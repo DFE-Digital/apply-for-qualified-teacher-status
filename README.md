@@ -1,6 +1,6 @@
 # Apply for qualified teacher status
 
-A service that allows teachers to apply for QTS (Qualified Teacher Status).
+A service that allows international teachers to apply for qualified teacher status (QTS) in England.
 
 ## Dependencies
 
