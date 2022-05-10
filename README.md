@@ -14,16 +14,14 @@ A service that allows teachers to apply for QTS (Qualified Teacher Status).
 Apply for qualified teacher status is a monolithic Rails app built with the
 GOVUK Design System and hosted on GOVUK PaaS.
 
-TODO: ADRs
+We keep track of architecture decisions in [Architecture Decision Records
+(ADRs)](/adr/).
 
-<!-- We keep track of architecture decisions in [Architecture Decision Records -->
-<!-- (ADRs)](/adr/). -->
+We use `rladr` to generate the boilerplate for new records:
 
-<!-- We use `rladr` to generate the boilerplate for new records: -->
-
-<!-- ```bash -->
-<!-- bin/bundle exec rladr new title -->
-<!-- ``` -->
+```bash
+bin/bundle exec rladr new title
+```
 
 ## Setup
 
