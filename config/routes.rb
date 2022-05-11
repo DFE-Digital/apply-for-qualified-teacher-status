@@ -5,9 +5,12 @@ Rails.application.routes.draw do
     get '/500', to: 'errors#internal_server_error'
   end
 
-  namespace :teacher_interface, path: '/teacher' do
-    root to: 'pages#start'
+  namespace :support_interface, path: '/support' do
   end
 
-  root to: 'pages#home'
+  namespace :teacher_interface, path: '/teacher' do
+    get 'start', to: 'pages#start'
+
+    root to: redirect('/teacher/start')
+  end
 end
