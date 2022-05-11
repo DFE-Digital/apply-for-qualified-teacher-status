@@ -1,5 +1,5 @@
 module TeacherInterface
-  class PagesController < TeacherInterface::BaseController
+  class PagesController < BaseController
 
   end
 end
