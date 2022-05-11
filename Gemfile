@@ -66,6 +66,8 @@ gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 
 group :test do
+  gem "capybara", "~> 3.37"
+  gem 'cuprite', '~> 0.13'
   gem "rspec"
   gem "rspec-rails"
 end
