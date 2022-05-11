@@ -25,49 +25,19 @@ bin/bundle exec rladr new title
 
 ## Setup
 
-### Bare metal
+Install dependencies using your preferred method, using `asdf` or `rbenv` or
+`nvm`. Example with `asdf`:
 
-TODO: Setup
+```bash
+# The first time
+brew install asdf # Mac-specific
+asdf plugin add ruby
+asdf plugin add nodejs
+asdf plugin add yarn
 
-<!-- Install dependencies using your preferred method, using `asdf` or `rbenv` or -->
-<!-- `nvm`. Example with `asdf`: -->
-
-<!-- ```bash -->
-<!-- # The first time -->
-<!-- brew install asdf # Mac-specific -->
-<!-- asdf plugin add ruby -->
-<!-- asdf plugin add nodejs -->
-<!-- asdf plugin add yarn -->
-<!-- asdf plugin add postgres -->
-<!-- asdf plugin add redis -->
-
-<!-- # To install (or update, following a change to .tool-versions) -->
-<!-- asdf install -->
-<!-- ``` -->
-
-<!-- If installing PostgreSQL via `asdf`, set up the `postgres` user: -->
-
-<!-- ```bash -->
-<!-- pg_ctl start -->
-<!-- createdb default -->
-<!-- psql -d default -->
-<!-- > CREATE ROLE postgres LOGIN SUPERUSER; -->
-<!-- ``` -->
-
-<!-- You might also need to install `postgresql-libs`: -->
-
-<!-- ```bash -->
-<!-- sudo apt install libpq-dev -->
-<!-- sudo yum install postgresql-devel -->
-<!-- sudo zypper in postgresql-devel -->
-<!-- sudo pacman -S postgresql-libs -->
-<!-- ``` -->
-
-<!-- If installing Redis, you'll need to start it in a separate terminal: -->
-
-<!-- ```bash -->
-<!-- redis-server -->
-<!-- ``` -->
+# To install (or update, following a change to .tool-versions)
+asdf install
+```
 
 Setup the project (re-run after `Gemfile` or `package.json` updates,
 automatically restarts any running Rails server):
