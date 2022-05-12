@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   namespace :teacher_interface, path: '/teacher' do
     get 'start', to: 'pages#start'
+    get 'eligible', to: 'pages#eligible'
 
     root to: redirect('/teacher/start')
   end
