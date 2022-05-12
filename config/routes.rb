@@ -13,4 +13,6 @@ Rails.application.routes.draw do
 
     root to: redirect('/teacher/start')
   end
+
+  root to: redirect('/teacher/start')
 end
