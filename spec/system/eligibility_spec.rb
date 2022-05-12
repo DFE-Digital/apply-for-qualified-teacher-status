@@ -2,15 +2,26 @@
 require 'rails_helper'
 
 RSpec.describe 'Eligibility check', type: :system do
-  it 'displays the start page' do
+  it 'happy path' do
     when_i_visit_the_start_page
     then_i_see_the_start_page
+
+    when_i_press_continue
+    then_i_see_the_eligible_page
   end
 
   private
 
+  def when_i_press_continue
+    click_link 'Continue'
+  end
+
   def when_i_visit_the_start_page
     visit '/teacher'
+  end
+
+  def then_i_see_the_eligible_page
+    expect(page).to have_content('You might be eligible to apply for QTS')
   end
 
   def then_i_see_the_start_page
