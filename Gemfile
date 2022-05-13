@@ -70,4 +70,5 @@ group :test do
   gem 'cuprite', '~> 0.13'
   gem "rspec"
   gem "rspec-rails"
+  gem "shoulda-matchers", "~> 5.1"
 end
