@@ -1,0 +1,2 @@
+class EligibilityCheck < ApplicationRecord
+end
