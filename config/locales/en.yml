@@ -4,6 +4,11 @@ en:
     email: my-service@email
 
   activemodel:
+    attributes:
+      eligibility_check:
+        ineligible_reason:
+          misconduct: To teach in England, you must not have any findings of misconduct or restrictions on your practice.
+
     errors:
       models:
         misconduct_form:

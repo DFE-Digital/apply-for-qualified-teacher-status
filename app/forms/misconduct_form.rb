@@ -1,13 +1,15 @@
 class MisconductForm
   include ActiveModel::Model
 
-  attr_accessor :eligibility_check, :free_of_sanctions
+  attr_accessor :eligibility_check
+  attr_reader :free_of_sanctions
 
   validates :eligibility_check, presence: true
-  validates :free_of_sanctions, presence: true, inclusion: { in: %w[true false], if: :free_of_sanctions? }
+  validates :free_of_sanctions, inclusion: { in: [true, false] }
 
-  def free_of_sanctions?
-    !free_of_sanctions.blank?
+  def free_of_sanctions=(value)
+    boolean = ActiveModel::Type::Boolean.new
+    @free_of_sanctions = boolean.cast(value)
   end
 
   def save
