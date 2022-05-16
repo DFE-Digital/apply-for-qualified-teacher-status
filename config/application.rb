@@ -35,5 +35,7 @@ module ApplyForQualifiedTeacherStatus
     config.generators.system_tests = nil
 
     config.exceptions_app = routes
+
+    config.assets.paths << Rails.root.join('node_modules/govuk-frontend/govuk/assets')
   end
 end
