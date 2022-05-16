@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe MisconductForm, type: :model do
   it { is_expected.to validate_presence_of(:eligibility_check) }
-  it { is_expected.to validate_presence_of(:free_of_sanctions) }
-  it { is_expected.to validate_inclusion_of(:free_of_sanctions).in_array(%w[true false]) }
+  it { is_expected.to validate_inclusion_of(:free_of_sanctions).in_array([true, false]) }
 
   describe '#valid?' do
     subject(:valid) { form.valid? }
