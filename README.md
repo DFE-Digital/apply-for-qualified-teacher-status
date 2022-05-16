@@ -64,13 +64,11 @@ TODO: Linting
 
 ### Testing
 
-TODO: Test script
+To run the tests:
 
-<!-- To run the tests: -->
-
-<!-- ```bash -->
-<!-- bin/test -->
-<!-- ``` -->
+```bash
+bin/test
+```
 
 ## Licence
 
