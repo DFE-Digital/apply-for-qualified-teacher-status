@@ -9,5 +9,5 @@ en:
         misconduct_form:
           attributes:
             free_of_sanctions:
-              inclusion: Tell us if you are free of sanctions
-              presence: Tell us if you are free of sanctions
+              inclusion: Tell us if your employment record is free of sanctions
+              presence: Tell us if your employment record is free of sanctions
