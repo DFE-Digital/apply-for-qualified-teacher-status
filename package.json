@@ -2,12 +2,12 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "esbuild": "^0.14.39",
     "govuk-frontend": "^4.0.1",
-    "esbuild": "^0.14.23",
     "sass": "^1.49.8"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
     "build:css": "sass --embed-sources --quiet-deps --load-path=node_modules ./app/assets/stylesheets/application.scss ./app/assets/builds/application.css"
   }
 }
