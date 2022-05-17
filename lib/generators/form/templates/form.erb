@@ -1,0 +1,13 @@
+class <%= class_name %>Form
+  include ActiveModel::Model
+
+  attr_accessor :eligibility_check
+
+  validates :eligibility_check, presence: true
+
+  def save
+    return false unless valid?
+
+    eligibility_check.save
+  end
+end
