@@ -1,0 +1,13 @@
+Description:
+    Form objects are used to collect the eligibility information from a person
+    and validate the data prior to persisting it in the database.
+    """
+
+Example:
+    bin/rails generate form Thing
+
+    This will create:
+        app/forms/thing_form.rb
+        app/controllers/teacher_interface/things_controller.rb
+        app/views/teacher_interface/things/new.html.erb
+        spec/forms/thing_form_spec.rb
