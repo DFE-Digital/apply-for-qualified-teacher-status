@@ -7,6 +7,10 @@ RSpec.describe 'Eligibility check', type: :system do
     then_i_see_the_start_page
 
     when_i_press_continue
+    then_i_see_the_teach_children_page
+
+    when_i_choose_yes
+    and_i_submit
     then_i_see_the_recognised_page
 
     when_i_choose_yes
@@ -21,6 +25,14 @@ RSpec.describe 'Eligibility check', type: :system do
   it 'ineligible paths' do
     when_i_visit_the_start_page
     when_i_press_continue
+    when_i_choose_no
+    and_i_submit
+    then_i_see_the_ineligible_page
+    and_i_see_the_ineligible_teach_children_text
+
+    when_i_press_back
+    when_i_choose_yes
+    and_i_submit
     when_i_choose_no
     and_i_submit
     then_i_see_the_ineligible_page
@@ -84,6 +96,10 @@ RSpec.describe 'Eligibility check', type: :system do
     expect(page).to have_content('This is because you are not recognised as a school teacher in the country where you trained.')
   end
 
+  def and_i_see_the_ineligible_teach_children_text
+    expect(page).to have_content('You must have experience of teaching children who are aged somewhere between 5 and 16 years.')
+  end
+
   def then_i_see_the_recognised_page
     expect(page).to have_current_path('/teacher/recognised')
     expect(page).to have_title('Are you recognised as a teacher in the country where you trained?')
@@ -93,5 +109,11 @@ RSpec.describe 'Eligibility check', type: :system do
   def then_i_see_the_start_page
     expect(page).to have_content('Apply for qualified teacher status')
     expect(page).to have_content('Teacher training in England leads to qualified teacher status (QTS). QTS is a legal requirement to teach in many English schools.')
+  end
+
+  def then_i_see_the_teach_children_page
+    expect(page).to have_current_path('/teacher/teach-children')
+    expect(page).to have_title('Are you qualified to teach children who are aged somewhere between 5 and 16 years?')
+    expect(page).to have_content('Are you qualified to teach children who are aged somewhere between 5 and 16 years?')
   end
 end
