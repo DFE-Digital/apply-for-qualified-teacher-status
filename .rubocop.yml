@@ -1,0 +1,12 @@
+inherit_gem:
+  rubocop-govuk:
+    - config/default.yml
+    - config/rails.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+Style/NumericLiterals:
+  Exclude:
+    - db/schema.rb

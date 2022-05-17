@@ -23,6 +23,8 @@ end
 group :development do
   gem 'rladr'
   gem "web-console"
+
+  gem "rubocop-govuk", require: false
 end
 
 group :test do
