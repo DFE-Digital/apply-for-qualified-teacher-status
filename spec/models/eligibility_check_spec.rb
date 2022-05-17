@@ -37,5 +37,21 @@ RSpec.describe EligibilityCheck, type: :model do
 
       it { is_expected.to eq(:recognised) }
     end
+
+    context 'when teach_children is true' do
+      before do
+        eligibility_check.teach_children = true
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when teach_children is false' do
+      before do
+        eligibility_check.teach_children = false
+      end
+
+      it { is_expected.to eq(:teach_children) }
+    end
   end
 end
