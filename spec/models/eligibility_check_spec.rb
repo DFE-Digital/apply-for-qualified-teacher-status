@@ -21,5 +21,21 @@ RSpec.describe EligibilityCheck, type: :model do
 
       it { is_expected.to eq(:misconduct) }
     end
+
+    context 'when recognised is true' do
+      before do
+        eligibility_check.recognised = true
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when recognised is false' do
+      before do
+        eligibility_check.recognised = false
+      end
+
+      it { is_expected.to eq(:recognised) }
+    end
   end
 end

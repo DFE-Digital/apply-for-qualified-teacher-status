@@ -7,6 +7,10 @@ RSpec.describe 'Eligibility check', type: :system do
     then_i_see_the_start_page
 
     when_i_press_continue
+    then_i_see_the_recognised_page
+
+    when_i_choose_yes
+    and_i_submit
     then_i_see_the_clean_record_page
 
     when_i_choose_yes
@@ -17,6 +21,14 @@ RSpec.describe 'Eligibility check', type: :system do
   it 'ineligible paths' do
     when_i_visit_the_start_page
     when_i_press_continue
+    when_i_choose_no
+    and_i_submit
+    then_i_see_the_ineligible_page
+    and_i_see_the_ineligible_recognised_text
+
+    when_i_press_back
+    when_i_choose_yes
+    and_i_submit
     when_i_choose_no
     and_i_submit
     then_i_see_the_ineligible_page
@@ -35,6 +47,10 @@ RSpec.describe 'Eligibility check', type: :system do
 
   def when_i_choose_yes
     choose 'Yes', visible: false
+  end
+
+  def when_i_press_back
+    click_link 'Back'
   end
 
   def when_i_press_continue
@@ -57,11 +73,21 @@ RSpec.describe 'Eligibility check', type: :system do
 
   def then_i_see_the_ineligible_page
     expect(page).to have_current_path('/teacher/ineligible')
-    expect(page).to have_content("You're not eligible to apply for qualified teacher status (QTS) in England")
+    expect(page).to have_content("You’re not eligible to apply for qualified teacher status (QTS) in England")
   end
 
   def and_i_see_the_ineligible_misconduct_text
     expect(page).to have_content('To teach in England, you must not have any findings of misconduct or restrictions on your practice.')
+  end
+
+  def and_i_see_the_ineligible_recognised_text
+    expect(page).to have_content('This is because you are not recognised as a school teacher in the country where you trained.')
+  end
+
+  def then_i_see_the_recognised_page
+    expect(page).to have_current_path('/teacher/recognised')
+    expect(page).to have_title('Are you recognised as a teacher in the country where you trained?')
+    expect(page).to have_content('Are you recognised as a teacher in the country where you trained?')
   end
 
   def then_i_see_the_start_page
