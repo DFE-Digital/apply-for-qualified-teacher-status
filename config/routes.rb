@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   end
 
   namespace :teacher_interface, path: '/teacher' do
+    get 'recognised', to: 'countries#new'
+    post 'recognised', to: 'countries#create'
     get 'start', to: 'pages#start'
     get 'eligible', to: 'pages#eligible'
     get 'ineligible', to: 'pages#ineligible'

@@ -8,9 +8,14 @@ en:
       eligibility_check:
         ineligible_reason:
           misconduct: To teach in England, you must not have any findings of misconduct or restrictions on your practice.
+          recognised: This is because you are not recognised as a school teacher in the country where you trained.
 
     errors:
       models:
+        country_form:
+          attributes:
+            recognised:
+              inclusion: Tell us if you are recognised as a teacher in the country you trained in
         misconduct_form:
           attributes:
             free_of_sanctions:

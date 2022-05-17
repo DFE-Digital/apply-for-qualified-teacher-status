@@ -1,0 +1,20 @@
+<% content_for :page_title, "#{'Error: ' if @country_form.errors.any?}Are you recognised as a teacher in the country where you trained?" %>
+<% content_for :back_link_url, back_link_url(teacher_interface_start_url) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @country_form, url: teacher_interface_recognised_url, method: :post do |f| %>
+      <%= f.govuk_error_summary %>
+      
+
+      <%= f.govuk_collection_radio_buttons(:recognised,
+            [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
+            :value,
+            :label,
+            legend: { size: 'l', text: 'Are you recognised as a teacher in the country where you trained?' },
+            hint: { text: 'You need to have met all conditions for being fully recognised.' }
+          ) %>
+      <%= f.govuk_submit prevent_double_click: false %>
+    <% end %>
+  </div>
+</div>

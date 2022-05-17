@@ -19,4 +19,16 @@ RSpec.describe MisconductForm, type: :model do
       it { is_expected.to be_falsy }
     end
   end
+
+  describe '#save' do
+    subject(:save) { form.save }
+
+    let(:eligibility_check) { EligibilityCheck.new }
+    let(:form) { described_class.new(eligibility_check:, free_of_sanctions: true) }
+
+    it 'saves the eligibility check' do
+      save
+      expect(eligibility_check.free_of_sanctions).to be_truthy
+    end
+  end
 end
