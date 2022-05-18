@@ -37,6 +37,10 @@
       </main>
     </div>
 
-    <%= govuk_footer %>
+    <%= govuk_footer(
+      meta_items_title: 'Footer links',
+      meta_items: {
+        'Cookies': '/cookies',
+      }) %>
   </body>
 </html>
