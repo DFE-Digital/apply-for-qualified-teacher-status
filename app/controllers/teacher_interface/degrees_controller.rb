@@ -5,9 +5,10 @@ module TeacherInterface
     end
 
     def create
-      eligibility_check = EligibilityCheck.find(session[:eligibility_check_id])
+      eligibility_check = EligibilityCheck.new
       @degree_form = DegreeForm.new(degree_form_params.merge(eligibility_check:))
       if @degree_form.save
+        session[:eligibility_check_id] = eligibility_check.id
         redirect_to @degree_form.success_url
       else
         render :new

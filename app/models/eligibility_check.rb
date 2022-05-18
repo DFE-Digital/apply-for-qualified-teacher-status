@@ -17,6 +17,7 @@ class EligibilityCheck < ApplicationRecord
     return :recognised unless recognised.nil? || recognised
     return :teach_children unless teach_children.nil? || teach_children
     return :qualification unless qualification.nil? || qualification
+    return :degree unless degree.nil? || degree
 
     nil
   end
