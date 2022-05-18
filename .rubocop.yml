@@ -3,6 +3,9 @@ inherit_gem:
     - config/default.yml
     - config/rails.yml
 
+inherit_from:
+  - node_modules/@prettier/plugin-ruby/rubocop.yml
+
 inherit_mode:
   merge:
     - Exclude

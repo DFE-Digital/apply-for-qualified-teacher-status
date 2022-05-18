@@ -24,7 +24,11 @@ group :development do
   gem 'rladr'
   gem "web-console"
 
+  gem "prettier_print", require: false
   gem "rubocop-govuk", require: false
+  gem "syntax_tree", require: false
+  gem "syntax_tree-haml", require: false
+  gem "syntax_tree-rbs", require: false
 end
 
 group :test do
