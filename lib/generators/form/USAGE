@@ -4,10 +4,11 @@ Description:
     """
 
 Example:
-    bin/rails generate form Thing
+    bin/rails generate form Thing attribute:type
 
     This will create:
         app/forms/thing_form.rb
         app/controllers/teacher_interface/things_controller.rb
         app/views/teacher_interface/things/new.html.erb
         spec/forms/thing_form_spec.rb
+        db/migration/add_thing_to_eligibility_check.rb
