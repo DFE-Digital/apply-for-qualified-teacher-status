@@ -5,13 +5,12 @@ module TeacherInterface
     end
 
     def create
-      eligibility_check = EligibilityCheck.new
+      eligibility_check = EligibilityCheck.find(session[:eligibility_check_id])
       @teach_children_form =
         TeachChildrenForm.new(
           teach_children_form_params.merge(eligibility_check:)
         )
       if @teach_children_form.save
-        session[:eligibility_check_id] = eligibility_check.id
         redirect_to(
           if @teach_children_form.teach_children
             teacher_interface_recognised_url

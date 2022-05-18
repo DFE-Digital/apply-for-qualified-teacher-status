@@ -7,6 +7,10 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_start_page
 
     when_i_press_continue
+    then_i_see_the_qualification_page
+
+    when_i_choose_yes
+    and_i_submit
     then_i_see_the_teach_children_page
 
     when_i_choose_yes
@@ -25,6 +29,14 @@ RSpec.describe "Eligibility check", type: :system do
   it "ineligible paths" do
     when_i_visit_the_start_page
     when_i_press_continue
+    when_i_choose_no
+    and_i_submit
+    then_i_see_the_ineligible_page
+    and_i_see_the_ineligible_qualification_text
+
+    when_i_press_back
+    when_i_choose_yes
+    and_i_submit
     when_i_choose_no
     and_i_submit
     then_i_see_the_ineligible_page
@@ -107,6 +119,20 @@ RSpec.describe "Eligibility check", type: :system do
   def and_i_see_the_ineligible_teach_children_text
     expect(page).to have_content(
       "You must have experience of teaching children who are aged somewhere between 5 and 16 years."
+    )
+  end
+
+  def and_i_see_the_ineligible_qualification_text
+    expect(page).to have_content(
+      "This is because you have not completed a formal teacher training course, for example, an undergraduate degree or postgraduate teacher training course."
+    )
+  end
+
+  def then_i_see_the_qualification_page
+    expect(page).to have_current_path("/teacher/qualifications")
+    expect(page).to have_title("Do you have a teacher training qualification?")
+    expect(page).to have_content(
+      "Do you have a teacher training qualification?"
     )
   end
 

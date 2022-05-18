@@ -5,9 +5,10 @@ class QualificationForm
   attr_reader :qualification
 
   validates :eligibility_check, presence: true
+  validates :qualification, inclusion: { in: [true, false] }
 
   def qualification=(value)
-    @qualification = ActiveMode::Type.new.cast(value)
+    @qualification = ActiveModel::Type::Boolean.new.cast(value)
   end
 
   def save
@@ -18,9 +19,16 @@ class QualificationForm
   end
 
   def success_url
-    ApplicationController
-      .routes
-      .url_helpers
-      .teacher_interface_qualifications_path
+    if qualification
+      return(
+        Rails
+          .application
+          .routes
+          .url_helpers
+          .teacher_interface_teach_children_path
+      )
+    end
+
+    Rails.application.routes.url_helpers.teacher_interface_ineligible_path
   end
 end

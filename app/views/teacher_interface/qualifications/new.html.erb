@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{'Error: ' if @qualification_form.errors.any?}" %>
+<% content_for :page_title, "#{'Error: ' if @qualification_form.errors.any?}Do you have a teacher training qualification?" %>
 <% content_for :back_link_url, back_link_url %>
 
 <div class="govuk-grid-row">
@@ -10,8 +10,8 @@
           [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
           :value,
           :label,
-          legend: { size: 'l', text: 'Change this question?' },
-          hint: { text: 'Change this hint' }
+          legend: { size: 'l', text: 'Do you have a teacher training qualification?' },
+          hint: { text: 'For example, this could be from an undergraduate degree, or a postgraduate teacher training course.' }
         ) %>
       <%= f.govuk_submit prevent_double_click: false %>
     <% end %>

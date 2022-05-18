@@ -10,6 +10,7 @@ en:
           misconduct: To teach in England, you must not have any findings of misconduct or restrictions on your practice.
           recognised: This is because you are not recognised as a school teacher in the country where you trained.
           teach_children: You must have experience of teaching children who are aged somewhere between 5 and 16 years.
+          qualification: This is because you have not completed a formal teacher training course, for example, an undergraduate degree or postgraduate teacher training course.
 
     errors:
       models:
@@ -21,6 +22,10 @@ en:
           attributes:
             free_of_sanctions:
               blank: Tell us if your employment record is free of sanctions
+        qualification_form:
+          attributes:
+            qualification:
+              inclusion: Tell us if you have a teacher training qualification
         teach_children_form:
           attributes:
             teach_children:
