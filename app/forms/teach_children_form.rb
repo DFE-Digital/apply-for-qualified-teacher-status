@@ -15,6 +15,6 @@ class TeachChildrenForm
     return false unless valid?
 
     eligibility_check.teach_children = teach_children
-    eligibility_check.save
+    eligibility_check.save!
   end
 end
