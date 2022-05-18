@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: eligibility_checks
+#
+#  id                :bigint           not null, primary key
+#  free_of_sanctions :boolean
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  recognised        :boolean
+#  teach_children    :boolean
+#
 require "rails_helper"
 
 RSpec.describe EligibilityCheck, type: :model do
