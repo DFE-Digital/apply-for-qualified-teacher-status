@@ -11,21 +11,22 @@ gem "jsbundling-rails"
 gem "pg"
 gem "propshaft"
 gem "puma", "~> 5.0"
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ] # Windows
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Windows
 
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
-  gem 'rladr'
+  gem "rladr"
   gem "web-console"
 
   gem "prettier_print", require: false
   gem "rubocop-govuk", require: false
+  gem "solargraph", require: false
   gem "syntax_tree", require: false
   gem "syntax_tree-haml", require: false
   gem "syntax_tree-rbs", require: false
@@ -33,7 +34,7 @@ end
 
 group :test do
   gem "capybara", "~> 3.37"
-  gem 'cuprite', '~> 0.13'
+  gem "cuprite", "~> 0.13"
   gem "rspec"
   gem "rspec-rails"
   gem "shoulda-matchers", "~> 5.1"

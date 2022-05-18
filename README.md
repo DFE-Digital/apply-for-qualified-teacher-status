@@ -52,6 +52,25 @@ Run the application on `http://localhost:3000`:
 bin/dev
 ```
 
+### Intellisense
+
+[solargraph](https://github.com/castwide/solargraph) is bundled as part of the
+development dependencies. You need to [set it up for your
+editor](https://github.com/castwide/solargraph#using-solargraph), and then run
+this command to index your local bundle (re-run if/when we install new
+dependencies and you want completion):
+
+```sh
+bin/bundle exec yard gems
+```
+
+You'll also need to configure your editor's `solargraph` plugin to
+`useBundler`:
+
+```diff
++  "solargraph.useBundler": true,
+```
+
 ### Linting
 
 To run the linters:
