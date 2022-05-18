@@ -119,6 +119,9 @@ GEM
       activemodel (>= 6.1)
       activesupport (>= 6.1)
       deep_merge (~> 1.2.1)
+    govuk_markdown (1.0.0)
+      activesupport
+      redcarpet
     haml (5.2.2)
       temple (>= 0.8.0)
       tilt
@@ -210,6 +213,7 @@ GEM
     rainbow (3.1.1)
     rake (13.0.6)
     rbs (2.4.0)
+    redcarpet (3.5.1)
     regexp_parser (2.4.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -333,6 +337,7 @@ DEPENDENCIES
   debug
   govuk-components
   govuk_design_system_formbuilder
+  govuk_markdown
   jsbundling-rails
   pg
   prettier_print
