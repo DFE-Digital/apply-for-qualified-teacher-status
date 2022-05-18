@@ -28,15 +28,34 @@ bin/bundle exec rladr new title
 Install dependencies using your preferred method, using `asdf` or `rbenv` or
 `nvm`. Example with `asdf`:
 
-```bash
+```sh
 # The first time
 brew install asdf # Mac-specific
 asdf plugin add ruby
 asdf plugin add nodejs
 asdf plugin add yarn
+asdf plugin add postgres
 
 # To install (or update, following a change to .tool-versions)
 asdf install
+```
+
+If installing PostgreSQL via `asdf`, set up the `postgres` user:
+
+```sh
+pg_ctl start
+createdb default
+psql -d default
+> CREATE ROLE postgres LOGIN SUPERUSER;
+```
+
+You might also need to install `libpq-dev`:
+
+```bash
+sudo apt install libpq-dev
+sudo yum install postgresql-devel
+sudo zypper in postgresql-devel
+sudo pacman -S postgresql-libs
 ```
 
 Setup the project (re-run after `Gemfile` or `package.json` updates,
