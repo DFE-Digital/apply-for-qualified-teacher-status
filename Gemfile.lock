@@ -68,6 +68,9 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
     ast (2.4.2)
     backport (1.2.0)
     benchmark (0.2.0)
@@ -278,6 +281,9 @@ GEM
       thor (~> 1.0)
       tilt (~> 2.0)
       yard (~> 0.9, >= 0.9.24)
+    solargraph-rails (0.3.1)
+      activesupport
+      solargraph (>= 0.41.1)
     strscan (3.0.2)
     syntax_tree (2.6.0)
       prettier_print
@@ -319,6 +325,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  annotate
   bootsnap
   capybara (~> 3.37)
   cssbundling-rails
@@ -338,6 +345,7 @@ DEPENDENCIES
   rubocop-govuk
   shoulda-matchers (~> 5.1)
   solargraph
+  solargraph-rails
   syntax_tree
   syntax_tree-haml
   syntax_tree-rbs

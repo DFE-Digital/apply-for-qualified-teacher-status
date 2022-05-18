@@ -24,9 +24,11 @@ group :development do
   gem "rladr"
   gem "web-console"
 
+  gem "annotate", require: false
   gem "prettier_print", require: false
   gem "rubocop-govuk", require: false
   gem "solargraph", require: false
+  gem "solargraph-rails", require: false
   gem "syntax_tree", require: false
   gem "syntax_tree-haml", require: false
   gem "syntax_tree-rbs", require: false
