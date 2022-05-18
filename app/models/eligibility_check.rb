@@ -3,11 +3,13 @@
 # Table name: eligibility_checks
 #
 #  id                :bigint           not null, primary key
+#  degree            :boolean
 #  free_of_sanctions :boolean
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  qualification     :boolean
 #  recognised        :boolean
 #  teach_children    :boolean
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 class EligibilityCheck < ApplicationRecord
   def ineligible_reason

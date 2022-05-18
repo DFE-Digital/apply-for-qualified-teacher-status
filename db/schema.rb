@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_18_113513) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_18_143818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_113513) do
     t.boolean "recognised"
     t.boolean "teach_children"
     t.boolean "qualification"
+    t.boolean "degree"
   end
 
 end
