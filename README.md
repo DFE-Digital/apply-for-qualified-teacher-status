@@ -54,13 +54,11 @@ bin/dev
 
 ### Linting
 
-TODO: Linting
+To run the linters:
 
-<!-- To run the linters: -->
-
-<!-- ```bash -->
-<!-- bin/lint -->
-<!-- ``` -->
+```bash
+bin/lint
+```
 
 ### Testing
 
