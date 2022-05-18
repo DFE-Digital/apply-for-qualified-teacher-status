@@ -22,7 +22,7 @@ RSpec.describe CountryForm, type: :model do
   end
 
   describe "#save" do
-    subject(:save) { form.save }
+    subject(:save!) { form.save }
 
     let(:eligibility_check) { EligibilityCheck.new }
     let(:form) { described_class.new(eligibility_check:, recognised: true) }
