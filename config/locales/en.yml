@@ -11,6 +11,7 @@ en:
           recognised: This is because you are not recognised as a school teacher in the country where you trained.
           teach_children: You must have experience of teaching children who are aged somewhere between 5 and 16 years.
           qualification: This is because you have not completed a formal teacher training course, for example, an undergraduate degree or postgraduate teacher training course.
+          degree: This is because you do not have a degree. As teaching in England is a graduate profession, you must have an undergraduate degree. Tell us if you have a degree.
 
     errors:
       models:
@@ -18,6 +19,10 @@ en:
           attributes:
             recognised:
               inclusion: Tell us if you are recognised as a teacher in the country you trained in
+        degree_form:
+          attributes:
+            degree:
+              inclusion: Tell us if you have a degree
         misconduct_form:
           attributes:
             free_of_sanctions:

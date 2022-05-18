@@ -66,5 +66,17 @@ RSpec.describe EligibilityCheck, type: :model do
 
       it { is_expected.to eq(:qualification) }
     end
+
+    context "when degree is true" do
+      before { eligibility_check.degree = true }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when degree is false" do
+      before { eligibility_check.degree = false }
+
+      it { is_expected.to eq(:degree) }
+    end
   end
 end

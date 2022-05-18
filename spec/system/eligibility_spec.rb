@@ -7,6 +7,10 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_start_page
 
     when_i_press_continue
+    then_i_see_the_degree_page
+
+    when_i_choose_yes
+    and_i_submit
     then_i_see_the_qualification_page
 
     when_i_choose_yes
@@ -29,6 +33,14 @@ RSpec.describe "Eligibility check", type: :system do
   it "ineligible paths" do
     when_i_visit_the_start_page
     when_i_press_continue
+    when_i_choose_no
+    and_i_submit
+    then_i_see_the_ineligible_page
+    and_i_see_the_ineligible_degree_text
+
+    when_i_press_back
+    when_i_choose_yes
+    and_i_submit
     when_i_choose_no
     and_i_submit
     then_i_see_the_ineligible_page
@@ -126,6 +138,16 @@ RSpec.describe "Eligibility check", type: :system do
     expect(page).to have_content(
       "This is because you have not completed a formal teacher training course, for example, an undergraduate degree or postgraduate teacher training course."
     )
+  end
+
+  def and_i_see_the_ineligible_degree_text
+    expect(page).to have_content("This is because you do not have a degree.")
+  end
+
+  def then_i_see_the_degree_page
+    expect(page).to have_current_path("/teacher/degree")
+    expect(page).to have_title("Do you have a degree?")
+    expect(page).to have_content("Do you have a degree?")
   end
 
   def then_i_see_the_qualification_page
