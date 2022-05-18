@@ -23,5 +23,7 @@ Rails.application.routes.draw do
     root to: redirect("/teacher/start")
   end
 
+  get "cookies", to: "static#cookies"
+
   root to: redirect("/teacher/start")
 end
