@@ -17,7 +17,7 @@ module TeacherInterface
     private
 
     def <%= model_resource_name %>_form_params
-      params.require(:<%= model_resource_name %>_form).permit
+      params.require(:<%= model_resource_name %>_form).permit(<%= attributes.map { |attribute| ":#{attribute.name}" }.join(', ') %>)
     end
   end
 end

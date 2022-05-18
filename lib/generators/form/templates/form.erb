@@ -7,10 +7,13 @@ attr_reader <%= attributes.map { |attribute| ":#{attribute.name}" }.join(', ') %
   <% end -%>
 
   validates :eligibility_check, presence: true
+  <% attributes.map do |attribute| -%>
+  validates :<%= attribute.name %>, <%= attribute.type == :boolean ? "inclusion: { in: [true, false] }" : "presence: true" %>
+  <% end -%>
 
   <% attributes.map do |attribute| -%>
 def <%= attribute.name %>=(value)
-    @<%= attribute.name %> = <%= attribute.type == :boolean ? "ActiveMode::Type.new.cast(value)" : "value" %>
+    @<%= attribute.name %> = <%= attribute.type == :boolean ? "ActiveModel::Type::Boolean.new.cast(value)" : "value" %>
   end
   <% end -%>
 
@@ -23,7 +26,17 @@ eligibility_check.<%= attribute.name %> = <%= attribute.name %>
 eligibility_check.save
   end
 
+  def eligible?
+    <%= attributes.map { |attribute| "eligibility_check.#{attribute.name}" }.join(' && ') %>
+  end
+
   def success_url
-    ApplicationController.routes.url_helpers.teacher_interface_<%= plural_name %>_path
+    return Rails.application.routes.url_helpers.teacher_interface_ineligible_path unless eligible?
+
+    Rails
+      .application
+      .routes
+      .url_helpers
+      .teacher_interface_<%= plural_name %>_path
   end
 end
