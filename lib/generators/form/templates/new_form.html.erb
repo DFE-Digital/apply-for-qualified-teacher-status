@@ -5,8 +5,18 @@
   <div class="govuk-grid-column-two-thirds">
     <%%= form_with model: @<%= model_resource_name %>_form, url: teacher_interface_<%= plural_name %>_url, method: :post do |f| %>
       <%%= f.govuk_error_summary %>
-
-      <%%= f.govuk_submit prevent_double_click: false %>
+      <% attributes.map do |attribute|
+        next unless attribute.type == :boolean -%>
+<%%= f.govuk_collection_radio_buttons(
+          :<%= attribute.name %>,
+          [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
+          :value,
+          :label,
+          legend: { size: 'l', text: 'Change this question?' },
+          hint: { text: 'Change this hint' }
+        ) %>
+      <% end -%>
+<%%= f.govuk_submit prevent_double_click: false %>
     <%% end %>
   </div>
 </div>
