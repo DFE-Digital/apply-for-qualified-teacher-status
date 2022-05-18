@@ -15,6 +15,6 @@ class CountryForm
     return false unless valid?
 
     eligibility_check.recognised = recognised
-    eligibility_check.save
+    eligibility_check.save!
   end
 end

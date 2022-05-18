@@ -16,6 +16,6 @@ class MisconductForm
     return false unless valid?
 
     eligibility_check.free_of_sanctions = free_of_sanctions
-    eligibility_check.save
+    eligibility_check.save!
   end
 end
