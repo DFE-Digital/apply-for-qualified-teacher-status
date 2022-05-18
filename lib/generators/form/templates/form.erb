@@ -10,4 +10,8 @@ class <%= class_name %>Form
 
     eligibility_check.save
   end
+
+  def success_url
+    ApplicationController.routes.url_helpers.teacher_interface_<%= plural_name %>_path
+  end
 end
