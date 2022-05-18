@@ -6,9 +6,16 @@ module TeacherInterface
 
     def create
       eligibility_check = EligibilityCheck.find(session[:eligibility_check_id])
-      @misconduct_form = MisconductForm.new(misconduct_params.merge(eligibility_check:))
+      @misconduct_form =
+        MisconductForm.new(misconduct_params.merge(eligibility_check:))
       if @misconduct_form.save
-        redirect_to @misconduct_form.free_of_sanctions ? teacher_interface_eligible_url : teacher_interface_ineligible_url
+        redirect_to(
+          if @misconduct_form.free_of_sanctions
+            teacher_interface_eligible_url
+          else
+            teacher_interface_ineligible_url
+          end
+        )
       else
         render :new
       end
