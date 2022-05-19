@@ -1,0 +1,54 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  rspec:
+    name: Rspec
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-retries 5
+          --health-timeout 5s
+
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/find_a_lost_trn_test
+      RAILS_ENV: test
+      REDIS_URL: redis://localhost:6379/0
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+
+      - name: Build frontend
+        run: bin/rails assets:precompile
+
+      - name: Setup DB
+        run: bin/rails db:prepare
+
+      - name: Run tests
+        run: bin/bundle exec rspec --format documentation
