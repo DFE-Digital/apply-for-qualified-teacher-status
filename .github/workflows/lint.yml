@@ -17,11 +17,9 @@ jobs:
 
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
-        with:
-          skip-node: true
 
       - name: Run Prettier
-        run: bin/bundle exec rbprettier --check --ignore-unknown --loglevel warn '**/*'
+        run: yarn prettier --check --ignore-unknown '**/*'
 
   rubocop:
     name: Rubocop
