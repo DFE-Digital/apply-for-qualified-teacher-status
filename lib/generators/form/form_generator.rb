@@ -17,7 +17,8 @@ class FormGenerator < Rails::Generators::NamedBase
     insert_into_file "config/routes.rb",
                      after:
                        "namespace :teacher_interface, path: \"/teacher\" do\n" do
-      "    get \"#{plural_name}\", to: \"#{plural_name}#new\"\n    post \"#{plural_name}\", to: \"#{plural_name}#create\"\n"
+      "    get \"#{plural_name}\", to: \"#{plural_name}#new\"\n" \
+        "    post \"#{plural_name}\", to: \"#{plural_name}#create\"\n"
     end
     generate :migration,
              "Add#{class_name}ToEligibilityCheck #{

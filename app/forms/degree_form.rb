@@ -3,19 +3,19 @@ class DegreeForm
 
   attr_accessor :eligibility_check
   attr_reader :degree
-  
+
   validates :eligibility_check, presence: true
   validates :degree, inclusion: { in: [true, false] }
-  
+
   def degree=(value)
     @degree = ActiveModel::Type::Boolean.new.cast(value)
   end
-  
+
   def save
     return false unless valid?
 
     eligibility_check.degree = degree
-    eligibility_check.save
+    eligibility_check.save!
   end
 
   def eligible?
@@ -23,12 +23,12 @@ class DegreeForm
   end
 
   def success_url
-    return Rails.application.routes.url_helpers.teacher_interface_ineligible_path unless eligible?
+    unless eligible?
+      return(
+        Rails.application.routes.url_helpers.teacher_interface_ineligible_path
+      )
+    end
 
-    Rails
-      .application
-      .routes
-      .url_helpers
-      .teacher_interface_qualifications_path
+    Rails.application.routes.url_helpers.teacher_interface_qualifications_path
   end
 end

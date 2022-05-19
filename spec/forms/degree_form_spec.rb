@@ -13,13 +13,12 @@ RSpec.describe DegreeForm, type: :model do
     let(:degree) { "true" }
 
     it { is_expected.to be_truthy }
-    
+
     context "when degree is blank" do
       let(:degree) { "" }
 
       it { is_expected.to be_falsy }
     end
-    
   end
 
   describe "#save" do
