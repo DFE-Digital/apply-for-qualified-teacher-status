@@ -45,7 +45,7 @@ jobs:
         uses: ./.github/actions/prepare-app-env
 
       - name: Build frontend
-        run: bin/rails assets:precompile
+        run: yarn build && yarn build:css
 
       - name: Setup DB
         run: bin/rails db:prepare
