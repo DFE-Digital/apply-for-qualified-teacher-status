@@ -106,6 +106,14 @@ To run the tests:
 bin/test
 ```
 
+### Deploying (temporary)
+
+```sh
+cf login -a api.london.cloud.service.gov.uk --sso
+cf target -o dfe -s sandbox
+cf push
+```
+
 ## Licence
 
 [MIT Licence](LICENCE).
