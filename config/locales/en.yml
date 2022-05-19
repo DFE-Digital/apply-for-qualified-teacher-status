@@ -12,6 +12,7 @@ en:
           teach_children: You must have experience of teaching children who are aged somewhere between 5 and 16 years.
           qualification: This is because you have not completed a formal teacher training course, for example, an undergraduate degree or postgraduate teacher training course.
           degree: This is because you do not have a degree. As teaching in England is a graduate profession, you must have an undergraduate degree. Tell us if you have a degree.
+          country: This is because teachers with qualifications from this country are not eligible under current legislation. The Department for Education is currently reviewing these rules.
 
     errors:
       models:
@@ -23,6 +24,10 @@ en:
           attributes:
             degree:
               inclusion: Tell us if you have a degree
+        location_form:
+          attributes:
+            country_code:
+              blank: Tell us where you are currently recognised as a teacher
         misconduct_form:
           attributes:
             free_of_sanctions:

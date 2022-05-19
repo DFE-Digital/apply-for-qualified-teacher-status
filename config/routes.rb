@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   namespace :teacher_interface, path: "/teacher" do
     get "degree", to: "degrees#new"
     post "degree", to: "degrees#create"
+    get "countries", to: "locations#new"
+    post "countries", to: "locations#create"
     get "qualifications", to: "qualifications#new"
     post "qualifications", to: "qualifications#create"
     get "recognised", to: "countries#new"
