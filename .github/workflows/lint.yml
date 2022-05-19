@@ -1,0 +1,63 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - "**"
+      - "!main"
+
+jobs:
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+        with:
+          skip-node: true
+
+      - name: Run Prettier
+        run: bin/bundle exec rbprettier --check --ignore-unknown --loglevel warn '**/*'
+
+  rubocop:
+    name: Rubocop
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+        with:
+          skip-node: true
+
+      - name: Run Rubocop
+        run: bin/bundle exec rubocop
+
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.10
+
+      - name: Check formatting
+        run: terraform fmt -check
+        working-directory: terraform
+
+      - name: Validate
+        run: |
+          terraform init -backend=false
+          terraform validate -no-color
+        working-directory: terraform
