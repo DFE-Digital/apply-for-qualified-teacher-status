@@ -4,6 +4,7 @@
 #
 #  id                :bigint           not null, primary key
 #  degree            :boolean
+#  country_code      :string
 #  free_of_sanctions :boolean
 #  qualification     :boolean
 #  recognised        :boolean
@@ -18,6 +19,7 @@ class EligibilityCheck < ApplicationRecord
     return :teach_children unless teach_children.nil? || teach_children
     return :qualification unless qualification.nil? || qualification
     return :degree unless degree.nil? || degree
+    return :country if !country_code.nil? && country_code == "INELIGIBLE"
 
     nil
   end

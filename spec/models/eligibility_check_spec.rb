@@ -4,6 +4,7 @@
 #
 #  id                :bigint           not null, primary key
 #  degree            :boolean
+#  country_code      :string
 #  free_of_sanctions :boolean
 #  qualification     :boolean
 #  recognised        :boolean
@@ -77,6 +78,18 @@ RSpec.describe EligibilityCheck, type: :model do
       before { eligibility_check.degree = false }
 
       it { is_expected.to eq(:degree) }
+    end
+
+    context "when country_code is eligible" do
+      before { eligibility_check.country_code = "GB" }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when country_code is ineligible" do
+      before { eligibility_check.country_code = "INELIGIBLE" }
+
+      it { is_expected.to eq(:country) }
     end
   end
 end
