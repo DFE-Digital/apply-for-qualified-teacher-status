@@ -3,3 +3,9 @@ $govuk-new-link-styles: true;
 $govuk-assets-path: "/";
 
 @import "govuk-frontend/govuk/all";
+
+ul.autocomplete__menu {
+  li {
+    font-family: $govuk-font-family;
+  }
+}
