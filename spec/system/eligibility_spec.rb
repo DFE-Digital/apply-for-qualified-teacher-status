@@ -37,12 +37,6 @@ RSpec.describe "Eligibility check", type: :system do
   it "ineligible paths" do
     when_i_visit_the_start_page
     when_i_press_continue
-    when_i_select_an_ineligible_country
-    and_i_submit
-    then_i_see_the_ineligible_page
-    and_i_see_the_ineligible_country_text
-
-    when_i_press_back
     when_i_select_a_country
     and_i_submit
     when_i_choose_no
@@ -106,7 +100,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_select_a_country
-    select "United Kingdom", from: "location-form-country-code-field"
+    fill_in "location-form-country-code-field", with: "United Kingdom"
   end
 
   def when_i_select_an_ineligible_country

@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     get "ineligible", to: "pages#ineligible"
     get "misconduct", to: "misconduct#new"
     post "misconduct", to: "misconduct#create"
+
+    resources :locations, only: [:index]
+
     root to: redirect("/teacher/start")
   end
 
