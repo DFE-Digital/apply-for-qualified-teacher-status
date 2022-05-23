@@ -31,7 +31,7 @@ en:
         misconduct_form:
           attributes:
             free_of_sanctions:
-              blank: Tell us if your employment record is free of sanctions
+              inclusion: Tell us if your employment record is free of sanctions
         qualification_form:
           attributes:
             qualification:
