@@ -1,8 +1,7 @@
 module TeacherInterface
   class LocationsController < BaseController
     def index
-      render json:
-               JSON.parse(File.read("public/location-autocomplete-graph.json"))
+      render json: LOCATION_AUTOCOMPLETE_GRAPH
     end
 
     def new
@@ -23,13 +22,20 @@ module TeacherInterface
 
     private
 
+    LOCATION_AUTOCOMPLETE_GRAPH =
+      JSON.parse(File.read("public/location-autocomplete-graph.json"))
+
+    LOCATION_AUTOCOMPLETE_CANONICAL_LIST =
+      JSON.parse(File.read("public/location-autocomplete-canonical-list.json"))
+
     def location_form_params
       params.require(:location_form).permit(:country_code)
     end
 
     def locations
-      JSON.parse(File.read("public/location-autocomplete-canonical-list.json"))
+      LOCATION_AUTOCOMPLETE_CANONICAL_LIST
     end
+
     helper_method :locations
   end
 end
