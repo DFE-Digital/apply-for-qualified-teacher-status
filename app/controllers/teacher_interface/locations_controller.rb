@@ -2,11 +2,7 @@ module TeacherInterface
   class LocationsController < BaseController
     def index
       render json:
-               JSON.parse(
-                 File.read(
-                   "node_modules/govuk-country-and-territory-autocomplete/dist/location-autocomplete-graph.json"
-                 )
-               )
+               JSON.parse(File.read("public/location-autocomplete-graph.json"))
     end
 
     def new
@@ -32,11 +28,7 @@ module TeacherInterface
     end
 
     def locations
-      JSON.parse(
-        File.read(
-          "node_modules/govuk-country-and-territory-autocomplete/dist/location-autocomplete-canonical-list.json"
-        )
-      )
+      JSON.parse(File.read("public/location-autocomplete-canonical-list.json"))
     end
     helper_method :locations
   end
