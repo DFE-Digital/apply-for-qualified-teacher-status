@@ -9,11 +9,9 @@ module TeacherInterface
     end
 
     def create
-      eligibility_check = EligibilityCheck.new
       @country_form =
         CountryForm.new(location_form_params.merge(eligibility_check:))
       if @country_form.save
-        session[:eligibility_check_id] = eligibility_check.id
         redirect_to @country_form.success_url
       else
         render :new

@@ -5,11 +5,9 @@ module TeacherInterface
     end
 
     def create
-      eligibility_check = EligibilityCheck.new
       @recognised_form =
         RecognisedForm.new(recognised_form_params.merge(eligibility_check:))
       if @recognised_form.save
-        session[:eligibility_check_id] = eligibility_check.id
         redirect_to(
           if @recognised_form.recognised
             teacher_interface_misconduct_url

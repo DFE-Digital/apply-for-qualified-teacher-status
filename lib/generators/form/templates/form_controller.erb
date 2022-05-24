@@ -5,7 +5,6 @@ module TeacherInterface
     end
 
     def create
-      eligibility_check = EligibilityCheck.find(session[:eligibility_check_id])
       @<%= model_resource_name %>_form = <%= class_name %>Form.new(<%= model_resource_name %>_form_params.merge(eligibility_check:))
       if @<%= model_resource_name %>_form.save
         redirect_to @<%= model_resource_name %>_form.success_url

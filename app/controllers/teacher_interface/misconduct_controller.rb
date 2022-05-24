@@ -5,7 +5,6 @@ module TeacherInterface
     end
 
     def create
-      eligibility_check = EligibilityCheck.find(session[:eligibility_check_id])
       @misconduct_form =
         MisconductForm.new(misconduct_params.merge(eligibility_check:))
       if @misconduct_form.save
