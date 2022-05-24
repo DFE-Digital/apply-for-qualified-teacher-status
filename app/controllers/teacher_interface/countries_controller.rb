@@ -1,17 +1,17 @@
 module TeacherInterface
   class CountriesController < BaseController
     def new
-      @country_form = CountryForm.new
+      @recognised_form = RecognisedForm.new
     end
 
     def create
       eligibility_check = EligibilityCheck.new
-      @country_form =
-        CountryForm.new(country_form_params.merge(eligibility_check:))
-      if @country_form.save
+      @recognised_form =
+        RecognisedForm.new(recognised_form_params.merge(eligibility_check:))
+      if @recognised_form.save
         session[:eligibility_check_id] = eligibility_check.id
         redirect_to(
-          if @country_form.recognised
+          if @recognised_form.recognised
             teacher_interface_misconduct_url
           else
             teacher_interface_ineligible_url
@@ -24,8 +24,8 @@ module TeacherInterface
 
     private
 
-    def country_form_params
-      params.require(:country_form).permit(:recognised)
+    def recognised_form_params
+      params.require(:recognised_form).permit(:recognised)
     end
   end
 end

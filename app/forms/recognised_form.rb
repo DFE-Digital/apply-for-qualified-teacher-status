@@ -1,4 +1,4 @@
-class CountryForm
+class RecognisedForm
   include ActiveModel::Model
 
   attr_accessor :eligibility_check
