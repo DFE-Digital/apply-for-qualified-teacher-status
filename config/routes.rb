@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   namespace :teacher_interface, path: "/teacher" do
     get "degree", to: "degrees#new"
     post "degree", to: "degrees#create"
-    get "countries", to: "locations#new"
-    post "countries", to: "locations#create"
+    get "countries", to: "countries#new"
+    post "countries", to: "countries#create"
     get "qualifications", to: "qualifications#new"
     post "qualifications", to: "qualifications#create"
     get "recognised", to: "recognised#new"
@@ -24,8 +24,7 @@ Rails.application.routes.draw do
     get "ineligible", to: "pages#ineligible"
     get "misconduct", to: "misconduct#new"
     post "misconduct", to: "misconduct#create"
-
-    resources :locations, only: [:index]
+    get "locations", to: "countries#index"
 
     root to: redirect("/teacher/start")
   end

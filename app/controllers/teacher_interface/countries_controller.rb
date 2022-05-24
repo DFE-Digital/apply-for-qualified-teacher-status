@@ -1,5 +1,5 @@
 module TeacherInterface
-  class LocationsController < BaseController
+  class CountriesController < BaseController
     def index
       render json: LOCATION_AUTOCOMPLETE_GRAPH
     end

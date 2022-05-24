@@ -4,16 +4,16 @@ import openregisterLocationPicker from "govuk-country-and-territory-autocomplete
 initAll();
 
 const loadCountryAutoComplete = () => {
-  let locationPicker = document.getElementById(
-    "location-form-country-code-field"
+  let countryPicker = document.getElementById(
+    "country-form-country-code-field"
   );
-  locationPicker ??= document.getElementById(
-    "location-form-country-code-field-error"
+  countryPicker ??= document.getElementById(
+    "country-form-country-code-field-error"
   );
 
-  if (locationPicker) {
+  if (countryPicker) {
     openregisterLocationPicker({
-      selectElement: locationPicker,
+      selectElement: countryPicker,
       url: "/teacher/locations.json",
     });
   }
