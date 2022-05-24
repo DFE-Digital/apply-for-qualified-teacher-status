@@ -8,13 +8,7 @@ module TeacherInterface
       @misconduct_form =
         MisconductForm.new(misconduct_params.merge(eligibility_check:))
       if @misconduct_form.save
-        redirect_to(
-          if @misconduct_form.free_of_sanctions
-            teacher_interface_eligible_url
-          else
-            teacher_interface_ineligible_url
-          end
-        )
+        redirect_to @misconduct_form.success_url
       else
         render :new
       end

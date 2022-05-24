@@ -10,13 +10,7 @@ module TeacherInterface
           teach_children_form_params.merge(eligibility_check:)
         )
       if @teach_children_form.save
-        redirect_to(
-          if @teach_children_form.teach_children
-            teacher_interface_recognised_url
-          else
-            teacher_interface_ineligible_url
-          end
-        )
+        redirect_to @teach_children_form.success_url
       else
         render :new
       end

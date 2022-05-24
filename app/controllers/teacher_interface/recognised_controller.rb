@@ -8,13 +8,7 @@ module TeacherInterface
       @recognised_form =
         RecognisedForm.new(recognised_form_params.merge(eligibility_check:))
       if @recognised_form.save
-        redirect_to(
-          if @recognised_form.recognised
-            teacher_interface_misconduct_url
-          else
-            teacher_interface_ineligible_url
-          end
-        )
+        redirect_to @recognised_form.success_url
       else
         render :new
       end

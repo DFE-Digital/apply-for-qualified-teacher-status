@@ -17,4 +17,18 @@ class TeachChildrenForm
     eligibility_check.teach_children = teach_children
     eligibility_check.save!
   end
+
+  def eligible?
+    eligibility_check.teach_children
+  end
+
+  def success_url
+    unless eligible?
+      return(
+        Rails.application.routes.url_helpers.teacher_interface_ineligible_path
+      )
+    end
+
+    Rails.application.routes.url_helpers.teacher_interface_recognised_path
+  end
 end
