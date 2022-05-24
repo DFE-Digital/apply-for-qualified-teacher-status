@@ -5,16 +5,16 @@ module TeacherInterface
     end
 
     def new
-      @location_form = LocationForm.new
+      @country_form = CountryForm.new
     end
 
     def create
       eligibility_check = EligibilityCheck.new
-      @location_form =
-        LocationForm.new(location_form_params.merge(eligibility_check:))
-      if @location_form.save
+      @country_form =
+        CountryForm.new(location_form_params.merge(eligibility_check:))
+      if @country_form.save
         session[:eligibility_check_id] = eligibility_check.id
-        redirect_to @location_form.success_url
+        redirect_to @country_form.success_url
       else
         render :new
       end
@@ -29,7 +29,7 @@ module TeacherInterface
       JSON.parse(File.read("public/location-autocomplete-canonical-list.json"))
 
     def location_form_params
-      params.require(:location_form).permit(:country_code)
+      params.require(:country_form).permit(:country_code)
     end
 
     def locations
