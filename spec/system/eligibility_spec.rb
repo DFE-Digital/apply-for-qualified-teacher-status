@@ -2,6 +2,8 @@
 require "rails_helper"
 
 RSpec.describe "Eligibility check", type: :system do
+  before { given_the_service_is_open }
+
   it "happy path" do
     when_i_visit_the_start_page
     then_i_see_the_start_page
@@ -88,10 +90,36 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_degree_page
   end
 
+  it "service is closed" do
+    given_the_service_is_closed
+    when_i_visit_the_start_page
+    then_i_do_not_see_the_start_page
+
+    when_i_am_authorized_as_a_support_user
+    when_i_visit_the_start_page
+    then_i_see_the_start_page
+
+    given_the_service_is_open
+    when_i_visit_the_start_page
+    then_i_see_the_start_page
+  end
+
   private
 
   def and_i_submit
     click_button "Continue", visible: false
+  end
+
+  def given_the_service_is_closed
+    FeatureFlag.deactivate(:service_open)
+  end
+
+  def given_the_service_is_open
+    FeatureFlag.activate(:service_open)
+  end
+
+  def when_i_am_authorized_as_a_support_user
+    page.driver.basic_authorize("test", "test")
   end
 
   def when_i_choose_no
@@ -124,6 +152,22 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_visit_the_start_page
     visit "/teacher"
+  end
+
+  def then_i_do_not_see_the_start_page
+    expect(page).not_to have_content(
+      "Check your eligilibity to apply for qualified teacher status (QTS) in England"
+    )
+  end
+
+  def then_i_see_the_start_page
+    expect(page).to have_content(
+      "Check your eligilibity to apply for qualified teacher status (QTS) in England"
+    )
+    expect(page).to have_current_path("/teacher/start")
+    expect(page).to have_title(
+      "Check your eligilibity to apply for qualified teacher status (QTS) in England"
+    )
   end
 
   def then_i_see_the_clean_record_page
