@@ -18,8 +18,12 @@ class QualificationForm
     eligibility_check.save!
   end
 
+  def eligible?
+    eligibility_check.qualification
+  end
+
   def success_url
-    if qualification
+    if eligible?
       return(
         Rails
           .application
