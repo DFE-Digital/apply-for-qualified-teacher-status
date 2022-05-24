@@ -16,7 +16,7 @@ en:
 
     errors:
       models:
-        country_form:
+        recognised_form:
           attributes:
             recognised:
               inclusion: Tell us if you are recognised as a teacher in the country you trained in
