@@ -15,9 +15,9 @@ class FeatureFlag
 
   FEATURES =
     (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS)
-      .to_h { |name, description, owner|
+      .to_h do |name, description, owner|
         [name, FeatureFlag.new(description:, name:, owner:)]
-      }
+      end
       .with_indifferent_access
       .freeze
 
