@@ -77,6 +77,17 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_see_the_ineligible_misconduct_text
   end
 
+  it "handles the country picker error" do
+    when_i_visit_the_start_page
+    when_i_press_continue
+    and_i_submit
+    then_i_see_the_country_error_message
+
+    when_i_select_a_country_in_the_error_state
+    and_i_submit
+    then_i_see_the_degree_page
+  end
+
   private
 
   def and_i_submit
@@ -103,6 +114,10 @@ RSpec.describe "Eligibility check", type: :system do
     fill_in "location-form-country-code-field", with: "United Kingdom"
   end
 
+  def when_i_select_a_country_in_the_error_state
+    fill_in "location-form-country-code-field-error", with: "United Kingdom"
+  end
+
   def when_i_select_an_ineligible_country
     select "Other", from: "location-form-country-code-field"
   end
@@ -125,6 +140,12 @@ RSpec.describe "Eligibility check", type: :system do
     )
     expect(page).to have_content(
       "Where are you currently recognised as a teacher?"
+    )
+  end
+
+  def then_i_see_the_country_error_message
+    expect(page).to have_content(
+      "Tell us where you are currently recognised as a teacher"
     )
   end
 
