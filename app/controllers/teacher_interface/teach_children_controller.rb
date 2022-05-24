@@ -5,7 +5,6 @@ module TeacherInterface
     end
 
     def create
-      eligibility_check = EligibilityCheck.find(session[:eligibility_check_id])
       @teach_children_form =
         TeachChildrenForm.new(
           teach_children_form_params.merge(eligibility_check:)
