@@ -1,5 +1,5 @@
 module TeacherInterface
-  class CountriesController < BaseController
+  class RecognisedController < BaseController
     def new
       @recognised_form = RecognisedForm.new
     end
