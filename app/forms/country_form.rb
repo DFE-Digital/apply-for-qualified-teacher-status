@@ -1,4 +1,4 @@
-class LocationForm
+class CountryForm
   include ActiveModel::Model
 
   attr_accessor :country_code, :eligibility_check
