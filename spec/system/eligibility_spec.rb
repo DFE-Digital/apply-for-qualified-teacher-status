@@ -139,15 +139,15 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_select_a_country
-    fill_in "country-form-country-code-field", with: "United Kingdom"
+    fill_in "country-form-location-field", with: "United Kingdom"
   end
 
   def when_i_select_a_country_in_the_error_state
-    fill_in "country-form-country-code-field-error", with: "United Kingdom"
+    fill_in "country-form-location-field-error", with: "United Kingdom"
   end
 
   def when_i_select_an_ineligible_country
-    select "Other", from: "country-form-country-code-field"
+    select "Other", from: "country-form-location-field"
   end
 
   def when_i_visit_the_start_page

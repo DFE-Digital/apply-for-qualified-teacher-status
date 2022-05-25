@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @country_form, url: teacher_interface_countries_url, method: :post do |f| %>
       <%= f.govuk_error_summary %>
-      <%= f.govuk_select :country_code, options_for_select(locations),
+      <%= f.govuk_select :location, options_for_select(locations),
             hint: { text: "This means you have all the qualifications needed to teach in a state school. You'll need to provide evidence of this if you apply for QTS." },
             label: { size: 'xl', text: "Where are you currently recognised as a teacher?" },
             options: { include_blank: true }

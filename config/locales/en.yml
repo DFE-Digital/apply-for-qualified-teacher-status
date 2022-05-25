@@ -26,7 +26,7 @@ en:
               inclusion: Tell us if you have a degree
         country_form:
           attributes:
-            country_code:
+            location:
               blank: Tell us where you are currently recognised as a teacher
         misconduct_form:
           attributes:
