@@ -1,0 +1,42 @@
+<% content_for :page_title, 'Features' %>
+
+<h1 class="govuk-heading-l">Features</h1>
+
+<% @features.each do |feature_name, feature_flag| %>
+  <h2 class="govuk-heading-m">
+    <%= feature_name.humanize %>
+    <span class="govuk-visually-hidden">
+      - <%= FeatureFlag.active?(feature_name) ? 'Active' : 'Inactive' %>
+    </span>
+  </h2>
+  <% rows = [
+      { 
+        key: { text: 'Description'},
+        value: { text: feature_flag.description },
+      },
+      { 
+        key: { text: 'Status'},
+        value: {
+          text: govuk_tag(
+            text: FeatureFlag.active?(feature_name) ? 'Active' : 'Inactive',
+            colour: FeatureFlag.active?(feature_name) ? 'green' : 'grey',
+          )
+        },
+      },
+      { 
+        key: { text: 'Owner'},
+        value: { text: feature_flag.owner },
+      },
+  ] %>
+  <%= govuk_summary_list(rows: rows) %>
+  <% if FeatureFlag.active?(feature_name) %>
+    <% feature_url = support_interface_deactivate_feature_path(feature_name) %>
+    <% label = 'Deactivate ' %>
+  <% else %>
+    <% feature_url = support_interface_activate_feature_path(feature_name) %>
+    <% label = 'Activate ' %>
+  <% end %>
+  <%= form_with(url: feature_url) do |f| %>
+    <%= f.govuk_submit label + feature_name.humanize, prevent_double_click: false %>
+  <% end %>
+<% end %>
