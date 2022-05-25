@@ -22,10 +22,12 @@ RSpec.describe "Support", type: :system do
   end
 
   def then_the_service_open_flag_is_off
+    expect(page).to have_content("Feature “Service open” deactivated")
     expect(page).to have_content("Service open\n- Inactive")
   end
 
   def then_the_service_open_flag_is_on
+    expect(page).to have_content("Feature “Service open” activated")
     expect(page).to have_content("Service open\n- Active")
   end
 
