@@ -13,17 +13,19 @@
 #  updated_at        :datetime         not null
 #
 class EligibilityCheck < ApplicationRecord
-  def ineligible_reason
-    return :misconduct unless free_of_sanctions.nil? || free_of_sanctions
-    return :recognised unless recognised.nil? || recognised
-    return :teach_children unless teach_children.nil? || teach_children
-    return :qualification unless qualification.nil? || qualification
-    return :degree unless degree.nil? || degree
-    if !country_code.nil? && !eligible_country_code? && !legacy_country_code?
-      return :country
-    end
+  def ineligible_reasons
+    [
+      !free_of_sanctions ? :misconduct : nil,
+      !recognised ? :recognised : nil,
+      !teach_children ? :teach_children : nil,
+      !qualification ? :qualification : nil,
+      !degree ? :degree : nil,
+      !(eligible_country_code? || legacy_country_code?) ? :country : nil
+    ].compact
+  end
 
-    nil
+  def eligible?
+    ineligible_reasons.empty?
   end
 
   def eligible_country_code?
