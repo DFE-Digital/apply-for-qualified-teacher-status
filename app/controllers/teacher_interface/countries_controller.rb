@@ -27,7 +27,7 @@ module TeacherInterface
       JSON.parse(File.read("public/location-autocomplete-canonical-list.json"))
 
     def location_form_params
-      params.require(:country_form).permit(:country_code)
+      params.require(:country_form).permit(:location)
     end
 
     def locations
