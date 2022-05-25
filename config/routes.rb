@@ -6,6 +6,13 @@ Rails.application.routes.draw do
   end
 
   namespace :support_interface, path: "/support" do
+    get "/features", to: "feature_flags#index"
+    post "/features/:feature_name/activate",
+         to: "feature_flags#activate",
+         as: :activate_feature
+    post "/features/:feature_name/deactivate",
+         to: "feature_flags#deactivate",
+         as: :deactivate_feature
   end
 
   namespace :teacher_interface, path: "/teacher" do
