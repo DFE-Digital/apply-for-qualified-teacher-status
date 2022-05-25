@@ -12,7 +12,7 @@ module TeacherInterface
       @country_form =
         CountryForm.new(location_form_params.merge(eligibility_check:))
       if @country_form.save
-        redirect_to @country_form.success_url
+        redirect_to @country_form.success_url, allow_other_host: true
       else
         render :new
       end

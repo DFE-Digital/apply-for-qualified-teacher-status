@@ -38,7 +38,14 @@ RSpec.describe "Eligibility check", type: :system do
 
   it "ineligible paths" do
     when_i_visit_the_start_page
+
     when_i_press_continue
+    when_i_select_an_ineligible_country
+    and_i_submit
+    then_i_see_the_ineligible_page
+    and_i_see_the_ineligible_country_text
+
+    when_i_press_back
     when_i_select_a_country
     and_i_submit
     when_i_choose_no
@@ -88,6 +95,14 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_select_a_country_in_the_error_state
     and_i_submit
     then_i_see_the_degree_page
+  end
+
+  it "sends legacy users to the old service" do
+    when_i_visit_the_start_page
+    when_i_press_continue
+    when_i_select_a_legacy_country
+    and_i_submit
+    then_i_see_the_legacy_service
   end
 
   it "service is closed" do
@@ -147,7 +162,11 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_select_an_ineligible_country
-    select "Other", from: "country-form-location-field"
+    fill_in "country-form-location-field", with: "Spain"
+  end
+
+  def when_i_select_a_legacy_country
+    fill_in "country-form-location-field", with: "France"
   end
 
   def when_i_visit_the_start_page
@@ -203,6 +222,10 @@ RSpec.describe "Eligibility check", type: :system do
     expect(page).to have_content(
       "You’re not eligible to apply for qualified teacher status (QTS) in England"
     )
+  end
+
+  def then_i_see_the_legacy_service
+    expect(page).to have_current_path("/MutualRecognition/")
   end
 
   def and_i_see_the_ineligible_country_text
