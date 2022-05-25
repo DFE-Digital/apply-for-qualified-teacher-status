@@ -50,39 +50,27 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_submit
     when_i_choose_no
     and_i_submit
+    then_i_see_the_qualification_page
+
+    when_i_choose_no
+    and_i_submit
+    then_i_see_the_teach_children_page
+
+    when_i_choose_no
+    and_i_submit
+    then_i_see_the_recognised_page
+
+    when_i_choose_no
+    and_i_submit
+    then_i_see_the_clean_record_page
+
+    when_i_choose_no
+    and_i_submit
     then_i_see_the_ineligible_page
     and_i_see_the_ineligible_degree_text
-
-    when_i_press_back
-    when_i_choose_yes
-    and_i_submit
-    when_i_choose_no
-    and_i_submit
-    then_i_see_the_ineligible_page
     and_i_see_the_ineligible_qualification_text
-
-    when_i_press_back
-    when_i_choose_yes
-    and_i_submit
-    when_i_choose_no
-    and_i_submit
-    then_i_see_the_ineligible_page
     and_i_see_the_ineligible_teach_children_text
-
-    when_i_press_back
-    when_i_choose_yes
-    and_i_submit
-    when_i_choose_no
-    and_i_submit
-    then_i_see_the_ineligible_page
     and_i_see_the_ineligible_recognised_text
-
-    when_i_press_back
-    when_i_choose_yes
-    and_i_submit
-    when_i_choose_no
-    and_i_submit
-    then_i_see_the_ineligible_page
     and_i_see_the_ineligible_misconduct_text
   end
 

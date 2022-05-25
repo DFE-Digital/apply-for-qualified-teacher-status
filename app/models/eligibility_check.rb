@@ -15,12 +15,12 @@
 class EligibilityCheck < ApplicationRecord
   def ineligible_reasons
     [
-      !free_of_sanctions ? :misconduct : nil,
-      !recognised ? :recognised : nil,
-      !teach_children ? :teach_children : nil,
-      !qualification ? :qualification : nil,
+      !(eligible_country_code? || legacy_country_code?) ? :country : nil,
       !degree ? :degree : nil,
-      !(eligible_country_code? || legacy_country_code?) ? :country : nil
+      !qualification ? :qualification : nil,
+      !teach_children ? :teach_children : nil,
+      !recognised ? :recognised : nil,
+      !free_of_sanctions ? :misconduct : nil
     ].compact
   end
 
