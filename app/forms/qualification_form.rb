@@ -18,21 +18,7 @@ class QualificationForm
     eligibility_check.save!
   end
 
-  def eligible?
-    eligibility_check.qualification
-  end
-
   def success_url
-    if eligible?
-      return(
-        Rails
-          .application
-          .routes
-          .url_helpers
-          .teacher_interface_teach_children_path
-      )
-    end
-
-    Rails.application.routes.url_helpers.teacher_interface_ineligible_path
+    Rails.application.routes.url_helpers.teacher_interface_teach_children_path
   end
 end
