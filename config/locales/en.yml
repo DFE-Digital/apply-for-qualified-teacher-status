@@ -1,4 +1,9 @@
 en:
+  notification_banner:
+    info: Information
+    success: Success
+    warning: Warning
+
   service:
     name: Apply for qualified teacher status (QTS) in England
     email: my-service@email

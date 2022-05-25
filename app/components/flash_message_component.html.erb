@@ -1,0 +1,8 @@
+<%= govuk_notification_banner(
+  classes: classes,
+  html_attributes: { role: role },
+  title_text: title,
+) do |notification_banner| %>
+  <% notification_banner.heading(text: heading) %>
+  <%= body %>
+<% end %>
