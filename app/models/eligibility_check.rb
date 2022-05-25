@@ -19,8 +19,22 @@ class EligibilityCheck < ApplicationRecord
     return :teach_children unless teach_children.nil? || teach_children
     return :qualification unless qualification.nil? || qualification
     return :degree unless degree.nil? || degree
-    return :country if !country_code.nil? && country_code == "INELIGIBLE"
+    if !country_code.nil? && !eligible_country_code? && !legacy_country_code?
+      return :country
+    end
 
     nil
   end
+
+  def eligible_country_code?
+    ELIGIBLE_COUNTRY_CODES.include?(country_code)
+  end
+
+  def legacy_country_code?
+    LEGACY_COUNTRY_CODES.include?(country_code)
+  end
+
+  ELIGIBLE_COUNTRY_CODES = ["GB"].freeze
+
+  LEGACY_COUNTRY_CODES = ["FR"].freeze
 end

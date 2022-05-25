@@ -15,10 +15,10 @@
 require "rails_helper"
 
 RSpec.describe EligibilityCheck, type: :model do
+  let(:eligibility_check) { EligibilityCheck.new }
+
   describe "#ineligible_reason" do
     subject(:ineligible_reason) { eligibility_check.ineligible_reason }
-
-    let(:eligibility_check) { EligibilityCheck.new }
 
     context "when free_of_sanctions is true" do
       before { eligibility_check.free_of_sanctions = true }
@@ -90,6 +90,40 @@ RSpec.describe EligibilityCheck, type: :model do
       before { eligibility_check.country_code = "INELIGIBLE" }
 
       it { is_expected.to eq(:country) }
+    end
+  end
+
+  describe "#eligible_country_code?" do
+    subject(:eligible_country_code?) do
+      eligibility_check.eligible_country_code?
+    end
+
+    context "when country_code is eligible" do
+      before { eligibility_check.country_code = "GB" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when country_code is not eligible" do
+      before { eligibility_check.country_code = "ES" }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#legacy_country_code?" do
+    subject(:legacy_country_code?) { eligibility_check.legacy_country_code? }
+
+    context "when country_code is legacy" do
+      before { eligibility_check.country_code = "FR" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when country_code is not legacy" do
+      before { eligibility_check.country_code = "ES" }
+
+      it { is_expected.to be false }
     end
   end
 end
