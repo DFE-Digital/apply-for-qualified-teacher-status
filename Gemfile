@@ -8,6 +8,7 @@ gem "rails", "~> 7.0.3"
 gem "bootsnap", require: false
 gem "cssbundling-rails"
 gem "jsbundling-rails"
+gem "okcomputer"
 gem "pg"
 gem "propshaft"
 gem "puma", "~> 5.0"
