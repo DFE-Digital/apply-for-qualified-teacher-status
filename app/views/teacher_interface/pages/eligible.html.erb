@@ -5,9 +5,13 @@
     <h1 class="govuk-heading-xl">You might be eligible to apply for QTS</h1>
     <p class="govuk-body">Based on the information you've given, you can apply for QTS.</p>
 
+    <% if @eligibility_check.country.eligible_content.present? %>
+      <%= GovukMarkdown.render(@eligibility_check.country.eligible_content) %>
+    <% end %>
+
     <h2 class="govuk-heading-m">You can prepare to apply now</h2>
     <p class="govuk-body">
-      If you decide to apply, you'll need to provide a range of evidence. We'll ask you 
+      If you decide to apply, you'll need to provide a range of evidence. We'll ask you
       to upload some scans, photos, or original files, so it's useful to get these now.
     </p>
 

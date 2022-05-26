@@ -117,7 +117,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def given_countries_exist
-    create(:country, code: "GB")
+    create(:country, code: "GB", eligible_content: "Custom eligible content.")
     create(:country, :legacy, code: "FR")
   end
 
@@ -211,6 +211,7 @@ RSpec.describe "Eligibility check", type: :system do
   def then_i_see_the_eligible_page
     expect(page).to have_current_path("/teacher/eligible")
     expect(page).to have_content("You might be eligible to apply for QTS")
+    expect(page).to have_content("Custom eligible content.")
   end
 
   def then_i_see_the_ineligible_page
