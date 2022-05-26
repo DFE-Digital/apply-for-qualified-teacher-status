@@ -99,6 +99,18 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_legacy_service
   end
 
+  it "handles countries with multiple regions" do
+    when_i_visit_the_start_page
+    when_i_press_continue
+    when_i_select_a_country_with_multiple_regions
+    and_i_submit
+    then_i_see_the_region_page
+
+    when_i_choose_region
+    and_i_submit
+    then_i_see_the_degree_page
+  end
+
   it "service is closed" do
     given_the_service_is_closed
     when_i_visit_the_start_page
@@ -122,6 +134,10 @@ RSpec.describe "Eligibility check", type: :system do
   def given_countries_exist
     create(:country, :with_national_region, code: "GB-SCT")
     create(:country, :legacy, code: "FR")
+
+    it = create(:country, code: "IT")
+    create(:region, country: it, name: "Region")
+    create(:region, country: it, name: "Other Region")
   end
 
   def given_the_service_is_closed
@@ -142,6 +158,10 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_choose_yes
     choose "Yes", visible: false
+  end
+
+  def when_i_choose_region
+    choose "Region", visible: false
   end
 
   def when_i_press_back
@@ -170,6 +190,10 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_select_a_legacy_country
     fill_in "country-form-location-field", with: "France"
+  end
+
+  def when_i_select_a_country_with_multiple_regions
+    fill_in "country-form-location-field", with: "Italy"
   end
 
   def when_i_visit_the_start_page
@@ -201,6 +225,16 @@ RSpec.describe "Eligibility check", type: :system do
 
   def then_i_see_the_countries_page
     expect(page).to have_current_path("/teacher/countries")
+    expect(page).to have_title(
+      "Where are you currently recognised as a teacher?"
+    )
+    expect(page).to have_content(
+      "Where are you currently recognised as a teacher?"
+    )
+  end
+
+  def then_i_see_the_region_page
+    expect(page).to have_current_path("/teacher/region")
     expect(page).to have_title(
       "Where are you currently recognised as a teacher?"
     )

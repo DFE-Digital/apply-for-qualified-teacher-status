@@ -50,4 +50,8 @@ class EligibilityCheck < ApplicationRecord
 
     country.legacy ? :legacy : :region
   end
+
+  def country_regions
+    Region.joins(:country).where(country: { code: country_code }).order(:name)
+  end
 end

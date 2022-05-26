@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     post "degree", to: "degrees#create"
     get "countries", to: "countries#new"
     post "countries", to: "countries#create"
+    get "region", to: "region#new"
+    post "region", to: "region#create"
     get "qualifications", to: "qualifications#new"
     post "qualifications", to: "qualifications#create"
     get "recognised", to: "recognised#new"

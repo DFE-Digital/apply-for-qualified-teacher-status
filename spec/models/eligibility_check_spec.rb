@@ -155,4 +155,16 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to be(:ineligible) }
     end
   end
+
+  describe "#country_regions" do
+    subject(:country_regions) { eligibility_check.country_regions }
+
+    let(:country) { create(:country) }
+    let(:region_1) { create(:region, name: "A", country:) }
+    let(:region_2) { create(:region, name: "B", country:) }
+
+    before { eligibility_check.country_code = country.code }
+
+    it { is_expected.to eq([region_1, region_2]) }
+  end
 end

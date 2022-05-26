@@ -33,6 +33,10 @@ en:
           attributes:
             location:
               blank: Tell us where you are currently recognised as a teacher
+        region_form:
+          attributes:
+            region_id:
+              blank: Tell us where you are currently recognised as a teacher
         misconduct_form:
           attributes:
             free_of_sanctions:

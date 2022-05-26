@@ -51,6 +51,14 @@ RSpec.describe CountryForm, type: :model do
       it { is_expected.to eq("/teacher/eligible") }
     end
 
+    context "with a multi-region country" do
+      let(:country) { create(:country) }
+
+      before { create_list(:region, 5, country:) }
+
+      it { is_expected.to eq("/teacher/region") }
+    end
+
     context "with a non-eligible country" do
       let(:country) { nil }
 
