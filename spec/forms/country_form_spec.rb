@@ -48,11 +48,7 @@ RSpec.describe CountryForm, type: :model do
     context "with a legacy country" do
       let(:country) { create(:country, :legacy) }
 
-      it do
-        is_expected.to eq(
-          "https://teacherservices.education.gov.uk/MutualRecognition/"
-        )
-      end
+      it { is_expected.to eq("/teacher/eligible") }
     end
 
     context "with a non-eligible country" do
