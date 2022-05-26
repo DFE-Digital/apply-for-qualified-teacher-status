@@ -8,6 +8,7 @@ A service that allows international teachers to apply for qualified teacher stat
 - Node.js 16.x
 - Yarn 1.22.x
 - PostgreSQL 13.x
+- Terraform 1.0.x
 
 ## How the application works
 
@@ -35,6 +36,7 @@ asdf plugin add ruby
 asdf plugin add nodejs
 asdf plugin add yarn
 asdf plugin add postgres
+asdf plugin add terraform
 
 # To install (or update, following a change to .tool-versions)
 asdf install
