@@ -135,4 +135,28 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to be_nil }
     end
   end
+
+  describe "#country_eligibility_status" do
+    subject(:country_eligibility_status) do
+      eligibility_check.country_eligibility_status
+    end
+
+    context "when the country exists" do
+      before { eligibility_check.country_code = create(:country).code }
+
+      it { is_expected.to eq(:eligible) }
+    end
+
+    context "when the country exists and is legacy" do
+      before { eligibility_check.country_code = create(:country, :legacy).code }
+
+      it { is_expected.to eq(:legacy) }
+    end
+
+    context "when the country doesn't exist" do
+      before { eligibility_check.country_code = "ABC" }
+
+      it { is_expected.to be(:ineligible) }
+    end
+  end
 end
