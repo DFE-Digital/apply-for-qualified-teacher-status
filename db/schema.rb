@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_26_104016) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_26_154413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_26_104016) do
     t.boolean "qualification"
     t.boolean "degree"
     t.string "country_code"
+    t.bigint "region_id"
   end
 
   create_table "features", force: :cascade do |t|
@@ -50,5 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_26_104016) do
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
 
+  add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "regions", "countries"
 end
