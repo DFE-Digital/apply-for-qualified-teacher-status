@@ -48,7 +48,7 @@ jobs:
         run: yarn build && yarn build:css
 
       - name: Setup DB
-        run: bin/rails db:prepare
+        run: bin/rails db:test:prepare
 
       - name: Run tests
         run: bin/bundle exec rspec --format documentation
