@@ -2,11 +2,12 @@
 #
 # Table name: countries
 #
-#  id         :bigint           not null, primary key
-#  code       :string           not null
-#  legacy     :boolean          default(FALSE), not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id               :bigint           not null, primary key
+#  code             :string           not null
+#  eligible_content :text             default(""), not null
+#  legacy           :boolean          default(FALSE), not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #
 # Indexes
 #
