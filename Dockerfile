@@ -58,6 +58,9 @@ FROM ruby:3.1.1-alpine as production
 # The application runs from /app
 WORKDIR /app
 
+# Set Rails environment to production
+ENV RAILS_ENV=production
+
 # Add the timezone (prod image) as it's not configured by default in Alpine
 RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
