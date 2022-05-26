@@ -120,7 +120,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def given_countries_exist
-    create(:country, code: "GB-SCT")
+    create(:country, :with_national_region, code: "GB-SCT")
     create(:country, :legacy, code: "FR")
   end
 
