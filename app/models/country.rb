@@ -13,6 +13,8 @@
 #  index_countries_on_code  (code) UNIQUE
 #
 class Country < ApplicationRecord
+  has_many :regions
+
   LOCATION_AUTOCOMPLETE_CANONICAL_LIST =
     JSON.parse(File.read("public/location-autocomplete-canonical-list.json"))
 
