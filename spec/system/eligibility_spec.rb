@@ -117,7 +117,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def given_countries_exist
-    create(:country, code: "GB")
+    create(:country, code: "GB-SCT")
     create(:country, :legacy, code: "FR")
   end
 
@@ -150,11 +150,11 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_select_a_country
-    fill_in "country-form-location-field", with: "United Kingdom"
+    fill_in "country-form-location-field", with: "Scotland"
   end
 
   def when_i_select_a_country_in_the_error_state
-    fill_in "country-form-location-field-error", with: "United Kingdom"
+    fill_in "country-form-location-field-error", with: "Scotland"
   end
 
   def when_i_select_an_ineligible_country

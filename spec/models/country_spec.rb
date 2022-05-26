@@ -16,7 +16,7 @@ require "rails_helper"
 
 RSpec.describe Country, type: :model do
   describe "validations" do
-    it { is_expected.to validate_inclusion_of(:code).in_array(%w[GB FR]) }
+    it { is_expected.to validate_inclusion_of(:code).in_array(%w[GB-SCT FR]) }
     it { is_expected.to_not validate_inclusion_of(:code).in_array(%w[ABC]) }
   end
 end

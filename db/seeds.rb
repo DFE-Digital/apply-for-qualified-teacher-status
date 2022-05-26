@@ -6,5 +6,5 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Country.create!(code: "GB")
+Country.create!(code: "GB-SCT")
 Country.create!(code: "FR", legacy: true)
