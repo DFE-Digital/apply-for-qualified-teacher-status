@@ -31,4 +31,10 @@ class EligibilityCheck < ApplicationRecord
   def country
     @country ||= Country.find_by(code: country_code)
   end
+
+  def country_eligibility_status
+    return :legacy if country&.legacy
+    return :eligible if country
+    :ineligible
+  end
 end

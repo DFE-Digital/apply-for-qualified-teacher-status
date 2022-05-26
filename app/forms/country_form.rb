@@ -14,12 +14,12 @@ class CountryForm
   end
 
   def success_url
-    if eligibility_check.country&.legacy
-      "https://teacherservices.education.gov.uk/MutualRecognition/"
-    elsif eligibility_check.country
-      Rails.application.routes.url_helpers.teacher_interface_degree_path
-    else
-      Rails.application.routes.url_helpers.teacher_interface_ineligible_path
-    end
+    {
+      eligible:
+        Rails.application.routes.url_helpers.teacher_interface_degree_path,
+      ineligible:
+        Rails.application.routes.url_helpers.teacher_interface_ineligible_path,
+      legacy: "https://teacherservices.education.gov.uk/MutualRecognition/"
+    }.fetch(eligibility_check.country_eligibility_status)
   end
 end
