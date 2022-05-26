@@ -2,7 +2,10 @@
 require "rails_helper"
 
 RSpec.describe "Eligibility check", type: :system do
-  before { given_the_service_is_open }
+  before do
+    given_countries_exist
+    given_the_service_is_open
+  end
 
   it "happy path" do
     when_i_visit_the_start_page
@@ -111,6 +114,11 @@ RSpec.describe "Eligibility check", type: :system do
 
   def and_i_submit
     click_button "Continue", visible: false
+  end
+
+  def given_countries_exist
+    create(:country, code: "GB")
+    create(:country, :legacy, code: "FR")
   end
 
   def given_the_service_is_closed
