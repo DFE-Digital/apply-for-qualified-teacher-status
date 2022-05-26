@@ -20,9 +20,16 @@
 class EligibilityCheck < ApplicationRecord
   belongs_to :region, optional: true
 
+  def country_code=(value)
+    super(value)
+
+    regions = Region.joins(:country).where(country: { code: value })
+    self.region = regions.count == 1 ? regions.first : nil
+  end
+
   def ineligible_reasons
     [
-      !country ? :country : nil,
+      !region ? :country : nil,
       !degree ? :degree : nil,
       !qualification ? :qualification : nil,
       !teach_children ? :teach_children : nil,
@@ -35,13 +42,12 @@ class EligibilityCheck < ApplicationRecord
     ineligible_reasons.empty?
   end
 
-  def country
-    @country ||= Country.find_by(code: country_code)
-  end
-
   def country_eligibility_status
-    return :legacy if country&.legacy
-    return :eligible if country
-    :ineligible
+    return :eligible if region
+
+    country = Country.find_by(code: country_code)
+    return :ineligible if country.nil?
+
+    country.legacy ? :legacy : :region
   end
 end

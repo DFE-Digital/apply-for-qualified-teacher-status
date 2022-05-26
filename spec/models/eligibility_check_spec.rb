@@ -86,7 +86,7 @@ RSpec.describe EligibilityCheck, type: :model do
     end
 
     context "when country exists" do
-      let(:country) { create(:country) }
+      let(:country) { create(:country, :with_national_region) }
 
       before { eligibility_check.country_code = country.code }
 
@@ -108,7 +108,7 @@ RSpec.describe EligibilityCheck, type: :model do
     end
 
     context "when eligible" do
-      let(:country) { create(:country) }
+      let(:country) { create(:country, :with_national_region) }
 
       before do
         eligibility_check.free_of_sanctions = true
@@ -123,24 +123,6 @@ RSpec.describe EligibilityCheck, type: :model do
     end
   end
 
-  describe "#country" do
-    subject(:country) { eligibility_check.country }
-
-    context "when country_code exists" do
-      let(:country) { create(:country) }
-
-      before { eligibility_check.country_code = country.code }
-
-      it { is_expected.to eq(country) }
-    end
-
-    context "when country_code doesn't exist" do
-      before { eligibility_check.country_code = "ABC" }
-
-      it { is_expected.to be_nil }
-    end
-  end
-
   describe "#country_eligibility_status" do
     subject(:country_eligibility_status) do
       eligibility_check.country_eligibility_status
@@ -148,6 +130,15 @@ RSpec.describe EligibilityCheck, type: :model do
 
     context "when the country exists" do
       before { eligibility_check.country_code = create(:country).code }
+
+      it { is_expected.to eq(:region) }
+    end
+
+    context "when the country exists and has a region" do
+      before do
+        eligibility_check.country_code =
+          create(:country, :with_national_region).code
+      end
 
       it { is_expected.to eq(:eligible) }
     end

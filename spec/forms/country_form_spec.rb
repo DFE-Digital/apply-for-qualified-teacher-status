@@ -40,7 +40,7 @@ RSpec.describe CountryForm, type: :model do
     before { eligibility_check.country_code = country&.code }
 
     context "with an eligible country" do
-      let(:country) { create(:country) }
+      let(:country) { create(:country, :with_national_region) }
 
       it { is_expected.to eq("/teacher/degree") }
     end
