@@ -3,14 +3,19 @@
 # Table name: eligibility_checks
 #
 #  id                :bigint           not null, primary key
-#  degree            :boolean
 #  country_code      :string
+#  degree            :boolean
 #  free_of_sanctions :boolean
 #  qualification     :boolean
 #  recognised        :boolean
 #  teach_children    :boolean
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  region_id         :bigint
+#
+# Foreign Keys
+#
+#  fk_rails_...  (region_id => regions.id)
 #
 require "rails_helper"
 

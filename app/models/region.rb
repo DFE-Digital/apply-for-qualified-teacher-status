@@ -19,6 +19,7 @@
 #
 class Region < ApplicationRecord
   belongs_to :country
+  has_many :eligibility_checks
 
   validates :name, uniqueness: { scope: :country_id }
 end
