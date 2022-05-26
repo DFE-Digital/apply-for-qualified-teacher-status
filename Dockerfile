@@ -5,10 +5,6 @@
 # Build builder image
 FROM ruby:3.1.1-alpine as builder
 
-# RUN apk -U upgrade && \
-#     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
-#     postgresql13-dev yarn
-
 WORKDIR /app
 
 # Add the timezone (builder image) as it's not configured by default in Alpine
@@ -38,6 +34,9 @@ RUN yarn install --frozen-lockfile --check-files
 
 # Copy all files to /app (except what is defined in .dockerignore)
 COPY . .
+
+# Build app/assets/builds/application.{css,js}
+RUN yarn build && yarn build:css
 
 # Precompile assets
 RUN RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used \
