@@ -93,6 +93,9 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_press_continue
     when_i_select_a_legacy_country
     and_i_submit
+    then_i_see_the_eligible_page
+
+    when_i_press_start
     then_i_see_the_legacy_service
   end
 
@@ -147,6 +150,10 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_press_continue
     click_link "Continue"
+  end
+
+  def when_i_press_start
+    click_link "Start now"
   end
 
   def when_i_select_a_country
