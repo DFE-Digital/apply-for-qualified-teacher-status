@@ -80,14 +80,16 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to include(:degree) }
     end
 
-    context "when country_code is eligible" do
-      before { eligibility_check.country_code = "GB" }
+    context "when country exists" do
+      let(:country) { create(:country) }
+
+      before { eligibility_check.country_code = country.code }
 
       it { is_expected.to_not include(:country) }
     end
 
-    context "when country_code is ineligible" do
-      before { eligibility_check.country_code = "INELIGIBLE" }
+    context "when country doesn't exist" do
+      before { eligibility_check.country_code = "ABC" }
 
       it { is_expected.to include(:country) }
     end
@@ -101,50 +103,36 @@ RSpec.describe EligibilityCheck, type: :model do
     end
 
     context "when eligible" do
+      let(:country) { create(:country) }
+
       before do
         eligibility_check.free_of_sanctions = true
         eligibility_check.recognised = true
         eligibility_check.teach_children = true
         eligibility_check.qualification = true
         eligibility_check.degree = true
-        eligibility_check.country_code = "GB"
+        eligibility_check.country_code = country.code
       end
 
       it { is_expected.to be true }
     end
   end
 
-  describe "#eligible_country_code?" do
-    subject(:eligible_country_code?) do
-      eligibility_check.eligible_country_code?
+  describe "#country" do
+    subject(:country) { eligibility_check.country }
+
+    context "when country_code exists" do
+      let(:country) { create(:country) }
+
+      before { eligibility_check.country_code = country.code }
+
+      it { is_expected.to eq(country) }
     end
 
-    context "when country_code is eligible" do
-      before { eligibility_check.country_code = "GB" }
+    context "when country_code doesn't exist" do
+      before { eligibility_check.country_code = "ABC" }
 
-      it { is_expected.to be true }
-    end
-
-    context "when country_code is not eligible" do
-      before { eligibility_check.country_code = "ES" }
-
-      it { is_expected.to be false }
-    end
-  end
-
-  describe "#legacy_country_code?" do
-    subject(:legacy_country_code?) { eligibility_check.legacy_country_code? }
-
-    context "when country_code is legacy" do
-      before { eligibility_check.country_code = "FR" }
-
-      it { is_expected.to be true }
-    end
-
-    context "when country_code is not legacy" do
-      before { eligibility_check.country_code = "ES" }
-
-      it { is_expected.to be false }
+      it { is_expected.to be_nil }
     end
   end
 end

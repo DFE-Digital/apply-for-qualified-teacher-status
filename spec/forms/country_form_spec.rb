@@ -37,16 +37,16 @@ RSpec.describe CountryForm, type: :model do
     let(:eligibility_check) { EligibilityCheck.new }
     let(:form) { described_class.new(eligibility_check:) }
 
-    before { eligibility_check.country_code = country_code }
+    before { eligibility_check.country_code = country&.code }
 
     context "with an eligible country" do
-      let(:country_code) { "GB" }
+      let(:country) { create(:country) }
 
       it { is_expected.to eq("/teacher/degree") }
     end
 
     context "with a legacy country" do
-      let(:country_code) { "FR" }
+      let(:country) { create(:country, :legacy) }
 
       it do
         is_expected.to eq(
@@ -56,7 +56,7 @@ RSpec.describe CountryForm, type: :model do
     end
 
     context "with a non-eligible country" do
-      let(:country_code) { "ES" }
+      let(:country) { nil }
 
       it { is_expected.to eq("/teacher/ineligible") }
     end
