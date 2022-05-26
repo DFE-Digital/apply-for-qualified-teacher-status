@@ -23,15 +23,12 @@ module TeacherInterface
     LOCATION_AUTOCOMPLETE_GRAPH =
       JSON.parse(File.read("public/location-autocomplete-graph.json"))
 
-    LOCATION_AUTOCOMPLETE_CANONICAL_LIST =
-      JSON.parse(File.read("public/location-autocomplete-canonical-list.json"))
-
     def location_form_params
       params.require(:country_form).permit(:location)
     end
 
     def locations
-      LOCATION_AUTOCOMPLETE_CANONICAL_LIST
+      Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST
     end
 
     helper_method :locations
