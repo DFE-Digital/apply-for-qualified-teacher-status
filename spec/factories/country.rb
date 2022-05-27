@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :country do
-    sequence :code, Country::COUNTRY_CODES.cycle
+    sequence :code, Country::COUNTRIES.keys.cycle
 
     legacy { false }
 

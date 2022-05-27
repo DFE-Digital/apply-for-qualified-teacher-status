@@ -22,4 +22,10 @@ class Region < ApplicationRecord
   has_many :eligibility_checks
 
   validates :name, uniqueness: { scope: :country_id }
+
+  def full_name
+    string = country.name
+    string += " — #{name}" if name.present?
+    string
+  end
 end

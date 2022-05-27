@@ -37,5 +37,20 @@ class PagesController < ApplicationController
       last_n_days.map do |day|
         [day.strftime("%d %B"), eligibility_checks_eligible[day] || 0]
       end
+
+    eligibility_checks_by_country =
+      EligibilityCheck
+        .where(created_at: since..Time.zone.now)
+        .group("region")
+        .where.not(region: nil)
+        .count
+
+    @country_data = [%w[Country Requests]]
+    @country_data +=
+      eligibility_checks_by_country.map do |region, count|
+        [region.full_name, count]
+      end
+
+    @countries = eligibility_checks_by_country.count
   end
 end
