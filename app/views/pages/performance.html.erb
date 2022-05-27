@@ -14,13 +14,13 @@
 <div class="app-!-border-top-1 govuk-!-padding-top-2">
   <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Live service usage</h2>
   <p class="govuk-!-font-size-16">
-    Number of eligibility checks submitted daily over the last 7 days
+    Number of eligibility checks submitted daily <%= @since_text %>
   </p>
 
   <div class="govuk-!-text-align-right">
     <div style="display: inline-block">
-      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@checks_over_last_7_days) %></p>
-      <p>eligibility checks over the last 7 days</p>
+      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@checks_over_last_n_days) %></p>
+      <p>eligibility checks submitted <%= @since_text %></p>
     </div>
   </div>
 
@@ -30,13 +30,13 @@
 <div class="app-!-border-top-1 govuk-!-padding-top-2">
   <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Submission results</h2>
   <p class="govuk-!-font-size-16">
-    Number of successful checks over the last 7 days
+    Number of successful checks submitted <%= @since_text %>
   </p>
 
   <div class="govuk-!-text-align-right">
     <div style="display: inline-block">
       <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@eligible_checks) %></p>
-      <p>successful checks found over the last 7 days</p>
+      <p>successful checks submitted <%= @since_text %></p>
     </div>
   </div>
 

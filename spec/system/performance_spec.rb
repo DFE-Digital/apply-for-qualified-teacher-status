@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Performance", type: :system do
-  before { travel_to Date.new(2022, 4, 21) }
+  before { travel_to Date.new(2022, 6, 10) }
 
   after { travel_back }
 
@@ -10,6 +10,9 @@ RSpec.describe "Performance", type: :system do
     given_there_are_a_few_eligibility_checks
     when_i_visit_the_performance_page
     then_i_see_the_live_stats
+
+    when_i_visit_the_performance_page_since_launch
+    then_i_see_the_live_stats_since_launch
   end
 
   private
@@ -19,7 +22,7 @@ RSpec.describe "Performance", type: :system do
   end
 
   def given_there_are_a_few_eligibility_checks
-    (0..6).each.with_index do |n, i|
+    (0..8).each.with_index do |n, i|
       (i + 1).times do
         create(:eligibility_check, :eligible, created_at: n.days.ago)
       end
@@ -31,8 +34,22 @@ RSpec.describe "Performance", type: :system do
   end
 
   def then_i_see_the_live_stats
-    expect(page).to have_content("28\neligibility checks over the last 7 days")
-    expect(page).to have_content("21 April\t1")
-    expect(page).to have_content("15 April\t7")
+    expect(page).to have_content(
+      "36\neligibility checks submitted over the last 7 days"
+    )
+    expect(page).to have_content("10 June\t1")
+    expect(page).to have_content("4 June\t7")
+  end
+
+  def when_i_visit_the_performance_page_since_launch
+    visit performance_path(since_launch: true)
+  end
+
+  def then_i_see_the_live_stats_since_launch
+    expect(page).to have_content(
+      "45\neligibility checks submitted since launch"
+    )
+    expect(page).to have_content("10 June\t1")
+    expect(page).to have_content("2 June\t9")
   end
 end
