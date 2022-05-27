@@ -43,6 +43,22 @@
   <%= govuk_table(rows: @submission_data, classes: 'app-performance-table') %>
 </div>
 
+<div class="app-!-border-top-1 govuk-!-padding-top-2">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Country usage</h2>
+  <p class="govuk-!-font-size-16">
+    Number of eligibility checks submitted by country <%= @since_text %>
+  </p>
+
+  <div class="govuk-!-text-align-right">
+    <div style="display: inline-block">
+      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@countries) %></p>
+      <p>countries</p>
+    </div>
+  </div>
+
+  <%= govuk_table(rows: @country_data, classes: 'app-performance-table') %>
+</div>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">Visit this service</h2>
