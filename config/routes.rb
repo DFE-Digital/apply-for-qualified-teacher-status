@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   end
 
   get "cookies", to: "static#cookies"
+  get "performance", to: "pages#performance"
 
   root to: redirect("/teacher/start")
 end

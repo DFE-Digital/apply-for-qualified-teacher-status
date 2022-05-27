@@ -1,0 +1,68 @@
+<% content_for :page_title, 'Performance dashboard' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">
+        <%= t('service.name') %>
+      </span>
+      Performance dashboard
+    </h1>
+  </div>
+</div>
+
+<div class="app-!-border-top-1 govuk-!-padding-top-2">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Live service usage</h2>
+  <p class="govuk-!-font-size-16">
+    Number of eligibility checks submitted daily over the last 7 days
+  </p>
+
+  <div class="govuk-!-text-align-right">
+    <div style="display: inline-block">
+      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@checks_over_last_7_days) %></p>
+      <p>eligibility checks over the last 7 days</p>
+    </div>
+  </div>
+
+  <%= govuk_table(rows: @live_service_data, classes: 'app-performance-table') %>
+</div>
+
+<div class="app-!-border-top-1 govuk-!-padding-top-2">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Submission results</h2>
+  <p class="govuk-!-font-size-16">
+    Number of successful checks over the last 7 days
+  </p>
+
+  <div class="govuk-!-text-align-right">
+    <div style="display: inline-block">
+      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@eligible_checks) %></p>
+      <p>successful checks found over the last 7 days</p>
+    </div>
+  </div>
+
+  <%= govuk_table(rows: @submission_data, classes: 'app-performance-table') %>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">Visit this service</h2>
+    <p class="govuk-heading-m">
+      <%= govuk_link_to t('service.name'), teacher_interface_start_path %>
+    </p>
+
+    <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">Ministerial department:</h2>
+    <p class="govuk-heading-m">
+      Department for Education
+    </p>
+
+    <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">User:</h2>
+    <p class="govuk-heading-m">
+      Individuals
+    </p>
+
+    <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">Service costs paid by:</h2>
+    <p class="govuk-heading-m">
+      Department budget
+    </p>
+  </div>
+</div>

@@ -10,3 +10,18 @@ ul.autocomplete__menu {
     font-family: $govuk-font-family;
   }
 }
+
+.app-\!-border-top-1 {
+  border-top: 1px solid $govuk-border-colour;
+}
+
+.app-\!-colour--link {
+  color: $govuk-link-colour;
+}
+
+.app-performance-table {
+  .govuk-table__header:nth-child(n + 2),
+  .govuk-table__cell:nth-child(n + 2) {
+    text-align: right;
+  }
+}
