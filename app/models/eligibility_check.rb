@@ -20,6 +20,17 @@
 class EligibilityCheck < ApplicationRecord
   belongs_to :region, optional: true
 
+  scope :eligible,
+        -> {
+          where.not(region: nil).where(
+            degree: true,
+            qualification: true,
+            teach_children: true,
+            recognised: true,
+            free_of_sanctions: true
+          )
+        }
+
   def country_code=(value)
     super(value)
 
