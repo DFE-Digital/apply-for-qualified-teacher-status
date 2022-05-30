@@ -245,7 +245,7 @@ RSpec.describe "Eligibility check", type: :system do
 
   def then_i_see_the_country_error_message
     expect(page).to have_content(
-      "Tell us where you are currently recognised as a teacher"
+      "Tell us where you’re currently recognised as a teacher"
     )
   end
 
