@@ -6,7 +6,8 @@ en:
 
   service:
     name: Apply for qualified teacher status (QTS) in England
-    email: my-service@email
+    email: qts.enquiries@education.gov.uk
+    url: https://apply-for-qts-in-england.education.gov.uk
 
   activemodel:
     attributes:
