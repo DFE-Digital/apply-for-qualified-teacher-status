@@ -3,6 +3,7 @@
 # Table name: eligibility_checks
 #
 #  id                :bigint           not null, primary key
+#  completed_at      :datetime
 #  country_code      :string
 #  degree            :boolean
 #  free_of_sanctions :boolean
@@ -176,5 +177,37 @@ RSpec.describe EligibilityCheck, type: :model do
 
     it { is_expected.to_not include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
+  end
+
+  describe ".complete" do
+    subject(:complete) { described_class.complete }
+
+    let!(:incomplete_check) { create(:eligibility_check) }
+    let!(:complete_check) { create(:eligibility_check, :complete) }
+
+    it { is_expected.to eq([complete_check]) }
+  end
+
+  describe ".ineligible" do
+    subject(:ineligible) { described_class.ineligible }
+
+    let!(:ineligible_check) { create(:eligibility_check, :ineligible) }
+    let!(:eligible_check) { create(:eligibility_check, :eligible) }
+
+    it { is_expected.to eq([ineligible_check]) }
+  end
+
+  describe "#complete!" do
+    subject(:complete!) { eligibility_check.complete! }
+
+    let(:eligibility_check) { create(:eligibility_check, :eligible) }
+
+    it "sets the completed_at attribute" do
+      freeze_time do
+        expect { complete! }.to change(eligibility_check, :completed_at).from(
+          nil
+        ).to(Time.current)
+      end
+    end
   end
 end

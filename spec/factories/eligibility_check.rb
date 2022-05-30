@@ -19,5 +19,13 @@ FactoryBot.define do
         eligiblity_check.country_code = eligiblity_check.region.country.code
       end
     end
+
+    trait :complete do
+      completed_at { Time.current }
+    end
+
+    trait :ineligible do
+      degree { false }
+    end
   end
 end
