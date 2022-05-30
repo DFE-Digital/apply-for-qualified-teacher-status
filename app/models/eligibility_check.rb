@@ -3,6 +3,7 @@
 # Table name: eligibility_checks
 #
 #  id                :bigint           not null, primary key
+#  completed_at      :datetime
 #  country_code      :string
 #  degree            :boolean
 #  free_of_sanctions :boolean
@@ -20,15 +21,25 @@
 class EligibilityCheck < ApplicationRecord
   belongs_to :region, optional: true
 
+  scope :complete, -> { where.not(completed_at: nil) }
   scope :eligible,
         -> {
           where.not(region: nil).where(
             degree: true,
+            free_of_sanctions: true,
             qualification: true,
-            teach_children: true,
             recognised: true,
-            free_of_sanctions: true
+            teach_children: true
           )
+        }
+  scope :ineligible,
+        -> {
+          where(degree: false)
+            .or(where(free_of_sanctions: false))
+            .or(where(qualification: false))
+            .or(where(recognised: false))
+            .or(where(region: nil))
+            .or(where(teach_children: false))
         }
 
   def country_code=(value)
@@ -64,5 +75,9 @@ class EligibilityCheck < ApplicationRecord
 
   def country_regions
     Region.joins(:country).where(country: { code: country_code }).order(:name)
+  end
+
+  def complete!
+    touch(:completed_at)
   end
 end

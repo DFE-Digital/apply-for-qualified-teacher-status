@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_26_154413) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_27_101213) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_26_154413) do
     t.boolean "degree"
     t.string "country_code"
     t.bigint "region_id"
+    t.datetime "completed_at"
   end
 
   create_table "features", force: :cascade do |t|
