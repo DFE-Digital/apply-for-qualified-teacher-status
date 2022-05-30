@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{'Error: ' if @region_form.errors.any?}Where are you currently recognised as a teacher?" %>
+<% content_for :page_title, "#{'Error: ' if @region_form.errors.any?}In which state/territory are you currently recognised as a teacher?" %>
 <% content_for :back_link_url, back_link_url(teacher_interface_countries_url) %>
 
 <div class="govuk-grid-row">
@@ -9,7 +9,7 @@
                                            @regions,
                                            :id,
                                            :name,
-                                           legend: { size: 'l', text: 'Where are you currently recognised as a teacher?' },
+                                           legend: { size: 'l', text: 'In which state/territory are you currently recognised as a teacher?' },
                                            hint: { text: "This means you have all the qualifications needed to teach in a state school. You'll need to provide evidence of this if you apply for QTS." }
           ) %>
       <%= f.govuk_submit prevent_double_click: false %>
