@@ -28,10 +28,10 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_choose_yes
     and_i_submit
-    then_i_see_the_recognised_page
+    # then_i_see_the_recognised_page
 
-    when_i_choose_yes
-    and_i_submit
+    # when_i_choose_yes
+    # and_i_submit
     then_i_see_the_clean_record_page
 
     when_i_choose_yes
@@ -61,10 +61,10 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_choose_no
     and_i_submit
-    then_i_see_the_recognised_page
+    # then_i_see_the_recognised_page
 
-    when_i_choose_no
-    and_i_submit
+    # when_i_choose_no
+    # and_i_submit
     then_i_see_the_clean_record_page
 
     when_i_choose_no
@@ -73,7 +73,7 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_see_the_ineligible_degree_text
     and_i_see_the_ineligible_qualification_text
     and_i_see_the_ineligible_teach_children_text
-    and_i_see_the_ineligible_recognised_text
+    # and_i_see_the_ineligible_recognised_text
     and_i_see_the_ineligible_misconduct_text
   end
 
