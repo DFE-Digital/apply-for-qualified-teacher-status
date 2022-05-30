@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 
   get "accessibility", to: "static#accessibility"
   get "cookies", to: "static#cookies"
+  get "privacy", to: "static#privacy"
+
   get "performance", to: "pages#performance"
 
   root to: redirect("/teacher/start")
