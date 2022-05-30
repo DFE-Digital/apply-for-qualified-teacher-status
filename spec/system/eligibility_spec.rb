@@ -173,7 +173,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_press_start
-    click_link "Start now"
+    click_link "Apply for QTS"
   end
 
   def when_i_select_a_country
@@ -226,20 +226,20 @@ RSpec.describe "Eligibility check", type: :system do
   def then_i_see_the_countries_page
     expect(page).to have_current_path("/teacher/countries")
     expect(page).to have_title(
-      "Where are you currently recognised as a teacher?"
+      "In which country are you currently recognised as a teacher?"
     )
     expect(page).to have_content(
-      "Where are you currently recognised as a teacher?"
+      "In which country are you currently recognised as a teacher?"
     )
   end
 
   def then_i_see_the_region_page
     expect(page).to have_current_path("/teacher/region")
     expect(page).to have_title(
-      "Where are you currently recognised as a teacher?"
+      "In which state/territory are you currently recognised as a teacher?"
     )
     expect(page).to have_content(
-      "Where are you currently recognised as a teacher?"
+      "In which state/territory are you currently recognised as a teacher?"
     )
   end
 
@@ -251,7 +251,9 @@ RSpec.describe "Eligibility check", type: :system do
 
   def then_i_see_the_eligible_page
     expect(page).to have_current_path("/teacher/eligible")
-    expect(page).to have_content("You might be eligible to apply for QTS")
+    expect(page).to have_content(
+      "You’re eligible to apply for qualified teacher status (QTS) in England"
+    )
   end
 
   def then_i_see_the_ineligible_page
