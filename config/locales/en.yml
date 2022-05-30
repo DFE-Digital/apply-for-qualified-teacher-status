@@ -13,11 +13,11 @@ en:
     attributes:
       eligibility_check:
         ineligible_reason:
+          degree: You do not have a degree. As teaching in England is a graduate profession, you must have an undergraduate degree.
+          qualification: You have not completed a formal teacher training course, for example, an undergraduate degree or postgraduate teacher training course.
+          teach_children: You are not qualified to teach children who are aged somewhere between 5 and 16 years.
           misconduct: To teach in England, you must not have any findings of misconduct or restrictions on your practice.
-          recognised: This is because you are not recognised as a school teacher in the country where you trained.
-          teach_children: You must have experience of teaching children who are aged somewhere between 5 and 16 years.
-          qualification: This is because you have not completed a formal teacher training course, for example, an undergraduate degree or postgraduate teacher training course.
-          degree: This is because you do not have a degree. As teaching in England is a graduate profession, you must have an undergraduate degree. Tell us if you have a degree.
+          recognised: You are not recognised as a school teacher in the country where you trained.
 
     errors:
       models:

@@ -281,26 +281,25 @@ RSpec.describe "Eligibility check", type: :system do
 
   def and_i_see_the_ineligible_recognised_text
     expect(page).to have_content(
-      "This is because you are not recognised as a school teacher in the country where you trained."
+      "You are not recognised as a school teacher in the country where you trained."
     )
   end
 
   def and_i_see_the_ineligible_teach_children_text
     expect(page).to have_content(
-      "You must have experience of teaching children who are aged somewhere between 5 and 16 years."
+      "You are not qualified to teach children who are aged somewhere between 5 and 16 years."
     )
   end
 
   def and_i_see_the_ineligible_qualification_text
     expect(page).to have_content(
-      "This is because you have not completed a formal teacher training " \
-        "course, for example, an undergraduate degree or postgraduate " \
-        "teacher training course."
+      "You have not completed a formal teacher training course, for example, an undergraduate " \
+        "degree or postgraduate teacher training course."
     )
   end
 
   def and_i_see_the_ineligible_degree_text
-    expect(page).to have_content("This is because you do not have a degree.")
+    expect(page).to have_content("You do not have a degree.")
   end
 
   def then_i_see_the_degree_page
