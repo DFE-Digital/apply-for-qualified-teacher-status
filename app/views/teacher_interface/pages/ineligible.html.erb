@@ -9,6 +9,8 @@
     <% if @eligibility_check.ineligible_reasons.include?(:country) %>
       <p class="govuk-body">This is because teachers with qualifications from this country are not eligible under current legislation. The Department for Education is currently reviewing these rules.</p>
     <% else %>
+      <p class="govuk-body">This is because:</p>
+
       <ul class="govuk-list govuk-list--bullet">
         <% @eligibility_check.ineligible_reasons.each do |reason| %>
           <li><%= I18n.t("activemodel.attributes.eligibility_check.ineligible_reason.#{reason}") %></li>
