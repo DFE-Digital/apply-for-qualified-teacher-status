@@ -35,29 +35,27 @@ brew install asdf # Mac-specific
 asdf plugin add ruby
 asdf plugin add nodejs
 asdf plugin add yarn
-asdf plugin add postgres
 asdf plugin add terraform
 
 # To install (or update, following a change to .tool-versions)
 asdf install
 ```
 
-If installing PostgreSQL via `asdf`, set up the `postgres` user:
+You'll also need to install PostgreSQL 13.x. The way to do this is different on
+each operating system, but on macOS you can try the following:
+
+```bash
+brew install postgresql@13
+# Add to utilities to the path
+echo 'export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"' >> ~/.zshrc
+```
+
+Set up the `postgres` user if it doesn't exist:
 
 ```sh
-pg_ctl start
 createdb default
 psql -d default
 > CREATE ROLE postgres LOGIN SUPERUSER;
-```
-
-You might also need to install `libpq-dev`:
-
-```bash
-sudo apt install libpq-dev
-sudo yum install postgresql-devel
-sudo zypper in postgresql-devel
-sudo pacman -S postgresql-libs
 ```
 
 Setup the project (re-run after `Gemfile` or `package.json` updates,
