@@ -72,6 +72,8 @@ COUNTRIES = {
   },
   PL: {
   },
+  PT: {
+  },
   IE: {
   },
   RO: {
