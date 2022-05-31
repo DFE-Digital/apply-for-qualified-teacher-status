@@ -641,7 +641,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Czechia"
+      "en-GB": "Czech Republic"
     }
   },
   "country:DE": {
@@ -6014,7 +6014,7 @@
       "en-GB": "Curaçao"
     }
   },
-  "nym:Czech Republic": {
+  "nym:Czechia": {
     "edges": {
       "from": ["country:CZ"]
     },
@@ -6026,7 +6026,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Czech Republic"
+      "en-GB": "Czechia"
     }
   },
   "nym:DE": {
