@@ -1,3 +1,9 @@
+PATH
+  remote: error_log
+  specs:
+    error_log (0.1.0)
+      rails (>= 7.0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -352,6 +358,7 @@ DEPENDENCIES
   cssbundling-rails
   cuprite (~> 0.13)
   debug
+  error_log!
   factory_bot_rails
   govuk-components
   govuk_design_system_formbuilder
