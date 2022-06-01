@@ -11,46 +11,12 @@ class PagesController < ApplicationController
       @since_text = "since launch"
     end
 
-    eligibility_checks =
-      EligibilityCheck.where(created_at: since..Time.zone.now).group(
-        "date_trunc('day', created_at)"
-      )
+    stats = PerformanceStats.new(since, until_days)
 
-    eligibility_checks_total = eligibility_checks.count
+    @checks_over_last_n_days, @live_service_data = stats.live_service_usage
 
-    eligibility_checks_eligible = eligibility_checks.eligible.count
+    @eligible_checks, @submission_data = stats.submission_results
 
-    last_n_days = (0..until_days).map { |n| n.days.ago.beginning_of_day.utc }
-
-    @checks_over_last_n_days = eligibility_checks_total.values.sum
-
-    @live_service_data = [%w[Date Requests]]
-    @live_service_data +=
-      last_n_days.map do |day|
-        [day.strftime("%d %B"), eligibility_checks_total[day] || 0]
-      end
-
-    @eligible_checks = eligibility_checks_eligible.values.sum
-
-    @submission_data = [["Date", "Successful checks"]]
-    @submission_data +=
-      last_n_days.map do |day|
-        [day.strftime("%d %B"), eligibility_checks_eligible[day] || 0]
-      end
-
-    eligibility_checks_by_country =
-      EligibilityCheck
-        .where(created_at: since..Time.zone.now)
-        .group("region")
-        .where.not(region: nil)
-        .count
-
-    @country_data = [%w[Country Requests]]
-    @country_data +=
-      eligibility_checks_by_country.map do |region, count|
-        [region.full_name, count]
-      end
-
-    @countries = eligibility_checks_by_country.count
+    @countries, @country_data = stats.country_usage
   end
 end
