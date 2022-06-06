@@ -1,3 +1,7 @@
 #!/bin/sh
 
 bundle exec rspec --format documentation
+
+cd error_log
+bundle exec rspec --format documentation
+cd ..

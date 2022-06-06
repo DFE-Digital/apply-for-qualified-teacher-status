@@ -7,8 +7,9 @@ Gem::Specification.new do |spec|
   spec.email = ["felix.clack@digital.education.gov.uk"]
   spec.homepage =
     "https://github.com/DFE-Digital/apply-for-qualified-teacher-status"
-  spec.summary = "Summary of ErrorLog."
-  spec.description = "Description of ErrorLog."
+  spec.summary = "Store validation errors"
+  spec.description =
+    "Store a log of validation errors with the goal of improving the UX of a series of forms"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -28,4 +29,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "rspec-rails"
   spec.add_development_dependency "shoulda-matchers"
+
+  spec.required_ruby_version = ">= 3.1"
 end

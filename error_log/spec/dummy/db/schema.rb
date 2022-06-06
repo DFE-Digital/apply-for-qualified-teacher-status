@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_31_111721) do
+ActiveRecord::Schema[7.0].define(version: 20_220_606_105_653) do
   create_table "error_log_validation_errors", force: :cascade do |t|
     t.string "form_object", null: false
     t.json "messages", default: "{}", null: false
@@ -19,7 +19,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_31_111721) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["messages"], name: "index_error_log_validation_errors_on_messages"
-    t.index ["record_type", "record_id"], name: "index_error_log_validation_errors_on_record"
+    t.index %w[record_type record_id],
+            name: "index_error_log_validation_errors_on_record"
   end
 
+  create_table "examples", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 end

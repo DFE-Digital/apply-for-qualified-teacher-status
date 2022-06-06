@@ -10,6 +10,10 @@ inherit_mode:
   merge:
     - Exclude
 
+Rails/SaveBang:
+  Exclude:
+    - error_log/spec/**/*
+
 Style/NumericLiterals:
   Exclude:
     - db/schema.rb
