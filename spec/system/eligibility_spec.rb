@@ -11,7 +11,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_visit_the_start_page
     then_i_see_the_start_page
 
-    when_i_press_continue
+    when_i_press_start_now
     then_i_see_the_countries_page
 
     when_i_select_a_country
@@ -42,7 +42,7 @@ RSpec.describe "Eligibility check", type: :system do
   it "ineligible paths" do
     when_i_visit_the_start_page
 
-    when_i_press_continue
+    when_i_press_start_now
     when_i_select_an_ineligible_country
     and_i_submit
     then_i_see_the_ineligible_page
@@ -79,7 +79,7 @@ RSpec.describe "Eligibility check", type: :system do
 
   it "handles the country picker error" do
     when_i_visit_the_start_page
-    when_i_press_continue
+    when_i_press_start_now
     and_i_submit
     then_i_see_the_country_error_message
 
@@ -90,7 +90,7 @@ RSpec.describe "Eligibility check", type: :system do
 
   it "sends legacy users to the old service" do
     when_i_visit_the_start_page
-    when_i_press_continue
+    when_i_press_start_now
     when_i_select_a_legacy_country
     and_i_submit
     then_i_see_the_eligible_page
@@ -101,7 +101,7 @@ RSpec.describe "Eligibility check", type: :system do
 
   it "handles countries with multiple regions" do
     when_i_visit_the_start_page
-    when_i_press_continue
+    when_i_press_start_now
     when_i_select_a_country_with_multiple_regions
     and_i_submit
     then_i_see_the_region_page
@@ -168,8 +168,8 @@ RSpec.describe "Eligibility check", type: :system do
     click_link "Back"
   end
 
-  def when_i_press_continue
-    click_link "Continue"
+  def when_i_press_start_now
+    click_link "Start now"
   end
 
   def when_i_press_start
@@ -293,7 +293,7 @@ RSpec.describe "Eligibility check", type: :system do
 
   def and_i_see_the_ineligible_qualification_text
     expect(page).to have_content(
-      "You have not completed a formal teacher training course, for example, an undergraduate " \
+      "You have not completed a formal teacher training course, for example, an undergraduate teaching " \
         "degree or postgraduate teacher training course."
     )
   end
