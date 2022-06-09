@@ -3,13 +3,19 @@ class FeatureFlag
 
   attr_accessor :description, :name, :owner
 
-  PERMANENT_SETTINGS = [].freeze
+  PERMANENT_SETTINGS = [
+    [
+      :service_open,
+      "Allow users to access the service without HTTP basic auth",
+      "Felix Clack"
+    ]
+  ].freeze
 
   TEMPORARY_FEATURE_FLAGS = [
     [
-      :service_open,
-      "Allow users to access the service and check their eligibility",
-      "Felix Clack"
+      :service_start,
+      "Allow users to use the service, rather than being sent to the legacy mutual recognition site",
+      "Thomas Leese"
     ]
   ].freeze
 

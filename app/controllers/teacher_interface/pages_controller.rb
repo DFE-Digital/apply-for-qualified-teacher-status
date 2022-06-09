@@ -7,7 +7,11 @@ module TeacherInterface
       "https://teacherservices.education.gov.uk/MutualRecognition/".freeze
 
     def root
-      redirect_to teacher_interface_start_url
+      if FeatureFlag.active?(:service_start)
+        redirect_to teacher_interface_start_url
+      else
+        redirect_to MUTUAL_RECOGNITION_URL, allow_other_host: true
+      end
     end
 
     def eligible
