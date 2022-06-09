@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   namespace :teacher_interface, path: "/teacher" do
+    root to: "pages#root"
     get "degree", to: "degrees#new"
     post "degree", to: "degrees#create"
     get "countries", to: "countries#new"
@@ -34,8 +35,6 @@ Rails.application.routes.draw do
     get "misconduct", to: "misconduct#new"
     post "misconduct", to: "misconduct#create"
     get "locations", to: "countries#index"
-
-    root to: redirect("/teacher/start")
   end
 
   get "accessibility", to: "static#accessibility"
