@@ -45,5 +45,5 @@ Rails.application.routes.draw do
 
   get "performance", to: "pages#performance"
 
-  root to: redirect("/teacher/start")
+  root to: redirect("/teacher")
 end
