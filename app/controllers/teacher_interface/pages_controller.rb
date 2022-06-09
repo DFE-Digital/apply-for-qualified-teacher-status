@@ -4,7 +4,7 @@ module TeacherInterface
     before_action :complete_eligibility_check, only: %i[eligible ineligible]
 
     MUTUAL_RECOGNITION_URL =
-      "https://teacherservices.education.gov.uk/MutualRecognition/"
+      "https://teacherservices.education.gov.uk/MutualRecognition/".freeze
 
     def root
       redirect_to teacher_interface_start_url
