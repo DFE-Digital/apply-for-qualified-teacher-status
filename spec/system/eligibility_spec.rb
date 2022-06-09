@@ -5,6 +5,7 @@ RSpec.describe "Eligibility check", type: :system do
   before do
     given_countries_exist
     given_the_service_is_open
+    given_the_service_can_be_started
   end
 
   it "happy path" do
@@ -125,6 +126,13 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_start_page
   end
 
+  it "service cannot be started" do
+    given_the_service_cannot_be_started
+    when_i_visit_the_start_page
+    then_i_do_not_see_the_start_page
+    then_i_see_the_legacy_service
+  end
+
   private
 
   def and_i_submit
@@ -146,6 +154,14 @@ RSpec.describe "Eligibility check", type: :system do
 
   def given_the_service_is_open
     FeatureFlag.activate(:service_open)
+  end
+
+  def given_the_service_cannot_be_started
+    FeatureFlag.deactivate(:service_start)
+  end
+
+  def given_the_service_can_be_started
+    FeatureFlag.activate(:service_start)
   end
 
   def when_i_am_authorized_as_a_support_user
