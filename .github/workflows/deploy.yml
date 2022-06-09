@@ -4,14 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Deploy environment ( dev, test, preprod or production )"
+        description: "Deploy environment ( dev or production )"
         required: true
         default: dev
         type: environment
         options:
           - dev
-          - test
-          - preprod
           - production
   push:
     branches:
@@ -71,3 +69,26 @@ jobs:
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
           terraform_vars: workspace_variables/dev.tfvars.json
+
+  deploy_environment:
+    name: Deploy to ${{ github.event.inputs.environment }} environment
+    runs-on: ubuntu-latest
+    needs: [docker]
+    if: github.event_name == 'workflow_dispatch'
+    environment:
+      name: ${{ github.event.inputs.environment }}
+      url: ${{ steps.deploy.outputs.environment_url }}
+    concurrency: deploy_${{ github.event.inputs.environment }}
+
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: ${{ github.event.inputs.environment }}
+          docker_image: ${{ needs.docker.outputs.docker_image }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
