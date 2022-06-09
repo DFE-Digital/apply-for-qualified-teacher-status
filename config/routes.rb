@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     post "/features/:feature_name/deactivate",
          to: "feature_flags#deactivate",
          as: :deactivate_feature
+
+    root to: redirect("/support/features")
   end
 
   namespace :teacher_interface, path: "/teacher" do
