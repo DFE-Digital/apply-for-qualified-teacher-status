@@ -144,8 +144,8 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to eq(:eligible) }
     end
 
-    context "when the country exists and is legacy" do
-      before { eligibility_check.country_code = create(:country, :legacy).code }
+    context "when the region exists and is legacy" do
+      before { eligibility_check.region = create(:region, :legacy) }
 
       it { is_expected.to eq(:legacy) }
     end
@@ -154,6 +154,24 @@ RSpec.describe EligibilityCheck, type: :model do
       before { eligibility_check.country_code = "ABC" }
 
       it { is_expected.to be(:ineligible) }
+    end
+  end
+
+  describe "#region_eligibility_status" do
+    subject(:region_eligibility_status) do
+      eligibility_check.region_eligibility_status
+    end
+
+    context "when the region exists and is not legacy" do
+      before { eligibility_check.region = create(:region) }
+
+      it { is_expected.to eq(:eligible) }
+    end
+
+    context "when the region exists and is legacy" do
+      before { eligibility_check.region = create(:region, :legacy) }
+
+      it { is_expected.to eq(:legacy) }
     end
   end
 
@@ -179,7 +197,7 @@ RSpec.describe EligibilityCheck, type: :model do
     it { is_expected.to include(eligibility_check_2) }
   end
 
-  describe ".complete" do
+  describe "#complete" do
     subject(:complete) { described_class.complete }
 
     let!(:incomplete_check) { create(:eligibility_check) }
@@ -188,7 +206,7 @@ RSpec.describe EligibilityCheck, type: :model do
     it { is_expected.to eq([complete_check]) }
   end
 
-  describe ".ineligible" do
+  describe "#ineligible" do
     subject(:ineligible) { described_class.ineligible }
 
     let!(:ineligible_check) { create(:eligibility_check, :ineligible) }
