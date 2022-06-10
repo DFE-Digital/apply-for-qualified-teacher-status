@@ -1,4 +1,4 @@
-module TeacherInterface
+module EligibilityInterface
   class PagesController < BaseController
     before_action :load_eligibility_check, except: %i[root]
     before_action :complete_eligibility_check, only: %i[eligible ineligible]
@@ -8,7 +8,7 @@ module TeacherInterface
 
     def root
       if FeatureFlag.active?(:service_start)
-        redirect_to teacher_interface_start_url
+        redirect_to eligibility_interface_start_url
       else
         redirect_to MUTUAL_RECOGNITION_URL, allow_other_host: true
       end

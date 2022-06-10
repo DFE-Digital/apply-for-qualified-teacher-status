@@ -12,7 +12,7 @@ const loadCountryAutoComplete = () => {
   if (locationPicker) {
     openregisterLocationPicker({
       selectElement: locationPicker,
-      url: "/teacher/locations.json",
+      url: "/eligibility/locations.json",
     });
   }
 };

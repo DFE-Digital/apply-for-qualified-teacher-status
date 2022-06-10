@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%%= form_with model: @<%= model_resource_name %>_form, url: teacher_interface_<%= plural_name %>_url, method: :post do |f| %>
+    <%%= form_with model: @<%= model_resource_name %>_form, url: eligibility_interface_<%= plural_name %>_url, method: :post do |f| %>
       <%%= f.govuk_error_summary %>
       <% attributes.map do |attribute|
         next unless attribute.type == :boolean -%>

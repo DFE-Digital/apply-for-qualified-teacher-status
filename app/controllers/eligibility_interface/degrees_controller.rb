@@ -1,4 +1,4 @@
-module TeacherInterface
+module EligibilityInterface
   class DegreesController < BaseController
     def new
       @degree_form = DegreeForm.new

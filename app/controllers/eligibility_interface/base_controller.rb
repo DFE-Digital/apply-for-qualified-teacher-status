@@ -1,4 +1,4 @@
-module TeacherInterface
+module EligibilityInterface
   class BaseController < ApplicationController
     after_action :save_eligibility_check_id
 

@@ -21,9 +21,9 @@ class MisconductForm
 
   def success_url
     if eligibility_check.eligible?
-      Rails.application.routes.url_helpers.teacher_interface_eligible_path
+      Rails.application.routes.url_helpers.eligibility_interface_eligible_path
     else
-      Rails.application.routes.url_helpers.teacher_interface_ineligible_path
+      Rails.application.routes.url_helpers.eligibility_interface_ineligible_path
     end
   end
 end

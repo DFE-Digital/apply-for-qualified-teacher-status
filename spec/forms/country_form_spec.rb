@@ -42,13 +42,13 @@ RSpec.describe CountryForm, type: :model do
     context "with an eligible country" do
       let(:country) { create(:country, :with_national_region) }
 
-      it { is_expected.to eq("/teacher/degree") }
+      it { is_expected.to eq("/eligibility/degree") }
     end
 
     context "with a legacy country" do
       let(:country) { create(:country, :legacy) }
 
-      it { is_expected.to eq("/teacher/eligible") }
+      it { is_expected.to eq("/eligibility/eligible") }
     end
 
     context "with a multi-region country" do
@@ -56,13 +56,13 @@ RSpec.describe CountryForm, type: :model do
 
       before { create_list(:region, 5, country:) }
 
-      it { is_expected.to eq("/teacher/region") }
+      it { is_expected.to eq("/eligibility/region") }
     end
 
     context "with a non-eligible country" do
       let(:country) { nil }
 
-      it { is_expected.to eq("/teacher/ineligible") }
+      it { is_expected.to eq("/eligibility/ineligible") }
     end
   end
 end

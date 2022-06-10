@@ -1,4 +1,4 @@
-module TeacherInterface
+module EligibilityInterface
   class RegionController < BaseController
     before_action :load_regions
 

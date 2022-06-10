@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     root to: redirect("/support/features")
   end
 
-  namespace :teacher_interface, path: "/teacher" do
+  namespace :eligibility_interface, path: "/eligibility" do
     root to: "pages#root"
     get "degree", to: "degrees#new"
     post "degree", to: "degrees#create"
@@ -45,5 +45,5 @@ Rails.application.routes.draw do
 
   get "performance", to: "pages#performance"
 
-  root to: redirect("/teacher")
+  root to: redirect("/eligibility")
 end

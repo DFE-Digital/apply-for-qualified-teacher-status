@@ -1,9 +1,9 @@
 <% content_for :page_title, "#{'Error: ' if @recognised_form.errors.any?}Are you recognised as a teacher in the country where you trained?" %>
-<% content_for :back_link_url, back_link_url(teacher_interface_teach_children_url) %>
+<% content_for :back_link_url, back_link_url(eligibility_interface_teach_children_url) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @recognised_form, url: teacher_interface_recognised_url, method: :post do |f| %>
+    <%= form_with model: @recognised_form, url: eligibility_interface_recognised_url, method: :post do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_collection_radio_buttons(:recognised,
             [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],

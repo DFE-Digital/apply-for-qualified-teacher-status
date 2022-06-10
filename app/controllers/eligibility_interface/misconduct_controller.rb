@@ -1,4 +1,4 @@
-module TeacherInterface
+module EligibilityInterface
   class MisconductController < BaseController
     def new
       @misconduct_form = MisconductForm.new

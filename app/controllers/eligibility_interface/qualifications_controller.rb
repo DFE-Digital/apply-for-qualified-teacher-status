@@ -1,4 +1,4 @@
-module TeacherInterface
+module EligibilityInterface
   class QualificationsController < BaseController
     def new
       @qualification_form = QualificationForm.new

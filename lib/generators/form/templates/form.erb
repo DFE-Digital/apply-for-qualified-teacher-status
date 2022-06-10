@@ -31,12 +31,12 @@ eligibility_check.save
   end
 
   def success_url
-    return Rails.application.routes.url_helpers.teacher_interface_ineligible_path unless eligible?
+    return Rails.application.routes.url_helpers.eligibility_interface_ineligible_path unless eligible?
 
     Rails
       .application
       .routes
       .url_helpers
-      .teacher_interface_<%= plural_name %>_path
+      .eligibility_interface_<%= plural_name %>_path
   end
 end

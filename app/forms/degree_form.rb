@@ -19,6 +19,6 @@ class DegreeForm
   end
 
   def success_url
-    Rails.application.routes.url_helpers.teacher_interface_qualifications_path
+    Rails.application.routes.url_helpers.eligibility_interface_qualifications_path
   end
 end
