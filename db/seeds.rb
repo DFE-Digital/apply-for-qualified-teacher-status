@@ -185,17 +185,13 @@ COUNTRIES.each do |code, attributes|
   legacy = attributes.fetch(:legacy, false)
   regions = attributes.fetch(:regions, [])
 
-  country =
-    Country
-      .find_or_initialize_by(code:)
-      .tap do |c|
-        c.legacy = legacy
-        c.save!
-      end
+  country = Country.find_or_create_by!(code:)
 
   if regions.empty?
-    country.regions.find_or_create_by!(name: "")
+    country.regions.find_or_create_by!(name: "").update!(legacy:)
   else
-    regions.each { |name| country.regions.find_or_create_by(name:) }
+    regions.each do |name|
+      country.regions.find_or_create_by!(name:).update!(legacy:)
+    end
   end
 end
