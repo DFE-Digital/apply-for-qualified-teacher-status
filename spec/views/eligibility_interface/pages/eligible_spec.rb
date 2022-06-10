@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "eligibility_interface/pages/eligible", type: :view do
+  let(:region) { nil }
+
   before do
     assign(:region, region)
     render
@@ -8,24 +10,70 @@ RSpec.describe "eligibility_interface/pages/eligible", type: :view do
 
   subject { rendered }
 
-  context "without a region" do
-    let(:region) { nil }
+  it { is_expected.to match(/You’re eligible/) }
+  it { is_expected.to_not match(/What we’ll ask for/) }
 
-    it { is_expected.to match(/You’re eligible/) }
-    it { is_expected.to_not match(/What we’ll ask for/) }
+  context "with a fully online region" do
+    let(:region) do
+      create(:region, status_check: :online, sanction_check: :online)
+    end
+
+    it { is_expected.to match(/has an online register of teachers/) }
   end
 
-  context "with a legacy region" do
-    let(:region) { create(:region, :legacy) }
+  context "with a fully written region" do
+    let(:region) do
+      create(
+        :region,
+        status_check: :written,
+        sanction_check: :written,
+        teaching_authority_certificate: "certificate",
+        teaching_authority_address: "address"
+      )
+    end
 
-    it { is_expected.to match(/You’re eligible/) }
-    it { is_expected.to_not match(/What we’ll ask for/) }
+    it { is_expected.to match(/recognises you as a teacher must confirm/) }
+    it { is_expected.to match(/You’ll need to provide a certificate/) }
+    it { is_expected.to match(/address/) }
   end
 
-  context "with a non-legacy region" do
-    let(:region) { create(:region) }
+  context "with an online status check and written sanction check" do
+    let(:region) do
+      create(
+        :region,
+        status_check: :online,
+        sanction_check: :written,
+        teaching_authority_certificate: "certificate",
+        teaching_authority_address: "address"
+      )
+    end
 
-    it { is_expected.to match(/You’re eligible/) }
-    it { is_expected.to match(/What we’ll ask for/) }
+    it { is_expected.to match(/has an online register of teachers/) }
+    it { is_expected.to match(/must also confirm in writing/) }
+    it { is_expected.to match(/You’ll need to provide a certificate/) }
+    it { is_expected.to match(/address/) }
+  end
+
+  context "with a written status check and no sanction check" do
+    let(:region) do
+      create(
+        :region,
+        status_check: :written,
+        sanction_check: :none,
+        teaching_authority_certificate: "certificate",
+        teaching_authority_address: "address"
+      )
+    end
+
+    it { is_expected.to match(/recognises you as a teacher must confirm/) }
+    it { is_expected.to match(/You’ll need to provide a certificate/) }
+    it { is_expected.to match(/address/) }
+    it { is_expected.to match(/show evidence of your work history/) }
+  end
+
+  context "with no status check and no sanction check" do
+    let(:region) { create(:region, status_check: :none, sanction_check: :none) }
+
+    it { is_expected.to match(/show evidence of your work history/) }
   end
 end
