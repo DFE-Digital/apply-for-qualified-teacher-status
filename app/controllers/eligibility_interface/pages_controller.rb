@@ -16,6 +16,7 @@ module EligibilityInterface
 
     def eligible
       @mutual_recognition_url = MUTUAL_RECOGNITION_URL
+      @region = eligibility_check.region
       session[:eligibility_check_complete] = true
     end
 
