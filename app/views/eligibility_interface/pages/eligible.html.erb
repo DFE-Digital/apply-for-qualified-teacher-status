@@ -33,7 +33,68 @@
       <p class="govuk-body">Note that you must have done some of all of your teacher training qualification in <%= @region.country.name %>.</p>
 
       <h3 class="govuk-heading-s">3. Proof that you’re recognised as a teacher</h3>
-      <p class="govuk-body">As your education department or authority has an online register of teachers, you’ll need to provide any reference numbers we need to check your record.</p>
+
+      <% if @region.status_check_online? %>
+        <p class="govuk-body">As your education department or authority has an online register of teachers, you’ll need to provide any reference numbers we need to check your record.</p>
+      <% end %>
+
+      <% if @region.status_check_written? && @region.sanction_check_written? %>
+        <p class="govuk-body">The authority or territory that recognises you as a teacher must confirm:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>that you’ve completed a course of initial teacher training (ITT)</li>
+          <li>that you’ve successfully completed any period of professional experience comparable to an induction period (if required)</li>
+          <li>that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and that you have no sanctions against you</li>
+          <li>the age ranges and subjects you’re qualified to teach</li>
+          <li>that you’re qualified to teach at state or government schools.</li>
+        </ul>
+      <% elsif @region.status_check_written? %>
+        <p class="govuk-body">The authority or territory that recognises you as a teacher must confirm:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>that you’ve completed a course of initial teacher training (ITT)</li>
+          <li>that you’ve successfully completed any period of professional experience comparable to an induction period (if required)</li>
+          <li>the age ranges and subjects you’re qualified to teach.</li>
+        </ul>
+      <% elsif @region.sanction_check_written? %>
+        <p class="govuk-body">The education department or authority must also confirm in writing:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and that you have no sanctions against you.</li>
+        </ul>
+      <% end %>
+
+      <% if @region.status_check_written? || @region.sanction_check_written? %>
+        <p class="govuk-body">You’ll need to provide a <%= @region.teaching_authority_certificate %>, which you can obtain by contacting:</p>
+
+        <% if @region.teaching_authority_address.present? %>
+          <p class="govuk-body"><%= @region.teaching_authority_address %></p>
+        <% end %>
+
+        <% if @region.teaching_authority_website.present? %>
+          <p class="govuk-body"><%= @region.teaching_authority_website %></p>
+        <% end %>
+
+        <% if @region.teaching_authority_email_address.present? %>
+          <p class="govuk-body"><%= @region.teaching_authority_email_address %></p>
+        <% end %>
+
+        <p class="govuk-body">This must be dated within 3 months of you applying for QTS.</p>
+      <% end %>
+
+      <% if @region.sanction_check_none? %>
+        <p class="govuk-body">You also need to show evidence of your work history for the last [x] years.</p>
+
+        <p class="govuk-body">For each school this should include:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>school name</li>
+          <li>school address</li>
+          <li>country</li>
+          <li>your job role</li>
+          <li>start date</li>
+          <li>end date.</li>
+        </ul>
+      <% end %>
     <% end %>
 
     <h2 class="govuk-heading-m">You might need to provide translations</h2>
