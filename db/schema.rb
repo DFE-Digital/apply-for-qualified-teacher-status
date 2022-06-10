@@ -47,6 +47,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_10_144648) do
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status_check", default: "none", null: false
+    t.string "sanction_check", default: "none", null: false
+    t.text "teaching_authority_certificate", default: "", null: false
+    t.text "teaching_authority_address", default: "", null: false
+    t.text "teaching_authority_website", default: "", null: false
+    t.text "teaching_authority_email_address", default: "", null: false
     t.boolean "legacy", default: true, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
