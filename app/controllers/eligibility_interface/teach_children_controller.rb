@@ -19,7 +19,9 @@ module EligibilityInterface
     private
 
     def teach_children_form_params
-      params.require(:teach_children_form).permit(:teach_children)
+      params.require(:eligibility_interface_teach_children_form).permit(
+        :teach_children
+      )
     end
   end
 end

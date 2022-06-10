@@ -17,7 +17,9 @@ module EligibilityInterface
     private
 
     def misconduct_params
-      params.require(:misconduct_form).permit(:free_of_sanctions)
+      params.require(:eligibility_interface_misconduct_form).permit(
+        :free_of_sanctions
+      )
     end
   end
 end

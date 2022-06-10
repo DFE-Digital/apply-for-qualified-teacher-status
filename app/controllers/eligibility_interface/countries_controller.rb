@@ -24,7 +24,7 @@ module EligibilityInterface
       JSON.parse(File.read("public/location-autocomplete-graph.json"))
 
     def location_form_params
-      params.require(:country_form).permit(:location)
+      params.require(:eligibility_interface_country_form).permit(:location)
     end
 
     def locations

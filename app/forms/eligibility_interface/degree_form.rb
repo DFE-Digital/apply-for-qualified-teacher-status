@@ -1,4 +1,4 @@
-class DegreeForm
+class EligibilityInterface::DegreeForm
   include ActiveModel::Model
 
   attr_accessor :eligibility_check
@@ -19,6 +19,10 @@ class DegreeForm
   end
 
   def success_url
-    Rails.application.routes.url_helpers.eligibility_interface_qualifications_path
+    Rails
+      .application
+      .routes
+      .url_helpers
+      .eligibility_interface_qualifications_path
   end
 end

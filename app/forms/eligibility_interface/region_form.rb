@@ -1,4 +1,4 @@
-class RegionForm
+class EligibilityInterface::RegionForm
   include ActiveModel::Model
 
   attr_accessor :eligibility_check

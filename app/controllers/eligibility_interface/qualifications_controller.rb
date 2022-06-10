@@ -19,7 +19,9 @@ module EligibilityInterface
     private
 
     def qualification_form_params
-      params.require(:qualification_form).permit(:qualification)
+      params.require(:eligibility_interface_qualification_form).permit(
+        :qualification
+      )
     end
   end
 end

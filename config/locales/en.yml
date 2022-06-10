@@ -21,31 +21,31 @@ en:
 
     errors:
       models:
-        recognised_form:
+        eligibility_interface/recognised_form:
           attributes:
             recognised:
               inclusion: Tell us if you are recognised as a teacher in the country you trained in
-        degree_form:
+        eligibility_interface/degree_form:
           attributes:
             degree:
               inclusion: Tell us if you have a degree
-        country_form:
+        eligibility_interface/country_form:
           attributes:
             location:
               blank: Tell us where you’re currently recognised as a teacher
-        region_form:
+        eligibility_interface/region_form:
           attributes:
             region_id:
               blank: Tell us where you’re currently recognised as a teacher
-        misconduct_form:
+        eligibility_interface/misconduct_form:
           attributes:
             free_of_sanctions:
               inclusion: Tell us if your employment record is free of sanctions
-        qualification_form:
+        eligibility_interface/qualification_form:
           attributes:
             qualification:
               inclusion: Tell us if you have a teacher training qualification
-        teach_children_form:
+        eligibility_interface/teach_children_form:
           attributes:
             teach_children:
               inclusion: Tell us if you have experience with teaching children

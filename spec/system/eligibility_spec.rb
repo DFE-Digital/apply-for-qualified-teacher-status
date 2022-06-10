@@ -193,23 +193,25 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_select_a_country
-    fill_in "country-form-location-field", with: "Scotland"
+    fill_in "eligibility-interface-country-form-location-field",
+            with: "Scotland"
   end
 
   def when_i_select_a_country_in_the_error_state
-    fill_in "country-form-location-field-error", with: "Scotland"
+    fill_in "eligibility-interface-country-form-location-field-error",
+            with: "Scotland"
   end
 
   def when_i_select_an_ineligible_country
-    fill_in "country-form-location-field", with: "Spain"
+    fill_in "eligibility-interface-country-form-location-field", with: "Spain"
   end
 
   def when_i_select_a_legacy_country
-    fill_in "country-form-location-field", with: "France"
+    fill_in "eligibility-interface-country-form-location-field", with: "France"
   end
 
   def when_i_select_a_country_with_multiple_regions
-    fill_in "country-form-location-field", with: "Italy"
+    fill_in "eligibility-interface-country-form-location-field", with: "Italy"
   end
 
   def when_i_visit_the_start_page

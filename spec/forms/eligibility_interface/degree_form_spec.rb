@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe DegreeForm, type: :model do
+RSpec.describe EligibilityInterface::DegreeForm, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:eligibility_check) }
   end
