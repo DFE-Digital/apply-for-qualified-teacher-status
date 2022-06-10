@@ -1,4 +1,4 @@
-module TeacherInterface
+module EligibilityInterface
   class RecognisedController < BaseController
     def new
       @recognised_form = RecognisedForm.new

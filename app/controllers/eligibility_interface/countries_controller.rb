@@ -1,4 +1,4 @@
-module TeacherInterface
+module EligibilityInterface
   class CountriesController < BaseController
     def index
       render json: LOCATION_AUTOCOMPLETE_GRAPH

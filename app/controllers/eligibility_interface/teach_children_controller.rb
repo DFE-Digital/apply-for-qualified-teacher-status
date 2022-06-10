@@ -1,4 +1,4 @@
-module TeacherInterface
+module EligibilityInterface
   class TeachChildrenController < BaseController
     def new
       @teach_children_form = TeachChildrenForm.new
