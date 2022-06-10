@@ -11,8 +11,33 @@
       to upload some scans, photos, or original files, so it's useful to get these now.
     </p>
 
+    <% if @region && !@region.legacy %>
+      <h2 class="govuk-heading-m">What we’ll ask for</h2>
+
+      <p class="govuk-body">You’ll need to provide the following evidence when you apply.</p>
+
+      <h3 class="govuk-heading-s">1. Proof of identity</h3>
+      <p class="govuk-body">You must provide:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a passport, national identity card or driving licence that shows your date of birth and nationality. This must be valid and have not expired.</li>
+      </ul>
+      <p class="govuk-body">If the name on your proof of identity is different from that on your other documents, you need to provide evidence of your name change (for example, a divorce certificate or name change deed).</p>
+
+      <h3 class="govuk-heading-s">2. Proof of qualifications</h3>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>your degree certificate from the awarding university or institution</li>
+        <li>an official teacher training certificate from the awarding body (this is not required if your teacher training was completed as part of your degree)</li>
+        <li>a transcript or diploma supplement of the qualification that led you to being a recognised teacher. This should be issued by the awarding body and show all the modules you studied and the marks you got for each. If your teacher training was completed as part of your degree, you should supply your degree transcript.</li>
+      </ul>
+
+      <p class="govuk-body">Note that you must have done some of all of your teacher training qualification in <%= @region.country.name %>.</p>
+
+      <h3 class="govuk-heading-s">3. Proof that you’re recognised as a teacher</h3>
+      <p class="govuk-body">As your education department or authority has an online register of teachers, you’ll need to provide any reference numbers we need to check your record.</p>
+    <% end %>
+
     <h2 class="govuk-heading-m">You might need to provide translations</h2>
-    <p class="govuk-body">If your documents are not in English, you’ll need to provide a certified translation of each one.</p>
+    <p class="govuk-body">If your documents are not in English, you’ll need to provide a certified translation of each one. Identity documents can be submitted in their original language.</p>
 
     <p class="govuk-body">You’ll make your application on the Teaching Regulation Agency website.</p>
 
