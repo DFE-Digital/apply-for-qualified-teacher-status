@@ -39,6 +39,9 @@ Rails.application.routes.draw do
     get "locations", to: "countries#index"
   end
 
+  namespace :assessor_interface, path: "/assessor" do
+  end
+
   get "accessibility", to: "static#accessibility"
   get "cookies", to: "static#cookies"
   get "privacy", to: "static#privacy"
