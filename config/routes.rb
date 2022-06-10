@@ -5,16 +5,10 @@ Rails.application.routes.draw do
     get "/500", to: "errors#internal_server_error"
   end
 
-  namespace :support_interface, path: "/support" do
-    get "/features", to: "feature_flags#index"
-    post "/features/:feature_name/activate",
-         to: "feature_flags#activate",
-         as: :activate_feature
-    post "/features/:feature_name/deactivate",
-         to: "feature_flags#deactivate",
-         as: :deactivate_feature
+  namespace :applicant_interface, path: "/applicant" do
+  end
 
-    root to: redirect("/support/features")
+  namespace :assessor_interface, path: "/assessor" do
   end
 
   namespace :eligibility_interface, path: "/eligibility" do
@@ -39,7 +33,16 @@ Rails.application.routes.draw do
     get "locations", to: "countries#index"
   end
 
-  namespace :assessor_interface, path: "/assessor" do
+  namespace :support_interface, path: "/support" do
+    get "/features", to: "feature_flags#index"
+    post "/features/:feature_name/activate",
+         to: "feature_flags#activate",
+         as: :activate_feature
+    post "/features/:feature_name/deactivate",
+         to: "feature_flags#deactivate",
+         as: :deactivate_feature
+
+    root to: redirect("/support/features")
   end
 
   get "accessibility", to: "static#accessibility"
