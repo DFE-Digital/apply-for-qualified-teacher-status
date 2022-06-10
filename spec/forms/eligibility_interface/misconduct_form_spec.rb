@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe MisconductForm, type: :model do
+RSpec.describe EligibilityInterface::MisconductForm, type: :model do
   it { is_expected.to validate_presence_of(:eligibility_check) }
   it do
     is_expected.to validate_inclusion_of(:free_of_sanctions).in_array(

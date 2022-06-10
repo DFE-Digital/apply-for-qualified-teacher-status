@@ -4,9 +4,11 @@ import openregisterLocationPicker from "govuk-country-and-territory-autocomplete
 initAll();
 
 const loadCountryAutoComplete = () => {
-  let locationPicker = document.getElementById("country-form-location-field");
+  let locationPicker = document.getElementById(
+    "eligibility-interface-country-form-location-field"
+  );
   locationPicker ??= document.getElementById(
-    "country-form-location-field-error"
+    "eligibility-interface-country-form-location-field-error"
   );
 
   if (locationPicker) {

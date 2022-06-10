@@ -1,22 +1,21 @@
 require "rails_helper"
 
-RSpec.describe RegionForm, type: :model do
+RSpec.describe EligibilityInterface::RecognisedForm, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:eligibility_check) }
-    it { is_expected.to validate_presence_of(:region_id) }
   end
 
   describe "#valid?" do
     subject(:valid) { form.valid? }
 
     let(:eligibility_check) { EligibilityCheck.new }
-    let(:form) { described_class.new(eligibility_check:, region_id:) }
-    let(:region_id) { "10" }
+    let(:form) { described_class.new(eligibility_check:, recognised:) }
+    let(:recognised) { "true" }
 
     it { is_expected.to be_truthy }
 
-    context "when region_id is blank" do
-      let(:region_id) { "" }
+    context "when recognised is blank" do
+      let(:recognised) { "" }
 
       it { is_expected.to be_falsy }
     end
@@ -25,14 +24,12 @@ RSpec.describe RegionForm, type: :model do
   describe "#save" do
     subject(:save!) { form.save }
 
-    let(:region) { create(:region) }
-
     let(:eligibility_check) { EligibilityCheck.new }
-    let(:form) { described_class.new(eligibility_check:, region_id: region.id) }
+    let(:form) { described_class.new(eligibility_check:, recognised: true) }
 
     it "saves the eligibility check" do
       save!
-      expect(eligibility_check.region).to eq(region)
+      expect(eligibility_check.recognised).to be_truthy
     end
   end
 end

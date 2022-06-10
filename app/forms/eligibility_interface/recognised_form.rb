@@ -1,4 +1,4 @@
-class RecognisedForm
+class EligibilityInterface::RecognisedForm
   include ActiveModel::Model
 
   attr_accessor :eligibility_check

@@ -17,7 +17,7 @@ module EligibilityInterface
     private
 
     def degree_form_params
-      params.require(:degree_form).permit(:degree)
+      params.require(:eligibility_interface_degree_form).permit(:degree)
     end
   end
 end

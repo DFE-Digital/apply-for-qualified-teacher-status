@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CountryForm, type: :model do
+RSpec.describe EligibilityInterface::CountryForm, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:eligibility_check) }
     it { is_expected.to validate_presence_of(:location) }

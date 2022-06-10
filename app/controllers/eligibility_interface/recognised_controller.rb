@@ -17,7 +17,7 @@ module EligibilityInterface
     private
 
     def recognised_form_params
-      params.require(:recognised_form).permit(:recognised)
+      params.require(:eligibility_interface_recognised_form).permit(:recognised)
     end
   end
 end

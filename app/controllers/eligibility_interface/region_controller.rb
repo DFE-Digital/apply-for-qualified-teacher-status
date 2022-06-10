@@ -19,7 +19,7 @@ module EligibilityInterface
     private
 
     def region_form_params
-      params.require(:region_form).permit(:region_id)
+      params.require(:eligibility_interface_region_form).permit(:region_id)
     end
 
     def load_regions

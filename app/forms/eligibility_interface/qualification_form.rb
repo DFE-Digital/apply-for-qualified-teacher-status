@@ -1,4 +1,4 @@
-class QualificationForm
+class EligibilityInterface::QualificationForm
   include ActiveModel::Model
 
   attr_accessor :eligibility_check
@@ -19,6 +19,10 @@ class QualificationForm
   end
 
   def success_url
-    Rails.application.routes.url_helpers.eligibility_interface_teach_children_path
+    Rails
+      .application
+      .routes
+      .url_helpers
+      .eligibility_interface_teach_children_path
   end
 end
