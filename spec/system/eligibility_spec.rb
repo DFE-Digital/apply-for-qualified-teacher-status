@@ -345,8 +345,9 @@ RSpec.describe "Eligibility check", type: :system do
   def then_i_see_the_start_page
     expect(page).to have_content("Apply for qualified teacher status")
     expect(page).to have_content(
-      "Teacher training in England leads to qualified teacher status (QTS)." \
-        " QTS is a legal requirement to teach in many English schools."
+      "This service is for qualified teachers who trained outside of England" \
+        " who want to apply for qualified teacher status (QTS) to teach in" \
+        " English schools."
     )
   end
 
