@@ -26,4 +26,20 @@ RSpec.describe Country, type: :model do
 
     it { is_expected.to eq("Scotland") }
   end
+
+  describe "#name_with_prefix" do
+    subject(:name_with_prefix) { country.name_with_prefix }
+
+    context "without a 'the' prefixed country" do
+      let(:country) { create(:country, code: "GB-SCT") }
+
+      it { is_expected.to eq("Scotland") }
+    end
+
+    context "with a 'the' prefixed country" do
+      let(:country) { create(:country, code: "US") }
+
+      it { is_expected.to eq("the United States") }
+    end
+  end
 end
