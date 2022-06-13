@@ -1,17 +1,18 @@
 class PagesController < ApplicationController
   def performance
-    since = 1.week.ago.beginning_of_day
+    time_period = 1.week.ago.beginning_of_day..Time.zone.now
     until_days = 6
     @since_text = "over the last 7 days"
 
     if params.key? :since_launch
       launch_date = Date.new(2022, 6, 1).beginning_of_day
-      since = launch_date
-      until_days = ((Time.zone.now.beginning_of_day - since) / (3600 * 24)).to_i
+      time_period = launch_date..Time.zone.now
+      until_days =
+        ((Time.zone.now.beginning_of_day - time_period.first) / 1.day).to_i
       @since_text = "since launch"
     end
 
-    stats = PerformanceStats.new(since, until_days)
+    stats = PerformanceStats.new(time_period, until_days)
 
     @checks_over_last_n_days, @live_service_data = stats.live_service_usage
 

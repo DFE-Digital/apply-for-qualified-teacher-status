@@ -1,14 +1,13 @@
 class PerformanceStats
-  def initialize(since, until_days)
-    unless since.is_a? ActiveSupport::TimeWithZone
-      raise ArgumentError, "since is not a TimeWithZone"
+  def initialize(time_period, until_days)
+    unless time_period.is_a? Range
+      raise ArgumentError, "time_period is not a Range"
     end
     unless until_days.is_a? Integer
       raise ArgumentError, "until_days is not an Integer"
     end
 
-    @eligibility_checks =
-      EligibilityCheck.where(created_at: since..Time.zone.now)
+    @eligibility_checks = EligibilityCheck.where(created_at: time_period)
 
     @grouped_eligibility_checks =
       @eligibility_checks.group("date_trunc('day', created_at)")
