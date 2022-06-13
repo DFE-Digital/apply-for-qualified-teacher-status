@@ -26,7 +26,7 @@ module EligibilityInterface
     private
 
     def complete_eligibility_check
-      @eligibility_check.complete!
+      @eligibility_check.complete! if @eligibility_check.persisted?
     end
 
     def load_eligibility_check
