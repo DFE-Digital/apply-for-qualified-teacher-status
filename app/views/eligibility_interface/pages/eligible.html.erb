@@ -68,15 +68,15 @@
         <p class="govuk-body">You’ll need to provide a <%= @region.teaching_authority_certificate %>, which you can obtain by contacting:</p>
 
         <% if @region.teaching_authority_address.present? %>
-          <p class="govuk-body"><%= @region.teaching_authority_address %></p>
+          <p class="govuk-body app-teaching-authority-address"><%= @region.teaching_authority_address %></p>
         <% end %>
 
         <% if @region.teaching_authority_website.present? %>
-          <p class="govuk-body"><%= @region.teaching_authority_website %></p>
+          <p class="govuk-body"><a class="govuk-link" href="<%= @region.teaching_authority_website %>"><%= @region.teaching_authority_website %></a></p>
         <% end %>
 
         <% if @region.teaching_authority_email_address.present? %>
-          <p class="govuk-body"><%= @region.teaching_authority_email_address %></p>
+          <p class="govuk-body"><a class="govuk-link" href="mailto:<%= @region.teaching_authority_email_address %>"><%= @region.teaching_authority_email_address %></a></p>
         <% end %>
 
         <p class="govuk-body">This must be dated within 3 months of you applying for QTS.</p>
