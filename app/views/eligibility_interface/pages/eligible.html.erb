@@ -71,12 +71,12 @@
           <p class="govuk-body app-teaching-authority-address"><%= @region.teaching_authority_address %></p>
         <% end %>
 
-        <% if @region.teaching_authority_website.present? %>
-          <p class="govuk-body"><a class="govuk-link" href="<%= @region.teaching_authority_website %>"><%= @region.teaching_authority_website %></a></p>
-        <% end %>
-
         <% if @region.teaching_authority_email_address.present? %>
           <p class="govuk-body"><a class="govuk-link" href="mailto:<%= @region.teaching_authority_email_address %>"><%= @region.teaching_authority_email_address %></a></p>
+        <% end %>
+
+        <% if @region.teaching_authority_website.present? %>
+          <p class="govuk-body">You’ll need to complete the <a class="govuk-link" href="<%= @region.teaching_authority_website %>"><%= @region.teaching_authority_certificate %> request form</a>.</p>
         <% end %>
 
         <p class="govuk-body">This must be dated within 3 months of you applying for QTS.</p>
@@ -88,8 +88,8 @@
         <p class="govuk-body">For each school this should include:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>school name</li>
-          <li>school address</li>
-          <li>country</li>
+          <li>school city</li>
+          <li>school country</li>
           <li>your job role</li>
           <li>start date</li>
           <li>end date.</li>
