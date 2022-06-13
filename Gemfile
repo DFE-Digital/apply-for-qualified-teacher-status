@@ -14,6 +14,7 @@ gem "propshaft"
 gem "puma", "~> 5.0"
 gem "sentry-rails"
 gem "sentry-ruby"
+gem "sidekiq"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Windows
 
 gem "govuk-components"
