@@ -89,6 +89,7 @@ GEM
       xpath (~> 3.2)
     cliver (0.3.2)
     concurrent-ruby (1.1.10)
+    connection_pool (2.2.5)
     crass (1.0.6)
     cssbundling-rails (1.1.0)
       railties (>= 6.0.0)
@@ -232,6 +233,7 @@ GEM
     rake (13.0.6)
     rbs (2.4.0)
     redcarpet (3.5.1)
+    redis (4.6.0)
     regexp_parser (2.4.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -296,6 +298,10 @@ GEM
       concurrent-ruby
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
+    sidekiq (6.5.0)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     solargraph (0.44.3)
       backport (~> 1.2)
       benchmark
@@ -381,6 +387,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   shoulda-matchers (~> 5.1)
+  sidekiq
   solargraph
   solargraph-rails
   syntax_tree
