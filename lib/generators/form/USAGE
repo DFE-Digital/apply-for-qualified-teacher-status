@@ -8,7 +8,7 @@ Example:
 
     This will create:
         app/forms/thing_form.rb
-        app/controllers/teacher_interface/things_controller.rb
-        app/views/teacher_interface/things/new.html.erb
+        app/controllers/eligibility_interface/things_controller.rb
+        app/views/eligibility_interface/things/new.html.erb
         spec/forms/thing_form_spec.rb
         db/migration/add_thing_to_eligibility_check.rb

@@ -1,0 +1,107 @@
+<% content_for :page_title, 'You’re eligible' %>
+<% content_for :back_link_url, back_link_url %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">You’re eligible to apply for qualified teacher status (QTS) in England</h1>
+    <p class="govuk-body">Based on the information you’ve given us you may be eligible for QTS.</p>
+
+    <h2 class="govuk-heading-m">You can prepare to apply now</h2>
+    <p class="govuk-body">
+      If you decide to apply, you'll need to provide a range of evidence. We'll ask you
+      to upload some scans, photos, or original files, so it's useful to get these now.
+    </p>
+
+    <% if @region && !@region.legacy %>
+      <h2 class="govuk-heading-m">What we’ll ask for</h2>
+
+      <p class="govuk-body">You’ll need to provide the following evidence when you apply.</p>
+
+      <h3 class="govuk-heading-s">1. Proof of identity</h3>
+      <p class="govuk-body">You must provide:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a passport, national identity card or driving licence that shows your date of birth and nationality. This must be valid and have not expired.</li>
+      </ul>
+      <p class="govuk-body">If the name on your proof of identity is different from that on your other documents, you need to provide evidence of your name change (for example, a divorce certificate or name change deed).</p>
+
+      <h3 class="govuk-heading-s">2. Proof of qualifications</h3>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>your degree certificate from the awarding university or institution</li>
+        <li>an official teacher training certificate from the awarding body (this is not required if your teacher training was completed as part of your degree)</li>
+        <li>a transcript or diploma supplement of the qualification that led you to being a recognised teacher. This should be issued by the awarding body and show all the modules you studied and the marks you got for each. If your teacher training was completed as part of your degree, you should supply your degree transcript.</li>
+      </ul>
+
+      <p class="govuk-body">Note that you must have done some of all of your teacher training qualification in <%= @region.country.name %>.</p>
+
+      <h3 class="govuk-heading-s">3. Proof that you’re recognised as a teacher</h3>
+
+      <% if @region.status_check_online? %>
+        <p class="govuk-body">As your education department or authority has an online register of teachers, you’ll need to provide any reference numbers we need to check your record.</p>
+      <% end %>
+
+      <% if @region.status_check_written? && @region.sanction_check_written? %>
+        <p class="govuk-body">The authority or territory that recognises you as a teacher must confirm:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>that you’ve completed a course of initial teacher training (ITT)</li>
+          <li>that you’ve successfully completed any period of professional experience comparable to an induction period (if required)</li>
+          <li>that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and that you have no sanctions against you</li>
+          <li>the age ranges and subjects you’re qualified to teach</li>
+          <li>that you’re qualified to teach at state or government schools.</li>
+        </ul>
+      <% elsif @region.status_check_written? %>
+        <p class="govuk-body">The authority or territory that recognises you as a teacher must confirm:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>that you’ve completed a course of initial teacher training (ITT)</li>
+          <li>that you’ve successfully completed any period of professional experience comparable to an induction period (if required)</li>
+          <li>the age ranges and subjects you’re qualified to teach.</li>
+        </ul>
+      <% elsif @region.sanction_check_written? %>
+        <p class="govuk-body">The education department or authority must also confirm in writing:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and that you have no sanctions against you.</li>
+        </ul>
+      <% end %>
+
+      <% if @region.status_check_written? || @region.sanction_check_written? %>
+        <p class="govuk-body">You’ll need to provide a <%= @region.teaching_authority_certificate %>, which you can obtain by contacting:</p>
+
+        <% if @region.teaching_authority_address.present? %>
+          <p class="govuk-body app-teaching-authority-address"><%= @region.teaching_authority_address %></p>
+        <% end %>
+
+        <% if @region.teaching_authority_email_address.present? %>
+          <p class="govuk-body"><a class="govuk-link" href="mailto:<%= @region.teaching_authority_email_address %>"><%= @region.teaching_authority_email_address %></a></p>
+        <% end %>
+
+        <% if @region.teaching_authority_website.present? %>
+          <p class="govuk-body">You’ll need to complete the <a class="govuk-link" href="<%= @region.teaching_authority_website %>"><%= @region.teaching_authority_certificate %> request form</a>.</p>
+        <% end %>
+
+        <p class="govuk-body">This must be dated within 3 months of you applying for QTS.</p>
+      <% end %>
+
+      <% if @region.sanction_check_none? %>
+        <p class="govuk-body">You also need to show evidence of your work history for the last 10 years.</p>
+
+        <p class="govuk-body">For each school this should include:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>school name</li>
+          <li>school city</li>
+          <li>school country</li>
+          <li>your job role</li>
+          <li>start date</li>
+          <li>end date.</li>
+        </ul>
+      <% end %>
+    <% end %>
+
+    <h2 class="govuk-heading-m">You might need to provide translations</h2>
+    <p class="govuk-body">If your documents are not in English, you’ll need to provide a certified translation of each one. Identity documents can be submitted in their original language.</p>
+
+    <p class="govuk-body">You’ll make your application on the Teaching Regulation Agency website.</p>
+
+    <%= govuk_start_button(text: "Apply for QTS", href: @mutual_recognition_url) %>
+  </div>
+</div>

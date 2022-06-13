@@ -141,7 +141,7 @@ RSpec.describe "Eligibility check", type: :system do
 
   def given_countries_exist
     create(:country, :with_national_region, code: "GB-SCT")
-    create(:country, :legacy, code: "FR")
+    create(:country, :with_legacy_region, code: "FR")
 
     it = create(:country, code: "IT")
     create(:region, country: it, name: "Region")
@@ -193,27 +193,29 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_select_a_country
-    fill_in "country-form-location-field", with: "Scotland"
+    fill_in "eligibility-interface-country-form-location-field",
+            with: "Scotland"
   end
 
   def when_i_select_a_country_in_the_error_state
-    fill_in "country-form-location-field-error", with: "Scotland"
+    fill_in "eligibility-interface-country-form-location-field-error",
+            with: "Scotland"
   end
 
   def when_i_select_an_ineligible_country
-    fill_in "country-form-location-field", with: "Spain"
+    fill_in "eligibility-interface-country-form-location-field", with: "Spain"
   end
 
   def when_i_select_a_legacy_country
-    fill_in "country-form-location-field", with: "France"
+    fill_in "eligibility-interface-country-form-location-field", with: "France"
   end
 
   def when_i_select_a_country_with_multiple_regions
-    fill_in "country-form-location-field", with: "Italy"
+    fill_in "eligibility-interface-country-form-location-field", with: "Italy"
   end
 
   def when_i_visit_the_start_page
-    visit "/teacher"
+    visit "/eligibility"
   end
 
   def then_i_do_not_see_the_start_page
@@ -226,21 +228,21 @@ RSpec.describe "Eligibility check", type: :system do
     expect(page).to have_content(
       "Check your eligilibity to apply for qualified teacher status (QTS) in England"
     )
-    expect(page).to have_current_path("/teacher/start")
+    expect(page).to have_current_path("/eligibility/start")
     expect(page).to have_title(
       "Check your eligilibity to apply for qualified teacher status (QTS) in England"
     )
   end
 
   def then_i_see_the_clean_record_page
-    expect(page).to have_current_path("/teacher/misconduct")
+    expect(page).to have_current_path("/eligibility/misconduct")
     expect(page).to have_content(
       "Is your employment record as a teacher free of sanctions?"
     )
   end
 
   def then_i_see_the_countries_page
-    expect(page).to have_current_path("/teacher/countries")
+    expect(page).to have_current_path("/eligibility/countries")
     expect(page).to have_title(
       "In which country are you currently recognised as a teacher?"
     )
@@ -250,7 +252,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_region_page
-    expect(page).to have_current_path("/teacher/region")
+    expect(page).to have_current_path("/eligibility/region")
     expect(page).to have_title(
       "In which state/territory are you currently recognised as a teacher?"
     )
@@ -266,14 +268,14 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_eligible_page
-    expect(page).to have_current_path("/teacher/eligible")
+    expect(page).to have_current_path("/eligibility/eligible")
     expect(page).to have_content(
       "You’re eligible to apply for qualified teacher status (QTS) in England"
     )
   end
 
   def then_i_see_the_ineligible_page
-    expect(page).to have_current_path("/teacher/ineligible")
+    expect(page).to have_current_path("/eligibility/ineligible")
     expect(page).to have_content(
       "You’re not eligible to apply for qualified teacher status (QTS) in England"
     )
@@ -319,13 +321,13 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_degree_page
-    expect(page).to have_current_path("/teacher/degree")
+    expect(page).to have_current_path("/eligibility/degree")
     expect(page).to have_title("Do you have a degree?")
     expect(page).to have_content("Do you have a degree?")
   end
 
   def then_i_see_the_qualification_page
-    expect(page).to have_current_path("/teacher/qualifications")
+    expect(page).to have_current_path("/eligibility/qualifications")
     expect(page).to have_title("Do you have a teacher training qualification?")
     expect(page).to have_content(
       "Do you have a teacher training qualification?"
@@ -333,7 +335,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_recognised_page
-    expect(page).to have_current_path("/teacher/recognised")
+    expect(page).to have_current_path("/eligibility/recognised")
     expect(page).to have_title(
       "Are you recognised as a teacher in the country where you trained?"
     )
@@ -345,13 +347,14 @@ RSpec.describe "Eligibility check", type: :system do
   def then_i_see_the_start_page
     expect(page).to have_content("Apply for qualified teacher status")
     expect(page).to have_content(
-      "Teacher training in England leads to qualified teacher status (QTS)." \
-        " QTS is a legal requirement to teach in many English schools."
+      "This service is for qualified teachers who trained outside of England" \
+        " who want to apply for qualified teacher status (QTS) to teach in" \
+        " English schools."
     )
   end
 
   def then_i_see_the_teach_children_page
-    expect(page).to have_current_path("/teacher/teach-children")
+    expect(page).to have_current_path("/eligibility/teach-children")
     expect(page).to have_title(
       "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
     )

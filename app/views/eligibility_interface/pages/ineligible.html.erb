@@ -1,0 +1,30 @@
+<% content_for :page_title, "You’re not eligible" %>
+<% content_for :back_link_url, back_link_url %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      You’re not eligible to apply for qualified teacher status (QTS) in England
+    </h1>
+
+    <% if @eligibility_check.ineligible_reasons.include?(:country) %>
+      <p class="govuk-body">This is because teachers with qualifications from this country are not eligible under current legislation. The Department for Education is currently reviewing these rules.</p>
+    <% else %>
+      <p class="govuk-body">This is because:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <% @eligibility_check.ineligible_reasons.each do |reason| %>
+          <li><%= I18n.t("activemodel.attributes.eligibility_check.ineligible_reason.#{reason}") %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% unless @eligibility_check.ineligible_reasons.include?(:misconduct) %>
+      <p class="govuk-body">You can find out <a href="https://getintoteaching.education.gov.uk/non-uk-teachers">how to train to become a teacher in England</a></p>
+    <% end %>
+
+    <% if @eligibility_check.ineligible_reasons.include?(:country) %>
+      <p class="govuk-body">The Department for Education is currently reviewing who can apply for qualified teacher status. If you’d like to help us with our research, contact:</p>
+      <p class="govuk-body"><a class="govuk-link" href="mailto:<%= I18n.t("service.email") %>"><%= I18n.t("service.email") %></a></p>
+    <% end %>
+  </div>
+</div>

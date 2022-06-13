@@ -5,19 +5,13 @@ Rails.application.routes.draw do
     get "/500", to: "errors#internal_server_error"
   end
 
-  namespace :support_interface, path: "/support" do
-    get "/features", to: "feature_flags#index"
-    post "/features/:feature_name/activate",
-         to: "feature_flags#activate",
-         as: :activate_feature
-    post "/features/:feature_name/deactivate",
-         to: "feature_flags#deactivate",
-         as: :deactivate_feature
-
-    root to: redirect("/support/features")
+  namespace :applicant_interface, path: "/applicant" do
   end
 
-  namespace :teacher_interface, path: "/teacher" do
+  namespace :assessor_interface, path: "/assessor" do
+  end
+
+  namespace :eligibility_interface, path: "/eligibility" do
     root to: "pages#root"
     get "degree", to: "degrees#new"
     post "degree", to: "degrees#create"
@@ -39,11 +33,23 @@ Rails.application.routes.draw do
     get "locations", to: "countries#index"
   end
 
+  namespace :support_interface, path: "/support" do
+    get "/features", to: "feature_flags#index"
+    post "/features/:feature_name/activate",
+         to: "feature_flags#activate",
+         as: :activate_feature
+    post "/features/:feature_name/deactivate",
+         to: "feature_flags#deactivate",
+         as: :deactivate_feature
+
+    root to: redirect("/support/features")
+  end
+
   get "accessibility", to: "static#accessibility"
   get "cookies", to: "static#cookies"
   get "privacy", to: "static#privacy"
 
   get "performance", to: "pages#performance"
 
-  root to: redirect("/teacher")
+  root to: redirect("/eligibility")
 end

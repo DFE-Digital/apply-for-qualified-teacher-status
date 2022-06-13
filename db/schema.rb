@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_27_101213) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_10_144648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "countries", force: :cascade do |t|
     t.string "code", null: false
-    t.boolean "legacy", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
@@ -48,6 +47,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_27_101213) do
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status_check", default: "none", null: false
+    t.string "sanction_check", default: "none", null: false
+    t.text "teaching_authority_certificate", default: "", null: false
+    t.text "teaching_authority_address", default: "", null: false
+    t.text "teaching_authority_website", default: "", null: false
+    t.text "teaching_authority_email_address", default: "", null: false
+    t.boolean "legacy", default: true, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end

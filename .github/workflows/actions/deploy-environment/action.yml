@@ -10,9 +10,6 @@ inputs:
   azure_credentials:
     description: "JSON object containing a service principal that can read from Azure Key Vault"
     required: true
-  terraform_vars:
-    description: "Path to the tfvars file for the environment"
-    required: true
 
 outputs:
   environment_url:
@@ -43,7 +40,7 @@ runs:
         echo ::set-output name=paas_space::$PAAS_SPACE
       shell: bash
       env:
-        TFVARS: ${{ inputs.terraform_vars }}
+        TFVARS: workspace_variables/${{ inputs.environment_name }}.tfvars.json
       working-directory: terraform
 
     - uses: Azure/login@v1
