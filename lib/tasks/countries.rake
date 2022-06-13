@@ -38,7 +38,9 @@ namespace :countries do
         teaching_authority_address:
           "Subdirectora General de Títulos y Ordenación\nSeguimiento y Gestión de las Enseñanzas Universitarias\n" \
             "SECRETARÍA GENERAL DE UNIVERSIDADES\nMINISTERIO DE UNIVERSIDADES\n" \
-            "Paseo de la Castellana 162, planta 17\n28071 MADRID"
+            "Paseo de la Castellana 162, planta 17\n28071 MADRID",
+        teaching_authority_website:
+          "https://www.universidades.gob.es/stfls/universidades/ministerio/ficheros/BREXIT/solicitud-certificado-reino-unido.pdf"
       },
       # Canada (British Columbia)
       {
