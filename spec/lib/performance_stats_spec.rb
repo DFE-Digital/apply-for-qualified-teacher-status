@@ -1,21 +1,21 @@
 require "rails_helper"
 
 RSpec.describe PerformanceStats do
-  let(:since) { 1.week.ago.beginning_of_day }
+  let(:time_period) { 1.week.ago.beginning_of_day..Time.zone.now }
   let(:until_days) { 6 }
 
-  subject { PerformanceStats.new(since, until_days) }
+  subject { PerformanceStats.new(time_period, until_days) }
 
   describe "without params" do
-    it "asks for a since parameter" do
+    it "asks for a time_period parameter" do
       expect { PerformanceStats.new(nil, nil) }.to raise_error(
         ArgumentError,
-        "since is not a TimeWithZone"
+        "time_period is not a Range"
       )
     end
 
     it "asks for an until_days parameter" do
-      expect { PerformanceStats.new(since, nil) }.to raise_error(
+      expect { PerformanceStats.new(time_period, nil) }.to raise_error(
         ArgumentError,
         "until_days is not an Integer"
       )
