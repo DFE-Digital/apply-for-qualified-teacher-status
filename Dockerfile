@@ -39,7 +39,9 @@ COPY . .
 RUN yarn build && yarn build:css
 
 # Precompile assets
-RUN RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used \
+RUN RAILS_ENV=production \
+    SECRET_KEY_BASE=required-to-run-but-not-used \
+    GOVUK_NOTIFY_API_KEY=required-to-run-but-not-used \
     bundle exec rails assets:precompile
 
 # Cleanup to save space in the production image
