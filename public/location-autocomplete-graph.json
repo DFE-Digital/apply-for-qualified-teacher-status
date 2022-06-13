@@ -6021,8 +6021,8 @@
     "meta": {
       "canonical": false,
       "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
+      "display-name": true,
+      "stable-name": true
     },
     "names": {
       "cy": false,
@@ -13476,8 +13476,8 @@
     "meta": {
       "canonical": false,
       "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
+      "display-name": true,
+      "stable-name": true
     },
     "names": {
       "cy": false,
