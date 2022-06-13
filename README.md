@@ -106,13 +106,9 @@ To run the tests:
 bin/test
 ```
 
-### Deploying (temporary)
+### Ops manual
 
-```sh
-cf login -a api.london.cloud.service.gov.uk --sso
-cf target -o dfe -s sandbox
-cf push
-```
+[Ops manual](docs/ops-manual.md).
 
 ## Licence
 

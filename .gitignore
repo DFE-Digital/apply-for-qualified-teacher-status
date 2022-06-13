@@ -6,6 +6,7 @@
 *.log
 .bundle
 app/assets/builds/*
+bin/fetch_config.rb
 config/master.key
 log/*
 node_modules
