@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   end
 
   namespace :support_interface, path: "/support" do
+    root to: redirect("/support/features")
+
     get "/features", to: "feature_flags#index"
     post "/features/:feature_name/activate",
          to: "feature_flags#activate",
@@ -42,7 +44,21 @@ Rails.application.routes.draw do
          to: "feature_flags#deactivate",
          as: :deactivate_feature
 
-    root to: redirect("/support/features")
+    # https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
+    require "sidekiq/web"
+
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      ActiveSupport::SecurityUtils.secure_compare(
+        ::Digest::SHA256.hexdigest(username),
+        ::Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_USERNAME", nil))
+      ) &
+        ActiveSupport::SecurityUtils.secure_compare(
+          ::Digest::SHA256.hexdigest(password),
+          ::Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_PASSWORD", nil))
+        )
+    end
+
+    mount Sidekiq::Web, at: "sidekiq"
   end
 
   get "accessibility", to: "static#accessibility"
