@@ -65,7 +65,7 @@ Rails.application.routes.draw do
   get "cookies", to: "static#cookies"
   get "privacy", to: "static#privacy"
 
-  get "performance", to: "pages#performance"
+  get "performance", to: "performance#index"
 
   root to: redirect("/eligibility")
 end

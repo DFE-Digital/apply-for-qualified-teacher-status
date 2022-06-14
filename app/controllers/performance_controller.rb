@@ -1,5 +1,5 @@
-class PagesController < ApplicationController
-  def performance
+class PerformanceController < ApplicationController
+  def index
     time_period = 1.week.ago.beginning_of_day..Time.zone.now
     until_days = 6
     @since_text = "over the last 7 days"
@@ -22,6 +22,6 @@ class PagesController < ApplicationController
   end
 
   def current_namespace
-    "pages"
+    "performance"
   end
 end
