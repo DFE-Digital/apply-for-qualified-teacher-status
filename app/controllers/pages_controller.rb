@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     @since_text = "over the last 7 days"
 
     if params.key? :since_launch
-      launch_date = Date.new(2022, 6, 1).beginning_of_day
+      launch_date = Date.new(2022, 6, 21).beginning_of_day
       time_period = launch_date..Time.zone.now
       until_days =
         ((Time.zone.now.beginning_of_day - time_period.first) / 1.day).to_i
