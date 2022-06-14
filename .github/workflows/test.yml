@@ -24,18 +24,18 @@ jobs:
           --health-retries 5
           --health-timeout 5s
 
-      # redis:
-      #   image: redis
-      #   options: >-
-      #     --health-cmd "redis-cli ping"
-      #     --health-interval 10s
-      #     --health-timeout 5s
-      #     --health-retries 5
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/apply_for_qts_test
       RAILS_ENV: test
-      # REDIS_URL: redis://localhost:6379/0
+      REDIS_URL: redis://localhost:6379/0
 
     steps:
       - name: Checkout code
