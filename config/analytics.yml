@@ -1,0 +1,38 @@
+---
+:shared:
+  :regions:
+    - id
+    - country_id
+    - name
+    - created_at
+    - updated_at
+    - status_check
+    - sanction_check
+    - teaching_authority_certificate
+    - teaching_authority_address
+    - teaching_authority_website
+    - teaching_authority_email_address
+    - legacy
+  :features:
+    - id
+    - name
+    - active
+    - created_at
+    - updated_at
+  :eligibility_checks:
+    - id
+    - free_of_sanctions
+    - created_at
+    - updated_at
+    - recognised
+    - teach_children
+    - qualification
+    - degree
+    - country_code
+    - region_id
+    - completed_at
+  :countries:
+    - id
+    - code
+    - created_at
+    - updated_at
