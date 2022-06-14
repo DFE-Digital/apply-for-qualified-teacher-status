@@ -4,4 +4,6 @@ class ApplicationController < ActionController::Base
   http_basic_authenticate_with name: ENV.fetch("SUPPORT_USERNAME", "test"),
                                password: ENV.fetch("SUPPORT_PASSWORD", "test"),
                                unless: -> { FeatureFlag.active?(:service_open) }
+
+  helper_method :current_namespace
 end

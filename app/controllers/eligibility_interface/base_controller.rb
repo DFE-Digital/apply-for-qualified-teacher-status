@@ -14,5 +14,9 @@ module EligibilityInterface
     def save_eligibility_check_id
       session[:eligibility_check_id] = eligibility_check.id
     end
+
+    def current_namespace
+      "eligibility"
+    end
   end
 end
