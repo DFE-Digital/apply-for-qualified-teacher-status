@@ -17,6 +17,7 @@ gem "sentry-ruby"
 gem "sidekiq"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Windows
 
+gem "dfe-analytics", git: "https://github.com/DFE-Digital/dfe-analytics"
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 gem "govuk_markdown"
