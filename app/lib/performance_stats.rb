@@ -1,18 +1,18 @@
 class PerformanceStats
-  def initialize(time_period, until_days)
+  def initialize(time_period)
     unless time_period.is_a? Range
       raise ArgumentError, "time_period is not a Range"
     end
-    unless until_days.is_a? Integer
-      raise ArgumentError, "until_days is not an Integer"
-    end
 
+    number_of_days_in_period =
+      ((Time.zone.now.beginning_of_day - time_period.first) / 1.day).to_i
     @eligibility_checks = EligibilityCheck.where(created_at: time_period)
 
     @grouped_eligibility_checks =
       @eligibility_checks.group("date_trunc('day', created_at)")
 
-    @last_n_days = (0..until_days).map { |n| n.days.ago.beginning_of_day.utc }
+    @last_n_days =
+      (0...number_of_days_in_period).map { |n| n.days.ago.beginning_of_day.utc }
 
     calculate_live_service_usage
     calculate_submission_results
