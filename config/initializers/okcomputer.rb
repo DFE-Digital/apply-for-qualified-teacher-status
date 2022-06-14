@@ -2,14 +2,10 @@ OkComputer.mount_at = "healthcheck"
 
 OkComputer::Registry.register "postgresql", OkComputer::ActiveRecordCheck.new
 
-OkComputer::Registry.register "redis",
-                              OkComputer::RedisCheck.new(
-                                url:
-                                  ENV.fetch(
-                                    "REDIS_URL",
-                                    "redis://localhost:6379/1"
-                                  )
-                              )
+Sidekiq.redis do |conn|
+  OkComputer::Registry.register "sidekiq",
+                                OkComputer::RedisCheck.new(conn.connection)
+end
 
 OkComputer::Registry.register "version", OkComputer::AppVersionCheck.new
 
