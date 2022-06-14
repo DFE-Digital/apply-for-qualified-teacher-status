@@ -234,7 +234,7 @@ GEM
     rbs (2.4.0)
     redcarpet (3.5.1)
     redis (4.6.0)
-    regexp_parser (2.4.0)
+    regexp_parser (2.5.0)
     reline (0.3.1)
       io-console (~> 0.5)
     reverse_markdown (2.1.1)
@@ -302,7 +302,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    solargraph (0.44.3)
+    solargraph (0.45.0)
       backport (~> 1.2)
       benchmark
       bundler (>= 1.17.2)
@@ -352,7 +352,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yard (0.9.27)
+    yard (0.9.28)
       webrick (~> 1.7.0)
     zeitwerk (2.5.4)
 
