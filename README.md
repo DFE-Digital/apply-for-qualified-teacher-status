@@ -8,6 +8,7 @@ A service that allows international teachers to apply for qualified teacher stat
 - Node.js 16.x
 - Yarn 1.22.x
 - PostgreSQL 13.x
+- Redis 7.x
 - Terraform 1.0.x
 
 ## How the application works
@@ -56,6 +57,20 @@ Set up the `postgres` user if it doesn't exist:
 createdb default
 psql -d default
 > CREATE ROLE postgres LOGIN SUPERUSER;
+```
+
+You'll also need to install Redis 7.x. The way to do this is different on
+each operating system, but on macOS you can try the following:
+
+```bash
+brew install redis@7
+brew services start redis
+```
+
+If installing Redis manually, you'll need to start it in a separate terminal:
+
+```bash
+redis-server
 ```
 
 Setup the project (re-run after `Gemfile` or `package.json` updates,
