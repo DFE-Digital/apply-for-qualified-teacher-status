@@ -49,6 +49,11 @@ variable "postgres_database_service_plan" {
   default = "small-13"
 }
 
+variable "redis_service_plan" {
+  type    = string
+  default = "tiny-7_x"
+}
+
 locals {
   apply_qts_routes = flatten([
     cloudfoundry_route.apply_qts_public
@@ -56,4 +61,5 @@ locals {
 
   apply_qts_app_name     = "apply-for-qts-in-england-${var.environment_name}"
   postgres_database_name = "apply-for-qts-in-england-${var.environment_name}-pg-svc"
+  redis_database_name    = "apply-for-qts-in-england-${var.environment_name}-redis-svc"
 }
