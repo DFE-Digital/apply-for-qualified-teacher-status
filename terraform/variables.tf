@@ -51,7 +51,7 @@ variable "postgres_database_service_plan" {
 
 variable "redis_service_plan" {
   type    = string
-  default = "tiny-7_x"
+  default = "tiny-6_x"
 }
 
 locals {
