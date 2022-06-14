@@ -18,6 +18,7 @@ resource "cloudfoundry_app" "app" {
 
   environment = merge(local.app_environment_variables, {
     SENTRY_ENVIRONMENT = var.environment_name,
+    REDIS_URL          = cloudfoundry_service_key.redis_key.credentials.uri
   })
 
   health_check_type          = "http"
@@ -54,4 +55,9 @@ resource "cloudfoundry_service_instance" "redis" {
   name         = local.redis_database_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_service_plan]
+}
+
+resource "cloudfoundry_service_key" "redis_key" {
+  name             = "${local.redis_database_name}_key"
+  service_instance = cloudfoundry_service_instance.redis.id
 }
