@@ -25,6 +25,8 @@
 #  fk_rails_...  (country_id => countries.id)
 #
 class Region < ApplicationRecord
+  include DfE::Analytics::Entities
+
   belongs_to :country
   has_many :eligibility_checks
 

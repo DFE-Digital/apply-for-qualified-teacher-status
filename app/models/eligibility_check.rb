@@ -19,6 +19,8 @@
 #  fk_rails_...  (region_id => regions.id)
 #
 class EligibilityCheck < ApplicationRecord
+  include DfE::Analytics::Entities
+
   belongs_to :region, optional: true
 
   scope :complete, -> { where.not(completed_at: nil) }

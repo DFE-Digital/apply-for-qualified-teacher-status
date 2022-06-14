@@ -12,6 +12,8 @@
 #  index_countries_on_code  (code) UNIQUE
 #
 class Country < ApplicationRecord
+  include DfE::Analytics::Entities
+
   has_many :regions
 
   LOCATION_AUTOCOMPLETE_CANONICAL_LIST =
