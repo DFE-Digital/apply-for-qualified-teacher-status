@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Performance", type: :system do
-  before { travel_to Date.new(2022, 6, 10) }
+  before { travel_to Date.new(2022, 6, 30) }
 
   after { travel_back }
 
@@ -37,8 +37,8 @@ RSpec.describe "Performance", type: :system do
     expect(page).to have_content(
       "36\neligibility checks submitted over the last 7 days"
     )
-    expect(page).to have_content("10 June\t1")
-    expect(page).to have_content("4 June\t7")
+    expect(page).to have_content("30 June\t1")
+    expect(page).to have_content("24 June\t7")
   end
 
   def when_i_visit_the_performance_page_since_launch
@@ -49,7 +49,7 @@ RSpec.describe "Performance", type: :system do
     expect(page).to have_content(
       "45\neligibility checks submitted since launch"
     )
-    expect(page).to have_content("10 June\t1")
-    expect(page).to have_content("2 June\t9")
+    expect(page).to have_content("30 June\t1")
+    expect(page).to have_content("22 June\t9")
   end
 end
