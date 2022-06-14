@@ -20,4 +20,8 @@ class PagesController < ApplicationController
 
     @countries, @country_data = stats.country_usage
   end
+
+  def current_namespace
+    "pages"
+  end
 end
