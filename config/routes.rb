@@ -44,6 +44,8 @@ Rails.application.routes.draw do
          to: "feature_flags#deactivate",
          as: :deactivate_feature
 
+    get "/countries", to: "countries#index"
+
     # https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
     require "sidekiq/web"
 
