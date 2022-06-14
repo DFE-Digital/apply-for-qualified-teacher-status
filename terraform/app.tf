@@ -33,6 +33,10 @@ resource "cloudfoundry_app" "app" {
   service_binding {
     service_instance = cloudfoundry_service_instance.postgres.id
   }
+
+  service_binding {
+    service_instance = cloudfoundry_service_instance.redis.id
+  }
 }
 
 resource "cloudfoundry_service_instance" "postgres" {
@@ -44,4 +48,10 @@ resource "cloudfoundry_service_instance" "postgres" {
     create = "60m"
     update = "60m"
   }
+}
+
+resource "cloudfoundry_service_instance" "redis" {
+  name         = local.redis_database_name
+  space        = data.cloudfoundry_space.space.id
+  service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_service_plan]
 }
