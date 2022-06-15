@@ -17,6 +17,7 @@ class PerformanceStats
     calculate_live_service_usage
     calculate_submission_results
     calculate_country_usage
+    calculate_duration_usage
   end
 
   def live_service_usage
@@ -29,6 +30,10 @@ class PerformanceStats
 
   def country_usage
     [@countries, @country_data]
+  end
+
+  def duration_usage
+    @duration_data
   end
 
   private
@@ -67,5 +72,42 @@ class PerformanceStats
       end
 
     @countries = eligibility_checks_by_country.count
+  end
+
+  def calculate_duration_usage
+    percentiles_by_day =
+      @eligibility_checks
+        .where.not(completed_at: nil)
+        .group("1")
+        .pluck(
+          Arel.sql("date_trunc('day', created_at) AS day"),
+          Arel.sql(
+            "percentile_cont(0.90) within group (order by (completed_at - created_at) asc) as percentile_90"
+          ),
+          Arel.sql(
+            "percentile_cont(0.75) within group (order by (completed_at - created_at) asc) as percentile_75"
+          ),
+          Arel.sql(
+            "percentile_cont(0.50) within group (order by (completed_at - created_at) asc) as percentile_50"
+          )
+        )
+        .each_with_object({}) { |row, hash| hash[row[0]] = row.slice(1, 3) }
+
+    @duration_data = [
+      [
+        "Date",
+        "90% of users within",
+        "75% of users within",
+        "50% of users within"
+      ]
+    ]
+    @duration_data +=
+      @last_n_days.map do |day|
+        percentiles = percentiles_by_day[day] || [0, 0, 0]
+        [day.strftime("%d %B")] +
+          percentiles.map do |value|
+            ActiveSupport::Duration.build(value.to_i).inspect
+          end
+      end
   end
 end

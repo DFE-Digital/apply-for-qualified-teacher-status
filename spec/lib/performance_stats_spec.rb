@@ -37,4 +37,11 @@ RSpec.describe PerformanceStats do
       expect(data.size).to eq 1
     end
   end
+
+  describe "#duration_usage" do
+    it "calculates duration results" do
+      data = subject.duration_usage
+      expect(data.size).to eq 8
+    end
+  end
 end
