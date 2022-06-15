@@ -84,10 +84,10 @@ any changes we make to address any issues raised.
 
 ## Preparation of this accessibility statement
 
-This statement was prepared on Monday 30 May 2022. It was last reviewed on
-Monday 30 May 2022.
+This statement was prepared on Wednesday 15 June 2022. It was last reviewed on
+Wednesday 15 June 2022.
 
-This service was last tested on XXX. The test was carried
+This service was last tested on Wednesday 15 June 2022. The test was carried
 out by the TRA Digital team.
 
-Last updated: Monday 30 May 2022
+Last updated: Wednesday 15 June 2022
