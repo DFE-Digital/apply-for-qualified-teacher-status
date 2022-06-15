@@ -65,10 +65,10 @@
       <% end %>
 
       <% if @region.status_check_written? || @region.sanction_check_written? %>
-        <p class="govuk-body">You’ll need to provide a <%= @region.teaching_authority_certificate %>, which you can obtain by contacting:</p>
+        <p class="govuk-body">You’ll need to provide a <span lang="<%= @region.country.code %>"><%= @region.teaching_authority_certificate %></span>, which you can obtain by contacting:</p>
 
         <% if @region.teaching_authority_address.present? %>
-          <p class="govuk-body app-teaching-authority-address"><%= @region.teaching_authority_address %></p>
+          <p class="govuk-body app-teaching-authority-address" lang="<%= @region.country.code %>"><%= @region.teaching_authority_address %></p>
         <% end %>
 
         <% if @region.teaching_authority_email_address.present? %>
@@ -76,7 +76,7 @@
         <% end %>
 
         <% if @region.teaching_authority_website.present? %>
-          <p class="govuk-body">You’ll need to complete the <a class="govuk-link" href="<%= @region.teaching_authority_website %>"><%= @region.teaching_authority_certificate %> request form</a>.</p>
+          <p class="govuk-body">You’ll need to complete the <a class="govuk-link" href="<%= @region.teaching_authority_website %>"><span lang="<%= @region.country.code %>"><%= @region.teaching_authority_certificate %></span> request form</a>.</p>
         <% end %>
 
         <p class="govuk-body">This must be dated within 3 months of you applying for QTS.</p>

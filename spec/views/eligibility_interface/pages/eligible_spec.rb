@@ -33,7 +33,8 @@ RSpec.describe "eligibility_interface/pages/eligible", type: :view do
     end
 
     it { is_expected.to match(/recognises you as a teacher must confirm/) }
-    it { is_expected.to match(/You’ll need to provide a certificate/) }
+    it { is_expected.to match(/You’ll need to provide a/) }
+    it { is_expected.to match(/certificate/) }
     it { is_expected.to match(/address/) }
   end
 
@@ -50,7 +51,8 @@ RSpec.describe "eligibility_interface/pages/eligible", type: :view do
 
     it { is_expected.to match(/has an online register of teachers/) }
     it { is_expected.to match(/must also confirm in writing/) }
-    it { is_expected.to match(/You’ll need to provide a certificate/) }
+    it { is_expected.to match(/You’ll need to provide a/) }
+    it { is_expected.to match(/certificate/) }
     it { is_expected.to match(/address/) }
   end
 
@@ -66,7 +68,8 @@ RSpec.describe "eligibility_interface/pages/eligible", type: :view do
     end
 
     it { is_expected.to match(/recognises you as a teacher must confirm/) }
-    it { is_expected.to match(/You’ll need to provide a certificate/) }
+    it { is_expected.to match(/You’ll need to provide a/) }
+    it { is_expected.to match(/certificate/) }
     it { is_expected.to match(/address/) }
     it { is_expected.to match(/show evidence of your work history/) }
   end
