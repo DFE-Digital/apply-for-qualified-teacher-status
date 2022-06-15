@@ -28,7 +28,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= govuk_header(service_name: t('service.name')) do |header| %>
+    <%= govuk_header(homepage_url: "https://ww.gov.uk", service_name: t('service.name')) do |header| %>
       <% case try(:current_namespace) %>
       <% when 'support' %>
         <% header.navigation_item(
