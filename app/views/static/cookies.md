@@ -31,7 +31,7 @@ t('service.name') %> service. We do not need to ask permission to use them.
         Used to keep you signed in
       </td>
       <td class="govuk-table__cell">
-        2 hours
+        20 hours
       </td>
     </tr>
   </tbody>
