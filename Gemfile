@@ -24,6 +24,7 @@ gem "mail-notify"
 
 group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "dotenv-rails"
 end
 
 group :development do
