@@ -16,6 +16,8 @@ class PerformanceController < ApplicationController
     @eligible_checks, @submission_data = stats.submission_results
 
     @countries, @country_data = stats.country_usage
+
+    @duration_data = stats.duration_usage
   end
 
   def current_namespace
