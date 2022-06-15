@@ -45,6 +45,9 @@ Rails.application.routes.draw do
          as: :deactivate_feature
 
     get "/countries", to: "countries#index"
+    post "/countries/private-beta",
+         to: "countries#configure_private_beta",
+         as: :configure_private_beta_countries
 
     # https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
     require "sidekiq/web"

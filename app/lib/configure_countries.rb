@@ -49,7 +49,7 @@ class ConfigureCountries
     },
     # Cyprus
     { country_code: :CY, sanction_check: :none, status_check: :none }
-  ]
+  ].freeze
 
   def self.private_beta!
     Region.where(legacy: false).update_all(legacy: true)
