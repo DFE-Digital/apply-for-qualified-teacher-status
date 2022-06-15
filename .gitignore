@@ -5,6 +5,10 @@
 !tmp/pids/.keep
 *.log
 .bundle
+.env.development.local
+.env.local
+.env.production.local
+.env.test.local
 app/assets/builds/*
 bin/fetch_config.rb
 config/master.key
