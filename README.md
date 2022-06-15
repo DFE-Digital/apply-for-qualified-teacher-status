@@ -90,6 +90,8 @@ bin/dev
 
 Edit `.env.local` and add a BigQuery key if you want to use BigQuery locally.
 
+Remove `BIGQUERY_DISABLE=true` or set it to `false`.
+
 [Read more about setting up BigQuery](docs/setup-bigquery.md).
 
 ### Intellisense
