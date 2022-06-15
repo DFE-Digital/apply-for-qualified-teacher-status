@@ -86,6 +86,12 @@ Run the application on `http://localhost:3000`:
 bin/dev
 ```
 
+### BigQuery
+
+Edit `.env.local` and add a BigQuery key if you want to use BigQuery locally.
+
+[Read more about setting up BigQuery](docs/setup-bigquery.md).
+
 ### Intellisense
 
 [solargraph](https://github.com/castwide/solargraph) is bundled as part of the
