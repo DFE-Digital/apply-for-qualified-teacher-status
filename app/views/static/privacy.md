@@ -8,15 +8,18 @@ The <%= t('service.name') %> service is run by the [Teaching Regulation Agency
 (TRA)](https://www.gov.uk/government/organisations/teaching-regulation-agency/about),
 an executive agency of the Department for Education (DfE).
 
-Our service allows anyone with a teacher reference number (TRN) to get a
-reminder of their TRN by email.
+Our service allows anyone to check whether they might be eligible to receive qualified teacher status (QTS) in England.
 
 For the purpose of data protection legislation, DfE is the data controller for
 the data we hold and process.
 
 ## What data we collect
 
+We collect information on the answers that people give to the eligibility questions. We do not currently collect any personally identifiable information.
+
 ### Why we need your data
+
+We use it to determine whether someone might be eligible to receive qualified teacher status (QTS) in England.
 
 ## Our legal basis for processing your data
 
@@ -29,7 +32,15 @@ conditions in the data protection legislation. For our service, this is:
 
 ### What we do with your data
 
+We use the data you give us to determine whether you might be eligible to receive qualified teacher status (QTS) in England. This allows you to apply for teaching jobs or access other DfE services.
+
+We might also use your details when analysing data to improve the service.
+
+We use GOV.UK PaaS to run the service. [Visit the GOV.UK PaaS website](https://www.cloud.service.gov.uk/privacy-notice/#what-data-we-collect-from-end-users) to find out how they use and look after your data.
+
 ## How long we keep your data
+
+We'll keep a record of who has checked their eligibility status, and how many requests have been made, for up to 2 years.
 
 ## Your data protection rights
 
@@ -39,12 +50,12 @@ You have the right:
 - to have your personal data rectified if it is inaccurate or incomplete
 - to request the deletion or removal of personal data where there is no
   compelling reason for its continued processing
-- to restrict our processing of your personal data (for instance allow us to
+- to restrict our processing of your personal data (for instance, to allow us to
   store it but not process it further)
 - to object to direct marketing (including profiling) and processing for the
   purposes of scientific or historical research and statistics
 - not to be subject to decisions based purely on automated processing where it
-  produces a legal or similarly significant effect on you
+  produces a legal or similarly significant effect on you.
 
 If you have any questions about how we’ll use your personal information,
 email [qts.enquiries@education.gov.uk](mailto:qts.enquiries@education.gov.uk)
@@ -80,4 +91,4 @@ Commissioner’s Office (ICO)](https://ico.org.uk/concerns/).
 
 We’ll update this privacy notice when required. You should review it at least once a year.
 
-This version was last updated on 30 May 2022.
+This version was last updated on 16 June 2022.
