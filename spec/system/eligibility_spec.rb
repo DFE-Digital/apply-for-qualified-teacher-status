@@ -33,9 +33,9 @@ RSpec.describe "Eligibility check", type: :system do
 
     # when_i_choose_yes
     # and_i_submit
-    then_i_see_the_clean_record_page
+    then_i_see_the_misconduct_page
 
-    when_i_choose_yes
+    when_i_choose_no
     and_i_submit
     then_i_see_the_eligible_page
   end
@@ -66,9 +66,9 @@ RSpec.describe "Eligibility check", type: :system do
 
     # when_i_choose_no
     # and_i_submit
-    then_i_see_the_clean_record_page
+    then_i_see_the_misconduct_page
 
-    when_i_choose_no
+    when_i_choose_yes
     and_i_submit
     then_i_see_the_ineligible_page
     and_i_see_the_ineligible_degree_text
@@ -234,10 +234,10 @@ RSpec.describe "Eligibility check", type: :system do
     )
   end
 
-  def then_i_see_the_clean_record_page
+  def then_i_see_the_misconduct_page
     expect(page).to have_current_path("/eligibility/misconduct")
     expect(page).to have_content(
-      "Is your employment record as a teacher free of sanctions?"
+      "Do you have any sanctions or restrictions on your employment record?"
     )
   end
 
