@@ -3,22 +3,20 @@ require "rails_helper"
 RSpec.describe EligibilityInterface::MisconductForm, type: :model do
   it { is_expected.to validate_presence_of(:eligibility_check) }
   it do
-    is_expected.to validate_inclusion_of(:free_of_sanctions).in_array(
-      [true, false]
-    )
+    is_expected.to validate_inclusion_of(:misconduct).in_array([true, false])
   end
 
   describe "#valid?" do
     subject(:valid) { form.valid? }
 
     let(:eligibility_check) { EligibilityCheck.new }
-    let(:form) { described_class.new(eligibility_check:, free_of_sanctions:) }
-    let(:free_of_sanctions) { "true" }
+    let(:form) { described_class.new(eligibility_check:, misconduct:) }
+    let(:misconduct) { "true" }
 
     it { is_expected.to be_truthy }
 
-    context "when free_of_sanctions is blank" do
-      let(:free_of_sanctions) { "" }
+    context "when misconduct is blank" do
+      let(:misconduct) { "" }
 
       it { is_expected.to be_falsy }
     end
@@ -28,9 +26,7 @@ RSpec.describe EligibilityInterface::MisconductForm, type: :model do
     subject(:save!) { form.save }
 
     let(:eligibility_check) { EligibilityCheck.new }
-    let(:form) do
-      described_class.new(eligibility_check:, free_of_sanctions: true)
-    end
+    let(:form) { described_class.new(eligibility_check:, misconduct: false) }
 
     it "saves the eligibility check" do
       save!

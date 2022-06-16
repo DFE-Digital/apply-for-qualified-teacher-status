@@ -6,12 +6,12 @@
     <%= form_with model: @misconduct_form, url: eligibility_interface_misconduct_path, method: :post do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_collection_radio_buttons(
-        :free_of_sanctions,
+        :misconduct,
         [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
         :value,
         :label,
-        legend: { size: 'l', tag: 'h1', text: 'Is your employment record as a teacher free of sanctions?' },
-        hint: { text: 'You must not have any findings of misconduct or restrictions on your practice.' }
+        legend: { size: 'l', tag: 'h1', text: 'Do you have any sanctions or restrictions on your employment record?' },
+        hint: { text: 'To teach in England, your record must be free of any sanctions, restrictions, penalties or instances of misconduct.' }
       ) %>
       <%= f.govuk_submit prevent_double_click: false %>
     <% end %>
