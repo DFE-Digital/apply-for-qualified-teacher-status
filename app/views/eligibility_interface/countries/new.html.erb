@@ -7,7 +7,7 @@
       <%= f.govuk_error_summary %>
       <%= f.govuk_select :location, options_for_select(locations),
             hint: { text: "This means you have all the qualifications needed to teach in a state school. You'll need to provide evidence of this if you apply for QTS." },
-            label: { size: 'xl', text: "In which country are you currently recognised as a teacher?" },
+            label: { size: 'l', tag: 'h1', text: "In which country are you currently recognised as a teacher?" },
             options: { include_blank: true }
       %>
       <%= f.govuk_submit prevent_double_click: false %>
