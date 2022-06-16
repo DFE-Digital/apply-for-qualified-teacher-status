@@ -6,13 +6,13 @@
     <%= form_with model: @degree_form, url: eligibility_interface_degree_url, method: :post do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_collection_radio_buttons(
-          :degree,
-          [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
-          :value,
-          :label,
-          legend: { size: 'l', text: 'Do you have a degree?' },
-          hint: { text: 'Your degree can be in any subject.' }
-        ) %>
+        :degree,
+        [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
+        :value,
+        :label,
+        legend: { size: 'l', tag: 'h1', text: 'Do you have a degree?' },
+        hint: { text: 'Your degree can be in any subject.' }
+      ) %>
       <%= f.govuk_submit prevent_double_click: false %>
     <% end %>
   </div>

@@ -6,13 +6,13 @@
     <%= form_with model: @qualification_form, url: eligibility_interface_qualifications_url, method: :post do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_collection_radio_buttons(
-          :qualification,
-          [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
-          :value,
-          :label,
-          legend: { size: 'l', text: 'Do you have a teacher training qualification?' },
-          hint: { text: 'For example, this could be from an undergraduate degree, or a postgraduate teacher training course.' }
-        ) %>
+        :qualification,
+        [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
+        :value,
+        :label,
+        legend: { size: 'l', tag: 'h1', text: 'Do you have a teacher training qualification?' },
+        hint: { text: 'For example, this could be from an undergraduate degree, or a postgraduate teacher training course.' }
+      ) %>
       <%= f.govuk_submit prevent_double_click: false %>
     <% end %>
   </div>
