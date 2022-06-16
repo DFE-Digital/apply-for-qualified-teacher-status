@@ -4,8 +4,8 @@ locals {
   ), {})
 
   app_environment_variables = merge(local.azure_environment_variables, {
-    SENTRY_ENVIRONMENT = var.environment_name,
-    REDIS_URL          = cloudfoundry_service_key.redis_key.credentials.uri
+    HOSTING_ENVIRONMENT = var.environment_name,
+    REDIS_URL           = cloudfoundry_service_key.redis_key.credentials.uri
   })
 }
 
