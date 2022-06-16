@@ -35,6 +35,9 @@ ci:	## Run in automation environment
 	$(eval AUTO_APPROVE=-auto-approve)
 	$(eval SP_AUTH=true)
 
+tags: ##Tags that will be added to resource group on it's creation in ARM template
+	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Apply for QTS in England", "Service Line": "Becoming a teacher", "Service": "Apply for QTS in England", "Service Offering": "Apply for QTS in England"}' | jq . ))
+
 .PHONY: install-fetch-config
 install-fetch-config: ## Install the fetch-config script, for viewing/editing secrets in Azure Key Vault
 	[ ! -f bin/fetch_config.rb ] \
@@ -96,9 +99,9 @@ terraform-apply: terraform-init
 terraform-destroy: terraform-init
 	terraform -chdir=terraform destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
-deploy-azure-resources: set-azure-account # make dev deploy-azure-resources CONFIRM_DEPLOY=1
+deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources CONFIRM_DEPLOY=1
 	$(if $(CONFIRM_DEPLOY), , $(error can only run with CONFIRM_DEPLOY))
-	az deployment sub create -l "West Europe" --template-file "./azure/azuredeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-rg" "environment=${DEPLOY_ENV}" "storageAccountName=${RESOURCE_NAME_PREFIX}afqtstfstate${ENV_SHORT}" "containerName=afqts-tfstate" "keyVaultName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-kv"
+	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}afqtstfstate${ENV_SHORT}" "tfStorageContainerName=afqts-tfstate" "dbBackupStorageAccountName=false" "dbBackupStorageContainerName=false" "keyVaultName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-kv"
 
-validate-azure-resources: set-azure-account # make dev validate-azure-resources
-	az deployment sub create -l "West Europe" --template-file "./azure/azuredeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-rg" "environment=${DEPLOY_ENV}" "storageAccountName=${RESOURCE_NAME_PREFIX}afqtstfstate${ENV_SHORT}" "containerName=afqts-tfstate" "keyVaultName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-kv" --what-if
+validate-azure-resources: set-azure-account  tags# make dev validate-azure-resources
+	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}afqtstfstate${ENV_SHORT}" "tfStorageContainerName=afqts-tfstate" "dbBackupStorageAccountName=false" "dbBackupStorageContainerName=false" "keyVaultName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-kv" --what-if
