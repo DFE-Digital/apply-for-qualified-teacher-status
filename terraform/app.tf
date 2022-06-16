@@ -1,5 +1,8 @@
 locals {
-  app_environment_variables = try(local.application_environment_variables, {})
+  app_environment_variables = merge(try(local.application_environment_variables, {}), {
+    SENTRY_ENVIRONMENT = var.environment_name,
+    REDIS_URL          = cloudfoundry_service_key.redis_key.credentials.uri
+  })
 }
 
 resource "cloudfoundry_route" "apply_qts_public" {
@@ -7,6 +10,7 @@ resource "cloudfoundry_route" "apply_qts_public" {
   hostname = local.apply_qts_app_name
   space    = data.cloudfoundry_space.space.id
 }
+
 resource "cloudfoundry_app" "app" {
   name         = local.apply_qts_app_name
   space        = data.cloudfoundry_space.space.id
@@ -15,11 +19,7 @@ resource "cloudfoundry_app" "app" {
   disk_quota   = var.apply_qts_disk_quota
   docker_image = var.apply_qts_docker_image
   strategy     = "blue-green"
-
-  environment = merge(local.app_environment_variables, {
-    SENTRY_ENVIRONMENT = var.environment_name,
-    REDIS_URL          = cloudfoundry_service_key.redis_key.credentials.uri
-  })
+  environment  = local.app_environment_variables
 
   health_check_type          = "http"
   health_check_http_endpoint = "/healthcheck"
@@ -30,6 +30,28 @@ resource "cloudfoundry_app" "app" {
       route = routes.value.id
     }
   }
+
+  service_binding {
+    service_instance = cloudfoundry_service_instance.postgres.id
+  }
+
+  service_binding {
+    service_instance = cloudfoundry_service_instance.redis.id
+  }
+}
+
+resource "cloudfoundry_app" "worker" {
+  name         = "${local.apply_qts_app_name}-worker"
+  space        = data.cloudfoundry_space.space.id
+  instances    = var.apply_qts_instances
+  memory       = var.apply_qts_memory
+  disk_quota   = var.apply_qts_disk_quota
+  docker_image = var.apply_qts_docker_image
+  command      = "bundle exec sidekiq -C ./config/sidekiq.yml"
+  strategy     = "standard"
+  environment  = local.app_environment_variables
+
+  health_check_type = "process"
 
   service_binding {
     service_instance = cloudfoundry_service_instance.postgres.id
