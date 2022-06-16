@@ -1,6 +1,5 @@
 locals {
-  azure_credentials                 = try(jsondecode(var.azure_sp_credentials_json), null)
-  application_environment_variables = yamldecode(data.azurerm_key_vault_secret.secrets["APPLY-QTS-APP-VARIABLES"].value)
+  azure_credentials = try(jsondecode(var.azure_sp_credentials_json), null)
 }
 
 provider "azurerm" {

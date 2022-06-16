@@ -1,5 +1,9 @@
 locals {
-  app_environment_variables = merge(try(local.application_environment_variables, {}), {
+  azure_environment_variables = try(yamldecode(
+    data.azurerm_key_vault_secret.secrets["APPLY-QTS-APP-VARIABLES"].value
+  ), {})
+
+  app_environment_variables = merge(local.azure_environment_variables, {
     SENTRY_ENVIRONMENT = var.environment_name,
     REDIS_URL          = cloudfoundry_service_key.redis_key.credentials.uri
   })
