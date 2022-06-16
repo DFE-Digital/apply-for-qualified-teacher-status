@@ -94,7 +94,6 @@ You should create separate data sets for each environment (dev/preprod/prod).
 
 <details>
 <summary>Permissions for bigquery_developer_custom</summary>
-</details>
     bigquery.connections.create
     bigquery.connections.delete
     bigquery.connections.get
