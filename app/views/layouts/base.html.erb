@@ -48,20 +48,18 @@
       <% end %>
     <% end %>
 
-    <% if HostingEnvironment.phase %>
-      <div class="govuk-width-container">
-        <div class="govuk-phase-banner">
-          <p class="govuk-phase-banner__content">
-            <strong class="govuk-tag govuk-phase-banner__content__tag app-environment-tag--<%= HostingEnvironment.name %>">
-              <%= HostingEnvironment.phase %>
-            </strong>
-            <span class="govuk-phase-banner__text">
-              <%= HostingEnvironment.phase_text %>
-            </span>
-          </p>
-        </div>
+    <div class="govuk-width-container">
+      <div class="govuk-phase-banner">
+        <p class="govuk-phase-banner__content">
+          <strong class="govuk-tag govuk-phase-banner__content__tag app-environment-tag--<%= HostingEnvironment.name %>">
+            <%= HostingEnvironment.phase %>
+          </strong>
+          <span class="govuk-phase-banner__text">
+            <%= HostingEnvironment.phase_text.html_safe %>
+          </span>
+        </p>
       </div>
-    <% end %>
+    </div>
 
     <div class="govuk-width-container">
       <%= govuk_back_link(href: yield(:back_link_url)) unless yield(:back_link_url).blank? %>
