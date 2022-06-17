@@ -44,6 +44,7 @@ end
 
 group :test do
   gem "capybara", "~> 3.37"
+  gem "climate_control"
   gem "cuprite", "~> 0.13"
   gem "factory_bot_rails"
   gem "rspec"
