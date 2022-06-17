@@ -1,5 +1,7 @@
 module EligibilityInterface
   class TeachChildrenController < BaseController
+    include EnforceEligibilityQuestionOrder
+
     def new
       @teach_children_form = TeachChildrenForm.new
     end

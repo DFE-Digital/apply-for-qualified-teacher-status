@@ -1,5 +1,7 @@
 module EligibilityInterface
   class MisconductController < BaseController
+    include EnforceEligibilityQuestionOrder
+
     def new
       @misconduct_form = MisconductForm.new
     end

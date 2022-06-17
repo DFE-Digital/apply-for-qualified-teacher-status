@@ -1,5 +1,7 @@
 module EligibilityInterface
   class QualificationsController < BaseController
+    include EnforceEligibilityQuestionOrder
+
     def new
       @qualification_form = QualificationForm.new
     end

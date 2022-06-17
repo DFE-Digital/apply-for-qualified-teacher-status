@@ -1,5 +1,7 @@
 module EligibilityInterface
   class DegreesController < BaseController
+    include EnforceEligibilityQuestionOrder
+
     def new
       @degree_form = DegreeForm.new
     end

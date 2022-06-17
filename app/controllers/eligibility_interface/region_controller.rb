@@ -1,5 +1,7 @@
 module EligibilityInterface
   class RegionController < BaseController
+    include EnforceEligibilityQuestionOrder
+
     before_action :load_regions
 
     def new
