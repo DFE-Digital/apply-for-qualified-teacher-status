@@ -13,12 +13,6 @@ RSpec.describe "Support", type: :system do
 
     when_i_deactivate_the_service_open_flag
     then_the_service_open_flag_is_off
-
-    when_i_visit_the_countries_path
-    then_i_see_the_countries
-
-    when_i_configure_the_private_beta_countries
-    then_the_private_beta_countries_are_configured
   end
 
   private

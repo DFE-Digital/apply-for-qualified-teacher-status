@@ -1,28 +1,3 @@
 <% content_for :page_title, 'Countries' %>
 
 <h1 class="govuk-heading-l">Countries</h1>
-
-<h2 class="govuk-heading-m">Configure private beta countries</h2>
-
-<p class="govuk-body">Enable the following countries in the service to go through the question flow and enable the rest to go directly to the legacy mutual recognition site:</p>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>Republic of Ireland</li>
-  <li>Poland</li>
-  <li>USA (Hawaii)</li>
-  <li>Spain</li>
-  <li>Canada (British Columbia)</li>
-  <li>Cyprus</li>
-</ul>
-
-<div class="govuk-warning-text">
-  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-  <strong class="govuk-warning-text__text">
-    <span class="govuk-warning-text__assistive">Warning</span>
-    This action is irreversible.
-  </strong>
-</div>
-
-<%= form_with(url: support_interface_configure_private_beta_countries_path) do |f| %>
-  <%= f.govuk_submit "Configure private beta countries", prevent_double_click: false %>
-<% end %>
