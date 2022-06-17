@@ -122,6 +122,7 @@ COUNTRIES = {
     "Pennsylvania",
     "Rhode Island",
     "South Carolina",
+    "South Dakota",
     "Tennessee",
     "Texas",
     "Utah",
