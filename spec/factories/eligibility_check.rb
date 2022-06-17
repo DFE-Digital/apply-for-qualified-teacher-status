@@ -4,7 +4,6 @@ FactoryBot.define do
     degree { nil }
     free_of_sanctions { nil }
     qualification { nil }
-    recognised { nil }
     teach_children { nil }
 
     trait :eligible do
@@ -12,7 +11,6 @@ FactoryBot.define do
       degree { true }
       free_of_sanctions { true }
       qualification { true }
-      recognised { true }
       teach_children { true }
 
       after(:create) do |eligiblity_check, _evaluator|

@@ -30,7 +30,6 @@ class EligibilityCheck < ApplicationRecord
             degree: true,
             free_of_sanctions: true,
             qualification: true,
-            # recognised: true,
             teach_children: true
           )
         }
@@ -39,7 +38,6 @@ class EligibilityCheck < ApplicationRecord
           where(degree: false)
             .or(where(free_of_sanctions: false))
             .or(where(qualification: false))
-            # .or(where(recognised: false))
             .or(where(region: nil))
             .or(where(teach_children: false))
         }
@@ -57,7 +55,6 @@ class EligibilityCheck < ApplicationRecord
       !degree ? :degree : nil,
       !qualification ? :qualification : nil,
       !teach_children ? :teach_children : nil,
-      # !recognised ? :recognised : nil,
       !free_of_sanctions ? :misconduct : nil
     ].compact
   end
