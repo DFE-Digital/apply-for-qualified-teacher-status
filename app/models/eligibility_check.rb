@@ -82,4 +82,21 @@ class EligibilityCheck < ApplicationRecord
   def complete!
     touch(:completed_at)
   end
+
+  def status
+    # Ineligible and legacy countries aren't required to answer all the questions
+    if (country_code.present? && country_eligibility_status == :ineligible) ||
+         country_eligibility_status == :legacy
+      return :eligibility
+    end
+
+    return :eligibility unless free_of_sanctions.nil?
+    return :misconduct unless teach_children.nil?
+    return :teach_children unless qualification.nil?
+    return :qualification unless degree.nil?
+    return :degree if region.present?
+    return :region if country_code.present?
+
+    :country
+  end
 end

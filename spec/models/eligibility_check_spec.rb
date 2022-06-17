@@ -228,4 +228,82 @@ RSpec.describe EligibilityCheck, type: :model do
       end
     end
   end
+
+  describe "#status" do
+    subject { eligibility_check.status }
+
+    let(:eligibility_check) { described_class.new(attributes) }
+    let(:country) { create(:country) }
+
+    context "when no attributes are present" do
+      let(:attributes) { nil }
+
+      it { is_expected.to eq(:country) }
+    end
+
+    context "when a country_code is present" do
+      let(:attributes) { { country_code: country.code } }
+
+      it { is_expected.to eq(:region) }
+    end
+
+    context "when a region is present" do
+      let(:attributes) { { region: create(:region) } }
+
+      it { is_expected.to eq(:degree) }
+    end
+
+    context "when a degree is present" do
+      let(:attributes) { { degree: true, region: create(:region) } }
+
+      it { is_expected.to eq(:qualification) }
+    end
+
+    context "when qualification is present" do
+      let(:attributes) do
+        { qualification: true, degree: true, region: create(:region) }
+      end
+
+      it { is_expected.to eq(:teach_children) }
+    end
+
+    context "when teach children is present" do
+      let(:attributes) do
+        {
+          teach_children: true,
+          qualification: true,
+          degree: true,
+          region: create(:region)
+        }
+      end
+
+      it { is_expected.to eq(:misconduct) }
+    end
+
+    context "when free of sanctions is present" do
+      let(:attributes) do
+        {
+          free_of_sanctions: true,
+          teach_children: true,
+          qualification: true,
+          degree: true,
+          region: create(:region)
+        }
+      end
+
+      it { is_expected.to eq(:eligibility) }
+    end
+
+    context "with a legacy region" do
+      let(:attributes) { { region: create(:region, :legacy) } }
+
+      it { is_expected.to eq(:eligibility) }
+    end
+
+    context "with an ineligible country" do
+      let(:attributes) { { country_code: "XX" } }
+
+      it { is_expected.to eq(:eligibility) }
+    end
+  end
 end
