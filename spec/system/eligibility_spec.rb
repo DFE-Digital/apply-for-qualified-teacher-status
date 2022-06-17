@@ -29,10 +29,6 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_choose_yes
     and_i_submit
-    # then_i_see_the_recognised_page
-
-    # when_i_choose_yes
-    # and_i_submit
     then_i_see_the_misconduct_page
 
     when_i_choose_no
@@ -62,10 +58,6 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_choose_no
     and_i_submit
-    # then_i_see_the_recognised_page
-
-    # when_i_choose_no
-    # and_i_submit
     then_i_see_the_misconduct_page
 
     when_i_choose_yes
@@ -74,7 +66,6 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_see_the_ineligible_degree_text
     and_i_see_the_ineligible_qualification_text
     and_i_see_the_ineligible_teach_children_text
-    # and_i_see_the_ineligible_recognised_text
     and_i_see_the_ineligible_misconduct_text
   end
 
@@ -363,12 +354,6 @@ RSpec.describe "Eligibility check", type: :system do
     )
   end
 
-  def and_i_see_the_ineligible_recognised_text
-    expect(page).to have_content(
-      "You are not recognised as a school teacher in the country where you trained."
-    )
-  end
-
   def and_i_see_the_ineligible_teach_children_text
     expect(page).to have_content(
       "You are not qualified to teach children who are aged somewhere between 5 and 16 years."
@@ -397,16 +382,6 @@ RSpec.describe "Eligibility check", type: :system do
     expect(page).to have_title("Do you have a teacher training qualification?")
     expect(page).to have_content(
       "Do you have a teacher training qualification?"
-    )
-  end
-
-  def then_i_see_the_recognised_page
-    expect(page).to have_current_path("/eligibility/recognised")
-    expect(page).to have_title(
-      "Are you recognised as a teacher in the country where you trained?"
-    )
-    expect(page).to have_content(
-      "Are you recognised as a teacher in the country where you trained?"
     )
   end
 

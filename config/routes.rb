@@ -21,8 +21,6 @@ Rails.application.routes.draw do
     post "region", to: "region#create"
     get "qualifications", to: "qualifications#new"
     post "qualifications", to: "qualifications#create"
-    get "recognised", to: "recognised#new"
-    post "recognised", to: "recognised#create"
     get "teach-children", to: "teach_children#new"
     post "teach-children", to: "teach_children#create"
     get "start", to: "pages#start"

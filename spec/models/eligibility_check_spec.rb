@@ -38,18 +38,6 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to include(:misconduct) }
     end
 
-    context "when recognised is true" do
-      before { eligibility_check.recognised = true }
-
-      it { is_expected.to_not include(:recognised) }
-    end
-
-    # context "when recognised is false" do
-    #   before { eligibility_check.recognised = false }
-    #
-    #   it { is_expected.to include(:recognised) }
-    # end
-
     context "when teach_children is true" do
       before { eligibility_check.teach_children = true }
 
@@ -113,7 +101,6 @@ RSpec.describe EligibilityCheck, type: :model do
 
       before do
         eligibility_check.free_of_sanctions = true
-        eligibility_check.recognised = true
         eligibility_check.teach_children = true
         eligibility_check.qualification = true
         eligibility_check.degree = true
