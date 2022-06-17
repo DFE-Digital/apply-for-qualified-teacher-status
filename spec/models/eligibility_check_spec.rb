@@ -8,7 +8,6 @@
 #  degree            :boolean
 #  free_of_sanctions :boolean
 #  qualification     :boolean
-#  recognised        :boolean
 #  teach_children    :boolean
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
