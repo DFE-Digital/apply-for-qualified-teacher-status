@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Support", type: :system do
   before { given_countries_exist }
 
-  it "using the support interface" do
+  it "features" do
     when_i_am_authorized_as_a_support_user
     when_i_visit_the_feature_flags_page
     then_i_see_the_feature_flags
@@ -13,6 +13,25 @@ RSpec.describe "Support", type: :system do
 
     when_i_deactivate_the_service_open_flag
     then_the_service_open_flag_is_off
+  end
+
+  it "countries" do
+    when_i_am_authorized_as_a_support_user
+    when_i_visit_the_countries_page
+    then_i_see_the_countries
+
+    when_i_press_a_country
+    then_i_see_a_country
+
+    when_i_select_sanction_check
+    when_i_select_status_check
+    when_i_fill_teaching_authority_address
+    when_i_fill_teaching_authority_certificate
+    when_i_fill_teaching_authority_email_address
+    when_i_fill_teaching_authority_website
+    and_i_save
+
+    then_i_see_the_countries
   end
 
   private
@@ -65,7 +84,7 @@ RSpec.describe "Support", type: :system do
     visit support_interface_features_path
   end
 
-  def when_i_visit_the_countries_path
+  def when_i_visit_the_countries_page
     visit support_interface_countries_path
   end
 
@@ -75,11 +94,39 @@ RSpec.describe "Support", type: :system do
     expect(page).to have_content("Countries")
   end
 
-  def when_i_configure_the_private_beta_countries
-    click_on "Configure private beta countries"
+  def when_i_press_a_country
+    click_link "Hawaii"
   end
 
-  def then_the_private_beta_countries_are_configured
-    expect(page).to have_content("Private beta countries configured")
+  def then_i_see_a_country
+    expect(page).to have_title("Hawaii")
+  end
+
+  def when_i_select_sanction_check
+    select "Online", from: "region-sanction-check-field"
+  end
+
+  def when_i_select_status_check
+    select "Online", from: "region-status-check-field"
+  end
+
+  def when_i_fill_teaching_authority_address
+    fill_in "region-teaching-authority-address-field", with: "Address"
+  end
+
+  def when_i_fill_teaching_authority_certificate
+    fill_in "region-teaching-authority-address-field", with: "Certificate"
+  end
+
+  def when_i_fill_teaching_authority_email_address
+    fill_in "region-teaching-authority-address-field", with: "Email address"
+  end
+
+  def when_i_fill_teaching_authority_website
+    fill_in "region-teaching-authority-address-field", with: "Website"
+  end
+
+  def and_i_save
+    click_button "Save", visible: false
   end
 end

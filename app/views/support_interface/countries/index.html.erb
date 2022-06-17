@@ -12,7 +12,7 @@
     <div class="govuk-grid-row">
       <% regions.each do |region| %>
         <div class="govuk-grid-column-one-quarter">
-          <a class="govuk-heading-s govuk-link">
+          <a class="govuk-heading-s govuk-link" href="<%= edit_support_interface_region_path(region) %>">
             <% if region.name.present? %>
               <%= region.name %>
             <% else %>

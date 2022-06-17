@@ -1,0 +1,29 @@
+<% content_for :page_title, @region.full_name %>
+
+<h1 class="govuk-heading-l"><%= @region.full_name %></h1>
+
+<%= form_with model: [:support_interface, @region] do |f| %>
+  <%= f.govuk_check_box :legacy, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Legacy" } %>
+
+  <%= f.govuk_collection_select :sanction_check, [
+    OpenStruct.new(id: 'online', name: 'Online'),
+    OpenStruct.new(id: 'written', name: 'Written'),
+    OpenStruct.new(id: 'none', name: 'None')
+  ], :id, :name, label: { text: "Sanction check" } %>
+
+  <%= f.govuk_collection_select :status_check, [
+    OpenStruct.new(id: 'online', name: 'Online'),
+    OpenStruct.new(id: 'written', name: 'Written'),
+    OpenStruct.new(id: 'none', name: 'None')
+  ], :id, :name, label: { text: "Status check" } %>
+
+  <%= f.govuk_text_area :teaching_authority_address, label: { text: "Teaching authority address" } %>
+
+  <%= f.govuk_text_field :teaching_authority_certificate, label: { text: "Teaching authority certificate" } %>
+
+  <%= f.govuk_email_field :teaching_authority_email_address, label: { text: "Teaching authority email address" } %>
+
+  <%= f.govuk_url_field :teaching_authority_website, label: { text: "Teaching authority website" } %>
+
+  <%= f.govuk_submit "Save", prevent_double_click: false %>
+<% end %>
