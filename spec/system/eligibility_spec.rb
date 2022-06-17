@@ -78,6 +78,48 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_see_the_ineligible_misconduct_text
   end
 
+  it "trying to skip steps" do
+    when_i_visit_the_start_page
+    then_i_see_the_start_page
+
+    when_i_try_to_go_to_the_eligible_page
+    then_i_see_the_start_page
+
+    when_i_try_to_go_to_the_ineligible_page
+    then_i_see_the_start_page
+
+    when_i_press_start_now
+    then_i_see_the_countries_page
+
+    when_i_try_to_go_to_the_region_page
+    then_i_see_the_countries_page
+
+    when_i_select_a_country
+    and_i_submit
+    then_i_see_the_degree_page
+
+    when_i_try_to_go_to_the_qualifications_page
+    then_i_see_the_degree_page
+
+    when_i_choose_yes
+    and_i_submit
+    then_i_see_the_qualification_page
+
+    when_i_try_to_go_to_the_teach_children_page
+    then_i_see_the_qualification_page
+
+    when_i_choose_yes
+    and_i_submit
+    then_i_see_the_teach_children_page
+
+    when_i_try_to_go_to_the_misconduct_page
+    then_i_see_the_teach_children_page
+
+    when_i_choose_yes
+    and_i_submit
+    then_i_see_the_misconduct_page
+  end
+
   it "handles the country picker error" do
     when_i_visit_the_start_page
     when_i_press_start_now
@@ -216,6 +258,30 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_visit_the_start_page
     visit "/eligibility"
+  end
+
+  def when_i_try_to_go_to_the_eligible_page
+    visit "/eligibility/eligible"
+  end
+
+  def when_i_try_to_go_to_the_ineligible_page
+    visit "/eligibility/ineligible"
+  end
+
+  def when_i_try_to_go_to_the_region_page
+    visit "/eligibility/region"
+  end
+
+  def when_i_try_to_go_to_the_qualifications_page
+    visit "/eligibility/qualifications"
+  end
+
+  def when_i_try_to_go_to_the_teach_children_page
+    visit "/eligibility/teach-children"
+  end
+
+  def when_i_try_to_go_to_the_misconduct_page
+    visit "/eligibility/misconduct"
   end
 
   def then_i_do_not_see_the_start_page

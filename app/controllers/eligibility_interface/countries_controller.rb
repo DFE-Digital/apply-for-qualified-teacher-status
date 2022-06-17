@@ -1,5 +1,7 @@
 module EligibilityInterface
   class CountriesController < BaseController
+    include EnforceEligibilityQuestionOrder
+
     def index
       render json: LOCATION_AUTOCOMPLETE_GRAPH
     end

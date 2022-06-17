@@ -1,5 +1,7 @@
 module EligibilityInterface
   class RecognisedController < BaseController
+    include EnforceEligibilityQuestionOrder
+
     def new
       @recognised_form = RecognisedForm.new
     end
