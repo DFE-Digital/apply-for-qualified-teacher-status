@@ -5,6 +5,8 @@ $govuk-assets-path: "/";
 @import "govuk-frontend/govuk/all";
 @import "location-autocomplete.min";
 
+@import "_environments";
+
 ul.autocomplete__menu {
   li {
     font-family: $govuk-font-family;
