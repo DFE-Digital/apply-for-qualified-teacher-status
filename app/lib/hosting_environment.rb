@@ -1,10 +1,11 @@
 module HostingEnvironment
   def self.name
-    ENV.fetch("HOSTING_ENVIRONMENT", "development")
+    ENV.fetch("HOSTING_ENVIRONMENT", "dev")
   end
 
   def self.phase
     return nil if production?
+    return "Development" if development?
 
     name.capitalize
   end
@@ -12,10 +13,14 @@ module HostingEnvironment
   def self.phase_text
     return nil if production?
 
-    "This is a #{name} version of the service."
+    "This is a '#{phase}' version of the service."
   end
 
   def self.production?
     name == "production"
+  end
+
+  def self.development?
+    name == "dev"
   end
 end

@@ -1,9 +1,9 @@
 $app-colour-development: govuk-colour("dark-grey", $legacy: "grey-1");
 
-.app-header--development .govuk-header__container {
+.app-header--dev .govuk-header__container {
   border-bottom-color: $app-colour-development;
 }
 
-.app-environment-tag--development {
+.app-environment-tag--dev {
   background-color: $app-colour-development;
 }

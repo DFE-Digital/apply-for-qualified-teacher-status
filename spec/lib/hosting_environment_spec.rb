@@ -13,7 +13,7 @@ RSpec.describe HostingEnvironment do
     end
 
     context "when the environment variable isn't set" do
-      it { is_expected.to eq("development") }
+      it { is_expected.to eq("dev") }
     end
   end
 end
