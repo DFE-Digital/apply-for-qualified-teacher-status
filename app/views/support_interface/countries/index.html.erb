@@ -1,3 +1,26 @@
 <% content_for :page_title, 'Countries' %>
 
 <h1 class="govuk-heading-l">Countries</h1>
+
+<% @countries.each do |country| %>
+  <h2 class="govuk-heading-m">
+    <%= country.name %>
+    <code class="govuk-tag app-country-code-tag govuk-!-margin-left-2"><%= country.code %></code>
+  </h2>
+
+  <% country.regions.each_slice(4) do |regions| %>
+    <div class="govuk-grid-row">
+      <% regions.each do |region| %>
+        <div class="govuk-grid-column-one-quarter">
+          <a class="govuk-heading-s govuk-link">
+            <% if region.name.present? %>
+              <%= region.name %>
+            <% else %>
+              <em>National</em>
+            <% end %>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

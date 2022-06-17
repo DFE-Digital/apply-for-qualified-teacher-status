@@ -39,7 +39,7 @@
         <% header.navigation_item(
           text: "Countries",
           href: support_interface_countries_path,
-          active: current_page?(support_interface_countries_path)
+          active: request.path.start_with?("/support/countries") || request.path.start_with?("/support/regions")
         ) %>
         <% header.navigation_item(
           text: "Sidekiq",
