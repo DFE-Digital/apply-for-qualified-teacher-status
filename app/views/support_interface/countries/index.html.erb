@@ -12,13 +12,19 @@
     <div class="govuk-grid-row">
       <% regions.each do |region| %>
         <div class="govuk-grid-column-one-quarter">
-          <a class="govuk-heading-s govuk-link" href="<%= edit_support_interface_region_path(region) %>">
-            <% if region.name.present? %>
-              <%= region.name %>
-            <% else %>
-              <em>National</em>
+          <p class="govuk-heading-s">
+            <a class="govuk-link" href="<%= edit_support_interface_region_path(region) %>">
+              <% if region.name.present? %>
+                <%= region.name %>
+              <% else %>
+                <em>National</em>
+              <% end %>
+            </a>
+
+            <% unless region.legacy %>
+              <%= govuk_tag(text: "Active", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
             <% end %>
-          </a>
+          </p>
         </div>
       <% end %>
     </div>
