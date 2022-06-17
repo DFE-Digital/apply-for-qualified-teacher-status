@@ -2,6 +2,13 @@
 
 A service that allows international teachers to apply for qualified teacher status (QTS) in England.
 
+## Environments
+
+| Name        | URL                                                                                                                    |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Production  | [apply-for-qts-in-england.education.gov.uk](https://apply-for-qts-in-england.education.gov.uk)                         |
+| Development | [apply-for-qts-in-england-dev.london.cloudapps.digital](https://apply-for-qts-in-england-dev.london.cloudapps.digital) |
+
 ## Dependencies
 
 - Ruby 3.x
