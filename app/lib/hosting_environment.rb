@@ -4,14 +4,14 @@ module HostingEnvironment
   end
 
   def self.phase
-    return nil if production?
+    return "Beta" if production?
     return "Development" if development?
 
     name.capitalize
   end
 
   def self.phase_text
-    return nil if production?
+    return I18n.t("service.phase_banner_text") if production?
 
     "This is a '#{phase}' version of the service."
   end
