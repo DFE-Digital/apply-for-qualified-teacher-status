@@ -2,10 +2,6 @@ module EligibilityInterface
   class CountriesController < BaseController
     include EnforceEligibilityQuestionOrder
 
-    def index
-      render json: LOCATION_AUTOCOMPLETE_GRAPH
-    end
-
     def new
       @country_form = CountryForm.new
     end
@@ -21,9 +17,6 @@ module EligibilityInterface
     end
 
     private
-
-    LOCATION_AUTOCOMPLETE_GRAPH =
-      JSON.parse(File.read("public/location-autocomplete-graph.json"))
 
     def location_form_params
       params.require(:eligibility_interface_country_form).permit(:location)

@@ -28,7 +28,6 @@ Rails.application.routes.draw do
     get "ineligible", to: "pages#ineligible"
     get "misconduct", to: "misconduct#new"
     post "misconduct", to: "misconduct#create"
-    get "locations", to: "countries#index"
   end
 
   namespace :support_interface, path: "/support" do
@@ -63,6 +62,8 @@ Rails.application.routes.draw do
 
     mount Sidekiq::Web, at: "sidekiq"
   end
+
+  resources :autocomplete_locations, only: %i[index]
 
   get "accessibility", to: "static#accessibility"
   get "cookies", to: "static#cookies"

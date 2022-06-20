@@ -14,7 +14,7 @@ const loadCountryAutoComplete = () => {
   if (locationPicker) {
     openregisterLocationPicker({
       selectElement: locationPicker,
-      url: "/eligibility/locations.json",
+      url: "/autocomplete_locations.json",
     });
   }
 };
