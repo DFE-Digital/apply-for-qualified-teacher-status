@@ -2,29 +2,32 @@ require "rails_helper"
 
 RSpec.describe ConfigureCountries do
   describe "#private_beta!" do
-    let!(:ireland) do
-      create(:region, :national, country: create(:country, code: "IE"))
+    let(:ireland) do
+      Region.joins(:country).find_by!(country: { code: "IE" }, name: "")
     end
-    let!(:poland) do
-      create(:region, :national, country: create(:country, code: "PL"))
+    let(:poland) do
+      Region.joins(:country).find_by!(country: { code: "PL" }, name: "")
     end
-    let!(:hawaii) do
-      create(:region, name: "Hawaii", country: create(:country, code: "US"))
+    let(:hawaii) do
+      Region.joins(:country).find_by!(country: { code: "US" }, name: "Hawaii")
     end
-    let!(:spain) do
-      create(:region, :national, country: create(:country, code: "ES"))
+    let(:spain) do
+      Region.joins(:country).find_by!(country: { code: "ES" }, name: "")
     end
-    let!(:british_columbia) do
-      create(
-        :region,
-        name: "British Columbia",
-        country: create(:country, code: "CA")
+    let(:british_columbia) do
+      Region.joins(:country).find_by!(
+        country: {
+          code: "CA"
+        },
+        name: "British Columbia"
       )
     end
-    let!(:cyprus) do
-      create(:region, :national, country: create(:country, code: "CY"))
+    let(:cyprus) do
+      Region.joins(:country).find_by!(country: { code: "CY" }, name: "")
     end
-    let!(:other) { create(:region, :national) }
+    let(:france) do
+      Region.joins(:country).find_by!(country: { code: "FR" }, name: "")
+    end
 
     before { described_class.private_beta! }
 
@@ -35,7 +38,7 @@ RSpec.describe ConfigureCountries do
       expect(spain.reload.legacy).to eq(false)
       expect(british_columbia.reload.legacy).to eq(false)
       expect(cyprus.reload.legacy).to eq(false)
-      expect(other.reload.legacy).to eq(true)
+      expect(france.reload.legacy).to eq(true)
     end
   end
 end

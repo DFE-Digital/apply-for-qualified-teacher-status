@@ -52,6 +52,8 @@ class ConfigureCountries
   ].freeze
 
   def self.private_beta!
+    Rails.application.load_seed
+
     Region.where(legacy: false).update_all(legacy: true)
 
     PRIVATE_BETA_REGIONS.each do |region_attributes|
