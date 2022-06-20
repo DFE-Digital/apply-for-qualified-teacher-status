@@ -55,7 +55,7 @@ variable "redis_service_plan" {
 }
 
 variable "education_hostnames" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
