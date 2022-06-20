@@ -15,6 +15,14 @@ resource "cloudfoundry_route" "apply_qts_public" {
   space    = data.cloudfoundry_space.space.id
 }
 
+resource "cloudfoundry_route" "education" {
+  for_each = toset(var.education_hostnames)
+
+  domain   = data.cloudfoundry_domain.education.id
+  hostname = each.value
+  space    = data.cloudfoundry_space.space.id
+}
+
 resource "cloudfoundry_app" "app" {
   name         = local.apply_qts_app_name
   space        = data.cloudfoundry_space.space.id
