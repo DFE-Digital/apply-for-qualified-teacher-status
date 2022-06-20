@@ -75,5 +75,5 @@ RUN apk add --no-cache libpq
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
-CMD bundle exec rails db:migrate && \
+CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
     bundle exec rails server -b 0.0.0.0
