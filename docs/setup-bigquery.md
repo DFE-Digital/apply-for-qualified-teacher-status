@@ -34,7 +34,158 @@ You should create separate data sets for each environment (dev/preprod/prod).
 1. Tap on the 3 dots next to the project name, "Create data set"
 1. Name it `events_ENVIRONMENT`, such as `events_local` for local development testing, and set the location to `europe-west2 (London)`
 1. Select your new `events_local` data set
-1. Create a table, name it `events`
+1. Create a table
+1. Name it `events`
+1. Set the schema to match the one below (including the nested fields inside `request_query` and `data`)
+1. Set Partitioning to `occurred_at`
+1. Set Partitioning type to `By day`
+1. Set Clustering order to `event_type`
+1. Click on "Create table"
+
+**Tip:** You can copy this empty table between environments to save time and
+not have to do the last few steps over and over.
+
+### Schema
+
+| Field name                   | Type      | Mode     |
+| ---------------------------- | --------- | -------- |
+| occurred_at                  | TIMESTAMP | REQUIRED |
+| event_type                   | STRING    | REQUIRED |
+| environment                  | STRING    | REQUIRED |
+| namespace                    | STRING    | NULLABLE |
+| user_id                      | STRING    | NULLABLE |
+| request_uuid                 | STRING    | NULLABLE |
+| request_method               | STRING    | NULLABLE |
+| request_path                 | STRING    | NULLABLE |
+| request_user_agent           | STRING    | NULLABLE |
+| request_referrer             | STRING    | NULLABLE |
+| request_query                | RECORD    | REPEATED |
+| request_query.key            | STRING    | REQUIRED |
+| request_query.value          | STRING    | REPEATED |
+| response_content_type        | STRING    | NULLABLE |
+| response_status              | STRING    | NULLABLE |
+| data                         | RECORD    | REPEATED |
+| data.key                     | STRING    | REQUIRED |
+| data.value                   | STRING    | REPEATED |
+| entity_table_name            | STRING    | NULLABLE |
+| event_tags                   | STRING    | REPEATED |
+| anonymised_user_agent_and_ip | STRING    | NULLABLE |
+
+If you edit as text, you can paste this:
+
+```json
+[
+  {
+    "name": "occurred_at",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "event_type",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "environment",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "namespace",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "user_id",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "request_uuid",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "request_method",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "request_path",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "request_user_agent",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "request_referrer",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "request_query",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "fields": [
+      {
+        "name": "key",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "value",
+        "type": "STRING",
+        "mode": "REPEATED"
+      }
+    ]
+  },
+  {
+    "name": "response_content_type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "response_status",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "data",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "fields": [
+      {
+        "name": "key",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "value",
+        "type": "STRING",
+        "mode": "REPEATED"
+      }
+    ]
+  },
+  {
+    "name": "entity_table_name",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "event_tags",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "anonymised_user_agent_and_ip",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  }
+]
+```
 
 ## 3. Create custom roles
 
