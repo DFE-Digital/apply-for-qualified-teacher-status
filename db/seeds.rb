@@ -131,7 +131,7 @@ COUNTRIES = {
     "Washington",
     "Washington DC",
     "West Virginia",
-    "Wisonsin",
+    "Wisconsin",
     "Wyoming"
   ],
   GI: [],
