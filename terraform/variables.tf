@@ -54,9 +54,15 @@ variable "redis_service_plan" {
   default = "tiny-6_x"
 }
 
+variable "education_hostnames" {
+  type    = list
+  default = []
+}
+
 locals {
   apply_qts_routes = flatten([
-    cloudfoundry_route.apply_qts_public
+    cloudfoundry_route.apply_qts_public,
+    values(cloudfoundry_route.education)
   ])
 
   apply_qts_app_name     = "apply-for-qts-in-england-${var.environment_name}"
