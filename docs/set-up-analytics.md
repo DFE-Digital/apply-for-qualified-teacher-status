@@ -322,7 +322,7 @@ If you edit as text, you can paste this:
 ## 5. Create an appender service account
 
 1. Go to [IAM and Admin settings > Create service account](https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts/create?supportedpurview=project)
-1. Name it like "Appender <Name of service> <Environment>", so "Appender Apply Local"
+1. Name it like "Appender NAME_OF_SERVICE ENVIRONMENT", so "Appender Apply Local"
 1. Add a description, like "Used when developing locally."
 1. Grant the service account access to the project, use the "BigQuery Appender Custom" role you set up earlier
 
