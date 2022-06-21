@@ -58,7 +58,7 @@ not have to do the last few steps over and over.
 | request_method               | STRING    | NULLABLE |
 | request_path                 | STRING    | NULLABLE |
 | request_user_agent           | STRING    | NULLABLE |
-| request_referrer             | STRING    | NULLABLE |
+| request_referer              | STRING    | NULLABLE |
 | request_query                | RECORD    | REPEATED |
 | request_query.key            | STRING    | REQUIRED |
 | request_query.value          | STRING    | REPEATED |
@@ -121,7 +121,7 @@ If you edit as text, you can paste this:
     "mode": "NULLABLE"
   },
   {
-    "name": "request_referrer",
+    "name": "request_referer",
     "type": "STRING",
     "mode": "NULLABLE"
   },
