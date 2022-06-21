@@ -3,10 +3,13 @@ class FeatureFlag
 
   attr_accessor :description, :name, :owner
 
+  DISABLED_IN_PRODUCTION = %i[service_open].freeze
+
   PERMANENT_SETTINGS = [
     [
       :service_open,
-      "Allow users to access the service without HTTP basic auth",
+      "Allow users to access the service without HTTP basic auth. Should be \
+      inactive on production, and active on all other environments.",
       "Felix Clack"
     ]
   ].freeze
@@ -14,7 +17,8 @@ class FeatureFlag
   TEMPORARY_FEATURE_FLAGS = [
     [
       :service_start,
-      "Allow users to use the service, rather than being sent to the legacy mutual recognition site",
+      "Allow users to use the service, rather than being sent to the legacy \
+      mutual recognition site",
       "Thomas Leese"
     ]
   ].freeze
@@ -50,6 +54,13 @@ class FeatureFlag
     feature.active = active
 
     feature.save!
+  end
+
+  def self.disabled_in_production?(feature_name)
+    raise unless feature_name.in?(FEATURES)
+    return false unless HostingEnvironment.production?
+
+    feature_name.to_sym.in?(DISABLED_IN_PRODUCTION)
   end
 
   def self.feature_statuses
