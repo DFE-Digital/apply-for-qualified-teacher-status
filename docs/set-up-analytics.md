@@ -1,11 +1,11 @@
-# Setting up BigQuery
+# Setting up analytics
 
-## 0. Configure [`dfe-analytics`](https://github.com/dfe-Digital/dfe-analytics)
+## 1. Configure [`dfe-analytics`](https://github.com/dfe-Digital/dfe-analytics)
 
 Follow the instructions in the README, and set it up:
 https://github.com/DFE-Digital/apply-for-qualified-teacher-status/pull/99
 
-## 1. Get a BigQuery project setup and add initial owners
+## 2. Get a BigQuery project setup and add initial owners
 
 Ask in Slack on the `#twd_data_insights` channel for someone to help you
 procure a BigQuery instance in the `digital.education.gov.uk` Google Cloud
@@ -25,7 +25,7 @@ accessDenied: Access Denied: BigQuery BigQuery: Streaming insert is not allowed
 in the free tier
 ```
 
-## 2. Create a data set and table
+## 3. Create a data set and table
 
 You should create separate data sets for each environment (dev/preprod/prod).
 
@@ -187,7 +187,7 @@ If you edit as text, you can paste this:
 ]
 ```
 
-## 3. Create custom roles
+## 4. Create custom roles
 
 1. Go to IAM and Admin settings > Roles
 1. Click on "+ Create role"
@@ -319,14 +319,14 @@ If you edit as text, you can paste this:
     bigquery.tables.updateData
 </details>
 
-## 4. Create an appender service account
+## 5. Create an appender service account
 
 1. Go to [IAM and Admin settings > Create service account](https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts/create?supportedpurview=project)
 1. Name it like "Appender <Name of service> <Environment>", so "Appender Apply Local"
 1. Add a description, like "Used when developing locally."
 1. Grant the service account access to the project, use the "BigQuery Appender Custom" role you set up earlier
 
-## 5. Get an API JSON key :key:
+## 6. Get an API JSON key :key:
 
 1. Access the service account you previously setup
 1. Go to the keys tab, click on "Add key > Create new key"
@@ -345,3 +345,7 @@ BIGQUERY_PROJECT_ID=apply-for-qts-in-england
 BIGQUERY_DATASET=events_local
 BIGQUERY_API_JSON_KEY=<contents of the JSON, make sure to strip or escape newlines>
 ```
+
+## 7. Configure `dfe-analytics-dataform`
+
+Follow the instructions in the README, and set it up: https://github.com/DFE-Digital/dfe-analytics-dataform#how-to-install
