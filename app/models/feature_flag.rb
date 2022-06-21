@@ -10,7 +10,7 @@ class FeatureFlag
       :service_open,
       "Allow users to access the service without HTTP basic auth. Should be \
       inactive on production, and active on all other environments.",
-      "Felix Clack"
+      "Thomas Leese"
     ]
   ].freeze
 
