@@ -58,6 +58,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web, at: "sidekiq"
   end
 
+  devise_for :staff
+
   namespace :teacher_interface, path: "/teacher" do
   end
 
