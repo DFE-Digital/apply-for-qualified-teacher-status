@@ -32,6 +32,7 @@ RSpec.describe "Support", type: :system do
     and_i_save
 
     then_i_see_the_countries
+    and_i_see_a_success_banner
   end
 
   private
@@ -128,5 +129,9 @@ RSpec.describe "Support", type: :system do
 
   def and_i_save
     click_button "Save", visible: false
+  end
+
+  def and_i_see_a_success_banner
+    expect(page).to have_content "Successfully updated"
   end
 end

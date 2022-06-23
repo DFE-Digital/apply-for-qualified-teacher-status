@@ -8,6 +8,7 @@ module SupportInterface
       @region = Region.find(params[:id])
 
       if @region.update(region_params)
+        flash[:success] = "Successfully updated #{@region.full_name}"
         redirect_to support_interface_countries_path
       else
         render :edit, status: :unprocessable_entity
