@@ -12,6 +12,7 @@
 app/assets/builds/*
 bin/fetch_config.rb
 config/master.key
+dump.rdb
 log/*
 node_modules
 public/assets
