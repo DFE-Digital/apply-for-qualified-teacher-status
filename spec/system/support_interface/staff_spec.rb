@@ -16,11 +16,14 @@ RSpec.describe "Staff support", type: :system do
     and_i_send_invitation
     then_i_see_an_invitation_email
     then_i_see_the_staff_index
+    then_i_see_the_invited_staff_user
 
     when_i_visit_the_invitation_email
     and_i_fill_password
     and_i_set_password
     then_i_see_the_staff_index
+
+    then_i_see_the_accepted_staff_user
   end
 
   private
@@ -78,6 +81,16 @@ RSpec.describe "Staff support", type: :system do
 
     expect(message.subject).to eq("Invitation instructions")
     expect(message.to).to include("test@example.com")
+  end
+
+  def then_i_see_the_invited_staff_user
+    expect(page).to have_content("test@example.com")
+    expect(page).to have_content("NOT ACCEPTED")
+  end
+
+  def then_i_see_the_accepted_staff_user
+    expect(page).to have_content("test@example.com")
+    expect(page).to have_content("ACCEPTED")
   end
 
   def and_i_fill_password
