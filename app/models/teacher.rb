@@ -26,4 +26,8 @@ class Teacher < ApplicationRecord
               allow_blank: true,
               if: :will_save_change_to_email?
             }
+
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
 end
