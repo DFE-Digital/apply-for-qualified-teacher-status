@@ -42,6 +42,11 @@
           active: request.path.start_with?("/support/countries") || request.path.start_with?("/support/regions")
         ) %>
         <% header.navigation_item(
+          text: "Staff",
+          href: support_interface_staff_index_path,
+          active: request.path.start_with?("/support/staff")
+        ) %>
+        <% header.navigation_item(
           text: "Sidekiq",
           href: support_interface_sidekiq_web_path
         ) %>

@@ -43,6 +43,7 @@ Rails.application.routes.draw do
 
     resources :countries, only: %i[index]
     resources :regions, only: %i[edit update]
+    resources :staff, only: %i[index]
 
     devise_scope :staff do
       authenticate :staff do
