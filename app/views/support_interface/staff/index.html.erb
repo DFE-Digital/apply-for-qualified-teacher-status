@@ -5,3 +5,38 @@
 <p class="govuk-body">
   <%= govuk_button_link_to 'Invite staff user', new_staff_invitation_path %>
 </p>
+
+<% @staff.find_each do |staff| %>
+  <h2 class="govuk-heading-m"><%= staff.email %></h2>
+
+  <%= govuk_summary_list do |summary_list|
+    summary_list.row do |row|
+      row.key { 'Created at' }
+      row.value { staff.created_at.to_s }
+    end
+
+    if staff.created_by_invite?
+      summary_list.row do |row|
+        row.key { 'Invitation status' }
+
+        row.value do
+          if staff.invitation_accepted?
+             govuk_tag(text: "Accepted", colour: "green")
+          else
+            govuk_tag(text: "Not accepted", colour: "red")
+          end
+        end
+      end
+
+      summary_list.row do |row|
+        row.key { 'Invited at' }
+        row.value { staff.invitation_sent_at.to_s }
+      end
+    end
+
+    summary_list.row do |row|
+      row.key { 'Last signed in at' }
+      row.value { staff.last_sign_in_at.to_s }
+    end
+  end %>
+<% end %>
