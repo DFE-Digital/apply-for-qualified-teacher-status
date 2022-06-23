@@ -8,6 +8,7 @@ gem "rails", "~> 7.0.3"
 gem "bootsnap", require: false
 gem "cssbundling-rails"
 gem "devise"
+gem "devise_invitable"
 gem "jsbundling-rails"
 gem "okcomputer"
 gem "pg"
