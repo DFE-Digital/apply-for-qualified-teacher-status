@@ -5,9 +5,6 @@ Rails.application.routes.draw do
     get "/500", to: "errors#internal_server_error"
   end
 
-  namespace :applicant_interface, path: "/applicant" do
-  end
-
   namespace :assessor_interface, path: "/assessor" do
   end
 
@@ -59,6 +56,9 @@ Rails.application.routes.draw do
     end
 
     mount Sidekiq::Web, at: "sidekiq"
+  end
+
+  namespace :teacher_interface, path: "/teacher" do
   end
 
   resources :autocomplete_locations, only: %i[index]
