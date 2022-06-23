@@ -1,7 +1,7 @@
-module ApplicantInterface
+module TeacherInterface
   class BaseController < ApplicationController
     def current_namespace
-      "applicant"
+      "teacher"
     end
   end
 end
