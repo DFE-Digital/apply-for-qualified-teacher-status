@@ -1,8 +1,7 @@
-# frozen_string_literal: true
 require "rails_helper"
 
 RSpec.describe FeatureFlag do
-  let(:feature) { Feature.create_or_find_by(name: feature_name) }
+  let(:feature) { create(:feature, name: feature_name) }
   let(:feature_name) { :service_open }
 
   describe ".activate" do
