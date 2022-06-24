@@ -1,3 +1,5 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
   scope via: :all do
     get "/404", to: "errors#not_found"
@@ -41,21 +43,11 @@ Rails.application.routes.draw do
     resources :countries, only: %i[index]
     resources :regions, only: %i[edit update]
 
-    # https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
-    require "sidekiq/web"
-
-    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-      ActiveSupport::SecurityUtils.secure_compare(
-        ::Digest::SHA256.hexdigest(username),
-        ::Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_USERNAME", "test"))
-      ) &
-        ActiveSupport::SecurityUtils.secure_compare(
-          ::Digest::SHA256.hexdigest(password),
-          ::Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_PASSWORD", "test"))
-        )
+    devise_scope :staff do
+      authenticate :staff do
+        mount Sidekiq::Web, at: "sidekiq"
+      end
     end
-
-    mount Sidekiq::Web, at: "sidekiq"
   end
 
   devise_for :staff
