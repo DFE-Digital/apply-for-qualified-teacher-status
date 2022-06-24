@@ -2,7 +2,7 @@ terraform {
   required_version = "~> 1.0"
 
   backend "azurerm" {
-    container_name = "apply-qts-tfstate"
+    container_name = "afqts-tfstate"
   }
 
   required_providers {

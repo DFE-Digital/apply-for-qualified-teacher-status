@@ -4,12 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Deploy environment ( dev or production )"
+        description: "Deploy environment ( dev or test or preprod or production )"
         required: true
         default: dev
         type: environment
         options:
           - dev
+          - test
+          - preprod
           - production
   push:
     branches:
