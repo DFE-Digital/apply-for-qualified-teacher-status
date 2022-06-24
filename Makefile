@@ -11,6 +11,23 @@ dev:
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
 	$(eval RESOURCE_NAME_PREFIX=s165d01)
 	$(eval ENV_SHORT=dv)
+	$(eval ENV_TAG=dev)
+
+.PHONY: test
+test:
+	$(eval DEPLOY_ENV=test)
+	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
+	$(eval RESOURCE_NAME_PREFIX=s165t01)
+	$(eval ENV_SHORT=st)
+	$(eval ENV_TAG=test)
+
+.PHONY: preprod
+preprod:
+	$(eval DEPLOY_ENV=preprod)
+	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
+	$(eval RESOURCE_NAME_PREFIX=s165t01)
+	$(eval ENV_SHORT=pp)
+	$(eval ENV_TAG=pre-prod)
 
 .PHONY: production
 production:
@@ -36,7 +53,7 @@ ci:	## Run in automation environment
 	$(eval SP_AUTH=true)
 
 tags: ##Tags that will be added to resource group on it's creation in ARM template
-	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Apply for QTS in England", "Service Line": "Becoming a teacher", "Service": "Apply for QTS in England", "Service Offering": "Apply for QTS in England"}' | jq . ))
+	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Apply for QTS in England", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Apply for QTS in England", "Environment" : "$(ENV_TAG)"}' | jq . ))
 
 .PHONY: install-fetch-config
 install-fetch-config: ## Install the fetch-config script, for viewing/editing secrets in Azure Key Vault
@@ -87,7 +104,7 @@ remove-postgres-tf-state: terraform-init ## make dev remove-postgres-tf-state PA
 
 terraform-init:
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
+	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
 	terraform -chdir=terraform init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars -upgrade -reconfigure
 
 terraform-plan: terraform-init
