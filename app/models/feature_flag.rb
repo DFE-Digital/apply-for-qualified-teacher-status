@@ -8,8 +8,15 @@ class FeatureFlag
   PERMANENT_SETTINGS = [
     [
       :service_open,
-      "Allow users to access the service without HTTP basic auth. Should be \
-      inactive on production, and active on all other environments.",
+      "Allow users to access the service without HTTP basic auth. Should be " \
+        "inactive on production, and active on all other environments.",
+      "Thomas Leese"
+    ],
+    [
+      :staff_http_basic_auth,
+      "Allow signing in as a staff user using HTTP Basic authentication. " \
+        "This is useful before staff users have been created, but should " \
+        "otherwise be inactive.",
       "Thomas Leese"
     ]
   ].freeze
@@ -17,8 +24,8 @@ class FeatureFlag
   TEMPORARY_FEATURE_FLAGS = [
     [
       :service_start,
-      "Allow users to use the service, rather than being sent to the legacy \
-      mutual recognition site",
+      "Allow users to use the service, rather than being sent to the " \
+        "legacy mutual recognition site",
       "Thomas Leese"
     ]
   ].freeze
