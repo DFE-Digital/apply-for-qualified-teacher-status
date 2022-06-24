@@ -1,7 +1,6 @@
 module SupportInterface
   class BaseController < ApplicationController
-    http_basic_authenticate_with name: ENV.fetch("SUPPORT_USERNAME", "test"),
-                                 password: ENV.fetch("SUPPORT_PASSWORD", "test")
+    before_action :authenticate_staff!
 
     def current_namespace
       "support"
