@@ -1,0 +1,2 @@
+class AnonymousSupportUser
+end

@@ -10,7 +10,7 @@ class StaffHttpBasicAuthStrategy < Warden::Strategies::Base
   def authenticate!
     auth = Rack::Auth::Basic::Request.new(env)
 
-    return success!(true) if credentials_valid?(auth)
+    return success!(ANONYMOUS_SUPPORT_USER) if credentials_valid?(auth)
 
     custom!(
       [
@@ -31,6 +31,8 @@ class StaffHttpBasicAuthStrategy < Warden::Strategies::Base
     Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_USERNAME", "test"))
   SUPPORT_PASSWORD =
     Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_PASSWORD", "test"))
+
+  ANONYMOUS_SUPPORT_USER = AnonymousSupportUser.new
 
   def credentials_valid?(auth)
     return false unless auth.provided? && auth.basic? && auth.credentials
