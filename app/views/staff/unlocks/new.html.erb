@@ -1,16 +1,8 @@
-<h2>Resend unlock instructions</h2>
+<h1 class="govuk-heading-l">Resend unlock instructions</h1>
 
 <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "staff/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Resend unlock instructions" %>
-  </div>
+  <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", label: { text: "Email" } %>
+  <%= f.govuk_submit "Resend unlock instructions" %>
 <% end %>
 
 <%= render "staff/shared/links" %>
