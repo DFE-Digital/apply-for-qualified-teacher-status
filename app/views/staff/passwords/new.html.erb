@@ -1,16 +1,8 @@
-<h2>Forgot your password?</h2>
+<h1 class="govuk-heading-l">Forgot your password?</h1>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "staff/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
+  <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", label: { text: "Email" } %>
+  <%= f.govuk_submit "Send me reset password instructions" %>
 <% end %>
 
 <%= render "staff/shared/links" %>
