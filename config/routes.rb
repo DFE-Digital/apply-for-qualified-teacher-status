@@ -50,7 +50,14 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :staff
+  devise_for :staff,
+             controllers: {
+               confirmations: "staff/confirmations",
+               invitations: "staff/invitations",
+               passwords: "staff/passwords",
+               sessions: "staff/sessions",
+               unlocks: "staff/unlocks"
+             }
 
   namespace :teacher_interface, path: "/teacher" do
   end
