@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
 class Staff::PasswordsController < Devise::PasswordsController
+  include StaffCurrentNamespace
+
   # GET /resource/password/new
   # def new
   #   super
