@@ -1,6 +1,8 @@
 class Staff::InvitationsController < Devise::InvitationsController
   include StaffCurrentNamespace
 
+  protect_from_forgery prepend: true
+
   # GET /resource/invitation/new
   # def new
   #   super
