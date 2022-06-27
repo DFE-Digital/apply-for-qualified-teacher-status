@@ -405,7 +405,7 @@ GEM
       activesupport
       solargraph (>= 0.41.1)
     strscan (3.0.2)
-    syntax_tree (2.6.0)
+    syntax_tree (2.8.0)
       prettier_print
     syntax_tree-haml (1.2.0)
       haml (>= 5.2)
