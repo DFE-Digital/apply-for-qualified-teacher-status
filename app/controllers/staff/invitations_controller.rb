@@ -27,4 +27,14 @@ class Staff::InvitationsController < Devise::InvitationsController
   # def destroy
   #   super
   # end
+
+  protected
+
+  def invite_resource(&block)
+    if current_inviter.is_a?(AnonymousSupportUser)
+      resource_class.invite!(invite_params, &block)
+    else
+      super
+    end
+  end
 end
