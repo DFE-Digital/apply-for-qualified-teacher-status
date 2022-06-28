@@ -9,6 +9,7 @@ gem "bootsnap", require: false
 gem "cssbundling-rails"
 gem "devise"
 gem "devise_invitable"
+gem "devise-passwordless"
 gem "jsbundling-rails"
 gem "okcomputer"
 gem "pg"
