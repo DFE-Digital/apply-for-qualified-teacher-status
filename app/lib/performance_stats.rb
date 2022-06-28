@@ -1,11 +1,8 @@
 class PerformanceStats
-  def initialize(time_period)
-    unless time_period.is_a? Range
-      raise ArgumentError, "time_period is not a Range"
-    end
+  def initialize(from: 1.week.ago.beginning_of_day, to: Time.zone.now)
+    time_period = from..to
 
-    number_of_days_in_period =
-      ((Time.zone.now.beginning_of_day - time_period.first) / 1.day).to_i
+    number_of_days_in_period = ((to.beginning_of_day - from) / 1.day).to_i
     @eligibility_checks = EligibilityCheck.where(created_at: time_period)
 
     @grouped_eligibility_checks =

@@ -1,18 +1,9 @@
 require "rails_helper"
 
 RSpec.describe PerformanceStats do
-  let(:time_period) { 1.week.ago.beginning_of_day..Time.zone.now }
+  let(:from) { 1.week.ago.beginning_of_day }
 
-  subject { PerformanceStats.new(time_period) }
-
-  describe "without params" do
-    it "asks for a time_period parameter" do
-      expect { PerformanceStats.new(nil) }.to raise_error(
-        ArgumentError,
-        "time_period is not a Range"
-      )
-    end
-  end
+  subject { PerformanceStats.new(from:) }
 
   describe "#live_service_usage" do
     it "calculates live service usage" do
