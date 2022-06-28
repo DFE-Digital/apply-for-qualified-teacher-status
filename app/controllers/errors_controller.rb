@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class ErrorsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -8,6 +7,10 @@ class ErrorsController < ApplicationController
 
   def unprocessable_entity
     render "unprocessable_entity", status: :unprocessable_entity
+  end
+
+  def too_many_requests
+    render "too_many_requests", status: :too_many_requests
   end
 
   def internal_server_error
