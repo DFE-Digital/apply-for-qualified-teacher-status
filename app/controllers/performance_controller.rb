@@ -1,15 +1,15 @@
 class PerformanceController < ApplicationController
   def index
-    time_period = 1.week.ago.beginning_of_day..Time.zone.now
+    from = 1.week.ago.beginning_of_day
     @since_text = "over the last 7 days"
 
     if params.key? :since_launch
       launch_date = Date.new(2022, 6, 21).beginning_of_day
-      time_period = launch_date..Time.zone.now
+      from = launch_date
       @since_text = "since launch"
     end
 
-    stats = PerformanceStats.new(time_period)
+    stats = PerformanceStats.new(from:)
 
     @checks_over_last_n_days, @live_service_data = stats.live_service_usage
 
