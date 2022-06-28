@@ -1,6 +1,6 @@
-# frozen_string_literal: true
 class FlashMessageComponent < ViewComponent::Base
   ALLOWED_PRIMARY_KEYS = %i[info success warning].freeze
+  DEVISE_PRIMARY_KEYS = { alert: :warning, notice: :info }.freeze
 
   def initialize(flash:)
     super
@@ -8,7 +8,11 @@ class FlashMessageComponent < ViewComponent::Base
   end
 
   def message_key
-    flash.keys.detect { |key| ALLOWED_PRIMARY_KEYS.include?(key) }
+    key =
+      flash.keys.detect do |k|
+        ALLOWED_PRIMARY_KEYS.include?(k) || DEVISE_PRIMARY_KEYS.keys.include?(k)
+      end
+    DEVISE_PRIMARY_KEYS[key] || key
   end
 
   def title
@@ -40,7 +44,7 @@ class FlashMessageComponent < ViewComponent::Base
   private
 
   def messages
-    flash[message_key]
+    flash[message_key] || flash[DEVISE_PRIMARY_KEYS.key(message_key)]
   end
 
   attr_reader :flash
