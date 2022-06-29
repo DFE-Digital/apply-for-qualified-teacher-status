@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   end
 
   namespace :eligibility_interface, path: "/eligibility" do
-    root to: "pages#root"
+    root to: "start#root"
+    resource :start, controller: "start", only: %i[show]
     get "degree", to: "degrees#new"
     post "degree", to: "degrees#create"
     get "countries", to: "countries#new"
@@ -23,7 +24,6 @@ Rails.application.routes.draw do
     post "qualifications", to: "qualifications#create"
     get "teach-children", to: "teach_children#new"
     post "teach-children", to: "teach_children#create"
-    get "start", to: "pages#start"
     get "eligible", to: "pages#eligible"
     get "ineligible", to: "pages#ineligible"
     get "misconduct", to: "misconduct#new"
