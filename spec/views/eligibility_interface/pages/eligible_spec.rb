@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "eligibility_interface/pages/eligible", type: :view do
+RSpec.describe "eligibility_interface/finish/eligible", type: :view do
   let(:region) { nil }
 
   before do

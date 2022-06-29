@@ -13,21 +13,23 @@ Rails.application.routes.draw do
 
   namespace :eligibility_interface, path: "/eligibility" do
     root to: "start#root"
+
     resource :start, controller: "start", only: %i[show]
-    get "degree", to: "degrees#new"
-    post "degree", to: "degrees#create"
+    get "eligible", to: "finish#eligible"
+    get "ineligible", to: "finish#ineligible"
+
     get "countries", to: "countries#new"
     post "countries", to: "countries#create"
-    get "region", to: "region#new"
-    post "region", to: "region#create"
-    get "qualifications", to: "qualifications#new"
-    post "qualifications", to: "qualifications#create"
-    get "teach-children", to: "teach_children#new"
-    post "teach-children", to: "teach_children#create"
-    get "eligible", to: "pages#eligible"
-    get "ineligible", to: "pages#ineligible"
+    get "degree", to: "degrees#new"
+    post "degree", to: "degrees#create"
     get "misconduct", to: "misconduct#new"
     post "misconduct", to: "misconduct#create"
+    get "qualifications", to: "qualifications#new"
+    post "qualifications", to: "qualifications#create"
+    get "region", to: "region#new"
+    post "region", to: "region#create"
+    get "teach-children", to: "teach_children#new"
+    post "teach-children", to: "teach_children#create"
   end
 
   namespace :support_interface, path: "/support" do
