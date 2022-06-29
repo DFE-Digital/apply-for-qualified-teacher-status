@@ -64,6 +64,20 @@ Rails.application.routes.draw do
   namespace :teacher_interface, path: "/teacher" do
   end
 
+  devise_for :teachers,
+             path: "/teacher",
+             controllers: {
+               confirmations: "teachers/confirmations",
+               registrations: "teachers/registrations",
+               sessions: "teachers/sessions"
+             }
+
+  devise_scope :teacher do
+    get "/teacher/magic_link",
+        to: "teachers/magic_links#show",
+        as: "teacher_magic_link"
+  end
+
   resources :autocomplete_locations, only: %i[index]
 
   get "accessibility", to: "static#accessibility"
