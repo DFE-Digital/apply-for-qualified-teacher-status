@@ -16,6 +16,12 @@ module HostingEnvironment
     "This is a '#{phase}' version of the service."
   end
 
+  def self.host
+    return "apply-for-qts-in-england.education.gov.uk" if production?
+
+    "apply-for-qts-in-england-#{name}.london.cloudapps.digital"
+  end
+
   def self.production?
     name == "production"
   end
