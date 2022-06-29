@@ -97,7 +97,7 @@ bin/dev
 
 Edit `.env.local` and add a BigQuery key if you want to use BigQuery locally.
 
-Remove `BIGQUERY_DISABLE=true` or set it to `false`.
+Set `BIGQUERY_DISABLE` to `false` as it defaults to `true` in the development environment.
 
 [Read more about setting up BigQuery](docs/set-up-analytics.md).
 
