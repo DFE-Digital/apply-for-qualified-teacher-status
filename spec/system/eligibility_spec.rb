@@ -218,7 +218,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_press_start_now
-    click_link "Start now"
+    click_button "Start now"
   end
 
   def when_i_press_start

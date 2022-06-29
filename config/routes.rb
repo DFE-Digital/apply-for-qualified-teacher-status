@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   namespace :eligibility_interface, path: "/eligibility" do
     root to: "start#root"
 
-    resource :start, controller: "start", only: %i[show]
+    resource :start, controller: "start", only: %i[show create]
     get "eligible", to: "finish#eligible"
     get "ineligible", to: "finish#ineligible"
 

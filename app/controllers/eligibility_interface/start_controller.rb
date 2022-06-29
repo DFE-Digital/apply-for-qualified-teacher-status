@@ -9,4 +9,9 @@ class EligibilityInterface::StartController < EligibilityInterface::BaseControll
 
   def show
   end
+
+  def create
+    eligibility_check.save!
+    redirect_to eligibility_interface_countries_path
+  end
 end
