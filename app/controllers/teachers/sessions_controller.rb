@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Teachers::SessionsController < Devise::SessionsController
+  include TeacherCurrentNamespace
+
   def create
     self.resource = resource_class.find_by(email: create_params[:email])
     if resource
