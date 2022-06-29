@@ -1,4 +1,6 @@
-class DeviseMailer < Devise::Mailer
+require "devise/passwordless/mailer"
+
+class DeviseMailer < Devise::Passwordless::Mailer
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
       "GOVUK_NOTIFY_TEMPLATE_ID_DEVISE",
