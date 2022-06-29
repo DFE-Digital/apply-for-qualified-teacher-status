@@ -41,5 +41,7 @@ module ApplyForQualifiedTeacherStatus
     config.assets.paths << Rails.root.join(
       "node_modules/govuk-frontend/govuk/assets"
     )
+
+    config.action_mailer.deliver_later_queue_name = "mailer"
   end
 end
