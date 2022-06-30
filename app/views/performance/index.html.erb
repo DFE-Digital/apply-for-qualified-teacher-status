@@ -41,19 +41,19 @@
 </div>
 
 <div class="app-!-border-top-1 govuk-!-padding-top-2">
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Country usage</h2>
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Usage by country</h2>
   <p class="govuk-!-font-size-16">
-    Number of eligibility checks submitted by country <%= @since_text %>
+    Number of eligibility checks by country <%= @since_text %>
   </p>
 
   <div class="govuk-!-text-align-right">
     <div style="display: inline-block">
-      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@countries) %></p>
-      <p>countries</p>
+      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@usage_by_country_count) %></p>
+      <p>countries and states</p>
     </div>
   </div>
 
-  <%= govuk_table(rows: @country_data, classes: 'app-performance-table') %>
+  <%= govuk_table(rows: @usage_by_country_data, classes: 'app-performance-table') %>
 </div>
 
 <div class="govuk-grid-row">

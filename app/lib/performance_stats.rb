@@ -15,7 +15,7 @@ class PerformanceStats
 
     calculate_live_service_usage
     calculate_time_to_complete
-    calculate_country_usage
+    calculate_usage_by_country
   end
 
   def live_service_usage
@@ -26,8 +26,8 @@ class PerformanceStats
     @time_to_complete_data
   end
 
-  def country_usage
-    [@countries, @country_data]
+  def usage_by_country
+    [@usage_by_country_count, @usage_by_country_data]
   end
 
   private
@@ -94,19 +94,21 @@ class PerformanceStats
       end
   end
 
-  def calculate_country_usage
-    eligibility_checks_by_country =
-      @eligibility_checks.group("region").where.not(region: nil).count
+  def calculate_usage_by_country
+    eligibility_checks_by_region =
+      @eligibility_checks
+        .includes(region: :country)
+        .where.not(region: nil)
+        .group(:region)
+        .count
 
-    @country_data = [%w[Country Requests]]
-    @country_data +=
-      eligibility_checks_by_country
-        .sort_by { |region, count| [count, region.name, region.country.name] }
-        .group_by { |region, _| region.country }
-        .map do |country, regions_and_counts|
-          [country.name, regions_and_counts.sum(&:second)]
-        end
+    @usage_by_country_count = eligibility_checks_by_region.count
 
-    @countries = eligibility_checks_by_country.count
+    @usage_by_country_data = [%w[Country State Checks]]
+    @usage_by_country_data +=
+      eligibility_checks_by_region
+        .sort_by { |region, count| [-count, region.country.name, region.name] }
+        .map { |region, count| [region.country.name, region.name, count] }
   end
 end
+y
