@@ -77,7 +77,8 @@ class PerformanceStats
   def calculate_duration_usage
     percentiles_by_day =
       @eligibility_checks
-        .where.not(completed_at: nil)
+        .complete
+        .answered_all_questions
         .group("1")
         .pluck(
           Arel.sql("date_trunc('day', created_at) AS day"),

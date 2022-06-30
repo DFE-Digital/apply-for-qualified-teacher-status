@@ -173,6 +173,15 @@ RSpec.describe EligibilityCheck, type: :model do
     it { is_expected.to eq([region_1, region_2]) }
   end
 
+  describe "#complete" do
+    subject(:complete) { described_class.complete }
+
+    let!(:incomplete_check) { create(:eligibility_check) }
+    let!(:complete_check) { create(:eligibility_check, :complete) }
+
+    it { is_expected.to eq([complete_check]) }
+  end
+
   describe "#eligible" do
     subject(:eligible) { described_class.eligible }
 
@@ -183,15 +192,6 @@ RSpec.describe EligibilityCheck, type: :model do
     it { is_expected.to include(eligibility_check_2) }
   end
 
-  describe "#complete" do
-    subject(:complete) { described_class.complete }
-
-    let!(:incomplete_check) { create(:eligibility_check) }
-    let!(:complete_check) { create(:eligibility_check, :complete) }
-
-    it { is_expected.to eq([complete_check]) }
-  end
-
   describe "#ineligible" do
     subject(:ineligible) { described_class.ineligible }
 
@@ -199,6 +199,24 @@ RSpec.describe EligibilityCheck, type: :model do
     let!(:eligible_check) { create(:eligibility_check, :eligible) }
 
     it { is_expected.to eq([ineligible_check]) }
+  end
+
+  describe "#answered_all_questions" do
+    subject(:eligible) { described_class.answered_all_questions }
+
+    let(:eligibility_check_1) { create(:eligibility_check) }
+    let(:eligibility_check_2) do
+      create(
+        :eligibility_check,
+        degree: true,
+        free_of_sanctions: false,
+        qualification: true,
+        teach_children: false
+      )
+    end
+
+    it { is_expected.to_not include(eligibility_check_1) }
+    it { is_expected.to include(eligibility_check_2) }
   end
 
   describe "#complete!" do
