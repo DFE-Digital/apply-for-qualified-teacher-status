@@ -13,14 +13,6 @@ RSpec.describe PerformanceStats do
     end
   end
 
-  describe "#submission_results" do
-    it "calculates submission results" do
-      count, data = subject.submission_results
-      expect(count).to eq 0
-      expect(data.size).to eq 8
-    end
-  end
-
   describe "#country_usage" do
     it "calculates country usage" do
       count, data = subject.country_usage
