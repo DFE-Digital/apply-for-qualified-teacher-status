@@ -13,8 +13,8 @@ class PerformanceController < ApplicationController
 
     @all_checks_count, @eligible_checks_count, @live_service_data =
       stats.live_service_usage
+    @time_to_complete_data = stats.time_to_complete
     @countries, @country_data = stats.country_usage
-    @duration_data = stats.duration_usage
   end
 
   def current_namespace
