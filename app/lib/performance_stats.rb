@@ -100,15 +100,29 @@ class PerformanceStats
         .includes(region: :country)
         .where.not(region: nil)
         .group(:region)
-        .count
 
-    @usage_by_country_count = eligibility_checks_by_region.count
+    eligibility_checks_by_region_all = eligibility_checks_by_region.count
+    eligibility_checks_by_region_answered_all_questions =
+      eligibility_checks_by_region.answered_all_questions.count
+    eligibility_checks_by_region_eligible =
+      eligibility_checks_by_region.eligible.count
 
-    @usage_by_country_data = [%w[Country State Checks]]
+    @usage_by_country_count = eligibility_checks_by_region_all.count
+
+    @usage_by_country_data = [
+      ["Country", "State", "All checks", "Full checks", "Eligible checks"]
+    ]
     @usage_by_country_data +=
-      eligibility_checks_by_region
+      eligibility_checks_by_region_all
         .sort_by { |region, count| [-count, region.country.name, region.name] }
-        .map { |region, count| [region.country.name, region.name, count] }
+        .map do |region, count|
+          [
+            region.country.name,
+            region.name,
+            count,
+            eligibility_checks_by_region_answered_all_questions[region] || 0,
+            eligibility_checks_by_region_eligible[region] || 0
+          ]
+        end
   end
 end
-y
