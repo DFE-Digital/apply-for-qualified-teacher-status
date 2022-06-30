@@ -1,4 +1,6 @@
 class PerformanceStats
+  include ActionView::Helpers::NumberHelper
+
   def initialize(from: 1.week.ago.beginning_of_day, to: Time.zone.now)
     time_period = from..to
 
@@ -12,17 +14,12 @@ class PerformanceStats
       (0...number_of_days_in_period).map { |n| n.days.ago.beginning_of_day.utc }
 
     calculate_live_service_usage
-    calculate_submission_results
     calculate_country_usage
     calculate_duration_usage
   end
 
   def live_service_usage
-    [@checks_over_last_n_days, @live_service_data]
-  end
-
-  def submission_results
-    [@eligible_checks, @submission_data]
+    [@all_checks_count, @eligible_checks_count, @live_service_data]
   end
 
   def country_usage
@@ -36,25 +33,26 @@ class PerformanceStats
   private
 
   def calculate_live_service_usage
-    eligibility_checks_total = @grouped_eligibility_checks.count
+    eligibility_checks_all = @grouped_eligibility_checks.count
+    eligibility_checks_eligible = @grouped_eligibility_checks.eligible.count
 
-    @checks_over_last_n_days = eligibility_checks_total.values.sum
+    @all_checks_count = eligibility_checks_all.values.sum
+    @eligible_checks_count = eligibility_checks_eligible.values.sum
 
-    @live_service_data = [%w[Date Requests]]
+    @live_service_data = [
+      ["Date", "All checks", "Eligible checks", "Proportion eligible"]
+    ]
     @live_service_data +=
       @last_n_days.map do |day|
-        [day.strftime("%d %B"), eligibility_checks_total[day] || 0]
-      end
-  end
-
-  def calculate_submission_results
-    eligibility_checks_eligible = @grouped_eligibility_checks.eligible.count
-    @eligible_checks = eligibility_checks_eligible.values.sum
-
-    @submission_data = [["Date", "Successful checks"]]
-    @submission_data +=
-      @last_n_days.map do |day|
-        [day.strftime("%d %B"), eligibility_checks_eligible[day] || 0]
+        all_checks = eligibility_checks_all[day] || 0
+        eligible_checks = eligibility_checks_eligible[day] || 0
+        conversion = all_checks != 0 ? eligible_checks / all_checks : 0
+        [
+          day.strftime("%d %B"),
+          all_checks,
+          eligible_checks,
+          number_to_percentage(conversion * 100, precision: 0)
+        ]
       end
   end
 

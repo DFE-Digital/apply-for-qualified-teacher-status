@@ -11,12 +11,9 @@ class PerformanceController < ApplicationController
 
     stats = PerformanceStats.new(from:)
 
-    @checks_over_last_n_days, @live_service_data = stats.live_service_usage
-
-    @eligible_checks, @submission_data = stats.submission_results
-
+    @all_checks_count, @eligible_checks_count, @live_service_data =
+      stats.live_service_usage
     @countries, @country_data = stats.country_usage
-
     @duration_data = stats.duration_usage
   end
 
