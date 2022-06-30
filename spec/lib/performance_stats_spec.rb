@@ -20,9 +20,9 @@ RSpec.describe PerformanceStats do
     end
   end
 
-  describe "#country_usage" do
-    it "calculates country usage" do
-      count, data = subject.country_usage
+  describe "#usage_by_country" do
+    it "calculates usage by country" do
+      count, data = subject.usage_by_country
       expect(count).to eq 0
       expect(data.size).to eq 1
     end
