@@ -64,9 +64,12 @@ class PerformanceStats
 
     @country_data = [%w[Country Requests]]
     @country_data +=
-      eligibility_checks_by_country.map do |region, count|
-        [region.full_name, count]
-      end
+      eligibility_checks_by_country
+        .sort_by { |region, count| [count, region.name, region.country.name] }
+        .group_by { |region, _| region.country }
+        .map do |country, regions_and_counts|
+          [country.name, regions_and_counts.sum(&:second)]
+        end
 
     @countries = eligibility_checks_by_country.count
   end

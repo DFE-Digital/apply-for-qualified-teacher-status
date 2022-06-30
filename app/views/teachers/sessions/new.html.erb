@@ -1,0 +1,17 @@
+<% content_for :page_title, "Log in" %>
+
+<h1 class="govuk-heading-l">Log in</h1>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", label: { text: "Email" } %>
+
+  <% if devise_mapping.rememberable? %>
+    <%= f.govuk_check_boxes_fieldset :remember_me, multiple: false, legend: nil do %>
+      <%= f.govuk_check_box :remember_me, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Remember me?" } %>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_submit "Log in" %>
+<% end %>
+
+<%= render "teachers/shared/links" %>

@@ -12,22 +12,24 @@ Rails.application.routes.draw do
   end
 
   namespace :eligibility_interface, path: "/eligibility" do
-    root to: "pages#root"
-    get "degree", to: "degrees#new"
-    post "degree", to: "degrees#create"
+    root to: "start#root"
+
+    resource :start, controller: "start", only: %i[show create]
+    get "eligible", to: "finish#eligible"
+    get "ineligible", to: "finish#ineligible"
+
     get "countries", to: "countries#new"
     post "countries", to: "countries#create"
-    get "region", to: "region#new"
-    post "region", to: "region#create"
-    get "qualifications", to: "qualifications#new"
-    post "qualifications", to: "qualifications#create"
-    get "teach-children", to: "teach_children#new"
-    post "teach-children", to: "teach_children#create"
-    get "start", to: "pages#start"
-    get "eligible", to: "pages#eligible"
-    get "ineligible", to: "pages#ineligible"
+    get "degree", to: "degrees#new"
+    post "degree", to: "degrees#create"
     get "misconduct", to: "misconduct#new"
     post "misconduct", to: "misconduct#create"
+    get "qualifications", to: "qualifications#new"
+    post "qualifications", to: "qualifications#create"
+    get "region", to: "region#new"
+    post "region", to: "region#create"
+    get "teach-children", to: "teach_children#new"
+    post "teach-children", to: "teach_children#create"
   end
 
   namespace :support_interface, path: "/support" do
@@ -62,6 +64,20 @@ Rails.application.routes.draw do
              }
 
   namespace :teacher_interface, path: "/teacher" do
+  end
+
+  devise_for :teachers,
+             path: "/teacher",
+             controllers: {
+               confirmations: "teachers/confirmations",
+               registrations: "teachers/registrations",
+               sessions: "teachers/sessions"
+             }
+
+  devise_scope :teacher do
+    get "/teacher/magic_link",
+        to: "teachers/magic_links#show",
+        as: "teacher_magic_link"
   end
 
   resources :autocomplete_locations, only: %i[index]

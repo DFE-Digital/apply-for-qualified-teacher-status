@@ -1,7 +1,5 @@
 module TeacherInterface
   class BaseController < ApplicationController
-    def current_namespace
-      "teacher"
-    end
+    include TeacherCurrentNamespace
   end
 end

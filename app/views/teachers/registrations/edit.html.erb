@@ -1,0 +1,19 @@
+<% content_for :page_title, "Edit #{resource_name.to_s.humanize}" %>
+
+<h1 class="govuk-heading-l">Edit <%= resource_name.to_s.humanize %></h1>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", label: { text: "Email" } %>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <p class="govuk-body">Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+  <% end %>
+
+  <%= f.govuk_submit "Update" %>
+<% end %>
+
+<h3 class="govuk-heading-m">Cancel my account</h3>
+
+<p class="govuk-body">Unhappy? <%= govuk_link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+
+<p class="govuk-body"><%= govuk_link_to "Back", :back %></p>

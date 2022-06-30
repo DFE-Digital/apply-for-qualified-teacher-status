@@ -1,0 +1,10 @@
+<% content_for :page_title, "Resend confirmation instructions" %>
+
+<h1 class="govuk-heading-l">Resend confirmation instructions</h1>
+
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+  <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), label: { text: "Email" } %>
+  <%= f.govuk_submit "Resend confirmation instructions" %>
+<% end %>
+
+<%= render "teachers/shared/links" %>
