@@ -40,6 +40,15 @@ class EligibilityCheck < ApplicationRecord
             .or(where(region: nil))
             .or(where(teach_children: false))
         }
+  scope :answered_all_questions,
+        -> {
+          where.not(
+            degree: nil,
+            free_of_sanctions: nil,
+            qualification: nil,
+            teach_children: nil
+          )
+        }
 
   def country_code=(value)
     super(value)
