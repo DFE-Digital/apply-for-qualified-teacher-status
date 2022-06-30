@@ -32,6 +32,15 @@
 </div>
 
 <div class="app-!-border-top-1 govuk-!-padding-top-2">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Time to complete</h2>
+  <p class="govuk-!-font-size-16">
+    How quickly did users check their eligibility <%= @since_text %>
+  </p>
+
+  <%= govuk_table(rows: @time_to_complete_data, classes: 'app-performance-table') %>
+</div>
+
+<div class="app-!-border-top-1 govuk-!-padding-top-2">
   <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Country usage</h2>
   <p class="govuk-!-font-size-16">
     Number of eligibility checks submitted by country <%= @since_text %>
@@ -45,15 +54,6 @@
   </div>
 
   <%= govuk_table(rows: @country_data, classes: 'app-performance-table') %>
-</div>
-
-<div class="app-!-border-top-1 govuk-!-padding-top-2">
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Time to complete</h2>
-  <p class="govuk-!-font-size-16">
-    How quickly did users check their eligibility <%= @since_text %>
-  </p>
-
-  <%= govuk_table(rows: @duration_data, classes: 'app-performance-table') %>
 </div>
 
 <div class="govuk-grid-row">

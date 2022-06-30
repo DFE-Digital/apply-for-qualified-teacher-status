@@ -14,20 +14,20 @@ class PerformanceStats
       (0...number_of_days_in_period).map { |n| n.days.ago.beginning_of_day.utc }
 
     calculate_live_service_usage
+    calculate_time_to_complete
     calculate_country_usage
-    calculate_duration_usage
   end
 
   def live_service_usage
     [@all_checks_count, @eligible_checks_count, @live_service_data]
   end
 
-  def country_usage
-    [@countries, @country_data]
+  def time_to_complete
+    @time_to_complete_data
   end
 
-  def duration_usage
-    @duration_data
+  def country_usage
+    [@countries, @country_data]
   end
 
   private
@@ -56,23 +56,7 @@ class PerformanceStats
       end
   end
 
-  def calculate_country_usage
-    eligibility_checks_by_country =
-      @eligibility_checks.group("region").where.not(region: nil).count
-
-    @country_data = [%w[Country Requests]]
-    @country_data +=
-      eligibility_checks_by_country
-        .sort_by { |region, count| [count, region.name, region.country.name] }
-        .group_by { |region, _| region.country }
-        .map do |country, regions_and_counts|
-          [country.name, regions_and_counts.sum(&:second)]
-        end
-
-    @countries = eligibility_checks_by_country.count
-  end
-
-  def calculate_duration_usage
+  def calculate_time_to_complete
     percentiles_by_day =
       @eligibility_checks
         .complete
@@ -92,7 +76,7 @@ class PerformanceStats
         )
         .each_with_object({}) { |row, hash| hash[row[0]] = row.slice(1, 3) }
 
-    @duration_data = [
+    @time_to_complete_data = [
       [
         "Date",
         "90% of users within",
@@ -100,7 +84,7 @@ class PerformanceStats
         "50% of users within"
       ]
     ]
-    @duration_data +=
+    @time_to_complete_data +=
       @last_n_days.map do |day|
         percentiles = percentiles_by_day[day] || [0, 0, 0]
         [day.strftime("%d %B")] +
@@ -108,5 +92,21 @@ class PerformanceStats
             ActiveSupport::Duration.build(value.to_i).inspect
           end
       end
+  end
+
+  def calculate_country_usage
+    eligibility_checks_by_country =
+      @eligibility_checks.group("region").where.not(region: nil).count
+
+    @country_data = [%w[Country Requests]]
+    @country_data +=
+      eligibility_checks_by_country
+        .sort_by { |region, count| [count, region.name, region.country.name] }
+        .group_by { |region, _| region.country }
+        .map do |country, regions_and_counts|
+          [country.name, regions_and_counts.sum(&:second)]
+        end
+
+    @countries = eligibility_checks_by_country.count
   end
 end

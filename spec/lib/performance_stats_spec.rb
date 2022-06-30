@@ -13,18 +13,18 @@ RSpec.describe PerformanceStats do
     end
   end
 
+  describe "#time_to_complete" do
+    it "calculates time to complete" do
+      data = subject.time_to_complete
+      expect(data.size).to eq 8
+    end
+  end
+
   describe "#country_usage" do
     it "calculates country usage" do
       count, data = subject.country_usage
       expect(count).to eq 0
       expect(data.size).to eq 1
-    end
-  end
-
-  describe "#duration_usage" do
-    it "calculates duration results" do
-      data = subject.duration_usage
-      expect(data.size).to eq 8
     end
   end
 end
