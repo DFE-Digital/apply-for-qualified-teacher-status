@@ -46,12 +46,12 @@ class PerformanceStats
       @last_n_days.map do |day|
         all_checks = eligibility_checks_all[day] || 0
         eligible_checks = eligibility_checks_eligible[day] || 0
-        conversion = all_checks != 0 ? eligible_checks / all_checks : 0
+        conversion = all_checks != 0 ? eligible_checks.to_f / all_checks : 0
         [
           day.strftime("%d %B"),
           all_checks,
           eligible_checks,
-          number_to_percentage(conversion * 100, precision: 0)
+          number_to_percentage(conversion * 100, precision: 1)
         ]
       end
   end
