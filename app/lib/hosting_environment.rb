@@ -19,7 +19,7 @@ module HostingEnvironment
   def self.host
     return "apply-for-qts-in-england.education.gov.uk" if production?
 
-    "apply-for-qts-in-england-#{name}.london.cloudapps.digital"
+    "#{name}.apply-for-qts-in-england.education.gov.uk"
   end
 
   def self.production?
