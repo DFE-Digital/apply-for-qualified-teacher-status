@@ -36,30 +36,20 @@ RSpec.describe HostingEnvironment do
       let(:hosting_environment) { "preprod" }
 
       it do
-        is_expected.to eq(
-          "apply-for-qts-in-england-preprod.london.cloudapps.digital"
-        )
+        is_expected.to eq("preprod.apply-for-qts-in-england.education.gov.uk")
       end
     end
 
     context "when the environment is test" do
       let(:hosting_environment) { "test" }
 
-      it do
-        is_expected.to eq(
-          "apply-for-qts-in-england-test.london.cloudapps.digital"
-        )
-      end
+      it { is_expected.to eq("test.apply-for-qts-in-england.education.gov.uk") }
     end
 
     context "when the environment is dev" do
       let(:hosting_environment) { "dev" }
 
-      it do
-        is_expected.to eq(
-          "apply-for-qts-in-england-dev.london.cloudapps.digital"
-        )
-      end
+      it { is_expected.to eq("dev.apply-for-qts-in-england.education.gov.uk") }
     end
   end
 end
