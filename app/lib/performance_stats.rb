@@ -19,7 +19,12 @@ class PerformanceStats
   end
 
   def live_service_usage
-    [@all_checks_count, @eligible_checks_count, @live_service_data]
+    [
+      @all_checks_count,
+      @answered_all_questions_checks_count,
+      @eligible_checks_count,
+      @live_service_data
+    ]
   end
 
   def time_to_complete
@@ -34,22 +39,42 @@ class PerformanceStats
 
   def calculate_live_service_usage
     eligibility_checks_all = @grouped_eligibility_checks.count
+    eligibility_checks_answered_all_questions =
+      @grouped_eligibility_checks.answered_all_questions.count
     eligibility_checks_eligible = @grouped_eligibility_checks.eligible.count
 
     @all_checks_count = eligibility_checks_all.values.sum
+    @answered_all_questions_checks_count =
+      eligibility_checks_answered_all_questions.values.sum
     @eligible_checks_count = eligibility_checks_eligible.values.sum
 
     @live_service_data = [
-      ["Date", "All checks", "Eligible checks", "Proportion eligible"]
+      [
+        "Date",
+        "All checks",
+        "Full checks",
+        "Eligible checks",
+        "Proportion eligible"
+      ]
     ]
     @live_service_data +=
       @last_n_days.map do |day|
         all_checks = eligibility_checks_all[day] || 0
+        answered_all_questions_checks =
+          eligibility_checks_answered_all_questions[day] || 0
         eligible_checks = eligibility_checks_eligible[day] || 0
-        conversion = all_checks != 0 ? eligible_checks.to_f / all_checks : 0
+        conversion =
+          (
+            if answered_all_questions_checks != 0
+              eligible_checks.to_f / answered_all_questions_checks
+            else
+              0
+            end
+          )
         [
           day.strftime("%d %B"),
           all_checks,
+          answered_all_questions_checks,
           eligible_checks,
           number_to_percentage(conversion * 100, precision: 1)
         ]
