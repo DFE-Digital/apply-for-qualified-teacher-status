@@ -7,8 +7,10 @@ RSpec.describe PerformanceStats do
 
   describe "#live_service_usage" do
     it "calculates live service usage" do
-      count, data = subject.live_service_usage
-      expect(count).to eq 0
+      all_count, full_count, eligible_count, data = subject.live_service_usage
+      expect(all_count).to eq 0
+      expect(full_count).to eq 0
+      expect(eligible_count).to eq 0
       expect(data.size).to eq 8
     end
   end

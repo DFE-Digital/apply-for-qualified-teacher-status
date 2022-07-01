@@ -23,6 +23,10 @@
       <p>checks <%= @since_text %></p>
     </div>
     <div style="display: inline-block" class="govuk-!-margin-left-8">
+      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@answered_all_questions_checks_count) %></p>
+      <p>full checks <%= @since_text %></p>
+    </div>
+    <div style="display: inline-block" class="govuk-!-margin-left-8">
       <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@eligible_checks_count) %></p>
       <p>eligible checks <%= @since_text %></p>
     </div>
