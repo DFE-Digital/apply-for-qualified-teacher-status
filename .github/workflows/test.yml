@@ -52,5 +52,8 @@ jobs:
       - name: Setup DB
         run: bin/rails db:test:prepare
 
+      - name: Run DfE Analytics
+        run: bin/bundle exec rails dfe:analytics:check
+
       - name: Run tests
         run: bin/bundle exec rspec --format documentation
