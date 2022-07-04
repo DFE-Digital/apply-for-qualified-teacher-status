@@ -47,7 +47,7 @@ RSpec.describe EligibilityInterface::RegionForm, type: :model do
     context "with an eligible country" do
       let(:region) { create(:region) }
 
-      it { is_expected.to eq("/eligibility/degree") }
+      it { is_expected.to eq("/eligibility/completed-requirements") }
     end
 
     context "with a legacy country" do
