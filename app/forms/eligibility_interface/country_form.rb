@@ -16,7 +16,11 @@ class EligibilityInterface::CountryForm
   def success_url
     {
       eligible:
-        Rails.application.routes.url_helpers.eligibility_interface_degree_path,
+        Rails
+          .application
+          .routes
+          .url_helpers
+          .eligibility_interface_completed_requirements_path,
       ineligible:
         Rails
           .application

@@ -14,25 +14,26 @@ en:
     attributes:
       eligibility_check:
         ineligible_reason:
+          completed_requirements: You have not completed all requirements to work as a qualified teacher in %{region_name}.
           degree: You do not have a degree. As teaching in England is a graduate profession, you must have an undergraduate degree.
+          misconduct: To teach in England, you must not have any findings of misconduct or restrictions on your practice.
           qualification: You have not completed a formal teacher training course, for example, an undergraduate teaching degree or postgraduate teacher training course.
           teach_children: You are not qualified to teach children who are aged somewhere between 5 and 16 years.
-          misconduct: To teach in England, you must not have any findings of misconduct or restrictions on your practice.
 
     errors:
       models:
-        eligibility_interface/degree_form:
+        eligibility_interface/completed_requirements_form:
           attributes:
-            degree:
-              inclusion: Tell us if you have a degree
+            completed_requirements:
+              inclusion: Tell us if you have completed all requirements to work as a qualified teacher
         eligibility_interface/country_form:
           attributes:
             location:
               blank: Tell us where you’re currently recognised as a teacher
-        eligibility_interface/region_form:
+        eligibility_interface/degree_form:
           attributes:
-            region_id:
-              blank: Tell us where you’re currently recognised as a teacher
+            degree:
+              inclusion: Tell us if you have a degree
         eligibility_interface/misconduct_form:
           attributes:
             free_of_sanctions:
@@ -41,6 +42,10 @@ en:
           attributes:
             qualification:
               inclusion: Tell us if you have a teacher training qualification
+        eligibility_interface/region_form:
+          attributes:
+            region_id:
+              blank: Tell us where you’re currently recognised as a teacher
         eligibility_interface/teach_children_form:
           attributes:
             teach_children:
