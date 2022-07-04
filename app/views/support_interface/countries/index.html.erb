@@ -4,7 +4,7 @@
 
 <% @countries.each do |country| %>
   <h2 class="govuk-heading-m">
-    <%= country.name %>
+    <%= govuk_link_to country.name, edit_support_interface_country_path(country) %>
     <code class="govuk-tag app-country-code-tag govuk-!-margin-left-2"><%= country.code %></code>
   </h2>
 
