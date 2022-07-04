@@ -6,19 +6,19 @@ RSpec.describe "Countries support", type: :system do
 
     when_i_am_authorized_as_a_support_user
     when_i_visit_the_countries_page
-    then_i_see_the_countries
+    then_i_see_the_countries_page
+    and_i_see_the_initial_countries
 
-    when_i_visit_the_countries_page
-    and_i_click_on_a_country
+    when_i_click_on_a_country
     then_i_see_a_country
 
     when_i_fill_regions
     and_i_save
     then_i_see_region_changes_confirmation
-    # and_i_confirm
+    and_i_confirm
+    and_i_see_a_success_banner
 
-    when_i_visit_the_countries_page
-    and_i_click_on_a_region
+    when_i_click_on_a_region
     then_i_see_a_region
 
     when_i_select_sanction_check
@@ -29,7 +29,8 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_website
     and_i_save
 
-    then_i_see_the_countries
+    then_i_see_the_countries_page
+    and_i_see_the_updated_countries
     and_i_see_a_success_banner
   end
 
@@ -59,15 +60,23 @@ RSpec.describe "Countries support", type: :system do
     visit support_interface_countries_path
   end
 
-  def then_i_see_the_countries
+  def then_i_see_the_countries_page
     expect(page).to have_current_path("/support/countries")
     expect(page).to have_title("Countries")
     expect(page).to have_content("Countries")
+  end
+
+  def and_i_see_the_initial_countries
     expect(page).to have_content("United States")
     expect(page).to have_content("Hawaii")
   end
 
-  def and_i_click_on_a_country
+  def and_i_see_the_updated_countries
+    expect(page).to have_content("United States")
+    expect(page).to have_content("California")
+  end
+
+  def when_i_click_on_a_country
     click_link "United States"
   end
 
@@ -80,12 +89,12 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_content("DELETE Hawaii")
   end
 
-  def and_i_click_on_a_region
-    click_link "Hawaii"
+  def when_i_click_on_a_region
+    click_link "California"
   end
 
   def then_i_see_a_region
-    expect(page).to have_title("Hawaii")
+    expect(page).to have_title("California")
   end
 
   def when_i_fill_regions
