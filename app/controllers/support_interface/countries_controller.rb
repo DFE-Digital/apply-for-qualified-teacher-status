@@ -22,7 +22,9 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
       when :create
         @country.regions.create!(name: action[:name])
       when :delete
-        @country.regions.find_by!(name: action[:name]).destroy!
+        region = @country.regions.find_by!(name: action[:name])
+        region.eligibility_checks.delete_all
+        region.destroy!
       end
     end
 
