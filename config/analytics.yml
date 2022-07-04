@@ -30,6 +30,7 @@
     - country_code
     - region_id
     - completed_at
+    - completed_requirements
   :countries:
     - id
     - code
