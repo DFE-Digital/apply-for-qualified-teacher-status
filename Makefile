@@ -37,6 +37,18 @@ production:
 	$(eval ENV_SHORT=pd)
 	$(eval ENV_TAG=prod)
 
+.PHONY: review
+review:
+	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
+	$(eval DEPLOY_ENV=review)
+	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
+	$(eval RESOURCE_NAME_PREFIX=s165d01)
+	$(eval ENV_SHORT=rv)
+	$(eval ENV_TAG=rev)
+	$(eval env=-pr-$(pr_id))
+	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
+	$(eval export TF_VAR_app_suffix=$(env))
+
 read-keyvault-config:
 	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval KEY_VAULT_SECRET_NAME=APPLY-QTS-APP-VARIABLES)
@@ -108,7 +120,7 @@ remove-postgres-tf-state: terraform-init ## make dev remove-postgres-tf-state PA
 terraform-init:
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
-	terraform -chdir=terraform init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars -upgrade -reconfigure
+	terraform -chdir=terraform init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
 
 terraform-plan: terraform-init
 	terraform -chdir=terraform plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
