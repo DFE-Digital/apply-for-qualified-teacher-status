@@ -1,14 +1,24 @@
 module EligibilityInterface
   class BaseController < ApplicationController
+    before_action :load_region_name
     after_action :save_eligibility_check_id
 
     def eligibility_check
       @eligibility_check ||=
         if session[:eligibility_check_id]
-          EligibilityCheck.find(session[:eligibility_check_id])
+          EligibilityCheck.includes(region: :country).find(
+            session[:eligibility_check_id]
+          )
         else
           EligibilityCheck.new
         end
+    end
+
+    def load_region_name
+      region = eligibility_check.region
+      return if region.nil?
+
+      @region_name = region.name.presence || region.country.name_with_prefix
     end
 
     def save_eligibility_check_id

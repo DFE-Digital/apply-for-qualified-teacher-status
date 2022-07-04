@@ -13,7 +13,7 @@
 
       <ul class="govuk-list govuk-list--bullet">
         <% @eligibility_check.ineligible_reasons.each do |reason| %>
-          <li><%= I18n.t("activemodel.attributes.eligibility_check.ineligible_reason.#{reason}") %></li>
+          <li><%= I18n.t("activemodel.attributes.eligibility_check.ineligible_reason.#{reason}", region_name: @region_name) %></li>
         <% end %>
       </ul>
     <% end %>
@@ -27,7 +27,7 @@
     <% else %>
       <p class="govuk-body">If you have any questions about QTS contact the help team at:</p>
     <% end %>
-    
+
     <p class="govuk-body"><a class="govuk-link" href="mailto:<%= I18n.t("service.email") %>"><%= I18n.t("service.email") %></a></p>
   </div>
 </div>

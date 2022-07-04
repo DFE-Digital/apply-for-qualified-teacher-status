@@ -82,6 +82,7 @@ class EligibilityCheck < ApplicationRecord
   def ineligible_reasons
     [
       !region ? :country : nil,
+      !completed_requirements ? :completed_requirements : nil,
       !degree ? :degree : nil,
       !qualification ? :qualification : nil,
       !teach_children ? :teach_children : nil,
@@ -121,7 +122,8 @@ class EligibilityCheck < ApplicationRecord
     return :misconduct unless teach_children.nil?
     return :teach_children unless qualification.nil?
     return :qualification unless degree.nil?
-    return :degree if region.present?
+    return :degree unless completed_requirements.nil?
+    return :completed_requirements if region.present?
     return :region if country_code.present?
 
     :country

@@ -21,7 +21,11 @@ class EligibilityInterface::RegionForm
   def success_url
     {
       eligible:
-        Rails.application.routes.url_helpers.eligibility_interface_degree_path,
+        Rails
+          .application
+          .routes
+          .url_helpers
+          .eligibility_interface_completed_requirements_path,
       legacy:
         Rails.application.routes.url_helpers.eligibility_interface_eligible_path
     }.fetch(eligibility_check.region_eligibility_status)
