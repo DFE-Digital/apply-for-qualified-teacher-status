@@ -2,6 +2,10 @@ variable "environment_name" {
   type = string
 }
 
+variable "app_suffix" {
+  type    = string
+  default = ""
+}
 variable "azure_sp_credentials_json" {
   type    = string
   default = null
@@ -65,7 +69,7 @@ locals {
     values(cloudfoundry_route.education)
   ])
 
-  apply_qts_app_name     = "apply-for-qts-in-england-${var.environment_name}"
-  postgres_database_name = "apply-for-qts-in-england-${var.environment_name}-pg-svc"
-  redis_database_name    = "apply-for-qts-in-england-${var.environment_name}-redis-svc"
+  apply_qts_app_name     = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}"
+  postgres_database_name = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}-pg-svc"
+  redis_database_name    = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}-redis-svc"
 }
