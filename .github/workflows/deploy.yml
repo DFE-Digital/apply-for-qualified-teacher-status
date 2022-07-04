@@ -16,11 +16,21 @@ on:
   push:
     branches:
       - main
+
+  pull_request:
+    branches:
+      - main
+    types:
+      - labeled
+      - synchronize
+      - reopened
+      - opened
 env:
   CONTAINER_REGISTRY: ghcr.io
 
 jobs:
   docker:
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     name: Docker build and push
     runs-on: ubuntu-latest
     outputs:
@@ -63,7 +73,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - uses: ./.github/workflows/actions/deploy-environment
         id: deploy
         with:
@@ -71,6 +80,32 @@ jobs:
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
           terraform_vars: workspace_variables/dev.tfvars.json
+
+  deploy_review:
+    name: Deploy to review environment
+    concurrency: deploy_review_${{ github.event.pull_request.number }}
+    needs: [docker]
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
+    environment:
+      name: review
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: review
+          docker_image: ${{ needs.docker.outputs.docker_image }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          pr_id: ${{ github.event.pull_request.number }}
+
+      - name: Post sticky pull request comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            Review app deployed to ${{ steps.deploy.outputs.environment_url }}
 
   deploy_environment:
     name: Deploy to ${{ github.event.inputs.environment }} environment
@@ -86,8 +121,7 @@ jobs:
       environment_url: ${{ steps.deploy.outputs.environment_url }}
 
     steps:
-      - uses: actions/checkout@v2
-
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/deploy-environment
         id: deploy
         with:
