@@ -12,6 +12,11 @@ RSpec.describe "Countries support", type: :system do
     and_i_click_on_a_country
     then_i_see_a_country
 
+    when_i_fill_regions
+    and_i_save
+    then_i_see_region_changes_confirmation
+    # and_i_confirm
+
     when_i_visit_the_countries_page
     and_i_click_on_a_region
     then_i_see_a_region
@@ -58,6 +63,8 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_current_path("/support/countries")
     expect(page).to have_title("Countries")
     expect(page).to have_content("Countries")
+    expect(page).to have_content("United States")
+    expect(page).to have_content("Hawaii")
   end
 
   def and_i_click_on_a_country
@@ -68,12 +75,21 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_title("United States")
   end
 
+  def then_i_see_region_changes_confirmation
+    expect(page).to have_content("CREATE California")
+    expect(page).to have_content("DELETE Hawaii")
+  end
+
   def and_i_click_on_a_region
     click_link "Hawaii"
   end
 
   def then_i_see_a_region
     expect(page).to have_title("Hawaii")
+  end
+
+  def when_i_fill_regions
+    fill_in "country-all-regions-field", with: "California"
   end
 
   def when_i_select_sanction_check
@@ -102,6 +118,10 @@ RSpec.describe "Countries support", type: :system do
 
   def and_i_save
     click_button "Save", visible: false
+  end
+
+  def and_i_confirm
+    click_button "Confirm", visible: false
   end
 
   def and_i_see_a_success_banner

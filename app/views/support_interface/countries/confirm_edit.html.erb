@@ -1,0 +1,36 @@
+<% content_for :page_title, @country.name %>
+
+<h1 class="govuk-heading-l"><%= @country.name %></h1>
+
+<h2 class="govuk-heading-s">Review and confirm the following changes:</h2>
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive">Warning</span>
+    This action is irreversible.
+  </strong>
+</div>
+
+<ul class="govuk-list">
+  <% @diff_actions.each do |action| %>
+    <li>
+      <% if action[:action] == :create %>
+        <%= govuk_tag(text: "Create", colour: "green") %>
+      <% elsif action[:action] == :delete %>
+        <%= govuk_tag(text: "Delete", colour: "red") %>
+      <% end %>
+
+      <% if action[:name].present? %>
+        <%= action[:name] %>
+      <% else %>
+        <em>National</em>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<%= form_with model: [:support_interface, @country] do |f| %>
+  <%= f.hidden_field :all_regions, value: @all_regions %>
+  <%= f.govuk_submit "Confirm", prevent_double_click: false %>
+<% end %>
