@@ -2,16 +2,17 @@
 #
 # Table name: eligibility_checks
 #
-#  id                :bigint           not null, primary key
-#  completed_at      :datetime
-#  country_code      :string
-#  degree            :boolean
-#  free_of_sanctions :boolean
-#  qualification     :boolean
-#  teach_children    :boolean
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  region_id         :bigint
+#  id                     :bigint           not null, primary key
+#  completed_at           :datetime
+#  completed_requirements :boolean
+#  country_code           :string
+#  degree                 :boolean
+#  free_of_sanctions      :boolean
+#  qualification          :boolean
+#  teach_children         :boolean
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  region_id              :bigint
 #
 # Foreign Keys
 #
@@ -25,12 +26,21 @@ class EligibilityCheck < ApplicationRecord
   scope :complete, -> { where.not(completed_at: nil) }
   scope :eligible,
         -> {
-          where.not(region: nil).where(
-            degree: true,
-            free_of_sanctions: true,
-            qualification: true,
-            teach_children: true
-          )
+          where
+            .not(region: nil)
+            .where(
+              degree: true,
+              free_of_sanctions: true,
+              qualification: true,
+              teach_children: true
+            )
+            .merge(
+              where(completed_requirements: true).or(
+                where.not(completed_requirements: true).merge(
+                  _before_completed_requirements
+                )
+              )
+            )
         }
   scope :ineligible,
         -> {
@@ -39,6 +49,7 @@ class EligibilityCheck < ApplicationRecord
             .or(where(qualification: false))
             .or(where(region: nil))
             .or(where(teach_children: false))
+            .or(where(completed_requirements: false))
         }
   scope :answered_all_questions,
         -> {
@@ -47,8 +58,19 @@ class EligibilityCheck < ApplicationRecord
             free_of_sanctions: nil,
             qualification: nil,
             teach_children: nil
+          ).merge(
+            where.not(completed_requirements: nil).or(
+              where(completed_requirements: nil).merge(
+                _before_completed_requirements
+              )
+            )
           )
         }
+
+  # The completed requirements question was added after the eligibility
+  # checker was launched.
+  scope :_before_completed_requirements,
+        -> { where(created_at: ..Date.new(2022, 7, 5)) }
 
   def country_code=(value)
     super(value)
