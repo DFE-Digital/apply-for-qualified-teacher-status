@@ -43,7 +43,9 @@ Rails.application.routes.draw do
          to: "feature_flags#deactivate",
          as: :deactivate_feature
 
-    resources :countries, only: %i[index]
+    resources :countries, only: %i[index edit] do
+      post "confirm_edit", on: :member
+    end
     resources :regions, only: %i[edit update]
     resources :staff, only: %i[index]
 

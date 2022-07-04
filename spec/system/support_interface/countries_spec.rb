@@ -8,8 +8,13 @@ RSpec.describe "Countries support", type: :system do
     when_i_visit_the_countries_page
     then_i_see_the_countries
 
-    when_i_press_a_country
+    when_i_visit_the_countries_page
+    and_i_click_on_a_country
     then_i_see_a_country
+
+    when_i_visit_the_countries_page
+    and_i_click_on_a_region
+    then_i_see_a_region
 
     when_i_select_sanction_check
     when_i_select_status_check
@@ -55,11 +60,19 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_content("Countries")
   end
 
-  def when_i_press_a_country
-    click_link "Hawaii"
+  def and_i_click_on_a_country
+    click_link "United States"
   end
 
   def then_i_see_a_country
+    expect(page).to have_title("United States")
+  end
+
+  def and_i_click_on_a_region
+    click_link "Hawaii"
+  end
+
+  def then_i_see_a_region
     expect(page).to have_title("Hawaii")
   end
 

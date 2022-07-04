@@ -1,0 +1,13 @@
+<% content_for :page_title, @country.name %>
+
+<h1 class="govuk-heading-l"><%= @country.name %></h1>
+
+<%= form_with model: @country, url: confirm_edit_support_interface_country_path(@country), method: "POST" do |f| %>
+  <%= f.govuk_text_area :all_regions,
+                        value: @all_regions,
+                        label: { text: "Regions" },
+                        hint: { text: "Include a region on each line." },
+                        rows: 30 %>
+
+  <%= f.govuk_submit "Save", prevent_double_click: false %>
+<% end %>
