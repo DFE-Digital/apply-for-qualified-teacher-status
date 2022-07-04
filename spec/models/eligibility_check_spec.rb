@@ -2,16 +2,17 @@
 #
 # Table name: eligibility_checks
 #
-#  id                :bigint           not null, primary key
-#  completed_at      :datetime
-#  country_code      :string
-#  degree            :boolean
-#  free_of_sanctions :boolean
-#  qualification     :boolean
-#  teach_children    :boolean
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  region_id         :bigint
+#  id                     :bigint           not null, primary key
+#  completed_at           :datetime
+#  completed_requirements :boolean
+#  country_code           :string
+#  degree                 :boolean
+#  free_of_sanctions      :boolean
+#  qualification          :boolean
+#  teach_children         :boolean
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  region_id              :bigint
 #
 # Foreign Keys
 #
@@ -208,13 +209,14 @@ RSpec.describe EligibilityCheck, type: :model do
     let(:eligibility_check_2) do
       create(
         :eligibility_check,
+        completed_requirements: false,
         degree: true,
         free_of_sanctions: false,
         qualification: true,
         teach_children: false
       )
     end
-
+    g
     it { is_expected.to_not include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
   end
