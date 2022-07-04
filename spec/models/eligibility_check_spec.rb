@@ -216,7 +216,7 @@ RSpec.describe EligibilityCheck, type: :model do
         teach_children: false
       )
     end
-    g
+
     it { is_expected.to_not include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
   end
