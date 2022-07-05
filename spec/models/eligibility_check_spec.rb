@@ -192,6 +192,18 @@ RSpec.describe EligibilityCheck, type: :model do
 
     it { is_expected.to_not include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
+
+    context "before the completed requirements question" do
+      before do
+        eligibility_check_2.update!(
+          created_at: Date.new(2020, 1, 1),
+          completed_requirements: nil
+        )
+      end
+
+      it { is_expected.to_not include(eligibility_check_1) }
+      it { is_expected.to include(eligibility_check_2) }
+    end
   end
 
   describe "#ineligible" do
@@ -220,6 +232,18 @@ RSpec.describe EligibilityCheck, type: :model do
 
     it { is_expected.to_not include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
+
+    context "before the completed requirements question" do
+      before do
+        eligibility_check_2.update!(
+          created_at: Date.new(2020, 1, 1),
+          completed_requirements: nil
+        )
+      end
+
+      it { is_expected.to_not include(eligibility_check_1) }
+      it { is_expected.to include(eligibility_check_2) }
+    end
   end
 
   describe "#complete!" do
