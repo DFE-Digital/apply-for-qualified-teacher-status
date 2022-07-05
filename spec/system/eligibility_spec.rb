@@ -371,6 +371,12 @@ RSpec.describe "Eligibility check", type: :system do
     expect(page).to have_content(
       "You’re not eligible to apply for qualified teacher status (QTS) in England"
     )
+    expect(page).to have_content(
+      "Teachers applying from Spain are not currently eligible to use this service."
+    )
+    expect(page).to have_content(
+      "You can also learn more about teaching in England."
+    )
   end
 
   def and_i_see_the_ineligible_completed_requirements_text
