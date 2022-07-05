@@ -1,12 +1,9 @@
 require "rails_helper"
 
-RSpec.describe "eligibility_interface/finish/eligible", type: :view do
+RSpec.describe "Eligible region content", type: :view do
   let(:region) { nil }
 
-  before do
-    assign(:region, region)
-    render
-  end
+  before { render "shared/eligible_region_content", region: }
 
   subject { rendered }
 
