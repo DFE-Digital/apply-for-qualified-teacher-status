@@ -78,17 +78,18 @@ class EligibilityCheck < ApplicationRecord
 
   def ineligible_reasons
     [
-      !region ? :country : nil,
-      !completed_requirements ? :completed_requirements : nil,
-      !degree ? :degree : nil,
-      !qualification ? :qualification : nil,
-      !teach_children ? :teach_children : nil,
-      !free_of_sanctions ? :misconduct : nil
+      region.nil? ? :country : nil,
+      completed_requirements == false ? :completed_requirements : nil,
+      degree == false ? :degree : nil,
+      qualification == false ? :qualification : nil,
+      teach_children == false ? :teach_children : nil,
+      free_of_sanctions == false ? :misconduct : nil
     ].compact
   end
 
   def eligible?
-    ineligible_reasons.empty?
+    region.present? && completed_requirements && degree && qualification &&
+      teach_children && free_of_sanctions
   end
 
   def country_eligibility_status
