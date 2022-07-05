@@ -48,7 +48,11 @@ Rails.application.routes.draw do
     resources :countries, only: %i[index edit update] do
       post "confirm_edit", on: :member
     end
-    resources :regions, only: %i[edit update]
+
+    resources :regions, only: %i[edit update] do
+      get "preview", on: :member
+    end
+
     resources :staff, only: %i[index]
 
     devise_scope :staff do

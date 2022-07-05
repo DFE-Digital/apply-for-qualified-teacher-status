@@ -15,6 +15,10 @@ module SupportInterface
       end
     end
 
+    def preview
+      @region = Region.find(params[:id])
+    end
+
     private
 
     def region_params

@@ -2,6 +2,8 @@
 
 <h1 class="govuk-heading-l"><%= @region.full_name %></h1>
 
+<p class="govuk-body"><%= govuk_link_to "Preview eligible page", preview_support_interface_region_path(@region) %></p>
+
 <%= form_with model: [:support_interface, @region] do |f| %>
   <%= f.govuk_check_box :legacy, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Legacy" } %>
 

@@ -1,0 +1,9 @@
+<% content_for :page_title, "Preview #{@region.full_name}" %>
+
+<h1 class="govuk-heading-l">Preview <%= @region.full_name %></h1>
+
+<%= govuk_warning_text(text: "This is what users will see if they are eligible.") %>
+
+<hr class="govuk-!-margin-bottom-6" />
+
+<%= render "shared/eligible_region_content", region: @region %>
