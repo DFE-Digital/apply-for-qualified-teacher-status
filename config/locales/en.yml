@@ -36,7 +36,7 @@ en:
               inclusion: Tell us if you have a degree
         eligibility_interface/misconduct_form:
           attributes:
-            free_of_sanctions:
+            misconduct:
               inclusion: Tell us if your employment record is free of sanctions
         eligibility_interface/qualification_form:
           attributes:
