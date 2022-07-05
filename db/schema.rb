@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_04_095759) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_05_135243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_04_095759) do
     t.text "teaching_authority_website", default: "", null: false
     t.text "teaching_authority_email_address", default: "", null: false
     t.boolean "legacy", default: true, null: false
+    t.text "teaching_authority_other", default: "", null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end

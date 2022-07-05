@@ -25,31 +25,19 @@
 #
 #  fk_rails_...  (country_id => countries.id)
 #
-class Region < ApplicationRecord
-  include DfE::Analytics::Entities
+FactoryBot.define do
+  factory :region do
+    association :country
 
-  belongs_to :country
-  has_many :eligibility_checks
+    sequence(:name) { |n| "Region #{n}" }
+    legacy { false }
 
-  enum :sanction_check,
-       { none: "none", online: "online", written: "written" },
-       default: :none,
-       prefix: true
-  enum :status_check,
-       { none: "none", online: "online", written: "written" },
-       default: :none,
-       prefix: true
+    trait :national do
+      name { "" }
+    end
 
-  validates :name, uniqueness: { scope: :country_id }
-  validates :sanction_check, inclusion: { in: sanction_checks.values }
-  validates :status_check, inclusion: { in: status_checks.values }
-  validates :teaching_authority_certificate,
-            presence: true,
-            if: -> { sanction_check_written? || status_check_written? }
-
-  def full_name
-    string = country.name
-    string += " — #{name}" if name.present?
-    string
+    trait :legacy do
+      legacy { true }
+    end
   end
 end

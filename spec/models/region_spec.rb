@@ -10,6 +10,7 @@
 #  teaching_authority_address       :text             default(""), not null
 #  teaching_authority_certificate   :text             default(""), not null
 #  teaching_authority_email_address :text             default(""), not null
+#  teaching_authority_other         :text             default(""), not null
 #  teaching_authority_website       :text             default(""), not null
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
