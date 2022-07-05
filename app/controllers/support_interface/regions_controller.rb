@@ -22,6 +22,9 @@ module SupportInterface
 
     def preview
       @region = Region.find(params[:id])
+
+      # Non-legacy previews are more useful to the team.
+      @region.legacy = false
     end
 
     private
