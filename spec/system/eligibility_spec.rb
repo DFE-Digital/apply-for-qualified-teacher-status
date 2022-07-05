@@ -38,6 +38,11 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_choose_no
     and_i_submit
     then_i_see_the_eligible_page
+
+    when_i_visit_the_start_page
+    then_i_see_the_start_page
+    when_i_press_start_now
+    then_i_have_two_eligibility_checks
   end
 
   it "ineligible paths" do
@@ -438,5 +443,9 @@ RSpec.describe "Eligibility check", type: :system do
     expect(page).to have_content(
       "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
     )
+  end
+
+  def then_i_have_two_eligibility_checks
+    expect(EligibilityCheck.count).to eq(2)
   end
 end
