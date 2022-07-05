@@ -37,7 +37,8 @@ module SupportInterface
         :teaching_authority_address,
         :teaching_authority_certificate,
         :teaching_authority_email_address,
-        :teaching_authority_website
+        :teaching_authority_website,
+        :teaching_authority_other
       )
     end
   end
