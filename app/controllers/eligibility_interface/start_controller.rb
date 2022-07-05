@@ -11,6 +11,7 @@ class EligibilityInterface::StartController < EligibilityInterface::BaseControll
   end
 
   def create
+    @eligibility_check = EligibilityCheck.new if eligibility_check.completed_at?
     eligibility_check.save!
     redirect_to eligibility_interface_countries_path
   end
