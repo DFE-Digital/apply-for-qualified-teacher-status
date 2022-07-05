@@ -27,17 +27,13 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_email_address
     when_i_fill_teaching_authority_website
-    and_i_save
-
-    then_i_see_the_countries_page
-    and_i_see_the_updated_countries
+    and_i_save_and_preview
+    then_i_see_the_preview
     and_i_see_a_success_banner
 
-    when_i_click_on_a_region
-    then_i_see_a_region
-
-    when_i_click_on_preview
-    then_i_see_the_preview
+    when_i_visit_the_countries_page
+    then_i_see_the_countries_page
+    and_i_see_the_updated_countries
   end
 
   private
@@ -103,14 +99,10 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_title("California")
   end
 
-  def when_i_click_on_preview
-    click_link "Preview eligible page"
-  end
-
   def then_i_see_the_preview
-    expect(page).to have_title("Preview California")
+    expect(page).to have_title("Preview United States — California")
+    expect(page).to have_content("You’re eligible to apply")
     expect(page).to have_content("Preparing to apply")
-    expect(page).to have_content("What we’ll ask for")
     expect(page).to have_content("You might need to provide translations")
   end
 
@@ -144,6 +136,10 @@ RSpec.describe "Countries support", type: :system do
 
   def and_i_save
     click_button "Save", visible: false
+  end
+
+  def and_i_save_and_preview
+    click_button "Save and preview", visible: false
   end
 
   def and_i_confirm
