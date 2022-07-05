@@ -32,6 +32,12 @@ RSpec.describe "Countries support", type: :system do
     then_i_see_the_countries_page
     and_i_see_the_updated_countries
     and_i_see_a_success_banner
+
+    when_i_click_on_a_region
+    then_i_see_a_region
+
+    when_i_click_on_preview
+    then_i_see_the_preview
   end
 
   private
@@ -95,6 +101,17 @@ RSpec.describe "Countries support", type: :system do
 
   def then_i_see_a_region
     expect(page).to have_title("California")
+  end
+
+  def when_i_click_on_preview
+    click_link "Preview eligible page"
+  end
+
+  def then_i_see_the_preview
+    expect(page).to have_title("Preview California")
+    expect(page).to have_content("Preparing to apply")
+    expect(page).to have_content("What we’ll ask for")
+    expect(page).to have_content("You might need to provide translations")
   end
 
   def when_i_fill_regions
