@@ -1,5 +1,6 @@
 <% content_for :page_title, "You’re not eligible" %>
 <% content_for :back_link_url, back_link_url %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
@@ -7,7 +8,7 @@
     </h1>
 
     <% if @eligibility_check.ineligible_reasons.include?(:country) %>
-      <p class="govuk-body">This is because teachers with qualifications from this country are not eligible under current legislation.</p>
+      <p class="govuk-body">Teachers applying from <%= @country_name %> are not currently eligible to use this service. However, you can <%= govuk_link_to "apply for QTS using alternative routes", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#qts-exemption-for-teachers-from-outside-the-uk" %>.</p>
     <% else %>
       <p class="govuk-body">This is because:</p>
 
@@ -19,7 +20,7 @@
     <% end %>
 
     <% unless @eligibility_check.ineligible_reasons.include?(:misconduct) %>
-      <p class="govuk-body">You can find out how to train to become a teacher in England by visiting the <a href="https://getintoteaching.education.gov.uk/non-uk-teachers">Get into Teaching service</a>.</p>
+      <p class="govuk-body">You can also <%= govuk_link_to "learn more about teaching in England", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" %>.</p>
     <% end %>
 
     <% if @eligibility_check.ineligible_reasons.include?(:country) %>
