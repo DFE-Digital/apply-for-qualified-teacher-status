@@ -25,6 +25,8 @@
 
   <%= f.govuk_url_field :teaching_authority_website, label: { text: "Teaching authority website" } %>
 
+  <%= f.govuk_text_area :teaching_authority_other, label: { text: "Teaching authority other" } %>
+
   <%= f.govuk_submit "Save", prevent_double_click: false do %>
     <%= f.govuk_submit "Save and preview", prevent_double_click: false, name: "preview", value: "preview" %>
     <%= govuk_button_link_to "Ignore changes and preview", preview_support_interface_region_path(@region), secondary: true %>
