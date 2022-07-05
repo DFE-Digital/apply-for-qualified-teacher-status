@@ -24,16 +24,5 @@ class Country < ApplicationRecord
       .map { |row| [row.last.split(":").last, row.first] }
       .to_h
 
-  COUNTRIES_WITH_DEFINITE_ARTICLE =
-    YAML.load(File.read("lib/countries-with-definite-article.yaml"))
-
   validates :code, inclusion: { in: COUNTRIES.keys }
-
-  def name
-    COUNTRIES.fetch(code)
-  end
-
-  def name_with_prefix
-    COUNTRIES_WITH_DEFINITE_ARTICLE.include?(code) ? "the #{name}" : name
-  end
 end

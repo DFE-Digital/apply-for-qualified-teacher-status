@@ -1,6 +1,6 @@
-<% content_for :page_title, "Preview #{@region.full_name}" %>
+<% content_for :page_title, "Preview #{CountryName.from_region(@region)}" %>
 
-<h1 class="govuk-heading-l">Preview <%= @region.full_name %></h1>
+<h1 class="govuk-heading-l">Preview <%= CountryName.from_region(@region) %></h1>
 
 <%= govuk_warning_text(text: "This is what users will see if they are eligible.") %>
 
@@ -10,4 +10,4 @@
 
 <hr class="govuk-!-margin-top-6 govuk-!-margin-bottom-6" />
 
-<p class="govuk-body"><%= govuk_link_to "Back to edit #{@region.full_name}", edit_support_interface_region_path(@region) %></p>
+<p class="govuk-body"><%= govuk_link_to "Back to edit #{CountryName.from_region(@region)}", edit_support_interface_region_path(@region) %></p>

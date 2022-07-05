@@ -28,7 +28,9 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
       end
     end
 
-    flash[:success] = "Successfully updated #{@country.name}"
+    flash[
+      :success
+    ] = "Successfully updated #{CountryName.from_country(@country)}"
     redirect_to support_interface_countries_path
   end
 

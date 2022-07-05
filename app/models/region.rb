@@ -46,10 +46,4 @@ class Region < ApplicationRecord
   validates :teaching_authority_certificate,
             presence: true,
             if: -> { sanction_check_written? || status_check_written? }
-
-  def full_name
-    string = country.name
-    string += " — #{name}" if name.present?
-    string
-  end
 end

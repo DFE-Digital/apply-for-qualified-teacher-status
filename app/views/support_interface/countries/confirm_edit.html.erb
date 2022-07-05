@@ -1,6 +1,6 @@
-<% content_for :page_title, @country.name %>
+<% content_for :page_title, CountryName.from_country(@country) %>
 
-<h1 class="govuk-heading-l"><%= @country.name %></h1>
+<h1 class="govuk-heading-l"><%= CountryName.from_country(@country) %></h1>
 
 <h2 class="govuk-heading-s">Review and confirm the following changes:</h2>
 
