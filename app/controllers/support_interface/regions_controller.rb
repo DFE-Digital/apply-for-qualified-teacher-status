@@ -8,7 +8,9 @@ module SupportInterface
       @region = Region.find(params[:id])
 
       if @region.update(region_params)
-        flash[:success] = "Successfully updated #{@region.full_name}"
+        flash[
+          :success
+        ] = "Successfully updated #{CountryName.from_region(@region)}"
 
         if params[:preview] == "preview"
           redirect_to preview_support_interface_region_path(@region)

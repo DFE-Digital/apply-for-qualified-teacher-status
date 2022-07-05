@@ -15,10 +15,11 @@ module EligibilityInterface
     end
 
     def load_region_name
-      region = eligibility_check.region
-      return if region.nil?
-
-      @region_name = region.name.presence || region.country.name_with_prefix
+      @region_name =
+        CountryName.from_eligibility_check(
+          eligibility_check,
+          with_definite_article: true
+        )
     end
 
     def save_eligibility_check_id

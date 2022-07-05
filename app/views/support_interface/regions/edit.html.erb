@@ -1,6 +1,6 @@
-<% content_for :page_title, @region.full_name %>
+<% content_for :page_title, CountryName.from_region(@region) %>
 
-<h1 class="govuk-heading-l"><%= @region.full_name %></h1>
+<h1 class="govuk-heading-l"><%= CountryName.from_region(@region) %></h1>
 
 <%= form_with model: [:support_interface, @region] do |f| %>
   <%= f.govuk_check_box :legacy, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Legacy" } %>

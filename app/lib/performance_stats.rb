@@ -134,20 +134,23 @@ class PerformanceStats
 
     @usage_by_country_count = eligibility_checks_by_region_all.count
 
+    sorted_eligibility_checks_by_region_all =
+      eligibility_checks_by_region_all.sort_by do |region, count|
+        [-count, CountryName.from_country(region.country), region.name]
+      end
+
     @usage_by_country_data = [
       ["Country", "State", "All checks", "Full checks", "Eligible checks"]
     ]
     @usage_by_country_data +=
-      eligibility_checks_by_region_all
-        .sort_by { |region, count| [-count, region.country.name, region.name] }
-        .map do |region, count|
-          [
-            region.country.name,
-            region.name,
-            count,
-            eligibility_checks_by_region_answered_all_questions[region] || 0,
-            eligibility_checks_by_region_eligible[region] || 0
-          ]
-        end
+      sorted_eligibility_checks_by_region_all.map do |region, count|
+        [
+          CountryName.from_country(region.country),
+          region.name,
+          count,
+          eligibility_checks_by_region_answered_all_questions[region] || 0,
+          eligibility_checks_by_region_eligible[region] || 0
+        ]
+      end
   end
 end

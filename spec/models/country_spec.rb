@@ -18,28 +18,4 @@ RSpec.describe Country, type: :model do
     it { is_expected.to validate_inclusion_of(:code).in_array(%w[GB-SCT FR]) }
     it { is_expected.to_not validate_inclusion_of(:code).in_array(%w[ABC]) }
   end
-
-  describe "#name" do
-    subject(:name) { country.name }
-
-    let(:country) { create(:country, code: "GB-SCT") }
-
-    it { is_expected.to eq("Scotland") }
-  end
-
-  describe "#name_with_prefix" do
-    subject(:name_with_prefix) { country.name_with_prefix }
-
-    context "without a 'the' prefixed country" do
-      let(:country) { create(:country, code: "GB-SCT") }
-
-      it { is_expected.to eq("Scotland") }
-    end
-
-    context "with a 'the' prefixed country" do
-      let(:country) { create(:country, code: "US") }
-
-      it { is_expected.to eq("the United States") }
-    end
-  end
 end

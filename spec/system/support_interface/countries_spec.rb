@@ -101,7 +101,7 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def then_i_see_the_preview
-    expect(page).to have_title("Preview United States — California")
+    expect(page).to have_title("Preview California")
     expect(page).to have_content("You’re eligible to apply")
     expect(page).to have_content("Preparing to apply")
     expect(page).to have_content("You might need to provide translations")

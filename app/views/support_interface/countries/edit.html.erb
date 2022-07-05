@@ -1,6 +1,6 @@
-<% content_for :page_title, @country.name %>
+<% content_for :page_title, CountryName.from_country(@country) %>
 
-<h1 class="govuk-heading-l"><%= @country.name %></h1>
+<h1 class="govuk-heading-l"><%= CountryName.from_country(@country) %></h1>
 
 <%= form_with model: @country, url: confirm_edit_support_interface_country_path(@country), method: "POST" do |f| %>
   <%= f.govuk_text_area :all_regions,

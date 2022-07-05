@@ -57,22 +57,4 @@ RSpec.describe Region, type: :model do
       end
     end
   end
-
-  describe "#full_name" do
-    subject(:full_name) { region.full_name }
-
-    let(:country) { create(:country, code: "GB-SCT") }
-
-    context "with a region" do
-      let(:region) { create(:region, country:, name: "Edinburgh") }
-
-      it { is_expected.to eq("Scotland — Edinburgh") }
-    end
-
-    context "with a nameless region" do
-      let(:region) { create(:region, :national, country:) }
-
-      it { is_expected.to eq("Scotland") }
-    end
-  end
 end
