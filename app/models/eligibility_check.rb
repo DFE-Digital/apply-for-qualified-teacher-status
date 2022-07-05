@@ -67,7 +67,7 @@ class EligibilityCheck < ApplicationRecord
 
   # The completed requirements question was added after the eligibility
   # checker was launched.
-  BEFORE_COMPLETED_REQUIREMENTS = ..Date.new(2022, 7, 5)
+  BEFORE_COMPLETED_REQUIREMENTS = ..Date.new(2022, 7, 5, 8)
 
   def country_code=(value)
     super(value)
