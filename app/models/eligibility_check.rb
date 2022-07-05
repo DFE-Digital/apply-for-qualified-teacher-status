@@ -34,13 +34,11 @@ class EligibilityCheck < ApplicationRecord
               qualification: true,
               teach_children: true
             )
-            .merge(
-              where(completed_requirements: true).or(
-                where.not(completed_requirements: true).merge(
-                  _before_completed_requirements
-                )
-              )
+            .where(
+              completed_requirements: [nil, false],
+              created_at: BEFORE_COMPLETED_REQUIREMENTS
             )
+            .or(where(completed_requirements: true))
         }
   scope :ineligible,
         -> {
@@ -53,24 +51,23 @@ class EligibilityCheck < ApplicationRecord
         }
   scope :answered_all_questions,
         -> {
-          where.not(
-            degree: nil,
-            free_of_sanctions: nil,
-            qualification: nil,
-            teach_children: nil
-          ).merge(
-            where.not(completed_requirements: nil).or(
-              where(completed_requirements: nil).merge(
-                _before_completed_requirements
-              )
+          where
+            .not(
+              degree: nil,
+              free_of_sanctions: nil,
+              qualification: nil,
+              teach_children: nil
             )
-          )
+            .where(
+              completed_requirements: nil,
+              created_at: BEFORE_COMPLETED_REQUIREMENTS
+            )
+            .or(where.not(completed_requirements: nil))
         }
 
   # The completed requirements question was added after the eligibility
   # checker was launched.
-  scope :_before_completed_requirements,
-        -> { where(created_at: ..Date.new(2022, 7, 5)) }
+  BEFORE_COMPLETED_REQUIREMENTS = ..Date.new(2022, 7, 5)
 
   def country_code=(value)
     super(value)
