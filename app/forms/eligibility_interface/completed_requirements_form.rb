@@ -19,10 +19,6 @@ class EligibilityInterface::CompletedRequirementsForm
   end
 
   def success_url
-    Rails
-      .application
-      .routes
-      .url_helpers
-      .eligibility_interface_qualifications_path
+    Rails.application.routes.url_helpers.eligibility_interface_degree_path
   end
 end
