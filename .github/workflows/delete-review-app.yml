@@ -60,6 +60,7 @@ jobs:
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
           pr_state_file=$(az storage blob list -c afqts-tfstate \
             --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
+            --account-name "s165d01afqtstfstatedv" \
             --prefix $TF_STATE_FILE --query "[].name" -o tsv)
           if [ -n "$pr_state_file" ]; then echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV; fi;
 
@@ -78,4 +79,5 @@ jobs:
         if: env.TF_STATE_EXISTS == 'true'
         run: |
           az storage blob delete -c afqts-tfstate --name ${{ env.TF_STATE_FILE }} \
-          --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }}
+          --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
+          --account-name "s165d01afqtstfstatedv"
