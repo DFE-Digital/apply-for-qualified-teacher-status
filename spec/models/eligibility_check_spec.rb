@@ -292,15 +292,19 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to eq(:qualification) }
     end
 
-    context "when degree is present" do
+    context "when qualification is present" do
       let(:attributes) do
-        { degree: true, completed_requirements: true, region: create(:region) }
+        {
+          qualification: true,
+          completed_requirements: true,
+          region: create(:region)
+        }
       end
 
-      it { is_expected.to eq(:teach_children) }
+      it { is_expected.to eq(:degree) }
     end
 
-    context "when qualification is present" do
+    context "when degree is present" do
       let(:attributes) do
         {
           qualification: true,
