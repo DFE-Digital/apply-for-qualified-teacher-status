@@ -1,6 +1,6 @@
 module EligibilityInterface
   class BaseController < ApplicationController
-    before_action :load_country_name
+    before_action :load_region
     after_action :save_eligibility_check_id
 
     def eligibility_check
@@ -14,12 +14,8 @@ module EligibilityInterface
         end
     end
 
-    def load_country_name
-      @country_name =
-        CountryName.from_eligibility_check(
-          eligibility_check,
-          with_definite_article: true
-        )
+    def load_region
+      @region = eligibility_check.region
     end
 
     def save_eligibility_check_id
