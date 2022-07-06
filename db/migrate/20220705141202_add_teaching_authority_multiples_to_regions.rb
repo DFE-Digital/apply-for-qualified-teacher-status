@@ -1,16 +1,16 @@
 class AddTeachingAuthorityMultiplesToRegions < ActiveRecord::Migration[7.0]
   def up
     change_table :regions, bulk: true do |t|
-      t.add_column :teaching_authority_emails,
-                   :text,
-                   default: [],
-                   null: false,
-                   array: true
-      t.add_column :teaching_authority_websites,
-                   :text,
-                   default: [],
-                   null: false,
-                   array: true
+      t.column :teaching_authority_emails,
+               :text,
+               default: [],
+               null: false,
+               array: true
+      t.column :teaching_authority_websites,
+               :text,
+               default: [],
+               null: false,
+               array: true
     end
 
     regions_to_update =
@@ -32,8 +32,7 @@ class AddTeachingAuthorityMultiplesToRegions < ActiveRecord::Migration[7.0]
 
   def down
     change_table :regions, bulk: true do |t|
-      t.remove_column :teaching_authority_websites
-      t.remove_column :teaching_authority_emails
+      t.remove :teaching_authority_websites, :teaching_authority_emails
     end
   end
 end
