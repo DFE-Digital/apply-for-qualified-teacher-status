@@ -12,8 +12,6 @@
     - teaching_authority_address
     - teaching_authority_emails
     - teaching_authority_websites
-    - teaching_authority_website
-    - teaching_authority_email_address
     - teaching_authority_other
     - legacy
   :features:
