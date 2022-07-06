@@ -80,20 +80,22 @@
         </p>
 
         <% if region.teaching_authority_address.present? %>
-          <p class="govuk-body app-teaching-authority-address" lang="<%= region.country.code %>">
-            <%= region.teaching_authority_address %>
+          <p class="govuk-body app-teaching-authority-address" lang="<%= region.country.code %>"><%= region.teaching_authority_address %></p>
+        <% end %>
+
+        <% if region.teaching_authority_emails.present? %>
+          <p class="govuk-body">
+            <% region.teaching_authority_emails.each do |email| %>
+              <%= govuk_link_to email, "mailto:#{email}" %><br />
+            <% end %>
           </p>
         <% end %>
 
-        <% if region.teaching_authority_email_address.present? %>
+        <% if region.teaching_authority_websites.present? %>
           <p class="govuk-body">
-            <a class="govuk-link" href="mailto:<%= region.teaching_authority_email_address %>"><%= region.teaching_authority_email_address %></a>
-          </p>
-        <% end %>
-
-        <% if region.teaching_authority_website.present? %>
-          <p class="govuk-body">
-            <a class="govuk-link" href="<%= region.teaching_authority_website %>"><%= region.teaching_authority_website %></a>
+            <% region.teaching_authority_websites.each do |website| %>
+              <%= govuk_link_to website, website %><br />
+            <% end %>
           </p>
         <% end %>
 
