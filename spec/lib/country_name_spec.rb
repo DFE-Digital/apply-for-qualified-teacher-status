@@ -90,10 +90,12 @@ RSpec.describe CountryName do
 
     context "with a named region" do
       before do
-        eligibility_check.update!(region: create(:region, name: "California"))
+        eligibility_check.update!(
+          region: create(:region, country: create(:country, code: "US"))
+        )
       end
 
-      it { is_expected.to eq("California") }
+      it { is_expected.to eq("United States") }
     end
   end
 end
