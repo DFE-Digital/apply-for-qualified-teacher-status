@@ -198,6 +198,8 @@ GEM
     httpclient (2.8.3)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
+    indefinite_article (0.2.5)
+      activesupport
     io-console (0.5.11)
     irb (1.4.1)
       reline (>= 0.3.0)
@@ -471,6 +473,7 @@ DEPENDENCIES
   govuk-components
   govuk_design_system_formbuilder
   govuk_markdown
+  indefinite_article
   jsbundling-rails
   mail-notify
   okcomputer

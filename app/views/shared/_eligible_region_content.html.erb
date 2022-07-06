@@ -75,7 +75,7 @@
 
       <% if region.status_check_written? || region.sanction_check_written? %>
         <p class="govuk-body">
-          You’ll need to provide a <span lang="<%= region.country.code %>"><%= region.teaching_authority_certificate %></span>,
+          You’ll need to provide <%= region.teaching_authority_certificate.indefinite_article %> <span lang="<%= region.country.code %>"><%= region.teaching_authority_certificate %></span>,
           which you can obtain by contacting:
         </p>
 
