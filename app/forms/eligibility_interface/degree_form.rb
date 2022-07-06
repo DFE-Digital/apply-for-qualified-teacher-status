@@ -23,6 +23,6 @@ class EligibilityInterface::DegreeForm
       .application
       .routes
       .url_helpers
-      .eligibility_interface_qualifications_path
+      .eligibility_interface_teach_children_path
   end
 end

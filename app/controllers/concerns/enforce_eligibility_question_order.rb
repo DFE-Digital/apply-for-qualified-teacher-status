@@ -23,8 +23,8 @@ module EnforceEligibilityQuestionOrder
       country: eligibility_interface_countries_path,
       region: eligibility_interface_region_path,
       completed_requirements: eligibility_interface_completed_requirements_path,
-      degree: eligibility_interface_degree_path,
       qualification: eligibility_interface_qualifications_path,
+      degree: eligibility_interface_degree_path,
       teach_children: eligibility_interface_teach_children_path,
       misconduct: eligibility_interface_misconduct_path
     }

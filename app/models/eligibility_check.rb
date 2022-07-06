@@ -118,9 +118,9 @@ class EligibilityCheck < ApplicationRecord
 
     return :eligibility unless free_of_sanctions.nil?
     return :misconduct unless teach_children.nil?
-    return :teach_children unless qualification.nil?
-    return :qualification unless degree.nil?
-    return :degree unless completed_requirements.nil?
+    return :teach_children unless degree.nil?
+    return :degree unless qualification.nil?
+    return :qualification unless completed_requirements.nil?
     return :completed_requirements if region.present?
     return :region if country_code.present?
 

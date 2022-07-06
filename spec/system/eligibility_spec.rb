@@ -21,11 +21,11 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_choose_yes
     and_i_submit
-    then_i_see_the_degree_page
+    then_i_see_the_qualification_page
 
     when_i_choose_yes
     and_i_submit
-    then_i_see_the_qualification_page
+    then_i_see_the_degree_page
 
     when_i_choose_yes
     and_i_submit
@@ -59,11 +59,11 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_submit
     when_i_choose_no
     and_i_submit
-    then_i_see_the_degree_page
+    then_i_see_the_qualification_page
 
     when_i_choose_no
     and_i_submit
-    then_i_see_the_qualification_page
+    then_i_see_the_degree_page
 
     when_i_choose_no
     and_i_submit
@@ -103,22 +103,22 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_submit
     then_i_see_the_completed_requirements_page
 
-    when_i_try_to_go_to_the_degree_page
+    when_i_try_to_go_to_the_qualifications_page
     then_i_see_the_completed_requirements_page
 
     when_i_choose_yes
     and_i_submit
-    then_i_see_the_degree_page
+    then_i_see_the_qualification_page
 
-    when_i_try_to_go_to_the_qualifications_page
-    then_i_see_the_degree_page
+    when_i_try_to_go_to_the_degree_page
+    then_i_see_the_qualification_page
 
     when_i_choose_yes
     and_i_submit
-    then_i_see_the_qualification_page
+    then_i_see_the_degree_page
 
     when_i_try_to_go_to_the_teach_children_page
-    then_i_see_the_qualification_page
+    then_i_see_the_degree_page
 
     when_i_choose_yes
     and_i_submit
@@ -420,8 +420,8 @@ RSpec.describe "Eligibility check", type: :system do
 
   def then_i_see_the_degree_page
     expect(page).to have_current_path("/eligibility/degree")
-    expect(page).to have_title("Do you have a degree?")
-    expect(page).to have_content("Do you have a degree?")
+    expect(page).to have_title("Do you have a university degree?")
+    expect(page).to have_content("Do you have a university degree?")
   end
 
   def then_i_see_the_qualification_page
