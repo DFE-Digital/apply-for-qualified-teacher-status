@@ -55,7 +55,7 @@ jobs:
       - name: Set Environment variables
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
-          TF_STATE_FILE=review-pr-$PR_NUMBER.tfstate
+          TF_STATE_FILE=review/review-pr-$PR_NUMBER.tfstate
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
           pr_state_file=$(az storage blob list -c afqts-tfstate \
