@@ -19,16 +19,16 @@
       </ul>
     <% end %>
 
-    <% unless @eligibility_check.ineligible_reasons.include?(:misconduct) %>
-      <p class="govuk-body">You can also <%= govuk_link_to "learn more about teaching in England", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" %>.</p>
-    <% end %>
-
     <% if @eligibility_check.ineligible_reasons.include?(:country) %>
       <p class="govuk-body">The Department for Education is currently reviewing who can apply for qualified teacher status. If you’d like to help us with our research, or if you have any questions contact the help team at:</p>
     <% else %>
       <p class="govuk-body">If you have any questions about QTS contact the help team at:</p>
     <% end %>
-
     <p class="govuk-body"><a class="govuk-link" href="mailto:<%= I18n.t("service.email") %>"><%= I18n.t("service.email") %></a></p>
+
+    <% unless @eligibility_check.ineligible_reasons.include?(:misconduct) %>
+      <p class="govuk-body">You can also <%= govuk_link_to "learn more about teaching in England", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" %>.</p>
+    <% end %>
+
   </div>
 </div>
