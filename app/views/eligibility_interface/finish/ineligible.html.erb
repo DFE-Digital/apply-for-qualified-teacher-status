@@ -8,13 +8,13 @@
     </h1>
 
     <% if @eligibility_check.ineligible_reasons.include?(:country) %>
-      <p class="govuk-body">Teachers applying from <%= @country_name %> are not currently eligible to use this service. However, you can <%= govuk_link_to "apply for QTS using alternative routes", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#qts-exemption-for-teachers-from-outside-the-uk" %>.</p>
+      <p class="govuk-body">Teachers applying from <%= CountryName.from_eligibility_check(@eligibility_check, with_definite_article: true) %> are not currently eligible to use this service. However, you can <%= govuk_link_to "apply for QTS using alternative routes", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#qts-exemption-for-teachers-from-outside-the-uk" %>.</p>
     <% else %>
       <p class="govuk-body">This is because:</p>
 
       <ul class="govuk-list govuk-list--bullet">
         <% @eligibility_check.ineligible_reasons.each do |reason| %>
-          <li><%= I18n.t("activemodel.attributes.eligibility_check.ineligible_reason.#{reason}", country_name: @country_name) %></li>
+          <li><%= I18n.t("activemodel.attributes.eligibility_check.ineligible_reason.#{reason}", country_name: CountryName.from_eligibility_check(@eligibility_check, with_definite_article: true)) %></li>
         <% end %>
       </ul>
     <% end %>
