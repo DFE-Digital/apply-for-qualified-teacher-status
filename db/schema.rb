@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_05_141202) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_06_105701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,8 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_141202) do
     t.string "sanction_check", default: "none", null: false
     t.text "teaching_authority_certificate", default: "", null: false
     t.text "teaching_authority_address", default: "", null: false
-    t.text "teaching_authority_website", default: "", null: false
-    t.text "teaching_authority_email_address", default: "", null: false
     t.boolean "legacy", default: true, null: false
     t.text "teaching_authority_other", default: "", null: false
     t.text "teaching_authority_emails", default: [], null: false, array: true
