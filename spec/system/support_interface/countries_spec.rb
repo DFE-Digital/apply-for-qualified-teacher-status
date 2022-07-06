@@ -25,8 +25,8 @@ RSpec.describe "Countries support", type: :system do
     when_i_select_status_check
     when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_certificate
-    when_i_fill_teaching_authority_email_address
-    when_i_fill_teaching_authority_website
+    when_i_fill_teaching_authority_emails
+    when_i_fill_teaching_authority_websites
     when_i_fill_teaching_authority_other
     and_i_save_and_preview
     then_i_see_the_preview
@@ -127,13 +127,13 @@ RSpec.describe "Countries support", type: :system do
     fill_in "region-teaching-authority-certificate-field", with: "Certificate"
   end
 
-  def when_i_fill_teaching_authority_email_address
-    fill_in "region-teaching-authority-email-address-field",
+  def when_i_fill_teaching_authority_emails
+    fill_in "region-teaching-authority-emails-string-field",
             with: "Email address"
   end
 
-  def when_i_fill_teaching_authority_website
-    fill_in "region-teaching-authority-website-field", with: "Website"
+  def when_i_fill_teaching_authority_websites
+    fill_in "region-teaching-authority-websites-string-field", with: "Website"
   end
 
   def when_i_fill_teaching_authority_other

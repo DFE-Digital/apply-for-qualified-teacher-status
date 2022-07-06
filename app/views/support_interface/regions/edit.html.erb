@@ -21,9 +21,9 @@
 
   <%= f.govuk_text_field :teaching_authority_certificate, label: { text: "Teaching authority certificate" } %>
 
-  <%= f.govuk_email_field :teaching_authority_email_address, label: { text: "Teaching authority email address" } %>
+  <%= f.govuk_text_area :teaching_authority_emails_string, label: { text: "Teaching authority emails" }, hint: { text: "One on each line." } %>
 
-  <%= f.govuk_url_field :teaching_authority_website, label: { text: "Teaching authority website" } %>
+  <%= f.govuk_text_area :teaching_authority_websites_string, label: { text: "Teaching authority websites" }, hint: { text: "One on each line." } %>
 
   <%= f.govuk_text_area :teaching_authority_other, label: { text: "Teaching authority other" } %>
 
