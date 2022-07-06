@@ -1,0 +1,28 @@
+#!/bin/bash
+set -eu
+CF_ORG_NAME='dfe'
+DEPLOY_ENV=$1
+CONFIRM_RESTORE=$2
+SPACE=$3
+BACKUP_FILENAME=$4
+POSTGRES_DATABASE_NAME=$5
+
+if [[ -z "${DEPLOY_ENV}" ]]; then
+  echo "DEPLOY_ENV environment variable not set"
+  exit 1
+fi
+
+if [[ -z "${SPACE}" ]]; then
+  echo "SPACE environment variable not set"
+  exit 1
+fi
+
+if [[ ! -f "${BACKUP_FILENAME}" ]]; then
+  echo "${BACKUP_FILENAME} does not exist."
+  exit 1
+else
+  cf target -o "${CF_ORG_NAME}" -s "${SPACE}"
+  # if conduit isn't installed on the machine that's running this command then install it using `cf install-plugin conduit`
+  # if psql is not installed on the machine that's running this command then install it using `sudo apt install postgresql-client postgresql -y`
+  cf conduit ${POSTGRES_DATABASE_NAME} -- psql < "${BACKUP_FILENAME}"
+fi
