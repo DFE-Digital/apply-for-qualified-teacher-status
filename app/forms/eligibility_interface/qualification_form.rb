@@ -19,10 +19,6 @@ class EligibilityInterface::QualificationForm
   end
 
   def success_url
-    Rails
-      .application
-      .routes
-      .url_helpers
-      .eligibility_interface_teach_children_path
+    Rails.application.routes.url_helpers.eligibility_interface_degree_path
   end
 end
