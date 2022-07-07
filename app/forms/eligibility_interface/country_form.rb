@@ -20,7 +20,7 @@ class EligibilityInterface::CountryForm
           .application
           .routes
           .url_helpers
-          .eligibility_interface_completed_requirements_path,
+          .eligibility_interface_qualifications_path,
       ineligible:
         Rails
           .application

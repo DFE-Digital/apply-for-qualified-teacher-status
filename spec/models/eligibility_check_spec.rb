@@ -281,37 +281,18 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when a region is present" do
       let(:attributes) { { region: create(:region) } }
 
-      it { is_expected.to eq(:completed_requirements) }
-    end
-
-    context "when completed requirements is present" do
-      let(:attributes) do
-        { completed_requirements: true, region: create(:region) }
-      end
-
       it { is_expected.to eq(:qualification) }
     end
 
     context "when qualification is present" do
-      let(:attributes) do
-        {
-          qualification: true,
-          completed_requirements: true,
-          region: create(:region)
-        }
-      end
+      let(:attributes) { { qualification: true, region: create(:region) } }
 
       it { is_expected.to eq(:degree) }
     end
 
     context "when degree is present" do
       let(:attributes) do
-        {
-          qualification: true,
-          degree: true,
-          completed_requirements: true,
-          region: create(:region)
-        }
+        { qualification: true, degree: true, region: create(:region) }
       end
 
       it { is_expected.to eq(:teach_children) }
@@ -323,7 +304,6 @@ RSpec.describe EligibilityCheck, type: :model do
           teach_children: true,
           qualification: true,
           degree: true,
-          completed_requirements: true,
           region: create(:region)
         }
       end
@@ -338,7 +318,6 @@ RSpec.describe EligibilityCheck, type: :model do
           teach_children: true,
           qualification: true,
           degree: true,
-          completed_requirements: true,
           region: create(:region)
         }
       end

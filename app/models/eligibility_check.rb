@@ -26,19 +26,12 @@ class EligibilityCheck < ApplicationRecord
   scope :complete, -> { where.not(completed_at: nil) }
   scope :eligible,
         -> {
-          where
-            .not(region: nil)
-            .where(
-              degree: true,
-              free_of_sanctions: true,
-              qualification: true,
-              teach_children: true
-            )
-            .where(
-              completed_requirements: [nil, false],
-              created_at: BEFORE_COMPLETED_REQUIREMENTS
-            )
-            .or(where(completed_requirements: true))
+          where.not(region: nil).where(
+            degree: true,
+            free_of_sanctions: true,
+            qualification: true,
+            teach_children: true
+          )
         }
   scope :ineligible,
         -> {
@@ -47,27 +40,16 @@ class EligibilityCheck < ApplicationRecord
             .or(where(qualification: false))
             .or(where(region: nil))
             .or(where(teach_children: false))
-            .or(where(completed_requirements: false))
         }
   scope :answered_all_questions,
         -> {
-          where
-            .not(
-              degree: nil,
-              free_of_sanctions: nil,
-              qualification: nil,
-              teach_children: nil
-            )
-            .where(
-              completed_requirements: nil,
-              created_at: BEFORE_COMPLETED_REQUIREMENTS
-            )
-            .or(where.not(completed_requirements: nil))
+          where.not(
+            degree: nil,
+            free_of_sanctions: nil,
+            qualification: nil,
+            teach_children: nil
+          )
         }
-
-  # The completed requirements question was added after the eligibility
-  # checker was launched.
-  BEFORE_COMPLETED_REQUIREMENTS = ..Date.new(2022, 7, 5, 8)
 
   def country_code=(value)
     super(value)
@@ -79,7 +61,6 @@ class EligibilityCheck < ApplicationRecord
   def ineligible_reasons
     [
       region.nil? ? :country : nil,
-      completed_requirements == false ? :completed_requirements : nil,
       degree == false ? :degree : nil,
       qualification == false ? :qualification : nil,
       teach_children == false ? :teach_children : nil,
@@ -88,8 +69,8 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def eligible?
-    region.present? && completed_requirements && degree && qualification &&
-      teach_children && free_of_sanctions
+    region.present? && degree && qualification && teach_children &&
+      free_of_sanctions
   end
 
   def country_eligibility_status
@@ -120,8 +101,7 @@ class EligibilityCheck < ApplicationRecord
     return :misconduct unless teach_children.nil?
     return :teach_children unless degree.nil?
     return :degree unless qualification.nil?
-    return :qualification unless completed_requirements.nil?
-    return :completed_requirements if region.present?
+    return :qualification if region.present?
     return :region if country_code.present?
 
     :country

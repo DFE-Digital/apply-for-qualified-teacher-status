@@ -25,7 +25,7 @@ class EligibilityInterface::RegionForm
           .application
           .routes
           .url_helpers
-          .eligibility_interface_completed_requirements_path,
+          .eligibility_interface_qualifications_path,
       legacy:
         Rails.application.routes.url_helpers.eligibility_interface_eligible_path
     }.fetch(eligibility_check.region_eligibility_status)
