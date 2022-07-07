@@ -17,11 +17,7 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_select_a_country
     and_i_submit
-    then_i_see_the_completed_requirements_page
-
-    when_i_choose_yes
-    and_i_submit
-    then_i_see_the_qualification_page
+    then_i_see_the_qualifications_page
 
     when_i_choose_yes
     and_i_submit
@@ -57,9 +53,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_press_back
     when_i_select_a_country
     and_i_submit
-    when_i_choose_no
-    and_i_submit
-    then_i_see_the_qualification_page
+    then_i_see_the_qualifications_page
 
     when_i_choose_no
     and_i_submit
@@ -76,7 +70,6 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_choose_yes
     and_i_submit
     then_i_see_the_ineligible_page
-    and_i_see_the_ineligible_completed_requirements_text
     and_i_see_the_ineligible_degree_text
     and_i_see_the_ineligible_qualification_text
     and_i_see_the_ineligible_teach_children_text
@@ -101,17 +94,10 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_select_a_country
     and_i_submit
-    then_i_see_the_completed_requirements_page
-
-    when_i_try_to_go_to_the_qualifications_page
-    then_i_see_the_completed_requirements_page
-
-    when_i_choose_yes
-    and_i_submit
-    then_i_see_the_qualification_page
+    then_i_see_the_qualifications_page
 
     when_i_try_to_go_to_the_degree_page
-    then_i_see_the_qualification_page
+    then_i_see_the_qualifications_page
 
     when_i_choose_yes
     and_i_submit
@@ -140,7 +126,7 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_select_a_country_in_the_error_state
     and_i_submit
-    then_i_see_the_completed_requirements_page
+    then_i_see_the_qualifications_page
   end
 
   it "sends legacy users to the old service" do
@@ -163,7 +149,7 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_choose_region
     and_i_submit
-    then_i_see_the_completed_requirements_page
+    then_i_see_the_qualifications_page
   end
 
   it "service is closed" do
@@ -424,7 +410,7 @@ RSpec.describe "Eligibility check", type: :system do
     expect(page).to have_content("Do you have a university degree?")
   end
 
-  def then_i_see_the_qualification_page
+  def then_i_see_the_qualifications_page
     expect(page).to have_current_path("/eligibility/qualifications")
     expect(page).to have_title("Do you have a teacher training qualification?")
     expect(page).to have_content(
