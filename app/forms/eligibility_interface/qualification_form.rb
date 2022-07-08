@@ -17,8 +17,4 @@ class EligibilityInterface::QualificationForm
     eligibility_check.qualification = qualification
     eligibility_check.save!
   end
-
-  def success_url
-    Rails.application.routes.url_helpers.eligibility_interface_degree_path
-  end
 end

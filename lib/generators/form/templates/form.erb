@@ -30,13 +30,4 @@ eligibility_check.save
     <%= attributes.map { |attribute| "eligibility_check.#{attribute.name}" }.join(' && ') %>
   end
 
-  def success_url
-    return Rails.application.routes.url_helpers.eligibility_interface_ineligible_path unless eligible?
-
-    Rails
-      .application
-      .routes
-      .url_helpers
-      .eligibility_interface_<%= plural_name %>_path
-  end
 end

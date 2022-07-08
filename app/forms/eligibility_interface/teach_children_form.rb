@@ -17,8 +17,4 @@ class EligibilityInterface::TeachChildrenForm
     eligibility_check.teach_children = teach_children
     eligibility_check.save!
   end
-
-  def success_url
-    Rails.application.routes.url_helpers.eligibility_interface_misconduct_path
-  end
 end

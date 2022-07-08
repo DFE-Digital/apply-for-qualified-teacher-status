@@ -17,12 +17,4 @@ class EligibilityInterface::CompletedRequirementsForm
     eligibility_check.completed_requirements = completed_requirements
     eligibility_check.save!
   end
-
-  def success_url
-    Rails
-      .application
-      .routes
-      .url_helpers
-      .eligibility_interface_qualifications_path
-  end
 end

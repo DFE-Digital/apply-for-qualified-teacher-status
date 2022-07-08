@@ -17,12 +17,4 @@ class EligibilityInterface::MisconductForm
     eligibility_check.free_of_sanctions = !misconduct
     eligibility_check.save!
   end
-
-  def success_url
-    if eligibility_check.eligible?
-      Rails.application.routes.url_helpers.eligibility_interface_eligible_path
-    else
-      Rails.application.routes.url_helpers.eligibility_interface_ineligible_path
-    end
-  end
 end
