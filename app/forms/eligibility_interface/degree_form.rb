@@ -17,12 +17,4 @@ class EligibilityInterface::DegreeForm
     eligibility_check.degree = degree
     eligibility_check.save!
   end
-
-  def success_url
-    Rails
-      .application
-      .routes
-      .url_helpers
-      .eligibility_interface_teach_children_path
-  end
 end

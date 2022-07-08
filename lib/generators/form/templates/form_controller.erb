@@ -7,7 +7,7 @@ module TeacherInterface
     def create
       @<%= model_resource_name %>_form = <%= class_name %>Form.new(<%= model_resource_name %>_form_params.merge(eligibility_check:))
       if @<%= model_resource_name %>_form.save
-        redirect_to @<%= model_resource_name %>_form.success_url
+        redirect_to @url
       else
         render :new
       end

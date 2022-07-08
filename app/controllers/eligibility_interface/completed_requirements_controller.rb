@@ -12,7 +12,7 @@ module EligibilityInterface
           completed_requirements_form_params.merge(eligibility_check:)
         )
       if @completed_requirements_form.save
-        redirect_to @completed_requirements_form.success_url
+        redirect_to paths[:qualification]
       else
         render :new
       end

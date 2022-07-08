@@ -10,13 +10,22 @@ module EligibilityInterface
       @country_form =
         CountryForm.new(location_form_params.merge(eligibility_check:))
       if @country_form.save
-        redirect_to @country_form.success_url, allow_other_host: true
+        redirect_to next_url
       else
         render :new
       end
     end
 
     private
+
+    def next_url
+      {
+        eligible: eligibility_interface_qualifications_path,
+        ineligible: eligibility_interface_ineligible_path,
+        legacy: eligibility_interface_eligible_path,
+        region: eligibility_interface_region_path
+      }.fetch(eligibility_check.country_eligibility_status)
+    end
 
     def location_form_params
       params.require(:eligibility_interface_country_form).permit(:location)

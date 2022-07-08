@@ -10,7 +10,7 @@ module EligibilityInterface
       @degree_form =
         DegreeForm.new(degree_form_params.merge(eligibility_check:))
       if @degree_form.save
-        redirect_to @degree_form.success_url
+        redirect_to paths[:teach_children]
       else
         render :new
       end

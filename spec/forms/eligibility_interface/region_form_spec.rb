@@ -35,25 +35,4 @@ RSpec.describe EligibilityInterface::RegionForm, type: :model do
       expect(eligibility_check.region).to eq(region)
     end
   end
-
-  describe "#success_url" do
-    subject(:success_url) { form.success_url }
-
-    let(:eligibility_check) { EligibilityCheck.new }
-    let(:form) { described_class.new(eligibility_check:) }
-
-    before { eligibility_check.region = region }
-
-    context "with an eligible country" do
-      let(:region) { create(:region) }
-
-      it { is_expected.to eq("/eligibility/qualifications") }
-    end
-
-    context "with a legacy country" do
-      let(:region) { create(:region, :legacy) }
-
-      it { is_expected.to eq("/eligibility/eligible") }
-    end
-  end
 end

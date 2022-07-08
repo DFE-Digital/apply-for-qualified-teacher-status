@@ -12,7 +12,7 @@ module EligibilityInterface
           teach_children_form_params.merge(eligibility_check:)
         )
       if @teach_children_form.save
-        redirect_to @teach_children_form.success_url
+        redirect_to paths[:misconduct]
       else
         render :new
       end

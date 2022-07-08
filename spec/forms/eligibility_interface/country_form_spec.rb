@@ -30,39 +30,4 @@ RSpec.describe EligibilityInterface::CountryForm, type: :model do
       expect(eligibility_check.country_code).to eq("GB")
     end
   end
-
-  describe "#success_url" do
-    subject(:success_url) { form.success_url }
-
-    let(:eligibility_check) { EligibilityCheck.new }
-    let(:form) { described_class.new(eligibility_check:) }
-
-    before { eligibility_check.country_code = country&.code }
-
-    context "with an eligible country" do
-      let(:country) { create(:country, :with_national_region) }
-
-      it { is_expected.to eq("/eligibility/qualifications") }
-    end
-
-    context "with a legacy country" do
-      let(:country) { create(:country, :with_legacy_region) }
-
-      it { is_expected.to eq("/eligibility/eligible") }
-    end
-
-    context "with a multi-region country" do
-      let(:country) { create(:country) }
-
-      before { create_list(:region, 5, country:) }
-
-      it { is_expected.to eq("/eligibility/region") }
-    end
-
-    context "with a non-eligible country" do
-      let(:country) { nil }
-
-      it { is_expected.to eq("/eligibility/ineligible") }
-    end
-  end
 end
