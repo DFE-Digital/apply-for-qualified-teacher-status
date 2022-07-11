@@ -72,4 +72,8 @@ locals {
   apply_qts_app_name     = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}"
   postgres_database_name = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}-pg-svc"
   redis_database_name    = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}-redis-svc"
+
+  bigquery_project_id = "apply-for-qts-in-england"
+  bigquery_dataset    = "events_${var.environment_name}"
+  bigquery_table_name = "events"
 }
