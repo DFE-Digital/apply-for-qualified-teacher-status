@@ -8,11 +8,9 @@
     - updated_at
     - status_check
     - sanction_check
-    - teaching_authority_certificate
     - teaching_authority_address
     - teaching_authority_emails
     - teaching_authority_websites
-    - teaching_authority_other
     - legacy
   :features:
     - id
