@@ -14,21 +14,20 @@
 #
 #  index_countries_on_code  (code) UNIQUE
 #
-class Country < ApplicationRecord
-  include DfE::Analytics::Entities
-  include TeachingAuthorityContactable
+FactoryBot.define do
+  factory :country do
+    sequence :code, Country::COUNTRIES.keys.cycle
 
-  has_many :regions
+    trait :with_national_region do
+      after(:create) do |country, _evaluator|
+        create(:region, :national, country:)
+      end
+    end
 
-  LOCATION_AUTOCOMPLETE_CANONICAL_LIST =
-    JSON.parse(File.read("public/location-autocomplete-canonical-list.json"))
-
-  COUNTRIES =
-    LOCATION_AUTOCOMPLETE_CANONICAL_LIST
-      .map { |row| [row.last.split(":").last, row.first] }
-      .to_h
-
-  validates :code, inclusion: { in: COUNTRIES.keys }
-
-  alias_method :country, :itself
+    trait :with_legacy_region do
+      after(:create) do |country, _evaluator|
+        create(:region, :legacy, country:)
+      end
+    end
+  end
 end

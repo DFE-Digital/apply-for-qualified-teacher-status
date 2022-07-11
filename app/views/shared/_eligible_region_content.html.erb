@@ -79,6 +79,8 @@
           which you can obtain by contacting:
         </p>
 
+        <%= render "shared/teaching_authority_contactable", contactable: region.country %>
+
         <%= render "shared/teaching_authority_contactable", contactable: region %>
 
         <% if region.teaching_authority_other.present? %>
