@@ -75,16 +75,15 @@
 
       <% if region.status_check_written? || region.sanction_check_written? %>
         <p class="govuk-body">
-          You’ll need to provide <%= region.teaching_authority_certificate.indefinite_article %> <span lang="<%= region.country.code %>"><%= region.teaching_authority_certificate %></span>,
-          which you can obtain by contacting:
+          You’ll need to provide <%= region.country.teaching_authority_certificate.indefinite_article || "a" %> <span lang="<%= region.country.code %>"><%= region.country.teaching_authority_certificate.presence || "certificate" %></span>, which you can obtain by contacting:
         </p>
 
         <%= render "shared/teaching_authority_contactable", contactable: region.country %>
 
         <%= render "shared/teaching_authority_contactable", contactable: region %>
 
-        <% if region.teaching_authority_other.present? %>
-          <%= raw GovukMarkdown.render(region.teaching_authority_other) %>
+        <% if region.country.teaching_authority_other.present? %>
+          <%= raw GovukMarkdown.render(region.country.teaching_authority_other) %>
         <% end %>
 
         <p class="govuk-body">This must be dated within 3 months of you applying for QTS.</p>
