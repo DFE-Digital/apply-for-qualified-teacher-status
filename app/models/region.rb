@@ -44,7 +44,4 @@ class Region < ApplicationRecord
   validates :name, uniqueness: { scope: :country_id }
   validates :sanction_check, inclusion: { in: sanction_checks.values }
   validates :status_check, inclusion: { in: status_checks.values }
-  validates :teaching_authority_certificate,
-            presence: true,
-            if: -> { sanction_check_written? || status_check_written? }
 end

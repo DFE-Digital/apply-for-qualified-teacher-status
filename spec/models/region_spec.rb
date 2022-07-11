@@ -44,18 +44,6 @@ RSpec.describe Region, type: :model do
         .with_prefix(:status_check)
         .backed_by_column_of_type(:string)
     end
-    it do
-      is_expected.to_not validate_presence_of(:teaching_authority_certificate)
-    end
-
-    context "with written checks" do
-      before do
-        allow(region).to receive(:status_check_written?).and_return(true)
-      end
-      it do
-        is_expected.to validate_presence_of(:teaching_authority_certificate)
-      end
-    end
   end
 
   describe "#teaching_authority_emails_string" do
