@@ -5,7 +5,11 @@ locals {
 
   app_environment_variables = merge(local.azure_environment_variables, {
     HOSTING_ENVIRONMENT = var.environment_name,
-    REDIS_URL           = cloudfoundry_service_key.redis_key.credentials.uri
+    REDIS_URL           = cloudfoundry_service_key.redis_key.credentials.uri,
+
+    BIGQUERY_PROJECT_ID = local.bigquery_project_id,
+    BIGQUERY_DATASET    = local.bigquery_dataset,
+    BIGQUERY_TABLE_NAME = local.bigquery_table_name
   })
 }
 
