@@ -37,3 +37,6 @@
     - code
     - created_at
     - updated_at
+    - teaching_authority_address
+    - teaching_authority_emails
+    - teaching_authority_websites
