@@ -9,7 +9,9 @@ locals {
 
     BIGQUERY_PROJECT_ID = local.bigquery_project_id,
     BIGQUERY_DATASET    = local.bigquery_dataset,
-    BIGQUERY_TABLE_NAME = local.bigquery_table_name
+    BIGQUERY_TABLE_NAME = local.bigquery_table_name,
+
+    RAILS_SERVE_STATIC_FILES = "true"
   })
 }
 
