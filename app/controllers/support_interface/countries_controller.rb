@@ -63,7 +63,9 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
     params.require(:country).permit(
       :teaching_authority_address,
       :teaching_authority_emails_string,
-      :teaching_authority_websites_string
+      :teaching_authority_websites_string,
+      :teaching_authority_certificate,
+      :teaching_authority_other
     )
   end
 end

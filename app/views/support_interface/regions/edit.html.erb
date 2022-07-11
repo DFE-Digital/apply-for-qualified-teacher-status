@@ -17,11 +17,7 @@
     OpenStruct.new(id: 'none', name: 'None')
   ], :id, :name, label: { text: "Status check" } %>
 
-  <%= f.govuk_text_field :teaching_authority_certificate, label: { text: "Teaching authority certificate" } %>
-
   <%= render "shared/teaching_authority_contactable_fields", f: %>
-
-  <%= f.govuk_text_area :teaching_authority_other, label: { text: "Teaching authority other" } %>
 
   <%= f.govuk_submit "Save", prevent_double_click: false do %>
     <%= f.govuk_submit "Save and preview", prevent_double_click: false, name: "preview", value: "preview" %>
