@@ -6,6 +6,7 @@ module HostingEnvironment
   def self.phase
     return "Beta" if production?
     return "Development" if development?
+    return "Pre-production" if preprod?
 
     name.capitalize
   end
@@ -24,6 +25,10 @@ module HostingEnvironment
 
   def self.production?
     name == "production"
+  end
+
+  def self.preprod?
+    name == "preprod"
   end
 
   def self.development?
