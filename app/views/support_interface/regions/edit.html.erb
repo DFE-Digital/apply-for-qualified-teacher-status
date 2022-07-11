@@ -17,13 +17,9 @@
     OpenStruct.new(id: 'none', name: 'None')
   ], :id, :name, label: { text: "Status check" } %>
 
-  <%= f.govuk_text_area :teaching_authority_address, label: { text: "Teaching authority address" } %>
-
   <%= f.govuk_text_field :teaching_authority_certificate, label: { text: "Teaching authority certificate" } %>
 
-  <%= f.govuk_text_area :teaching_authority_emails_string, label: { text: "Teaching authority emails" }, hint: { text: "One on each line." } %>
-
-  <%= f.govuk_text_area :teaching_authority_websites_string, label: { text: "Teaching authority websites" }, hint: { text: "One on each line." } %>
+  <%= render "shared/teaching_authority_contactable_fields", f: %>
 
   <%= f.govuk_text_area :teaching_authority_other, label: { text: "Teaching authority other" } %>
 

@@ -27,6 +27,7 @@
 #
 class Region < ApplicationRecord
   include DfE::Analytics::Entities
+  include TeachingAuthorityContactable
 
   belongs_to :country
   has_many :eligibility_checks
@@ -46,22 +47,4 @@ class Region < ApplicationRecord
   validates :teaching_authority_certificate,
             presence: true,
             if: -> { sanction_check_written? || status_check_written? }
-
-  def teaching_authority_emails_string
-    teaching_authority_emails.join("\n")
-  end
-
-  def teaching_authority_emails_string=(string)
-    self.teaching_authority_emails =
-      string.split("\n").map(&:chomp).compact_blank
-  end
-
-  def teaching_authority_websites_string
-    teaching_authority_websites.join("\n")
-  end
-
-  def teaching_authority_websites_string=(string)
-    self.teaching_authority_websites =
-      string.split("\n").map(&:chomp).compact_blank
-  end
 end

@@ -79,25 +79,7 @@
           which you can obtain by contacting:
         </p>
 
-        <% if region.teaching_authority_address.present? %>
-          <p class="govuk-body app-teaching-authority-address" lang="<%= region.country.code %>"><%= region.teaching_authority_address %></p>
-        <% end %>
-
-        <% if region.teaching_authority_emails.present? %>
-          <p class="govuk-body">
-            <% region.teaching_authority_emails.each do |email| %>
-              <%= govuk_link_to email, "mailto:#{email}" %><br />
-            <% end %>
-          </p>
-        <% end %>
-
-        <% if region.teaching_authority_websites.present? %>
-          <p class="govuk-body">
-            <% region.teaching_authority_websites.each do |website| %>
-              <%= govuk_link_to website, website %><br />
-            <% end %>
-          </p>
-        <% end %>
+        <%= render "shared/teaching_authority_contactable", contactable: region %>
 
         <% if region.teaching_authority_other.present? %>
           <%= raw GovukMarkdown.render(region.teaching_authority_other) %>
