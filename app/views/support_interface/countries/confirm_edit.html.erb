@@ -2,35 +2,47 @@
 
 <h1 class="govuk-heading-l"><%= CountryName.from_country(@country) %></h1>
 
-<h2 class="govuk-heading-s">Review and confirm the following changes:</h2>
+<h2 class="govuk-heading-m">Review and confirm the following changes:</h2>
 
-<div class="govuk-warning-text">
-  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-  <strong class="govuk-warning-text__text">
-    <span class="govuk-warning-text__assistive">Warning</span>
-    This action is irreversible and could affect historic eligibility checks.
-  </strong>
-</div>
+<% if @country.changed? %>
+  <h3 class="govuk-heading-s">Teaching authority</h3>
+  <%= render "shared/teaching_authority_contactable", contactable: @country %>
+<% end %>
 
-<ul class="govuk-list">
-  <% @diff_actions.each do |action| %>
-    <li>
-      <% if action[:action] == :create %>
-        <%= govuk_tag(text: "Create", colour: "green") %>
-      <% elsif action[:action] == :delete %>
-        <%= govuk_tag(text: "Delete", colour: "red") %>
-      <% end %>
+<% if @diff_actions.present? %>
+  <h3 class="govuk-heading-s">Regions</h3>
 
-      <% if action[:name].present? %>
-        <%= action[:name] %>
-      <% else %>
-        <em>National</em>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      This action is irreversible and could affect historic eligibility checks.
+    </strong>
+  </div>
+
+  <ul class="govuk-list">
+    <% @diff_actions.each do |action| %>
+      <li>
+        <% if action[:action] == :create %>
+          <%= govuk_tag(text: "Create", colour: "green") %>
+        <% elsif action[:action] == :delete %>
+          <%= govuk_tag(text: "Delete", colour: "red") %>
+        <% end %>
+
+        <% if action[:name].present? %>
+          <%= action[:name] %>
+        <% else %>
+          <em>National</em>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
 
 <%= form_with model: [:support_interface, @country] do |f| %>
   <%= f.hidden_field :all_regions, value: @all_regions %>
-  <%= f.govuk_submit "Confirm", prevent_double_click: false %>
+  <%= f.hidden_field :teaching_authority_address, value: @country.teaching_authority_address %>
+  <%= f.hidden_field :teaching_authority_emails_string, value: @country.teaching_authority_emails_string %>
+  <%= f.hidden_field :teaching_authority_websites_string, value: @country.teaching_authority_websites_string %>
+  <%= f.govuk_submit "Confirm save", prevent_double_click: false %>
 <% end %>

@@ -12,8 +12,12 @@ RSpec.describe "Countries support", type: :system do
     when_i_click_on_a_country
     then_i_see_a_country
 
+    when_i_fill_teaching_authority_address
+    when_i_fill_teaching_authority_emails
+    when_i_fill_teaching_authority_websites
     when_i_fill_regions
     and_i_save
+    then_i_see_country_contact_preview
     then_i_see_region_changes_confirmation
     and_i_confirm
     and_i_see_a_success_banner
@@ -23,8 +27,8 @@ RSpec.describe "Countries support", type: :system do
 
     when_i_select_sanction_check
     when_i_select_status_check
-    when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_certificate
+    when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
     when_i_fill_teaching_authority_other
@@ -87,6 +91,12 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_title("United States")
   end
 
+  def then_i_see_country_contact_preview
+    expect(page).to have_content("Address")
+    expect(page).to have_content("Email address")
+    expect(page).to have_content("Website")
+  end
+
   def then_i_see_region_changes_confirmation
     expect(page).to have_content("CREATE California")
     expect(page).to have_content("DELETE Hawaii")
@@ -119,21 +129,28 @@ RSpec.describe "Countries support", type: :system do
     select "Online", from: "region-status-check-field"
   end
 
-  def when_i_fill_teaching_authority_address
-    fill_in "region-teaching-authority-address-field", with: "Address"
-  end
-
   def when_i_fill_teaching_authority_certificate
     fill_in "region-teaching-authority-certificate-field", with: "Certificate"
+  end
+
+  def when_i_fill_teaching_authority_address
+    fill_in "region-teaching-authority-address-field", with: "Address"
+  rescue Capybara::ElementNotFound
+    fill_in "country-teaching-authority-address-field", with: "Address"
   end
 
   def when_i_fill_teaching_authority_emails
     fill_in "region-teaching-authority-emails-string-field",
             with: "Email address"
+  rescue Capybara::ElementNotFound
+    fill_in "country-teaching-authority-emails-string-field",
+            with: "Email address"
   end
 
   def when_i_fill_teaching_authority_websites
     fill_in "region-teaching-authority-websites-string-field", with: "Website"
+  rescue Capybara::ElementNotFound
+    fill_in "country-teaching-authority-websites-string-field", with: "Website"
   end
 
   def when_i_fill_teaching_authority_other

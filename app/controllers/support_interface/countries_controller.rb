@@ -2,7 +2,7 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
   before_action :load_country_and_edit_actions, only: %w[confirm_edit update]
 
   def index
-    @countries = Country.includes(:regions)
+    @countries = Country.includes(:regions).order(:code)
   end
 
   def edit
@@ -11,27 +11,30 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
   end
 
   def confirm_edit
-    if @diff_actions.empty?
-      redirect_to edit_support_interface_country_path(@country)
-    end
+    @country.assign_attributes(country_params)
   end
 
   def update
-    @diff_actions.each do |action|
-      case action[:action]
-      when :create
-        @country.regions.create!(name: action[:name])
-      when :delete
-        region = @country.regions.find_by!(name: action[:name])
-        region.eligibility_checks.delete_all
-        region.destroy!
+    if @country.update(country_params)
+      @diff_actions.each do |action|
+        case action[:action]
+        when :create
+          @country.regions.create!(name: action[:name])
+        when :delete
+          region = @country.regions.find_by!(name: action[:name])
+          region.eligibility_checks.delete_all
+          region.destroy!
+        end
       end
-    end
 
-    flash[
-      :success
-    ] = "Successfully updated #{CountryName.from_country(@country)}"
-    redirect_to support_interface_countries_path
+      flash[
+        :success
+      ] = "Successfully updated #{CountryName.from_country(@country)}"
+
+      redirect_to support_interface_countries_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
@@ -57,6 +60,10 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
   end
 
   def country_params
-    params.require(:country).permit(:all_regions)
+    params.require(:country).permit(
+      :teaching_authority_address,
+      :teaching_authority_emails_string,
+      :teaching_authority_websites_string
+    )
   end
 end
