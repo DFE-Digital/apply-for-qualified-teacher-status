@@ -5,11 +5,15 @@
 <%= form_with model: @country, url: confirm_edit_support_interface_country_path(@country), method: "POST" do |f| %>
   <%= render "shared/teaching_authority_contactable_fields", f: %>
 
+  <%= f.govuk_text_field :teaching_authority_certificate, label: { text: "Teaching authority certificate" } %>
+
+  <%= f.govuk_text_area :teaching_authority_other, label: { text: "Teaching authority other" } %>
+
   <%= f.govuk_text_area :all_regions,
                         value: @all_regions,
                         label: { text: "Regions" },
                         hint: { text: "Include a region on each line." },
-                        rows: 30 %>
+                        rows: 20 %>
 
   <%= f.govuk_submit "Save", prevent_double_click: false %>
 <% end %>
