@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_11_124042) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_11_131836) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_11_124042) do
     t.text "teaching_authority_address", default: "", null: false
     t.text "teaching_authority_emails", default: [], null: false, array: true
     t.text "teaching_authority_websites", default: [], null: false, array: true
+    t.text "teaching_authority_certificate", default: "", null: false
+    t.text "teaching_authority_other", default: "", null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
