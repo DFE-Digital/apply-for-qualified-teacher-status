@@ -3,13 +3,14 @@ import openregisterLocationPicker from "govuk-country-and-territory-autocomplete
 
 initAll();
 
-const loadCountryAutoComplete = () => {
-  let locationPicker = document.getElementById(
-    "eligibility-interface-country-form-location-field"
-  );
-  locationPicker ??= document.getElementById(
-    "eligibility-interface-country-form-location-field-error"
-  );
+var loadCountryAutoComplete = () => {
+  var locationPicker =
+    document.getElementById(
+      "eligibility-interface-country-form-location-field"
+    ) ??
+    document.getElementById(
+      "eligibility-interface-country-form-location-field-error"
+    );
 
   if (locationPicker) {
     openregisterLocationPicker({
