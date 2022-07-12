@@ -22,6 +22,7 @@ class EligibilityCheck < ApplicationRecord
   include DfE::Analytics::Entities
 
   belongs_to :region, optional: true
+  has_one :application
 
   scope :complete, -> { where.not(completed_at: nil) }
   scope :eligible,

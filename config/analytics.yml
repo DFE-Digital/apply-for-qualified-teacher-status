@@ -40,3 +40,11 @@
     - teaching_authority_address
     - teaching_authority_emails
     - teaching_authority_websites
+  :application_forms:
+    - id
+    - reference
+    - status
+    - teacher_id
+    - eligibility_check_id
+    - created_at
+    - updated_at
