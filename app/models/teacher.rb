@@ -18,6 +18,8 @@
 class Teacher < ApplicationRecord
   devise :magic_link_authenticatable, :confirmable, :registerable, :timeoutable
 
+  has_many :applications
+
   validates :email,
             presence: true,
             uniqueness: {
