@@ -80,6 +80,10 @@
 
         <%= render "shared/teaching_authority_contactable", contactable: region.country %>
 
+        <% if region.country.teaching_authority_present? && region.teaching_authority_present? %>
+          <p class="govuk-body">or</p>
+        <% end %>
+
         <%= render "shared/teaching_authority_contactable", contactable: region %>
 
         <% if region.country.teaching_authority_other.present? %>
