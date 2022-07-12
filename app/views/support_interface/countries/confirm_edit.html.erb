@@ -8,6 +8,10 @@
   <h3 class="govuk-heading-s">Teaching authority</h3>
 
   <%= render "shared/teaching_authority_contactable", contactable: @country %>
+
+  <p class="govuk-body"><%= @country.teaching_authority_certificate %></p>
+
+  <%= raw GovukMarkdown.render(@country.teaching_authority_other) %>
 <% end %>
 
 <% if @diff_actions.present? %>
@@ -45,5 +49,7 @@
   <%= f.hidden_field :teaching_authority_address, value: @country.teaching_authority_address %>
   <%= f.hidden_field :teaching_authority_emails_string, value: @country.teaching_authority_emails_string %>
   <%= f.hidden_field :teaching_authority_websites_string, value: @country.teaching_authority_websites_string %>
+  <%= f.hidden_field :teaching_authority_certificate, value: @country.teaching_authority_certificate %>
+  <%= f.hidden_field :teaching_authority_other, value: @country.teaching_authority_other %>
   <%= f.govuk_submit "Confirm save", prevent_double_click: false %>
 <% end %>
