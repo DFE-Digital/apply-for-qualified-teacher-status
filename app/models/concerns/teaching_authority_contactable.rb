@@ -18,4 +18,9 @@ module TeachingAuthorityContactable
     self.teaching_authority_websites =
       string.split("\n").map(&:chomp).compact_blank
   end
+
+  def teaching_authority_present?
+    teaching_authority_address.present? || teaching_authority_emails.present? ||
+      teaching_authority_websites.present?
+  end
 end

@@ -111,4 +111,30 @@ RSpec.describe Region, type: :model do
       it { is_expected.to eq(%w[example1.com example2.com]) }
     end
   end
+
+  describe "#teaching_authority_present?" do
+    subject(:teaching_authority_present?) { region.teaching_authority_present? }
+
+    it { is_expected.to eq(false) }
+
+    context "with an address" do
+      before { region.update(teaching_authority_address: "Address") }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "with an email address" do
+      before { region.update(teaching_authority_emails: ["test@example.com"]) }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "with a website" do
+      before do
+        region.update(teaching_authority_websites: ["https://www.example.com"])
+      end
+
+      it { is_expected.to eq(true) }
+    end
+  end
 end
