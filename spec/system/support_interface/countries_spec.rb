@@ -95,6 +95,8 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_content("Address")
     expect(page).to have_content("Email address")
     expect(page).to have_content("Website")
+    expect(page).to have_content("Certificate")
+    expect(page).to have_content("Other")
   end
 
   def then_i_see_region_changes_confirmation
