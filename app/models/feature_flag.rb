@@ -18,6 +18,12 @@ class FeatureFlag
         "This is useful before staff users have been created, but should " \
         "otherwise be inactive.",
       "Thomas Leese"
+    ],
+    [
+      :teacher_applications,
+      "Allow starting an application on this service directly after " \
+        "completing an eligibility check.",
+      "Thomas Leese"
     ]
   ].freeze
 
