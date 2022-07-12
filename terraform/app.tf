@@ -21,6 +21,13 @@ resource "cloudfoundry_route" "apply_qts_public" {
   space    = data.cloudfoundry_space.space.id
 }
 
+resource "cloudfoundry_route" "apply_qts_internal" {
+  count    = local.configure_prometheus_network_policy
+  domain   = data.cloudfoundry_domain.internal.id
+  space    = data.cloudfoundry_space.space.id
+  hostname = local.apply_qts_app_name
+}
+
 resource "cloudfoundry_route" "education" {
   for_each = toset(var.education_hostnames)
 

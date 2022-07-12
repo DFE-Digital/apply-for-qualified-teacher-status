@@ -26,6 +26,10 @@ data "cloudfoundry_domain" "education" {
   name = "apply-for-qts-in-england.education.gov.uk"
 }
 
+data "cloudfoundry_domain" "internal" {
+  name = "apps.internal"
+}
+
 data "cloudfoundry_service" "postgres" {
   name = "postgres"
 }
