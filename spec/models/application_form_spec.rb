@@ -25,7 +25,7 @@
 require "rails_helper"
 
 RSpec.describe ApplicationForm, type: :model do
-  subject(:application_form) { build(:application_form) }
+  subject(:application_form) { create(:application_form) }
 
   describe "validations" do
     it { is_expected.to be_valid }
@@ -42,6 +42,25 @@ RSpec.describe ApplicationForm, type: :model do
         active: "active",
         submitted: "submitted"
       ).backed_by_column_of_type(:string)
+    end
+  end
+
+  describe "#reference" do
+    let!(:application_form1) { create(:application_form, reference: nil) }
+    let!(:application_form2) { create(:application_form, reference: nil) }
+
+    context "the first application" do
+      subject(:reference) { application_form1.reference }
+
+      it { is_expected.to_not be_nil }
+      it { is_expected.to eq("2000001") }
+    end
+
+    context "the second application" do
+      subject(:reference) { application_form2.reference }
+
+      it { is_expected.to_not be_nil }
+      it { is_expected.to eq("2000002") }
     end
   end
 end
