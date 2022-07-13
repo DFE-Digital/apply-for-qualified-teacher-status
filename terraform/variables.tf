@@ -67,9 +67,14 @@ variable "prometheus_app" {
   default = null
 }
 
+variable "statuscake_alerts" {
+  type = map(any)
+}
+
 locals {
   apply_qts_routes = flatten([
     cloudfoundry_route.apply_qts_public,
+    cloudfoundry_route.apply_qts_internal,
     values(cloudfoundry_route.education)
   ])
 
