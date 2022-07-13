@@ -26,12 +26,25 @@ RSpec.describe "Teacher authentication", type: :system do
 
     when_i_visit_the_magic_link_email
     then_i_see_successful_magic_link_message
+
+    given_i_clear_my_session
+
+    when_i_visit_the_sign_up_page
+    then_i_see_the_sign_up_form
+
+    when_i_fill_email_address
+    and_i_sign_up
+    then_i_receive_a_magic_link_email
+
+    when_i_visit_the_magic_link_email
+    then_i_see_successful_magic_link_message
   end
 
   private
 
   def given_i_clear_my_session
     page.driver.clear_cookies
+    ActionMailer::Base.deliveries = []
   end
 
   def when_i_visit_the_sign_up_page
@@ -47,7 +60,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def when_i_visit_the_confirmation_email
-    message = ActionMailer::Base.deliveries.first
+    message = ActionMailer::Base.deliveries.last
     uri = URI.parse(URI.extract(message.body.to_s).second)
     expect(uri.path).to eq("/teacher/confirmation")
     expect(uri.query).to include("confirmation_token=")
@@ -55,7 +68,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def when_i_visit_the_magic_link_email
-    message = ActionMailer::Base.deliveries.second
+    message = ActionMailer::Base.deliveries.last
     uri = URI.parse(URI.extract(message.body.to_s).second)
     expect(uri.path).to eq("/teacher/magic_link")
     expect(uri.query).to include("teacher")
@@ -75,7 +88,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def then_i_receive_a_confirmation_email
-    message = ActionMailer::Base.deliveries.first
+    message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
     expect(message.subject).to eq("Confirmation instructions")
@@ -83,7 +96,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def then_i_receive_a_magic_link_email
-    message = ActionMailer::Base.deliveries.second
+    message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
     expect(message.subject).to eq("Here's your magic login link")

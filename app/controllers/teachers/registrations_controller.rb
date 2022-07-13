@@ -11,10 +11,15 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    if (resource = Teacher.find_by(email: sign_up_params[:email]))
+      resource.send_magic_link(sign_up_params[:remember_me])
+      flash[:notice] = I18n.t("devise.passwordless.magic_link_sent")
+      redirect_to new_teacher_session_path
+    else
+      super
+    end
+  end
 
   # GET /resource/edit
   # def edit
