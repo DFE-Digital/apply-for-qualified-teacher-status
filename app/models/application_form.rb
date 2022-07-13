@@ -31,4 +31,14 @@ class ApplicationForm < ApplicationRecord
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
   enum status: { active: "active", submitted: "submitted" }
+
+  before_validation :assign_reference, on: :create
+
+  def assign_reference
+    return if reference
+    ActiveRecord::Base.connection.execute(
+      "LOCK TABLE application_forms IN EXCLUSIVE MODE"
+    )
+    self.reference = (ApplicationForm.maximum(:reference) || "2000000").to_i + 1
+  end
 end
