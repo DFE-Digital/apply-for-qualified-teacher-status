@@ -188,24 +188,12 @@ RSpec.describe "Eligibility check", type: :system do
     create(:region, country: it, name: "Other Region")
   end
 
-  def given_the_service_is_closed
-    FeatureFlag.deactivate(:service_open)
-  end
-
-  def given_the_service_is_open
-    FeatureFlag.activate(:service_open)
-  end
-
   def given_the_service_cannot_be_started
     FeatureFlag.deactivate(:service_start)
   end
 
   def given_the_service_can_be_started
     FeatureFlag.activate(:service_start)
-  end
-
-  def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize("test", "test")
   end
 
   def when_i_choose_no

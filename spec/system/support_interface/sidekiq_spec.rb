@@ -9,13 +9,6 @@ RSpec.describe "Sidekiq support", type: :system do
 
   private
 
-  def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize(
-      ENV.fetch("SUPPORT_USERNAME", "test"),
-      ENV.fetch("SUPPORT_PASSWORD", "test")
-    )
-  end
-
   def when_i_visit_the_sidekiq_page
     visit "/support/sidekiq"
   end
