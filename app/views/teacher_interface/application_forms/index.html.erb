@@ -1,0 +1,29 @@
+<% content_for :page_title, 'Your applications' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Your applications</h1>
+
+    <%= govuk_table do |table|
+      table.caption(size: 'm', text: 'List of applications')
+
+      table.head do |head|
+        head.row do |row|
+          row.cell(header: true, text: 'Started at')
+          row.cell(header: true, text: 'Status')
+          row.cell(header: true, text: 'Actions')
+        end
+      end
+
+      table.body do |body|
+        @application_forms.find_each do |application_form|
+          body.row do |row|
+            row.cell(text: application_form.created_at.to_s)
+            row.cell(text: application_form.status.capitalize)
+            row.cell { govuk_link_to "Continue", teacher_interface_application_form_path(application_form) }
+          end
+        end
+      end
+    end %>
+  </div>
+</div>

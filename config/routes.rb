@@ -76,7 +76,7 @@ Rails.application.routes.draw do
 
     resources :application_forms,
               path: "applications",
-              only: %i[index new create]
+              only: %i[index new create show]
   end
 
   devise_for :teachers,

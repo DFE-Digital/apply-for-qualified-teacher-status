@@ -16,6 +16,9 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_visit_the_teacher_confirmation_email
     then_i_see_the_new_application_page
+
+    when_i_click_start_now
+    then_i_see_the_application_page
   end
 
   private
@@ -28,6 +31,10 @@ RSpec.describe "Teacher application", type: :system do
     click_link "Apply for QTS", visible: false
   end
 
+  def when_i_click_start_now
+    click_button "Start now", visible: false
+  end
+
   def then_i_see_the_sign_up_form
     expect(page).to have_current_path("/teacher/sign_up")
     expect(page).to have_title("Sign up")
@@ -36,5 +43,15 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_the_new_application_page
     expect(page).to have_current_path("/teacher/applications/new")
+    expect(page).to have_title("Start your application")
+    expect(page).to have_content("Start your application")
+  end
+
+  def then_i_see_the_application_page
+    expect(page).to have_current_path(
+      teacher_interface_application_form_path(ApplicationForm.last)
+    )
+    expect(page).to have_title("Apply for qualified teacher status (QTS)")
+    expect(page).to have_content("Apply for qualified teacher status (QTS)")
   end
 end
