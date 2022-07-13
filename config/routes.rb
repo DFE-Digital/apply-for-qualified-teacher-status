@@ -72,6 +72,11 @@ Rails.application.routes.draw do
              }
 
   namespace :teacher_interface, path: "/teacher" do
+    root to: redirect("/teacher/applications")
+
+    resources :application_forms,
+              path: "applications",
+              only: %i[index new create]
   end
 
   devise_for :teachers,

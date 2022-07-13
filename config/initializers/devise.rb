@@ -322,6 +322,7 @@ Devise.setup do |config|
   # change the failure app, you can configure them inside the config.warden block.
   #
   config.warden do |manager|
+    manager.failure_app = AuthenticationFailureApp
     manager.strategies.add(:staff_http_basic_auth, StaffHttpBasicAuthStrategy)
     manager.default_strategies(scope: :staff).unshift :staff_http_basic_auth
   end
