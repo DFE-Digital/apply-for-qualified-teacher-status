@@ -17,10 +17,6 @@ RSpec.describe "Performance", type: :system do
 
   private
 
-  def given_the_service_is_open
-    FeatureFlag.activate(:service_open)
-  end
-
   def given_there_are_a_few_eligibility_checks
     (0..8).each.with_index do |n, i|
       (i + 1).times do

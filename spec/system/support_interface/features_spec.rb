@@ -35,13 +35,6 @@ RSpec.describe "Features support", type: :system do
     click_on "Activate Service open"
   end
 
-  def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize(
-      ENV.fetch("SUPPORT_USERNAME", "test"),
-      ENV.fetch("SUPPORT_PASSWORD", "test")
-    )
-  end
-
   def when_i_deactivate_the_service_open_flag
     click_on "Deactivate Service open"
   end

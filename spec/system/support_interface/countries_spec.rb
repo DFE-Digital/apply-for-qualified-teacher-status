@@ -56,13 +56,6 @@ RSpec.describe "Countries support", type: :system do
     create(:region, :national, country: create(:country, code: "CY"))
   end
 
-  def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize(
-      ENV.fetch("SUPPORT_USERNAME", "test"),
-      ENV.fetch("SUPPORT_PASSWORD", "test")
-    )
-  end
-
   def when_i_visit_the_countries_page
     visit support_interface_countries_path
   end

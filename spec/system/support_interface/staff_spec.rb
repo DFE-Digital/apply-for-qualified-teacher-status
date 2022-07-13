@@ -28,19 +28,8 @@ RSpec.describe "Staff support", type: :system do
 
   private
 
-  def given_the_service_is_startable
-    FeatureFlag.activate(:service_start)
-  end
-
   def given_the_service_is_staff_http_basic_auth
     FeatureFlag.activate(:staff_http_basic_auth)
-  end
-
-  def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize(
-      ENV.fetch("SUPPORT_USERNAME", "test"),
-      ENV.fetch("SUPPORT_PASSWORD", "test")
-    )
   end
 
   def when_i_visit_the_staff_page

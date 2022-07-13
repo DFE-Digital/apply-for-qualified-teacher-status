@@ -30,14 +30,6 @@ RSpec.describe "Teacher authentication", type: :system do
 
   private
 
-  def given_the_service_is_open
-    FeatureFlag.activate(:service_open)
-  end
-
-  def given_the_service_is_startable
-    FeatureFlag.activate(:service_start)
-  end
-
   def given_i_clear_my_session
     page.driver.clear_cookies
   end
