@@ -1,7 +1,9 @@
 class TeacherInterface::ApplicationFormsController < TeacherInterface::BaseController
+  before_action :load_application_form, only: %i[show submit]
+
   def index
     @application_forms =
-      ApplicationForms.where(teacher: current_teacher).order(created_at: :desc)
+      ApplicationForm.where(teacher: current_teacher).order(created_at: :desc)
   end
 
   def create
@@ -15,11 +17,19 @@ class TeacherInterface::ApplicationFormsController < TeacherInterface::BaseContr
   end
 
   def show
-    @application_form =
-      ApplicationForm.where(teacher: current_teacher).find(params[:id])
+  end
+
+  def submit
+    @application_form.submitted!
+    redirect_to teacher_interface_application_form_path(@application_form)
   end
 
   private
+
+  def load_application_form
+    @application_form =
+      ApplicationForm.where(teacher: current_teacher).find(params[:id])
+  end
 
   def application_form_params
     {

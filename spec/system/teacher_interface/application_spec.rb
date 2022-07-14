@@ -18,7 +18,10 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_new_application_page
 
     when_i_click_start_now
-    then_i_see_the_application_page
+    then_i_see_the_active_application_page
+
+    when_i_click_submit
+    then_i_see_the_submitted_application_page
   end
 
   private
@@ -28,11 +31,15 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_apply_for_qts
-    click_link "Apply for QTS", visible: false
+    click_link "Apply for QTS"
   end
 
   def when_i_click_start_now
-    click_button "Start now", visible: false
+    click_button "Start now"
+  end
+
+  def when_i_click_submit
+    click_button "Submit"
   end
 
   def then_i_see_the_sign_up_form
@@ -47,11 +54,25 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Start your application")
   end
 
-  def then_i_see_the_application_page
+  def then_i_see_the_active_application_page
     expect(page).to have_current_path(
       teacher_interface_application_form_path(ApplicationForm.last)
     )
     expect(page).to have_title("Apply for qualified teacher status (QTS)")
     expect(page).to have_content("Apply for qualified teacher status (QTS)")
+    expect(page).to have_content("Submit")
+  end
+
+  def then_i_see_the_submitted_application_page
+    application_form = ApplicationForm.last
+
+    expect(page).to have_current_path(
+      teacher_interface_application_form_path(application_form)
+    )
+    expect(page).to have_title("Apply for qualified teacher status (QTS)")
+    expect(page).to have_content("Apply for qualified teacher status (QTS)")
+    expect(page).to have_content("Application complete")
+    expect(page).to have_content("Your reference number")
+    expect(page).to have_content(application_form.reference)
   end
 end
