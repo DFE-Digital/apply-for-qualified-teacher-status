@@ -47,6 +47,10 @@ variable "apply_qts_memory" {
 variable "apply_qts_disk_quota" {
   default = "2048"
 }
+variable "enable_external_logging" {
+  type    = bool
+  default = true
+}
 
 variable "postgres_database_service_plan" {
   type    = string
@@ -81,8 +85,14 @@ locals {
   apply_qts_app_name     = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}"
   postgres_database_name = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}-pg-svc"
   redis_database_name    = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}-redis-svc"
-
-  bigquery_project_id = "apply-for-qts-in-england"
-  bigquery_dataset    = "events_${var.environment_name}"
-  bigquery_table_name = "events"
+  logging_service_name   = "apply-for-qts-in-england-logit-ssl-drain-${var.environment_name}${var.app_suffix}"
+  app_cloudfoundry_service_instances = [
+    cloudfoundry_service_instance.postgres.id,
+    cloudfoundry_service_instance.redis.id,
+  ]
+  app_user_provided_service_bindings = var.enable_external_logging ? [cloudfoundry_user_provided_service.logging.id] : []
+  app_service_bindings               = concat(local.app_cloudfoundry_service_instances, local.app_user_provided_service_bindings)
+  bigquery_project_id                = "apply-for-qts-in-england"
+  bigquery_dataset                   = "events_${var.environment_name}"
+  bigquery_table_name                = "events"
 }
