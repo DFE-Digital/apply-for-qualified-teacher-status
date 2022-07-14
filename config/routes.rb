@@ -76,7 +76,9 @@ Rails.application.routes.draw do
 
     resources :application_forms,
               path: "applications",
-              only: %i[index new create show]
+              only: %i[index new create show] do
+      post "submit", on: :member
+    end
   end
 
   devise_for :teachers,
