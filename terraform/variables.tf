@@ -72,7 +72,8 @@ variable "prometheus_app" {
 }
 
 variable "statuscake_alerts" {
-  type = map(any)
+  type    = map(any)
+  default = {}
 }
 
 locals {
