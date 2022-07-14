@@ -13,6 +13,7 @@ locals {
 
     RAILS_SERVE_STATIC_FILES = "true"
   })
+  logstash_endpoint = data.azurerm_key_vault_secret.secrets["LOGSTASH-ENDPOINT"].value
 }
 
 resource "cloudfoundry_route" "apply_qts_public" {
@@ -36,6 +37,12 @@ resource "cloudfoundry_route" "education" {
   space    = data.cloudfoundry_space.space.id
 }
 
+resource "cloudfoundry_user_provided_service" "logging" {
+  name             = local.logging_service_name
+  space            = data.cloudfoundry_space.space.id
+  syslog_drain_url = "syslog-tls://${local.logstash_endpoint}"
+}
+
 resource "cloudfoundry_app" "app" {
   name         = local.apply_qts_app_name
   space        = data.cloudfoundry_space.space.id
@@ -56,12 +63,11 @@ resource "cloudfoundry_app" "app" {
     }
   }
 
-  service_binding {
-    service_instance = cloudfoundry_service_instance.postgres.id
-  }
-
-  service_binding {
-    service_instance = cloudfoundry_service_instance.redis.id
+  dynamic "service_binding" {
+    for_each = local.app_service_bindings
+    content {
+      service_instance = service_binding.value
+    }
   }
 }
 
