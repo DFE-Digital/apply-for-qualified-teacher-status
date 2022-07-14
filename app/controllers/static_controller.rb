@@ -1,5 +1,5 @@
 class StaticController < ApplicationController
-  layout "static_layout"
+  layout "two_thirds"
 
   def current_namespace
     "static"

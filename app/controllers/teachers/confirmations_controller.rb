@@ -3,6 +3,8 @@
 class Teachers::ConfirmationsController < Devise::ConfirmationsController
   include TeacherCurrentNamespace
 
+  layout "two_thirds"
+
   # GET /resource/confirmation/new
   # def new
   #   super

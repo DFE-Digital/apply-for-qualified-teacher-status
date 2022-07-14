@@ -1,6 +1,8 @@
 class Staff::PasswordsController < Devise::PasswordsController
   include StaffCurrentNamespace
 
+  layout "two_thirds"
+
   # GET /resource/password/new
   # def new
   #   super

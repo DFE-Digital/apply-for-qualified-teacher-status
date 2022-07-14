@@ -1,17 +1,13 @@
 <% content_for :page_title, "Apply for qualified teacher status (QTS)" %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Apply for qualified teacher status (QTS)</h1>
+<h1 class="govuk-heading-xl">Apply for qualified teacher status (QTS)</h1>
 
-    <% if @application_form.submitted? %>
-      <%= govuk_panel(title_text: "Application complete") do %>
-        Your reference number
-        <br />
-        <strong><%= @application_form.reference %></strong>
-      <% end %>
-    <% else %>
-      <%= govuk_button_to "Submit", submit_teacher_interface_application_form_path %>
-    <% end %>
-  </div>
-</div>
+<% if @application_form.submitted? %>
+  <%= govuk_panel(title_text: "Application complete") do %>
+    Your reference number
+    <br />
+    <strong><%= @application_form.reference %></strong>
+  <% end %>
+<% else %>
+  <%= govuk_button_to "Submit", submit_teacher_interface_application_form_path %>
+<% end %>
