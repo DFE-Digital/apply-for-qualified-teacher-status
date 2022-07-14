@@ -1,6 +1,8 @@
 class Staff::ConfirmationsController < Devise::ConfirmationsController
   include StaffCurrentNamespace
 
+  layout "two_thirds"
+
   # GET /resource/confirmation/new
   # def new
   #   super

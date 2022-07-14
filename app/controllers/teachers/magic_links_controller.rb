@@ -7,6 +7,8 @@ class Teachers::MagicLinksController < DeviseController
     request.env["devise.skip_timeout"] = true
   end
 
+  layout "two_thirds"
+
   def show
     self.resource = warden.authenticate!(auth_options)
     set_flash_message!(:notice, :signed_in)

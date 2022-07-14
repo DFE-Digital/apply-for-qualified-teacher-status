@@ -1,6 +1,8 @@
 class Staff::UnlocksController < Devise::UnlocksController
   include StaffCurrentNamespace
 
+  layout "two_thirds"
+
   # GET /resource/unlock/new
   # def new
   #   super

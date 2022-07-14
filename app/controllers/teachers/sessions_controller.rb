@@ -3,6 +3,8 @@
 class Teachers::SessionsController < Devise::SessionsController
   include TeacherCurrentNamespace
 
+  layout "two_thirds"
+
   def create
     self.resource = resource_class.find_by(email: create_params[:email])
     if resource

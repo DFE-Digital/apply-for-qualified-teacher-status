@@ -1,7 +1,7 @@
-module TeacherInterface
-  class BaseController < ApplicationController
-    include TeacherCurrentNamespace
+class TeacherInterface::BaseController < ApplicationController
+  include TeacherCurrentNamespace
 
-    before_action :authenticate_teacher!
-  end
+  layout "two_thirds"
+
+  before_action :authenticate_teacher!
 end

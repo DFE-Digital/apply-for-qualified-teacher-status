@@ -1,6 +1,8 @@
 class Staff::SessionsController < Devise::SessionsController
   include StaffCurrentNamespace
 
+  layout "two_thirds"
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
