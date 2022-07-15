@@ -3,6 +3,9 @@
 # Table name: application_forms
 #
 #  id                   :bigint           not null, primary key
+#  date_of_birth        :date
+#  family_name          :text             default(""), not null
+#  given_names          :text             default(""), not null
 #  reference            :string(31)       not null
 #  status               :string           default("active"), not null
 #  created_at           :datetime         not null
@@ -31,6 +34,12 @@ FactoryBot.define do
 
     trait :submitted do
       status { "submitted" }
+    end
+
+    trait :with_personal_information do
+      given_names { "Given names" }
+      family_name { "Family name" }
+      date_of_birth { Date.new(2000, 1, 1) }
     end
   end
 end

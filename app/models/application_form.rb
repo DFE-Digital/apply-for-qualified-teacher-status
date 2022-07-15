@@ -3,6 +3,9 @@
 # Table name: application_forms
 #
 #  id                   :bigint           not null, primary key
+#  date_of_birth        :date
+#  family_name          :text             default(""), not null
+#  given_names          :text             default(""), not null
 #  reference            :string(31)       not null
 #  status               :string           default("active"), not null
 #  created_at           :datetime         not null
