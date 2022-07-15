@@ -20,6 +20,13 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_start_now
     then_i_see_the_active_application_page
 
+    when_i_click_personal_information
+    then_i_see_the_personal_information_form
+
+    when_i_fill_in_personal_information
+    and_i_click_continue
+    then_i_see_completed_personal_information_section
+
     when_i_click_submit
     then_i_see_the_submitted_application_page
   end
@@ -39,7 +46,23 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_submit
-    click_button "Submit"
+    click_button "Submit your application"
+  end
+
+  def and_i_click_continue
+    click_button "Continue"
+  end
+
+  def when_i_click_personal_information
+    click_link "Personal information"
+  end
+
+  def when_i_fill_in_personal_information
+    fill_in "application-form-given-names-field", with: "Name"
+    fill_in "application-form-family-name-field", with: "Name"
+    fill_in "application_form_date_of_birth_3i", with: "1"
+    fill_in "application_form_date_of_birth_2i", with: "1"
+    fill_in "application_form_date_of_birth_1i", with: "2000"
   end
 
   def then_i_see_the_sign_up_form
@@ -61,13 +84,25 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_title("Apply for qualified teacher status (QTS)")
     expect(page).to have_content("Apply for qualified teacher status (QTS)")
 
-    expect(page).to have_content("You have completed 0 of 1 section.")
+    expect(page).to have_content("You have completed 0 of 1 sections.")
 
     expect(page).to have_content("About you")
     expect(page).to have_content("Personal information\nNOT STARTED")
     expect(page).to have_content("Identity documents\nNOT STARTED")
 
     expect(page).to have_content("Submit your application")
+  end
+
+  def then_i_see_the_personal_information_form
+    expect(page).to have_title("Personal information")
+    expect(page).to have_content("Personal information")
+    expect(page).to have_content("Given names")
+    expect(page).to have_content("Family name")
+    expect(page).to have_content("Date of birth")
+  end
+
+  def then_i_see_completed_personal_information_section
+    expect(page).to have_content("Personal information\nCOMPLETED")
   end
 
   def then_i_see_the_submitted_application_page
