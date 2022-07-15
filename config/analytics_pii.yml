@@ -1,2 +1,6 @@
 ---
-shared: {}
+:shared:
+  :application_forms:
+    - given_names
+    - family_name
+    - date_of_birth

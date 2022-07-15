@@ -48,3 +48,6 @@
     - eligibility_check_id
     - created_at
     - updated_at
+    - given_names
+    - family_name
+    - date_of_birth
