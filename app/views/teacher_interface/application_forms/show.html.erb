@@ -9,34 +9,39 @@
     <strong><%= @application_form.reference %></strong>
   <% end %>
 <% else %>
-  <p class="govuk-body govuk-!-margin-bottom-7">You have completed 0 of 1 section.</p>
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
+    <% if @application_form.can_submit? %>
+      Application complete
+    <% else %>
+      Application incomplete
+    <% end %>
+  </h2>
+
+  <p class="govuk-body govuk-!-margin-bottom-7">
+    You have completed <%= @application_form.completed_sections.count %> of <%= ApplicationForm::SECTIONS.count %> sections.
+  </p>
 
   <ol class="app-task-list">
-    <li>
-      <h2 class="app-task-list__section">
-        <span class="app-task-list__section-number">1. </span> About you
-      </h2>
-      <ul class="app-task-list__items">
-        <li class="app-task-list__item">
-          <span class="app-task-list__task-name">
-            <a href="#" aria-describedby="personal-information-status">
-              Personal information
-            </a>
-          </span>
-          <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="personal-information-status">Not started</strong>
-        </li>
+    <% ApplicationForm::SECTIONS.each_with_index do |(section_key, subsection_keys), index| %>
+      <li>
+        <h2 class="app-task-list__section">
+          <span class="app-task-list__section-number"><%= index + 1 %>. </span> <%= section_key.to_s.humanize %>
+        </h2>
 
-        <li class="app-task-list__item">
-          <span class="app-task-list__task-name">
-            <a href="#" aria-describedby="identity-documents-status">
-              Identity documents
-            </a>
-          </span>
-          <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="identity-documents-status">Not started</strong>
-        </li>
-      </ul>
-    </li>
+        <ul class="app-task-list__items">
+          <% subsection_keys.each do |subsection_key| %>
+            <li class="app-task-list__item">
+              <span class="app-task-list__task-name">
+                <%= link_to subsection_key.to_s.humanize, "#", aria: { describedby: "#{subsection_key}-status" } %>
+              </span>
+
+              <%= render(ApplicationFormStatusTagComponent.new(key: subsection_key, status: @application_form.section_statuses.dig(section_key, subsection_key))) %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
   </ol>
 
-  <%= govuk_button_to "Submit your application", submit_teacher_interface_application_form_path %>
+  <%= govuk_button_to "Submit your application", submit_teacher_interface_application_form_path, disabled: !@application_form.can_submit? %>
 <% end %>
