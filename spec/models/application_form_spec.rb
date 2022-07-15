@@ -66,4 +66,61 @@ RSpec.describe ApplicationForm, type: :model do
       it { is_expected.to eq("2000002") }
     end
   end
+
+  describe "#section_statuses" do
+    subject(:section_statuses) { application_form.section_statuses }
+
+    it do
+      is_expected.to eq(
+        {
+          about_you: {
+            personal_information: :not_started,
+            identity_documents: :not_started
+          }
+        }
+      )
+    end
+
+    describe "about you section" do
+      subject(:about_you_section_status) { section_statuses[:about_you] }
+
+      context "with some personal information" do
+        before { application_form.update!(given_names: "Given") }
+
+        it do
+          is_expected.to match(
+            a_hash_including(personal_information: :in_progress)
+          )
+        end
+      end
+
+      context "with all personal information" do
+        before do
+          application_form.update!(
+            given_names: "Given",
+            family_name: "Family",
+            date_of_birth: Date.new(2000, 1, 1)
+          )
+        end
+
+        it do
+          is_expected.to match(
+            a_hash_including(personal_information: :completed)
+          )
+        end
+      end
+    end
+  end
+
+  describe "#completed_sections" do
+    subject(:completed_sections) { application_form.completed_sections }
+
+    it { is_expected.to be_empty }
+  end
+
+  describe "#can_submit?" do
+    subject(:can_submit?) { application_form.can_submit? }
+
+    it { is_expected.to eq(false) }
+  end
 end
