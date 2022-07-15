@@ -1,0 +1,29 @@
+<% content_for :page_title, "Personal information" %>
+<% content_for :back_link_url, teacher_interface_application_form_path(@application_form) %>
+
+<span class="govuk-caption-l">About you</span>
+<h1 class="govuk-heading-l">Personal information</h1>
+
+<%= form_with model: [:teacher_interface, @application_form] do |f| %>
+  <%= f.govuk_text_field :given_names,
+                         label: { text: "Given names", size: "m" },
+                         hint: { text: "Enter your full name apart from your family name" } %>
+
+  <%= f.govuk_text_field :family_name,
+                         label: { text: "Family name", size: "m" },
+                         hint: { text: "Enter just your family name" } %>
+
+  <%= f.govuk_date_field :date_of_birth,
+                         date_of_birth: true,
+                         legend: { text: "Date of birth" },
+                         hint: { text: "For example, 27 3 1980" } %>
+
+  <%= govuk_details(summary_text: "Why do we ask this?") do %>
+    <p>
+      We ask for your date of birth because not all forms of identification include it.
+      It also helps with security in case we need to discuss your application with you.
+    </p>
+  <% end %>
+
+  <%= f.govuk_submit "Continue", prevent_double_click: false %>
+<% end %>

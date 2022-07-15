@@ -32,10 +32,15 @@
           <% subsection_keys.each do |subsection_key| %>
             <li class="app-task-list__item">
               <span class="app-task-list__task-name">
-                <%= link_to subsection_key.to_s.humanize, "#", aria: { describedby: "#{subsection_key}-status" } %>
+                <%= link_to subsection_key.to_s.humanize,
+                            send("#{subsection_key}_teacher_interface_application_form_path"),
+                            aria: { describedby: "#{subsection_key}-status" } %>
               </span>
 
-              <%= render(ApplicationFormStatusTagComponent.new(key: subsection_key, status: @application_form.section_statuses.dig(section_key, subsection_key))) %>
+              <%= render(ApplicationFormStatusTagComponent.new(
+                key: subsection_key,
+                status: @application_form.section_statuses.dig(section_key, subsection_key)
+              )) %>
             </li>
           <% end %>
         </ul>
