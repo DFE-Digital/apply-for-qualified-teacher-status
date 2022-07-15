@@ -7,6 +7,7 @@ $govuk-assets-path: "/";
 
 @import "_environments";
 @import "_support";
+@import "_task_list";
 
 ul.autocomplete__menu {
   li {
