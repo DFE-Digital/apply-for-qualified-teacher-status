@@ -9,5 +9,34 @@
     <strong><%= @application_form.reference %></strong>
   <% end %>
 <% else %>
-  <%= govuk_button_to "Submit", submit_teacher_interface_application_form_path %>
+  <p class="govuk-body govuk-!-margin-bottom-7">You have completed 0 of 1 section.</p>
+
+  <ol class="app-task-list">
+    <li>
+      <h2 class="app-task-list__section">
+        <span class="app-task-list__section-number">1. </span> About you
+      </h2>
+      <ul class="app-task-list__items">
+        <li class="app-task-list__item">
+          <span class="app-task-list__task-name">
+            <a href="#" aria-describedby="personal-information-status">
+              Personal information
+            </a>
+          </span>
+          <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="personal-information-status">Not started</strong>
+        </li>
+
+        <li class="app-task-list__item">
+          <span class="app-task-list__task-name">
+            <a href="#" aria-describedby="identity-documents-status">
+              Identity documents
+            </a>
+          </span>
+          <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="identity-documents-status">Not started</strong>
+        </li>
+      </ul>
+    </li>
+  </ol>
+
+  <%= govuk_button_to "Submit your application", submit_teacher_interface_application_form_path %>
 <% end %>
