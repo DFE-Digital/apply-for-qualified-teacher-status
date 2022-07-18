@@ -67,6 +67,16 @@ RSpec.describe ApplicationForm, type: :model do
     end
   end
 
+  describe "#sections" do
+    subject(:sections) { application_form.sections }
+
+    it do
+      is_expected.to eq(
+        { about_you: %i[personal_information identity_documents] }
+      )
+    end
+  end
+
   describe "#section_statuses" do
     subject(:section_statuses) { application_form.section_statuses }
 
