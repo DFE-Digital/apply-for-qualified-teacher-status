@@ -1,0 +1,93 @@
+# == Schema Information
+#
+# Table name: work_histories
+#
+#  id                  :bigint           not null, primary key
+#  city                :text             default(""), not null
+#  country             :text             default(""), not null
+#  email               :text             default(""), not null
+#  end_date            :date
+#  job                 :text             default(""), not null
+#  school_name         :text             default(""), not null
+#  start_date          :date
+#  still_employed      :boolean
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  application_form_id :bigint           not null
+#
+# Indexes
+#
+#  index_work_histories_on_application_form_id  (application_form_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (application_form_id => application_forms.id)
+#
+require "rails_helper"
+
+RSpec.describe WorkHistory, type: :model do
+  subject(:work_history) { build(:work_history) }
+
+  describe "validations" do
+    it { is_expected.to be_valid }
+
+    context "when not still employed" do
+      before { work_history.still_employed = false }
+      it { is_expected.to validate_presence_of(:end_date).allow_nil }
+    end
+  end
+
+  describe "#completed" do
+    let!(:incomplete_work_history) { create(:work_history) }
+    let!(:complete_work_history) { create(:work_history, :completed) }
+
+    subject(:completed) { described_class.completed }
+
+    it { is_expected.to match_array([complete_work_history]) }
+  end
+
+  describe "#status" do
+    subject(:status) { work_history.status }
+
+    it { is_expected.to eq(:not_started) }
+
+    context "when partially filled out" do
+      before { work_history.update!(country: "Country") }
+
+      it { is_expected.to eq(:in_progress) }
+    end
+
+    context "when fully filled out and still employed" do
+      before do
+        work_history.update!(
+          school_name: "School",
+          city: "City",
+          country: "Country",
+          job: "Job",
+          email: "school@example.com",
+          start_date: Date.new(2020, 1, 1),
+          still_employed: true
+        )
+      end
+
+      it { is_expected.to eq(:completed) }
+    end
+
+    context "when fully filled out and not still employed" do
+      before do
+        work_history.update!(
+          school_name: "School",
+          city: "City",
+          country: "Country",
+          job: "Job",
+          email: "school@example.com",
+          start_date: Date.new(2020, 1, 1),
+          end_date: Date.new(2020, 12, 1),
+          still_employed: false
+        )
+      end
+
+      it { is_expected.to eq(:completed) }
+    end
+  end
+end

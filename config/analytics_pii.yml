@@ -4,3 +4,12 @@
     - given_names
     - family_name
     - date_of_birth
+  :work_histories:
+    - school_name
+    - city
+    - country
+    - job
+    - email
+    - start_date
+    - still_employed
+    - end_date

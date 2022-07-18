@@ -53,3 +53,16 @@
     - given_names
     - family_name
     - date_of_birth
+  :work_histories:
+    - id
+    - application_form_id
+    - school_name
+    - city
+    - country
+    - job
+    - email
+    - start_date
+    - still_employed
+    - end_date
+    - created_at
+    - updated_at
