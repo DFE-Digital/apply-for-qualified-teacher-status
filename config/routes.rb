@@ -81,6 +81,7 @@ Rails.application.routes.draw do
         post "submit"
         get "personal_information"
         get "identity_documents"
+        get "work_history"
       end
     end
   end
