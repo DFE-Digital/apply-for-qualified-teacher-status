@@ -57,6 +57,14 @@ variable "postgres_database_service_plan" {
   default = "small-13"
 }
 
+variable "paas_restore_db_from_db_instance" {
+  default = ""
+}
+
+variable "paas_restore_db_from_point_in_time_before" {
+  default = ""
+}
+
 variable "redis_service_plan" {
   type    = string
   default = "tiny-6_x"
@@ -96,4 +104,9 @@ locals {
   bigquery_project_id                = "apply-for-qts-in-england"
   bigquery_dataset                   = "events_${var.environment_name}"
   bigquery_table_name                = "events"
+
+  restore_db_backup_params = var.paas_restore_db_from_db_instance != "" ? {
+    restore_from_point_in_time_of     = var.paas_restore_db_from_db_instance
+    restore_from_point_in_time_before = var.paas_restore_db_from_point_in_time_before
+  } : {}
 }

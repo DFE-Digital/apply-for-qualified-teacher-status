@@ -97,7 +97,7 @@ resource "cloudfoundry_service_instance" "postgres" {
   name         = local.postgres_database_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.postgres.service_plans[var.postgres_database_service_plan]
-
+  json_params  = jsonencode(local.restore_db_backup_params)
   timeouts {
     create = "60m"
     update = "60m"
