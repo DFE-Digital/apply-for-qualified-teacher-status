@@ -18,11 +18,11 @@
   </h2>
 
   <p class="govuk-body govuk-!-margin-bottom-7">
-    You have completed <%= @application_form.completed_sections.count %> of <%= ApplicationForm::SECTIONS.count %> sections.
+    You have completed <%= @application_form.completed_sections.count %> of <%= @application_form.sections.count %> sections.
   </p>
 
   <ol class="app-task-list">
-    <% ApplicationForm::SECTIONS.each_with_index do |(section_key, subsection_keys), index| %>
+    <% @application_form.sections.each_with_index do |(section_key, subsection_keys), index| %>
       <li>
         <h2 class="app-task-list__section">
           <span class="app-task-list__section-number"><%= index + 1 %>. </span> <%= section_key.to_s.humanize %>

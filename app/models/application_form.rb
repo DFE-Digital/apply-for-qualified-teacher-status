@@ -45,11 +45,13 @@ class ApplicationForm < ApplicationRecord
     self.reference = (ApplicationForm.maximum(:reference) || "2000000").to_i + 1
   end
 
-  SECTIONS = { about_you: %i[personal_information identity_documents] }.freeze
+  def sections
+    { about_you: %i[personal_information identity_documents] }.freeze
+  end
 
   def section_statuses
     @section_statuses ||=
-      SECTIONS.each_with_object({}) do |(section, subsections), memo|
+      sections.each_with_object({}) do |(section, subsections), memo|
         memo[section] = subsections.index_with do |subsection|
           subsection_status(section, subsection)
         end
@@ -63,7 +65,7 @@ class ApplicationForm < ApplicationRecord
   end
 
   def can_submit?
-    completed_sections.count == SECTIONS.count
+    completed_sections.count == sections.count
   end
 
   private
