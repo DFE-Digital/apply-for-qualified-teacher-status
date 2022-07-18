@@ -30,7 +30,7 @@ FactoryBot.define do
     sequence(:reference) { |n| "ref#{n}" }
     status { "active" }
     association :teacher
-    association :eligibility_check
+    association :eligibility_check, :eligible
 
     trait :submitted do
       status { "submitted" }

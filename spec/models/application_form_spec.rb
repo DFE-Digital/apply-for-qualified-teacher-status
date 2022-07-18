@@ -70,10 +70,27 @@ RSpec.describe ApplicationForm, type: :model do
   describe "#sections" do
     subject(:sections) { application_form.sections }
 
-    it do
-      is_expected.to eq(
-        { about_you: %i[personal_information identity_documents] }
-      )
+    context "with a country that doesn't need work history" do
+      before { application_form.region = create(:region, :online_checks) }
+
+      it do
+        is_expected.to eq(
+          { about_you: %i[personal_information identity_documents] }
+        )
+      end
+    end
+
+    context "with a country that needs work history" do
+      before { application_form.region = create(:region, :none_checks) }
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: %i[personal_information identity_documents],
+            your_work_history: %i[work_history]
+          }
+        )
+      end
     end
   end
 
@@ -86,6 +103,9 @@ RSpec.describe ApplicationForm, type: :model do
           about_you: {
             personal_information: :not_started,
             identity_documents: :not_started
+          },
+          your_work_history: {
+            work_history: :not_started
           }
         }
       )

@@ -38,5 +38,15 @@ FactoryBot.define do
     trait :legacy do
       legacy { true }
     end
+
+    trait :online_checks do
+      sanction_check { :online }
+      status_check { :online }
+    end
+
+    trait :none_checks do
+      sanction_check { :none }
+      status_check { :none }
+    end
   end
 end

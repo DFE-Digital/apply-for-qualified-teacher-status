@@ -30,6 +30,7 @@ class ApplicationForm < ApplicationRecord
 
   belongs_to :teacher
   belongs_to :eligibility_check
+  has_one :region, through: :eligibility_check
 
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
@@ -46,7 +47,12 @@ class ApplicationForm < ApplicationRecord
   end
 
   def sections
-    { about_you: %i[personal_information identity_documents] }.freeze
+    @sections ||=
+      begin
+        hash = { about_you: %i[personal_information identity_documents] }
+        hash.merge!(your_work_history: %i[work_history]) if needs_work_history?
+        hash
+      end
   end
 
   def section_statuses
@@ -69,6 +75,10 @@ class ApplicationForm < ApplicationRecord
   end
 
   private
+
+  def needs_work_history?
+    region.status_check_none? || region.sanction_check_none?
+  end
 
   def subsection_status(section, subsection)
     case [section, subsection]
