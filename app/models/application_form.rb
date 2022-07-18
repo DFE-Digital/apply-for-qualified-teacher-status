@@ -30,6 +30,7 @@ class ApplicationForm < ApplicationRecord
 
   belongs_to :teacher
   belongs_to :eligibility_check
+  has_many :work_histories
   has_one :region, through: :eligibility_check
 
   validates :reference, presence: true, uniqueness: true, length: 3..31
@@ -86,6 +87,12 @@ class ApplicationForm < ApplicationRecord
       values = [given_names, family_name, date_of_birth]
       return :not_started if values.all?(&:blank?)
       return :completed if values.all?(&:present?)
+      :in_progress
+    when %i[your_work_history work_history]
+      return :not_started if work_histories.empty?
+      if work_histories.completed.count == work_histories.count
+        return :completed
+      end
       :in_progress
     else
       :not_started
