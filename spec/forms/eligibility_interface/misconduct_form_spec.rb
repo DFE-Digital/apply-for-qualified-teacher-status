@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.describe EligibilityInterface::MisconductForm, type: :model do
-  it { is_expected.to validate_presence_of(:eligibility_check) }
-  it do
-    is_expected.to validate_inclusion_of(:misconduct).in_array([true, false])
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:eligibility_check) }
   end
 
   describe "#valid?" do
