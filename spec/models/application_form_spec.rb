@@ -140,6 +140,28 @@ RSpec.describe ApplicationForm, type: :model do
         end
       end
     end
+
+    describe "your work history section" do
+      subject(:your_work_history_status) do
+        section_statuses[:your_work_history]
+      end
+
+      context "with no work history" do
+        it { is_expected.to eq(work_history: :not_started) }
+      end
+
+      context "with some incomplete work history" do
+        before { create(:work_history, application_form:) }
+
+        it { is_expected.to eq(work_history: :in_progress) }
+      end
+
+      context "with all complete work history" do
+        before { create(:work_history, :completed, application_form:) }
+
+        it { is_expected.to eq(work_history: :completed) }
+      end
+    end
   end
 
   describe "#completed_sections" do
