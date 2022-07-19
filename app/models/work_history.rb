@@ -40,6 +40,8 @@ class WorkHistory < ApplicationRecord
             .or(where(still_employed: false).where.not(end_date: nil))
         }
 
+  scope :ordered, -> { order(start_date: :asc, created_at: :asc) }
+
   def status
     values = [
       school_name,
@@ -59,5 +61,10 @@ class WorkHistory < ApplicationRecord
     return :not_started if values.all?(&:blank?)
     return :completed if values.all?(&:present?)
     :in_progress
+  end
+
+  def current_or_most_recent_role?
+    application_form.work_histories.empty? ||
+      application_form.work_histories.ordered.first == self
   end
 end
