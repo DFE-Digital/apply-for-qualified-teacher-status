@@ -11,6 +11,7 @@
     - teaching_authority_address
     - teaching_authority_emails
     - teaching_authority_websites
+    - teaching_authority_name
     - legacy
   :features:
     - id
@@ -40,6 +41,7 @@
     - teaching_authority_address
     - teaching_authority_emails
     - teaching_authority_websites
+    - teaching_authority_name
   :application_forms:
     - id
     - reference

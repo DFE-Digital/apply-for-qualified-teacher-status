@@ -9,6 +9,7 @@
 #  status_check                :string           default("none"), not null
 #  teaching_authority_address  :text             default(""), not null
 #  teaching_authority_emails   :text             default([]), not null, is an Array
+#  teaching_authority_name     :text             default(""), not null
 #  teaching_authority_websites :text             default([]), not null, is an Array
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
@@ -116,6 +117,12 @@ RSpec.describe Region, type: :model do
     subject(:teaching_authority_present?) { region.teaching_authority_present? }
 
     it { is_expected.to eq(false) }
+
+    context "with a name" do
+      before { region.update(teaching_authority_name: "Name") }
+
+      it { is_expected.to eq(true) }
+    end
 
     context "with an address" do
       before { region.update(teaching_authority_address: "Address") }
