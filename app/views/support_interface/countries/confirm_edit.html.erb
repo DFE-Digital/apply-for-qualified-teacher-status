@@ -46,6 +46,7 @@
 
 <%= form_with model: [:support_interface, @country] do |f| %>
   <%= f.hidden_field :all_regions, value: @all_regions %>
+  <%= f.hidden_field :teaching_authority_name, value: @country.teaching_authority_name %>
   <%= f.hidden_field :teaching_authority_address, value: @country.teaching_authority_address %>
   <%= f.hidden_field :teaching_authority_emails_string, value: @country.teaching_authority_emails_string %>
   <%= f.hidden_field :teaching_authority_websites_string, value: @country.teaching_authority_websites_string %>
