@@ -12,6 +12,7 @@ RSpec.describe "Countries support", type: :system do
     when_i_click_on_a_country
     then_i_see_a_country
 
+    when_i_fill_teaching_authority_name
     when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
@@ -29,6 +30,7 @@ RSpec.describe "Countries support", type: :system do
 
     when_i_select_sanction_check
     when_i_select_status_check
+    when_i_fill_teaching_authority_name
     when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
@@ -85,6 +87,7 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def then_i_see_country_contact_preview
+    expect(page).to have_content("Name")
     expect(page).to have_content("Address")
     expect(page).to have_content("Email address")
     expect(page).to have_content("Website")
@@ -122,6 +125,12 @@ RSpec.describe "Countries support", type: :system do
 
   def when_i_select_status_check
     select "Online", from: "region-status-check-field"
+  end
+
+  def when_i_fill_teaching_authority_name
+    fill_in "region-teaching-authority-name-field", with: "Name"
+  rescue Capybara::ElementNotFound
+    fill_in "country-teaching-authority-name-field", with: "Name"
   end
 
   def when_i_fill_teaching_authority_address
