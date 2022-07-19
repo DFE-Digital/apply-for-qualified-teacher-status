@@ -90,4 +90,32 @@ RSpec.describe WorkHistory, type: :model do
       it { is_expected.to eq(:completed) }
     end
   end
+
+  describe "#current_or_most_recent_role?" do
+    subject(:current_or_most_recent_role?) do
+      work_history.current_or_most_recent_role?
+    end
+
+    context "when there are no saved work histories" do
+      it { is_expected.to eq(true) }
+    end
+
+    context "when there are saved work histories and this is the first" do
+      before { work_history.save! }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "when there are saved work histories and this is not the first" do
+      before do
+        create(
+          :work_history,
+          application_form: work_history.application_form,
+          start_date: Date.new(2020, 1, 1)
+        )
+      end
+
+      it { is_expected.to eq(false) }
+    end
+  end
 end
