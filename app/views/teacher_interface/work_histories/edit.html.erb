@@ -1,0 +1,6 @@
+<% content_for :page_title, "Your work history in education" %>
+<% content_for :back_link_url, teacher_interface_application_form_work_histories_path(@application_form) %>
+
+<%= render "heading" %>
+
+<%= render "form", application_form: @application_form, work_history: @work_history %>
