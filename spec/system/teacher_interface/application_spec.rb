@@ -27,6 +27,17 @@ RSpec.describe "Teacher application", type: :system do
     and_i_click_continue
     then_i_see_completed_personal_information_section
 
+    when_i_click_work_history
+    then_i_see_the_work_history_form
+
+    when_i_fill_in_work_history
+    and_i_click_continue
+    then_i_see_the_work_history_summary
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_completed_work_history_section
+
     when_i_click_submit
     then_i_see_the_submitted_application_page
   end
@@ -63,6 +74,25 @@ RSpec.describe "Teacher application", type: :system do
     fill_in "application_form_date_of_birth_3i", with: "1"
     fill_in "application_form_date_of_birth_2i", with: "1"
     fill_in "application_form_date_of_birth_1i", with: "2000"
+  end
+
+  def when_i_click_work_history
+    click_link "Work history"
+  end
+
+  def when_i_fill_in_work_history
+    fill_in "work-history-school-name-field", with: "School name"
+    fill_in "work-history-city-field", with: "City"
+    fill_in "work-history-country-field", with: "Country"
+    fill_in "work-history-job-field", with: "Job"
+    fill_in "work-history-email-field", with: "test@example.com"
+    fill_in "work_history_start_date_2i", with: "1"
+    fill_in "work_history_start_date_1i", with: "2000"
+    choose "Yes", visible: false
+  end
+
+  def when_i_choose_no
+    choose "No", visible: false
   end
 
   def then_i_see_the_sign_up_form
@@ -104,8 +134,28 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Date of birth")
   end
 
+  def then_i_see_the_work_history_form
+    expect(page).to have_title("Your work history in education")
+    expect(page).to have_content("Your work history in education")
+    expect(page).to have_content("Your current or most recent role")
+  end
+
   def then_i_see_completed_personal_information_section
     expect(page).to have_content("Personal information\nCOMPLETED")
+  end
+
+  def then_i_see_the_work_history_summary
+    expect(page).to have_content("Your current or most recent role")
+    expect(page).to have_content("School name\tSchool name")
+    expect(page).to have_content("City of institution\tCity")
+    expect(page).to have_content("Country of institution\tCountry")
+    expect(page).to have_content("Your job role\tJob")
+    expect(page).to have_content("Contact email address\ttest@example.com")
+    expect(page).to have_content("Role start date\tJanuary 2000")
+  end
+
+  def then_i_see_completed_work_history_section
+    expect(page).to have_content("Work history\nCOMPLETED")
   end
 
   def then_i_see_the_submitted_application_page
