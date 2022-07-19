@@ -7,6 +7,7 @@
 #  teaching_authority_address     :text             default(""), not null
 #  teaching_authority_certificate :text             default(""), not null
 #  teaching_authority_emails      :text             default([]), not null, is an Array
+#  teaching_authority_name        :text             default(""), not null
 #  teaching_authority_other       :text             default(""), not null
 #  teaching_authority_websites    :text             default([]), not null, is an Array
 #  created_at                     :datetime         not null
