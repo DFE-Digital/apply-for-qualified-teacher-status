@@ -77,11 +77,12 @@ Rails.application.routes.draw do
     resources :application_forms,
               path: "applications",
               only: %i[index new create show update] do
+      resources :work_histories
+
       member do
         post "submit"
         get "personal_information"
         get "identity_documents"
-        get "work_history"
       end
     end
   end

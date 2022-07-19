@@ -75,6 +75,18 @@ class ApplicationForm < ApplicationRecord
     completed_sections.count == sections.count
   end
 
+  def path_for_subsection(key)
+    url_helpers = Rails.application.routes.url_helpers
+
+    if key == :work_history
+      return(
+        url_helpers.teacher_interface_application_form_work_histories_path(self)
+      )
+    end
+
+    url_helpers.send("#{key}_teacher_interface_application_form_path", self)
+  end
+
   private
 
   def needs_work_history?

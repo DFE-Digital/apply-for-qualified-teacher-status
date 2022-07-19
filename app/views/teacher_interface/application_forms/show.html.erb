@@ -33,7 +33,7 @@
             <li class="app-task-list__item">
               <span class="app-task-list__task-name">
                 <%= link_to subsection_key.to_s.humanize,
-                            send("#{subsection_key}_teacher_interface_application_form_path"),
+                            @application_form.path_for_subsection(subsection_key),
                             aria: { describedby: "#{subsection_key}-status" } %>
               </span>
 
