@@ -51,13 +51,6 @@ class TeacherInterface::WorkHistoriesController < TeacherInterface::BaseControll
 
   private
 
-  def load_application_form
-    @application_form =
-      ApplicationForm.where(teacher: current_teacher).find(
-        params[:application_form_id]
-      )
-  end
-
   def load_work_history
     @work_history = @application_form.work_histories.find(params[:id])
   end

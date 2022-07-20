@@ -25,6 +25,9 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_personal_information
     and_i_click_continue
+    then_i_see_the_personal_information_summary
+
+    when_i_click_continue
     then_i_see_completed_personal_information_section
 
     when_i_click_work_history
@@ -58,6 +61,10 @@ RSpec.describe "Teacher application", type: :system do
 
   def when_i_click_submit
     click_button "Submit your application"
+  end
+
+  def when_i_click_continue
+    click_link "Continue"
   end
 
   def and_i_click_continue
@@ -138,6 +145,13 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_title("Your work history in education")
     expect(page).to have_content("Your work history in education")
     expect(page).to have_content("Your current or most recent role")
+  end
+
+  def then_i_see_the_personal_information_summary
+    expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Given names\tName")
+    expect(page).to have_content("Family name\tName")
+    expect(page).to have_content("Date of birth\t1 January 2000")
   end
 
   def then_i_see_completed_personal_information_section

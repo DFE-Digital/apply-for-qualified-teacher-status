@@ -78,13 +78,20 @@ class ApplicationForm < ApplicationRecord
   def path_for_subsection(key)
     url_helpers = Rails.application.routes.url_helpers
 
-    if key == :work_history
-      return(
-        url_helpers.teacher_interface_application_form_work_histories_path(self)
-      )
-    end
+    key = :work_histories if key == :work_history
 
-    url_helpers.send("#{key}_teacher_interface_application_form_path", self)
+    begin
+      url_helpers.send("teacher_interface_application_form_#{key}_path", self)
+    rescue NoMethodError
+      url_helpers.send("#{key}_teacher_interface_application_form_path", self)
+    end
+  end
+
+  def personal_information_status
+    values = [given_names, family_name, date_of_birth]
+    return :not_started if values.all?(&:blank?)
+    return :completed if values.all?(&:present?)
+    :in_progress
   end
 
   private
@@ -96,10 +103,7 @@ class ApplicationForm < ApplicationRecord
   def subsection_status(section, subsection)
     case [section, subsection]
     when %i[about_you personal_information]
-      values = [given_names, family_name, date_of_birth]
-      return :not_started if values.all?(&:blank?)
-      return :completed if values.all?(&:present?)
-      :in_progress
+      personal_information_status
     when %i[your_work_history work_history]
       return :not_started if work_histories.empty?
       if work_histories.completed.count == work_histories.count

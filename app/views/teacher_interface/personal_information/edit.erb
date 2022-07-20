@@ -4,7 +4,7 @@
 <span class="govuk-caption-l">About you</span>
 <h1 class="govuk-heading-l">Personal information</h1>
 
-<%= form_with model: [:teacher_interface, @application_form] do |f| %>
+<%= form_with model: @application_form, url: [:teacher_interface, @application_form, :personal_information] do |f| %>
   <%= f.govuk_text_field :given_names,
                          label: { text: "Given names", size: "m" },
                          hint: { text: "Enter your full name apart from your family name" } %>

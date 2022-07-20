@@ -76,12 +76,14 @@ Rails.application.routes.draw do
 
     resources :application_forms,
               path: "applications",
-              only: %i[index new create show update] do
+              only: %i[index new create show] do
+      resource :personal_information,
+               controller: :personal_information,
+               only: %i[show edit update]
       resources :work_histories, except: %i[show]
 
       member do
         post "submit"
-        get "personal_information"
         get "identity_documents"
       end
     end
