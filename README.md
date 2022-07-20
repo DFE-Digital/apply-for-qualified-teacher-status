@@ -4,10 +4,23 @@ A service that allows international teachers to apply for qualified teacher stat
 
 ## Environments
 
-| Name        | URL                                                                                                                    |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Production  | [apply-for-qts-in-england.education.gov.uk](https://apply-for-qts-in-england.education.gov.uk)                         |
-| Development | [apply-for-qts-in-england-dev.london.cloudapps.digital](https://apply-for-qts-in-england-dev.london.cloudapps.digital) |
+### Links
+
+| Name           | URL                                                                                                            |
+| -------------- | -------------------------------------------------------------------------------------------------------------- |
+| Production     | [apply-for-qts-in-england.education.gov.uk](https://apply-for-qts-in-england.education.gov.uk)                 |
+| Pre-production | [preprod.apply-for-qts-in-england.education.gov.uk](https://preprod.apply-for-qts-in-england.education.gov.uk) |
+| Test           | [test.apply-for-qts-in-england.education.gov.uk](https://test.apply-for-qts-in-england.education.gov.uk)       |
+| Development    | [dev.apply-for-qts-in-england.education.gov.uk](https://dev.apply-for-qts-in-england.education.gov.uk)         |
+
+### Details and configuration
+
+| Name           | Description                                   | Notify API key |
+| -------------- | --------------------------------------------- | -------------- |
+| Production     | Public site                                   | Live           |
+| Pre-production | For internal use by DfE to test deploys       | Live           |
+| Test           | For external use by 3rd parties to run audits | Live           |
+| Development    | For internal use by DfE for testing           | Test           |
 
 ## Dependencies
 
