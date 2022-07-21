@@ -1,5 +1,5 @@
 class TeacherInterface::ApplicationFormsController < TeacherInterface::BaseController
-  before_action :load_application_form, only: %i[show submit]
+  before_action :load_application_form, only: %i[show update]
 
   def index
     @application_forms =
@@ -23,7 +23,12 @@ class TeacherInterface::ApplicationFormsController < TeacherInterface::BaseContr
   def show
   end
 
-  def submit
+  def update
+    unless @application_form.can_submit?
+      redirect_to [:teacher_interface, @application_form]
+      return
+    end
+
     @application_form.submitted!
     redirect_to teacher_interface_application_form_path(@application_form)
   end
