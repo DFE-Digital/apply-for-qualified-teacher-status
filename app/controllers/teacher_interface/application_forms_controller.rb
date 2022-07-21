@@ -1,5 +1,5 @@
 class TeacherInterface::ApplicationFormsController < TeacherInterface::BaseController
-  before_action :load_application_form, only: %i[show update]
+  before_action :load_application_form, only: %i[show edit update]
 
   def index
     @application_forms =
@@ -21,6 +21,9 @@ class TeacherInterface::ApplicationFormsController < TeacherInterface::BaseContr
   end
 
   def show
+  end
+
+  def edit
   end
 
   def update
