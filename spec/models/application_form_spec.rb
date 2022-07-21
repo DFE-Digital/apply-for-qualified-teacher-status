@@ -73,11 +73,7 @@ RSpec.describe ApplicationForm, type: :model do
     context "with a country that doesn't need work history" do
       before { application_form.region = create(:region, :online_checks) }
 
-      it do
-        is_expected.to eq(
-          { about_you: %i[personal_information identity_documents] }
-        )
-      end
+      it { is_expected.to eq({ about_you: %i[personal_information] }) }
     end
 
     context "with a country that needs work history" do
@@ -86,7 +82,7 @@ RSpec.describe ApplicationForm, type: :model do
       it do
         is_expected.to eq(
           {
-            about_you: %i[personal_information identity_documents],
+            about_you: %i[personal_information],
             your_work_history: %i[work_history]
           }
         )
@@ -101,8 +97,7 @@ RSpec.describe ApplicationForm, type: :model do
       is_expected.to eq(
         {
           about_you: {
-            personal_information: :not_started,
-            identity_documents: :not_started
+            personal_information: :not_started
           },
           your_work_history: {
             work_history: :not_started

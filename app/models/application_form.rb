@@ -50,7 +50,8 @@ class ApplicationForm < ApplicationRecord
   def sections
     @sections ||=
       begin
-        hash = { about_you: %i[personal_information identity_documents] }
+        hash = {}
+        hash.merge!(about_you: %i[personal_information])
         hash.merge!(your_work_history: %i[work_history]) if needs_work_history?
         hash
       end
