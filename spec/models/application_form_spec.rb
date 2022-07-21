@@ -75,7 +75,14 @@ RSpec.describe ApplicationForm, type: :model do
     context "with a country that doesn't need work history" do
       before { application_form.region = create(:region, :online_checks) }
 
-      it { is_expected.to eq({ about_you: %i[personal_information] }) }
+      it do
+        is_expected.to eq(
+          {
+            about_you: %i[personal_information],
+            your_qualifications: %i[age_range]
+          }
+        )
+      end
     end
 
     context "with a country that needs work history" do
@@ -85,6 +92,7 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: %i[personal_information],
+            your_qualifications: %i[age_range],
             your_work_history: %i[work_history]
           }
         )
@@ -100,6 +108,9 @@ RSpec.describe ApplicationForm, type: :model do
         {
           about_you: {
             personal_information: :not_started
+          },
+          your_qualifications: {
+            age_range: :not_started
           },
           your_work_history: {
             work_history: :not_started
@@ -135,6 +146,24 @@ RSpec.describe ApplicationForm, type: :model do
             a_hash_including(personal_information: :completed)
           )
         end
+      end
+    end
+
+    describe "your qualifications section" do
+      subject(:your_qualifications_section_status) do
+        section_statuses[:your_qualifications]
+      end
+
+      context "with some age range" do
+        before { application_form.update!(age_range_min: 7) }
+
+        it { is_expected.to match(a_hash_including(age_range: :in_progress)) }
+      end
+
+      context "with all personal information" do
+        before { application_form.update!(age_range_min: 7, age_range_max: 11) }
+
+        it { is_expected.to match(a_hash_including(age_range: :completed)) }
       end
     end
 
