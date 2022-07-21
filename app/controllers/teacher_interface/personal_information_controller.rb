@@ -2,7 +2,7 @@ class TeacherInterface::PersonalInformationController < TeacherInterface::BaseCo
   before_action :load_application_form
 
   def show
-    unless @application_form.personal_information_status == :completed
+    if @application_form.personal_information_status == :not_started
       redirect_to [
                     :edit,
                     :teacher_interface,

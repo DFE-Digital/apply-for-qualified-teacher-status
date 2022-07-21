@@ -3,24 +3,6 @@
 
 <h1 class="govuk-heading-l">Check your answers</h1>
 
-<%= govuk_summary_list do |summary_list|
-  summary_list.row do |row|
-    row.key { "Given names" }
-    row.value { @application_form.given_names }
-    row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, :personal_information], visually_hidden_text: "school name")
-  end
-
-  summary_list.row do |row|
-    row.key { "Family name" }
-    row.value { @application_form.family_name }
-    row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, :personal_information], visually_hidden_text: "city of institution")
-  end
-
-  summary_list.row do |row|
-    row.key { "Date of birth" }
-    row.value { @application_form.date_of_birth&.strftime("%e %B %Y") }
-    row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, :personal_information], visually_hidden_text: "country of institution")
-  end
-end %>
+<%= render "summary", application_form: @application_form %>
 
 <%= govuk_button_link_to "Continue", teacher_interface_application_form_path(@application_form) %>
