@@ -4,76 +4,10 @@
 <h1 class="govuk-heading-xl">Check your answers before submitting your application</h1>
 
 <h2 class="govuk-heading-m">About you</h2>
-
-<%= govuk_summary_list do |summary_list|
-  summary_list.row do |row|
-    row.key { "Given names" }
-    row.value { @application_form.given_names }
-    row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, :personal_information], visually_hidden_text: "school name")
-  end
-
-  summary_list.row do |row|
-    row.key { "Family name" }
-    row.value { @application_form.family_name }
-    row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, :personal_information], visually_hidden_text: "city of institution")
-  end
-
-  summary_list.row do |row|
-    row.key { "Date of birth" }
-    row.value { @application_form.date_of_birth&.strftime("%e %B %Y") }
-    row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, :personal_information], visually_hidden_text: "country of institution")
-  end
-end %>
+<%= render "teacher_interface/personal_information/summary", application_form: @application_form %>
 
 <h2 class="govuk-heading-m">Your work history</h2>
-
-<% @application_form.work_histories.each do |work_history| %>
-  <%= govuk_summary_list do |summary_list|
-    summary_list.row do |row|
-      row.key { "School name" }
-      row.value { work_history.school_name }
-      row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, work_history], visually_hidden_text: "school name")
-    end
-
-    summary_list.row do |row|
-      row.key { "City of institution" }
-      row.value { work_history.city }
-      row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, work_history], visually_hidden_text: "city of institution")
-    end
-
-    summary_list.row do |row|
-      row.key { "Country of institution" }
-      row.value { work_history.country }
-      row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, work_history], visually_hidden_text: "country of institution")
-    end
-
-    summary_list.row do |row|
-      row.key { "Your job role" }
-      row.value { work_history.job }
-      row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, work_history], visually_hidden_text: "your job role")
-    end
-
-    summary_list.row do |row|
-      row.key { "Contact email address" }
-      row.value { work_history.email }
-      row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, work_history], visually_hidden_text: "contact email address")
-    end
-
-    summary_list.row do |row|
-      row.key { "Role start date" }
-      row.value { work_history.start_date&.strftime("%B %Y") }
-      row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, work_history], visually_hidden_text: "role start date")
-    end
-
-    unless work_history.still_employed
-      summary_list.row do |row|
-        row.key { "Role end date" }
-        row.value { work_history.end_date&.strftime("%B %Y") }
-        row.action(text: "Change", href: [:edit, :teacher_interface, @application_form, work_history], visually_hidden_text: "role end date")
-      end
-    end
-  end %>
-<% end %>
+<%= render "teacher_interface/work_histories/summary", application_form: @application_form, work_histories: @application_form.work_histories %>
 
 <% if @application_form.can_submit? %>
   <h2 class="govuk-heading-m">Submitting your application</h2>
