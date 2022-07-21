@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       resource :personal_information,
                controller: :personal_information,
                only: %i[show edit update]
+      resource :age_range, controller: :age_range, only: %i[show edit update]
       resources :work_histories, except: %i[show]
     end
   end

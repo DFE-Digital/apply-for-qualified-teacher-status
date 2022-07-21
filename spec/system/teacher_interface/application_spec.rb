@@ -25,6 +25,16 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     then_i_see_completed_personal_information_section
 
+    when_i_click_age_range
+    then_i_see_the_age_range_form
+
+    when_i_fill_in_age_range
+    and_i_click_continue
+    then_i_see_the_age_range_summary
+
+    when_i_click_continue
+    then_i_see_completed_age_range_section
+
     when_i_click_work_history
     then_i_see_the_work_history_form
 
@@ -81,6 +91,15 @@ RSpec.describe "Teacher application", type: :system do
     fill_in "application_form_date_of_birth_1i", with: "2000"
   end
 
+  def when_i_click_age_range
+    click_link "Age range"
+  end
+
+  def when_i_fill_in_age_range
+    fill_in "teacher-interface-age-range-form-age-range-min-field", with: "7"
+    fill_in "teacher-interface-age-range-form-age-range-max-field", with: "11"
+  end
+
   def when_i_click_work_history
     click_link "Work history"
   end
@@ -135,6 +154,14 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Date of birth")
   end
 
+  def then_i_see_the_age_range_form
+    expect(page).to have_title("Age range")
+    expect(page).to have_content("Who you can teach")
+    expect(page).to have_content("What age range are you qualified to teach?")
+    expect(page).to have_content("From")
+    expect(page).to have_content("To")
+  end
+
   def then_i_see_the_work_history_form
     expect(page).to have_title("Your work history in education")
     expect(page).to have_content("Your work history in education")
@@ -150,6 +177,16 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_completed_personal_information_section
     expect(page).to have_content("Personal information\nCOMPLETED")
+  end
+
+  def then_i_see_the_age_range_summary
+    expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Minimum age\t7")
+    expect(page).to have_content("Maximum age\t11")
+  end
+
+  def then_i_see_completed_age_range_section
+    expect(page).to have_content("Age range\nCOMPLETED")
   end
 
   def then_i_see_the_work_history_summary
@@ -172,6 +209,7 @@ RSpec.describe "Teacher application", type: :system do
       "Check your answers before submitting your application"
     )
     expect(page).to have_content("About you")
+    expect(page).to have_content("Who you can teach")
     expect(page).to have_content("Your work history")
   end
 

@@ -1,0 +1,26 @@
+<% content_for :page_title, "Age range" %>
+<% content_for :back_link_url, teacher_interface_application_form_path(@application_form) %>
+
+<span class="govuk-caption-l">Who you can teach</span>
+<h1 class="govuk-heading-l">What age range are you qualified to teach?</h1>
+<p class="govuk-hint">Tell us about the age range of the children you’re qualified to teach. for example, from 5 to 11.</p>
+
+<%= form_with model: @age_range_form, url: [:teacher_interface, @application_form, :age_range], method: :put do |f| %>
+  <%= f.govuk_number_field :age_range_min, width: 3, label: { text: "From" } %>
+
+  <%= f.govuk_number_field :age_range_max, width: 3, label: { text: "To" } %>
+
+  <%= govuk_details(summary_text: "About age ranges and grades") do %>
+    <p>
+      Some countries recognise a teacher’s qualifications by the age of the children,
+      while others use the grade or year group the children are in.
+    </p>
+
+    <p>
+      Sometimes, you might teach children whose age falls outside the range that you’d normally teach.
+      For this question, we just need the approximate age range of the children you’re qualified to teach.
+    </p>
+  <% end %>
+
+  <%= f.govuk_submit "Continue", prevent_double_click: false %>
+<% end %>
