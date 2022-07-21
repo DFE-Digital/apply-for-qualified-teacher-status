@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_20_145949) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_21_124509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_20_145949) do
     t.text "given_names", default: "", null: false
     t.text "family_name", default: "", null: false
     t.date "date_of_birth"
+    t.integer "age_range_min"
+    t.integer "age_range_max"
     t.index ["eligibility_check_id"], name: "index_application_forms_on_eligibility_check_id"
     t.index ["reference"], name: "index_application_forms_on_reference", unique: true
     t.index ["status"], name: "index_application_forms_on_status"

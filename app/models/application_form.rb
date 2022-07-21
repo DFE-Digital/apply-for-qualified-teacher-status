@@ -3,6 +3,8 @@
 # Table name: application_forms
 #
 #  id                   :bigint           not null, primary key
+#  age_range_max        :integer
+#  age_range_min        :integer
 #  date_of_birth        :date
 #  family_name          :text             default(""), not null
 #  given_names          :text             default(""), not null
