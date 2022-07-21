@@ -74,9 +74,7 @@ Rails.application.routes.draw do
   namespace :teacher_interface, path: "/teacher" do
     root to: redirect("/teacher/applications")
 
-    resources :application_forms,
-              path: "applications",
-              except: %i[edit destroy] do
+    resources :application_forms, path: "applications", except: %i[destroy] do
       resource :personal_information,
                controller: :personal_information,
                only: %i[show edit update]

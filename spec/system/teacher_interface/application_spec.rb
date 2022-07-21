@@ -41,7 +41,10 @@ RSpec.describe "Teacher application", type: :system do
     and_i_click_continue
     then_i_see_completed_work_history_section
 
-    when_i_click_submit
+    when_i_click_check_your_answers
+    then_i_see_the_check_your_answers_page
+
+    # when_i_click_submit
     # then_i_see_the_submitted_application_page
   end
 
@@ -57,6 +60,10 @@ RSpec.describe "Teacher application", type: :system do
 
   def when_i_click_start_now
     click_button "Start now"
+  end
+
+  def when_i_click_check_your_answers
+    click_link "Check your answers"
   end
 
   def when_i_click_submit
@@ -130,7 +137,7 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Your work history")
     expect(page).to have_content("Work history\nNOT STARTED")
 
-    expect(page).to have_content("Submit your application")
+    expect(page).to have_content("Check your answers")
   end
 
   def then_i_see_the_personal_information_form
@@ -170,6 +177,15 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_completed_work_history_section
     expect(page).to have_content("Work history\nCOMPLETED")
+  end
+
+  def then_i_see_the_check_your_answers_page
+    expect(page).to have_title("Check your answers")
+    expect(page).to have_content(
+      "Check your answers before submitting your application"
+    )
+    expect(page).to have_content("About you")
+    expect(page).to have_content("Your work history")
   end
 
   def then_i_see_the_submitted_application_page

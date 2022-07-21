@@ -48,5 +48,5 @@
     <% end %>
   </ol>
 
-  <%= govuk_button_to "Submit your application", teacher_interface_application_form_path, method: :patch, disabled: !@application_form.can_submit? %>
+  <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_path %>
 <% end %>
