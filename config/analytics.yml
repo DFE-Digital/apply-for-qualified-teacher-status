@@ -53,6 +53,8 @@
     - given_names
     - family_name
     - date_of_birth
+    - age_range_min
+    - age_range_max
   :work_histories:
     - id
     - application_form_id
