@@ -39,8 +39,8 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_check_your_answers
     then_i_see_the_check_your_answers_page
 
-    # when_i_click_submit
-    # then_i_see_the_submitted_application_page
+    when_i_click_submit
+    then_i_see_the_submitted_application_page
   end
 
   private
@@ -117,7 +117,6 @@ RSpec.describe "Teacher application", type: :system do
 
     expect(page).to have_content("About you")
     expect(page).to have_content("Personal information\nNOT STARTED")
-    expect(page).to have_content("Identity documents\nNOT STARTED")
 
     expect(page).to have_content("Your work history")
     expect(page).to have_content("Work history\nNOT STARTED")

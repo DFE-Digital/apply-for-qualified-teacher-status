@@ -79,8 +79,6 @@ Rails.application.routes.draw do
                controller: :personal_information,
                only: %i[show edit update]
       resources :work_histories, except: %i[show]
-
-      member { get "identity_documents" }
     end
   end
 
