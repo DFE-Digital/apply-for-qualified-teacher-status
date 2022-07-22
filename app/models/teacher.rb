@@ -27,11 +27,7 @@ class Teacher < ApplicationRecord
               case_sensitive: true,
               if: :will_save_change_to_email?
             },
-            format: {
-              with: Devise.email_regexp,
-              allow_blank: true,
-              if: :will_save_change_to_email?
-            }
+            valid_for_notify: true
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
