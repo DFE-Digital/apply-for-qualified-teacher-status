@@ -23,8 +23,9 @@ RSpec.describe "Teacher authentication", type: :system do
     when_i_visit_the_sign_in_page
     then_i_see_the_sign_in_form
 
-    when_i_fill_teacher_email_address
-    and_i_sign_in
+    when_i_choose_yes_sign_in
+    and_i_fill_teacher_email_address
+    and_i_click_continue
     then_i_see_the_check_your_email_page
     and_i_receive_a_magic_link_email
 
@@ -63,8 +64,9 @@ RSpec.describe "Teacher authentication", type: :system do
     when_i_visit_the_sign_in_page
     then_i_see_the_sign_in_form
 
-    when_i_fill_teacher_email_address
-    and_i_sign_in
+    when_i_choose_yes_sign_in
+    and_i_fill_teacher_email_address
+    and_i_click_continue
     then_i_see_the_check_your_email_page
     and_i_receive_a_teacher_confirmation_email
 
@@ -95,6 +97,10 @@ RSpec.describe "Teacher authentication", type: :system do
     visit "#{uri.path}?#{uri.query}"
   end
 
+  def when_i_choose_yes_sign_in
+    choose "Yes, sign in", visible: false
+  end
+
   def then_i_see_the_sign_up_form
     expect(page).to have_current_path("/teacher/sign_up")
     expect(page).to have_title("Create an account")
@@ -103,8 +109,8 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def then_i_see_the_sign_in_form
     expect(page).to have_current_path("/teacher/sign_in")
-    expect(page).to have_title("Log in")
-    expect(page).to have_content("Log in")
+    expect(page).to have_title("Create an account or sign in")
+    expect(page).to have_content("Create an account or sign in")
   end
 
   def then_i_see_the_check_your_email_page
@@ -126,15 +132,14 @@ RSpec.describe "Teacher authentication", type: :system do
     expect(page).to have_content("Enter your email address")
   end
 
+  alias_method :and_i_fill_teacher_email_address,
+               :when_i_fill_teacher_email_address
+
   def and_i_receive_a_magic_link_email
     message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
     expect(message.subject).to eq("Here's your magic login link")
     expect(message.to).to include("test@example.com")
-  end
-
-  def and_i_sign_in
-    click_button "Log in", visible: false
   end
 end
