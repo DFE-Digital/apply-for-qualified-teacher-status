@@ -58,6 +58,23 @@ module SystemHelpers
     expect(uri.query).to include("confirmation_token=")
     visit "#{uri.path}?#{uri.query}"
   end
+
+  def then_i_see_the_sign_in_form
+    expect(page).to have_current_path("/teacher/sign_in")
+    expect(page).to have_title("Create an account or sign in")
+    expect(page).to have_content("Create an account or sign in")
+  end
+
+  def and_i_sign_up
+    choose "No, I need to create an account", visible: false
+    and_i_click_continue
+
+    when_i_fill_teacher_email_address
+    and_i_click_continue
+    and_i_receive_a_teacher_confirmation_email
+
+    when_i_visit_the_teacher_confirmation_email
+  end
 end
 
 RSpec.configure { |config| config.include SystemHelpers, type: :system }
