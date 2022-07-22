@@ -51,6 +51,27 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the_blank_email_address_message
   end
 
+  it "sign in when unconfirmed" do
+    when_i_visit_the_sign_up_page
+    then_i_see_the_sign_up_form
+
+    when_i_fill_teacher_email_address
+    and_i_click_continue
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_teacher_confirmation_email
+
+    when_i_visit_the_sign_in_page
+    then_i_see_the_sign_in_form
+
+    when_i_fill_teacher_email_address
+    and_i_sign_in
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_teacher_confirmation_email
+
+    when_i_visit_the_teacher_confirmation_email
+    then_i_see_successful_confirmation_message
+  end
+
   private
 
   def given_i_clear_my_session
