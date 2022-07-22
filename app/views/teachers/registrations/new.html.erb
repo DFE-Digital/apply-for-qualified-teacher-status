@@ -1,10 +1,14 @@
-<% content_for :page_title, "Sign up" %>
+<% content_for :page_title, "Create an account" %>
+<% content_for :back_link_url, new_teacher_session_path %>
 
-<h1 class="govuk-heading-l">Sign up</h1>
+<h1 class="govuk-heading-xl">Create an account</h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", label: { text: "Email" } %>
-  <%= f.govuk_submit "Sign up" %>
+<%= form_for resource, as: resource_name, url: registration_path(resource_name) do |f| %>
+  <%= f.govuk_email_field :email,
+                          autofocus: true,
+                          autocomplete: "email",
+                          label: { text: "Email address", size: "m" },
+                          hint: { text: "Do not use a work or university email address you might lose access to." } %>
+
+  <%= f.govuk_submit "Continue" %>
 <% end %>
-
-<%= render "teachers/shared/links" %>

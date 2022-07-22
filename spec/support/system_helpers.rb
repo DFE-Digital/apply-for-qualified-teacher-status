@@ -39,8 +39,8 @@ module SystemHelpers
     fill_in "teacher-email-field", with: "test@example.com"
   end
 
-  def and_i_click_sign_up
-    click_button "Sign up", visible: false
+  def and_i_click_continue
+    click_button "Continue", visible: false
   end
 
   def then_i_receive_a_teacher_confirmation_email

@@ -11,7 +11,7 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_sign_up_form
 
     when_i_fill_teacher_email_address
-    and_i_click_sign_up
+    and_i_click_continue
     then_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the_teacher_confirmation_email
@@ -74,10 +74,6 @@ RSpec.describe "Teacher application", type: :system do
     click_link "Continue"
   end
 
-  def and_i_click_continue
-    click_button "Continue"
-  end
-
   def when_i_click_personal_information
     click_link "Personal information"
   end
@@ -111,8 +107,8 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_the_sign_up_form
     expect(page).to have_current_path("/teacher/sign_up")
-    expect(page).to have_title("Sign up")
-    expect(page).to have_content("Sign up")
+    expect(page).to have_title("Create an account")
+    expect(page).to have_content("Create an account")
   end
 
   def then_i_see_the_new_application_page
