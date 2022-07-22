@@ -6,5 +6,3 @@
   <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), label: { text: "Email" } %>
   <%= f.govuk_submit "Resend confirmation instructions" %>
 <% end %>
-
-<%= render "teachers/shared/links" %>
