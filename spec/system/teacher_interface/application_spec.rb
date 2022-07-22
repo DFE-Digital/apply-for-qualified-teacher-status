@@ -12,7 +12,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_teacher_email_address
     and_i_click_continue
-    then_i_receive_a_teacher_confirmation_email
+    and_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the_teacher_confirmation_email
     then_i_see_the_new_application_page

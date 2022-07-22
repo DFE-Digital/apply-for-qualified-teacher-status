@@ -12,7 +12,8 @@ RSpec.describe "Teacher authentication", type: :system do
 
     when_i_fill_teacher_email_address
     and_i_click_continue
-    then_i_receive_a_teacher_confirmation_email
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the_teacher_confirmation_email
     then_i_see_successful_confirmation_message
@@ -24,7 +25,8 @@ RSpec.describe "Teacher authentication", type: :system do
 
     when_i_fill_teacher_email_address
     and_i_sign_in
-    then_i_receive_a_magic_link_email
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_magic_link_email
 
     when_i_visit_the_magic_link_email
     then_i_see_successful_magic_link_message
@@ -36,7 +38,8 @@ RSpec.describe "Teacher authentication", type: :system do
 
     when_i_fill_teacher_email_address
     and_i_click_continue
-    then_i_receive_a_magic_link_email
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_magic_link_email
 
     when_i_visit_the_magic_link_email
     then_i_see_successful_magic_link_message
@@ -83,12 +86,9 @@ RSpec.describe "Teacher authentication", type: :system do
     expect(page).to have_content("Log in")
   end
 
-  def then_i_receive_a_magic_link_email
-    message = ActionMailer::Base.deliveries.last
-    expect(message).to_not be_nil
-
-    expect(message.subject).to eq("Here's your magic login link")
-    expect(message.to).to include("test@example.com")
+  def then_i_see_the_check_your_email_page
+    expect(page).to have_title("Check your email")
+    expect(page).to have_content("Check your email")
   end
 
   def then_i_see_successful_confirmation_message
@@ -103,6 +103,14 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def then_i_see_the_blank_email_address_message
     expect(page).to have_content("Enter your email address")
+  end
+
+  def and_i_receive_a_magic_link_email
+    message = ActionMailer::Base.deliveries.last
+    expect(message).to_not be_nil
+
+    expect(message.subject).to eq("Here's your magic login link")
+    expect(message.to).to include("test@example.com")
   end
 
   def and_i_sign_in

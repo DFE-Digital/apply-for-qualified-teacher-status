@@ -16,8 +16,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   def create
     if (resource = Teacher.find_by(email: sign_up_params[:email]))
       resource.send_magic_link(sign_up_params[:remember_me])
-      flash[:notice] = I18n.t("devise.passwordless.magic_link_sent")
-      redirect_to new_teacher_session_path
+      redirect_to teacher_check_email_path
     else
       super
     end
@@ -47,25 +46,9 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
-
-  # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
-
-  # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_inactive_sign_up_path_for(_resource)
+    teacher_check_email_path
+  end
 end

@@ -9,13 +9,16 @@ class Teachers::SessionsController < Devise::SessionsController
     self.resource = resource_class.find_by(email: create_params[:email])
     if resource
       resource.send_magic_link(create_params[:remember_me])
-      set_flash_message(:notice, :magic_link_sent, now: true)
-    else
-      set_flash_message(:alert, :not_found_in_database, now: true)
+      redirect_to :teacher_check_email
+      return
     end
 
+    set_flash_message(:alert, :not_found_in_database, now: true)
     self.resource = resource_class.new(create_params)
     render :new
+  end
+
+  def check_email
   end
 
   protected
