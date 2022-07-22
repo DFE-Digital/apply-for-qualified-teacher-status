@@ -8,13 +8,8 @@ RSpec.describe "Teacher application", type: :system do
     given_an_eligible_eligibility_check
 
     when_i_click_apply_for_qts
-    then_i_see_the_sign_up_form
-
-    when_i_fill_teacher_email_address
-    and_i_click_continue
-    and_i_receive_a_teacher_confirmation_email
-
-    when_i_visit_the_teacher_confirmation_email
+    then_i_see_the_sign_in_form
+    and_i_sign_up
     then_i_see_the_new_application_page
 
     when_i_click_start_now
@@ -103,12 +98,6 @@ RSpec.describe "Teacher application", type: :system do
 
   def when_i_choose_no
     choose "No", visible: false
-  end
-
-  def then_i_see_the_sign_up_form
-    expect(page).to have_current_path("/teacher/sign_up")
-    expect(page).to have_title("Create an account")
-    expect(page).to have_content("Create an account")
   end
 
   def then_i_see_the_new_application_page
