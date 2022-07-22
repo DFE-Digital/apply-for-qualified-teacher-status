@@ -96,6 +96,9 @@ Rails.application.routes.draw do
     get "/teacher/magic_link",
         to: "teachers/magic_links#show",
         as: "teacher_magic_link"
+    get "/teacher/check_email",
+        to: "teachers/sessions#check_email",
+        as: "teacher_check_email"
   end
 
   resources :autocomplete_locations, only: %i[index]

@@ -43,7 +43,7 @@ module SystemHelpers
     click_button "Continue", visible: false
   end
 
-  def then_i_receive_a_teacher_confirmation_email
+  def and_i_receive_a_teacher_confirmation_email
     message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
