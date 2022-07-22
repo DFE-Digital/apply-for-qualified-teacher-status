@@ -6,6 +6,11 @@ class Teachers::SessionsController < Devise::SessionsController
   layout "two_thirds"
 
   def create
+    if create_params[:create_or_sign_in] == "create"
+      redirect_to :new_teacher_registration
+      return
+    end
+
     self.resource = resource_class.find_by(email: create_params[:email])
 
     if resource
@@ -39,6 +44,6 @@ class Teachers::SessionsController < Devise::SessionsController
   private
 
   def create_params
-    resource_params.permit(:email, :remember_me)
+    resource_params.permit(:email, :remember_me, :create_or_sign_in)
   end
 end
