@@ -1,15 +1,17 @@
 require "rails_helper"
 
 RSpec.describe "Teacher authentication", type: :system do
-  it "allows signing up and signing in" do
+  before do
     given_the_service_is_open
     given_the_service_is_startable
+  end
 
+  it "allows signing up and signing in" do
     when_i_visit_the_sign_up_page
     then_i_see_the_sign_up_form
 
     when_i_fill_teacher_email_address
-    and_i_click_sign_up
+    and_i_click_continue
     then_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the_teacher_confirmation_email
@@ -33,11 +35,17 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the_sign_up_form
 
     when_i_fill_teacher_email_address
-    and_i_click_sign_up
+    and_i_click_continue
     then_i_receive_a_magic_link_email
 
     when_i_visit_the_magic_link_email
     then_i_see_successful_magic_link_message
+  end
+
+  it "sign up with invalid email address" do
+    when_i_visit_the_sign_up_page
+    and_i_click_continue
+    then_i_see_the_blank_email_address_message
   end
 
   private
@@ -65,8 +73,8 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def then_i_see_the_sign_up_form
     expect(page).to have_current_path("/teacher/sign_up")
-    expect(page).to have_title("Sign up")
-    expect(page).to have_content("Sign up")
+    expect(page).to have_title("Create an account")
+    expect(page).to have_content("Create an account")
   end
 
   def then_i_see_the_sign_in_form
@@ -91,6 +99,10 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def then_i_see_successful_magic_link_message
     expect(page).to have_content("Signed in successfully.")
+  end
+
+  def then_i_see_the_blank_email_address_message
+    expect(page).to have_content("Enter your email address")
   end
 
   def and_i_sign_in

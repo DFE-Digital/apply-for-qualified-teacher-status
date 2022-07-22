@@ -50,3 +50,11 @@ en:
           attributes:
             teach_children:
               inclusion: Tell us if you have experience with teaching children
+
+  activerecord:
+    errors:
+      models:
+        teacher:
+          attributes:
+            email:
+              blank: Enter your email address
