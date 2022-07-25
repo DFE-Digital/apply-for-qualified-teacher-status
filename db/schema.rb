@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_25_125324) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_25_131251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -168,6 +168,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_25_125324) do
     t.index ["email"], name: "index_teachers_on_email", unique: true
   end
 
+  create_table "uploads", force: :cascade do |t|
+    t.bigint "document_id", null: false
+    t.boolean "translation", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_uploads_on_document_id"
+  end
+
   create_table "work_histories", force: :cascade do |t|
     t.bigint "application_form_id", null: false
     t.text "school_name", default: "", null: false
@@ -189,5 +197,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_25_125324) do
   add_foreign_key "application_forms", "teachers"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "regions", "countries"
+  add_foreign_key "uploads", "documents"
   add_foreign_key "work_histories", "application_forms"
 end
