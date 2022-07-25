@@ -6,16 +6,16 @@ class Teachers::SessionsController < Devise::SessionsController
   layout "two_thirds"
 
   def create
-    if create_params[:create_or_sign_in] == "create"
+    if resource_params[:create_or_sign_in] == "create"
       redirect_to :new_teacher_registration
       return
     end
 
-    self.resource = resource_class.find_by(email: create_params[:email])
+    self.resource = resource_class.find_by(email: resource_params[:email])
 
     if resource
       if resource.active_for_authentication?
-        resource.send_magic_link(create_params[:remember_me])
+        resource.send_magic_link(resource_params[:remember_me])
       else
         resource.resend_confirmation_instructions
       end
@@ -23,7 +23,7 @@ class Teachers::SessionsController < Devise::SessionsController
       redirect_to :teacher_check_email
     else
       set_flash_message(:alert, :not_found_in_database, now: true)
-      self.resource = resource_class.new(create_params)
+      self.resource = resource_class.new(email: resource_params[:email])
       render :new
     end
   end
@@ -39,11 +39,5 @@ class Teachers::SessionsController < Devise::SessionsController
     else
       super
     end
-  end
-
-  private
-
-  def create_params
-    resource_params.permit(:email, :remember_me, :create_or_sign_in)
   end
 end
