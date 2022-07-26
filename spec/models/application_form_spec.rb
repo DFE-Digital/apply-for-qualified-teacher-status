@@ -125,29 +125,44 @@ RSpec.describe ApplicationForm, type: :model do
     describe "about you section" do
       subject(:about_you_section_status) { section_statuses[:about_you] }
 
-      context "with some personal information" do
-        before { application_form.update!(given_names: "Given") }
-
-        it do
-          is_expected.to match(
-            a_hash_including(personal_information: :in_progress)
-          )
-        end
-      end
-
-      context "with all personal information" do
-        before do
-          application_form.update!(
-            given_names: "Given",
-            family_name: "Family",
-            date_of_birth: Date.new(2000, 1, 1)
-          )
+      describe "personal information subsection" do
+        subject(:personal_information_subsection_status) do
+          about_you_section_status[:personal_information]
         end
 
-        it do
-          is_expected.to match(
-            a_hash_including(personal_information: :completed)
-          )
+        context "with some fields set" do
+          before { application_form.update!(given_names: "Given") }
+
+          it { is_expected.to eq(:in_progress) }
+        end
+
+        context "with all fields set" do
+          before do
+            application_form.update!(
+              given_names: "Given",
+              family_name: "Family",
+              date_of_birth: Date.new(2000, 1, 1)
+            )
+          end
+
+          context "without an alternative name" do
+            before { application_form.update!(has_alternative_name: false) }
+
+            it { is_expected.to eq(:completed) }
+          end
+
+          context "with an alternative name" do
+            before do
+              application_form.update!(
+                has_alternative_name: true,
+                alternative_given_names: "Alt Given",
+                alternative_family_name: "Alt Family",
+                name_change_document: create(:document, :with_upload)
+              )
+            end
+
+            it { is_expected.to eq(:completed) }
+          end
         end
       end
     end

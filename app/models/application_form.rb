@@ -93,6 +93,10 @@ class ApplicationForm < ApplicationRecord
       .map { |section, _| section }
   end
 
+  def subsection_started?(section, subsection)
+    section_statuses.dig(section, subsection) != :not_started
+  end
+
   def can_submit?
     completed_sections.count == sections.count
   end
@@ -107,14 +111,6 @@ class ApplicationForm < ApplicationRecord
     rescue NoMethodError
       url_helpers.send("#{key}_teacher_interface_application_form_path", self)
     end
-  end
-
-  def personal_information_status
-    status_for_values(given_names, family_name, date_of_birth)
-  end
-
-  def age_range_status
-    status_for_values(age_range_min, age_range_max)
   end
 
   private
@@ -138,6 +134,28 @@ class ApplicationForm < ApplicationRecord
     else
       :not_started
     end
+  end
+
+  def personal_information_status
+    values = [given_names, family_name, date_of_birth]
+
+    if has_alternative_name.nil?
+      values.append(nil)
+    elsif has_alternative_name
+      values.append(
+        alternative_given_names,
+        alternative_family_name,
+        name_change_document&.uploaded?
+      )
+    else
+      values.append(true)
+    end
+
+    status_for_values(*values)
+  end
+
+  def age_range_status
+    status_for_values(age_range_min, age_range_max)
   end
 
   def status_for_values(*values)

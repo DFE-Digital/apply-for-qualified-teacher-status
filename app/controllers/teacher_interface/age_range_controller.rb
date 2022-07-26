@@ -3,7 +3,10 @@ module TeacherInterface
     before_action :load_application_form
 
     def show
-      if application_form.age_range_status == :not_started
+      unless application_form.subsection_started?(
+               :your_qualifications,
+               :age_range
+             )
         redirect_to [:edit, :teacher_interface, application_form, :age_range]
       end
     end
