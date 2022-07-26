@@ -22,5 +22,9 @@ FactoryBot.define do
     trait :translatable do
       sequence :type, Document::TRANSLATABLE_TYPES.cycle
     end
+
+    trait :with_upload do
+      after(:create) { |document, _evaluator| create(:upload, document:) }
+    end
   end
 end
