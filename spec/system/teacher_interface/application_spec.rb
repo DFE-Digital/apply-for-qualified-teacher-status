@@ -84,11 +84,16 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_personal_information
-    fill_in "application-form-given-names-field", with: "Name"
-    fill_in "application-form-family-name-field", with: "Name"
-    fill_in "application_form_date_of_birth_3i", with: "1"
-    fill_in "application_form_date_of_birth_2i", with: "1"
-    fill_in "application_form_date_of_birth_1i", with: "2000"
+    fill_in "teacher-interface-name-and-date-of-birth-form-given-names-field",
+            with: "Name"
+    fill_in "teacher-interface-name-and-date-of-birth-form-family-name-field",
+            with: "Name"
+    fill_in "teacher_interface_name_and_date_of_birth_form_date_of_birth_3i",
+            with: "1"
+    fill_in "teacher_interface_name_and_date_of_birth_form_date_of_birth_2i",
+            with: "1"
+    fill_in "teacher_interface_name_and_date_of_birth_form_date_of_birth_1i",
+            with: "2000"
   end
 
   def when_i_click_age_range
