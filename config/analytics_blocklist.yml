@@ -29,7 +29,7 @@
     - updated_at
   :documents:
     - id
-    - type
+    - document_type
     - documentable_type
     - documentable_id
     - created_at

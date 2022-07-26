@@ -36,17 +36,17 @@ class ApplicationForm < ApplicationRecord
   has_one :region, through: :eligibility_check
 
   has_one :identification_document,
-          -> { where(type: :identification) },
+          -> { where(document_type: :identification) },
           class_name: "Document",
           as: :documentable
 
   has_one :name_change_document,
-          -> { where(type: :name_change) },
+          -> { where(document_type: :name_change) },
           class_name: "Document",
           as: :documentable
 
   has_one :written_statement_document,
-          -> { where(type: :written_statement) },
+          -> { where(document_type: :written_statement) },
           class_name: "Document",
           as: :documentable
 
