@@ -3,16 +3,16 @@
 # Table name: documents
 #
 #  id                :bigint           not null, primary key
+#  document_type     :string           not null
 #  documentable_type :string
-#  type              :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  documentable_id   :bigint
 #
 # Indexes
 #
-#  index_documents_on_documentable  (documentable_type,documentable_id)
-#  index_documents_on_type          (type)
+#  index_documents_on_document_type  (document_type)
+#  index_documents_on_documentable   (documentable_type,documentable_id)
 #
 class Document < ApplicationRecord
   include DfE::Analytics::Entities
@@ -35,13 +35,14 @@ class Document < ApplicationRecord
     qualification_transcript
     written_statement
   ].freeze
-  TYPES = (UNTRANSLATABLE_TYPES + TRANSLATABLE_TYPES).freeze
+  DOCUMENT_TYPES = (UNTRANSLATABLE_TYPES + TRANSLATABLE_TYPES).freeze
 
-  enum type: TYPES.each_with_object({}) { |type, memo| memo[type] = type }
-  validates :type, inclusion: { in: TYPES }
+  enum document_type:
+         DOCUMENT_TYPES.each_with_object({}) { |type, memo| memo[type] = type }
+  validates :document_type, inclusion: { in: DOCUMENT_TYPES }
 
   def translatable?
-    TRANSLATABLE_TYPES.include?(type)
+    TRANSLATABLE_TYPES.include?(document_type)
   end
 
   def uploaded?

@@ -3,16 +3,16 @@
 # Table name: documents
 #
 #  id                :bigint           not null, primary key
+#  document_type     :string           not null
 #  documentable_type :string
-#  type              :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  documentable_id   :bigint
 #
 # Indexes
 #
-#  index_documents_on_documentable  (documentable_type,documentable_id)
-#  index_documents_on_type          (type)
+#  index_documents_on_document_type  (document_type)
+#  index_documents_on_documentable   (documentable_type,documentable_id)
 #
 require "rails_helper"
 
@@ -23,7 +23,7 @@ RSpec.describe Document, type: :model do
     it { is_expected.to be_valid }
 
     it do
-      is_expected.to define_enum_for(:type).with_values(
+      is_expected.to define_enum_for(:document_type).with_values(
         identification: "identification",
         name_change: "name_change",
         qualification_certificate: "qualification_certificate",
@@ -75,7 +75,7 @@ RSpec.describe Document, type: :model do
     it { is_expected.to be(false) }
 
     context "with a translatable document" do
-      before { document.type = :written_statement }
+      before { document.document_type = :written_statement }
 
       it { is_expected.to be(true) }
     end

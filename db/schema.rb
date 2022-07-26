@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_25_131251) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_26_140931) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,13 +74,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_25_131251) do
   end
 
   create_table "documents", force: :cascade do |t|
-    t.string "type", null: false
+    t.string "document_type", null: false
     t.string "documentable_type"
     t.bigint "documentable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["document_type"], name: "index_documents_on_document_type"
     t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable"
-    t.index ["type"], name: "index_documents_on_type"
   end
 
   create_table "eligibility_checks", force: :cascade do |t|
