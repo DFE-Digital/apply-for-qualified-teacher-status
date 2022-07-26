@@ -80,4 +80,16 @@ RSpec.describe Document, type: :model do
       it { is_expected.to be(true) }
     end
   end
+
+  describe "#uploaded?" do
+    subject(:uploaded?) { document.uploaded? }
+
+    it { is_expected.to be(false) }
+
+    context "with an upload" do
+      before { create(:upload, document:) }
+
+      it { is_expected.to be(true) }
+    end
+  end
 end

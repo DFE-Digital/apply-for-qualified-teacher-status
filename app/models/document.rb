@@ -43,4 +43,8 @@ class Document < ApplicationRecord
   def translatable?
     TRANSLATABLE_TYPES.include?(type)
   end
+
+  def uploaded?
+    !uploads.empty?
+  end
 end
