@@ -27,7 +27,7 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_personal_information_summary
 
     when_i_click_continue
-    # then_i_see_completed_personal_information_section
+    then_i_see_completed_personal_information_section
 
     when_i_click_age_range
     then_i_see_the_age_range_form
@@ -53,8 +53,8 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_check_your_answers
     then_i_see_the_check_your_answers_page
 
-    # when_i_click_submit
-    # then_i_see_the_submitted_application_page
+    when_i_click_submit
+    then_i_see_the_submitted_application_page
   end
 
   private
