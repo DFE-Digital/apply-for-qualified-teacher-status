@@ -19,6 +19,12 @@
 FactoryBot.define do
   factory :upload do
     association :document
+    attachment do
+      Rack::Test::UploadedFile.new(
+        "spec/fixtures/files/upload.txt",
+        "text/plain"
+      )
+    end
     translation { false }
 
     trait :translation do

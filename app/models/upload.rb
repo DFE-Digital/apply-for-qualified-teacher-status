@@ -21,6 +21,7 @@ class Upload < ApplicationRecord
 
   belongs_to :document
   has_one_attached :attachment
+  validates :attachment, presence: true
 
   def original?
     !translation?
