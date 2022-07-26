@@ -32,6 +32,7 @@ jobs:
   docker:
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     name: Docker build and push
+    environment: review
     runs-on: ubuntu-latest
     outputs:
       docker_image: ${{ steps.image.outputs.tag }}
@@ -44,6 +45,27 @@ jobs:
         run: |
           echo ::set-output name=tag::$CONTAINER_REGISTRY/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]'):$GITHUB_SHA
 
+      - name: Set KV environment variables
+        if: github.actor != 'dependabot[bot]'
+        run: |
+          # tag build to the review env for vars and secrets
+          tf_vars_file=terraform/workspace_variables/review.tfvars.json
+          echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo ${{ steps.image.outputs.tag }}
+
+      - uses: azure/login@v1
+        if: github.actor != 'dependabot[bot]'
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: DFE-Digital/keyvault-yaml-secret@v1
+        if: github.actor != 'dependabot[bot]'
+        id: get-secret
+        with:
+          keyvault: ${{ env.KEY_VAULT_NAME }}
+          secret: INFRASTRUCTURE
+          key: SNYK_TOKEN
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -51,12 +73,24 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker build & push
+      - name: Docker build
         uses: docker/build-push-action@v3
         with:
           context: .
-          push: true
+          push: false
           tags: ${{ steps.image.outputs.tag }}
+
+      - name: Run Snyk to check Docker image for vulnerabilities
+        if: github.actor != 'dependabot[bot]'
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ steps.get-secret.outputs.snyk_token }}
+        with:
+          image: ${{ steps.image.outputs.tag }}
+          args: --file=Dockerfile --severity-threshold=high
+
+      - name: Push docker image
+        run: docker image push ${{ steps.image.outputs.tag }}
 
   deploy_dev:
     name: Deploy to dev environment
