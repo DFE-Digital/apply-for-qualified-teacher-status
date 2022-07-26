@@ -2,18 +2,21 @@
 #
 # Table name: application_forms
 #
-#  id                   :bigint           not null, primary key
-#  age_range_max        :integer
-#  age_range_min        :integer
-#  date_of_birth        :date
-#  family_name          :text             default(""), not null
-#  given_names          :text             default(""), not null
-#  reference            :string(31)       not null
-#  status               :string           default("active"), not null
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  eligibility_check_id :bigint           not null
-#  teacher_id           :bigint           not null
+#  id                      :bigint           not null, primary key
+#  age_range_max           :integer
+#  age_range_min           :integer
+#  alternative_family_name :text             default(""), not null
+#  alternative_given_names :text             default(""), not null
+#  date_of_birth           :date
+#  family_name             :text             default(""), not null
+#  given_names             :text             default(""), not null
+#  has_alternative_name    :boolean
+#  reference               :string(31)       not null
+#  status                  :string           default("active"), not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  eligibility_check_id    :bigint           not null
+#  teacher_id              :bigint           not null
 #
 # Indexes
 #

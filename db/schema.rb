@@ -54,6 +54,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_140931) do
     t.date "date_of_birth"
     t.integer "age_range_min"
     t.integer "age_range_max"
+    t.boolean "has_alternative_name"
+    t.text "alternative_given_names", default: "", null: false
+    t.text "alternative_family_name", default: "", null: false
     t.index ["eligibility_check_id"], name: "index_application_forms_on_eligibility_check_id"
     t.index ["reference"], name: "index_application_forms_on_reference", unique: true
     t.index ["status"], name: "index_application_forms_on_status"

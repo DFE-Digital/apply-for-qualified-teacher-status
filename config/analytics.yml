@@ -55,6 +55,9 @@
     - date_of_birth
     - age_range_min
     - age_range_max
+    - has_alternative_name
+    - alternative_given_names
+    - alternative_family_name
   :work_histories:
     - id
     - application_form_id
