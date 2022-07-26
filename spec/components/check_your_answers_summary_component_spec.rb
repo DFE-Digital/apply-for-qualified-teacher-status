@@ -15,7 +15,8 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
       date_without_day: Date.new(2020, 1, 1),
       custom_key: "Custom key value",
       nil_value: nil,
-      boolean: true
+      boolean: true,
+      document: create(:document, :with_upload)
     )
   end
 
@@ -45,6 +46,9 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
       },
       boolean: {
         href: "/boolean"
+      },
+      document: {
+        href: "/document"
       }
     }
   end
@@ -193,6 +197,25 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
 
       expect(a.text.strip).to eq("Change boolean")
       expect(a.attribute("href").value).to eq("/boolean")
+    end
+  end
+
+  describe "document row" do
+    subject(:row) { component.css(".govuk-summary-list__row")[7] }
+
+    it "renders the key" do
+      expect(row.at_css(".govuk-summary-list__key").text).to eq("Document")
+    end
+
+    it "renders the value" do
+      expect(row.at_css(".govuk-summary-list__value").text).to eq("attachment")
+    end
+
+    it "renders the change link" do
+      a = row.at_css(".govuk-summary-list__actions .govuk-link")
+
+      expect(a.text.strip).to eq("Change document")
+      expect(a.attribute("href").value).to eq("/document")
     end
   end
 end
