@@ -20,7 +20,7 @@ class Upload < ApplicationRecord
   include DfE::Analytics::Entities
 
   belongs_to :document
-  has_many_attached :attachments
+  has_one_attached :attachment
 
   def original?
     !translation?

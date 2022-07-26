@@ -18,9 +18,13 @@ class Document < ApplicationRecord
   include DfE::Analytics::Entities
 
   belongs_to :documentable, polymorphic: true
+
+  has_many :uploads
+
   has_many :original_uploads,
            -> { where(translation: false) },
            class_name: "Upload"
+
   has_many :translated_uploads,
            -> { where(translation: true) },
            class_name: "Upload"

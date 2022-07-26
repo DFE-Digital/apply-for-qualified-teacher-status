@@ -37,15 +37,18 @@ class ApplicationForm < ApplicationRecord
 
   has_one :identification_document,
           -> { where(type: :identification) },
-          class_name: "Document"
+          class_name: "Document",
+          as: :documentable
 
   has_one :name_change_document,
           -> { where(type: :name_change) },
-          class_name: "Document"
+          class_name: "Document",
+          as: :documentable
 
   has_one :written_statement_document,
           -> { where(type: :written_statement) },
-          class_name: "Document"
+          class_name: "Document",
+          as: :documentable
 
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
