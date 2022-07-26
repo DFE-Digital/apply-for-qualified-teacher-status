@@ -16,9 +16,13 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_active_application_page
 
     when_i_click_personal_information
-    then_i_see_the_personal_information_form
+    then_i_see_the_name_and_date_of_birth_form
 
-    when_i_fill_in_personal_information
+    when_i_fill_in_the_name_and_date_of_birth_form
+    and_i_click_continue
+    then_i_see_the_alternative_name_form
+
+    when_i_fill_in_the_alternative_name_form
     and_i_click_continue
     then_i_see_the_personal_information_summary
 
@@ -83,7 +87,7 @@ RSpec.describe "Teacher application", type: :system do
     click_link "Personal information"
   end
 
-  def when_i_fill_in_personal_information
+  def when_i_fill_in_the_name_and_date_of_birth_form
     fill_in "teacher-interface-name-and-date-of-birth-form-given-names-field",
             with: "Name"
     fill_in "teacher-interface-name-and-date-of-birth-form-family-name-field",
@@ -94,6 +98,14 @@ RSpec.describe "Teacher application", type: :system do
             with: "1"
     fill_in "teacher_interface_name_and_date_of_birth_form_date_of_birth_1i",
             with: "2000"
+  end
+
+  def when_i_fill_in_the_alternative_name_form
+    choose "Yes – I'll upload another document to prove this", visible: false
+    fill_in "teacher-interface-alternative-name-form-alternative-given-names-field",
+            with: "Name"
+    fill_in "teacher-interface-alternative-name-form-alternative-family-name-field",
+            with: "Name"
   end
 
   def when_i_click_age_range
@@ -151,12 +163,23 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Check your answers")
   end
 
-  def then_i_see_the_personal_information_form
-    expect(page).to have_title("Personal information")
+  def then_i_see_the_name_and_date_of_birth_form
+    expect(page).to have_title("About you")
     expect(page).to have_content("Personal information")
     expect(page).to have_content("Given names")
     expect(page).to have_content("Family name")
     expect(page).to have_content("Date of birth")
+  end
+
+  def then_i_see_the_alternative_name_form
+    expect(page).to have_title("About you")
+    expect(page).to have_content(
+      "Does your name appear differently on your ID documents or qualifications?"
+    )
+    expect(page).to have_content(
+      "Yes – I'll upload another document to prove this"
+    )
+    expect(page).to have_content("No")
   end
 
   def then_i_see_the_age_range_form
@@ -178,9 +201,11 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Given names\tName")
     expect(page).to have_content("Family name\tName")
     expect(page).to have_content("Date of birth\t1 January 2000")
-    expect(page).to have_content("Legal name different to identity document?")
-    expect(page).to have_content("Alternative given names")
-    expect(page).to have_content("Alternative family name")
+    expect(page).to have_content(
+      "Legal name different to identity document?\tYes"
+    )
+    expect(page).to have_content("Alternative given names\tName")
+    expect(page).to have_content("Alternative family name\tName")
     expect(page).to have_content("Name change document")
   end
 

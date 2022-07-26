@@ -77,7 +77,18 @@ Rails.application.routes.draw do
     resources :application_forms, path: "applications", except: %i[destroy] do
       resource :personal_information,
                controller: :personal_information,
-               only: %i[show edit update]
+               only: %i[show] do
+        member do
+          get "name_and_date_of_birth",
+              to: "personal_information#name_and_date_of_birth"
+          post "name_and_date_of_birth",
+               to: "personal_information#update_name_and_date_of_birth"
+          get "alternative_name", to: "personal_information#alternative_name"
+          post "alternative_name",
+               to: "personal_information#update_alternative_name"
+        end
+      end
+
       resource :age_range, controller: :age_range, only: %i[show edit update]
       resources :work_histories, except: %i[show]
     end
