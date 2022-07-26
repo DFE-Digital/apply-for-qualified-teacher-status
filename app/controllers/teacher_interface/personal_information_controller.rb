@@ -2,11 +2,11 @@ class TeacherInterface::PersonalInformationController < TeacherInterface::BaseCo
   before_action :load_application_form
 
   def show
-    if @application_form.personal_information_status == :not_started
+    if application_form.personal_information_status == :not_started
       redirect_to [
                     :edit,
                     :teacher_interface,
-                    @application_form,
+                    application_form,
                     :personal_information
                   ]
     end
@@ -16,8 +16,12 @@ class TeacherInterface::PersonalInformationController < TeacherInterface::BaseCo
   end
 
   def update
-    if @application_form.update(personal_information_params)
-      redirect_to [:teacher_interface, @application_form, :personal_information]
+    if application_form.update(personal_information_params)
+      redirect_to_if_save_and_continue [
+                                         :teacher_interface,
+                                         application_form,
+                                         :personal_information
+                                       ]
     else
       render :edit, status: :unprocessable_entity
     end
