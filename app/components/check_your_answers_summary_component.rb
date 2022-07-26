@@ -30,6 +30,9 @@ class CheckYourAnswersSummaryComponent < ViewComponent::Base
       return value.strftime(format).strip
     end
 
+    return "Yes" if value == true
+    return "No" if value == false
+
     value.to_s
   end
 
