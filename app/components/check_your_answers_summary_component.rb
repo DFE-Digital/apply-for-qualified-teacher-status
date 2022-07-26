@@ -30,6 +30,17 @@ class CheckYourAnswersSummaryComponent < ViewComponent::Base
       return value.strftime(format).strip
     end
 
+    if value.is_a?(Document)
+      return(
+        value
+          .uploads
+          .order(:created_at)
+          .map { |upload| upload.attachment&.name }
+          .compact
+          .join(", ")
+      )
+    end
+
     return "Yes" if value == true
     return "No" if value == false
 
