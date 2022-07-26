@@ -1,13 +1,10 @@
-<%= govuk_summary_list do |summary_list|
-  summary_list.row do |row|
-    row.key { "Minimum age" }
-    row.value { application_form.age_range_min.to_s }
-    row.action(text: "Change", href: [:edit, :teacher_interface, application_form, :age_range], visually_hidden_text: "from")
-  end
-
-  summary_list.row do |row|
-    row.key { "Maximum age" }
-    row.value { application_form.age_range_max.to_s }
-    row.action(text: "Change", href: [:edit, :teacher_interface, application_form, :age_range], visually_hidden_text: "to")
-  end
-end %>
+<%= render(CheckYourAnswersSummaryComponent.new(model: application_form, title: "Age range", fields: {
+  age_range_min: {
+    key: "Minimum age",
+    href: [:edit, :teacher_interface, application_form, :age_range]
+  },
+  age_range_max: {
+    key: "Maximum age",
+    href: [:edit, :teacher_interface, application_form, :age_range]
+  },
+})) %>
