@@ -8,4 +8,17 @@
   date_of_birth: {
     href: [:edit, :teacher_interface, application_form, :personal_information]
   },
+  has_alternative_name: {
+    key: "Legal name different to identity document?",
+    href: [:edit, :teacher_interface, application_form, :personal_information]
+  },
+  alternative_given_names: application_form.has_alternative_name != false ? {
+    href: [:edit, :teacher_interface, application_form, :personal_information]
+  } : nil,
+  alternative_family_name: application_form.has_alternative_name != false ? {
+    href: [:edit, :teacher_interface, application_form, :personal_information]
+  } : nil,
+  name_change_document: application_form.has_alternative_name != false ? {
+    href: [:edit, :teacher_interface, application_form, :personal_information]
+  } : nil,
 })) %>

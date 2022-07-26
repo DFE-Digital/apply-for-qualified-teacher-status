@@ -173,6 +173,10 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Given names\tName")
     expect(page).to have_content("Family name\tName")
     expect(page).to have_content("Date of birth\t1 January 2000")
+    expect(page).to have_content("Legal name different to identity document?")
+    expect(page).to have_content("Alternative given names")
+    expect(page).to have_content("Alternative family name")
+    expect(page).to have_content("Name change document")
   end
 
   def then_i_see_completed_personal_information_section
