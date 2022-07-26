@@ -18,6 +18,9 @@ RUN apk add --update --no-cache tzdata && \
 # git: dependencies for bundle
 RUN apk add --no-cache build-base yarn postgresql13-dev git
 
+# Remove it after ruby is upgraded to 3.1.2-alpine
+RUN apk add --no-cache ncurses-libs=6.3_p20211120-r1 libcrypto1.1=1.1.1q-r0 libssl1.1=1.1.1q-r0
+
 # Install gems defined in Gemfile
 COPY .ruby-version Gemfile Gemfile.lock ./
 
@@ -68,6 +71,9 @@ ENV RAILS_ENV=production
 RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
+
+# Remove it after ruby is upgraded to 3.1.2-alpine
+RUN apk add --no-cache ncurses-libs=6.3_p20211120-r1 libcrypto1.1=1.1.1q-r0  libssl1.1=1.1.1q-r0
 
 # libpq: required to run postgres
 RUN apk add --no-cache libpq
