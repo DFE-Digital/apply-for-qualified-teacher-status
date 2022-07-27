@@ -18,6 +18,7 @@ en:
         work_history: Your work history
       items:
         personal_information: Enter personal information
+        identity_documents: Upload identity documents
         age_range: Enter age range
         work_history: Add work history
 
