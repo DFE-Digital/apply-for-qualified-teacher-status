@@ -59,10 +59,6 @@ RSpec.describe "Teacher application", type: :system do
 
   private
 
-  def given_the_service_allows_teacher_applications
-    FeatureFlag.activate(:teacher_applications)
-  end
-
   def when_i_click_apply_for_qts
     click_link "Apply for QTS"
   end

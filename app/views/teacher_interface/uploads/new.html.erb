@@ -1,0 +1,25 @@
+<% content_for :page_title, "Upload a document" %>
+<% content_for :back_link_url, teacher_interface_application_form_path(@application_form) %>
+
+<% if @document.identification? || @document.name_change? %>
+  <h1 class="govuk-heading-l">Upload a valid identification document</h1>
+
+  <p class="govuk-body">The document must show your date of birth and your nationality. If your ID document has several pages, you can add them on the next screen. </p>
+
+  <p class="govuk-body">Acceptable documents include:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>passport</li>
+    <li>driving licence</li>
+    <li>identity card</li>
+    <li>birth certificate.</li>
+  </ul>
+<% end %>
+
+<%= form_with model: [:teacher_interface, @application_form, @document, @upload] do |f| %>
+  <%= f.govuk_file_field :attachment,
+                         label: { text: "Select a file to upload" },
+                         hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 20MB." } %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>

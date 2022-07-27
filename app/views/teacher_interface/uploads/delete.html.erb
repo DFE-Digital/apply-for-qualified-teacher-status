@@ -1,0 +1,10 @@
+<% content_for :page_title, "Delete file" %>
+<% content_for :back_link_url, edit_teacher_interface_application_form_document_path(@application_form, @document) %>
+
+<h1 class="govuk-heading-l">Delete <%= @upload.attachment.filename %>?</h1>
+
+<%= form_with model: [:teacher_interface, @application_form, @document, @upload], method: :delete do |f| %>
+  <%= f.govuk_submit "Yes", prevent_double_click: false, warning: true do %>
+    <%= govuk_button_link_to "No, return to document", edit_teacher_interface_application_form_document_path(@application_form, @document) %>
+  <% end %>
+<% end %>

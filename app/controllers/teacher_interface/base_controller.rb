@@ -9,10 +9,21 @@ class TeacherInterface::BaseController < ApplicationController
     @application_form = application_form
   end
 
+  def load_document
+    @document = document
+  end
+
   def application_form
     @application_form ||=
       ApplicationForm.where(teacher: current_teacher).find(
         params[:application_form_id] || params[:id]
+      )
+  end
+
+  def document
+    @document ||=
+      Document.where(documentable: application_form).find(
+        params[:document_id] || params[:id]
       )
   end
 
