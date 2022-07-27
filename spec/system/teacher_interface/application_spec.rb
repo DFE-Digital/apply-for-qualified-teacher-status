@@ -24,6 +24,14 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_the_alternative_name_form
     and_i_click_continue
+    then_i_see_the_upload_name_change_form
+
+    when_i_fill_in_the_upload_name_change_form
+    and_i_click_continue
+    then_i_see_the_check_your_name_change_uploads
+
+    when_i_choose_no
+    and_i_click_continue
     then_i_see_the_personal_information_summary
 
     when_i_click_continue
@@ -104,6 +112,11 @@ RSpec.describe "Teacher application", type: :system do
             with: "Name"
   end
 
+  def when_i_fill_in_the_upload_name_change_form
+    attach_file "upload-attachment-field",
+                Rails.root.join(file_fixture("upload.txt"))
+  end
+
   def when_i_click_age_range
     click_link "Enter age range"
   end
@@ -176,6 +189,17 @@ RSpec.describe "Teacher application", type: :system do
       "Yes – I'll upload another document to prove this"
     )
     expect(page).to have_content("No")
+  end
+
+  def then_i_see_the_upload_name_change_form
+    expect(page).to have_title("Upload a document")
+    expect(page).to have_content("Upload a valid identification document")
+  end
+
+  def then_i_see_the_check_your_name_change_uploads
+    expect(page).to have_title("Check your uploaded files")
+    expect(page).to have_content("Check your uploaded files")
+    expect(page).to have_content("File 1\tupload.txt\tDelete")
   end
 
   def then_i_see_the_age_range_form

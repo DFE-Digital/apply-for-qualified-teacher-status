@@ -60,9 +60,10 @@ module TeacherInterface
         )
       if @alternative_name_form.save
         redirect_to_if_save_and_continue [
+                                           :edit,
                                            :teacher_interface,
                                            application_form,
-                                           :personal_information
+                                           application_form.name_change_document
                                          ]
       else
         render :alternative_name, status: :unprocessable_entity
