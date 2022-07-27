@@ -37,6 +37,17 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     then_i_see_completed_personal_information_section
 
+    when_i_click_identity_documents
+    then_i_see_the_upload_identification_form
+
+    when_i_fill_in_the_upload_identification_form
+    and_i_click_continue
+    then_i_see_the_check_your_identification_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_completed_identity_documents_section
+
     when_i_click_age_range
     then_i_see_the_age_range_form
 
@@ -117,6 +128,15 @@ RSpec.describe "Teacher application", type: :system do
                 Rails.root.join(file_fixture("upload.txt"))
   end
 
+  def when_i_click_identity_documents
+    click_link "Upload identity documents"
+  end
+
+  def when_i_fill_in_the_upload_identification_form
+    attach_file "upload-attachment-field",
+                Rails.root.join(file_fixture("upload.txt"))
+  end
+
   def when_i_click_age_range
     click_link "Enter age range"
   end
@@ -162,6 +182,7 @@ RSpec.describe "Teacher application", type: :system do
 
     expect(page).to have_content("About you")
     expect(page).to have_content("Enter personal information\nNOT STARTED")
+    expect(page).to have_content("Upload identity documents\nNOT STARTED")
 
     expect(page).to have_content("Your qualifications")
     expect(page).to have_content("Enter age range\nNOT STARTED")
@@ -202,6 +223,17 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("File 1\tupload.txt\tDelete")
   end
 
+  def then_i_see_the_upload_identification_form
+    expect(page).to have_title("Upload a document")
+    expect(page).to have_content("Upload a valid identification document")
+  end
+
+  def then_i_see_the_check_your_identification_uploads
+    expect(page).to have_title("Check your uploaded files")
+    expect(page).to have_content("Check your uploaded files")
+    expect(page).to have_content("File 1\tupload.txt\tDelete")
+  end
+
   def then_i_see_the_age_range_form
     expect(page).to have_title("Age range")
     expect(page).to have_content("Who you can teach")
@@ -231,6 +263,10 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_completed_personal_information_section
     expect(page).to have_content("Enter personal information\nCOMPLETED")
+  end
+
+  def then_i_see_completed_identity_documents_section
+    expect(page).to have_content("Upload identity documents\nCOMPLETED")
   end
 
   def then_i_see_the_age_range_summary
