@@ -18,28 +18,28 @@
   </h2>
 
   <p class="govuk-body govuk-!-margin-bottom-7">
-    You have completed <%= @application_form.completed_sections.count %> of <%= @application_form.sections.count %> sections.
+    You have completed <%= @application_form.completed_task_sections.count %> of <%= @application_form.tasks.count %> sections.
   </p>
 
   <ol class="app-task-list">
-    <% @application_form.sections.each_with_index do |(section_key, subsection_keys), index| %>
+    <% @application_form.tasks.each_with_index do |(section, items), index| %>
       <li>
         <h2 class="app-task-list__section">
-          <span class="app-task-list__section-number"><%= index + 1 %>. </span> <%= section_key.to_s.humanize %>
+          <span class="app-task-list__section-number"><%= index + 1 %>. </span> <%= section.to_s.humanize %>
         </h2>
 
         <ul class="app-task-list__items">
-          <% subsection_keys.each do |subsection_key| %>
+          <% items.each do |item| %>
             <li class="app-task-list__item">
               <span class="app-task-list__task-name">
-                <%= link_to subsection_key.to_s.humanize,
-                            @application_form.path_for_subsection(subsection_key),
-                            aria: { describedby: "#{subsection_key}-status" } %>
+                <%= link_to item.to_s.humanize,
+                            @application_form.path_for_task_item(item),
+                            aria: { describedby: "#{item}-status" } %>
               </span>
 
               <%= render(ApplicationFormStatusTagComponent.new(
-                key: subsection_key,
-                status: @application_form.section_statuses.dig(section_key, subsection_key)
+                key: item,
+                status: @application_form.task_statuses.dig(section, item)
               )) %>
             </li>
           <% end %>

@@ -3,7 +3,7 @@ module TeacherInterface
     before_action :load_application_form
 
     def show
-      unless application_form.subsection_started?(
+      unless application_form.task_item_started?(
                :about_you,
                :personal_information
              )
