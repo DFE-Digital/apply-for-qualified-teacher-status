@@ -208,7 +208,7 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
     end
 
     it "renders the value" do
-      expect(row.at_css(".govuk-summary-list__value").text).to eq("attachment")
+      expect(row.at_css(".govuk-summary-list__value").text).to eq("upload.txt")
     end
 
     it "renders the change link" do

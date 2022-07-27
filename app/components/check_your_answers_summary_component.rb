@@ -35,7 +35,7 @@ class CheckYourAnswersSummaryComponent < ViewComponent::Base
         value
           .uploads
           .order(:created_at)
-          .map { |upload| upload.attachment&.name }
+          .map { |upload| upload.attachment&.filename }
           .compact
           .join(", ")
       )
