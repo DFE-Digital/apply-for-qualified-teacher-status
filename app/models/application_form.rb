@@ -72,8 +72,8 @@ class ApplicationForm < ApplicationRecord
       begin
         hash = {}
         hash.merge!(about_you: %i[personal_information])
-        hash.merge!(your_qualifications: %i[age_range])
-        hash.merge!(your_work_history: %i[work_history]) if needs_work_history?
+        hash.merge!(qualifications: %i[age_range])
+        hash.merge!(work_history: %i[work_history]) if needs_work_history?
         hash
       end
   end
@@ -123,9 +123,9 @@ class ApplicationForm < ApplicationRecord
     case [section, subsection]
     when %i[about_you personal_information]
       personal_information_status
-    when %i[your_qualifications age_range]
-      age_range_status
-    when %i[your_work_history work_history]
+    when %i[qualifications age_range]
+      status_for_values(age_range_min, age_range_max)
+    when %i[work_history work_history]
       return :not_started if work_histories.empty?
       if work_histories.completed.count == work_histories.count
         return :completed
@@ -152,10 +152,6 @@ class ApplicationForm < ApplicationRecord
     end
 
     status_for_values(*values)
-  end
-
-  def age_range_status
-    status_for_values(age_range_min, age_range_max)
   end
 
   def status_for_values(*values)

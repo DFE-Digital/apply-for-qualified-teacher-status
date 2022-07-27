@@ -80,10 +80,7 @@ RSpec.describe ApplicationForm, type: :model do
 
       it do
         is_expected.to eq(
-          {
-            about_you: %i[personal_information],
-            your_qualifications: %i[age_range]
-          }
+          { about_you: %i[personal_information], qualifications: %i[age_range] }
         )
       end
     end
@@ -95,8 +92,8 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: %i[personal_information],
-            your_qualifications: %i[age_range],
-            your_work_history: %i[work_history]
+            qualifications: %i[age_range],
+            work_history: %i[work_history]
           }
         )
       end
@@ -112,10 +109,10 @@ RSpec.describe ApplicationForm, type: :model do
           about_you: {
             personal_information: :not_started
           },
-          your_qualifications: {
+          qualifications: {
             age_range: :not_started
           },
-          your_work_history: {
+          work_history: {
             work_history: :not_started
           }
         }
@@ -123,11 +120,11 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     describe "about you section" do
-      subject(:about_you_section_status) { section_statuses[:about_you] }
+      subject(:about_you_status) { section_statuses[:about_you] }
 
       describe "personal information subsection" do
-        subject(:personal_information_subsection_status) do
-          about_you_section_status[:personal_information]
+        subject(:personal_information_status) do
+          about_you_status[:personal_information]
         end
 
         context "with some fields set" do
@@ -167,43 +164,51 @@ RSpec.describe ApplicationForm, type: :model do
       end
     end
 
-    describe "your qualifications section" do
-      subject(:your_qualifications_section_status) do
-        section_statuses[:your_qualifications]
-      end
+    describe "qualifications section" do
+      subject(:qualifications_status) { section_statuses[:qualifications] }
 
-      context "with some age range" do
-        before { application_form.update!(age_range_min: 7) }
+      describe "age range subsection" do
+        subject(:age_range_status) { qualifications_status[:age_range] }
 
-        it { is_expected.to match(a_hash_including(age_range: :in_progress)) }
-      end
+        context "with some age range" do
+          before { application_form.update!(age_range_min: 7) }
 
-      context "with all personal information" do
-        before { application_form.update!(age_range_min: 7, age_range_max: 11) }
+          it { is_expected.to eq(:in_progress) }
+        end
 
-        it { is_expected.to match(a_hash_including(age_range: :completed)) }
+        context "with all personal information" do
+          before do
+            application_form.update!(age_range_min: 7, age_range_max: 11)
+          end
+
+          it { is_expected.to eq(:completed) }
+        end
       end
     end
 
-    describe "your work history section" do
-      subject(:your_work_history_status) do
-        section_statuses[:your_work_history]
-      end
+    describe "work history section" do
+      subject(:work_history_status) { section_statuses[:work_history] }
 
-      context "with no work history" do
-        it { is_expected.to eq(work_history: :not_started) }
-      end
+      describe "work history subsection" do
+        subject(:personal_information_status) do
+          work_history_status[:work_history]
+        end
 
-      context "with some incomplete work history" do
-        before { create(:work_history, application_form:) }
+        context "with no work history" do
+          it { is_expected.to eq(:not_started) }
+        end
 
-        it { is_expected.to eq(work_history: :in_progress) }
-      end
+        context "with some incomplete work history" do
+          before { create(:work_history, application_form:) }
 
-      context "with all complete work history" do
-        before { create(:work_history, :completed, application_form:) }
+          it { is_expected.to eq(:in_progress) }
+        end
 
-        it { is_expected.to eq(work_history: :completed) }
+        context "with all complete work history" do
+          before { create(:work_history, :completed, application_form:) }
+
+          it { is_expected.to eq(:completed) }
+        end
       end
     end
   end
