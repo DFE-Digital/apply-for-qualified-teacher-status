@@ -196,14 +196,6 @@ RSpec.describe "Eligibility check", type: :system do
     FeatureFlag.activate(:service_start)
   end
 
-  def when_i_choose_no
-    choose "No", visible: false
-  end
-
-  def when_i_choose_yes
-    choose "Yes", visible: false
-  end
-
   def when_i_choose_region
     choose "Region", visible: false
   end

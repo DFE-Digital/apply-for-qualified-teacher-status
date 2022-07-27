@@ -27,8 +27,11 @@ module TeacherInterface
     end
 
     def destroy
-      @upload.attachment.purge
-      @upload.destroy!
+      if ActiveModel::Type::Boolean.new.cast(params.dig(:upload, :confirm))
+        @upload.attachment.purge
+        @upload.destroy!
+      end
+
       redirect_to [:edit, :teacher_interface, @application_form, @document]
     end
 

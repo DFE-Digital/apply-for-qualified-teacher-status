@@ -1,10 +1,13 @@
 <% content_for :page_title, "Delete file" %>
 <% content_for :back_link_url, edit_teacher_interface_application_form_document_path(@application_form, @document) %>
 
-<h1 class="govuk-heading-l">Delete <%= @upload.attachment.filename %>?</h1>
-
 <%= form_with model: [:teacher_interface, @application_form, @document, @upload], method: :delete do |f| %>
-  <%= f.govuk_submit "Yes", prevent_double_click: false, warning: true do %>
-    <%= govuk_button_link_to "No, return to document", edit_teacher_interface_application_form_document_path(@application_form, @document) %>
-  <% end %>
+  <%= f.govuk_collection_radio_buttons :confirm,
+                                       [OpenStruct.new(id: "true", name: "Yes"), OpenStruct.new(id: "false", name: "No")],
+                                       :id,
+                                       :name,
+                                       inline: true,
+                                       legend: { text: "Are you sure you want to delete #{@upload.attachment.filename}?", size: "l", tag: "h1" } %>
+
+  <%= f.govuk_submit "Continue", prevent_double_click: false %>
 <% end %>

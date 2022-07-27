@@ -161,10 +161,6 @@ RSpec.describe "Teacher application", type: :system do
     choose "Yes", visible: false
   end
 
-  def when_i_choose_no
-    choose "No", visible: false
-  end
-
   def then_i_see_the_new_application_page
     expect(page).to have_current_path("/teacher/applications/new")
     expect(page).to have_title("Start your application")

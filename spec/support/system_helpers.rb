@@ -39,6 +39,18 @@ module SystemHelpers
     )
   end
 
+  def when_i_choose_yes
+    choose "Yes", visible: false
+  end
+
+  alias_method :and_i_choose_yes, :when_i_choose_yes
+
+  def when_i_choose_no
+    choose "No", visible: false
+  end
+
+  alias_method :and_i_choose_no, :when_i_choose_no
+
   def when_i_fill_teacher_email_address
     fill_in "teacher-email-field", with: "test@example.com"
   end
