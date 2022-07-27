@@ -14,6 +14,39 @@
     <li>identity card</li>
     <li>birth certificate.</li>
   </ul>
+<% elsif @document.written_statement? %>
+  <span class="govuk-caption-l">Proof that you're recognised as a teacher</span>
+  <h1 class="govuk-heading-l">Upload your written statement</h1>
+
+  <p class="govuk-body">
+    You need to provide a written statement from <span lang="<%= @application_form.region.country.code %>"><%= @application_form.region.country.teaching_authority_name.presence || @application_form.region.teaching_authority_name.presence %></span>.
+  </p>
+
+  <p class="govuk-body">
+    This is called <%= @application_form.region.country.teaching_authority_certificate.indefinite_article || "a" %> <span lang="<%= @application_form.region.country.code %>"><%= @application_form.region.country.teaching_authority_certificate.presence || "certificate" %></span>.
+  </p>
+
+  <div class="govuk-inset-text">If this document is not written in English, you'll also need to upload a translation.</div>
+
+  <p class="govuk-body">It must confirm:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>that you've completed a teaching qualification/teacher training</li>
+    <li>that you've successfully completed any period of professional experience comparable to an induction period (if required)</li>
+    <li>the age ranges and subjects you're qualified to teach</li>
+  </ul>
+  <p class="govuk-body">This written confirmation must be dated within 3 months of you applying for QTS.</p>
+
+  <%= govuk_details(summary_text: "I do not have this yet") do %>
+    <p class="govuk-body">If you do not have this yet, you can obtain it by contacting:</p>
+
+    <%= render "shared/teaching_authority_contactable", contactable: @application_form.region.country %>
+
+    <% if @application_form.region.country.teaching_authority_present? && @application_form.region.teaching_authority_present? %>
+      <p class="govuk-body">or</p>
+    <% end %>
+
+    <%= render "shared/teaching_authority_contactable", contactable: @application_form.region %>
+  <% end %>
 <% end %>
 
 <%= form_with model: [:teacher_interface, @application_form, @document, @upload] do |f| %>
