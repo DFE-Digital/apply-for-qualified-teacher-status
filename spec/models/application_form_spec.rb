@@ -81,7 +81,7 @@ RSpec.describe ApplicationForm, type: :model do
   describe "#tasks" do
     subject(:tasks) { application_form.tasks }
 
-    context "with a country that doesn't need work history" do
+    context "with a country that doesn't need work history or a written statement" do
       before { application_form.region = create(:region, :online_checks) }
 
       it do
@@ -107,10 +107,29 @@ RSpec.describe ApplicationForm, type: :model do
         )
       end
     end
+
+    context "with a country that needs a written statement" do
+      before { application_form.region = create(:region, :written_checks) }
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: %i[personal_information identity_documents],
+            qualifications: %i[age_range],
+            proof_of_recognition: %i[written_statement]
+          }
+        )
+      end
+    end
   end
 
   describe "#task_statuses" do
     subject(:task_statuses) { application_form.task_statuses }
+
+    before do
+      application_form.region =
+        create(:region, status_check: :none, sanction_check: :written)
+    end
 
     it do
       is_expected.to eq(
@@ -124,6 +143,9 @@ RSpec.describe ApplicationForm, type: :model do
           },
           work_history: {
             work_history: :not_started
+          },
+          proof_of_recognition: {
+            written_statement: :not_started
           }
         }
       )
@@ -235,6 +257,33 @@ RSpec.describe ApplicationForm, type: :model do
 
         context "with all complete work history" do
           before { create(:work_history, :completed, application_form:) }
+
+          it { is_expected.to eq(:completed) }
+        end
+      end
+    end
+
+    describe "proof of recognition section" do
+      subject(:proof_of_recognition_status) do
+        task_statuses[:proof_of_recognition]
+      end
+
+      describe "written statement subsection" do
+        subject(:written_statement_status) do
+          proof_of_recognition_status[:written_statement]
+        end
+
+        context "without uploads" do
+          it { is_expected.to eq(:not_started) }
+        end
+
+        context "with uploads" do
+          before do
+            create(
+              :upload,
+              document: application_form.written_statement_document
+            )
+          end
 
           it { is_expected.to eq(:completed) }
         end

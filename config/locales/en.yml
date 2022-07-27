@@ -16,11 +16,13 @@ en:
         about_you: About you
         qualifications: Your qualifications
         work_history: Your work history
+        proof_of_recognition: Proof that you’re recognised as a teacher
       items:
         personal_information: Enter personal information
         identity_documents: Upload identity documents
         age_range: Enter age range
         work_history: Add work history
+        written_statement: Upload your written statement
 
   activemodel:
     attributes:

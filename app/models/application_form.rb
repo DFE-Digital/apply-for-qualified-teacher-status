@@ -76,6 +76,9 @@ class ApplicationForm < ApplicationRecord
         hash.merge!(about_you: %i[personal_information identity_documents])
         hash.merge!(qualifications: %i[age_range])
         hash.merge!(work_history: %i[work_history]) if needs_work_history?
+        if needs_written_statement?
+          hash.merge!(proof_of_recognition: %i[written_statement])
+        end
         hash
       end
   end
@@ -113,6 +116,15 @@ class ApplicationForm < ApplicationRecord
       )
     end
 
+    if key == :written_statement
+      return(
+        url_helpers.edit_teacher_interface_application_form_document_path(
+          self,
+          written_statement_document
+        )
+      )
+    end
+
     key = :work_histories if key == :work_history
 
     begin
@@ -134,6 +146,10 @@ class ApplicationForm < ApplicationRecord
     region.status_check_none? || region.sanction_check_none?
   end
 
+  def needs_written_statement?
+    region.status_check_written? || region.sanction_check_written?
+  end
+
   def task_item_status(key)
     case key
     when :personal_information
@@ -148,6 +164,8 @@ class ApplicationForm < ApplicationRecord
         return :completed
       end
       :in_progress
+    when :written_statement
+      written_statement_document.uploaded? ? :completed : :not_started
     else
       :not_started
     end

@@ -44,6 +44,11 @@ FactoryBot.define do
       status_check { :online }
     end
 
+    trait :written_checks do
+      sanction_check { :written }
+      status_check { :written }
+    end
+
     trait :none_checks do
       sanction_check { :none }
       status_check { :none }
