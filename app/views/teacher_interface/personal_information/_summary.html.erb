@@ -12,13 +12,13 @@
     key: "Legal name different to identity document?",
     href: [:alternative_name, :teacher_interface, application_form, :personal_information]
   },
-  alternative_given_names: application_form.has_alternative_name != false ? {
+  alternative_given_names: application_form.has_alternative_name? ? {
     href: [:alternative_name, :teacher_interface, application_form, :personal_information]
   } : nil,
-  alternative_family_name: application_form.has_alternative_name != false ? {
+  alternative_family_name: application_form.has_alternative_name? ? {
     href: [:alternative_name, :teacher_interface, application_form, :personal_information]
   } : nil,
-  name_change_document: application_form.has_alternative_name != false ? {
-    href: [:alternative_name, :teacher_interface, application_form, :personal_information]
+  name_change_document: application_form.has_alternative_name? ? {
+    href: [:edit, :teacher_interface, application_form, application_form.name_change_document]
   } : nil,
 })) %>
