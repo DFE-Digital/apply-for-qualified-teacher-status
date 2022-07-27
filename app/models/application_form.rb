@@ -53,6 +53,8 @@ class ApplicationForm < ApplicationRecord
           class_name: "Document",
           as: :documentable
 
+  before_create :build_documents
+
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
   enum status: { active: "active", submitted: "submitted" }
@@ -112,6 +114,12 @@ class ApplicationForm < ApplicationRecord
   end
 
   private
+
+  def build_documents
+    build_identification_document(document_type: :identification)
+    build_name_change_document(document_type: :name_change)
+    build_written_statement_document(document_type: :written_statement)
+  end
 
   def needs_work_history?
     region.status_check_none? || region.sanction_check_none?

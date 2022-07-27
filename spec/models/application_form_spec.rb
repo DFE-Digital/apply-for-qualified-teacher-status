@@ -53,6 +53,12 @@ RSpec.describe ApplicationForm, type: :model do
     end
   end
 
+  it "attaches empty documents" do
+    expect(application_form.identification_document).to_not be_nil
+    expect(application_form.name_change_document).to_not be_nil
+    expect(application_form.written_statement_document).to_not be_nil
+  end
+
   describe "#reference" do
     let!(:application_form1) { create(:application_form, reference: nil) }
     let!(:application_form2) { create(:application_form, reference: nil) }
@@ -153,9 +159,10 @@ RSpec.describe ApplicationForm, type: :model do
               application_form.update!(
                 has_alternative_name: true,
                 alternative_given_names: "Alt Given",
-                alternative_family_name: "Alt Family",
-                name_change_document: create(:document, :with_upload)
+                alternative_family_name: "Alt Family"
               )
+
+              create(:upload, document: application_form.name_change_document)
             end
 
             it { is_expected.to eq(:completed) }
