@@ -27,8 +27,14 @@ RSpec.describe "Teacher documents", type: :system do
     and_i_click_continue
     then_i_see_the_check_your_uploaded_files_page_with_two_files
 
-    when_i_delete_the_first_document
-    and_i_click_yes
+    when_i_click_delete_on_the_first_document
+    and_i_choose_no
+    and_i_click_continue
+    then_i_see_the_check_your_uploaded_files_page_with_two_files
+
+    when_i_click_delete_on_the_first_document
+    and_i_choose_yes
+    and_i_click_continue
     then_i_see_the_check_your_uploaded_files_page
   end
 
@@ -53,16 +59,8 @@ RSpec.describe "Teacher documents", type: :system do
                 Rails.root.join(file_fixture("upload.txt"))
   end
 
-  def when_i_choose_yes
-    choose "Yes", visible: false
-  end
-
-  def when_i_delete_the_first_document
+  def when_i_click_delete_on_the_first_document
     first(:link, "Delete").click
-  end
-
-  def and_i_click_yes
-    click_button "Yes"
   end
 
   def then_i_see_document_form
