@@ -1,0 +1,31 @@
+<% content_for :page_title, "Check your uploaded files" %>
+<% content_for :back_link_url, teacher_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-l">Check your uploaded files</h1>
+
+<h2 class="govuk-heading-m">Files added</h2>
+
+<%= govuk_summary_list do |summary_list|
+  @document.uploads.each_with_index do |upload, index|
+    summary_list.row do |row|
+      row.key(text: "File #{index + 1}")
+      row.value(text: upload.attachment.filename)
+      row.action(
+        text: "Delete",
+        href: delete_teacher_interface_application_form_document_upload_path(@application_form, @document, upload),
+        visually_hidden_text: upload.attachment.filename
+      )
+    end
+  end
+end %>
+
+<%= form_with model: [:teacher_interface, @application_form, @document] do |f| %>
+  <%= f.govuk_radio_buttons_fieldset :add_another,
+                                     legend: { text: "Do you need to upload another page?" },
+                                     hint: { text: "If your document has several pages, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’." } do %>
+    <%= f.govuk_radio_button :add_another, "true", label: { text: "Yes" } %>
+    <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
+  <% end %>
+
+  <%= f.govuk_submit "Continue", prevent_double_click: false %>
+<% end %>

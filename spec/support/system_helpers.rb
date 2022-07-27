@@ -11,6 +11,10 @@ module SystemHelpers
     FeatureFlag.activate(:service_start)
   end
 
+  def given_the_service_allows_teacher_applications
+    FeatureFlag.activate(:teacher_applications)
+  end
+
   def given_an_eligible_eligibility_check
     create(:country, :with_national_region, code: "GB-SCT")
     visit "/eligibility/start"
