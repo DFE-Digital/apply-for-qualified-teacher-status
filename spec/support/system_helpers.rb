@@ -16,7 +16,9 @@ module SystemHelpers
   end
 
   def given_an_eligible_eligibility_check
-    create(:country, :with_national_region, code: "GB-SCT")
+    country = create(:country, :with_national_region, code: "GB-SCT")
+    country.regions.first.update!(status_check: :written)
+
     visit "/eligibility/start"
     click_button "Start now"
     fill_in "eligibility-interface-country-form-location-field",
