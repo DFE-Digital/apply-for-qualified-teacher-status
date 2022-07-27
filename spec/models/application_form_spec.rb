@@ -86,7 +86,10 @@ RSpec.describe ApplicationForm, type: :model do
 
       it do
         is_expected.to eq(
-          { about_you: %i[personal_information], qualifications: %i[age_range] }
+          {
+            about_you: %i[personal_information identity_documents],
+            qualifications: %i[age_range]
+          }
         )
       end
     end
@@ -97,7 +100,7 @@ RSpec.describe ApplicationForm, type: :model do
       it do
         is_expected.to eq(
           {
-            about_you: %i[personal_information],
+            about_you: %i[personal_information identity_documents],
             qualifications: %i[age_range],
             work_history: %i[work_history]
           }
@@ -113,7 +116,8 @@ RSpec.describe ApplicationForm, type: :model do
       is_expected.to eq(
         {
           about_you: {
-            personal_information: :not_started
+            personal_information: :not_started,
+            identity_documents: :not_started
           },
           qualifications: {
             age_range: :not_started
@@ -167,6 +171,24 @@ RSpec.describe ApplicationForm, type: :model do
 
             it { is_expected.to eq(:completed) }
           end
+        end
+      end
+
+      describe "identity documents item" do
+        subject(:identity_documents_status) do
+          about_you_status[:identity_documents]
+        end
+
+        context "without uploads" do
+          it { is_expected.to eq(:not_started) }
+        end
+
+        context "with uploads" do
+          before do
+            create(:upload, document: application_form.identification_document)
+          end
+
+          it { is_expected.to eq(:completed) }
         end
       end
     end

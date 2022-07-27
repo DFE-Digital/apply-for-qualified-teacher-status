@@ -73,7 +73,7 @@ class ApplicationForm < ApplicationRecord
     @tasks ||=
       begin
         hash = {}
-        hash.merge!(about_you: %i[personal_information])
+        hash.merge!(about_you: %i[personal_information identity_documents])
         hash.merge!(qualifications: %i[age_range])
         hash.merge!(work_history: %i[work_history]) if needs_work_history?
         hash
@@ -104,6 +104,15 @@ class ApplicationForm < ApplicationRecord
   def path_for_task_item(key)
     url_helpers = Rails.application.routes.url_helpers
 
+    if key == :identity_documents
+      return(
+        url_helpers.edit_teacher_interface_application_form_document_path(
+          self,
+          identification_document
+        )
+      )
+    end
+
     key = :work_histories if key == :work_history
 
     begin
@@ -129,6 +138,8 @@ class ApplicationForm < ApplicationRecord
     case key
     when :personal_information
       personal_information_status
+    when :identity_documents
+      identification_document.uploaded? ? :completed : :not_started
     when :age_range
       status_for_values(age_range_min, age_range_max)
     when :work_history
