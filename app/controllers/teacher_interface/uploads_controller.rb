@@ -11,7 +11,16 @@ module TeacherInterface
     def create
       attachment = params.dig(:upload, :attachment)
       @upload = document.uploads.build(attachment:, translation: false)
+
       if @upload.save
+        translated_attachment = params.dig(:upload, :translated_attachment)
+        if translated_attachment
+          document.uploads.create!(
+            attachment: translated_attachment,
+            translation: true
+          )
+        end
+
         redirect_to_if_save_and_continue [
                                            :edit,
                                            :teacher_interface,
