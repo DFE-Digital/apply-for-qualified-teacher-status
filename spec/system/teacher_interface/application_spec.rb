@@ -69,6 +69,17 @@ RSpec.describe "Teacher application", type: :system do
     and_i_click_continue
     then_i_see_completed_work_history_section
 
+    when_i_click_written_statement
+    then_i_see_the_upload_written_statement_form
+
+    when_i_fill_in_the_upload_written_statement_form
+    and_i_click_continue
+    then_i_see_the_check_your_written_statement_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_completed_written_statement_section
+
     when_i_click_check_your_answers
     then_i_see_the_check_your_answers_page
 
@@ -161,6 +172,15 @@ RSpec.describe "Teacher application", type: :system do
     choose "Yes", visible: false
   end
 
+  def when_i_click_written_statement
+    click_link "Upload your written statement"
+  end
+
+  def when_i_fill_in_the_upload_written_statement_form
+    attach_file "upload-attachment-field",
+                Rails.root.join(file_fixture("upload.txt"))
+  end
+
   def then_i_see_the_new_application_page
     expect(page).to have_current_path("/teacher/applications/new")
     expect(page).to have_title("Start your application")
@@ -247,6 +267,17 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Your current or most recent role")
   end
 
+  def then_i_see_the_upload_written_statement_form
+    expect(page).to have_title("Upload a document")
+    expect(page).to have_content("Upload your written statement")
+  end
+
+  def then_i_see_the_check_your_written_statement_uploads
+    expect(page).to have_title("Check your uploaded files")
+    expect(page).to have_content("Check your uploaded files")
+    expect(page).to have_content("File 1\tupload.txt\tDelete")
+  end
+
   def then_i_see_the_personal_information_summary
     expect(page).to have_content("Check your answers")
     expect(page).to have_content("Given names\tName")
@@ -292,6 +323,10 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Add work history\nCOMPLETED")
   end
 
+  def then_i_see_completed_written_statement_section
+    expect(page).to have_content("Upload your written statement\nCOMPLETED")
+  end
+
   def then_i_see_the_check_your_answers_page
     expect(page).to have_title("Check your answers")
     expect(page).to have_content(
@@ -300,6 +335,7 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("About you")
     expect(page).to have_content("Who you can teach")
     expect(page).to have_content("Your work history")
+    expect(page).to have_content("Proof that you’re recognised as a teacher")
   end
 
   def then_i_see_the_submitted_application_page

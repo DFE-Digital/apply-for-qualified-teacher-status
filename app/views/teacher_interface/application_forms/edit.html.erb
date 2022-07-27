@@ -13,6 +13,9 @@
 <h2 class="govuk-heading-m">Your work history</h2>
 <%= render "teacher_interface/work_histories/summary", application_form: @application_form, work_histories: @application_form.work_histories %>
 
+<h2 class="govuk-heading-m">Proof that you’re recognised as a teacher</h2>
+<%= render "teacher_interface/written_statement/summary", application_form: @application_form %>
+
 <% if @application_form.can_submit? %>
   <h2 class="govuk-heading-m">Submitting your application</h2>
   <p class="govuk-body">By selecting the ‘Submit application button’ you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
