@@ -174,7 +174,7 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_title("Apply for qualified teacher status (QTS)")
     expect(page).to have_content("Apply for qualified teacher status (QTS)")
 
-    expect(page).to have_content("You have completed 0 of 3 sections.")
+    expect(page).to have_content("You have completed 0 of 4 sections.")
 
     expect(page).to have_content("About you")
     expect(page).to have_content("Enter personal information\nNOT STARTED")
@@ -185,6 +185,9 @@ RSpec.describe "Teacher application", type: :system do
 
     expect(page).to have_content("Your work history")
     expect(page).to have_content("Add work history\nNOT STARTED")
+
+    expect(page).to have_content("Proof that you’re recognised as a teacher")
+    expect(page).to have_content("Upload your written statement\nNOT STARTED")
 
     expect(page).to have_content("Check your answers")
   end
