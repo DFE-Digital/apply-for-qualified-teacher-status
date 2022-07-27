@@ -67,8 +67,8 @@ class ApplicationForm < ApplicationRecord
     self.reference = (ApplicationForm.maximum(:reference) || "2000000").to_i + 1
   end
 
-  def sections
-    @sections ||=
+  def tasks
+    @tasks ||=
       begin
         hash = {}
         hash.merge!(about_you: %i[personal_information])
@@ -78,30 +78,28 @@ class ApplicationForm < ApplicationRecord
       end
   end
 
-  def section_statuses
-    @section_statuses ||=
-      sections.each_with_object({}) do |(section, subsections), memo|
-        memo[section] = subsections.index_with do |subsection|
-          subsection_status(section, subsection)
-        end
+  def task_statuses
+    @task_statuses ||=
+      tasks.transform_values do |items|
+        items.index_with { |item| task_item_status(item) }
       end
   end
 
-  def completed_sections
-    section_statuses
+  def completed_task_sections
+    task_statuses
       .filter { |_, statuses| statuses.values.all?(:completed) }
       .map { |section, _| section }
   end
 
-  def subsection_started?(section, subsection)
-    section_statuses.dig(section, subsection) != :not_started
+  def task_item_started?(section, item)
+    task_statuses.dig(section, item) != :not_started
   end
 
   def can_submit?
-    completed_sections.count == sections.count
+    completed_task_sections.count == tasks.count
   end
 
-  def path_for_subsection(key)
+  def path_for_task_item(key)
     url_helpers = Rails.application.routes.url_helpers
 
     key = :work_histories if key == :work_history
@@ -119,13 +117,13 @@ class ApplicationForm < ApplicationRecord
     region.status_check_none? || region.sanction_check_none?
   end
 
-  def subsection_status(section, subsection)
-    case [section, subsection]
-    when %i[about_you personal_information]
+  def task_item_status(key)
+    case key
+    when :personal_information
       personal_information_status
-    when %i[qualifications age_range]
+    when :age_range
       status_for_values(age_range_min, age_range_max)
-    when %i[work_history work_history]
+    when :work_history
       return :not_started if work_histories.empty?
       if work_histories.completed.count == work_histories.count
         return :completed

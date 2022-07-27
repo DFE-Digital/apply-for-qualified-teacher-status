@@ -72,8 +72,8 @@ RSpec.describe ApplicationForm, type: :model do
     end
   end
 
-  describe "#sections" do
-    subject(:sections) { application_form.sections }
+  describe "#tasks" do
+    subject(:tasks) { application_form.tasks }
 
     context "with a country that doesn't need work history" do
       before { application_form.region = create(:region, :online_checks) }
@@ -100,8 +100,8 @@ RSpec.describe ApplicationForm, type: :model do
     end
   end
 
-  describe "#section_statuses" do
-    subject(:section_statuses) { application_form.section_statuses }
+  describe "#task_statuses" do
+    subject(:task_statuses) { application_form.task_statuses }
 
     it do
       is_expected.to eq(
@@ -120,9 +120,9 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     describe "about you section" do
-      subject(:about_you_status) { section_statuses[:about_you] }
+      subject(:about_you_status) { task_statuses[:about_you] }
 
-      describe "personal information subsection" do
+      describe "personal information item" do
         subject(:personal_information_status) do
           about_you_status[:personal_information]
         end
@@ -165,9 +165,9 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     describe "qualifications section" do
-      subject(:qualifications_status) { section_statuses[:qualifications] }
+      subject(:qualifications_status) { task_statuses[:qualifications] }
 
-      describe "age range subsection" do
+      describe "age range item" do
         subject(:age_range_status) { qualifications_status[:age_range] }
 
         context "with some age range" do
@@ -187,9 +187,9 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     describe "work history section" do
-      subject(:work_history_status) { section_statuses[:work_history] }
+      subject(:work_history_status) { task_statuses[:work_history] }
 
-      describe "work history subsection" do
+      describe "work history item" do
         subject(:personal_information_status) do
           work_history_status[:work_history]
         end
@@ -213,8 +213,10 @@ RSpec.describe ApplicationForm, type: :model do
     end
   end
 
-  describe "#completed_sections" do
-    subject(:completed_sections) { application_form.completed_sections }
+  describe "#completed_task_sections" do
+    subject(:completed_task_sections) do
+      application_form.completed_task_sections
+    end
 
     it { is_expected.to be_empty }
   end
