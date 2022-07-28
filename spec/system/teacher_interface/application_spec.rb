@@ -136,7 +136,7 @@ RSpec.describe "Teacher application", type: :system do
 
   def when_i_fill_in_the_upload_name_change_form
     attach_file "upload-attachment-field",
-                Rails.root.join(file_fixture("upload.txt"))
+                Rails.root.join(file_fixture("upload.pdf"))
   end
 
   def when_i_click_identity_documents
@@ -145,7 +145,7 @@ RSpec.describe "Teacher application", type: :system do
 
   def when_i_fill_in_the_upload_identification_form
     attach_file "upload-attachment-field",
-                Rails.root.join(file_fixture("upload.txt"))
+                Rails.root.join(file_fixture("upload.pdf"))
   end
 
   def when_i_click_age_range
@@ -178,7 +178,7 @@ RSpec.describe "Teacher application", type: :system do
 
   def when_i_fill_in_the_upload_written_statement_form
     attach_file "upload-attachment-field",
-                Rails.root.join(file_fixture("upload.txt"))
+                Rails.root.join(file_fixture("upload.pdf"))
   end
 
   def then_i_see_the_new_application_page
@@ -239,7 +239,7 @@ RSpec.describe "Teacher application", type: :system do
   def then_i_see_the_check_your_name_change_uploads
     expect(page).to have_title("Check your uploaded files")
     expect(page).to have_content("Check your uploaded files")
-    expect(page).to have_content("File 1\tupload.txt\tDelete")
+    expect(page).to have_content("File 1\tupload.pdf\tDelete")
   end
 
   def then_i_see_the_upload_identification_form
@@ -250,7 +250,7 @@ RSpec.describe "Teacher application", type: :system do
   def then_i_see_the_check_your_identification_uploads
     expect(page).to have_title("Check your uploaded files")
     expect(page).to have_content("Check your uploaded files")
-    expect(page).to have_content("File 1\tupload.txt\tDelete")
+    expect(page).to have_content("File 1\tupload.pdf\tDelete")
   end
 
   def then_i_see_the_age_range_form
@@ -275,7 +275,7 @@ RSpec.describe "Teacher application", type: :system do
   def then_i_see_the_check_your_written_statement_uploads
     expect(page).to have_title("Check your uploaded files")
     expect(page).to have_content("Check your uploaded files")
-    expect(page).to have_content("File 1\tupload.txt\tDelete")
+    expect(page).to have_content("File 1\tupload.pdf\tDelete")
   end
 
   def then_i_see_the_personal_information_summary
