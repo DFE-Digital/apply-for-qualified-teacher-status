@@ -52,7 +52,7 @@
 <%= form_with model: [:teacher_interface, @application_form, @document, @upload] do |f| %>
   <%= f.govuk_file_field :attachment,
                          label: { text: "Select a file to upload" },
-                         hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 20MB." } %>
+                         hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 50MB." } %>
 
   <% if @document.translatable? %>
     <%= f.govuk_radio_buttons_fieldset :written_in_english, legend: { size: "m", text: "Is your document written in English?" } do %>
@@ -61,7 +61,7 @@
       <%= f.govuk_radio_button :written_in_english, "false", label: { text: "No, I'll upload a translation as well" }, checked: false do %>
         <%= f.govuk_file_field :translated_attachment,
                                label: { text: "Select a file to upload" },
-                               hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 20MB." } %>
+                               hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 50MB." } %>
       <% end %>
     <% end %>
   <% end %>
