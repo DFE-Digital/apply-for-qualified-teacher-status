@@ -110,7 +110,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_personal_information
-    click_link "Enter personal information"
+    click_link "Enter your personal information"
   end
 
   def when_i_fill_in_the_name_and_date_of_birth_form
@@ -140,7 +140,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_identity_documents
-    click_link "Upload identity documents"
+    click_link "Upload your identity document"
   end
 
   def when_i_fill_in_the_upload_identification_form
@@ -149,7 +149,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_age_range
-    click_link "Enter age range"
+    click_link "Enter your age range"
   end
 
   def when_i_fill_in_age_range
@@ -158,7 +158,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_work_history
-    click_link "Add work history"
+    click_link "Add your work history"
   end
 
   def when_i_fill_in_work_history
@@ -197,14 +197,14 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("You have completed 0 of 4 sections.")
 
     expect(page).to have_content("About you")
-    expect(page).to have_content("Enter personal information\nNOT STARTED")
-    expect(page).to have_content("Upload identity documents\nNOT STARTED")
+    expect(page).to have_content("Enter your personal information\nNOT STARTED")
+    expect(page).to have_content("Upload your identity document\nNOT STARTED")
 
     expect(page).to have_content("Your qualifications")
-    expect(page).to have_content("Enter age range\nNOT STARTED")
+    expect(page).to have_content("Enter your age range\nNOT STARTED")
 
     expect(page).to have_content("Your work history")
-    expect(page).to have_content("Add work history\nNOT STARTED")
+    expect(page).to have_content("Add your work history\nNOT STARTED")
 
     expect(page).to have_content("Proof that you’re recognised as a teacher")
     expect(page).to have_content("Upload your written statement\nNOT STARTED")
@@ -292,11 +292,11 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_completed_personal_information_section
-    expect(page).to have_content("Enter personal information\nCOMPLETED")
+    expect(page).to have_content("Enter your personal information\nCOMPLETED")
   end
 
   def then_i_see_completed_identity_documents_section
-    expect(page).to have_content("Upload identity documents\nCOMPLETED")
+    expect(page).to have_content("Upload your identity document\nCOMPLETED")
   end
 
   def then_i_see_the_age_range_summary
@@ -306,7 +306,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_completed_age_range_section
-    expect(page).to have_content("Enter age range\nCOMPLETED")
+    expect(page).to have_content("Enter your age range\nCOMPLETED")
   end
 
   def then_i_see_the_work_history_summary
@@ -320,7 +320,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_completed_work_history_section
-    expect(page).to have_content("Add work history\nCOMPLETED")
+    expect(page).to have_content("Add your work history\nCOMPLETED")
   end
 
   def then_i_see_completed_written_statement_section

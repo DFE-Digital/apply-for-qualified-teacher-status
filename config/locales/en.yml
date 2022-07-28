@@ -18,10 +18,10 @@ en:
         work_history: Your work history
         proof_of_recognition: Proof that you’re recognised as a teacher
       items:
-        personal_information: Enter personal information
-        identity_documents: Upload identity documents
-        age_range: Enter age range
-        work_history: Add work history
+        personal_information: Enter your personal information
+        identity_documents: Upload your identity document
+        age_range: Enter your age range
+        work_history: Add your work history
         written_statement: Upload your written statement
 
   activemodel:
