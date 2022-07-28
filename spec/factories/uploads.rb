@@ -21,8 +21,8 @@ FactoryBot.define do
     association :document
     attachment do
       Rack::Test::UploadedFile.new(
-        "spec/fixtures/files/upload.txt",
-        "text/plain"
+        "spec/fixtures/files/upload.pdf",
+        "application/pdf"
       )
     end
     translation { false }
