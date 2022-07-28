@@ -5,6 +5,7 @@ ruby "3.1.1"
 
 gem "rails", "~> 7.0.3"
 
+gem "active_storage_validations"
 gem "azure-storage-blob"
 gem "bootsnap", require: false
 gem "cssbundling-rails"
