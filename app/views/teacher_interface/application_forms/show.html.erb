@@ -25,14 +25,15 @@
     <% @application_form.tasks.each_with_index do |(section, items), index| %>
       <li>
         <h2 class="app-task-list__section">
-          <span class="app-task-list__section-number"><%= index + 1 %>. </span> <%= section.to_s.humanize %>
+          <span class="app-task-list__section-number"><%= index + 1 %>. </span>
+          <%= I18n.t("application_form.tasks.sections.#{section}") %>
         </h2>
 
         <ul class="app-task-list__items">
           <% items.each do |item| %>
             <li class="app-task-list__item">
               <span class="app-task-list__task-name">
-                <%= link_to item.to_s.humanize,
+                <%= link_to I18n.t("application_form.tasks.items.#{item}"),
                             @application_form.path_for_task_item(item),
                             aria: { describedby: "#{item}-status" } %>
               </span>

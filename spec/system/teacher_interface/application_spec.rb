@@ -84,7 +84,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_personal_information
-    click_link "Personal information"
+    click_link "Enter personal information"
   end
 
   def when_i_fill_in_the_name_and_date_of_birth_form
@@ -109,7 +109,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_age_range
-    click_link "Age range"
+    click_link "Enter age range"
   end
 
   def when_i_fill_in_age_range
@@ -118,7 +118,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_work_history
-    click_link "Work history"
+    click_link "Add work history"
   end
 
   def when_i_fill_in_work_history
@@ -152,13 +152,13 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("You have completed 0 of 3 sections.")
 
     expect(page).to have_content("About you")
-    expect(page).to have_content("Personal information\nNOT STARTED")
+    expect(page).to have_content("Enter personal information\nNOT STARTED")
 
     expect(page).to have_content("Your qualifications")
-    expect(page).to have_content("Age range\nNOT STARTED")
+    expect(page).to have_content("Enter age range\nNOT STARTED")
 
     expect(page).to have_content("Your work history")
-    expect(page).to have_content("Work history\nNOT STARTED")
+    expect(page).to have_content("Add work history\nNOT STARTED")
 
     expect(page).to have_content("Check your answers")
   end
@@ -210,7 +210,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_completed_personal_information_section
-    expect(page).to have_content("Personal information\nCOMPLETED")
+    expect(page).to have_content("Enter personal information\nCOMPLETED")
   end
 
   def then_i_see_the_age_range_summary
@@ -220,7 +220,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_completed_age_range_section
-    expect(page).to have_content("Age range\nCOMPLETED")
+    expect(page).to have_content("Enter age range\nCOMPLETED")
   end
 
   def then_i_see_the_work_history_summary
@@ -234,7 +234,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_completed_work_history_section
-    expect(page).to have_content("Work history\nCOMPLETED")
+    expect(page).to have_content("Add work history\nCOMPLETED")
   end
 
   def then_i_see_the_check_your_answers_page
