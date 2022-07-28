@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics
-  revision: 52fc43d39d061014cdc97bf3042defc297fc8c4d
+  revision: 4fc956a95fe68db7dc0afc811a58801e9d915444
   specs:
     dfe-analytics (1.2.1)
       google-cloud-bigquery (~> 1.38)
@@ -174,8 +174,8 @@ GEM
       websocket-driver (>= 0.6, < 0.8)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    google-apis-bigquery_v2 (0.35.0)
-      google-apis-core (>= 0.6, < 2.a)
+    google-apis-bigquery_v2 (0.36.0)
+      google-apis-core (>= 0.7, < 2.a)
     google-apis-core (0.7.0)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (>= 0.16.2, < 2.a)
@@ -185,7 +185,7 @@ GEM
       retriable (>= 2.0, < 4.a)
       rexml
       webrick
-    google-cloud-bigquery (1.38.1)
+    google-cloud-bigquery (1.39.0)
       concurrent-ruby (~> 1.0)
       google-apis-bigquery_v2 (~> 0.1)
       google-cloud-core (~> 1.6)
