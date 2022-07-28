@@ -134,13 +134,68 @@ jobs:
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pr_id: ${{ github.event.pull_request.number }}
-
       - name: Post sticky pull request comment
         if: github.event_name == 'pull_request'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
             Review app deployed to ${{ steps.deploy.outputs.environment_url }}
+
+  deploy_nonprod:
+    name: Deploy to ${{ matrix.environment }} environment
+    runs-on: ubuntu-latest
+    needs: [docker]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    concurrency: deploy_${{ matrix.environment }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [dev, test, preprod]
+    environment:
+      name: ${{ matrix.environment }}
+      url: ${{ steps.deploy.outputs.environment_url }}
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: ${{ matrix.environment }}
+          docker_image: ${{ needs.docker.outputs.docker_image }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          terraform_vars: workspace_variables/${{ matrix.environment }}.tfvars.json
+      - uses: ./.github/workflows/actions/smoke-test
+        id: smoke-test
+        with:
+          environment: ${{ matrix.environment }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  deploy_production:
+    name: Deploy to production environment
+    needs: [docker, deploy_nonprod]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.environment_url }}
+    concurrency: deploy_production
+
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: production
+          docker_image: ${{ needs.docker.outputs.docker_image }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          terraform_vars: workspace_variables/production.tfvars.json
 
   deploy_environment:
     name: Deploy to ${{ github.event.inputs.environment }} environment
