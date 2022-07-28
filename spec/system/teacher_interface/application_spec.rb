@@ -37,7 +37,7 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     then_i_see_completed_personal_information_section
 
-    when_i_click_identity_documents
+    when_i_click_identity_document
     then_i_see_the_upload_identification_form
 
     when_i_fill_in_the_upload_identification_form
@@ -46,7 +46,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_no
     and_i_click_continue
-    then_i_see_completed_identity_documents_section
+    then_i_see_completed_identity_document_section
 
     when_i_click_age_range
     then_i_see_the_age_range_form
@@ -139,7 +139,7 @@ RSpec.describe "Teacher application", type: :system do
                 Rails.root.join(file_fixture("upload.pdf"))
   end
 
-  def when_i_click_identity_documents
+  def when_i_click_identity_document
     click_link "Upload your identity document"
   end
 
@@ -295,7 +295,7 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Enter your personal information\nCOMPLETED")
   end
 
-  def then_i_see_completed_identity_documents_section
+  def then_i_see_completed_identity_document_section
     expect(page).to have_content("Upload your identity document\nCOMPLETED")
   end
 
