@@ -10,6 +10,17 @@ en:
     url: https://apply-for-qts-in-england.education.gov.uk
     phase_banner_text: This is a new service – <a href="https://docs.google.com/forms/d/1OpMhXJ1blJu2qFqW7VWwKnfjIoU-5SmOLXdgI0Z_kZg/viewform?edit_requested=true">your feedback will help us to improve it</a>.
 
+  application_form:
+    tasks:
+      sections:
+        about_you: About you
+        qualifications: Your qualifications
+        work_history: Your work history
+      items:
+        personal_information: Enter personal information
+        age_range: Enter age range
+        work_history: Add work history
+
   activemodel:
     attributes:
       eligibility_check:
