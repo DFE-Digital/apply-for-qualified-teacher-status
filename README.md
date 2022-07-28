@@ -57,6 +57,7 @@ asdf plugin add ruby
 asdf plugin add nodejs
 asdf plugin add yarn
 asdf plugin add terraform
+asdf plugin add azure-cli
 
 # To install (or update, following a change to .tool-versions)
 asdf install
