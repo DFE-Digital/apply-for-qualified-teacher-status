@@ -9,18 +9,7 @@ module TeacherInterface
     end
 
     def create
-      attachment = params.dig(:upload, :attachment)
-      @upload = document.uploads.build(attachment:, translation: false)
-
-      if @upload.save
-        translated_attachment = params.dig(:upload, :translated_attachment)
-        if translated_attachment
-          document.uploads.create!(
-            attachment: translated_attachment,
-            translation: true
-          )
-        end
-
+      if save_uploads
         redirect_to_if_save_and_continue [
                                            :edit,
                                            :teacher_interface,
@@ -48,6 +37,29 @@ module TeacherInterface
 
     def load_upload
       @upload = document.uploads.find(params[:id])
+    end
+
+    def save_uploads
+      attachment = params.dig(:upload, :attachment)
+      @upload = document.uploads.build(attachment:, translation: false)
+      return unless @upload.valid?
+
+      if (translated_attachment = params.dig(:upload, :translated_attachment))
+        translated_upload =
+          document.uploads.build(
+            attachment: translated_attachment,
+            translation: true
+          )
+
+        unless translated_upload.save
+          @upload.errors[:translated_attachment] = translated_upload.errors[
+            :attachment
+          ]
+          return
+        end
+      end
+
+      @upload.save!
     end
   end
 end
