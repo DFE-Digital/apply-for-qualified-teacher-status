@@ -64,6 +64,10 @@ WORKDIR /app
 # Set Rails environment to production
 ENV RAILS_ENV=production
 
+# Add the commit sha to the env
+ARG SHA
+ENV SHA=$SHA
+
 # Add the timezone (prod image) as it's not configured by default in Alpine
 RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
