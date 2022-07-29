@@ -79,6 +79,7 @@ jobs:
           context: .
           push: false
           tags: ${{ steps.image.outputs.tag }}
+          build-args: SHA=${{ github.sha }}
 
       - name: Run Snyk to check Docker image for vulnerabilities
         if: github.actor != 'dependabot[bot]'
