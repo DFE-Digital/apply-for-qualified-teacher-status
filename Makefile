@@ -52,6 +52,7 @@ review:
 	$(eval env=-pr-$(pr_id))
 	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
 	$(eval export TF_VAR_app_suffix=$(env))
+	$(eval export TF_VAR_forms_storage_account_name=$(RESOURCE_NAME_PREFIX)afqtsformspr$(pr_id))
 
 read-keyvault-config:
 	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))

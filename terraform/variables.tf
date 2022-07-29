@@ -84,6 +84,20 @@ variable "statuscake_alerts" {
   default = {}
 }
 
+variable "forms_container_delete_retention_days" {
+  default = 7
+  type    = number
+}
+
+variable "forms_storage_account_name" {
+  default = null
+}
+
+variable "region_name" {
+  default = "west europe"
+  type    = string
+}
+
 locals {
   apply_qts_routes = flatten([
     cloudfoundry_route.apply_qts_public,
@@ -95,6 +109,7 @@ locals {
   postgres_database_name = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}-pg-svc"
   redis_database_name    = "apply-for-qts-in-england-${var.environment_name}${var.app_suffix}-redis-svc"
   logging_service_name   = "apply-for-qts-in-england-logit-ssl-drain-${var.environment_name}${var.app_suffix}"
+
   app_cloudfoundry_service_instances = [
     cloudfoundry_service_instance.postgres.id,
     cloudfoundry_service_instance.redis.id,
