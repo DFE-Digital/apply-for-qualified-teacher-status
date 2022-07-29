@@ -163,6 +163,7 @@ jobs:
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pr_id: ${{ github.event.pull_request.number }}
+
       - name: Post sticky pull request comment
         if: github.event_name == 'pull_request'
         uses: marocchino/sticky-pull-request-comment@v2
