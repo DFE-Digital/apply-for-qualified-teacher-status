@@ -25,7 +25,7 @@ class Teachers::ConfirmationsController < Devise::ConfirmationsController
 
   protected
 
-  def after_confirmation_path_for(resource_name, resource)
-    stored_location_for(resource) || super
+  def after_confirmation_path_for(_resource_name, _resource)
+    new_teacher_interface_application_form_path
   end
 end

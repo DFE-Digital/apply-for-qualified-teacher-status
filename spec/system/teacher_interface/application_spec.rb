@@ -8,7 +8,6 @@ RSpec.describe "Teacher application", type: :system do
     given_an_eligible_eligibility_check
 
     when_i_click_apply_for_qts
-    then_i_see_the_sign_in_form
     and_i_sign_up
     then_i_see_the_new_application_page
 
