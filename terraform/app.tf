@@ -12,6 +12,10 @@ locals {
     BIGQUERY_TABLE_NAME = local.bigquery_table_name,
 
     RAILS_SERVE_STATIC_FILES = "true"
+
+    AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.forms.name,
+    AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.forms.primary_access_key,
+    AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
   })
   logstash_endpoint = data.azurerm_key_vault_secret.secrets["LOGSTASH-ENDPOINT"].value
 }
