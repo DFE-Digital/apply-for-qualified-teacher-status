@@ -84,9 +84,6 @@ module SystemHelpers
   end
 
   def and_i_sign_up
-    choose "No, I need to create an account", visible: false
-    and_i_click_continue
-
     when_i_fill_teacher_email_address
     and_i_click_continue
     and_i_receive_a_teacher_confirmation_email
