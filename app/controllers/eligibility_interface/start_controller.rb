@@ -13,6 +13,11 @@ class EligibilityInterface::StartController < EligibilityInterface::BaseControll
   def create
     @eligibility_check = EligibilityCheck.new if eligibility_check.completed_at?
     eligibility_check.save!
-    redirect_to eligibility_interface_countries_path
+
+    if FeatureFlag.active?(:teacher_applications)
+      redirect_to :new_teacher_session
+    else
+      redirect_to :eligibility_interface_countries
+    end
   end
 end

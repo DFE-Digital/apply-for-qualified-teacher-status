@@ -21,6 +21,12 @@ module SystemHelpers
 
     visit "/eligibility/start"
     click_button "Start now"
+
+    if FeatureFlag.active?(:teacher_applications)
+      choose "No, I need to check my eligibility", visible: false
+      and_i_click_continue
+    end
+
     fill_in "eligibility-interface-country-form-location-field",
             with: "Scotland"
     click_button "Continue", visible: false
@@ -79,8 +85,12 @@ module SystemHelpers
 
   def then_i_see_the_sign_in_form
     expect(page).to have_current_path("/teacher/sign_in")
-    expect(page).to have_title("Create an account or sign in")
-    expect(page).to have_content("Create an account or sign in")
+    expect(page).to have_title(
+      "Apply for qualified teacher status (QTS) in England"
+    )
+    expect(page).to have_content("Have you used the service before?")
+    expect(page).to have_content("Yes, sign in and continue application")
+    expect(page).to have_content("No, I need to check my eligibility")
   end
 
   def and_i_sign_up

@@ -7,7 +7,7 @@ class Teachers::SessionsController < Devise::SessionsController
 
   def create
     if resource_params[:create_or_sign_in] == "create"
-      redirect_to :new_teacher_registration
+      redirect_to :eligibility_interface_countries
       return
     end
 
