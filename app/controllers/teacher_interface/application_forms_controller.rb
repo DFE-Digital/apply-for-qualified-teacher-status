@@ -41,7 +41,8 @@ class TeacherInterface::ApplicationFormsController < TeacherInterface::BaseContr
   def application_form_params
     {
       teacher: current_teacher,
-      eligibility_check_id: session[:eligibility_check_id]
+      eligibility_check_id: session[:eligibility_check_id],
+      region_id: EligibilityCheck.find(session[:eligibility_check_id]).region_id
     }
   end
 end
