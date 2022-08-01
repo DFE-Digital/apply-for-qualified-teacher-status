@@ -12,6 +12,7 @@
 #  given_names             :text             default(""), not null
 #  has_alternative_name    :boolean
 #  reference               :string(31)       not null
+#  registration_number     :text
 #  status                  :string           default("active"), not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
@@ -45,6 +46,10 @@ FactoryBot.define do
       given_names { "Given names" }
       family_name { "Family name" }
       date_of_birth { Date.new(2000, 1, 1) }
+    end
+
+    trait :with_registration_number do
+      registration_number { "12345689" }
     end
   end
 end
