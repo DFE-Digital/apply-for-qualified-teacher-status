@@ -39,7 +39,7 @@ RSpec.describe "Teacher documents", type: :system do
   end
 
   def given_an_active_application
-    given_an_eligible_eligibility_check
+    given_an_eligible_eligibility_check_with_written_country_checks
     click_link "Apply for QTS"
     and_i_sign_up
     click_button "Continue"

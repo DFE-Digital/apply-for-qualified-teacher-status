@@ -1,17 +1,21 @@
 require "rails_helper"
 
 RSpec.describe "Teacher application", type: :system do
-  it "allows making an application" do
+  before do
     given_the_service_is_open
     given_the_service_is_startable
     given_the_service_allows_teacher_applications
-    given_an_eligible_eligibility_check
+  end
+
+  it "allows making an application for a country with no checks" do
+    given_an_eligible_eligibility_check_with_none_country_checks
 
     when_i_click_apply_for_qts
     and_i_sign_up
     then_i_see_the_new_application_page
     and_i_click_continue
     then_i_see_the_active_application_page
+    and_i_see_the_work_history_is_not_started
 
     when_i_click_personal_information
     then_i_see_the_name_and_date_of_birth_form
@@ -66,6 +70,125 @@ RSpec.describe "Teacher application", type: :system do
     when_i_choose_no
     and_i_click_continue
     then_i_see_completed_work_history_section
+
+    when_i_click_check_your_answers
+    then_i_see_the_check_your_answers_page
+
+    when_i_click_submit
+    then_i_see_the_submitted_application_page
+  end
+
+  it "allows making an application for a country with online checks" do
+    given_an_eligible_eligibility_check_with_online_country_checks
+
+    when_i_click_apply_for_qts
+    and_i_sign_up
+    then_i_see_the_new_application_page
+    and_i_click_continue
+    then_i_see_the_active_application_page
+
+    when_i_click_personal_information
+    then_i_see_the_name_and_date_of_birth_form
+
+    when_i_fill_in_the_name_and_date_of_birth_form
+    and_i_click_continue
+    then_i_see_the_alternative_name_form
+
+    when_i_fill_in_the_alternative_name_form
+    and_i_click_continue
+    then_i_see_the_upload_name_change_form
+
+    when_i_fill_in_the_upload_name_change_form
+    and_i_click_continue
+    then_i_see_the_check_your_name_change_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_personal_information_summary
+
+    when_i_click_continue
+    then_i_see_completed_personal_information_section
+
+    when_i_click_identity_document
+    then_i_see_the_upload_identification_form
+
+    when_i_fill_in_the_upload_identification_form
+    and_i_click_continue
+    then_i_see_the_check_your_identification_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_completed_identity_document_section
+
+    when_i_click_age_range
+    then_i_see_the_age_range_form
+
+    when_i_fill_in_age_range
+    and_i_click_continue
+    then_i_see_the_age_range_summary
+
+    when_i_click_continue
+    then_i_see_completed_age_range_section
+
+    when_i_click_check_your_answers
+    then_i_see_the_check_your_answers_page
+
+    when_i_click_submit
+    then_i_see_the_submitted_application_page
+  end
+
+  it "allows making an application for a country with written checks" do
+    given_an_eligible_eligibility_check_with_written_country_checks
+
+    when_i_click_apply_for_qts
+    and_i_sign_up
+    then_i_see_the_new_application_page
+    and_i_click_continue
+    then_i_see_the_active_application_page
+    and_i_see_the_written_statement_is_not_started
+
+    when_i_click_personal_information
+    then_i_see_the_name_and_date_of_birth_form
+
+    when_i_fill_in_the_name_and_date_of_birth_form
+    and_i_click_continue
+    then_i_see_the_alternative_name_form
+
+    when_i_fill_in_the_alternative_name_form
+    and_i_click_continue
+    then_i_see_the_upload_name_change_form
+
+    when_i_fill_in_the_upload_name_change_form
+    and_i_click_continue
+    then_i_see_the_check_your_name_change_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_personal_information_summary
+
+    when_i_click_continue
+    then_i_see_completed_personal_information_section
+
+    when_i_click_identity_document
+    then_i_see_the_upload_identification_form
+
+    when_i_fill_in_the_upload_identification_form
+    and_i_click_continue
+    then_i_see_the_check_your_identification_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_completed_identity_document_section
+
+    when_i_click_age_range
+    then_i_see_the_age_range_form
+
+    when_i_fill_in_age_range
+    and_i_click_continue
+    then_i_see_the_age_range_summary
+
+    when_i_click_continue
+    then_i_see_completed_age_range_section
 
     when_i_click_written_statement
     then_i_see_the_upload_written_statement_form
@@ -196,8 +319,6 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_title("Apply for qualified teacher status (QTS)")
     expect(page).to have_content("Apply for qualified teacher status (QTS)")
 
-    expect(page).to have_content("You have completed 0 of 4 sections.")
-
     expect(page).to have_content("About you")
     expect(page).to have_content("Enter your personal information\nNOT STARTED")
     expect(page).to have_content("Upload your identity document\nNOT STARTED")
@@ -205,13 +326,17 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Your qualifications")
     expect(page).to have_content("Enter your age range\nNOT STARTED")
 
+    expect(page).to have_content("Check your answers")
+  end
+
+  def and_i_see_the_work_history_is_not_started
     expect(page).to have_content("Your work history")
     expect(page).to have_content("Add your work history\nNOT STARTED")
+  end
 
+  def and_i_see_the_written_statement_is_not_started
     expect(page).to have_content("Proof that you’re recognised as a teacher")
     expect(page).to have_content("Upload your written statement\nNOT STARTED")
-
-    expect(page).to have_content("Check your answers")
   end
 
   def then_i_see_the_name_and_date_of_birth_form
