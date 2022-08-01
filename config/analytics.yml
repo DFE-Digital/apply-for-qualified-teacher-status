@@ -47,7 +47,6 @@
     - reference
     - status
     - teacher_id
-    - eligibility_check_id
     - region_id
     - created_at
     - updated_at

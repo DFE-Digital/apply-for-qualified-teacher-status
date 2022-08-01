@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_01_091806) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_01_093628) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,7 +46,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_01_091806) do
     t.string "reference", limit: 31, null: false
     t.string "status", default: "active", null: false
     t.bigint "teacher_id", null: false
-    t.bigint "eligibility_check_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "given_names", default: "", null: false
@@ -58,7 +57,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_01_091806) do
     t.text "alternative_given_names", default: "", null: false
     t.text "alternative_family_name", default: "", null: false
     t.bigint "region_id", null: false
-    t.index ["eligibility_check_id"], name: "index_application_forms_on_eligibility_check_id"
     t.index ["reference"], name: "index_application_forms_on_reference", unique: true
     t.index ["region_id"], name: "index_application_forms_on_region_id"
     t.index ["status"], name: "index_application_forms_on_status"
@@ -198,7 +196,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_01_091806) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "application_forms", "eligibility_checks"
   add_foreign_key "application_forms", "regions"
   add_foreign_key "application_forms", "teachers"
   add_foreign_key "eligibility_checks", "regions"
