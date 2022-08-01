@@ -12,6 +12,7 @@
 #  given_names             :text             default(""), not null
 #  has_alternative_name    :boolean
 #  reference               :string(31)       not null
+#  registration_number     :text
 #  status                  :string           default("active"), not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null

@@ -58,6 +58,7 @@
     - has_alternative_name
     - alternative_given_names
     - alternative_family_name
+    - registration_number
   :work_histories:
     - id
     - application_form_id
