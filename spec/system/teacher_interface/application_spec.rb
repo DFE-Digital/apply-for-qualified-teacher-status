@@ -10,8 +10,7 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_apply_for_qts
     and_i_sign_up
     then_i_see_the_new_application_page
-
-    when_i_click_start_now
+    and_i_click_continue
     then_i_see_the_active_application_page
 
     when_i_click_personal_information
@@ -182,8 +181,12 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_the_new_application_page
     expect(page).to have_current_path("/teacher/applications/new")
-    expect(page).to have_title("Start your application")
-    expect(page).to have_content("Start your application")
+    expect(page).to have_title(
+      "In which country are you currently recognised as a teacher?"
+    )
+    expect(page).to have_content(
+      "In which country are you currently recognised as a teacher?"
+    )
   end
 
   def then_i_see_the_active_application_page

@@ -42,7 +42,7 @@ RSpec.describe "Teacher documents", type: :system do
     given_an_eligible_eligibility_check
     click_link "Apply for QTS"
     and_i_sign_up
-    click_button "Start now"
+    click_button "Continue"
   end
 
   def when_i_click_written_statement

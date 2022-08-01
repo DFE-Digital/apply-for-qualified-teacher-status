@@ -10,6 +10,12 @@ var loadCountryAutoComplete = () => {
     ) ??
     document.getElementById(
       "eligibility-interface-country-form-location-field-error"
+    ) ??
+    document.getElementById(
+      "teacher-interface-country-region-form-location-field"
+    ) ??
+    document.getElementById(
+      "teacher-interface-country-region-form-location-field-error"
     );
 
   if (locationPicker) {
