@@ -112,7 +112,7 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_title("Preview California")
     expect(page).to have_content("You’re eligible to apply")
     expect(page).to have_content("Preparing to apply")
-    expect(page).to have_content("You might need to provide translations")
+    expect(page).to have_content("Providing certified translations")
   end
 
   def when_i_fill_regions
