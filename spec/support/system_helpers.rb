@@ -15,9 +15,9 @@ module SystemHelpers
     FeatureFlag.activate(:teacher_applications)
   end
 
-  def given_an_eligible_eligibility_check
+  def given_an_eligible_eligibility_check(country_check:)
     country = create(:country, :with_national_region, code: "GB-SCT")
-    country.regions.first.update!(status_check: :written)
+    country.regions.first.update!(status_check: country_check, sanction_check: country_check)
 
     visit "/eligibility/start"
     click_button "Start now"
@@ -38,6 +38,18 @@ module SystemHelpers
     click_button "Continue", visible: false
     choose "No", visible: false
     click_button "Continue", visible: false
+  end
+
+  def given_an_eligible_eligibility_check_with_none_country_checks
+    given_an_eligible_eligibility_check(country_check: :none)
+  end
+
+  def given_an_eligible_eligibility_check_with_online_country_checks
+    given_an_eligible_eligibility_check(country_check: :online)
+  end
+
+  def given_an_eligible_eligibility_check_with_written_country_checks
+    given_an_eligible_eligibility_check(country_check: :written)
   end
 
   def when_i_am_authorized_as_a_support_user
