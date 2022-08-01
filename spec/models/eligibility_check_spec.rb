@@ -23,6 +23,18 @@ require "rails_helper"
 RSpec.describe EligibilityCheck, type: :model do
   let(:eligibility_check) { EligibilityCheck.new }
 
+  describe "#location" do
+    subject(:location) { eligibility_check.location }
+
+    it { is_expected.to be_nil }
+
+    context "with a country code" do
+      before { eligibility_check.country_code = "GB-SCT" }
+
+      it { is_expected.to eq("country:GB-SCT") }
+    end
+  end
+
   describe "#ineligible_reasons" do
     subject(:ineligible_reasons) { eligibility_check.ineligible_reasons }
 
