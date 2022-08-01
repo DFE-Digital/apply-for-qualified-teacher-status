@@ -2,6 +2,8 @@
 
 <h1 class="govuk-heading-l">Your applications</h1>
 
+<%= govuk_button_link_to "Start new application", new_teacher_interface_application_form_path %>
+
 <%= govuk_table do |table|
   table.caption(size: 'm', text: 'List of applications')
 
