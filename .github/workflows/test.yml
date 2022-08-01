@@ -56,4 +56,4 @@ jobs:
         run: bin/bundle exec rails dfe:analytics:check
 
       - name: Run tests
-        run: bin/bundle exec rspec --format documentation
+        run: bin/test
