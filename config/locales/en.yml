@@ -22,6 +22,7 @@ en:
         identity_document: Upload your identity document
         age_range: Enter your age range
         work_history: Add your work history
+        registration_number: Enter your registration number
         written_statement: Upload your written statement
 
   eligibility_check:

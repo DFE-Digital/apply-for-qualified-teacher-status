@@ -91,6 +91,9 @@ Rails.application.routes.draw do
 
       resource :age_range, controller: :age_range, only: %i[show edit update]
       resources :work_histories, except: %i[show]
+      resource :registration_number,
+               controller: :registration_number,
+               only: %i[show edit update]
 
       resources :documents, only: %i[edit update] do
         resources :uploads, only: %i[new create destroy] do

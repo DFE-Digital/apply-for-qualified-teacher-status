@@ -86,6 +86,7 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_new_application_page
     and_i_click_continue
     then_i_see_the_active_application_page
+    and_i_see_the_registration_number_is_not_started
 
     when_i_click_personal_information
     then_i_see_the_name_and_date_of_birth_form
@@ -129,6 +130,16 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_continue
     then_i_see_completed_age_range_section
+
+    when_i_click_registration_number
+    then_i_see_the_registration_number_form
+
+    when_i_fill_in_registration_number
+    and_i_click_continue
+    then_i_see_the_registration_number_summary
+
+    when_i_click_continue
+    then_i_see_completed_registration_number_section
 
     when_i_click_check_your_answers
     then_i_see_the_check_your_answers_page
@@ -293,6 +304,15 @@ RSpec.describe "Teacher application", type: :system do
     choose "Yes", visible: false
   end
 
+  def when_i_click_registration_number
+    click_link "Enter your registration number"
+  end
+
+  def when_i_fill_in_registration_number
+    fill_in "teacher-interface-registration-number-form-registration-number-field",
+            with: "ABC"
+  end
+
   def when_i_click_written_statement
     click_link "Upload your written statement"
   end
@@ -337,6 +357,11 @@ RSpec.describe "Teacher application", type: :system do
   def and_i_see_the_written_statement_is_not_started
     expect(page).to have_content("Proof that you’re recognised as a teacher")
     expect(page).to have_content("Upload your written statement\nNOT STARTED")
+  end
+
+  def and_i_see_the_registration_number_is_not_started
+    expect(page).to have_content("Proof that you’re recognised as a teacher")
+    expect(page).to have_content("Enter your registration number\nNOT STARTED")
   end
 
   def then_i_see_the_name_and_date_of_birth_form
@@ -394,6 +419,11 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Your current or most recent role")
   end
 
+  def then_i_see_the_registration_number_form
+    expect(page).to have_title("Registration number")
+    expect(page).to have_content("What is your registration number?")
+  end
+
   def then_i_see_the_upload_written_statement_form
     expect(page).to have_title("Upload a document")
     expect(page).to have_content("Upload your written statement")
@@ -448,6 +478,15 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_completed_work_history_section
     expect(page).to have_content("Add your work history\nCOMPLETED")
+  end
+
+  def then_i_see_the_registration_number_summary
+    expect(page).to have_content("Registration number")
+    expect(page).to have_content("Registration number\tABC")
+  end
+
+  def then_i_see_completed_registration_number_section
+    expect(page).to have_content("Enter your registration number\nCOMPLETED")
   end
 
   def then_i_see_completed_written_statement_section
