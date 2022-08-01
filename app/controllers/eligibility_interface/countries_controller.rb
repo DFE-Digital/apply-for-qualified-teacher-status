@@ -30,11 +30,5 @@ module EligibilityInterface
     def location_form_params
       params.require(:eligibility_interface_country_form).permit(:location)
     end
-
-    def locations
-      Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST
-    end
-
-    helper_method :locations
   end
 end
