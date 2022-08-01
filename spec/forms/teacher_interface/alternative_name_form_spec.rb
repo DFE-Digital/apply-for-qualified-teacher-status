@@ -37,7 +37,7 @@ RSpec.describe TeacherInterface::AlternativeNameForm, type: :model do
 
     before { form.save }
 
-    it "saves the eligibility check" do
+    it "saves the application form" do
       expect(application_form.has_alternative_name).to eq(true)
       expect(application_form.alternative_given_names).to eq("Given")
       expect(application_form.alternative_family_name).to eq("Family")

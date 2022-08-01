@@ -37,7 +37,7 @@ RSpec.describe TeacherInterface::AgeRangeForm, type: :model do
 
     before { form.save }
 
-    it "saves the eligibility check" do
+    it "saves the application form" do
       expect(application_form.age_range_min).to eq(7)
       expect(application_form.age_range_max).to eq(11)
     end
