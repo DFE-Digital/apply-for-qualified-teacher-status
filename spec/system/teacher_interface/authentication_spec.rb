@@ -44,6 +44,9 @@ RSpec.describe "Teacher authentication", type: :system do
 
     when_i_visit_the_magic_link_email
     then_i_see_successful_magic_link_message
+
+    when_i_click_sign_out
+    then_i_see_the_signed_out_message
   end
 
   it "sign up with invalid email address" do
@@ -108,6 +111,10 @@ RSpec.describe "Teacher authentication", type: :system do
     choose "Yes, sign in", visible: false
   end
 
+  def when_i_click_sign_out
+    click_link "Sign out"
+  end
+
   def then_i_see_the_sign_up_form
     expect(page).to have_current_path("/teacher/sign_up")
     expect(page).to have_title("Create an account")
@@ -131,6 +138,10 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def then_i_see_the_blank_email_address_message
     expect(page).to have_content("Enter your email address")
+  end
+
+  def then_i_see_the_signed_out_message
+    expect(page).to have_content("Signed out successfully.")
   end
 
   alias_method :and_i_fill_teacher_email_address,
