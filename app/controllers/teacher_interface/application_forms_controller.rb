@@ -7,12 +7,12 @@ class TeacherInterface::ApplicationFormsController < TeacherInterface::BaseContr
   end
 
   def new
-    @application_form = ApplicationForm.new
+    @application_form = ApplicationForm.new(application_form_params)
   end
 
   def create
-    @application_form = ApplicationForm.new
-    if @application_form.update(application_form_params)
+    @application_form = ApplicationForm.new(application_form_params)
+    if @application_form.save
       redirect_to teacher_interface_application_form_path(@application_form)
     else
       flash[:warning] = "Could not start application."
@@ -41,8 +41,8 @@ class TeacherInterface::ApplicationFormsController < TeacherInterface::BaseContr
   def application_form_params
     {
       teacher: current_teacher,
-      eligibility_check_id: session[:eligibility_check_id],
-      region_id: EligibilityCheck.find(session[:eligibility_check_id]).region_id
+      region_id:
+        EligibilityCheck.find_by(id: session[:eligibility_check_id])&.region_id
     }
   end
 end
