@@ -33,6 +33,10 @@ class Teachers::SessionsController < Devise::SessionsController
 
   protected
 
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) || teacher_interface_root_path
+  end
+
   def translation_scope
     if action_name == "create"
       "devise.passwordless"
