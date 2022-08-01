@@ -34,11 +34,19 @@ class StaffHttpBasicAuthStrategy < Warden::Strategies::Base
 
   ANONYMOUS_SUPPORT_USER = AnonymousSupportUser.new
 
+  def valid_users
+    [{ username: SUPPORT_USERNAME, password: SUPPORT_PASSWORD }]
+  end
+
   def credentials_valid?(auth)
     return false unless auth.provided? && auth.basic? && auth.credentials
 
-    valid_comparison?(SUPPORT_USERNAME, auth.credentials.first) &&
-      valid_comparison?(SUPPORT_PASSWORD, auth.credentials.last)
+    valid_users
+      .find do |user|
+        valid_comparison?(user[:username], auth.credentials.first) &&
+          valid_comparison?(user[:password], auth.credentials.last)
+      end
+      .present?
   end
 
   def valid_comparison?(correct_value, given_value)
