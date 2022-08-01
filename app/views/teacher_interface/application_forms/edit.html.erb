@@ -14,6 +14,7 @@
 <%= render "teacher_interface/work_histories/summary", application_form: @application_form, work_histories: @application_form.work_histories %>
 
 <h2 class="govuk-heading-m">Proof that you’re recognised as a teacher</h2>
+<%= render "teacher_interface/registration_number/summary", application_form: @application_form %>
 <%= render "teacher_interface/written_statement/summary", application_form: @application_form %>
 
 <% if @application_form.can_submit? %>
