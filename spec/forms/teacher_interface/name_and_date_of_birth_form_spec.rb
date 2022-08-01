@@ -43,7 +43,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
 
     before { form.save }
 
-    it "saves the eligibility check" do
+    it "saves the application form" do
       expect(application_form.given_names).to eq("Given")
       expect(application_form.family_name).to eq("Family")
       expect(application_form.date_of_birth).to eq(Date.new(2000, 1, 1))
