@@ -82,20 +82,7 @@ RSpec.describe ApplicationForm, type: :model do
   describe "#tasks" do
     subject(:tasks) { application_form.tasks }
 
-    context "with a country that doesn't need work history or a written statement" do
-      before { application_form.region = create(:region, :online_checks) }
-
-      it do
-        is_expected.to eq(
-          {
-            about_you: %i[personal_information identity_document],
-            qualifications: %i[age_range]
-          }
-        )
-      end
-    end
-
-    context "with a country that needs work history" do
+    context "with no checks" do
       before { application_form.region = create(:region, :none_checks) }
 
       it do
@@ -109,7 +96,7 @@ RSpec.describe ApplicationForm, type: :model do
       end
     end
 
-    context "with a country that needs a written statement" do
+    context "with written checks" do
       before { application_form.region = create(:region, :written_checks) }
 
       it do
@@ -122,15 +109,24 @@ RSpec.describe ApplicationForm, type: :model do
         )
       end
     end
+
+    context "with online checks" do
+      before { application_form.region = create(:region, :online_checks) }
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: %i[personal_information identity_document],
+            qualifications: %i[age_range],
+            proof_of_recognition: %i[registration_number]
+          }
+        )
+      end
+    end
   end
 
   describe "#task_statuses" do
     subject(:task_statuses) { application_form.task_statuses }
-
-    before do
-      application_form.region =
-        create(:region, status_check: :none, sanction_check: :written)
-    end
 
     it do
       is_expected.to eq(
@@ -144,12 +140,51 @@ RSpec.describe ApplicationForm, type: :model do
           },
           work_history: {
             work_history: :not_started
-          },
-          proof_of_recognition: {
-            written_statement: :not_started
           }
         }
       )
+    end
+
+    context "with written checks" do
+      before { application_form.region = create(:region, :written_checks) }
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: {
+              personal_information: :not_started,
+              identity_document: :not_started
+            },
+            qualifications: {
+              age_range: :not_started
+            },
+            proof_of_recognition: {
+              written_statement: :not_started
+            }
+          }
+        )
+      end
+    end
+
+    context "with online checks" do
+      before { application_form.region = create(:region, :online_checks) }
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: {
+              personal_information: :not_started,
+              identity_document: :not_started
+            },
+            qualifications: {
+              age_range: :not_started
+            },
+            proof_of_recognition: {
+              registration_number: :not_started
+            }
+          }
+        )
+      end
     end
 
     describe "about you section" do
@@ -269,7 +304,9 @@ RSpec.describe ApplicationForm, type: :model do
         task_statuses[:proof_of_recognition]
       end
 
-      describe "written statement subsection" do
+      describe "written statement item" do
+        before { application_form.region = create(:region, :written_checks) }
+
         subject(:written_statement_status) do
           proof_of_recognition_status[:written_statement]
         end
@@ -285,6 +322,24 @@ RSpec.describe ApplicationForm, type: :model do
               document: application_form.written_statement_document
             )
           end
+
+          it { is_expected.to eq(:completed) }
+        end
+      end
+
+      describe "registration number item" do
+        before { application_form.region = create(:region, :online_checks) }
+
+        subject(:registration_number_status) do
+          proof_of_recognition_status[:registration_number]
+        end
+
+        context "without a registration number" do
+          it { is_expected.to eq(:not_started) }
+        end
+
+        context "with a registration number" do
+          before { application_form.update!(registration_number: "ABC") }
 
           it { is_expected.to eq(:completed) }
         end

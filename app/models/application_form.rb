@@ -76,9 +76,16 @@ class ApplicationForm < ApplicationRecord
         hash.merge!(about_you: %i[personal_information identity_document])
         hash.merge!(qualifications: %i[age_range])
         hash.merge!(work_history: %i[work_history]) if needs_work_history?
-        if needs_written_statement?
-          hash.merge!(proof_of_recognition: %i[written_statement])
+
+        if needs_written_statement? || needs_registration_number?
+          hash.merge!(
+            proof_of_recognition: [
+              needs_registration_number? ? :registration_number : nil,
+              needs_written_statement? ? :written_statement : nil
+            ].compact
+          )
         end
+
         hash
       end
   end
@@ -146,6 +153,10 @@ class ApplicationForm < ApplicationRecord
     region.status_check_none? || region.sanction_check_none?
   end
 
+  def needs_registration_number?
+    region.status_check_online? || region.sanction_check_online?
+  end
+
   def needs_written_statement?
     region.status_check_written? || region.sanction_check_written?
   end
@@ -164,6 +175,8 @@ class ApplicationForm < ApplicationRecord
         return :completed
       end
       :in_progress
+    when :registration_number
+      registration_number.nil? ? :not_started : :completed
     when :written_statement
       written_statement_document.uploaded? ? :completed : :not_started
     else
