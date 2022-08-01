@@ -3,6 +3,12 @@ module EligibilityInterface
     before_action :load_region
     after_action :save_eligibility_check_id
 
+    http_basic_authenticate_with name: ENV.fetch("TEST_USERNAME", "test"),
+                                 password: ENV.fetch("TEST_PASSWORD", "test"),
+                                 unless: -> {
+                                   FeatureFlag.active?(:service_open)
+                                 }
+
     def eligibility_check
       @eligibility_check ||=
         if session[:eligibility_check_id]
