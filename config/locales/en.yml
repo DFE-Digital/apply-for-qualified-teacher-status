@@ -24,6 +24,14 @@ en:
         work_history: Add your work history
         written_statement: Upload your written statement
 
+  eligibility_check:
+    country:
+      label: In which country are you currently recognised as a teacher?
+      hint: This means you have all the qualifications needed to teach in a state school. You'll need to provide evidence of this if you apply for QTS.
+    region:
+      label: In which state/territory are you currently recognised as a teacher?
+      hint: This means you have all the qualifications needed to teach in a state school. You'll need to provide evidence of this if you apply for QTS.
+
   activemodel:
     attributes:
       eligibility_check:

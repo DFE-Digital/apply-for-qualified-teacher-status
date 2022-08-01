@@ -1,18 +1,16 @@
-<% content_for :page_title, "#{'Error: ' if @region_form.errors.any?}In which state/territory are you currently recognised as a teacher?" %>
+<% content_for :page_title, "#{'Error: ' if @region_form.errors.any?}#{I18n.t('eligibility_check.region.label')}" %>
 <% content_for :back_link_url, back_link_url(eligibility_interface_countries_url) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @region_form, url: eligibility_interface_region_url, method: :post do |f| %>
       <%= f.govuk_error_summary %>
-      <%= f.govuk_collection_radio_buttons(
-        :region_id,
-        @regions,
-        :id,
-        :name,
-        legend: { size: 'l', tag: 'h1', text: 'In which state/territory are you currently recognised as a teacher?' },
-        hint: { text: "This means you have all the qualifications needed to teach in a state school. You'll need to provide evidence of this if you apply for QTS." }
-      ) %>
+      <%= f.govuk_collection_radio_buttons :region_id,
+                                           @regions,
+                                           :id,
+                                           :name,
+                                           legend: { text: I18n.t("eligibility_check.region.label"), size: "l", tag: "h1" },
+                                           hint: { text: I18n.t("eligibility_check.region.hint") } %>
       <%= f.govuk_submit prevent_double_click: false %>
     <% end %>
   </div>
