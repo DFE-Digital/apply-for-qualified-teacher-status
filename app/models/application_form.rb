@@ -11,6 +11,7 @@
 #  family_name             :text             default(""), not null
 #  given_names             :text             default(""), not null
 #  has_alternative_name    :boolean
+#  has_work_history        :boolean
 #  reference               :string(31)       not null
 #  registration_number     :text
 #  status                  :string           default("active"), not null
