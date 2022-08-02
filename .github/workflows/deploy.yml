@@ -93,29 +93,6 @@ jobs:
       - name: Push docker image
         run: docker image push ${{ steps.image.outputs.tag }}
 
-  deploy_dev:
-    name: Deploy to dev environment
-    needs: [docker]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment:
-      name: dev
-      url: ${{ steps.deploy.outputs.environment_url }}
-    concurrency: deploy_dev
-
-    outputs:
-      environment_url: ${{ steps.deploy.outputs.environment_url }}
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/actions/deploy-environment
-        id: deploy
-        with:
-          environment_name: dev
-          docker_image: ${{ needs.docker.outputs.docker_image }}
-          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          terraform_vars: workspace_variables/dev.tfvars.json
-
   deploy_review:
     name: Deploy to review environment
     concurrency: deploy_review_${{ github.event.pull_request.number }}
