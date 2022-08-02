@@ -158,9 +158,6 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_do_not_see_the_start_page
 
     when_i_am_authorized_as_a_support_user
-    when_i_visit_the_start_page
-    then_i_see_the_start_page
-
     given_the_service_is_open
     when_i_visit_the_start_page
     then_i_see_the_start_page
@@ -171,6 +168,20 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_visit_the_start_page
     then_i_do_not_see_the_start_page
     then_i_see_the_legacy_service
+  end
+
+  it "test user is disabled" do
+    given_the_test_user_is_disabled
+    when_i_visit_the_start_page
+    then_i_do_not_see_the_start_page
+
+    when_i_am_authorized_as_a_test_user
+    when_i_visit_the_start_page
+    then_i_see_the_start_page
+
+    given_the_test_user_is_enabled
+    when_i_visit_the_start_page
+    then_i_see_the_start_page
   end
 
   private

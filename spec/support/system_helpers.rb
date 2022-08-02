@@ -57,9 +57,24 @@ module SystemHelpers
 
   def when_i_am_authorized_as_a_support_user
     page.driver.basic_authorize(
-      ENV.fetch("SUPPORT_USERNAME", "test"),
-      ENV.fetch("SUPPORT_PASSWORD", "test")
+      ENV.fetch("SUPPORT_USERNAME", "support"),
+      ENV.fetch("SUPPORT_PASSWORD", "support")
     )
+  end
+
+  def when_i_am_authorized_as_a_test_user
+    page.driver.basic_authorize(
+      ENV.fetch("TEST_USERNAME", "test"),
+      ENV.fetch("TEST_PASSWORD", "test")
+    )
+  end
+
+  def given_the_test_user_is_disabled
+    FeatureFlag.deactivate(:staff_test_user)
+  end
+
+  def given_the_test_user_is_enabled
+    FeatureFlag.activate(:staff_test_user)
   end
 
   def when_i_choose_yes
