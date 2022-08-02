@@ -55,7 +55,9 @@ RSpec.describe StaffHttpBasicAuthStrategy do
 
     context "with valid credentials" do
       let(:env) do
-        { "HTTP_AUTHORIZATION" => "Basic #{Base64.encode64("test:test")}" }
+        {
+          "HTTP_AUTHORIZATION" => "Basic #{Base64.encode64("support:support")}"
+        }
       end
 
       it "should be successful" do
