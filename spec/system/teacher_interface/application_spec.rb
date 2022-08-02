@@ -61,6 +61,10 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_completed_age_range_section
 
     when_i_click_work_history
+    then_i_see_the_has_work_history_form
+
+    when_i_fill_in_has_work_history
+    and_i_click_continue
     then_i_see_the_work_history_form
 
     when_i_fill_in_work_history
@@ -293,6 +297,10 @@ RSpec.describe "Teacher application", type: :system do
     click_link "Add your work history"
   end
 
+  def when_i_fill_in_has_work_history
+    choose "Yes", visible: false
+  end
+
   def when_i_fill_in_work_history
     fill_in "work-history-school-name-field", with: "School name"
     fill_in "work-history-city-field", with: "City"
@@ -413,6 +421,13 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("To")
   end
 
+  def then_i_see_the_has_work_history_form
+    expect(page).to have_title("Your work history in education")
+    expect(page).to have_content("Have you worked professionally as a teacher?")
+    expect(page).to have_content("Yes")
+    expect(page).to have_content("No")
+  end
+
   def then_i_see_the_work_history_form
     expect(page).to have_title("Your work history in education")
     expect(page).to have_content("Your work history in education")
@@ -467,6 +482,10 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_work_history_summary
+    expect(page).to have_content("Work history")
+    expect(page).to have_content(
+      "Have you worked professionally as a teacher?\tYes"
+    )
     expect(page).to have_content("Your current or most recent role")
     expect(page).to have_content("School name\tSchool name")
     expect(page).to have_content("City of institution\tCity")

@@ -3,15 +3,17 @@
 
 <%= render "heading" %>
 
-<h2 class="govuk-heading-m">Work history</h2>
-
 <%= render "summary", application_form: @application_form, work_histories: @work_histories %>
 
-<%= form_with url: [:teacher_interface, @application_form, :work_histories] do |f| %>
-  <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: "Add another workplace?" } do %>
-    <%= f.govuk_radio_button :add_another, "true", label: { text: "Yes" } %>
-    <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
-  <% end %>
+<% if @application_form.has_work_history? %>
+  <%= form_with url: [:teacher_interface, @application_form, :work_histories] do |f| %>
+    <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: @work_histories.empty? ? "Add a workplace?" : "Add another workplace?" } do %>
+      <%= f.govuk_radio_button :add_another, "true", label: { text: "Yes" } %>
+      <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
+    <% end %>
 
-  <%= f.govuk_submit "Continue", prevent_double_click: false %>
+    <%= f.govuk_submit "Continue", prevent_double_click: false %>
+  <% end %>
+<% else %>
+  <%= govuk_button_link_to "Continue", teacher_interface_application_form_path(@application_form) %>
 <% end %>

@@ -11,6 +11,7 @@
 #  family_name             :text             default(""), not null
 #  given_names             :text             default(""), not null
 #  has_alternative_name    :boolean
+#  has_work_history        :boolean
 #  reference               :string(31)       not null
 #  registration_number     :text
 #  status                  :string           default("active"), not null
@@ -285,16 +286,26 @@ RSpec.describe ApplicationForm, type: :model do
           it { is_expected.to eq(:not_started) }
         end
 
-        context "with some incomplete work history" do
-          before { create(:work_history, application_form:) }
-
-          it { is_expected.to eq(:in_progress) }
-        end
-
-        context "with all complete work history" do
-          before { create(:work_history, :completed, application_form:) }
+        context "with no work history required" do
+          before { application_form.update!(has_work_history: false) }
 
           it { is_expected.to eq(:completed) }
+        end
+
+        context "with work history required" do
+          before { application_form.update!(has_work_history: true) }
+
+          context "with some incomplete work history" do
+            before { create(:work_history, application_form:) }
+
+            it { is_expected.to eq(:in_progress) }
+          end
+
+          context "with all complete work history" do
+            before { create(:work_history, :completed, application_form:) }
+
+            it { is_expected.to eq(:completed) }
+          end
         end
       end
     end

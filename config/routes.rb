@@ -90,7 +90,14 @@ Rails.application.routes.draw do
       end
 
       resource :age_range, controller: :age_range, only: %i[show edit update]
-      resources :work_histories, except: %i[show]
+
+      resources :work_histories, except: %i[show] do
+        collection do
+          get "has_work_history", to: "work_histories#edit_has_work_history"
+          post "has_work_history", to: "work_histories#update_has_work_history"
+        end
+      end
+
       resource :registration_number,
                controller: :registration_number,
                only: %i[show edit update]
