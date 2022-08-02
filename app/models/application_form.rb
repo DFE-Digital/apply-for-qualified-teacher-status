@@ -171,11 +171,7 @@ class ApplicationForm < ApplicationRecord
     when :age_range
       status_for_values(age_range_min, age_range_max)
     when :work_history
-      return :not_started if work_histories.empty?
-      if work_histories.completed.count == work_histories.count
-        return :completed
-      end
-      :in_progress
+      work_history_status
     when :registration_number
       registration_number.nil? ? :not_started : :completed
     when :written_statement
@@ -201,6 +197,20 @@ class ApplicationForm < ApplicationRecord
     end
 
     status_for_values(*values)
+  end
+
+  def work_history_status
+    return :not_started if has_work_history.nil?
+
+    if !has_work_history ||
+         (
+           !work_histories.empty? &&
+             work_histories.completed.count == work_histories.count
+         )
+      return :completed
+    end
+
+    :in_progress
   end
 
   def status_for_values(*values)
