@@ -77,6 +77,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_check_your_answers
     then_i_see_the_check_your_answers_page
+    and_i_see_check_your_work_history
 
     when_i_click_submit
     then_i_see_the_submitted_application_page
@@ -147,6 +148,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_check_your_answers
     then_i_see_the_check_your_answers_page
+    and_i_see_check_proof_of_recognition
 
     when_i_click_submit
     then_i_see_the_submitted_application_page
@@ -218,6 +220,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_check_your_answers
     then_i_see_the_check_your_answers_page
+    and_i_see_check_proof_of_recognition
 
     when_i_click_submit
     then_i_see_the_submitted_application_page
@@ -519,7 +522,13 @@ RSpec.describe "Teacher application", type: :system do
     )
     expect(page).to have_content("About you")
     expect(page).to have_content("Who you can teach")
+  end
+
+  def and_i_see_check_your_work_history
     expect(page).to have_content("Your work history")
+  end
+
+  def and_i_see_check_proof_of_recognition
     expect(page).to have_content("Proof that you’re recognised as a teacher")
   end
 
