@@ -19,7 +19,7 @@ module TeacherInterface
       if @country_region_form.needs_region?
         render :new
       elsif @country_region_form.save
-        redirect_to teacher_interface_application_form_path(@application_form)
+        redirect_to teacher_interface_application_form_path
       else
         render :new, status: :unprocessable_entity
       end
@@ -35,13 +35,8 @@ module TeacherInterface
     end
 
     def update
-      unless @application_form.can_submit?
-        redirect_to [:teacher_interface, @application_form]
-        return
-      end
-
-      @application_form.submitted!
-      redirect_to teacher_interface_application_form_path(@application_form)
+      @application_form.submitted! if @application_form.can_submit?
+      redirect_to %i[teacher_interface application_form]
     end
 
     private

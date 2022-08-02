@@ -1,7 +1,7 @@
 <% content_for :page_title, "Your work history in education" %>
 <% content_for :back_link_url, @work_history.new_record? && @application_form.work_histories.empty? ?
-                                 teacher_interface_application_form_path(@application_form) :
-                                 teacher_interface_application_form_work_histories_path(@application_form) %>
+                                 teacher_interface_application_form_path :
+                                 teacher_interface_application_form_work_histories_path %>
 
 <%= render "heading" %>
 

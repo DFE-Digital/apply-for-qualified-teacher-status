@@ -1,5 +1,5 @@
 <% content_for :page_title, "Check your uploaded files" %>
-<% content_for :back_link_url, teacher_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <h1 class="govuk-heading-l">Check your uploaded files</h1>
 
@@ -12,14 +12,14 @@
       row.value(text: upload.attachment.filename)
       row.action(
         text: "Delete",
-        href: delete_teacher_interface_application_form_document_upload_path(@application_form, @document, upload),
+        href: delete_teacher_interface_application_form_document_upload_path(@document, upload),
         visually_hidden_text: upload.attachment.filename
       )
     end
   end
 end %>
 
-<%= form_with model: [:teacher_interface, @application_form, @document] do |f| %>
+<%= form_with model: [:teacher_interface, :application_form, @document] do |f| %>
   <%= f.govuk_radio_buttons_fieldset :add_another,
                                      legend: { text: "Do you need to upload another page?" },
                                      hint: { text: "If your document has several pages, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’." } do %>

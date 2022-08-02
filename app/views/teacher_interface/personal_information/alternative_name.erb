@@ -1,9 +1,9 @@
 <% content_for :page_title, "About you" %>
-<% content_for :back_link_url, teacher_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <span class="govuk-caption-l">About you</span>
 
-<%= form_with model: @alternative_name_form, url: [:alternative_name, :teacher_interface, @application_form, :personal_information] do |f| %>
+<%= form_with model: @alternative_name_form, url: [:alternative_name, :teacher_interface, :application_form, :personal_information] do |f| %>
   <%= f.govuk_radio_buttons_fieldset :has_alternative_name,
                                      legend: { text: "Does your name appear differently on your ID documents or qualifications?", size: "l", tag: "h1" },
                                      hint: { text: "If your name appears differently on your ID documents or qualification certificates, we’ll need to see evidence of your name change." } do %>

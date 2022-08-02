@@ -1,8 +1,8 @@
 <% content_for :page_title, "Check your answers" %>
-<% content_for :back_link_url, edit_teacher_interface_application_form_registration_number_path(@application_form) %>
+<% content_for :back_link_url, edit_teacher_interface_application_form_registration_number_path %>
 
 <h1 class="govuk-heading-l">Check your answers</h1>
 
 <%= render "summary", application_form: @application_form %>
 
-<%= govuk_button_link_to "Continue", teacher_interface_application_form_path(@application_form) %>
+<%= govuk_button_link_to "Continue", teacher_interface_application_form_path %>

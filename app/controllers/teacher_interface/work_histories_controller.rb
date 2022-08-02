@@ -5,18 +5,18 @@ module TeacherInterface
 
     def index
       unless application_form.task_item_started?(:work_history, :work_history)
-        redirect_to [
-                      :has_work_history,
-                      :teacher_interface,
-                      application_form,
-                      :work_histories
+        redirect_to %i[
+                      has_work_history
+                      teacher_interface
+                      application_form
+                      work_histories
                     ]
       end
 
       @work_histories = application_form.work_histories.ordered
 
       if application_form.has_work_history? && @work_histories.empty?
-        redirect_to [:new, :teacher_interface, application_form, :work_history]
+        redirect_to %i[new teacher_interface application_form work_history]
       end
     end
 
@@ -34,10 +34,10 @@ module TeacherInterface
           has_work_history_form_params.merge(application_form:)
         )
       if @has_work_history_form.save
-        redirect_to_if_save_and_continue [
-                                           :teacher_interface,
-                                           application_form,
-                                           :work_histories
+        redirect_to_if_save_and_continue %i[
+                                           teacher_interface
+                                           application_form
+                                           work_histories
                                          ]
       else
         render :edit_has_work_history, status: :unprocessable_entity
@@ -51,12 +51,7 @@ module TeacherInterface
     def create
       unless params.include?(:work_history)
         if ActiveModel::Type::Boolean.new.cast(params[:add_another])
-          redirect_to [
-                        :new,
-                        :teacher_interface,
-                        application_form,
-                        :work_history
-                      ]
+          redirect_to %i[new teacher_interface application_form work_history]
         else
           redirect_to [:teacher_interface, application_form]
         end
@@ -66,7 +61,7 @@ module TeacherInterface
 
       @work_history = application_form.work_histories.new(work_history_params)
       if @work_history.save
-        redirect_to [:teacher_interface, application_form, :work_histories]
+        redirect_to %i[teacher_interface application_form work_histories]
       else
         render :new, status: :unprocessable_entity
       end
@@ -77,7 +72,7 @@ module TeacherInterface
 
     def update
       if @work_history.update(work_history_params)
-        redirect_to [:teacher_interface, application_form, :work_histories]
+        redirect_to %i[teacher_interface application_form work_histories]
       else
         render :edit, status: :unprocessable_entity
       end
@@ -85,7 +80,7 @@ module TeacherInterface
 
     def destroy
       @article.destroy!
-      redirect_to [:teacher_interface, application_form, :work_histories]
+      redirect_to %i[teacher_interface application_form work_histories]
     end
 
     private

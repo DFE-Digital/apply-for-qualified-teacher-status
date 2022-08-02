@@ -1,10 +1,10 @@
 <% content_for :page_title, "About you" %>
-<% content_for :back_link_url, teacher_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <span class="govuk-caption-l">About you</span>
 <h1 class="govuk-heading-l">Personal information</h1>
 
-<%= form_with model: @name_and_date_of_birth_form, url: [:name_and_date_of_birth, :teacher_interface, @application_form, :personal_information] do |f| %>
+<%= form_with model: @name_and_date_of_birth_form, url: [:name_and_date_of_birth, :teacher_interface, :application_form, :personal_information] do |f| %>
   <%= f.govuk_text_field :given_names,
                          label: { text: "Given names", size: "m" },
                          hint: { text: "Enter your full name apart from your family name" } %>

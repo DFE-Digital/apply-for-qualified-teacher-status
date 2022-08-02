@@ -7,11 +7,11 @@ module TeacherInterface
                :about_you,
                :personal_information
              )
-        redirect_to [
-                      :name_and_date_of_birth,
-                      :teacher_interface,
-                      application_form,
-                      :personal_information
+        redirect_to %i[
+                      name_and_date_of_birth
+                      teacher_interface
+                      application_form
+                      personal_information
                     ]
       end
     end
@@ -32,11 +32,11 @@ module TeacherInterface
           name_and_date_of_birth_params.merge(application_form:)
         )
       if @name_and_date_of_birth_form.save
-        redirect_to_if_save_and_continue [
-                                           :alternative_name,
-                                           :teacher_interface,
-                                           application_form,
-                                           :personal_information
+        redirect_to_if_save_and_continue %i[
+                                           alternative_name
+                                           teacher_interface
+                                           application_form
+                                           personal_information
                                          ]
       else
         render :name_and_date_of_birth, status: :unprocessable_entity
@@ -62,7 +62,7 @@ module TeacherInterface
         redirect_to_if_save_and_continue [
                                            :edit,
                                            :teacher_interface,
-                                           application_form,
+                                           :application_form,
                                            application_form.name_change_document
                                          ]
       else
