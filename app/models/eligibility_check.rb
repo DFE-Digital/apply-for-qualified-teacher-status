@@ -19,8 +19,6 @@
 #  fk_rails_...  (region_id => regions.id)
 #
 class EligibilityCheck < ApplicationRecord
-  include DfE::Analytics::Entities
-
   belongs_to :region, optional: true
   has_one :application
 

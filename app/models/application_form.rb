@@ -33,8 +33,6 @@
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class ApplicationForm < ApplicationRecord
-  include DfE::Analytics::Entities
-
   belongs_to :teacher
   belongs_to :region
   has_many :work_histories

@@ -17,8 +17,6 @@
 #  fk_rails_...  (document_id => documents.id)
 #
 class Upload < ApplicationRecord
-  include DfE::Analytics::Entities
-
   belongs_to :document
   has_one_attached :attachment
   validates :attachment,

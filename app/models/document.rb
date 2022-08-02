@@ -15,8 +15,6 @@
 #  index_documents_on_documentable   (documentable_type,documentable_id)
 #
 class Document < ApplicationRecord
-  include DfE::Analytics::Entities
-
   belongs_to :documentable, polymorphic: true
 
   has_many :uploads

@@ -22,8 +22,6 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
 class Qualification < ApplicationRecord
-  include DfE::Analytics::Entities
-
   belongs_to :application_form
 
   has_one :certificate_document,
