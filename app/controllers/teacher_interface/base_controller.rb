@@ -14,10 +14,7 @@ class TeacherInterface::BaseController < ApplicationController
   end
 
   def application_form
-    @application_form ||=
-      ApplicationForm.where(teacher: current_teacher).find(
-        params[:application_form_id] || params[:id]
-      )
+    @application_form ||= current_teacher.application_form
   end
 
   def document

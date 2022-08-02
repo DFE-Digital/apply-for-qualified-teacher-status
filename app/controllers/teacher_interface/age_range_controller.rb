@@ -4,7 +4,7 @@ module TeacherInterface
 
     def show
       unless application_form.task_item_started?(:qualifications, :age_range)
-        redirect_to [:edit, :teacher_interface, application_form, :age_range]
+        redirect_to %i[edit teacher_interface application_form age_range]
       end
     end
 
@@ -21,10 +21,10 @@ module TeacherInterface
       @age_range_form =
         AgeRangeForm.new(age_range_params.merge(application_form:))
       if @age_range_form.save
-        redirect_to_if_save_and_continue [
-                                           :teacher_interface,
-                                           application_form,
-                                           :age_range
+        redirect_to_if_save_and_continue %i[
+                                           teacher_interface
+                                           application_form
+                                           age_range
                                          ]
       else
         render :edit, status: :unprocessable_entity

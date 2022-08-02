@@ -72,9 +72,9 @@ Rails.application.routes.draw do
              }
 
   namespace :teacher_interface, path: "/teacher" do
-    root to: redirect("/teacher/applications")
+    root to: redirect("/teacher/application_form")
 
-    resources :application_forms, path: "applications", except: %i[destroy] do
+    resource :application_form, except: %i[destroy] do
       resource :personal_information,
                controller: :personal_information,
                only: %i[show] do

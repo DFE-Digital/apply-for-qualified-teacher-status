@@ -118,7 +118,6 @@ class ApplicationForm < ApplicationRecord
     if key == :identity_document
       return(
         url_helpers.edit_teacher_interface_application_form_document_path(
-          self,
           identification_document
         )
       )
@@ -127,7 +126,6 @@ class ApplicationForm < ApplicationRecord
     if key == :written_statement
       return(
         url_helpers.edit_teacher_interface_application_form_document_path(
-          self,
           written_statement_document
         )
       )
@@ -136,9 +134,9 @@ class ApplicationForm < ApplicationRecord
     key = :work_histories if key == :work_history
 
     begin
-      url_helpers.send("teacher_interface_application_form_#{key}_path", self)
+      url_helpers.send("teacher_interface_application_form_#{key}_path")
     rescue NoMethodError
-      url_helpers.send("#{key}_teacher_interface_application_form_path", self)
+      url_helpers.send("#{key}_teacher_interface_application_form_path")
     end
   end
 

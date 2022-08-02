@@ -4,7 +4,7 @@
   <% content_for :page_title, I18n.t("eligibility_check.country.label") %>
 <% end %>
 
-<%= form_with model: @country_region_form, url: [:teacher_interface, @application_form], method: :post do |f| %>
+<%= form_with model: @country_region_form, url: [:teacher_interface, :application_form], method: :post do |f| %>
   <%= f.govuk_error_summary %>
 
   <% if @country_region_form.needs_region? %>

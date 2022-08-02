@@ -7,11 +7,11 @@ module TeacherInterface
                :proof_of_recognition,
                :registration_number
              )
-        redirect_to [
-                      :edit,
-                      :teacher_interface,
-                      application_form,
-                      :registration_number
+        redirect_to %i[
+                      edit
+                      teacher_interface
+                      application_form
+                      registration_number
                     ]
       end
     end
@@ -30,10 +30,10 @@ module TeacherInterface
           registration_number_params.merge(application_form:)
         )
       if @registration_number_form.save
-        redirect_to_if_save_and_continue [
-                                           :teacher_interface,
-                                           application_form,
-                                           :registration_number
+        redirect_to_if_save_and_continue %i[
+                                           teacher_interface
+                                           application_form
+                                           registration_number
                                          ]
       else
         render :edit, status: :unprocessable_entity

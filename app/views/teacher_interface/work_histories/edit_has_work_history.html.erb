@@ -1,7 +1,7 @@
 <% content_for :page_title, "Your work history in education" %>
-<% content_for :back_link_url, teacher_interface_application_form_work_histories_path(@application_form) %>
+<% content_for :back_link_url, teacher_interface_application_form_work_histories_path %>
 
-<%= form_with model: @has_work_history_form, url: [:has_work_history, :teacher_interface, @application_form, :work_histories] do |f| %>
+<%= form_with model: @has_work_history_form, url: [:has_work_history, :teacher_interface, :application_form, :work_histories] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :has_work_history,

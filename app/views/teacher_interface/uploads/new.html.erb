@@ -1,5 +1,5 @@
 <% content_for :page_title, "Upload a document" %>
-<% content_for :back_link_url, teacher_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <% if @document.identification? || @document.name_change? %>
   <h1 class="govuk-heading-l">Upload a valid identification document</h1>
@@ -49,7 +49,7 @@
   <% end %>
 <% end %>
 
-<%= form_with model: [:teacher_interface, @application_form, @document, @upload] do |f| %>
+<%= form_with model: [:teacher_interface, :application_form, @document, @upload] do |f| %>
   <%= f.govuk_file_field :attachment,
                          label: { text: "Select a file to upload" },
                          hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 50MB." } %>

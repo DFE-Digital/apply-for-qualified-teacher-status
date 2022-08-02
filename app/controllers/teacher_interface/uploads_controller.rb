@@ -13,7 +13,7 @@ module TeacherInterface
         redirect_to_if_save_and_continue [
                                            :edit,
                                            :teacher_interface,
-                                           @application_form,
+                                           :application_form,
                                            @document
                                          ]
       else
@@ -30,7 +30,7 @@ module TeacherInterface
         @upload.destroy!
       end
 
-      redirect_to [:edit, :teacher_interface, @application_form, @document]
+      redirect_to [:edit, :teacher_interface, :application_form, @document]
     end
 
     private
