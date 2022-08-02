@@ -1,18 +1,7 @@
 module TeacherInterface
   class ApplicationFormsController < BaseController
-    before_action :load_application_form, only: %i[show edit update]
+    before_action :load_application_form, except: %i[new create]
     before_action :load_eligibility_check, only: %i[new create]
-
-    def index
-      @application_forms =
-        ApplicationForm.where(teacher: current_teacher).order(created_at: :desc)
-
-      if @application_forms.empty?
-        redirect_to %i[new teacher_interface application_form]
-      elsif @application_forms.count == 1
-        redirect_to [:teacher_interface, @application_forms.first]
-      end
-    end
 
     def new
       @application_form = ApplicationForm.new
@@ -37,6 +26,9 @@ module TeacherInterface
     end
 
     def show
+      unless @application_form
+        redirect_to %i[new teacher_interface application_form]
+      end
     end
 
     def edit
