@@ -1,3 +1,14 @@
+<%= render(CheckYourAnswersSummaryComponent.new(
+  model: application_form,
+  title: "Work history",
+  fields: {
+    has_work_history: {
+      key: "Have you worked professionally as a teacher?",
+      href: [:has_work_history, :teacher_interface, application_form, :work_histories]
+    },
+  }
+)) %>
+
 <% work_histories.each do |work_history| %>
   <%= render(CheckYourAnswersSummaryComponent.new(
     model: work_history,
