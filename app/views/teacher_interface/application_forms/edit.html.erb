@@ -10,12 +10,20 @@
 <h2 class="govuk-heading-m">Who you can teach</h2>
 <%= render "teacher_interface/age_range/summary", application_form: @application_form %>
 
-<h2 class="govuk-heading-m">Your work history</h2>
-<%= render "teacher_interface/work_histories/summary", application_form: @application_form, work_histories: @application_form.work_histories %>
+<% if @application_form.needs_work_history? %>
+  <h2 class="govuk-heading-m">Your work history</h2>
+  <%= render "teacher_interface/work_histories/summary", application_form: @application_form, work_histories: @application_form.work_histories %>
+<% end %>
 
-<h2 class="govuk-heading-m">Proof that you’re recognised as a teacher</h2>
-<%= render "teacher_interface/registration_number/summary", application_form: @application_form %>
-<%= render "teacher_interface/written_statement/summary", application_form: @application_form %>
+<% if @application_form.needs_written_statement? || @application_form.needs_registration_number? %>
+  <h2 class="govuk-heading-m">Proof that you’re recognised as a teacher</h2>
+  <% if @application_form.needs_registration_number? %>
+    <%= render "teacher_interface/registration_number/summary", application_form: @application_form %>
+  <% end %>
+  <% if @application_form.needs_written_statement? %>
+    <%= render "teacher_interface/written_statement/summary", application_form: @application_form %>
+  <% end %>
+<% end %>
 
 <% if @application_form.can_submit? %>
   <h2 class="govuk-heading-m">Submitting your application</h2>
