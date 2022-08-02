@@ -142,14 +142,6 @@ class ApplicationForm < ApplicationRecord
     end
   end
 
-  private
-
-  def build_documents
-    build_identification_document(document_type: :identification)
-    build_name_change_document(document_type: :name_change)
-    build_written_statement_document(document_type: :written_statement)
-  end
-
   def needs_work_history?
     region.status_check_none? || region.sanction_check_none?
   end
@@ -160,6 +152,14 @@ class ApplicationForm < ApplicationRecord
 
   def needs_written_statement?
     region.status_check_written? || region.sanction_check_written?
+  end
+
+  private
+
+  def build_documents
+    build_identification_document(document_type: :identification)
+    build_name_change_document(document_type: :name_change)
+    build_written_statement_document(document_type: :written_statement)
   end
 
   def task_item_status(key)
