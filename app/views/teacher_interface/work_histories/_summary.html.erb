@@ -15,33 +15,33 @@
     title: work_history.current_or_most_recent_role? ? "Your current or most recent role" : "Previous role",
     fields: {
       school_name: {
-        href: [:edit, :teacher_interface, application_form, work_history]
+        href: [:edit, :teacher_interface, :application_form, work_history]
       },
       city: {
         key: "City of institution",
-        href: [:edit, :teacher_interface, application_form, work_history]
+        href: [:edit, :teacher_interface, :application_form, work_history]
       },
       country: {
         key: "Country of institution",
-        href: [:edit, :teacher_interface, application_form, work_history]
+        href: [:edit, :teacher_interface, :application_form, work_history]
       },
       job: {
         key: "Your job role",
-        href: [:edit, :teacher_interface, application_form, work_history]
+        href: [:edit, :teacher_interface, :application_form, work_history]
       },
       email: {
         key: "Contact email address",
-        href: [:edit, :teacher_interface, application_form, work_history]
+        href: [:edit, :teacher_interface, :application_form, work_history]
       },
       start_date: {
         key: "Role start date",
         format: :without_day,
-        href: [:edit, :teacher_interface, application_form, work_history]
+        href: [:edit, :teacher_interface, :application_form, work_history]
       },
       end_date: work_history.still_employed ? {
         key: "Role end date",
         format: :without_day,
-        href: [:edit, :teacher_interface, application_form, work_history]
+        href: [:edit, :teacher_interface, :application_form, work_history]
       } : nil,
     }
   )) %>
