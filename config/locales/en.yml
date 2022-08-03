@@ -20,6 +20,7 @@ en:
       items:
         personal_information: Enter your personal information
         identity_document: Upload your identity document
+        qualifications: Add your teaching qualifications
         age_range: Enter your age range
         work_history: Add your work history
         registration_number: Enter your registration number
