@@ -30,7 +30,7 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_receive_a_magic_link_email
 
     when_i_visit_the_magic_link_email
-    then_i_see_successful_magic_link_message
+    then_i_see_the_new_application_form
 
     given_i_clear_my_session
 
@@ -43,7 +43,7 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_receive_a_magic_link_email
 
     when_i_visit_the_magic_link_email
-    then_i_see_successful_magic_link_message
+    then_i_see_the_new_application_form
 
     when_i_click_sign_out
     then_i_see_the_signed_out_message
@@ -132,8 +132,10 @@ RSpec.describe "Teacher authentication", type: :system do
     )
   end
 
-  def then_i_see_successful_magic_link_message
-    expect(page).to have_content("Signed in successfully.")
+  def then_i_see_the_new_application_form
+    expect(page).to have_content(
+      "In which country are you currently recognised as a teacher?"
+    )
   end
 
   def then_i_see_the_blank_email_address_message
