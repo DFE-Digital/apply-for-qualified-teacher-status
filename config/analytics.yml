@@ -73,3 +73,14 @@
     - end_date
     - created_at
     - updated_at
+  :qualifications:
+    - id
+    - application_form_id
+    - title
+    - institution_name
+    - institution_country
+    - start_date
+    - complete_date
+    - certificate_date
+    - created_at
+    - updated_at

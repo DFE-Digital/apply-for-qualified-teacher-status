@@ -16,3 +16,10 @@
     - start_date
     - still_employed
     - end_date
+  :qualifications:
+    - title
+    - institution_name
+    - institution_country
+    - start_date
+    - complete_date
+    - certificate_date

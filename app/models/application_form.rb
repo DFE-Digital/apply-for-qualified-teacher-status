@@ -38,6 +38,7 @@ class ApplicationForm < ApplicationRecord
   belongs_to :teacher
   belongs_to :region
   has_many :work_histories
+  has_many :qualifications
 
   has_one :identification_document,
           -> { where(document_type: :identification) },
