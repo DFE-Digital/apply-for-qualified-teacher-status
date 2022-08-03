@@ -13,7 +13,5 @@
 #  index_features_on_name  (name) UNIQUE
 #
 class Feature < ApplicationRecord
-  include DfE::Analytics::Entities
-
   validates :name, presence: true, uniqueness: true
 end

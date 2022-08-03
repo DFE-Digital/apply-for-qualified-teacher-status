@@ -18,7 +18,6 @@
 #  index_countries_on_code  (code) UNIQUE
 #
 class Country < ApplicationRecord
-  include DfE::Analytics::Entities
   include TeachingAuthorityContactable
 
   has_many :regions

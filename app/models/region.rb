@@ -25,7 +25,6 @@
 #  fk_rails_...  (country_id => countries.id)
 #
 class Region < ApplicationRecord
-  include DfE::Analytics::Entities
   include TeachingAuthorityContactable
 
   belongs_to :country
