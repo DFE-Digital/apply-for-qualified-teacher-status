@@ -19,9 +19,9 @@ class TeacherInterface::BaseController < ApplicationController
 
   def document
     @document ||=
-      Document.where(documentable: application_form).find(
-        params[:document_id] || params[:id]
-      )
+      Document.where(
+        documentable: [application_form] + application_form.qualifications
+      ).find(params[:document_id] || params[:id])
   end
 
   def redirect_to_if_save_and_continue(*args)

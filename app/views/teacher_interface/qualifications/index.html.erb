@@ -1,0 +1,16 @@
+<% content_for :page_title, I18n.t("application_form.qualifications.heading.caption") %>
+<% content_for :back_link_url, teacher_interface_application_form_path %>
+
+<span class="govuk-caption-l"><%= I18n.t("application_form.qualifications.heading.caption") %></span>
+<h1 class="govuk-heading-l">Check your answers</h1>
+
+<%= render "summary", application_form: @application_form, qualifications: @qualifications %>
+
+<%= form_with url: [:teacher_interface, :application_form, :qualifications] do |f| %>
+  <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: "Add another qualification?" } do %>
+    <%= f.govuk_radio_button :add_another, "true", label: { text: "Yes" } %>
+    <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
+  <% end %>
+
+  <%= f.govuk_submit "Continue", prevent_double_click: false %>
+<% end %>

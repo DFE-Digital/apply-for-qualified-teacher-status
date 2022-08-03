@@ -47,6 +47,16 @@
 
     <%= render "shared/teaching_authority_contactable", contactable: @application_form.region %>
   <% end %>
+<% elsif @document.qualification_certificate? %>
+  <span class="govuk-caption-l"><%= I18n.t("application_form.qualifications.heading.caption") %></span>
+  <h1 class="govuk-heading-l"><%= I18n.t("application_form.qualifications.upload.certificate.title.#{@document.documentable.locale_key}") %></h1>
+<% elsif @document.qualification_transcript? %>
+  <span class="govuk-caption-l"><%= I18n.t("application_form.qualifications.heading.caption") %></span>
+  <h1 class="govuk-heading-l"><%= I18n.t("application_form.qualifications.upload.transcript.title.#{@document.documentable.locale_key}") %></h1>
+
+  <%= govuk_details(summary_text: "What is a transcript?") do %>
+    <p class="govuk-body">A transcript (or diploma supplement) is a document from the institution where you studied for your degree. It lists all the modules or subjects you studied in each year, and the marks or grades you were awarded.</p>
+  <% end %>
 <% end %>
 
 <%= form_with model: [:teacher_interface, :application_form, @document, @upload] do |f| %>

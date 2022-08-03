@@ -1,0 +1,6 @@
+<% content_for :page_title, I18n.t("application_form.qualifications.heading.caption") %>
+<% content_for :back_link_url, teacher_interface_application_form_qualifications_path %>
+
+<%= render "heading", qualification: @qualification %>
+
+<%= render "form", application_form: @application_form, qualification: @qualification %>
