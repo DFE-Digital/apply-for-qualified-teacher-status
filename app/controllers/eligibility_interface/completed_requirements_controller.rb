@@ -14,7 +14,7 @@ module EligibilityInterface
       if @completed_requirements_form.save
         redirect_to paths[:qualification]
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 

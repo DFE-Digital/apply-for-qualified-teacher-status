@@ -14,7 +14,7 @@ module EligibilityInterface
       if @teach_children_form.save
         redirect_to paths[:misconduct]
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
