@@ -89,6 +89,8 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :qualifications, except: %i[show]
+
       resource :age_range, controller: :age_range, only: %i[show edit update]
 
       resources :work_histories, except: %i[show] do

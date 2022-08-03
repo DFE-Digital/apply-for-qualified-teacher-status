@@ -31,6 +31,15 @@ module TeacherInterface
       case document.document_type
       when "name_change"
         %i[teacher_interface application_form personal_information]
+      when "qualification_certificate"
+        [
+          :edit,
+          :teacher_interface,
+          :application_form,
+          document.documentable.transcript_document
+        ]
+      when "qualification_transcript"
+        %i[teacher_interface application_form qualifications]
       else
         %i[teacher_interface application_form]
       end

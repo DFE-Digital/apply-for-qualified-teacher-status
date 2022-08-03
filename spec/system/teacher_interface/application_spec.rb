@@ -30,7 +30,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_the_upload_name_change_form
     and_i_click_continue
-    then_i_see_the_check_your_name_change_uploads
+    then_i_see_the_check_your_uploads
 
     when_i_choose_no
     and_i_click_continue
@@ -44,11 +44,38 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_the_upload_identification_form
     and_i_click_continue
-    then_i_see_the_check_your_identification_uploads
+    then_i_see_the_check_your_uploads
 
     when_i_choose_no
     and_i_click_continue
     then_i_see_completed_identity_document_section
+
+    when_i_click_qualifications
+    then_i_see_the_qualifications_form
+
+    when_i_fill_in_qualifications
+    and_i_click_continue
+    then_i_see_the_upload_certificate_form
+
+    when_i_fill_in_the_upload_certificate_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_upload_transcript_form
+
+    when_i_fill_in_the_upload_transcript_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_qualifications_summary
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_completed_qualifications_section
 
     when_i_click_age_range
     then_i_see_the_age_range_form
@@ -106,7 +133,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_the_upload_name_change_form
     and_i_click_continue
-    then_i_see_the_check_your_name_change_uploads
+    then_i_see_the_check_your_uploads
 
     when_i_choose_no
     and_i_click_continue
@@ -120,11 +147,38 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_the_upload_identification_form
     and_i_click_continue
-    then_i_see_the_check_your_identification_uploads
+    then_i_see_the_check_your_uploads
 
     when_i_choose_no
     and_i_click_continue
     then_i_see_completed_identity_document_section
+
+    when_i_click_qualifications
+    then_i_see_the_qualifications_form
+
+    when_i_fill_in_qualifications
+    and_i_click_continue
+    then_i_see_the_upload_certificate_form
+
+    when_i_fill_in_the_upload_certificate_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_upload_transcript_form
+
+    when_i_fill_in_the_upload_transcript_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_qualifications_summary
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_completed_qualifications_section
 
     when_i_click_age_range
     then_i_see_the_age_range_form
@@ -177,7 +231,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_the_upload_name_change_form
     and_i_click_continue
-    then_i_see_the_check_your_name_change_uploads
+    then_i_see_the_check_your_uploads
 
     when_i_choose_no
     and_i_click_continue
@@ -191,11 +245,38 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_the_upload_identification_form
     and_i_click_continue
-    then_i_see_the_check_your_identification_uploads
+    then_i_see_the_check_your_uploads
 
     when_i_choose_no
     and_i_click_continue
     then_i_see_completed_identity_document_section
+
+    when_i_click_qualifications
+    then_i_see_the_qualifications_form
+
+    when_i_fill_in_qualifications
+    and_i_click_continue
+    then_i_see_the_upload_certificate_form
+
+    when_i_fill_in_the_upload_certificate_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_upload_transcript_form
+
+    when_i_fill_in_the_upload_transcript_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_qualifications_summary
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_completed_qualifications_section
 
     when_i_click_age_range
     then_i_see_the_age_range_form
@@ -212,7 +293,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_the_upload_written_statement_form
     and_i_click_continue
-    then_i_see_the_check_your_written_statement_uploads
+    then_i_see_the_check_your_uploads
 
     when_i_choose_no
     and_i_click_continue
@@ -283,6 +364,32 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_the_upload_identification_form
+    attach_file "upload-attachment-field",
+                Rails.root.join(file_fixture("upload.pdf"))
+  end
+
+  def when_i_click_qualifications
+    click_link "Add your teaching qualifications"
+  end
+
+  def when_i_fill_in_qualifications
+    fill_in "qualification-title-field", with: "Title"
+    fill_in "qualification-institution-name-field", with: "Name"
+    fill_in "qualification-institution-country-field", with: "Country"
+    fill_in "qualification_start_date_2i", with: "1"
+    fill_in "qualification_start_date_1i", with: "2000"
+    fill_in "qualification_complete_date_2i", with: "1"
+    fill_in "qualification_complete_date_1i", with: "2020"
+    fill_in "qualification_certificate_date_2i", with: "1"
+    fill_in "qualification_certificate_date_1i", with: "2000"
+  end
+
+  def when_i_fill_in_the_upload_certificate_form
+    attach_file "upload-attachment-field",
+                Rails.root.join(file_fixture("upload.pdf"))
+  end
+
+  def when_i_fill_in_the_upload_transcript_form
     attach_file "upload-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
   end
@@ -397,21 +504,37 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Upload a valid identification document")
   end
 
-  def then_i_see_the_check_your_name_change_uploads
-    expect(page).to have_title("Check your uploaded files")
-    expect(page).to have_content("Check your uploaded files")
-    expect(page).to have_content("File 1\tupload.pdf\tDelete")
-  end
-
   def then_i_see_the_upload_identification_form
     expect(page).to have_title("Upload a document")
     expect(page).to have_content("Upload a valid identification document")
   end
 
-  def then_i_see_the_check_your_identification_uploads
+  def then_i_see_the_check_your_uploads
     expect(page).to have_title("Check your uploaded files")
     expect(page).to have_content("Check your uploaded files")
     expect(page).to have_content("File 1\tupload.pdf\tDelete")
+  end
+
+  def then_i_see_the_qualifications_form
+    expect(page).to have_title("Your qualifications")
+    expect(page).to have_content("Your teaching qualification")
+    expect(page).to have_content(
+      "This is the qualification that led to you being recognised as a teacher."
+    )
+  end
+
+  def then_i_see_the_upload_certificate_form
+    expect(page).to have_title("Upload a document")
+    expect(page).to have_content(
+      "Upload your teaching qualification certificate"
+    )
+  end
+
+  def then_i_see_the_upload_transcript_form
+    expect(page).to have_title("Upload a document")
+    expect(page).to have_content(
+      "Upload your teaching qualification transcript"
+    )
   end
 
   def then_i_see_the_age_range_form
@@ -445,12 +568,6 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Upload your written statement")
   end
 
-  def then_i_see_the_check_your_written_statement_uploads
-    expect(page).to have_title("Check your uploaded files")
-    expect(page).to have_content("Check your uploaded files")
-    expect(page).to have_content("File 1\tupload.pdf\tDelete")
-  end
-
   def then_i_see_the_personal_information_summary
     expect(page).to have_content("Check your answers")
     expect(page).to have_content("Given names\tName")
@@ -470,6 +587,17 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_completed_identity_document_section
     expect(page).to have_content("Upload your identity document\nCOMPLETED")
+  end
+
+  def then_i_see_the_qualifications_summary
+    expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Qualification title\tTitle")
+    expect(page).to have_content("Name of institution\tName")
+    expect(page).to have_content("Country of institution\tCountry")
+  end
+
+  def then_i_see_completed_qualifications_section
+    expect(page).to have_content("Add your teaching qualifications\nCOMPLETED")
   end
 
   def then_i_see_the_age_range_summary

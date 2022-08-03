@@ -90,7 +90,7 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: %i[personal_information identity_document],
-            qualifications: %i[age_range],
+            qualifications: %i[qualifications age_range],
             work_history: %i[work_history]
           }
         )
@@ -104,7 +104,7 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: %i[personal_information identity_document],
-            qualifications: %i[age_range],
+            qualifications: %i[qualifications age_range],
             proof_of_recognition: %i[written_statement]
           }
         )
@@ -118,7 +118,7 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: %i[personal_information identity_document],
-            qualifications: %i[age_range],
+            qualifications: %i[qualifications age_range],
             proof_of_recognition: %i[registration_number]
           }
         )
@@ -137,6 +137,7 @@ RSpec.describe ApplicationForm, type: :model do
             identity_document: :not_started
           },
           qualifications: {
+            qualifications: :not_started,
             age_range: :not_started
           },
           work_history: {
@@ -157,6 +158,7 @@ RSpec.describe ApplicationForm, type: :model do
               identity_document: :not_started
             },
             qualifications: {
+              qualifications: :not_started,
               age_range: :not_started
             },
             proof_of_recognition: {
@@ -178,6 +180,7 @@ RSpec.describe ApplicationForm, type: :model do
               identity_document: :not_started
             },
             qualifications: {
+              qualifications: :not_started,
               age_range: :not_started
             },
             proof_of_recognition: {
@@ -255,6 +258,28 @@ RSpec.describe ApplicationForm, type: :model do
     describe "qualifications section" do
       subject(:qualifications_status) { task_statuses[:qualifications] }
 
+      describe "qualifications item" do
+        subject(:qualifications_item_status) do
+          qualifications_status[:qualifications]
+        end
+
+        context "with no qualifications" do
+          it { is_expected.to eq(:not_started) }
+        end
+
+        context "with some incomplete qualifications" do
+          before { create(:qualification, application_form:) }
+
+          it { is_expected.to eq(:in_progress) }
+        end
+
+        context "with all complete qualifications" do
+          before { create(:qualification, :completed, application_form:) }
+
+          it { is_expected.to eq(:completed) }
+        end
+      end
+
       describe "age range item" do
         subject(:age_range_status) { qualifications_status[:age_range] }
 
@@ -264,7 +289,7 @@ RSpec.describe ApplicationForm, type: :model do
           it { is_expected.to eq(:in_progress) }
         end
 
-        context "with all personal information" do
+        context "with all age range" do
           before do
             application_form.update!(age_range_min: 7, age_range_max: 11)
           end

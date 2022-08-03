@@ -20,10 +20,48 @@ en:
       items:
         personal_information: Enter your personal information
         identity_document: Upload your identity document
+        qualifications: Add your teaching qualifications
         age_range: Enter your age range
         work_history: Add your work history
         registration_number: Enter your registration number
         written_statement: Upload your written statement
+    qualifications:
+      heading:
+        caption: Your qualifications
+        title:
+          teaching_qualification: Your teaching qualification
+          university_degree: Your university degree
+        description:
+          teaching_qualification: This is the qualification that led to you being recognised as a teacher. It might be part of your university degree course, or it could be a separate qualification.
+          university_degree: Tell us about your university degree qualification. If you have more than one degree qualification, you’ll have the opportunity to add them later.
+      form:
+        title:
+          teaching_qualification: Enter your teaching qualification
+          university_degree: Enter your university degree
+        fields:
+          title:
+            teaching_qualification: Qualification title
+            university_degree: University degree title
+          institution_name: Name of institution
+          institution_country: Country of institution
+          start_date:
+            teaching_qualification: When did you start your teaching qualification?
+            university_degree: When did you start this university degree?
+          complete_date:
+            teaching_qualification: When did you complete your teaching qualification?
+            university_degree: When did you complete your university degree?
+          certificate_date:
+            teaching_qualification: What is the date on your teaching qualification certificate?
+            university_degree: What is the date on your university degree certificate?
+      upload:
+        certificate:
+          title:
+            teaching_qualification: Upload your teaching qualification certificate
+            university_degree: Upload your university degree certificate
+        transcript:
+          title:
+            teaching_qualification: Upload your teaching qualification transcript
+            university_degree: Upload your university degree transcript
 
   eligibility_check:
     country:

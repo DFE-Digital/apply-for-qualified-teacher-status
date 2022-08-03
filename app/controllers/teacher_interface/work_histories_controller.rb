@@ -79,7 +79,7 @@ module TeacherInterface
     end
 
     def destroy
-      @article.destroy!
+      @work_history.destroy!
       redirect_to %i[teacher_interface application_form work_histories]
     end
 

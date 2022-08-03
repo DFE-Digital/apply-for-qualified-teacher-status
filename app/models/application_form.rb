@@ -38,6 +38,7 @@ class ApplicationForm < ApplicationRecord
   belongs_to :teacher
   belongs_to :region
   has_many :work_histories
+  has_many :qualifications
 
   has_one :identification_document,
           -> { where(document_type: :identification) },
@@ -75,7 +76,7 @@ class ApplicationForm < ApplicationRecord
       begin
         hash = {}
         hash.merge!(about_you: %i[personal_information identity_document])
-        hash.merge!(qualifications: %i[age_range])
+        hash.merge!(qualifications: %i[qualifications age_range])
         hash.merge!(work_history: %i[work_history]) if needs_work_history?
 
         if needs_written_statement? || needs_registration_number?
@@ -166,6 +167,8 @@ class ApplicationForm < ApplicationRecord
       personal_information_status
     when :identity_document
       identification_document.uploaded? ? :completed : :not_started
+    when :qualifications
+      qualifications_status
     when :age_range
       status_for_values(age_range_min, age_range_max)
     when :work_history
@@ -195,6 +198,12 @@ class ApplicationForm < ApplicationRecord
     end
 
     status_for_values(*values)
+  end
+
+  def qualifications_status
+    return :not_started if qualifications.empty?
+    return :completed if qualifications.completed.count == qualifications.count
+    :in_progress
   end
 
   def work_history_status

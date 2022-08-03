@@ -1,0 +1,32 @@
+<%= form_with model: [:teacher_interface, :application_form, qualification] do |f| %>
+  <%= f.govuk_fieldset legend: { text: I18n.t("application_form.qualifications.form.title.#{qualification.locale_key}") } do %>
+    <%= f.govuk_text_field :title, label: { text: I18n.t("application_form.qualifications.form.fields.title.#{qualification.locale_key}") } %>
+    <%= f.govuk_text_field :institution_name, label: { text: I18n.t("application_form.qualifications.form.fields.institution_name") } %>
+    <%= f.govuk_text_field :institution_country, label: { text: I18n.t("application_form.qualifications.form.fields.institution_country") } %>
+  <% end %>
+
+  <% if qualification.is_teaching_qualification? %>
+    <%= govuk_details(summary_text: "Is this the same as my university degree?") do %>
+      <p>Some applicants have a university degree qualification that includes their teaching qualification.</p>
+      <p>Others have a teaching qualification that’s separate from their degree.</p>
+      <p>If your qualifications are separate, you’ll need to add your university degree in the next section.</p>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_date_field :start_date,
+                         omit_day: true,
+                         legend: { text: I18n.t("application_form.qualifications.form.fields.start_date.#{qualification.locale_key}") },
+                         hint: { text: "For example, 3 2020" } %>
+
+  <%= f.govuk_date_field :complete_date,
+                         omit_day: true,
+                         legend: { text: I18n.t("application_form.qualifications.form.fields.complete_date.#{qualification.locale_key}") },
+                         hint: { text: "For example, 3 2020" } %>
+
+  <%= f.govuk_date_field :certificate_date,
+                         omit_day: true,
+                         legend: { text: I18n.t("application_form.qualifications.form.fields.certificate_date.#{qualification.locale_key}") },
+                         hint: { text: "For example, 3 2020" } %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>
