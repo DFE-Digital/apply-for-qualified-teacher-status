@@ -17,6 +17,7 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   it "runs" do
     when_i_visit_the_service_domain
     and_i_click_the_start_button
+    and_i_need_to_check_my_eligibility
     and_i_enter_a_country
     and_i_select_a_state
     and_i_have_a_teaching_qualification
@@ -34,6 +35,15 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
 
   def and_i_click_the_start_button
     click_button("Start now")
+  end
+
+  def and_i_need_to_check_my_eligibility
+    # dev & test environments have this feature enabled currently but production does
+    # not. We can remove this conditional when the feature is released
+    if page.has_content?("Have you used the service before?")
+      choose "No, I need to check my eligibility", visible: false
+      continue
+    end
   end
 
   def and_i_enter_a_country
