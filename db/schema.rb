@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_02_080953) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_03_085227) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -109,6 +109,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_080953) do
     t.index ["name"], name: "index_features_on_name", unique: true
   end
 
+  create_table "qualifications", force: :cascade do |t|
+    t.bigint "application_form_id", null: false
+    t.text "title", default: "", null: false
+    t.text "institution_name", default: "", null: false
+    t.text "institution_country", default: "", null: false
+    t.date "start_date"
+    t.date "complete_date"
+    t.date "certificate_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_form_id"], name: "index_qualifications_on_application_form_id"
+  end
+
   create_table "regions", force: :cascade do |t|
     t.bigint "country_id", null: false
     t.string "name", default: "", null: false
@@ -201,6 +214,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_080953) do
   add_foreign_key "application_forms", "regions"
   add_foreign_key "application_forms", "teachers"
   add_foreign_key "eligibility_checks", "regions"
+  add_foreign_key "qualifications", "application_forms"
   add_foreign_key "regions", "countries"
   add_foreign_key "uploads", "documents"
   add_foreign_key "work_histories", "application_forms"
