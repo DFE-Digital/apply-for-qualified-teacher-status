@@ -46,7 +46,7 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the_new_application_form
 
     when_i_click_sign_out
-    then_i_see_the_signed_out_message
+    then_i_see_the_signed_out_page
   end
 
   it "sign up with invalid email address" do
@@ -142,8 +142,13 @@ RSpec.describe "Teacher authentication", type: :system do
     expect(page).to have_content("Enter your email address")
   end
 
-  def then_i_see_the_signed_out_message
-    expect(page).to have_content("Signed out successfully.")
+  def then_i_see_the_signed_out_page
+    expect(page).to have_content(
+      "We’ve signed you out of the Apply for qualified teacher status (QTS) service."
+    )
+    expect(page).to have_content(
+      "We’ve saved the information you’ve added to your application so far."
+    )
   end
 
   alias_method :and_i_fill_teacher_email_address,
