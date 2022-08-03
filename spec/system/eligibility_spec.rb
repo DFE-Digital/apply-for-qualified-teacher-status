@@ -161,6 +161,13 @@ RSpec.describe "Eligibility check", type: :system do
     given_the_service_is_open
     when_i_visit_the_start_page
     then_i_see_the_start_page
+
+    when_i_press_start_now
+    then_i_see_the_countries_page
+
+    when_i_select_a_country
+    and_i_submit
+    then_i_see_the_qualifications_page
   end
 
   it "service cannot be started" do
