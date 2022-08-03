@@ -14,7 +14,7 @@ module EligibilityInterface
       if @region_form.save
         redirect_to next_url
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 

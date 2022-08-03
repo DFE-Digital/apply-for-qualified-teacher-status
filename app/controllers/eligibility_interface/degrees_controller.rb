@@ -12,7 +12,7 @@ module EligibilityInterface
       if @degree_form.save
         redirect_to paths[:teach_children]
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
