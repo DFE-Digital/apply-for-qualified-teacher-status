@@ -7,6 +7,8 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   it "allows signing up and signing in" do
+    given_countries_exist
+
     when_i_visit_the_sign_up_page
     then_i_see_the_sign_up_form
 
@@ -44,6 +46,9 @@ RSpec.describe "Teacher authentication", type: :system do
 
     when_i_visit_the_magic_link_email
     then_i_see_the_new_application_form
+
+    when_i_select_a_country
+    and_i_click_continue
 
     when_i_click_sign_out
     then_i_see_the_signed_out_page
@@ -86,6 +91,10 @@ RSpec.describe "Teacher authentication", type: :system do
 
   private
 
+  def given_countries_exist
+    create(:country, :with_national_region, code: "GB-SCT")
+  end
+
   def given_i_clear_my_session
     page.driver.clear_cookies
     ActionMailer::Base.deliveries = []
@@ -111,8 +120,13 @@ RSpec.describe "Teacher authentication", type: :system do
     choose "Yes, sign in", visible: false
   end
 
+  def when_i_select_a_country
+    fill_in "teacher-interface-country-region-form-location-field",
+            with: "Scotland"
+  end
+
   def when_i_click_sign_out
-    click_link "Sign out"
+    click_button "Save and sign out"
   end
 
   def then_i_see_the_sign_up_form
@@ -160,5 +174,9 @@ RSpec.describe "Teacher authentication", type: :system do
 
     expect(message.subject).to eq("Here's your magic login link")
     expect(message.to).to include("test@example.com")
+  end
+
+  def and_i_click_continue
+    click_button "Continue", visible: false
   end
 end
