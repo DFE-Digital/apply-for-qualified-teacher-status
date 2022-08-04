@@ -2,7 +2,7 @@
   "name": "app",
   "private": "true",
   "dependencies": {
-    "esbuild": "^0.14.51",
+    "esbuild": "^0.14.53",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
     "govuk-frontend": "^4.2.0",
     "sass": "^1.54.2"
