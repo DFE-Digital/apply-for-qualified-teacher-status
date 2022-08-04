@@ -28,13 +28,26 @@ class Teachers::SessionsController < Devise::SessionsController
     end
   end
 
+  def destroy
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    yield if block_given?
+    respond_to_on_destroy
+  end
+
   def check_email
+  end
+
+  def signed_out
   end
 
   protected
 
   def after_sign_in_path_for(resource)
     stored_location_for(resource) || teacher_interface_root_path
+  end
+
+  def after_sign_out_path_for(_resource)
+    teacher_signed_out_path
   end
 
   def translation_scope

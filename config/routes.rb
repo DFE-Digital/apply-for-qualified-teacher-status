@@ -127,6 +127,9 @@ Rails.application.routes.draw do
     get "/teacher/check_email",
         to: "teachers/sessions#check_email",
         as: "teacher_check_email"
+    get "/teacher/signed_out",
+        to: "teachers/sessions#signed_out",
+        as: "teacher_signed_out"
   end
 
   resources :autocomplete_locations, only: %i[index]
