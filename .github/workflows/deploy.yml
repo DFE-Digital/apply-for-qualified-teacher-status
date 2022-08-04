@@ -93,10 +93,62 @@ jobs:
       - name: Push docker image
         run: docker image push ${{ steps.image.outputs.tag }}
 
+  rspec:
+    name: Rspec
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-retries 5
+          --health-timeout 5s
+
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/apply_for_qts_test
+      RAILS_ENV: test
+      REDIS_URL: redis://localhost:6379/0
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+
+      - name: Build frontend
+        run: yarn build && yarn build:css
+
+      - name: Setup DB
+        run: bin/rails db:test:prepare
+
+      - name: Run DfE Analytics
+        run: bin/bundle exec rails dfe:analytics:check
+
+      - name: Run tests
+        run: bin/test
+
   deploy_review:
     name: Deploy to review environment
     concurrency: deploy_review_${{ github.event.pull_request.number }}
-    needs: [docker]
+    needs: [docker, rspec]
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
     environment:
@@ -121,7 +173,7 @@ jobs:
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment
     runs-on: ubuntu-latest
-    needs: [docker]
+    needs: [docker, rspec]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_${{ matrix.environment }}
     strategy:
@@ -152,7 +204,7 @@ jobs:
 
   deploy_production:
     name: Deploy to production environment
-    needs: [docker, deploy_nonprod]
+    needs: [docker, rspec, deploy_nonprod]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
@@ -177,7 +229,7 @@ jobs:
   deploy_environment:
     name: Deploy to ${{ github.event.inputs.environment }} environment
     runs-on: ubuntu-latest
-    needs: [docker]
+    needs: [docker, rspec]
     if: github.event_name == 'workflow_dispatch'
     environment:
       name: ${{ github.event.inputs.environment }}
