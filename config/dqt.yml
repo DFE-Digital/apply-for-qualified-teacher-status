@@ -1,0 +1,11 @@
+development:
+  url: https://qualified-teachers-api-dev.london.cloudapps.digital
+  api_key: <%= ENV["DQT_API_KEY"] %>
+
+production:
+  url: <%= ENV.fetch("DQT_API_URL", "https://teacher-qualifications-api.education.gov.uk") %>
+  api_key: <%= ENV["DQT_API_KEY"] %>
+
+test:
+  url: https://test-teacher-qualifications-api.education.gov.uk
+  api_key: test-api-key
