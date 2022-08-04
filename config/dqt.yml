@@ -1,0 +1,18 @@
+default: &default
+  api_key: <%= ENV["DQT_API_KEY"] %>
+
+development:
+  <<: *default
+  url: https://qualified-teachers-api-dev.london.cloudapps.digital
+
+test:
+  <<: *default
+  url: https://test-teacher-qualifications-api.education.gov.uk/
+
+staging:
+  <<: *default
+  url: https://qualified-teachers-api-preprod.london.cloudapps.digital/
+
+production:
+  <<: *default
+  url: https://teacher-qualifications-api.education.gov.uk/

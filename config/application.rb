@@ -43,5 +43,7 @@ module ApplyForQualifiedTeacherStatus
     )
 
     config.action_mailer.deliver_later_queue_name = "mailer"
+
+    config.dqt = config_for(:dqt)
   end
 end
