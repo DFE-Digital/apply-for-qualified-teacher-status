@@ -23,4 +23,6 @@ Sentry.init do |config|
     "ActionDispatch::Http::Parameters::ParseError",
     "Mime::Type::InvalidMimeType"
   ]
+
+  config.traces_sample_rate = 0.1
 end
