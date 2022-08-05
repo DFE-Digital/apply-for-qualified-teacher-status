@@ -1,5 +1,7 @@
-<% content_for :page_title, I18n.t("application_form.qualifications.heading.caption") %>
+<% content_for :page_title, I18n.t("application_form.tasks.sections.qualifications") %>
 <% content_for :back_link_url, teacher_interface_application_form_qualifications_path %>
+
+<span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 
 <%= form_with model: @part_of_university_degree_form, url: [:part_of_university_degree, :teacher_interface, :application_form, @qualification] do |f| %>
   <%= f.govuk_error_summary %>

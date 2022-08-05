@@ -48,10 +48,10 @@
     <%= render "shared/teaching_authority_contactable", contactable: @application_form.region %>
   <% end %>
 <% elsif @document.qualification_certificate? %>
-  <span class="govuk-caption-l"><%= I18n.t("application_form.qualifications.heading.caption") %></span>
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
   <h1 class="govuk-heading-l"><%= I18n.t("application_form.qualifications.upload.certificate.title.#{@document.documentable.locale_key}") %></h1>
 <% elsif @document.qualification_transcript? %>
-  <span class="govuk-caption-l"><%= I18n.t("application_form.qualifications.heading.caption") %></span>
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
   <h1 class="govuk-heading-l"><%= I18n.t("application_form.qualifications.upload.transcript.title.#{@document.documentable.locale_key}") %></h1>
 
   <%= govuk_details(summary_text: "What is a transcript?") do %>
