@@ -89,7 +89,14 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :qualifications, except: %i[show]
+      resources :qualifications, except: %i[show] do
+        member do
+          get "part_of_university_degree",
+              to: "qualifications#edit_part_of_university_degree"
+          post "part_of_university_degree",
+               to: "qualifications#update_part_of_university_degree"
+        end
+      end
 
       resource :age_range, controller: :age_range, only: %i[show edit update]
 

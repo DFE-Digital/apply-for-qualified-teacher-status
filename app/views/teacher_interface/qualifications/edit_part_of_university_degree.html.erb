@@ -1,0 +1,14 @@
+<% content_for :page_title, I18n.t("application_form.qualifications.heading.caption") %>
+<% content_for :back_link_url, teacher_interface_application_form_qualifications_path %>
+
+<%= form_with model: @part_of_university_degree_form, url: [:part_of_university_degree, :teacher_interface, :application_form, @qualification] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons :part_of_university_degree,
+                                       [OpenStruct.new(label: "Yes", value: true), OpenStruct.new(label: "No", value: false)],
+                                       :value,
+                                       :label,
+                                       legend: { text: "Was this qualification part of your university degree?", size: "l", tag: "h1" } %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>

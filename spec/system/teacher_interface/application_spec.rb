@@ -71,6 +71,9 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_no
     and_i_click_continue
+
+    when_i_choose_yes
+    and_i_click_continue
     then_i_see_the_qualifications_summary
 
     when_i_choose_no
@@ -174,6 +177,9 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_no
     and_i_click_continue
+
+    when_i_choose_yes
+    and_i_click_continue
     then_i_see_the_qualifications_summary
 
     when_i_choose_no
@@ -271,6 +277,9 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_check_your_uploads
 
     when_i_choose_no
+    and_i_click_continue
+
+    when_i_choose_yes
     and_i_click_continue
     then_i_see_the_qualifications_summary
 
