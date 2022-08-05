@@ -18,13 +18,9 @@
 #
 class Upload < ApplicationRecord
   belongs_to :document
+
   has_one_attached :attachment
-  validates :attachment,
-            attached: true,
-            content_type: %i[png jpg jpeg pdf doc docx],
-            size: {
-              less_than: 50.megabytes
-            }
+  validates :attachment, presence: true
 
   def original?
     !translation?
