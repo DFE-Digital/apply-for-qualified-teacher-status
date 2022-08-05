@@ -1,7 +1,7 @@
 <% content_for :page_title, "Upload a document" %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
-<% if @document.identification? || @document.name_change? %>
+<% if @document.identification? %>
   <h1 class="govuk-heading-l">Upload a valid identification document</h1>
 
   <p class="govuk-body">The document must show your date of birth and your nationality. If your ID document has several pages, you can add them on the next screen. </p>
@@ -13,6 +13,17 @@
     <li>driving licence</li>
     <li>identity card</li>
     <li>birth certificate.</li>
+  </ul>
+<% elsif @document.name_change? %>
+  <h1 class="govuk-heading-l">Proof of your change of name</h1>
+
+  <p class="govuk-body">We need to see proof of your change of name.</p>
+
+  <p class="govuk-body">For example:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>a marriage or civil partnership certificate</li>
+    <li>proof that you’ve legally changed your name for another reason.</li>
   </ul>
 <% elsif @document.written_statement? %>
   <span class="govuk-caption-l">Proof that you're recognised as a teacher</span>
