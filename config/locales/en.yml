@@ -35,8 +35,8 @@ en:
           university_degree: Tell us about your university degree qualification. If you have more than one degree qualification, you’ll have the opportunity to add them later.
       form:
         title:
-          teaching_qualification: Enter your teaching qualification
-          university_degree: Enter your university degree
+          teaching_qualification: Enter the details of your teaching qualification
+          university_degree: Enter the details of your university degree
         fields:
           title:
             teaching_qualification: Qualification title
