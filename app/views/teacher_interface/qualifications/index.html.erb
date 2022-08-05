@@ -7,7 +7,9 @@
 <%= render "summary", application_form: @application_form, qualifications: @qualifications %>
 
 <%= form_with url: [:teacher_interface, :application_form, :qualifications] do |f| %>
-  <%= f.govuk_radio_buttons_fieldset :add_another, legend: { text: "Add another qualification?" } do %>
+  <%= f.govuk_radio_buttons_fieldset :add_another,
+                                     legend: { text: "Add another qualification?" },
+                                     hint: { text: "You can use the next section to tell us about additional degrees if you want to." } do %>
     <%= f.govuk_radio_button :add_another, "true", label: { text: "Yes" } %>
     <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
   <% end %>
