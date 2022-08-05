@@ -61,6 +61,7 @@ en:
           title:
             teaching_qualification: Upload your teaching qualification transcript
             university_degree: Upload your university degree transcript
+          description: Upload a transcript of your teaching qualification, issued by the awarding body. If your teaching qualification was completed as part of your degree, you should supply your degree transcript.
 
   eligibility_check:
     country:
