@@ -15,16 +15,22 @@
     <li>birth certificate.</li>
   </ul>
 <% elsif @document.name_change? %>
-  <h1 class="govuk-heading-l">Proof of your change of name</h1>
+  <% if @document.uploads.empty? %>
+    <h1 class="govuk-heading-l">Upload a proof of your change of name</h1>
 
-  <p class="govuk-body">We need to see proof of your change of name.</p>
+    <p class="govuk-body">We need to see proof of your change of name.</p>
 
-  <p class="govuk-body">For example:</p>
+    <p class="govuk-body">For example:</p>
 
-  <ul class="govuk-list govuk-list--bullet">
-    <li>a marriage or civil partnership certificate</li>
-    <li>proof that you’ve legally changed your name for another reason.</li>
-  </ul>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a marriage or civil partnership certificate</li>
+      <li>proof that you’ve legally changed your name for another reason.</li>
+    </ul>
+  <% else %>
+    <h1 class="govuk-heading-l">Upload the next page of your name change document</h1>
+
+    <p class="govuk-body">Upload the next page of your name change document. If your document has more pages, you can add them on the next screen.</p>
+  <% end %>
 <% elsif @document.written_statement? %>
   <span class="govuk-caption-l">Proof that you're recognised as a teacher</span>
   <h1 class="govuk-heading-l">Upload your written statement</h1>

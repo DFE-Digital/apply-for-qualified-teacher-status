@@ -6,7 +6,7 @@
 <h2 class="govuk-heading-m">Files added</h2>
 
 <%= govuk_summary_list do |summary_list|
-  @document.uploads.each_with_index do |upload, index|
+  @document.uploads.order(:created_at).each_with_index do |upload, index|
     summary_list.row do |row|
       row.key(text: "File #{index + 1}")
       row.value(text: upload.attachment.filename)
