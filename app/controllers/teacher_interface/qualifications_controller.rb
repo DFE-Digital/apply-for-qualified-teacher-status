@@ -1,7 +1,7 @@
 module TeacherInterface
   class QualificationsController < BaseController
     before_action :load_application_form
-    before_action :load_qualification, only: %i[edit update destroy]
+    before_action :load_qualification, except: %i[index new create]
 
     def index
       @qualifications = application_form.qualifications.ordered
@@ -54,6 +54,47 @@ module TeacherInterface
       end
     end
 
+    def edit_part_of_university_degree
+      @part_of_university_degree_form =
+        PartOfUniversityDegreeForm.new(
+          qualification: @qualification,
+          part_of_university_degree: @qualification.part_of_university_degree
+        )
+    end
+
+    def update_part_of_university_degree
+      @part_of_university_degree_form =
+        PartOfUniversityDegreeForm.new(
+          part_of_university_degree_form_params.merge(
+            qualification: @qualification
+          )
+        )
+      if @part_of_university_degree_form.save
+        if @qualification.part_of_university_degree.nil? ||
+             @qualification.part_of_university_degree
+          redirect_to_if_save_and_continue %i[
+                                             teacher_interface
+                                             application_form
+                                             qualifications
+                                           ]
+        else
+          degree_qualification = application_form.qualifications.ordered.second
+          if degree_qualification.nil?
+            degree_qualification = application_form.qualifications.create!
+          end
+
+          redirect_to_if_save_and_continue [
+                                             :edit,
+                                             :teacher_interface,
+                                             :application_form,
+                                             degree_qualification
+                                           ]
+        end
+      else
+        render :edit_has_work_history, status: :unprocessable_entity
+      end
+    end
+
     def destroy
       @qualification.destroy!
       redirect_to %i[teacher_interface application_form qualifications]
@@ -73,6 +114,12 @@ module TeacherInterface
         :start_date,
         :complete_date,
         :certificate_date
+      )
+    end
+
+    def part_of_university_degree_form_params
+      params.require(:teacher_interface_part_of_university_degree_form).permit(
+        :part_of_university_degree
       )
     end
   end

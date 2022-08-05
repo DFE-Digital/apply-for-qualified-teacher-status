@@ -36,6 +36,10 @@
       transcript_document: {
         href: [:edit, :teacher_interface, :application_form, qualification.transcript_document]
       },
+      part_of_university_degree: qualification.is_teaching_qualification? ? {
+        key: "Part of your university degree?",
+        href: [:part_of_university_degree, :teacher_interface, :application_form, qualification]
+      } : nil,
     }
   )) %>
 <% end %>

@@ -2,16 +2,17 @@
 #
 # Table name: qualifications
 #
-#  id                  :bigint           not null, primary key
-#  certificate_date    :date
-#  complete_date       :date
-#  institution_country :text             default(""), not null
-#  institution_name    :text             default(""), not null
-#  start_date          :date
-#  title               :text             default(""), not null
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  application_form_id :bigint           not null
+#  id                        :bigint           not null, primary key
+#  certificate_date          :date
+#  complete_date             :date
+#  institution_country       :text             default(""), not null
+#  institution_name          :text             default(""), not null
+#  part_of_university_degree :boolean
+#  start_date                :date
+#  title                     :text             default(""), not null
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  application_form_id       :bigint           not null
 #
 # Indexes
 #

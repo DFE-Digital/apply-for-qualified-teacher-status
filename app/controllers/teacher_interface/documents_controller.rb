@@ -39,7 +39,17 @@ module TeacherInterface
           document.documentable.transcript_document
         ]
       when "qualification_transcript"
-        %i[teacher_interface application_form qualifications]
+        qualification = document.documentable
+        if qualification.is_teaching_qualification?
+          [
+            :part_of_university_degree,
+            :teacher_interface,
+            :application_form,
+            document.documentable
+          ]
+        else
+          %i[teacher_interface application_form qualifications]
+        end
       else
         %i[teacher_interface application_form]
       end

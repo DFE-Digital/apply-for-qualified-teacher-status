@@ -273,8 +273,29 @@ RSpec.describe ApplicationForm, type: :model do
           it { is_expected.to eq(:in_progress) }
         end
 
-        context "with all complete qualifications" do
-          before { create(:qualification, :completed, application_form:) }
+        context "with all complete qualifications and not part of university degree" do
+          before do
+            create(
+              :qualification,
+              :completed,
+              part_of_university_degree: false,
+              application_form:
+            )
+            create(:qualification, :completed, application_form:)
+          end
+
+          it { is_expected.to eq(:completed) }
+        end
+
+        context "with all complete qualifications and part of university degree" do
+          before do
+            create(
+              :qualification,
+              :completed,
+              part_of_university_degree: true,
+              application_form:
+            )
+          end
 
           it { is_expected.to eq(:completed) }
         end

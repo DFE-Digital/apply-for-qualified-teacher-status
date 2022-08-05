@@ -200,6 +200,14 @@ class ApplicationForm < ApplicationRecord
 
   def qualifications_status
     return :not_started if qualifications.empty?
+
+    part_of_university_degree =
+      qualifications.ordered.first.part_of_university_degree
+    if part_of_university_degree.nil? ||
+         (!part_of_university_degree && qualifications.count == 1)
+      return :in_progress
+    end
+
     return :completed if qualifications.completed.count == qualifications.count
     :in_progress
   end
