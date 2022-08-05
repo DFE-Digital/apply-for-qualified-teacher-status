@@ -17,7 +17,7 @@ module TeacherInterface
                       @document
                     )
       else
-        redirect_to continue_url
+        redirect_to document.continue_url
       end
     end
 
@@ -25,34 +25,6 @@ module TeacherInterface
 
     def document_params
       params.require(:document).permit(:add_another)
-    end
-
-    def continue_url
-      case document.document_type
-      when "name_change"
-        %i[teacher_interface application_form personal_information]
-      when "qualification_certificate"
-        [
-          :edit,
-          :teacher_interface,
-          :application_form,
-          document.documentable.transcript_document
-        ]
-      when "qualification_transcript"
-        qualification = document.documentable
-        if qualification.is_teaching_qualification?
-          [
-            :part_of_university_degree,
-            :teacher_interface,
-            :application_form,
-            document.documentable
-          ]
-        else
-          %i[teacher_interface application_form qualifications]
-        end
-      else
-        %i[teacher_interface application_form]
-      end
     end
   end
 end
