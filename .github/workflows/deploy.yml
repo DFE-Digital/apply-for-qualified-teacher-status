@@ -96,7 +96,7 @@ jobs:
   rspec:
     name: Rspec
     runs-on: ubuntu-latest
-
+    needs: [docker]
     services:
       postgres:
         image: postgres
@@ -121,29 +121,42 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    env:
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/apply_for_qts_test
-      RAILS_ENV: test
-      REDIS_URL: redis://localhost:6379/0
+    container:
+      image: ${{ needs.docker.outputs.docker_image }}
+      credentials:
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        RAILS_ENV: test
+        DB_HOSTNAME: postgres
+        DB_USERNAME: postgres
+        DB_PASSWORD: postgres
+        REDIS_URL: redis://redis:6379/0
+        DB_PORT: 5432
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Prepare application environment
-        uses: ./.github/actions/prepare-app-env
+      # - name: Prepare application environment
+      #   uses: ./.github/actions/prepare-app-env
 
-      - name: Build frontend
-        run: yarn build && yarn build:css
+      # - name: Build frontend
+      #   run: yarn build && yarn build:css
 
-      - name: Setup DB
-        run: bin/rails db:test:prepare
+      # - name: Setup DB
+      #   run: bin/rails db:test:prepare
 
-      - name: Run DfE Analytics
-        run: bin/bundle exec rails dfe:analytics:check
+      # - name: Run DfE Analytics
+      #   run: bin/bundle exec rails dfe:analytics:check
 
       - name: Run tests
-        run: bin/test
+        run: |
+          bundle install
+          bundle install --with test
+          bundle exec bin/test
+        env:
+          RAILS_ENV: test
 
   deploy_review:
     name: Deploy to review environment
