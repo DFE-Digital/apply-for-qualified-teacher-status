@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_05_061904) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_08_131029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_05_061904) do
     t.bigint "region_id", null: false
     t.text "registration_number"
     t.boolean "has_work_history"
+    t.text "subjects", default: [], null: false, array: true
     t.index ["reference"], name: "index_application_forms_on_reference", unique: true
     t.index ["region_id"], name: "index_application_forms_on_region_id"
     t.index ["status"], name: "index_application_forms_on_status"

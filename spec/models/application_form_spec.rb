@@ -15,6 +15,7 @@
 #  reference               :string(31)       not null
 #  registration_number     :text
 #  status                  :string           default("active"), not null
+#  subjects                :text             default([]), not null, is an Array
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  region_id               :bigint           not null
