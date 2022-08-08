@@ -3,12 +3,10 @@
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.work_history") %></span>
 
-<%= form_with url: [:add_another, :teacher_interface, :application_form, :work_histories] do |f| %>
-  <%= f.govuk_radio_buttons_fieldset :add_another,
-                                     legend: { text: "Add another workplace?", tag: "h1", size: "l" } do %>
-    <%= f.govuk_radio_button :add_another, :true, label: { text: "Yes" } %>
-    <%= f.govuk_radio_button :add_another, :false, label: { text: "No" } %>
-  <% end %>
-
-  <%= f.govuk_submit "Continue", prevent_double_click: false %>
+<%= form_with model: WorkHistory.new, url: %i[add_another teacher_interface application_form work_histories] do |f| %>
+  <%= f.govuk_collection_radio_buttons :add_another,
+                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
+                                       :value,
+                                       legend: { tag: "h1", size: "l" } %>
+  <%= f.govuk_submit %>
 <% end %>

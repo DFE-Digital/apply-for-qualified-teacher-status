@@ -34,7 +34,9 @@ module TeacherInterface
     end
 
     def submit_add_another
-      if ActiveModel::Type::Boolean.new.cast(params[:add_another])
+      if ActiveModel::Type::Boolean.new.cast(
+           params.dig(:qualification, :add_another)
+         )
         redirect_to %i[new teacher_interface application_form qualification]
       else
         redirect_to %i[teacher_interface application_form]

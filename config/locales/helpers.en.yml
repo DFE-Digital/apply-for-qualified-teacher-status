@@ -1,0 +1,22 @@
+en:
+  helpers:
+    caption: {}
+    hint:
+      qualification:
+        add_another: You can use the next section to tell us about additional degrees if you want to.
+      work_history:
+        add_another: You can use the next section to tell us about additional work history.
+    label:
+      qualification:
+        add_another_options:
+          true: "Yes"
+          false: "No"
+      work_history:
+        add_another_options:
+          true: "Yes"
+          false: "No"
+    legend:
+      qualification:
+        add_another: Add another qualification?
+      work_history:
+        add_another: Add another workplace?
