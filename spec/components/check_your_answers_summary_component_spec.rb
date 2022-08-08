@@ -16,7 +16,8 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
       custom_key: "Custom key value",
       nil_value: nil,
       boolean: true,
-      document: create(:document, :with_upload)
+      document: create(:document, :with_upload),
+      array: %w[a b c]
     )
   end
 
@@ -49,6 +50,9 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
       },
       document: {
         href: "/document"
+      },
+      array: {
+        href: "/array"
       }
     }
   end
@@ -228,6 +232,25 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
 
       expect(a.text.strip).to eq("Change document")
       expect(a.attribute("href").value).to eq("/document")
+    end
+  end
+
+  describe "array row" do
+    subject(:row) { component.css(".govuk-summary-list__row")[8] }
+
+    it "renders the key" do
+      expect(row.at_css(".govuk-summary-list__key").text).to eq("Array")
+    end
+
+    it "renders the value" do
+      expect(row.at_css(".govuk-summary-list__value").text).to eq("abc")
+    end
+
+    it "renders the change link" do
+      a = row.at_css(".govuk-summary-list__actions .govuk-link")
+
+      expect(a.text.strip).to eq("Change array")
+      expect(a.attribute("href").value).to eq("/array")
     end
   end
 end
