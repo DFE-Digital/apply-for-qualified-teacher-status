@@ -46,10 +46,11 @@ module TeacherInterface
 
     def update
       if @qualification.update(qualification_params)
-        redirect_to_if_save_and_continue %i[
-                                           teacher_interface
-                                           application_form
-                                           qualifications
+        redirect_to_if_save_and_continue [
+                                           :edit,
+                                           :teacher_interface,
+                                           :application_form,
+                                           @qualification.certificate_document
                                          ]
       else
         render :edit, status: :unprocessable_entity
