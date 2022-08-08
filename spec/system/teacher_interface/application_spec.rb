@@ -466,7 +466,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_the_upload_name_change_form
-    attach_file "upload-attachment-field",
+    attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
   end
 
@@ -475,7 +475,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_the_upload_identification_form
-    attach_file "upload-attachment-field",
+    attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
   end
 
@@ -496,12 +496,12 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_the_upload_certificate_form
-    attach_file "upload-attachment-field",
+    attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
   end
 
   def when_i_fill_in_the_upload_transcript_form
-    attach_file "upload-attachment-field",
+    attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
   end
 
@@ -551,7 +551,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_the_upload_written_statement_form
-    attach_file "upload-attachment-field",
+    attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
   end
 

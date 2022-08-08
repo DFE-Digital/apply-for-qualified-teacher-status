@@ -5,17 +5,20 @@ module TeacherInterface
     before_action :load_upload, only: %i[delete destroy]
 
     def new
-      @upload = Upload.new(document:)
+      @upload_form = UploadForm.new(document:)
     end
 
     def create
-      if save_uploads
+      @upload_form = UploadForm.new(upload_form_params.merge(document:))
+      if @upload_form.save
         redirect_to_if_save_and_continue [
                                            :edit,
                                            :teacher_interface,
                                            :application_form,
                                            @document
                                          ]
+      elsif @upload_form.blank?
+        redirect_to_if_save_and_continue document.continue_url
       else
         render :new, status: :unprocessable_entity
       end
@@ -39,27 +42,15 @@ module TeacherInterface
       @upload = document.uploads.find(params[:id])
     end
 
-    def save_uploads
-      attachment = params.dig(:upload, :attachment)
-      @upload = document.uploads.build(attachment:, translation: false)
-      return unless @upload.valid?
-
-      if (translated_attachment = params.dig(:upload, :translated_attachment))
-        translated_upload =
-          document.uploads.build(
-            attachment: translated_attachment,
-            translation: true
-          )
-
-        unless translated_upload.save
-          @upload.errors[:translated_attachment] = translated_upload.errors[
-            :attachment
-          ]
-          return
-        end
-      end
-
-      @upload.save!
+    def upload_form_params
+      params.permit(
+        teacher_interface_upload_form: %i[
+          original_attachment
+          translated_attachment
+        ]
+      )[
+        :teacher_interface_upload_form
+      ] || {}
     end
   end
 end

@@ -24,25 +24,6 @@ RSpec.describe Upload, type: :model do
   describe "validations" do
     it { is_expected.to be_valid }
     it { is_expected.to validate_presence_of(:attachment) }
-
-    context "with an invalid content type" do
-      before do
-        upload.attachment =
-          Rack::Test::UploadedFile.new(file_fixture("upload.txt"), "text/plain")
-      end
-
-      it { is_expected.to_not be_valid }
-    end
-
-    context "with a large file" do
-      before do
-        allow(upload.attachment.blob).to receive(:byte_size).and_return(
-          50 * 1024 * 1024
-        )
-      end
-
-      it { is_expected.to_not be_valid }
-    end
   end
 
   describe "#original?" do

@@ -20,10 +20,7 @@ RSpec.describe "Teacher documents", type: :system do
     and_i_click_continue
     then_i_see_document_form
 
-    and_i_click_continue
-    then_i_see_document_form
-
-    when_i_upload_a_document_with_error
+    when_i_upload_a_document
     and_i_click_continue
     then_i_see_the_check_your_uploaded_files_page_with_three_files
 
@@ -50,15 +47,10 @@ RSpec.describe "Teacher documents", type: :system do
   end
 
   def when_i_upload_a_document
-    attach_file "upload-attachment-field",
+    attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
     choose "No, I'll upload a translation as well", visible: false
-    attach_file "upload-translated-attachment-field",
-                Rails.root.join(file_fixture("upload.pdf"))
-  end
-
-  def when_i_upload_a_document_with_error
-    attach_file "upload-attachment-field-error",
+    attach_file "teacher-interface-upload-form-translated-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
   end
 
