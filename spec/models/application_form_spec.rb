@@ -442,6 +442,21 @@ RSpec.describe ApplicationForm, type: :model do
     it { is_expected.to eq(false) }
   end
 
+  describe "#submit!" do
+    before do
+      application_form.update!(subjects: ["Maths", "", ""])
+      application_form.submit!
+    end
+
+    it "sets the status of the application form" do
+      expect(application_form.submitted?).to be true
+    end
+
+    it "compacts the subjects" do
+      expect(application_form.subjects).to eq(["Maths"])
+    end
+  end
+
   describe "#needs_work_history?" do
     subject(:needs_work_history?) { application_form.needs_work_history? }
 
