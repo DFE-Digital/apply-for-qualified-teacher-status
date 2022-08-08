@@ -99,6 +99,16 @@ class Qualification < ApplicationRecord
       I18n.t("application_form.qualifications.heading.title.#{locale_key}")
   end
 
+  def can_delete?
+    return false if is_teaching_qualification?
+
+    part_of_university_degree =
+      application_form.teaching_qualification&.part_of_university_degree
+    return true if part_of_university_degree.nil? || part_of_university_degree
+
+    application_form.qualifications.ordered.second != self
+  end
+
   private
 
   def build_documents

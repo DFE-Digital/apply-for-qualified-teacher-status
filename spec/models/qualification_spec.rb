@@ -144,4 +144,32 @@ RSpec.describe Qualification, type: :model do
       it { is_expected.to eq("Country") }
     end
   end
+
+  describe "#can_delete?" do
+    subject(:can_delete?) { qualification.can_delete? }
+
+    it { is_expected.to be false }
+
+    context "is a university degree" do
+      before { qualification.save! }
+
+      subject(:can_delete?) { second_qualification.can_delete? }
+
+      let(:second_qualification) do
+        create(:qualification, application_form: qualification.application_form)
+      end
+
+      context "with qualification part of degree" do
+        before { qualification.update!(part_of_university_degree: true) }
+
+        it { is_expected.to be true }
+      end
+
+      context "with qualification not part of degree" do
+        before { qualification.update!(part_of_university_degree: false) }
+
+        it { is_expected.to be false }
+      end
+    end
+  end
 end
