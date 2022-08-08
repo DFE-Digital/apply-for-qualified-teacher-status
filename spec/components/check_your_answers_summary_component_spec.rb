@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
   subject(:component) do
-    render_inline(described_class.new(model:, title:, fields:))
+    render_inline(described_class.new(model:, title:, fields:, delete_link_to:))
   end
 
   let(:model) do
@@ -53,8 +53,20 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
     }
   end
 
+  let(:delete_link_to) { nil }
+
   it "renders the title" do
     expect(component.css(".govuk-summary-list__card-title").text).to eq("Title")
+  end
+
+  describe "with a delete link" do
+    let(:delete_link_to) { "/delete" }
+
+    it "renders a link" do
+      a = component.at_css(".govuk-summary-list__card-actions a")
+      expect(a.text.strip).to eq("Delete")
+      expect(a.attribute("href").value).to eq("/delete")
+    end
   end
 
   describe "string row" do

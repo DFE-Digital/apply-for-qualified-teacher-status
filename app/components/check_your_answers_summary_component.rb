@@ -1,9 +1,10 @@
 class CheckYourAnswersSummaryComponent < ViewComponent::Base
-  def initialize(model:, title:, fields:)
+  def initialize(model:, title:, fields:, delete_link_to: nil)
     super
     @model = model
     @title = title
     @fields = fields
+    @delete_link_to = delete_link_to
   end
 
   attr_reader :title
