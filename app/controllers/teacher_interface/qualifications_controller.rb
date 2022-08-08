@@ -97,8 +97,16 @@ module TeacherInterface
       end
     end
 
+    def delete
+    end
+
     def destroy
-      @qualification.destroy!
+      if ActiveModel::Type::Boolean.new.cast(
+           params.dig(:qualification, :confirm)
+         )
+        @qualification.destroy!
+      end
+
       redirect_to %i[teacher_interface application_form qualifications]
     end
 

@@ -93,6 +93,22 @@ class Qualification < ApplicationRecord
     is_teaching_qualification? ? "teaching_qualification" : "university_degree"
   end
 
+  def summary_title
+    title.presence || institution_name.presence ||
+      institution_country.presence ||
+      I18n.t("application_form.qualifications.heading.title.#{locale_key}")
+  end
+
+  def can_delete?
+    return false if is_teaching_qualification?
+
+    part_of_university_degree =
+      application_form.teaching_qualification&.part_of_university_degree
+    return true if part_of_university_degree.nil? || part_of_university_degree
+
+    application_form.qualifications.ordered.second != self
+  end
+
   private
 
   def build_documents

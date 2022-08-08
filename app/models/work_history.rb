@@ -65,4 +65,17 @@ class WorkHistory < ApplicationRecord
     application_form.work_histories.empty? ||
       application_form.work_histories.ordered.first == self
   end
+
+  def summary_title
+    school_name.presence || city.presence || country.presence || job.presence ||
+      I18n.t(
+        (
+          if current_or_most_recent_role?
+            "application_form.work_history.current_or_most_recent_role"
+          else
+            "application_form.work_history.previous_role"
+          end
+        )
+      )
+  end
 end

@@ -320,6 +320,104 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_submitted_application_page
   end
 
+  it "allows deleting work history" do
+    given_an_eligible_eligibility_check_with_none_country_checks
+
+    when_i_click_apply_for_qts
+    and_i_sign_up
+    then_i_see_the_new_application_page
+    and_i_click_continue
+    then_i_see_the_active_application_page
+    and_i_see_the_work_history_is_not_started
+
+    when_i_click_work_history
+    then_i_see_the_has_work_history_form
+
+    when_i_fill_in_has_work_history
+    and_i_click_continue
+    then_i_see_the_work_history_form
+
+    when_i_fill_in_work_history
+    and_i_click_continue
+    then_i_see_the_work_history_summary
+
+    when_i_click_delete
+    then_i_see_delete_confirmation_form
+
+    when_i_choose_yes
+    and_i_click_continue
+    then_i_see_the_work_history_form
+  end
+
+  it "allows delete qualifications" do
+    given_an_eligible_eligibility_check_with_none_country_checks
+
+    when_i_click_apply_for_qts
+    and_i_sign_up
+    then_i_see_the_new_application_page
+    and_i_click_continue
+    then_i_see_the_active_application_page
+    and_i_see_the_work_history_is_not_started
+
+    when_i_click_qualifications
+    then_i_see_the_qualifications_form
+
+    when_i_fill_in_qualifications
+    and_i_click_continue
+    then_i_see_the_upload_certificate_form
+
+    when_i_fill_in_the_upload_certificate_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_upload_transcript_form
+
+    when_i_fill_in_the_upload_transcript_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+
+    when_i_choose_yes
+    and_i_click_continue
+    then_i_see_the_qualifications_summary
+
+    when_i_click_continue
+    and_i_choose_yes
+    and_i_click_continue
+    then_i_see_the_degree_qualifications_form
+
+    when_i_fill_in_qualifications
+    and_i_click_continue
+    then_i_see_the_upload_degree_certificate_form
+
+    when_i_fill_in_the_upload_certificate_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_upload_degree_transcript_form
+
+    when_i_fill_in_the_upload_transcript_form
+    and_i_click_continue
+    then_i_see_the_check_your_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_qualifications_summary
+
+    when_i_click_delete
+    then_i_see_delete_confirmation_form
+
+    when_i_choose_yes
+    and_i_click_continue
+    then_i_see_the_qualifications_summary
+  end
+
   private
 
   def when_i_click_apply_for_qts
@@ -448,6 +546,10 @@ RSpec.describe "Teacher application", type: :system do
     click_link "Upload your written statement"
   end
 
+  def when_i_click_delete
+    click_link "Delete"
+  end
+
   def when_i_fill_in_the_upload_written_statement_form
     attach_file "upload-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
@@ -536,6 +638,14 @@ RSpec.describe "Teacher application", type: :system do
     )
   end
 
+  def then_i_see_the_degree_qualifications_form
+    expect(page).to have_title("Your qualifications")
+    expect(page).to have_content("Your university degree")
+    expect(page).to have_content(
+      "Tell us about your university degree qualification."
+    )
+  end
+
   def then_i_see_the_upload_certificate_form
     expect(page).to have_title("Upload a document")
     expect(page).to have_content(
@@ -543,11 +653,21 @@ RSpec.describe "Teacher application", type: :system do
     )
   end
 
+  def then_i_see_the_upload_degree_certificate_form
+    expect(page).to have_title("Upload a document")
+    expect(page).to have_content("Upload your university degree certificate")
+  end
+
   def then_i_see_the_upload_transcript_form
     expect(page).to have_title("Upload a document")
     expect(page).to have_content(
       "Upload your teaching qualification transcript"
     )
+  end
+
+  def then_i_see_the_upload_degree_transcript_form
+    expect(page).to have_title("Upload a document")
+    expect(page).to have_content("Upload your university degree transcript")
   end
 
   def then_i_see_the_age_range_form
@@ -681,5 +801,10 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Application complete")
     expect(page).to have_content("Your reference number")
     expect(page).to have_content(application_form.reference)
+  end
+
+  def then_i_see_delete_confirmation_form
+    expect(page).to have_title("Delete")
+    expect(page).to have_content("Are you sure you want to delete")
   end
 end

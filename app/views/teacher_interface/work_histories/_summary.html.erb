@@ -12,7 +12,7 @@
 <% work_histories.each do |work_history| %>
   <%= render(CheckYourAnswersSummaryComponent.new(
     model: work_history,
-    title: work_history.current_or_most_recent_role? ? "Your current or most recent role" : "Previous role",
+    title: I18n.t(work_history.current_or_most_recent_role? ? "application_form.work_history.current_or_most_recent_role" : "application_form.work_history.previous_role"),
     fields: {
       school_name: {
         href: [:edit, :teacher_interface, :application_form, work_history]
@@ -43,6 +43,7 @@
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, work_history]
       } : nil,
-    }
+    },
+    delete_link_to: [:delete, :teacher_interface, :application_form, work_history]
   )) %>
 <% end %>

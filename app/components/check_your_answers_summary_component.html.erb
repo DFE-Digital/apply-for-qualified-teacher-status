@@ -1,6 +1,16 @@
 <div class="govuk-summary-list__card">
   <div class="govuk-summary-list__card-title-wrapper">
     <h2 class="govuk-summary-list__card-title"><%= title %></h2>
+
+    <% if @delete_link_to.present? %>
+      <div class="govuk-summary-list__card-actions">
+        <ul class="govuk-summary-list__card-actions-list">
+          <li class="govuk-summary-list__card-actions-list-item">
+            <%= govuk_link_to("Delete", @delete_link_to) %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
   </div>
 
   <div class="govuk-summary-list__card-content">

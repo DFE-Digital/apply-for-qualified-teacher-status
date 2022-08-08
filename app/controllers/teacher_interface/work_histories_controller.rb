@@ -1,7 +1,7 @@
 module TeacherInterface
   class WorkHistoriesController < BaseController
     before_action :load_application_form
-    before_action :load_work_history, only: %i[edit update destroy]
+    before_action :load_work_history, only: %i[edit update delete destroy]
 
     def index
       unless application_form.task_item_started?(:work_history, :work_history)
@@ -79,8 +79,16 @@ module TeacherInterface
       end
     end
 
+    def delete
+    end
+
     def destroy
-      @work_history.destroy!
+      if ActiveModel::Type::Boolean.new.cast(
+           params.dig(:work_history, :confirm)
+         )
+        @work_history.destroy!
+      end
+
       redirect_to %i[teacher_interface application_form work_histories]
     end
 
