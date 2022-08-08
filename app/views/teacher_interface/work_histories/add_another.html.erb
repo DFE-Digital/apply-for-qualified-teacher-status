@@ -1,6 +1,8 @@
 <% content_for :page_title, "Your work history in education" %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
+<span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.work_history") %></span>
+
 <%= form_with url: [:add_another, :teacher_interface, :application_form, :work_histories] do |f| %>
   <%= f.govuk_radio_buttons_fieldset :add_another,
                                      legend: { text: "Add another workplace?", tag: "h1", size: "l" } do %>
