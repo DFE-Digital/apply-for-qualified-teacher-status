@@ -121,30 +121,6 @@ RSpec.describe Qualification, type: :model do
     end
   end
 
-  describe "#summary_title" do
-    subject(:summary_title) { qualification.summary_title }
-
-    it { is_expected.to eq("Your teaching qualification") }
-
-    context "with a title" do
-      before { qualification.title = "Title" }
-
-      it { is_expected.to eq("Title") }
-    end
-
-    context "with an institution name" do
-      before { qualification.institution_name = "Name" }
-
-      it { is_expected.to eq("Name") }
-    end
-
-    context "with an institution country" do
-      before { qualification.institution_country = "Country" }
-
-      it { is_expected.to eq("Country") }
-    end
-  end
-
   describe "#can_delete?" do
     subject(:can_delete?) { qualification.can_delete? }
 

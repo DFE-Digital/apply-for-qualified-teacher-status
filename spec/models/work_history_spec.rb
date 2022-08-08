@@ -118,34 +118,4 @@ RSpec.describe WorkHistory, type: :model do
       it { is_expected.to eq(false) }
     end
   end
-
-  describe "#summary_title" do
-    subject(:summary_title) { work_history.summary_title }
-
-    it { is_expected.to eq("Your current or most recent role") }
-
-    context "with a school name" do
-      before { work_history.school_name = "Name" }
-
-      it { is_expected.to eq("Name") }
-    end
-
-    context "with a city" do
-      before { work_history.city = "City" }
-
-      it { is_expected.to eq("City") }
-    end
-
-    context "with a country" do
-      before { work_history.country = "Country" }
-
-      it { is_expected.to eq("Country") }
-    end
-
-    context "with a job" do
-      before { work_history.job = "Job" }
-
-      it { is_expected.to eq("Job") }
-    end
-  end
 end

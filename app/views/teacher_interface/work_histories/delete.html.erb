@@ -7,7 +7,7 @@
                                        :id,
                                        :name,
                                        inline: true,
-                                       legend: { text: "Are you sure you want to delete #{@work_history.summary_title}?", size: "l", tag: "h1" } %>
+                                       legend: { text: "Are you sure you want to delete #{work_history_title(@work_history)}?", size: "l", tag: "h1" } %>
 
   <%= f.govuk_submit "Continue", prevent_double_click: false %>
 <% end %>

@@ -1,0 +1,29 @@
+require "rails_helper"
+
+RSpec.describe QualificationHelper do
+  describe "#qualification_title" do
+    subject(:title) { qualification_title(qualification) }
+
+    let(:qualification) { build(:qualification) }
+
+    it { is_expected.to eq("Your teaching qualification") }
+
+    context "with a title" do
+      before { qualification.title = "Title" }
+
+      it { is_expected.to eq("Title") }
+    end
+
+    context "with an institution name" do
+      before { qualification.institution_name = "Name" }
+
+      it { is_expected.to eq("Name") }
+    end
+
+    context "with an institution country" do
+      before { qualification.institution_country = "Country" }
+
+      it { is_expected.to eq("Country") }
+    end
+  end
+end
