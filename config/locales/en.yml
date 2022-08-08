@@ -25,6 +25,9 @@ en:
         work_history: Add your work history
         registration_number: Enter your registration number
         written_statement: Upload your written statement
+    work_history:
+      current_or_most_recent_role: Your current or most recent role
+      previous_role: Previous role
     qualifications:
       heading:
         title:
