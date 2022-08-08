@@ -34,7 +34,9 @@ module TeacherInterface
     end
 
     def submit_add_another
-      if ActiveModel::Type::Boolean.new.cast(params[:add_another])
+      if ActiveModel::Type::Boolean.new.cast(
+           params.dig(:qualification, :add_another)
+         )
         redirect_to %i[new teacher_interface application_form qualification]
       else
         redirect_to %i[teacher_interface application_form]
@@ -46,10 +48,11 @@ module TeacherInterface
 
     def update
       if @qualification.update(qualification_params)
-        redirect_to_if_save_and_continue %i[
-                                           teacher_interface
-                                           application_form
-                                           qualifications
+        redirect_to_if_save_and_continue [
+                                           :edit,
+                                           :teacher_interface,
+                                           :application_form,
+                                           @qualification.certificate_document
                                          ]
       else
         render :edit, status: :unprocessable_entity

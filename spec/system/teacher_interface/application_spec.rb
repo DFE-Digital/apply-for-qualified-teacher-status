@@ -506,7 +506,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_age_range
-    click_link "Enter your age range"
+    click_link "Enter the age range you can teach"
   end
 
   def when_i_fill_in_age_range
@@ -575,7 +575,9 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Upload your identity document\nNOT STARTED")
 
     expect(page).to have_content("Your qualifications")
-    expect(page).to have_content("Enter your age range\nNOT STARTED")
+    expect(page).to have_content(
+      "Enter the age range you can teach\nNOT STARTED"
+    )
 
     expect(page).to have_content("Check your answers")
   end
@@ -679,14 +681,14 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_has_work_history_form
-    expect(page).to have_title("Your work history in education")
+    expect(page).to have_title("Your work history")
     expect(page).to have_content("Have you worked professionally as a teacher?")
     expect(page).to have_content("Yes")
     expect(page).to have_content("No")
   end
 
   def then_i_see_the_work_history_form
-    expect(page).to have_title("Your work history in education")
+    expect(page).to have_title("Your work history")
     expect(page).to have_content("Your work history in education")
     expect(page).to have_content("Your current or most recent role")
   end
@@ -740,7 +742,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_completed_age_range_section
-    expect(page).to have_content("Enter your age range\nCOMPLETED")
+    expect(page).to have_content("Enter the age range you can teach\nCOMPLETED")
   end
 
   def then_i_see_the_work_history_summary
