@@ -67,6 +67,14 @@ en:
             university_degree: Upload your university degree transcript
           description: Upload a transcript of your teaching qualification, issued by the awarding body. If your teaching qualification was completed as part of your degree, you should supply your degree transcript.
 
+  document:
+    document_type:
+      identification: identity
+      name_change: name change
+      qualification_certificate: certificate
+      qualification_transcript: transcript
+      written_statement: written statement
+
   eligibility_check:
     country:
       label: In which country are you currently recognised as a teacher?

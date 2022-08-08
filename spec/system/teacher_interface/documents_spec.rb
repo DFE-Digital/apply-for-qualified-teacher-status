@@ -18,7 +18,7 @@ RSpec.describe "Teacher documents", type: :system do
 
     when_i_choose_yes
     and_i_click_continue
-    then_i_see_document_form
+    then_i_see_the_next_page_document_form
 
     when_i_upload_a_document
     and_i_click_continue
@@ -49,7 +49,7 @@ RSpec.describe "Teacher documents", type: :system do
   def when_i_upload_a_document
     attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
-    choose "No, I'll upload a translation as well", visible: false
+    choose "No, I’ll upload a translation as well", visible: false
     attach_file "teacher-interface-upload-form-translated-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
   end
@@ -61,6 +61,13 @@ RSpec.describe "Teacher documents", type: :system do
   def then_i_see_document_form
     expect(page).to have_title("Upload a document")
     expect(page).to have_content("Upload your written statement")
+  end
+
+  def then_i_see_the_next_page_document_form
+    expect(page).to have_title("Upload a document")
+    expect(page).to have_content(
+      "Upload the next page of your written statement document"
+    )
   end
 
   def then_i_see_the_check_your_uploaded_files_page
