@@ -20,6 +20,30 @@ module TeacherInterface
       end
     end
 
+    def new
+      @work_history = WorkHistory.new(application_form:)
+    end
+
+    def create
+      @work_history = application_form.work_histories.new(work_history_params)
+      if @work_history.save
+        redirect_to %i[teacher_interface application_form work_histories]
+      else
+        render :new, status: :unprocessable_entity
+      end
+    end
+
+    def add_another
+    end
+
+    def submit_add_another
+      if ActiveModel::Type::Boolean.new.cast(params[:add_another])
+        redirect_to %i[new teacher_interface application_form work_history]
+      else
+        redirect_to %i[teacher_interface application_form]
+      end
+    end
+
     def edit_has_work_history
       @has_work_history_form =
         HasWorkHistoryForm.new(
@@ -41,29 +65,6 @@ module TeacherInterface
                                          ]
       else
         render :edit_has_work_history, status: :unprocessable_entity
-      end
-    end
-
-    def new
-      @work_history = WorkHistory.new(application_form:)
-    end
-
-    def create
-      unless params.include?(:work_history)
-        if ActiveModel::Type::Boolean.new.cast(params[:add_another])
-          redirect_to %i[new teacher_interface application_form work_history]
-        else
-          redirect_to [:teacher_interface, application_form]
-        end
-
-        return
-      end
-
-      @work_history = application_form.work_histories.new(work_history_params)
-      if @work_history.save
-        redirect_to %i[teacher_interface application_form work_histories]
-      else
-        render :new, status: :unprocessable_entity
       end
     end
 

@@ -1,7 +1,8 @@
 module TeacherInterface
   class QualificationsController < BaseController
     before_action :load_application_form
-    before_action :load_qualification, except: %i[index new create]
+    before_action :load_qualification,
+                  except: %i[index new create add_another submit_add_another]
 
     def index
       @qualifications = application_form.qualifications.ordered
@@ -16,16 +17,6 @@ module TeacherInterface
     end
 
     def create
-      unless params.include?(:qualification)
-        if ActiveModel::Type::Boolean.new.cast(params[:add_another])
-          redirect_to %i[new teacher_interface application_form qualification]
-        else
-          redirect_to %i[teacher_interface application_form]
-        end
-
-        return
-      end
-
       @qualification = application_form.qualifications.new(qualification_params)
       if @qualification.save
         redirect_to_if_save_and_continue [
@@ -36,6 +27,17 @@ module TeacherInterface
                                          ]
       else
         render :new, status: :unprocessable_entity
+      end
+    end
+
+    def add_another
+    end
+
+    def submit_add_another
+      if ActiveModel::Type::Boolean.new.cast(params[:add_another])
+        redirect_to %i[new teacher_interface application_form qualification]
+      else
+        redirect_to %i[teacher_interface application_form]
       end
     end
 
