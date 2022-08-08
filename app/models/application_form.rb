@@ -151,6 +151,10 @@ class ApplicationForm < ApplicationRecord
     region.status_check_written? || region.sanction_check_written?
   end
 
+  def teaching_qualification
+    qualifications.ordered.first
+  end
+
   private
 
   def build_documents
@@ -201,8 +205,7 @@ class ApplicationForm < ApplicationRecord
   def qualifications_status
     return :not_started if qualifications.empty?
 
-    part_of_university_degree =
-      qualifications.ordered.first.part_of_university_degree
+    part_of_university_degree = teaching_qualification.part_of_university_degree
     if part_of_university_degree.nil? ||
          (!part_of_university_degree && qualifications.count == 1)
       return :in_progress
