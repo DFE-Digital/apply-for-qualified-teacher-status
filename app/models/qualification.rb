@@ -93,6 +93,12 @@ class Qualification < ApplicationRecord
     is_teaching_qualification? ? "teaching_qualification" : "university_degree"
   end
 
+  def summary_title
+    title.presence || institution_name.presence ||
+      institution_country.presence ||
+      I18n.t("application_form.qualifications.heading.title.#{locale_key}")
+  end
+
   private
 
   def build_documents
