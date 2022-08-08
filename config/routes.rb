@@ -90,6 +90,11 @@ Rails.application.routes.draw do
       end
 
       resources :qualifications, except: %i[show] do
+        collection do
+          get "add_another", to: "qualifications#add_another"
+          post "add_another", to: "qualifications#submit_add_another"
+        end
+
         member do
           get "part_of_university_degree",
               to: "qualifications#edit_part_of_university_degree"
@@ -102,6 +107,9 @@ Rails.application.routes.draw do
 
       resources :work_histories, except: %i[show] do
         collection do
+          get "add_another", to: "work_histories#add_another"
+          post "add_another", to: "work_histories#submit_add_another"
+
           get "has_work_history", to: "work_histories#edit_has_work_history"
           post "has_work_history", to: "work_histories#update_has_work_history"
         end
