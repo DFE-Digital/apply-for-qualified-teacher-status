@@ -27,7 +27,6 @@ en:
         written_statement: Upload your written statement
     qualifications:
       heading:
-        caption: Your qualifications
         title:
           teaching_qualification: Your teaching qualification
           university_degree: Your university degree
@@ -36,8 +35,8 @@ en:
           university_degree: Tell us about your university degree qualification. If you have more than one degree qualification, you’ll have the opportunity to add them later.
       form:
         title:
-          teaching_qualification: Enter your teaching qualification
-          university_degree: Enter your university degree
+          teaching_qualification: Enter the details of your teaching qualification
+          university_degree: Enter the details of your university degree
         fields:
           title:
             teaching_qualification: Qualification title
@@ -62,6 +61,7 @@ en:
           title:
             teaching_qualification: Upload your teaching qualification transcript
             university_degree: Upload your university degree transcript
+          description: Upload a transcript of your teaching qualification, issued by the awarding body. If your teaching qualification was completed as part of your degree, you should supply your degree transcript.
 
   eligibility_check:
     country:

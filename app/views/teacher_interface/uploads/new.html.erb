@@ -48,21 +48,24 @@
     <%= render "shared/teaching_authority_contactable", contactable: @application_form.region %>
   <% end %>
 <% elsif @document.qualification_certificate? %>
-  <span class="govuk-caption-l"><%= I18n.t("application_form.qualifications.heading.caption") %></span>
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
   <h1 class="govuk-heading-l"><%= I18n.t("application_form.qualifications.upload.certificate.title.#{@document.documentable.locale_key}") %></h1>
 <% elsif @document.qualification_transcript? %>
-  <span class="govuk-caption-l"><%= I18n.t("application_form.qualifications.heading.caption") %></span>
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
   <h1 class="govuk-heading-l"><%= I18n.t("application_form.qualifications.upload.transcript.title.#{@document.documentable.locale_key}") %></h1>
-
-  <%= govuk_details(summary_text: "What is a transcript?") do %>
-    <p class="govuk-body">A transcript (or diploma supplement) is a document from the institution where you studied for your degree. It lists all the modules or subjects you studied in each year, and the marks or grades you were awarded.</p>
-  <% end %>
+  <p class="govuk-body"><%= I18n.t("application_form.qualifications.upload.transcript.description") %></p>
 <% end %>
 
 <%= form_with model: [:teacher_interface, :application_form, @document, @upload] do |f| %>
   <%= f.govuk_file_field :attachment,
                          label: { text: "Select a file to upload" },
                          hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 50MB." } %>
+
+  <% if @document.qualification_transcript? %>
+    <%= govuk_details(summary_text: "What is a transcript?") do %>
+      <p class="govuk-body">A transcript (or diploma supplement) is a document from the institution where you studied for your degree. It lists all the modules or subjects you studied in each year, and the marks or grades you were awarded.</p>
+    <% end %>
+  <% end %>
 
   <% if @document.translatable? %>
     <%= f.govuk_radio_buttons_fieldset :written_in_english, legend: { size: "m", text: "Is your document written in English?" } do %>

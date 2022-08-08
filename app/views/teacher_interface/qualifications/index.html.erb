@@ -1,7 +1,7 @@
-<% content_for :page_title, I18n.t("application_form.qualifications.heading.caption") %>
+<% content_for :page_title, I18n.t("application_form.tasks.sections.qualifications") %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
-<span class="govuk-caption-l"><%= I18n.t("application_form.qualifications.heading.caption") %></span>
+<span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 <h1 class="govuk-heading-l">Check your answers</h1>
 
 <%= render "summary", application_form: @application_form, qualifications: @qualifications %>
