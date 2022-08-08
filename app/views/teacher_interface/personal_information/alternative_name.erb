@@ -1,29 +1,16 @@
-<% content_for :page_title, "About you" %>
+<% content_for :page_title, I18n.t("application_form.tasks.sections.about_you") %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
-<span class="govuk-caption-l">About you</span>
+<span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.about_you") %></span>
 
 <%= form_with model: @alternative_name_form, url: [:alternative_name, :teacher_interface, :application_form, :personal_information] do |f| %>
-  <%= f.govuk_radio_buttons_fieldset :has_alternative_name,
-                                     legend: { text: "Does your name appear differently on your ID documents or qualifications?", size: "l", tag: "h1" },
-                                     hint: { text: "If your name appears differently on your ID documents or qualification certificates, we’ll need to see evidence of your name change." } do %>
-
-    <%= f.govuk_radio_button :has_alternative_name,
-                             "true",
-                             label: { text: "Yes – I'll upload another document to prove this" },
-                             link_errors: true do %>
-
-      <%= f.govuk_text_field :alternative_given_names,
-                             label: { text: "Alternate given names" },
-                             hint: { text: "Enter your full name apart from your family name" } %>
-
-      <%= f.govuk_text_field :alternative_family_name,
-                             label: { text: "Alternate family name" },
-                             hint: { text: "Enter just your family name" } %>
-
+  <%= f.govuk_radio_buttons_fieldset :has_alternative_name, legend: { size: "l", tag: "h1" } do %>
+    <%= f.govuk_radio_button :has_alternative_name, :true, link_errors: true do %>
+      <%= f.govuk_text_field :alternative_given_names %>
+      <%= f.govuk_text_field :alternative_family_name %>
     <% end %>
 
-    <%= f.govuk_radio_button :has_alternative_name, "false", label: { text: "No" } %>
+    <%= f.govuk_radio_button :has_alternative_name, :false %>
   <% end %>
 
   <%= render "shared/save_submit_buttons", f: %>

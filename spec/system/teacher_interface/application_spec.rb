@@ -458,7 +458,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_the_alternative_name_form
-    choose "Yes – I'll upload another document to prove this", visible: false
+    choose "Yes – I’ll upload another document to prove this", visible: false
     fill_in "teacher-interface-alternative-name-form-alternative-given-names-field",
             with: "Name"
     fill_in "teacher-interface-alternative-name-form-alternative-family-name-field",
@@ -611,14 +611,14 @@ RSpec.describe "Teacher application", type: :system do
       "Does your name appear differently on your ID documents or qualifications?"
     )
     expect(page).to have_content(
-      "Yes – I'll upload another document to prove this"
+      "Yes – I’ll upload another document to prove this"
     )
     expect(page).to have_content("No")
   end
 
   def then_i_see_the_upload_name_change_form
     expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload a valid identification document")
+    expect(page).to have_content("Upload a proof of your change of name")
   end
 
   def then_i_see_the_upload_identification_form
