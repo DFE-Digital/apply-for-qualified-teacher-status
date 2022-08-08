@@ -107,6 +107,10 @@ Rails.application.routes.draw do
 
       resource :age_range, controller: :age_range, only: %i[show edit update]
 
+      resource :subjects, only: %i[show edit update] do
+        get "delete"
+      end
+
       resources :work_histories, except: %i[show] do
         get "delete", on: :member
 

@@ -1,0 +1,34 @@
+<% content_for :page_title, I18n.t("application_form.tasks.items.subjects") %>
+<% content_for :back_link_url, teacher_interface_application_form_path %>
+
+<span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
+<h1 class="govuk-heading-l">What subjects are you qualified to teach?</h1>
+<p class="govuk-hint">You can enter up to three</p>
+
+<%= form_with model: @application_form, url: [:teacher_interface, :application_form, :subjects], method: :put do |f| %>
+  <% if @application_form.subjects.empty? %>
+    <%= f.govuk_text_field :subjects, multiple: true %>
+  <% else %>
+    <% @application_form.subjects.each_with_index do |value, index| %>
+      <div class="govuk-form-group">
+        <%= f.label :subjects,
+                    for: "application_form_subjects_#{index}",
+                    class: "govuk-label" %>
+        <%= f.text_field :subjects,
+                         id: "application_form_subjects_#{index}",
+                         multiple: true,
+                         class: "govuk-input",
+                         value: %>
+        <% if index != 0 %>
+          <%= govuk_link_to "Remove", delete_teacher_interface_application_form_subjects_path(index:) %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if @application_form.subjects.count <= 2 %>
+    <%= f.govuk_submit "Add another subject", secondary: true, name: "create", value: "true" %>
+  <% end %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>
