@@ -28,6 +28,10 @@ class TeacherInterface::UploadForm
     original_attachment.present? || translated_attachment.present?
   end
 
+  def blank?
+    !present?
+  end
+
   def save
     return false unless valid?
     return false if blank?
