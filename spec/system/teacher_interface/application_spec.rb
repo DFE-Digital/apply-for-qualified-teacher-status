@@ -709,7 +709,7 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Family name\tName")
     expect(page).to have_content("Date of birth\t1 January 2000")
     expect(page).to have_content(
-      "Legal name different to identity document?\tYes"
+      "Name appears differently on your ID documents or qualifications?\tYes"
     )
     expect(page).to have_content("Alternative given names\tName")
     expect(page).to have_content("Alternative family name\tName")
