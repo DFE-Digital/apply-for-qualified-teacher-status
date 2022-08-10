@@ -124,7 +124,7 @@ class PerformanceStats
       @eligibility_checks
         .left_joins(:region)
         .where.not(country_code: nil)
-        .group(:country_code, "regions.name")
+        .group(:country_code, "COALESCE(regions.name, '')")
 
     eligibility_checks_by_region_all = eligibility_checks_by_region.count
     eligibility_checks_by_region_answered_all_questions =
@@ -136,7 +136,7 @@ class PerformanceStats
 
     sorted_eligibility_checks_by_region_all =
       eligibility_checks_by_region_all.sort_by do |(country_code, region_name), count|
-        [-count, CountryName.from_code(country_code), region_name || ""]
+        [-count, CountryName.from_code(country_code), region_name]
       end
 
     @usage_by_country_data = [
@@ -148,7 +148,7 @@ class PerformanceStats
 
         [
           CountryName.from_code(country_code),
-          region_name || "",
+          region_name,
           count,
           eligibility_checks_by_region_answered_all_questions[key] || 0,
           eligibility_checks_by_region_eligible[key] || 0
