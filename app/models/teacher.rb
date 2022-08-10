@@ -29,6 +29,11 @@ class Teacher < ApplicationRecord
             },
             valid_for_notify: true
 
+  def send_magic_link(*)
+    token = Devise::Passwordless::LoginToken.encode(self)
+    send_devise_notification(:magic_link, token, {})
+  end
+
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end

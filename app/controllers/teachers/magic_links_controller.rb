@@ -29,10 +29,6 @@ class Teachers::MagicLinksController < DeviseController
 
   private
 
-  def create_params
-    resource_params.permit(:email, :remember_me)
-  end
-
   def after_sign_in_path_for(resource)
     stored_location_for(resource) || teacher_interface_root_path
   end
