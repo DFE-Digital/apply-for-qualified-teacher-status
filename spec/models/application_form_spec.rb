@@ -15,6 +15,7 @@
 #  reference               :string(31)       not null
 #  registration_number     :text
 #  status                  :string           default("active"), not null
+#  subjects                :text             default([]), not null, is an Array
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  region_id               :bigint           not null
@@ -90,7 +91,7 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: %i[personal_information identity_document],
-            qualifications: %i[qualifications age_range],
+            qualifications: %i[qualifications age_range subjects],
             work_history: %i[work_history]
           }
         )
@@ -104,7 +105,7 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: %i[personal_information identity_document],
-            qualifications: %i[qualifications age_range],
+            qualifications: %i[qualifications age_range subjects],
             proof_of_recognition: %i[written_statement]
           }
         )
@@ -118,7 +119,7 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: %i[personal_information identity_document],
-            qualifications: %i[qualifications age_range],
+            qualifications: %i[qualifications age_range subjects],
             proof_of_recognition: %i[registration_number]
           }
         )
@@ -138,7 +139,8 @@ RSpec.describe ApplicationForm, type: :model do
           },
           qualifications: {
             qualifications: :not_started,
-            age_range: :not_started
+            age_range: :not_started,
+            subjects: :not_started
           },
           work_history: {
             work_history: :not_started
@@ -159,7 +161,8 @@ RSpec.describe ApplicationForm, type: :model do
             },
             qualifications: {
               qualifications: :not_started,
-              age_range: :not_started
+              age_range: :not_started,
+              subjects: :not_started
             },
             proof_of_recognition: {
               written_statement: :not_started
@@ -181,7 +184,8 @@ RSpec.describe ApplicationForm, type: :model do
             },
             qualifications: {
               qualifications: :not_started,
-              age_range: :not_started
+              age_range: :not_started,
+              subjects: :not_started
             },
             proof_of_recognition: {
               registration_number: :not_started
@@ -304,6 +308,8 @@ RSpec.describe ApplicationForm, type: :model do
       describe "age range item" do
         subject(:age_range_status) { qualifications_status[:age_range] }
 
+        it { is_expected.to eq(:not_started) }
+
         context "with some age range" do
           before { application_form.update!(age_range_min: 7) }
 
@@ -314,6 +320,24 @@ RSpec.describe ApplicationForm, type: :model do
           before do
             application_form.update!(age_range_min: 7, age_range_max: 11)
           end
+
+          it { is_expected.to eq(:completed) }
+        end
+      end
+
+      describe "subjects item" do
+        subject(:subjects_status) { qualifications_status[:subjects] }
+
+        it { is_expected.to eq(:not_started) }
+
+        context "with blank subjects" do
+          before { application_form.update!(subjects: [""]) }
+
+          it { is_expected.to eq(:in_progress) }
+        end
+
+        context "with a subject" do
+          before { application_form.update!(subjects: ["Maths"]) }
 
           it { is_expected.to eq(:completed) }
         end
@@ -416,6 +440,21 @@ RSpec.describe ApplicationForm, type: :model do
     subject(:can_submit?) { application_form.can_submit? }
 
     it { is_expected.to eq(false) }
+  end
+
+  describe "#submit!" do
+    before do
+      application_form.update!(subjects: ["Maths", "", ""])
+      application_form.submit!
+    end
+
+    it "sets the status of the application form" do
+      expect(application_form.submitted?).to be true
+    end
+
+    it "compacts the subjects" do
+      expect(application_form.subjects).to eq(["Maths"])
+    end
   end
 
   describe "#needs_work_history?" do

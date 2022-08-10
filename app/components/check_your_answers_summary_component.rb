@@ -42,6 +42,10 @@ class CheckYourAnswersSummaryComponent < ViewComponent::Base
       )
     end
 
+    if value.is_a?(Array)
+      return value.map { |v| format_value(v, opts) }.join("<br />").html_safe
+    end
+
     return "Yes" if value == true
     return "No" if value == false
 

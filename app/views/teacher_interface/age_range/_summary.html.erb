@@ -1,10 +1,10 @@
 <%= render(CheckYourAnswersSummaryComponent.new(model: application_form, title: "Age range", fields: {
   age_range_min: {
     key: "Minimum age",
-    href: [:edit, :teacher_interface, application_form, :age_range]
+    href: [:edit, :teacher_interface, :application_form, :age_range]
   },
   age_range_max: {
     key: "Maximum age",
-    href: [:edit, :teacher_interface, application_form, :age_range]
+    href: [:edit, :teacher_interface, :application_form, :age_range]
   },
 })) %>

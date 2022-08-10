@@ -60,6 +60,7 @@
     - alternative_family_name
     - registration_number
     - has_work_history
+    - subjects
   :work_histories:
     - id
     - application_form_id

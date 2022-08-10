@@ -1,0 +1,9 @@
+<%= render(CheckYourAnswersSummaryComponent.new(
+  model: application_form,
+  title: "Subjects",
+  fields: {
+    subjects: {
+      href: [:edit, :teacher_interface, :application_form, :subjects]
+    },
+  }
+)) %>

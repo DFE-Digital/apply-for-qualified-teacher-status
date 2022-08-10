@@ -91,6 +91,16 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     then_i_see_completed_age_range_section
 
+    when_i_click_subjects
+    then_i_see_the_subjects_form
+
+    when_i_fill_in_subjects
+    and_i_click_continue
+    then_i_see_the_subjects_summary
+
+    when_i_click_continue
+    then_i_see_completed_subjects_section
+
     when_i_click_work_history
     then_i_see_the_has_work_history_form
 
@@ -199,6 +209,16 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     then_i_see_completed_age_range_section
 
+    when_i_click_subjects
+    then_i_see_the_subjects_form
+
+    when_i_fill_in_subjects
+    and_i_click_continue
+    then_i_see_the_subjects_summary
+
+    when_i_click_continue
+    then_i_see_completed_subjects_section
+
     when_i_click_registration_number
     then_i_see_the_registration_number_form
 
@@ -300,6 +320,16 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_continue
     then_i_see_completed_age_range_section
+
+    when_i_click_subjects
+    then_i_see_the_subjects_form
+
+    when_i_fill_in_subjects
+    and_i_click_continue
+    then_i_see_the_subjects_summary
+
+    when_i_click_continue
+    then_i_see_completed_subjects_section
 
     when_i_click_written_statement
     then_i_see_the_upload_written_statement_form
@@ -418,6 +448,32 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_qualifications_summary
   end
 
+  it "allows adding and removing subjects" do
+    given_an_eligible_eligibility_check_with_none_country_checks
+
+    when_i_click_apply_for_qts
+    and_i_sign_up
+    then_i_see_the_new_application_page
+    and_i_click_continue
+    then_i_see_the_active_application_page
+    and_i_see_the_work_history_is_not_started
+
+    when_i_click_subjects
+    then_i_see_the_subjects_form
+
+    when_i_fill_in_subjects
+    and_i_click_add_another_subject
+    then_i_see_the_two_subjects_form
+
+    when_i_click_remove
+    then_i_see_the_subjects_form
+    and_i_click_continue
+    then_i_see_the_subjects_summary
+
+    when_i_click_continue
+    then_i_see_completed_subjects_section
+  end
+
   private
 
   def when_i_click_apply_for_qts
@@ -438,6 +494,10 @@ RSpec.describe "Teacher application", type: :system do
 
   def when_i_click_continue
     click_link "Continue"
+  end
+
+  def when_i_click_remove
+    click_link "Remove"
   end
 
   def when_i_click_personal_information
@@ -512,6 +572,18 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_fill_in_age_range
     fill_in "teacher-interface-age-range-form-age-range-min-field", with: "7"
     fill_in "teacher-interface-age-range-form-age-range-max-field", with: "11"
+  end
+
+  def when_i_click_subjects
+    click_link "Enter the subjects you can teach"
+  end
+
+  def and_i_click_add_another_subject
+    click_button "Add another subject"
+  end
+
+  def when_i_fill_in_subjects
+    fill_in "application-form-subjects-field", with: "Subject"
   end
 
   def when_i_click_work_history
@@ -680,6 +752,18 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("To")
   end
 
+  def then_i_see_the_subjects_form
+    expect(page).to have_title("Enter the subjects you can teach")
+    expect(page).to have_content("What subjects are you qualified to teach?")
+  end
+
+  def then_i_see_the_two_subjects_form
+    expect(page).to have_title("Enter the subjects you can teach")
+    expect(page).to have_content("What subjects are you qualified to teach?")
+    expect(page).to have_content("Subject")
+    expect(page).to have_content("Remove")
+  end
+
   def then_i_see_the_has_work_history_form
     expect(page).to have_title("Your work history")
     expect(page).to have_content("Have you worked professionally as a teacher?")
@@ -743,6 +827,15 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_completed_age_range_section
     expect(page).to have_content("Enter the age range you can teach\nCOMPLETED")
+  end
+
+  def then_i_see_the_subjects_summary
+    expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Subjects\tSubject")
+  end
+
+  def then_i_see_completed_subjects_section
+    expect(page).to have_content("Enter the subjects you can teach\nCOMPLETED")
   end
 
   def then_i_see_the_work_history_summary

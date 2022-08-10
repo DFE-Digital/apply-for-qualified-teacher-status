@@ -15,6 +15,7 @@
 #  reference               :string(31)       not null
 #  registration_number     :text
 #  status                  :string           default("active"), not null
+#  subjects                :text             default([]), not null, is an Array
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  region_id               :bigint           not null
@@ -74,7 +75,7 @@ class ApplicationForm < ApplicationRecord
       begin
         hash = {}
         hash.merge!(about_you: %i[personal_information identity_document])
-        hash.merge!(qualifications: %i[qualifications age_range])
+        hash.merge!(qualifications: %i[qualifications age_range subjects])
         hash.merge!(work_history: %i[work_history]) if needs_work_history?
 
         if needs_written_statement? || needs_registration_number?
@@ -109,6 +110,13 @@ class ApplicationForm < ApplicationRecord
 
   def can_submit?
     completed_task_sections.count == tasks.count
+  end
+
+  def submit!
+    return if submitted?
+
+    subjects.compact_blank!
+    submitted!
   end
 
   def path_for_task_item(key)
@@ -173,6 +181,8 @@ class ApplicationForm < ApplicationRecord
       qualifications_status
     when :age_range
       status_for_values(age_range_min, age_range_max)
+    when :subjects
+      subjects_status
     when :work_history
       work_history_status
     when :registration_number
@@ -213,6 +223,12 @@ class ApplicationForm < ApplicationRecord
 
     return :completed if qualifications.completed.count == qualifications.count
     :in_progress
+  end
+
+  def subjects_status
+    return :not_started if subjects.empty?
+    return :in_progress if subjects.compact_blank.empty?
+    :completed
   end
 
   def work_history_status
