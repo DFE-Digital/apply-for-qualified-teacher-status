@@ -122,9 +122,9 @@ class PerformanceStats
   def calculate_usage_by_country
     eligibility_checks_by_region =
       @eligibility_checks
-        .includes(region: :country)
-        .where.not(region: nil)
-        .group(:region)
+        .left_joins(:region)
+        .where.not(country_code: nil)
+        .group(:country_code, "regions.name")
 
     eligibility_checks_by_region_all = eligibility_checks_by_region.count
     eligibility_checks_by_region_answered_all_questions =
@@ -135,21 +135,23 @@ class PerformanceStats
     @usage_by_country_count = eligibility_checks_by_region_all.count
 
     sorted_eligibility_checks_by_region_all =
-      eligibility_checks_by_region_all.sort_by do |region, count|
-        [-count, CountryName.from_country(region.country), region.name]
+      eligibility_checks_by_region_all.sort_by do |(country_code, region_name), count|
+        [-count, CountryName.from_code(country_code), region_name || ""]
       end
 
     @usage_by_country_data = [
       ["Country", "State", "All checks", "Full checks", "Eligible checks"]
     ]
     @usage_by_country_data +=
-      sorted_eligibility_checks_by_region_all.map do |region, count|
+      sorted_eligibility_checks_by_region_all.map do |key, count|
+        country_code, region_name = key
+
         [
-          CountryName.from_country(region.country),
-          region.name,
+          CountryName.from_code(country_code),
+          region_name || "",
           count,
-          eligibility_checks_by_region_answered_all_questions[region] || 0,
-          eligibility_checks_by_region_eligible[region] || 0
+          eligibility_checks_by_region_answered_all_questions[key] || 0,
+          eligibility_checks_by_region_eligible[key] || 0
         ]
       end
   end
