@@ -1,22 +1,61 @@
 ---
 :shared:
-  :regions:
+  :active_storage_variant_records:
     - id
-    - country_id
+    - blob_id
+    - variation_digest
+  :active_storage_blobs:
+    - id
+    - key
+    - filename
+    - content_type
+    - metadata
+    - service_name
+    - byte_size
+    - checksum
+    - created_at
+  :active_storage_attachments:
+    - id
     - name
+    - record_type
+    - record_id
+    - blob_id
+    - created_at
+  :application_forms:
+    - id
+    - reference
+    - status
+    - teacher_id
     - created_at
     - updated_at
-    - status_check
-    - sanction_check
+    - given_names
+    - family_name
+    - date_of_birth
+    - age_range_min
+    - age_range_max
+    - has_alternative_name
+    - alternative_given_names
+    - alternative_family_name
+    - region_id
+    - registration_number
+    - has_work_history
+    - subjects
+  :countries:
+    - id
+    - code
+    - created_at
+    - updated_at
     - teaching_authority_address
     - teaching_authority_emails
     - teaching_authority_websites
+    - teaching_authority_certificate
+    - teaching_authority_other
     - teaching_authority_name
-    - legacy
-  :features:
+  :documents:
     - id
-    - name
-    - active
+    - document_type
+    - documentable_type
+    - documentable_id
     - created_at
     - updated_at
   :eligibility_checks:
@@ -31,47 +70,10 @@
     - region_id
     - completed_at
     - completed_requirements
-  :countries:
+  :features:
     - id
-    - code
-    - created_at
-    - updated_at
-    - teaching_authority_certificate
-    - teaching_authority_other
-    - teaching_authority_address
-    - teaching_authority_emails
-    - teaching_authority_websites
-    - teaching_authority_name
-  :application_forms:
-    - id
-    - reference
-    - status
-    - teacher_id
-    - region_id
-    - created_at
-    - updated_at
-    - given_names
-    - family_name
-    - date_of_birth
-    - age_range_min
-    - age_range_max
-    - has_alternative_name
-    - alternative_given_names
-    - alternative_family_name
-    - registration_number
-    - has_work_history
-    - subjects
-  :work_histories:
-    - id
-    - application_form_id
-    - school_name
-    - city
-    - country
-    - job
-    - email
-    - start_date
-    - still_employed
-    - end_date
+    - name
+    - active
     - created_at
     - updated_at
   :qualifications:
@@ -86,3 +88,67 @@
     - created_at
     - updated_at
     - part_of_university_degree
+  :regions:
+    - id
+    - country_id
+    - name
+    - created_at
+    - updated_at
+    - status_check
+    - sanction_check
+    - teaching_authority_address
+    - legacy
+    - teaching_authority_emails
+    - teaching_authority_websites
+    - teaching_authority_name
+  :staff:
+    - id
+    - email
+    - reset_password_sent_at
+    - remember_created_at
+    - sign_in_count
+    - current_sign_in_at
+    - last_sign_in_at
+    - current_sign_in_ip
+    - last_sign_in_ip
+    - confirmed_at
+    - confirmation_sent_at
+    - unconfirmed_email
+    - failed_attempts
+    - locked_at
+    - created_at
+    - updated_at
+    - invitation_created_at
+    - invitation_sent_at
+    - invitation_accepted_at
+    - invitation_limit
+    - invited_by_type
+    - invited_by_id
+    - invitations_count
+  :teachers:
+    - id
+    - email
+    - created_at
+    - updated_at
+    - confirmed_at
+    - confirmation_sent_at
+    - unconfirmed_email
+  :uploads:
+    - id
+    - document_id
+    - translation
+    - created_at
+    - updated_at
+  :work_histories:
+    - id
+    - application_form_id
+    - school_name
+    - city
+    - country
+    - job
+    - email
+    - start_date
+    - still_employed
+    - end_date
+    - created_at
+    - updated_at

@@ -1,13 +1,37 @@
 ---
 :shared:
+  :active_storage_blobs:
+    - filename
+  :active_storage_attachments:
+    - name
   :application_forms:
     - given_names
     - family_name
     - date_of_birth
     - age_range_min
     - age_range_max
+    - has_alternative_name
+    - alternative_given_names
+    - alternative_family_name
     - registration_number
+    - has_work_history
     - subjects
+  :qualifications:
+    - title
+    - institution_name
+    - institution_country
+    - start_date
+    - complete_date
+    - certificate_date
+    - part_of_university_degree
+  :staff:
+    - email
+    - current_sign_in_ip
+    - last_sign_in_ip
+    - unconfirmed_email
+  :teachers:
+    - email
+    - unconfirmed_email
   :work_histories:
     - school_name
     - city
@@ -17,10 +41,3 @@
     - start_date
     - still_employed
     - end_date
-  :qualifications:
-    - title
-    - institution_name
-    - institution_country
-    - start_date
-    - complete_date
-    - certificate_date
