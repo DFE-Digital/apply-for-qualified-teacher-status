@@ -1,10 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Teacher authentication", type: :system do
-  before do
-    given_the_service_is_open
-    given_the_service_is_startable
-  end
+  before { given_the_service_is_open }
 
   it "allows signing up and signing in" do
     given_countries_exist

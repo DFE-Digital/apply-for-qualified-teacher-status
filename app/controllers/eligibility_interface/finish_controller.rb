@@ -14,6 +14,9 @@ class EligibilityInterface::FinishController < EligibilityInterface::BaseControl
 
   private
 
+  MUTUAL_RECOGNITION_URL =
+    "https://teacherservices.education.gov.uk/MutualRecognition/".freeze
+
   def ensure_eligibility_check_status
     if eligibility_check.status != :eligibility
       redirect_to eligibility_interface_start_path

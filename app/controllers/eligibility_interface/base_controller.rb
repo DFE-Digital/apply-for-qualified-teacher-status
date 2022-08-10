@@ -25,8 +25,5 @@ module EligibilityInterface
     def current_namespace
       "eligibility"
     end
-
-    MUTUAL_RECOGNITION_URL =
-      "https://teacherservices.education.gov.uk/MutualRecognition/".freeze
   end
 end

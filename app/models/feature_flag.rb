@@ -34,17 +34,8 @@ class FeatureFlag
     ]
   ].freeze
 
-  TEMPORARY_FEATURE_FLAGS = [
-    [
-      :service_start,
-      "Allow users to use the service, rather than being sent to the " \
-        "legacy mutual recognition site",
-      "Thomas Leese"
-    ]
-  ].freeze
-
   FEATURES =
-    (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS)
+    PERMANENT_SETTINGS
       .to_h do |name, description, owner|
         [name, FeatureFlag.new(description:, name:, owner:)]
       end

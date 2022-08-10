@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "Staff support", type: :system do
   it "allows inviting a user" do
-    given_the_service_is_startable
     given_the_service_is_staff_http_basic_auth
 
     when_i_am_authorized_as_a_support_user
