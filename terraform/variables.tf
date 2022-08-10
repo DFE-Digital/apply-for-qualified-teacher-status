@@ -93,6 +93,11 @@ variable "forms_storage_account_name" {
   default = null
 }
 
+variable "govuk_notify_template_id_devise" {
+  default = null
+  type    = string
+}
+
 variable "region_name" {
   default = "west europe"
   type    = string

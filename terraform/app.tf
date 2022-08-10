@@ -11,6 +11,8 @@ locals {
     BIGQUERY_DATASET    = local.bigquery_dataset,
     BIGQUERY_TABLE_NAME = local.bigquery_table_name,
 
+    GOVUK_NOTIFY_TEMPLATE_ID_DEVISE = var.govuk_notify_template_id_devise,
+
     RAILS_SERVE_STATIC_FILES = "true"
 
     AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.forms.name,
