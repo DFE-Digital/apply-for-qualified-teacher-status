@@ -7,10 +7,6 @@ module SystemHelpers
     FeatureFlag.deactivate(:service_open)
   end
 
-  def given_the_service_is_startable
-    FeatureFlag.activate(:service_start)
-  end
-
   def given_the_service_allows_teacher_applications
     FeatureFlag.activate(:teacher_applications)
   end

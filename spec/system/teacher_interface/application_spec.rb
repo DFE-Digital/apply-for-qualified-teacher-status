@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe "Teacher application", type: :system do
   before do
     given_the_service_is_open
-    given_the_service_is_startable
     given_the_service_allows_teacher_applications
   end
 
