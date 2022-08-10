@@ -18,7 +18,7 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the_teacher_confirmation_email
-    then_i_see_successful_confirmation_message
+    then_i_see_successful_confirmation
 
     given_i_clear_my_session
 
@@ -140,9 +140,9 @@ RSpec.describe "Teacher authentication", type: :system do
     expect(page).to have_content("Check your email")
   end
 
-  def then_i_see_successful_confirmation_message
+  def then_i_see_successful_confirmation
     expect(page).to have_content(
-      "Your email address has been successfully confirmed."
+      "In which country are you currently recognised as a teacher?"
     )
   end
 
