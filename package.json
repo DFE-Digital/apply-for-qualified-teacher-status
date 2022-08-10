@@ -4,7 +4,7 @@
   "dependencies": {
     "esbuild": "^0.14.54",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
-    "govuk-frontend": "^4.2.0",
+    "govuk-frontend": "^4.3.0",
     "sass": "^1.54.3"
   },
   "scripts": {
