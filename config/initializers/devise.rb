@@ -369,3 +369,12 @@ Devise.setup do |config|
   # each time you sign in, all existing magic links will be considered invalid.
   # config.passwordless_expire_old_tokens_on_sign_in = false
 end
+
+# As we only use magic link authentication for teachers, we don't need to unnecessarily
+# include the scope in the magic link URLs.
+# https://github.com/heartcombo/devise/blob/6d32d2447cc0f3739d9732246b5a5bde98d9e032/lib/devise/strategies/authenticatable.rb#L92-L95
+class Devise::Strategies::MagicLinkAuthenticatable
+  def params_auth_hash
+    params
+  end
+end
