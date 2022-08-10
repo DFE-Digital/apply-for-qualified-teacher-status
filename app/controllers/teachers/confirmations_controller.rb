@@ -10,7 +10,6 @@ class Teachers::ConfirmationsController < Devise::ConfirmationsController
     yield resource if block_given?
 
     if resource.errors.empty?
-      set_flash_message!(:notice, :confirmed)
       sign_in(resource)
       respond_with_navigational(resource) do
         redirect_to after_confirmation_path_for(resource_name, resource)

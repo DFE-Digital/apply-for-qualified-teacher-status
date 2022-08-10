@@ -25,6 +25,10 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
 
   protected
 
+  def set_flash_message(*args, **kwargs)
+    # We want to disable the built-in Devise flash messages for teachers.
+  end
+
   def after_inactive_sign_up_path_for(_resource)
     teacher_check_email_path
   end
