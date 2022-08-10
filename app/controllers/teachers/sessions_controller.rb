@@ -15,7 +15,7 @@ class Teachers::SessionsController < Devise::SessionsController
 
     if resource
       if resource.active_for_authentication?
-        resource.send_magic_link(resource_params[:remember_me])
+        resource.send_magic_link
       else
         resource.resend_confirmation_instructions
       end
