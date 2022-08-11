@@ -86,6 +86,7 @@ Rails.application.routes.draw do
           get "alternative_name", to: "personal_information#alternative_name"
           post "alternative_name",
                to: "personal_information#update_alternative_name"
+          get "check", to: "personal_information#check"
         end
       end
 
