@@ -104,8 +104,8 @@ class ApplicationForm < ApplicationRecord
       .map { |section, _| section }
   end
 
-  def task_item_started?(section, item)
-    task_statuses.dig(section, item) != :not_started
+  def task_item_completed?(section, item)
+    task_statuses.dig(section, item) == :completed
   end
 
   def can_submit?

@@ -347,7 +347,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_yes
     and_i_click_continue
-    then_i_see_the_work_history_form
+    then_i_see_the_empty_work_history_summary
   end
 
   it "allows delete qualifications" do
@@ -842,6 +842,13 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Your job role\tJob")
     expect(page).to have_content("Contact email address\ttest@example.com")
     expect(page).to have_content("Role start date\tJanuary 2000")
+  end
+
+  def then_i_see_the_empty_work_history_summary
+    expect(page).to have_content("Work history")
+    expect(page).to have_content(
+      "Have you worked professionally as a teacher?\tYes"
+    )
   end
 
   def then_i_see_completed_work_history_section

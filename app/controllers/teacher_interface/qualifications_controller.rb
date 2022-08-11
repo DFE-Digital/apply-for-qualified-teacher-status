@@ -12,10 +12,17 @@ module TeacherInterface
                   ]
 
     def index
-      if application_form.qualifications.empty?
+      if application_form.task_item_completed?(:qualifications, :qualifications)
+        redirect_to %i[check teacher_interface application_form qualifications]
+      elsif application_form.qualifications.empty?
         redirect_to %i[new teacher_interface application_form qualification]
       else
-        redirect_to %i[check teacher_interface application_form qualifications]
+        redirect_to [
+                      :edit,
+                      :teacher_interface,
+                      :application_form,
+                      application_form.qualifications.ordered.first
+                    ]
       end
     end
 
@@ -89,6 +96,7 @@ module TeacherInterface
         if @qualification.part_of_university_degree.nil? ||
              @qualification.part_of_university_degree
           redirect_to_if_save_and_continue %i[
+                                             check
                                              teacher_interface
                                              application_form
                                              qualifications
@@ -121,7 +129,7 @@ module TeacherInterface
         @qualification.destroy!
       end
 
-      redirect_to %i[teacher_interface application_form qualifications]
+      redirect_to %i[check teacher_interface application_form qualifications]
     end
 
     private

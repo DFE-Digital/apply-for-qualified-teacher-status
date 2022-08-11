@@ -3,7 +3,10 @@ module TeacherInterface
     before_action :load_application_form
 
     def show
-      if application_form.task_item_started?(:about_you, :personal_information)
+      if application_form.task_item_completed?(
+           :about_you,
+           :personal_information
+         )
         redirect_to %i[
                       check
                       teacher_interface
