@@ -26,9 +26,6 @@ en:
         work_history: Add your work history
         registration_number: Enter your registration number
         written_statement: Upload your written statement
-    work_history:
-      current_or_most_recent_role: Your current or most recent role
-      previous_role: Previous role
     qualifications:
       heading:
         title:
@@ -66,6 +63,15 @@ en:
             teaching_qualification: Upload your teaching qualification transcript
             university_degree: Upload your university degree transcript
           description: Upload a transcript of your teaching qualification, issued by the awarding body. If your teaching qualification was completed as part of your degree, you should supply your degree transcript.
+    age_range:
+      heading: What age range are you qualified to teach?
+      hint: Tell us about the age range of the children you’re qualified to teach. for example, from 5 to 11.
+    subjects:
+      heading: What subjects are you qualified to teach?
+      hint: You can enter up to three.
+    work_history:
+      current_or_most_recent_role: Your current or most recent role
+      previous_role: Previous role
 
   document:
     document_type:

@@ -1,10 +1,8 @@
-<% content_for :page_title, "Registration number" %>
+<% content_for :page_title, I18n.t("application_form.tasks.items.registration_number") %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
-<%= form_with model: @registration_number_form, url: [:teacher_interface, :application_form, :registration_number], method: :put do |f| %>
-  <%= f.govuk_text_field :registration_number,
-                         label: { text: "What is your registration number?", size: "l", tag: "h1" },
-                        hint: { text: "Your country has an online register of teachers. If you have a reference number, enter it on this screen. If you do not have one, just select ‘Continue’." } %>
+<%= form_with model: @registration_number_form, url: %i[registration_number teacher_interface application_form] do |f| %>
+  <%= f.govuk_text_field :registration_number, label: { size: "l", tag: "h1" } %>
 
   <%= govuk_details(summary_text: "When we might need more information") do %>
     <p>

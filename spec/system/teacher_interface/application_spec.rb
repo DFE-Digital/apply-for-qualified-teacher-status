@@ -85,9 +85,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_age_range
     and_i_click_continue
-    then_i_see_the_age_range_summary
-
-    when_i_click_continue
     then_i_see_completed_age_range_section
 
     when_i_click_subjects
@@ -95,9 +92,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_subjects
     and_i_click_continue
-    then_i_see_the_subjects_summary
-
-    when_i_click_continue
     then_i_see_completed_subjects_section
 
     when_i_click_work_history
@@ -203,9 +197,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_age_range
     and_i_click_continue
-    then_i_see_the_age_range_summary
-
-    when_i_click_continue
     then_i_see_completed_age_range_section
 
     when_i_click_subjects
@@ -213,9 +204,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_subjects
     and_i_click_continue
-    then_i_see_the_subjects_summary
-
-    when_i_click_continue
     then_i_see_completed_subjects_section
 
     when_i_click_registration_number
@@ -223,14 +211,12 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_registration_number
     and_i_click_continue
-    then_i_see_the_registration_number_summary
-
-    when_i_click_continue
     then_i_see_completed_registration_number_section
 
     when_i_click_check_your_answers
     then_i_see_the_check_your_answers_page
     and_i_see_check_proof_of_recognition
+    and_i_see_check_registration_number
 
     when_i_click_submit
     then_i_see_the_submitted_application_page
@@ -315,9 +301,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_age_range
     and_i_click_continue
-    then_i_see_the_age_range_summary
-
-    when_i_click_continue
     then_i_see_completed_age_range_section
 
     when_i_click_subjects
@@ -325,9 +308,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_subjects
     and_i_click_continue
-    then_i_see_the_subjects_summary
-
-    when_i_click_continue
     then_i_see_completed_subjects_section
 
     when_i_click_written_statement
@@ -467,9 +447,6 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_remove
     then_i_see_the_subjects_form
     and_i_click_continue
-    then_i_see_the_subjects_summary
-
-    when_i_click_continue
     then_i_see_completed_subjects_section
   end
 
@@ -569,8 +546,8 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_age_range
-    fill_in "teacher-interface-age-range-form-age-range-min-field", with: "7"
-    fill_in "teacher-interface-age-range-form-age-range-max-field", with: "11"
+    fill_in "teacher-interface-age-range-form-minimum-field", with: "7"
+    fill_in "teacher-interface-age-range-form-maximum-field", with: "11"
   end
 
   def when_i_click_subjects
@@ -744,8 +721,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_age_range_form
-    expect(page).to have_title("Age range")
-    expect(page).to have_content("Who you can teach")
+    expect(page).to have_title("Enter the age range you can teach")
     expect(page).to have_content("What age range are you qualified to teach?")
     expect(page).to have_content("From")
     expect(page).to have_content("To")
@@ -777,7 +753,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_registration_number_form
-    expect(page).to have_title("Registration number")
+    expect(page).to have_title("Enter your registration number")
     expect(page).to have_content("What is your registration number?")
   end
 
@@ -818,19 +794,8 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Add your teaching qualifications\nCOMPLETED")
   end
 
-  def then_i_see_the_age_range_summary
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Minimum age\t7")
-    expect(page).to have_content("Maximum age\t11")
-  end
-
   def then_i_see_completed_age_range_section
     expect(page).to have_content("Enter the age range you can teach\nCOMPLETED")
-  end
-
-  def then_i_see_the_subjects_summary
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Subjects\tSubject")
   end
 
   def then_i_see_completed_subjects_section
@@ -855,11 +820,6 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Add your work history\nCOMPLETED")
   end
 
-  def then_i_see_the_registration_number_summary
-    expect(page).to have_content("Registration number")
-    expect(page).to have_content("Registration number\tABC")
-  end
-
   def then_i_see_completed_registration_number_section
     expect(page).to have_content("Enter your registration number\nCOMPLETED")
   end
@@ -875,6 +835,9 @@ RSpec.describe "Teacher application", type: :system do
     )
     expect(page).to have_content("About you")
     expect(page).to have_content("Who you can teach")
+    expect(page).to have_content("Minimum age\t7")
+    expect(page).to have_content("Maximum age\t11")
+    expect(page).to have_content("Subjects\tSubject")
     expect(page).to have_content("Your teaching qualification")
   end
 
@@ -884,6 +847,11 @@ RSpec.describe "Teacher application", type: :system do
 
   def and_i_see_check_proof_of_recognition
     expect(page).to have_content("Proof that you’re recognised as a teacher")
+  end
+
+  def and_i_see_check_registration_number
+    expect(page).to have_content("Registration number")
+    expect(page).to have_content("Registration number\tABC")
   end
 
   def then_i_see_the_submitted_application_page

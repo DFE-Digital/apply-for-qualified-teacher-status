@@ -2,10 +2,10 @@
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-<h1 class="govuk-heading-l">What subjects are you qualified to teach?</h1>
-<p class="govuk-hint">You can enter up to three</p>
+<h1 class="govuk-heading-l"><%= I18n.t("application_form.subjects.heading") %></h1>
+<p class="govuk-hint"><%= I18n.t("application_form.subjects.hint") %></p>
 
-<%= form_with model: @application_form, url: [:teacher_interface, :application_form, :subjects], method: :put do |f| %>
+<%= form_with model: @application_form, url: %i[subjects teacher_interface application_form], method: :post do |f| %>
   <% if @application_form.subjects.empty? %>
     <%= f.govuk_text_field :subjects, multiple: true %>
   <% else %>
@@ -20,7 +20,7 @@
                          class: "govuk-input",
                          value: %>
         <% if index != 0 %>
-          <%= govuk_link_to "Remove", delete_teacher_interface_application_form_subjects_path(index:) %>
+          <%= govuk_link_to "Remove", subjects_delete_teacher_interface_application_form_path(index:) %>
         <% end %>
       </div>
     <% end %>

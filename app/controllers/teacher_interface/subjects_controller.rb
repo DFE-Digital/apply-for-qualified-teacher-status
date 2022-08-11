@@ -2,12 +2,6 @@ module TeacherInterface
   class SubjectsController < BaseController
     before_action :load_application_form
 
-    def show
-      unless application_form.task_item_started?(:qualifications, :subjects)
-        redirect_to %i[edit teacher_interface application_form subjects]
-      end
-    end
-
     def edit
     end
 
@@ -17,9 +11,9 @@ module TeacherInterface
           application_form.subjects.push("")
           application_form.save!
 
-          redirect_to %i[edit teacher_interface application_form subjects]
+          redirect_to %i[subjects teacher_interface application_form]
         else
-          redirect_to %i[teacher_interface application_form subjects]
+          redirect_to %i[teacher_interface application_form]
         end
       else
         render :new, status: unprocessable_entity
@@ -30,7 +24,7 @@ module TeacherInterface
       application_form.subjects.delete_at(params[:index].to_i)
       application_form.save!
 
-      redirect_to %i[edit teacher_interface application_form subjects]
+      redirect_to %i[subjects teacher_interface application_form]
     end
 
     private

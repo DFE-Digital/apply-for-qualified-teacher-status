@@ -10,29 +10,33 @@ RSpec.describe TeacherInterface::AgeRangeForm, type: :model do
   describe "#valid?" do
     subject(:valid?) { form.valid? }
 
-    let(:form) do
-      described_class.new(application_form:, age_range_min:, age_range_max:)
-    end
-    let(:age_range_min) { "" }
-    let(:age_range_max) { "" }
+    let(:form) { described_class.new(application_form:, minimum:, maximum:) }
 
-    it { is_expected.to be_truthy }
+    context "when the fields are blank" do
+      let(:minimum) { "" }
+      let(:maximum) { "" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the fields are numbers" do
+      let(:minimum) { "7" }
+      let(:maximum) { "11" }
+
+      it { is_expected.to be true }
+    end
 
     context "when age range max is less than age range min" do
-      let(:age_range_min) { "11" }
-      let(:age_range_max) { "7" }
+      let(:minimum) { "11" }
+      let(:maximum) { "7" }
 
-      it { is_expected.to be_falsy }
+      it { is_expected.to be false }
     end
   end
 
   describe "#save" do
     let(:form) do
-      described_class.new(
-        application_form:,
-        age_range_min: 7,
-        age_range_max: 11
-      )
+      described_class.new(application_form:, minimum: 7, maximum: 11)
     end
 
     before { form.save }
