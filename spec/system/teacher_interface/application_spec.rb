@@ -85,9 +85,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_age_range
     and_i_click_continue
-    then_i_see_the_age_range_summary
-
-    when_i_click_continue
     then_i_see_completed_age_range_section
 
     when_i_click_subjects
@@ -203,9 +200,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_age_range
     and_i_click_continue
-    then_i_see_the_age_range_summary
-
-    when_i_click_continue
     then_i_see_completed_age_range_section
 
     when_i_click_subjects
@@ -315,9 +309,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_age_range
     and_i_click_continue
-    then_i_see_the_age_range_summary
-
-    when_i_click_continue
     then_i_see_completed_age_range_section
 
     when_i_click_subjects
@@ -818,12 +809,6 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Add your teaching qualifications\nCOMPLETED")
   end
 
-  def then_i_see_the_age_range_summary
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Minimum age\t7")
-    expect(page).to have_content("Maximum age\t11")
-  end
-
   def then_i_see_completed_age_range_section
     expect(page).to have_content("Enter the age range you can teach\nCOMPLETED")
   end
@@ -875,6 +860,8 @@ RSpec.describe "Teacher application", type: :system do
     )
     expect(page).to have_content("About you")
     expect(page).to have_content("Who you can teach")
+    expect(page).to have_content("Minimum age\t7")
+    expect(page).to have_content("Maximum age\t11")
     expect(page).to have_content("Your teaching qualification")
   end
 

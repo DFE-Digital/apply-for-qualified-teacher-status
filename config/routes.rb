@@ -105,7 +105,10 @@ Rails.application.routes.draw do
         end
       end
 
-      resource :age_range, controller: :age_range, only: %i[show edit update]
+      member do
+        get "age_range", to: "age_range#edit"
+        post "age_range", to: "age_range#update"
+      end
 
       resource :subjects, only: %i[show edit update] do
         get "delete"

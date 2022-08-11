@@ -2,12 +2,6 @@ module TeacherInterface
   class AgeRangeController < BaseController
     before_action :load_application_form
 
-    def show
-      unless application_form.task_item_started?(:qualifications, :age_range)
-        redirect_to %i[edit teacher_interface application_form age_range]
-      end
-    end
-
     def edit
       @age_range_form =
         AgeRangeForm.new(
@@ -21,11 +15,7 @@ module TeacherInterface
       @age_range_form =
         AgeRangeForm.new(age_range_params.merge(application_form:))
       if @age_range_form.save
-        redirect_to_if_save_and_continue %i[
-                                           teacher_interface
-                                           application_form
-                                           age_range
-                                         ]
+        redirect_to %i[teacher_interface application_form]
       else
         render :edit, status: :unprocessable_entity
       end
