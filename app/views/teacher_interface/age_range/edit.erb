@@ -6,9 +6,9 @@
 <p class="govuk-hint">Tell us about the age range of the children you’re qualified to teach. for example, from 5 to 11.</p>
 
 <%= form_with model: @age_range_form, url: %i[age_range teacher_interface application_form] do |f| %>
-  <%= f.govuk_number_field :age_range_min, width: 3, label: { text: "From" } %>
+  <%= f.govuk_number_field :minimum, width: 3, label: { text: "From" } %>
 
-  <%= f.govuk_number_field :age_range_max, width: 3, label: { text: "To" } %>
+  <%= f.govuk_number_field :maximum, width: 3, label: { text: "To" } %>
 
   <%= govuk_details(summary_text: "About age ranges and grades") do %>
     <p>

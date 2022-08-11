@@ -6,14 +6,14 @@ module TeacherInterface
       @age_range_form =
         AgeRangeForm.new(
           application_form:,
-          age_range_min: application_form.age_range_min,
-          age_range_max: application_form.age_range_max
+          minimum: application_form.age_range_min,
+          maximum: application_form.age_range_max
         )
     end
 
     def update
       @age_range_form =
-        AgeRangeForm.new(age_range_params.merge(application_form:))
+        AgeRangeForm.new(age_range_form_params.merge(application_form:))
       if @age_range_form.save
         redirect_to %i[teacher_interface application_form]
       else
@@ -23,10 +23,10 @@ module TeacherInterface
 
     private
 
-    def age_range_params
+    def age_range_form_params
       params.require(:teacher_interface_age_range_form).permit(
-        :age_range_min,
-        :age_range_max
+        :minimum,
+        :maximum
       )
     end
   end

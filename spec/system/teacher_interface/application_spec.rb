@@ -560,8 +560,8 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_age_range
-    fill_in "teacher-interface-age-range-form-age-range-min-field", with: "7"
-    fill_in "teacher-interface-age-range-form-age-range-max-field", with: "11"
+    fill_in "teacher-interface-age-range-form-minimum-field", with: "7"
+    fill_in "teacher-interface-age-range-form-maximum-field", with: "11"
   end
 
   def when_i_click_subjects
