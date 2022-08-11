@@ -62,7 +62,7 @@ FROM ruby:3.1.2-alpine as production
 WORKDIR /app
 
 # Set Rails environment to production
-ENV RAILS_ENV=production
+# ENV RAILS_ENV=production
 
 # Add the commit sha to the env
 ARG SHA
