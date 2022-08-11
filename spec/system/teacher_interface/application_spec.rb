@@ -753,7 +753,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_registration_number_form
-    expect(page).to have_title("Registration number")
+    expect(page).to have_title("Enter your registration number")
     expect(page).to have_content("What is your registration number?")
   end
 
