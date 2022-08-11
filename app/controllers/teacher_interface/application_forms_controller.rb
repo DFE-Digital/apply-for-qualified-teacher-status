@@ -1,7 +1,6 @@
 module TeacherInterface
   class ApplicationFormsController < BaseController
     before_action :load_application_form, except: %i[new create]
-    before_action :load_eligibility_check, only: %i[new create]
 
     def new
       @application_form = ApplicationForm.new
@@ -13,7 +12,7 @@ module TeacherInterface
 
       @country_region_form =
         CountryRegionForm.new(
-          country_region_form_params.merge(application_form: @application_form)
+          country_region_form_params.merge(application_form:)
         )
 
       if @country_region_form.needs_region?
@@ -40,11 +39,6 @@ module TeacherInterface
     end
 
     private
-
-    def load_eligibility_check
-      @eligibility_check =
-        EligibilityCheck.find_by(id: session[:eligibility_check_id])
-    end
 
     def country_region_form_params
       params.require(:teacher_interface_country_region_form).permit(

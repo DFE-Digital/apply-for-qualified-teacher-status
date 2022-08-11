@@ -11,8 +11,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_new_application_page
-    and_i_click_continue
     then_i_see_the_active_application_page
     and_i_see_the_work_history_is_not_started
 
@@ -123,8 +121,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_new_application_page
-    and_i_click_continue
     then_i_see_the_active_application_page
     and_i_see_the_registration_number_is_not_started
 
@@ -227,8 +223,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_new_application_page
-    and_i_click_continue
     then_i_see_the_active_application_page
     and_i_see_the_written_statement_is_not_started
 
@@ -334,8 +328,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_new_application_page
-    and_i_click_continue
     then_i_see_the_active_application_page
     and_i_see_the_work_history_is_not_started
 
@@ -363,8 +355,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_new_application_page
-    and_i_click_continue
     then_i_see_the_active_application_page
     and_i_see_the_work_history_is_not_started
 
@@ -432,8 +422,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_new_application_page
-    and_i_click_continue
     then_i_see_the_active_application_page
     and_i_see_the_work_history_is_not_started
 
@@ -455,8 +443,6 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_new_application_page
-    and_i_click_continue
     then_i_see_the_active_application_page
     and_i_see_the_work_history_is_not_started
 
@@ -470,6 +456,12 @@ RSpec.describe "Teacher application", type: :system do
     when_i_choose_no
     and_i_click_continue
     then_i_see_the_personal_information_summary_without_name_change
+  end
+
+  it "allows starting an application form without a session" do
+    when_i_visit_the_sign_up_page
+    and_i_sign_up
+    then_i_see_the_new_application_page
   end
 
   private
@@ -623,6 +615,10 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_fill_in_the_upload_written_statement_form
     attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
+  end
+
+  def when_i_visit_the_sign_up_page
+    visit new_teacher_registration_path
   end
 
   def then_i_see_the_new_application_page
