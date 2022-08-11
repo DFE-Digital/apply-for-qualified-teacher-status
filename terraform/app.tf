@@ -3,7 +3,7 @@ locals {
     data.azurerm_key_vault_secret.secrets["APPLY-QTS-APP-VARIABLES"].value
   ), {})
 
-  app_environment_variables = merge(local.azure_environment_variables, {
+  app_environment_variables = merge(local.azure_environment_variables, local.app_config, {
     HOSTING_ENVIRONMENT = var.environment_name,
     REDIS_URL           = cloudfoundry_service_key.redis_key.credentials.uri,
 
