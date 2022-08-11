@@ -1,6 +1,7 @@
 <% content_for :page_title, "Check your answers" %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
+<span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.about_you") %></span>
 <h1 class="govuk-heading-l">Check your answers</h1>
 
 <%= render "summary", application_form: @application_form %>

@@ -92,6 +92,8 @@ Rails.application.routes.draw do
 
       resources :qualifications, except: %i[show] do
         collection do
+          get "check", to: "qualifications#check"
+
           get "add_another", to: "qualifications#add_another"
           post "add_another", to: "qualifications#submit_add_another"
         end

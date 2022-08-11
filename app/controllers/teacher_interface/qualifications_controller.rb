@@ -2,14 +2,25 @@ module TeacherInterface
   class QualificationsController < BaseController
     before_action :load_application_form
     before_action :load_qualification,
-                  except: %i[index new create add_another submit_add_another]
+                  only: %i[
+                    edit
+                    update
+                    edit_part_of_university_degree
+                    update_part_of_university_degree
+                    delete
+                    destroy
+                  ]
 
     def index
-      @qualifications = application_form.qualifications.ordered
-
-      if @qualifications.empty?
+      if application_form.qualifications.empty?
         redirect_to %i[new teacher_interface application_form qualification]
+      else
+        redirect_to %i[check teacher_interface application_form qualifications]
       end
+    end
+
+    def check
+      @qualifications = application_form.qualifications.ordered
     end
 
     def new
