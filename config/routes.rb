@@ -124,6 +124,8 @@ Rails.application.routes.draw do
         get "delete", on: :member
 
         collection do
+          get "check", to: "work_histories#check"
+
           get "add_another", to: "work_histories#add_another"
           post "add_another", to: "work_histories#submit_add_another"
 

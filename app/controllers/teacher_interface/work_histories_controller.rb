@@ -4,7 +4,19 @@ module TeacherInterface
     before_action :load_work_history, only: %i[edit update delete destroy]
 
     def index
-      unless application_form.task_item_started?(:work_history, :work_history)
+      if application_form.task_item_started?(:work_history, :work_history)
+        if application_form.has_work_history? &&
+             application_form.work_histories.empty?
+          redirect_to %i[new teacher_interface application_form work_history]
+        else
+          redirect_to %i[
+                        check
+                        teacher_interface
+                        application_form
+                        work_histories
+                      ]
+        end
+      else
         redirect_to %i[
                       has_work_history
                       teacher_interface
@@ -12,12 +24,10 @@ module TeacherInterface
                       work_histories
                     ]
       end
+    end
 
+    def check
       @work_histories = application_form.work_histories.ordered
-
-      if application_form.has_work_history? && @work_histories.empty?
-        redirect_to %i[new teacher_interface application_form work_history]
-      end
     end
 
     def new
