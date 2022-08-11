@@ -66,6 +66,9 @@ en:
     age_range:
       heading: What age range are you qualified to teach?
       hint: Tell us about the age range of the children you’re qualified to teach. for example, from 5 to 11.
+    subjects:
+      heading: What subjects are you qualified to teach?
+      hint: You can enter up to three.
     work_history:
       current_or_most_recent_role: Your current or most recent role
       previous_role: Previous role

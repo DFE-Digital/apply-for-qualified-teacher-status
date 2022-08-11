@@ -2,8 +2,8 @@
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-<h1 class="govuk-heading-l">What subjects are you qualified to teach?</h1>
-<p class="govuk-hint">You can enter up to three</p>
+<h1 class="govuk-heading-l"><%= I18n.t("application_form.subjects.heading") %></h1>
+<p class="govuk-hint"><%= I18n.t("application_form.subjects.hint") %></p>
 
 <%= form_with model: @application_form, url: %i[subjects teacher_interface application_form], method: :post do |f| %>
   <% if @application_form.subjects.empty? %>
