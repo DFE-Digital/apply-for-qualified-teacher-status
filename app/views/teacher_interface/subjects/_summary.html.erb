@@ -1,9 +1,9 @@
 <%= render(CheckYourAnswersSummaryComponent.new(
   model: application_form,
-  title: "Subjects",
+  title: I18n.t("application_form.tasks.items.subjects"),
   fields: {
     subjects: {
-      href: [:edit, :teacher_interface, :application_form, :subjects]
+      href: %i[subjects teacher_interface application_form]
     },
   }
 )) %>

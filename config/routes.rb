@@ -108,10 +108,10 @@ Rails.application.routes.draw do
       member do
         get "age_range", to: "age_range#edit"
         post "age_range", to: "age_range#update"
-      end
 
-      resource :subjects, only: %i[show edit update] do
-        get "delete"
+        get "subjects", to: "subjects#edit"
+        post "subjects", to: "subjects#update"
+        get "subjects/delete", to: "subjects#delete"
       end
 
       resources :work_histories, except: %i[show] do
