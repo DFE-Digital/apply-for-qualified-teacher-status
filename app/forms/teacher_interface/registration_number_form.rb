@@ -3,7 +3,6 @@ class TeacherInterface::RegistrationNumberForm
   include ActiveModel::Attributes
 
   attr_accessor :application_form
-
   attribute :registration_number, :string
 
   validates :application_form, presence: true

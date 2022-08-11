@@ -112,6 +112,9 @@ Rails.application.routes.draw do
         get "subjects", to: "subjects#edit"
         post "subjects", to: "subjects#update"
         get "subjects/delete", to: "subjects#delete"
+
+        get "registration_number", to: "registration_number#edit"
+        post "registration_number", to: "registration_number#update"
       end
 
       resources :work_histories, except: %i[show] do
@@ -125,10 +128,6 @@ Rails.application.routes.draw do
           post "has_work_history", to: "work_histories#update_has_work_history"
         end
       end
-
-      resource :registration_number,
-               controller: :registration_number,
-               only: %i[show edit update]
 
       resources :documents, only: %i[edit update] do
         resources :uploads, only: %i[new create destroy] do

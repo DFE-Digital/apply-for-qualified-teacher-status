@@ -1,6 +1,9 @@
-<%= render(CheckYourAnswersSummaryComponent.new(model: application_form, title: "Registration number", fields: {
-  registration_number: {
-    key: "Registration number",
-    href: [:edit, :teacher_interface, application_form, :registration_number]
-  },
-})) %>
+<%= render(CheckYourAnswersSummaryComponent.new(
+  model: application_form,
+  title: I18n.t("application_form.tasks.items.registration_number"),
+  fields: {
+    registration_number: {
+      href: %i[registration_number teacher_interface application_form]
+    },
+  }
+)) %>

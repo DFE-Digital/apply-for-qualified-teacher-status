@@ -211,14 +211,12 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_registration_number
     and_i_click_continue
-    then_i_see_the_registration_number_summary
-
-    when_i_click_continue
     then_i_see_completed_registration_number_section
 
     when_i_click_check_your_answers
     then_i_see_the_check_your_answers_page
     and_i_see_check_proof_of_recognition
+    and_i_see_check_registration_number
 
     when_i_click_submit
     then_i_see_the_submitted_application_page
@@ -822,11 +820,6 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Add your work history\nCOMPLETED")
   end
 
-  def then_i_see_the_registration_number_summary
-    expect(page).to have_content("Registration number")
-    expect(page).to have_content("Registration number\tABC")
-  end
-
   def then_i_see_completed_registration_number_section
     expect(page).to have_content("Enter your registration number\nCOMPLETED")
   end
@@ -854,6 +847,11 @@ RSpec.describe "Teacher application", type: :system do
 
   def and_i_see_check_proof_of_recognition
     expect(page).to have_content("Proof that you’re recognised as a teacher")
+  end
+
+  def and_i_see_check_registration_number
+    expect(page).to have_content("Registration number")
+    expect(page).to have_content("Registration number\tABC")
   end
 
   def then_i_see_the_submitted_application_page
