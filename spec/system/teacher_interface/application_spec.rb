@@ -735,8 +735,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_age_range_form
-    expect(page).to have_title("Age range")
-    expect(page).to have_content("Who you can teach")
+    expect(page).to have_title("Enter the age range you can teach")
     expect(page).to have_content("What age range are you qualified to teach?")
     expect(page).to have_content("From")
     expect(page).to have_content("To")

@@ -21,6 +21,9 @@ en:
           false: "No"
         alternative_given_names: Alternate given names
         alternative_family_name: Alternate family name
+      teacher_interface_age_range_form:
+        minimum: From
+        maximum: To
       work_history:
         add_another_options:
           true: "Yes"
