@@ -84,6 +84,10 @@ variable "statuscake_alerts" {
   default = {}
 }
 
+variable env_config {}
+
+variable app_config_file { default = "workspace_variables/app_config.yml" }
+
 locals {
   apply_qts_routes = flatten([
     cloudfoundry_route.apply_qts_public,
@@ -109,4 +113,5 @@ locals {
     restore_from_point_in_time_of     = var.paas_restore_db_from_db_instance
     restore_from_point_in_time_before = var.paas_restore_db_from_point_in_time_before
   } : {}
+  app_config    = yamldecode(file(var.app_config_file))[var.env_config]
 }
