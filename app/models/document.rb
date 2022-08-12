@@ -50,7 +50,7 @@ class Document < ApplicationRecord
   def continue_url
     case document_type
     when "name_change"
-      %i[teacher_interface application_form personal_information]
+      %i[check teacher_interface application_form personal_information]
     when "qualification_certificate"
       [
         :edit,
@@ -67,7 +67,7 @@ class Document < ApplicationRecord
           documentable
         ]
       else
-        %i[teacher_interface application_form qualifications]
+        %i[check teacher_interface application_form qualifications]
       end
     else
       %i[teacher_interface application_form]

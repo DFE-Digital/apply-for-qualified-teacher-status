@@ -5,8 +5,4 @@
 
 <%= render "heading" %>
 
-<% if @application_form.work_histories.empty? %>
-  <%= render "summary", application_form: @application_form, work_histories: [] %>
-<% end %>
-
 <%= render "form", application_form: @application_form, work_history: @work_history %>

@@ -2,14 +2,32 @@ module TeacherInterface
   class QualificationsController < BaseController
     before_action :load_application_form
     before_action :load_qualification,
-                  except: %i[index new create add_another submit_add_another]
+                  only: %i[
+                    edit
+                    update
+                    edit_part_of_university_degree
+                    update_part_of_university_degree
+                    delete
+                    destroy
+                  ]
 
     def index
-      @qualifications = application_form.qualifications.ordered
-
-      if @qualifications.empty?
+      if application_form.task_item_completed?(:qualifications, :qualifications)
+        redirect_to %i[check teacher_interface application_form qualifications]
+      elsif application_form.qualifications.empty?
         redirect_to %i[new teacher_interface application_form qualification]
+      else
+        redirect_to [
+                      :edit,
+                      :teacher_interface,
+                      :application_form,
+                      application_form.qualifications.ordered.first
+                    ]
       end
+    end
+
+    def check
+      @qualifications = application_form.qualifications.ordered
     end
 
     def new
@@ -78,6 +96,7 @@ module TeacherInterface
         if @qualification.part_of_university_degree.nil? ||
              @qualification.part_of_university_degree
           redirect_to_if_save_and_continue %i[
+                                             check
                                              teacher_interface
                                              application_form
                                              qualifications
@@ -110,7 +129,7 @@ module TeacherInterface
         @qualification.destroy!
       end
 
-      redirect_to %i[teacher_interface application_form qualifications]
+      redirect_to %i[check teacher_interface application_form qualifications]
     end
 
     private

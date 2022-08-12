@@ -86,11 +86,14 @@ Rails.application.routes.draw do
           get "alternative_name", to: "personal_information#alternative_name"
           post "alternative_name",
                to: "personal_information#update_alternative_name"
+          get "check", to: "personal_information#check"
         end
       end
 
       resources :qualifications, except: %i[show] do
         collection do
+          get "check", to: "qualifications#check"
+
           get "add_another", to: "qualifications#add_another"
           post "add_another", to: "qualifications#submit_add_another"
         end
@@ -121,6 +124,8 @@ Rails.application.routes.draw do
         get "delete", on: :member
 
         collection do
+          get "check", to: "work_histories#check"
+
           get "add_another", to: "work_histories#add_another"
           post "add_another", to: "work_histories#submit_add_another"
 

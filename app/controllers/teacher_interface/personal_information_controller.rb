@@ -3,10 +3,17 @@ module TeacherInterface
     before_action :load_application_form
 
     def show
-      unless application_form.task_item_started?(
-               :about_you,
-               :personal_information
-             )
+      if application_form.task_item_completed?(
+           :about_you,
+           :personal_information
+         )
+        redirect_to %i[
+                      check
+                      teacher_interface
+                      application_form
+                      personal_information
+                    ]
+      else
         redirect_to %i[
                       name_and_date_of_birth
                       teacher_interface
@@ -65,6 +72,9 @@ module TeacherInterface
       end
     end
 
+    def check
+    end
+
     private
 
     def name_and_date_of_birth_params
@@ -92,7 +102,7 @@ module TeacherInterface
           application_form.name_change_document
         ]
       else
-        %i[teacher_interface application_form personal_information]
+        %i[check teacher_interface application_form personal_information]
       end
     end
   end

@@ -4,7 +4,9 @@ module TeacherInterface
     before_action :load_work_history, only: %i[edit update delete destroy]
 
     def index
-      unless application_form.task_item_started?(:work_history, :work_history)
+      if application_form.task_item_completed?(:work_history, :work_history)
+        redirect_to %i[check teacher_interface application_form work_histories]
+      else
         redirect_to %i[
                       has_work_history
                       teacher_interface
@@ -12,12 +14,10 @@ module TeacherInterface
                       work_histories
                     ]
       end
+    end
 
+    def check
       @work_histories = application_form.work_histories.ordered
-
-      if application_form.has_work_history? && @work_histories.empty?
-        redirect_to %i[new teacher_interface application_form work_history]
-      end
     end
 
     def new
@@ -27,7 +27,7 @@ module TeacherInterface
     def create
       @work_history = application_form.work_histories.new(work_history_params)
       if @work_history.save
-        redirect_to %i[teacher_interface application_form work_histories]
+        redirect_to %i[check teacher_interface application_form work_histories]
       else
         render :new, status: :unprocessable_entity
       end
@@ -60,11 +60,7 @@ module TeacherInterface
           has_work_history_form_params.merge(application_form:)
         )
       if @has_work_history_form.save
-        redirect_to_if_save_and_continue %i[
-                                           teacher_interface
-                                           application_form
-                                           work_histories
-                                         ]
+        redirect_to_if_save_and_continue has_work_history_next_url
       else
         render :edit_has_work_history, status: :unprocessable_entity
       end
@@ -75,7 +71,7 @@ module TeacherInterface
 
     def update
       if @work_history.update(work_history_params)
-        redirect_to %i[teacher_interface application_form work_histories]
+        redirect_to %i[check teacher_interface application_form work_histories]
       else
         render :edit, status: :unprocessable_entity
       end
@@ -91,7 +87,7 @@ module TeacherInterface
         @work_history.destroy!
       end
 
-      redirect_to %i[teacher_interface application_form work_histories]
+      redirect_to %i[check teacher_interface application_form work_histories]
     end
 
     private
@@ -100,6 +96,25 @@ module TeacherInterface
       params.require(:teacher_interface_has_work_history_form).permit(
         :has_work_history
       )
+    end
+
+    def has_work_history_next_url
+      if application_form.has_work_history.nil?
+        %i[teacher_interface application_form]
+      elsif application_form.has_work_history?
+        if application_form.work_histories.empty?
+          %i[new teacher_interface application_form work_history]
+        else
+          [
+            :edit,
+            :teacher_interface,
+            :application_form,
+            application_form.work_histories.ordered.first
+          ]
+        end
+      else
+        %i[check teacher_interface application_form work_histories]
+      end
     end
 
     def load_work_history

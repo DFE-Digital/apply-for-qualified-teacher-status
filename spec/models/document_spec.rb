@@ -107,7 +107,7 @@ RSpec.describe Document, type: :model do
 
       it do
         is_expected.to eq(
-          %i[teacher_interface application_form personal_information]
+          %i[check teacher_interface application_form personal_information]
         )
       end
     end
