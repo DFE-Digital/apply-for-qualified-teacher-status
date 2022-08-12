@@ -35,17 +35,6 @@ class Qualification < ApplicationRecord
           class_name: "Document",
           as: :documentable
 
-  scope :completed,
-        -> {
-          where
-            .not(title: "", institution_name: "", institution_country: "")
-            .where.not(
-              start_date: nil,
-              complete_date: nil,
-              certificate_date: nil
-            )
-        }
-
   scope :ordered, -> { order(created_at: :asc) }
 
   validates :start_date,
@@ -75,13 +64,17 @@ class Qualification < ApplicationRecord
       transcript_document.uploaded?
     ]
 
+    if is_teaching_qualification? && part_of_university_degree != false
+      values.push(part_of_university_degree)
+    end
+
     return :not_started if values.all?(&:blank?)
     return :completed if values.all?(&:present?)
     :in_progress
   end
 
   def is_teaching_qualification?
-    (new_record? && application_form.qualifications.empty?) ||
+    application_form.qualifications.empty? ||
       application_form.qualifications.ordered.first == self
   end
 

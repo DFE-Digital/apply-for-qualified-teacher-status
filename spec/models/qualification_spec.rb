@@ -40,15 +40,6 @@ RSpec.describe Qualification, type: :model do
     end
   end
 
-  describe "#completed" do
-    let!(:incomplete_qualification) { create(:qualification) }
-    let!(:complete_qualification) { create(:qualification, :completed) }
-
-    subject(:completed) { described_class.completed }
-
-    it { is_expected.to match_array([complete_qualification]) }
-  end
-
   describe "#status" do
     subject(:status) { qualification.status }
 
@@ -68,7 +59,8 @@ RSpec.describe Qualification, type: :model do
           institution_country: "Institution country",
           start_date: Date.new(2020, 1, 1),
           complete_date: Date.new(2021, 1, 1),
-          certificate_date: Date.new(2021, 1, 1)
+          certificate_date: Date.new(2021, 1, 1),
+          part_of_university_degree: true
         )
 
         create(:upload, document: qualification.certificate_document)
