@@ -831,7 +831,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_work_history_summary
-    expect(page).to have_content("Work history")
+    expect(page).to have_content("Your work history in education")
     expect(page).to have_content(
       "Have you worked professionally as a teacher?\tYes"
     )

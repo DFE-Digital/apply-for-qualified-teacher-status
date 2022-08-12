@@ -1,24 +1,28 @@
-<%= render(CheckYourAnswersSummaryComponent.new(model: application_form, title: "Personal information", fields: {
-  given_names: {
-    href: [:name_and_date_of_birth, :teacher_interface, application_form, :personal_information]
-  },
-  family_name: {
-    href: [:name_and_date_of_birth, :teacher_interface, application_form, :personal_information]
-  },
-  date_of_birth: {
-    href: [:name_and_date_of_birth, :teacher_interface, application_form, :personal_information]
-  },
-  has_alternative_name: {
-    title: "Name appears differently on your ID documents or qualifications?",
-    href: [:alternative_name, :teacher_interface, application_form, :personal_information]
-  },
-  alternative_given_names: application_form.has_alternative_name? ? {
-    href: [:alternative_name, :teacher_interface, application_form, :personal_information]
-  } : nil,
-  alternative_family_name: application_form.has_alternative_name? ? {
-    href: [:alternative_name, :teacher_interface, application_form, :personal_information]
-  } : nil,
-  name_change_document: application_form.has_alternative_name? ? {
-    href: [:edit, :teacher_interface, application_form, application_form.name_change_document]
-  } : nil,
-})) %>
+<%= render(CheckYourAnswersSummaryComponent.new(
+  model: application_form,
+  title: I18n.t("application_form.tasks.items.personal_information"),
+  fields: {
+    given_names: {
+      href: %i[name_and_date_of_birth teacher_interface application_form personal_information]
+    },
+    family_name: {
+      href: %i[name_and_date_of_birth teacher_interface application_form personal_information]
+    },
+    date_of_birth: {
+      href: %i[name_and_date_of_birth teacher_interface application_form personal_information]
+    },
+    has_alternative_name: {
+      title: "Name appears differently on your ID documents or qualifications?",
+      href: %i[alternative_name teacher_interface application_form personal_information]
+    },
+    alternative_given_names: application_form.has_alternative_name? ? {
+      href: %i[alternative_name teacher_interface application_form personal_information]
+    } : nil,
+    alternative_family_name: application_form.has_alternative_name? ? {
+      href: %i[alternative_name teacher_interface application_form personal_information]
+    } : nil,
+    name_change_document: application_form.has_alternative_name? ? {
+      href: [:edit, :teacher_interface, :application_form, application_form.name_change_document]
+    } : nil,
+  }
+)) %>

@@ -1,6 +1,10 @@
-<%= render(CheckYourAnswersSummaryComponent.new(model: application_form, title: "Identity documents", fields: {
-  identification_document: {
-    title: "Identity documents",
-    href: [:edit, :teacher_interface, application_form, application_form.identification_document]
-  },
-})) %>
+<%= render(CheckYourAnswersSummaryComponent.new(
+  model: application_form,
+  title: I18n.t("application_form.tasks.items.identity_document"),
+  fields: {
+    identification_document: {
+      title: "Identity documents",
+      href: [:edit, :teacher_interface, :application_form, application_form.identification_document]
+    },
+  }
+)) %>

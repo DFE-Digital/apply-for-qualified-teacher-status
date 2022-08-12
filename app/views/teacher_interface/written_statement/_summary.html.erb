@@ -1,6 +1,10 @@
-<%= render(CheckYourAnswersSummaryComponent.new(model: application_form, title: "Written statement", fields: {
-  identification_document: {
-    title: "Written statement",
-    href: [:edit, :teacher_interface, application_form, application_form.written_statement_document]
-  },
-})) %>
+<%= render(CheckYourAnswersSummaryComponent.new(
+  model: application_form,
+  title: I18n.t("application_form.tasks.items.written_statement"),
+  fields: {
+    written_statement_document: {
+      title: "Written statement",
+      href: [:edit, :teacher_interface, :application_form, application_form.written_statement_document]
+    },
+  }
+)) %>
