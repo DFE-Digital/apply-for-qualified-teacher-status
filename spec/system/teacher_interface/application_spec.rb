@@ -450,6 +450,28 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_completed_subjects_section
   end
 
+  it "allows skipping name change document" do
+    given_an_eligible_eligibility_check_with_none_country_checks
+
+    when_i_click_apply_for_qts
+    and_i_sign_up
+    then_i_see_the_new_application_page
+    and_i_click_continue
+    then_i_see_the_active_application_page
+    and_i_see_the_work_history_is_not_started
+
+    when_i_click_personal_information
+    then_i_see_the_name_and_date_of_birth_form
+
+    when_i_fill_in_the_name_and_date_of_birth_form
+    and_i_click_continue
+    then_i_see_the_alternative_name_form
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_personal_information_summary_without_name_change
+  end
+
   private
 
   def when_i_click_apply_for_qts
@@ -773,6 +795,16 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Alternative given names\tName")
     expect(page).to have_content("Alternative family name\tName")
     expect(page).to have_content("Name change document")
+  end
+
+  def then_i_see_the_personal_information_summary_without_name_change
+    expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Given names\tName")
+    expect(page).to have_content("Family name\tName")
+    expect(page).to have_content("Date of birth\t1 January 2000")
+    expect(page).to have_content(
+      "Name appears differently on your ID documents or qualifications?\tNo"
+    )
   end
 
   def then_i_see_completed_personal_information_section

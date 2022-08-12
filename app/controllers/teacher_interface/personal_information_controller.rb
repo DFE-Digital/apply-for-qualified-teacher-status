@@ -59,12 +59,7 @@ module TeacherInterface
           alternative_name_params.merge(application_form:)
         )
       if @alternative_name_form.save
-        redirect_to_if_save_and_continue [
-                                           :edit,
-                                           :teacher_interface,
-                                           :application_form,
-                                           application_form.name_change_document
-                                         ]
+        redirect_to_if_save_and_continue alternative_name_next_url
       else
         render :alternative_name, status: :unprocessable_entity
       end
@@ -86,6 +81,19 @@ module TeacherInterface
         :alternative_given_names,
         :alternative_family_name
       )
+    end
+
+    def alternative_name_next_url
+      if application_form.has_alternative_name
+        [
+          :edit,
+          :teacher_interface,
+          :application_form,
+          application_form.name_change_document
+        ]
+      else
+        %i[teacher_interface application_form personal_information]
+      end
     end
   end
 end
