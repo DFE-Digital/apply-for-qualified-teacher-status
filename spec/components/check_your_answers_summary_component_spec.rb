@@ -17,8 +17,13 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
       nil_value: nil,
       boolean: true,
       document: create(:document, :with_upload),
-      array: %w[a b c]
+      array: %w[a b c],
+      translatable_document:
     )
+  end
+
+  let(:translatable_document) do
+    create(:document, :translatable, :with_translation, :with_upload)
   end
 
   let(:title) { "Title" }
@@ -39,7 +44,7 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
         href: "/date_without_day"
       },
       custom_key: {
-        key: "A custom key",
+        title: "A custom key",
         href: "/custom_key"
       },
       nil_value: {
@@ -53,6 +58,9 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
       },
       array: {
         href: "/array"
+      },
+      translatable_document: {
+        href: "/translatable-document"
       }
     }
   end
@@ -251,6 +259,64 @@ RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
 
       expect(a.text.strip).to eq("Change array")
       expect(a.attribute("href").value).to eq("/array")
+    end
+  end
+
+  describe "translatable row" do
+    describe "original document row" do
+      subject(:row) { component.css(".govuk-summary-list__row")[9] }
+
+      it "renders the key" do
+        expect(row.at_css(".govuk-summary-list__key").text).to eq(
+          "Translatable document"
+        )
+      end
+
+      it "renders the value" do
+        expect(row.at_css(".govuk-summary-list__value").text).to eq(
+          "upload.pdf"
+        )
+      end
+
+      it "renders the change link" do
+        a = row.at_css(".govuk-summary-list__actions .govuk-link")
+
+        expect(a.text.strip).to eq("Change translatable document")
+        expect(a.attribute("href").value).to eq("/translatable-document")
+      end
+    end
+
+    describe "translated row" do
+      subject(:row) { component.css(".govuk-summary-list__row")[10] }
+
+      it "renders the translation title" do
+        expect(row.at_css(".govuk-summary-list__key").text).to eq(
+          "Translatable document translation"
+        )
+      end
+
+      it "renders the value" do
+        expect(row.at_css(".govuk-summary-list__value").text).to eq(
+          "translation_upload.pdf"
+        )
+      end
+
+      it "renders the change link" do
+        a = row.at_css(".govuk-summary-list__actions .govuk-link")
+
+        expect(a.text.strip).to eq("Change translatable document translation")
+        expect(a.attribute("href").value).to eq("/translatable-document")
+      end
+    end
+
+    context "when the translatable document doesn't have any translations" do
+      let(:translatable_document) do
+        create(:document, :translatable, :with_upload)
+      end
+
+      it "does not add a translation row" do
+        expect(component).not_to match(/Translatable document translation/)
+      end
     end
   end
 end

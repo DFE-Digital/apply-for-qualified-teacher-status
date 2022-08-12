@@ -10,40 +10,59 @@ class CheckYourAnswersSummaryComponent < ViewComponent::Base
   attr_reader :title
 
   def rows
-    fields.map { |key, opts| opts ? row_for_field(key, opts) : nil }.compact
+    fields_with_translations.map { |field| row_for_field(field) }
   end
 
   private
 
-  def row_for_field(key, opts)
+  attr_reader :model, :fields
+
+  def fields_with_translations
+    fields_as_array.flat_map do |field|
+      has_translation?(field) ? [field, translation_row_for(field)] : field
+    end
+  end
+
+  def has_translation?(field)
+    object = model.send(field[:key])
+
+    return false unless object.is_a?(Document)
+    object.translated_uploads.any?
+  end
+
+  def row_title_for(field)
+    field.fetch(:title, field[:key].to_s.humanize)
+  end
+
+  def translation_row_for(field)
+    field.merge(translation: true, title: "#{row_title_for(field)} translation")
+  end
+
+  def fields_as_array
+    fields.filter_map { |key, options| options&.merge(key:) }
+  end
+
+  def row_for_field(field)
     {
-      key: opts.fetch(:key, key.to_s.humanize),
-      value: format_value(model.send(key), opts),
-      href: opts.fetch(:href)
+      key: field[:key],
+      title: row_title_for(field),
+      value: format_value(model.send(field[:key]), field),
+      href: field.fetch(:href)
     }
   end
 
-  def format_value(value, opts)
+  def format_value(value, field)
     return "" if value.nil?
 
     if value.is_a?(Date)
-      format = opts[:format] == :without_day ? "%B %Y" : "%e %B %Y"
+      format = field[:format] == :without_day ? "%B %Y" : "%e %B %Y"
       return value.strftime(format).strip
     end
 
-    if value.is_a?(Document)
-      return(
-        value
-          .uploads
-          .order(:created_at)
-          .map { |upload| upload.attachment&.filename }
-          .compact
-          .join(", ")
-      )
-    end
+    return file_names_for(value, field[:translation]) if value.is_a?(Document)
 
     if value.is_a?(Array)
-      return value.map { |v| format_value(v, opts) }.join("<br />").html_safe
+      return value.map { |v| format_value(v, field) }.join("<br />").html_safe
     end
 
     return "Yes" if value == true
@@ -52,5 +71,13 @@ class CheckYourAnswersSummaryComponent < ViewComponent::Base
     value.to_s
   end
 
-  attr_reader :model, :fields
+  def file_names_for(document, translations)
+    scope =
+      translations ? document.translated_uploads : document.original_uploads
+    scope
+      .order(:created_at)
+      .map { |upload| upload.attachment&.filename }
+      .compact
+      .join(", ")
+  end
 end

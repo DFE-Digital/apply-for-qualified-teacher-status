@@ -4,40 +4,40 @@
     title: I18n.t("application_form.qualifications.heading.title.#{qualification.locale_key}"),
     fields: {
       title: {
-        key: I18n.t("application_form.qualifications.form.fields.title.#{qualification.locale_key}"),
+        title: I18n.t("application_form.qualifications.form.fields.title.#{qualification.locale_key}"),
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
       institution_name: {
-        key: I18n.t("application_form.qualifications.form.fields.institution_name"),
+        title: I18n.t("application_form.qualifications.form.fields.institution_name"),
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
       institution_country: {
-        key: I18n.t("application_form.qualifications.form.fields.institution_country"),
+        title: I18n.t("application_form.qualifications.form.fields.institution_country"),
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
       start_date: {
-        key: I18n.t("application_form.qualifications.form.fields.start_date.#{qualification.locale_key}"),
+        title: I18n.t("application_form.qualifications.form.fields.start_date.#{qualification.locale_key}"),
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
       complete_date: {
-        key: I18n.t("application_form.qualifications.form.fields.complete_date.#{qualification.locale_key}"),
+        title: I18n.t("application_form.qualifications.form.fields.complete_date.#{qualification.locale_key}"),
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
       certificate_date: {
-        key: I18n.t("application_form.qualifications.form.fields.certificate_date.#{qualification.locale_key}"),
+        title: I18n.t("application_form.qualifications.form.fields.certificate_date.#{qualification.locale_key}"),
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
       certificate_document: {
-        href: [:edit, :teacher_interface, :application_form, qualification.certificate_document]
+        href: [:edit, :teacher_interface, :application_form, qualification.certificate_document],
       },
       transcript_document: {
-        href: [:edit, :teacher_interface, :application_form, qualification.transcript_document]
+        href: [:edit, :teacher_interface, :application_form, qualification.transcript_document],
       },
       part_of_university_degree: qualification.is_teaching_qualification? ? {
-        key: "Part of your university degree?",
+        title: "Part of your university degree?",
         href: [:part_of_university_degree, :teacher_interface, :application_form, qualification]
       } : nil,
     },

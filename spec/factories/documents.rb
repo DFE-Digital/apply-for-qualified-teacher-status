@@ -26,5 +26,11 @@ FactoryBot.define do
     trait :with_upload do
       after(:create) { |document, _evaluator| create(:upload, document:) }
     end
+
+    trait :with_translation do
+      after(:create) do |document, _evaluator|
+        create(:upload, :translation, document:)
+      end
+    end
   end
 end
