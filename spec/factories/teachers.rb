@@ -12,6 +12,7 @@
 #  last_sign_in_at      :datetime
 #  last_sign_in_ip      :string
 #  sign_in_count        :integer          default(0), not null
+#  trn                  :string
 #  unconfirmed_email    :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
