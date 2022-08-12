@@ -40,15 +40,6 @@ RSpec.describe Qualification, type: :model do
     end
   end
 
-  describe "#completed" do
-    let!(:incomplete_qualification) { create(:qualification) }
-    let!(:complete_qualification) { create(:qualification, :completed) }
-
-    subject(:completed) { described_class.completed }
-
-    it { is_expected.to match_array([complete_qualification]) }
-  end
-
   describe "#status" do
     subject(:status) { qualification.status }
 

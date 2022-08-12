@@ -221,8 +221,10 @@ class ApplicationForm < ApplicationRecord
       return :in_progress
     end
 
-    return :completed if qualifications.completed.count == qualifications.count
-    :in_progress
+    all_complete =
+      qualifications.all? { |qualification| qualification.status == :completed }
+
+    all_complete ? :completed : :in_progress
   end
 
   def subjects_status

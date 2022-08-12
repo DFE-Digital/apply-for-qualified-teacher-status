@@ -35,17 +35,6 @@ class Qualification < ApplicationRecord
           class_name: "Document",
           as: :documentable
 
-  scope :completed,
-        -> {
-          where
-            .not(title: "", institution_name: "", institution_country: "")
-            .where.not(
-              start_date: nil,
-              complete_date: nil,
-              certificate_date: nil
-            )
-        }
-
   scope :ordered, -> { order(created_at: :asc) }
 
   validates :start_date,
