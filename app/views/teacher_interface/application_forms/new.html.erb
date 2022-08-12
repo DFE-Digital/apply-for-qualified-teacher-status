@@ -4,7 +4,7 @@
   <% content_for :page_title, I18n.t("eligibility_check.country.label") %>
 <% end %>
 
-<%= form_with model: @country_region_form, url: [:teacher_interface, :application_form], method: :post do |f| %>
+<%= form_with model: @country_region_form, url: %i[teacher_interface application_form] do |f| %>
   <%= f.govuk_error_summary %>
 
   <% if @country_region_form.needs_region? %>
@@ -17,13 +17,12 @@
         <%= f.govuk_radio_button :region_id,
                                  region.id,
                                  label: { text: region.name },
-                                 link_errors: i == 0,
-                                 checked: region.id == @eligibility_check&.region_id %>
+                                 link_errors: i == 0 %>
       <% end %>
     <% end %>
   <% else %>
     <%= f.govuk_select :location,
-                       options_for_select(locations, @eligibility_check&.location),
+                       options_for_select(locations),
                        hint: { text: I18n.t("eligibility_check.country.hint") },
                        label: { text: I18n.t("eligibility_check.country.label"), size: "l", tag: "h1" },
                        options: { include_blank: true } %>
