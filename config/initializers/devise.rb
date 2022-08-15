@@ -367,7 +367,7 @@ Devise.setup do |config|
   # When using the :trackable module, set to true to consider magic link tokens
   # generated before the user's current sign in time to be expired. In other words,
   # each time you sign in, all existing magic links will be considered invalid.
-  # config.passwordless_expire_old_tokens_on_sign_in = false
+  config.passwordless_expire_old_tokens_on_sign_in = true
 end
 
 # As we only use magic link authentication for teachers, we don't need to unnecessarily
