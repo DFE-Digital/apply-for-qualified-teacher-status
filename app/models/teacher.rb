@@ -21,7 +21,11 @@
 #  index_teachers_on_email  (email) UNIQUE
 #
 class Teacher < ApplicationRecord
-  devise :magic_link_authenticatable, :confirmable, :registerable, :timeoutable
+  devise :magic_link_authenticatable,
+         :confirmable,
+         :registerable,
+         :timeoutable,
+         :trackable
 
   has_one :application_form
 
