@@ -16,10 +16,8 @@ class Teachers::ConfirmationsController < Devise::ConfirmationsController
         redirect_to after_confirmation_path_for(resource_name, resource)
       end
     else
-      respond_with_navigational(
-        resource.errors,
-        status: :unprocessable_entity
-      ) { render :new }
+      set_flash_message!(:notice, :already_confirmed)
+      redirect_to new_teacher_session_path
     end
   end
 

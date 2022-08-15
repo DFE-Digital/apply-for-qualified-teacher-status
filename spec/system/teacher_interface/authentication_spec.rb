@@ -86,6 +86,25 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_receive_a_teacher_confirmation_email
   end
 
+  it "confirming email twice" do
+    when_i_visit_the_sign_up_page
+    then_i_see_the_sign_up_form
+
+    when_i_fill_teacher_email_address
+    and_i_click_continue
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_teacher_confirmation_email
+
+    when_i_visit_the_teacher_confirmation_email
+    then_i_see_successful_confirmation
+
+    given_i_clear_my_session
+
+    when_i_visit_the_teacher_confirmation_email
+    then_i_see_the_sign_in_form
+    and_i_see_already_confirmed_message
+  end
+
   private
 
   def given_countries_exist
@@ -174,5 +193,11 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def and_i_click_continue
     click_button "Continue", visible: false
+  end
+
+  def and_i_see_already_confirmed_message
+    expect(page).to have_content(
+      "Your email address is already confirmed, please sign in."
+    )
   end
 end
