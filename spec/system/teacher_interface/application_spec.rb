@@ -114,6 +114,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_submit
     then_i_see_the_submitted_application_page
+    and_i_receive_an_application_email
   end
 
   it "allows making an application for a country with online checks" do
@@ -216,6 +217,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_submit
     then_i_see_the_submitted_application_page
+    and_i_receive_an_application_email
   end
 
   it "allows making an application for a country with written checks" do
@@ -321,6 +323,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_submit
     then_i_see_the_submitted_application_page
+    and_i_receive_an_application_email
   end
 
   it "allows deleting work history" do
@@ -669,6 +672,16 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Given names")
     expect(page).to have_content("Family name")
     expect(page).to have_content("Date of birth")
+  end
+
+  def and_i_receive_an_application_email
+    message = ActionMailer::Base.deliveries.last
+    expect(message).to_not be_nil
+
+    expect(message.subject).to eq(
+      "We’ve received your application for qualified teacher status (QTS)"
+    )
+    expect(message.to).to include("test@example.com")
   end
 
   def then_i_see_the_alternative_name_form

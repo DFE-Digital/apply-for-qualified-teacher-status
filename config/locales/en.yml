@@ -92,7 +92,7 @@ en:
   mailer:
     teacher:
       application_received:
-        subject: We’ve received your application for qualified teacher status (QTS).
+        subject: We’ve received your application for qualified teacher status (QTS)
 
   activemodel:
     attributes:
