@@ -36,6 +36,7 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
+    when_i_fill_teaching_authority_other
     and_i_save_and_preview
     then_i_see_the_preview
     and_i_see_a_success_banner
@@ -164,6 +165,8 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_fill_teaching_authority_other
+    fill_in "region-teaching-authority-other-field", with: "Other"
+  rescue Capybara::ElementNotFound
     fill_in "country-teaching-authority-other-field", with: "Other"
   end
 
