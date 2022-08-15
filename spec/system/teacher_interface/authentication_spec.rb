@@ -94,7 +94,6 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def given_i_clear_my_session
     page.driver.clear_cookies
-    ActionMailer::Base.deliveries = []
   end
 
   def when_i_visit_the_sign_up_page
