@@ -26,12 +26,14 @@
     - part_of_university_degree
   :staff:
     - email
+    - unconfirmed_email
     - current_sign_in_ip
     - last_sign_in_ip
-    - unconfirmed_email
   :teachers:
     - email
     - unconfirmed_email
+    - current_sign_in_ip
+    - last_sign_in_ip
   :work_histories:
     - school_name
     - city
