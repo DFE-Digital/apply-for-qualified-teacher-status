@@ -6,7 +6,12 @@
 #  confirmation_sent_at :datetime
 #  confirmation_token   :string
 #  confirmed_at         :datetime
+#  current_sign_in_at   :datetime
+#  current_sign_in_ip   :string
 #  email                :string           default(""), not null
+#  last_sign_in_at      :datetime
+#  last_sign_in_ip      :string
+#  sign_in_count        :integer          default(0), not null
 #  unconfirmed_email    :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -16,7 +21,11 @@
 #  index_teachers_on_email  (email) UNIQUE
 #
 class Teacher < ApplicationRecord
-  devise :magic_link_authenticatable, :confirmable, :registerable, :timeoutable
+  devise :magic_link_authenticatable,
+         :confirmable,
+         :registerable,
+         :timeoutable,
+         :trackable
 
   has_one :application_form
 

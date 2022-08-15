@@ -6,7 +6,12 @@
 #  confirmation_sent_at :datetime
 #  confirmation_token   :string
 #  confirmed_at         :datetime
+#  current_sign_in_at   :datetime
+#  current_sign_in_ip   :string
 #  email                :string           default(""), not null
+#  last_sign_in_at      :datetime
+#  last_sign_in_ip      :string
+#  sign_in_count        :integer          default(0), not null
 #  unconfirmed_email    :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
