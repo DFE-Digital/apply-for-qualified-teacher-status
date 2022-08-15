@@ -10,8 +10,6 @@
   <%= render "shared/teaching_authority_contactable", contactable: @country %>
 
   <p class="govuk-body"><%= @country.teaching_authority_certificate %></p>
-
-  <%= raw GovukMarkdown.render(@country.teaching_authority_other) %>
 <% end %>
 
 <% if @diff_actions.present? %>

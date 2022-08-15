@@ -129,5 +129,11 @@ RSpec.describe Country, type: :model do
 
       it { is_expected.to eq(true) }
     end
+
+    context "with other information" do
+      before { country.update(teaching_authority_other: "Other") }
+
+      it { is_expected.to eq(true) }
+    end
   end
 end
