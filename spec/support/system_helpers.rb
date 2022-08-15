@@ -110,7 +110,6 @@ module SystemHelpers
   end
 
   def then_i_see_the_sign_in_form
-    expect(page).to have_current_path("/teacher/sign_in")
     expect(page).to have_title(
       "Apply for qualified teacher status (QTS) in England"
     )

@@ -105,6 +105,33 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_see_already_confirmed_message
   end
 
+  it "sign in with same token" do
+    given_countries_exist
+
+    when_i_visit_the_sign_up_page
+    then_i_see_the_sign_up_form
+    and_i_sign_up
+
+    given_i_clear_my_session
+
+    when_i_visit_the_sign_in_page
+    then_i_see_the_sign_in_form
+
+    when_i_choose_yes_sign_in
+    and_i_fill_teacher_email_address
+    and_i_click_continue
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_magic_link_email
+
+    when_i_visit_the_magic_link_email
+    then_i_see_the_new_application_form
+
+    given_i_clear_my_session
+
+    when_i_visit_the_magic_link_email
+    then_i_see_the_sign_in_form
+  end
+
   private
 
   def given_countries_exist
