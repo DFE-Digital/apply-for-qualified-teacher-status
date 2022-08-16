@@ -136,6 +136,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_061643) do
     t.text "teaching_authority_emails", default: [], null: false, array: true
     t.text "teaching_authority_websites", default: [], null: false, array: true
     t.text "teaching_authority_name", default: "", null: false
+    t.text "teaching_authority_other", default: "", null: false
     t.boolean "application_form_enabled", default: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"

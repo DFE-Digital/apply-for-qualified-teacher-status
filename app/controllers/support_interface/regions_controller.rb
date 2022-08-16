@@ -40,7 +40,8 @@ module SupportInterface
         :teaching_authority_name,
         :teaching_authority_address,
         :teaching_authority_emails_string,
-        :teaching_authority_websites_string
+        :teaching_authority_websites_string,
+        :teaching_authority_other
       )
     end
   end
