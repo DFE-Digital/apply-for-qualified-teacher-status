@@ -35,13 +35,8 @@ module TeacherInterface
 
     def update
       if application_form.can_submit?
-        application_form.submit!
-        TeacherMailer
-          .with(teacher: application_form.teacher)
-          .application_received
-          .deliver_later
+        SubmitApplicationForm.call(application_form:)
       end
-
       redirect_to %i[teacher_interface application_form]
     end
 
