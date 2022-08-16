@@ -40,6 +40,10 @@ FactoryBot.define do
       legacy { true }
     end
 
+    trait :application_form_enabled do
+      application_form_enabled { true }
+    end
+
     trait :online_checks do
       sanction_check { :online }
       status_check { :online }

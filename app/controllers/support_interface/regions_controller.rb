@@ -34,6 +34,7 @@ module SupportInterface
     def region_params
       params.require(:region).permit(
         :legacy,
+        :application_form_enabled,
         :sanction_check,
         :status_check,
         :teaching_authority_name,
