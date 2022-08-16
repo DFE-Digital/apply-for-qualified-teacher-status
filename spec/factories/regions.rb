@@ -3,6 +3,7 @@
 # Table name: regions
 #
 #  id                          :bigint           not null, primary key
+#  application_form_enabled    :boolean          default(FALSE)
 #  legacy                      :boolean          default(TRUE), not null
 #  name                        :string           default(""), not null
 #  sanction_check              :string           default("none"), not null
