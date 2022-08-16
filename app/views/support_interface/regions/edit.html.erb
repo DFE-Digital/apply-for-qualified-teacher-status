@@ -3,9 +3,9 @@
 <h1 class="govuk-heading-l"><%= CountryName.from_region(@region) %></h1>
 
 <%= form_with model: [:support_interface, @region] do |f| %>
-  <%= f.govuk_check_box :legacy, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Legacy" } %>
+  <%= f.govuk_check_box :legacy, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Skip eligibility checker (legacy)" } %>
 
-  <%= f.govuk_check_box :application_form_enabled, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Application Form Enabled" } %>
+  <%= f.govuk_check_box :application_form_enabled, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Application form enabled" } %>
 
   <%= f.govuk_collection_select :sanction_check, [
     OpenStruct.new(id: 'online', name: 'Online'),
