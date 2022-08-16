@@ -71,3 +71,10 @@ runs:
         TF_VAR_apply_qts_docker_image: ${{ inputs.docker_image }}
         pr_id: ${{ inputs.pr_id }}
       shell: bash
+
+    - uses: DFE-Digital/github-actions/setup-cf-cli@master
+      with:
+        CF_USERNAME: ${{ steps.get_secrets.outputs.PAAS-USER }}
+        CF_PASSWORD: ${{ steps.get_secrets.outputs.PAAS-PASSWORD }}
+        CF_SPACE_NAME: ${{ steps.config.outputs.paas_space }}
+        INSTALL_CONDUIT: true
