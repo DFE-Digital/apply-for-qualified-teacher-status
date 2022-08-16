@@ -34,7 +34,9 @@ module TeacherInterface
     end
 
     def update
-      @application_form.submit! if @application_form.can_submit?
+      if application_form.can_submit?
+        SubmitApplicationForm.call(application_form:)
+      end
       redirect_to %i[teacher_interface application_form]
     end
 

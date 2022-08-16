@@ -52,6 +52,6 @@ group :test do
   gem "cuprite", "~> 0.13"
   gem "factory_bot_rails"
   gem "rspec"
-  gem "rspec-rails"
+  gem "rspec-rails", "~> 6.0.0.rc1"
   gem "shoulda-matchers", "~> 5.1"
 end

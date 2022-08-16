@@ -112,13 +112,6 @@ class ApplicationForm < ApplicationRecord
     completed_task_sections.count == tasks.count
   end
 
-  def submit!
-    return if submitted?
-
-    subjects.compact_blank!
-    submitted!
-  end
-
   def path_for_task_item(key)
     url_helpers = Rails.application.routes.url_helpers
 
