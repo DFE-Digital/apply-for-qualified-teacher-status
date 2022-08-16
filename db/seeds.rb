@@ -186,10 +186,16 @@ COUNTRIES.each do |code, regions|
   country = Country.find_or_create_by!(code:)
 
   if regions.empty?
-    country.regions.find_or_create_by!(name: "").update!(legacy: false)
+    country
+      .regions
+      .find_or_create_by!(name: "")
+      .update!(legacy: false, application_form_enabled: true)
   else
     regions.each do |name|
-      country.regions.find_or_create_by!(name:).update!(legacy: false)
+      country
+        .regions
+        .find_or_create_by!(name:)
+        .update!(legacy: false, application_form_enabled: true)
     end
   end
 end
