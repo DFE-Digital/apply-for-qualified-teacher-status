@@ -101,6 +101,7 @@
     - teaching_authority_emails
     - teaching_authority_websites
     - teaching_authority_name
+    - application_form_enabled
   :staff:
     - id
     - email

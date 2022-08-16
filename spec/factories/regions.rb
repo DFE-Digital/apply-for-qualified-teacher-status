@@ -3,6 +3,7 @@
 # Table name: regions
 #
 #  id                          :bigint           not null, primary key
+#  application_form_enabled    :boolean          default(FALSE)
 #  legacy                      :boolean          default(TRUE), not null
 #  name                        :string           default(""), not null
 #  sanction_check              :string           default("none"), not null
@@ -37,6 +38,10 @@ FactoryBot.define do
 
     trait :legacy do
       legacy { true }
+    end
+
+    trait :application_form_enabled do
+      application_form_enabled { true }
     end
 
     trait :online_checks do
