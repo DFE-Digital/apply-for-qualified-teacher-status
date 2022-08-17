@@ -5,7 +5,7 @@
 #  id                        :bigint           not null, primary key
 #  certificate_date          :date
 #  complete_date             :date
-#  institution_country       :text             default(""), not null
+#  institution_country_code  :text             default(""), not null
 #  institution_name          :text             default(""), not null
 #  part_of_university_degree :boolean
 #  start_date                :date

@@ -4,7 +4,7 @@
 #
 #  id                  :bigint           not null, primary key
 #  city                :text             default(""), not null
-#  country             :text             default(""), not null
+#  country_code        :text             default(""), not null
 #  email               :text             default(""), not null
 #  end_date            :date
 #  job                 :text             default(""), not null
