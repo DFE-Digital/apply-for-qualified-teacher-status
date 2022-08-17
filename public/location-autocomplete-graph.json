@@ -3871,7 +3871,7 @@
   },
   "nym:Ascension Island": {
     "edges": {
-      "from": ["territory:SH-AC"]
+      "from": ["country:SH"]
     },
     "meta": {
       "canonical": false,
@@ -14459,9 +14459,9 @@
       "en-GB": "SG"
     }
   },
-  "nym:SH-AC": {
+  "nym:SH": {
     "edges": {
-      "from": ["territory:SH-AC"]
+      "from": ["country:SH"]
     },
     "meta": {
       "canonical": false,
@@ -14471,37 +14471,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "SH-AC"
-    }
-  },
-  "nym:SH-HL": {
-    "edges": {
-      "from": ["territory:SH-HL"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "SH-HL"
-    }
-  },
-  "nym:SH-TA": {
-    "edges": {
-      "from": ["territory:SH-TA"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "SH-TA"
+      "en-GB": "SH"
     }
   },
   "nym:SI": {
@@ -14746,7 +14716,7 @@
   },
   "nym:Saint Helena": {
     "edges": {
-      "from": ["territory:SH-HL"]
+      "from": ["country:SH"]
     },
     "meta": {
       "canonical": false,
@@ -18886,7 +18856,7 @@
   },
   "nym:Tristan da Cunha": {
     "edges": {
-      "from": ["territory:SH-TA"]
+      "from": ["country:SH"]
     },
     "meta": {
       "canonical": false,
@@ -24194,7 +24164,7 @@
       "en-GB": "Réunion"
     }
   },
-  "territory:SH-AC": {
+  "country:SH": {
     "edges": {
       "from": []
     },
@@ -24206,37 +24176,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Ascension"
-    }
-  },
-  "territory:SH-HL": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Saint Helena"
-    }
-  },
-  "territory:SH-TA": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Tristan da Cunha"
+      "en-GB": "Saint Helena, Ascension and Tristan da Cunha"
     }
   },
   "territory:SJ": {
