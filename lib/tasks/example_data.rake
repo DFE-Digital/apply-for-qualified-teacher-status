@@ -1,10 +1,11 @@
-require_relative Rails.root.join("config/environment")
 require "factory_bot"
 
 namespace :example_data do
   desc "Create example data for testing"
   task generate: :environment do
-    raise "THIS TASK CANNOT BE RUN IN PRODUCTION" if Rails.env.production?
+    if HostingEnvironment.production?
+      raise "THIS TASK CANNOT BE RUN IN PRODUCTION"
+    end
 
     if Teacher.any?
       puts "Noop as DB already contains data"
@@ -30,18 +31,11 @@ end
 def evidential_traits_for(status_check, sanction_check)
   args = [status_check, sanction_check]
 
-  traits = {
-    %w[none none] => [:with_work_history],
-    %w[online none] => %i[with_reference_number with_work_history],
-    %w[written none] => [:with_written_statement],
-    %w[online written] => %i[with_written_statement with_reference_number],
-    %w[written written] => [:with_written_statement],
-    %w[online online] => [:with_reference_number]
-  }
-
-  raise "unknown evidence combination for #{args}" if traits[args].nil?
-
-  traits[args]
+  [].tap do |traits|
+    traits << :with_work_history if args.include?("none")
+    traits << :with_written_statement if args.include?("written")
+    traits << :with_registration_number if args.include?("online")
+  end
 end
 
 def application_form_traits_for(region)
