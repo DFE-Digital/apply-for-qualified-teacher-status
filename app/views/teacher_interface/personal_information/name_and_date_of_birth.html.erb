@@ -5,6 +5,8 @@
 <h1 class="govuk-heading-l">Personal information</h1>
 
 <%= form_with model: @name_and_date_of_birth_form, url: [:name_and_date_of_birth, :teacher_interface, :application_form, :personal_information] do |f| %>
+  <%= f.govuk_error_summary %>
+
   <%= f.govuk_text_field :given_names,
                          label: { text: "Given names", size: "m" },
                          hint: { text: "Enter your full name apart from your family name" } %>

@@ -1,4 +1,6 @@
 <%= form_with model: [:teacher_interface, :application_form, qualification] do |f| %>
+  <%= f.govuk_error_summary %>
+
   <%= f.govuk_fieldset legend: { text: I18n.t("application_form.qualifications.form.title.#{qualification.locale_key}") } do %>
     <%= f.govuk_text_field :title, label: { text: I18n.t("application_form.qualifications.form.fields.title.#{qualification.locale_key}") } %>
     <%= f.govuk_text_field :institution_name, label: { text: I18n.t("application_form.qualifications.form.fields.institution_name") } %>

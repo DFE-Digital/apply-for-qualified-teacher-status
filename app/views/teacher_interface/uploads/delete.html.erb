@@ -2,6 +2,8 @@
 <% content_for :back_link_url, edit_teacher_interface_application_form_document_path(@document) %>
 
 <%= form_with model: [:teacher_interface, :application_form, @document, @upload], method: :delete do |f| %>
+  <%= f.govuk_error_summary %>
+
   <%= f.govuk_collection_radio_buttons :confirm,
                                        [OpenStruct.new(id: "true", name: "Yes"), OpenStruct.new(id: "false", name: "No")],
                                        :id,
