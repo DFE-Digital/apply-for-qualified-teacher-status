@@ -86,8 +86,13 @@ module SystemHelpers
 
   alias_method :and_i_choose_no, :when_i_choose_no
 
-  def when_i_fill_teacher_email_address
+  def when_i_fill_create_teacher_email_address
     fill_in "teacher-email-field", with: "test@example.com"
+  end
+
+  def when_i_fill_sign_in_teacher_email_address
+    fill_in "teacher-interface-new-session-form-email-field",
+            with: "test@example.com"
   end
 
   def and_i_click_continue
@@ -120,7 +125,7 @@ module SystemHelpers
   end
 
   def and_i_sign_up
-    when_i_fill_teacher_email_address
+    when_i_fill_create_teacher_email_address
     and_i_click_continue
     and_i_receive_a_teacher_confirmation_email
 

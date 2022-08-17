@@ -1,31 +1,46 @@
 # frozen_string_literal: true
-
 class Teachers::SessionsController < Devise::SessionsController
   include TeacherCurrentNamespace
 
   layout "two_thirds"
 
+  def new
+    @new_session_form = TeacherInterface::NewSessionForm.new
+  end
+
   def create
-    if resource_params[:create_or_sign_in] == "create"
-      redirect_to :eligibility_interface_countries
-      return
-    end
+    @new_session_form =
+      TeacherInterface::NewSessionForm.new(
+        email: new_session_form_params[:email],
+        create_or_sign_in: new_session_form_params[:create_or_sign_in]
+      )
 
-    self.resource = resource_class.find_by(email: resource_params[:email])
-
-    if resource
-      if resource.active_for_authentication?
-        resource.send_magic_link
-      else
-        resource.resend_confirmation_instructions
+    if @new_session_form.valid?
+      if @new_session_form.create?
+        redirect_to :eligibility_interface_countries
+        return
       end
 
+      self.resource = resource_class.find_by(email: @new_session_form.email)
+
+      if resource
+        if resource.active_for_authentication?
+          resource.send_magic_link
+        else
+          resource.resend_confirmation_instructions
+        end
+      end
       redirect_to :teacher_check_email
     else
-      set_flash_message(:alert, :not_found_in_database, now: true)
-      self.resource = resource_class.new(email: resource_params[:email])
-      render :new
+      render :new, status: :unprocessable_entity
     end
+  end
+
+  def new_session_form_params
+    params.require(:teacher_interface_new_session_form).permit(
+      :email,
+      :create_or_sign_in
+    )
   end
 
   def destroy

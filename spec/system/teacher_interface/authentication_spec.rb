@@ -8,8 +8,7 @@ RSpec.describe "Teacher authentication", type: :system do
 
     when_i_visit_the_sign_up_page
     then_i_see_the_sign_up_form
-
-    when_i_fill_teacher_email_address
+    when_i_fill_create_teacher_email_address
     and_i_click_continue
     then_i_see_the_check_your_email_page
     and_i_receive_a_teacher_confirmation_email
@@ -23,7 +22,7 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the_sign_in_form
 
     when_i_choose_yes_sign_in
-    and_i_fill_teacher_email_address
+    and_i_fill_sign_in_teacher_email_address
     and_i_click_continue
     then_i_see_the_check_your_email_page
     and_i_receive_a_magic_link_email
@@ -36,7 +35,7 @@ RSpec.describe "Teacher authentication", type: :system do
     when_i_visit_the_sign_up_page
     then_i_see_the_sign_up_form
 
-    when_i_fill_teacher_email_address
+    when_i_fill_create_teacher_email_address
     and_i_click_continue
     then_i_see_the_check_your_email_page
     and_i_receive_a_magic_link_email
@@ -62,16 +61,16 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the_sign_in_form
 
     when_i_choose_yes_sign_in
-    and_i_fill_teacher_email_address
+    and_i_fill_sign_in_teacher_email_address
     and_i_click_continue
-    then_i_see_the_sign_in_form
+    then_i_see_the_check_your_email_page
   end
 
   it "sign in invalid email" do
     when_i_visit_the_sign_up_page
     then_i_see_the_sign_up_form
 
-    when_i_fill_teacher_email_address
+    when_i_fill_create_teacher_email_address
     and_i_click_continue
     then_i_see_the_check_your_email_page
     and_i_receive_a_teacher_confirmation_email
@@ -80,7 +79,7 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the_sign_in_form
 
     when_i_choose_yes_sign_in
-    and_i_fill_teacher_email_address
+    and_i_fill_sign_in_teacher_email_address
     and_i_click_continue
     then_i_see_the_check_your_email_page
     and_i_receive_a_teacher_confirmation_email
@@ -90,7 +89,7 @@ RSpec.describe "Teacher authentication", type: :system do
     when_i_visit_the_sign_up_page
     then_i_see_the_sign_up_form
 
-    when_i_fill_teacher_email_address
+    when_i_fill_create_teacher_email_address
     and_i_click_continue
     then_i_see_the_check_your_email_page
     and_i_receive_a_teacher_confirmation_email
@@ -118,7 +117,7 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the_sign_in_form
 
     when_i_choose_yes_sign_in
-    and_i_fill_teacher_email_address
+    and_i_fill_sign_in_teacher_email_address
     and_i_click_continue
     then_i_see_the_check_your_email_page
     and_i_receive_a_magic_link_email
@@ -207,8 +206,11 @@ RSpec.describe "Teacher authentication", type: :system do
     )
   end
 
-  alias_method :and_i_fill_teacher_email_address,
-               :when_i_fill_teacher_email_address
+  alias_method :and_i_fill_create_teacher_email_address,
+               :when_i_fill_create_teacher_email_address
+
+  alias_method :and_i_fill_sign_in_teacher_email_address,
+               :when_i_fill_sign_in_teacher_email_address
 
   def and_i_receive_a_magic_link_email
     message = ActionMailer::Base.deliveries.last
