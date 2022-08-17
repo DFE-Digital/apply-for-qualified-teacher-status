@@ -539,7 +539,7 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_fill_in_qualifications
     fill_in "qualification-title-field", with: "Title"
     fill_in "qualification-institution-name-field", with: "Name"
-    select "France", from: "qualification-institution-country-code-field"
+    fill_in "qualification-institution-country-code-field", with: "France"
     fill_in "qualification_start_date_2i", with: "1"
     fill_in "qualification_start_date_1i", with: "2000"
     fill_in "qualification_complete_date_2i", with: "1"
@@ -590,7 +590,7 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_fill_in_work_history
     fill_in "work-history-school-name-field", with: "School name"
     fill_in "work-history-city-field", with: "City"
-    select "France", from: "work-history-country-code-field"
+    fill_in "work-history-country-code-field", with: "France"
     fill_in "work-history-job-field", with: "Job"
     fill_in "work-history-email-field", with: "test@example.com"
     fill_in "work_history_start_date_2i", with: "1"
