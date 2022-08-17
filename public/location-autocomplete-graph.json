@@ -4379,21 +4379,6 @@
       "en-GB": "Bailiwick of Jersey"
     }
   },
-  "nym:Baker Island": {
-    "edges": {
-      "from": ["territory:UM-81"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Baker Island"
-    }
-  },
   "nym:Bangla Desh": {
     "edges": {
       "from": ["country:BD"]
@@ -8114,21 +8099,6 @@
       "en-GB": "Hong Kong Special Administrative Region"
     }
   },
-  "nym:Howland Island": {
-    "edges": {
-      "from": ["territory:UM-84"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Howland Island"
-    }
-  },
   "nym:Hrvatska": {
     "edges": {
       "from": ["country:HR"]
@@ -8819,36 +8789,6 @@
       "en-GB": "Japan"
     }
   },
-  "nym:Jarvis Island": {
-    "edges": {
-      "from": ["territory:UM-86"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Jarvis Island"
-    }
-  },
-  "nym:Johnston Atoll": {
-    "edges": {
-      "from": ["territory:UM-67"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Johnston Atoll"
-    }
-  },
   "nym:Juzur al-Qamar": {
     "edges": {
       "from": ["country:KM"]
@@ -9387,21 +9327,6 @@
     "names": {
       "cy": false,
       "en-GB": "Kingdom of the Netherlands"
-    }
-  },
-  "nym:Kingman Reef": {
-    "edges": {
-      "from": ["territory:UM-89"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Kingman Reef"
     }
   },
   "nym:Kirghizia": {
@@ -10724,21 +10649,6 @@
       "en-GB": "Mexixo"
     }
   },
-  "nym:Midway Islands": {
-    "edges": {
-      "from": ["territory:UM-71"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Midway Islands"
-    }
-  },
   "nym:Misr": {
     "edges": {
       "from": ["country:EG"]
@@ -11277,21 +11187,6 @@
     "names": {
       "cy": false,
       "en-GB": "Naoero"
-    }
-  },
-  "nym:Navassa Island": {
-    "edges": {
-      "from": ["territory:UM-76"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Navassa Island"
     }
   },
   "nym:Naíjíríà": {
@@ -12012,21 +11907,6 @@
     "names": {
       "cy": false,
       "en-GB": "PY"
-    }
-  },
-  "nym:Palmyra Atoll": {
-    "edges": {
-      "from": ["territory:UM-95"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Palmyra Atoll"
     }
   },
   "nym:Panamá": {
@@ -19154,126 +19034,6 @@
       "en-GB": "UG"
     }
   },
-  "nym:UM-67": {
-    "edges": {
-      "from": ["territory:UM-67"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "UM-67"
-    }
-  },
-  "nym:UM-71": {
-    "edges": {
-      "from": ["territory:UM-71"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "UM-71"
-    }
-  },
-  "nym:UM-76": {
-    "edges": {
-      "from": ["territory:UM-76"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "UM-76"
-    }
-  },
-  "nym:UM-81": {
-    "edges": {
-      "from": ["territory:UM-81"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "UM-81"
-    }
-  },
-  "nym:UM-84": {
-    "edges": {
-      "from": ["territory:UM-84"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "UM-84"
-    }
-  },
-  "nym:UM-86": {
-    "edges": {
-      "from": ["territory:UM-86"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "UM-86"
-    }
-  },
-  "nym:UM-89": {
-    "edges": {
-      "from": ["territory:UM-89"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "UM-89"
-    }
-  },
-  "nym:UM-95": {
-    "edges": {
-      "from": ["territory:UM-95"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "UM-95"
-    }
-  },
   "nym:US": {
     "edges": {
       "from": ["country:US"]
@@ -24267,141 +24027,6 @@
     "names": {
       "cy": false,
       "en-GB": "Taiwan"
-    }
-  },
-  "territory:UM-67": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Johnston Atoll"
-    }
-  },
-  "territory:UM-71": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Midway Islands"
-    }
-  },
-  "territory:UM-76": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Navassa Island"
-    }
-  },
-  "territory:UM-79": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Wake Island"
-    }
-  },
-  "territory:UM-81": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Baker Island"
-    }
-  },
-  "territory:UM-84": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Howland Island"
-    }
-  },
-  "territory:UM-86": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Jarvis Island"
-    }
-  },
-  "territory:UM-89": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Kingman Reef"
-    }
-  },
-  "territory:UM-95": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Palmyra Atoll"
     }
   },
   "territory:VG": {
