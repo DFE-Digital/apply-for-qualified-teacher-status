@@ -75,4 +75,8 @@ class WorkHistory < ApplicationRecord
   def country_name
     CountryName.from_code(country_code)
   end
+
+  def country_location
+    Country::LOCATIONS_BY_COUNTRY_CODE[country_code]
+  end
 end

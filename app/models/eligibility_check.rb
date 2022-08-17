@@ -57,13 +57,8 @@ class EligibilityCheck < ApplicationRecord
     self.region = regions.count == 1 ? regions.first : nil
   end
 
-  LOCATIONS_BY_COUNTRY_CODE =
-    Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST
-      .map { |row| [row.last.split(":").last, row.last] }
-      .to_h
-
   def location
-    LOCATIONS_BY_COUNTRY_CODE[country_code]
+    Country::LOCATIONS_BY_COUNTRY_CODE[country_code]
   end
 
   def ineligible_reasons

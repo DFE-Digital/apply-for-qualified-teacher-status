@@ -100,6 +100,10 @@ class Qualification < ApplicationRecord
     CountryName.from_code(institution_country_code)
   end
 
+  def institution_country_location
+    Country::LOCATIONS_BY_COUNTRY_CODE[institution_country_code]
+  end
+
   private
 
   def build_documents

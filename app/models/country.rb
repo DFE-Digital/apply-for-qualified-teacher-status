@@ -30,6 +30,11 @@ class Country < ApplicationRecord
       .map { |row| [row.last.split(":").last, row.first] }
       .to_h
 
+  LOCATIONS_BY_COUNTRY_CODE =
+    LOCATION_AUTOCOMPLETE_CANONICAL_LIST
+      .map { |row| [row.last.split(":").last, row.last] }
+      .to_h
+
   validates :code, inclusion: { in: COUNTRIES.keys }
 
   alias_method :country, :itself
