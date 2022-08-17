@@ -71,4 +71,8 @@ class WorkHistory < ApplicationRecord
     application_form.work_histories.empty? ||
       application_form.work_histories.ordered.first == self
   end
+
+  def country_name
+    CountryName.from_code(country_code)
+  end
 end

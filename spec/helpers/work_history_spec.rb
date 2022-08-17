@@ -21,9 +21,9 @@ RSpec.describe WorkHistoryHelper do
     end
 
     context "with a country" do
-      before { work_history.country = "Country" }
+      before { work_history.country_code = "FR" }
 
-      it { is_expected.to eq("Country") }
+      it { is_expected.to eq("France") }
     end
 
     context "with a job" do

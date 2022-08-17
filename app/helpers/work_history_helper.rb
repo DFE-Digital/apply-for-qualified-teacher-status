@@ -1,7 +1,7 @@
 module WorkHistoryHelper
   def work_history_title(work_history)
     work_history.school_name.presence || work_history.city.presence ||
-      work_history.country.presence || work_history.job.presence ||
+      work_history.country_name.presence || work_history.job.presence ||
       I18n.t(
         (
           if work_history.current_or_most_recent_role?

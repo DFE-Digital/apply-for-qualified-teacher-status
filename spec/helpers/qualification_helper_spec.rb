@@ -21,9 +21,9 @@ RSpec.describe QualificationHelper do
     end
 
     context "with an institution country" do
-      before { qualification.institution_country = "Country" }
+      before { qualification.institution_country_code = "FR" }
 
-      it { is_expected.to eq("Country") }
+      it { is_expected.to eq("France") }
     end
   end
 end

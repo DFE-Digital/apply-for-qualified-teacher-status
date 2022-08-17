@@ -96,6 +96,10 @@ class Qualification < ApplicationRecord
     application_form.qualifications.ordered.second != self
   end
 
+  def institution_country_name
+    CountryName.from_code(institution_country_code)
+  end
+
   private
 
   def build_documents
