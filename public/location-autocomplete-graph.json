@@ -4769,21 +4769,6 @@
       "en-GB": "Bosnia-Herzegovina"
     }
   },
-  "nym:Bouvet Island": {
-    "edges": {
-      "from": ["territory:BV"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Bouvet Island"
-    }
-  },
   "nym:Brasil": {
     "edges": {
       "from": ["country:BR"]
@@ -23277,21 +23262,6 @@
     "names": {
       "cy": false,
       "en-GB": "Bonaire, Sint Eustatius and Saba"
-    }
-  },
-  "territory:BV": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Bouvet Island"
     }
   },
   "territory:CC": {
