@@ -52,7 +52,7 @@ RSpec.describe WorkHistory, type: :model do
     it { is_expected.to eq(:not_started) }
 
     context "when partially filled out" do
-      before { work_history.update!(country: "Country") }
+      before { work_history.update!(country_code: "FR") }
 
       it { is_expected.to eq(:in_progress) }
     end
@@ -62,7 +62,7 @@ RSpec.describe WorkHistory, type: :model do
         work_history.update!(
           school_name: "School",
           city: "City",
-          country: "Country",
+          country_code: "FR",
           job: "Job",
           email: "school@example.com",
           start_date: Date.new(2020, 1, 1),
@@ -78,7 +78,7 @@ RSpec.describe WorkHistory, type: :model do
         work_history.update!(
           school_name: "School",
           city: "City",
-          country: "Country",
+          country_code: "FR",
           job: "Job",
           email: "school@example.com",
           start_date: Date.new(2020, 1, 1),

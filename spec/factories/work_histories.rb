@@ -30,7 +30,7 @@ FactoryBot.define do
     trait :completed do
       school_name { "School" }
       city { "City" }
-      country { "Country" }
+      country_code { "FR" }
       job { "Job" }
       email { "school@example.com" }
       start_date { Date.new(2020, 1, 1) }

@@ -56,7 +56,7 @@ class Qualification < ApplicationRecord
     values = [
       title,
       institution_name,
-      institution_country,
+      institution_country_code,
       start_date,
       complete_date,
       certificate_date,

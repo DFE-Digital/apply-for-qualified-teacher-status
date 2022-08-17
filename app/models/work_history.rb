@@ -32,7 +32,13 @@ class WorkHistory < ApplicationRecord
   scope :completed,
         -> {
           where
-            .not(school_name: "", city: "", country: "", job: "", email: "")
+            .not(
+              school_name: "",
+              city: "",
+              country_code: "",
+              job: "",
+              email: ""
+            )
             .where.not(start_date: nil)
             .where(still_employed: true)
             .or(where(still_employed: false).where.not(end_date: nil))
@@ -44,7 +50,7 @@ class WorkHistory < ApplicationRecord
     values = [
       school_name,
       city,
-      country,
+      country_code,
       job,
       email,
       start_date,

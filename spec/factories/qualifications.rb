@@ -29,7 +29,7 @@ FactoryBot.define do
     trait :completed do
       title { Faker::Educator.degree }
       institution_name { Faker::University.name }
-      institution_country { Faker::Address.country }
+      institution_country_code { Country::COUNTRIES.keys.cycle }
       start_date { Date.new(2020, 1, 1) }
       complete_date { Date.new(2021, 1, 1) }
       certificate_date { Date.new(2021, 1, 1) }
