@@ -27,9 +27,9 @@ FactoryBot.define do
     association :application_form
 
     trait :completed do
-      title { "Title" }
-      institution_name { "Institution name" }
-      institution_country { "Institution country" }
+      title { Faker::Educator.degree }
+      institution_name { Faker::University.name }
+      institution_country { Faker::Address.country }
       start_date { Date.new(2020, 1, 1) }
       complete_date { Date.new(2021, 1, 1) }
       certificate_date { Date.new(2021, 1, 1) }

@@ -44,14 +44,53 @@ FactoryBot.define do
       status { "submitted" }
     end
 
+    trait :with_age_range do
+      age_range_min { Faker::Number.between(from: 5, to: 11) }
+      age_range_max { Faker::Number.between(from: age_range_min, to: 18) }
+    end
+
+    trait :with_subjects do
+      transient { number_of_subjects { Faker::Number.between(from: 1, to: 3) } }
+
+      subjects do
+        ([-> { Faker::Educator.subject }] * number_of_subjects).map(&:call)
+      end
+    end
+
+    trait :with_identification_document do
+      identification_document do
+        build(:document, :identification_document, :with_upload)
+      end
+    end
+
     trait :with_personal_information do
-      given_names { "Given names" }
-      family_name { "Family name" }
-      date_of_birth { Date.new(2000, 1, 1) }
+      given_names { Faker::Name.name }
+      family_name { Faker::Name.last_name }
+      date_of_birth do
+        Faker::Date.between(from: 65.years.ago, to: 21.years.ago)
+      end
     end
 
     trait :with_registration_number do
-      registration_number { "12345689" }
+      registration_number do
+        Faker::Number.unique.leading_zero_number(digits: 8)
+      end
+    end
+
+    trait :with_completed_qualification do
+      after(:create) do |application_form, _evaluator|
+        application_form.qualifications << build(:qualification, :completed)
+      end
+    end
+
+    trait :with_work_history do
+      has_work_history { true }
+    end
+
+    trait :with_written_statement do
+      written_statement_document do
+        build(:document, :written_statement, :with_upload)
+      end
     end
   end
 end
