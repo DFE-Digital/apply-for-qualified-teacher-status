@@ -15329,21 +15329,6 @@
       "en-GB": "South west africa"
     }
   },
-  "nym:Sovereign Base Areas of Akrotiri and Dhekelia": {
-    "edges": {
-      "from": ["territory:XXD"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Sovereign Base Areas of Akrotiri and Dhekelia"
-    }
-  },
   "nym:Spanish Guinea": {
     "edges": {
       "from": ["country:GQ"]
@@ -24522,36 +24507,6 @@
     "names": {
       "cy": false,
       "en-GB": "Wallis and Futuna"
-    }
-  },
-  "territory:XQZ": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Akrotiri"
-    }
-  },
-  "territory:XXD": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Dhekelia"
     }
   },
   "territory:YT": {
