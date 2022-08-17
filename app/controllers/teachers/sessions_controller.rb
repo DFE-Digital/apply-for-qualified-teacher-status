@@ -30,7 +30,8 @@ class Teachers::SessionsController < Devise::SessionsController
           resource.resend_confirmation_instructions
         end
       end
-      redirect_to :teacher_check_email
+
+      redirect_to teacher_check_email_path(email: @new_session_form.email)
     else
       render :new, status: :unprocessable_entity
     end
@@ -50,6 +51,7 @@ class Teachers::SessionsController < Devise::SessionsController
   end
 
   def check_email
+    @email = params[:email]
   end
 
   def signed_out
