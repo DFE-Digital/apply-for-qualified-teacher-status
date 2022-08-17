@@ -3,7 +3,11 @@
 <h1 class="govuk-heading-xl">Check your email</h1>
 
 <p class="govuk-body-m">
-  You should have received a link by email. Follow the link confirm your email address.
+  <% if @email.present? %>
+    You asked us to send a link to <%= @email %>. If we have a record of that email address, we’ll send you a link to sign in.
+  <% else %>
+    You should have received a link by email. Follow the link to confirm your email address.
+  <% end %>
 </p>
 
 <p class="govuk-body">
