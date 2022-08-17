@@ -5534,21 +5534,6 @@
       "en-GB": "Ceska"
     }
   },
-  "nym:Ceuta": {
-    "edges": {
-      "from": ["territory:ES-CE"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Ceuta"
-    }
-  },
   "nym:Ceylon": {
     "edges": {
       "from": ["country:LK"]
@@ -10557,21 +10542,6 @@
     "names": {
       "cy": false,
       "en-GB": "Mayotte"
-    }
-  },
-  "nym:Melilla": {
-    "edges": {
-      "from": ["territory:ES-ML"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Melilla"
     }
   },
   "nym:Mexcio": {
@@ -23397,36 +23367,6 @@
     "names": {
       "cy": false,
       "en-GB": "Western Sahara"
-    }
-  },
-  "territory:ES-CE": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Ceuta"
-    }
-  },
-  "territory:ES-ML": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Melilla"
     }
   },
   "territory:FK": {
