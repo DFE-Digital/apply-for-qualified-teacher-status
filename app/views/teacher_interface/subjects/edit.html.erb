@@ -6,6 +6,8 @@
 <p class="govuk-hint"><%= I18n.t("application_form.subjects.hint") %></p>
 
 <%= form_with model: @application_form, url: %i[subjects teacher_interface application_form], method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+
   <% if @application_form.subjects.empty? %>
     <%= f.govuk_text_field :subjects, multiple: true %>
   <% else %>

@@ -73,6 +73,8 @@
 <% end %>
 
 <%= form_with model: @upload_form, url: [:teacher_interface, :application_form, @document, :uploads] do |f| %>
+  <%= f.govuk_error_summary %>
+
   <%= f.govuk_file_field :original_attachment,
                          label: { text: "Select a file to upload" },
                          hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 50MB." } %>

@@ -3,6 +3,8 @@
 <h1 class="govuk-heading-l"><%= CountryName.from_country(@country) %></h1>
 
 <%= form_with model: @country, url: confirm_edit_support_interface_country_path(@country), method: "POST" do |f| %>
+  <%= f.govuk_error_summary %>
+
   <%= render "shared/teaching_authority_contactable_fields", f: %>
 
   <%= f.govuk_text_field :teaching_authority_certificate, label: { text: "Teaching authority certificate" } %>

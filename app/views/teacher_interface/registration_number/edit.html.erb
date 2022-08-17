@@ -2,6 +2,8 @@
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <%= form_with model: @registration_number_form, url: %i[registration_number teacher_interface application_form] do |f| %>
+  <%= f.govuk_error_summary %>
+
   <%= f.govuk_text_field :registration_number, label: { size: "l", tag: "h1" } %>
 
   <%= govuk_details(summary_text: "When we might need more information") do %>

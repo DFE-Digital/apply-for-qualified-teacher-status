@@ -1,4 +1,6 @@
 <%= form_with model: [:teacher_interface, application_form, work_history] do |f| %>
+  <%= f.govuk_error_summary %>
+
   <%= f.govuk_fieldset legend: { text: I18n.t(work_history.current_or_most_recent_role? ? "application_form.work_history.current_or_most_recent_role" : "application_form.work_history.previous_role") } do %>
     <%= f.govuk_text_field :school_name, label: { text: "School name" } %>
     <%= f.govuk_text_field :city, label: { text: "City" } %>

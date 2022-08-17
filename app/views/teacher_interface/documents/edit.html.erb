@@ -20,6 +20,8 @@
 end %>
 
 <%= form_with model: [:teacher_interface, :application_form, @document] do |f| %>
+  <%= f.govuk_error_summary %>
+
   <%= f.govuk_radio_buttons_fieldset :add_another,
                                      legend: { text: "Do you need to upload another page?" },
                                      hint: { text: "If your document has several pages, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’." } do %>

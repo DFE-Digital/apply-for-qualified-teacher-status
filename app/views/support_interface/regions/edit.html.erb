@@ -3,6 +3,8 @@
 <h1 class="govuk-heading-l"><%= CountryName.from_region(@region) %></h1>
 
 <%= form_with model: [:support_interface, @region] do |f| %>
+  <%= f.govuk_error_summary %>
+
   <%= f.govuk_check_box :legacy, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Skip eligibility checker (legacy)" } %>
 
   <%= f.govuk_check_box :application_form_enabled, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Application form enabled" } %>

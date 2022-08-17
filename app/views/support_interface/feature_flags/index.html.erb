@@ -43,7 +43,7 @@
         <% feature_url = support_interface_activate_feature_path(feature_name) %>
         <% label = 'Activate ' %>
       <% end %>
-      <%= form_with(url: feature_url) do |f| %>
+      <%= form_with url: feature_url do |f| %>
         <%= f.govuk_submit label + feature_name.humanize, prevent_double_click: false %>
     <% end %>
   <% end %>

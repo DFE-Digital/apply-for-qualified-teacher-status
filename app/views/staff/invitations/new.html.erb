@@ -1,6 +1,8 @@
 <h1 class="govuk-heading-l"><%= t "devise.invitations.new.header" %></h1>
 
 <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post }) do |f| %>
+  <%= f.govuk_error_summary %>
+
   <% resource.class.invite_key_fields.each do |field| -%>
     <%= f.govuk_text_field field, label: { text: field.to_s.humanize } %>
   <% end -%>
