@@ -414,6 +414,8 @@ GEM
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
+    sitemap_generator (6.3.0)
+      builder (~> 3.0)
     strscan (3.0.4)
     syntax_tree (3.3.0)
       prettier_print
@@ -493,6 +495,7 @@ DEPENDENCIES
   sentry-ruby
   shoulda-matchers (~> 5.1)
   sidekiq
+  sitemap_generator
   syntax_tree
   syntax_tree-haml
   syntax_tree-rbs

@@ -21,6 +21,7 @@ gem "rack-attack"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sidekiq"
+gem "sitemap_generator"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Windows
 
 gem "dfe-analytics", git: "https://github.com/DFE-Digital/dfe-analytics"
