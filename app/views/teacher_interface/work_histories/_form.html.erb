@@ -4,7 +4,12 @@
   <%= f.govuk_fieldset legend: { text: I18n.t(work_history.current_or_most_recent_role? ? "application_form.work_history.current_or_most_recent_role" : "application_form.work_history.previous_role") } do %>
     <%= f.govuk_text_field :school_name, label: { text: "School name" } %>
     <%= f.govuk_text_field :city, label: { text: "City" } %>
-    <%= f.govuk_text_field :country, label: { text: "Country" } %>
+
+    <%= f.govuk_select :country_code,
+                       options_for_select(locations, work_history.country_location),
+                       label: { text: "Country" },
+                       options: { include_blank: true } %>
+
     <%= f.govuk_text_field :job, label: { text: "Your job role" } %>
     <%= f.govuk_text_field :email, label: { text: "Contact email address for this organisation" } %>
   <% end %>

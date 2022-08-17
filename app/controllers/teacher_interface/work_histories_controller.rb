@@ -122,16 +122,21 @@ module TeacherInterface
     end
 
     def work_history_params
-      params.require(:work_history).permit(
-        :city,
-        :country,
-        :email,
-        :end_date,
-        :job,
-        :school_name,
-        :start_date,
-        :still_employed
-      )
+      params
+        .require(:work_history)
+        .permit(
+          :city,
+          :country_code,
+          :email,
+          :end_date,
+          :job,
+          :school_name,
+          :start_date,
+          :still_employed
+        )
+        .tap do |params|
+          params[:country_code] = params[:country_code].split(":").last
+        end
     end
   end
 end
