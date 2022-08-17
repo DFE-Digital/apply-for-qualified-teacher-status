@@ -4184,9 +4184,9 @@
       "en-GB": "BO"
     }
   },
-  "nym:BQ-BO": {
+  "nym:BQ": {
     "edges": {
-      "from": ["territory:BQ-BO"]
+      "from": ["country:BQ"]
     },
     "meta": {
       "canonical": false,
@@ -4196,37 +4196,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "BQ-BO"
-    }
-  },
-  "nym:BQ-SA": {
-    "edges": {
-      "from": ["territory:BQ-SA"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "BQ-SA"
-    }
-  },
-  "nym:BQ-SE": {
-    "edges": {
-      "from": ["territory:BQ-SE"]
-    },
-    "meta": {
-      "canonical": false,
-      "canonical-mask": 0,
-      "display-name": false,
-      "stable-name": false
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "BQ-SE"
+      "en-GB": "BQ"
     }
   },
   "nym:BR": {
@@ -4741,7 +4711,7 @@
   },
   "nym:Bonaire": {
     "edges": {
-      "from": ["territory:BQ-BO"]
+      "from": ["country:BQ"]
     },
     "meta": {
       "canonical": false,
@@ -14566,7 +14536,7 @@
   },
   "nym:Saba": {
     "edges": {
-      "from": ["territory:BQ-SA"]
+      "from": ["country:BQ"]
     },
     "meta": {
       "canonical": false,
@@ -14926,7 +14896,7 @@
   },
   "nym:Sint Eustatius": {
     "edges": {
-      "from": ["territory:BQ-SE"]
+      "from": ["country:BQ"]
     },
     "meta": {
       "canonical": false,
@@ -23324,7 +23294,7 @@
       "en-GB": "Bermuda"
     }
   },
-  "territory:BQ-BO": {
+  "country:BQ": {
     "edges": {
       "from": []
     },
@@ -23336,37 +23306,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Bonaire"
-    }
-  },
-  "territory:BQ-SA": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Saba"
-    }
-  },
-  "territory:BQ-SE": {
-    "edges": {
-      "from": []
-    },
-    "meta": {
-      "canonical": true,
-      "canonical-mask": 1,
-      "display-name": true,
-      "stable-name": true
-    },
-    "names": {
-      "cy": false,
-      "en-GB": "Sint Eustatius"
+      "en-GB": "Bonaire, Sint Eustatius and Saba"
     }
   },
   "territory:BV": {
