@@ -1,4 +1,4 @@
-Rails.application.config do |config|
+Rails.application.configure do
   config.content_security_policy do |policy|
     policy.default_src :self
     policy.font_src :self
