@@ -151,7 +151,7 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def when_i_visit_the_magic_link_email
     message = ActionMailer::Base.deliveries.last
-    uri = URI.parse(URI.extract(message.body.to_s).second)
+    uri = URI.parse(URI.extract(message.body.encoded).first)
     expect(uri.path).to eq("/teacher/magic_link")
     expect(uri.query).to include("token")
     visit "#{uri.path}?#{uri.query}"
@@ -218,7 +218,7 @@ RSpec.describe "Teacher authentication", type: :system do
     message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
-    expect(message.subject).to eq("Here's your magic login link")
+    expect(message.subject).to eq("Your QTS application link")
     expect(message.to).to include("test@example.com")
   end
 

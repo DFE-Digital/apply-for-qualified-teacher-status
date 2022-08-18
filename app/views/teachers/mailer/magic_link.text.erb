@@ -1,6 +1,6 @@
-Hello <%= @resource.email %>!
+Hello <%= @resource.email %>
 
-You can login using the link below:
+Use the link below to log in and continue your QTS application.
 
 <%= teacher_magic_link_url(email: @resource.email, token: @token) %>
 

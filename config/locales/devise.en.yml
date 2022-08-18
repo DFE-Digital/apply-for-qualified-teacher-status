@@ -20,7 +20,7 @@ en:
       magic_link_invalid: "Invalid or expired login link."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions"
+        subject: "Your QTS application link"
       reset_password_instructions:
         subject: "Reset password instructions"
       unlock_instructions:
@@ -30,7 +30,7 @@ en:
       password_change:
         subject: "Password Changed"
       magic_link:
-        subject: "Here's your magic login link"
+        subject: "Your QTS application link"
     omniauth_callbacks:
       failure: 'Could not authenticate you from %{kind} because "%{reason}".'
       success: "Successfully authenticated from %{kind} account."

@@ -103,13 +103,13 @@ module SystemHelpers
     message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
-    expect(message.subject).to eq("Confirmation instructions")
+    expect(message.subject).to eq("Your QTS application link")
     expect(message.to).to include("test@example.com")
   end
 
   def when_i_visit_the_teacher_confirmation_email
     message = ActionMailer::Base.deliveries.last
-    uri = URI.parse(URI.extract(message.body.to_s).second)
+    uri = URI.parse(URI.extract(message.body.encoded).first)
     expect(uri.path).to eq("/teacher/confirmation")
     expect(uri.query).to include("confirmation_token=")
     visit "#{uri.path}?#{uri.query}"
