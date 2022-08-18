@@ -70,7 +70,9 @@ RSpec.describe "Teacher documents", type: :system do
 
   def then_i_see_the_check_your_uploaded_files_page
     expect(page).to have_title("Check your uploaded files")
-    expect(page).to have_content("Check your uploaded files")
+    expect(page).to have_content(
+      "Check your uploaded files – written statement document"
+    )
     expect(page).to have_content("File 1\tupload.pdf\tDelete")
     expect(page).to have_content("File 2\tupload.pdf\tDelete")
   end

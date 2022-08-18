@@ -61,10 +61,29 @@
     <% end %>
   <% elsif @document.qualification_certificate? %>
     <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-    <h1 class="govuk-heading-l"><%= I18n.t("application_form.qualifications.upload.certificate.title.#{@document.documentable.locale_key}") %></h1>
+
+    <h1 class="govuk-heading-l">
+      <% if @document.documentable.institution_name.present? %>
+        Upload your <%= I18n.t("document.document_type.qualification_certificate") %> for <%= @document.documentable.institution_name %>
+      <% elsif @document.documentable.is_teaching_qualification? %>
+        Upload your teaching qualification certificate
+      <% else %>
+        Upload your university degree certificate
+      <% end %>
+    </h1>
   <% elsif @document.qualification_transcript? %>
     <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-    <h1 class="govuk-heading-l"><%= I18n.t("application_form.qualifications.upload.transcript.title.#{@document.documentable.locale_key}") %></h1>
+
+    <h1 class="govuk-heading-l">
+      <% if @document.documentable.institution_name.present? %>
+        Upload your <%= I18n.t("document.document_type.qualification_transcript") %> for <%= @document.documentable.institution_name %>
+      <% elsif @document.documentable.is_teaching_qualification? %>
+        Upload your teaching qualification transcript
+      <% else %>
+        Upload your university degree transcript
+      <% end %>
+    </h1>
+
     <p class="govuk-body"><%= I18n.t("application_form.qualifications.upload.transcript.description") %></p>
   <% end %>
 <% else %>
