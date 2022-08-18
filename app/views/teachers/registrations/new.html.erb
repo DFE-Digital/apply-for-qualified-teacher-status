@@ -1,16 +1,12 @@
-<% content_for :page_title, "Create an account" %>
+<% content_for :page_title, I18n.t("teacher.registration.title") %>
 <% content_for :back_link_url, new_teacher_session_path %>
 
-<h1 class="govuk-heading-xl">Create an account</h1>
+<h1 class="govuk-heading-xl">
+  <%= I18n.t("teacher.registration.title") %>
+</h1>
 
 <%= form_with model: resource, url: registration_path(resource_name) do |f| %>
   <%= f.govuk_error_summary %>
-
-  <%= f.govuk_email_field :email,
-                          autofocus: true,
-                          autocomplete: "email",
-                          label: { text: "Email address", size: "m" },
-                          hint: { text: "Do not use a work or university email address you might lose access to." } %>
-
-  <%= f.govuk_submit "Continue" %>
+  <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", label: { size: "m" } %>
+  <%= f.govuk_submit %>
 <% end %>

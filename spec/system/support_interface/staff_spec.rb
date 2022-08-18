@@ -37,7 +37,7 @@ RSpec.describe "Staff support", type: :system do
 
   def when_i_visit_the_invitation_email
     message = ActionMailer::Base.deliveries.first
-    uri = URI.parse(URI.extract(message.body.to_s).second)
+    uri = URI.parse(URI.extract(message.body.encoded).second)
     expect(uri.path).to eq("/staff/invitation/accept")
     expect(uri.query).to include("invitation_token=")
     visit "#{uri.path}?#{uri.query}"

@@ -10,6 +10,10 @@ en:
     url: https://apply-for-qts-in-england.education.gov.uk
     phase_banner_text: This is a new service – <a href="https://docs.google.com/forms/d/1OpMhXJ1blJu2qFqW7VWwKnfjIoU-5SmOLXdgI0Z_kZg/viewform?edit_requested=true">your feedback will help us to improve it</a>.
 
+  teacher:
+    registration:
+      title: Your email address
+
   application_form:
     tasks:
       sections:
