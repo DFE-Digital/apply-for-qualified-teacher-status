@@ -1,7 +1,7 @@
 <% content_for :page_title, "Check your uploaded files" %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
-<h1 class="govuk-heading-l">Check your uploaded files</h1>
+<h1 class="govuk-heading-l">Check your uploaded files – <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>
 
 <h2 class="govuk-heading-m">Files added</h2>
 
