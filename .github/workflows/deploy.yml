@@ -205,6 +205,23 @@ jobs:
           environment: ${{ matrix.environment }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
+  zap_scan:
+    name: OWASP ZAP API scan
+    needs: deploy_environment
+    runs-on: ubuntu-latest
+    concurrency: deploy_${{ github.event.inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: zaproxy/action-full-scan@v0.4.0
+        with:
+          target: ${{ needs.deploy_nonprod.outputs.environment_url }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          docker_name: 'owasp/zap2docker-stable'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a "-configFile /zap/wrk/options.prop"'
+
   deploy_production:
     name: Deploy to production environment
     needs: [docker, rspec, deploy_nonprod]
