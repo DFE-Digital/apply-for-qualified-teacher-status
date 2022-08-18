@@ -9,7 +9,9 @@ class TeacherInterface::NameAndDateOfBirthForm
   attribute :date_of_birth, :date
 
   validates :application_form, presence: true
-  validate :validate_date_of_birth
+  validates :date_of_birth,
+            allow_blank: true,
+            inclusion: 100.years.ago..18.years.ago
 
   def save
     return false unless valid?
@@ -18,18 +20,5 @@ class TeacherInterface::NameAndDateOfBirthForm
     application_form.family_name = family_name
     application_form.date_of_birth = date_of_birth
     application_form.save!
-  end
-
-  private
-
-  def validate_date_of_birth
-    if date_of_birth.present? && date_of_birth >= 18.years.ago
-      errors.add(
-        :date_of_birth,
-        I18n.t(
-          "activemodel.errors.models.teacher_interface/name_and_date_of_birth_form.attributes.date_of_birth.inclusion"
-        )
-      )
-    end
   end
 end

@@ -29,6 +29,12 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
 
       it { is_expected.to be false }
     end
+
+    context "when date of birth is greater than 100 years ago" do
+      let(:date_of_birth) { Date.new(1900, 1, 1) }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe "#save" do
