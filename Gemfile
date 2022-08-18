@@ -31,6 +31,9 @@ gem "govuk_design_system_formbuilder"
 gem "govuk_markdown"
 gem "mail-notify"
 
+# this is used in the example data generation task
+gem "factory_bot_rails"
+
 group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
@@ -53,7 +56,6 @@ group :test do
   gem "capybara", "~> 3.37"
   gem "climate_control"
   gem "cuprite", "~> 0.13"
-  gem "factory_bot_rails"
   gem "rspec"
   gem "rspec-rails", "~> 6.0.0.rc1"
   gem "shoulda-matchers", "~> 5.1"
