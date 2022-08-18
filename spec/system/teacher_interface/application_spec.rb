@@ -763,26 +763,22 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_the_upload_certificate_form
     expect(page).to have_title("Upload a document")
-    expect(page).to have_content(
-      "Upload your teaching qualification certificate"
-    )
+    expect(page).to have_content("Upload your certificate for Name")
   end
 
   def then_i_see_the_upload_degree_certificate_form
     expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload your university degree certificate")
+    expect(page).to have_content("Upload your certificate for Name")
   end
 
   def then_i_see_the_upload_transcript_form
     expect(page).to have_title("Upload a document")
-    expect(page).to have_content(
-      "Upload your teaching qualification transcript"
-    )
+    expect(page).to have_content("Upload your transcript for Name")
   end
 
   def then_i_see_the_upload_degree_transcript_form
     expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload your university degree transcript")
+    expect(page).to have_content("Upload your transcript for Name")
   end
 
   def then_i_see_the_age_range_form
