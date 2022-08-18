@@ -30,6 +30,11 @@
 
     <%= govuk_header(homepage_url: "https://www.gov.uk", service_name: t('service.name'), classes: "app-header--#{HostingEnvironment.name}") do |header| %>
       <% case try(:current_namespace) %>
+      <% when "teacher" %>
+        <% header.navigation_item(
+           text: "Sign out",
+           href: destroy_teacher_session_path
+         ) %>
       <% when "support" %>
         <% header.navigation_item(
           text: "Features",
