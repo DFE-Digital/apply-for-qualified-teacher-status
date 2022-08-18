@@ -171,9 +171,11 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def then_i_see_the_sign_up_form
-    expect(page).to have_current_path("/teacher/sign_up")
-    expect(page).to have_title("Create an account")
-    expect(page).to have_content("Create an account")
+    expect(page).to have_title("Your email address")
+    expect(page).to have_content("Your email address")
+    expect(page).to have_content(
+      "We’ll use this to send you a link to continue with your QTS application."
+    )
   end
 
   def then_i_see_the_check_your_email_page

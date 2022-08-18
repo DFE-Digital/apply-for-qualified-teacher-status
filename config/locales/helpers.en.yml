@@ -4,6 +4,8 @@ en:
     hint:
       qualification:
         add_another: You can use the next section to tell us about additional degrees if you want to.
+      teacher:
+        email: We’ll use this to send you a link to continue with your QTS application. Do not use a work or university email that you might lose access to.
       teacher_interface_alternative_name_form:
         has_alternative_name: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
         alternative_given_names: Enter your full name apart from your family name
@@ -17,6 +19,8 @@ en:
         add_another_options:
           true: "Yes"
           false: "No"
+      teacher:
+        email: Email address
       teacher_interface_alternative_name_form:
         has_alternative_name_options:
           true: Yes – I’ll upload another document to prove this
