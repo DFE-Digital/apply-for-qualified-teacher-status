@@ -50,14 +50,7 @@
 
     <%= govuk_details(summary_text: "I do not have this yet") do %>
       <p class="govuk-body">If you do not have this yet, you can obtain it by contacting:</p>
-
-      <%= render "shared/teaching_authority_contactable", contactable: @application_form.region.country %>
-
-      <% if @application_form.region.country.teaching_authority_present? && @application_form.region.teaching_authority_present? %>
-        <p class="govuk-body">or</p>
-      <% end %>
-
-      <%= render "shared/teaching_authority_contactable", contactable: @application_form.region %>
+      <%= render "shared/teaching_authority_contact_information", region: @application_form.region %>
     <% end %>
   <% elsif @document.qualification_certificate? %>
     <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
