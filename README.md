@@ -47,6 +47,8 @@ bin/bundle exec rladr new title
 
 ## Setup
 
+### Dependencies
+
 Install dependencies using your preferred method, using `asdf` or `rbenv` or
 `nvm`. Example with `asdf`:
 
@@ -63,8 +65,17 @@ asdf plugin add azure-cli
 asdf install
 ```
 
-You'll also need to install PostgreSQL 13.x. The way to do this is different on
-each operating system, but on macOS you can try the following:
+#### VIPS
+
+You’ll need to install `lipvips`. This varies on each operating system, but on macOS you can try this:
+
+```bash
+brew install libvips
+```
+
+#### PostgreSQL
+
+You’ll need to install PostgreSQL 13.x. The way to do this is different on each operating system, but on macOS you can try the following:
 
 ```bash
 brew install postgresql@13
@@ -80,8 +91,9 @@ psql -d default
 > CREATE ROLE postgres LOGIN SUPERUSER;
 ```
 
-You'll also need to install Redis 6.x. The way to do this is different on
-each operating system, but on macOS you can try the following:
+#### Redis
+
+You’ll need to install Redis 6.x. The way to do this is different on each operating system, but on macOS you can try the following:
 
 ```bash
 brew install redis@6
@@ -94,8 +106,9 @@ If installing Redis manually, you'll need to start it in a separate terminal:
 redis-server
 ```
 
-Setup the project (re-run after `Gemfile` or `package.json` updates,
-automatically restarts any running Rails server):
+### Application
+
+Setup the project (re-run after `Gemfile` or `package.json` updates, automatically restarts any running Rails server):
 
 ```bash
 bin/setup
