@@ -21,7 +21,6 @@ module TeachingAuthorityContactable
 
   def teaching_authority_present?
     teaching_authority_name.present? || teaching_authority_address.present? ||
-      teaching_authority_emails.present? ||
-      teaching_authority_websites.present? || teaching_authority_other.present?
+      teaching_authority_emails.present? || teaching_authority_websites.present?
   end
 end

@@ -32,5 +32,11 @@ FactoryBot.define do
         create(:region, :legacy, country:)
       end
     end
+
+    trait :with_teaching_authority do
+      teaching_authority_address { Faker::Address.street_address }
+      teaching_authority_emails { [Faker::Internet.email] }
+      teaching_authority_websites { [Faker::Internet.url] }
+    end
   end
 end

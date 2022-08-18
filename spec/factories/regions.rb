@@ -59,5 +59,11 @@ FactoryBot.define do
       sanction_check { :none }
       status_check { :none }
     end
+
+    trait :with_teaching_authority do
+      teaching_authority_address { Faker::Address.street_address }
+      teaching_authority_emails { [Faker::Internet.email] }
+      teaching_authority_websites { [Faker::Internet.url] }
+    end
   end
 end
