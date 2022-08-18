@@ -32,5 +32,21 @@ FactoryBot.define do
         create(:upload, :translation, document:)
       end
     end
+
+    trait :written_statement do
+      document_type { "written_statement" }
+    end
+
+    trait :qualification_certificate do
+      document_type { "qualification_certificate" }
+    end
+
+    trait :qualification_transcript do
+      document_type { "qualification_transcript" }
+    end
+
+    trait :identification_document do
+      document_type { "identification" }
+    end
   end
 end

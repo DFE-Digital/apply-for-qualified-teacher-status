@@ -165,7 +165,7 @@ jobs:
           pr_id: ${{ github.event.pull_request.number }}
       - name: Seed the DB
         shell: bash
-        run: cf run-task apply-for-qts-in-england-review-pr-${{ github.event.pull_request.number }} --command "cd /app && bundle exec rails db:seed"
+        run: cf run-task apply-for-qts-in-england-review-pr-${{ github.event.pull_request.number }} --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
       - name: Post sticky pull request comment
         if: github.event_name == 'pull_request'
         uses: marocchino/sticky-pull-request-comment@v2
