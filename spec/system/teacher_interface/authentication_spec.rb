@@ -46,6 +46,20 @@ RSpec.describe "Teacher authentication", type: :system do
     when_i_select_a_country
     and_i_click_continue
 
+    when_i_click_save_and_sign_out
+    then_i_see_the_signed_out_page
+  end
+
+  it "sign out with navigation link" do
+    when_i_visit_the_sign_up_page
+
+    when_i_fill_create_teacher_email_address
+    and_i_click_continue
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_teacher_confirmation_email
+
+    when_i_visit_the_teacher_confirmation_email
+
     when_i_click_sign_out
     then_i_see_the_signed_out_page
   end
@@ -167,7 +181,11 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def when_i_click_sign_out
-    click_button "Save and sign out"
+    click_link "Sign out"
+  end
+
+  def when_i_click_save_and_sign_out
+    click_link "Save and sign out"
   end
 
   def then_i_see_the_sign_up_form
