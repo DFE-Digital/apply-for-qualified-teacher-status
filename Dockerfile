@@ -16,8 +16,8 @@ RUN apk add --update --no-cache tzdata && \
 # yarn: node package manager
 # postgresql-dev: postgres driver and libraries
 # git: dependencies for bundle
-# libvips: dependencies for ruby-vips (image processing library)
-RUN apk add --no-cache build-base yarn postgresql13-dev git libvips
+# vips-dev: dependencies for ruby-vips (image processing library)
+RUN apk add --no-cache build-base yarn postgresql13-dev git vips-dev
 
 # Install gems defined in Gemfile
 COPY .ruby-version Gemfile Gemfile.lock ./
