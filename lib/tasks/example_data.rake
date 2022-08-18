@@ -1,5 +1,3 @@
-require "factory_bot"
-
 namespace :example_data do
   desc "Create example data for testing"
   task generate: :environment do
@@ -15,7 +13,6 @@ namespace :example_data do
     Teacher.reset_column_information
     Faker::Config.locale = "en-GB"
     Faker::UniqueGenerator.clear
-    FactoryBot.find_definitions
 
     Country.all.each do |country|
       country.regions.each do |region|
