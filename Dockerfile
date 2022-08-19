@@ -75,7 +75,8 @@ RUN apk add --update --no-cache tzdata && \
     echo "Europe/London" > /etc/timezone
 
 # libpq: required to run postgres
-RUN apk add --no-cache libpq
+# vips-dev: dependencies for ruby-vips (image processing library)
+RUN apk add --no-cache libpq vips-dev
 
 # Copy files generated in the builder image
 COPY --from=builder /app /app

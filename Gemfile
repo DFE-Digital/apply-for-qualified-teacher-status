@@ -33,11 +33,11 @@ gem "mail-notify"
 
 # this is used in the example data generation task
 gem "factory_bot_rails"
+gem "faker"
 
 group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
-  gem "faker"
 end
 
 group :development do
