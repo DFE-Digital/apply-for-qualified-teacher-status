@@ -41,7 +41,14 @@ RSpec.describe ApplicationForm, type: :model do
   describe "validations" do
     it { is_expected.to be_valid }
 
-    it { is_expected.to validate_uniqueness_of(:reference) }
+    context "with an alphanumeric reference" do
+      # This is to ensure the uniqueness is case sensitive,
+      # even if we're only generating numbers at the moment.
+
+      before { application_form.update!(reference: "abc") }
+
+      it { is_expected.to validate_uniqueness_of(:reference) }
+    end
 
     it do
       is_expected.to validate_length_of(:reference).is_at_least(3).is_at_most(

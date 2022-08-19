@@ -62,11 +62,16 @@ class ApplicationForm < ApplicationRecord
   enum status: { active: "active", submitted: "submitted" }
 
   def assign_reference
-    return if reference.present? && reference.length >= 3
+    return if reference.present?
+
     ActiveRecord::Base.connection.execute(
       "LOCK TABLE application_forms IN EXCLUSIVE MODE"
     )
-    self.reference = (ApplicationForm.maximum(:reference) || "2000000").to_i + 1
+
+    max_reference = ApplicationForm.maximum(:reference)&.to_i
+    max_reference = 2_000_000 if max_reference.nil? || max_reference.zero?
+
+    self.reference = (max_reference + 1).to_s.rjust(7, "0")
   end
 
   def tasks
