@@ -63,7 +63,7 @@ class ApplicationForm < ApplicationRecord
   before_validation :assign_reference, on: :create
 
   def assign_reference
-    return if reference
+    return if reference.present? && reference.length >= 3
     ActiveRecord::Base.connection.execute(
       "LOCK TABLE application_forms IN EXCLUSIVE MODE"
     )

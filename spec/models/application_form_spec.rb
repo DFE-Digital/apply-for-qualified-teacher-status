@@ -65,6 +65,7 @@ RSpec.describe ApplicationForm, type: :model do
   describe "#reference" do
     let!(:application_form1) { create(:application_form, reference: nil) }
     let!(:application_form2) { create(:application_form, reference: nil) }
+    let!(:application_form3) { create(:application_form, reference: "") }
 
     context "the first application" do
       subject(:reference) { application_form1.reference }
@@ -78,6 +79,13 @@ RSpec.describe ApplicationForm, type: :model do
 
       it { is_expected.to_not be_nil }
       it { is_expected.to eq("2000002") }
+    end
+
+    context "the third application" do
+      subject(:reference) { application_form3.reference }
+
+      it { is_expected.to_not be_blank }
+      it { is_expected.to eq("2000003") }
     end
   end
 
