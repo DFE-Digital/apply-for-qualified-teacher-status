@@ -17,7 +17,7 @@ namespace :example_data do
     Country.all.each do |country|
       country.regions.each do |region|
         application_form_traits_for(region).each do |traits|
-          teacher = FactoryBot.create(:teacher)
+          teacher = FactoryBot.create(:teacher, confirmed_at: Time.zone.now)
           FactoryBot.create(:application_form, *traits, teacher:, region:)
         end
       end
