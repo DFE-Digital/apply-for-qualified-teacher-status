@@ -4,7 +4,7 @@
 #
 #  id                  :bigint           not null, primary key
 #  city                :text             default(""), not null
-#  country             :text             default(""), not null
+#  country_code        :text             default(""), not null
 #  email               :text             default(""), not null
 #  end_date            :date
 #  job                 :text             default(""), not null
@@ -52,7 +52,7 @@ RSpec.describe WorkHistory, type: :model do
     it { is_expected.to eq(:not_started) }
 
     context "when partially filled out" do
-      before { work_history.update!(country: "Country") }
+      before { work_history.update!(country_code: "FR") }
 
       it { is_expected.to eq(:in_progress) }
     end
@@ -62,7 +62,7 @@ RSpec.describe WorkHistory, type: :model do
         work_history.update!(
           school_name: "School",
           city: "City",
-          country: "Country",
+          country_code: "FR",
           job: "Job",
           email: "school@example.com",
           start_date: Date.new(2020, 1, 1),
@@ -78,7 +78,7 @@ RSpec.describe WorkHistory, type: :model do
         work_history.update!(
           school_name: "School",
           city: "City",
-          country: "Country",
+          country_code: "FR",
           job: "Job",
           email: "school@example.com",
           start_date: Date.new(2020, 1, 1),
@@ -116,6 +116,18 @@ RSpec.describe WorkHistory, type: :model do
       end
 
       it { is_expected.to eq(false) }
+    end
+  end
+
+  describe "#country_location" do
+    subject(:country_location) { work_history.country_location }
+
+    it { is_expected.to be_nil }
+
+    context "with a country code" do
+      before { work_history.country_code = "GB-SCT" }
+
+      it { is_expected.to eq("country:GB-SCT") }
     end
   end
 end

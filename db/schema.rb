@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_16_061643) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_17_125214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,7 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_061643) do
     t.bigint "application_form_id", null: false
     t.text "title", default: "", null: false
     t.text "institution_name", default: "", null: false
-    t.text "institution_country", default: "", null: false
+    t.text "institution_country_code", default: "", null: false
     t.date "start_date"
     t.date "complete_date"
     t.date "certificate_date"
@@ -207,7 +207,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_061643) do
     t.bigint "application_form_id", null: false
     t.text "school_name", default: "", null: false
     t.text "city", default: "", null: false
-    t.text "country", default: "", null: false
+    t.text "country_code", default: "", null: false
     t.text "job", default: "", null: false
     t.text "email", default: "", null: false
     t.date "start_date"

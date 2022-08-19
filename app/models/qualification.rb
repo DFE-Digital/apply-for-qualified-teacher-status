@@ -5,7 +5,7 @@
 #  id                        :bigint           not null, primary key
 #  certificate_date          :date
 #  complete_date             :date
-#  institution_country       :text             default(""), not null
+#  institution_country_code  :text             default(""), not null
 #  institution_name          :text             default(""), not null
 #  part_of_university_degree :boolean
 #  start_date                :date
@@ -56,7 +56,7 @@ class Qualification < ApplicationRecord
     values = [
       title,
       institution_name,
-      institution_country,
+      institution_country_code,
       start_date,
       complete_date,
       certificate_date,
@@ -94,6 +94,14 @@ class Qualification < ApplicationRecord
     return true if part_of_university_degree.nil? || part_of_university_degree
 
     application_form.qualifications.ordered.second != self
+  end
+
+  def institution_country_name
+    CountryName.from_code(institution_country_code)
+  end
+
+  def institution_country_location
+    Country::LOCATIONS_BY_COUNTRY_CODE[institution_country_code]
   end
 
   private

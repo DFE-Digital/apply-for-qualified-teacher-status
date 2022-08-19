@@ -539,7 +539,7 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_fill_in_qualifications
     fill_in "qualification-title-field", with: "Title"
     fill_in "qualification-institution-name-field", with: "Name"
-    fill_in "qualification-institution-country-field", with: "Country"
+    fill_in "qualification-institution-country-code-field", with: "France"
     fill_in "qualification_start_date_2i", with: "1"
     fill_in "qualification_start_date_1i", with: "2000"
     fill_in "qualification_complete_date_2i", with: "1"
@@ -590,7 +590,7 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_fill_in_work_history
     fill_in "work-history-school-name-field", with: "School name"
     fill_in "work-history-city-field", with: "City"
-    fill_in "work-history-country-field", with: "Country"
+    fill_in "work-history-country-code-field", with: "France"
     fill_in "work-history-job-field", with: "Job"
     fill_in "work-history-email-field", with: "test@example.com"
     fill_in "work_history_start_date_2i", with: "1"
@@ -858,7 +858,7 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Check your answers")
     expect(page).to have_content("Qualification title\tTitle")
     expect(page).to have_content("Name of institution\tName")
-    expect(page).to have_content("Country of institution\tCountry")
+    expect(page).to have_content("Country of institution\tFrance")
   end
 
   def then_i_see_completed_qualifications_section
@@ -881,7 +881,7 @@ RSpec.describe "Teacher application", type: :system do
     expect(page).to have_content("Your current or most recent role")
     expect(page).to have_content("School name\tSchool name")
     expect(page).to have_content("City of institution\tCity")
-    expect(page).to have_content("Country of institution\tCountry")
+    expect(page).to have_content("Country of institution\tFrance")
     expect(page).to have_content("Your job role\tJob")
     expect(page).to have_content("Contact email address\ttest@example.com")
     expect(page).to have_content("Role start date\tJanuary 2000")

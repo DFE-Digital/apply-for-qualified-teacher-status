@@ -139,14 +139,21 @@ module TeacherInterface
     end
 
     def qualification_params
-      params.require(:qualification).permit(
-        :title,
-        :institution_name,
-        :institution_country,
-        :start_date,
-        :complete_date,
-        :certificate_date
-      )
+      params
+        .require(:qualification)
+        .permit(
+          :title,
+          :institution_name,
+          :institution_country_code,
+          :start_date,
+          :complete_date,
+          :certificate_date
+        )
+        .tap do |params|
+          params[:institution_country_code] = params[
+            :institution_country_code
+          ].split(":").last
+        end
     end
 
     def part_of_university_degree_form_params

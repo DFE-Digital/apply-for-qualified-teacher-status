@@ -5,7 +5,7 @@
 #  id                        :bigint           not null, primary key
 #  certificate_date          :date
 #  complete_date             :date
-#  institution_country       :text             default(""), not null
+#  institution_country_code  :text             default(""), not null
 #  institution_name          :text             default(""), not null
 #  part_of_university_degree :boolean
 #  start_date                :date
@@ -56,7 +56,7 @@ RSpec.describe Qualification, type: :model do
         qualification.update!(
           title: "Title",
           institution_name: "Institution name",
-          institution_country: "Institution country",
+          institution_country_code: "FR",
           start_date: Date.new(2020, 1, 1),
           complete_date: Date.new(2021, 1, 1),
           certificate_date: Date.new(2021, 1, 1),
@@ -138,6 +138,20 @@ RSpec.describe Qualification, type: :model do
 
         it { is_expected.to be false }
       end
+    end
+  end
+
+  describe "#institution_country_location" do
+    subject(:institution_country_location) do
+      qualification.institution_country_location
+    end
+
+    it { is_expected.to be_nil }
+
+    context "with a country code" do
+      before { qualification.institution_country_code = "GB-SCT" }
+
+      it { is_expected.to eq("country:GB-SCT") }
     end
   end
 end

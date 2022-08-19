@@ -81,7 +81,7 @@
     - application_form_id
     - title
     - institution_name
-    - institution_country
+    - institution_country_code
     - start_date
     - complete_date
     - certificate_date
@@ -151,7 +151,7 @@
     - application_form_id
     - school_name
     - city
-    - country
+    - country_code
     - job
     - email
     - start_date

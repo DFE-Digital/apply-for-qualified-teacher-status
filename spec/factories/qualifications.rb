@@ -5,7 +5,7 @@
 #  id                        :bigint           not null, primary key
 #  certificate_date          :date
 #  complete_date             :date
-#  institution_country       :text             default(""), not null
+#  institution_country_code  :text             default(""), not null
 #  institution_name          :text             default(""), not null
 #  part_of_university_degree :boolean
 #  start_date                :date
@@ -29,7 +29,7 @@ FactoryBot.define do
     trait :completed do
       title { Faker::Educator.degree }
       institution_name { Faker::University.name }
-      institution_country { Faker::Address.country }
+      institution_country_code { Country::COUNTRIES.keys.cycle }
       start_date { Date.new(2020, 1, 1) }
       complete_date { Date.new(2021, 1, 1) }
       certificate_date { Date.new(2021, 1, 1) }

@@ -4,7 +4,7 @@
 #
 #  id                  :bigint           not null, primary key
 #  city                :text             default(""), not null
-#  country             :text             default(""), not null
+#  country_code        :text             default(""), not null
 #  email               :text             default(""), not null
 #  end_date            :date
 #  job                 :text             default(""), not null
@@ -32,7 +32,13 @@ class WorkHistory < ApplicationRecord
   scope :completed,
         -> {
           where
-            .not(school_name: "", city: "", country: "", job: "", email: "")
+            .not(
+              school_name: "",
+              city: "",
+              country_code: "",
+              job: "",
+              email: ""
+            )
             .where.not(start_date: nil)
             .where(still_employed: true)
             .or(where(still_employed: false).where.not(end_date: nil))
@@ -44,7 +50,7 @@ class WorkHistory < ApplicationRecord
     values = [
       school_name,
       city,
-      country,
+      country_code,
       job,
       email,
       start_date,
@@ -64,5 +70,13 @@ class WorkHistory < ApplicationRecord
   def current_or_most_recent_role?
     application_form.work_histories.empty? ||
       application_form.work_histories.ordered.first == self
+  end
+
+  def country_name
+    CountryName.from_code(country_code)
+  end
+
+  def country_location
+    Country::LOCATIONS_BY_COUNTRY_CODE[country_code]
   end
 end

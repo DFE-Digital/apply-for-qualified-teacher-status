@@ -16,6 +16,12 @@ var loadCountryAutoComplete = () => {
     ) ??
     document.getElementById(
       "teacher-interface-country-region-form-location-field-error"
+    ) ??
+    document.getElementById("work-history-country-code-field") ??
+    document.getElementById("work-history-country-code-field-error") ??
+    document.getElementById("qualification-institution-country-code-field") ??
+    document.getElementById(
+      "qualification-institution-country-code-field-error"
     );
 
   if (locationPicker) {
