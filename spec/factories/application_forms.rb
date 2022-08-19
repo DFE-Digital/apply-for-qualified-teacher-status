@@ -35,7 +35,7 @@
 #
 FactoryBot.define do
   factory :application_form do
-    sequence(:reference) { |n| "ref#{n}" }
+    sequence(:reference) { |n| n.to_s.rjust(7, "0") }
     status { "active" }
     association :teacher
     association :region, :national

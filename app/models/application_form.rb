@@ -56,18 +56,22 @@ class ApplicationForm < ApplicationRecord
 
   before_create :build_documents
 
+  before_validation :assign_reference
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
   enum status: { active: "active", submitted: "submitted" }
 
-  before_validation :assign_reference, on: :create
-
   def assign_reference
-    return if reference
+    return if reference.present?
+
     ActiveRecord::Base.connection.execute(
       "LOCK TABLE application_forms IN EXCLUSIVE MODE"
     )
-    self.reference = (ApplicationForm.maximum(:reference) || "2000000").to_i + 1
+
+    max_reference = ApplicationForm.maximum(:reference)&.to_i
+    max_reference = 2_000_000 if max_reference.nil? || max_reference.zero?
+
+    self.reference = (max_reference + 1).to_s.rjust(7, "0")
   end
 
   def tasks
