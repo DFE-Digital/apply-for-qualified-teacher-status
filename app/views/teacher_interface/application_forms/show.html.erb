@@ -49,10 +49,8 @@
     <% end %>
   </ol>
 
-  <%= form_with url: destroy_teacher_session_path, method: :delete do |f| %>
-    <div class="govuk-button-group">
-      <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_path %>
-      <%= f.govuk_submit "Save and sign out", secondary: true %>
-    </div>
-  <% end %>
+  <div class="govuk-button-group">
+    <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_path %>
+    <%= govuk_button_link_to "Save and sign out", destroy_teacher_session_path, secondary: true %>
+  </div>
 <% end %>
