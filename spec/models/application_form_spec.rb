@@ -41,13 +41,14 @@ RSpec.describe ApplicationForm, type: :model do
   describe "validations" do
     it { is_expected.to be_valid }
 
-    it { is_expected.to validate_presence_of(:reference) }
     it { is_expected.to validate_uniqueness_of(:reference) }
+
     it do
       is_expected.to validate_length_of(:reference).is_at_least(3).is_at_most(
         31
       )
     end
+
     it do
       is_expected.to define_enum_for(:status).with_values(
         active: "active",

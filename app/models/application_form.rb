@@ -56,11 +56,10 @@ class ApplicationForm < ApplicationRecord
 
   before_create :build_documents
 
+  before_validation :assign_reference
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
   enum status: { active: "active", submitted: "submitted" }
-
-  before_validation :assign_reference, on: :create
 
   def assign_reference
     return if reference.present? && reference.length >= 3
