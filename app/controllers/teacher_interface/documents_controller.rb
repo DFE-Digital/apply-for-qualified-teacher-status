@@ -12,19 +12,15 @@ module TeacherInterface
     end
 
     def update
-      if ActiveModel::Type::Boolean.new.cast(document_params[:add_another])
+      add_another = params.dig(:document, :add_another)
+
+      if add_another && ActiveModel::Type::Boolean.new.cast(add_another)
         redirect_to new_teacher_interface_application_form_document_upload_path(
                       @document
                     )
       else
         redirect_to document.continue_url
       end
-    end
-
-    private
-
-    def document_params
-      params.require(:document).permit(:add_another)
     end
   end
 end
