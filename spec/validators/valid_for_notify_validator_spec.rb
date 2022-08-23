@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe ValidForNotifyValidator do
   before do
     stub_const("Validatable", Class.new).class_eval do

@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe "Performance", type: :system do
   before { travel_to Date.new(2022, 6, 30) }
 

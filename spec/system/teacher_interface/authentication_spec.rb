@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe "Teacher authentication", type: :system do
   before { given_the_service_is_open }
 

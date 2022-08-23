@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe TeacherInterface::CountryRegionForm, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:application_form) }

@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe FeatureFlag do
   let(:feature) { create(:feature, name: feature_name) }
   let(:feature_name) { :service_open }

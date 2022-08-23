@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe "Sitemap", type: :request do
   it "responds successfully" do
     get "/sitemap.xml"
