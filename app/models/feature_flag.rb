@@ -3,9 +3,16 @@ class FeatureFlag
 
   attr_accessor :description, :name, :owner
 
-  DISABLED_IN_PRODUCTION = %i[service_open staff_test_user].freeze
+  DISABLED_IN_PRODUCTION = %i[personas service_open staff_test_user].freeze
 
   SETTINGS = [
+    [
+      :personas,
+      "Allow signing in as a 'persona', making it easy to perform " \
+        "acceptance testing by impersonating a particular user, e.g. teacher, " \
+        "assessor, or admin.",
+      "Thomas Leese"
+    ],
     [
       :service_open,
       "Allow users to access the service without HTTP basic auth. Should be " \
