@@ -29,21 +29,6 @@ class WorkHistory < ApplicationRecord
   validates :email, valid_for_notify: true, allow_blank: true
   validates :end_date, presence: true, allow_nil: true, unless: :still_employed?
 
-  scope :completed,
-        -> {
-          where
-            .not(
-              school_name: "",
-              city: "",
-              country_code: "",
-              job: "",
-              email: ""
-            )
-            .where.not(start_date: nil)
-            .where(still_employed: true)
-            .or(where(still_employed: false).where.not(end_date: nil))
-        }
-
   scope :ordered, -> { order(start_date: :asc, created_at: :asc) }
 
   def status

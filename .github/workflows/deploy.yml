@@ -171,7 +171,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            Review app deployed to ${{ steps.deploy.outputs.environment_url }}
+            Review app deployed to ${{ steps.deploy.outputs.environment_url }}personas
 
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment

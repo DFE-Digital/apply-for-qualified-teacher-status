@@ -23,5 +23,9 @@
 FactoryBot.define do
   factory :teacher do
     sequence(:email) { |n| "teacher#{n}@example.org" }
+
+    trait :confirmed do
+      confirmed_at { Time.zone.now }
+    end
   end
 end

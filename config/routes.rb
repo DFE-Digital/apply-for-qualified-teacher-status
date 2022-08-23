@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   end
 
   namespace :assessor_interface, path: "/assessor" do
+    root to: redirect("/assessor/application_forms")
+
+    resources :application_forms, only: %i[index]
   end
 
   namespace :eligibility_interface, path: "/eligibility" do
@@ -160,6 +163,13 @@ Rails.application.routes.draw do
     get "/teacher/signed_out",
         to: "teachers/sessions#signed_out",
         as: "teacher_signed_out"
+  end
+
+  resources :personas, only: %i[index] do
+    member do
+      post "staff", to: "personas#staff_sign_in", as: "staff_sign_in"
+      post "teacher", to: "personas#teacher_sign_in", as: "teacher_sign_in"
+    end
   end
 
   resources :autocomplete_locations, only: %i[index]

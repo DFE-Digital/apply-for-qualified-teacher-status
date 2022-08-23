@@ -3,9 +3,16 @@ class FeatureFlag
 
   attr_accessor :description, :name, :owner
 
-  DISABLED_IN_PRODUCTION = %i[service_open staff_test_user].freeze
+  DISABLED_IN_PRODUCTION = %i[personas service_open staff_test_user].freeze
 
-  PERMANENT_SETTINGS = [
+  SETTINGS = [
+    [
+      :personas,
+      "Allow signing in as a 'persona', making it easy to perform " \
+        "acceptance testing by impersonating a particular user, e.g. teacher, " \
+        "assessor, or admin.",
+      "Thomas Leese"
+    ],
     [
       :service_open,
       "Allow users to access the service without HTTP basic auth. Should be " \
@@ -20,22 +27,22 @@ class FeatureFlag
       "Thomas Leese"
     ],
     [
-      :teacher_applications,
-      "Allow starting an application on this service directly after " \
-        "completing an eligibility check.",
-      "Thomas Leese"
-    ],
-    [
       :staff_test_user,
       "Add extra user with access the eligibility checker for user research. " \
         "When service_open is deactivated, and this flag is enabled, the user will have " \
         "full access to the service. Should be inactive on production.",
       "David Feetenby"
+    ],
+    [
+      :teacher_applications,
+      "Allow starting an application on this service directly after " \
+        "completing an eligibility check.",
+      "Thomas Leese"
     ]
   ].freeze
 
   FEATURES =
-    PERMANENT_SETTINGS
+    SETTINGS
       .to_h do |name, description, owner|
         [name, FeatureFlag.new(description:, name:, owner:)]
       end

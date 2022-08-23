@@ -58,8 +58,8 @@ FactoryBot.define do
     end
 
     trait :with_identification_document do
-      identification_document do
-        build(:document, :identification_document, :with_upload)
+      after(:build) do |application_form, _evaluator|
+        build(:upload, document: application_form.identification_document)
       end
     end
 
@@ -88,8 +88,8 @@ FactoryBot.define do
     end
 
     trait :with_written_statement do
-      written_statement_document do
-        build(:document, :written_statement, :with_upload)
+      after(:build) do |application_form, _evaluator|
+        build(:upload, document: application_form.written_statement_document)
       end
     end
   end

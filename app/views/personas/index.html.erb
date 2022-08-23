@@ -1,0 +1,56 @@
+<% content_for :page_title, "Personas" %>
+
+<h1 class="govuk-heading-xl">Personas</h1>
+
+<h2 class="govuk-heading-l">Staff</h2>
+
+<% if @staff.empty? %>
+  <p class="govuk-body">No staff personas.</p>
+<% else %>
+  <% @staff.find_each do |staff| %>
+    <h3 class="govuk-heading-m"><%= staff.email %></h3>
+    <%= govuk_button_to "Sign in as #{staff.email}", staff_sign_in_persona_path(staff) %>
+  <% end %>
+<% end %>
+
+<h2 class="govuk-heading-l">Teachers</h2>
+
+<% if @teacher_personas.empty? %>
+  <p class="govuk-body">No teacher personas.</p>
+<% else %>
+  <div class="app-teacher-personas">
+    <%= govuk_table do |table|
+      table.head do |head|
+        head.row do |row|
+          row.cell(header: true, text: "Country bucket")
+          row.cell(header: true, text: "Status check")
+          row.cell(header: true, text: "Sanction check")
+          row.cell(header: true, text: "Submitted?")
+          row.cell(header: true, text: "Actions")
+        end
+      end
+
+      table.body do |body|
+        @teacher_personas.each do |persona|
+          body.row do |row|
+            row.cell do
+              bucket = region_bucket_for_teacher_persona(persona)
+              govuk_tag(text: bucket) if bucket
+            end
+
+            row.cell { persona_check_tag(persona[:status_check]) }
+            row.cell { persona_check_tag(persona[:sanction_check]) }
+
+            row.cell do
+              persona[:submitted] ? govuk_tag(text: "Yes", colour: "green") : govuk_tag(text: "No", colour: "red")
+            end
+
+            row.cell do
+              govuk_button_to "Sign in as #{persona[:teacher].email}", teacher_sign_in_persona_path(persona[:teacher])
+            end
+          end
+        end
+      end
+    end %>
+  </div>
+<% end %>

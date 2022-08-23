@@ -30,10 +30,6 @@
 
     <%= govuk_header(homepage_url: "https://www.gov.uk", service_name: t('service.name'), classes: "app-header--#{HostingEnvironment.name}") do |header| %>
       <% case try(:current_namespace) %>
-      <% when "teacher" %>
-        <% if current_teacher %>
-          <% header.navigation_item(text: "Sign out", href: destroy_teacher_session_path) %>
-        <% end %>
       <% when "support" %>
         <% header.navigation_item(
           text: "Features",
@@ -54,6 +50,14 @@
           text: "Sidekiq",
           href: support_interface_sidekiq_web_path
         ) %>
+      <% when "teacher" %>
+        <% if current_teacher %>
+          <% header.navigation_item(text: "Sign out", href: destroy_teacher_session_path) %>
+        <% end %>
+      <% when "assessor" %>
+        <% if current_staff %>
+          <% header.navigation_item(text: "Sign out", href: destroy_staff_session_path) %>
+        <% end %>
       <% end %>
     <% end %>
 
