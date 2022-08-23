@@ -5,6 +5,7 @@ namespace :review_app do
       raise "THIS TASK CANNOT BE RUN IN PRODUCTION"
     end
 
+    FeatureFlag.activate(:personas)
     FeatureFlag.activate(:teacher_applications)
     Region.update_all(application_form_enabled: true)
   end
