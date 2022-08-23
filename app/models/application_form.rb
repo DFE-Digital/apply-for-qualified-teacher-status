@@ -143,7 +143,7 @@ class ApplicationForm < ApplicationRecord
   end
 
   def teaching_qualification
-    qualifications.ordered.first
+    qualifications.find(&:is_teaching_qualification?)
   end
 
   def identification_document

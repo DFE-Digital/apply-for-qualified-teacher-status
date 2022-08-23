@@ -66,7 +66,7 @@ class Qualification < ApplicationRecord
 
   def is_teaching_qualification?
     application_form.qualifications.empty? ||
-      application_form.qualifications.ordered.first == self
+      application_form.qualifications.min_by(&:created_at) == self
   end
 
   def is_university_degree?
