@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe WorkHistoryHelper do
   describe "#work_history_title" do
     subject(:title) { work_history_title(work_history) }

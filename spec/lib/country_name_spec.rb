@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe CountryName do
   describe "#from_code" do
     subject(:name) { described_class.from_code(code, with_definite_article:) }

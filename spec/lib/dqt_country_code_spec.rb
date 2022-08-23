@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe DqtCountryCode do
   describe "#for_code" do
     subject(:dqt_code) { described_class.for_code(code) }

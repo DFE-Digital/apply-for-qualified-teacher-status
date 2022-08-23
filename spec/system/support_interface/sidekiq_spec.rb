@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe "Sidekiq support", type: :system do
   it "allows viewing Sidekiq dashboard" do
     when_i_am_authorized_as_a_support_user

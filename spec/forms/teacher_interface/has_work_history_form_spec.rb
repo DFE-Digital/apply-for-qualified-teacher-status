@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe TeacherInterface::HasWorkHistoryForm, type: :model do
   subject(:has_work_history_form) do
     described_class.new(application_form:, has_work_history:)

@@ -41,8 +41,6 @@
 #  index_staff_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_staff_on_unlock_token          (unlock_token) UNIQUE
 #
-require "spec_helper"
-
 RSpec.describe Staff, type: :model do
   subject(:staff) { build(:staff) }
 
