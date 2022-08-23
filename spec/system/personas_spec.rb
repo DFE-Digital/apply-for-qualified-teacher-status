@@ -49,7 +49,9 @@ RSpec.describe "Personas", type: :system do
 
   def given_personas_exist
     create(:staff, :confirmed, email: "staff@example.com")
-    create(:teacher, :confirmed, email: "teacher@example.com")
+
+    teacher = create(:teacher, :confirmed, email: "teacher@example.com")
+    create(:application_form, teacher:)
   end
 
   def when_i_visit_the_personas_page
@@ -76,9 +78,8 @@ RSpec.describe "Personas", type: :system do
   end
 
   def then_i_see_the_application_form_page
-    expect(page).to have_content(
-      "In which country are you currently recognised as a teacher?"
-    )
+    expect(page).to have_content("Application incomplete")
+    expect(page).to have_content("You have completed 0 of 3 sections.")
   end
 
   def then_i_see_the_start_page
