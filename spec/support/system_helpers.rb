@@ -52,6 +52,10 @@ module SystemHelpers
     given_an_eligible_eligibility_check(country_check: :written)
   end
 
+  def when_i_am_authorized_as_an_assessor_user
+    when_i_am_authorized_as_a_support_user
+  end
+
   def when_i_am_authorized_as_a_support_user
     page.driver.basic_authorize(
       ENV.fetch("SUPPORT_USERNAME", "support"),

@@ -76,7 +76,7 @@ RSpec.describe "Personas", type: :system do
   end
 
   def then_i_see_the_case_management_page
-    expect(page).to have_content("Application forms")
+    expect(page).to have_content("Applications")
   end
 
   def then_i_see_the_application_form_page

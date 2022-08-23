@@ -1,3 +1,22 @@
 <% content_for :page_title, "Application forms" %>
 
-<h1 class="govuk-heading-xl">Application forms</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-from-desktop"> 
+      <h1 class="govuk-heading-xl">Applications</h1>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-from-desktop"> 
+      <div class="govuk-grid-column-one-third app-applications__filters">
+        <h2 class="govuk-heading-m">Filters</h2>
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <%- @application_forms.each do |application_form| -%>
+          <h2 class="govuk-heading-m">
+            <%= application_form.given_names%> <%= application_form.family_name %>
+          </h2>
+        <%- end -%>
+      </div>
+    </div>
+  </div>
+
