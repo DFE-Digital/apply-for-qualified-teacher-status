@@ -17,7 +17,7 @@
 #
 #  index_countries_on_code  (code) UNIQUE
 #
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Country, type: :model do
   subject(:country) { build(:country) }

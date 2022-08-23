@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe WorkHistoryHelper do
   describe "#work_history_title" do

@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe StaffHttpBasicAuthStrategy do
   subject(:staff_http_basic_auth_strategy) { described_class.new(env) }

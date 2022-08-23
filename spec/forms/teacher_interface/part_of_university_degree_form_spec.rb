@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe TeacherInterface::PartOfUniversityDegreeForm, type: :model do
   subject(:part_of_university_degree_form) do

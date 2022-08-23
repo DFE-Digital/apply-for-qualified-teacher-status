@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe "Teaching authority contactable", type: :view do
   before { render "shared/teaching_authority_contactable", contactable: }

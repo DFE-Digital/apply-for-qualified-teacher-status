@@ -20,7 +20,7 @@
 #
 #  index_teachers_on_email  (email) UNIQUE
 #
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Teacher, type: :model do
   subject(:teacher) { create(:teacher) }

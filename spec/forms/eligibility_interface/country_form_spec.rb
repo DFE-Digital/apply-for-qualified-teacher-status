@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe EligibilityInterface::CountryForm, type: :model do
   describe "validations" do

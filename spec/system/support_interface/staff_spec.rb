@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe "Staff support", type: :system do
   it "allows inviting a user" do

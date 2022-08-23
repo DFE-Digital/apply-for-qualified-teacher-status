@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe "Countries support", type: :system do
   it "allows modifying countries" do

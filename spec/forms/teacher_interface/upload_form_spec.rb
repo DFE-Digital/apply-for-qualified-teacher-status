@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe TeacherInterface::UploadForm, type: :model do
   subject(:upload_form) do

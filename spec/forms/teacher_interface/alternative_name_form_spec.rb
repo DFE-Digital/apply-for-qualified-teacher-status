@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe TeacherInterface::AlternativeNameForm, type: :model do
   describe "validations" do
