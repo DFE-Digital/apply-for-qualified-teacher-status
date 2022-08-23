@@ -45,5 +45,9 @@ FactoryBot.define do
   factory :staff do
     email { "test@example.org" }
     password { "example" }
+
+    trait :confirmed do
+      confirmed_at { Time.zone.now }
+    end
   end
 end
