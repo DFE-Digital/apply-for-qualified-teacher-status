@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "rails_helper"
+
 RSpec.describe ApplicationFormStatusTagComponent, type: :component do
   subject(:component) { render_inline(described_class.new(key:, status:)) }
 

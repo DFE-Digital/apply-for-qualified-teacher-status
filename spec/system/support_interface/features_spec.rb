@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe "Features support", type: :system do
   it "allows activating/deactivating features" do
     when_i_am_authorized_as_a_support_user

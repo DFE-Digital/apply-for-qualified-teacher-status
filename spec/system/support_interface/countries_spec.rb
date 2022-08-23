@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe "Countries support", type: :system do
   it "allows modifying countries" do
     given_countries_exist

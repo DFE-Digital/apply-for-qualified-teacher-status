@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require "rails_helper"
+
 RSpec.describe "Eligibility check", type: :system do
   before do
     given_countries_exist

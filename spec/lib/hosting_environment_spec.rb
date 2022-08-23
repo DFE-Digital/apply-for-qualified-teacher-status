@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe HostingEnvironment do
   let(:hosting_environment) { nil }
   let(:application_name) { "apply-for-qts-in-england-review-pr-292" }

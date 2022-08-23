@@ -18,6 +18,8 @@
 #
 #  fk_rails_...  (region_id => regions.id)
 #
+require "rails_helper"
+
 RSpec.describe EligibilityCheck, type: :model do
   let(:eligibility_check) { EligibilityCheck.new }
 

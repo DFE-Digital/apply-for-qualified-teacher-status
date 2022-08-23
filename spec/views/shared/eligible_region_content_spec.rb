@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe "Eligible region content", type: :view do
   let(:region) { nil }
 

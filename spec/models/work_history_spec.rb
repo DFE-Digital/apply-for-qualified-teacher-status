@@ -23,6 +23,8 @@
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
+require "rails_helper"
+
 RSpec.describe WorkHistory, type: :model do
   subject(:work_history) { build(:work_history) }
 

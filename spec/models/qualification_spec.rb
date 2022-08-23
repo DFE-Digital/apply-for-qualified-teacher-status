@@ -22,6 +22,8 @@
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
+require "rails_helper"
+
 RSpec.describe Qualification, type: :model do
   subject(:qualification) { create(:qualification) }
 

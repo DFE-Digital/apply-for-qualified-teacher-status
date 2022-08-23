@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe "Teacher documents", type: :system do
   before do
     given_the_service_is_open

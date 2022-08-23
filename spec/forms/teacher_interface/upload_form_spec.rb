@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe TeacherInterface::UploadForm, type: :model do
   subject(:upload_form) do
     described_class.new(document:, original_attachment:, translated_attachment:)

@@ -26,6 +26,8 @@
 #
 #  fk_rails_...  (country_id => countries.id)
 #
+require "rails_helper"
+
 RSpec.describe Region, type: :model do
   subject(:region) { build(:region) }
 
