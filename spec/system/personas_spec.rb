@@ -18,6 +18,14 @@ RSpec.describe "Personas", type: :system do
       when_i_visit_the_personas_page
       then_i_see_the_personas_page
       and_i_see_some_personas
+
+      when_i_sign_in_as_a_staff_persona
+      then_i_see_the_case_management_page
+
+      when_i_visit_the_personas_page
+
+      when_i_sign_in_as_a_teacher_persona
+      then_i_see_the_application_form_page
     end
   end
 
@@ -40,12 +48,20 @@ RSpec.describe "Personas", type: :system do
   end
 
   def given_personas_exist
-    create(:staff, email: "staff@example.com")
-    create(:teacher, email: "teacher@example.com")
+    create(:staff, :confirmed, email: "staff@example.com")
+    create(:teacher, :confirmed, email: "teacher@example.com")
   end
 
   def when_i_visit_the_personas_page
     visit :personas
+  end
+
+  def when_i_sign_in_as_a_staff_persona
+    click_button "Sign in as staff@example.com"
+  end
+
+  def when_i_sign_in_as_a_teacher_persona
+    click_button "Sign in as teacher@example.com"
   end
 
   def then_i_see_the_personas_page
@@ -53,6 +69,16 @@ RSpec.describe "Personas", type: :system do
     expect(page).to have_content("Personas")
     expect(page).to have_content("Staff")
     expect(page).to have_content("Teachers")
+  end
+
+  def then_i_see_the_case_management_page
+    expect(page).to have_content("Application forms")
+  end
+
+  def then_i_see_the_application_form_page
+    expect(page).to have_content(
+      "In which country are you currently recognised as a teacher?"
+    )
   end
 
   def then_i_see_the_start_page

@@ -9,6 +9,7 @@
 <% else %>
   <% @staff.find_each do |staff| %>
     <h3 class="govuk-heading-m"><%= staff.email %></h3>
+    <%= govuk_button_to "Sign in as #{staff.email}", staff_sign_in_persona_path(staff) %>
   <% end %>
 <% end %>
 
@@ -19,5 +20,6 @@
 <% else %>
   <% @teachers.find_each do |teacher| %>
     <h3 class="govuk-heading-m"><%= teacher.email %></h3>
+    <%= govuk_button_to "Sign in as #{teacher.email}", teacher_sign_in_persona_path(teacher) %>
   <% end %>
 <% end %>
