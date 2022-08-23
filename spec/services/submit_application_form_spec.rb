@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe SubmitApplicationForm do
   let(:application_form) do
     create(:application_form, subjects: ["Maths", "", ""])

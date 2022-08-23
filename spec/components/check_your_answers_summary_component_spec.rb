@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
   subject(:component) do
     render_inline(described_class.new(model:, title:, fields:, delete_link_to:))

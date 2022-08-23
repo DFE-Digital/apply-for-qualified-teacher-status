@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe FileUploadValidator do
   before do
     stub_const("Validatable", Class.new).class_eval do

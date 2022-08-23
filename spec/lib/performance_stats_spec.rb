@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe PerformanceStats do
   let(:from) { 1.week.ago.beginning_of_day }
 

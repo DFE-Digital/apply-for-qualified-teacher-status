@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe QualificationHelper do
   describe "#qualification_title" do
     subject(:title) { qualification_title(qualification) }
