@@ -5,7 +5,7 @@ class FeatureFlag
 
   DISABLED_IN_PRODUCTION = %i[service_open staff_test_user].freeze
 
-  PERMANENT_SETTINGS = [
+  SETTINGS = [
     [
       :service_open,
       "Allow users to access the service without HTTP basic auth. Should be " \
@@ -35,7 +35,7 @@ class FeatureFlag
   ].freeze
 
   FEATURES =
-    PERMANENT_SETTINGS
+    SETTINGS
       .to_h do |name, description, owner|
         [name, FeatureFlag.new(description:, name:, owner:)]
       end
