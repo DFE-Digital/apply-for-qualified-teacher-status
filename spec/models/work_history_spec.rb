@@ -35,15 +35,6 @@ RSpec.describe WorkHistory, type: :model do
     end
   end
 
-  describe "#completed" do
-    let!(:incomplete_work_history) { create(:work_history) }
-    let!(:complete_work_history) { create(:work_history, :completed) }
-
-    subject(:completed) { described_class.completed }
-
-    it { is_expected.to match_array([complete_work_history]) }
-  end
-
   describe "#status" do
     subject(:status) { work_history.status }
 

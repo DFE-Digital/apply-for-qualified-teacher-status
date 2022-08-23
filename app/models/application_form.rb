@@ -234,7 +234,9 @@ class ApplicationForm < ApplicationRecord
     if !has_work_history ||
          (
            !work_histories.empty? &&
-             work_histories.completed.count == work_histories.count
+             work_histories.all? do |work_history|
+               work_history.status == :completed
+             end
          )
       return :completed
     end
