@@ -24,16 +24,7 @@
 #
 class Qualification < ApplicationRecord
   belongs_to :application_form
-
-  has_one :certificate_document,
-          -> { where(document_type: :qualification_certificate) },
-          class_name: "Document",
-          as: :documentable
-
-  has_one :transcript_document,
-          -> { where(document_type: :qualification_transcript) },
-          class_name: "Document",
-          as: :documentable
+  has_many :documents, as: :documentable
 
   scope :ordered, -> { order(created_at: :asc) }
 
@@ -104,10 +95,18 @@ class Qualification < ApplicationRecord
     Country::LOCATIONS_BY_COUNTRY_CODE[institution_country_code]
   end
 
+  def certificate_document
+    documents.find(&:qualification_certificate?)
+  end
+
+  def transcript_document
+    documents.find(&:qualification_transcript?)
+  end
+
   private
 
   def build_documents
-    build_certificate_document(document_type: :qualification_certificate)
-    build_transcript_document(document_type: :qualification_transcript)
+    documents.build(document_type: :qualification_certificate)
+    documents.build(document_type: :qualification_transcript)
   end
 end

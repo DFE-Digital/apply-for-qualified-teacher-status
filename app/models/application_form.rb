@@ -38,21 +38,7 @@ class ApplicationForm < ApplicationRecord
   belongs_to :region
   has_many :work_histories
   has_many :qualifications
-
-  has_one :identification_document,
-          -> { where(document_type: :identification) },
-          class_name: "Document",
-          as: :documentable
-
-  has_one :name_change_document,
-          -> { where(document_type: :name_change) },
-          class_name: "Document",
-          as: :documentable
-
-  has_one :written_statement_document,
-          -> { where(document_type: :written_statement) },
-          class_name: "Document",
-          as: :documentable
+  has_many :documents, as: :documentable
 
   before_create :build_documents
 
@@ -160,12 +146,24 @@ class ApplicationForm < ApplicationRecord
     qualifications.ordered.first
   end
 
+  def identification_document
+    documents.find(&:identification?)
+  end
+
+  def name_change_document
+    documents.find(&:name_change?)
+  end
+
+  def written_statement_document
+    documents.find(&:written_statement?)
+  end
+
   private
 
   def build_documents
-    build_identification_document(document_type: :identification)
-    build_name_change_document(document_type: :name_change)
-    build_written_statement_document(document_type: :written_statement)
+    documents.build(document_type: :identification)
+    documents.build(document_type: :name_change)
+    documents.build(document_type: :written_statement)
   end
 
   def task_item_status(key)
