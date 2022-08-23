@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe TeacherInterface::HasWorkHistoryForm, type: :model do
   subject(:has_work_history_form) do

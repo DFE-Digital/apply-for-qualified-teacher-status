@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe "Personas", type: :system do
   before { given_the_service_is_open }

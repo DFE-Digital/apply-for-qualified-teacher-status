@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe DqtCountryCode do
   describe "#for_code" do

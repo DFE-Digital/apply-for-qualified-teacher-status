@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe SubmitApplicationForm do
   let(:application_form) do

@@ -33,7 +33,7 @@
 #  fk_rails_...  (region_id => regions.id)
 #  fk_rails_...  (teacher_id => teachers.id)
 #
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe ApplicationForm, type: :model do
   subject(:application_form) { create(:application_form) }

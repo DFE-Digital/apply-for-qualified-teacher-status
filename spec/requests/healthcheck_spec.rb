@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe "Healthcheck", type: :request do
   it "responds successfully" do

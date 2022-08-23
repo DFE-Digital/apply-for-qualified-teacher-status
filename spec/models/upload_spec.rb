@@ -16,7 +16,7 @@
 #
 #  fk_rails_...  (document_id => documents.id)
 #
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe Upload, type: :model do
   subject(:upload) { build(:upload) }

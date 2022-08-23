@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe TeacherMailer, type: :mailer do
   let(:teacher) { create(:teacher, email: "teacher@example.com") }

@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe HostingEnvironment do
   let(:hosting_environment) { nil }

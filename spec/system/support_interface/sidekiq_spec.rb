@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe "Sidekiq support", type: :system do
   it "allows viewing Sidekiq dashboard" do

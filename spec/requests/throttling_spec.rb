@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe "Throttling", rack_attack: true do
   before { FeatureFlag.activate(:service_open) }

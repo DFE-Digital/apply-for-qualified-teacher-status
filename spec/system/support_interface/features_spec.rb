@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe "Features support", type: :system do
   it "allows activating/deactivating features" do

@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe FeatureFlag do
   let(:feature) { create(:feature, name: feature_name) }

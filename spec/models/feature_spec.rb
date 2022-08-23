@@ -12,7 +12,7 @@
 #
 #  index_features_on_name  (name) UNIQUE
 #
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe Feature, type: :model do
   subject { described_class.new(name: :basic_auth) }
