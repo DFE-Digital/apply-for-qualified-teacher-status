@@ -84,10 +84,3 @@ RSpec.configure do |config|
   config.before(:each, type: :system) { driven_by(:cuprite) }
   config.include ViewComponent::TestHelpers, type: :component
 end
-
-Shoulda::Matchers.configure do |config|
-  config.integrate do |with|
-    with.test_framework :rspec
-    with.library :rails
-  end
-end
