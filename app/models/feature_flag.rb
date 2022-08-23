@@ -20,17 +20,17 @@ class FeatureFlag
       "Thomas Leese"
     ],
     [
-      :teacher_applications,
-      "Allow starting an application on this service directly after " \
-        "completing an eligibility check.",
-      "Thomas Leese"
-    ],
-    [
       :staff_test_user,
       "Add extra user with access the eligibility checker for user research. " \
         "When service_open is deactivated, and this flag is enabled, the user will have " \
         "full access to the service. Should be inactive on production.",
       "David Feetenby"
+    ],
+    [
+      :teacher_applications,
+      "Allow starting an application on this service directly after " \
+        "completing an eligibility check.",
+      "Thomas Leese"
     ]
   ].freeze
 
