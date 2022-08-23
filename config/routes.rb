@@ -162,6 +162,8 @@ Rails.application.routes.draw do
         as: "teacher_signed_out"
   end
 
+  resources :personas, only: %i[index]
+
   resources :autocomplete_locations, only: %i[index]
 
   get "accessibility", to: "static#accessibility"

@@ -1,0 +1,23 @@
+<% content_for :page_title, "Personas" %>
+
+<h1 class="govuk-heading-xl">Personas</h1>
+
+<h2 class="govuk-heading-l">Staff</h2>
+
+<% if @staff.empty? %>
+  <p class="govuk-body">No staff personas.</p>
+<% else %>
+  <% @staff.find_each do |staff| %>
+    <h3 class="govuk-heading-m"><%= staff.email %></h3>
+  <% end %>
+<% end %>
+
+<h2 class="govuk-heading-l">Teachers</h2>
+
+<% if @teachers.empty? %>
+  <p class="govuk-body">No teacher personas.</p>
+<% else %>
+  <% @teachers.find_each do |teacher| %>
+    <h3 class="govuk-heading-m"><%= teacher.email %></h3>
+  <% end %>
+<% end %>
