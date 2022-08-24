@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Assessor", type: :system do
+RSpec.describe "Assessor authentication", type: :system do
   it "allows signing in and signing out" do
     given_the_service_is_open
     given_staff_exist
