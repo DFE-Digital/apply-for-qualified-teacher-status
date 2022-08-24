@@ -80,6 +80,10 @@ en:
       reference: Reference
       status: Status
       notes: Notes
+    overview:
+      title: Overview
+      application_history: Application history
+      view_timeline: View timeline of this applications actions
 
   document:
     document_type:
