@@ -35,7 +35,7 @@
     </p>
 
     <p class="govuk-body">
-      This is called <%= @application_form.region.country.teaching_authority_certificate.indefinite_article || "a" %> <span lang="<%= @application_form.region.country.code %>"><%= @application_form.region.country.teaching_authority_certificate.presence || "certificate" %></span>.
+      This is called <%= region_certificate_phrase(@application_form.region) %>.
     </p>
 
     <div class="govuk-inset-text">If this document is not written in English, you’ll also need to upload a translation.</div>
