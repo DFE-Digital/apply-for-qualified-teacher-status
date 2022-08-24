@@ -1,14 +1,15 @@
-<% content_for :page_title, "Application forms" %>
+<% content_for :page_title, "Application" %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full-from-desktop"> 
+  <div class="govuk-grid-column-full-from-desktop">
     <h1 class="govuk-heading-xl">Application</h1>
   </div>
 </div>
+
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full-from-desktop"> 
+  <div class="govuk-grid-column-full-from-desktop">
     <div class="govuk-body">
-      <%= @application_form.given_names%> <%= @application_form.family_name %>
+      <%= render(ApplicationFormOverviewComponent.new(@application_form)) %>
     </div>
   </div>
 </div>
