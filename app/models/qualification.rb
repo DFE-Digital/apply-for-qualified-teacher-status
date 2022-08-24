@@ -92,7 +92,7 @@ class Qualification < ApplicationRecord
   end
 
   def institution_country_location
-    Country::LOCATIONS_BY_COUNTRY_CODE[institution_country_code]
+    CountryCode.to_location(institution_country_code)
   end
 
   def certificate_document

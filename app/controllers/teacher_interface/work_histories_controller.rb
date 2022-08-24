@@ -135,7 +135,9 @@ module TeacherInterface
           :still_employed
         )
         .tap do |params|
-          params[:country_code] = params[:country_code].split(":").last
+          params[:country_code] = CountryCode.from_location(
+            params[:country_code]
+          )
         end
     end
   end

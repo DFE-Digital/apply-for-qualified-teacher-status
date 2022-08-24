@@ -25,17 +25,12 @@ class Country < ApplicationRecord
   LOCATION_AUTOCOMPLETE_CANONICAL_LIST =
     JSON.parse(File.read("public/location-autocomplete-canonical-list.json"))
 
-  COUNTRIES =
-    LOCATION_AUTOCOMPLETE_CANONICAL_LIST
-      .map { |row| [row.last.split(":").last, row.first] }
-      .to_h
+  CODES =
+    LOCATION_AUTOCOMPLETE_CANONICAL_LIST.map do |row|
+      CountryCode.from_location(row.last)
+    end
 
-  LOCATIONS_BY_COUNTRY_CODE =
-    LOCATION_AUTOCOMPLETE_CANONICAL_LIST
-      .map { |row| [row.last.split(":").last, row.last] }
-      .to_h
-
-  validates :code, inclusion: { in: COUNTRIES.keys }
+  validates :code, inclusion: { in: CODES }
 
   alias_method :country, :itself
 end
