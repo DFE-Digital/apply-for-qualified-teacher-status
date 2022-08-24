@@ -27,12 +27,7 @@ class Country < ApplicationRecord
 
   COUNTRIES =
     LOCATION_AUTOCOMPLETE_CANONICAL_LIST
-      .map { |row| [row.last.split(":").last, row.first] }
-      .to_h
-
-  LOCATIONS_BY_COUNTRY_CODE =
-    LOCATION_AUTOCOMPLETE_CANONICAL_LIST
-      .map { |row| [row.last.split(":").last, row.last] }
+      .map { |row| [CountryCode.from_location(row.last), row.first] }
       .to_h
 
   validates :code, inclusion: { in: COUNTRIES.keys }

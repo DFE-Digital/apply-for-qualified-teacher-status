@@ -58,7 +58,7 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def location
-    Country::LOCATIONS_BY_COUNTRY_CODE[country_code]
+    CountryCode.to_location(country_code)
   end
 
   def ineligible_reasons

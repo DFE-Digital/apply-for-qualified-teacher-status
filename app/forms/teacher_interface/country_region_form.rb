@@ -34,8 +34,6 @@ class TeacherInterface::CountryRegionForm
   private
 
   def country_code
-    location.split(":")[1]
-  rescue StandardError
-    nil
+    CountryCode.from_location(location)
   end
 end

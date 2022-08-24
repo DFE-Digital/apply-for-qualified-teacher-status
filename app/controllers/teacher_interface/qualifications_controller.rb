@@ -150,9 +150,9 @@ module TeacherInterface
           :certificate_date
         )
         .tap do |params|
-          params[:institution_country_code] = params[
-            :institution_country_code
-          ].split(":").last
+          params[:institution_country_code] = CountryCode.from_location(
+            params[:institution_country_code]
+          )
         end
     end
 
