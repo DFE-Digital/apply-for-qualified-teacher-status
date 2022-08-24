@@ -70,14 +70,20 @@ en:
       current_or_most_recent_role: Your current or most recent role
       previous_role: Previous role
     summary:
+      name: Name
       country: Country trained in
       region: State/territory trained in
       created_at: Created on
       days_remaining_sla: Days remaining in SLA
       assignee: Assigned to
       reviewer: Reviewer
+      reference: Reference
       status: Status
       notes: Notes
+    overview:
+      title: Overview
+      application_history: Application history
+      view_timeline: View timeline of this applications actions
 
   document:
     document_type:

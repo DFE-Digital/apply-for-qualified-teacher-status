@@ -11,6 +11,7 @@ RSpec.describe ApplicationFormHelper do
     create(
       :application_form,
       region:,
+      reference: "0000001",
       created_at: Date.new(2020, 1, 1),
       given_names: "Given",
       family_name: "Family"
@@ -24,18 +25,35 @@ RSpec.describe ApplicationFormHelper do
   end
 
   describe "#application_form_summary_rows" do
-    subject(:summary_rows) { application_form_summary_rows(application_form) }
+    subject(:summary_rows) do
+      application_form_summary_rows(
+        application_form,
+        include_name: true,
+        include_reference: true,
+        include_notes: true
+      )
+    end
 
     it do
       is_expected.to eq(
         [
           {
             key: {
+              text: "Name"
+            },
+            value: {
+              text: "Given Family"
+            },
+            actions: []
+          },
+          {
+            key: {
               text: "Country trained in"
             },
             value: {
               text: "United States"
-            }
+            },
+            actions: []
           },
           {
             key: {
@@ -43,19 +61,54 @@ RSpec.describe ApplicationFormHelper do
             },
             value: {
               text: "Region"
-            }
+            },
+            actions: []
           },
-          { key: { text: "Created on" }, value: { text: " 1 January 2020" } },
+          {
+            key: {
+              text: "Created on"
+            },
+            value: {
+              text: " 1 January 2020"
+            },
+            actions: []
+          },
           {
             key: {
               text: "Days remaining in SLA"
             },
             value: {
               text: "Not implemented"
-            }
+            },
+            actions: []
           },
-          { key: { text: "Assigned to" }, value: { text: "Not implemented" } },
-          { key: { text: "Reviewer" }, value: { text: "Not implemented" } },
+          {
+            key: {
+              text: "Assigned to"
+            },
+            value: {
+              text: "Not implemented"
+            },
+            actions: [{ href: "#" }]
+          },
+          {
+            key: {
+              text: "Reviewer"
+            },
+            value: {
+              text: "Not implemented"
+            },
+            actions: [{ href: "#" }]
+          },
+          {
+            key: {
+              text: "Reference"
+            },
+            value: {
+              text: "0000001"
+            },
+            actions: []
+          },
           {
             key: {
               text: "Status"
@@ -63,9 +116,18 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text:
                 "<strong class=\"govuk-tag govuk-tag--blue\">Not implemented</strong>"
-            }
+            },
+            actions: []
           },
-          { key: { text: "Notes" }, value: { text: "Not implemented" } }
+          {
+            key: {
+              text: "Notes"
+            },
+            value: {
+              text: "Not implemented"
+            },
+            actions: []
+          }
         ]
       )
     end

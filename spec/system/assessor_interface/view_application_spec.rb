@@ -28,6 +28,7 @@ RSpec.describe "viewing an application", type: :system do
     expect(page).to have_content(
       "#{application_form.given_names} #{application_form.family_name}"
     )
+    expect(page).to have_content(application_form.reference)
   end
 
   def application_form
