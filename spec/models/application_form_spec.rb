@@ -14,6 +14,7 @@
 #  has_work_history        :boolean
 #  reference               :string(31)       not null
 #  registration_number     :text
+#  state                   :string
 #  status                  :string           default("active"), not null
 #  subjects                :text             default([]), not null, is an Array
 #  created_at              :datetime         not null
