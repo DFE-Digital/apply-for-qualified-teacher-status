@@ -69,6 +69,15 @@ en:
     work_history:
       current_or_most_recent_role: Your current or most recent role
       previous_role: Previous role
+    summary:
+      country: Country trained in
+      region: State/territory trained in
+      created_at: Created on
+      days_remaining_sla: Days remaining in SLA
+      assignee: Assigned to
+      reviewer: Reviewer
+      status: Status
+      notes: Notes
 
   document:
     document_type:

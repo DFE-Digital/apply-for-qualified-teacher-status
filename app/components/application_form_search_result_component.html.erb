@@ -1,0 +1,10 @@
+<li class="app-search-results__item">
+  <h2 class="app-search-result__item-title">
+    <%= govuk_link_to full_name, href %>
+  </h2>
+
+  <%= render(DescriptionListComponent.new(
+    rows: summary_rows,
+    classes: ["app-description-list--search-result"]
+  )) %>
+</li>

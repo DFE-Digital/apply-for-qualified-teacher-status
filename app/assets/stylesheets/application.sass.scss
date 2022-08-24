@@ -5,11 +5,13 @@ $govuk-assets-path: "/";
 @import "govuk-frontend/govuk/all";
 @import "location-autocomplete.min";
 
+@import "_application_forms";
+@import "_description_list";
 @import "_environments";
+@import "_search_results";
 @import "_summary_list_card";
 @import "_support";
 @import "_task_list";
-@import "_applications";
 
 ul.autocomplete__menu {
   li {

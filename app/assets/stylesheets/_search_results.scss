@@ -1,0 +1,22 @@
+.app-search-results {
+  @include govuk-responsive-padding(4, "top");
+  margin: 0;
+  padding-left: 0;
+  border-top: 1px solid $govuk-border-colour;
+}
+
+.app-search-results__item {
+  @include govuk-responsive-margin(4, "bottom");
+  border-bottom: 1px solid $govuk-border-colour;
+  display: block;
+}
+
+.app-search-result__item-title {
+  @include govuk-font($size: 24, $weight: bold);
+  @include govuk-responsive-margin(4, "bottom");
+  margin-top: 0;
+
+  a {
+    text-decoration: none;
+  }
+}
