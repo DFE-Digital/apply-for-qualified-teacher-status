@@ -10,9 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_24_163503) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_24_172503) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -206,6 +208,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_24_163503) do
     t.index ["email"], name: "index_teachers_on_email", unique: true
   end
 
+  create_table "timeline_events", force: :cascade do |t|
+    t.string "event_type", null: false
+    t.bigint "application_form_id"
+    t.string "annotation"
+    t.integer "staff_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
+  end
+
   create_table "uploads", force: :cascade do |t|
     t.bigint "document_id", null: false
     t.boolean "translation", null: false
@@ -237,6 +249,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_24_163503) do
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "qualifications", "application_forms"
   add_foreign_key "regions", "countries"
+  add_foreign_key "timeline_events", "application_forms"
   add_foreign_key "uploads", "documents"
   add_foreign_key "work_histories", "application_forms"
 end
