@@ -13,7 +13,12 @@ class ApplicationFormSearchResultComponent < ViewComponent::Base
   end
 
   def summary_rows
-    application_form_summary_rows(application_form)
+    application_form_summary_rows(
+      application_form,
+      include_name: false,
+      include_reference: false,
+      include_notes: true
+    )
   end
 
   private
