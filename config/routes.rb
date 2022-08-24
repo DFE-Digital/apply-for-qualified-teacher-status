@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   namespace :assessor_interface, path: "/assessor" do
     root to: redirect("/assessor/application_forms")
 
-    resources :application_forms, only: %i[index]
+    resources :application_forms, only: %i[index show]
   end
 
   namespace :eligibility_interface, path: "/eligibility" do
