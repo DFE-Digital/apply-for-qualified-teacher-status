@@ -19,7 +19,7 @@
 #
 FactoryBot.define do
   factory :country do
-    sequence :code, Country::COUNTRIES.keys.cycle
+    sequence :code, Country::CODES.cycle
 
     trait :with_national_region do
       after(:create) do |country, _evaluator|

@@ -1,7 +1,7 @@
 class CountryName
   class << self
     def from_code(code, with_definite_article: false)
-      name = Country::COUNTRIES.fetch(code, "")
+      name = NAMES_BY_COUNTRY_CODE.fetch(code, "")
       return name unless with_definite_article
       COUNTRIES_WITH_DEFINITE_ARTICLE.include?(code) ? "the #{name}" : name
     end
@@ -22,6 +22,11 @@ class CountryName
         from_code(eligibility_check.country_code, with_definite_article:)
       end
     end
+
+    NAMES_BY_COUNTRY_CODE =
+      Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST
+        .map { |row| [CountryCode.from_location(row.last), row.first] }
+        .to_h
 
     COUNTRIES_WITH_DEFINITE_ARTICLE =
       YAML.load(File.read("lib/countries-with-definite-article.yaml"))
