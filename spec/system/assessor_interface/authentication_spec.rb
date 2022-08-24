@@ -7,7 +7,7 @@ RSpec.describe "Assessor authentication", type: :system do
     given_the_service_is_open
     given_staff_exist
 
-    when_i_visit_the_sign_in_page
+    when_i_visit_the_assessor_page
     then_i_see_the_sign_in_form
 
     when_i_fill_in_the_sign_in_form
@@ -24,8 +24,8 @@ RSpec.describe "Assessor authentication", type: :system do
     create(:staff, :confirmed, email: "staff@example.com", password: "password")
   end
 
-  def when_i_visit_the_sign_in_page
-    visit new_staff_session_path
+  def when_i_visit_the_assessor_page
+    visit assessor_interface_root_path
   end
 
   def when_i_fill_in_the_sign_in_form
