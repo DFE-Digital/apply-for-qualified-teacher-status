@@ -52,6 +52,7 @@ class ApplicationFormState
       #store the current state string on the application_form so as we can easily filter?
       application_form.update!(state: to) # should we just set it rather than saving the application_form?
       ApplicationFormStateChange.create!(application_form:, state: to)
+      TimelineEvent.create!(event_type: TimelineEvent::STATE_CHANGED, annotation: to.to_s)
     end
 
     current #reload the state_changes and return
