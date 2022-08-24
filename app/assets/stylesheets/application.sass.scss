@@ -5,6 +5,7 @@ $govuk-assets-path: "/";
 @import "govuk-frontend/govuk/all";
 @import "location-autocomplete.min";
 
+@import "_description_list";
 @import "_environments";
 @import "_summary_list_card";
 @import "_support";

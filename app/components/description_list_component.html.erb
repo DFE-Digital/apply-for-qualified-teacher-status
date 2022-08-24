@@ -1,0 +1,6 @@
+<dl class="<%= classes.join(" ") %>">
+  <%- rows.each do |row| %>
+    <dt class="app-description-list__label"><%= row.fetch(:key).fetch(:text) %></dt>
+    <dd><%= row.fetch(:value).fetch(:text) %></dd>
+  <% end %>
+</dl>
