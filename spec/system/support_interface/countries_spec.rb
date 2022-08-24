@@ -17,8 +17,8 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
-    when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_other
+    when_i_fill_teaching_authority_certificate
     when_i_fill_regions
     and_i_save
     then_i_see_country_contact_preview
@@ -37,6 +37,7 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
     when_i_fill_teaching_authority_other
+    when_i_fill_teaching_authority_certificate
     and_i_save_and_preview
     then_i_see_the_preview
     and_i_see_a_success_banner
@@ -160,14 +161,16 @@ RSpec.describe "Countries support", type: :system do
     fill_in "country-teaching-authority-websites-string-field", with: "Website"
   end
 
-  def when_i_fill_teaching_authority_certificate
-    fill_in "country-teaching-authority-certificate-field", with: "Certificate"
-  end
-
   def when_i_fill_teaching_authority_other
     fill_in "region-teaching-authority-other-field", with: "Other"
   rescue Capybara::ElementNotFound
     fill_in "country-teaching-authority-other-field", with: "Other"
+  end
+
+  def when_i_fill_teaching_authority_certificate
+    fill_in "region-teaching-authority-certificate-field", with: "Certificate"
+  rescue Capybara::ElementNotFound
+    fill_in "country-teaching-authority-certificate-field", with: "Certificate"
   end
 
   def and_i_save

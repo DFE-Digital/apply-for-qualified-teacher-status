@@ -75,7 +75,7 @@
 
       <% if region.status_check_written? || region.sanction_check_written? %>
         <p class="govuk-body">
-          You’ll need to provide <%= region.country.teaching_authority_certificate.indefinite_article || "a" %> <span lang="<%= region.country.code %>"><%= region.country.teaching_authority_certificate.presence || "certificate" %></span>, which you can obtain by contacting:
+          You’ll need to provide <%= region_certificate_phrase(region) %>, which you can obtain by contacting:
         </p>
 
         <%= render "shared/teaching_authority_contact_information", region: %>
