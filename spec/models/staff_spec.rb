@@ -56,5 +56,7 @@ RSpec.describe Staff, type: :model do
     end
 
     it { is_expected.to validate_presence_of(:password).allow_nil }
+
+    it { is_expected.to validate_presence_of(:name) }
   end
 end
