@@ -152,6 +152,7 @@
     - creator_type
     - created_at
     - updated_at
+    - assignee_id
   :uploads:
     - id
     - document_id
