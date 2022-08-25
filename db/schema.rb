@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_25_124404) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_25_130606) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,7 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_25_124404) do
 
   create_table "application_forms", force: :cascade do |t|
     t.string "reference", limit: 31, null: false
-    t.string "status", default: "active", null: false
     t.bigint "teacher_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -62,11 +61,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_25_124404) do
     t.text "subjects", default: [], null: false, array: true
     t.bigint "assessor_id"
     t.bigint "reviewer_id"
+    t.string "state", default: "draft", null: false
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["reference"], name: "index_application_forms_on_reference", unique: true
     t.index ["region_id"], name: "index_application_forms_on_region_id"
     t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
-    t.index ["status"], name: "index_application_forms_on_status"
+    t.index ["state"], name: "index_application_forms_on_state"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
   end
 

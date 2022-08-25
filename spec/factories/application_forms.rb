@@ -14,7 +14,7 @@
 #  has_work_history        :boolean
 #  reference               :string(31)       not null
 #  registration_number     :text
-#  status                  :string           default("active"), not null
+#  state                   :string           default("draft"), not null
 #  subjects                :text             default([]), not null, is an Array
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
@@ -29,7 +29,7 @@
 #  index_application_forms_on_reference    (reference) UNIQUE
 #  index_application_forms_on_region_id    (region_id)
 #  index_application_forms_on_reviewer_id  (reviewer_id)
-#  index_application_forms_on_status       (status)
+#  index_application_forms_on_state        (state)
 #  index_application_forms_on_teacher_id   (teacher_id)
 #
 # Foreign Keys
@@ -42,12 +42,12 @@
 FactoryBot.define do
   factory :application_form do
     sequence(:reference) { |n| n.to_s.rjust(7, "0") }
-    status { "active" }
+    state { "draft" }
     association :teacher
     association :region, :national
 
     trait :submitted do
-      status { "submitted" }
+      state { "submitted" }
     end
 
     trait :with_age_range do
