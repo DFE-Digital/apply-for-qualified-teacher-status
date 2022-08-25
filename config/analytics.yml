@@ -130,6 +130,7 @@
     - invited_by_type
     - invited_by_id
     - invitations_count
+    - name
   :teachers:
     - id
     - email
