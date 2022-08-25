@@ -6,14 +6,26 @@ RSpec.describe "Teaching authority contact information", type: :view do
   subject { rendered }
 
   context "with a region with teaching authority" do
-    let(:region) { create(:region, :with_teaching_authority) }
+    let(:region) do
+      create(
+        :region,
+        :with_teaching_authority,
+        teaching_authority_address: "1 Street, Region, Country"
+      )
+    end
 
     it { is_expected.to_not include('<p class="govuk-body">or</p>') }
     it { is_expected.to include(region.teaching_authority_address) }
   end
 
   context "with a country with teaching authority" do
-    let(:country) { create(:country, :with_teaching_authority) }
+    let(:country) do
+      create(
+        :country,
+        :with_teaching_authority,
+        teaching_authority_address: "1 Street, Country"
+      )
+    end
     let(:region) { create(:region, country:) }
 
     it { is_expected.to_not include('<p class="govuk-body">or</p>') }
@@ -21,8 +33,21 @@ RSpec.describe "Teaching authority contact information", type: :view do
   end
 
   context "with a country and a region with teaching authority" do
-    let(:country) { create(:country, :with_teaching_authority) }
-    let(:region) { create(:region, :with_teaching_authority, country:) }
+    let(:country) do
+      create(
+        :country,
+        :with_teaching_authority,
+        teaching_authority_address: "1 Street, Country"
+      )
+    end
+    let(:region) do
+      create(
+        :region,
+        :with_teaching_authority,
+        teaching_authority_address: "1 Street, Region, Country",
+        country:
+      )
+    end
 
     it { is_expected.to include('<p class="govuk-body">or</p>') }
     it { is_expected.to include(region.teaching_authority_address) }
