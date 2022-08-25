@@ -18,19 +18,25 @@
 #  subjects                :text             default([]), not null, is an Array
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
+#  assessor_id             :bigint
 #  region_id               :bigint           not null
+#  reviewer_id             :bigint
 #  teacher_id              :bigint           not null
 #
 # Indexes
 #
-#  index_application_forms_on_reference   (reference) UNIQUE
-#  index_application_forms_on_region_id   (region_id)
-#  index_application_forms_on_status      (status)
-#  index_application_forms_on_teacher_id  (teacher_id)
+#  index_application_forms_on_assessor_id  (assessor_id)
+#  index_application_forms_on_reference    (reference) UNIQUE
+#  index_application_forms_on_region_id    (region_id)
+#  index_application_forms_on_reviewer_id  (reviewer_id)
+#  index_application_forms_on_status       (status)
+#  index_application_forms_on_teacher_id   (teacher_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (assessor_id => staff.id)
 #  fk_rails_...  (region_id => regions.id)
+#  fk_rails_...  (reviewer_id => staff.id)
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 require "rails_helper"

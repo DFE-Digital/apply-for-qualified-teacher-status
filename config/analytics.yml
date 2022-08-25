@@ -40,6 +40,8 @@
     - registration_number
     - has_work_history
     - subjects
+    - assessor_id
+    - reviewer_id
   :countries:
     - id
     - code

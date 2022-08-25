@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_24_172503) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_25_094810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,8 +60,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_24_172503) do
     t.text "registration_number"
     t.boolean "has_work_history"
     t.text "subjects", default: [], null: false, array: true
+    t.bigint "assessor_id"
+    t.bigint "reviewer_id"
+    t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["reference"], name: "index_application_forms_on_reference", unique: true
     t.index ["region_id"], name: "index_application_forms_on_region_id"
+    t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
     t.index ["status"], name: "index_application_forms_on_status"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
   end
@@ -233,6 +237,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_24_172503) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "application_forms", "regions"
+  add_foreign_key "application_forms", "staff", column: "assessor_id"
+  add_foreign_key "application_forms", "staff", column: "reviewer_id"
   add_foreign_key "application_forms", "teachers"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "qualifications", "application_forms"

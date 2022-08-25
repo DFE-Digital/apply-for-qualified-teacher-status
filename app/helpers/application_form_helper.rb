@@ -32,7 +32,7 @@ module ApplicationFormHelper
         "Not implemented"
       ],
       [
-        I18n.t("application_form.summary.assignee"),
+        I18n.t("application_form.summary.assessor"),
         "Not implemented",
         [{ href: "#" }]
       ],
