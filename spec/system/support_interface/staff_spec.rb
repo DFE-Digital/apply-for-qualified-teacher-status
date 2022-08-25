@@ -12,6 +12,7 @@ RSpec.describe "Staff support", type: :system do
     then_i_see_the_staff_invitation_form
 
     when_i_fill_email_address
+    and_i_fill_name
     and_i_send_invitation
     then_i_see_an_invitation_email
     then_i_see_the_staff_index
@@ -79,6 +80,10 @@ RSpec.describe "Staff support", type: :system do
   def then_i_see_the_accepted_staff_user
     expect(page).to have_content("test@example.com")
     expect(page).to have_content("ACCEPTED")
+  end
+
+  def and_i_fill_name
+    fill_in "staff-name-field", with: "Name"
   end
 
   def and_i_fill_password

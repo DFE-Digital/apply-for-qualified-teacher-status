@@ -7,5 +7,7 @@
     <%= f.govuk_text_field field, label: { text: field.to_s.humanize } %>
   <% end -%>
 
+  <%= f.govuk_text_field :name %>
+
   <%= f.govuk_submit t("devise.invitations.new.submit_button") %>
 <% end %>
