@@ -21,6 +21,7 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string
 #  locked_at              :datetime
+#  name                   :text             default(""), not null
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -51,6 +52,8 @@ class Staff < ApplicationRecord
          :validatable,
          :lockable,
          :invitable
+
+  validates :name, presence: true
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

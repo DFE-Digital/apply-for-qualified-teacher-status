@@ -7,17 +7,22 @@
 </p>
 
 <% @staff.find_each do |staff| %>
-  <h2 class="govuk-heading-m"><%= staff.email %></h2>
+  <h2 class="govuk-heading-m"><%= staff.name %></h2>
 
   <%= govuk_summary_list do |summary_list|
     summary_list.row do |row|
-      row.key { 'Created at' }
+      row.key { "Email address" }
+      row.value { staff.email }
+    end
+
+    summary_list.row do |row|
+      row.key { "Created at" }
       row.value { staff.created_at.to_s }
     end
 
     if staff.created_by_invite?
       summary_list.row do |row|
-        row.key { 'Invitation status' }
+        row.key { "Invitation status" }
 
         row.value do
           if staff.invitation_accepted?
@@ -29,13 +34,13 @@
       end
 
       summary_list.row do |row|
-        row.key { 'Invited at' }
+        row.key { "Invited at" }
         row.value { staff.invitation_sent_at.to_s }
       end
     end
 
     summary_list.row do |row|
-      row.key { 'Last signed in at' }
+      row.key { "Last signed in at" }
       row.value { staff.last_sign_in_at.to_s }
     end
   end %>

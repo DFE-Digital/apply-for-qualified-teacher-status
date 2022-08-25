@@ -33,13 +33,13 @@ module ApplicationFormHelper
       ],
       [
         I18n.t("application_form.summary.assessor"),
-        application_form.assessor&.email ||
+        application_form.assessor&.name ||
           I18n.t("application_form.summary.unassigned"),
         [{ href: "#" }]
       ],
       [
         I18n.t("application_form.summary.reviewer"),
-        application_form.reviewer&.email ||
+        application_form.reviewer&.name ||
           I18n.t("application_form.summary.unassigned"),
         [{ href: "#" }]
       ],

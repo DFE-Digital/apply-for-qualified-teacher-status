@@ -29,6 +29,7 @@
     - unconfirmed_email
     - current_sign_in_ip
     - last_sign_in_ip
+    - name
   :teachers:
     - email
     - unconfirmed_email
