@@ -141,6 +141,15 @@
     - last_sign_in_at
     - current_sign_in_ip
     - last_sign_in_ip
+  :timeline_events:
+    - id
+    - event_type
+    - application_form_id
+    - annotation
+    - creator_id
+    - creator_type
+    - created_at
+    - updated_at
   :uploads:
     - id
     - document_id
