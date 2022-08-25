@@ -18,19 +18,25 @@
 #  subjects                :text             default([]), not null, is an Array
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
+#  assessor_id             :bigint
 #  region_id               :bigint           not null
+#  reviewer_id             :bigint
 #  teacher_id              :bigint           not null
 #
 # Indexes
 #
-#  index_application_forms_on_reference   (reference) UNIQUE
-#  index_application_forms_on_region_id   (region_id)
-#  index_application_forms_on_status      (status)
-#  index_application_forms_on_teacher_id  (teacher_id)
+#  index_application_forms_on_assessor_id  (assessor_id)
+#  index_application_forms_on_reference    (reference) UNIQUE
+#  index_application_forms_on_region_id    (region_id)
+#  index_application_forms_on_reviewer_id  (reviewer_id)
+#  index_application_forms_on_status       (status)
+#  index_application_forms_on_teacher_id   (teacher_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (assessor_id => staff.id)
 #  fk_rails_...  (region_id => regions.id)
+#  fk_rails_...  (reviewer_id => staff.id)
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class ApplicationForm < ApplicationRecord
@@ -44,6 +50,10 @@ class ApplicationForm < ApplicationRecord
 
   before_validation :assign_reference
   validates :reference, presence: true, uniqueness: true, length: 3..31
+
+  belongs_to :assessor, class_name: "Staff", optional: true
+  belongs_to :reviewer, class_name: "Staff", optional: true
+  validate :assessor_and_reviewer_must_be_different
 
   enum status: { active: "active", submitted: "submitted" }
 
@@ -164,6 +174,13 @@ class ApplicationForm < ApplicationRecord
     documents.build(document_type: :identification)
     documents.build(document_type: :name_change)
     documents.build(document_type: :written_statement)
+  end
+
+  def assessor_and_reviewer_must_be_different
+    if assessor_id.present? && reviewer_id.present? &&
+         assessor_id == reviewer_id
+      errors.add(:reviewer, :same_as_assessor)
+    end
   end
 
   def task_item_status(key)

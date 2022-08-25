@@ -32,13 +32,15 @@ module ApplicationFormHelper
         "Not implemented"
       ],
       [
-        I18n.t("application_form.summary.assignee"),
-        "Not implemented",
+        I18n.t("application_form.summary.assessor"),
+        application_form.assessor&.email ||
+          I18n.t("application_form.summary.unassigned"),
         [{ href: "#" }]
       ],
       [
         I18n.t("application_form.summary.reviewer"),
-        "Not implemented",
+        application_form.reviewer&.email ||
+          I18n.t("application_form.summary.unassigned"),
         [{ href: "#" }]
       ],
       (

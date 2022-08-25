@@ -75,9 +75,10 @@ en:
       region: State/territory trained in
       created_at: Created on
       days_remaining_sla: Days remaining in SLA
-      assignee: Assigned to
+      assessor: Assigned to
       reviewer: Reviewer
       reference: Reference
+      unassigned: Unassigned
       status: Status
       notes: Notes
     overview:
@@ -158,6 +159,10 @@ en:
           attributes:
             email:
               blank: Enter your email address
+        application_form:
+          attributes:
+            reviewer:
+              same_as_assessor: can’t be assigned to the same person
 
   errors:
     messages:
