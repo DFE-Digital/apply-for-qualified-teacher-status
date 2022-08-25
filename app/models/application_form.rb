@@ -14,7 +14,7 @@
 #  has_work_history        :boolean
 #  reference               :string(31)       not null
 #  registration_number     :text
-#  status                  :string           default("active"), not null
+#  state                   :string           default("draft"), not null
 #  subjects                :text             default([]), not null, is an Array
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
@@ -29,7 +29,7 @@
 #  index_application_forms_on_reference    (reference) UNIQUE
 #  index_application_forms_on_region_id    (region_id)
 #  index_application_forms_on_reviewer_id  (reviewer_id)
-#  index_application_forms_on_status       (status)
+#  index_application_forms_on_state        (state)
 #  index_application_forms_on_teacher_id   (teacher_id)
 #
 # Foreign Keys
@@ -55,7 +55,12 @@ class ApplicationForm < ApplicationRecord
   belongs_to :reviewer, class_name: "Staff", optional: true
   validate :assessor_and_reviewer_must_be_different
 
-  enum status: { active: "active", submitted: "submitted" }
+  enum state: {
+         draft: "draft",
+         submitted: "submitted",
+         awarded: "awarded",
+         declined: "declined"
+       }
 
   def assign_reference
     return if reference.present?
