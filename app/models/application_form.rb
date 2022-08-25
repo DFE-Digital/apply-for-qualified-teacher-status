@@ -51,6 +51,10 @@ class ApplicationForm < ApplicationRecord
   before_validation :assign_reference
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
+  belongs_to :assessor, class_name: "Staff", optional: true
+  belongs_to :reviewer, class_name: "Staff", optional: true
+  validate :assessor_and_reviewer_must_be_different
+
   enum status: { active: "active", submitted: "submitted" }
 
   def assign_reference
@@ -170,6 +174,13 @@ class ApplicationForm < ApplicationRecord
     documents.build(document_type: :identification)
     documents.build(document_type: :name_change)
     documents.build(document_type: :written_statement)
+  end
+
+  def assessor_and_reviewer_must_be_different
+    if assessor_id.present? && reviewer_id.present? &&
+         assessor_id == reviewer_id
+      errors.add(:reviewer, :same_as_assessor)
+    end
   end
 
   def task_item_status(key)

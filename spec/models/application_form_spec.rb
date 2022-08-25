@@ -68,6 +68,17 @@ RSpec.describe ApplicationForm, type: :model do
         submitted: "submitted"
       ).backed_by_column_of_type(:string)
     end
+
+    context "with the same assessor and reviewer" do
+      let(:staff) { create(:staff) }
+
+      before do
+        application_form.assessor = staff
+        application_form.reviewer = staff
+      end
+
+      it { is_expected.to_not be_valid }
+    end
   end
 
   it "attaches empty documents" do

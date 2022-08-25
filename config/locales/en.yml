@@ -158,6 +158,10 @@ en:
           attributes:
             email:
               blank: Enter your email address
+        application_form:
+          attributes:
+            reviewer:
+              same_as_assessor: can’t be assigned to the same person
 
   errors:
     messages:
