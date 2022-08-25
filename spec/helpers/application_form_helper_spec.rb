@@ -87,7 +87,7 @@ RSpec.describe ApplicationFormHelper do
               text: "Assigned to"
             },
             value: {
-              text: "Not implemented"
+              text: "Unassigned"
             },
             actions: [{ href: "#" }]
           },
@@ -96,7 +96,7 @@ RSpec.describe ApplicationFormHelper do
               text: "Reviewer"
             },
             value: {
-              text: "Not implemented"
+              text: "Unassigned"
             },
             actions: [{ href: "#" }]
           },

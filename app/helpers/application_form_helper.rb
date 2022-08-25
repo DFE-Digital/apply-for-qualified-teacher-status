@@ -33,12 +33,14 @@ module ApplicationFormHelper
       ],
       [
         I18n.t("application_form.summary.assessor"),
-        "Not implemented",
+        application_form.assessor&.email ||
+          I18n.t("application_form.summary.unassigned"),
         [{ href: "#" }]
       ],
       [
         I18n.t("application_form.summary.reviewer"),
-        "Not implemented",
+        application_form.reviewer&.email ||
+          I18n.t("application_form.summary.unassigned"),
         [{ href: "#" }]
       ],
       (
