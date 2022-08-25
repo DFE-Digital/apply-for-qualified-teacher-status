@@ -26,5 +26,12 @@ RSpec.describe TimelineEvent do
 
   describe "validations" do
     it { is_expected.to be_valid }
+
+    it do
+      is_expected.to define_enum_for(:event_type).with_values(
+        assessor_assigned: "assessor_assigned",
+        reviewer_assigned: "reviewer_assigned"
+      ).backed_by_column_of_type(:string)
+    end
   end
 end

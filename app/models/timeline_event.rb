@@ -25,5 +25,9 @@ class TimelineEvent < ApplicationRecord
   belongs_to :application_form
   belongs_to :creator, polymorphic: true, optional: true
 
-  enum event_type: { assessor_assigned: "assessor_assigned" }
+  enum event_type: {
+         assessor_assigned: "assessor_assigned",
+         reviewer_assigned: "reviewer_assigned"
+       }
+  validates :event_type, inclusion: { in: event_types.values }
 end
