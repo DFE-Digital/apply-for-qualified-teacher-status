@@ -13,7 +13,7 @@
   width: 100%;
 }
 .autocomplete__input {
-  background-color: transparent;
+  background-color: white;
   position: relative;
 }
 .autocomplete__hint {
