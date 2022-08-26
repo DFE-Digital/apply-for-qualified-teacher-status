@@ -14,6 +14,18 @@ namespace :example_data do
     Faker::Config.locale = "en-GB"
     Faker::UniqueGenerator.clear
 
+    [
+      { name: "Dave Assessor", email: "assessor-dave@example.com" },
+      { name: "Beryl Assessor", email: "assessor-beryl@example.com" }
+    ].each do |assessor|
+      FactoryBot.create(
+        :staff,
+        :confirmed,
+        name: assessor[:name],
+        email: assessor[:email]
+      )
+    end
+
     Country.all.each do |country|
       country.regions.each do |region|
         application_form_traits_for(region).each do |traits|
