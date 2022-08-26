@@ -14,13 +14,20 @@
         <%= f.govuk_submit "Apply filters" do %>
           <%= govuk_link_to "Clear selection"%>
         <%- end -%>
-
-        <%= f.govuk_text_field :name, label: { text: "Applicant name" }, value: params[:name] %>
-
+        
+        <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { text: "Assessor" } do %>
+          <%- @assessors.each do |assessor| -%>
+            <%= f.govuk_check_box :assessor_ids, assessor.id, label: { text: assessor.name }, checked: params[:assessor_ids]&.include?(assessor.id.to_s) %>
+          <%- end -%>
+        <%- end -%>
+        
         <%= f.govuk_select :location,
                            options_for_select(locations, params[:location]),
                            label: { text: "Country" },
                            options: { include_blank: true } %>
+                         
+
+        <%= f.govuk_text_field :name, label: { text: "Applicant name" }, value: params[:name] %>
       <%- end -%>
     </div>
 

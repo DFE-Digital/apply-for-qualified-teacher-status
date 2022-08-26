@@ -1,3 +1,3 @@
 module Filters
-  ALL = [Name, Country].freeze
+  ALL = [Name, Assessor, Country].freeze
 end
