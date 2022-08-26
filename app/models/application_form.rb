@@ -62,6 +62,8 @@ class ApplicationForm < ApplicationRecord
          declined: "declined"
        }
 
+  scope :active, -> { not_draft }
+
   def assign_reference
     return if reference.present?
 
