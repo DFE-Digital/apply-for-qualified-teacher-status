@@ -44,7 +44,7 @@
 #
 FactoryBot.define do
   factory :staff do
-    email { "test@example.org" }
+    sequence(:email) { |n| "test#{n}@example.org" }
     password { "example" }
     name { Faker::Name.name }
 
