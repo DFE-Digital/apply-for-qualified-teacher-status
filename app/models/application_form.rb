@@ -26,6 +26,8 @@
 # Indexes
 #
 #  index_application_forms_on_assessor_id  (assessor_id)
+#  index_application_forms_on_family_name  (family_name)
+#  index_application_forms_on_given_names  (given_names)
 #  index_application_forms_on_reference    (reference) UNIQUE
 #  index_application_forms_on_region_id    (region_id)
 #  index_application_forms_on_reviewer_id  (reviewer_id)
@@ -61,6 +63,8 @@ class ApplicationForm < ApplicationRecord
          awarded: "awarded",
          declined: "declined"
        }
+
+  scope :active, -> { not_draft }
 
   def assign_reference
     return if reference.present?

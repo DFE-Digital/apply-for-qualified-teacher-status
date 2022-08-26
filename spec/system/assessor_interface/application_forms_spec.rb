@@ -36,6 +36,6 @@ RSpec.describe "Assessor application forms", type: :system do
 
   def application_forms
     @application_forms ||=
-      create_list(:application_form, 3, :with_personal_information)
+      create_list(:application_form, 3, :with_personal_information, :submitted)
   end
 end

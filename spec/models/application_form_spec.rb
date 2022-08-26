@@ -26,6 +26,8 @@
 # Indexes
 #
 #  index_application_forms_on_assessor_id  (assessor_id)
+#  index_application_forms_on_family_name  (family_name)
+#  index_application_forms_on_given_names  (given_names)
 #  index_application_forms_on_reference    (reference) UNIQUE
 #  index_application_forms_on_region_id    (region_id)
 #  index_application_forms_on_reviewer_id  (reviewer_id)
@@ -80,6 +82,36 @@ RSpec.describe ApplicationForm, type: :model do
       end
 
       it { is_expected.to_not be_valid }
+    end
+  end
+
+  describe "scopes" do
+    describe ".active" do
+      subject { described_class.active }
+
+      context "draft" do
+        let!(:application_form) { create(:application_form, :draft) }
+
+        it { is_expected.to be_empty }
+      end
+
+      context "submitted" do
+        let!(:application_form) { create(:application_form, :submitted) }
+
+        it { is_expected.to eq([application_form]) }
+      end
+
+      context "awarded" do
+        let!(:application_form) { create(:application_form, :awarded) }
+
+        it { is_expected.to eq([application_form]) }
+      end
+
+      context "declined" do
+        let!(:application_form) { create(:application_form, :declined) }
+
+        it { is_expected.to eq([application_form]) }
+      end
     end
   end
 

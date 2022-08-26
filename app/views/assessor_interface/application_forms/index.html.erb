@@ -10,6 +10,12 @@
   <div class="govuk-grid-column-full-from-desktop">
     <div class="govuk-grid-column-one-third app-application-forms__filters">
       <h2 class="govuk-heading-m">Filters</h2>
+      <%= form_with method: :get, class: "app-application-forms__filter-form" do |f| %>
+        <%= f.govuk_submit "Apply filters" do %>
+          <%= govuk_link_to "Clear selection"%>
+        <%- end -%>
+        <%= f.govuk_text_field :name, label: { text: "Applicant name" }, value: params[:name] %>
+      <%- end -%>
     </div>
 
     <div class="govuk-grid-column-two-thirds">
