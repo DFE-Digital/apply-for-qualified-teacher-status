@@ -45,6 +45,17 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         expect(application_forms).to be_empty
       end
     end
+
+    context "with multiple application form" do
+      let(:application_form_1) do
+        create(:application_form, :submitted, created_at: Date.new(2020, 1, 1))
+      end
+      let(:application_form_2) do
+        create(:application_form, :submitted, created_at: Date.new(2020, 1, 2))
+      end
+
+      it { is_expected.to eq([application_form_2, application_form_1]) }
+    end
   end
 
   describe "#assessor_filter_options" do
