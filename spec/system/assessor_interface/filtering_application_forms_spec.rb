@@ -21,6 +21,10 @@ RSpec.describe "Filtering application forms", type: :system do
     when_i_clear_the_filters
     and_i_apply_the_assessor_filter
     then_i_see_a_list_of_applications_filtered_by_assessor
+
+    when_i_clear_the_filters
+    and_i_apply_the_state_filter
+    then_i_see_a_list_of_applications_filtered_by_state
   end
 
   private
@@ -68,6 +72,15 @@ RSpec.describe "Filtering application forms", type: :system do
     expect(page).to have_content("Arnold Drummond")
   end
 
+  def and_i_apply_the_state_filter
+    check "Awarded (1)", visible: false
+    click_button "Apply filters"
+  end
+
+  def then_i_see_a_list_of_applications_filtered_by_state
+    expect(page).to have_content("John Smith")
+  end
+
   def application_forms
     @application_forms ||= [
       create(
@@ -90,6 +103,12 @@ RSpec.describe "Filtering application forms", type: :system do
         given_names: "Arnold",
         family_name: "Drummond",
         assessor: assessors.first
+      ),
+      create(
+        :application_form,
+        :awarded,
+        given_names: "John",
+        family_name: "Smith"
       )
     ]
   end

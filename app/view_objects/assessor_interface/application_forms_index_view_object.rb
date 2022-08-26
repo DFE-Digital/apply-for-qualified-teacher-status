@@ -8,9 +8,10 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   def application_forms
-    ALL_FILTERS.reduce(ApplicationForm.active) do |scope, filter|
-      filter.apply(scope:, params:)
-    end
+    ::Filters::State.apply(
+      scope: application_forms_without_state_filter,
+      params:
+    )
   end
 
   def assessor_filter_options
@@ -32,13 +33,33 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     params[:name]
   end
 
+  def state_filter_options
+    counts = application_forms_without_state_filter.group(:state).count
+    states = %w[submitted awarded declined]
+
+    states.map do |state|
+      OpenStruct.new(
+        id: state,
+        label: "#{state.humanize} (#{counts.fetch(state, 0)})"
+      )
+    end
+  end
+
+  def state_filter_checked?(option)
+    params[:states]&.include?(option.id) || false
+  end
+
   private
 
-  ALL_FILTERS = [
-    ::Filters::Name,
-    ::Filters::Assessor,
-    ::Filters::Country
-  ].freeze
+  def application_forms_without_state_filter
+    @application_forms_without_state_filter ||=
+      begin
+        filters = [::Filters::Name, ::Filters::Assessor, ::Filters::Country]
+        filters.reduce(ApplicationForm.active) do |scope, filter|
+          filter.apply(scope:, params:)
+        end
+      end
+  end
 
   attr_reader :params
 end

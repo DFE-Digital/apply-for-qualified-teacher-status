@@ -27,6 +27,12 @@
                            options: { include_blank: true } %>
 
         <%= f.govuk_text_field :name, label: { text: "Applicant name" }, value: @view_object.name_filter_value %>
+
+        <%= f.govuk_check_boxes_fieldset :states, legend: { text: "Status of application" } do %>
+          <%- @view_object.state_filter_options.each do |option| -%>
+            <%= f.govuk_check_box :states, option.id, label: { text: option.label }, checked: @view_object.state_filter_checked?(option) %>
+          <%- end -%>
+        <%- end -%>
       <%- end -%>
     </div>
 

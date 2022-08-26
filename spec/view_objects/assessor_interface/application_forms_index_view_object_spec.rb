@@ -37,6 +37,13 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         )
         expect(application_forms).to be_empty
       end
+
+      it "filters on the state" do
+        expect_any_instance_of(Filters::State).to receive(:apply).and_return(
+          ApplicationForm.none
+        )
+        expect(application_forms).to be_empty
+      end
     end
   end
 
@@ -97,6 +104,54 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       let(:params) { { name: "abc" } }
 
       it { is_expected.to eq("abc") }
+    end
+  end
+
+  describe "#state_filter_options" do
+    subject(:state_filter_options) { view_object.state_filter_options }
+
+    it do
+      is_expected.to eq(
+        [
+          OpenStruct.new(id: "submitted", label: "Submitted (0)"),
+          OpenStruct.new(id: "awarded", label: "Awarded (0)"),
+          OpenStruct.new(id: "declined", label: "Declined (0)")
+        ]
+      )
+    end
+
+    context "with application forms" do
+      before do
+        create_list(:application_form, 2, :submitted)
+        create_list(:application_form, 3, :awarded)
+        create_list(:application_form, 4, :declined)
+      end
+
+      it do
+        is_expected.to eq(
+          [
+            OpenStruct.new(id: "submitted", label: "Submitted (2)"),
+            OpenStruct.new(id: "awarded", label: "Awarded (3)"),
+            OpenStruct.new(id: "declined", label: "Declined (4)")
+          ]
+        )
+      end
+    end
+  end
+
+  describe "#state_filter_checked?" do
+    subject(:state_filter_checked?) do
+      view_object.state_filter_checked?(option)
+    end
+
+    let(:option) { OpenStruct.new(id: "draft") }
+
+    it { is_expected.to be false }
+
+    context "when the filter is set" do
+      let(:params) { { states: %w[draft submitted] } }
+
+      it { is_expected.to be true }
     end
   end
 end
