@@ -48,10 +48,6 @@ FactoryBot.define do
     association :teacher
     association :region, :national
 
-    trait :submitted do
-      state { "submitted" }
-    end
-
     trait :with_age_range do
       age_range_min { Faker::Number.between(from: 5, to: 11) }
       age_range_max { Faker::Number.between(from: age_range_min, to: 18) }
