@@ -22,7 +22,9 @@ var loadCountryAutoComplete = () => {
     document.getElementById("qualification-institution-country-code-field") ??
     document.getElementById(
       "qualification-institution-country-code-field-error"
-    );
+    ) ??
+    document.getElementById("location-field") ??
+    document.getElementById("location-field-error");
 
   if (locationPicker) {
     openregisterLocationPicker({

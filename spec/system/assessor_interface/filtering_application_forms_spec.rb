@@ -10,8 +10,11 @@ RSpec.describe "Filtering application forms", type: :system do
     when_i_am_authorized_as_an_assessor_user
     when_i_visit_the_applications_page
 
-    and_i_apply_the_name_filter
+    when_i_apply_the_name_filter
     then_i_see_a_list_of_applications_filtered_by_name
+
+    when_i_apply_the_country_filter
+    then_i_see_a_list_of_applications_filtered_by_country
   end
 
   private
@@ -28,7 +31,8 @@ RSpec.describe "Filtering application forms", type: :system do
     visit assessor_interface_application_forms_path
   end
 
-  def and_i_apply_the_name_filter
+  def when_i_apply_the_name_filter
+    click_link "Clear selection"
     fill_in "Applicant name", with: "cher"
     click_button "Apply filters"
   end
@@ -37,13 +41,31 @@ RSpec.describe "Filtering application forms", type: :system do
     expect(page).to have_content("Cher Bert")
   end
 
+  def when_i_apply_the_country_filter
+    click_link "Clear selection"
+    fill_in "Country", with: "France"
+    click_button "Apply filters"
+  end
+
+  def then_i_see_a_list_of_applications_filtered_by_country
+    expect(page).to have_content("Emma Dubois")
+  end
+
   def application_forms
     @application_forms ||= [
       create(
         :application_form,
         :submitted,
+        region: create(:region, country: create(:country, code: "US")),
         given_names: "Cher",
         family_name: "Bert"
+      ),
+      create(
+        :application_form,
+        :submitted,
+        region: create(:region, country: create(:country, code: "FR")),
+        given_names: "Emma",
+        family_name: "Dubois"
       )
     ]
   end
