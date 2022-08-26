@@ -14,26 +14,25 @@
         <%= f.govuk_submit "Apply filters" do %>
           <%= govuk_link_to "Clear selection"%>
         <%- end -%>
-        
+
         <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { text: "Assessor" } do %>
-          <%- @assessors.each do |assessor| -%>
-            <%= f.govuk_check_box :assessor_ids, assessor.id, label: { text: assessor.name }, checked: params[:assessor_ids]&.include?(assessor.id.to_s) %>
+          <%- @view_object.assessor_filter_options.each do |option| -%>
+            <%= f.govuk_check_box :assessor_ids, option.id, label: { text: option.name }, checked: @view_object.assessor_filter_checked?(option) %>
           <%- end -%>
         <%- end -%>
-        
+
         <%= f.govuk_select :location,
-                           options_for_select(locations, params[:location]),
+                           @view_object.country_filter_options,
                            label: { text: "Country" },
                            options: { include_blank: true } %>
-                         
 
-        <%= f.govuk_text_field :name, label: { text: "Applicant name" }, value: params[:name] %>
+        <%= f.govuk_text_field :name, label: { text: "Applicant name" }, value: @view_object.name_filter_value %>
       <%- end -%>
     </div>
 
     <div class="govuk-grid-column-two-thirds">
       <ul class="app-search-results">
-        <%- @application_forms.each do |application_form| -%>
+        <%- @view_object.application_forms.each do |application_form| -%>
           <%= render(ApplicationFormSearchResultComponent.new(application_form)) %>
         <%- end -%>
       </ul>
