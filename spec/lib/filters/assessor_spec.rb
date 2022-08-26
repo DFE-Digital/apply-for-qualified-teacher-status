@@ -10,15 +10,30 @@ module Filters
     subject { described_class.apply(scope:, params:) }
 
     context "the params include assessor_id" do
-      let(:params) { { assessor_ids: assessor_one.id } }
-      let(:scope) { ApplicationForm.all }
+      describe "filtering 'assigned to'" do
+        let(:params) { { assessor_ids: assessor_one.id } }
+        let(:scope) { ApplicationForm.all }
 
-      let!(:included) { create(:application_form, assessor: assessor_one) }
+        let!(:included) { create(:application_form, assessor: assessor_one) }
 
-      let!(:filtered) { create(:application_form, assessor: assessor_two) }
+        let!(:filtered) { create(:application_form, assessor: assessor_two) }
 
-      it "returns a filtered scope" do
-        expect(subject).to eq([included])
+        it "returns a filtered scope" do
+          expect(subject).to eq([included])
+        end
+      end
+
+      describe "filtering 'reviewer'" do
+        let(:params) { { assessor_ids: assessor_one.id } }
+        let(:scope) { ApplicationForm.all }
+
+        let!(:included) { create(:application_form, reviewer: assessor_one) }
+
+        let!(:filtered) { create(:application_form, reviewer: assessor_two) }
+
+        it "returns a filtered scope" do
+          expect(subject).to eq([included])
+        end
       end
     end
 
