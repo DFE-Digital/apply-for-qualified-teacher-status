@@ -11,7 +11,7 @@ module Filters
     private
 
     def assessor_ids
-      Array(params[:assessor_ids])
+      Array(params[:assessor_ids]).reject(&:blank?)
     end
   end
 end

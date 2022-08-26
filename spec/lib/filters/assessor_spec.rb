@@ -43,6 +43,15 @@ module Filters
       end
     end
 
+    context "the params include a blank string" do
+      let(:params) { { assessor_ids: [""] } }
+      let(:scope) { double }
+
+      it "returns the original scope" do
+        expect(subject).to eq(scope)
+      end
+    end
+
     context "the params don't include :assessor_ids" do
       let(:params) { {} }
       let(:scope) { double }
