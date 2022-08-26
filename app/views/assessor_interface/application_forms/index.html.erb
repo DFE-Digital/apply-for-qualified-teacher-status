@@ -39,11 +39,17 @@
     </div>
 
     <div class="govuk-grid-column-two-thirds">
-      <ul class="app-search-results">
-        <%- @view_object.application_forms.each do |application_form| -%>
-          <%= render(ApplicationFormSearchResultComponent.new(application_form)) %>
-        <%- end -%>
-      </ul>
+      <% if @view_object.application_forms.any? %>
+        <ul class="app-search-results">
+          <%- @view_object.application_forms.each do |application_form| -%>
+            <%= render(ApplicationFormSearchResultComponent.new(application_form)) %>
+          <%- end -%>
+        </ul>
+      <% else %>
+        <h2 class="govuk-heading-m">
+          No applications found. Use the filters on the left to try again or refine your search.
+        </h2>
+      <% end %>
     </div>
   </div>
 </div>
