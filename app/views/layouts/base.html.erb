@@ -85,7 +85,7 @@
     <div class="govuk-width-container">
       <%= govuk_back_link(href: yield(:back_link_url)) unless yield(:back_link_url).blank? %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
-        <%= render(FlashMessageComponent.new(flash: flash)) %>
+        <%= render(FlashMessage::Component.new(flash: flash)) %>
         <%= content_for?(:content) ? yield(:content) : yield %>
       </main>
     </div>

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ApplicationFormOverviewComponent, type: :component do
+RSpec.describe ApplicationFormOverview::Component, type: :component do
   subject(:component) { render_inline(described_class.new(application_form)) }
 
   let(:application_form) { create(:application_form) }

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ApplicationFormSearchResultComponent, type: :component do
+RSpec.describe ApplicationFormSearchResult::Component, type: :component do
   subject(:component) { render_inline(described_class.new(application_form)) }
 
   let(:application_form) do

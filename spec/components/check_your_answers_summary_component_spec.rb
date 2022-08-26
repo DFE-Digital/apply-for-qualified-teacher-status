@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe CheckYourAnswersSummaryComponent, type: :component do
+RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   subject(:component) do
     render_inline(described_class.new(model:, title:, fields:, delete_link_to:))
   end

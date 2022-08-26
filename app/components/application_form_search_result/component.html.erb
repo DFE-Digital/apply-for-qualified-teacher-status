@@ -3,7 +3,7 @@
     <%= govuk_link_to full_name, href %>
   </h2>
 
-  <%= render(DescriptionListComponent.new(
+  <%= render(DescriptionList::Component.new(
     rows: summary_rows,
     classes: ["app-description-list--search-result"]
   )) %>

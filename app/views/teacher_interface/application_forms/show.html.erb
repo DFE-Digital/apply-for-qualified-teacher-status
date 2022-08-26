@@ -38,7 +38,7 @@
                             aria: { describedby: "#{item}-status" } %>
               </span>
 
-              <%= render(ApplicationFormStatusTagComponent.new(
+              <%= render(ApplicationFormStatusTag::Component.new(
                 key: item,
                 status: @application_form.task_statuses.dig(section, item)
               )) %>
