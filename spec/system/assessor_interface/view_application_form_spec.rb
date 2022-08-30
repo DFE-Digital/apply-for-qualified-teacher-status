@@ -32,6 +32,7 @@ RSpec.describe "Assessor view application form", type: :system do
   end
 
   def application_form
-    @application_form ||= create(:application_form, :with_personal_information)
+    @application_form ||=
+      create(:application_form, :submitted, :with_personal_information)
   end
 end

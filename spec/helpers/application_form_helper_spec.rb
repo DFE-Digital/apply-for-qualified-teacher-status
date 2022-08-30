@@ -10,9 +10,10 @@ RSpec.describe ApplicationFormHelper do
   let(:application_form) do
     create(
       :application_form,
+      :submitted,
       region:,
       reference: "0000001",
-      created_at: Date.new(2020, 1, 1),
+      submitted_at: Date.new(2020, 1, 1),
       given_names: "Given",
       family_name: "Family"
     )
