@@ -7,8 +7,21 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
   let(:params) { {} }
 
-  describe "#application_forms" do
-    subject(:application_forms) { view_object.application_forms }
+  describe "#application_forms_pagy" do
+    subject(:application_forms_pagy) { view_object.application_forms_pagy }
+
+    it { is_expected.to_not be_nil }
+
+    it "is configured correctly" do
+      expect(application_forms_pagy.items).to eq(20)
+      expect(application_forms_pagy.page).to eq(1)
+    end
+  end
+
+  describe "#application_forms_records" do
+    subject(:application_forms_records) do
+      view_object.application_forms_records
+    end
 
     it { is_expected.to be_empty }
 
@@ -17,36 +30,48 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       it { is_expected.to include(application_form) }
 
-      it "filters on the name" do
-        expect_any_instance_of(Filters::Name).to receive(:apply).and_return(
-          ApplicationForm.none
-        )
-        expect(application_forms).to be_empty
+      context "with a name filter" do
+        before do
+          expect_any_instance_of(Filters::Name).to receive(:apply).and_return(
+            ApplicationForm.none
+          )
+        end
+
+        it { is_expected.to be_empty }
       end
 
-      it "filters on the assessor" do
-        expect_any_instance_of(Filters::Assessor).to receive(:apply).and_return(
-          ApplicationForm.none
-        )
-        expect(application_forms).to be_empty
+      context "with an assessor filter" do
+        before do
+          expect_any_instance_of(Filters::Assessor).to receive(
+            :apply
+          ).and_return(ApplicationForm.none)
+        end
+
+        it { is_expected.to be_empty }
       end
 
-      it "filters on the country" do
-        expect_any_instance_of(Filters::Country).to receive(:apply).and_return(
-          ApplicationForm.none
-        )
-        expect(application_forms).to be_empty
+      context "with a country filter" do
+        before do
+          expect_any_instance_of(Filters::Country).to receive(
+            :apply
+          ).and_return(ApplicationForm.none)
+        end
+
+        it { is_expected.to be_empty }
       end
 
-      it "filters on the state" do
-        expect_any_instance_of(Filters::State).to receive(:apply).and_return(
-          ApplicationForm.none
-        )
-        expect(application_forms).to be_empty
+      context "with a state filter" do
+        before do
+          expect_any_instance_of(Filters::State).to receive(:apply).and_return(
+            ApplicationForm.none
+          )
+        end
+
+        it { is_expected.to be_empty }
       end
     end
 
-    context "with multiple application form" do
+    context "with multiple application forms" do
       let(:application_form_1) do
         create(:application_form, :submitted, created_at: Date.new(2020, 1, 1))
       end
@@ -55,6 +80,14 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       end
 
       it { is_expected.to eq([application_form_2, application_form_1]) }
+    end
+
+    context "with lots of application forms" do
+      before { create_list(:application_form, 25, :submitted) }
+
+      it "limits to 20 results" do
+        expect(application_forms_records.length).to eq(20)
+      end
     end
   end
 
