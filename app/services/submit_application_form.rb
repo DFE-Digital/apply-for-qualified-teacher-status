@@ -9,6 +9,7 @@ class SubmitApplicationForm
     return if application_form.submitted?
 
     application_form.subjects.compact_blank!
+    application_form.submitted_at = Time.zone.now
     application_form.submitted!
 
     TeacherMailer
