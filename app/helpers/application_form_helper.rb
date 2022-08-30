@@ -54,9 +54,10 @@ module ApplicationFormHelper
       [
         I18n.t("application_form.summary.status"),
         render(
-          GovukComponent::TagComponent.new(
-            text: "Not implemented",
-            colour: "blue"
+          ApplicationFormStatusTag::Component.new(
+            key: "application-form-#{application_form.id}",
+            status: application_form.state,
+            class_context: "app-search-result__item"
           )
         )
       ],
