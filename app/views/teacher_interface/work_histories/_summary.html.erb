@@ -1,4 +1,4 @@
-<%= render(CheckYourAnswersSummaryComponent.new(
+<%= render(CheckYourAnswersSummary::Component.new(
   model: application_form,
   title: I18n.t("application_form.tasks.items.work_history"),
   fields: {
@@ -10,7 +10,7 @@
 )) %>
 
 <% work_histories.each do |work_history| %>
-  <%= render(CheckYourAnswersSummaryComponent.new(
+  <%= render(CheckYourAnswersSummary::Component.new(
     model: work_history,
     title: I18n.t(work_history.current_or_most_recent_role? ? "application_form.work_history.current_or_most_recent_role" : "application_form.work_history.previous_role"),
     fields: {

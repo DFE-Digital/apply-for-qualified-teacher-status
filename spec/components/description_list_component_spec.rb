@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DescriptionListComponent, type: :component do
+RSpec.describe DescriptionList::Component, type: :component do
   subject(:component) { render_inline(described_class.new(rows:)) }
 
   let(:rows) do

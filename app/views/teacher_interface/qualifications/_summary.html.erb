@@ -1,5 +1,5 @@
 <% qualifications.each do |qualification| %>
-  <%= render(CheckYourAnswersSummaryComponent.new(
+  <%= render(CheckYourAnswersSummary::Component.new(
     model: qualification,
     title: I18n.t("application_form.qualifications.heading.title.#{qualification.locale_key}"),
     fields: {

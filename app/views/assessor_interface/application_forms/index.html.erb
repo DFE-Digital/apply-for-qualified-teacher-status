@@ -42,7 +42,7 @@
       <% if @view_object.application_forms.any? %>
         <ul class="app-search-results">
           <%- @view_object.application_forms.each do |application_form| -%>
-            <%= render(ApplicationFormSearchResultComponent.new(application_form)) %>
+            <%= render(ApplicationFormSearchResult::Component.new(application_form)) %>
           <%- end -%>
         </ul>
       <% else %>
