@@ -84,6 +84,18 @@ RSpec.describe ApplicationForm, type: :model do
 
       it { is_expected.to_not be_valid }
     end
+
+    context "when submitted" do
+      before { application_form.state = "submitted" }
+
+      it { is_expected.to_not be_valid }
+
+      context "with submitted_at" do
+        before { application_form.submitted_at = Time.zone.now }
+
+        it { is_expected.to be_valid }
+      end
+    end
   end
 
   describe "scopes" do

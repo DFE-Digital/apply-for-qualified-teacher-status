@@ -58,6 +58,8 @@ class ApplicationForm < ApplicationRecord
   belongs_to :reviewer, class_name: "Staff", optional: true
   validate :assessor_and_reviewer_must_be_different
 
+  validates :submitted_at, presence: true, unless: :draft?
+
   enum state: {
          draft: "draft",
          submitted: "submitted",
