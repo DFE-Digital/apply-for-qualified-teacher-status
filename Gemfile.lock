@@ -487,6 +487,7 @@ DEPENDENCIES
   jsbundling-rails
   mail-notify
   okcomputer
+  pagy
   pg
   prettier_print
   propshaft

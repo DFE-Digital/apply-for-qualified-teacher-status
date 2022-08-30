@@ -2,17 +2,18 @@
 
 class AssessorInterface::ApplicationFormsIndexViewObject
   include ActionView::Helpers::FormOptionsHelper
+  include Pagy::Backend
 
   def initialize(params:)
     @params = params
   end
 
-  def application_forms
-    @application_forms ||=
-      ::Filters::State.apply(
-        scope: application_forms_without_state_filter,
-        params:
-      ).order(created_at: :desc)
+  def application_forms_pagy
+    application_forms_with_pagy.first
+  end
+
+  def application_forms_records
+    application_forms_with_pagy.last
   end
 
   def assessor_filter_options
@@ -51,6 +52,16 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   private
+
+  def application_forms_with_pagy
+    @application_forms_with_pagy ||=
+      pagy(
+        ::Filters::State.apply(
+          scope: application_forms_without_state_filter,
+          params:
+        ).order(created_at: :desc)
+      )
+  end
 
   def application_forms_without_state_filter
     @application_forms_without_state_filter ||=
