@@ -3,15 +3,24 @@
 require "rails_helper"
 
 RSpec.describe ApplicationFormStatusTag::Component, type: :component do
-  subject(:component) { render_inline(described_class.new(key:, status:)) }
+  subject(:component) do
+    render_inline(described_class.new(key:, status:, class_context:))
+  end
 
   let(:key) { "key" }
   let(:status) { :status }
+  let(:class_context) { "app-task-list" }
 
   describe "text" do
     subject(:text) { component.text.strip }
 
     it { is_expected.to eq("Status") }
+
+    context "submitted" do
+      let(:status) { :submitted }
+
+      it { is_expected.to eq("New") }
+    end
   end
 
   describe "id" do
@@ -39,6 +48,48 @@ RSpec.describe ApplicationFormStatusTag::Component, type: :component do
       let(:status) { :completed }
 
       it { is_expected.to eq("govuk-tag app-task-list__tag") }
+    end
+
+    context "with an 'initial_assessment' status" do
+      let(:status) { :initial_assessment }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--blue app-task-list__tag") }
+    end
+
+    context "with an 'request_further_information' status" do
+      let(:status) { :request_further_information }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--yellow app-task-list__tag") }
+    end
+
+    context "with an 'received_further_information' status" do
+      let(:status) { :received_further_information }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--purple app-task-list__tag") }
+    end
+
+    context "with an 'awarded' status" do
+      let(:status) { :awarded }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--green app-task-list__tag") }
+    end
+
+    context "with an 'declined' status" do
+      let(:status) { :declined }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--red app-task-list__tag") }
+    end
+
+    context "with an 'draft' status" do
+      let(:status) { :draft }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--grey app-task-list__tag") }
+    end
+
+    context "with an 'submitted' status" do
+      let(:status) { :submitted }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--grey app-task-list__tag") }
     end
   end
 end
