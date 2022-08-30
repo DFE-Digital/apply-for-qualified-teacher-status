@@ -5,7 +5,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   include Pagy::Backend
 
   def initialize(params:)
-    @params = params
+    @params = remove_cleared_autocomplete_values(params)
   end
 
   def application_forms_pagy
@@ -71,6 +71,15 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           filter.apply(scope:, params:)
         end
       end
+  end
+
+  def remove_cleared_autocomplete_values(params)
+    if params.include?(:location_autocomplete) &&
+         params[:location_autocomplete].blank?
+      params.except(:location)
+    else
+      params
+    end
   end
 
   attr_reader :params
