@@ -18,9 +18,7 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
   describe "heading link" do
     subject(:href) { component.at_css("h2 > a")["href"] }
 
-    it do
-      is_expected.to eq("/assessor/application_forms/#{application_form.id}")
-    end
+    it { is_expected.to eq("/assessor/applications/#{application_form.id}") }
   end
 
   describe "description list" do
