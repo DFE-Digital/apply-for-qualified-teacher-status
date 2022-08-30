@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "viewing an application", type: :system do
+RSpec.describe "Assessor view application form", type: :system do
   it "displays the application overview" do
     given_the_service_is_staff_http_basic_auth
     given_there_is_an_application_form

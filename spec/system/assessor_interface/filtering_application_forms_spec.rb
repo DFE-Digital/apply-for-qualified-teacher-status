@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Filtering application forms", type: :system do
+RSpec.describe "Assessor filtering application forms", type: :system do
   it "applies the filters" do
     given_the_service_is_staff_http_basic_auth
     given_there_are_application_forms
