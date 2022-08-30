@@ -30,6 +30,7 @@ var loadCountryAutoComplete = () => {
     openregisterLocationPicker({
       selectElement: locationPicker,
       url: "/autocomplete_locations.json",
+      name: "location_autocomplete",
     });
   }
 };

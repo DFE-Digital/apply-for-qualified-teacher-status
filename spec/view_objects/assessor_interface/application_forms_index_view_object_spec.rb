@@ -129,6 +129,28 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
 
     context "when the filter is set" do
+      let(:params) do
+        { location: "country:US", location_autocomplete: "United States" }
+      end
+
+      it do
+        is_expected.to include(
+          '<option selected="selected" value="country:US">United States</option>'
+        )
+      end
+    end
+
+    context "when the autocomplete input is cleared" do
+      let(:params) { { location: "country:US", location_autocomplete: "" } }
+
+      it do
+        is_expected.to include(
+          '<option value="country:US">United States</option>'
+        )
+      end
+    end
+
+    context "when the autocomplete input isn't being used" do
       let(:params) { { location: "country:US" } }
 
       it do
