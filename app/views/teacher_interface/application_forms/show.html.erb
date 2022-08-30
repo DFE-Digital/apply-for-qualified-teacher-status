@@ -40,7 +40,8 @@
 
               <%= render(ApplicationFormStatusTag::Component.new(
                 key: item,
-                status: @application_form.task_statuses.dig(section, item)
+                status: @application_form.task_statuses.dig(section, item),
+                class_context: "app-task-list"
               )) %>
             </li>
           <% end %>

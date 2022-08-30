@@ -21,3 +21,7 @@ Style/BlockDelimiters:
 Style/MethodCalledOnDoEndBlock:
   Exclude:
     - app/models/feature_flag.rb
+
+Layout/LineLength:
+  Exclude:
+    - spec/helpers/application_form_helper_spec.rb
