@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe ApplicationFormSearchResult::Component, type: :component do
-  subject(:component) { render_inline(described_class.new(application_form)) }
+  subject(:component) do
+    render_inline(described_class.new(application_form:, search_params:))
+  end
 
   let(:application_form) do
     create(
@@ -13,6 +15,8 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
       family_name: "Family"
     )
   end
+
+  let(:search_params) { {} }
 
   describe "heading text" do
     subject(:text) { component.at_css("h2").text.strip }
@@ -24,6 +28,16 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
     subject(:href) { component.at_css("h2 > a")["href"] }
 
     it { is_expected.to eq("/assessor/applications/#{application_form.id}") }
+
+    context "with search params" do
+      let(:search_params) { { states: %w[awarded] } }
+
+      it do
+        is_expected.to eq(
+          "/assessor/applications/#{application_form.id}?search%5Bstates%5D%5B%5D=awarded"
+        )
+      end
+    end
   end
 
   describe "description list" do
