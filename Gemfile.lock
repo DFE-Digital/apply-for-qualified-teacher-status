@@ -419,6 +419,11 @@ GEM
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
+    site_prism (3.7.3)
+      addressable (~> 2.6)
+      capybara (~> 3.15)
+      site_prism-all_there (>= 0.3.1, < 1.0)
+    site_prism-all_there (0.3.2)
     sitemap_generator (6.3.0)
       builder (~> 3.0)
     strscan (3.0.4)
@@ -503,6 +508,7 @@ DEPENDENCIES
   sentry-ruby
   shoulda-matchers (~> 5.1)
   sidekiq
+  site_prism
   sitemap_generator
   syntax_tree
   syntax_tree-haml
