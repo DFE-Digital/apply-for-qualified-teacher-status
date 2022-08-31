@@ -116,7 +116,7 @@ RSpec.describe ApplicationFormHelper do
             },
             value: {
               text:
-                "<strong class=\"govuk-tag govuk-tag--grey app-search-result__item__tag\" id=\"application-form-#{application_form.id}-status\">Draft</strong>\n"
+                "<strong class=\"govuk-tag govuk-tag--grey app-search-result__item__tag\" id=\"application-form-#{application_form.id}-status\">New</strong>\n"
             },
             actions: []
           },
