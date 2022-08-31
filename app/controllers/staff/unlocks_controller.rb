@@ -1,5 +1,5 @@
 class Staff::UnlocksController < Devise::UnlocksController
-  include StaffCurrentNamespace
+  include AssessorCurrentNamespace
 
   layout "two_thirds"
 

@@ -1,5 +1,5 @@
 class Staff::InvitationsController < Devise::InvitationsController
-  include StaffCurrentNamespace
+  include AssessorCurrentNamespace
 
   layout "two_thirds"
 

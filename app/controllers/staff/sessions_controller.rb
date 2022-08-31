@@ -1,5 +1,5 @@
 class Staff::SessionsController < Devise::SessionsController
-  include StaffCurrentNamespace
+  include AssessorCurrentNamespace
 
   layout "two_thirds"
 

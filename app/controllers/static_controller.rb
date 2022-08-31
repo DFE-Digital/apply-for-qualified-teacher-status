@@ -1,7 +1,5 @@
 class StaticController < ApplicationController
-  layout "two_thirds"
+  include EligibilityCurrentNamespace
 
-  def current_namespace
-    "static"
-  end
+  layout "two_thirds"
 end

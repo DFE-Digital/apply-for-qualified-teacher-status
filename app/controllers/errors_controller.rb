@@ -1,4 +1,6 @@
 class ErrorsController < ApplicationController
+  include EligibilityCurrentNamespace
+
   skip_before_action :verify_authenticity_token
 
   def not_found
@@ -15,9 +17,5 @@ class ErrorsController < ApplicationController
 
   def internal_server_error
     render "internal_server_error", status: :internal_server_error
-  end
-
-  def current_namespace
-    "errors"
   end
 end

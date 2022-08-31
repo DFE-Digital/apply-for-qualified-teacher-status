@@ -1,9 +1,5 @@
-module AssessorInterface
-  class BaseController < ApplicationController
-    before_action :authenticate_staff!
+class AssessorInterface::BaseController < ApplicationController
+  include AssessorCurrentNamespace
 
-    def current_namespace
-      "assessor"
-    end
-  end
+  before_action :authenticate_staff!
 end
