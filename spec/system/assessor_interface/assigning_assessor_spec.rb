@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe "assgining an assesor", type: :system do
+RSpec.describe "assgining an assessor", type: :system do
   it "assigns an assessor" do
-    given_the_service_is_staff_http_basic_auth
-    when_i_am_authorized_as_an_assessor_user
+    given_the_service_is_open
+    given_i_am_authorized_as_an_assessor_user(assessor)
     given_there_is_an_application_form
     given_an_assessor_exists
 
@@ -16,10 +16,6 @@ RSpec.describe "assgining an assesor", type: :system do
 
   private
 
-  def given_the_service_is_staff_http_basic_auth
-    FeatureFlag.activate(:staff_http_basic_auth)
-  end
-
   def given_there_is_an_application_form
     application_form
   end
@@ -29,7 +25,9 @@ RSpec.describe "assgining an assesor", type: :system do
   end
 
   def when_i_visit_the_assign_assessor_page
-    visit assessor_interface_application_form_assign_assessor_path(application_form)
+    visit assessor_interface_application_form_assign_assessor_path(
+            application_form
+          )
   end
 
   def and_i_select_an_assessor
@@ -42,7 +40,8 @@ RSpec.describe "assgining an assesor", type: :system do
   end
 
   def application_form
-    @application_form ||= create(:application_form, :with_personal_information, :submitted)
+    @application_form ||=
+      create(:application_form, :with_personal_information, :submitted)
   end
 
   def assessor

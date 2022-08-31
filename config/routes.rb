@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
     resources :application_forms, path: "/applications", only: %i[index show] do
       get "assign-assessor", to: "assessor_assignments#new"
-      patch "assign-assessor", to: "assessor_assignments#update"
+      post "assign-assessor", to: "assessor_assignments#create"
     end
   end
 

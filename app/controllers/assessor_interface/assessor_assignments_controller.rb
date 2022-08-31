@@ -1,12 +1,26 @@
 module AssessorInterface
   class AssessorAssignmentsController < BaseController
     def new
-      application_form
+      @assessor_assignment_form =
+        AssessorAssignmentForm.new(
+          assessor_id: application_form.assessor_id,
+          application_form:
+        )
     end
 
-    def update
-      application_form.update!(assessor_id: assessor_params[:assessor_id])
-      redirect_to assessor_interface_application_form_path(application_form)
+    def create
+      @assessor_assignment_form =
+        AssessorAssignmentForm.new(
+          assessor_id: assessor_params[:assessor_id],
+          application_form:,
+          assigning_user_id: current_staff.id
+        )
+
+      if @assessor_assignment_form.save!
+        redirect_to assessor_interface_application_form_path(application_form)
+      else
+        render :new
+      end
     end
 
     private
@@ -16,7 +30,9 @@ module AssessorInterface
     end
 
     def assessor_params
-      params.require(:application_form).permit(:assessor_id)
+      params.require(:assessor_interface_assessor_assignment_form).permit(
+        :assessor_id
+      )
     end
   end
 end
