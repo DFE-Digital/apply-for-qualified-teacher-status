@@ -1,0 +1,15 @@
+<h1 class="govuk-heading-l">
+  Select an assessor
+</h1>
+
+<%= form_for @application_form, url: assessor_interface_application_form_assign_assessor_path(@application_form) do |form| %>
+    <%= form.govuk_collection_radio_buttons :assessor_id,
+      Staff.all,
+      :id,
+      :name,
+      legend: nil
+    %>
+    <%= form.govuk_submit "Continue" %>
+
+<%- end -%>
+
