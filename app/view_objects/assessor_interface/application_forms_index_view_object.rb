@@ -51,6 +51,17 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     params[:states]&.include?(option.id) || false
   end
 
+  def search_params
+    params.permit(
+      :assessor_ids,
+      :location,
+      :location_autocomplete,
+      :name,
+      :states,
+      :page
+    )
+  end
+
   private
 
   def application_forms_with_pagy
