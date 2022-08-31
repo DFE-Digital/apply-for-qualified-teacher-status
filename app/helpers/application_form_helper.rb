@@ -24,8 +24,8 @@ module ApplicationFormHelper
       ],
       [I18n.t("application_form.summary.region"), application_form.region.name],
       [
-        I18n.t("application_form.summary.created_at"),
-        application_form.created_at.strftime("%e %B %Y")
+        I18n.t("application_form.summary.submitted_at"),
+        application_form.submitted_at.strftime("%e %B %Y")
       ],
       [
         I18n.t("application_form.summary.days_remaining_sla"),

@@ -6,7 +6,12 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
   subject(:component) { render_inline(described_class.new(application_form)) }
 
   let(:application_form) do
-    create(:application_form, given_names: "Given", family_name: "Family")
+    create(
+      :application_form,
+      :submitted,
+      given_names: "Given",
+      family_name: "Family"
+    )
   end
 
   describe "heading text" do

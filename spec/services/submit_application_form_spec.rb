@@ -31,6 +31,18 @@ RSpec.describe SubmitApplicationForm do
     end
   end
 
+  describe "setting submitted at date" do
+    subject(:submitted_at) { application_form.submitted_at }
+
+    it { is_expected.to be_nil }
+
+    context "when calling the service" do
+      before { travel_to(Date.new(2020, 1, 1)) { call } }
+
+      it { is_expected.to eq(Date.new(2020, 1, 1)) }
+    end
+  end
+
   describe "sending application received email" do
     it "queues an email job" do
       expect { call }.to have_enqueued_mail(

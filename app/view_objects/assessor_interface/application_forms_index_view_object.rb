@@ -59,7 +59,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
         ::Filters::State.apply(
           scope: application_forms_without_state_filter,
           params:
-        ).order(created_at: :desc)
+        ).order(:submitted_at)
       )
   end
 

@@ -16,6 +16,7 @@
 #  registration_number     :text
 #  state                   :string           default("draft"), not null
 #  subjects                :text             default([]), not null, is an Array
+#  submitted_at            :datetime
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  assessor_id             :bigint
@@ -56,6 +57,8 @@ class ApplicationForm < ApplicationRecord
   belongs_to :assessor, class_name: "Staff", optional: true
   belongs_to :reviewer, class_name: "Staff", optional: true
   validate :assessor_and_reviewer_must_be_different
+
+  validates :submitted_at, presence: true, unless: :draft?
 
   enum state: {
          draft: "draft",

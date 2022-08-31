@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe ApplicationFormOverview::Component, type: :component do
   subject(:component) { render_inline(described_class.new(application_form)) }
 
-  let(:application_form) { create(:application_form) }
+  let(:application_form) { create(:application_form, :submitted) }
 
   describe "heading" do
     subject(:text) { component.at_css("h2").text.strip }

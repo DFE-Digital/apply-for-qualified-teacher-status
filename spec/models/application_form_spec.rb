@@ -16,6 +16,7 @@
 #  registration_number     :text
 #  state                   :string           default("draft"), not null
 #  subjects                :text             default([]), not null, is an Array
+#  submitted_at            :datetime
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  assessor_id             :bigint
@@ -82,6 +83,18 @@ RSpec.describe ApplicationForm, type: :model do
       end
 
       it { is_expected.to_not be_valid }
+    end
+
+    context "when submitted" do
+      before { application_form.state = "submitted" }
+
+      it { is_expected.to_not be_valid }
+
+      context "with submitted_at" do
+        before { application_form.submitted_at = Time.zone.now }
+
+        it { is_expected.to be_valid }
+      end
     end
   end
 

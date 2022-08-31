@@ -69,6 +69,6 @@ RSpec.describe "Assessor listing application forms", type: :system do
         25,
         :with_personal_information,
         :submitted
-      ).sort_by(&:created_at).reverse
+      ).sort_by(&:submitted_at)
   end
 end

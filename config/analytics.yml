@@ -42,6 +42,7 @@
     - subjects
     - assessor_id
     - reviewer_id
+    - submitted_at
   :countries:
     - id
     - code

@@ -16,6 +16,7 @@
 #  registration_number     :text
 #  state                   :string           default("draft"), not null
 #  subjects                :text             default([]), not null, is an Array
+#  submitted_at            :datetime
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  assessor_id             :bigint
@@ -47,6 +48,21 @@ FactoryBot.define do
     state { "draft" }
     association :teacher
     association :region, :national
+
+    trait :submitted do
+      state { "submitted" }
+      submitted_at { Time.zone.now }
+    end
+
+    trait :awarded do
+      state { "awarded" }
+      submitted_at { Time.zone.now }
+    end
+
+    trait :declined do
+      state { "declined" }
+      submitted_at { Time.zone.now }
+    end
 
     trait :with_age_range do
       age_range_min { Faker::Number.between(from: 5, to: 11) }
