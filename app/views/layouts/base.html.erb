@@ -28,46 +28,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= govuk_header(homepage_url: "https://www.gov.uk", service_name: t(current_namespace, scope: %i[service name]), classes: "app-header--#{HostingEnvironment.name}") do |header| %>
-      <% case try(:current_namespace) %>
-      <% when "support" %>
-        <% header.navigation_item(
-          text: "Features",
-          href: support_interface_features_path,
-          active: current_page?(support_interface_features_path)
-        ) %>
-        <% header.navigation_item(
-          text: "Countries",
-          href: support_interface_countries_path,
-          active: request.path.start_with?("/support/countries") || request.path.start_with?("/support/regions")
-        ) %>
-        <% header.navigation_item(
-          text: "Staff",
-          href: support_interface_staff_index_path,
-          active: request.path.start_with?("/support/staff")
-        ) %>
-        <% header.navigation_item(
-          text: "Sidekiq",
-          href: support_interface_sidekiq_web_path
-        ) %>
-        <% header.navigation_item(
-          text: "Assessor case management",
-          href: assessor_interface_root_path
-        ) %>
-      <% when "teacher" %>
-        <% if current_teacher %>
-          <% header.navigation_item(text: "Sign out", href: destroy_teacher_session_path) %>
-        <% end %>
-      <% when "assessor" %>
-        <% header.navigation_item(
-          text: "Support console",
-          href: support_interface_root_path
-        ) %>
-        <% if current_staff %>
-          <% header.navigation_item(text: "Sign out", href: destroy_staff_session_path) %>
-        <% end %>
-      <% end %>
-    <% end %>
+    <%= render partial: "shared/header" %>
 
     <div class="govuk-width-container">
       <div class="govuk-phase-banner">
