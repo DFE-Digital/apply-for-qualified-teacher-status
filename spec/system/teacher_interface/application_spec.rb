@@ -625,7 +625,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_new_application_page
-    expect(page).to have_current_path("/teacher/application_form/new")
+    expect(page).to have_current_path("/teacher/application/new")
     expect(page).to have_title(
       "In which country are you currently recognised as a teacher?"
     )
@@ -635,7 +635,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_active_application_page
-    expect(page).to have_current_path("/teacher/application_form")
+    expect(page).to have_current_path("/teacher/application")
     expect(page).to have_title("Apply for qualified teacher status (QTS)")
     expect(page).to have_content("Apply for qualified teacher status (QTS)")
 
@@ -935,7 +935,7 @@ RSpec.describe "Teacher application", type: :system do
   def then_i_see_the_submitted_application_page
     application_form = ApplicationForm.last
 
-    expect(page).to have_current_path("/teacher/application_form")
+    expect(page).to have_current_path("/teacher/application")
     expect(page).to have_title("Apply for qualified teacher status (QTS)")
     expect(page).to have_content("Apply for qualified teacher status (QTS)")
     expect(page).to have_content("Application complete")

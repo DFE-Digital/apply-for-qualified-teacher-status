@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   end
 
   namespace :assessor_interface, path: "/assessor" do
-    root to: redirect("/assessor/application_forms")
+    root to: redirect("/assessor/applications")
 
-    resources :application_forms, only: %i[index show]
+    resources :application_forms, path: "/applications", only: %i[index show]
   end
 
   namespace :eligibility_interface, path: "/eligibility" do
@@ -75,9 +75,9 @@ Rails.application.routes.draw do
              }
 
   namespace :teacher_interface, path: "/teacher" do
-    root to: redirect("/teacher/application_form")
+    root to: redirect("/teacher/application")
 
-    resource :application_form, except: %i[destroy] do
+    resource :application_form, path: "/application", except: %i[destroy] do
       resource :personal_information,
                controller: :personal_information,
                only: %i[show] do
