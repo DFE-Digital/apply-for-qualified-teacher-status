@@ -5,13 +5,13 @@
 Cookies are small files saved on your phone, tablet or computer when you visit
 a website.
 
-We use cookies to make the <%= t('service.name') %> service work and
+We use cookies to make the <%= t(current_namespace, scope: %i[service name]) %> service work and
 collect information about how you use our service.
 
 ## Essential cookies
 
 Essential cookies keep your information secure while you use the <%=
-t('service.name') %> service. We do not need to ask permission to use them.
+t(current_namespace, scope: %i[service name]) %> service. We do not need to ask permission to use them.
 
 <table class="govuk-table">
   <caption class="govuk-visually-hidden">Essential cookies</caption>

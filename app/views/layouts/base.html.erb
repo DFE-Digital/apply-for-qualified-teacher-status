@@ -2,7 +2,7 @@
 <html lang="en" class="govuk-template">
   <head>
     <meta charset="utf-8">
-    <title><%= [yield(:page_title).presence, t('service.name')].compact.join(' - ') %></title>
+    <title><%= [yield(:page_title).presence, t(current_namespace, scope: %i[service name])].compact.join(' - ') %></title>
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -28,7 +28,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= govuk_header(homepage_url: "https://www.gov.uk", service_name: t('service.name'), classes: "app-header--#{HostingEnvironment.name}") do |header| %>
+    <%= govuk_header(homepage_url: "https://www.gov.uk", service_name: t(current_namespace, scope: %i[service name]), classes: "app-header--#{HostingEnvironment.name}") do |header| %>
       <% case try(:current_namespace) %>
       <% when "support" %>
         <% header.navigation_item(

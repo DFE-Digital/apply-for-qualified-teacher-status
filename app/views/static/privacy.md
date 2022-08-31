@@ -4,7 +4,7 @@
 
 ## Who we are
 
-The <%= t('service.name') %> service is run by the [Teaching Regulation Agency
+The <%= t(current_namespace, scope: %i[service name]) %> service is run by the [Teaching Regulation Agency
 (TRA)](https://www.gov.uk/government/organisations/teaching-regulation-agency/about),
 an executive agency of the Department for Education (DfE).
 

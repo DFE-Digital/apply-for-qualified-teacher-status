@@ -1,8 +1,8 @@
 <% content_for :page_title, 'Accessibility statement' %>
 
-# Accessibility statement for <%= t('service.name') %>
+# Accessibility statement for <%= t(current_namespace, scope: %i[service name]) %>
 
-This page only contains information about the <%= t('service.name') %>
+This page only contains information about the <%= t(current_namespace, scope: %i[service name]) %>
 service, available at: <a href="<%= t('service.url') %>" class="govuk-link
 govuk-link--no-visited-state"> <%= t('service.url') %> </a>
 
