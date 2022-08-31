@@ -4,3 +4,34 @@
 <h1 class="govuk-heading-xl">Application</h1>
 
 <%= render(ApplicationFormOverview::Component.new(@view_object.application_form)) %>
+
+<h2 class="govuk-heading-l govuk-!-margin-top-9">Assessment</h2>
+
+<ol class="app-task-list">
+  <% @view_object.assessment_tasks.each_with_index do |(section, items), index| %>
+    <li>
+      <h2 class="app-task-list__section">
+        <span class="app-task-list__section-number"><%= index + 1 %>. </span>
+        <%= t(".assessment_tasks.sections.#{section}") %>
+      </h2>
+
+      <ul class="app-task-list__items">
+        <% items.each do |item| %>
+          <li class="app-task-list__item">
+            <span class="app-task-list__task-name">
+              <%= link_to t(".assessment_tasks.items.#{item}"),
+                          @view_object.assessment_task_path(section, item),
+                          aria: { describedby: "#{item}-status" } %>
+            </span>
+
+            <%= render(ApplicationFormStatusTag::Component.new(
+              key: item,
+              status: @view_object.assessment_task_status(section, item),
+              class_context: "app-task-list"
+            )) %>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ol>
