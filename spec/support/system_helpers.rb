@@ -1,4 +1,6 @@
 module SystemHelpers
+  include Warden::Test::Helpers
+
   def given_the_service_is_open
     FeatureFlag.activate(:service_open)
   end
@@ -50,6 +52,10 @@ module SystemHelpers
 
   def given_an_eligible_eligibility_check_with_written_country_checks
     given_an_eligible_eligibility_check(country_check: :written)
+  end
+
+  def given_i_am_authorized_as_an_assessor_user(user)
+    login_as(user)
   end
 
   def when_i_am_authorized_as_an_assessor_user

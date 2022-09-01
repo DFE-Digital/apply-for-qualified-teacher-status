@@ -156,6 +156,10 @@ en:
           attributes:
             date_of_birth:
               inclusion: You must be 18 or over to use this service
+        assessor_interface/assessor_assignment_form:
+          attributes:
+            assessor_id:
+              blank: Select an assessor to assign
 
   activerecord:
     errors:

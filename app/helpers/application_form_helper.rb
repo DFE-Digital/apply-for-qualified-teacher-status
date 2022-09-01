@@ -35,7 +35,14 @@ module ApplicationFormHelper
         I18n.t("application_form.summary.assessor"),
         application_form.assessor&.name ||
           I18n.t("application_form.summary.unassigned"),
-        [{ href: "#" }]
+        [
+          {
+            href:
+              assessor_interface_application_form_assign_assessor_path(
+                application_form
+              )
+          }
+        ]
       ],
       [
         I18n.t("application_form.summary.reviewer"),
