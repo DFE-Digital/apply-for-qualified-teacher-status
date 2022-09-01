@@ -4,8 +4,9 @@ RSpec.describe SubmitApplicationForm do
   let(:application_form) do
     create(:application_form, subjects: ["Maths", "", ""])
   end
+  let(:user) { create(:teacher) }
 
-  subject(:call) { described_class.call(application_form:) }
+  subject(:call) { described_class.call(application_form:, user:) }
 
   describe "application form submitted status" do
     subject(:submitted?) { application_form.submitted? }
@@ -40,6 +41,24 @@ RSpec.describe SubmitApplicationForm do
       before { travel_to(Date.new(2020, 1, 1)) { call } }
 
       it { is_expected.to eq(Date.new(2020, 1, 1)) }
+    end
+  end
+
+  describe "recording timeline event" do
+    subject(:timeline_event) { TimelineEvent.find_by(application_form:) }
+
+    it { is_expected.to be_nil }
+
+    context "after calling the service" do
+      before { call }
+
+      it { is_expected.to_not be_nil }
+
+      it "sets the attributes correctly" do
+        expect(timeline_event.creator).to eq(user)
+        expect(timeline_event.old_state).to eq("draft")
+        expect(timeline_event.new_state).to eq("submitted")
+      end
     end
   end
 

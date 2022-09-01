@@ -1,8 +1,9 @@
 class SubmitApplicationForm
   include ServicePattern
 
-  def initialize(application_form:)
+  def initialize(application_form:, user:)
     @application_form = application_form
+    @user = user
   end
 
   def call
@@ -10,7 +11,12 @@ class SubmitApplicationForm
 
     application_form.subjects.compact_blank!
     application_form.submitted_at = Time.zone.now
-    application_form.submitted!
+
+    ChangeApplicationFormState.call(
+      application_form:,
+      user:,
+      new_state: "submitted"
+    )
 
     TeacherMailer
       .with(teacher: application_form.teacher)
@@ -20,5 +26,5 @@ class SubmitApplicationForm
 
   private
 
-  attr_reader :application_form
+  attr_reader :application_form, :user
 end
