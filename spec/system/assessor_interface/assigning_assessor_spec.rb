@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "assgining an assessor", type: :system do
+RSpec.describe "Assigning an assessor", type: :system do
   it "assigns an assessor" do
     given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user(assessor)

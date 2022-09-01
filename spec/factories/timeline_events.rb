@@ -6,6 +6,8 @@
 #  annotation          :string           default(""), not null
 #  creator_type        :string
 #  event_type          :string           not null
+#  new_state           :string           default(""), not null
+#  old_state           :string           default(""), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  application_form_id :bigint           not null
@@ -25,9 +27,21 @@
 FactoryBot.define do
   factory :timeline_event do
     association :application_form
-    event_type { TimelineEvent.event_types.keys.sample }
 
-    # all our event types require this field for now
-    association :assignee, factory: :staff
+    trait :assessor_assigned do
+      event_type { "assessor_assigned" }
+      association :assignee, factory: :staff
+    end
+
+    trait :reviewer_assigned do
+      event_type { "reviewer_assigned" }
+      association :assignee, factory: :staff
+    end
+
+    trait :state_changed do
+      event_type { "state_changed" }
+      old_state { ApplicationForm.states.keys.sample }
+      new_state { ApplicationForm.states.keys.sample }
+    end
   end
 end
