@@ -2,6 +2,8 @@ en:
   helpers:
     caption: {}
     hint:
+      assessor_interface_complete_assessment_form:
+        new_state: You've completed your review of this QTS application and marked all sections as complete to your satisfaction.
       qualification:
         add_another: You can use the next section to tell us about additional degrees if you want to.
       teacher:
@@ -15,6 +17,10 @@ en:
       work_history:
         add_another: You can use the next section to tell us about additional work history.
     label:
+      assessor_interface_complete_assessment_form:
+        new_state_options:
+          awarded: Award QTS
+          declined: Decline QTS
       qualification:
         add_another_options:
           true: "Yes"
@@ -37,6 +43,8 @@ en:
           true: "Yes"
           false: "No"
     legend:
+      assessor_interface_complete_assessment_form:
+        new_state: QTS review completed
       qualification:
         add_another: Add another qualification?
       teacher_interface_alternative_name_form:

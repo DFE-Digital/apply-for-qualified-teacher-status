@@ -58,10 +58,26 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       view_object.assessment_task_path(section, item)
     end
 
-    let(:section) { nil }
+    let(:application_form) { create(:application_form) }
+    let(:params) { { id: application_form.id } }
+
     let(:item) { nil }
 
-    it { is_expected.to eq("#") }
+    context "with submitted details section" do
+      let(:section) { :submitted_details }
+
+      it { is_expected.to eq("#") }
+    end
+
+    context "with recommendation section" do
+      let(:section) { :recommendation }
+
+      it do
+        is_expected.to eq(
+          "/assessor/applications/#{application_form.id}/complete-assessment"
+        )
+      end
+    end
   end
 
   describe "#assessment_task_status" do
