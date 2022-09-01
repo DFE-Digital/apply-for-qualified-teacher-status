@@ -420,6 +420,6 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def start_page
-    @start_page ||= PageObjects::Start.new
+    @start_page ||= PageObjects::EligibilityInterface::Start.new
   end
 end
