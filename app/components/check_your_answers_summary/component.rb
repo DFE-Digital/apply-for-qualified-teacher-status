@@ -1,11 +1,18 @@
 module CheckYourAnswersSummary
   class Component < ViewComponent::Base
-    def initialize(model:, title:, fields:, delete_link_to: nil)
+    def initialize(
+      model:,
+      title:,
+      fields:,
+      changeable: true,
+      delete_link_to: nil
+    )
       super
       @model = model
       @title = title
       @fields = fields
-      @delete_link_to = delete_link_to
+      @changeable = changeable
+      @delete_link_to = changeable ? delete_link_to : nil
     end
 
     attr_reader :title
@@ -16,7 +23,7 @@ module CheckYourAnswersSummary
 
     private
 
-    attr_reader :model, :fields
+    attr_reader :model, :fields, :changeable
 
     def fields_with_translations
       fields_as_array.flat_map do |field|
@@ -51,7 +58,7 @@ module CheckYourAnswersSummary
         key: field[:key],
         title: row_title_for(field),
         value: format_value(model.send(field[:key]), field),
-        href: field.fetch(:href)
+        href: changeable ? field.fetch(:href) : nil
       }
     end
 

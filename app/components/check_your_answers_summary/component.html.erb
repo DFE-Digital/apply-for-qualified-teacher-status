@@ -19,11 +19,14 @@
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key"><%= row.fetch(:title) %></dt>
           <dd class="govuk-summary-list__value"><%= row.fetch(:value) %></dd>
-          <dd class="govuk-summary-list__actions">
-            <%= govuk_link_to(row.fetch(:href)) do %>
-              Change <span class="govuk-visually-hidden"><%= row.fetch(:title).downcase %></span>
-            <% end %>
-          </dd>
+
+          <% if (href = row[:href]).present? %>
+            <dd class="govuk-summary-list__actions">
+              <%= govuk_link_to(href) do %>
+                Change <span class="govuk-visually-hidden"><%= row.fetch(:title).downcase %></span>
+              <% end %>
+            </dd>
+          <% end %>
         </div>
       <% end %>
     </dl>
