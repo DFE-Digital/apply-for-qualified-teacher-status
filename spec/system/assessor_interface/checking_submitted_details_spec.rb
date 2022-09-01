@@ -24,6 +24,14 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_application_page
   end
 
+  it "allows checking the professional standing" do
+    when_i_visit_the_check_professional_standing_page
+    then_i_see_the_professional_standing
+
+    when_i_click_continue
+    then_i_see_the_application_page
+  end
+
   private
 
   def given_an_assessor_exists
@@ -40,6 +48,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def when_i_visit_the_check_work_history_page
     check_work_history_page.load(application_id: application_form.id)
+  end
+
+  def when_i_visit_the_check_professional_standing_page
+    check_professional_standing_page.load(application_id: application_form.id)
   end
 
   def then_i_see_the_qualifications
@@ -63,6 +75,15 @@ RSpec.describe "Assessor check submitted details", type: :system do
     ).to have_content("Your current or most recent role")
   end
 
+  def then_i_see_the_professional_standing
+    expect(check_professional_standing_page.heading).to have_content(
+      "Check professional standing"
+    )
+    expect(
+      check_professional_standing_page.professional_standing_cards.first.heading
+    ).to have_content("Enter your registration number")
+  end
+
   def when_i_click_continue
     check_qualifications_page.continue_button.click
   end
@@ -81,7 +102,8 @@ RSpec.describe "Assessor check submitted details", type: :system do
         :application_form,
         :submitted,
         :with_completed_qualification,
-        :with_work_history
+        :with_work_history,
+        :with_registration_number
       )
   end
 
@@ -93,5 +115,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
   def check_work_history_page
     @check_work_history_page ||=
       PageObjects::AssessorInterface::CheckWorkHistory.new
+  end
+
+  def check_professional_standing_page
+    @check_professional_standing_page ||=
+      PageObjects::AssessorInterface::CheckProfessionalStanding.new
   end
 end
