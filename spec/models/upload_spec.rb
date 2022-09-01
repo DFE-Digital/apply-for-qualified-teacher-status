@@ -38,6 +38,12 @@ RSpec.describe Upload, type: :model do
     end
   end
 
+  describe "#name" do
+    subject(:name) { upload.name }
+
+    it { is_expected.to eq("upload.pdf") }
+  end
+
   describe "#url" do
     subject(:url) { upload.url }
 
