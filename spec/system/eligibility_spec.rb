@@ -207,7 +207,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_press_start_now
-    click_button "Start now"
+    start_page.start_button.click
   end
 
   def when_i_press_start
@@ -237,7 +237,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_visit_the_start_page
-    visit "/eligibility"
+    start_page.load
   end
 
   def when_i_try_to_go_to_the_eligible_page
@@ -275,13 +275,9 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_start_page
-    expect(page).to have_content(
-      "Check your eligilibity to apply for qualified teacher status (QTS) in England"
-    )
-    expect(page).to have_current_path("/eligibility/start")
-    expect(page).to have_title(
-      "Check your eligilibity to apply for qualified teacher status (QTS) in England"
-    )
+    expect start_page.heading.text.to eq(
+             "Check your eligibility to apply for qualified teacher status (QTS) in England"
+           )
   end
 
   def then_i_see_the_misconduct_page
@@ -421,5 +417,9 @@ RSpec.describe "Eligibility check", type: :system do
 
   def then_i_have_two_eligibility_checks
     expect(EligibilityCheck.count).to eq(2)
+  end
+
+  def start_page
+    @start_page ||= PageObjects::Start.new
   end
 end
