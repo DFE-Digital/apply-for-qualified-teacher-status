@@ -8,6 +8,8 @@
 #  annotation          :string           default(""), not null
 #  creator_type        :string
 #  event_type          :string           not null
+#  new_state           :string           default(""), not null
+#  old_state           :string           default(""), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  application_form_id :bigint           not null
@@ -30,7 +32,8 @@ class TimelineEvent < ApplicationRecord
 
   enum event_type: {
          assessor_assigned: "assessor_assigned",
-         reviewer_assigned: "reviewer_assigned"
+         reviewer_assigned: "reviewer_assigned",
+         state_changed: "state_changed"
        }
   validates :event_type, inclusion: { in: event_types.values }
 
@@ -41,4 +44,7 @@ class TimelineEvent < ApplicationRecord
   validates :assignee,
             absence: true,
             unless: -> { assessor_assigned? || reviewer_assigned? }
+
+  validates :old_state, :new_state, presence: true, if: :state_changed?
+  validates :old_state, :new_state, absence: true, unless: :state_changed?
 end

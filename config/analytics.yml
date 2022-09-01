@@ -155,6 +155,8 @@
     - created_at
     - updated_at
     - assignee_id
+    - old_state
+    - new_state
   :uploads:
     - id
     - document_id

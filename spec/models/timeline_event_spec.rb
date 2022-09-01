@@ -6,6 +6,8 @@
 #  annotation          :string           default(""), not null
 #  creator_type        :string
 #  event_type          :string           not null
+#  new_state           :string           default(""), not null
+#  old_state           :string           default(""), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  application_form_id :bigint           not null
@@ -25,15 +27,14 @@
 require "rails_helper"
 
 RSpec.describe TimelineEvent do
-  subject(:timeline_event) { create(:timeline_event) }
+  subject(:timeline_event) { build(:timeline_event) }
 
   describe "validations" do
-    it { is_expected.to be_valid }
-
     it do
       is_expected.to define_enum_for(:event_type).with_values(
         assessor_assigned: "assessor_assigned",
-        reviewer_assigned: "reviewer_assigned"
+        reviewer_assigned: "reviewer_assigned",
+        state_changed: "state_changed"
       ).backed_by_column_of_type(:string)
     end
 
@@ -41,12 +42,24 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :assessor_assigned }
 
       it { is_expected.to validate_presence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:old_state) }
+      it { is_expected.to validate_absence_of(:new_state) }
     end
 
     context "with an reviewer assigned event type" do
       before { timeline_event.event_type = :reviewer_assigned }
 
       it { is_expected.to validate_presence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:old_state) }
+      it { is_expected.to validate_absence_of(:new_state) }
+    end
+
+    context "with a state changed event type" do
+      before { timeline_event.event_type = :state_changed }
+
+      it { is_expected.to validate_absence_of(:assignee) }
+      it { is_expected.to validate_presence_of(:old_state) }
+      it { is_expected.to validate_presence_of(:new_state) }
     end
   end
 end
