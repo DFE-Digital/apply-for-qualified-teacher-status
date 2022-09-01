@@ -9,7 +9,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_there_is_an_application_form
 
     when_i_visit_the_complete_assessment_page
-    and_i_select_award
+    then_i_see_the_complete_assessment_form
+
+    when_i_select_award_qts
+    and_i_click_continue
     then_the_application_form_is_awarded
   end
 
@@ -20,14 +23,23 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_visit_the_complete_assessment_page
-    visit assessor_interface_application_form_complete_assessment_path(
-            application_form
-          )
+    complete_assessment_page.load(application_id: application_form.id)
   end
 
-  def and_i_select_award
-    choose "Award QTS", visible: false
-    click_button "Continue"
+  def then_i_see_the_complete_assessment_form
+    expect(complete_assessment_page.heading).to have_content(
+      "QTS review completed"
+    )
+    expect(complete_assessment_page.new_states.first).to have_content(
+      "Award QTS"
+    )
+    expect(complete_assessment_page.new_states.second).to have_content(
+      "Decline QTS"
+    )
+  end
+
+  def when_i_select_award_qts
+    complete_assessment_page.new_states.first.input.choose
   end
 
   def then_the_application_form_is_awarded
@@ -41,5 +53,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def assessor
     @assessor ||= create(:staff, :confirmed)
+  end
+
+  def complete_assessment_page
+    @complete_assessment_page ||=
+      PageObjects::AssessorInterface::CompleteAssessment.new
   end
 end
