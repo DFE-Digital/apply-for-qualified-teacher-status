@@ -61,16 +61,53 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     let(:application_form) { create(:application_form) }
     let(:params) { { id: application_form.id } }
 
-    let(:item) { nil }
-
     context "with submitted details section" do
       let(:section) { :submitted_details }
 
-      it { is_expected.to eq("#") }
+      context "with personal information item" do
+        let(:item) { :personal_information }
+
+        it do
+          is_expected.to eq(
+            "/assessor/applications/#{application_form.id}/check_personal_information"
+          )
+        end
+      end
+
+      context "with qualifications item" do
+        let(:item) { :qualifications }
+
+        it do
+          is_expected.to eq(
+            "/assessor/applications/#{application_form.id}/check_qualifications"
+          )
+        end
+      end
+
+      context "with work history item" do
+        let(:item) { :work_history }
+
+        it do
+          is_expected.to eq(
+            "/assessor/applications/#{application_form.id}/check_work_history"
+          )
+        end
+      end
+
+      context "with professional standing item" do
+        let(:item) { :professional_standing }
+
+        it do
+          is_expected.to eq(
+            "/assessor/applications/#{application_form.id}/check_professional_standing"
+          )
+        end
+      end
     end
 
     context "with recommendation section" do
       let(:section) { :recommendation }
+      let(:item) { nil }
 
       it do
         is_expected.to eq(

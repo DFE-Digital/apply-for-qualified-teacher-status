@@ -27,13 +27,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
     }
   end
 
-  def assessment_task_path(section, _item)
-    if section == :recommendation
+  def assessment_task_path(section, item)
+    case section
+    when :submitted_details
+      url_helpers.send(
+        "assessor_interface_application_form_check_#{item}_path",
+        application_form
+      )
+    when :recommendation
       url_helpers.assessor_interface_application_form_complete_assessment_path(
         application_form
       )
-    else
-      "#"
     end
   end
 
@@ -44,9 +48,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   private
 
+  attr_reader :params
+
   def url_helpers
     Rails.application.routes.url_helpers
   end
-
-  attr_reader :params
 end
