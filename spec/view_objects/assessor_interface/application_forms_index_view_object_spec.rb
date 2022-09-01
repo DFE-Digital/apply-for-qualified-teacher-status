@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
-  subject(:view_object) { described_class.new(params:) }
+  subject(:view_object) do
+    described_class.new(params: ActionController::Parameters.new(params))
+  end
 
   let(:params) { {} }
 
@@ -218,6 +220,44 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       let(:params) { { states: %w[draft submitted] } }
 
       it { is_expected.to be true }
+    end
+  end
+
+  describe "#search_params" do
+    subject(:search_params) { view_object.search_params }
+
+    it { is_expected.to be_empty }
+
+    context "with permitted params" do
+      let(:params) do
+        %w[
+          assessor_ids
+          location
+          location_autocomplete
+          name
+          states
+          page
+        ].each_with_object({}) { |p, memo| memo[p] = p }
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            "assessor_ids" => "assessor_ids",
+            "location" => "location",
+            "location_autocomplete" => "location_autocomplete",
+            "name" => "name",
+            "states" => "states",
+            "page" => "page"
+          }
+        )
+      end
+    end
+
+    context "with unpermitted params" do
+      let(:params) { { unpermitted: "unpermitted" } }
+
+      it { is_expected.to be_empty }
     end
   end
 end

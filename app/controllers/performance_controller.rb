@@ -1,4 +1,6 @@
 class PerformanceController < ApplicationController
+  include EligibilityCurrentNamespace
+
   def index
     from = 1.week.ago.beginning_of_day
     @since_text = "over the last 7 days"
@@ -18,9 +20,5 @@ class PerformanceController < ApplicationController
       stats.live_service_usage
     @time_to_complete_data = stats.time_to_complete
     @usage_by_country_count, @usage_by_country_data = stats.usage_by_country
-  end
-
-  def current_namespace
-    "performance"
   end
 end

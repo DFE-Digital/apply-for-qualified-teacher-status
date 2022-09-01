@@ -1,4 +1,6 @@
 class PersonasController < ApplicationController
+  include EligibilityCurrentNamespace
+
   before_action :ensure_feature_active
   before_action :load_teacher_personas
 
@@ -17,10 +19,6 @@ class PersonasController < ApplicationController
   end
 
   protected
-
-  def current_namespace
-    "personas"
-  end
 
   def after_sign_in_path_for(resource)
     case resource

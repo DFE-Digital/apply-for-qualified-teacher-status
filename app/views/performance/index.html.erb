@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl">
-        <%= t('service.name') %>
+        <%= t(current_namespace, scope: %i[service name]) %>
       </span>
       Performance dashboard
     </h1>
@@ -64,7 +64,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">Visit this service</h2>
     <p class="govuk-heading-m">
-      <%= govuk_link_to t('service.name'), eligibility_interface_start_path %>
+      <%= govuk_link_to t(current_namespace, scope: %i[service name]), eligibility_interface_start_path %>
     </p>
 
     <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">Ministerial department:</h2>

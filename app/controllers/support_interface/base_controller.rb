@@ -1,9 +1,5 @@
-module SupportInterface
-  class BaseController < ApplicationController
-    before_action :authenticate_staff!
+class SupportInterface::BaseController < ApplicationController
+  include SupportCurrentNamespace
 
-    def current_namespace
-      "support"
-    end
-  end
+  before_action :authenticate_staff!
 end

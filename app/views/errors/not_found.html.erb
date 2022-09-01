@@ -12,7 +12,7 @@
     <p class="govuk-body">
       If the web address is correct or you selected a link or button and you
       need to speak to someone about this problem, contact the <%=
-      t('service.name') %> team: <a class="govuk-link" href="mailto:<%=
+      t(current_namespace, scope: %i[service name]) %> team: <a class="govuk-link" href="mailto:<%=
       t('service.email') %>"><%= t('service.email') %></a>.
     </p>
   </div>

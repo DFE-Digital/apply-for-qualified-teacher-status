@@ -1,5 +1,5 @@
 class Staff::PasswordsController < Devise::PasswordsController
-  include StaffCurrentNamespace
+  include AssessorCurrentNamespace
 
   layout "two_thirds"
 

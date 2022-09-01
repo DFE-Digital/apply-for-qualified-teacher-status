@@ -5,7 +5,7 @@ module AssessorInterface
     end
 
     def show
-      @application_form = ApplicationForm.find(params[:id])
+      @view_object = ApplicationFormsShowViewObject.new(params:)
     end
   end
 end
