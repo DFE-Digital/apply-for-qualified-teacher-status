@@ -4,6 +4,9 @@
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 <h1 class="govuk-heading-l">Check your answers</h1>
 
-<%= render "summary", application_form: @application_form, qualifications: @qualifications %>
+<%= render "shared/application_form/qualifications_summary",
+           application_form: @application_form,
+           qualifications: @qualifications,
+           changeable: true %>
 
 <%= govuk_button_link_to "Continue", %i[add_another teacher_interface application_form qualifications] %>

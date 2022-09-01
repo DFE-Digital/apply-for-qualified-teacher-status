@@ -6,7 +6,8 @@
       title: "Have you worked professionally as a teacher?",
       href: %i[has_work_history teacher_interface application_form work_histories]
     },
-  }
+  },
+  changeable:
 )) %>
 
 <% work_histories.each do |work_history| %>
@@ -44,6 +45,7 @@
         href: [:edit, :teacher_interface, :application_form, work_history]
       } : nil,
     },
+    changeable:,
     delete_link_to: [:delete, :teacher_interface, :application_form, work_history]
   )) %>
 <% end %>
