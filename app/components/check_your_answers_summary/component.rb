@@ -63,7 +63,7 @@ module CheckYourAnswersSummary
         return value.strftime(format).strip
       end
 
-      return file_names_for(value, field[:translation]) if value.is_a?(Document)
+      return file_links_for(value, field[:translation]) if value.is_a?(Document)
 
       if value.is_a?(Array)
         return value.map { |v| format_value(v, field) }.join("<br />").html_safe
@@ -75,14 +75,15 @@ module CheckYourAnswersSummary
       value.to_s
     end
 
-    def file_names_for(document, translations)
+    def file_links_for(document, translations)
       scope =
         translations ? document.translated_uploads : document.original_uploads
       scope
         .order(:created_at)
-        .map { |upload| upload.attachment&.filename }
-        .compact
+        .select { |upload| upload.attachment.present? }
+        .map { |upload| link_to(upload.name, upload.url) }
         .join(", ")
+        .html_safe
     end
   end
 end
