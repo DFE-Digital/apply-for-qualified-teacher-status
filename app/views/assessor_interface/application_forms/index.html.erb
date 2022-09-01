@@ -1,57 +1,50 @@
 <% content_for :page_title, "Applications" %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full-from-desktop">
-    <h1 class="govuk-heading-xl">Applications</h1>
-  </div>
+<h1 class="govuk-heading-xl">Applications</h1>
+
+<div class="govuk-grid-column-one-third app-application-forms__filters">
+  <h2 class="govuk-heading-m">Filters</h2>
+
+  <%= form_with method: :get, class: "app-application-forms__filter-form" do |f| %>
+    <%= f.govuk_submit "Apply filters" do %>
+      <%= govuk_link_to "Clear selection"%>
+    <%- end -%>
+
+    <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { text: "Assessor name", size: "s" }, small: true do %>
+      <%- @view_object.assessor_filter_options.each do |option| -%>
+        <%= f.govuk_check_box :assessor_ids, option.id, label: { text: option.name }, checked: @view_object.assessor_filter_checked?(option) %>
+      <%- end -%>
+    <%- end -%>
+
+    <%= f.govuk_select :location,
+                       @view_object.country_filter_options,
+                       label: { text: "Country trained in", size: "s" },
+                       options: { include_blank: true } %>
+
+    <%= f.govuk_text_field :name,
+                           label: { text: "Applicant name", size: "s" },
+                           value: @view_object.name_filter_value %>
+
+    <%= f.govuk_check_boxes_fieldset :states, legend: { text: "Status of application", size: "s" }, small: true do %>
+      <%- @view_object.state_filter_options.each do |option| -%>
+        <%= f.govuk_check_box :states, option.id, label: { text: option.label }, checked: @view_object.state_filter_checked?(option) %>
+      <%- end -%>
+    <%- end -%>
+  <%- end -%>
 </div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full-from-desktop">
-    <div class="govuk-grid-column-one-third app-application-forms__filters">
-      <h2 class="govuk-heading-m">Filters</h2>
-      <%= form_with method: :get, class: "app-application-forms__filter-form" do |f| %>
-        <%= f.govuk_submit "Apply filters" do %>
-          <%= govuk_link_to "Clear selection"%>
-        <%- end -%>
-
-        <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { text: "Assessor name", size: "s" }, small: true do %>
-          <%- @view_object.assessor_filter_options.each do |option| -%>
-            <%= f.govuk_check_box :assessor_ids, option.id, label: { text: option.name }, checked: @view_object.assessor_filter_checked?(option) %>
-          <%- end -%>
-        <%- end -%>
-
-        <%= f.govuk_select :location,
-                           @view_object.country_filter_options,
-                           label: { text: "Country trained in", size: "s" },
-                           options: { include_blank: true } %>
-
-        <%= f.govuk_text_field :name,
-                               label: { text: "Applicant name", size: "s" },
-                               value: @view_object.name_filter_value %>
-
-        <%= f.govuk_check_boxes_fieldset :states, legend: { text: "Status of application", size: "s" }, small: true do %>
-          <%- @view_object.state_filter_options.each do |option| -%>
-            <%= f.govuk_check_box :states, option.id, label: { text: option.label }, checked: @view_object.state_filter_checked?(option) %>
-          <%- end -%>
-        <%- end -%>
+<div class="govuk-grid-column-two-thirds">
+  <% if @view_object.application_forms_records.any? %>
+    <ul class="app-search-results">
+      <%- @view_object.application_forms_records.each do |application_form| -%>
+        <%= render(ApplicationFormSearchResult::Component.new(application_form:, search_params: @view_object.search_params)) %>
       <%- end -%>
-    </div>
+    </ul>
 
-    <div class="govuk-grid-column-two-thirds">
-      <% if @view_object.application_forms_records.any? %>
-        <ul class="app-search-results">
-          <%- @view_object.application_forms_records.each do |application_form| -%>
-            <%= render(ApplicationFormSearchResult::Component.new(application_form:, search_params: @view_object.search_params)) %>
-          <%- end -%>
-        </ul>
-
-        <%= govuk_pagination(pagy: @view_object.application_forms_pagy) %>
-      <% else %>
-        <h2 class="govuk-heading-m">
-          No applications found. Use the filters on the left to try again or refine your search.
-        </h2>
-      <% end %>
-    </div>
-  </div>
+    <%= govuk_pagination(pagy: @view_object.application_forms_pagy) %>
+  <% else %>
+    <h2 class="govuk-heading-m">
+      No applications found. Use the filters on the left to try again or refine your search.
+    </h2>
+  <% end %>
 </div>

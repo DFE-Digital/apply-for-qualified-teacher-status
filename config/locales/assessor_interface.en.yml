@@ -1,0 +1,15 @@
+en:
+  assessor_interface:
+    application_forms:
+      show:
+        assessment_tasks:
+          sections:
+            submitted_details: Check submitted details
+            recommendation: Your recommendation
+          items:
+            personal_information: Check personal information
+            qualifications: Check qualifications
+            work_history: Check work history
+            professional_standing: Check professional standing
+            first_assessment: First assessment
+            second_assessment: Second assessment

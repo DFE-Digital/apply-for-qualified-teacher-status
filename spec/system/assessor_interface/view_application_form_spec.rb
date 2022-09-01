@@ -8,6 +8,7 @@ RSpec.describe "Assessor view application form", type: :system do
     when_i_am_authorized_as_an_assessor_user
     when_i_visit_the_application_page
     then_i_see_the_application
+    and_i_see_the_assessment_tasks
 
     when_i_click_back_link
     then_i_see_the_application_forms
@@ -36,6 +37,17 @@ RSpec.describe "Assessor view application form", type: :system do
       "#{application_form.given_names} #{application_form.family_name}"
     )
     expect(page).to have_content(application_form.reference)
+  end
+
+  def and_i_see_the_assessment_tasks
+    expect(page).to have_content("Check submitted details")
+    expect(page).to have_content("Check personal information")
+    expect(page).to have_content("Check qualifications")
+    expect(page).to have_content("Check work history")
+    expect(page).to have_content("Check professional standing")
+    expect(page).to have_content("Your recommendation")
+    expect(page).to have_content("First assessment")
+    expect(page).to have_content("Second assessment")
   end
 
   def then_i_see_the_application_forms

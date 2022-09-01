@@ -34,4 +34,53 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it { is_expected.to eq("/assessor/applications?states%5B%5D=awarded") }
     end
   end
+
+  describe "#assessment_tasks" do
+    subject(:assessment_tasks) { view_object.assessment_tasks }
+
+    it do
+      is_expected.to eq(
+        {
+          submitted_details: %i[
+            personal_information
+            qualifications
+            work_history
+            professional_standing
+          ],
+          recommendation: %i[first_assessment second_assessment]
+        }
+      )
+    end
+  end
+
+  describe "#assessment_task_path" do
+    subject(:assessment_task_path) do
+      view_object.assessment_task_path(section, item)
+    end
+
+    let(:section) { nil }
+    let(:item) { nil }
+
+    it { is_expected.to eq("#") }
+  end
+
+  describe "#assessment_task_status" do
+    subject(:assessment_task_status) do
+      view_object.assessment_task_status(section, item)
+    end
+
+    let(:item) { nil }
+
+    context "with submitted details section" do
+      let(:section) { :submitted_details }
+
+      it { is_expected.to eq(:in_progress) }
+    end
+
+    context "with recommendation section" do
+      let(:section) { :recommendation }
+
+      it { is_expected.to eq(:not_started) }
+    end
+  end
 end
