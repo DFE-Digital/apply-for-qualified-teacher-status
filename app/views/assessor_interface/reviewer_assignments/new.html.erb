@@ -1,0 +1,18 @@
+<h1 class="govuk-heading-l">
+  Select a reviewer
+</h1>
+
+<%= form_for @reviewer_assignment_form, url: assessor_interface_application_form_assign_reviewer_path(@application_form) do |form| %>
+    <%= form.govuk_error_summary %>
+
+    <%= form.govuk_collection_radio_buttons :reviewer_id,
+      Staff.all,
+      :id,
+      :name,
+      legend: nil
+    %>
+    <%= form.govuk_submit "Continue" do %>
+      <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+    <%- end -%>
+<%- end -%>
+

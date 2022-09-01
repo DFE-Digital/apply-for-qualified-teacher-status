@@ -14,6 +14,17 @@ RSpec.describe "Assigning an assessor", type: :system do
     then_the_assessor_is_assigned_to_the_application_form
   end
 
+  it "assigns a reviewer" do
+    given_the_service_is_open
+    given_i_am_authorized_as_an_assessor_user(assessor)
+    given_there_is_an_application_form
+    given_an_assessor_exists
+
+    when_i_visit_the_assign_reviewer_page
+    and_i_select_a_reviewer
+    then_the_assessor_is_assigned_as_reviewer_to_the_application_form
+  end
+
   private
 
   def given_there_is_an_application_form
@@ -39,6 +50,19 @@ RSpec.describe "Assigning an assessor", type: :system do
     expect(page).to have_content("Assigned to\t#{assessor.name}")
   end
 
+  def when_i_visit_the_assign_reviewer_page
+    assign_reviewer_page.load(application_id: application_form.id)
+  end
+
+  def and_i_select_a_reviewer
+    assign_reviewer_page.reviewers.first.input.click
+    assign_reviewer_page.continue_button.click
+  end
+
+  def then_the_assessor_is_assigned_as_reviewer_to_the_application_form
+    expect(page).to have_content("Reviewer\t#{assessor.name}")
+  end
+
   def application_form
     @application_form ||=
       create(:application_form, :with_personal_information, :submitted)
@@ -46,5 +70,9 @@ RSpec.describe "Assigning an assessor", type: :system do
 
   def assessor
     @assessor ||= create(:staff, :confirmed)
+  end
+
+  def assign_reviewer_page
+    @assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
   end
 end

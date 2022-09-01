@@ -106,7 +106,14 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text: "Not assigned"
             },
-            actions: [{ href: "#" }]
+            actions: [
+              {
+                href:
+                  assessor_interface_application_form_assign_reviewer_path(
+                    application_form
+                  )
+              }
+            ]
           },
           {
             key: {
