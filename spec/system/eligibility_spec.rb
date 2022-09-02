@@ -18,8 +18,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_select_an_eligible_country
     then_i_see_the_qualifications_page
 
-    when_i_choose_yes
-    and_i_submit
+    when_i_have_a_qualification
     then_i_see_the_degree_page
 
     when_i_choose_yes
@@ -52,8 +51,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_select_an_eligible_country
     then_i_see_the_qualifications_page
 
-    when_i_choose_no
-    and_i_submit
+    when_i_dont_have_a_qualification
     then_i_see_the_degree_page
 
     when_i_choose_no
@@ -95,8 +93,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_try_to_go_to_the_degree_page
     then_i_see_the_qualifications_page
 
-    when_i_choose_yes
-    and_i_submit
+    when_i_have_a_qualification
     then_i_see_the_degree_page
 
     when_i_try_to_go_to_the_teach_children_page
@@ -258,12 +255,12 @@ RSpec.describe "Eligibility check", type: :system do
     )
   end
 
-  def when_i_try_to_go_to_the_region_page
-    region_page.load
-  end
-
   def region_page
     @region_page ||= PageObjects::EligibilityInterface::Region.new
+  end
+
+  def when_i_try_to_go_to_the_region_page
+    region_page.load
   end
 
   def then_i_see_the_region_page
@@ -278,6 +275,33 @@ RSpec.describe "Eligibility check", type: :system do
   def when_i_select_a_region
     region_page.form.radio_items.first.input.click
     region_page.form.continue_button.click
+  end
+
+  def qualification_page
+    @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
+  end
+
+  def when_i_try_to_go_to_the_qualification_page
+    qualification_page.load
+  end
+
+  def then_i_see_the_qualifications_page
+    expect(qualification_page).to have_title(
+      "Do you have a teacher training qualification?"
+    )
+    expect(qualification_page.heading).to have_content(
+      "Do you have a teacher training qualification?"
+    )
+  end
+
+  def when_i_have_a_qualification
+    qualification_page.form.yes_radio_item.input.click
+    qualification_page.form.continue_button.click
+  end
+
+  def when_i_dont_have_a_qualification
+    qualification_page.form.no_radio_item.input.click
+    qualification_page.form.continue_button.click
   end
 
   def and_i_submit
@@ -302,10 +326,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_try_to_go_to_the_degree_page
     visit "/eligibility/degree"
-  end
-
-  def when_i_try_to_go_to_the_qualifications_page
-    visit "/eligibility/qualifications"
   end
 
   def when_i_try_to_go_to_the_teach_children_page
@@ -391,13 +411,6 @@ RSpec.describe "Eligibility check", type: :system do
   def then_i_see_the_degree_page
     expect(page).to have_title("Do you have a university degree?")
     expect(page).to have_content("Do you have a university degree?")
-  end
-
-  def then_i_see_the_qualifications_page
-    expect(page).to have_title("Do you have a teacher training qualification?")
-    expect(page).to have_content(
-      "Do you have a teacher training qualification?"
-    )
   end
 
   def then_i_see_the_teach_children_page
