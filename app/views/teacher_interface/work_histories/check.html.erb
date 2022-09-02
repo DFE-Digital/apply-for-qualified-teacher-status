@@ -3,7 +3,10 @@
 
 <%= render "heading" %>
 
-<%= render "summary", application_form: @application_form, work_histories: @work_histories %>
+<%= render "shared/application_form/work_history_summary",
+           application_form: @application_form,
+           work_histories: @work_histories,
+           changeable: true %>
 
 <% if @application_form.has_work_history? %>
   <%= govuk_button_link_to "Continue", add_another_teacher_interface_application_form_work_histories_path %>
