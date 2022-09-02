@@ -27,8 +27,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_can_teach_children
     then_i_see_the_misconduct_page
 
-    when_i_choose_no
-    and_i_submit
+    when_i_dont_have_a_misconduct_record
     then_i_see_the_eligible_page
 
     when_i_visit_the_start_page
@@ -58,8 +57,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_cant_teach_children
     then_i_see_the_misconduct_page
 
-    when_i_choose_yes
-    and_i_submit
+    when_i_have_a_misconduct_record
     then_i_see_the_ineligible_page
     and_i_see_the_ineligible_degree_text
     and_i_see_the_ineligible_qualification_text
@@ -108,7 +106,7 @@ RSpec.describe "Eligibility check", type: :system do
   it "handles the country picker error" do
     when_i_visit_the_start_page
     when_i_press_start_now
-    and_i_submit
+    when_i_dont_select_a_country
     then_i_see_the_country_error_message
 
     when_i_select_an_eligible_country
@@ -233,6 +231,10 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_select_a_country "Italy"
   end
 
+  def when_i_dont_select_a_country
+    country_page.form.continue_button.click
+  end
+
   def then_i_see_the_country_page
     expect(country_page).to have_title(
       "In which country are you currently recognised as a teacher?"
@@ -351,8 +353,31 @@ RSpec.describe "Eligibility check", type: :system do
     teach_children_page.form.continue_button.click
   end
 
-  def and_i_submit
-    click_button "Continue", visible: false
+  def misconduct_page
+    @misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
+  end
+
+  def when_i_try_to_go_to_the_misconduct_page
+    misconduct_page.load
+  end
+
+  def then_i_see_the_misconduct_page
+    expect(misconduct_page).to have_title(
+      "Do you have any sanctions or restrictions on your employment record?"
+    )
+    expect(misconduct_page.heading).to have_content(
+      "Do you have any sanctions or restrictions on your employment record?"
+    )
+  end
+
+  def when_i_have_a_misconduct_record
+    misconduct_page.form.yes_radio_item.input.click
+    misconduct_page.form.continue_button.click
+  end
+
+  def when_i_dont_have_a_misconduct_record
+    misconduct_page.form.no_radio_item.input.click
+    misconduct_page.form.continue_button.click
   end
 
   def when_i_press_back
@@ -369,16 +394,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_try_to_go_to_the_ineligible_page
     visit "/eligibility/ineligible"
-  end
-
-  def when_i_try_to_go_to_the_misconduct_page
-    visit "/eligibility/misconduct"
-  end
-
-  def then_i_see_the_misconduct_page
-    expect(page).to have_content(
-      "Do you have any sanctions or restrictions on your employment record?"
-    )
   end
 
   def then_i_see_the_eligible_page
@@ -436,15 +451,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def and_i_see_the_ineligible_degree_text
     expect(page).to have_content("You do not have a degree.")
-  end
-
-  def then_i_see_the_completed_requirements_page
-    expect(page).to have_title(
-      "Have you completed all requirements to work as a qualified teacher in"
-    )
-    expect(page).to have_content(
-      "Have you completed all requirements to work as a qualified teacher in"
-    )
   end
 
   def then_i_have_two_eligibility_checks
