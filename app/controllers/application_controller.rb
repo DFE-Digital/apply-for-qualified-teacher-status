@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include ActiveStorage::SetCurrent
   include DfE::Analytics::Requests
 
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)

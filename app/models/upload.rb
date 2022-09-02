@@ -31,6 +31,6 @@ class Upload < ApplicationRecord
   end
 
   def url
-    Rails.application.routes.url_helpers.url_for(attachment)
+    attachment.url(expires_in: 5.minutes)
   end
 end
