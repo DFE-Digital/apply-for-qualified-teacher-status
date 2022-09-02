@@ -32,6 +32,14 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_application_page
   end
 
+  it "allows checking the personal information" do
+    when_i_visit_the_check_personal_information_page
+    then_i_see_the_personal_informations
+
+    when_i_click_continue
+    then_i_see_the_application_page
+  end
+
   private
 
   def given_an_assessor_exists
@@ -40,6 +48,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def given_there_is_an_application_form
     application_form
+  end
+
+  def when_i_visit_the_check_personal_information_page
+    check_personal_information_page.load(application_id: application_form.id)
   end
 
   def when_i_visit_the_check_qualifications_page
@@ -52,6 +64,12 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def when_i_visit_the_check_professional_standing_page
     check_professional_standing_page.load(application_id: application_form.id)
+  end
+
+  def then_i_see_the_personal_informations
+    expect(check_personal_information_page.heading).to have_content(
+      "Check personal information"
+    )
   end
 
   def then_i_see_the_qualifications
@@ -103,8 +121,14 @@ RSpec.describe "Assessor check submitted details", type: :system do
         :submitted,
         :with_completed_qualification,
         :with_work_history,
-        :with_registration_number
+        :with_registration_number,
+        :with_personal_information
       )
+  end
+
+  def check_personal_information_page
+    @check_personal_information_page ||=
+      PageObjects::AssessorInterface::CheckPersonalInformation.new
   end
 
   def check_qualifications_page
