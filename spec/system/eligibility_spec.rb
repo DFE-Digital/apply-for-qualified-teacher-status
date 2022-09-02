@@ -13,10 +13,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_start_page
 
     when_i_press_start_now
-    then_i_see_the_countries_page
+    then_i_see_the_country_page
 
-    when_i_select_a_country
-    and_i_submit
+    when_i_select_an_eligible_country
     then_i_see_the_qualifications_page
 
     when_i_choose_yes
@@ -46,13 +45,11 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_press_start_now
     when_i_select_an_ineligible_country
-    and_i_submit
     then_i_see_the_ineligible_page
     and_i_see_the_ineligible_country_text
 
     when_i_press_back
-    when_i_select_a_country
-    and_i_submit
+    when_i_select_an_eligible_country
     then_i_see_the_qualifications_page
 
     when_i_choose_no
@@ -87,13 +84,12 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_start_page
 
     when_i_press_start_now
-    then_i_see_the_countries_page
+    then_i_see_the_country_page
 
     when_i_try_to_go_to_the_region_page
-    then_i_see_the_countries_page
+    then_i_see_the_country_page
 
-    when_i_select_a_country
-    and_i_submit
+    when_i_select_an_eligible_country
     then_i_see_the_qualifications_page
 
     when_i_try_to_go_to_the_degree_page
@@ -124,8 +120,7 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_submit
     then_i_see_the_country_error_message
 
-    when_i_select_a_country_in_the_error_state
-    and_i_submit
+    when_i_select_an_eligible_country
     then_i_see_the_qualifications_page
   end
 
@@ -133,7 +128,6 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_visit_the_start_page
     when_i_press_start_now
     when_i_select_a_legacy_country
-    and_i_submit
     then_i_see_the_eligible_page
 
     when_i_press_start
@@ -143,8 +137,7 @@ RSpec.describe "Eligibility check", type: :system do
   it "handles countries with multiple regions" do
     when_i_visit_the_start_page
     when_i_press_start_now
-    when_i_select_a_country_with_multiple_regions
-    and_i_submit
+    when_i_select_a_multiple_region_country
     then_i_see_the_region_page
 
     when_i_choose_region
@@ -163,10 +156,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_start_page
 
     when_i_press_start_now
-    then_i_see_the_countries_page
+    then_i_see_the_country_page
 
-    when_i_select_a_country
-    and_i_submit
+    when_i_select_an_eligible_country
     then_i_see_the_qualifications_page
   end
 
@@ -226,6 +218,47 @@ RSpec.describe "Eligibility check", type: :system do
     start_page.start_button.click
   end
 
+  def country_page
+    @country_page ||= PageObjects::EligibilityInterface::Country.new
+  end
+
+  def when_i_select_a_country(country)
+    country_page.form.location_field.fill_in with: country
+    country_page.form.continue_button.click
+  end
+
+  def when_i_select_an_eligible_country
+    when_i_select_a_country "Scotland"
+  end
+
+  def when_i_select_an_ineligible_country
+    when_i_select_a_country "Spain"
+  end
+
+  def when_i_select_a_legacy_country
+    when_i_select_a_country "France"
+  end
+
+  def when_i_select_a_multiple_region_country
+    when_i_select_a_country "Italy"
+  end
+
+  def then_i_see_the_country_page
+    expect(country_page).to have_title(
+      "In which country are you currently recognised as a teacher?"
+    )
+    expect(country_page.heading).to have_content(
+      "In which country are you currently recognised as a teacher?"
+    )
+  end
+
+  def then_i_see_the_country_error_message
+    expect(country_page).to have_error_summary
+    expect(country_page.error_summary.body).to have_content(
+      "Tell us where you’re currently recognised as a teacher"
+    )
+  end
+
   def and_i_submit
     click_button "Continue", visible: false
   end
@@ -240,28 +273,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_press_start
     click_link "Apply for QTS"
-  end
-
-  def when_i_select_a_country
-    fill_in "eligibility-interface-country-form-location-field",
-            with: "Scotland"
-  end
-
-  def when_i_select_a_country_in_the_error_state
-    fill_in "eligibility-interface-country-form-location-field-error",
-            with: "Scotland"
-  end
-
-  def when_i_select_an_ineligible_country
-    fill_in "eligibility-interface-country-form-location-field", with: "Spain"
-  end
-
-  def when_i_select_a_legacy_country
-    fill_in "eligibility-interface-country-form-location-field", with: "France"
-  end
-
-  def when_i_select_a_country_with_multiple_regions
-    fill_in "eligibility-interface-country-form-location-field", with: "Italy"
   end
 
   def when_i_try_to_go_to_the_eligible_page
@@ -298,27 +309,12 @@ RSpec.describe "Eligibility check", type: :system do
     )
   end
 
-  def then_i_see_the_countries_page
-    expect(page).to have_title(
-      "In which country are you currently recognised as a teacher?"
-    )
-    expect(page).to have_content(
-      "In which country are you currently recognised as a teacher?"
-    )
-  end
-
   def then_i_see_the_region_page
     expect(page).to have_title(
       "In which state/territory are you currently recognised as a teacher?"
     )
     expect(page).to have_content(
       "In which state/territory are you currently recognised as a teacher?"
-    )
-  end
-
-  def then_i_see_the_country_error_message
-    expect(page).to have_content(
-      "Tell us where you’re currently recognised as a teacher"
     )
   end
 
