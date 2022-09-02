@@ -140,8 +140,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_select_a_multiple_region_country
     then_i_see_the_region_page
 
-    when_i_choose_region
-    and_i_submit
+    when_i_select_a_region
     then_i_see_the_qualifications_page
   end
 
@@ -259,12 +258,30 @@ RSpec.describe "Eligibility check", type: :system do
     )
   end
 
-  def and_i_submit
-    click_button "Continue", visible: false
+  def when_i_try_to_go_to_the_region_page
+    region_page.load
   end
 
-  def when_i_choose_region
-    choose "Region", visible: false
+  def region_page
+    @region_page ||= PageObjects::EligibilityInterface::Region.new
+  end
+
+  def then_i_see_the_region_page
+    expect(region_page).to have_title(
+      "In which state/territory are you currently recognised as a teacher?"
+    )
+    expect(region_page.heading).to have_content(
+      "In which state/territory are you currently recognised as a teacher?"
+    )
+  end
+
+  def when_i_select_a_region
+    region_page.form.radio_items.first.input.click
+    region_page.form.continue_button.click
+  end
+
+  def and_i_submit
+    click_button "Continue", visible: false
   end
 
   def when_i_press_back
@@ -281,10 +298,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_try_to_go_to_the_ineligible_page
     visit "/eligibility/ineligible"
-  end
-
-  def when_i_try_to_go_to_the_region_page
-    visit "/eligibility/region"
   end
 
   def when_i_try_to_go_to_the_degree_page
@@ -306,15 +319,6 @@ RSpec.describe "Eligibility check", type: :system do
   def then_i_see_the_misconduct_page
     expect(page).to have_content(
       "Do you have any sanctions or restrictions on your employment record?"
-    )
-  end
-
-  def then_i_see_the_region_page
-    expect(page).to have_title(
-      "In which state/territory are you currently recognised as a teacher?"
-    )
-    expect(page).to have_content(
-      "In which state/territory are you currently recognised as a teacher?"
     )
   end
 
