@@ -105,6 +105,10 @@ FactoryBot.define do
 
     trait :with_work_history do
       has_work_history { true }
+
+      after(:create) do |application_form, _evaluator|
+        application_form.work_histories << build(:work_history, :completed)
+      end
     end
 
     trait :with_written_statement do

@@ -1,0 +1,11 @@
+<% content_for :page_title, "Check work history" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-xl">Check work history</h1>
+
+<%= render "shared/application_form/work_history_summary",
+           application_form: @application_form,
+           work_histories: @work_histories,
+           changeable: false %>
+
+<%= govuk_button_link_to "Continue", [:assessor_interface, @application_form] %>
