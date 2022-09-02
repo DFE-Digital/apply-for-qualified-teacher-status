@@ -4,6 +4,7 @@ module PageObjects
       set_url "/eligibility"
 
       element :heading, "h1"
+      element :description, ".govuk-body", match: :first
 
       element :start_button, "button"
 
