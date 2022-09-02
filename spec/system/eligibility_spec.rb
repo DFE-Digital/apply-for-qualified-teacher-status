@@ -24,8 +24,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_have_a_degree
     then_i_see_the_teach_children_page
 
-    when_i_choose_yes
-    and_i_submit
+    when_i_can_teach_children
     then_i_see_the_misconduct_page
 
     when_i_choose_no
@@ -56,8 +55,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_dont_have_a_degree
     then_i_see_the_teach_children_page
 
-    when_i_choose_no
-    and_i_submit
+    when_i_cant_teach_children
     then_i_see_the_misconduct_page
 
     when_i_choose_yes
@@ -103,8 +101,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_try_to_go_to_the_misconduct_page
     then_i_see_the_teach_children_page
 
-    when_i_choose_yes
-    and_i_submit
+    when_i_can_teach_children
     then_i_see_the_misconduct_page
   end
 
@@ -326,6 +323,34 @@ RSpec.describe "Eligibility check", type: :system do
     degree_page.form.continue_button.click
   end
 
+  def teach_children_page
+    @teach_children_page ||=
+      PageObjects::EligibilityInterface::TeachChildren.new
+  end
+
+  def when_i_try_to_go_to_the_teach_children_page
+    teach_children_page.load
+  end
+
+  def then_i_see_the_teach_children_page
+    expect(teach_children_page).to have_title(
+      "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
+    )
+    expect(teach_children_page.heading).to have_content(
+      "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
+    )
+  end
+
+  def when_i_can_teach_children
+    teach_children_page.form.yes_radio_item.input.click
+    teach_children_page.form.continue_button.click
+  end
+
+  def when_i_cant_teach_children
+    teach_children_page.form.no_radio_item.input.click
+    teach_children_page.form.continue_button.click
+  end
+
   def and_i_submit
     click_button "Continue", visible: false
   end
@@ -344,10 +369,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_try_to_go_to_the_ineligible_page
     visit "/eligibility/ineligible"
-  end
-
-  def when_i_try_to_go_to_the_teach_children_page
-    visit "/eligibility/teach-children"
   end
 
   def when_i_try_to_go_to_the_misconduct_page
@@ -423,15 +444,6 @@ RSpec.describe "Eligibility check", type: :system do
     )
     expect(page).to have_content(
       "Have you completed all requirements to work as a qualified teacher in"
-    )
-  end
-
-  def then_i_see_the_teach_children_page
-    expect(page).to have_title(
-      "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
-    )
-    expect(page).to have_content(
-      "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
     )
   end
 
