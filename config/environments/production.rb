@@ -39,6 +39,7 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :microsoft
+  config.active_storage.draw_routes = false
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -84,11 +85,10 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  routes.default_url_options = {
+  config.action_mailer.default_url_options = {
     host: HostingEnvironment.host,
     protocol: "https"
   }
-
   config.action_mailer.delivery_method = :notify
   config.action_mailer.notify_settings = {
     api_key: ENV.fetch("GOVUK_NOTIFY_API_KEY")
