@@ -275,9 +275,9 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_start_page
-    expect start_page.heading.text.to eq(
-             "Check your eligibility to apply for qualified teacher status (QTS) in England"
-           )
+    expect(start_page.heading.text).to eq(
+      "Check your eligibility to apply for qualified teacher status (QTS) in England"
+    )
   end
 
   def then_i_see_the_misconduct_page
