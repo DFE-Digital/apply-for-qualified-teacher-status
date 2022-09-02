@@ -21,8 +21,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_have_a_qualification
     then_i_see_the_degree_page
 
-    when_i_choose_yes
-    and_i_submit
+    when_i_have_a_degree
     then_i_see_the_teach_children_page
 
     when_i_choose_yes
@@ -54,8 +53,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_dont_have_a_qualification
     then_i_see_the_degree_page
 
-    when_i_choose_no
-    and_i_submit
+    when_i_dont_have_a_degree
     then_i_see_the_teach_children_page
 
     when_i_choose_no
@@ -99,8 +97,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_try_to_go_to_the_teach_children_page
     then_i_see_the_degree_page
 
-    when_i_choose_yes
-    and_i_submit
+    when_i_have_a_degree
     then_i_see_the_teach_children_page
 
     when_i_try_to_go_to_the_misconduct_page
@@ -304,6 +301,31 @@ RSpec.describe "Eligibility check", type: :system do
     qualification_page.form.continue_button.click
   end
 
+  def degree_page
+    @degree_page ||= PageObjects::EligibilityInterface::Degree.new
+  end
+
+  def when_i_try_to_go_to_the_degree_page
+    degree_page.load
+  end
+
+  def then_i_see_the_degree_page
+    expect(degree_page).to have_title("Do you have a university degree?")
+    expect(degree_page.heading).to have_content(
+      "Do you have a university degree?"
+    )
+  end
+
+  def when_i_have_a_degree
+    degree_page.form.yes_radio_item.input.click
+    degree_page.form.continue_button.click
+  end
+
+  def when_i_dont_have_a_degree
+    degree_page.form.no_radio_item.input.click
+    degree_page.form.continue_button.click
+  end
+
   def and_i_submit
     click_button "Continue", visible: false
   end
@@ -322,10 +344,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_try_to_go_to_the_ineligible_page
     visit "/eligibility/ineligible"
-  end
-
-  def when_i_try_to_go_to_the_degree_page
-    visit "/eligibility/degree"
   end
 
   def when_i_try_to_go_to_the_teach_children_page
@@ -406,11 +424,6 @@ RSpec.describe "Eligibility check", type: :system do
     expect(page).to have_content(
       "Have you completed all requirements to work as a qualified teacher in"
     )
-  end
-
-  def then_i_see_the_degree_page
-    expect(page).to have_title("Do you have a university degree?")
-    expect(page).to have_content("Do you have a university degree?")
   end
 
   def then_i_see_the_teach_children_page
