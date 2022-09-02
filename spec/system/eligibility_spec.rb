@@ -402,8 +402,8 @@ RSpec.describe "Eligibility check", type: :system do
     expect(page).to have_current_path("/MutualRecognition/")
   end
 
-  def when_i_press_back
-    click_link "Back"
+  def ineligible_page
+    @ineligible_page = PageObjects::EligibilityInterface::Ineligible.new
   end
 
   def when_i_try_to_go_to_the_ineligible_page
@@ -411,50 +411,51 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_ineligible_page
-    expect(page).to have_content(
+    expect(ineligible_page.heading).to have_content(
       "You’re not eligible to apply for qualified teacher status (QTS) in England"
     )
   end
 
   def and_i_see_the_ineligible_country_text
-    expect(page).to have_content(
+    expect(ineligible_page.heading).to have_content(
       "You’re not eligible to apply for qualified teacher status (QTS) in England"
     )
-    expect(page).to have_content(
+    expect(ineligible_page.body).to have_content(
       "Teachers applying from Spain are not currently eligible to use this service."
-    )
-    expect(page).to have_content(
-      "You can also learn more about teaching in England."
     )
   end
 
   def and_i_see_the_ineligible_completed_requirements_text
-    expect(page).to have_content(
+    expect(ineligible_page.reasons).to have_content(
       "You have not completed all requirements to work as a qualified teacher in Scotland."
     )
   end
 
   def and_i_see_the_ineligible_misconduct_text
-    expect(page).to have_content(
+    expect(ineligible_page.reasons).to have_content(
       "To teach in England, you must not have any findings of misconduct or restrictions on your practice."
     )
   end
 
   def and_i_see_the_ineligible_teach_children_text
-    expect(page).to have_content(
+    expect(ineligible_page.reasons).to have_content(
       "You are not qualified to teach children who are aged somewhere between 5 and 16 years."
     )
   end
 
   def and_i_see_the_ineligible_qualification_text
-    expect(page).to have_content(
+    expect(ineligible_page.reasons).to have_content(
       "You have not completed a formal teacher training course, for example, an undergraduate teaching " \
         "degree or postgraduate teacher training course."
     )
   end
 
   def and_i_see_the_ineligible_degree_text
-    expect(page).to have_content("You do not have a degree.")
+    expect(ineligible_page.reasons).to have_content("You do not have a degree.")
+  end
+
+  def when_i_press_back
+    click_link "Back"
   end
 
   def then_i_have_two_eligibility_checks
