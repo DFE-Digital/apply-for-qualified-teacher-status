@@ -1,0 +1,38 @@
+module AssessorInterface
+  class ReviewerAssignmentsController < BaseController
+    def new
+      @reviewer_assignment_form =
+        ReviewerAssignmentForm.new(
+          reviewer_id: application_form.reviewer_id,
+          application_form:
+        )
+    end
+
+    def create
+      @reviewer_assignment_form =
+        ReviewerAssignmentForm.new(
+          reviewer_id: reviewer_params[:reviewer_id],
+          application_form:,
+          assigning_user_id: current_staff.id
+        )
+
+      if @reviewer_assignment_form.save!
+        redirect_to assessor_interface_application_form_path(application_form)
+      else
+        render :new
+      end
+    end
+
+    private
+
+    def application_form
+      @application_form ||= ApplicationForm.find(params[:application_form_id])
+    end
+
+    def reviewer_params
+      params.require(:assessor_interface_reviewer_assignment_form).permit(
+        :reviewer_id
+      )
+    end
+  end
+end

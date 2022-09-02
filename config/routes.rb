@@ -14,8 +14,11 @@ Rails.application.routes.draw do
     resources :application_forms, path: "/applications", only: %i[index show] do
       get "assign-assessor", to: "assessor_assignments#new"
       post "assign-assessor", to: "assessor_assignments#create"
+      get "assign-reviewer", to: "reviewer_assignments#new"
+      post "assign-reviewer", to: "reviewer_assignments#create"
       get "complete-assessment", to: "complete_assessments#new"
       post "complete-assessment", to: "complete_assessments#create"
+
       resource :check_personal_information, only: :show
       resource :check_qualifications, only: :show
       resource :check_work_history, only: :show

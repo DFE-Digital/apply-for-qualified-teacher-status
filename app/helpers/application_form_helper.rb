@@ -48,7 +48,14 @@ module ApplicationFormHelper
         I18n.t("application_form.summary.reviewer"),
         application_form.reviewer&.name ||
           I18n.t("application_form.summary.unassigned"),
-        [{ href: "#" }]
+        [
+          {
+            href:
+              assessor_interface_application_form_assign_reviewer_path(
+                application_form
+              )
+          }
+        ]
       ],
       (
         if include_reference

@@ -24,7 +24,6 @@ gem "sentry-rails"
 gem "sentry-ruby"
 gem "sidekiq"
 gem "sitemap_generator"
-gem "site_prism"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Windows
 
 gem "dfe-analytics", git: "https://github.com/DFE-Digital/dfe-analytics"
@@ -61,4 +60,5 @@ group :test do
   gem "rspec"
   gem "rspec-rails", "~> 6.0.0.rc1"
   gem "shoulda-matchers", "~> 5.1"
+  gem "site_prism"
 end

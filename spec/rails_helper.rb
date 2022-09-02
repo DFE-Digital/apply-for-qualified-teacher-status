@@ -11,6 +11,8 @@ require "rspec/rails"
 require "capybara/cuprite"
 require "dfe/analytics/testing"
 require "view_component/test_helpers"
+require "site_prism"
+require "site_prism/all_there"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -77,4 +79,4 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
