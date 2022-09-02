@@ -25,4 +25,12 @@ class Upload < ApplicationRecord
   def original?
     !translation?
   end
+
+  def name
+    attachment.filename.to_s
+  end
+
+  def url
+    Rails.application.routes.url_helpers.url_for(attachment)
+  end
 end

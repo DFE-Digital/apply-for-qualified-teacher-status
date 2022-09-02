@@ -232,7 +232,12 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
     end
 
     it "renders the value" do
-      expect(row.at_css(".govuk-summary-list__value").text).to eq("upload.pdf")
+      expect(row.at_css(".govuk-summary-list__value a").text).to eq(
+        "upload.pdf"
+      )
+      expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
+        "upload.pdf"
+      )
     end
 
     it "renders the change link" do
@@ -273,7 +278,10 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       end
 
       it "renders the value" do
-        expect(row.at_css(".govuk-summary-list__value").text).to eq(
+        expect(row.at_css(".govuk-summary-list__value a").text).to eq(
+          "upload.pdf"
+        )
+        expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
           "upload.pdf"
         )
       end
@@ -296,7 +304,10 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       end
 
       it "renders the value" do
-        expect(row.at_css(".govuk-summary-list__value").text).to eq(
+        expect(row.at_css(".govuk-summary-list__value a").text).to eq(
+          "translation_upload.pdf"
+        )
+        expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
           "translation_upload.pdf"
         )
       end

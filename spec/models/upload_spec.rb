@@ -37,4 +37,21 @@ RSpec.describe Upload, type: :model do
       it { is_expected.to be(false) }
     end
   end
+
+  describe "#name" do
+    subject(:name) { upload.name }
+
+    it { is_expected.to eq("upload.pdf") }
+  end
+
+  describe "#url" do
+    subject(:url) { upload.url }
+
+    it do
+      is_expected.to include(
+        "http://localhost:3000/rails/active_storage/blobs/redirect/"
+      )
+    end
+    it { is_expected.to include("upload.pdf") }
+  end
 end

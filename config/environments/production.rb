@@ -84,10 +84,11 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = {
+  routes.default_url_options = {
     host: HostingEnvironment.host,
     protocol: "https"
   }
+
   config.action_mailer.delivery_method = :notify
   config.action_mailer.notify_settings = {
     api_key: ENV.fetch("GOVUK_NOTIFY_API_KEY")
