@@ -171,24 +171,21 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   it "test user is disabled" do
-    given_the_test_user_is_disabled
+    given_the_service_is_closed
     when_i_visit_the_start_page
     then_i_do_not_see_the_start_page
 
     when_i_am_authorized_as_a_test_user
     when_i_visit_the_start_page
-    then_i_see_the_start_page
+    then_i_do_not_see_the_start_page
 
     given_the_test_user_is_enabled
+    when_i_am_authorized_as_a_test_user
     when_i_visit_the_start_page
     then_i_see_the_start_page
   end
 
   private
-
-  def and_i_submit
-    click_button "Continue", visible: false
-  end
 
   def given_countries_exist
     create(:country, :with_national_region, code: "GB-SCT")
@@ -199,16 +196,46 @@ RSpec.describe "Eligibility check", type: :system do
     create(:region, country: it, name: "Other Region")
   end
 
+  def start_page
+    @start_page ||= PageObjects::EligibilityInterface::Start.new
+  end
+
+  def when_i_visit_the_start_page
+    start_page.load
+  end
+
+  def then_i_see_the_start_page
+    expect(page).to have_title(
+      "Apply for qualified teacher status (QTS) in England"
+    )
+    expect(start_page.heading).to have_content(
+      "Check your eligibility to apply for qualified teacher status (QTS) in England"
+    )
+    expect(start_page.description).to have_content(
+      "This service is for qualified teachers who trained outside of England" \
+        " who want to apply for qualified teacher status (QTS) to teach in" \
+        " English schools."
+    )
+  end
+
+  def then_i_do_not_see_the_start_page
+    expect(start_page).to_not have_start_button
+  end
+
+  def when_i_press_start_now
+    start_page.start_button.click
+  end
+
+  def and_i_submit
+    click_button "Continue", visible: false
+  end
+
   def when_i_choose_region
     choose "Region", visible: false
   end
 
   def when_i_press_back
     click_link "Back"
-  end
-
-  def when_i_press_start_now
-    start_page.start_button.click
   end
 
   def when_i_press_start
@@ -237,10 +264,6 @@ RSpec.describe "Eligibility check", type: :system do
     fill_in "eligibility-interface-country-form-location-field", with: "Italy"
   end
 
-  def when_i_visit_the_start_page
-    start_page.load
-  end
-
   def when_i_try_to_go_to_the_eligible_page
     visit "/eligibility/eligible"
   end
@@ -267,18 +290,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_try_to_go_to_the_misconduct_page
     visit "/eligibility/misconduct"
-  end
-
-  def then_i_do_not_see_the_start_page
-    expect(page).not_to have_content(
-      "Check your eligilibity to apply for qualified teacher status (QTS) in England"
-    )
-  end
-
-  def then_i_see_the_start_page
-    expect(start_page.heading.text).to eq(
-      "Check your eligibility to apply for qualified teacher status (QTS) in England"
-    )
   end
 
   def then_i_see_the_misconduct_page
@@ -389,15 +400,6 @@ RSpec.describe "Eligibility check", type: :system do
     )
   end
 
-  def then_i_see_the_start_page
-    expect(page).to have_content("Apply for qualified teacher status")
-    expect(page).to have_content(
-      "This service is for qualified teachers who trained outside of England" \
-        " who want to apply for qualified teacher status (QTS) to teach in" \
-        " English schools."
-    )
-  end
-
   def then_i_see_the_teach_children_page
     expect(page).to have_title(
       "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
@@ -409,9 +411,5 @@ RSpec.describe "Eligibility check", type: :system do
 
   def then_i_have_two_eligibility_checks
     expect(EligibilityCheck.count).to eq(2)
-  end
-
-  def start_page
-    @start_page ||= PageObjects::EligibilityInterface::Start.new
   end
 end
