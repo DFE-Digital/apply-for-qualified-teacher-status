@@ -119,7 +119,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_select_a_legacy_country
     then_i_see_the_eligible_page
 
-    when_i_press_start
+    when_i_press_apply
     then_i_see_the_legacy_service
   end
 
@@ -380,36 +380,40 @@ RSpec.describe "Eligibility check", type: :system do
     misconduct_page.form.continue_button.click
   end
 
-  def when_i_press_back
-    click_link "Back"
-  end
-
-  def when_i_press_start
-    click_link "Apply for QTS"
+  def eligible_page
+    @eligible_page = PageObjects::EligibilityInterface::Eligible.new
   end
 
   def when_i_try_to_go_to_the_eligible_page
-    visit "/eligibility/eligible"
+    eligible_page.load
+  end
+
+  def when_i_press_apply
+    eligible_page.apply_button.click
+  end
+
+  def then_i_see_the_eligible_page
+    expect(eligible_page).to have_content(
+      "You’re eligible to apply for qualified teacher status (QTS) in England"
+    )
+  end
+
+  def then_i_see_the_legacy_service
+    expect(page).to have_current_path("/MutualRecognition/")
+  end
+
+  def when_i_press_back
+    click_link "Back"
   end
 
   def when_i_try_to_go_to_the_ineligible_page
     visit "/eligibility/ineligible"
   end
 
-  def then_i_see_the_eligible_page
-    expect(page).to have_content(
-      "You’re eligible to apply for qualified teacher status (QTS) in England"
-    )
-  end
-
   def then_i_see_the_ineligible_page
     expect(page).to have_content(
       "You’re not eligible to apply for qualified teacher status (QTS) in England"
     )
-  end
-
-  def then_i_see_the_legacy_service
-    expect(page).to have_current_path("/MutualRecognition/")
   end
 
   def and_i_see_the_ineligible_country_text
