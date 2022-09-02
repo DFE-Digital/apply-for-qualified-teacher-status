@@ -66,8 +66,7 @@ Rails.application.configure do
 
   config.active_job.queue_adapter = :sidekiq
 
-  routes.default_url_options = { host: "localhost", port: 3000 }
-
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
   config.action_mailer.delivery_method = :file
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
