@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "Eligibility check", type: :system do
@@ -281,14 +282,12 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_misconduct_page
-    expect(page).to have_current_path("/eligibility/misconduct")
     expect(page).to have_content(
       "Do you have any sanctions or restrictions on your employment record?"
     )
   end
 
   def then_i_see_the_countries_page
-    expect(page).to have_current_path("/eligibility/countries")
     expect(page).to have_title(
       "In which country are you currently recognised as a teacher?"
     )
@@ -298,7 +297,6 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_region_page
-    expect(page).to have_current_path("/eligibility/region")
     expect(page).to have_title(
       "In which state/territory are you currently recognised as a teacher?"
     )
@@ -314,14 +312,12 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_eligible_page
-    expect(page).to have_current_path("/eligibility/eligible")
     expect(page).to have_content(
       "You’re eligible to apply for qualified teacher status (QTS) in England"
     )
   end
 
   def then_i_see_the_ineligible_page
-    expect(page).to have_current_path("/eligibility/ineligible")
     expect(page).to have_content(
       "You’re not eligible to apply for qualified teacher status (QTS) in England"
     )
@@ -373,7 +369,6 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_completed_requirements_page
-    expect(page).to have_current_path("/eligibility/completed-requirements")
     expect(page).to have_title(
       "Have you completed all requirements to work as a qualified teacher in"
     )
@@ -383,13 +378,11 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_degree_page
-    expect(page).to have_current_path("/eligibility/degree")
     expect(page).to have_title("Do you have a university degree?")
     expect(page).to have_content("Do you have a university degree?")
   end
 
   def then_i_see_the_qualifications_page
-    expect(page).to have_current_path("/eligibility/qualifications")
     expect(page).to have_title("Do you have a teacher training qualification?")
     expect(page).to have_content(
       "Do you have a teacher training qualification?"
@@ -406,7 +399,6 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def then_i_see_the_teach_children_page
-    expect(page).to have_current_path("/eligibility/teach-children")
     expect(page).to have_title(
       "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
     )
