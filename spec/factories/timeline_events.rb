@@ -28,6 +28,8 @@ FactoryBot.define do
   factory :timeline_event do
     association :application_form
 
+    association :creator, factory: :staff
+
     trait :assessor_assigned do
       event_type { "assessor_assigned" }
       association :assignee, factory: :staff
