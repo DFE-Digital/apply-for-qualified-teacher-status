@@ -13,6 +13,11 @@ module PageObjects
         element :location_field, 'input[name="location_autocomplete"]'
         element :continue_button, "button"
       end
+
+      def submit(country:)
+        form.location_field.fill_in with: country
+        form.continue_button.click
+      end
     end
   end
 end

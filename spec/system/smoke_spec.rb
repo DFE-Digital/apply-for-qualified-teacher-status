@@ -1,7 +1,19 @@
 # frozen_string_literal: true
+
 require "spec_helper"
 require "capybara/rspec"
 require "capybara/cuprite"
+require "site_prism"
+require "site_prism/all_there"
+
+require "support/page_objects/eligiblity_interface/country"
+require "support/page_objects/eligiblity_interface/degree"
+require "support/page_objects/eligiblity_interface/eligible"
+require "support/page_objects/eligiblity_interface/misconduct"
+require "support/page_objects/eligiblity_interface/qualification"
+require "support/page_objects/eligiblity_interface/region"
+require "support/page_objects/eligiblity_interface/start"
+require "support/page_objects/eligiblity_interface/teach_children"
 
 Capybara.javascript_driver = :cuprite
 Capybara.always_include_port = false
@@ -34,7 +46,7 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def and_i_click_the_start_button
-    click_button("Start now")
+    start_page.start_button.click
   end
 
   def and_i_need_to_check_my_eligibility
@@ -47,42 +59,63 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def and_i_enter_a_country
-    fill_in "eligibility-interface-country-form-location-field", with: "Canada"
-    continue
+    country_page.submit(country: "Canada")
   end
 
   def and_i_select_a_state
-    choose "Ontario", visible: false
-    continue
+    region_page.submit(region: "Ontario")
   end
 
   def and_i_have_a_teaching_qualification
-    choose "Yes", visible: false
-    continue
+    qualification_page.submit_yes
   end
 
   def and_i_have_a_university_degree
-    choose "Yes", visible: false
-    continue
+    degree_page.submit_yes
   end
 
   def and_i_am_qualified_to_teach
-    choose "Yes", visible: false
-    continue
+    teach_children_page.submit_yes
   end
 
   def and_i_dont_have_sanctions
-    choose "No", visible: false
-    continue
+    misconduct_page.submit_no
   end
 
   def then_i_should_be_eligible_to_apply
-    expect(page).to have_content("You’re eligible to apply")
+    expect(eligible_page).to have_content("You’re eligible to apply")
   end
 
-  private
+  def start_page
+    @start_page ||= PageObjects::EligibilityInterface::Start.new
+  end
 
-  def continue
-    click_button("Continue")
+  def country_page
+    @country_page ||= PageObjects::EligibilityInterface::Country.new
+  end
+
+  def region_page
+    @region_page ||= PageObjects::EligibilityInterface::Region.new
+  end
+
+  def qualification_page
+    @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
+  end
+
+  def degree_page
+    @degree_page ||= PageObjects::EligibilityInterface::Degree.new
+  end
+
+  def teach_children_page
+    @teach_children_page ||=
+      PageObjects::EligibilityInterface::TeachChildren.new
+  end
+
+  def misconduct_page
+    @misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
+  end
+
+  def eligible_page
+    @eligible_page ||= PageObjects::EligibilityInterface::Eligible.new
   end
 end

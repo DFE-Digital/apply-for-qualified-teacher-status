@@ -1,4 +1,5 @@
-require "support/page_objects/govuk_error_summary"
+require_relative "../govuk_error_summary"
+require_relative "../govuk_radio_item"
 
 module PageObjects
   module EligibilityInterface
@@ -14,6 +15,11 @@ module PageObjects
                  PageObjects::GovukRadioItem,
                  ".govuk-radios__item"
         element :continue_button, "button"
+      end
+
+      def submit(region:)
+        form.radio_items.find { |e| e.text == region }.input.click
+        form.continue_button.click
       end
     end
   end

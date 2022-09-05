@@ -1,4 +1,5 @@
-require "support/page_objects/govuk_error_summary"
+require_relative "../govuk_error_summary"
+require_relative "../govuk_radio_item"
 
 module PageObjects
   module EligibilityInterface
@@ -15,6 +16,16 @@ module PageObjects
                 PageObjects::GovukRadioItem,
                 ".govuk-radios__item:nth-of-type(2)"
         element :continue_button, "button"
+      end
+
+      def submit_yes
+        form.yes_radio_item.input.click
+        form.continue_button.click
+      end
+
+      def submit_no
+        form.no_radio_item.input.click
+        form.continue_button.click
       end
     end
   end
