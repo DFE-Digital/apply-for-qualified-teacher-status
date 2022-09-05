@@ -1,8 +1,10 @@
 $govuk-global-styles: true;
 $govuk-new-link-styles: true;
 $govuk-assets-path: "/";
+$moj-images-path: "/";
 
 @import "govuk-frontend/govuk/all";
+@import "@ministryofjustice/frontend/moj/components/timeline/timeline";
 @import "location-autocomplete.min";
 
 @import "_application_forms";
