@@ -13,3 +13,13 @@ en:
             professional_standing: Check professional standing
             first_assessment: First assessment
             second_assessment: Second assessment
+    timeline_events:
+      index:
+        title:
+          assessor_assigned: Assessor assigned
+          reviewer_assigned: Reviewer assigned
+          state_changed: Status changed
+        description:
+          assessor_assigned: "%{assignee_name} is assigned as the assessor."
+          reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
+          state_changed: Status changed from %{old_state} to %{new_state}.

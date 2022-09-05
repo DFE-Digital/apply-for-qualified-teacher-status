@@ -25,7 +25,9 @@ module ApplicationFormOverview
               text:
                 govuk_link_to(
                   I18n.t("application_form.overview.view_timeline"),
-                  "#"
+                  assessor_interface_application_form_timeline_events_path(
+                    application_form
+                  )
                 )
             }
           }
