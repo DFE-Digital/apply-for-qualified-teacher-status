@@ -75,10 +75,18 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
     context "with multiple application forms" do
       let(:application_form_1) do
-        create(:application_form, :submitted, created_at: Date.new(2020, 1, 1))
+        create(
+          :application_form,
+          :submitted,
+          submitted_at: Date.new(2020, 1, 1)
+        )
       end
       let(:application_form_2) do
-        create(:application_form, :submitted, created_at: Date.new(2020, 1, 2))
+        create(
+          :application_form,
+          :submitted,
+          submitted_at: Date.new(2020, 1, 2)
+        )
       end
 
       it { is_expected.to eq([application_form_2, application_form_1]) }
