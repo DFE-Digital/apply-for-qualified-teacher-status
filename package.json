@@ -2,6 +2,7 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "@ministryofjustice/frontend": "^1.4.2",
     "esbuild": "^0.15.6",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
     "govuk-frontend": "^4.3.1",
