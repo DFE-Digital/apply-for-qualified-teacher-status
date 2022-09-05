@@ -23,6 +23,10 @@ var loadCountryAutoComplete = () => {
     document.getElementById(
       "qualification-institution-country-code-field-error"
     ) ??
+    document.getElementById("assessor-interface-filter-form-location-field") ??
+    document.getElementById(
+      "assessor-interface-filter-form-location-field-error"
+    ) ??
     document.getElementById("location-field") ??
     document.getElementById("location-field-error");
 

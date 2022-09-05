@@ -16,23 +16,19 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     application_forms_with_pagy.last
   end
 
-  def assessor_filter_options
-    Staff.all
+  def filter_form
+    @filter_form ||= AssessorInterface::FilterForm.new(filter_params)
   end
 
-  def assessor_filter_checked?(option)
-    params[:assessor_ids]&.include?(option.id.to_s) || false
+  def assessor_filter_options
+    Staff.all
   end
 
   def country_filter_options
     options_for_select(
       Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST,
-      params[:location]
+      filter_form.location
     )
-  end
-
-  def name_filter_value
-    params[:name]
   end
 
   def state_filter_options
@@ -47,29 +43,30 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     end
   end
 
-  def state_filter_checked?(option)
-    params[:states]&.include?(option.id) || false
-  end
-
-  def search_params
+  def permitted_params
     params.permit(
-      :assessor_ids,
-      :location,
       :location_autocomplete,
-      :name,
-      :states,
-      :page
+      :page,
+      assessor_interface_filter_form: [
+        :location,
+        :name,
+        { assessor_ids: [], states: [] }
+      ]
     )
   end
 
   private
+
+  def filter_params
+    permitted_params[:assessor_interface_filter_form] || {}
+  end
 
   def application_forms_with_pagy
     @application_forms_with_pagy ||=
       pagy(
         ::Filters::State.apply(
           scope: application_forms_without_state_filter,
-          params:
+          params: filter_params
         ).order(submitted_at: :desc)
       )
   end
@@ -79,7 +76,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       begin
         filters = [::Filters::Name, ::Filters::Assessor, ::Filters::Country]
         filters.reduce(ApplicationForm.active) do |scope, filter|
-          filter.apply(scope:, params:)
+          filter.apply(scope:, params: filter_params)
         end
       end
   end
@@ -87,10 +84,10 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def remove_cleared_autocomplete_values(params)
     if params.include?(:location_autocomplete) &&
          params[:location_autocomplete].blank?
-      params.except(:location)
-    else
-      params
+      params[:assessor_interface_filter_form]&.delete(:location)
     end
+
+    params
   end
 
   attr_reader :params
