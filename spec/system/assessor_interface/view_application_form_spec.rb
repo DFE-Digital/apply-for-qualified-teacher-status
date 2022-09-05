@@ -44,7 +44,6 @@ RSpec.describe "Assessor view application form", type: :system do
     expect(page).to have_content("Check personal information")
     expect(page).to have_content("Check qualifications")
     expect(page).to have_content("Check work history")
-    expect(page).to have_content("Check professional standing")
     expect(page).to have_content("Your recommendation")
     expect(page).to have_content("First assessment")
     expect(page).to have_content("Second assessment")

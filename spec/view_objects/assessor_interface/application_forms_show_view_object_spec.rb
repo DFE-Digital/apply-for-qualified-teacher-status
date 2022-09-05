@@ -36,20 +36,55 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
   end
 
   describe "#assessment_tasks" do
+    let(:application_form) { create(:application_form) }
+    let(:params) { { id: application_form.id } }
+
     subject(:assessment_tasks) { view_object.assessment_tasks }
 
-    it do
-      is_expected.to eq(
-        {
-          submitted_details: %i[
-            personal_information
-            qualifications
-            work_history
-            professional_standing
-          ],
-          recommendation: %i[first_assessment second_assessment]
-        }
-      )
+    describe "submitted details" do
+      subject(:submitted_details) { assessment_tasks.fetch(:submitted_details) }
+
+      context "with none checks" do
+        before do
+          application_form.update!(region: create(:region, :none_checks))
+        end
+
+        it do
+          is_expected.to eq(
+            %i[personal_information qualifications work_history]
+          )
+        end
+      end
+
+      context "with written checks" do
+        before do
+          application_form.update!(region: create(:region, :written_checks))
+        end
+
+        it do
+          is_expected.to eq(
+            %i[personal_information qualifications professional_standing]
+          )
+        end
+      end
+
+      context "with online checks" do
+        before do
+          application_form.update!(region: create(:region, :online_checks))
+        end
+
+        it do
+          is_expected.to eq(
+            %i[personal_information qualifications professional_standing]
+          )
+        end
+      end
+    end
+
+    describe "recommendation" do
+      subject(:recommendation) { assessment_tasks.fetch(:recommendation) }
+
+      it { is_expected.to eq(%i[first_assessment second_assessment]) }
     end
   end
 
