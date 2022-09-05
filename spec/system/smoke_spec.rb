@@ -59,33 +59,27 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def and_i_enter_a_country
-    country_page.form.location_field.fill_in with: "Canada"
-    country_page.form.continue_button.click
+    country_page.submit(country: "Canada")
   end
 
   def and_i_select_a_state
-    region_page.form.radio_items.find { |e| e.text == "Ontario" }.input.click
-    region_page.form.continue_button.click
+    region_page.submit(region: "Ontario")
   end
 
   def and_i_have_a_teaching_qualification
-    qualification_page.form.yes_radio_item.input.click
-    qualification_page.form.continue_button.click
+    qualification_page.submit_yes
   end
 
   def and_i_have_a_university_degree
-    degree_page.form.yes_radio_item.input.click
-    degree_page.form.continue_button.click
+    degree_page.submit_yes
   end
 
   def and_i_am_qualified_to_teach
-    teach_children_page.form.yes_radio_item.input.click
-    teach_children_page.form.continue_button.click
+    teach_children_page.submit_yes
   end
 
   def and_i_dont_have_sanctions
-    misconduct_page.form.no_radio_item.input.click
-    misconduct_page.form.continue_button.click
+    misconduct_page.submit_no
   end
 
   def then_i_should_be_eligible_to_apply

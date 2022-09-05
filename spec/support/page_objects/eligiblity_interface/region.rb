@@ -16,6 +16,11 @@ module PageObjects
                  ".govuk-radios__item"
         element :continue_button, "button"
       end
+
+      def submit(region:)
+        form.radio_items.find { |e| e.text == region }.input.click
+        form.continue_button.click
+      end
     end
   end
 end

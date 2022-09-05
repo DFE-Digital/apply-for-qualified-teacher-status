@@ -210,25 +210,20 @@ RSpec.describe "Eligibility check", type: :system do
     @country_page ||= PageObjects::EligibilityInterface::Country.new
   end
 
-  def when_i_select_a_country(country)
-    country_page.form.location_field.fill_in with: country
-    country_page.form.continue_button.click
-  end
-
   def when_i_select_an_eligible_country
-    when_i_select_a_country "Scotland"
+    country_page.submit(country: "Scotland")
   end
 
   def when_i_select_an_ineligible_country
-    when_i_select_a_country "Spain"
+    country_page.submit(country: "Spain")
   end
 
   def when_i_select_a_legacy_country
-    when_i_select_a_country "France"
+    country_page.submit(country: "France")
   end
 
   def when_i_select_a_multiple_region_country
-    when_i_select_a_country "Italy"
+    country_page.submit(country: "Italy")
   end
 
   def when_i_dont_select_a_country
@@ -269,8 +264,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_select_a_region
-    region_page.form.radio_items.first.input.click
-    region_page.form.continue_button.click
+    region_page.submit(region: "Region")
   end
 
   def qualification_page
@@ -291,13 +285,11 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_have_a_qualification
-    qualification_page.form.yes_radio_item.input.click
-    qualification_page.form.continue_button.click
+    qualification_page.submit_yes
   end
 
   def when_i_dont_have_a_qualification
-    qualification_page.form.no_radio_item.input.click
-    qualification_page.form.continue_button.click
+    qualification_page.submit_no
   end
 
   def degree_page
@@ -316,13 +308,11 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_have_a_degree
-    degree_page.form.yes_radio_item.input.click
-    degree_page.form.continue_button.click
+    degree_page.submit_yes
   end
 
   def when_i_dont_have_a_degree
-    degree_page.form.no_radio_item.input.click
-    degree_page.form.continue_button.click
+    degree_page.submit_no
   end
 
   def teach_children_page
@@ -344,13 +334,11 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_can_teach_children
-    teach_children_page.form.yes_radio_item.input.click
-    teach_children_page.form.continue_button.click
+    teach_children_page.submit_yes
   end
 
   def when_i_cant_teach_children
-    teach_children_page.form.no_radio_item.input.click
-    teach_children_page.form.continue_button.click
+    teach_children_page.submit_no
   end
 
   def misconduct_page
@@ -371,13 +359,11 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_have_a_misconduct_record
-    misconduct_page.form.yes_radio_item.input.click
-    misconduct_page.form.continue_button.click
+    misconduct_page.submit_yes
   end
 
   def when_i_dont_have_a_misconduct_record
-    misconduct_page.form.no_radio_item.input.click
-    misconduct_page.form.continue_button.click
+    misconduct_page.submit_no
   end
 
   def eligible_page
