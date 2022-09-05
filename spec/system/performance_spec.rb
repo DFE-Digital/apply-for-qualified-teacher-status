@@ -26,22 +26,38 @@ RSpec.describe "Performance", type: :system do
   end
 
   def when_i_visit_the_performance_page
-    visit performance_path
+    performance_page.load
   end
 
   def then_i_see_the_live_stats
-    expect(page).to have_content("36\nchecks over the last 7 days")
-    expect(page).to have_content("30 June\t1")
-    expect(page).to have_content("24 June\t7")
+    expect(performance_page.live_service_usage.stats.first).to have_content(
+      "36\nchecks over the last 7 days"
+    )
+    expect(performance_page.live_service_usage.table).to have_content(
+      "30 June\t1"
+    )
+    expect(performance_page.live_service_usage.table).to have_content(
+      "24 June\t7"
+    )
   end
 
   def when_i_visit_the_performance_page_since_launch
-    visit performance_path(since_launch: true)
+    performance_page.load(since_launch: true)
   end
 
   def then_i_see_the_live_stats_since_launch
-    expect(page).to have_content("45\nchecks since launch")
-    expect(page).to have_content("30 June\t1")
-    expect(page).to have_content("22 June\t9")
+    expect(performance_page.live_service_usage.stats.first).to have_content(
+      "45\nchecks since launch"
+    )
+    expect(performance_page.live_service_usage.table).to have_content(
+      "30 June\t1"
+    )
+    expect(performance_page.live_service_usage.table).to have_content(
+      "22 June\t9"
+    )
+  end
+
+  def performance_page
+    @performance_page ||= PageObjects::Performance.new
   end
 end
