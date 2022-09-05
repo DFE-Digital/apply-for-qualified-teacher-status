@@ -3,17 +3,17 @@ module AssessorInterface
     def new
       @reviewer_assignment_form =
         ReviewerAssignmentForm.new(
-          reviewer_id: application_form.reviewer_id,
-          application_form:
+          application_form:,
+          reviewer_id: application_form.reviewer_id
         )
     end
 
     def create
       @reviewer_assignment_form =
         ReviewerAssignmentForm.new(
-          reviewer_id: reviewer_params[:reviewer_id],
           application_form:,
-          assigning_user_id: current_staff.id
+          staff: current_staff,
+          reviewer_id: reviewer_params[:reviewer_id]
         )
 
       if @reviewer_assignment_form.save!
