@@ -57,22 +57,22 @@ RSpec.describe "Personas", type: :system do
   end
 
   def when_i_visit_the_personas_page
-    visit :personas
+    personas_page.load
   end
 
   def when_i_sign_in_as_a_staff_persona
-    click_button "Sign in as staff@example.com"
+    personas_page.staff.buttons.first.click
   end
 
   def when_i_sign_in_as_a_teacher_persona
-    click_button "Sign in as teacher@example.com"
+    personas_page.teachers.buttons.first.click
   end
 
   def then_i_see_the_personas_page
-    expect(page).to have_title("Personas")
-    expect(page).to have_content("Personas")
-    expect(page).to have_content("Staff")
-    expect(page).to have_content("Teachers")
+    expect(personas_page).to have_title("Personas")
+    expect(personas_page.heading).to have_content("Personas")
+    expect(personas_page.staff.heading).to have_content("Staff")
+    expect(personas_page.teachers.heading).to have_content("Teachers")
   end
 
   def then_i_see_the_case_management_page
@@ -91,16 +91,20 @@ RSpec.describe "Personas", type: :system do
   end
 
   def and_i_see_no_personas
-    expect(page).to have_content("No staff personas.")
-    expect(page).to have_content("No teacher personas.")
+    expect(personas_page.staff).to have_content("No staff personas.")
+    expect(personas_page.teachers).to have_content("No teacher personas.")
   end
 
   def and_i_see_some_personas
-    expect(page).to have_content("staff@example.com")
-    expect(page).to have_content("teacher@example.com")
+    expect(personas_page.staff).to have_content("staff@example.com")
+    expect(personas_page.teachers).to have_content("teacher@example.com")
   end
 
   def and_i_see_the_feature_disabled_message
-    expect(page).to have_content("Personas feature not active.")
+    expect(personas_page).to have_content("Personas feature not active.")
+  end
+
+  def personas_page
+    @personas_page ||= PageObjects::Personas.new
   end
 end
