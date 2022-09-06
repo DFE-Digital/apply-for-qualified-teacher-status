@@ -71,8 +71,4 @@ RSpec.describe "Assigning an assessor", type: :system do
   def assessor
     @assessor ||= create(:staff, :confirmed)
   end
-
-  def assign_reviewer_page
-    @assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
-  end
 end
