@@ -17,12 +17,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def assessment_tasks
     {
-      submitted_details: %i[
-        personal_information
-        qualifications
-        work_history
-        professional_standing
-      ],
+      submitted_details: submitted_details_tasks,
       recommendation: %i[first_assessment second_assessment]
     }
   end
@@ -49,6 +44,16 @@ class AssessorInterface::ApplicationFormsShowViewObject
   private
 
   attr_reader :params
+
+  def submitted_details_tasks
+    %i[personal_information qualifications].tap do |tasks|
+      tasks << :work_history if application_form.needs_work_history?
+      if application_form.needs_written_statement? ||
+           application_form.needs_registration_number?
+        tasks << :professional_standing
+      end
+    end
+  end
 
   def url_helpers
     Rails.application.routes.url_helpers
