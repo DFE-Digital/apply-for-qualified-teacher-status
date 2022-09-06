@@ -75,10 +75,18 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
     context "with multiple application forms" do
       let(:application_form_1) do
-        create(:application_form, :submitted, created_at: Date.new(2020, 1, 1))
+        create(
+          :application_form,
+          :submitted,
+          submitted_at: Date.new(2020, 1, 1)
+        )
       end
       let(:application_form_2) do
-        create(:application_form, :submitted, created_at: Date.new(2020, 1, 2))
+        create(
+          :application_form,
+          :submitted,
+          submitted_at: Date.new(2020, 1, 2)
+        )
       end
 
       it { is_expected.to eq([application_form_2, application_form_1]) }
@@ -105,22 +113,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
   end
 
-  describe "#assessor_filter_checked?" do
-    subject(:assessor_filter_checked?) do
-      view_object.assessor_filter_checked?(option)
-    end
-
-    let(:option) { OpenStruct.new(id: 1) }
-
-    it { is_expected.to be false }
-
-    context "when the filter is set" do
-      let(:params) { { assessor_ids: %w[1] } }
-
-      it { is_expected.to be true }
-    end
-  end
-
   describe "#country_filter_options" do
     subject(:country_filter_options) { view_object.country_filter_options }
 
@@ -132,7 +124,12 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
     context "when the filter is set" do
       let(:params) do
-        { location: "country:US", location_autocomplete: "United States" }
+        {
+          assessor_interface_filter_form: {
+            location: "country:US"
+          },
+          location_autocomplete: "United States"
+        }
       end
 
       it do
@@ -143,7 +140,14 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
 
     context "when the autocomplete input is cleared" do
-      let(:params) { { location: "country:US", location_autocomplete: "" } }
+      let(:params) do
+        {
+          assessor_interface_filter_form: {
+            location: "country:US"
+          },
+          location_autocomplete: ""
+        }
+      end
 
       it do
         is_expected.to include(
@@ -153,25 +157,15 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
 
     context "when the autocomplete input isn't being used" do
-      let(:params) { { location: "country:US" } }
+      let(:params) do
+        { assessor_interface_filter_form: { location: "country:US" } }
+      end
 
       it do
         is_expected.to include(
           '<option selected="selected" value="country:US">United States</option>'
         )
       end
-    end
-  end
-
-  describe "#name_filter_value" do
-    subject(:name_filter_value) { view_object.name_filter_value }
-
-    it { is_expected.to be_nil }
-
-    context "when the filter is set" do
-      let(:params) { { name: "abc" } }
-
-      it { is_expected.to eq("abc") }
     end
   end
 
@@ -207,47 +201,35 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
   end
 
-  describe "#state_filter_checked?" do
-    subject(:state_filter_checked?) do
-      view_object.state_filter_checked?(option)
-    end
-
-    let(:option) { OpenStruct.new(id: "draft") }
-
-    it { is_expected.to be false }
-
-    context "when the filter is set" do
-      let(:params) { { states: %w[draft submitted] } }
-
-      it { is_expected.to be true }
-    end
-  end
-
-  describe "#search_params" do
-    subject(:search_params) { view_object.search_params }
+  describe "#permitted_params" do
+    subject(:permitted_params) { view_object.permitted_params }
 
     it { is_expected.to be_empty }
 
     context "with permitted params" do
       let(:params) do
-        %w[
-          assessor_ids
-          location
-          location_autocomplete
-          name
-          states
-          page
-        ].each_with_object({}) { |p, memo| memo[p] = p }
+        {
+          assessor_interface_filter_form: {
+            assessor_ids: ["assessor_id"],
+            location: "location",
+            name: "name",
+            states: ["state"]
+          },
+          location_autocomplete: "location_autocomplete",
+          page: "page"
+        }
       end
 
       it do
         is_expected.to eq(
           {
-            "assessor_ids" => "assessor_ids",
-            "location" => "location",
+            "assessor_interface_filter_form" => {
+              "assessor_ids" => ["assessor_id"],
+              "location" => "location",
+              "name" => "name",
+              "states" => ["state"]
+            },
             "location_autocomplete" => "location_autocomplete",
-            "name" => "name",
-            "states" => "states",
             "page" => "page"
           }
         )

@@ -28,7 +28,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     it { is_expected.to eq("/assessor/applications") }
 
-    context "with search params" do
+    context "with form params" do
       let(:params) { { search: { states: %w[awarded] } } }
 
       it { is_expected.to eq("/assessor/applications?states%5B%5D=awarded") }
