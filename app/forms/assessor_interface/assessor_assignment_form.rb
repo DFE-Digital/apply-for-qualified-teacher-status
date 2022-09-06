@@ -3,11 +3,10 @@ class AssessorInterface::AssessorAssignmentForm
   include ActiveModel::Attributes
   include ActiveRecord::AttributeAssignment
 
-  attr_accessor :application_form
+  attr_accessor :application_form, :staff
   attribute :assessor_id, :string
-  attribute :assigning_user_id, :string
 
-  validates :application_form, :assessor_id, :assigning_user_id, presence: true
+  validates :application_form, :staff, :assessor_id, presence: true
 
   def save!
     return false unless valid?
@@ -23,7 +22,7 @@ class AssessorInterface::AssessorAssignmentForm
     TimelineEvent.create!(
       application_form:,
       event_type: "assessor_assigned",
-      creator_id: assigning_user_id,
+      creator: staff,
       assignee_id: assessor_id
     )
   end

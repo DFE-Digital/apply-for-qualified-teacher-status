@@ -7,6 +7,14 @@
   resolved "https://registry.yarnpkg.com/@esbuild/linux-loong64/-/linux-loong64-0.15.6.tgz#45be4184f00e505411bc265a05e709764114acd8"
   integrity sha512-hqmVU2mUjH6J2ZivHphJ/Pdse2ZD+uGCHK0uvsiLDk/JnSedEVj77CiVUnbMKuU4tih1TZZL8tG9DExQg/GZsw==
 
+"@ministryofjustice/frontend@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-1.4.2.tgz#d105ada3bb7abf5977dcb742213178a7820a3959"
+  integrity sha512-vkJFncllNqVoogLEjsk2k1Fn1EtOV9IJS0XB1htw0x1nhq/fX1Edac3mY04IfQyzIiA9RNwIbV/5qQ83z+Akgg==
+  dependencies:
+    govuk-frontend "^3.0.0 || ^4.0.0"
+    moment "^2.27.0"
+
 "@prettier/plugin-ruby@^3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@prettier/plugin-ruby/-/plugin-ruby-3.2.0.tgz#7301d2bcbb062638c839351fd5311e2bbd8fd740"
@@ -223,7 +231,7 @@ govuk-country-and-territory-autocomplete@^1.0.2:
     core-js "3.2.1"
     openregister-picker-engine "^1.2.1"
 
-govuk-frontend@^4.3.1:
+"govuk-frontend@^3.0.0 || ^4.0.0", govuk-frontend@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.3.1.tgz#d9c581aca3d23bbfe9bd27c25fee65322b276393"
   integrity sha512-uD0KVFds7drOwLEvfp4zRBOXuHCxkWLYDQcYvlbG+2baZ9po2TGZz8WjfzhfueYjo9+Uwk+bM0NQT6g4cg/Q+A==
@@ -261,6 +269,11 @@ jquery@>=1.11:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
+
+moment@^2.27.0:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"

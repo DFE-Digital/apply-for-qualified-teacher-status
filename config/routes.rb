@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       get "complete-assessment", to: "complete_assessments#new"
       post "complete-assessment", to: "complete_assessments#create"
 
+      resources :timeline_events, only: :index
+
       resource :check_personal_information, only: :show
       resource :check_qualifications, only: :show
       resource :check_work_history, only: :show

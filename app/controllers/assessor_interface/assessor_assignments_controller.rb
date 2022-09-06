@@ -3,17 +3,17 @@ module AssessorInterface
     def new
       @assessor_assignment_form =
         AssessorAssignmentForm.new(
-          assessor_id: application_form.assessor_id,
-          application_form:
+          application_form:,
+          assessor_id: application_form.assessor_id
         )
     end
 
     def create
       @assessor_assignment_form =
         AssessorAssignmentForm.new(
-          assessor_id: assessor_params[:assessor_id],
           application_form:,
-          assigning_user_id: current_staff.id
+          staff: current_staff,
+          assessor_id: assessor_params[:assessor_id]
         )
 
       if @assessor_assignment_form.save!
