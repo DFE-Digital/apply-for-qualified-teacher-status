@@ -11,16 +11,20 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     when_i_visit_the_applications_page
 
     when_i_clear_the_filters
-    and_i_apply_the_name_filter
-    then_i_see_a_list_of_applications_filtered_by_name
+    and_i_apply_the_assessor_filter
+    then_i_see_a_list_of_applications_filtered_by_assessor
 
     when_i_clear_the_filters
     and_i_apply_the_country_filter
     then_i_see_a_list_of_applications_filtered_by_country
 
     when_i_clear_the_filters
-    and_i_apply_the_assessor_filter
-    then_i_see_a_list_of_applications_filtered_by_assessor
+    and_i_apply_the_name_filter
+    then_i_see_a_list_of_applications_filtered_by_name
+
+    when_i_clear_the_filters
+    and_i_apply_the_submitted_at_filter
+    then_i_see_a_list_of_applications_filtered_by_submitted_at
 
     when_i_clear_the_filters
     and_i_apply_the_state_filter
@@ -45,13 +49,13 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     click_link "Clear selection"
   end
 
-  def and_i_apply_the_name_filter
-    fill_in "Applicant name", with: "cher"
+  def and_i_apply_the_assessor_filter
+    check "Wag Staff", visible: false
     click_button "Apply filters"
   end
 
-  def then_i_see_a_list_of_applications_filtered_by_name
-    expect(page).to have_content("Cher Bert")
+  def then_i_see_a_list_of_applications_filtered_by_assessor
+    expect(page).to have_content("Arnold Drummond")
   end
 
   def and_i_apply_the_country_filter
@@ -63,13 +67,25 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     expect(page).to have_content("Emma Dubois")
   end
 
-  def and_i_apply_the_assessor_filter
-    check "Wag Staff", visible: false
+  def and_i_apply_the_name_filter
+    fill_in "Applicant name", with: "cher"
     click_button "Apply filters"
   end
 
-  def then_i_see_a_list_of_applications_filtered_by_assessor
-    expect(page).to have_content("Arnold Drummond")
+  def then_i_see_a_list_of_applications_filtered_by_name
+    expect(page).to have_content("Cher Bert")
+  end
+
+  def and_i_apply_the_submitted_at_filter
+    fill_in "assessor_interface_filter_form_submitted_at_before_1i",
+            with: "2020"
+    fill_in "assessor_interface_filter_form_submitted_at_before_2i", with: "1"
+    fill_in "assessor_interface_filter_form_submitted_at_before_3i", with: "1"
+    click_button "Apply filters"
+  end
+
+  def then_i_see_a_list_of_applications_filtered_by_submitted_at
+    expect(page).to have_content("John Smith")
   end
 
   def and_i_apply_the_state_filter
@@ -108,7 +124,8 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         :application_form,
         :awarded,
         given_names: "John",
-        family_name: "Smith"
+        family_name: "Smith",
+        submitted_at: Date.new(2020, 1, 1)
       )
     ]
   end

@@ -23,6 +23,11 @@
 
     <%= f.govuk_text_field :name, label: { text: "Applicant name", size: "s" } %>
 
+    <%= f.govuk_fieldset legend: { text: "Created date", size: "s" } do %>
+      <%= f.govuk_date_field :submitted_at_after, legend: { text: "Start date", size: "s" } %>
+      <%= f.govuk_date_field :submitted_at_before, legend: { text: "End date", size: "s" } %>
+    <% end %>
+
     <%= f.govuk_check_boxes_fieldset :states, legend: { text: "Status of application", size: "s" }, small: true do %>
       <%- @view_object.state_filter_options.each do |option| -%>
         <%= f.govuk_check_box :states, option.id, label: { text: option.label }, checked: @view_object.filter_form.states&.include?(option.id) %>

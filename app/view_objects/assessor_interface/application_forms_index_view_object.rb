@@ -50,6 +50,8 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       assessor_interface_filter_form: [
         :location,
         :name,
+        :submitted_at_before,
+        :submitted_at_after,
         { assessor_ids: [], states: [] }
       ]
     )
@@ -74,10 +76,15 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def application_forms_without_state_filter
     @application_forms_without_state_filter ||=
       begin
-        filters = [::Filters::Name, ::Filters::Assessor, ::Filters::Country]
-        filters.reduce(ApplicationForm.active) do |scope, filter|
-          filter.apply(scope:, params: filter_params)
-        end
+        filters = [
+          ::Filters::Assessor,
+          ::Filters::Country,
+          ::Filters::Name,
+          ::Filters::SubmittedAt
+        ]
+        filters.reduce(
+          ApplicationForm.includes(region: :country).active
+        ) { |scope, filter| filter.apply(scope:, params: filter_params) }
       end
   end
 
