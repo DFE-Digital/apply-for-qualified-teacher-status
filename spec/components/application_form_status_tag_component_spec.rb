@@ -8,18 +8,18 @@ RSpec.describe ApplicationFormStatusTag::Component, type: :component do
   end
 
   let(:key) { "key" }
-  let(:status) { :status }
+  let(:status) { :awarded }
   let(:class_context) { "app-task-list" }
 
   describe "text" do
     subject(:text) { component.text.strip }
 
-    it { is_expected.to eq("Status") }
+    it { is_expected.to eq("Awarded") }
 
     context "submitted" do
       let(:status) { :submitted }
 
-      it { is_expected.to eq("New") }
+      it { is_expected.to eq("Not started") }
     end
   end
 

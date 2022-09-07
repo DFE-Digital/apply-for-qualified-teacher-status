@@ -20,6 +20,17 @@ en:
       title: Your email address
 
   application_form:
+    status:
+      not_started: Not started
+      in_progress: In progress
+      initial_assessment: Initial assessment
+      request_further_information: Request further information
+      received_further_information: Received further information
+      awarded: Awarded
+      declined: Declined
+      draft: Draft
+      submitted: Not started
+      completed: Completed
     tasks:
       sections:
         about_you: About you
