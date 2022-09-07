@@ -156,11 +156,11 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def when_i_visit_the_sign_up_page
-    visit new_teacher_registration_path
+    when_i_visit_the(:teacher_sign_up_page)
   end
 
   def when_i_visit_the_sign_in_page
-    visit new_teacher_session_path
+    teacher_sign_in_page.load
   end
 
   def when_i_visit_the_magic_link_email
@@ -189,26 +189,28 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def then_i_see_the_sign_up_form
-    expect(page).to have_title("Your email address")
-    expect(page).to have_content("Your email address")
-    expect(page).to have_content(
+    expect(teacher_sign_up_page.heading.text).to eq("Your email address")
+    expect(teacher_sign_up_page.email_heading).to have_content(
+      "Your email address"
+    )
+    expect(teacher_sign_up_page.hint).to have_content(
       "We’ll use this to send you a link to continue with your QTS application."
     )
   end
 
   def then_i_see_the_check_your_email_page
-    expect(page).to have_title("Check your email")
-    expect(page).to have_content("Check your email")
+    expect(check_email_page).to have_title("Check your email")
+    expect(check_email_page.heading.text).to eq("Check your email")
   end
 
   def then_i_see_successful_confirmation
-    expect(page).to have_content(
+    expect(new_application_form_page.heading.text).to eq(
       "In which country are you currently recognised as a teacher?"
     )
   end
 
   def then_i_see_the_new_application_form
-    expect(page).to have_content(
+    expect(new_application_form_page.heading.text).to eq(
       "In which country are you currently recognised as a teacher?"
     )
   end
@@ -218,10 +220,10 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def then_i_see_the_signed_out_page
-    expect(page).to have_content(
+    expect(signed_out_page.body_content).to have_content(
       "We’ve signed you out of the Apply for qualified teacher status (QTS) service."
     )
-    expect(page).to have_content(
+    expect(signed_out_page.body_content).to have_content(
       "We’ve saved the information you’ve added to your application so far."
     )
   end
@@ -245,7 +247,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def and_i_see_already_confirmed_message
-    expect(page).to have_content(
+    expect(teacher_sign_up_page).to have_content(
       "Your email address is already confirmed, please sign in."
     )
   end

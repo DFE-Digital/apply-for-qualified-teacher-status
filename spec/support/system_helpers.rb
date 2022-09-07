@@ -126,12 +126,18 @@ module SystemHelpers
   end
 
   def then_i_see_the_sign_in_form
-    expect(page).to have_title(
+    expect(teacher_sign_in_page).to have_title(
       "Apply for qualified teacher status (QTS) in England"
     )
-    expect(page).to have_content("Have you used the service before?")
-    expect(page).to have_content("Yes, sign in and continue application")
-    expect(page).to have_content("No, I need to check my eligibility")
+    expect(teacher_sign_in_page).to have_content(
+      "Have you used the service before?"
+    )
+    expect(teacher_sign_in_page).to have_content(
+      "Yes, sign in and continue application"
+    )
+    expect(teacher_sign_in_page).to have_content(
+      "No, I need to check my eligibility"
+    )
   end
 
   def and_i_sign_up

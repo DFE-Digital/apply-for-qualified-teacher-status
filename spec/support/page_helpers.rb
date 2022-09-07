@@ -1,6 +1,15 @@
 module PageHelpers
-  def application_page
-    @application_page ||= PageObjects::AssessorInterface::Application.new
+  def then_i_see_the(page, **args)
+    expect(send(page.to_sym)).to be_displayed(**args)
+  end
+
+  def when_i_visit_the(page, **args)
+    send(page.to_sym).load(**args)
+  end
+
+  def assessor_application_page
+    @assessor_application_page ||=
+      PageObjects::AssessorInterface::Application.new
   end
 
   def applications_page
@@ -93,11 +102,119 @@ module PageHelpers
     @timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end
 
-  def then_i_see_the(page, **args)
-    expect(send(page.to_sym)).to be_displayed(**args)
+  def teacher_sign_in_page
+    @teacher_sign_in_page = PageObjects::TeacherInterface::SignIn.new
   end
 
-  def when_i_visit_the(page, **args)
-    send(page.to_sym).load(**args)
+  def teacher_sign_up_page
+    @teacher_sign_up_page = PageObjects::TeacherInterface::SignUp.new
+  end
+
+  def document_form_page
+    @document_form_page = PageObjects::TeacherInterface::DocumentForm.new
+  end
+
+  def check_uploaded_files_page
+    @check_uploaded_files_page =
+      PageObjects::TeacherInterface::CheckUploadedFiles.new
+  end
+
+  def check_email_page
+    @check_email_page = PageObjects::TeacherInterface::CheckYourEmail.new
+  end
+
+  def new_application_form_page
+    @new_application_form_page =
+      PageObjects::TeacherInterface::NewApplicationForm.new
+  end
+
+  def signed_out_page
+    @signed_out_page = PageObjects::TeacherInterface::SignedOut.new
+  end
+
+  def teacher_application_page
+    @teacher_application_page = PageObjects::TeacherInterface::Application.new
+  end
+
+  def new_teacher_form_page
+    @new_teacher_form_page =
+      PageObjects::TeacherInterface::NewApplicationForm.new
+  end
+
+  def subjects_form_page
+    @subjects_form_page = PageObjects::TeacherInterface::SubjectsForm.new
+  end
+
+  def work_history_form_page
+    @work_history_form_page = PageObjects::TeacherInterface::WorkHistoryForm.new
+  end
+
+  def delete_confirmation_page
+    @delete_confirmation_page =
+      PageObjects::TeacherInterface::DeleteConfirmationForm.new
+  end
+
+  def written_statement_page
+    @written_statement_page =
+      PageObjects::TeacherInterface::WrittenStatement.new
+  end
+
+  def personal_information_summary_page
+    @personal_information_summary_page =
+      PageObjects::TeacherInterface::PersonalInformationSummary.new
+  end
+
+  def qualification_summary_page
+    @qualification_summary_page =
+      PageObjects::TeacherInterface::QualificationSummary.new
+  end
+
+  def qualifications_form_page
+    @qualifications_form_page =
+      PageObjects::TeacherInterface::QualificationsForm.new
+  end
+
+  def name_and_date_of_birth_page
+    @name_and_date_of_birth_page =
+      PageObjects::TeacherInterface::NameAndDateOfBirth.new
+  end
+
+  def check_your_answers_page
+    @check_your_answers_page =
+      PageObjects::TeacherInterface::CheckYourAnswers.new
+  end
+
+  def work_history_summary_page
+    @work_history_summary_page =
+      PageObjects::TeacherInterface::WorkHistorySummary.new
+  end
+
+  def upload_document_page
+    @upload_document_page =
+      PageObjects::TeacherInterface::UploadDocumentForm.new
+  end
+
+  def submitted_application_page
+    @submitted_application_page =
+      PageObjects::TeacherInterface::SubmittedApplication.new
+  end
+
+  def check_your_uploads_page
+    @check_your_uploads_page =
+      PageObjects::TeacherInterface::CheckYourUploads.new
+  end
+
+  def alternative_name_page
+    @alternative_name_page =
+      PageObjects::TeacherInterface::AlternativeNameForm.new
+  end
+
+  def age_range_form
+    @age_range_page = PageObjects::TeacherInterface::AgeRangeForm.new
+  end
+
+  def registration_number_form
+    @registration_number_form =
+      PageObjects::TeacherInterface::RegistrationNumberForm.new
   end
 end

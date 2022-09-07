@@ -9,7 +9,7 @@ RSpec.describe "Assessor view timeline events", type: :system do
   end
 
   it "displays the timeline events" do
-    when_i_visit_the(:application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_id:)
     and_i_click_view_timeline
     then_i_see_the_timeline
   end
@@ -25,7 +25,7 @@ RSpec.describe "Assessor view timeline events", type: :system do
   end
 
   def and_i_click_view_timeline
-    application_page.overview.click_link(
+    assessor_application_page.overview.click_link(
       "View timeline of this applications actions"
     )
   end
