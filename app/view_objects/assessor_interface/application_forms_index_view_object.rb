@@ -36,10 +36,8 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     states = %w[submitted awarded declined]
 
     states.map do |state|
-      OpenStruct.new(
-        id: state,
-        label: "#{state.humanize} (#{counts.fetch(state, 0)})"
-      )
+      text = I18n.t("application_form.status.#{state}")
+      OpenStruct.new(id: state, label: "#{text} (#{counts.fetch(state, 0)})")
     end
   end
 

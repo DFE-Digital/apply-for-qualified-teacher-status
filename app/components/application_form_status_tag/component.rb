@@ -14,9 +14,7 @@ module ApplicationFormStatusTag
     end
 
     def text
-      return "New" if @status.to_s == "submitted"
-
-      @status.to_s.humanize
+      I18n.t("application_form.status.#{@status}")
     end
 
     COLOURS = {

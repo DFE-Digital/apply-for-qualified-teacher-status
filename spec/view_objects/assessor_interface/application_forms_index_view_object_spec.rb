@@ -175,7 +175,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     it do
       is_expected.to eq(
         [
-          OpenStruct.new(id: "submitted", label: "Submitted (0)"),
+          OpenStruct.new(id: "submitted", label: "Not started (0)"),
           OpenStruct.new(id: "awarded", label: "Awarded (0)"),
           OpenStruct.new(id: "declined", label: "Declined (0)")
         ]
@@ -192,7 +192,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       it do
         is_expected.to eq(
           [
-            OpenStruct.new(id: "submitted", label: "Submitted (2)"),
+            OpenStruct.new(id: "submitted", label: "Not started (2)"),
             OpenStruct.new(id: "awarded", label: "Awarded (3)"),
             OpenStruct.new(id: "declined", label: "Declined (4)")
           ]
