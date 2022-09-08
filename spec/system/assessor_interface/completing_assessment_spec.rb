@@ -8,8 +8,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_i_am_authorized_as_an_assessor_user(assessor)
     given_there_is_an_application_form
 
-    when_i_visit_the_complete_assessment_page
-    then_i_see_the_complete_assessment_form
+    when_i_visit_the(:complete_assessment_page, application_id:)
 
     when_i_select_award_qts
     and_i_click_continue
@@ -27,28 +26,25 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def then_i_see_the_complete_assessment_form
-    expect(complete_assessment_page.heading).to have_content(
-      "QTS review completed"
-    )
-    expect(complete_assessment_page.new_states.first).to have_content(
-      "Award QTS"
-    )
-    expect(complete_assessment_page.new_states.second).to have_content(
-      "Decline QTS"
-    )
+    expect(complete_assessment_page.award_qts).to be_visible
+    expect(complete_assessment_page.decline_qts).to be_visible
   end
 
   def when_i_select_award_qts
-    complete_assessment_page.new_states.first.input.choose
+    complete_assessment_page.award_qts.input.choose
   end
 
   def then_the_application_form_is_awarded
-    expect(page).to have_content("Status\tAWARDED")
+    expect(application_page.overview.status.text).to eq("AWARDED")
   end
 
   def application_form
     @application_form ||=
       create(:application_form, :with_personal_information, :submitted)
+  end
+
+  def application_id
+    application_form.id
   end
 
   def assessor
