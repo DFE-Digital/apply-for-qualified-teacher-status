@@ -1,6 +1,7 @@
 require "support/page_objects/govuk_radio_item"
 require "support/page_objects/govuk_checkbox_item"
 require "support/page_objects/page_header"
+require "support/page_objects/govuk_error_summary"
 
 module PageHelpers
   def application_page
