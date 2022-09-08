@@ -10,29 +10,41 @@
       <%= govuk_link_to "Clear selection"%>
     <%- end -%>
 
-    <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { text: "Assessor name", size: "s" }, small: true do %>
-      <%- @view_object.assessor_filter_options.each do |option| -%>
-        <%= f.govuk_check_box :assessor_ids, option.id, label: { text: option.name }, checked: @view_object.filter_form.assessor_ids&.include?(option.id.to_s) %>
+    <section id="app-applications-filters-assessor">
+      <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { text: "Assessor name", size: "s" }, small: true do %>
+        <%- @view_object.assessor_filter_options.each do |option| -%>
+          <%= f.govuk_check_box :assessor_ids, option.id, label: { text: option.name }, checked: @view_object.filter_form.assessor_ids&.include?(option.id.to_s) %>
+        <%- end -%>
       <%- end -%>
-    <%- end -%>
+    </section>
 
-    <%= f.govuk_select :location,
-                       @view_object.country_filter_options,
-                       label: { text: "Country trained in", size: "s" },
-                       options: { include_blank: true } %>
 
-    <%= f.govuk_text_field :name, label: { text: "Applicant name", size: "s" } %>
+    <section id="app-applications-filters-country">
+      <%= f.govuk_select :location,
+                         @view_object.country_filter_options,
+                         label: { text: "Country trained in", size: "s" },
+                         options: { include_blank: true } %>
+    </section>
 
-    <%= f.govuk_fieldset legend: { text: "Created date", size: "s" } do %>
-      <%= f.govuk_date_field :submitted_at_after, legend: { text: "Start date", size: "s" } %>
-      <%= f.govuk_date_field :submitted_at_before, legend: { text: "End date", size: "s" } %>
-    <% end %>
+    <section id="app-applications-filters-name">
+      <%= f.govuk_text_field :name, label: { text: "Applicant name", size: "s" } %>
+    </section>
 
-    <%= f.govuk_check_boxes_fieldset :states, legend: { text: "Status of application", size: "s" }, small: true do %>
-      <%- @view_object.state_filter_options.each do |option| -%>
-        <%= f.govuk_check_box :states, option.id, label: { text: option.label }, checked: @view_object.filter_form.states&.include?(option.id) %>
+    <section id="app-applications-filters-submitted-at">
+      <%= f.govuk_fieldset legend: { text: "Created date", size: "s" } do %>
+        <%= f.govuk_date_field :submitted_at_after, legend: { text: "Start date", size: "s" } %>
+        <%= f.govuk_date_field :submitted_at_before, legend: { text: "End date", size: "s" } %>
+      <% end %>
+    </section>
+
+    <section id="app-applications-filters-state">
+      <%= f.govuk_check_boxes_fieldset :states, legend: { text: "Status of application", size: "s" }, small: true do %>
+        <%- @view_object.state_filter_options.each do |option| -%>
+          <%= f.govuk_check_box :states, option.id, label: { text: option.label }, checked: @view_object.filter_form.states&.include?(option.id) %>
+        <%- end -%>
       <%- end -%>
-    <%- end -%>
+    </section>
+
   <%- end -%>
 </div>
 
