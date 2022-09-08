@@ -92,13 +92,13 @@ class ApplicationForm < ApplicationRecord
         hash = {}
         hash.merge!(about_you: %i[personal_information identity_document])
         hash.merge!(qualifications: %i[qualifications age_range subjects])
-        hash.merge!(work_history: %i[work_history]) if needs_work_history?
+        hash.merge!(work_history: %i[work_history]) if needs_work_history
 
-        if needs_written_statement? || needs_registration_number?
+        if needs_written_statement || needs_registration_number
           hash.merge!(
             proof_of_recognition: [
-              needs_registration_number? ? :registration_number : nil,
-              needs_written_statement? ? :written_statement : nil
+              needs_registration_number ? :registration_number : nil,
+              needs_written_statement ? :written_statement : nil
             ].compact
           )
         end
@@ -154,18 +154,6 @@ class ApplicationForm < ApplicationRecord
     rescue NoMethodError
       url_helpers.send("#{key}_teacher_interface_application_form_path")
     end
-  end
-
-  def needs_work_history?
-    region.status_check_none? || region.sanction_check_none?
-  end
-
-  def needs_registration_number?
-    region.status_check_online? || region.sanction_check_online?
-  end
-
-  def needs_written_statement?
-    region.status_check_written? || region.sanction_check_written?
   end
 
   def teaching_qualification

@@ -44,10 +44,8 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     describe "submitted details" do
       subject(:submitted_details) { assessment_tasks.fetch(:submitted_details) }
 
-      context "with none checks" do
-        before do
-          application_form.update!(region: create(:region, :none_checks))
-        end
+      context "with work history" do
+        before { application_form.update!(needs_work_history: true) }
 
         it do
           is_expected.to eq(
@@ -56,10 +54,8 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         end
       end
 
-      context "with written checks" do
-        before do
-          application_form.update!(region: create(:region, :written_checks))
-        end
+      context "with written statement" do
+        before { application_form.update!(needs_written_statement: true) }
 
         it do
           is_expected.to eq(
@@ -68,10 +64,8 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         end
       end
 
-      context "with online checks" do
-        before do
-          application_form.update!(region: create(:region, :online_checks))
-        end
+      context "with registration number" do
+        before { application_form.update!(needs_registration_number: true) }
 
         it do
           is_expected.to eq(

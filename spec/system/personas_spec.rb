@@ -81,7 +81,7 @@ RSpec.describe "Personas", type: :system do
 
   def then_i_see_the_application_form_page
     expect(page).to have_content("Application incomplete")
-    expect(page).to have_content("You have completed 0 of 3 sections.")
+    expect(page).to have_content("You have completed 0 of 2 sections.")
   end
 
   def then_i_see_the_start_page

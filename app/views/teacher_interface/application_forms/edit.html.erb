@@ -12,17 +12,17 @@
 <%= render "shared/application_form/age_range_summary", application_form: @application_form, changeable: true %>
 <%= render "shared/application_form/subjects_summary", application_form: @application_form, changeable: true %>
 
-<% if @application_form.needs_work_history? %>
+<% if @application_form.needs_work_history %>
   <h2 class="govuk-heading-m">Your work history</h2>
   <%= render "shared/application_form/work_history_summary", application_form: @application_form, work_histories: @application_form.work_histories.ordered, changeable: true %>
 <% end %>
 
-<% if @application_form.needs_written_statement? || @application_form.needs_registration_number? %>
+<% if @application_form.needs_written_statement || @application_form.needs_registration_number %>
   <h2 class="govuk-heading-m">Proof that you’re recognised as a teacher</h2>
-  <% if @application_form.needs_registration_number? %>
+  <% if @application_form.needs_registration_number %>
     <%= render "shared/application_form/registration_number_summary", application_form: @application_form, changeable: true %>
   <% end %>
-  <% if @application_form.needs_written_statement? %>
+  <% if @application_form.needs_written_statement %>
     <%= render "shared/application_form/written_statement_summary", application_form: @application_form, changeable: true %>
   <% end %>
 <% end %>

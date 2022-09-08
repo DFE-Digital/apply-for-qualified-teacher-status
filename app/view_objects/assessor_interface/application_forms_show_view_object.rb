@@ -47,9 +47,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def submitted_details_tasks
     %i[personal_information qualifications].tap do |tasks|
-      tasks << :work_history if application_form.needs_work_history?
-      if application_form.needs_written_statement? ||
-           application_form.needs_registration_number?
+      tasks << :work_history if application_form.needs_work_history
+      if application_form.needs_written_statement ||
+           application_form.needs_registration_number
         tasks << :professional_standing
       end
     end
