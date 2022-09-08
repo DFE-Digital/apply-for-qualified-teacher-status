@@ -1,6 +1,3 @@
-require_relative "../govuk_error_summary"
-require_relative "../govuk_radio_item"
-
 module PageObjects
   module EligibilityInterface
     class Question < SitePrism::Page

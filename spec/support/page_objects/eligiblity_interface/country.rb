@@ -1,5 +1,3 @@
-require "support/page_objects/govuk_error_summary"
-
 module PageObjects
   module EligibilityInterface
     class Country < SitePrism::Page

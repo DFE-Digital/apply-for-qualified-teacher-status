@@ -6,12 +6,12 @@ RSpec.describe "Assessor view application form", type: :system do
     given_there_is_an_application_form
 
     when_i_am_authorized_as_an_assessor_user
-    when_i_visit_the_application_page
+    when_i_visit_the(:application_page, application_id:)
     then_i_see_the_application
     and_i_see_the_assessment_tasks
 
     when_i_click_back_link
-    then_i_see_the_application_forms
+    then_i_see_the(:applications_page)
   end
 
   private
@@ -24,33 +24,38 @@ RSpec.describe "Assessor view application form", type: :system do
     application_form
   end
 
-  def when_i_visit_the_application_page
-    visit assessor_interface_application_form_path(application_form)
-  end
-
   def when_i_click_back_link
-    click_link "Back"
+    application_page.back_link.click
   end
 
   def then_i_see_the_application
-    expect(page).to have_content(
+    expect(application_page.overview.name.text).to eq(
       "#{application_form.given_names} #{application_form.family_name}"
     )
-    expect(page).to have_content(application_form.reference)
   end
 
   def and_i_see_the_assessment_tasks
-    expect(page).to have_content("Check submitted details")
-    expect(page).to have_content("Check personal information")
-    expect(page).to have_content("Check qualifications")
-    expect(page).to have_content("Check work history")
-    expect(page).to have_content("Your recommendation")
-    expect(page).to have_content("First assessment")
-    expect(page).to have_content("Second assessment")
-  end
+    expect(application_page.task_list.tasks.count).to eq(2)
 
-  def then_i_see_the_application_forms
-    expect(page).to have_content("Applications")
+    first_section_links =
+      application_page.task_list.tasks.first.items.map { |item| item.link.text }
+
+    expect(first_section_links).to eq(
+      [
+        "Check personal information",
+        "Check qualifications",
+        "Check work history"
+      ]
+    )
+
+    second_section_links =
+      application_page.task_list.tasks.second.items.map do |item|
+        item.link.text
+      end
+
+    expect(second_section_links).to eq(
+      ["First assessment", "Second assessment"]
+    )
   end
 
   def application_form
@@ -61,5 +66,9 @@ RSpec.describe "Assessor view application form", type: :system do
         :with_work_history,
         :with_personal_information
       )
+  end
+
+  def application_id
+    application_form.id
   end
 end

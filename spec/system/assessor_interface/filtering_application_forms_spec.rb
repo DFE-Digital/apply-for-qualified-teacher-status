@@ -8,7 +8,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     given_there_are_application_forms
 
     when_i_am_authorized_as_an_assessor_user
-    when_i_visit_the_applications_page
+    when_i_visit_the(:applications_page)
 
     when_i_clear_the_filters
     and_i_apply_the_assessor_filter
@@ -46,55 +46,67 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   end
 
   def when_i_clear_the_filters
-    click_link "Clear selection"
+    applications_page.clear_filters.click
   end
 
   def and_i_apply_the_assessor_filter
-    check "Wag Staff", visible: false
-    click_button "Apply filters"
+    applications_page.assessor_filter.assessors.first.checkbox.click
+    applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_assessor
-    expect(page).to have_content("Arnold Drummond")
+    expect(applications_page.search_results.count).to eq(1)
+    expect(applications_page.search_results.first.name.text).to eq(
+      "Arnold Drummond"
+    )
   end
 
   def and_i_apply_the_country_filter
-    fill_in "Country", with: "France"
-    click_button "Apply filters"
+    applications_page.country_filter.country.set("France")
+    applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_country
-    expect(page).to have_content("Emma Dubois")
+    expect(applications_page.search_results.count).to eq(1)
+    expect(applications_page.search_results.first.name.text).to eq(
+      "Emma Dubois"
+    )
   end
 
   def and_i_apply_the_name_filter
-    fill_in "Applicant name", with: "cher"
-    click_button "Apply filters"
+    applications_page.name_filter.name.set("cher")
+    applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_name
-    expect(page).to have_content("Cher Bert")
+    expect(applications_page.search_results.count).to eq(1)
+    expect(applications_page.search_results.first.name.text).to eq("Cher Bert")
   end
 
   def and_i_apply_the_submitted_at_filter
-    fill_in "assessor_interface_filter_form_submitted_at_before_1i",
-            with: "2020"
-    fill_in "assessor_interface_filter_form_submitted_at_before_2i", with: "1"
-    fill_in "assessor_interface_filter_form_submitted_at_before_3i", with: "1"
-    click_button "Apply filters"
+    applications_page.submitted_at_filter.start_day.set(1)
+    applications_page.submitted_at_filter.start_month.set(1)
+    applications_page.submitted_at_filter.start_year.set(2020)
+    applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_submitted_at
-    expect(page).to have_content("John Smith")
+    expect(applications_page.search_results.count).to eq(1)
+    expect(applications_page.search_results.first.name.text).to eq("John Smith")
   end
 
   def and_i_apply_the_state_filter
-    check "Awarded (1)", visible: false
-    click_button "Apply filters"
+    awarded_state =
+      applications_page.state_filter.states.find do |state|
+        state.label.text == "Awarded (1)"
+      end
+    awarded_state.checkbox.click
+    applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_state
-    expect(page).to have_content("John Smith")
+    expect(applications_page.search_results.count).to eq(1)
+    expect(applications_page.search_results.first.name.text).to eq("John Smith")
   end
 
   def application_forms
@@ -104,21 +116,24 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         :submitted,
         region: create(:region, country: create(:country, code: "US")),
         given_names: "Cher",
-        family_name: "Bert"
+        family_name: "Bert",
+        submitted_at: Date.new(2019, 12, 1)
       ),
       create(
         :application_form,
         :submitted,
         region: create(:region, country: create(:country, code: "FR")),
         given_names: "Emma",
-        family_name: "Dubois"
+        family_name: "Dubois",
+        submitted_at: Date.new(2019, 12, 1)
       ),
       create(
         :application_form,
         :submitted,
         given_names: "Arnold",
         family_name: "Drummond",
-        assessor: assessors.first
+        assessor: assessors.first,
+        submitted_at: Date.new(2019, 12, 1)
       ),
       create(
         :application_form,

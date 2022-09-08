@@ -9,7 +9,7 @@ RSpec.describe "Assigning an assessor", type: :system do
     given_there_is_an_application_form
     given_an_assessor_exists
 
-    when_i_visit_the_assign_assessor_page
+    when_i_visit_the(:assign_assessor_page, application_id: application_form.id)
     and_i_select_an_assessor
     then_the_assessor_is_assigned_to_the_application_form
   end
@@ -20,7 +20,7 @@ RSpec.describe "Assigning an assessor", type: :system do
     given_there_is_an_application_form
     given_an_assessor_exists
 
-    when_i_visit_the_assign_reviewer_page
+    when_i_visit_the(:assign_reviewer_page, application_id: application_form.id)
     and_i_select_a_reviewer
     then_the_assessor_is_assigned_as_reviewer_to_the_application_form
   end
@@ -35,19 +35,13 @@ RSpec.describe "Assigning an assessor", type: :system do
     assessor
   end
 
-  def when_i_visit_the_assign_assessor_page
-    visit assessor_interface_application_form_assign_assessor_path(
-            application_form
-          )
-  end
-
   def and_i_select_an_assessor
-    choose assessor.name, visible: false
-    click_button "Continue"
+    assign_assessor_page.assessors.first.input.click
+    assign_assessor_page.continue_button.click
   end
 
   def then_the_assessor_is_assigned_to_the_application_form
-    expect(page).to have_content("Assigned to\t#{assessor.name}")
+    expect(application_page.overview.assessor_name.text).to eq(assessor.name)
   end
 
   def when_i_visit_the_assign_reviewer_page
@@ -60,7 +54,7 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def then_the_assessor_is_assigned_as_reviewer_to_the_application_form
-    expect(page).to have_content("Reviewer\t#{assessor.name}")
+    expect(application_page.overview.reviewer_name.text).to eq(assessor.name)
   end
 
   def application_form
@@ -70,9 +64,5 @@ RSpec.describe "Assigning an assessor", type: :system do
 
   def assessor
     @assessor ||= create(:staff, :confirmed)
-  end
-
-  def assign_reviewer_page
-    @assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
   end
 end

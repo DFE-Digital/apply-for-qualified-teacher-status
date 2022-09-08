@@ -11,12 +11,12 @@ RSpec.describe "Assessor listing application forms", type: :system do
   end
 
   it "displays a list of applications" do
-    when_i_visit_the_applications_page
+    when_i_visit_the(:applications_page)
     then_i_see_a_list_of_applications
   end
 
   it "paginates the results" do
-    when_i_visit_the_applications_page
+    when_i_visit_the(:applications_page)
     then_i_see_the_pagination_controls
 
     when_i_click_on_next
@@ -33,33 +33,34 @@ RSpec.describe "Assessor listing application forms", type: :system do
     application_forms
   end
 
-  def when_i_visit_the_applications_page
-    visit assessor_interface_application_forms_path
-  end
-
   def when_i_click_on_next
-    click_link "Next"
+    applications_page.pagination.next.click
   end
 
   def then_i_see_a_list_of_applications
-    application_forms[0..19].each do |application_form|
-      expect(page).to have_content(
+    page_one_names =
+      application_forms[0..19].map do |application_form|
         "#{application_form.given_names} #{application_form.family_name}"
-      )
-    end
+      end
+
+    expect(page_one_names).to eq(visible_names)
   end
 
   def then_i_see_the_pagination_controls
-    expect(page).to have_content("1")
-    expect(page).to have_content("Next")
+    expect(applications_page.pagination).to be_visible
   end
 
   def then_i_see_the_next_page_of_applications
-    application_forms[20..24].each do |application_form|
-      expect(page).to have_content(
+    page_two_names =
+      application_forms[20..24].map do |application_form|
         "#{application_form.given_names} #{application_form.family_name}"
-      )
-    end
+      end
+
+    expect(page_two_names).to eq(visible_names)
+  end
+
+  def visible_names
+    applications_page.search_results.map { |result| result.name.text }
   end
 
   def application_forms
