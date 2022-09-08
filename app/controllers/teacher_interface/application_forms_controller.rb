@@ -3,16 +3,13 @@ module TeacherInterface
     before_action :load_application_form, except: %i[new create]
 
     def new
-      @application_form = ApplicationForm.new
       @country_region_form = CountryRegionForm.new
     end
 
     def create
-      @application_form = ApplicationForm.new(teacher: current_teacher)
-
       @country_region_form =
         CountryRegionForm.new(
-          country_region_form_params.merge(application_form:)
+          country_region_form_params.merge(teacher: current_teacher)
         )
 
       if @country_region_form.needs_region?

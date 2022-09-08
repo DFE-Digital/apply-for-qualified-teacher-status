@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::CountryRegionForm, type: :model do
   describe "validations" do
-    it { is_expected.to validate_presence_of(:application_form) }
+    it { is_expected.to validate_presence_of(:teacher) }
     it { is_expected.to validate_presence_of(:location) }
 
     context "with a location" do
@@ -69,20 +69,20 @@ RSpec.describe TeacherInterface::CountryRegionForm, type: :model do
   end
 
   describe "#save" do
-    let(:application_form) { build(:application_form) }
+    let(:teacher) { create(:teacher) }
     let(:region) { create(:region, :national) }
 
     let(:form) do
       described_class.new(
-        application_form:,
+        teacher:,
         location: "country:#{region.country.code}",
         region_id: region.id
       )
     end
 
-    before { form.save }
-
-    it "saves the application form" do
+    it "creates an application form" do
+      application_form = form.save
+      expect(application_form.teacher).to eq(teacher)
       expect(application_form.region).to eq(region)
     end
   end
