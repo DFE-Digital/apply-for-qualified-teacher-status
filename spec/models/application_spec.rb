@@ -164,8 +164,8 @@ RSpec.describe ApplicationForm, type: :model do
   describe "#tasks" do
     subject(:tasks) { application_form.tasks }
 
-    context "with no checks" do
-      before { application_form.region = create(:region, :none_checks) }
+    context "with needs work history" do
+      before { application_form.needs_work_history = true }
 
       it do
         is_expected.to eq(
@@ -178,8 +178,8 @@ RSpec.describe ApplicationForm, type: :model do
       end
     end
 
-    context "with written checks" do
-      before { application_form.region = create(:region, :written_checks) }
+    context "with needs written statement" do
+      before { application_form.needs_written_statement = true }
 
       it do
         is_expected.to eq(
@@ -192,8 +192,8 @@ RSpec.describe ApplicationForm, type: :model do
       end
     end
 
-    context "with online checks" do
-      before { application_form.region = create(:region, :online_checks) }
+    context "with needs registration number" do
+      before { application_form.needs_registration_number = true }
 
       it do
         is_expected.to eq(
@@ -221,16 +221,36 @@ RSpec.describe ApplicationForm, type: :model do
             qualifications: :not_started,
             age_range: :not_started,
             subjects: :not_started
-          },
-          work_history: {
-            work_history: :not_started
           }
         }
       )
     end
 
-    context "with written checks" do
-      before { application_form.region = create(:region, :written_checks) }
+    context "with work history" do
+      before { application_form.needs_work_history = true }
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: {
+              personal_information: :not_started,
+              identity_document: :not_started
+            },
+            qualifications: {
+              qualifications: :not_started,
+              age_range: :not_started,
+              subjects: :not_started
+            },
+            work_history: {
+              work_history: :not_started
+            }
+          }
+        )
+      end
+    end
+
+    context "with written statement" do
+      before { application_form.needs_written_statement = true }
 
       it do
         is_expected.to eq(
@@ -252,8 +272,8 @@ RSpec.describe ApplicationForm, type: :model do
       end
     end
 
-    context "with online checks" do
-      before { application_form.region = create(:region, :online_checks) }
+    context "with registration number" do
+      before { application_form.needs_registration_number = true }
 
       it do
         is_expected.to eq(
@@ -425,6 +445,8 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     describe "work history section" do
+      before { application_form.needs_work_history = true }
+
       subject(:work_history_status) { task_statuses[:work_history] }
 
       describe "work history item" do
@@ -466,7 +488,7 @@ RSpec.describe ApplicationForm, type: :model do
       end
 
       describe "written statement item" do
-        before { application_form.region = create(:region, :written_checks) }
+        before { application_form.needs_written_statement = true }
 
         subject(:written_statement_status) do
           proof_of_recognition_status[:written_statement]
@@ -489,7 +511,7 @@ RSpec.describe ApplicationForm, type: :model do
       end
 
       describe "registration number item" do
-        before { application_form.region = create(:region, :online_checks) }
+        before { application_form.needs_registration_number = true }
 
         subject(:registration_number_status) do
           proof_of_recognition_status[:registration_number]
@@ -520,69 +542,5 @@ RSpec.describe ApplicationForm, type: :model do
     subject(:can_submit?) { application_form.can_submit? }
 
     it { is_expected.to eq(false) }
-  end
-
-  describe "#needs_work_history?" do
-    subject(:needs_work_history?) { application_form.needs_work_history? }
-
-    context "with none checks" do
-      it { is_expected.to be true }
-    end
-
-    context "with written checks" do
-      before { application_form.region = create(:region, :written_checks) }
-
-      it { is_expected.to be false }
-    end
-
-    context "with online checks" do
-      before { application_form.region = create(:region, :online_checks) }
-
-      it { is_expected.to be false }
-    end
-  end
-
-  describe "#needs_registration_number?" do
-    subject(:needs_registration_number?) do
-      application_form.needs_registration_number?
-    end
-
-    context "with none checks" do
-      it { is_expected.to be false }
-    end
-
-    context "with written checks" do
-      before { application_form.region = create(:region, :written_checks) }
-
-      it { is_expected.to be false }
-    end
-
-    context "with online checks" do
-      before { application_form.region = create(:region, :online_checks) }
-
-      it { is_expected.to be true }
-    end
-  end
-
-  describe "#needs_written_statement?" do
-    subject(:needs_written_statement?) do
-      application_form.needs_written_statement?
-    end
-
-    context "with none checks" do
-      it { is_expected.to be false }
-    end
-
-    context "with written checks" do
-      before { application_form.region = create(:region, :written_checks) }
-
-      it { is_expected.to be true }
-    end
-
-    context "with online checks" do
-      before { application_form.region = create(:region, :online_checks) }
-
-      it { is_expected.to be false }
-    end
   end
 end

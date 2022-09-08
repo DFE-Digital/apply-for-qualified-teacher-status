@@ -43,6 +43,9 @@
     - assessor_id
     - reviewer_id
     - submitted_at
+    - needs_work_history
+    - needs_written_statement
+    - needs_registration_number
   :countries:
     - id
     - code

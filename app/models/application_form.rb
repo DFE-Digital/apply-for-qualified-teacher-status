@@ -2,27 +2,30 @@
 #
 # Table name: application_forms
 #
-#  id                      :bigint           not null, primary key
-#  age_range_max           :integer
-#  age_range_min           :integer
-#  alternative_family_name :text             default(""), not null
-#  alternative_given_names :text             default(""), not null
-#  date_of_birth           :date
-#  family_name             :text             default(""), not null
-#  given_names             :text             default(""), not null
-#  has_alternative_name    :boolean
-#  has_work_history        :boolean
-#  reference               :string(31)       not null
-#  registration_number     :text
-#  state                   :string           default("draft"), not null
-#  subjects                :text             default([]), not null, is an Array
-#  submitted_at            :datetime
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  assessor_id             :bigint
-#  region_id               :bigint           not null
-#  reviewer_id             :bigint
-#  teacher_id              :bigint           not null
+#  id                        :bigint           not null, primary key
+#  age_range_max             :integer
+#  age_range_min             :integer
+#  alternative_family_name   :text             default(""), not null
+#  alternative_given_names   :text             default(""), not null
+#  date_of_birth             :date
+#  family_name               :text             default(""), not null
+#  given_names               :text             default(""), not null
+#  has_alternative_name      :boolean
+#  has_work_history          :boolean
+#  needs_registration_number :boolean          not null
+#  needs_work_history        :boolean          not null
+#  needs_written_statement   :boolean          not null
+#  reference                 :string(31)       not null
+#  registration_number       :text
+#  state                     :string           default("draft"), not null
+#  subjects                  :text             default([]), not null, is an Array
+#  submitted_at              :datetime
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  assessor_id               :bigint
+#  region_id                 :bigint           not null
+#  reviewer_id               :bigint
+#  teacher_id                :bigint           not null
 #
 # Indexes
 #
@@ -89,13 +92,13 @@ class ApplicationForm < ApplicationRecord
         hash = {}
         hash.merge!(about_you: %i[personal_information identity_document])
         hash.merge!(qualifications: %i[qualifications age_range subjects])
-        hash.merge!(work_history: %i[work_history]) if needs_work_history?
+        hash.merge!(work_history: %i[work_history]) if needs_work_history
 
-        if needs_written_statement? || needs_registration_number?
+        if needs_written_statement || needs_registration_number
           hash.merge!(
             proof_of_recognition: [
-              needs_registration_number? ? :registration_number : nil,
-              needs_written_statement? ? :written_statement : nil
+              needs_registration_number ? :registration_number : nil,
+              needs_written_statement ? :written_statement : nil
             ].compact
           )
         end
@@ -151,18 +154,6 @@ class ApplicationForm < ApplicationRecord
     rescue NoMethodError
       url_helpers.send("#{key}_teacher_interface_application_form_path")
     end
-  end
-
-  def needs_work_history?
-    region.status_check_none? || region.sanction_check_none?
-  end
-
-  def needs_registration_number?
-    region.status_check_online? || region.sanction_check_online?
-  end
-
-  def needs_written_statement?
-    region.status_check_written? || region.sanction_check_written?
   end
 
   def teaching_qualification

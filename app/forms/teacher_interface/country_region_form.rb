@@ -2,12 +2,11 @@ class TeacherInterface::CountryRegionForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attr_accessor :application_form
-
+  attr_accessor :teacher
   attribute :location, :string
   attribute :region_id, :integer
 
-  validates :application_form, presence: true
+  validates :teacher, presence: true
   validates :location, presence: true
   validates :region_id, presence: true, if: -> { location.present? }
 
@@ -27,8 +26,7 @@ class TeacherInterface::CountryRegionForm
   def save
     return false unless valid?
 
-    application_form.region_id = region_id
-    application_form.save!
+    ApplicationFormFactory.call(teacher:, region: Region.find(region_id))
   end
 
   private

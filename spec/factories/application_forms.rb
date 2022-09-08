@@ -2,27 +2,30 @@
 #
 # Table name: application_forms
 #
-#  id                      :bigint           not null, primary key
-#  age_range_max           :integer
-#  age_range_min           :integer
-#  alternative_family_name :text             default(""), not null
-#  alternative_given_names :text             default(""), not null
-#  date_of_birth           :date
-#  family_name             :text             default(""), not null
-#  given_names             :text             default(""), not null
-#  has_alternative_name    :boolean
-#  has_work_history        :boolean
-#  reference               :string(31)       not null
-#  registration_number     :text
-#  state                   :string           default("draft"), not null
-#  subjects                :text             default([]), not null, is an Array
-#  submitted_at            :datetime
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  assessor_id             :bigint
-#  region_id               :bigint           not null
-#  reviewer_id             :bigint
-#  teacher_id              :bigint           not null
+#  id                        :bigint           not null, primary key
+#  age_range_max             :integer
+#  age_range_min             :integer
+#  alternative_family_name   :text             default(""), not null
+#  alternative_given_names   :text             default(""), not null
+#  date_of_birth             :date
+#  family_name               :text             default(""), not null
+#  given_names               :text             default(""), not null
+#  has_alternative_name      :boolean
+#  has_work_history          :boolean
+#  needs_registration_number :boolean          not null
+#  needs_work_history        :boolean          not null
+#  needs_written_statement   :boolean          not null
+#  reference                 :string(31)       not null
+#  registration_number       :text
+#  state                     :string           default("draft"), not null
+#  subjects                  :text             default([]), not null, is an Array
+#  submitted_at              :datetime
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  assessor_id               :bigint
+#  region_id                 :bigint           not null
+#  reviewer_id               :bigint
+#  teacher_id                :bigint           not null
 #
 # Indexes
 #
@@ -48,6 +51,10 @@ FactoryBot.define do
     state { "draft" }
     association :teacher
     association :region, :national
+
+    needs_work_history { false }
+    needs_written_statement { false }
+    needs_registration_number { false }
 
     trait :submitted do
       state { "submitted" }
@@ -92,6 +99,7 @@ FactoryBot.define do
     end
 
     trait :with_registration_number do
+      needs_registration_number { true }
       registration_number do
         Faker::Number.unique.leading_zero_number(digits: 8)
       end
@@ -104,6 +112,7 @@ FactoryBot.define do
     end
 
     trait :with_work_history do
+      needs_work_history { true }
       has_work_history { true }
 
       after(:create) do |application_form, _evaluator|
@@ -112,6 +121,7 @@ FactoryBot.define do
     end
 
     trait :with_written_statement do
+      needs_written_statement { true }
       after(:build) do |application_form, _evaluator|
         build(:upload, document: application_form.written_statement_document)
       end
