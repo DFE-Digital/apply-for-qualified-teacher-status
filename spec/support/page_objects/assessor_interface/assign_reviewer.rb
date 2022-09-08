@@ -1,5 +1,3 @@
-require "support/page_objects/govuk_radio_item"
-
 module PageObjects
   module AssessorInterface
     class AssignReviewer < SitePrism::Page
