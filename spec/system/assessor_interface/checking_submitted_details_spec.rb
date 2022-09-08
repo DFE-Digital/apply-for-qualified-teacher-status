@@ -9,35 +9,35 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   it "allows checking the qualifications" do
-    when_i_visit_the_check_qualifications_page
+    when_i_visit_the(:check_qualifications_page, application_id:)
     then_i_see_the_qualifications
 
-    when_i_click_continue
-    then_i_see_the_application_page
+    when_i_click_check_qualifications_continue
+    then_i_see_the(:application_page, application_id:)
   end
 
   it "allows checking the work history" do
-    when_i_visit_the_check_work_history_page
+    when_i_visit_the(:check_work_history_page, application_id:)
     then_i_see_the_work_history
 
-    when_i_click_continue
-    then_i_see_the_application_page
+    when_i_click_check_work_history_continue
+    then_i_see_the(:application_page, application_id:)
   end
 
   it "allows checking the professional standing" do
-    when_i_visit_the_check_professional_standing_page
+    when_i_visit_the(:check_professional_standing_page, application_id:)
     then_i_see_the_professional_standing
 
-    when_i_click_continue
-    then_i_see_the_application_page
+    when_i_click_check_professional_standing_continue
+    then_i_see_the(:application_page, application_id:)
   end
 
   it "allows checking the personal information" do
-    when_i_visit_the_check_personal_information_page
-    then_i_see_the_personal_informations
+    when_i_visit_the(:check_personal_information_page, application_id:)
+    then_i_see_the_personal_information
 
-    when_i_click_continue
-    then_i_see_the_application_page
+    when_i_click_check_personal_information_continue
+    then_i_see_the(:application_page, application_id:)
   end
 
   private
@@ -50,64 +50,53 @@ RSpec.describe "Assessor check submitted details", type: :system do
     application_form
   end
 
-  def when_i_visit_the_check_personal_information_page
-    check_personal_information_page.load(application_id: application_form.id)
-  end
-
-  def when_i_visit_the_check_qualifications_page
-    check_qualifications_page.load(application_id: application_form.id)
-  end
-
-  def when_i_visit_the_check_work_history_page
-    check_work_history_page.load(application_id: application_form.id)
-  end
-
-  def when_i_visit_the_check_professional_standing_page
-    check_professional_standing_page.load(application_id: application_form.id)
-  end
-
-  def then_i_see_the_personal_informations
-    expect(check_personal_information_page.heading).to have_content(
-      "Check personal information"
-    )
-  end
-
   def then_i_see_the_qualifications
-    expect(check_qualifications_page.heading).to have_content(
-      "Check qualifications"
+    teaching_qualification =
+      application_form.qualifications.find(&:is_teaching_qualification?)
+    expect(check_qualifications_page.teaching_qualification.title.text).to eq(
+      teaching_qualification.title
     )
-    expect(
-      check_qualifications_page.qualification_cards.first.heading
-    ).to have_content("Your teaching qualification")
   end
 
   def then_i_see_the_work_history
-    expect(check_work_history_page.heading).to have_content(
-      "Check work history"
+    most_recent_role = application_form.work_histories.first
+    expect(check_work_history_page.most_recent_role.school_name.text).to eq(
+      most_recent_role.school_name
     )
-    expect(
-      check_work_history_page.work_history_cards.first.heading
-    ).to have_content("Add your work history")
-    expect(
-      check_work_history_page.work_history_cards.second.heading
-    ).to have_content("Your current or most recent role")
   end
 
   def then_i_see_the_professional_standing
-    expect(check_professional_standing_page.heading).to have_content(
-      "Check professional standing"
-    )
     expect(
-      check_professional_standing_page.professional_standing_cards.first.heading
-    ).to have_content("Enter your registration number")
+      check_professional_standing_page
+        .proof_of_recognition
+        .reference_number
+        .text
+    ).to eq(application_form.registration_number)
   end
 
-  def when_i_click_continue
+  def then_i_see_the_personal_information
+    expect(
+      check_personal_information_page.personal_information.given_names.text
+    ).to eq(application_form.given_names)
+    expect(
+      check_personal_information_page.personal_information.family_name.text
+    ).to eq(application_form.family_name)
+  end
+
+  def when_i_click_check_qualifications_continue
     check_qualifications_page.continue_button.click
   end
 
-  def then_i_see_the_application_page
-    expect(page).to have_content("Overview")
+  def when_i_click_check_work_history_continue
+    check_work_history_page.continue_button.click
+  end
+
+  def when_i_click_check_professional_standing_continue
+    check_professional_standing_page.continue_button.click
+  end
+
+  def when_i_click_check_personal_information_continue
+    check_personal_information_page.continue_button.click
   end
 
   def assessor
@@ -124,6 +113,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
         :with_registration_number,
         :with_personal_information
       )
+  end
+
+  def application_id
+    application_form.id
   end
 
   def check_personal_information_page
