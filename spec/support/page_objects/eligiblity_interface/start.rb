@@ -1,7 +1,7 @@
 module PageObjects
   module EligibilityInterface
     class Start < SitePrism::Page
-      set_url "/eligibility"
+      set_url "/eligibility/start"
 
       element :heading, "h1"
       element :description, ".govuk-body", match: :first

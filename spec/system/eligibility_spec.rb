@@ -9,56 +9,56 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   it "happy path" do
-    when_i_visit_the_start_page
-    then_i_see_the_start_page
+    when_i_visit_the(:start_page)
+    then_i_see_the(:start_page)
 
     when_i_press_start_now
-    then_i_see_the_country_page
+    then_i_see_the(:country_page)
 
     when_i_select_an_eligible_country
-    then_i_see_the_qualifications_page
+    then_i_see_the(:qualification_page)
 
     when_i_have_a_qualification
-    then_i_see_the_degree_page
+    then_i_see_the(:degree_page)
 
     when_i_have_a_degree
-    then_i_see_the_teach_children_page
+    then_i_see_the(:teach_children_page)
 
     when_i_can_teach_children
-    then_i_see_the_misconduct_page
+    then_i_see_the(:misconduct_page)
 
     when_i_dont_have_a_misconduct_record
-    then_i_see_the_eligible_page
+    then_i_see_the(:eligible_page)
 
-    when_i_visit_the_start_page
-    then_i_see_the_start_page
+    when_i_visit_the(:start_page)
+    then_i_see_the(:start_page)
     when_i_press_start_now
     then_i_have_two_eligibility_checks
   end
 
   it "ineligible paths" do
-    when_i_visit_the_start_page
+    when_i_visit_the(:start_page)
 
     when_i_press_start_now
     when_i_select_an_ineligible_country
-    then_i_see_the_ineligible_page
+    then_i_see_the(:ineligible_page)
     and_i_see_the_ineligible_country_text
 
     when_i_press_back
     when_i_select_an_eligible_country
-    then_i_see_the_qualifications_page
+    then_i_see_the(:qualification_page)
 
     when_i_dont_have_a_qualification
-    then_i_see_the_degree_page
+    then_i_see_the(:degree_page)
 
     when_i_dont_have_a_degree
-    then_i_see_the_teach_children_page
+    then_i_see_the(:teach_children_page)
 
     when_i_cant_teach_children
-    then_i_see_the_misconduct_page
+    then_i_see_the(:misconduct_page)
 
     when_i_have_a_misconduct_record
-    then_i_see_the_ineligible_page
+    then_i_see_the(:ineligible_page)
     and_i_see_the_ineligible_degree_text
     and_i_see_the_ineligible_qualification_text
     and_i_see_the_ineligible_teach_children_text
@@ -66,106 +66,110 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   it "trying to skip steps" do
-    when_i_visit_the_start_page
-    then_i_see_the_start_page
+    when_i_visit_the(:start_page)
+    then_i_see_the(:start_page)
 
-    when_i_try_to_go_to_the_eligible_page
-    then_i_see_the_start_page
+    when_i_visit_the(:eligible_page)
+    then_i_see_the(:start_page)
 
-    when_i_try_to_go_to_the_ineligible_page
-    then_i_see_the_start_page
+    when_i_visit_the(:ineligible_page)
+    then_i_see_the(:start_page)
 
     when_i_press_start_now
-    then_i_see_the_country_page
+    then_i_see_the(:country_page)
 
-    when_i_try_to_go_to_the_region_page
-    then_i_see_the_country_page
+    when_i_visit_the(:region_page)
+    then_i_see_the(:country_page)
 
     when_i_select_an_eligible_country
-    then_i_see_the_qualifications_page
+    then_i_see_the(:qualification_page)
 
-    when_i_try_to_go_to_the_degree_page
-    then_i_see_the_qualifications_page
+    when_i_visit_the(:degree_page)
+    then_i_see_the(:qualification_page)
 
     when_i_have_a_qualification
-    then_i_see_the_degree_page
+    then_i_see_the(:degree_page)
 
-    when_i_try_to_go_to_the_teach_children_page
-    then_i_see_the_degree_page
+    when_i_visit_the(:teach_children_page)
+    then_i_see_the(:degree_page)
 
     when_i_have_a_degree
-    then_i_see_the_teach_children_page
+    then_i_see_the(:teach_children_page)
 
-    when_i_try_to_go_to_the_misconduct_page
-    then_i_see_the_teach_children_page
+    when_i_visit_the(:misconduct_page)
+    then_i_see_the(:teach_children_page)
 
     when_i_can_teach_children
-    then_i_see_the_misconduct_page
+    then_i_see_the(:misconduct_page)
   end
 
   it "handles the country picker error" do
-    when_i_visit_the_start_page
+    when_i_visit_the(:start_page)
     when_i_press_start_now
     when_i_dont_select_a_country
     then_i_see_the_country_error_message
 
     when_i_select_an_eligible_country
-    then_i_see_the_qualifications_page
+    then_i_see_the(:qualification_page)
   end
 
   it "sends legacy users to the old service" do
-    when_i_visit_the_start_page
+    when_i_visit_the(:start_page)
     when_i_press_start_now
     when_i_select_a_legacy_country
-    then_i_see_the_eligible_page
+    then_i_see_the(:eligible_page)
 
     when_i_press_apply
     then_i_see_the_legacy_service
   end
 
   it "handles countries with multiple regions" do
-    when_i_visit_the_start_page
+    when_i_visit_the(:start_page)
     when_i_press_start_now
     when_i_select_a_multiple_region_country
     then_i_see_the_region_page
 
     when_i_select_a_region
-    then_i_see_the_qualifications_page
+    then_i_see_the(:qualification_page)
   end
 
   it "service is closed" do
     given_the_service_is_closed
-    when_i_visit_the_start_page
-    then_i_do_not_see_the_start_page
+    when_i_visit_the(:start_page)
+    then_access_is_denied
 
     when_i_am_authorized_as_a_support_user
     given_the_service_is_open
-    when_i_visit_the_start_page
-    then_i_see_the_start_page
+    when_i_visit_the(:start_page)
+    then_i_see_the(:start_page)
 
     when_i_press_start_now
-    then_i_see_the_country_page
+    then_i_see_the(:country_page)
 
     when_i_select_an_eligible_country
-    then_i_see_the_qualifications_page
+    then_i_see_the(:qualification_page)
   end
 
   it "test user is disabled" do
     given_the_service_is_closed
-    when_i_visit_the_start_page
-    then_i_do_not_see_the_start_page
+    when_i_visit_the(:start_page)
+    then_access_is_denied
 
     when_i_am_authorized_as_a_test_user
-    when_i_visit_the_start_page
-    then_i_do_not_see_the_start_page
+    when_i_visit_the(:start_page)
+    then_access_is_denied
 
     given_the_test_user_is_enabled
     when_i_am_authorized_as_a_test_user
-    when_i_visit_the_start_page
-    then_i_see_the_start_page
+    when_i_visit_the(:start_page)
+    then_i_see_the(:start_page)
   end
 
   private
+
+  def then_access_is_denied
+    expect(page).to have_content("HTTP Basic: Access denied")
+  end
 
   def given_countries_exist
     create(:country, :with_national_region, code: "GB-SCT")
@@ -176,38 +180,12 @@ RSpec.describe "Eligibility check", type: :system do
     create(:region, country: it, name: "Other Region")
   end
 
-  def start_page
-    @start_page ||= PageObjects::EligibilityInterface::Start.new
-  end
-
-  def when_i_visit_the_start_page
-    start_page.load
-  end
-
-  def then_i_see_the_start_page
-    expect(page).to have_title(
-      "Apply for qualified teacher status (QTS) in England"
-    )
-    expect(start_page.heading).to have_content(
-      "Check your eligibility to apply for qualified teacher status (QTS) in England"
-    )
-    expect(start_page.description).to have_content(
-      "This service is for qualified teachers who trained outside of England" \
-        " who want to apply for qualified teacher status (QTS) to teach in" \
-        " English schools."
-    )
-  end
-
   def then_i_do_not_see_the_start_page
-    expect(start_page).to_not have_start_button
+    expect(start_page).not_to be_displayed
   end
 
   def when_i_press_start_now
     start_page.start_button.click
-  end
-
-  def country_page
-    @country_page ||= PageObjects::EligibilityInterface::Country.new
   end
 
   def when_i_select_an_eligible_country
@@ -230,28 +208,11 @@ RSpec.describe "Eligibility check", type: :system do
     country_page.form.continue_button.click
   end
 
-  def then_i_see_the_country_page
-    expect(country_page).to have_title(
-      "In which country are you currently recognised as a teacher?"
-    )
-    expect(country_page.heading).to have_content(
-      "In which country are you currently recognised as a teacher?"
-    )
-  end
-
   def then_i_see_the_country_error_message
     expect(country_page).to have_error_summary
     expect(country_page.error_summary.body).to have_content(
       "Tell us where you’re currently recognised as a teacher"
     )
-  end
-
-  def region_page
-    @region_page ||= PageObjects::EligibilityInterface::Region.new
-  end
-
-  def when_i_try_to_go_to_the_region_page
-    region_page.load
   end
 
   def then_i_see_the_region_page
@@ -267,44 +228,12 @@ RSpec.describe "Eligibility check", type: :system do
     region_page.submit(region: "Region")
   end
 
-  def qualification_page
-    @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
-  end
-
-  def when_i_try_to_go_to_the_qualification_page
-    qualification_page.load
-  end
-
-  def then_i_see_the_qualifications_page
-    expect(qualification_page).to have_title(
-      "Do you have a teacher training qualification?"
-    )
-    expect(qualification_page.heading).to have_content(
-      "Do you have a teacher training qualification?"
-    )
-  end
-
   def when_i_have_a_qualification
     qualification_page.submit_yes
   end
 
   def when_i_dont_have_a_qualification
     qualification_page.submit_no
-  end
-
-  def degree_page
-    @degree_page ||= PageObjects::EligibilityInterface::Degree.new
-  end
-
-  def when_i_try_to_go_to_the_degree_page
-    degree_page.load
-  end
-
-  def then_i_see_the_degree_page
-    expect(degree_page).to have_title("Do you have a university degree?")
-    expect(degree_page.heading).to have_content(
-      "Do you have a university degree?"
-    )
   end
 
   def when_i_have_a_degree
@@ -315,47 +244,12 @@ RSpec.describe "Eligibility check", type: :system do
     degree_page.submit_no
   end
 
-  def teach_children_page
-    @teach_children_page ||=
-      PageObjects::EligibilityInterface::TeachChildren.new
-  end
-
-  def when_i_try_to_go_to_the_teach_children_page
-    teach_children_page.load
-  end
-
-  def then_i_see_the_teach_children_page
-    expect(teach_children_page).to have_title(
-      "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
-    )
-    expect(teach_children_page.heading).to have_content(
-      "Are you qualified to teach children who are aged somewhere between 5 and 16 years?"
-    )
-  end
-
   def when_i_can_teach_children
     teach_children_page.submit_yes
   end
 
   def when_i_cant_teach_children
     teach_children_page.submit_no
-  end
-
-  def misconduct_page
-    @misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
-  end
-
-  def when_i_try_to_go_to_the_misconduct_page
-    misconduct_page.load
-  end
-
-  def then_i_see_the_misconduct_page
-    expect(misconduct_page).to have_title(
-      "Do you have any sanctions or restrictions on your employment record?"
-    )
-    expect(misconduct_page.heading).to have_content(
-      "Do you have any sanctions or restrictions on your employment record?"
-    )
   end
 
   def when_i_have_a_misconduct_record
@@ -366,40 +260,12 @@ RSpec.describe "Eligibility check", type: :system do
     misconduct_page.submit_no
   end
 
-  def eligible_page
-    @eligible_page = PageObjects::EligibilityInterface::Eligible.new
-  end
-
-  def when_i_try_to_go_to_the_eligible_page
-    eligible_page.load
-  end
-
   def when_i_press_apply
     eligible_page.apply_button.click
   end
 
-  def then_i_see_the_eligible_page
-    expect(eligible_page).to have_content(
-      "You’re eligible to apply for qualified teacher status (QTS) in England"
-    )
-  end
-
   def then_i_see_the_legacy_service
     expect(page).to have_current_path("/MutualRecognition/")
-  end
-
-  def ineligible_page
-    @ineligible_page = PageObjects::EligibilityInterface::Ineligible.new
-  end
-
-  def when_i_try_to_go_to_the_ineligible_page
-    visit "/eligibility/ineligible"
-  end
-
-  def then_i_see_the_ineligible_page
-    expect(ineligible_page.heading).to have_content(
-      "You’re not eligible to apply for qualified teacher status (QTS) in England"
-    )
   end
 
   def and_i_see_the_ineligible_country_text
