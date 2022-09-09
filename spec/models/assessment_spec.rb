@@ -24,6 +24,8 @@ RSpec.describe Assessment, type: :model do
   subject(:assessment) { build(:assessment) }
 
   describe "validations" do
+    it { is_expected.to have_many(:sections) }
+
     it { is_expected.to validate_presence_of(:recommendation) }
 
     it do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_09_084614) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_09_100205) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,6 +74,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_09_084614) do
     t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
     t.index ["state"], name: "index_application_forms_on_state"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
+  end
+
+  create_table "assessment_sections", force: :cascade do |t|
+    t.bigint "assessment_id", null: false
+    t.string "key", null: false
+    t.boolean "passed"
+    t.string "checks", default: [], array: true
+    t.string "failure_reasons", default: [], array: true
+    t.string "selected_failure_reasons", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id", "key"], name: "index_assessment_sections_on_assessment_id_and_key", unique: true
+    t.index ["assessment_id"], name: "index_assessment_sections_on_assessment_id"
   end
 
   create_table "assessments", force: :cascade do |t|
@@ -259,6 +272,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_09_084614) do
   add_foreign_key "application_forms", "staff", column: "assessor_id"
   add_foreign_key "application_forms", "staff", column: "reviewer_id"
   add_foreign_key "application_forms", "teachers"
+  add_foreign_key "assessment_sections", "assessments"
   add_foreign_key "assessments", "application_forms"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "qualifications", "application_forms"

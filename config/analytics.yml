@@ -116,6 +116,16 @@
     - teaching_authority_other
     - teaching_authority_certificate
     - application_form_enabled
+  :assessment_sections:
+    - id
+    - assessment_id
+    - key
+    - passed
+    - checks
+    - failure_reasons
+    - selected_failure_reasons
+    - created_at
+    - updated_at
   :staff:
     - id
     - email
