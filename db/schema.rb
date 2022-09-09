@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_08_064656) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_09_084614) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,6 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_08_064656) do
     t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
     t.index ["state"], name: "index_application_forms_on_state"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
+  end
+
+  create_table "assessments", force: :cascade do |t|
+    t.bigint "application_form_id", null: false
+    t.string "recommendation", default: "unknown", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -251,6 +259,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_08_064656) do
   add_foreign_key "application_forms", "staff", column: "assessor_id"
   add_foreign_key "application_forms", "staff", column: "reviewer_id"
   add_foreign_key "application_forms", "teachers"
+  add_foreign_key "assessments", "application_forms"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "qualifications", "application_forms"
   add_foreign_key "regions", "countries"
