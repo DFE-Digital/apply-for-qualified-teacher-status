@@ -62,6 +62,18 @@ RSpec.describe SubmitApplicationForm do
     end
   end
 
+  describe "creating assessment" do
+    subject(:assessment) { Assessment.find_by(application_form:) }
+
+    it { is_expected.to be_nil }
+
+    context "after calling the service" do
+      before { call }
+
+      it { is_expected.to_not be_nil }
+    end
+  end
+
   describe "sending application received email" do
     it "queues an email job" do
       expect { call }.to have_enqueued_mail(

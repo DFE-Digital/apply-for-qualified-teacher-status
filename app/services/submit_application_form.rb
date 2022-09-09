@@ -18,6 +18,8 @@ class SubmitApplicationForm
       new_state: "submitted"
     )
 
+    AssessmentFactory.call(application_form:)
+
     TeacherMailer
       .with(teacher: application_form.teacher)
       .application_received
