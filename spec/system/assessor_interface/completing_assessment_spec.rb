@@ -50,9 +50,4 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def assessor
     @assessor ||= create(:staff, :confirmed)
   end
-
-  def complete_assessment_page
-    @complete_assessment_page ||=
-      PageObjects::AssessorInterface::CompleteAssessment.new
-  end
 end

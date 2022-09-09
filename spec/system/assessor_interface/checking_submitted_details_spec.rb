@@ -118,24 +118,4 @@ RSpec.describe "Assessor check submitted details", type: :system do
   def application_id
     application_form.id
   end
-
-  def check_personal_information_page
-    @check_personal_information_page ||=
-      PageObjects::AssessorInterface::CheckPersonalInformation.new
-  end
-
-  def check_qualifications_page
-    @check_qualifications_page ||=
-      PageObjects::AssessorInterface::CheckQualifications.new
-  end
-
-  def check_work_history_page
-    @check_work_history_page ||=
-      PageObjects::AssessorInterface::CheckWorkHistory.new
-  end
-
-  def check_professional_standing_page
-    @check_professional_standing_page ||=
-      PageObjects::AssessorInterface::CheckProfessionalStanding.new
-  end
 end

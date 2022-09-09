@@ -8,10 +8,10 @@ RSpec.describe "Performance", type: :system do
   it "using the performance dashboard" do
     given_the_service_is_open
     given_there_are_a_few_eligibility_checks
-    when_i_visit_the_performance_page
+    when_i_visit_the(:performance_page)
     then_i_see_the_live_stats
 
-    when_i_visit_the_performance_page_since_launch
+    when_i_visit_the(:performance_page, since_launch: true)
     then_i_see_the_live_stats_since_launch
   end
 
@@ -23,10 +23,6 @@ RSpec.describe "Performance", type: :system do
         create(:eligibility_check, :eligible, created_at: n.days.ago)
       end
     end
-  end
-
-  def when_i_visit_the_performance_page
-    performance_page.load
   end
 
   def then_i_see_the_live_stats
@@ -41,10 +37,6 @@ RSpec.describe "Performance", type: :system do
     )
   end
 
-  def when_i_visit_the_performance_page_since_launch
-    performance_page.load(since_launch: true)
-  end
-
   def then_i_see_the_live_stats_since_launch
     expect(performance_page.live_service_usage.stats.first).to have_content(
       "45\nchecks since launch"
@@ -55,9 +47,5 @@ RSpec.describe "Performance", type: :system do
     expect(performance_page.live_service_usage.table).to have_content(
       "22 June\t9"
     )
-  end
-
-  def performance_page
-    @performance_page ||= PageObjects::Performance.new
   end
 end
