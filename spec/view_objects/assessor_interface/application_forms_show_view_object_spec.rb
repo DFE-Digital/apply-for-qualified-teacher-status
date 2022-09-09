@@ -37,6 +37,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
   describe "#assessment_tasks" do
     let(:application_form) { create(:application_form) }
+    let(:assessment) { create(:assessment, application_form:) }
+    before { create(:assessment_section, :personal_information, assessment:) }
+
     let(:params) { { id: application_form.id } }
 
     subject(:assessment_tasks) { view_object.assessment_tasks }
@@ -45,33 +48,17 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       subject(:submitted_details) { assessment_tasks.fetch(:submitted_details) }
 
       context "with work history" do
-        before { application_form.update!(needs_work_history: true) }
+        before { create(:assessment_section, :work_history, assessment:) }
 
-        it do
-          is_expected.to eq(
-            %i[personal_information qualifications work_history]
-          )
-        end
+        it { is_expected.to eq(%i[personal_information work_history]) }
       end
 
-      context "with written statement" do
-        before { application_form.update!(needs_written_statement: true) }
-
-        it do
-          is_expected.to eq(
-            %i[personal_information qualifications professional_standing]
-          )
+      context "with professional standing statement" do
+        before do
+          create(:assessment_section, :professional_standing, assessment:)
         end
-      end
 
-      context "with registration number" do
-        before { application_form.update!(needs_registration_number: true) }
-
-        it do
-          is_expected.to eq(
-            %i[personal_information qualifications professional_standing]
-          )
-        end
+        it { is_expected.to eq(%i[personal_information professional_standing]) }
       end
     end
 
@@ -147,20 +134,26 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
   end
 
   describe "#assessment_task_status" do
+    let(:application_form) { create(:application_form) }
+    let(:assessment) { create(:assessment, application_form:) }
+    before { create(:assessment_section, :personal_information, assessment:) }
+
+    let(:params) { { id: application_form.id } }
+
     subject(:assessment_task_status) do
       view_object.assessment_task_status(section, item)
     end
 
-    let(:item) { nil }
-
     context "with submitted details section" do
       let(:section) { :submitted_details }
+      let(:item) { :personal_information }
 
-      it { is_expected.to eq(:in_progress) }
+      it { is_expected.to eq(:not_started) }
     end
 
     context "with recommendation section" do
       let(:section) { :recommendation }
+      let(:item) { nil }
 
       it { is_expected.to eq(:not_started) }
     end

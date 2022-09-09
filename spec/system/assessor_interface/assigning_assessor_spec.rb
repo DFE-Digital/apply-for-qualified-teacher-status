@@ -59,7 +59,12 @@ RSpec.describe "Assigning an assessor", type: :system do
 
   def application_form
     @application_form ||=
-      create(:application_form, :with_personal_information, :submitted)
+      create(
+        :application_form,
+        :with_personal_information,
+        :submitted,
+        :with_assessment
+      )
   end
 
   def assessor

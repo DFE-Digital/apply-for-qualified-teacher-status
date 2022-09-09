@@ -6,7 +6,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def application_form
-    @application_form ||= ApplicationForm.find(params[:id])
+    @application_form ||=
+      ApplicationForm.includes(assessment: :sections).find(params[:id])
   end
 
   def back_link_path
@@ -17,7 +18,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def assessment_tasks
     {
-      submitted_details: submitted_details_tasks,
+      submitted_details: assessment.sections.map(&:key).map(&:to_sym),
       recommendation: %i[first_assessment second_assessment]
     }
   end
@@ -36,8 +37,11 @@ class AssessorInterface::ApplicationFormsShowViewObject
     end
   end
 
-  def assessment_task_status(section, _item)
-    return :in_progress if section == :submitted_details
+  def assessment_task_status(section, item)
+    if section == :submitted_details
+      return assessment.sections.find { |s| s.key == item.to_s }.state
+    end
+
     :not_started
   end
 
@@ -45,14 +49,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   attr_reader :params
 
-  def submitted_details_tasks
-    %i[personal_information qualifications].tap do |tasks|
-      tasks << :work_history if application_form.needs_work_history
-      if application_form.needs_written_statement ||
-           application_form.needs_registration_number
-        tasks << :professional_standing
-      end
-    end
+  def assessment
+    @assessment ||= application_form.assessment
   end
 
   def url_helpers
