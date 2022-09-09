@@ -40,4 +40,9 @@ class AssessmentSection < ApplicationRecord
             inclusion: {
               in: keys.values
             }
+
+  def state
+    return :not_started if passed.nil?
+    passed ? :completed : :action_required
+  end
 end

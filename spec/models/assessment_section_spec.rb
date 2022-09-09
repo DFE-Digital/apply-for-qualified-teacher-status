@@ -42,4 +42,23 @@ RSpec.describe AssessmentSection, type: :model do
       ).backed_by_column_of_type(:string)
     end
   end
+
+  describe "#state" do
+    subject(:state) { assessment_section.state }
+
+    context "with a passed assessment" do
+      before { assessment_section.passed = true }
+      it { is_expected.to eq(:completed) }
+    end
+
+    context "with a failed assessment" do
+      before { assessment_section.passed = false }
+      it { is_expected.to eq(:action_required) }
+    end
+
+    context "with no assessment yet" do
+      before { assessment_section.passed = nil }
+      it { is_expected.to eq(:not_started) }
+    end
+  end
 end
