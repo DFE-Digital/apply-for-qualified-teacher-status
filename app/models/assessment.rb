@@ -28,4 +28,8 @@ class Assessment < ApplicationRecord
             inclusion: {
               in: recommendations.values
             }
+
+  def finished?
+    award? || decline?
+  end
 end

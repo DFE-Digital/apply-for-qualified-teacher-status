@@ -38,4 +38,23 @@ RSpec.describe Assessment, type: :model do
   it "defaults to an unknown recommendation" do
     expect(assessment.unknown?).to be true
   end
+
+  describe "#finished?" do
+    subject(:finished?) { assessment.finished? }
+
+    context "with an unknown recommendation" do
+      before { assessment.unknown! }
+      it { is_expected.to be false }
+    end
+
+    context "with an awarded recommendation" do
+      before { assessment.award! }
+      it { is_expected.to be true }
+    end
+
+    context "with an unknown recommendation" do
+      before { assessment.decline! }
+      it { is_expected.to be true }
+    end
+  end
 end
