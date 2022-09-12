@@ -52,6 +52,7 @@ class ApplicationForm < ApplicationRecord
   has_many :qualifications
   has_many :documents, as: :documentable
   has_many :timeline_events
+  has_one :assessment
 
   before_create :build_documents
 

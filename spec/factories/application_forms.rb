@@ -71,6 +71,12 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
+    trait :with_assessment do
+      after(:create) do |application_form, _evaluator|
+        create(:assessment, application_form:)
+      end
+    end
+
     trait :with_age_range do
       age_range_min { Faker::Number.between(from: 5, to: 11) }
       age_range_max { Faker::Number.between(from: age_range_min, to: 18) }

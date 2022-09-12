@@ -46,7 +46,8 @@ RSpec.describe "Assessor view timeline events", type: :system do
   def application_form
     @application_form ||=
       begin
-        application_form = create(:application_form, :submitted)
+        application_form =
+          create(:application_form, :submitted, :with_assessment)
         create(:timeline_event, :assessor_assigned, application_form:)
         create(:timeline_event, :state_changed, application_form:)
         application_form

@@ -24,6 +24,8 @@ RSpec.describe Assessment, type: :model do
   subject(:assessment) { build(:assessment) }
 
   describe "validations" do
+    it { is_expected.to have_many(:sections) }
+
     it { is_expected.to validate_presence_of(:recommendation) }
 
     it do
@@ -55,6 +57,15 @@ RSpec.describe Assessment, type: :model do
     context "with an unknown recommendation" do
       before { assessment.decline! }
       it { is_expected.to be true }
+    end
+
+    context "with unfinished section assessments" do
+      before do
+        assessment.save!
+        assessment.sections.create!(key: :personal_information)
+      end
+
+      it { is_expected.to be false }
     end
   end
 end

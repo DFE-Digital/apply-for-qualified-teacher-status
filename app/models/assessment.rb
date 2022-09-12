@@ -19,6 +19,8 @@
 class Assessment < ApplicationRecord
   belongs_to :application_form
 
+  has_many :sections, class_name: "AssessmentSection"
+
   enum :recommendation,
        { unknown: "unknown", award: "award", decline: "decline" },
        default: :unknown
@@ -30,6 +32,7 @@ class Assessment < ApplicationRecord
             }
 
   def finished?
-    award? || decline?
+    sections.none? { |section| section.state == :not_started } &&
+      (award? || decline?)
   end
 end
