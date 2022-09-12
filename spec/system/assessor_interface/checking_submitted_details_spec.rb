@@ -96,19 +96,19 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_click_check_qualifications_continue
-    check_qualifications_page.continue_button.click
+    check_qualifications_page.form.continue_button.click
   end
 
   def when_i_click_check_work_history_continue
-    check_work_history_page.continue_button.click
+    check_work_history_page.form.continue_button.click
   end
 
   def when_i_click_check_professional_standing_continue
-    check_professional_standing_page.continue_button.click
+    check_professional_standing_page.form.continue_button.click
   end
 
   def when_i_click_check_personal_information_continue
-    check_personal_information_page.continue_button.click
+    check_personal_information_page.form.continue_button.click
   end
 
   def assessor

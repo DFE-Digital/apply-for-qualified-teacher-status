@@ -6,17 +6,13 @@ module PageObjects
               "dl.govuk-summary-list > div:nth-of-type(1) > dd:nth-of-type(1)"
     end
 
-    class CheckQualifications < SitePrism::Page
+    class CheckQualifications < AssessmentSection
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/qualifications"
 
-      element :heading, "h1"
-      element :continue_button, ".govuk-button"
-      sections :qualification_cards,
-               QualificationCard,
-               ".govuk-summary-list__card"
+      sections :cards, QualificationCard, ".govuk-summary-list__card"
 
       def teaching_qualification
-        qualification_cards&.first
+        cards&.first
       end
     end
   end
