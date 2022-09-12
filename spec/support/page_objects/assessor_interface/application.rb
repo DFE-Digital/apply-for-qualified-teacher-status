@@ -18,6 +18,7 @@ module PageObjects
                    "ol.app-task-list > li > ul.app-task-list__items > li.app-task-list__item" do
             element :heading, "h2"
             element :link, "a"
+            element :status, "strong"
           end
         end
       end

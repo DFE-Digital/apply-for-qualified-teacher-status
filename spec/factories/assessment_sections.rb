@@ -32,5 +32,13 @@ FactoryBot.define do
     trait :failed do
       passed { false }
     end
+
+    trait :personal_information do
+      key { "personal_information" }
+      checks { %w[identification_document_present] }
+      failure_reasons do
+        %w[identification_document_expired identification_document_illegible]
+      end
+    end
   end
 end

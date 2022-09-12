@@ -8,7 +8,9 @@ class AssessmentFactory
   end
 
   def call
-    sections = section_keys.map { |key| AssessmentSection.new(key:) }
+    sections =
+      [personal_information_section] +
+        section_keys.map { |key| AssessmentSection.new(key:) }
     Assessment.create!(application_form:, sections:)
   end
 
@@ -17,12 +19,38 @@ class AssessmentFactory
   attr_reader :application_form
 
   def section_keys
-    %i[personal_information qualifications].tap do |keys|
+    %i[qualifications].tap do |keys|
       keys << :work_history if application_form.needs_work_history
       if application_form.needs_written_statement ||
            application_form.needs_registration_number
         keys << :professional_standing
       end
     end
+  end
+
+  def personal_information_section
+    checks = [
+      :identification_document_present,
+      (:name_change_document_present if application_form.has_alternative_name),
+      :duplicate_application,
+      :applicant_already_qts
+    ].compact
+
+    failure_reasons = [
+      :identification_document_expired,
+      :identification_document_illegible,
+      :identification_document_mismatch,
+      (
+        :name_change_document_illegible if application_form.has_alternative_name
+      ),
+      :duplicate_application,
+      :applicant_already_qts
+    ].compact
+
+    AssessmentSection.new(
+      key: "personal_information",
+      checks:,
+      failure_reasons:
+    )
   end
 end

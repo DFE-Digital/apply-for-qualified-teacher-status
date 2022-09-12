@@ -20,6 +20,18 @@ en:
           qualifications: Check qualifications
           work_history: Check work history
           professional_standing: Check professional standing
+        checks:
+          identification_document_present: a valid ID document is present
+          name_change_document_present: evidence of name change is present (if the name entered on the form is different to the name on their ID)
+          duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
+          applicant_already_qts: applicant does not already hold QTS and induction exemption
+        failure_reasons:
+          identification_document_expired: The ID document has expired.
+          identification_document_illegible: The ID document is illegible.
+          identification_document_mismatch: The name on the online application form is different from the ID document, but no evidence of change of name was provided.
+          name_change_document_illegible: The evidence of change of name is illegible.
+          duplicate_application: There’s already another in-flight application for this applicant.
+          applicant_already_qts: The applicant already holds QTS and induction exemption.
     timeline_events:
       index:
         title:
