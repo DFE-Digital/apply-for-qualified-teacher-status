@@ -38,9 +38,4 @@ class Assessment < ApplicationRecord
   def sections_finished?
     sections.none? { |section| section.state == :not_started }
   end
-
-  def application_form_state
-    return "awarded" if award?
-    "declined" if decline?
-  end
 end
