@@ -36,6 +36,10 @@ module PageObjects
         task_item_for("Check work history")
       end
 
+      def professional_standing_task
+        task_item_for("Check professional standing")
+      end
+
       private
 
       def task_item_for(text)

@@ -78,7 +78,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_see_check_work_history_action_required
   end
 
-  it "allows checking the professional standing" do
+  it "allows passing the professional standing" do
     when_i_visit_the(
       :check_professional_standing_page,
       application_id:,
@@ -86,8 +86,22 @@ RSpec.describe "Assessor check submitted details", type: :system do
     )
     then_i_see_the_professional_standing
 
-    when_i_click_check_professional_standing_continue
+    when_i_choose_check_professional_standing_yes
     then_i_see_the(:application_page, application_id:)
+    and_i_see_check_professional_standing_completed
+  end
+
+  it "allows failing the professional standing" do
+    when_i_visit_the(
+      :check_professional_standing_page,
+      application_id:,
+      assessment_id:
+    )
+    then_i_see_the_professional_standing
+
+    when_i_choose_check_professional_standing_no
+    then_i_see_the(:application_page, application_id:)
+    and_i_see_check_professional_standing_action_required
   end
 
   private
@@ -213,8 +227,32 @@ RSpec.describe "Assessor check submitted details", type: :system do
     ).to eq(application_form.registration_number)
   end
 
-  def when_i_click_check_professional_standing_continue
+  def when_i_choose_check_professional_standing_yes
+    check_professional_standing_page.form.yes_radio_item.input.click
     check_professional_standing_page.form.continue_button.click
+  end
+
+  def and_i_see_check_professional_standing_completed
+    expect(application_page.professional_standing_task.status.text).to eq(
+      "COMPLETED"
+    )
+  end
+
+  def when_i_choose_check_professional_standing_no
+    check_professional_standing_page.form.no_radio_item.input.click
+    check_professional_standing_page
+      .form
+      .failure_reason_checkbox_items
+      .first
+      .checkbox
+      .click
+    check_professional_standing_page.form.continue_button.click
+  end
+
+  def and_i_see_check_professional_standing_action_required
+    expect(application_page.professional_standing_task.status.text).to eq(
+      "ACTION REQUIRED"
+    )
   end
 
   def assessor
