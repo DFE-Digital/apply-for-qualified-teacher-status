@@ -45,4 +45,11 @@
   <% end %>
 <% end %>
 
+<h2 class="govuk-heading-s">Check:</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <% @assessment_section.checks.each do |check| %>
+    <li><%= t(".checks.#{check}") %></li>
+  <% end %>
+</ul>
+
 <%= govuk_button_link_to "Continue", [:assessor_interface, @application_form] %>
