@@ -25,7 +25,7 @@ Rails.application.routes.draw do
         resources :assessment_sections,
                   path: "/sections",
                   param: :key,
-                  only: :show
+                  only: %i[show update]
       end
     end
   end

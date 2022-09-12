@@ -52,4 +52,21 @@
   <% end %>
 </ul>
 
-<%= govuk_button_link_to "Continue", [:assessor_interface, @application_form] %>
+<%= form_with model: @assessment_section, url: assessor_interface_application_form_assessment_assessment_section_path(@application_form, @assessment, @assessment_section.key) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?", size: "s" } do %>
+    <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
+    <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
+      <%= f.govuk_collection_check_boxes :selected_failure_reasons,
+                                         @assessment_section.failure_reasons.map { |id| OpenStruct.new(id:, label: t(".failure_reasons.#{id}")) },
+                                         :id,
+                                         :label,
+                                         legend: { size: "s" } %>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_submit prevent_double_click: false do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+  <% end %>
+<% end %>

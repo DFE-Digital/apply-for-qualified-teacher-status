@@ -2,6 +2,8 @@ en:
   helpers:
     caption: {}
     hint:
+      assessment_section:
+        selected_failure_reasons: Select all options that are relevant to you.
       assessor_interface_complete_assessment_form:
         new_state: You've completed your review of this QTS application and marked all sections as complete to your satisfaction.
       qualification:
@@ -43,6 +45,8 @@ en:
           true: "Yes"
           false: "No"
     legend:
+      assessment_section:
+        selected_failure_reasons: What are the reasons for your recommendation?
       assessor_interface_complete_assessment_form:
         new_state: QTS review completed
       qualification:
