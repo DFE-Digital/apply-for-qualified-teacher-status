@@ -129,19 +129,75 @@ RSpec.describe AssessmentFactory do
         end
       end
 
-      context "with written statement" do
-        before { application_form.needs_written_statement = true }
-
-        it "creates a professional standing assessment" do
-          expect(sections.professional_standing.count).to eq(1)
+      describe "professional standing section" do
+        it "is not created" do
+          expect(sections.work_history.count).to eq(0)
         end
-      end
 
-      context "with registration number" do
-        before { application_form.needs_registration_number = true }
+        context "when application form needs a written statement" do
+          before { application_form.needs_written_statement = true }
 
-        it "creates a professional standing assessment" do
-          expect(sections.professional_standing.count).to eq(1)
+          it "is created" do
+            expect(sections.professional_standing.count).to eq(1)
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.professional_standing.first
+            expect(section.checks).to eq(
+              %w[
+                written_statement_present
+                written_statement_recent
+                authorisation_to_teach
+                teaching_qualification
+                age_ranges_subjects
+                qualified_to_teach
+                full_professional_status
+              ]
+            )
+            expect(section.failure_reasons).to eq(
+              %w[
+                written_statement_illegible
+                written_statement_recent
+                authorisation_to_teach
+                teaching_qualification
+                age_ranges_subjects
+                qualified_to_teach
+                full_professional_status
+              ]
+            )
+          end
+        end
+
+        context "when application form needs a registration number" do
+          before { application_form.needs_registration_number = true }
+
+          it "is created" do
+            expect(sections.professional_standing.count).to eq(1)
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.professional_standing.first
+            expect(section.checks).to eq(
+              %w[
+                registration_number
+                authorisation_to_teach
+                teaching_qualification
+                age_ranges_subjects
+                qualified_to_teach
+                full_professional_status
+              ]
+            )
+            expect(section.failure_reasons).to eq(
+              %w[
+                registration_number
+                authorisation_to_teach
+                teaching_qualification
+                age_ranges_subjects
+                qualified_to_teach
+                full_professional_status
+              ]
+            )
+          end
         end
       end
     end
