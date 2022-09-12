@@ -47,7 +47,7 @@ RSpec.describe ApplicationFormStatusTag::Component, type: :component do
     context "with a 'completed' status" do
       let(:status) { :completed }
 
-      it { is_expected.to eq("govuk-tag app-task-list__tag") }
+      it { is_expected.to eq("govuk-tag govuk-tag--green app-task-list__tag") }
     end
 
     context "with an 'initial_assessment' status" do
