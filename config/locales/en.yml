@@ -31,6 +31,7 @@ en:
       draft: Draft
       submitted: Not started
       completed: Completed
+      action_required: Action required
     tasks:
       sections:
         about_you: About you

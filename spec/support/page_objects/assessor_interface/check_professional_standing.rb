@@ -6,17 +6,13 @@ module PageObjects
               "dl.govuk-summary-list > div:nth-of-type(1) > dd:nth-of-type(1)"
     end
 
-    class CheckProfessionalStanding < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/check_professional_standing"
+    class CheckProfessionalStanding < AssessmentSection
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/professional_standing"
 
-      element :heading, "h1"
-      element :continue_button, ".govuk-button"
-      sections :professional_standing_cards,
-               ProfessionalStandingCard,
-               ".govuk-summary-list__card"
+      sections :cards, ProfessionalStandingCard, ".govuk-summary-list__card"
 
       def proof_of_recognition
-        professional_standing_cards&.first
+        cards&.first
       end
     end
   end

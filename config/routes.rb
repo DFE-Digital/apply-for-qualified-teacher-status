@@ -21,10 +21,12 @@ Rails.application.routes.draw do
 
       resources :timeline_events, only: :index
 
-      resource :check_personal_information, only: :show
-      resource :check_qualifications, only: :show
-      resource :check_work_history, only: :show
-      resource :check_professional_standing, only: :show
+      resources :assessments, only: [] do
+        resources :assessment_sections,
+                  path: "/sections",
+                  param: :key,
+                  only: %i[show update]
+      end
     end
   end
 

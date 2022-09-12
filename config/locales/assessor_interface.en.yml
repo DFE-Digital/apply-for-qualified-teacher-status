@@ -13,6 +13,13 @@ en:
             professional_standing: Check professional standing
             first_assessment: First assessment
             second_assessment: Second assessment
+    assessment_sections:
+      show:
+        title:
+          personal_information: Check personal information
+          qualifications: Check qualifications
+          work_history: Check work history
+          professional_standing: Check professional standing
     timeline_events:
       index:
         title:

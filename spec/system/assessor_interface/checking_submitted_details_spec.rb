@@ -9,7 +9,11 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   it "allows checking the qualifications" do
-    when_i_visit_the(:check_qualifications_page, application_id:)
+    when_i_visit_the(
+      :check_qualifications_page,
+      application_id:,
+      assessment_id:
+    )
     then_i_see_the_qualifications
 
     when_i_click_check_qualifications_continue
@@ -17,7 +21,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   it "allows checking the work history" do
-    when_i_visit_the(:check_work_history_page, application_id:)
+    when_i_visit_the(:check_work_history_page, application_id:, assessment_id:)
     then_i_see_the_work_history
 
     when_i_click_check_work_history_continue
@@ -25,7 +29,11 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   it "allows checking the professional standing" do
-    when_i_visit_the(:check_professional_standing_page, application_id:)
+    when_i_visit_the(
+      :check_professional_standing_page,
+      application_id:,
+      assessment_id:
+    )
     then_i_see_the_professional_standing
 
     when_i_click_check_professional_standing_continue
@@ -33,7 +41,11 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   it "allows checking the personal information" do
-    when_i_visit_the(:check_personal_information_page, application_id:)
+    when_i_visit_the(
+      :check_personal_information_page,
+      application_id:,
+      assessment_id:
+    )
     then_i_see_the_personal_information
 
     when_i_click_check_personal_information_continue
@@ -84,19 +96,19 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_click_check_qualifications_continue
-    check_qualifications_page.continue_button.click
+    check_qualifications_page.form.continue_button.click
   end
 
   def when_i_click_check_work_history_continue
-    check_work_history_page.continue_button.click
+    check_work_history_page.form.continue_button.click
   end
 
   def when_i_click_check_professional_standing_continue
-    check_professional_standing_page.continue_button.click
+    check_professional_standing_page.form.continue_button.click
   end
 
   def when_i_click_check_personal_information_continue
-    check_personal_information_page.continue_button.click
+    check_personal_information_page.form.continue_button.click
   end
 
   def assessor
@@ -105,18 +117,48 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def application_form
     @application_form ||=
-      create(
-        :application_form,
-        :with_completed_qualification,
-        :with_work_history,
-        :with_registration_number,
-        :with_personal_information,
-        :submitted,
-        :with_assessment
-      )
+      begin
+        application_form =
+          create(
+            :application_form,
+            :with_completed_qualification,
+            :with_work_history,
+            :with_registration_number,
+            :with_personal_information,
+            :submitted,
+            :with_assessment
+          )
+
+        create(
+          :assessment_section,
+          :personal_information,
+          assessment: application_form.assessment
+        )
+        create(
+          :assessment_section,
+          :qualifications,
+          assessment: application_form.assessment
+        )
+        create(
+          :assessment_section,
+          :work_history,
+          assessment: application_form.assessment
+        )
+        create(
+          :assessment_section,
+          :professional_standing,
+          assessment: application_form.assessment
+        )
+
+        application_form
+      end
   end
 
   def application_id
     application_form.id
+  end
+
+  def assessment_id
+    application_form.assessment.id
   end
 end

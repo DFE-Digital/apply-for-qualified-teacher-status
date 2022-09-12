@@ -26,9 +26,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def assessment_task_path(section, item)
     case section
     when :submitted_details
-      url_helpers.send(
-        "assessor_interface_application_form_check_#{item}_path",
-        application_form
+      url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
+        application_form,
+        assessment,
+        item
       )
     when :recommendation
       url_helpers.assessor_interface_application_form_complete_assessment_path(
