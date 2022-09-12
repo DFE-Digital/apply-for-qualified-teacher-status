@@ -40,5 +40,38 @@ FactoryBot.define do
         %w[identification_document_expired identification_document_illegible]
       end
     end
+
+    trait :qualifications do
+      key { "qualifications" }
+      checks do
+        %w[
+          identification_document_present
+          qualifications_meet_level_6_or_equivalent
+          teaching_qualifcations_completed_in_eligible_country
+          qualified_in_mainstream_education
+          has_teacher_qualification_certificate
+          has_teacher_qualification_transcript
+          has_university_degree_certificate
+          has_university_degree_transcript
+          has_additional_qualification_certificate
+          has_additional_degree_transcript
+        ]
+      end
+      failure_reasons do
+        %w[
+          teaching_qualifications_from_ineligible_country
+          teaching_qualifications_not_at_required_level
+          not_qualified_to_teach_mainstream
+          teaching_certificate_illegible
+          teaching_qualification_illegible
+          degree_certificate_illegible
+          degree_transcript_illegible
+          application_and_qualification_names_do_not_match
+          teaching_hours_not_fulfilled
+          qualifications_dont_support_subjects
+          qualifications_dont_match_those_entered
+        ]
+      end
+    end
   end
 end
