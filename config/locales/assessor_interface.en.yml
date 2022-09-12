@@ -34,6 +34,8 @@ en:
           has_university_degree_transcript: university degree transcript is present (and translation if required)
           has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
           has_additional_degree_transcript: additional degree transcript is present (and translation if required).
+          email_contact_current_employer: the applicant has entered an email contact for their current/most recent employer
+          satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
         failure_reasons:
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible.
@@ -52,6 +54,7 @@ en:
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           qualifications_dont_support_subjects: The qualifications do not support the teaching subjects entered.
           qualifications_dont_match_those_entered: The qualifications do not match what was entered on the form.
+          satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
     timeline_events:
       index:
         title:
