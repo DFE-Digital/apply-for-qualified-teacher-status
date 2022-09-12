@@ -96,7 +96,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to eq(
-          "/assessor/applications/#{application_form.id}/complete-assessment"
+          "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/edit"
         )
       end
     end
@@ -133,6 +133,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "with finished assessment sections" do
         before { assessment_section.update!(passed: true) }
         it { is_expected.to eq(:not_started) }
+
+        context "with a finished assessment" do
+          before { assessment.award! }
+          it { is_expected.to eq(:completed) }
+        end
       end
     end
   end

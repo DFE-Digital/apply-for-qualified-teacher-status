@@ -34,8 +34,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :recommendation
       return nil unless assessment.sections_finished?
 
-      url_helpers.assessor_interface_application_form_complete_assessment_path(
-        application_form
+      url_helpers.edit_assessor_interface_application_form_assessment_path(
+        application_form,
+        assessment
       )
     end
   end
@@ -45,6 +46,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :submitted_details
       assessment.sections.find { |s| s.key == item.to_s }.state
     when :recommendation
+      return :completed if assessment.finished?
       assessment.sections_finished? ? :not_started : :cannot_start_yet
     end
   end

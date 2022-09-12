@@ -8,7 +8,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_i_am_authorized_as_an_assessor_user(assessor)
     given_there_is_an_application_form
 
-    when_i_visit_the(:complete_assessment_page, application_id:)
+    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
 
     when_i_select_award_qts
     and_i_click_continue
@@ -50,6 +50,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def application_id
     application_form.id
+  end
+
+  def assessment_id
+    application_form.assessment.id
   end
 
   def assessor
