@@ -7,7 +7,7 @@ module PageObjects
     end
 
     class CheckWorkHistory < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/check_work_history"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/work_history"
 
       element :heading, "h1"
       element :continue_button, ".govuk-button"

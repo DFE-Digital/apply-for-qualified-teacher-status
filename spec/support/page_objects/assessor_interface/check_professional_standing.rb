@@ -7,7 +7,7 @@ module PageObjects
     end
 
     class CheckProfessionalStanding < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/check_professional_standing"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/professional_standing"
 
       element :heading, "h1"
       element :continue_button, ".govuk-button"

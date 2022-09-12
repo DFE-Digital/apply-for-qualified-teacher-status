@@ -7,7 +7,7 @@ module PageObjects
     end
 
     class CheckQualifications < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/check_qualifications"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/qualifications"
 
       element :heading, "h1"
       element :continue_button, ".govuk-button"

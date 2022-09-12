@@ -36,13 +36,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
   end
 
   describe "#assessment_tasks" do
+    subject(:assessment_tasks) { view_object.assessment_tasks }
+
     let(:application_form) { create(:application_form) }
     let(:assessment) { create(:assessment, application_form:) }
     before { create(:assessment_section, :personal_information, assessment:) }
 
     let(:params) { { id: application_form.id } }
-
-    subject(:assessment_tasks) { view_object.assessment_tasks }
 
     describe "submitted details" do
       subject(:submitted_details) { assessment_tasks.fetch(:submitted_details) }
@@ -79,45 +79,14 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     context "with submitted details section" do
       let(:section) { :submitted_details }
+      let(:item) { :personal_information }
 
-      context "with personal information item" do
-        let(:item) { :personal_information }
+      let!(:assessment) { create(:assessment, application_form:) }
 
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/check_personal_information"
-          )
-        end
-      end
-
-      context "with qualifications item" do
-        let(:item) { :qualifications }
-
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/check_qualifications"
-          )
-        end
-      end
-
-      context "with work history item" do
-        let(:item) { :work_history }
-
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/check_work_history"
-          )
-        end
-      end
-
-      context "with professional standing item" do
-        let(:item) { :professional_standing }
-
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/check_professional_standing"
-          )
-        end
+      it do
+        is_expected.to eq(
+          "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/sections/personal_information"
+        )
       end
     end
 

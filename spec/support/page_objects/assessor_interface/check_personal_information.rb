@@ -9,7 +9,7 @@ module PageObjects
     end
 
     class CheckPersonalInformation < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/check_personal_information"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/personal_information"
 
       element :heading, "h1"
       element :continue_button, ".govuk-button"
