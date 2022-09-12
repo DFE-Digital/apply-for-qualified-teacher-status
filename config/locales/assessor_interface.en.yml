@@ -35,6 +35,14 @@ en:
           has_additional_degree_transcript: additional degree transcript is present (and translation if required).
           email_contact_current_employer: the applicant has entered an email contact for their current/most recent employer
           satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
+          registration_number: registration number provided and verified
+          written_statement_present: letter from the country or state’s competent authority provided
+          written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
+          authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present
+          teaching_qualification: confirmation of the applicant’s teaching qualification
+          age_ranges_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
+          qualified_to_teach: the applicant is qualified to teach at state or government schools
+          full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
         failure_reasons:
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible.
@@ -54,6 +62,14 @@ en:
           qualifications_dont_support_subjects: The qualifications do not support the teaching subjects entered.
           qualifications_dont_match_those_entered: The qualifications do not match what was entered on the form.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
+          registration_number: We could not verify the reference number using the online checker.
+          written_statement_illegible: The letter from the country or state’s authority is illegible.
+          written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
+          authorisation_to_teach: Sanctions or restrictions were detected on professional record.
+          teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
+          age_ranges_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
+          qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
+          full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
     timeline_events:
       index:
         title:
