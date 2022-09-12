@@ -32,6 +32,7 @@ en:
       submitted: Not started
       completed: Completed
       action_required: Action required
+      cannot_start_yet: Cannot start yet
     tasks:
       sections:
         about_you: About you

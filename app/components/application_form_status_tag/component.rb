@@ -26,7 +26,8 @@ module ApplicationFormStatusTag
       awarded: "green",
       declined: "red",
       draft: "grey",
-      submitted: "grey"
+      submitted: "grey",
+      cannot_start_yet: "grey"
     }.freeze
 
     def colour
