@@ -9,8 +9,11 @@ class AssessmentFactory
 
   def call
     sections =
-      [personal_information_section, qualifications_section] +
-        section_keys.map { |key| AssessmentSection.new(key:) }
+      [
+        personal_information_section,
+        qualifications_section,
+        work_history_section
+      ].compact + section_keys.map { |key| AssessmentSection.new(key:) }
     Assessment.create!(application_form:, sections:)
   end
 
@@ -19,12 +22,11 @@ class AssessmentFactory
   attr_reader :application_form
 
   def section_keys
-    [].tap do |keys|
-      keys << :work_history if application_form.needs_work_history
-      if application_form.needs_written_statement ||
-           application_form.needs_registration_number
-        keys << :professional_standing
-      end
+    if application_form.needs_written_statement ||
+         application_form.needs_registration_number
+      [:professional_standing]
+    else
+      []
     end
   end
 
@@ -82,5 +84,18 @@ class AssessmentFactory
     ].compact
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
+  end
+
+  def work_history_section
+    return nil unless application_form.needs_work_history
+
+    checks = %i[
+      email_contact_current_employer
+      satisfactory_evidence_work_history
+    ]
+
+    failure_reasons = %i[satisfactory_evidence_work_history]
+
+    AssessmentSection.new(key: "work_history", checks:, failure_reasons:)
   end
 end
