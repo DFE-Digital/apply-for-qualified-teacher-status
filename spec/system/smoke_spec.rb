@@ -6,14 +6,14 @@ require "capybara/cuprite"
 require "site_prism"
 require "site_prism/all_there"
 
-require "support/page_objects/eligiblity_interface/country"
-require "support/page_objects/eligiblity_interface/degree"
-require "support/page_objects/eligiblity_interface/eligible"
-require "support/page_objects/eligiblity_interface/misconduct"
-require "support/page_objects/eligiblity_interface/qualification"
-require "support/page_objects/eligiblity_interface/region"
-require "support/page_objects/eligiblity_interface/start"
-require "support/page_objects/eligiblity_interface/teach_children"
+require "support/autoload/page_objects/eligibility_interface/country"
+require "support/autoload/page_objects/eligibility_interface/degree"
+require "support/autoload/page_objects/eligibility_interface/eligible"
+require "support/autoload/page_objects/eligibility_interface/misconduct"
+require "support/autoload/page_objects/eligibility_interface/qualification"
+require "support/autoload/page_objects/eligibility_interface/region"
+require "support/autoload/page_objects/eligibility_interface/start"
+require "support/autoload/page_objects/eligibility_interface/teach_children"
 
 Capybara.javascript_driver = :cuprite
 Capybara.always_include_port = false

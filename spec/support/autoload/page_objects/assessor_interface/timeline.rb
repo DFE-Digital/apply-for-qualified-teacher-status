@@ -1,5 +1,3 @@
-require_relative "../moj_timeline_item"
-
 module PageObjects
   module AssessorInterface
     class Timeline < SitePrism::Page
