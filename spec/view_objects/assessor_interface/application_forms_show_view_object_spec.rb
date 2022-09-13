@@ -65,7 +65,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     describe "recommendation" do
       subject(:recommendation) { assessment_tasks.fetch(:recommendation) }
 
-      it { is_expected.to eq(%i[first_assessment second_assessment]) }
+      it { is_expected.to eq(%i[initial_assessment]) }
     end
   end
 
@@ -75,13 +75,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     let(:application_form) { create(:application_form) }
+    let!(:assessment) { create(:assessment, application_form:) }
+
     let(:params) { { id: application_form.id } }
 
     context "with submitted details section" do
       let(:section) { :submitted_details }
       let(:item) { :personal_information }
-
-      let!(:assessment) { create(:assessment, application_form:) }
 
       it do
         is_expected.to eq(
@@ -92,11 +92,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     context "with recommendation section" do
       let(:section) { :recommendation }
-      let(:item) { nil }
+      let(:item) { :initial_assessment }
 
       it do
         is_expected.to eq(
-          "/assessor/applications/#{application_form.id}/complete-assessment"
+          "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/edit"
         )
       end
     end
@@ -105,7 +105,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
   describe "#assessment_task_status" do
     let(:application_form) { create(:application_form) }
     let(:assessment) { create(:assessment, application_form:) }
-    before { create(:assessment_section, :personal_information, assessment:) }
+    let!(:assessment_section) do
+      create(:assessment_section, :personal_information, assessment:)
+    end
 
     let(:params) { { id: application_form.id } }
 
@@ -122,9 +124,21 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     context "with recommendation section" do
       let(:section) { :recommendation }
-      let(:item) { nil }
+      let(:item) { :initial_assessment }
 
-      it { is_expected.to eq(:not_started) }
+      context "with unfinished assessment sections" do
+        it { is_expected.to eq(:cannot_start_yet) }
+      end
+
+      context "with finished assessment sections" do
+        before { assessment_section.update!(passed: true) }
+        it { is_expected.to eq(:not_started) }
+
+        context "with a finished assessment" do
+          before { assessment.award! }
+          it { is_expected.to eq(:completed) }
+        end
+      end
     end
   end
 end

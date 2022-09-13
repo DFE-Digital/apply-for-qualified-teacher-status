@@ -21,7 +21,7 @@
 require "rails_helper"
 
 RSpec.describe Assessment, type: :model do
-  subject(:assessment) { build(:assessment) }
+  subject(:assessment) { create(:assessment) }
 
   describe "validations" do
     it { is_expected.to have_many(:sections) }
@@ -60,12 +60,30 @@ RSpec.describe Assessment, type: :model do
     end
 
     context "with unfinished section assessments" do
-      before do
-        assessment.save!
-        assessment.sections.create!(key: :personal_information)
-      end
-
+      before { assessment.sections.create!(key: :personal_information) }
       it { is_expected.to be false }
+    end
+  end
+
+  describe "#sections_finished?" do
+    subject(:sections_finished?) { assessment.sections_finished? }
+
+    let!(:assessment_section) do
+      assessment.sections.create!(key: :personal_information)
+    end
+
+    context "with an unknown assessment" do
+      it { is_expected.to be false }
+    end
+
+    context "with a passed assessment" do
+      before { assessment_section.update!(passed: true) }
+      it { is_expected.to be true }
+    end
+
+    context "with a failed assessment" do
+      before { assessment_section.update!(passed: false) }
+      it { is_expected.to be true }
     end
   end
 end

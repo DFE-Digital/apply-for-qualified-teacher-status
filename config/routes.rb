@@ -16,12 +16,10 @@ Rails.application.routes.draw do
       post "assign-assessor", to: "assessor_assignments#create"
       get "assign-reviewer", to: "reviewer_assignments#new"
       post "assign-reviewer", to: "reviewer_assignments#create"
-      get "complete-assessment", to: "complete_assessments#new"
-      post "complete-assessment", to: "complete_assessments#create"
 
       resources :timeline_events, only: :index
 
-      resources :assessments, only: [] do
+      resources :assessments, only: %i[edit update] do
         resources :assessment_sections,
                   path: "/sections",
                   param: :key,

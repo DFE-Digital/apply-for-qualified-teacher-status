@@ -38,7 +38,7 @@ RSpec.describe "Assessor view application form", type: :system do
     expect(application_page.task_list.tasks.count).to eq(2)
 
     first_section_links =
-      application_page.task_list.tasks.first.items.map { |item| item.link.text }
+      application_page.task_list.tasks.first.items.map { |item| item.name.text }
 
     expect(first_section_links).to eq(
       ["Check personal information", "Check qualifications"]
@@ -46,12 +46,10 @@ RSpec.describe "Assessor view application form", type: :system do
 
     second_section_links =
       application_page.task_list.tasks.second.items.map do |item|
-        item.link.text
+        item.name.text
       end
 
-    expect(second_section_links).to eq(
-      ["First assessment", "Second assessment"]
-    )
+    expect(second_section_links).to eq(["Initial assessment recommendation"])
   end
 
   def application_form

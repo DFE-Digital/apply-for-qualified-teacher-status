@@ -32,7 +32,10 @@ class Assessment < ApplicationRecord
             }
 
   def finished?
-    sections.none? { |section| section.state == :not_started } &&
-      (award? || decline?)
+    sections_finished? && (award? || decline?)
+  end
+
+  def sections_finished?
+    sections.none? { |section| section.state == :not_started }
   end
 end

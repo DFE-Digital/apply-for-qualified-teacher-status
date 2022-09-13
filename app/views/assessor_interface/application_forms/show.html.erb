@@ -18,10 +18,12 @@
       <ul class="app-task-list__items">
         <% items.each do |item| %>
           <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <%= link_to t(".assessment_tasks.items.#{item}"),
-                          @view_object.assessment_task_path(section, item),
-                          aria: { describedby: "#{item}-status" } %>
+            <span class="app-task-list__task-name" aria-describedby="<%= item %>-status">
+              <% if (href = @view_object.assessment_task_path(section, item)) %>
+                <%= link_to t(".assessment_tasks.items.#{item}"), href %>
+              <% else %>
+                <%= t(".assessment_tasks.items.#{item}") %>
+              <% end %>
             </span>
 
             <%= render(ApplicationFormStatusTag::Component.new(

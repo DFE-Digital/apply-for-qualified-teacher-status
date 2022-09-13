@@ -14,10 +14,11 @@ module PageObjects
 
       section :task_list, "ol.app-task-list" do
         sections :tasks, "ol.app-task-list > li" do
-          sections :items,
-                   "ol.app-task-list > li > ul.app-task-list__items > li.app-task-list__item" do
-            element :heading, "h2"
-            element :link, "a"
+          sections :items, "li.app-task-list__item" do
+            section :name, ".app-task-list__task-name" do
+              element :link, "a"
+            end
+
             element :status, "strong"
           end
         end
@@ -37,8 +38,8 @@ module PageObjects
 
       private
 
-      def task_item_for(link_text)
-        task_list.tasks.first.items.find { |item| item.link.text == link_text }
+      def task_item_for(text)
+        task_list.tasks.first.items.find { |item| item.name.text == text }
       end
     end
   end

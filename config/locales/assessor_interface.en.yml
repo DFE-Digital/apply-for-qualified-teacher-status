@@ -11,8 +11,7 @@ en:
             qualifications: Check qualifications
             work_history: Check work history
             professional_standing: Check professional standing
-            first_assessment: First assessment
-            second_assessment: Second assessment
+            initial_assessment: Initial assessment recommendation
     assessment_sections:
       show:
         title:
