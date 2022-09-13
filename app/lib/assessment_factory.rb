@@ -8,27 +8,19 @@ class AssessmentFactory
   end
 
   def call
-    sections =
-      [
-        personal_information_section,
-        qualifications_section,
-        work_history_section
-      ].compact + section_keys.map { |key| AssessmentSection.new(key:) }
+    sections = [
+      personal_information_section,
+      qualifications_section,
+      work_history_section,
+      professional_standing_section
+    ].compact
+
     Assessment.create!(application_form:, sections:)
   end
 
   private
 
   attr_reader :application_form
-
-  def section_keys
-    if application_form.needs_written_statement ||
-         application_form.needs_registration_number
-      [:professional_standing]
-    else
-      []
-    end
-  end
 
   def personal_information_section
     checks = [
@@ -97,5 +89,42 @@ class AssessmentFactory
     failure_reasons = %i[satisfactory_evidence_work_history]
 
     AssessmentSection.new(key: "work_history", checks:, failure_reasons:)
+  end
+
+  def professional_standing_section
+    unless application_form.needs_written_statement ||
+             application_form.needs_registration_number
+      return nil
+    end
+
+    checks = [
+      application_form.needs_registration_number ? :registration_number : nil,
+      (:written_statement_present if application_form.needs_written_statement),
+      (:written_statement_recent if application_form.needs_written_statement),
+      :authorisation_to_teach,
+      :teaching_qualification,
+      :age_ranges_subjects,
+      :qualified_to_teach,
+      :full_professional_status
+    ].compact
+
+    failure_reasons = [
+      application_form.needs_registration_number ? :registration_number : nil,
+      (
+        :written_statement_illegible if application_form.needs_written_statement
+      ),
+      (:written_statement_recent if application_form.needs_written_statement),
+      :authorisation_to_teach,
+      :teaching_qualification,
+      :age_ranges_subjects,
+      :qualified_to_teach,
+      :full_professional_status
+    ].compact
+
+    AssessmentSection.new(
+      key: "professional_standing",
+      checks:,
+      failure_reasons:
+    )
   end
 end

@@ -79,5 +79,13 @@ FactoryBot.define do
       checks { %w[satisfactory_evidence_work_history] }
       failure_reasons { %w[satisfactory_evidence_work_history] }
     end
+
+    trait :professional_standing do
+      key { "professional_standing" }
+      checks { %w[written_statement_present written_statement_recent] }
+      failure_reasons do
+        %w[written_statement_illegible written_statement_recent]
+      end
+    end
   end
 end
