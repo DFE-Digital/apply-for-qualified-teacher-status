@@ -6,7 +6,7 @@ RSpec.describe "Assessor view application form", type: :system do
     given_there_is_an_application_form
 
     when_i_am_authorized_as_an_assessor_user
-    when_i_visit_the(:application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_id:)
     then_i_see_the_application
     and_i_see_the_assessment_tasks
 
@@ -25,27 +25,29 @@ RSpec.describe "Assessor view application form", type: :system do
   end
 
   def when_i_click_back_link
-    application_page.back_link.click
+    assessor_application_page.back_link.click
   end
 
   def then_i_see_the_application
-    expect(application_page.overview.name.text).to eq(
+    expect(assessor_application_page.overview.name.text).to eq(
       "#{application_form.given_names} #{application_form.family_name}"
     )
   end
 
   def and_i_see_the_assessment_tasks
-    expect(application_page.task_list.tasks.count).to eq(2)
+    expect(assessor_application_page.task_list.tasks.count).to eq(2)
 
     first_section_links =
-      application_page.task_list.tasks.first.items.map { |item| item.name.text }
+      assessor_application_page.task_list.tasks.first.items.map do |item|
+        item.name.text
+      end
 
     expect(first_section_links).to eq(
       ["Check personal information", "Check qualifications"]
     )
 
     second_section_links =
-      application_page.task_list.tasks.second.items.map do |item|
+      assessor_application_page.task_list.tasks.second.items.map do |item|
         item.name.text
       end
 

@@ -58,7 +58,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           create(:assessment_section, :professional_standing, assessment:)
         end
 
-        it { is_expected.to eq(%i[personal_information professional_standing]) }
+        it do
+          is_expected.to match_array(
+            %i[personal_information professional_standing]
+          )
+        end
       end
     end
 

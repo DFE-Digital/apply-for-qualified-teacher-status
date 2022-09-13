@@ -11,7 +11,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_active_application_page
+    then_i_see_the_teacher_application_page
     and_i_see_the_work_history_is_not_started
 
     when_i_click_personal_information
@@ -122,7 +122,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_active_application_page
+    then_i_see_the_teacher_application_page
     and_i_see_the_registration_number_is_not_started
 
     when_i_click_personal_information
@@ -225,7 +225,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_active_application_page
+    then_i_see_the_teacher_application_page
     and_i_see_the_written_statement_is_not_started
 
     when_i_click_personal_information
@@ -331,7 +331,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_active_application_page
+    then_i_see_the_teacher_application_page
     and_i_see_the_work_history_is_not_started
 
     when_i_click_work_history
@@ -358,7 +358,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_active_application_page
+    then_i_see_the_teacher_application_page
     and_i_see_the_work_history_is_not_started
 
     when_i_click_qualifications
@@ -425,7 +425,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_active_application_page
+    then_i_see_the_teacher_application_page
     and_i_see_the_work_history_is_not_started
 
     when_i_click_subjects
@@ -446,7 +446,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_click_apply_for_qts
     and_i_sign_up
-    then_i_see_the_active_application_page
+    then_i_see_the_teacher_application_page
     and_i_see_the_work_history_is_not_started
 
     when_i_click_personal_information
@@ -464,13 +464,13 @@ RSpec.describe "Teacher application", type: :system do
   it "allows starting an application form without a session" do
     when_i_visit_the_sign_up_page
     and_i_sign_up
-    then_i_see_the_new_application_page
+    then_i_see_the_new_teacher_application_page
   end
 
   private
 
   def when_i_click_apply_for_qts
-    click_link "Apply for QTS"
+    eligible_page.apply_button.click
   end
 
   def when_i_click_start_now
@@ -478,7 +478,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_check_your_answers
-    click_link "Check your answers"
+    teacher_application_page.check_answers.click
   end
 
   def when_i_click_submit
@@ -494,7 +494,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_personal_information
-    click_link "Enter your personal information"
+    teacher_application_page.click_item("Enter your personal information")
   end
 
   def when_i_fill_in_the_name_and_date_of_birth_form
@@ -533,7 +533,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_qualifications
-    click_link "Add your teaching qualifications"
+    teacher_application_page.click_item("Add your teaching qualifications")
   end
 
   def when_i_fill_in_qualifications
@@ -568,7 +568,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_subjects
-    click_link "Enter the subjects you can teach"
+    teacher_application_page.click_item("Enter the subjects you can teach")
   end
 
   def and_i_click_add_another_subject
@@ -580,7 +580,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_work_history
-    click_link "Add your work history"
+    teacher_application_page.click_item("Add your work history")
   end
 
   def when_i_fill_in_has_work_history
@@ -599,7 +599,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_registration_number
-    click_link "Enter your registration number"
+    teacher_application_page.click_item("Enter your registration number")
   end
 
   def when_i_fill_in_registration_number
@@ -608,7 +608,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_written_statement
-    click_link "Upload your written statement"
+    teacher_application_page.click_item("Upload your written statement")
   end
 
   def when_i_click_delete
@@ -621,57 +621,78 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_visit_the_sign_up_page
-    visit new_teacher_registration_path
+    new_teacher_form_page.load
   end
 
-  def then_i_see_the_new_application_page
-    expect(page).to have_current_path("/teacher/application/new")
-    expect(page).to have_title(
-      "In which country are you currently recognised as a teacher?"
+  def then_i_see_the_new_teacher_application_page
+    expect(new_teacher_form_page).to have_current_path(
+      "/teacher/application/new"
     )
-    expect(page).to have_content(
+    expect(new_teacher_form_page.heading.text).to eq(
       "In which country are you currently recognised as a teacher?"
     )
   end
 
-  def then_i_see_the_active_application_page
-    expect(page).to have_current_path("/teacher/application")
-    expect(page).to have_title("Apply for qualified teacher status (QTS)")
-    expect(page).to have_content("Apply for qualified teacher status (QTS)")
+  def then_i_see_the_teacher_application_page
+    expect(teacher_application_page).to have_current_path(
+      "/teacher/application"
+    )
+    expect(teacher_application_page.heading.text).to eq(
+      "Apply for qualified teacher status (QTS)"
+    )
 
-    expect(page).to have_content("About you")
-    expect(page).to have_content("Enter your personal information\nNOT STARTED")
-    expect(page).to have_content("Upload your identity document\nNOT STARTED")
+    expect(teacher_application_page).to have_content("About you")
+    expect(teacher_application_page).to have_content(
+      "Enter your personal information\nNOT STARTED"
+    )
+    expect(teacher_application_page).to have_content(
+      "Upload your identity document\nNOT STARTED"
+    )
 
-    expect(page).to have_content("Your qualifications")
-    expect(page).to have_content(
+    expect(teacher_application_page).to have_content("Your qualifications")
+    expect(teacher_application_page).to have_content(
       "Enter the age range you can teach\nNOT STARTED"
     )
 
-    expect(page).to have_content("Check your answers")
+    expect(teacher_application_page).to have_content("Check your answers")
   end
 
   def and_i_see_the_work_history_is_not_started
-    expect(page).to have_content("Your work history")
-    expect(page).to have_content("Add your work history\nNOT STARTED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Your work history"
+    )
+
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Add your work history\nNOT STARTED"
+    )
   end
 
   def and_i_see_the_written_statement_is_not_started
-    expect(page).to have_content("Proof that you’re recognised as a teacher")
-    expect(page).to have_content("Upload your written statement\nNOT STARTED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Proof that you’re recognised as a teacher"
+    )
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Upload your written statement\nNOT STARTED"
+    )
   end
 
   def and_i_see_the_registration_number_is_not_started
-    expect(page).to have_content("Proof that you’re recognised as a teacher")
-    expect(page).to have_content("Enter your registration number\nNOT STARTED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Proof that you’re recognised as a teacher"
+    )
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Enter your registration number\nNOT STARTED"
+    )
   end
 
   def then_i_see_the_name_and_date_of_birth_form
-    expect(page).to have_title("About you")
-    expect(page).to have_content("Personal information")
-    expect(page).to have_content("Given names")
-    expect(page).to have_content("Family name")
-    expect(page).to have_content("Date of birth")
+    expect(name_and_date_of_birth_page).to have_title("About you")
+    expect(name_and_date_of_birth_page.heading.text).to eq(
+      "Personal information"
+    )
+    expect(name_and_date_of_birth_page.grid).to have_content("Given names")
+    expect(name_and_date_of_birth_page.grid).to have_content("Family name")
+    expect(name_and_date_of_birth_page.grid).to have_content("Date of birth")
   end
 
   def and_i_receive_an_application_email
@@ -685,266 +706,391 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_alternative_name_form
-    expect(page).to have_title("About you")
-    expect(page).to have_content(
+    expect(alternative_name_page).to have_title("About you")
+    expect(alternative_name_page.heading.text).to eq(
       "Does your name appear differently on your ID documents or qualifications?"
     )
-    expect(page).to have_content(
+    expect(alternative_name_page.grid).to have_content(
       "Yes – I’ll upload another document to prove this"
     )
-    expect(page).to have_content("No")
+    expect(alternative_name_page.grid).to have_content("No")
   end
 
   def then_i_see_the_upload_name_change_form
-    expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload proof of your change of name")
+    expect(upload_document_page).to have_title("Upload a document")
+    expect(upload_document_page.heading.text).to eq(
+      "Upload proof of your change of name"
+    )
   end
 
   def then_i_see_the_upload_identification_form
-    expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload a valid identification document")
+    expect(check_your_uploads_page).to have_title("Upload a document")
+    expect(check_your_uploads_page.heading.text).to eq(
+      "Upload a valid identification document"
+    )
   end
 
   def then_i_see_the_check_your_identification_uploads
-    expect(page).to have_title("Check your uploaded files")
-    expect(page).to have_content(
+    expect(check_your_uploads_page).to have_title("Check your uploaded files")
+    expect(check_your_uploads_page.heading.text).to eq(
       "Check your uploaded files – identity document"
     )
-    expect(page).to have_content("File 1\tupload.pdf\tDelete")
+    expect(check_your_uploads_page.summary_list_row).to have_content(
+      "File 1\tupload.pdf\tDelete"
+    )
   end
 
   def then_i_see_the_check_your_name_change_uploads
-    expect(page).to have_title("Check your uploaded files")
-    expect(page).to have_content(
+    expect(check_your_uploads_page).to have_title("Check your uploaded files")
+    expect(check_your_uploads_page.heading.text).to eq(
       "Check your uploaded files – name change document"
     )
-    expect(page).to have_content("File 1\tupload.pdf\tDelete")
+    expect(check_your_uploads_page.summary_list_row).to have_content(
+      "File 1\tupload.pdf\tDelete"
+    )
   end
 
   def then_i_see_the_check_your_certificate_uploads
-    expect(page).to have_title("Check your uploaded files")
-    expect(page).to have_content(
+    expect(check_your_uploads_page).to have_title("Check your uploaded files")
+    expect(check_your_uploads_page.heading.text).to eq(
       "Check your uploaded files – certificate document"
     )
-    expect(page).to have_content("File 1\tupload.pdf\tDelete")
+    expect(check_your_uploads_page.summary_list_row).to have_content(
+      "File 1\tupload.pdf\tDelete"
+    )
   end
 
   def then_i_see_the_check_your_transcript_uploads
-    expect(page).to have_title("Check your uploaded files")
-    expect(page).to have_content(
+    expect(check_your_uploads_page).to have_title("Check your uploaded files")
+    expect(check_your_uploads_page.heading.text).to eq(
       "Check your uploaded files – transcript document"
     )
-    expect(page).to have_content("File 1\tupload.pdf\tDelete")
+    expect(check_your_uploads_page.summary_list_row).to have_content(
+      "File 1\tupload.pdf\tDelete"
+    )
   end
 
   def then_i_see_the_check_your_written_statement_uploads
-    expect(page).to have_title("Check your uploaded files")
-    expect(page).to have_content(
+    expect(check_your_uploads_page).to have_title("Check your uploaded files")
+    expect(check_your_uploads_page.heading.text).to eq(
       "Check your uploaded files – written statement document"
     )
-    expect(page).to have_content("File 1\tupload.pdf\tDelete")
+    expect(check_your_uploads_page.summary_list_row).to have_content(
+      "File 1\tupload.pdf\tDelete"
+    )
   end
 
   def then_i_see_the_qualifications_form
-    expect(page).to have_title("Your qualifications")
-    expect(page).to have_content("Your teaching qualification")
-    expect(page).to have_content(
+    expect(qualifications_form_page).to have_title("Your qualifications")
+    expect(qualifications_form_page.heading.text).to eq(
+      "Your teaching qualification"
+    )
+    expect(qualifications_form_page.body).to have_content(
       "This is the qualification that led to you being recognised as a teacher."
     )
   end
 
   def then_i_see_the_degree_qualifications_form
-    expect(page).to have_title("Your qualifications")
-    expect(page).to have_content("Your university degree")
-    expect(page).to have_content(
+    expect(qualifications_form_page).to have_title("Your qualifications")
+    expect(qualifications_form_page.heading.text).to eq(
+      "Your university degree"
+    )
+    expect(qualifications_form_page.body).to have_content(
       "Tell us about your university degree qualification."
     )
   end
 
   def then_i_see_the_upload_certificate_form
-    expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload your certificate for Name")
+    expect(upload_document_page).to have_title("Upload a document")
+    expect(upload_document_page.heading.text).to eq(
+      "Upload your certificate for Name"
+    )
   end
 
   def then_i_see_the_upload_degree_certificate_form
-    expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload your certificate for Name")
+    expect(upload_document_page).to have_title("Upload a document")
+    expect(upload_document_page.heading.text).to eq(
+      "Upload your certificate for Name"
+    )
   end
 
   def then_i_see_the_upload_transcript_form
-    expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload your transcript for Name")
+    expect(upload_document_page).to have_title("Upload a document")
+    expect(upload_document_page.heading.text).to eq(
+      "Upload your transcript for Name"
+    )
   end
 
   def then_i_see_the_upload_degree_transcript_form
-    expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload your transcript for Name")
+    expect(upload_document_page).to have_title("Upload a document")
+    expect(upload_document_page.heading.text).to eq(
+      "Upload your transcript for Name"
+    )
   end
 
   def then_i_see_the_age_range_form
-    expect(page).to have_title("Enter the age range you can teach")
-    expect(page).to have_content("What age range are you qualified to teach?")
-    expect(page).to have_content("From")
-    expect(page).to have_content("To")
+    expect(age_range_form).to have_title("Enter the age range you can teach")
+    expect(age_range_form.heading.text).to eq(
+      "What age range are you qualified to teach?"
+    )
+    expect(age_range_form.grid).to have_content("From")
+    expect(age_range_form.grid).to have_content("To")
   end
 
   def then_i_see_the_subjects_form
-    expect(page).to have_title("Enter the subjects you can teach")
-    expect(page).to have_content("What subjects are you qualified to teach?")
+    expect(subjects_form_page).to have_title("Enter the subjects you can teach")
+    expect(subjects_form_page.heading.text).to eq(
+      "What subjects are you qualified to teach?"
+    )
   end
 
   def then_i_see_the_two_subjects_form
-    expect(page).to have_title("Enter the subjects you can teach")
-    expect(page).to have_content("What subjects are you qualified to teach?")
-    expect(page).to have_content("Subject")
-    expect(page).to have_content("Remove")
+    expect(subjects_form_page).to have_title("Enter the subjects you can teach")
+    expect(subjects_form_page.heading.text).to eq(
+      "What subjects are you qualified to teach?"
+    )
+    expect(subjects_form_page).to have_content("Subject")
+    expect(subjects_form_page).to have_content("Remove")
   end
 
   def then_i_see_the_has_work_history_form
-    expect(page).to have_title("Your work history")
-    expect(page).to have_content("Have you worked professionally as a teacher?")
-    expect(page).to have_content("Yes")
-    expect(page).to have_content("No")
+    expect(work_history_form_page).to have_title("Your work history")
+    expect(work_history_form_page.heading.text).to eq(
+      "Have you worked professionally as a teacher?"
+    )
+    expect(work_history_form_page.grid).to have_content("Yes")
+    expect(work_history_form_page.grid).to have_content("No")
   end
 
   def then_i_see_the_work_history_form
-    expect(page).to have_title("Your work history")
-    expect(page).to have_content("Your work history in education")
-    expect(page).to have_content("Your current or most recent role")
+    expect(work_history_form_page).to have_title("Your work history")
+    expect(work_history_form_page).to have_content(
+      "Your work history in education"
+    )
+    expect(work_history_form_page).to have_content(
+      "Your current or most recent role"
+    )
   end
 
   def then_i_see_the_registration_number_form
-    expect(page).to have_title("Enter your registration number")
-    expect(page).to have_content("What is your registration number?")
+    expect(registration_number_form).to have_title(
+      "Enter your registration number"
+    )
+    expect(registration_number_form.heading.text).to eq(
+      "What is your registration number?"
+    )
   end
 
   def then_i_see_the_upload_written_statement_form
-    expect(page).to have_title("Upload a document")
-    expect(page).to have_content("Upload your written statement")
+    expect(upload_document_page).to have_title("Upload a document")
+    expect(upload_document_page.heading.text).to eq(
+      "Upload your written statement"
+    )
   end
 
   def then_i_see_the_personal_information_summary
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Given names\tName")
-    expect(page).to have_content("Family name\tName")
-    expect(page).to have_content("Date of birth\t1 January 2000")
-    expect(page).to have_content(
+    expect(personal_information_summary_page).to have_content(
+      "Check your answers"
+    )
+    expect(personal_information_summary_page).to have_content(
+      "Given names\tName"
+    )
+    expect(personal_information_summary_page).to have_content(
+      "Family name\tName"
+    )
+    expect(personal_information_summary_page).to have_content(
+      "Date of birth\t1 January 2000"
+    )
+    expect(personal_information_summary_page).to have_content(
       "Name appears differently on your ID documents or qualifications?\tYes"
     )
-    expect(page).to have_content("Alternative given names\tName")
-    expect(page).to have_content("Alternative family name\tName")
-    expect(page).to have_content("Name change document")
+    expect(personal_information_summary_page).to have_content(
+      "Alternative given names\tName"
+    )
+    expect(personal_information_summary_page).to have_content(
+      "Alternative family name\tName"
+    )
+    expect(personal_information_summary_page).to have_content(
+      "Name change document"
+    )
   end
 
   def then_i_see_the_personal_information_summary_without_name_change
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Given names\tName")
-    expect(page).to have_content("Family name\tName")
-    expect(page).to have_content("Date of birth\t1 January 2000")
-    expect(page).to have_content(
+    expect(personal_information_summary_page.heading.text).to eq(
+      "Check your answers"
+    )
+    expect(personal_information_summary_page.summary_card).to have_content(
+      "Given names\tName"
+    )
+    expect(personal_information_summary_page.summary_card).to have_content(
+      "Family name\tName"
+    )
+    expect(personal_information_summary_page.summary_card).to have_content(
+      "Date of birth\t1 January 2000"
+    )
+    expect(personal_information_summary_page.summary_card).to have_content(
       "Name appears differently on your ID documents or qualifications?\tNo"
     )
   end
 
   def then_i_see_completed_personal_information_section
-    expect(page).to have_content("Enter your personal information\nCOMPLETED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Enter your personal information\nCOMPLETED"
+    )
   end
 
   def then_i_see_completed_identity_document_section
-    expect(page).to have_content("Upload your identity document\nCOMPLETED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Upload your identity document\nCOMPLETED"
+    )
   end
 
   def then_i_see_the_qualifications_summary
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Qualification title\tTitle")
-    expect(page).to have_content("Name of institution\tName")
-    expect(page).to have_content("Country of institution\tFrance")
+    expect(qualification_summary_page.heading.text).to eq("Check your answers")
+    expect(qualification_summary_page.summary_card).to have_content(
+      "Qualification title\tTitle"
+    )
+    expect(qualification_summary_page.summary_card).to have_content(
+      "Name of institution\tName"
+    )
+    expect(qualification_summary_page.summary_card).to have_content(
+      "Country of institution\tFrance"
+    )
   end
 
   def then_i_see_completed_qualifications_section
-    expect(page).to have_content("Add your teaching qualifications\nCOMPLETED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Add your teaching qualifications\nCOMPLETED"
+    )
   end
 
   def then_i_see_completed_age_range_section
-    expect(page).to have_content("Enter the age range you can teach\nCOMPLETED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Enter the age range you can teach\nCOMPLETED"
+    )
   end
 
   def then_i_see_completed_subjects_section
-    expect(page).to have_content("Enter the subjects you can teach\nCOMPLETED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Enter the subjects you can teach\nCOMPLETED"
+    )
   end
 
   def then_i_see_the_work_history_summary
-    expect(page).to have_content("Your work history in education")
-    expect(page).to have_content(
+    expect(work_history_summary_page.heading.text).to eq(
+      "Your work history in education"
+    )
+    expect(work_history_summary_page.summary_card_1).to have_content(
       "Have you worked professionally as a teacher?\tYes"
     )
-    expect(page).to have_content("Your current or most recent role")
-    expect(page).to have_content("School name\tSchool name")
-    expect(page).to have_content("City of institution\tCity")
-    expect(page).to have_content("Country of institution\tFrance")
-    expect(page).to have_content("Your job role\tJob")
-    expect(page).to have_content("Contact email address\ttest@example.com")
-    expect(page).to have_content("Role start date\tJanuary 2000")
+    expect(work_history_summary_page.summary_card_2).to have_content(
+      "Your current or most recent role"
+    )
+    expect(work_history_summary_page.summary_card_2).to have_content(
+      "School name\tSchool name"
+    )
+    expect(work_history_summary_page.summary_card_2).to have_content(
+      "City of institution\tCity"
+    )
+    expect(work_history_summary_page.summary_card_2).to have_content(
+      "Country of institution\tFrance"
+    )
+    expect(work_history_summary_page.summary_card_2).to have_content(
+      "Your job role\tJob"
+    )
+    expect(work_history_summary_page.summary_card_2).to have_content(
+      "Contact email address\ttest@example.com"
+    )
+    expect(work_history_summary_page.summary_card_2).to have_content(
+      "Role start date\tJanuary 2000"
+    )
   end
 
   def then_i_see_the_empty_work_history_summary
-    expect(page).to have_content("Your work history in education")
-    expect(page).to have_content(
+    expect(work_history_summary_page.heading.text).to eq(
+      "Your work history in education"
+    )
+    expect(work_history_summary_page.summary_card_1).to have_content(
       "Have you worked professionally as a teacher?\tYes"
     )
   end
 
   def then_i_see_completed_work_history_section
-    expect(page).to have_content("Add your work history\nCOMPLETED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Add your work history\nCOMPLETED"
+    )
   end
 
   def then_i_see_completed_registration_number_section
-    expect(page).to have_content("Enter your registration number\nCOMPLETED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Enter your registration number\nCOMPLETED"
+    )
   end
 
   def then_i_see_completed_written_statement_section
-    expect(page).to have_content("Upload your written statement\nCOMPLETED")
+    expect(teacher_application_page.app_task_list).to have_content(
+      "Upload your written statement\nCOMPLETED"
+    )
   end
 
   def then_i_see_the_check_your_answers_page
-    expect(page).to have_title("Check your answers")
-    expect(page).to have_content(
+    expect(check_your_answers_page).to have_title("Check your answers")
+    expect(check_your_answers_page.heading.text).to eq(
       "Check your answers before submitting your application"
     )
-    expect(page).to have_content("About you")
-    expect(page).to have_content("Who you can teach")
-    expect(page).to have_content("Minimum age\t7")
-    expect(page).to have_content("Maximum age\t11")
-    expect(page).to have_content("Subjects\tSubject")
-    expect(page).to have_content("Your teaching qualification")
+    expect(check_your_answers_page.heading_1.text).to have_content("About you")
+    expect(check_your_answers_page.heading_2.text).to have_content(
+      "Who you can teach"
+    )
+    expect(check_your_answers_page.content).to have_content("Minimum age\t7")
+    expect(check_your_answers_page.content).to have_content("Maximum age\t11")
+    expect(check_your_answers_page).to have_content("Subjects\tSubject")
+    expect(check_your_answers_page).to have_content(
+      "Your teaching qualification"
+    )
   end
 
   def and_i_see_check_your_work_history
-    expect(page).to have_content("Your work history")
+    expect(check_your_answers_page).to have_content("Your work history")
   end
 
   def and_i_see_check_proof_of_recognition
-    expect(page).to have_content("Proof that you’re recognised as a teacher")
+    expect(check_your_answers_page.heading_3.text).to have_content(
+      "Proof that you’re recognised as a teacher"
+    )
   end
 
   def and_i_see_check_registration_number
-    expect(page).to have_content("Registration number")
-    expect(page).to have_content("Registration number\tABC")
+    expect(check_your_answers_page).to have_content("Registration number")
   end
 
   def then_i_see_the_submitted_application_page
     application_form = ApplicationForm.last
 
-    expect(page).to have_current_path("/teacher/application")
-    expect(page).to have_title("Apply for qualified teacher status (QTS)")
-    expect(page).to have_content("Apply for qualified teacher status (QTS)")
-    expect(page).to have_content("Application complete")
-    expect(page).to have_content("Your reference number")
-    expect(page).to have_content(application_form.reference)
+    expect(submitted_application_page).to have_current_path(
+      "/teacher/application"
+    )
+    expect(submitted_application_page).to have_title(
+      "Apply for qualified teacher status (QTS)"
+    )
+    expect(submitted_application_page.heading_1.text).to have_content(
+      "Apply for qualified teacher status (QTS)"
+    )
+    expect(submitted_application_page.heading_2.text).to have_content(
+      "Application complete"
+    )
+    expect(submitted_application_page.reference).to have_content(
+      "Your reference number"
+    )
+    expect(submitted_application_page.reference).to have_content(
+      application_form.reference
+    )
   end
 
   def then_i_see_delete_confirmation_form
-    expect(page).to have_title("Delete")
-    expect(page).to have_content("Are you sure you want to delete")
+    expect(delete_confirmation_page).to have_title("Delete")
+    expect(delete_confirmation_page.heading).to have_content(
+      "Are you sure you want to delete"
+    )
   end
 end

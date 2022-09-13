@@ -17,7 +17,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_personal_information
 
     when_i_choose_check_personal_information_yes
-    then_i_see_the(:application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_personal_information_completed
   end
 
@@ -30,7 +30,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_personal_information
 
     when_i_choose_check_personal_information_no
-    then_i_see_the(:application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_personal_information_action_required
   end
 
@@ -43,7 +43,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_qualifications
 
     when_i_choose_check_qualifications_yes
-    then_i_see_the(:application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_qualifications_completed
   end
 
@@ -56,7 +56,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_qualifications
 
     when_i_choose_check_qualifications_no
-    then_i_see_the(:application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_qualifications_action_required
   end
 
@@ -65,7 +65,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_work_history
 
     when_i_choose_check_work_history_yes
-    then_i_see_the(:application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_work_history_completed
   end
 
@@ -74,7 +74,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_work_history
 
     when_i_choose_check_work_history_no
-    then_i_see_the(:application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_work_history_action_required
   end
 
@@ -87,7 +87,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_professional_standing
 
     when_i_choose_check_professional_standing_yes
-    then_i_see_the(:application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_professional_standing_completed
   end
 
@@ -100,7 +100,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_professional_standing
 
     when_i_choose_check_professional_standing_no
-    then_i_see_the(:application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_professional_standing_action_required
   end
 
@@ -128,10 +128,16 @@ RSpec.describe "Assessor check submitted details", type: :system do
     check_personal_information_page.form.continue_button.click
   end
 
+  def personal_information_task_item
+    assessor_application_page.task_list.tasks.first.items.find do |item|
+      item.link.text == "Check personal information"
+    end
+  end
+
   def and_i_see_check_personal_information_completed
-    expect(application_page.personal_information_task.status.text).to eq(
-      "COMPLETED"
-    )
+    expect(
+      assessor_application_page.personal_information_task.status.text
+    ).to eq("COMPLETED")
   end
 
   def when_i_choose_check_personal_information_no
@@ -146,9 +152,9 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_personal_information_action_required
-    expect(application_page.personal_information_task.status.text).to eq(
-      "ACTION REQUIRED"
-    )
+    expect(
+      assessor_application_page.personal_information_task.status.text
+    ).to eq("ACTION REQUIRED")
   end
 
   def then_i_see_the_qualifications
@@ -176,11 +182,13 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_qualifications_completed
-    expect(application_page.qualifications_task.status.text).to eq("COMPLETED")
+    expect(assessor_application_page.qualifications_task.status.text).to eq(
+      "COMPLETED"
+    )
   end
 
   def and_i_see_check_qualifications_action_required
-    expect(application_page.qualifications_task.status.text).to eq(
+    expect(assessor_application_page.qualifications_task.status.text).to eq(
       "ACTION REQUIRED"
     )
   end
@@ -198,7 +206,9 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_work_history_completed
-    expect(application_page.work_history_task.status.text).to eq("COMPLETED")
+    expect(assessor_application_page.work_history_task.status.text).to eq(
+      "COMPLETED"
+    )
   end
 
   def when_i_choose_check_work_history_no
@@ -213,7 +223,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_work_history_action_required
-    expect(application_page.work_history_task.status.text).to eq(
+    expect(assessor_application_page.work_history_task.status.text).to eq(
       "ACTION REQUIRED"
     )
   end
@@ -233,9 +243,9 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_professional_standing_completed
-    expect(application_page.professional_standing_task.status.text).to eq(
-      "COMPLETED"
-    )
+    expect(
+      assessor_application_page.professional_standing_task.status.text
+    ).to eq("COMPLETED")
   end
 
   def when_i_choose_check_professional_standing_no
@@ -250,9 +260,9 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_professional_standing_action_required
-    expect(application_page.professional_standing_task.status.text).to eq(
-      "ACTION REQUIRED"
-    )
+    expect(
+      assessor_application_page.professional_standing_task.status.text
+    ).to eq("ACTION REQUIRED")
   end
 
   def assessor
