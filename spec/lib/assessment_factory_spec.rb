@@ -102,11 +102,30 @@ RSpec.describe AssessmentFactory do
         end
       end
 
-      context "with work history" do
-        before { application_form.needs_work_history = true }
+      describe "work history section" do
+        it "is not created" do
+          expect(sections.work_history.count).to eq(0)
+        end
 
-        it "creates a work history assessment" do
-          expect(sections.work_history.count).to eq(1)
+        context "when application form form needs work history" do
+          before { application_form.needs_work_history = true }
+
+          it "is created" do
+            expect(sections.work_history.count).to eq(1)
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.work_history.first
+            expect(section.checks).to eq(
+              %w[
+                email_contact_current_employer
+                satisfactory_evidence_work_history
+              ]
+            )
+            expect(section.failure_reasons).to eq(
+              ["satisfactory_evidence_work_history"]
+            )
+          end
         end
       end
 

@@ -73,5 +73,11 @@ FactoryBot.define do
         ]
       end
     end
+
+    trait :work_history do
+      key { "work_history" }
+      checks { %w[satisfactory_evidence_work_history] }
+      failure_reasons { %w[satisfactory_evidence_work_history] }
+    end
   end
 end

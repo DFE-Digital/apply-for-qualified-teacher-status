@@ -31,6 +31,10 @@ module PageObjects
         task_item_for("Check qualifications")
       end
 
+      def work_history_task
+        task_item_for("Check work history")
+      end
+
       private
 
       def task_item_for(link_text)

@@ -60,12 +60,22 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_see_check_qualifications_action_required
   end
 
-  it "allows checking the work history" do
+  it "allows passing the work history" do
     when_i_visit_the(:check_work_history_page, application_id:, assessment_id:)
     then_i_see_the_work_history
 
-    when_i_click_check_work_history_continue
+    when_i_choose_check_work_history_yes
     then_i_see_the(:application_page, application_id:)
+    and_i_see_check_work_history_completed
+  end
+
+  it "allows failing the work history" do
+    when_i_visit_the(:check_work_history_page, application_id:, assessment_id:)
+    then_i_see_the_work_history
+
+    when_i_choose_check_work_history_no
+    then_i_see_the(:application_page, application_id:)
+    and_i_see_check_work_history_action_required
   end
 
   it "allows checking the professional standing" do
@@ -168,6 +178,32 @@ RSpec.describe "Assessor check submitted details", type: :system do
     )
   end
 
+  def when_i_choose_check_work_history_yes
+    check_work_history_page.form.yes_radio_item.input.click
+    check_work_history_page.form.continue_button.click
+  end
+
+  def and_i_see_check_work_history_completed
+    expect(application_page.work_history_task.status.text).to eq("COMPLETED")
+  end
+
+  def when_i_choose_check_work_history_no
+    check_work_history_page.form.no_radio_item.input.click
+    check_work_history_page
+      .form
+      .failure_reason_checkbox_items
+      .first
+      .checkbox
+      .click
+    check_work_history_page.form.continue_button.click
+  end
+
+  def and_i_see_check_work_history_action_required
+    expect(application_page.work_history_task.status.text).to eq(
+      "ACTION REQUIRED"
+    )
+  end
+
   def then_i_see_the_professional_standing
     expect(
       check_professional_standing_page
@@ -175,10 +211,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
         .reference_number
         .text
     ).to eq(application_form.registration_number)
-  end
-
-  def when_i_click_check_work_history_continue
-    check_work_history_page.form.continue_button.click
   end
 
   def when_i_click_check_professional_standing_continue
