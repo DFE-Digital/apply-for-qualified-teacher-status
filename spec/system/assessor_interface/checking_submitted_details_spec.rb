@@ -34,7 +34,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_see_check_personal_information_action_required
   end
 
-  it "allows checking the qualifications" do
+  it "allows passing the qualifications" do
     when_i_visit_the(
       :check_qualifications_page,
       application_id:,
@@ -42,8 +42,22 @@ RSpec.describe "Assessor check submitted details", type: :system do
     )
     then_i_see_the_qualifications
 
-    when_i_click_check_qualifications_continue
+    when_i_choose_check_qualifications_yes
     then_i_see_the(:application_page, application_id:)
+    and_i_see_check_qualifications_completed
+  end
+
+  it "allows failing the qualifications" do
+    when_i_visit_the(
+      :check_qualifications_page,
+      application_id:,
+      assessment_id:
+    )
+    then_i_see_the_qualifications
+
+    when_i_choose_check_qualifications_no
+    then_i_see_the(:application_page, application_id:)
+    and_i_see_check_qualifications_action_required
   end
 
   it "allows checking the work history" do
@@ -90,14 +104,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
     check_personal_information_page.form.continue_button.click
   end
 
-  def personal_information_task_item
-    application_page.task_list.tasks.first.items.find do |item|
-      item.link.text == "Check personal information"
-    end
-  end
-
   def and_i_see_check_personal_information_completed
-    expect(personal_information_task_item.status).to have_content("COMPLETED")
+    expect(application_page.personal_information_task.status.text).to eq(
+      "COMPLETED"
+    )
   end
 
   def when_i_choose_check_personal_information_no
@@ -112,7 +122,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_personal_information_action_required
-    expect(personal_information_task_item.status).to have_content(
+    expect(application_page.personal_information_task.status.text).to eq(
       "ACTION REQUIRED"
     )
   end
@@ -122,6 +132,32 @@ RSpec.describe "Assessor check submitted details", type: :system do
       application_form.qualifications.find(&:is_teaching_qualification?)
     expect(check_qualifications_page.teaching_qualification.title.text).to eq(
       teaching_qualification.title
+    )
+  end
+
+  def when_i_choose_check_qualifications_yes
+    check_qualifications_page.form.yes_radio_item.input.click
+    check_qualifications_page.form.continue_button.click
+  end
+
+  def when_i_choose_check_qualifications_no
+    check_qualifications_page.form.no_radio_item.input.click
+    check_qualifications_page
+      .form
+      .failure_reason_checkbox_items
+      .first
+      .checkbox
+      .click
+    check_qualifications_page.form.continue_button.click
+  end
+
+  def and_i_see_check_qualifications_completed
+    expect(application_page.qualifications_task.status.text).to eq("COMPLETED")
+  end
+
+  def and_i_see_check_qualifications_action_required
+    expect(application_page.qualifications_task.status.text).to eq(
+      "ACTION REQUIRED"
     )
   end
 
@@ -139,10 +175,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
         .reference_number
         .text
     ).to eq(application_form.registration_number)
-  end
-
-  def when_i_click_check_qualifications_continue
-    check_qualifications_page.form.continue_button.click
   end
 
   def when_i_click_check_work_history_continue

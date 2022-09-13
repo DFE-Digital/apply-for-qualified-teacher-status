@@ -22,6 +22,20 @@ module PageObjects
           end
         end
       end
+
+      def personal_information_task
+        task_item_for("Check personal information")
+      end
+
+      def qualifications_task
+        task_item_for("Check qualifications")
+      end
+
+      private
+
+      def task_item_for(link_text)
+        task_list.tasks.first.items.find { |item| item.link.text == link_text }
+      end
     end
   end
 end
