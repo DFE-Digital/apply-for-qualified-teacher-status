@@ -8,10 +8,16 @@ RSpec.describe DqtCountryCode do
 
     it { is_expected.to eq("US") }
 
-    context "with Cyprus" do
+    context "with Cyprus (European Union)" do
       let(:code) { "CY" }
 
-      it { is_expected.to eq("XC") }
+      it { is_expected.to eq("XA") }
+    end
+
+    context "with Cyprus (Non-European Union)" do
+      let(:code) { "CY-TR" }
+
+      it { is_expected.to eq("XB") }
     end
 
     context "with Antarctica" do
