@@ -18,6 +18,7 @@ module ApplicationFormStatusTag
     end
 
     COLOURS = {
+      action_required: "red",
       not_started: "grey",
       in_progress: "blue",
       initial_assessment: "blue",
