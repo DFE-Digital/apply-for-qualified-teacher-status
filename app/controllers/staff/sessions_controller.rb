@@ -27,4 +27,8 @@ class Staff::SessionsController < Devise::SessionsController
   def after_sign_out_path_for(_resource)
     new_staff_session_path
   end
+
+  def set_flash_message(*)
+    # Intentionally left blank
+  end
 end

@@ -15,7 +15,6 @@ RSpec.describe "Assessor authentication", type: :system do
 
     when_i_click_sign_out
     then_i_see_the(:login_page)
-    and_i_see_the_signed_out_message
   end
 
   private
@@ -30,9 +29,5 @@ RSpec.describe "Assessor authentication", type: :system do
 
   def when_i_click_sign_out
     applications_page.header.sign_out_link.click
-  end
-
-  def and_i_see_the_signed_out_message
-    expect(login_page.signed_out_message).to be_visible
   end
 end

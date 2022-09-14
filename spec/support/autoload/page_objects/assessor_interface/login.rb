@@ -3,10 +3,6 @@ module PageObjects
     class Login < SitePrism::Page
       set_url "/staff/sign_in"
 
-      element :signed_out_message,
-              ".govuk-notification-banner__heading",
-              text: "Signed out successfully."
-
       section :form, "form" do
         element :email_field, "#staff-email-field"
         element :password_field, "#staff-password-field"
