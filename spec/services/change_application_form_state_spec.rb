@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ChangeApplicationFormState do
-  let(:application_form) { create(:application_form, :submitted) }
+  let!(:application_form) { create(:application_form, :submitted) }
   let(:user) { create(:staff) }
   let(:new_state) { :awarded }
 
@@ -22,7 +22,9 @@ RSpec.describe ChangeApplicationFormState do
   end
 
   describe "record timeline event" do
-    subject(:timeline_event) { TimelineEvent.find_by(application_form:) }
+    subject(:timeline_event) do
+      TimelineEvent.find_by(application_form:, new_state: "awarded")
+    end
 
     it { is_expected.to be_nil }
 

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::AssessorAssignmentForm, type: :model do
-  let(:application_form) do
+  let!(:application_form) do
     create(:application_form, :with_personal_information, :submitted)
   end
   let(:staff) { create(:staff, :confirmed) }

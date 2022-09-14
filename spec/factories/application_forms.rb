@@ -59,6 +59,17 @@ FactoryBot.define do
     trait :submitted do
       state { "submitted" }
       submitted_at { Time.zone.now }
+
+      after(:create) do |application_form, _evaluator|
+        create(
+          :timeline_event,
+          :state_changed,
+          application_form:,
+          creator: application_form.teacher,
+          old_state: "draft",
+          new_state: "submitted"
+        )
+      end
     end
 
     trait :awarded do
