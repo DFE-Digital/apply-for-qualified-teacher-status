@@ -80,6 +80,12 @@ def application_form_traits_for(region)
   [
     [],
     [:with_personal_information],
+    %i[with_personal_information with_alternative_name],
+    %i[
+      with_personal_information
+      with_alternative_name
+      with_name_change_document
+    ],
     %i[with_personal_information with_completed_qualification],
     %i[
       with_personal_information
@@ -108,6 +114,15 @@ def application_form_traits_for(region)
     ] + evidential_traits,
     %i[
       with_personal_information
+      with_completed_qualification
+      with_identification_document
+      with_age_range
+      with_subjects
+    ] + evidential_traits << :submitted,
+    %i[
+      with_personal_information
+      with_alternative_name
+      with_name_change_document
       with_completed_qualification
       with_identification_document
       with_age_range

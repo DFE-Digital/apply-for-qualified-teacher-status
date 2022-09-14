@@ -102,6 +102,19 @@ FactoryBot.define do
       date_of_birth do
         Faker::Date.between(from: 65.years.ago, to: 21.years.ago)
       end
+      has_alternative_name { false }
+    end
+
+    trait :with_alternative_name do
+      has_alternative_name { true }
+      alternative_given_names { Faker::Name.name }
+      alternative_family_name { Faker::Name.last_name }
+    end
+
+    trait :with_name_change_document do
+      after(:create) do |application_form, _evaluator|
+        create(:upload, document: application_form.name_change_document)
+      end
     end
 
     trait :with_registration_number do
