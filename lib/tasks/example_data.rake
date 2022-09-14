@@ -1,5 +1,5 @@
 namespace :example_data do
-  desc "Create example data for testing"
+  desc "Create example data for testing."
   task generate: :environment do
     if HostingEnvironment.production?
       raise "THIS TASK CANNOT BE RUN IN PRODUCTION"
@@ -14,10 +14,7 @@ namespace :example_data do
     Faker::Config.locale = "en-GB"
     Faker::UniqueGenerator.clear
 
-    [
-      { name: "Dave Assessor", email: "assessor-dave@example.com" },
-      { name: "Beryl Assessor", email: "assessor-beryl@example.com" }
-    ].each do |assessor|
+    assessors.each do |assessor|
       FactoryBot.create(
         :staff,
         :confirmed,
@@ -37,6 +34,33 @@ namespace :example_data do
       end
     end
   end
+
+  desc "Reset database suitable for generating example data."
+  task reset: :environment do
+    if HostingEnvironment.production?
+      raise "THIS TASK CANNOT BE RUN IN PRODUCTION"
+    end
+
+    Staff.where(email: assessors.map { |assessor| assessor[:email] }).delete_all
+
+    AssessmentSection.delete_all
+    Assessment.delete_all
+    Qualification.delete_all
+    WorkHistory.delete_all
+    TimelineEvent.delete_all
+    ApplicationForm.delete_all
+    Teacher.delete_all
+  end
+
+  desc "Reset and regenerate example data."
+  task regenerate: %i[reset generate]
+end
+
+def assessors
+  [
+    { name: "Dave Assessor", email: "assessor-dave@example.com" },
+    { name: "Beryl Assessor", email: "assessor-beryl@example.com" }
+  ]
 end
 
 def evidential_traits_for(status_check, sanction_check)
