@@ -17,10 +17,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def assessment_tasks
-    {
-      submitted_details: assessment.sections.map(&:key).map(&:to_sym),
-      recommendation: %i[initial_assessment]
-    }
+    assessment_section_keys = assessment.sections.map(&:key).map(&:to_sym)
+
+    submitted_details =
+      %i[
+        personal_information
+        qualifications
+        work_history
+        professional_standing
+      ].select { |key| assessment_section_keys.include?(key) }
+
+    { submitted_details:, recommendation: %i[initial_assessment] }
   end
 
   def assessment_task_path(section, item)
