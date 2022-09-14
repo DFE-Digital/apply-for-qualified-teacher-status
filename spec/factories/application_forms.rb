@@ -59,6 +59,17 @@ FactoryBot.define do
     trait :submitted do
       state { "submitted" }
       submitted_at { Time.zone.now }
+
+      after(:create) do |application_form, _evaluator|
+        create(
+          :timeline_event,
+          :state_changed,
+          application_form:,
+          creator: application_form.teacher,
+          old_state: "draft",
+          new_state: "submitted"
+        )
+      end
     end
 
     trait :awarded do
@@ -91,8 +102,8 @@ FactoryBot.define do
     end
 
     trait :with_identification_document do
-      after(:build) do |application_form, _evaluator|
-        build(:upload, document: application_form.identification_document)
+      after(:create) do |application_form, _evaluator|
+        create(:upload, document: application_form.identification_document)
       end
     end
 
@@ -101,6 +112,19 @@ FactoryBot.define do
       family_name { Faker::Name.last_name }
       date_of_birth do
         Faker::Date.between(from: 65.years.ago, to: 21.years.ago)
+      end
+      has_alternative_name { false }
+    end
+
+    trait :with_alternative_name do
+      has_alternative_name { true }
+      alternative_given_names { Faker::Name.name }
+      alternative_family_name { Faker::Name.last_name }
+    end
+
+    trait :with_name_change_document do
+      after(:create) do |application_form, _evaluator|
+        create(:upload, document: application_form.name_change_document)
       end
     end
 
@@ -128,8 +152,8 @@ FactoryBot.define do
 
     trait :with_written_statement do
       needs_written_statement { true }
-      after(:build) do |application_form, _evaluator|
-        build(:upload, document: application_form.written_statement_document)
+      after(:create) do |application_form, _evaluator|
+        create(:upload, document: application_form.written_statement_document)
       end
     end
   end

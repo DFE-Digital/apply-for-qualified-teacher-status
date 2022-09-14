@@ -10,11 +10,9 @@
              application_form: @application_form,
              changeable: false %>
 
-  <% if @application_form.has_alternative_name %>
-    <%= render "shared/application_form/identity_document_summary",
-               application_form: @application_form,
-               changeable: false %>
-  <% end %>
+  <%= render "shared/application_form/identity_document_summary",
+             application_form: @application_form,
+             changeable: false %>
 <% when "qualifications" %>
   <%= render "shared/application_form/qualifications_summary",
              application_form: @application_form,
