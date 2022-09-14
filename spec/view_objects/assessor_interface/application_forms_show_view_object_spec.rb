@@ -40,7 +40,10 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     let(:application_form) { create(:application_form) }
     let(:assessment) { create(:assessment, application_form:) }
-    before { create(:assessment_section, :personal_information, assessment:) }
+    before do
+      create(:assessment_section, :personal_information, assessment:)
+      create(:assessment_section, :qualifications, assessment:)
+    end
 
     let(:params) { { id: application_form.id } }
 
@@ -50,7 +53,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "with work history" do
         before { create(:assessment_section, :work_history, assessment:) }
 
-        it { is_expected.to eq(%i[personal_information work_history]) }
+        it do
+          is_expected.to eq(
+            %i[personal_information qualifications work_history]
+          )
+        end
       end
 
       context "with professional standing statement" do
@@ -59,8 +66,8 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         end
 
         it do
-          is_expected.to match_array(
-            %i[personal_information professional_standing]
+          is_expected.to eq(
+            %i[personal_information qualifications professional_standing]
           )
         end
       end
