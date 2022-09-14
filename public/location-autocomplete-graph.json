@@ -626,7 +626,22 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Cyprus"
+      "en-GB": "Cyprus (European Union)"
+    }
+  },
+  "country:CY-TR": {
+    "edges": {
+      "from": []
+    },
+    "meta": {
+      "canonical": true,
+      "canonical-mask": 1,
+      "display-name": true,
+      "stable-name": true
+    },
+    "names": {
+      "cy": false,
+      "en-GB": "Cyprus (Non-European Union)"
     }
   },
   "country:CZ": {
@@ -5321,7 +5336,22 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "CY"
+      "en-GB": "CY-TR"
+    }
+  },
+  "nym:CY-TR": {
+    "edges": {
+      "from": ["country:CY-TR"]
+    },
+    "meta": {
+      "canonical": false,
+      "canonical-mask": 0,
+      "display-name": false,
+      "stable-name": false
+    },
+    "names": {
+      "cy": false,
+      "en-GB": "CY-TR"
     }
   },
   "nym:CZ": {
@@ -9511,7 +9541,7 @@
   },
   "nym:Kıbrıs": {
     "edges": {
-      "from": ["country:CY"]
+      "from": ["country:CY-TR"]
     },
     "meta": {
       "canonical": false,
@@ -12807,6 +12837,21 @@
     "names": {
       "cy": false,
       "en-GB": "Republic of Cyprus"
+    }
+  },
+  "nym:Northern Cyprus": {
+    "edges": {
+      "from": ["country:CY-TR"]
+    },
+    "meta": {
+      "canonical": false,
+      "canonical-mask": 0,
+      "display-name": false,
+      "stable-name": false
+    },
+    "names": {
+      "cy": false,
+      "en-GB": "Northern Cyprus"
     }
   },
   "nym:Republic of Djibouti": {
