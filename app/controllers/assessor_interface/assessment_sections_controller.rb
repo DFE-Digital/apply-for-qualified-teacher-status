@@ -1,15 +1,17 @@
 module AssessorInterface
   class AssessmentSectionsController < BaseController
-    before_action :load_assessment_section_and_assessment
-
     def show
     end
 
     def update
-      if @assessment_section.update(assessment_section_params)
+      if UpdateAssessmentSection.call(
+           assessment_section:,
+           user: current_user,
+           params: assessment_section_params
+         )
         redirect_to [
                       :assessor_interface,
-                      @assessment_section.assessment.application_form
+                      assessment_section.assessment.application_form
                     ]
       else
         render :show, status: :unprocessable_entity
@@ -18,8 +20,8 @@ module AssessorInterface
 
     private
 
-    def load_assessment_section_and_assessment
-      @assessment_section =
+    def assessment_section
+      @assessment_section ||=
         AssessmentSection
           .includes(assessment: :application_form)
           .where(
@@ -29,11 +31,22 @@ module AssessorInterface
             }
           )
           .find_by!(key: params[:key])
+    end
 
-      @assessment = @assessment_section.assessment
-      @application_form = @assessment.application_form
-      @qualifications = @application_form.qualifications.ordered
-      @work_histories = @application_form.work_histories.ordered
+    def assessment
+      @assessment ||= @assessment_section.assessment
+    end
+
+    def application_form
+      @application_form ||= assessment.application_form
+    end
+
+    def qualifications
+      @qualifications ||= application_form.qualifications.ordered
+    end
+
+    def work_histories
+      @work_histories = application_form.work_histories.ordered
     end
 
     def assessment_section_params
