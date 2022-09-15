@@ -38,4 +38,19 @@ class Assessment < ApplicationRecord
   def sections_finished?
     sections.none? { |section| section.state == :not_started }
   end
+
+  def can_award?
+    sections.all? { |section| section.state == :completed }
+  end
+
+  def can_decline?
+    sections.any? { |section| section.state == :action_required }
+  end
+
+  def available_recommendations
+    [].tap do |recommendations|
+      recommendations << "award" if can_award?
+      recommendations << "decline" if can_decline?
+    end
+  end
 end

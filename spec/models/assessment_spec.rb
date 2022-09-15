@@ -91,4 +91,81 @@ RSpec.describe Assessment, type: :model do
       it { is_expected.to be true }
     end
   end
+
+  describe "#can_award?" do
+    subject(:can_award?) { assessment.can_award? }
+
+    context "with an unknown assessment" do
+      before { create(:assessment_section, :personal_information, assessment:) }
+      it { is_expected.to be false }
+    end
+
+    context "with a passed assessment" do
+      before do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+      end
+      it { is_expected.to be true }
+    end
+
+    context "with a failed assessment" do
+      before do
+        create(:assessment_section, :personal_information, :failed, assessment:)
+      end
+      it { is_expected.to be false }
+    end
+
+    context "with a mixture of assessments" do
+      before do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+        create(:assessment_section, :qualifications, :failed, assessment:)
+      end
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#can_decline?" do
+    subject(:can_decline?) { assessment.can_decline? }
+
+    context "with an unfinished assessment" do
+      before { create(:assessment_section, :personal_information, assessment:) }
+
+      it { is_expected.to be false }
+    end
+
+    context "with a passed assessment" do
+      before do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+      end
+      it { is_expected.to be false }
+    end
+
+    context "with a failed assessment" do
+      before do
+        create(:assessment_section, :personal_information, :failed, assessment:)
+      end
+      it { is_expected.to be true }
+    end
+
+    context "with a mixture of assessments" do
+      before do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+        create(:assessment_section, :qualifications, :failed, assessment:)
+      end
+      it { is_expected.to be true }
+    end
+  end
+
+  describe "#available_recommendations" do
+    subject(:available_recommendations) { assessment.available_recommendations }
+
+    context "with an award-able assessment" do
+      before { expect(assessment).to receive(:can_award?).and_return(true) }
+      it { is_expected.to include("award") }
+    end
+
+    context "with a decline-able assessment" do
+      before { expect(assessment).to receive(:can_decline?).and_return(true) }
+      it { is_expected.to include("decline") }
+    end
+  end
 end
