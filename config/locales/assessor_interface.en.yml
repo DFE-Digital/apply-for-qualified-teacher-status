@@ -32,7 +32,7 @@ en:
           has_university_degree_certificate: university degree qualification certificate is present (and translation if required)
           has_university_degree_transcript: university degree transcript is present (and translation if required)
           has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
-          has_additional_degree_transcript: additional degree transcript is present (and translation if required).
+          has_additional_degree_transcript: additional degree transcript is present (and translation if required)
           email_contact_current_employer: the applicant has entered an email contact for their current/most recent employer
           satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
           registration_number: registration number provided and verified
