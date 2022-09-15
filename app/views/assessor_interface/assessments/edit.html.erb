@@ -5,7 +5,7 @@
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :recommendation,
-                                       %w[award decline],
+                                       @assessment.available_recommendations,
                                        :itself,
                                        legend: { size: "xl", tag: "h1" } %>
 

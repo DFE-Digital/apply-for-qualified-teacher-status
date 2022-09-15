@@ -149,4 +149,18 @@ RSpec.describe Assessment, type: :model do
       it { is_expected.to be true }
     end
   end
+
+  describe "#available_recommendations" do
+    subject(:available_recommendations) { assessment.available_recommendations }
+
+    context "with an award-able assessment" do
+      before { expect(assessment).to receive(:can_award?).and_return(true) }
+      it { is_expected.to include("award") }
+    end
+
+    context "with a decline-able assessment" do
+      before { expect(assessment).to receive(:can_decline?).and_return(true) }
+      it { is_expected.to include("decline") }
+    end
+  end
 end
