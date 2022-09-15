@@ -48,5 +48,17 @@ FactoryBot.define do
       old_state { ApplicationForm.states.keys.sample }
       new_state { ApplicationForm.states.keys.sample }
     end
+
+    trait :assessment_section_recorded do
+      event_type { "assessment_section_recorded" }
+      eventable do
+        build(
+          :assessment_section,
+          :passed,
+          :personal_information,
+          assessment: build(:assessment, application_form:)
+        )
+      end
+    end
   end
 end

@@ -6,7 +6,7 @@ module AssessorInterface
     def update
       if UpdateAssessmentSection.call(
            assessment_section:,
-           user: current_user,
+           user: current_staff,
            params: assessment_section_params
          )
         redirect_to [

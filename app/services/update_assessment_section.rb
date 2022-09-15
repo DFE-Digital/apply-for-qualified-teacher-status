@@ -21,7 +21,7 @@ class UpdateAssessmentSection
   def create_timeline_event
     TimelineEvent.create!(
       creator: user,
-      event_type: :assessment_section_completed,
+      event_type: :assessment_section_recorded,
       eventable: assessment_section,
       application_form:
     )
