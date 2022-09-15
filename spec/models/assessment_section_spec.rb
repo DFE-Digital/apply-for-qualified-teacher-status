@@ -41,6 +41,29 @@ RSpec.describe AssessmentSection, type: :model do
         professional_standing: "professional_standing"
       ).backed_by_column_of_type(:string)
     end
+
+    it { is_expected.to validate_absence_of(:selected_failure_reasons) }
+
+    context "when not passed" do
+      before { assessment_section.passed = false }
+
+      it { is_expected.to validate_presence_of(:selected_failure_reasons) }
+    end
+  end
+
+  context "when passed" do
+    before do
+      assessment_section.update!(
+        key: :personal_information,
+        passed: false,
+        selected_failure_reasons: %w[failure_reason]
+      )
+    end
+
+    it "clears selected failure reasons" do
+      assessment_section.update!(passed: true)
+      expect(assessment_section.selected_failure_reasons).to be_empty
+    end
   end
 
   describe "#state" do

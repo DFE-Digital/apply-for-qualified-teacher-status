@@ -1,12 +1,8 @@
 module AssessorInterface
   class AssessmentSectionsController < BaseController
-    before_action :load_assessment_section
+    before_action :load_assessment_section_and_assessment
 
     def show
-      @assessment = @assessment_section.assessment
-      @application_form = @assessment.application_form
-      @qualifications = @application_form.qualifications.ordered
-      @work_histories = @application_form.work_histories.ordered
     end
 
     def update
@@ -22,7 +18,7 @@ module AssessorInterface
 
     private
 
-    def load_assessment_section
+    def load_assessment_section_and_assessment
       @assessment_section =
         AssessmentSection
           .includes(assessment: :application_form)
@@ -33,6 +29,11 @@ module AssessorInterface
             }
           )
           .find_by!(key: params[:key])
+
+      @assessment = @assessment_section.assessment
+      @application_form = @assessment.application_form
+      @qualifications = @application_form.qualifications.ordered
+      @work_histories = @application_form.work_histories.ordered
     end
 
     def assessment_section_params

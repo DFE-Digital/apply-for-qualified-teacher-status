@@ -185,6 +185,10 @@ en:
           attributes:
             reviewer:
               same_as_assessor: can’t be assigned to the same person
+        assessment_section:
+          attributes:
+            selected_failure_reasons:
+              blank: Select the reasons for your recommendation.
 
   errors:
     messages:

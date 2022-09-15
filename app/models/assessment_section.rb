@@ -41,8 +41,25 @@ class AssessmentSection < ApplicationRecord
               in: keys.values
             }
 
+  validates :selected_failure_reasons,
+            absence: true,
+            if: -> { passed || passed.nil? }
+  validates :selected_failure_reasons,
+            presence: true,
+            if: -> { passed == false }
+
+  before_validation :prepare_selected_failure_reasons
+
   def state
     return :not_started if passed.nil?
     passed ? :completed : :action_required
+  end
+
+  private
+
+  def prepare_selected_failure_reasons
+    return if selected_failure_reasons.nil?
+    selected_failure_reasons.compact_blank!
+    selected_failure_reasons.clear if passed
   end
 end
