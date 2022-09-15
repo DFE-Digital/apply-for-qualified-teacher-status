@@ -38,4 +38,12 @@ class Assessment < ApplicationRecord
   def sections_finished?
     sections.none? { |section| section.state == :not_started }
   end
+
+  def can_award?
+    sections.all? { |section| section.state == :completed }
+  end
+
+  def can_decline?
+    sections.any? { |section| section.state == :action_required }
+  end
 end
