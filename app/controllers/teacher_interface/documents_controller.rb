@@ -4,6 +4,7 @@ module TeacherInterface
     before_action :load_document
 
     def edit
+      @add_another_upload_form = AddAnotherUploadForm.new
       if document.uploads.empty?
         redirect_to new_teacher_interface_application_form_document_upload_path(
                       @document,
@@ -12,14 +13,20 @@ module TeacherInterface
     end
 
     def update
-      add_another = params.dig(:document, :add_another)
-
-      if add_another && ActiveModel::Type::Boolean.new.cast(add_another)
-        redirect_to new_teacher_interface_application_form_document_upload_path(
-                      @document,
-                    )
+      add_another =
+        params.dig(:teacher_interface_add_another_upload_form, :add_another)
+      @add_another_upload_form =
+        TeacherInterface::AddAnotherUploadForm.new(add_another:)
+      if @add_another_upload_form.valid?
+        if @add_another_upload_form.add_another
+          redirect_to new_teacher_interface_application_form_document_upload_path(
+                        @document,
+                      )
+        else
+          redirect_to document.continue_url
+        end
       else
-        redirect_to document.continue_url
+        render :edit, status: :unprocessable_entity
       end
     end
   end

@@ -18,8 +18,7 @@
     end
   end
 end %>
-
-<%= form_with model: [:teacher_interface, :application_form, @document] do |f| %>
+<%= form_with model: @add_another_upload_form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_radio_buttons_fieldset :add_another,

@@ -7,10 +7,8 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
 
   let(:application_form) { build(:application_form) }
 
-  describe "#valid?" do
-    subject(:valid?) { form.valid? }
-
-    let(:form) do
+  describe "validations" do
+    subject(:form) do
       described_class.new(
         application_form:,
         given_names:,
@@ -18,22 +16,35 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
         date_of_birth:,
       )
     end
-    let(:given_names) { "" }
-    let(:family_name) { "" }
-    let(:date_of_birth) { "" }
 
-    it { is_expected.to be true }
+    context "when date of birth and names are blank" do
+      let(:given_names) { "" }
+      let(:family_name) { "" }
+      let(:date_of_birth) { "" }
+
+      it { is_expected.to_not be_valid }
+    end
 
     context "when date of birth is less than 18 years ago" do
       let(:date_of_birth) { Time.zone.now }
+      let(:given_names) { "given_name" }
+      let(:family_name) { "family_name" }
+      it { is_expected.to_not be_valid }
+    end
 
-      it { is_expected.to be false }
+    context "when date of birth is more than 18 years ago but less than 100 years ago" do
+      let(:date_of_birth) { Date.new(2003, 1, 1) }
+      let(:given_names) { "given_name" }
+      let(:family_name) { "family_name" }
+      it { is_expected.to be_valid }
     end
 
     context "when date of birth is greater than 100 years ago" do
       let(:date_of_birth) { Date.new(1900, 1, 1) }
+      let(:given_names) { "given_name" }
+      let(:family_name) { "family_name" }
 
-      it { is_expected.to be false }
+      it { is_expected.to_not be_valid }
     end
   end
 

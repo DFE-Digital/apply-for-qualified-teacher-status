@@ -25,15 +25,18 @@ module TeacherInterface
     end
 
     def delete
+      @delete_upload_form = DeleteUploadForm.new
     end
 
     def destroy
-      if ActiveModel::Type::Boolean.new.cast(params.dig(:upload, :confirm))
-        @upload.attachment.purge
-        @upload.destroy!
+      confirm = params.dig(:teacher_interface_delete_upload_form, :confirm)
+      @delete_upload_form =
+        TeacherInterface::DeleteUploadForm.new(confirm:, upload: @upload)
+      if @delete_upload_form.save!
+        redirect_to [:edit, :teacher_interface, :application_form, @document]
+      else
+        render :delete, status: :unprocessable_entity
       end
-
-      redirect_to [:edit, :teacher_interface, :application_form, @document]
     end
 
     private

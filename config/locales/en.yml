@@ -148,11 +148,11 @@ en:
         eligibility_interface/degree_form:
           attributes:
             degree:
-              inclusion: Tell us if you have a degree
+              inclusion: Tell us whether you have a university degree
         eligibility_interface/misconduct_form:
           attributes:
             misconduct:
-              inclusion: Tell us if your employment record is free of sanctions
+              inclusion: Tell us whether your employment record has any sanctions or restrictions
         eligibility_interface/qualification_form:
           attributes:
             qualification:
@@ -164,11 +164,33 @@ en:
         eligibility_interface/teach_children_form:
           attributes:
             teach_children:
-              inclusion: Tell us if you have experience with teaching children
+              inclusion: Tell us whether you’re qualified to teach children aged between 5 and 16
         teacher_interface/name_and_date_of_birth_form:
           attributes:
             date_of_birth:
               inclusion: You must be 18 or over to use this service
+              blank: Enter your date of birth in the format 27 3 1980
+              less_than: Your date of birth must be in the past
+            given_names:
+              blank: Enter your given names
+            family_name:
+              blank: Enter your family name
+        teacher_interface/alternative_name_form:
+          attributes:
+            alternative_given_names:
+              blank: Enter your alternate given names
+            alternative_family_name:
+              blank: Enter your alternate family name
+            has_alternative_name:
+              inclusion: Tell us whether you have an alternative name
+        teacher_interface/add_another_upload_form:
+          attributes:
+            add_another:
+              inclusion: Select whether you need to upload another page
+        teacher_interface/delete_upload_form:
+          attributes:
+            confirm:
+              inclusion: Select whether you want to delete this file
         teacher_interface/new_session_form:
           attributes:
             email:
