@@ -1,65 +1,68 @@
-<% content_for :page_title, t(".title.#{@assessment_section.key}") %>
+<% content_for :page_title, t(".title.#{@assessment_section_view_object.assessment_section.key}") %>
 
-<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@assessment_section_view_object.application_form) %>
 
-<h1 class="govuk-heading-xl"><%= t(".title.#{@assessment_section.key}") %></h1>
+<h1 class="govuk-heading-xl"><%= t(".title.#{@assessment_section_view_object.assessment_section.key}") %></h1>
 
-<% case @assessment_section.key %>
+<% case @assessment_section_view_object.assessment_section.key %>
 <% when "personal_information" %>
   <%= render "shared/application_form/personal_information_summary",
-             application_form: @application_form,
+             application_form: @assessment_section_view_object.application_form,
              changeable: false %>
 
   <%= render "shared/application_form/identity_document_summary",
-             application_form: @application_form,
+             application_form: @assessment_section_view_object.application_form,
              changeable: false %>
 <% when "qualifications" %>
   <%= render "shared/application_form/age_range_summary",
-             application_form: @application_form,
+             application_form: @assessment_section_view_object.application_form,
              changeable: false %>
 
   <%= render "shared/application_form/subjects_summary",
-             application_form: @application_form,
+             application_form: @assessment_section_view_object.application_form,
              changeable: false %>
 
   <%= render "shared/application_form/qualifications_summary",
-             application_form: @application_form,
-             qualifications: @qualifications,
+             application_form: @assessment_section_view_object.application_form,
+             qualifications: @assessment_section_view_object.qualifications,
              changeable: false %>
 <% when "work_history" %>
   <%= render "shared/application_form/work_history_summary",
-             application_form: @application_form,
-             work_histories: @work_histories,
+             application_form: @assessment_section_view_object.application_form,
+             work_histories: @assessment_section_view_object.work_histories,
              changeable: false %>
 <% when "professional_standing" %>
-  <% if @application_form.registration_number.present? %>
+  <% if @assessment_section_view_object.show_registration_number_summary %>
     <%= render "shared/application_form/registration_number_summary",
-               application_form: @application_form,
-               changeable: false %>
+      application_form: @assessment_section_view_object.application_form,
+      changeable: false %>
   <% end %>
 
-  <% if @application_form.written_statement_document.uploaded? %>
+  <% if @assessment_section_view_object.show_written_statement_summary %>
     <%= render "shared/application_form/written_statement_summary",
-               application_form: @application_form,
+               application_form: @assessment_section_view_object.application_form,
                changeable: false %>
   <% end %>
 <% end %>
 
 <h2 class="govuk-heading-s">Check:</h2>
 <ul class="govuk-list govuk-list--bullet">
-  <% @assessment_section.checks.each do |check| %>
+  <% @assessment_section_view_object.checks.each do |check| %>
     <li><%= t(".checks.#{check}") %></li>
   <% end %>
 </ul>
 
-<%= form_with model: @assessment_section, url: assessor_interface_application_form_assessment_assessment_section_path(@application_form, @assessment, @assessment_section.key) do |f| %>
+<%= form_with model: @assessment_section_view_object.assessment_section, 
+  url: assessor_interface_application_form_assessment_assessment_section_path(
+    @assessment_section_view_object.application_form, @assessment_section_view_object.assessment, @assessment_section_view_object.assessment_section.key
+  ) do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?", size: "s" } do %>
     <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
     <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
       <%= f.govuk_collection_check_boxes :selected_failure_reasons,
-                                         @assessment_section.failure_reasons.map { |id| OpenStruct.new(id:, label: t(".failure_reasons.#{id}")) },
+                                         @assessment_section_view_object.assessment_section.failure_reasons.map { |id| OpenStruct.new(id:, label: t(".failure_reasons.#{id}")) },
                                          :id,
                                          :label,
                                          legend: { size: "s" } %>
@@ -67,6 +70,6 @@
   <% end %>
 
   <%= f.govuk_submit prevent_double_click: false do %>
-    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @assessment_section_view_object.application_form] %>
   <% end %>
 <% end %>
