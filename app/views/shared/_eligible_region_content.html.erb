@@ -42,6 +42,10 @@
           As your education department or authority has an online register of teachers,
           you’ll need to provide any reference numbers we need to check your record.
         </p>
+
+        <% if region.teaching_authority_other.present? %>
+          <%= raw GovukMarkdown.render(region.teaching_authority_other) %>
+        <% end %>
       <% end %>
 
       <% if region.status_check_written? && region.sanction_check_written? %>
