@@ -33,7 +33,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
 
   def state_filter_options
     counts = application_forms_without_state_filter.group(:state).count
-    states = %w[submitted awarded declined]
+    states = %w[submitted initial_assessment awarded declined]
 
     states.map do |state|
       text = I18n.t("application_form.status.#{state}")

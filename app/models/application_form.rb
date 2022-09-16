@@ -68,6 +68,7 @@ class ApplicationForm < ApplicationRecord
   enum state: {
          draft: "draft",
          submitted: "submitted",
+         initial_assessment: "initial_assessment",
          awarded: "awarded",
          declined: "declined"
        }

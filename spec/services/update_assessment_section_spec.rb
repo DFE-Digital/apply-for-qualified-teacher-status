@@ -4,8 +4,13 @@ require "rails_helper"
 
 RSpec.describe UpdateAssessmentSection do
   let(:user) { build(:staff, id: 1) }
+  let(:application_form) { create(:application_form, :submitted) }
   let(:assessment_section) do
-    create(:assessment_section, :personal_information)
+    create(
+      :assessment_section,
+      :personal_information,
+      assessment: create(:assessment, application_form:)
+    )
   end
   let(:selected_failure_reason) { assessment_section.failure_reasons.sample }
   let(:params) do
@@ -25,13 +30,21 @@ RSpec.describe UpdateAssessmentSection do
     end
 
     it "creates a timeline event" do
-      expect { subject }.to change { TimelineEvent.count }.by(1)
+      expect { subject }.to change {
+        TimelineEvent.assessment_section_recorded.count
+      }.by(1)
     end
 
     it "sets the failure reasons" do
       expect { subject }.to change {
         assessment_section.selected_failure_reasons
       }.from([]).to([selected_failure_reason])
+    end
+
+    it "changes the application form state" do
+      expect { subject }.to change { application_form.state }.from(
+        "submitted"
+      ).to("initial_assessment")
     end
   end
 
@@ -43,7 +56,11 @@ RSpec.describe UpdateAssessmentSection do
     end
 
     it "doesn't create a timeline event" do
-      expect { subject }.not_to(change { TimelineEvent.count })
+      expect { subject }.to_not(change { TimelineEvent.count })
+    end
+
+    it "doesn't change the application form state" do
+      expect { subject }.to_not(change { application_form.state })
     end
   end
 end

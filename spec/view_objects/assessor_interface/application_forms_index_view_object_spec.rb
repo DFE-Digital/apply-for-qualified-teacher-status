@@ -176,6 +176,10 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       is_expected.to eq(
         [
           OpenStruct.new(id: "submitted", label: "Not started (0)"),
+          OpenStruct.new(
+            id: "initial_assessment",
+            label: "Initial assessment (0)"
+          ),
           OpenStruct.new(id: "awarded", label: "Awarded (0)"),
           OpenStruct.new(id: "declined", label: "Declined (0)")
         ]
@@ -185,16 +189,21 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     context "with application forms" do
       before do
         create_list(:application_form, 2, :submitted)
-        create_list(:application_form, 3, :awarded)
-        create_list(:application_form, 4, :declined)
+        create_list(:application_form, 3, :initial_assessment)
+        create_list(:application_form, 4, :awarded)
+        create_list(:application_form, 5, :declined)
       end
 
       it do
         is_expected.to eq(
           [
             OpenStruct.new(id: "submitted", label: "Not started (2)"),
-            OpenStruct.new(id: "awarded", label: "Awarded (3)"),
-            OpenStruct.new(id: "declined", label: "Declined (4)")
+            OpenStruct.new(
+              id: "initial_assessment",
+              label: "Initial assessment (3)"
+            ),
+            OpenStruct.new(id: "awarded", label: "Awarded (4)"),
+            OpenStruct.new(id: "declined", label: "Declined (5)")
           ]
         )
       end
