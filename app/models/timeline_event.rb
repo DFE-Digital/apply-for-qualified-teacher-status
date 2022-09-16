@@ -8,6 +8,7 @@
 #  annotation          :string           default(""), not null
 #  creator_type        :string
 #  event_type          :string           not null
+#  eventable_type      :string
 #  new_state           :string           default(""), not null
 #  old_state           :string           default(""), not null
 #  created_at          :datetime         not null
@@ -15,11 +16,13 @@
 #  application_form_id :bigint           not null
 #  assignee_id         :bigint
 #  creator_id          :integer
+#  eventable_id        :bigint
 #
 # Indexes
 #
 #  index_timeline_events_on_application_form_id  (application_form_id)
 #  index_timeline_events_on_assignee_id          (assignee_id)
+#  index_timeline_events_on_eventable            (eventable_type,eventable_id)
 #
 # Foreign Keys
 #
@@ -29,11 +32,13 @@
 class TimelineEvent < ApplicationRecord
   belongs_to :application_form
   belongs_to :creator, polymorphic: true
+  belongs_to :eventable, polymorphic: true, optional: true
 
   enum event_type: {
          assessor_assigned: "assessor_assigned",
          reviewer_assigned: "reviewer_assigned",
-         state_changed: "state_changed"
+         state_changed: "state_changed",
+         assessment_section_recorded: "assessment_section_recorded"
        }
   validates :event_type, inclusion: { in: event_types.values }
 

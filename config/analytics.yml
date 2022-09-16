@@ -176,6 +176,8 @@
     - assignee_id
     - old_state
     - new_state
+    - eventable_type
+    - eventable_id
   :uploads:
     - id
     - document_id

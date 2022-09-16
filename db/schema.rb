@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_09_100205) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_14_121554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -239,8 +239,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_09_100205) do
     t.bigint "assignee_id"
     t.string "old_state", default: "", null: false
     t.string "new_state", default: "", null: false
+    t.string "eventable_type"
+    t.bigint "eventable_id"
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
+    t.index ["eventable_type", "eventable_id"], name: "index_timeline_events_on_eventable"
   end
 
   create_table "uploads", force: :cascade do |t|

@@ -6,6 +6,7 @@
 #  annotation          :string           default(""), not null
 #  creator_type        :string
 #  event_type          :string           not null
+#  eventable_type      :string
 #  new_state           :string           default(""), not null
 #  old_state           :string           default(""), not null
 #  created_at          :datetime         not null
@@ -13,11 +14,13 @@
 #  application_form_id :bigint           not null
 #  assignee_id         :bigint
 #  creator_id          :integer
+#  eventable_id        :bigint
 #
 # Indexes
 #
 #  index_timeline_events_on_application_form_id  (application_form_id)
 #  index_timeline_events_on_assignee_id          (assignee_id)
+#  index_timeline_events_on_eventable            (eventable_type,eventable_id)
 #
 # Foreign Keys
 #
@@ -44,6 +47,18 @@ FactoryBot.define do
       event_type { "state_changed" }
       old_state { ApplicationForm.states.keys.sample }
       new_state { ApplicationForm.states.keys.sample }
+    end
+
+    trait :assessment_section_recorded do
+      event_type { "assessment_section_recorded" }
+      eventable do
+        build(
+          :assessment_section,
+          :passed,
+          :personal_information,
+          assessment: build(:assessment, application_form:)
+        )
+      end
     end
   end
 end

@@ -1,15 +1,21 @@
+# frozen_string_literal: true
+
 module AssessorInterface
   class AssessmentSectionsController < BaseController
-    before_action :load_assessment_section_and_assessment
-
     def show
+      assessment_section_view_object
     end
 
     def update
-      if @assessment_section.update(assessment_section_params)
+      if UpdateAssessmentSection.call(
+           assessment_section:
+             assessment_section_view_object.assessment_section,
+           user: current_staff,
+           params: assessment_section_params
+         )
         redirect_to [
                       :assessor_interface,
-                      @assessment_section.assessment.application_form
+                      assessment_section_view_object.application_form
                     ]
       else
         render :show, status: :unprocessable_entity
@@ -18,22 +24,9 @@ module AssessorInterface
 
     private
 
-    def load_assessment_section_and_assessment
-      @assessment_section =
-        AssessmentSection
-          .includes(assessment: :application_form)
-          .where(
-            assessment_id: params[:assessment_id],
-            assessment: {
-              application_form_id: params[:application_form_id]
-            }
-          )
-          .find_by!(key: params[:key])
-
-      @assessment = @assessment_section.assessment
-      @application_form = @assessment.application_form
-      @qualifications = @application_form.qualifications.ordered
-      @work_histories = @application_form.work_histories.ordered
+    def assessment_section_view_object
+      @assessment_section_view_object ||=
+        AssessmentSectionViewObject.new(params:)
     end
 
     def assessment_section_params

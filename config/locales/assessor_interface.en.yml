@@ -70,13 +70,15 @@ en:
           age_ranges_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
-    timeline_events:
-      index:
-        title:
-          assessor_assigned: Assessor assigned
-          reviewer_assigned: Reviewer assigned
-          state_changed: Status changed
-        description:
-          assessor_assigned: "%{assignee_name} is assigned as the assessor."
-          reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
-          state_changed: Status changed from %{old_state} to %{new_state}.
+  components:
+    timeline_entry:
+      title:
+        assessor_assigned: Assessor assigned
+        reviewer_assigned: Reviewer assigned
+        state_changed: Status changed
+        assessment_section_completed: Section completed
+      description:
+        assessor_assigned: "%{assignee_name} is assigned as the assessor."
+        reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
+        state_changed: Status changed from %{old_state} to %{new_state}
+        assessment_section_recorded: "%{section_name}: %{section_state}"

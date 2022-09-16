@@ -5,24 +5,6 @@
 
 <div class="moj-timeline">
   <% @timeline_events.each do |timeline_event| %>
-    <div class="moj-timeline__item">
-      <div class="moj-timeline__header">
-        <h2 class="moj-timeline__title"><%= t(".title.#{timeline_event.event_type}") %></h2>
-        <p class="moj-timeline__byline">by <%= timeline_event.creator.try(:name).presence || timeline_event.creator.email %></p>
-      </div>
-
-      <p class="moj-timeline__date">
-        <time datetime="<%= timeline_event.created_at.iso8601 %>">
-          <%= timeline_event.created_at.strftime("%e %B %Y at %l:%M %P") %>
-        </time>
-      </p>
-
-      <div class="moj-timeline__description">
-        <p><%= t(".description.#{timeline_event.event_type}",
-                 old_state: timeline_event.old_state,
-                 new_state: timeline_event.new_state,
-                 assignee_name: timeline_event.assignee&.name) %></p>
-      </div>
-    </div>
+    <%= render(TimelineEntry::Component.new(timeline_event:))%>
   <% end %>
 </div>
