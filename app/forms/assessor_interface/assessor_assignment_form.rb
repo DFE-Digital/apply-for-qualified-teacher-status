@@ -11,19 +11,10 @@ class AssessorInterface::AssessorAssignmentForm
   def save!
     return false unless valid?
 
-    application_form.assessor_id = assessor_id
-    application_form.save!
-    create_timeline_event!
-  end
-
-  private
-
-  def create_timeline_event!
-    TimelineEvent.create!(
+    AssignApplicationFormAssessor.call(
       application_form:,
-      event_type: "assessor_assigned",
-      creator: staff,
-      assignee_id: assessor_id
+      user: staff,
+      assessor: Staff.find(assessor_id)
     )
   end
 end
