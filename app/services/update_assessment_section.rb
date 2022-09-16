@@ -10,8 +10,14 @@ class UpdateAssessmentSection
   end
 
   def call
-    create_timeline_event if (result = assessment_section.update(params))
-    result
+    ActiveRecord::Base.transaction do
+      next false unless assessment_section.update(params)
+
+      create_timeline_event
+      update_application_form_state
+
+      true
+    end
   end
 
   private
@@ -25,6 +31,16 @@ class UpdateAssessmentSection
       eventable: assessment_section,
       application_form:
     )
+  end
+
+  def update_application_form_state
+    if application_form.submitted?
+      ChangeApplicationFormState.call(
+        application_form:,
+        user:,
+        new_state: "initial_assessment"
+      )
+    end
   end
 
   def application_form
