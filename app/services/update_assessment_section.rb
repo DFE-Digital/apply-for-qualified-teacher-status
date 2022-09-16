@@ -14,6 +14,7 @@ class UpdateAssessmentSection
       next false unless assessment_section.update(params)
 
       create_timeline_event
+      update_application_form_assessor
       update_application_form_state
 
       true
@@ -31,6 +32,16 @@ class UpdateAssessmentSection
       eventable: assessment_section,
       application_form:
     )
+  end
+
+  def update_application_form_assessor
+    if application_form.assessor.nil?
+      AssignApplicationFormAssessor.call(
+        application_form:,
+        user:,
+        assessor: user
+      )
+    end
   end
 
   def update_application_form_state
