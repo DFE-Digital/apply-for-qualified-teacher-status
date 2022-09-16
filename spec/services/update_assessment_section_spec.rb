@@ -41,6 +41,20 @@ RSpec.describe UpdateAssessmentSection do
       }.from([]).to([selected_failure_reason])
     end
 
+    it "changes the assessor" do
+      expect { subject }.to change { application_form.assessor }.from(nil).to(
+        user
+      )
+    end
+
+    context "with an existing assessor" do
+      before { application_form.assessor = create(:staff) }
+
+      it "doesn't change the assessor" do
+        expect { subject }.to_not(change { application_form.assessor })
+      end
+    end
+
     it "changes the application form state" do
       expect { subject }.to change { application_form.state }.from(
         "submitted"
@@ -57,6 +71,10 @@ RSpec.describe UpdateAssessmentSection do
 
     it "doesn't create a timeline event" do
       expect { subject }.to_not(change { TimelineEvent.count })
+    end
+
+    it "doesn't change the assessor" do
+      expect { subject }.to_not(change { application_form.assessor })
     end
 
     it "doesn't change the application form state" do
