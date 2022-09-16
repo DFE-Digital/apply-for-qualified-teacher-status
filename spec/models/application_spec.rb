@@ -69,6 +69,7 @@ RSpec.describe ApplicationForm, type: :model do
       is_expected.to define_enum_for(:state).with_values(
         draft: "draft",
         submitted: "submitted",
+        initial_assessment: "initial_assessment",
         awarded: "awarded",
         declined: "declined"
       ).backed_by_column_of_type(:string)

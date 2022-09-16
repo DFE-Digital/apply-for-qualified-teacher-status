@@ -72,6 +72,11 @@ FactoryBot.define do
       end
     end
 
+    trait :initial_assessment do
+      state { "initial_assessment" }
+      submitted_at { Time.zone.now }
+    end
+
     trait :awarded do
       state { "awarded" }
       submitted_at { Time.zone.now }
