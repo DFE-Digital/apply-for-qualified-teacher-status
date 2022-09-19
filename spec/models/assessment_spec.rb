@@ -23,9 +23,12 @@ require "rails_helper"
 RSpec.describe Assessment, type: :model do
   subject(:assessment) { create(:assessment) }
 
-  describe "validations" do
+  describe "associations" do
     it { is_expected.to have_many(:sections) }
+    it { is_expected.to have_many(:further_information_requests) }
+  end
 
+  describe "validations" do
     it { is_expected.to validate_presence_of(:recommendation) }
 
     it do
