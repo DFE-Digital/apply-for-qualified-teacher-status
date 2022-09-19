@@ -55,7 +55,7 @@ RSpec.describe Staff, type: :model do
       is_expected.to validate_uniqueness_of(:email).ignoring_case_sensitivity
     end
 
-    it { is_expected.to validate_presence_of(:password).allow_nil }
+    it { is_expected.to validate_presence_of(:password) }
 
     it { is_expected.to validate_presence_of(:name) }
   end
