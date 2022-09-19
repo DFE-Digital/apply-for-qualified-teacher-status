@@ -46,6 +46,16 @@
     - needs_work_history
     - needs_written_statement
     - needs_registration_number
+  :assessment_sections:
+    - id
+    - assessment_id
+    - key
+    - passed
+    - checks
+    - failure_reasons
+    - selected_failure_reasons
+    - created_at
+    - updated_at
   :assessments:
     - id
     - application_form_id
@@ -88,6 +98,21 @@
     - active
     - created_at
     - updated_at
+  :further_information_requests:
+    - id
+    - received_at
+    - state
+    - created_at
+    - updated_at
+    - assessment_id
+  :further_information_request_items:
+    - id
+    - information_type
+    - created_at
+    - updated_at
+    - further_information_request_id
+    - assessor_notes
+    - response
   :qualifications:
     - id
     - application_form_id
@@ -116,16 +141,6 @@
     - teaching_authority_other
     - teaching_authority_certificate
     - application_form_enabled
-  :assessment_sections:
-    - id
-    - assessment_id
-    - key
-    - passed
-    - checks
-    - failure_reasons
-    - selected_failure_reasons
-    - created_at
-    - updated_at
   :staff:
     - id
     - email

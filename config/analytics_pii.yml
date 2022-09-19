@@ -16,6 +16,9 @@
     - registration_number
     - has_work_history
     - subjects
+  :further_information_request_items:
+    - assessor_notes
+    - response
   :qualifications:
     - title
     - institution_name
