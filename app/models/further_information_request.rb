@@ -15,6 +15,9 @@
 #
 class FurtherInformationRequest < ApplicationRecord
   belongs_to :assessment
+  has_many :items,
+           class_name: "FurtherInformationRequestItem",
+           inverse_of: :further_information_request
 
   enum :state,
        { requested: "requested", received: "received" },
