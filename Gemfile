@@ -59,6 +59,6 @@ group :test do
   gem "cuprite", "~> 0.13"
   gem "rspec"
   gem "rspec-rails", "~> 6.0.0.rc1"
-  gem "shoulda-matchers", "~> 5.1"
+  gem "shoulda-matchers", "~> 5.2"
   gem "site_prism"
 end
