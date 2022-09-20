@@ -20,6 +20,7 @@ class Assessment < ApplicationRecord
   belongs_to :application_form
 
   has_many :sections, class_name: "AssessmentSection"
+  has_many :further_information_requests
 
   enum :recommendation,
        { unknown: "unknown", award: "award", decline: "decline" },
