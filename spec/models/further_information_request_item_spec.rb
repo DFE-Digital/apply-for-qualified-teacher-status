@@ -21,6 +21,7 @@ require "rails_helper"
 RSpec.describe FurtherInformationRequestItem do
   describe "associations" do
     it { is_expected.to belong_to(:further_information_request) }
+    it { is_expected.to have_one(:document) }
   end
 
   it do

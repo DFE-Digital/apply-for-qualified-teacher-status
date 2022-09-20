@@ -18,6 +18,7 @@
 #
 class FurtherInformationRequestItem < ApplicationRecord
   belongs_to :further_information_request, inverse_of: :items
+  has_one :document, as: :documentable
 
   enum :information_type, { text: "text", document: "document" }
 end
