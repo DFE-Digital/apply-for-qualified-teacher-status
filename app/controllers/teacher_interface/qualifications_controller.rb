@@ -115,7 +115,7 @@ module TeacherInterface
                                            ]
         end
       else
-        render :edit_has_work_history, status: :unprocessable_entity
+        render :edit_part_of_university_degree, status: :unprocessable_entity
       end
     end
 

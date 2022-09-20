@@ -28,7 +28,7 @@ class TeacherInterface::BaseController < ApplicationController
     if params[:next] == "save_and_continue"
       redirect_to(*args)
     else
-      redirect_to [:teacher_interface, application_form]
+      redirect_to %i[teacher_interface application_form]
     end
   end
 end
