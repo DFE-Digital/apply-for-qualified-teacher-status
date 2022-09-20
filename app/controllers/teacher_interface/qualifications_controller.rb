@@ -102,8 +102,7 @@ module TeacherInterface
                                              qualifications
                                            ]
         else
-          degree_qualification = application_form.qualifications.ordered.second
-          if degree_qualification.nil?
+          if application_form.degree_qualifications.empty?
             degree_qualification = application_form.qualifications.create!
           end
 
