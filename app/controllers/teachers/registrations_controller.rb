@@ -22,7 +22,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   end
 
   def update
-    redirect_to new_teacher_session_path
+    redirect_to :create_or_new_teacher_session
   end
 
   protected

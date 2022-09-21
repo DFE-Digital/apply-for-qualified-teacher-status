@@ -160,7 +160,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def when_i_visit_the_sign_in_page
-    teacher_sign_in_page.load
+    teacher_create_or_sign_in_page.load
   end
 
   def when_i_visit_the_magic_link_email
