@@ -50,6 +50,10 @@ require "rails_helper"
 RSpec.describe ApplicationForm, type: :model do
   subject(:application_form) { create(:application_form) }
 
+  describe "associations" do
+    it { is_expected.to have_many(:notes) }
+  end
+
   describe "validations" do
     it { is_expected.to be_valid }
 
