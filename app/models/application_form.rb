@@ -162,6 +162,10 @@ class ApplicationForm < ApplicationRecord
     qualifications.find(&:is_teaching_qualification?)
   end
 
+  def degree_qualifications
+    qualifications.select(&:is_university_degree?)
+  end
+
   def identification_document
     documents.find(&:identification?)
   end

@@ -102,8 +102,7 @@ module TeacherInterface
                                              qualifications
                                            ]
         else
-          degree_qualification = application_form.qualifications.ordered.second
-          if degree_qualification.nil?
+          if application_form.degree_qualifications.empty?
             degree_qualification = application_form.qualifications.create!
           end
 
@@ -115,7 +114,7 @@ module TeacherInterface
                                            ]
         end
       else
-        render :edit_has_work_history, status: :unprocessable_entity
+        render :edit_part_of_university_degree, status: :unprocessable_entity
       end
     end
 
