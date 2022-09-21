@@ -9,7 +9,7 @@ module EligibilityInterface
       @eligibility_check ||=
         if session[:eligibility_check_id]
           EligibilityCheck.includes(region: :country).find(
-            session[:eligibility_check_id]
+            session[:eligibility_check_id],
           )
         else
           EligibilityCheck.new

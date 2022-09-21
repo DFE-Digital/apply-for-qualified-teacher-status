@@ -6,7 +6,7 @@ module Filters
       return scope if assessor_ids.empty?
 
       scope.where(assessor_id: assessor_ids).or(
-        scope.where(reviewer_id: assessor_ids)
+        scope.where(reviewer_id: assessor_ids),
       )
     end
 

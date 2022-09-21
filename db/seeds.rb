@@ -31,22 +31,22 @@ COUNTRIES = {
       status_check: "none",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "French region",
       status_check: "none",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "German region",
       status_check: "none",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: true
-    }
+      legacy: true,
+    },
   ],
   "CZ" => [],
   "EE" => [],
@@ -70,358 +70,358 @@ COUNTRIES = {
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Mississippi",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Maryland",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Nevada",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Iowa",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Massachusetts",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Michigan",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Missouri",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "New York",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "North Carolina",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Oklahoma",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Oregon",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Pennsylvania",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Tennessee",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Texas",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Utah",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Washington",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Washington DC",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Maine",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Wyoming",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "North Dakota",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "South Dakota",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Nebraska",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "New Mexico",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Alabama",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Hawaii",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Colorado",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Alaska",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Arkansas",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "California",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Delaware",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Florida",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Georgia",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Idaho",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Illinois",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Louisiana",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Indiana",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Connecticut",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "West Virginia",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Minnesota",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "New Hampshire",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Rhode Island",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Vermont",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Virginia",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Wisconsin",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Arizona",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Kansas",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Montana",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "Ohio",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "South Carolina",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
+      legacy: true,
     },
     {
       name: "New Jersey",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: true
-    }
+      legacy: true,
+    },
   ],
   "HU" => [],
   "DE" => [
@@ -430,113 +430,113 @@ COUNTRIES = {
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Lower Saxony",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Baden-Wurttemberg",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Bremen",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Hessen",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Saxony-Anhalt",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Saarland",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Berlin",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Brandenburg",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Bavaria",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Schleswig-Holstein",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Hamburg",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Saxony",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Mecklenburg-Vorpommern",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Rhineland-Palatinate",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Thuringia",
       status_check: "written",
       sanction_check: "none",
       application_form_enabled: false,
-      legacy: false
-    }
+      legacy: false,
+    },
   ],
   "HR" => [],
   "BG" => [],
@@ -551,57 +551,57 @@ COUNTRIES = {
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "South Australia",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Australian Capital Territory",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Queensland",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Victoria",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Northern Territory",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Western Australia",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Tasmania",
       status_check: "online",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
-    }
+      legacy: false,
+    },
   ],
   "CA" => [
     {
@@ -609,92 +609,92 @@ COUNTRIES = {
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Newfoundland and Labrador",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "New Brunswick",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Northwest Territories",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Nova Scotia",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Prince Edward Island",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Quebec",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Alberta",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "British Columbia",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Ontario",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Saskatchewan",
       status_check: "online",
       sanction_check: "online",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Yukon",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
+      legacy: false,
     },
     {
       name: "Nunavut",
       status_check: "written",
       sanction_check: "written",
       application_form_enabled: false,
-      legacy: false
-    }
+      legacy: false,
+    },
   ],
   "LT" => [],
   "CY" => [],
@@ -704,7 +704,7 @@ COUNTRIES = {
   "SE" => [],
   "PT" => [],
   "DK" => [],
-  "FI" => []
+  "FI" => [],
 }.freeze
 
 COUNTRIES.each do |code, regions|

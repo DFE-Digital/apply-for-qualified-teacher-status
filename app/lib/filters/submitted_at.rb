@@ -24,7 +24,7 @@ module Filters
       Date.new(
         params["submitted_at_after(1i)"].to_i,
         params["submitted_at_after(2i)"].to_i,
-        params["submitted_at_after(3i)"].to_i
+        params["submitted_at_after(3i)"].to_i,
       )
     rescue Date::Error
       nil
@@ -34,7 +34,7 @@ module Filters
       Date.new(
         params["submitted_at_before(1i)"].to_i,
         params["submitted_at_before(2i)"].to_i,
-        params["submitted_at_before(3i)"].to_i
+        params["submitted_at_before(3i)"].to_i,
       )
     rescue Date::Error
       nil

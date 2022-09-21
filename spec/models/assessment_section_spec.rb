@@ -38,7 +38,7 @@ RSpec.describe AssessmentSection, type: :model do
         personal_information: "personal_information",
         qualifications: "qualifications",
         work_history: "work_history",
-        professional_standing: "professional_standing"
+        professional_standing: "professional_standing",
       ).backed_by_column_of_type(:string)
     end
 
@@ -56,7 +56,7 @@ RSpec.describe AssessmentSection, type: :model do
       assessment_section.update!(
         key: :personal_information,
         passed: false,
-        selected_failure_reasons: %w[failure_reason]
+        selected_failure_reasons: %w[failure_reason],
       )
     end
 

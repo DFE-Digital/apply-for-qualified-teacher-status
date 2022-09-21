@@ -44,7 +44,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
         :application_form,
         :with_personal_information,
         :submitted,
-        :with_assessment
+        :with_assessment,
       )
   end
 

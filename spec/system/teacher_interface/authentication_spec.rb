@@ -191,10 +191,10 @@ RSpec.describe "Teacher authentication", type: :system do
   def then_i_see_the_sign_up_form
     expect(teacher_sign_up_page.heading.text).to eq("Your email address")
     expect(teacher_sign_up_page.email_heading).to have_content(
-      "Your email address"
+      "Your email address",
     )
     expect(teacher_sign_up_page.hint).to have_content(
-      "We’ll use this to send you a link to continue with your QTS application."
+      "We’ll use this to send you a link to continue with your QTS application.",
     )
   end
 
@@ -205,13 +205,13 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def then_i_see_successful_confirmation
     expect(new_application_form_page.heading.text).to eq(
-      "In which country are you currently recognised as a teacher?"
+      "In which country are you currently recognised as a teacher?",
     )
   end
 
   def then_i_see_the_new_application_form
     expect(new_application_form_page.heading.text).to eq(
-      "In which country are you currently recognised as a teacher?"
+      "In which country are you currently recognised as a teacher?",
     )
   end
 
@@ -221,10 +221,10 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def then_i_see_the_signed_out_page
     expect(signed_out_page.body_content).to have_content(
-      "We’ve signed you out of the Apply for qualified teacher status (QTS) service."
+      "We’ve signed you out of the Apply for qualified teacher status (QTS) service.",
     )
     expect(signed_out_page.body_content).to have_content(
-      "We’ve saved the information you’ve added to your application so far."
+      "We’ve saved the information you’ve added to your application so far.",
     )
   end
 
@@ -248,7 +248,7 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def and_i_see_already_confirmed_message
     expect(teacher_sign_up_page).to have_content(
-      "Your email address is already confirmed, please sign in."
+      "Your email address is already confirmed, please sign in.",
     )
   end
 end

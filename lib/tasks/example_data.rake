@@ -19,7 +19,7 @@ namespace :example_data do
         :staff,
         :confirmed,
         name: assessor[:name],
-        email: assessor[:email]
+        email: assessor[:email],
       )
     end
 
@@ -59,7 +59,7 @@ end
 def assessors
   [
     { name: "Dave Assessor", email: "assessor-dave@example.com" },
-    { name: "Beryl Assessor", email: "assessor-beryl@example.com" }
+    { name: "Beryl Assessor", email: "assessor-beryl@example.com" },
   ]
 end
 
@@ -127,6 +127,6 @@ def application_form_traits_for(region)
       with_identification_document
       with_age_range
       with_subjects
-    ] + evidential_traits << :submitted
+    ] + evidential_traits << :submitted,
   ]
 end

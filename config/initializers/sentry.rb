@@ -9,7 +9,7 @@ Sentry.init do |config|
 
   filter =
     ActiveSupport::ParameterFilter.new(
-      Rails.application.config.filter_parameters
+      Rails.application.config.filter_parameters,
     )
   config.before_send = lambda { |event, _hint| filter.filter(event.to_hash) }
 
@@ -21,6 +21,6 @@ Sentry.init do |config|
     "ActionController::UnknownFormat",
     "ActionController::UnknownHttpMethod",
     "ActionDispatch::Http::Parameters::ParseError",
-    "Mime::Type::InvalidMimeType"
+    "Mime::Type::InvalidMimeType",
   ]
 end

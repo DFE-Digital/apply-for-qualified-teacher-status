@@ -12,7 +12,7 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
       :application_form,
       :submitted,
       given_names: "Given",
-      family_name: "Family"
+      family_name: "Family",
     )
   end
 
@@ -34,7 +34,7 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
 
       it do
         is_expected.to eq(
-          "/assessor/applications/#{application_form.id}?search%5Bstates%5D%5B%5D=awarded"
+          "/assessor/applications/#{application_form.id}?search%5Bstates%5D%5B%5D=awarded",
         )
       end
     end

@@ -8,7 +8,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       teacher:,
       reference: "abc",
       given_names: "First",
-      family_name: "Last"
+      family_name: "Last",
     )
   end
 
@@ -20,7 +20,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         is_expected.to eq(
-          "We’ve received your application for qualified teacher status (QTS)"
+          "We’ve received your application for qualified teacher status (QTS)",
         )
       end
     end

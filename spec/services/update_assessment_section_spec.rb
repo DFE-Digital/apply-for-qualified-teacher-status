@@ -9,7 +9,7 @@ RSpec.describe UpdateAssessmentSection do
     create(
       :assessment_section,
       :personal_information,
-      assessment: create(:assessment, application_form:)
+      assessment: create(:assessment, application_form:),
     )
   end
   let(:selected_failure_reason) { assessment_section.failure_reasons.sample }
@@ -25,7 +25,7 @@ RSpec.describe UpdateAssessmentSection do
 
     it "sets the state" do
       expect { subject }.to change { assessment_section.state }.from(
-        :not_started
+        :not_started,
       ).to(:action_required)
     end
 
@@ -43,7 +43,7 @@ RSpec.describe UpdateAssessmentSection do
 
     it "changes the assessor" do
       expect { subject }.to change { application_form.assessor }.from(nil).to(
-        user
+        user,
       )
     end
 
@@ -57,7 +57,7 @@ RSpec.describe UpdateAssessmentSection do
 
     it "changes the application form state" do
       expect { subject }.to change { application_form.state }.from(
-        "submitted"
+        "submitted",
       ).to("initial_assessment")
     end
   end

@@ -30,7 +30,7 @@ class UpdateAssessmentSection
       creator: user,
       event_type: :assessment_section_recorded,
       eventable: assessment_section,
-      application_form:
+      application_form:,
     )
   end
 
@@ -39,7 +39,7 @@ class UpdateAssessmentSection
       AssignApplicationFormAssessor.call(
         application_form:,
         user:,
-        assessor: user
+        assessor: user,
       )
     end
   end
@@ -49,7 +49,7 @@ class UpdateAssessmentSection
       ChangeApplicationFormState.call(
         application_form:,
         user:,
-        new_state: "initial_assessment"
+        new_state: "initial_assessment",
       )
     end
   end

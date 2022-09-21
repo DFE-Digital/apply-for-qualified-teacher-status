@@ -17,8 +17,8 @@ class AddTeachingAuthorityCertificateOtherToCountries < ActiveRecord::Migration[
       region.country.update!(
         {
           teaching_authority_certificate: region.teaching_authority_certificate,
-          teaching_authority_other: region.teaching_authority_other
-        }.compact_blank
+          teaching_authority_other: region.teaching_authority_other,
+        }.compact_blank,
       )
     end
   end

@@ -34,7 +34,7 @@ class Teacher < ApplicationRecord
             uniqueness: {
               allow_blank: true,
               case_sensitive: true,
-              if: :will_save_change_to_email?
+              if: :will_save_change_to_email?,
             },
             valid_for_notify: true
 

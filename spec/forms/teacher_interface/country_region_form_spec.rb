@@ -76,7 +76,7 @@ RSpec.describe TeacherInterface::CountryRegionForm, type: :model do
       described_class.new(
         teacher:,
         location: "country:#{region.country.code}",
-        region_id: region.id
+        region_id: region.id,
       )
     end
 

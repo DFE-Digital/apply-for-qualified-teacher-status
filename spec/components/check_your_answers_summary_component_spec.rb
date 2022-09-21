@@ -5,7 +5,13 @@ require "rails_helper"
 RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   subject(:component) do
     render_inline(
-      described_class.new(model:, title:, fields:, changeable:, delete_link_to:)
+      described_class.new(
+        model:,
+        title:,
+        fields:,
+        changeable:,
+        delete_link_to:,
+      ),
     )
   end
 
@@ -20,7 +26,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       boolean: true,
       document: create(:document, :with_upload),
       array: %w[a b c],
-      translatable_document:
+      translatable_document:,
     )
   end
 
@@ -33,37 +39,37 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   let(:fields) do
     {
       string: {
-        href: "/string"
+        href: "/string",
       },
       number: {
-        href: "/number"
+        href: "/number",
       },
       date: {
-        href: "/date"
+        href: "/date",
       },
       date_without_day: {
         format: :without_day,
-        href: "/date_without_day"
+        href: "/date_without_day",
       },
       custom_key: {
         title: "A custom key",
-        href: "/custom_key"
+        href: "/custom_key",
       },
       nil_value: {
-        href: "/nil_value"
+        href: "/nil_value",
       },
       boolean: {
-        href: "/boolean"
+        href: "/boolean",
       },
       document: {
-        href: "/document"
+        href: "/document",
       },
       array: {
-        href: "/array"
+        href: "/array",
       },
       translatable_document: {
-        href: "/translatable-document"
-      }
+        href: "/translatable-document",
+      },
     }
   end
 
@@ -103,7 +109,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
 
     it "renders the value" do
       expect(row.at_css(".govuk-summary-list__value").text).to eq(
-        "String value"
+        "String value",
       )
     end
 
@@ -143,7 +149,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
 
     it "renders the value" do
       expect(row.at_css(".govuk-summary-list__value").text).to eq(
-        "1 January 2020"
+        "1 January 2020",
       )
     end
 
@@ -160,13 +166,13 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
 
     it "renders the key" do
       expect(row.at_css(".govuk-summary-list__key").text).to eq(
-        "Date without day"
+        "Date without day",
       )
     end
 
     it "renders the value" do
       expect(row.at_css(".govuk-summary-list__value").text).to eq(
-        "January 2020"
+        "January 2020",
       )
     end
 
@@ -187,7 +193,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
 
     it "renders the value" do
       expect(row.at_css(".govuk-summary-list__value").text).to eq(
-        "Custom key value"
+        "Custom key value",
       )
     end
 
@@ -246,10 +252,10 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
 
     it "renders the value" do
       expect(row.at_css(".govuk-summary-list__value a").text).to eq(
-        "upload.pdf"
+        "upload.pdf",
       )
       expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
-        "upload.pdf"
+        "upload.pdf",
       )
     end
 
@@ -286,16 +292,16 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
 
       it "renders the key" do
         expect(row.at_css(".govuk-summary-list__key").text).to eq(
-          "Translatable document"
+          "Translatable document",
         )
       end
 
       it "renders the value" do
         expect(row.at_css(".govuk-summary-list__value a").text).to eq(
-          "upload.pdf"
+          "upload.pdf",
         )
         expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
-          "upload.pdf"
+          "upload.pdf",
         )
       end
 
@@ -312,16 +318,16 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
 
       it "renders the translation title" do
         expect(row.at_css(".govuk-summary-list__key").text).to eq(
-          "Translatable document translation"
+          "Translatable document translation",
         )
       end
 
       it "renders the value" do
         expect(row.at_css(".govuk-summary-list__value a").text).to eq(
-          "translation_upload.pdf"
+          "translation_upload.pdf",
         )
         expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
-          "translation_upload.pdf"
+          "translation_upload.pdf",
         )
       end
 

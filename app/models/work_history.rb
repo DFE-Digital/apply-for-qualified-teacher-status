@@ -39,7 +39,7 @@ class WorkHistory < ApplicationRecord
       job,
       email,
       start_date,
-      still_employed
+      still_employed,
     ]
 
     if still_employed == false

@@ -57,7 +57,7 @@ RSpec.describe "Countries support", type: :system do
     create(
       :region,
       name: "British Columbia",
-      country: create(:country, code: "CA")
+      country: create(:country, code: "CA"),
     )
     create(:region, :national, country: create(:country, code: "CY"))
   end

@@ -14,7 +14,7 @@ class AssessorInterface::AssessorAssignmentForm
     AssignApplicationFormAssessor.call(
       application_form:,
       user: staff,
-      assessor: Staff.find(assessor_id)
+      assessor: Staff.find(assessor_id),
     )
   end
 end

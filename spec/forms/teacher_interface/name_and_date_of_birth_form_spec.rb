@@ -15,7 +15,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
         application_form:,
         given_names:,
         family_name:,
-        date_of_birth:
+        date_of_birth:,
       )
     end
     let(:given_names) { "" }
@@ -43,7 +43,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
         application_form:,
         given_names: "Given",
         family_name: "Family",
-        date_of_birth: Date.new(2000, 1, 1)
+        date_of_birth: Date.new(2000, 1, 1),
       )
     end
 

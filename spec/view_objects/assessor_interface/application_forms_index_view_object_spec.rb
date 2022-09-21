@@ -35,7 +35,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       context "with a name filter" do
         before do
           expect_any_instance_of(Filters::Name).to receive(:apply).and_return(
-            ApplicationForm.none
+            ApplicationForm.none,
           )
         end
 
@@ -45,7 +45,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       context "with an assessor filter" do
         before do
           expect_any_instance_of(Filters::Assessor).to receive(
-            :apply
+            :apply,
           ).and_return(ApplicationForm.none)
         end
 
@@ -55,7 +55,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       context "with a country filter" do
         before do
           expect_any_instance_of(Filters::Country).to receive(
-            :apply
+            :apply,
           ).and_return(ApplicationForm.none)
         end
 
@@ -65,7 +65,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       context "with a state filter" do
         before do
           expect_any_instance_of(Filters::State).to receive(:apply).and_return(
-            ApplicationForm.none
+            ApplicationForm.none,
           )
         end
 
@@ -78,14 +78,14 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         create(
           :application_form,
           :submitted,
-          submitted_at: Date.new(2020, 1, 1)
+          submitted_at: Date.new(2020, 1, 1),
         )
       end
       let(:application_form_2) do
         create(
           :application_form,
           :submitted,
-          submitted_at: Date.new(2020, 1, 2)
+          submitted_at: Date.new(2020, 1, 2),
         )
       end
 
@@ -118,7 +118,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
     it do
       is_expected.to include(
-        '<option value="country:US">United States</option>'
+        '<option value="country:US">United States</option>',
       )
     end
 
@@ -126,15 +126,15 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       let(:params) do
         {
           assessor_interface_filter_form: {
-            location: "country:US"
+            location: "country:US",
           },
-          location_autocomplete: "United States"
+          location_autocomplete: "United States",
         }
       end
 
       it do
         is_expected.to include(
-          '<option selected="selected" value="country:US">United States</option>'
+          '<option selected="selected" value="country:US">United States</option>',
         )
       end
     end
@@ -143,15 +143,15 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       let(:params) do
         {
           assessor_interface_filter_form: {
-            location: "country:US"
+            location: "country:US",
           },
-          location_autocomplete: ""
+          location_autocomplete: "",
         }
       end
 
       it do
         is_expected.to include(
-          '<option value="country:US">United States</option>'
+          '<option value="country:US">United States</option>',
         )
       end
     end
@@ -163,7 +163,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       it do
         is_expected.to include(
-          '<option selected="selected" value="country:US">United States</option>'
+          '<option selected="selected" value="country:US">United States</option>',
         )
       end
     end
@@ -178,11 +178,11 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
           OpenStruct.new(id: "submitted", label: "Not started (0)"),
           OpenStruct.new(
             id: "initial_assessment",
-            label: "Initial assessment (0)"
+            label: "Initial assessment (0)",
           ),
           OpenStruct.new(id: "awarded", label: "Awarded (0)"),
-          OpenStruct.new(id: "declined", label: "Declined (0)")
-        ]
+          OpenStruct.new(id: "declined", label: "Declined (0)"),
+        ],
       )
     end
 
@@ -200,11 +200,11 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             OpenStruct.new(id: "submitted", label: "Not started (2)"),
             OpenStruct.new(
               id: "initial_assessment",
-              label: "Initial assessment (3)"
+              label: "Initial assessment (3)",
             ),
             OpenStruct.new(id: "awarded", label: "Awarded (4)"),
-            OpenStruct.new(id: "declined", label: "Declined (5)")
-          ]
+            OpenStruct.new(id: "declined", label: "Declined (5)"),
+          ],
         )
       end
     end
@@ -222,10 +222,10 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             assessor_ids: ["assessor_id"],
             location: "location",
             name: "name",
-            states: ["state"]
+            states: ["state"],
           },
           location_autocomplete: "location_autocomplete",
-          page: "page"
+          page: "page",
         }
       end
 
@@ -236,11 +236,11 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
               "assessor_ids" => ["assessor_id"],
               "location" => "location",
               "name" => "name",
-              "states" => ["state"]
+              "states" => ["state"],
             },
             "location_autocomplete" => "location_autocomplete",
-            "page" => "page"
-          }
+            "page" => "page",
+          },
         )
       end
     end

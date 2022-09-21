@@ -9,7 +9,7 @@ module EligibilityInterface
     def create
       @completed_requirements_form =
         CompletedRequirementsForm.new(
-          completed_requirements_form_params.merge(eligibility_check:)
+          completed_requirements_form_params.merge(eligibility_check:),
         )
       if @completed_requirements_form.save
         redirect_to paths[:qualification]
@@ -22,7 +22,7 @@ module EligibilityInterface
 
     def completed_requirements_form_params
       params.require(:eligibility_interface_completed_requirements_form).permit(
-        :completed_requirements
+        :completed_requirements,
       )
     end
   end

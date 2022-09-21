@@ -15,7 +15,7 @@ module TeacherInterface
                                            :edit,
                                            :teacher_interface,
                                            :application_form,
-                                           @document
+                                           @document,
                                          ]
       elsif @upload_form.blank?
         redirect_to_if_save_and_continue document.continue_url
@@ -47,7 +47,7 @@ module TeacherInterface
         teacher_interface_upload_form: %i[
           original_attachment
           translated_attachment
-        ]
+        ],
       )[
         :teacher_interface_upload_form
       ] || {}

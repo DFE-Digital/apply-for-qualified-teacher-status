@@ -30,7 +30,7 @@ RSpec.describe "Assessor view application form", type: :system do
 
   def then_i_see_the_application
     expect(assessor_application_page.overview.name.text).to eq(
-      "#{application_form.given_names} #{application_form.family_name}"
+      "#{application_form.given_names} #{application_form.family_name}",
     )
   end
 
@@ -43,7 +43,7 @@ RSpec.describe "Assessor view application form", type: :system do
       end
 
     expect(first_section_links).to eq(
-      ["Check personal information", "Check qualifications"]
+      ["Check personal information", "Check qualifications"],
     )
 
     second_section_links =
@@ -63,18 +63,18 @@ RSpec.describe "Assessor view application form", type: :system do
             :with_work_history,
             :with_personal_information,
             :submitted,
-            :with_assessment
+            :with_assessment,
           )
 
         create(
           :assessment_section,
           :personal_information,
-          assessment: application_form.assessment
+          assessment: application_form.assessment,
         )
         create(
           :assessment_section,
           :qualifications,
-          assessment: application_form.assessment
+          assessment: application_form.assessment,
         )
 
         application_form

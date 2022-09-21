@@ -15,7 +15,7 @@ class ValidForNotifyValidator < ActiveModel::EachValidator
     if value.blank? || !value.match?(EMAIL_REGEX)
       record.errors.add(
         attribute,
-        "Enter an email address in the correct format, like name@example.com"
+        "Enter an email address in the correct format, like name@example.com",
       )
     end
   end

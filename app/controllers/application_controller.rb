@@ -18,16 +18,16 @@ class ApplicationController < ActionController::Base
     valid_credentials = [
       {
         username: ENV.fetch("SUPPORT_USERNAME", "support"),
-        password: ENV.fetch("SUPPORT_PASSWORD", "support")
-      }
+        password: ENV.fetch("SUPPORT_PASSWORD", "support"),
+      },
     ]
 
     if FeatureFlag.active?(:staff_test_user)
       valid_credentials.push(
         {
           username: ENV.fetch("TEST_USERNAME", "test"),
-          password: ENV.fetch("TEST_PASSWORD", "test")
-        }
+          password: ENV.fetch("TEST_PASSWORD", "test"),
+        },
       )
     end
 

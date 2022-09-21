@@ -25,7 +25,7 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   before do
     page.driver.basic_authorize(
       ENV["SUPPORT_USERNAME"],
-      ENV["SUPPORT_PASSWORD"]
+      ENV["SUPPORT_PASSWORD"],
     )
   end
 

@@ -102,7 +102,7 @@ m =
       require_error = activation_error_handling { require "bundler/version" }
       if require_error.nil? &&
            Gem::Requirement.new(bundler_requirement).satisfied_by?(
-             Gem::Version.new(Bundler::VERSION)
+             Gem::Version.new(Bundler::VERSION),
            )
         return
       end

@@ -20,17 +20,17 @@ module TimelineEntry
             ApplicationFormStatusTag::Component.new(
               key: timeline_event.id,
               status: timeline_event.old_state,
-              class_context: "timeline-event"
-            )
+              class_context: "timeline-event",
+            ),
           ),
         new_state:
           render(
             ApplicationFormStatusTag::Component.new(
               key: timeline_event.id,
               status: timeline_event.new_state,
-              class_context: "timeline-event"
-            )
-          )
+              class_context: "timeline-event",
+            ),
+          ),
       }
     end
 
@@ -49,9 +49,9 @@ module TimelineEntry
             ApplicationFormStatusTag::Component.new(
               key: timeline_event.id,
               status: section.state,
-              class_context: "timeline-event"
-            )
-          )
+              class_context: "timeline-event",
+            ),
+          ),
       }
     end
   end

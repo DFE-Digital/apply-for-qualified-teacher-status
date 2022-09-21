@@ -8,7 +8,7 @@ RSpec.describe HostingEnvironment do
   around do |example|
     ClimateControl.modify(
       HOSTING_ENVIRONMENT: hosting_environment,
-      VCAP_APPLICATION: vcap_application
+      VCAP_APPLICATION: vcap_application,
     ) { example.run }
   end
 
@@ -60,7 +60,7 @@ RSpec.describe HostingEnvironment do
 
       it do
         is_expected.to eq(
-          "apply-for-qts-in-england-review-pr-292.london.cloudapps.digital"
+          "apply-for-qts-in-england-review-pr-292.london.cloudapps.digital",
         )
       end
 
@@ -71,7 +71,7 @@ RSpec.describe HostingEnvironment do
 
         it do
           is_expected.to eq(
-            "apply-for-qts-in-england-review-pr-292.london.cloudapps.digital"
+            "apply-for-qts-in-england-review-pr-292.london.cloudapps.digital",
           )
         end
       end

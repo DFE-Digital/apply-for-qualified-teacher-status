@@ -29,16 +29,16 @@ class AssessmentSection < ApplicationRecord
          personal_information: "personal_information",
          qualifications: "qualifications",
          work_history: "work_history",
-         professional_standing: "professional_standing"
+         professional_standing: "professional_standing",
        }
 
   validates :key,
             presence: true,
             uniqueness: {
-              scope: [:assessment]
+              scope: [:assessment],
             },
             inclusion: {
-              in: keys.values
+              in: keys.values,
             }
 
   validates :selected_failure_reasons,

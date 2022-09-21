@@ -57,7 +57,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   def then_i_see_a_list_of_applications_filtered_by_assessor
     expect(applications_page.search_results.count).to eq(1)
     expect(applications_page.search_results.first.name.text).to eq(
-      "Arnold Drummond"
+      "Arnold Drummond",
     )
   end
 
@@ -69,7 +69,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   def then_i_see_a_list_of_applications_filtered_by_country
     expect(applications_page.search_results.count).to eq(1)
     expect(applications_page.search_results.first.name.text).to eq(
-      "Emma Dubois"
+      "Emma Dubois",
     )
   end
 
@@ -117,7 +117,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         region: create(:region, country: create(:country, code: "US")),
         given_names: "Cher",
         family_name: "Bert",
-        submitted_at: Date.new(2019, 12, 1)
+        submitted_at: Date.new(2019, 12, 1),
       ),
       create(
         :application_form,
@@ -125,7 +125,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         region: create(:region, country: create(:country, code: "FR")),
         given_names: "Emma",
         family_name: "Dubois",
-        submitted_at: Date.new(2019, 12, 1)
+        submitted_at: Date.new(2019, 12, 1),
       ),
       create(
         :application_form,
@@ -133,15 +133,15 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         given_names: "Arnold",
         family_name: "Drummond",
         assessor: assessors.first,
-        submitted_at: Date.new(2019, 12, 1)
+        submitted_at: Date.new(2019, 12, 1),
       ),
       create(
         :application_form,
         :awarded,
         given_names: "John",
         family_name: "Smith",
-        submitted_at: Date.new(2020, 1, 1)
-      )
+        submitted_at: Date.new(2020, 1, 1),
+      ),
     ]
   end
 

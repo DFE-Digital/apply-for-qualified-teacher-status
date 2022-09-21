@@ -37,7 +37,7 @@ RSpec.describe Country, type: :model do
     context "when there are emails" do
       before do
         country.update(
-          teaching_authority_emails: %w[a@example.com b@example.com]
+          teaching_authority_emails: %w[a@example.com b@example.com],
         )
       end
 
@@ -53,7 +53,7 @@ RSpec.describe Country, type: :model do
     context "when there are emails" do
       before do
         country.update(
-          teaching_authority_emails_string: "a@example.com\nb@example.com\n"
+          teaching_authority_emails_string: "a@example.com\nb@example.com\n",
         )
       end
 
@@ -71,7 +71,7 @@ RSpec.describe Country, type: :model do
     context "when there are emails" do
       before do
         country.update(
-          teaching_authority_websites: %w[example1.com example2.com]
+          teaching_authority_websites: %w[example1.com example2.com],
         )
       end
 
@@ -89,7 +89,7 @@ RSpec.describe Country, type: :model do
     context "when there are emails" do
       before do
         country.update(
-          teaching_authority_websites_string: "example1.com\nexample2.com\n"
+          teaching_authority_websites_string: "example1.com\nexample2.com\n",
         )
       end
 

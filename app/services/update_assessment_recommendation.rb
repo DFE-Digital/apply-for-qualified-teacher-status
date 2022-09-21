@@ -19,7 +19,7 @@ class UpdateAssessmentRecommendation
         ChangeApplicationFormState.call(
           application_form: assessment.application_form,
           user:,
-          new_state:
+          new_state:,
         )
       end
 

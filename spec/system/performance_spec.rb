@@ -27,25 +27,25 @@ RSpec.describe "Performance", type: :system do
 
   def then_i_see_the_live_stats
     expect(performance_page.live_service_usage.stats.first).to have_content(
-      "36\nchecks over the last 7 days"
+      "36\nchecks over the last 7 days",
     )
     expect(performance_page.live_service_usage.table).to have_content(
-      "30 June\t1"
+      "30 June\t1",
     )
     expect(performance_page.live_service_usage.table).to have_content(
-      "24 June\t7"
+      "24 June\t7",
     )
   end
 
   def then_i_see_the_live_stats_since_launch
     expect(performance_page.live_service_usage.stats.first).to have_content(
-      "45\nchecks since launch"
+      "45\nchecks since launch",
     )
     expect(performance_page.live_service_usage.table).to have_content(
-      "30 June\t1"
+      "30 June\t1",
     )
     expect(performance_page.live_service_usage.table).to have_content(
-      "22 June\t9"
+      "22 June\t9",
     )
   end
 end

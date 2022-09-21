@@ -10,7 +10,7 @@ RSpec.describe "Teaching authority contact information", type: :view do
       create(
         :region,
         :with_teaching_authority,
-        teaching_authority_address: "1 Street, Region, Country"
+        teaching_authority_address: "1 Street, Region, Country",
       )
     end
 
@@ -23,7 +23,7 @@ RSpec.describe "Teaching authority contact information", type: :view do
       create(
         :country,
         :with_teaching_authority,
-        teaching_authority_address: "1 Street, Country"
+        teaching_authority_address: "1 Street, Country",
       )
     end
     let(:region) { create(:region, country:) }
@@ -37,7 +37,7 @@ RSpec.describe "Teaching authority contact information", type: :view do
       create(
         :country,
         :with_teaching_authority,
-        teaching_authority_address: "1 Street, Country"
+        teaching_authority_address: "1 Street, Country",
       )
     end
     let(:region) do
@@ -45,7 +45,7 @@ RSpec.describe "Teaching authority contact information", type: :view do
         :region,
         :with_teaching_authority,
         teaching_authority_address: "1 Street, Region, Country",
-        country:
+        country:,
       )
     end
 
@@ -64,7 +64,7 @@ RSpec.describe "Teaching authority contact information", type: :view do
     let(:region) do
       create(
         :region,
-        country: create(:country, teaching_authority_other: "Other")
+        country: create(:country, teaching_authority_other: "Other"),
       )
     end
 

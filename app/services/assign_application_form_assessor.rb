@@ -19,7 +19,7 @@ class AssignApplicationFormAssessor
         application_form:,
         event_type: "assessor_assigned",
         creator: user,
-        assignee: assessor
+        assignee: assessor,
       )
     end
   end

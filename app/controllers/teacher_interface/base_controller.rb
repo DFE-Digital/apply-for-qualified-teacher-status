@@ -20,7 +20,7 @@ class TeacherInterface::BaseController < ApplicationController
   def document
     @document ||=
       Document.where(
-        documentable: [application_form] + application_form.qualifications
+        documentable: [application_form] + application_form.qualifications,
       ).find(params[:document_id] || params[:id])
   end
 

@@ -22,7 +22,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
       let(:original_attachment) do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
-          type: "application/pdf"
+          type: "application/pdf",
         )
       end
 
@@ -33,7 +33,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
       let(:translated_attachment) do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
-          type: "application/pdf"
+          type: "application/pdf",
         )
       end
 
@@ -44,7 +44,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
       let(:original_attachment) do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.txt"),
-          type: "text/plain"
+          type: "text/plain",
         )
       end
 
@@ -55,13 +55,13 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
       let(:original_attachment) do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
-          type: "application/pdf"
+          type: "application/pdf",
         )
       end
 
       before do
         allow(original_attachment).to receive(:size).and_return(
-          50 * 1024 * 1024
+          50 * 1024 * 1024,
         )
       end
 
@@ -77,7 +77,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
           filename: "upload.pdf",
-          type: "application/pdf"
+          type: "application/pdf",
         )
       end
 
@@ -92,7 +92,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
           filename: "upload.pdf",
-          type: "application/pdf"
+          type: "application/pdf",
         )
       end
 

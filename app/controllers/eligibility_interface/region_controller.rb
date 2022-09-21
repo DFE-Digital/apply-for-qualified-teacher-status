@@ -23,7 +23,7 @@ module EligibilityInterface
     def next_url
       {
         eligible: eligibility_interface_qualifications_path,
-        legacy: eligibility_interface_eligible_path
+        legacy: eligibility_interface_eligible_path,
       }.fetch(eligibility_check.region_eligibility_status)
     end
 

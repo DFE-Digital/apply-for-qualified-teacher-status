@@ -11,11 +11,11 @@ module AssessorInterface
            assessment_section:
              assessment_section_view_object.assessment_section,
            user: current_staff,
-           params: assessment_section_params
+           params: assessment_section_params,
          )
         redirect_to [
                       :assessor_interface,
-                      assessment_section_view_object.application_form
+                      assessment_section_view_object.application_form,
                     ]
       else
         render :show, status: :unprocessable_entity
@@ -32,7 +32,7 @@ module AssessorInterface
     def assessment_section_params
       params.require(:assessment_section).permit(
         :passed,
-        selected_failure_reasons: []
+        selected_failure_reasons: [],
       )
     end
   end

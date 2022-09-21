@@ -56,7 +56,7 @@ FactoryBot.define do
           :assessment_section,
           :passed,
           :personal_information,
-          assessment: build(:assessment, application_form:)
+          assessment: build(:assessment, application_form:),
         )
       end
     end

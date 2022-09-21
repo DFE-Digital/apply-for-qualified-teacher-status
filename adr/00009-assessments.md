@@ -111,7 +111,7 @@ class AssessmentBuilder
   def call
     initial_assessments = [
       InitialAssessment.create!(section: :personal_details),
-      InitialAssessment.create!(section: :qualifications)
+      InitialAssessment.create!(section: :qualifications),
     ]
 
     if application_form.needs_work_history
@@ -121,7 +121,7 @@ class AssessmentBuilder
     if application_form.needs_written_statement ||
          application_form.needs_registration_number
       initial_assessments << InitialAssessment.create!(
-        section: :professional_standing
+        section: :professional_standing,
       )
     end
 

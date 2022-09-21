@@ -5,7 +5,7 @@ module AssessorInterface
 
       @timeline_events =
         TimelineEvent.where(application_form: @application_form).order(
-          created_at: :desc
+          created_at: :desc,
         )
     end
   end

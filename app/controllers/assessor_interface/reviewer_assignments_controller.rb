@@ -4,7 +4,7 @@ module AssessorInterface
       @reviewer_assignment_form =
         ReviewerAssignmentForm.new(
           application_form:,
-          reviewer_id: application_form.reviewer_id
+          reviewer_id: application_form.reviewer_id,
         )
     end
 
@@ -13,7 +13,7 @@ module AssessorInterface
         ReviewerAssignmentForm.new(
           application_form:,
           staff: current_staff,
-          reviewer_id: reviewer_params[:reviewer_id]
+          reviewer_id: reviewer_params[:reviewer_id],
         )
 
       if @reviewer_assignment_form.save!
@@ -31,7 +31,7 @@ module AssessorInterface
 
     def reviewer_params
       params.require(:assessor_interface_reviewer_assignment_form).permit(
-        :reviewer_id
+        :reviewer_id,
       )
     end
   end

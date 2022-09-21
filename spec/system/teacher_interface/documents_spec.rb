@@ -59,34 +59,34 @@ RSpec.describe "Teacher documents", type: :system do
   def then_i_see_document_form
     expect(document_form_page).to have_title("Upload a document")
     expect(document_form_page.heading.text).to eq(
-      "Upload your written statement"
+      "Upload your written statement",
     )
   end
 
   def then_i_see_the_next_page_document_form
     expect(document_form_page).to have_title("Upload a document")
     expect(document_form_page.heading.text).to eq(
-      "Upload the next page of your written statement document"
+      "Upload the next page of your written statement document",
     )
   end
 
   def then_i_see_the_check_your_uploaded_files_page
     expect(check_uploaded_files_page).to have_title("Check your uploaded files")
     expect(check_uploaded_files_page.heading.text).to eq(
-      "Check your uploaded files – written statement document"
+      "Check your uploaded files – written statement document",
     )
     expect(check_uploaded_files_page.files).to have_content(
-      "File 1\tupload.pdf\tDelete"
+      "File 1\tupload.pdf\tDelete",
     )
     expect(check_uploaded_files_page.files).to have_content(
-      "File 2\tupload.pdf\tDelete"
+      "File 2\tupload.pdf\tDelete",
     )
   end
 
   def then_i_see_the_check_your_uploaded_files_page_with_three_files
     then_i_see_the_check_your_uploaded_files_page
     expect(check_uploaded_files_page.files).to have_content(
-      "File 3\tupload.pdf\tDelete"
+      "File 3\tupload.pdf\tDelete",
     )
   end
 end

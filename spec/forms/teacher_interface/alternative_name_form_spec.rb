@@ -15,7 +15,7 @@ RSpec.describe TeacherInterface::AlternativeNameForm, type: :model do
         application_form:,
         has_alternative_name:,
         alternative_given_names:,
-        alternative_family_name:
+        alternative_family_name:,
       )
     end
     let(:has_alternative_name) { "" }
@@ -31,7 +31,7 @@ RSpec.describe TeacherInterface::AlternativeNameForm, type: :model do
         application_form:,
         has_alternative_name: "true",
         alternative_given_names: "Given",
-        alternative_family_name: "Family"
+        alternative_family_name: "Family",
       )
     end
 

@@ -13,7 +13,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     {
       key: "personal_information",
       assessment_id: assessment.id,
-      application_form_id: application_form.id
+      application_form_id: application_form.id,
     }
   end
 
@@ -40,7 +40,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
   describe "registration_number" do
     it "returns the correct registration_number" do
       expect(subject.registration_number).to eq(
-        application_form.registration_number
+        application_form.registration_number,
       )
     end
   end
@@ -48,7 +48,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
   describe "qualifications" do
     it "returns an ordered list of qualifications" do
       expect(subject.qualifications).to match_array(
-        application_form.qualifications.ordered
+        application_form.qualifications.ordered,
       )
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
   describe "work_histories" do
     it "returns an ordered list of work histories" do
       expect(subject.work_histories).to match_array(
-        application_form.work_histories.ordered
+        application_form.work_histories.ordered,
       )
     end
   end

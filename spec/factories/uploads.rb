@@ -23,7 +23,7 @@ FactoryBot.define do
     attachment do
       Rack::Test::UploadedFile.new(
         "spec/fixtures/files/upload.pdf",
-        "application/pdf"
+        "application/pdf",
       )
     end
     translation { false }
@@ -33,7 +33,7 @@ FactoryBot.define do
       attachment do
         Rack::Test::UploadedFile.new(
           "spec/fixtures/files/translation_upload.pdf",
-          "application/pdf"
+          "application/pdf",
         )
       end
     end

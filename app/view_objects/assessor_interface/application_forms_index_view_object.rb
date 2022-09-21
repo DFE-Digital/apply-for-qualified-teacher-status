@@ -27,7 +27,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def country_filter_options
     options_for_select(
       Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST,
-      filter_form.location
+      filter_form.location,
     )
   end
 
@@ -50,8 +50,8 @@ class AssessorInterface::ApplicationFormsIndexViewObject
         :name,
         :submitted_at_before,
         :submitted_at_after,
-        { assessor_ids: [], states: [] }
-      ]
+        { assessor_ids: [], states: [] },
+      ],
     )
   end
 
@@ -66,8 +66,8 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       pagy(
         ::Filters::State.apply(
           scope: application_forms_without_state_filter,
-          params: filter_params
-        ).order(submitted_at: :desc)
+          params: filter_params,
+        ).order(submitted_at: :desc),
       )
   end
 
@@ -78,10 +78,10 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ::Filters::Assessor,
           ::Filters::Country,
           ::Filters::Name,
-          ::Filters::SubmittedAt
+          ::Filters::SubmittedAt,
         ]
         filters.reduce(
-          ApplicationForm.includes(region: :country).active
+          ApplicationForm.includes(region: :country).active,
         ) { |scope, filter| filter.apply(scope:, params: filter_params) }
       end
   end

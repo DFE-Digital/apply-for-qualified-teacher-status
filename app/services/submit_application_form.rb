@@ -15,7 +15,7 @@ class SubmitApplicationForm
     ChangeApplicationFormState.call(
       application_form:,
       user:,
-      new_state: "submitted"
+      new_state: "submitted",
     )
 
     AssessmentFactory.call(application_form:)

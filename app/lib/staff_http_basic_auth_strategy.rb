@@ -18,10 +18,10 @@ class StaffHttpBasicAuthStrategy < Warden::Strategies::Base
         {
           "Content-Type" => "text/plain",
           "Content-Length" => "0",
-          "WWW-Authenticate" => "Basic realm=\"Application\""
+          "WWW-Authenticate" => "Basic realm=\"Application\"",
         },
-        []
-      ]
+        [],
+      ],
     )
   end
 
@@ -44,7 +44,7 @@ class StaffHttpBasicAuthStrategy < Warden::Strategies::Base
   def valid_comparison?(correct_value, given_value)
     ActiveSupport::SecurityUtils.secure_compare(
       Digest::SHA256.hexdigest(given_value),
-      correct_value
+      correct_value,
     )
   end
 end

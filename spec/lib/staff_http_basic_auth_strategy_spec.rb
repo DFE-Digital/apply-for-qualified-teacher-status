@@ -46,17 +46,17 @@ RSpec.describe StaffHttpBasicAuthStrategy do
           {
             "Content-Length" => "0",
             "Content-Type" => "text/plain",
-            "WWW-Authenticate" => "Basic realm=\"Application\""
+            "WWW-Authenticate" => "Basic realm=\"Application\"",
           },
-          []
-        ]
+          [],
+        ],
       )
     end
 
     context "with valid credentials" do
       let(:env) do
         {
-          "HTTP_AUTHORIZATION" => "Basic #{Base64.encode64("support:support")}"
+          "HTTP_AUTHORIZATION" => "Basic #{Base64.encode64("support:support")}",
         }
       end
 

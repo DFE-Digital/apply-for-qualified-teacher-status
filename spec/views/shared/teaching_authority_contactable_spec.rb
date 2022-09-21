@@ -11,7 +11,7 @@ RSpec.describe "Teaching authority contactable", type: :view do
         :country,
         teaching_authority_address: "Address",
         teaching_authority_emails: ["test@example.com"],
-        teaching_authority_websites: ["https://www.example.com"]
+        teaching_authority_websites: ["https://www.example.com"],
       )
     end
 
@@ -26,7 +26,7 @@ RSpec.describe "Teaching authority contactable", type: :view do
         :region,
         teaching_authority_address: "Address",
         teaching_authority_emails: ["test@example.com"],
-        teaching_authority_websites: ["https://www.example.com"]
+        teaching_authority_websites: ["https://www.example.com"],
       )
     end
 

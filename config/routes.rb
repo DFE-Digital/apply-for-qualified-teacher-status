@@ -85,7 +85,7 @@ Rails.application.routes.draw do
                invitations: "staff/invitations",
                passwords: "staff/passwords",
                sessions: "staff/sessions",
-               unlocks: "staff/unlocks"
+               unlocks: "staff/unlocks",
              }
 
   namespace :teacher_interface, path: "/teacher" do
@@ -164,7 +164,7 @@ Rails.application.routes.draw do
              controllers: {
                confirmations: "teachers/confirmations",
                registrations: "teachers/registrations",
-               sessions: "teachers/sessions"
+               sessions: "teachers/sessions",
              }
 
   devise_scope :teacher do

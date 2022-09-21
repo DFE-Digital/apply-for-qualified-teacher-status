@@ -55,7 +55,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
         it do
           is_expected.to eq(
-            %i[personal_information qualifications work_history]
+            %i[personal_information qualifications work_history],
           )
         end
       end
@@ -67,7 +67,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
         it do
           is_expected.to eq(
-            %i[personal_information qualifications professional_standing]
+            %i[personal_information qualifications professional_standing],
           )
         end
       end
@@ -96,7 +96,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to eq(
-          "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/sections/personal_information"
+          "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/sections/personal_information",
         )
       end
     end
@@ -107,7 +107,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to eq(
-          "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/edit"
+          "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/edit",
         )
       end
     end

@@ -11,34 +11,34 @@ class FeatureFlag
       "Allow signing in as a 'persona', making it easy to perform " \
         "acceptance testing by impersonating a particular user, e.g. teacher, " \
         "assessor, or admin.",
-      "Thomas Leese"
+      "Thomas Leese",
     ],
     [
       :service_open,
       "Allow users to access the service without HTTP basic auth. Should be " \
         "inactive on production, and active on all other environments.",
-      "Thomas Leese"
+      "Thomas Leese",
     ],
     [
       :staff_http_basic_auth,
       "Allow signing in as a staff user using HTTP Basic authentication. " \
         "This is useful before staff users have been created, but should " \
         "otherwise be inactive.",
-      "Thomas Leese"
+      "Thomas Leese",
     ],
     [
       :staff_test_user,
       "Add extra user with access the eligibility checker for user research. " \
         "When service_open is deactivated, and this flag is enabled, the user will have " \
         "full access to the service. Should be inactive on production.",
-      "David Feetenby"
+      "David Feetenby",
     ],
     [
       :teacher_applications,
       "Allow starting an application on this service directly after " \
         "completing an eligibility check.",
-      "Thomas Leese"
-    ]
+      "Thomas Leese",
+    ],
   ].freeze
 
   FEATURES =

@@ -31,13 +31,13 @@ class Qualification < ApplicationRecord
   validates :start_date,
             comparison: {
               allow_nil: true,
-              less_than: :complete_date
+              less_than: :complete_date,
             },
             if: -> { complete_date.present? }
   validates :complete_date,
             comparison: {
               allow_nil: true,
-              greater_than: :start_date
+              greater_than: :start_date,
             },
             if: -> { start_date.present? }
 
@@ -52,7 +52,7 @@ class Qualification < ApplicationRecord
       complete_date,
       certificate_date,
       certificate_document.uploaded?,
-      transcript_document.uploaded?
+      transcript_document.uploaded?,
     ]
 
     if is_teaching_qualification? && part_of_university_degree != false

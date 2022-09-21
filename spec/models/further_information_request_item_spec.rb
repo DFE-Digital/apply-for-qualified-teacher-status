@@ -27,7 +27,7 @@ RSpec.describe FurtherInformationRequestItem do
   it do
     is_expected.to define_enum_for(:information_type).with_values(
       text: "text",
-      document: "document"
+      document: "document",
     ).backed_by_column_of_type(:string)
   end
 end

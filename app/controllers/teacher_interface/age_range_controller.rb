@@ -7,7 +7,7 @@ module TeacherInterface
         AgeRangeForm.new(
           application_form:,
           minimum: application_form.age_range_min,
-          maximum: application_form.age_range_max
+          maximum: application_form.age_range_max,
         )
     end
 
@@ -26,7 +26,7 @@ module TeacherInterface
     def age_range_form_params
       params.require(:teacher_interface_age_range_form).permit(
         :minimum,
-        :maximum
+        :maximum,
       )
     end
   end
