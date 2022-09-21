@@ -14,6 +14,8 @@ en:
         has_alternative_name: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
         alternative_given_names: Enter your full name apart from your family name
         alternative_family_name: Enter just your family name
+      teacher_interface_new_session_form:
+        email: Enter the email address you used to register, and we will send you a link to sign in.
       teacher_interface_registration_number_form:
         registration_number: Your country has an online register of teachers. If you have a reference number, enter it on this screen. If you do not have one, just select ‘Continue’.
       work_history:
@@ -38,6 +40,8 @@ en:
       teacher_interface_age_range_form:
         minimum: From
         maximum: To
+      teacher_interface_new_session_form:
+        email: Email address
       teacher_interface_registration_number_form:
         registration_number: What is your registration number?
       work_history:

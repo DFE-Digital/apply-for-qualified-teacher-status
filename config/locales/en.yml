@@ -169,6 +169,10 @@ en:
           attributes:
             date_of_birth:
               inclusion: You must be 18 or over to use this service
+        teacher_interface/new_session_form:
+          attributes:
+            email:
+              blank: Enter your email address
         assessor_interface/assessor_assignment_form:
           attributes:
             assessor_id:
@@ -177,10 +181,6 @@ en:
   activerecord:
     errors:
       models:
-        teacher:
-          attributes:
-            email:
-              blank: Enter your email address
         application_form:
           attributes:
             reviewer:
@@ -189,6 +189,10 @@ en:
           attributes:
             selected_failure_reasons:
               blank: Select the reasons for your recommendation.
+        teacher:
+          attributes:
+            email:
+              blank: Enter your email address
 
   errors:
     messages:

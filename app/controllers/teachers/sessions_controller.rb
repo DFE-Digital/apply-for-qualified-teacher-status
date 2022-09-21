@@ -5,6 +5,11 @@ class Teachers::SessionsController < Devise::SessionsController
   layout "two_thirds"
 
   def new
+    @new_session_form =
+      TeacherInterface::NewSessionForm.new(create_or_sign_in: "sign_in")
+  end
+
+  def new_or_create
     @new_session_form = TeacherInterface::NewSessionForm.new
   end
 

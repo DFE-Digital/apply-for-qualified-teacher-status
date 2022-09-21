@@ -125,7 +125,7 @@ module SystemHelpers
     visit "#{uri.path}?#{uri.query}"
   end
 
-  def then_i_see_the_sign_in_form
+  def then_i_see_the_create_and_sign_in_form
     expect(teacher_create_or_sign_in_page).to have_title(
       "Apply for qualified teacher status (QTS) in England",
     )
@@ -138,6 +138,13 @@ module SystemHelpers
     expect(teacher_create_or_sign_in_page).to have_content(
       "No, I need to check my eligibility",
     )
+  end
+
+  def then_i_see_the_sign_in_form
+    expect(teacher_sign_in_page).to have_title(
+      "Apply for qualified teacher status (QTS) in England",
+    )
+    expect(teacher_sign_in_page).to have_content("Email address")
   end
 
   def and_i_sign_up
