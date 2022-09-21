@@ -54,5 +54,9 @@ module TimelineEntry
           ),
       }
     end
+
+    def note_created_vars
+      { text: timeline_event.note.text }
+    end
   end
 end

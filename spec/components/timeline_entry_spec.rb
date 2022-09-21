@@ -69,4 +69,17 @@ RSpec.describe TimelineEntry::Component, type: :component do
       expect(component.text).to include(creator.name)
     end
   end
+
+  context "note created" do
+    let(:timeline_event) { create(:timeline_event, :note_created) }
+    let(:text) { timeline_event.note.text }
+
+    it "describes the event" do
+      expect(component.text).to include(text)
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
 end

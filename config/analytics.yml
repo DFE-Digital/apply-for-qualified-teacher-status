@@ -200,6 +200,7 @@
     - new_state
     - eventable_type
     - eventable_id
+    - note_id
   :uploads:
     - id
     - document_id
