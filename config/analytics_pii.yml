@@ -19,6 +19,8 @@
   :further_information_request_items:
     - assessor_notes
     - response
+  :notes:
+    - text
   :qualifications:
     - title
     - institution_name

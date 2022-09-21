@@ -113,6 +113,13 @@
     - further_information_request_id
     - assessor_notes
     - response
+  :notes:
+    - id
+    - application_form_id
+    - author_id
+    - text
+    - created_at
+    - updated_at
   :qualifications:
     - id
     - application_form_id
@@ -193,6 +200,7 @@
     - new_state
     - eventable_type
     - eventable_id
+    - note_id
   :uploads:
     - id
     - document_id

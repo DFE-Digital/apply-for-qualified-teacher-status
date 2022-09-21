@@ -15,17 +15,20 @@
 #  assignee_id         :bigint
 #  creator_id          :integer
 #  eventable_id        :bigint
+#  note_id             :bigint
 #
 # Indexes
 #
 #  index_timeline_events_on_application_form_id  (application_form_id)
 #  index_timeline_events_on_assignee_id          (assignee_id)
 #  index_timeline_events_on_eventable            (eventable_type,eventable_id)
+#  index_timeline_events_on_note_id              (note_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
 #  fk_rails_...  (assignee_id => staff.id)
+#  fk_rails_...  (note_id => notes.id)
 #
 FactoryBot.define do
   factory :timeline_event do
@@ -59,6 +62,11 @@ FactoryBot.define do
           assessment: build(:assessment, application_form:),
         )
       end
+    end
+
+    trait :note_created do
+      event_type { "note_created" }
+      association :note
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_19_110134) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_21_083326) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -160,6 +160,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_19_110134) do
     t.index ["assessment_id"], name: "index_further_information_requests_on_assessment_id"
   end
 
+  create_table "notes", force: :cascade do |t|
+    t.bigint "application_form_id", null: false
+    t.bigint "author_id", null: false
+    t.text "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_form_id"], name: "index_notes_on_application_form_id"
+    t.index ["author_id"], name: "index_notes_on_author_id"
+  end
+
   create_table "qualifications", force: :cascade do |t|
     t.bigint "application_form_id", null: false
     t.text "title", default: "", null: false
@@ -260,9 +270,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_19_110134) do
     t.string "new_state", default: "", null: false
     t.string "eventable_type"
     t.bigint "eventable_id"
+    t.bigint "note_id"
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
     t.index ["eventable_type", "eventable_id"], name: "index_timeline_events_on_eventable"
+    t.index ["note_id"], name: "index_timeline_events_on_note_id"
   end
 
   create_table "uploads", force: :cascade do |t|
@@ -297,9 +309,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_19_110134) do
   add_foreign_key "assessment_sections", "assessments"
   add_foreign_key "assessments", "application_forms"
   add_foreign_key "eligibility_checks", "regions"
+  add_foreign_key "notes", "application_forms"
+  add_foreign_key "notes", "staff", column: "author_id"
   add_foreign_key "qualifications", "application_forms"
   add_foreign_key "regions", "countries"
   add_foreign_key "timeline_events", "application_forms"
+  add_foreign_key "timeline_events", "notes"
   add_foreign_key "timeline_events", "staff", column: "assignee_id"
   add_foreign_key "uploads", "documents"
   add_foreign_key "work_histories", "application_forms"
