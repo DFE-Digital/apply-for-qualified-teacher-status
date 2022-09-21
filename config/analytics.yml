@@ -198,8 +198,7 @@
     - assignee_id
     - old_state
     - new_state
-    - eventable_type
-    - eventable_id
+    - assessment_section_id
     - note_id
   :uploads:
     - id

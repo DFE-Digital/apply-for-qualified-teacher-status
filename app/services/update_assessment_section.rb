@@ -29,7 +29,7 @@ class UpdateAssessmentSection
     TimelineEvent.create!(
       creator: user,
       event_type: :assessment_section_recorded,
-      eventable: assessment_section,
+      assessment_section:,
       application_form:,
     )
   end
