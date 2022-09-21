@@ -53,6 +53,10 @@ module PageHelpers
     @country_page ||= PageObjects::EligibilityInterface::Country.new
   end
 
+  def create_note_page
+    @create_note_page ||= PageObjects::AssessorInterface::CreateNote.new
+  end
+
   def degree_page
     @degree_page ||= PageObjects::EligibilityInterface::Degree.new
   end

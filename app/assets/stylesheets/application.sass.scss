@@ -43,3 +43,9 @@ ul.autocomplete__menu {
 .app-teacher-personas .govuk-button {
   margin-bottom: 0;
 }
+
+.app-inline-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

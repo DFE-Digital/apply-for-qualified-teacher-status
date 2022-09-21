@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get "assign-reviewer", to: "reviewer_assignments#new"
       post "assign-reviewer", to: "reviewer_assignments#create"
 
+      resources :notes, only: %i[new create]
       resources :timeline_events, only: :index
 
       resources :assessments, only: %i[edit update] do

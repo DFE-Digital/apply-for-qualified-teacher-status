@@ -6,6 +6,8 @@ en:
         recommendation: You've completed your review of this QTS application and marked all sections as complete to your satisfaction.
       assessment_section:
         selected_failure_reasons: Select all options that are relevant to you.
+      assessor_interface_create_note_form:
+        text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
       qualification:
         add_another: You can use the next section to tell us about additional degrees if you want to.
       teacher:
@@ -23,6 +25,8 @@ en:
         recommendation_options:
           award: Award QTS
           decline: Decline QTS
+      assessor_interface_create_note_form:
+        text: Add a note to this application
       qualification:
         add_another_options:
           true: "Yes"
