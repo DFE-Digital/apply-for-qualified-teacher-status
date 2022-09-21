@@ -6,7 +6,7 @@ RSpec.describe "Teacher authentication", type: :system do
   it "allows signing up and signing in" do
     given_countries_exist
 
-    when_i_visit_the_sign_up_page
+    when_i_visit_the(:teacher_sign_up_page)
     then_i_see_the_sign_up_form
     when_i_fill_create_teacher_email_address
     and_i_click_continue
@@ -18,8 +18,8 @@ RSpec.describe "Teacher authentication", type: :system do
 
     given_i_clear_my_session
 
-    when_i_visit_the_sign_in_page
-    then_i_see_the_sign_in_form
+    when_i_visit_the(:teacher_create_or_sign_in_page)
+    then_i_see_the_create_and_sign_in_form
 
     when_i_choose_yes_sign_in
     and_i_fill_sign_in_teacher_email_address
@@ -32,7 +32,16 @@ RSpec.describe "Teacher authentication", type: :system do
 
     given_i_clear_my_session
 
-    when_i_visit_the_sign_up_page
+    when_i_visit_the(:teacher_sign_in_page)
+    then_i_see_the(:teacher_sign_in_page)
+    and_i_fill_sign_in_teacher_email_address
+    and_i_click_continue
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_magic_link_email
+
+    given_i_clear_my_session
+
+    when_i_visit_the(:teacher_sign_up_page)
     then_i_see_the_sign_up_form
 
     when_i_fill_create_teacher_email_address
@@ -51,7 +60,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   it "sign out with navigation link" do
-    when_i_visit_the_sign_up_page
+    when_i_visit_the(:teacher_sign_up_page)
 
     when_i_fill_create_teacher_email_address
     and_i_click_continue
@@ -65,14 +74,14 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   it "sign up with invalid email address" do
-    when_i_visit_the_sign_up_page
+    when_i_visit_the(:teacher_sign_up_page)
     and_i_click_continue
     then_i_see_the_blank_email_address_message
   end
 
   it "sign in when unconfirmed" do
-    when_i_visit_the_sign_in_page
-    then_i_see_the_sign_in_form
+    when_i_visit_the(:teacher_create_or_sign_in_page)
+    then_i_see_the_create_and_sign_in_form
 
     when_i_choose_yes_sign_in
     and_i_fill_sign_in_teacher_email_address
@@ -81,7 +90,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   it "sign in invalid email" do
-    when_i_visit_the_sign_up_page
+    when_i_visit_the(:teacher_sign_up_page)
     then_i_see_the_sign_up_form
 
     when_i_fill_create_teacher_email_address
@@ -89,8 +98,8 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the_check_your_email_page
     and_i_receive_a_teacher_confirmation_email
 
-    when_i_visit_the_sign_in_page
-    then_i_see_the_sign_in_form
+    when_i_visit_the(:teacher_create_or_sign_in_page)
+    then_i_see_the_create_and_sign_in_form
 
     when_i_choose_yes_sign_in
     and_i_fill_sign_in_teacher_email_address
@@ -100,7 +109,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   it "confirming email twice" do
-    when_i_visit_the_sign_up_page
+    when_i_visit_the(:teacher_sign_up_page)
     then_i_see_the_sign_up_form
 
     when_i_fill_create_teacher_email_address
@@ -114,21 +123,21 @@ RSpec.describe "Teacher authentication", type: :system do
     given_i_clear_my_session
 
     when_i_visit_the_teacher_confirmation_email
-    then_i_see_the_sign_in_form
+    then_i_see_the_create_and_sign_in_form
     and_i_see_already_confirmed_message
   end
 
   it "sign in with same token" do
     given_countries_exist
 
-    when_i_visit_the_sign_up_page
+    when_i_visit_the(:teacher_sign_up_page)
     then_i_see_the_sign_up_form
     and_i_sign_up
 
     given_i_clear_my_session
 
-    when_i_visit_the_sign_in_page
-    then_i_see_the_sign_in_form
+    when_i_visit_the(:teacher_create_or_sign_in_page)
+    then_i_see_the_create_and_sign_in_form
 
     when_i_choose_yes_sign_in
     and_i_fill_sign_in_teacher_email_address
@@ -153,14 +162,6 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def given_i_clear_my_session
     page.driver.clear_cookies
-  end
-
-  def when_i_visit_the_sign_up_page
-    when_i_visit_the(:teacher_sign_up_page)
-  end
-
-  def when_i_visit_the_sign_in_page
-    teacher_sign_in_page.load
   end
 
   def when_i_visit_the_magic_link_email

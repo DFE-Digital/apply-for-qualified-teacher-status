@@ -16,7 +16,7 @@ class Teachers::ConfirmationsController < Devise::ConfirmationsController
       end
     else
       set_flash_message!(:notice, :already_confirmed)
-      redirect_to new_teacher_session_path
+      redirect_to :create_or_new_teacher_session
     end
   end
 

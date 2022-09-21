@@ -102,6 +102,11 @@ module PageHelpers
     @timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end
 
+  def teacher_create_or_sign_in_page
+    @teacher_create_or_sign_in_page =
+      PageObjects::TeacherInterface::CreateOrSignIn.new
+  end
+
   def teacher_sign_in_page
     @teacher_sign_in_page = PageObjects::TeacherInterface::SignIn.new
   end

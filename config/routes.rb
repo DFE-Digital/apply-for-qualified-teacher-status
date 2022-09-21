@@ -168,6 +168,9 @@ Rails.application.routes.draw do
              }
 
   devise_scope :teacher do
+    get "/teacher/create_or_sign_in",
+        to: "teachers/sessions#new_or_create",
+        as: "create_or_new_teacher_session"
     get "/teacher/magic_link",
         to: "teachers/magic_links#show",
         as: "teacher_magic_link"
