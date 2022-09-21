@@ -29,7 +29,7 @@ class EligibilityCheck < ApplicationRecord
             degree: true,
             free_of_sanctions: true,
             qualification: true,
-            teach_children: true
+            teach_children: true,
           )
         }
   scope :ineligible,
@@ -46,7 +46,7 @@ class EligibilityCheck < ApplicationRecord
             degree: nil,
             free_of_sanctions: nil,
             qualification: nil,
-            teach_children: nil
+            teach_children: nil,
           )
         }
 
@@ -67,7 +67,7 @@ class EligibilityCheck < ApplicationRecord
       degree == false ? :degree : nil,
       qualification == false ? :qualification : nil,
       teach_children == false ? :teach_children : nil,
-      free_of_sanctions == false ? :misconduct : nil
+      free_of_sanctions == false ? :misconduct : nil,
     ].compact
   end
 

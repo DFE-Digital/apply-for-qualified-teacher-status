@@ -13,8 +13,8 @@ module AssessorInterface
           .where(
             assessment_id: params[:assessment_id],
             assessment: {
-              application_form_id: params[:application_form_id]
-            }
+              application_form_id: params[:application_form_id],
+            },
           )
           .find_by!(key: params[:key])
     end

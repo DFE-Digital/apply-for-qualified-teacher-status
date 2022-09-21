@@ -23,7 +23,7 @@ module EligibilityInterface
         eligible: eligibility_interface_qualifications_path,
         ineligible: eligibility_interface_ineligible_path,
         legacy: eligibility_interface_eligible_path,
-        region: eligibility_interface_region_path
+        region: eligibility_interface_region_path,
       }.fetch(eligibility_check.country_eligibility_status)
     end
 

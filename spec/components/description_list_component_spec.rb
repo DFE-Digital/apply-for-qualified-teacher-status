@@ -8,7 +8,7 @@ RSpec.describe DescriptionList::Component, type: :component do
   let(:rows) do
     [
       { key: { text: "Label 1" }, value: { text: "Value 1" } },
-      { key: { text: "Label 2" }, value: { text: "Value 2" } }
+      { key: { text: "Label 2" }, value: { text: "Value 2" } },
     ]
   end
 

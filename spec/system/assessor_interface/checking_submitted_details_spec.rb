@@ -12,7 +12,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_visit_the(
       :check_personal_information_page,
       application_id:,
-      assessment_id:
+      assessment_id:,
     )
     then_i_see_the_personal_information
 
@@ -25,7 +25,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_visit_the(
       :check_personal_information_page,
       application_id:,
-      assessment_id:
+      assessment_id:,
     )
     then_i_see_the_personal_information
 
@@ -38,7 +38,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_visit_the(
       :check_qualifications_page,
       application_id:,
-      assessment_id:
+      assessment_id:,
     )
     then_i_see_the_qualifications
 
@@ -51,7 +51,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_visit_the(
       :check_qualifications_page,
       application_id:,
-      assessment_id:
+      assessment_id:,
     )
     then_i_see_the_qualifications
 
@@ -82,7 +82,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_visit_the(
       :check_professional_standing_page,
       application_id:,
-      assessment_id:
+      assessment_id:,
     )
     then_i_see_the_professional_standing
 
@@ -95,7 +95,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_visit_the(
       :check_professional_standing_page,
       application_id:,
-      assessment_id:
+      assessment_id:,
     )
     then_i_see_the_professional_standing
 
@@ -116,10 +116,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def then_i_see_the_personal_information
     expect(
-      check_personal_information_page.personal_information.given_names.text
+      check_personal_information_page.personal_information.given_names.text,
     ).to eq(application_form.given_names)
     expect(
-      check_personal_information_page.personal_information.family_name.text
+      check_personal_information_page.personal_information.family_name.text,
     ).to eq(application_form.family_name)
   end
 
@@ -136,7 +136,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_personal_information_completed
     expect(
-      assessor_application_page.personal_information_task.status.text
+      assessor_application_page.personal_information_task.status.text,
     ).to eq("COMPLETED")
   end
 
@@ -153,7 +153,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_personal_information_action_required
     expect(
-      assessor_application_page.personal_information_task.status.text
+      assessor_application_page.personal_information_task.status.text,
     ).to eq("ACTION REQUIRED")
   end
 
@@ -161,7 +161,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     teaching_qualification =
       application_form.qualifications.find(&:is_teaching_qualification?)
     expect(check_qualifications_page.teaching_qualification.title.text).to eq(
-      teaching_qualification.title
+      teaching_qualification.title,
     )
   end
 
@@ -183,20 +183,20 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_qualifications_completed
     expect(assessor_application_page.qualifications_task.status.text).to eq(
-      "COMPLETED"
+      "COMPLETED",
     )
   end
 
   def and_i_see_check_qualifications_action_required
     expect(assessor_application_page.qualifications_task.status.text).to eq(
-      "ACTION REQUIRED"
+      "ACTION REQUIRED",
     )
   end
 
   def then_i_see_the_work_history
     most_recent_role = application_form.work_histories.first
     expect(check_work_history_page.most_recent_role.school_name.text).to eq(
-      most_recent_role.school_name
+      most_recent_role.school_name,
     )
   end
 
@@ -207,7 +207,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_work_history_completed
     expect(assessor_application_page.work_history_task.status.text).to eq(
-      "COMPLETED"
+      "COMPLETED",
     )
   end
 
@@ -224,7 +224,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_work_history_action_required
     expect(assessor_application_page.work_history_task.status.text).to eq(
-      "ACTION REQUIRED"
+      "ACTION REQUIRED",
     )
   end
 
@@ -233,7 +233,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       check_professional_standing_page
         .proof_of_recognition
         .reference_number
-        .text
+        .text,
     ).to eq(application_form.registration_number)
   end
 
@@ -244,7 +244,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_professional_standing_completed
     expect(
-      assessor_application_page.professional_standing_task.status.text
+      assessor_application_page.professional_standing_task.status.text,
     ).to eq("COMPLETED")
   end
 
@@ -261,7 +261,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_professional_standing_action_required
     expect(
-      assessor_application_page.professional_standing_task.status.text
+      assessor_application_page.professional_standing_task.status.text,
     ).to eq("ACTION REQUIRED")
   end
 
@@ -280,28 +280,28 @@ RSpec.describe "Assessor check submitted details", type: :system do
             :with_registration_number,
             :with_personal_information,
             :submitted,
-            :with_assessment
+            :with_assessment,
           )
 
         create(
           :assessment_section,
           :personal_information,
-          assessment: application_form.assessment
+          assessment: application_form.assessment,
         )
         create(
           :assessment_section,
           :qualifications,
-          assessment: application_form.assessment
+          assessment: application_form.assessment,
         )
         create(
           :assessment_section,
           :work_history,
-          assessment: application_form.assessment
+          assessment: application_form.assessment,
         )
         create(
           :assessment_section,
           :professional_standing,
-          assessment: application_form.assessment
+          assessment: application_form.assessment,
         )
 
         application_form

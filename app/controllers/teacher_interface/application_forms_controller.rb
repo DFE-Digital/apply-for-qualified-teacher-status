@@ -9,7 +9,7 @@ module TeacherInterface
     def create
       @country_region_form =
         CountryRegionForm.new(
-          country_region_form_params.merge(teacher: current_teacher)
+          country_region_form_params.merge(teacher: current_teacher),
         )
 
       if @country_region_form.needs_region?
@@ -43,7 +43,7 @@ module TeacherInterface
     def country_region_form_params
       params.require(:teacher_interface_country_region_form).permit(
         :location,
-        :region_id
+        :region_id,
       )
     end
   end

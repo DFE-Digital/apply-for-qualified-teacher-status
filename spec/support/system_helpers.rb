@@ -18,7 +18,7 @@ module SystemHelpers
     country.regions.first.update!(
       application_form_enabled: true,
       status_check: country_check,
-      sanction_check: country_check
+      sanction_check: country_check,
     )
 
     visit "/eligibility/start"
@@ -65,14 +65,14 @@ module SystemHelpers
   def when_i_am_authorized_as_a_support_user
     page.driver.basic_authorize(
       ENV.fetch("SUPPORT_USERNAME", "support"),
-      ENV.fetch("SUPPORT_PASSWORD", "support")
+      ENV.fetch("SUPPORT_PASSWORD", "support"),
     )
   end
 
   def when_i_am_authorized_as_a_test_user
     page.driver.basic_authorize(
       ENV.fetch("TEST_USERNAME", "test"),
-      ENV.fetch("TEST_PASSWORD", "test")
+      ENV.fetch("TEST_PASSWORD", "test"),
     )
   end
 
@@ -127,16 +127,16 @@ module SystemHelpers
 
   def then_i_see_the_sign_in_form
     expect(teacher_sign_in_page).to have_title(
-      "Apply for qualified teacher status (QTS) in England"
+      "Apply for qualified teacher status (QTS) in England",
     )
     expect(teacher_sign_in_page).to have_content(
-      "Have you used the service before?"
+      "Have you used the service before?",
     )
     expect(teacher_sign_in_page).to have_content(
-      "Yes, sign in and continue application"
+      "Yes, sign in and continue application",
     )
     expect(teacher_sign_in_page).to have_content(
-      "No, I need to check my eligibility"
+      "No, I need to check my eligibility",
     )
   end
 

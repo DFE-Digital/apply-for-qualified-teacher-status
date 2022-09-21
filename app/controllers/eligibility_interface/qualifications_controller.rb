@@ -9,7 +9,7 @@ module EligibilityInterface
     def create
       @qualification_form =
         QualificationForm.new(
-          qualification_form_params.merge(eligibility_check:)
+          qualification_form_params.merge(eligibility_check:),
         )
       if @qualification_form.save
         redirect_to paths[:degree]
@@ -22,7 +22,7 @@ module EligibilityInterface
 
     def qualification_form_params
       params.require(:eligibility_interface_qualification_form).permit(
-        :qualification
+        :qualification,
       )
     end
   end

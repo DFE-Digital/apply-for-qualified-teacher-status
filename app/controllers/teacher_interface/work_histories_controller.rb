@@ -38,7 +38,7 @@ module TeacherInterface
 
     def submit_add_another
       if ActiveModel::Type::Boolean.new.cast(
-           params.dig(:work_history, :add_another)
+           params.dig(:work_history, :add_another),
          )
         redirect_to %i[new teacher_interface application_form work_history]
       else
@@ -50,14 +50,14 @@ module TeacherInterface
       @has_work_history_form =
         HasWorkHistoryForm.new(
           application_form:,
-          has_work_history: application_form.has_work_history
+          has_work_history: application_form.has_work_history,
         )
     end
 
     def update_has_work_history
       @has_work_history_form =
         HasWorkHistoryForm.new(
-          has_work_history_form_params.merge(application_form:)
+          has_work_history_form_params.merge(application_form:),
         )
       if @has_work_history_form.save
         redirect_to_if_save_and_continue has_work_history_next_url
@@ -82,7 +82,7 @@ module TeacherInterface
 
     def destroy
       if ActiveModel::Type::Boolean.new.cast(
-           params.dig(:work_history, :confirm)
+           params.dig(:work_history, :confirm),
          )
         @work_history.destroy!
       end
@@ -94,7 +94,7 @@ module TeacherInterface
 
     def has_work_history_form_params
       params.require(:teacher_interface_has_work_history_form).permit(
-        :has_work_history
+        :has_work_history,
       )
     end
 
@@ -109,7 +109,7 @@ module TeacherInterface
             :edit,
             :teacher_interface,
             :application_form,
-            application_form.work_histories.ordered.first
+            application_form.work_histories.ordered.first,
           ]
         end
       else
@@ -132,11 +132,11 @@ module TeacherInterface
           :job,
           :school_name,
           :start_date,
-          :still_employed
+          :still_employed,
         )
         .tap do |params|
           params[:country_code] = CountryCode.from_location(
-            params[:country_code]
+            params[:country_code],
           )
         end
     end

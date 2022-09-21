@@ -17,7 +17,7 @@ RSpec.describe FileUploadValidator do
     let(:file) do
       ActionDispatch::Http::UploadedFile.new(
         tempfile: file_fixture("upload.pdf"),
-        type: "application/pdf"
+        type: "application/pdf",
       )
     end
 
@@ -28,7 +28,7 @@ RSpec.describe FileUploadValidator do
     let(:file) do
       ActionDispatch::Http::UploadedFile.new(
         tempfile: file_fixture("upload.txt"),
-        type: "text/plain"
+        type: "text/plain",
       )
     end
 
@@ -39,7 +39,7 @@ RSpec.describe FileUploadValidator do
     let(:file) do
       ActionDispatch::Http::UploadedFile.new(
         tempfile: file_fixture("upload.pdf"),
-        type: "application/pdf"
+        type: "application/pdf",
       )
     end
 

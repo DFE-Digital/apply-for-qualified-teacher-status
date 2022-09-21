@@ -22,14 +22,14 @@ class TeacherInterface::UploadForm
     if original_attachment.present?
       document.uploads.create!(
         attachment: original_attachment,
-        translation: false
+        translation: false,
       )
     end
 
     if translated_attachment.present?
       document.uploads.create!(
         attachment: translated_attachment,
-        translation: true
+        translation: true,
       )
     end
 

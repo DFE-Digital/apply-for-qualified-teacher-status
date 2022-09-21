@@ -12,7 +12,7 @@ class Teachers::SessionsController < Devise::SessionsController
     @new_session_form =
       TeacherInterface::NewSessionForm.new(
         email: new_session_form_params[:email],
-        create_or_sign_in: new_session_form_params[:create_or_sign_in]
+        create_or_sign_in: new_session_form_params[:create_or_sign_in],
       )
 
     if @new_session_form.valid?
@@ -40,7 +40,7 @@ class Teachers::SessionsController < Devise::SessionsController
   def new_session_form_params
     params.require(:teacher_interface_new_session_form).permit(
       :email,
-      :create_or_sign_in
+      :create_or_sign_in,
     )
   end
 

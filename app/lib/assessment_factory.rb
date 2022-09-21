@@ -12,7 +12,7 @@ class AssessmentFactory
       personal_information_section,
       qualifications_section,
       work_history_section,
-      professional_standing_section
+      professional_standing_section,
     ].compact
 
     Assessment.create!(application_form:, sections:)
@@ -27,7 +27,7 @@ class AssessmentFactory
       :identification_document_present,
       (:name_change_document_present if application_form.has_alternative_name),
       :duplicate_application,
-      :applicant_already_qts
+      :applicant_already_qts,
     ].compact
 
     failure_reasons = [
@@ -38,13 +38,13 @@ class AssessmentFactory
         :name_change_document_illegible if application_form.has_alternative_name
       ),
       :duplicate_application,
-      :applicant_already_qts
+      :applicant_already_qts,
     ].compact
 
     AssessmentSection.new(
       key: "personal_information",
       checks:,
-      failure_reasons:
+      failure_reasons:,
     )
   end
 
@@ -105,7 +105,7 @@ class AssessmentFactory
       :teaching_qualification,
       :age_ranges_subjects,
       :qualified_to_teach,
-      :full_professional_status
+      :full_professional_status,
     ].compact
 
     failure_reasons = [
@@ -118,13 +118,13 @@ class AssessmentFactory
       :teaching_qualification,
       :age_ranges_subjects,
       :qualified_to_teach,
-      :full_professional_status
+      :full_professional_status,
     ].compact
 
     AssessmentSection.new(
       key: "professional_standing",
       checks:,
-      failure_reasons:
+      failure_reasons:,
     )
   end
 end

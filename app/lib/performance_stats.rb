@@ -23,7 +23,7 @@ class PerformanceStats
       @all_checks_count,
       @answered_all_questions_checks_count,
       @eligible_checks_count,
-      @live_service_data
+      @live_service_data,
     ]
   end
 
@@ -54,8 +54,8 @@ class PerformanceStats
         "All checks",
         "Full checks",
         "Eligible checks",
-        "Proportion eligible"
-      ]
+        "Proportion eligible",
+      ],
     ]
     @live_service_data +=
       @last_n_days.map do |day|
@@ -76,7 +76,7 @@ class PerformanceStats
           all_checks,
           answered_all_questions_checks,
           eligible_checks,
-          number_to_percentage(conversion * 100, precision: 1)
+          number_to_percentage(conversion * 100, precision: 1),
         ]
       end
   end
@@ -90,14 +90,14 @@ class PerformanceStats
         .pluck(
           Arel.sql("date_trunc('day', created_at) AS day"),
           Arel.sql(
-            "percentile_cont(0.90) within group (order by (completed_at - created_at) asc) as percentile_90"
+            "percentile_cont(0.90) within group (order by (completed_at - created_at) asc) as percentile_90",
           ),
           Arel.sql(
-            "percentile_cont(0.75) within group (order by (completed_at - created_at) asc) as percentile_75"
+            "percentile_cont(0.75) within group (order by (completed_at - created_at) asc) as percentile_75",
           ),
           Arel.sql(
-            "percentile_cont(0.50) within group (order by (completed_at - created_at) asc) as percentile_50"
-          )
+            "percentile_cont(0.50) within group (order by (completed_at - created_at) asc) as percentile_50",
+          ),
         )
         .each_with_object({}) { |row, hash| hash[row[0]] = row.slice(1, 3) }
 
@@ -106,8 +106,8 @@ class PerformanceStats
         "Date",
         "90% of users within",
         "75% of users within",
-        "50% of users within"
-      ]
+        "50% of users within",
+      ],
     ]
     @time_to_complete_data +=
       @last_n_days.map do |day|
@@ -151,7 +151,7 @@ class PerformanceStats
           region_name,
           count,
           eligibility_checks_by_region_answered_all_questions[key] || 0,
-          eligibility_checks_by_region_eligible[key] || 0
+          eligibility_checks_by_region_eligible[key] || 0,
         ]
       end
 

@@ -57,7 +57,7 @@ class Document < ApplicationRecord
         :edit,
         :teacher_interface,
         :application_form,
-        documentable.transcript_document
+        documentable.transcript_document,
       ]
     when "qualification_transcript"
       if documentable.is_teaching_qualification?
@@ -65,7 +65,7 @@ class Document < ApplicationRecord
           :part_of_university_degree,
           :teacher_interface,
           :application_form,
-          documentable
+          documentable,
         ]
       else
         %i[check teacher_interface application_form qualifications]

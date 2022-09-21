@@ -17,7 +17,7 @@ class AddRulesToApplicationForms < ActiveRecord::Migration[7.0]
           needs_written_statement:
             region.status_check_online? || region.sanction_check_online?,
           needs_registration_number:
-            region.status_check_written? || region.sanction_check_written?
+            region.status_check_written? || region.sanction_check_written?,
         )
       end
 

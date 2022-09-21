@@ -22,7 +22,7 @@ class AssessorInterface::ReviewerAssignmentForm
       application_form:,
       event_type: "reviewer_assigned",
       creator: staff,
-      assignee_id: reviewer_id
+      assignee_id: reviewer_id,
     )
   end
 end

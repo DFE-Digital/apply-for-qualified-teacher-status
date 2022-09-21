@@ -60,7 +60,7 @@ RSpec.describe Qualification, type: :model do
           start_date: Date.new(2020, 1, 1),
           complete_date: Date.new(2021, 1, 1),
           certificate_date: Date.new(2021, 1, 1),
-          part_of_university_degree: true
+          part_of_university_degree: true,
         )
 
         create(:upload, document: qualification.certificate_document)

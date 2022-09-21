@@ -29,7 +29,7 @@ RSpec.describe Document, type: :model do
         qualification_certificate: "qualification_certificate",
         qualification_transcript: "qualification_transcript",
         written_statement: "written_statement",
-        further_information_request: "further_information_request"
+        further_information_request: "further_information_request",
       ).backed_by_column_of_type(:string)
     end
   end
@@ -108,7 +108,7 @@ RSpec.describe Document, type: :model do
 
       it do
         is_expected.to eq(
-          %i[check teacher_interface application_form personal_information]
+          %i[check teacher_interface application_form personal_information],
         )
       end
     end
@@ -127,8 +127,8 @@ RSpec.describe Document, type: :model do
               :edit,
               :teacher_interface,
               :application_form,
-              qualification.transcript_document
-            ]
+              qualification.transcript_document,
+            ],
           )
         end
       end
@@ -142,8 +142,8 @@ RSpec.describe Document, type: :model do
               :part_of_university_degree,
               :teacher_interface,
               :application_form,
-              qualification
-            ]
+              qualification,
+            ],
           )
         end
       end

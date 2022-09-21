@@ -43,7 +43,7 @@ RSpec.describe Filters::Assessor do
     let!(:included) do
       [
         create(:application_form, assessor: assessor_one),
-        create(:application_form, assessor: assessor_two)
+        create(:application_form, assessor: assessor_two),
       ]
     end
 

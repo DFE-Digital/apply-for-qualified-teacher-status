@@ -66,7 +66,7 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
       :teaching_authority_emails_string,
       :teaching_authority_websites_string,
       :teaching_authority_certificate,
-      :teaching_authority_other
+      :teaching_authority_other,
     )
   end
 end

@@ -78,7 +78,7 @@ RSpec.describe SubmitApplicationForm do
     it "queues an email job" do
       expect { call }.to have_enqueued_mail(
         TeacherMailer,
-        :application_received
+        :application_received,
       ).with(params: { teacher: application_form.teacher }, args: [])
     end
   end

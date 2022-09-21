@@ -21,11 +21,11 @@ class AddTeachingAuthorityMultiplesToRegions < ActiveRecord::Migration[7.0]
     regions_to_update.find_each do |region|
       region.update!(
         teaching_authority_emails: [
-          region.teaching_authority_email_address
+          region.teaching_authority_email_address,
         ].compact_blank,
         teaching_authority_websites: [
-          region.teaching_authority_website
-        ].compact_blank
+          region.teaching_authority_website,
+        ].compact_blank,
       )
     end
   end

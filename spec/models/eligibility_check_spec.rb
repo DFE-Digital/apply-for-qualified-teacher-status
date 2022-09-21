@@ -209,7 +209,7 @@ RSpec.describe EligibilityCheck, type: :model do
       before do
         eligibility_check_2.update!(
           created_at: Date.new(2020, 1, 1),
-          completed_requirements: nil
+          completed_requirements: nil,
         )
       end
 
@@ -238,7 +238,7 @@ RSpec.describe EligibilityCheck, type: :model do
         degree: true,
         free_of_sanctions: false,
         qualification: true,
-        teach_children: false
+        teach_children: false,
       )
     end
 
@@ -249,7 +249,7 @@ RSpec.describe EligibilityCheck, type: :model do
       before do
         eligibility_check_2.update!(
           created_at: Date.new(2020, 1, 1),
-          completed_requirements: nil
+          completed_requirements: nil,
         )
       end
 
@@ -266,7 +266,7 @@ RSpec.describe EligibilityCheck, type: :model do
     it "sets the completed_at attribute" do
       freeze_time do
         expect { complete! }.to change(eligibility_check, :completed_at).from(
-          nil
+          nil,
         ).to(Time.current)
       end
     end
@@ -316,7 +316,7 @@ RSpec.describe EligibilityCheck, type: :model do
           teach_children: true,
           qualification: true,
           degree: true,
-          region: create(:region)
+          region: create(:region),
         }
       end
 
@@ -330,7 +330,7 @@ RSpec.describe EligibilityCheck, type: :model do
           teach_children: true,
           qualification: true,
           degree: true,
-          region: create(:region)
+          region: create(:region),
         }
       end
 

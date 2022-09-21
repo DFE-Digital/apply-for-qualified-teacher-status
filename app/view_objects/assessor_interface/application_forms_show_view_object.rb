@@ -12,7 +12,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def back_link_path
     url_helpers.assessor_interface_application_forms_path(
-      params[:search]&.permit!
+      params[:search]&.permit!,
     )
   end
 
@@ -36,14 +36,14 @@ class AssessorInterface::ApplicationFormsShowViewObject
       url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
         application_form,
         assessment,
-        item
+        item,
       )
     when :recommendation
       return nil unless assessment.sections_finished?
 
       url_helpers.edit_assessor_interface_application_form_assessment_path(
         application_form,
-        assessment
+        assessment,
       )
     end
   end

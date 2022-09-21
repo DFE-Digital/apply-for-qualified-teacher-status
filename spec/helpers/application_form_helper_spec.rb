@@ -15,7 +15,7 @@ RSpec.describe ApplicationFormHelper do
       reference: "0000001",
       submitted_at: Date.new(2020, 1, 1),
       given_names: "Given",
-      family_name: "Family"
+      family_name: "Family",
     )
   end
 
@@ -31,7 +31,7 @@ RSpec.describe ApplicationFormHelper do
         application_form,
         include_name: true,
         include_reference: true,
-        include_notes: true
+        include_notes: true,
       )
     end
 
@@ -40,110 +40,110 @@ RSpec.describe ApplicationFormHelper do
         [
           {
             key: {
-              text: "Name"
+              text: "Name",
             },
             value: {
-              text: "Given Family"
+              text: "Given Family",
             },
-            actions: []
+            actions: [],
           },
           {
             key: {
-              text: "Country trained in"
+              text: "Country trained in",
             },
             value: {
-              text: "United States"
+              text: "United States",
             },
-            actions: []
+            actions: [],
           },
           {
             key: {
-              text: "State/territory trained in"
+              text: "State/territory trained in",
             },
             value: {
-              text: "Region"
+              text: "Region",
             },
-            actions: []
+            actions: [],
           },
           {
             key: {
-              text: "Created on"
+              text: "Created on",
             },
             value: {
-              text: " 1 January 2020"
+              text: " 1 January 2020",
             },
-            actions: []
+            actions: [],
           },
           {
             key: {
-              text: "Days remaining in SLA"
+              text: "Days remaining in SLA",
             },
             value: {
-              text: "Not implemented"
+              text: "Not implemented",
             },
-            actions: []
+            actions: [],
           },
           {
             key: {
-              text: "Assigned to"
+              text: "Assigned to",
             },
             value: {
-              text: "Not assigned"
+              text: "Not assigned",
             },
             actions: [
               {
                 href:
                   assessor_interface_application_form_assign_assessor_path(
-                    application_form
-                  )
-              }
-            ]
+                    application_form,
+                  ),
+              },
+            ],
           },
           {
             key: {
-              text: "Reviewer"
+              text: "Reviewer",
             },
             value: {
-              text: "Not assigned"
+              text: "Not assigned",
             },
             actions: [
               {
                 href:
                   assessor_interface_application_form_assign_reviewer_path(
-                    application_form
-                  )
-              }
-            ]
+                    application_form,
+                  ),
+              },
+            ],
           },
           {
             key: {
-              text: "Reference"
+              text: "Reference",
             },
             value: {
-              text: "0000001"
+              text: "0000001",
             },
-            actions: []
+            actions: [],
           },
           {
             key: {
-              text: "Status"
+              text: "Status",
             },
             value: {
               text:
-                "<strong class=\"govuk-tag govuk-tag--grey app-search-result__item__tag\" id=\"application-form-#{application_form.id}-status\">Not started</strong>\n"
+                "<strong class=\"govuk-tag govuk-tag--grey app-search-result__item__tag\" id=\"application-form-#{application_form.id}-status\">Not started</strong>\n",
             },
-            actions: []
+            actions: [],
           },
           {
             key: {
-              text: "Notes"
+              text: "Notes",
             },
             value: {
-              text: "Not implemented"
+              text: "Not implemented",
             },
-            actions: []
-          }
-        ]
+            actions: [],
+          },
+        ],
       )
     end
   end

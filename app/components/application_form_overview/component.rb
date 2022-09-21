@@ -14,23 +14,23 @@ module ApplicationFormOverview
         application_form,
         include_name: true,
         include_reference: true,
-        include_notes: false
+        include_notes: false,
       ) +
         [
           {
             key: {
-              text: I18n.t("application_form.overview.application_history")
+              text: I18n.t("application_form.overview.application_history"),
             },
             value: {
               text:
                 govuk_link_to(
                   I18n.t("application_form.overview.view_timeline"),
                   assessor_interface_application_form_timeline_events_path(
-                    application_form
-                  )
-                )
-            }
-          }
+                    application_form,
+                  ),
+                ),
+            },
+          },
         ]
     end
 

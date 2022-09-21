@@ -29,7 +29,7 @@ class Assessment < ApplicationRecord
   validates :recommendation,
             presence: true,
             inclusion: {
-              in: recommendations.values
+              in: recommendations.values,
             }
 
   def finished?

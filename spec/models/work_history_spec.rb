@@ -57,7 +57,7 @@ RSpec.describe WorkHistory, type: :model do
           job: "Job",
           email: "school@example.com",
           start_date: Date.new(2020, 1, 1),
-          still_employed: true
+          still_employed: true,
         )
       end
 
@@ -74,7 +74,7 @@ RSpec.describe WorkHistory, type: :model do
           email: "school@example.com",
           start_date: Date.new(2020, 1, 1),
           end_date: Date.new(2020, 12, 1),
-          still_employed: false
+          still_employed: false,
         )
       end
 
@@ -102,7 +102,7 @@ RSpec.describe WorkHistory, type: :model do
         create(
           :work_history,
           application_form: work_history.application_form,
-          start_date: Date.new(2020, 1, 1)
+          start_date: Date.new(2020, 1, 1),
         )
       end
 

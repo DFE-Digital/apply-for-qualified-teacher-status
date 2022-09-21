@@ -20,6 +20,6 @@ module PersonasHelper
     { status_check: "online", sanction_check: "written" } => 3,
     { status_check: "written", sanction_check: "none" } => 4,
     { status_check: "online", sanction_check: "none" } => 5,
-    { status_check: "none", sanction_check: "none" } => 6
+    { status_check: "none", sanction_check: "none" } => 6,
   }.freeze
 end

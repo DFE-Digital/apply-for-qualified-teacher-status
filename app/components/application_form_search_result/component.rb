@@ -13,7 +13,7 @@ module ApplicationFormSearchResult
     def href
       assessor_interface_application_form_path(
         application_form,
-        search: search_params
+        search: search_params,
       )
     end
 
@@ -22,7 +22,7 @@ module ApplicationFormSearchResult
         application_form,
         include_name: false,
         include_reference: false,
-        include_notes: true
+        include_notes: true,
       )
     end
 

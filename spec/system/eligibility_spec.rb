@@ -211,16 +211,16 @@ RSpec.describe "Eligibility check", type: :system do
   def then_i_see_the_country_error_message
     expect(country_page).to have_error_summary
     expect(country_page.error_summary.body).to have_content(
-      "Tell us where you’re currently recognised as a teacher"
+      "Tell us where you’re currently recognised as a teacher",
     )
   end
 
   def then_i_see_the_region_page
     expect(region_page).to have_title(
-      "In which state/territory are you currently recognised as a teacher?"
+      "In which state/territory are you currently recognised as a teacher?",
     )
     expect(region_page.heading).to have_content(
-      "In which state/territory are you currently recognised as a teacher?"
+      "In which state/territory are you currently recognised as a teacher?",
     )
   end
 
@@ -270,35 +270,35 @@ RSpec.describe "Eligibility check", type: :system do
 
   def and_i_see_the_ineligible_country_text
     expect(ineligible_page.heading).to have_content(
-      "You’re not eligible to apply for qualified teacher status (QTS) in England"
+      "You’re not eligible to apply for qualified teacher status (QTS) in England",
     )
     expect(ineligible_page.body).to have_content(
-      "Teachers applying from Spain are not currently eligible to use this service."
+      "Teachers applying from Spain are not currently eligible to use this service.",
     )
   end
 
   def and_i_see_the_ineligible_completed_requirements_text
     expect(ineligible_page.reasons).to have_content(
-      "You have not completed all requirements to work as a qualified teacher in Scotland."
+      "You have not completed all requirements to work as a qualified teacher in Scotland.",
     )
   end
 
   def and_i_see_the_ineligible_misconduct_text
     expect(ineligible_page.reasons).to have_content(
-      "To teach in England, you must not have any findings of misconduct or restrictions on your practice."
+      "To teach in England, you must not have any findings of misconduct or restrictions on your practice.",
     )
   end
 
   def and_i_see_the_ineligible_teach_children_text
     expect(ineligible_page.reasons).to have_content(
-      "You are not qualified to teach children who are aged somewhere between 5 and 16 years."
+      "You are not qualified to teach children who are aged somewhere between 5 and 16 years.",
     )
   end
 
   def and_i_see_the_ineligible_qualification_text
     expect(ineligible_page.reasons).to have_content(
       "You have not completed a formal teacher training course, for example, an undergraduate teaching " \
-        "degree or postgraduate teacher training course."
+        "degree or postgraduate teacher training course.",
     )
   end
 

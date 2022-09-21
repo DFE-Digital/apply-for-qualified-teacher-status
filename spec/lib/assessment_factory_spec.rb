@@ -36,7 +36,7 @@ RSpec.describe AssessmentFactory do
               identification_document_present
               duplicate_application
               applicant_already_qts
-            ]
+            ],
           )
           expect(section.failure_reasons).to eq(
             %w[
@@ -45,7 +45,7 @@ RSpec.describe AssessmentFactory do
               identification_document_mismatch
               duplicate_application
               applicant_already_qts
-            ]
+            ],
           )
         end
 
@@ -56,7 +56,7 @@ RSpec.describe AssessmentFactory do
             section = sections.personal_information.first
             expect(section.checks).to include("name_change_document_present")
             expect(section.failure_reasons).to include(
-              "name_change_document_illegible"
+              "name_change_document_illegible",
             )
           end
         end
@@ -81,7 +81,7 @@ RSpec.describe AssessmentFactory do
               has_university_degree_transcript
               has_additional_qualification_certificate
               has_additional_degree_transcript
-            ]
+            ],
           )
 
           expect(section.failure_reasons).to eq(
@@ -97,7 +97,7 @@ RSpec.describe AssessmentFactory do
               teaching_hours_not_fulfilled
               qualifications_dont_support_subjects
               qualifications_dont_match_those_entered
-            ]
+            ],
           )
         end
       end
@@ -120,10 +120,10 @@ RSpec.describe AssessmentFactory do
               %w[
                 email_contact_current_employer
                 satisfactory_evidence_work_history
-              ]
+              ],
             )
             expect(section.failure_reasons).to eq(
-              ["satisfactory_evidence_work_history"]
+              ["satisfactory_evidence_work_history"],
             )
           end
         end
@@ -152,7 +152,7 @@ RSpec.describe AssessmentFactory do
                 age_ranges_subjects
                 qualified_to_teach
                 full_professional_status
-              ]
+              ],
             )
             expect(section.failure_reasons).to eq(
               %w[
@@ -163,7 +163,7 @@ RSpec.describe AssessmentFactory do
                 age_ranges_subjects
                 qualified_to_teach
                 full_professional_status
-              ]
+              ],
             )
           end
         end
@@ -185,7 +185,7 @@ RSpec.describe AssessmentFactory do
                 age_ranges_subjects
                 qualified_to_teach
                 full_professional_status
-              ]
+              ],
             )
             expect(section.failure_reasons).to eq(
               %w[
@@ -195,7 +195,7 @@ RSpec.describe AssessmentFactory do
                 age_ranges_subjects
                 qualified_to_teach
                 full_professional_status
-              ]
+              ],
             )
           end
         end

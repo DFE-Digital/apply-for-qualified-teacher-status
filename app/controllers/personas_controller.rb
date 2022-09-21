@@ -53,10 +53,10 @@ class PersonasController < ApplicationController
           region: [],
           documents: :uploads,
           qualifications: {
-            documents: :uploads
+            documents: :uploads,
           },
-          work_histories: []
-        }
+          work_histories: [],
+        },
       ).order(:id)
 
     @teacher_personas =

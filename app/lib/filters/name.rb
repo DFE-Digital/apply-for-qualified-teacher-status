@@ -6,7 +6,7 @@ module Filters
       return scope if name.blank?
 
       scope.where("given_names ilike ?", "%#{name}%").or(
-        scope.where("family_name ilike ?", "%#{name}%")
+        scope.where("family_name ilike ?", "%#{name}%"),
       )
     end
 

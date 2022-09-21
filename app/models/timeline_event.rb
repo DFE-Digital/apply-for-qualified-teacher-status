@@ -38,7 +38,7 @@ class TimelineEvent < ApplicationRecord
          assessor_assigned: "assessor_assigned",
          reviewer_assigned: "reviewer_assigned",
          state_changed: "state_changed",
-         assessment_section_recorded: "assessment_section_recorded"
+         assessment_section_recorded: "assessment_section_recorded",
        }
   validates :event_type, inclusion: { in: event_types.values }
 

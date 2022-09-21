@@ -9,7 +9,7 @@ module AssessorInterface
       if UpdateAssessmentRecommendation.call(
            assessment: @assessment,
            user: current_staff,
-           new_recommendation: assessment_params[:recommendation]
+           new_recommendation: assessment_params[:recommendation],
          )
         redirect_to [:assessor_interface, @application_form]
       else

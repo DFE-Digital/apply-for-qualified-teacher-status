@@ -25,7 +25,7 @@ RSpec.describe FurtherInformationRequest do
   it do
     is_expected.to define_enum_for(:state).with_values(
       requested: "requested",
-      received: "received"
+      received: "received",
     ).backed_by_column_of_type(:string)
   end
 end

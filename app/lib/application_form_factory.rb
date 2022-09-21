@@ -14,7 +14,7 @@ class ApplicationFormFactory
       region:,
       needs_work_history:,
       needs_written_statement:,
-      needs_registration_number:
+      needs_registration_number:,
     )
   end
 

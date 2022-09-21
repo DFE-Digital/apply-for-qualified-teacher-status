@@ -35,7 +35,7 @@ RSpec.describe Assessment, type: :model do
       is_expected.to define_enum_for(:recommendation).with_values(
         unknown: "unknown",
         award: "award",
-        decline: "decline"
+        decline: "decline",
       ).backed_by_column_of_type(:string)
     end
   end
@@ -88,7 +88,7 @@ RSpec.describe Assessment, type: :model do
       before do
         assessment_section.update!(
           passed: false,
-          selected_failure_reasons: %w[failure_reason]
+          selected_failure_reasons: %w[failure_reason],
         )
       end
       it { is_expected.to be true }

@@ -14,7 +14,7 @@ RSpec.describe Filters::Name do
         create(
           :application_form,
           :with_personal_information,
-          given_names: "Dave"
+          given_names: "Dave",
         )
       end
       let!(:filtered) do
@@ -22,7 +22,7 @@ RSpec.describe Filters::Name do
           :application_form,
           :with_personal_information,
           given_names: "Maude",
-          family_name: "Ling"
+          family_name: "Ling",
         )
       end
 
@@ -36,7 +36,7 @@ RSpec.describe Filters::Name do
         create(
           :application_form,
           :with_personal_information,
-          given_names: "Cornishpasty Dave"
+          given_names: "Cornishpasty Dave",
         )
       end
       let!(:filtered) do
@@ -44,7 +44,7 @@ RSpec.describe Filters::Name do
           :application_form,
           :with_personal_information,
           given_names: "Maude",
-          family_name: "Ling"
+          family_name: "Ling",
         )
       end
 
@@ -58,7 +58,7 @@ RSpec.describe Filters::Name do
         create(
           :application_form,
           :with_personal_information,
-          family_name: "Dave"
+          family_name: "Dave",
         )
       end
       let!(:filtered) do
@@ -66,7 +66,7 @@ RSpec.describe Filters::Name do
           :application_form,
           :with_personal_information,
           given_names: "Maude",
-          family_name: "Ling"
+          family_name: "Ling",
         )
       end
 
@@ -80,7 +80,7 @@ RSpec.describe Filters::Name do
         create(
           :application_form,
           :with_personal_information,
-          family_name: "Davethegangster"
+          family_name: "Davethegangster",
         )
       end
       let!(:filtered) do
@@ -88,7 +88,7 @@ RSpec.describe Filters::Name do
           :application_form,
           :with_personal_information,
           given_names: "Maude",
-          family_name: "Ling"
+          family_name: "Ling",
         )
       end
 
@@ -104,7 +104,7 @@ RSpec.describe Filters::Name do
         create(
           :application_form,
           :with_personal_information,
-          family_name: "Dave"
+          family_name: "Dave",
         )
       end
 

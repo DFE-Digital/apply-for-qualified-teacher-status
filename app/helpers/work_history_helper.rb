@@ -9,7 +9,7 @@ module WorkHistoryHelper
           else
             "application_form.work_history.previous_role"
           end
-        )
+        ),
       )
   end
 end

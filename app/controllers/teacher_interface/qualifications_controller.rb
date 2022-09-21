@@ -21,7 +21,7 @@ module TeacherInterface
                       :edit,
                       :teacher_interface,
                       :application_form,
-                      application_form.qualifications.ordered.first
+                      application_form.qualifications.ordered.first,
                     ]
       end
     end
@@ -41,7 +41,7 @@ module TeacherInterface
                                            :edit,
                                            :teacher_interface,
                                            :application_form,
-                                           @qualification.certificate_document
+                                           @qualification.certificate_document,
                                          ]
       else
         render :new, status: :unprocessable_entity
@@ -53,7 +53,7 @@ module TeacherInterface
 
     def submit_add_another
       if ActiveModel::Type::Boolean.new.cast(
-           params.dig(:qualification, :add_another)
+           params.dig(:qualification, :add_another),
          )
         redirect_to %i[new teacher_interface application_form qualification]
       else
@@ -70,7 +70,7 @@ module TeacherInterface
                                            :edit,
                                            :teacher_interface,
                                            :application_form,
-                                           @qualification.certificate_document
+                                           @qualification.certificate_document,
                                          ]
       else
         render :edit, status: :unprocessable_entity
@@ -81,7 +81,7 @@ module TeacherInterface
       @part_of_university_degree_form =
         PartOfUniversityDegreeForm.new(
           qualification: @qualification,
-          part_of_university_degree: @qualification.part_of_university_degree
+          part_of_university_degree: @qualification.part_of_university_degree,
         )
     end
 
@@ -89,8 +89,8 @@ module TeacherInterface
       @part_of_university_degree_form =
         PartOfUniversityDegreeForm.new(
           part_of_university_degree_form_params.merge(
-            qualification: @qualification
-          )
+            qualification: @qualification,
+          ),
         )
       if @part_of_university_degree_form.save
         if @qualification.part_of_university_degree.nil? ||
@@ -111,7 +111,7 @@ module TeacherInterface
                                              :edit,
                                              :teacher_interface,
                                              :application_form,
-                                             degree_qualification
+                                             degree_qualification,
                                            ]
         end
       else
@@ -124,7 +124,7 @@ module TeacherInterface
 
     def destroy
       if ActiveModel::Type::Boolean.new.cast(
-           params.dig(:qualification, :confirm)
+           params.dig(:qualification, :confirm),
          )
         @qualification.destroy!
       end
@@ -147,18 +147,18 @@ module TeacherInterface
           :institution_country_code,
           :start_date,
           :complete_date,
-          :certificate_date
+          :certificate_date,
         )
         .tap do |params|
           params[:institution_country_code] = CountryCode.from_location(
-            params[:institution_country_code]
+            params[:institution_country_code],
           )
         end
     end
 
     def part_of_university_degree_form_params
       params.require(:teacher_interface_part_of_university_degree_form).permit(
-        :part_of_university_degree
+        :part_of_university_degree,
       )
     end
   end

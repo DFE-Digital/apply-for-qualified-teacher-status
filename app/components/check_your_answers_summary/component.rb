@@ -45,7 +45,7 @@ module CheckYourAnswersSummary
     def translation_row_for(field)
       field.merge(
         translation: true,
-        title: "#{row_title_for(field)} translation"
+        title: "#{row_title_for(field)} translation",
       )
     end
 
@@ -58,7 +58,7 @@ module CheckYourAnswersSummary
         key: field[:key],
         title: row_title_for(field),
         value: format_value(model.send(field[:key]), field),
-        href: changeable ? field.fetch(:href) : nil
+        href: changeable ? field.fetch(:href) : nil,
       }
     end
 

@@ -12,7 +12,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
     it "describes the event" do
       expect(component.text).to include(
-        "#{assignee.name} is assigned as the assessor"
+        "#{assignee.name} is assigned as the assessor",
       )
     end
 
@@ -27,7 +27,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
     it "describes the event" do
       expect(component.text).to include(
-        "#{assignee.name} is assigned as the reviewer"
+        "#{assignee.name} is assigned as the reviewer",
       )
     end
 
@@ -47,7 +47,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
     it "describes the event" do
       expect(component.text.squish).to include(
-        "Status changed from #{old_state} to #{new_state}"
+        "Status changed from #{old_state} to #{new_state}",
       )
     end
 

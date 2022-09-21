@@ -4,7 +4,7 @@ module AssessorInterface
       @assessor_assignment_form =
         AssessorAssignmentForm.new(
           application_form:,
-          assessor_id: application_form.assessor_id
+          assessor_id: application_form.assessor_id,
         )
     end
 
@@ -13,7 +13,7 @@ module AssessorInterface
         AssessorAssignmentForm.new(
           application_form:,
           staff: current_staff,
-          assessor_id: assessor_params[:assessor_id]
+          assessor_id: assessor_params[:assessor_id],
         )
 
       if @assessor_assignment_form.save!
@@ -31,7 +31,7 @@ module AssessorInterface
 
     def assessor_params
       params.require(:assessor_interface_assessor_assignment_form).permit(
-        :assessor_id
+        :assessor_id,
       )
     end
   end

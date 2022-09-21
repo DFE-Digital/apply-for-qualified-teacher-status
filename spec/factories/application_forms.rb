@@ -67,7 +67,7 @@ FactoryBot.define do
           application_form:,
           creator: application_form.teacher,
           old_state: "draft",
-          new_state: "submitted"
+          new_state: "submitted",
         )
       end
     end

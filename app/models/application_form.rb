@@ -70,7 +70,7 @@ class ApplicationForm < ApplicationRecord
          submitted: "submitted",
          initial_assessment: "initial_assessment",
          awarded: "awarded",
-         declined: "declined"
+         declined: "declined",
        }
 
   scope :active, -> { not_draft }
@@ -79,7 +79,7 @@ class ApplicationForm < ApplicationRecord
     return if reference.present?
 
     ActiveRecord::Base.connection.execute(
-      "LOCK TABLE application_forms IN EXCLUSIVE MODE"
+      "LOCK TABLE application_forms IN EXCLUSIVE MODE",
     )
 
     max_reference = ApplicationForm.maximum(:reference)&.to_i
@@ -100,8 +100,8 @@ class ApplicationForm < ApplicationRecord
           hash.merge!(
             proof_of_recognition: [
               needs_registration_number ? :registration_number : nil,
-              needs_written_statement ? :written_statement : nil
-            ].compact
+              needs_written_statement ? :written_statement : nil,
+            ].compact,
           )
         end
 
@@ -136,7 +136,7 @@ class ApplicationForm < ApplicationRecord
     if key == :identity_document
       return(
         url_helpers.edit_teacher_interface_application_form_document_path(
-          identification_document
+          identification_document,
         )
       )
     end
@@ -144,7 +144,7 @@ class ApplicationForm < ApplicationRecord
     if key == :written_statement
       return(
         url_helpers.edit_teacher_interface_application_form_document_path(
-          written_statement_document
+          written_statement_document,
         )
       )
     end
@@ -221,7 +221,7 @@ class ApplicationForm < ApplicationRecord
       values.append(
         alternative_given_names,
         alternative_family_name,
-        name_change_document&.uploaded?
+        name_change_document&.uploaded?,
       )
     else
       values.append(true)

@@ -2,7 +2,7 @@ class TeacherMailer < ApplicationMailer
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
       "GOVUK_NOTIFY_TEMPLATE_ID_TEACHER",
-      "95adafaf-0920-4623-bddc-340853c047af"
+      "95adafaf-0920-4623-bddc-340853c047af",
     )
 
   def application_received
@@ -15,7 +15,7 @@ class TeacherMailer < ApplicationMailer
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
       to: teacher.email,
-      subject: I18n.t("mailer.teacher.application_received.subject")
+      subject: I18n.t("mailer.teacher.application_received.subject"),
     )
   end
 end

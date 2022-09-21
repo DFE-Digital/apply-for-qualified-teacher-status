@@ -13,7 +13,7 @@ RSpec.describe Filters::SubmittedAt do
         "submitted_at_after(3i)" => "01",
         "submitted_at_before(1i)" => "2020",
         "submitted_at_before(2i)" => "01",
-        "submitted_at_before(3i)" => "31"
+        "submitted_at_before(3i)" => "31",
       }
     end
     let(:scope) { ApplicationForm.all }
@@ -35,7 +35,7 @@ RSpec.describe Filters::SubmittedAt do
       {
         "submitted_at_before(1i)" => "2020",
         "submitted_at_before(2i)" => "01",
-        "submitted_at_before(3i)" => "01"
+        "submitted_at_before(3i)" => "01",
       }
     end
     let(:scope) { ApplicationForm.all }
@@ -56,7 +56,7 @@ RSpec.describe Filters::SubmittedAt do
       {
         "submitted_at_after(1i)" => "2020",
         "submitted_at_after(2i)" => "01",
-        "submitted_at_after(3i)" => "02"
+        "submitted_at_after(3i)" => "02",
       }
     end
     let(:scope) { ApplicationForm.all }

@@ -11,13 +11,13 @@ class TeacherInterface::AgeRangeForm
             numericality: {
               only_integer: true,
               allow_nil: true,
-              greater_than_or_equal_to: 0
+              greater_than_or_equal_to: 0,
             }
   validates :maximum,
             numericality: {
               only_integer: true,
               allow_nil: true,
-              greater_than_or_equal_to: :minimum
+              greater_than_or_equal_to: :minimum,
             }
 
   def save

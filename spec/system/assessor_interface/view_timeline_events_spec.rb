@@ -26,7 +26,7 @@ RSpec.describe "Assessor view timeline events", type: :system do
 
   def and_i_click_view_timeline
     assessor_application_page.overview.click_link(
-      "View timeline of this applications actions"
+      "View timeline of this applications actions",
     )
   end
 
@@ -36,10 +36,10 @@ RSpec.describe "Assessor view timeline events", type: :system do
 
     expect(timeline_page).to have_timeline_items
     expect(timeline_page.timeline_items.first.title).to have_content(
-      "Status changed"
+      "Status changed",
     )
     expect(timeline_page.timeline_items.second.title).to have_content(
-      "Assessor assigned"
+      "Assessor assigned",
     )
   end
 

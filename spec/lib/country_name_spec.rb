@@ -62,7 +62,7 @@ RSpec.describe CountryName do
     subject(:name) do
       described_class.from_eligibility_check(
         eligibility_check,
-        with_definite_article:
+        with_definite_article:,
       )
     end
 
@@ -81,7 +81,7 @@ RSpec.describe CountryName do
       before do
         eligibility_check.update!(
           region:
-            create(:region, :national, country: create(:country, code: "US"))
+            create(:region, :national, country: create(:country, code: "US")),
         )
       end
 
@@ -91,7 +91,7 @@ RSpec.describe CountryName do
     context "with a named region" do
       before do
         eligibility_check.update!(
-          region: create(:region, country: create(:country, code: "US"))
+          region: create(:region, country: create(:country, code: "US")),
         )
       end
 

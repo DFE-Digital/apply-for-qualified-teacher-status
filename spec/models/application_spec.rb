@@ -61,7 +61,7 @@ RSpec.describe ApplicationForm, type: :model do
 
     it do
       is_expected.to validate_length_of(:reference).is_at_least(3).is_at_most(
-        31
+        31,
       )
     end
 
@@ -71,7 +71,7 @@ RSpec.describe ApplicationForm, type: :model do
         submitted: "submitted",
         initial_assessment: "initial_assessment",
         awarded: "awarded",
-        declined: "declined"
+        declined: "declined",
       ).backed_by_column_of_type(:string)
     end
 
@@ -173,8 +173,8 @@ RSpec.describe ApplicationForm, type: :model do
           {
             about_you: %i[personal_information identity_document],
             qualifications: %i[qualifications age_range subjects],
-            work_history: %i[work_history]
-          }
+            work_history: %i[work_history],
+          },
         )
       end
     end
@@ -187,8 +187,8 @@ RSpec.describe ApplicationForm, type: :model do
           {
             about_you: %i[personal_information identity_document],
             qualifications: %i[qualifications age_range subjects],
-            proof_of_recognition: %i[written_statement]
-          }
+            proof_of_recognition: %i[written_statement],
+          },
         )
       end
     end
@@ -201,8 +201,8 @@ RSpec.describe ApplicationForm, type: :model do
           {
             about_you: %i[personal_information identity_document],
             qualifications: %i[qualifications age_range subjects],
-            proof_of_recognition: %i[registration_number]
-          }
+            proof_of_recognition: %i[registration_number],
+          },
         )
       end
     end
@@ -216,14 +216,14 @@ RSpec.describe ApplicationForm, type: :model do
         {
           about_you: {
             personal_information: :not_started,
-            identity_document: :not_started
+            identity_document: :not_started,
           },
           qualifications: {
             qualifications: :not_started,
             age_range: :not_started,
-            subjects: :not_started
-          }
-        }
+            subjects: :not_started,
+          },
+        },
       )
     end
 
@@ -235,17 +235,17 @@ RSpec.describe ApplicationForm, type: :model do
           {
             about_you: {
               personal_information: :not_started,
-              identity_document: :not_started
+              identity_document: :not_started,
             },
             qualifications: {
               qualifications: :not_started,
               age_range: :not_started,
-              subjects: :not_started
+              subjects: :not_started,
             },
             work_history: {
-              work_history: :not_started
-            }
-          }
+              work_history: :not_started,
+            },
+          },
         )
       end
     end
@@ -258,17 +258,17 @@ RSpec.describe ApplicationForm, type: :model do
           {
             about_you: {
               personal_information: :not_started,
-              identity_document: :not_started
+              identity_document: :not_started,
             },
             qualifications: {
               qualifications: :not_started,
               age_range: :not_started,
-              subjects: :not_started
+              subjects: :not_started,
             },
             proof_of_recognition: {
-              written_statement: :not_started
-            }
-          }
+              written_statement: :not_started,
+            },
+          },
         )
       end
     end
@@ -281,17 +281,17 @@ RSpec.describe ApplicationForm, type: :model do
           {
             about_you: {
               personal_information: :not_started,
-              identity_document: :not_started
+              identity_document: :not_started,
             },
             qualifications: {
               qualifications: :not_started,
               age_range: :not_started,
-              subjects: :not_started
+              subjects: :not_started,
             },
             proof_of_recognition: {
-              registration_number: :not_started
-            }
-          }
+              registration_number: :not_started,
+            },
+          },
         )
       end
     end
@@ -315,7 +315,7 @@ RSpec.describe ApplicationForm, type: :model do
             application_form.update!(
               given_names: "Given",
               family_name: "Family",
-              date_of_birth: Date.new(2000, 1, 1)
+              date_of_birth: Date.new(2000, 1, 1),
             )
           end
 
@@ -330,7 +330,7 @@ RSpec.describe ApplicationForm, type: :model do
               application_form.update!(
                 has_alternative_name: true,
                 alternative_given_names: "Alt Given",
-                alternative_family_name: "Alt Family"
+                alternative_family_name: "Alt Family",
               )
 
               create(:upload, document: application_form.name_change_document)
@@ -384,7 +384,7 @@ RSpec.describe ApplicationForm, type: :model do
               :qualification,
               :completed,
               part_of_university_degree: false,
-              application_form:
+              application_form:,
             )
             create(:qualification, :completed, application_form:)
           end
@@ -398,7 +398,7 @@ RSpec.describe ApplicationForm, type: :model do
               :qualification,
               :completed,
               part_of_university_degree: true,
-              application_form:
+              application_form:,
             )
           end
 
@@ -503,7 +503,7 @@ RSpec.describe ApplicationForm, type: :model do
           before do
             create(
               :upload,
-              document: application_form.written_statement_document
+              document: application_form.written_statement_document,
             )
           end
 

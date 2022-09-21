@@ -22,7 +22,7 @@ class ChangeApplicationFormState
         event_type: "state_changed",
         creator: user,
         new_state:,
-        old_state:
+        old_state:,
       )
     end
   end
