@@ -8,7 +8,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   layout "two_thirds"
 
   def create
-    if (resource = Teacher.find_by(email: sign_up_params[:email]))
+    if (self.resource = Teacher.find_by(email: sign_up_params[:email]))
       if resource.active_for_authentication?
         resource.send_magic_link
       else

@@ -154,6 +154,32 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the_sign_in_form
   end
 
+  it "signing up with existing email address" do
+    given_countries_exist
+
+    when_i_visit_the(:teacher_sign_up_page)
+    then_i_see_the_sign_up_form
+    when_i_fill_create_teacher_email_address
+    and_i_click_continue
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_teacher_confirmation_email
+
+    when_i_visit_the_teacher_confirmation_email
+    then_i_see_successful_confirmation
+
+    given_i_clear_my_session
+
+    when_i_visit_the(:teacher_sign_up_page)
+    then_i_see_the_sign_up_form
+    when_i_fill_create_teacher_email_address
+    and_i_click_continue
+    then_i_see_the_check_your_email_page
+    and_i_receive_a_magic_link_email
+
+    when_i_visit_the_magic_link_email
+    then_i_see_the_new_application_form
+  end
+
   private
 
   def given_countries_exist
