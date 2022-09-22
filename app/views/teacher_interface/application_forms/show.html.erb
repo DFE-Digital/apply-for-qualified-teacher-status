@@ -2,13 +2,7 @@
 
 <h1 class="govuk-heading-xl">Apply for qualified teacher status (QTS)</h1>
 
-<% if @application_form.submitted? %>
-  <%= govuk_panel(title_text: "Application complete") do %>
-    Your reference number
-    <br />
-    <strong><%= @application_form.reference %></strong>
-  <% end %>
-<% else %>
+<% if @application_form.draft? %>
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
     <% if @application_form.can_submit? %>
       Application complete
@@ -54,4 +48,10 @@
     <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_path %>
     <%= govuk_button_link_to "Save and sign out", destroy_teacher_session_path, secondary: true %>
   </div>
+<% else %>
+  <%= govuk_panel(title_text: "Application complete") do %>
+    Your reference number
+    <br />
+    <strong><%= @application_form.reference %></strong>
+  <% end %>
 <% end %>

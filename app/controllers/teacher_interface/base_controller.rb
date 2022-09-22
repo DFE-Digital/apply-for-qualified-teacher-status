@@ -31,4 +31,10 @@ class TeacherInterface::BaseController < ApplicationController
       redirect_to %i[teacher_interface application_form]
     end
   end
+
+  def redirect_unless_application_form_is_draft
+    unless application_form.draft?
+      redirect_to %i[teacher_interface application_form]
+    end
+  end
 end
