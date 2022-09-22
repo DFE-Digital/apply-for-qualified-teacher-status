@@ -5,7 +5,7 @@ module AssessorInterface
 
       @timeline_events =
         TimelineEvent
-          .includes(:note)
+          .includes(:assignee, :assessment_section, :note)
           .where(application_form: @application_form)
           .order(created_at: :desc)
     end

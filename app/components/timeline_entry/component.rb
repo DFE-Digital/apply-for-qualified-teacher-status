@@ -41,7 +41,7 @@ module TimelineEntry
     alias_method :reviewer_assigned_vars, :assessor_assigned_vars
 
     def assessment_section_recorded_vars
-      section = timeline_event.eventable
+      section = timeline_event.assessment_section
       {
         section_name: section.key.titleize,
         section_state:

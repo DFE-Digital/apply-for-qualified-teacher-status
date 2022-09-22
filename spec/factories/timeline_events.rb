@@ -2,31 +2,31 @@
 #
 # Table name: timeline_events
 #
-#  id                  :bigint           not null, primary key
-#  annotation          :string           default(""), not null
-#  creator_type        :string
-#  event_type          :string           not null
-#  eventable_type      :string
-#  new_state           :string           default(""), not null
-#  old_state           :string           default(""), not null
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  application_form_id :bigint           not null
-#  assignee_id         :bigint
-#  creator_id          :integer
-#  eventable_id        :bigint
-#  note_id             :bigint
+#  id                    :bigint           not null, primary key
+#  annotation            :string           default(""), not null
+#  creator_type          :string
+#  event_type            :string           not null
+#  new_state             :string           default(""), not null
+#  old_state             :string           default(""), not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  application_form_id   :bigint           not null
+#  assessment_section_id :bigint
+#  assignee_id           :bigint
+#  creator_id            :integer
+#  note_id               :bigint
 #
 # Indexes
 #
-#  index_timeline_events_on_application_form_id  (application_form_id)
-#  index_timeline_events_on_assignee_id          (assignee_id)
-#  index_timeline_events_on_eventable            (eventable_type,eventable_id)
-#  index_timeline_events_on_note_id              (note_id)
+#  index_timeline_events_on_application_form_id    (application_form_id)
+#  index_timeline_events_on_assessment_section_id  (assessment_section_id)
+#  index_timeline_events_on_assignee_id            (assignee_id)
+#  index_timeline_events_on_note_id                (note_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
+#  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
 #  fk_rails_...  (note_id => notes.id)
 #
@@ -54,7 +54,7 @@ FactoryBot.define do
 
     trait :assessment_section_recorded do
       event_type { "assessment_section_recorded" }
-      eventable do
+      assessment_section do
         build(
           :assessment_section,
           :passed,
