@@ -1,5 +1,7 @@
 module TeacherInterface
   class ApplicationFormsController < BaseController
+    before_action :redirect_unless_application_form_is_draft,
+                  only: %i[edit update]
     before_action :load_application_form, except: %i[new create]
 
     def new

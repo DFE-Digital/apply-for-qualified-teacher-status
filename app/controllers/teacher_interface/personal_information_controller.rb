@@ -1,5 +1,6 @@
 module TeacherInterface
   class PersonalInformationController < BaseController
+    before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
 
     def show
