@@ -54,8 +54,8 @@ module SystemHelpers
     given_an_eligible_eligibility_check(country_check: :written)
   end
 
-  def given_i_am_authorized_as_an_assessor_user(user)
-    login_as(user)
+  def given_i_am_authorized_as_a_user(user)
+    sign_in(user)
   end
 
   def when_i_am_authorized_as_an_assessor_user
