@@ -9,6 +9,9 @@ class TeacherInterface::AlternativeNameForm
   attribute :alternative_family_name, :string
 
   validates :application_form, presence: true
+  validates :alternative_given_names, presence: true, if: :has_alternative_name
+  validates :alternative_family_name, presence: true, if: :has_alternative_name
+  validates :has_alternative_name, inclusion: { in: [true, false] }
 
   def save
     return false unless valid?

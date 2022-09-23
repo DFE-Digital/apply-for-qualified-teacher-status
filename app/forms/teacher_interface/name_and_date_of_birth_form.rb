@@ -10,8 +10,14 @@ class TeacherInterface::NameAndDateOfBirthForm
 
   validates :application_form, presence: true
   validates :date_of_birth,
-            allow_blank: true,
+            comparison: {
+              less_than: Time.zone.today,
+            },
+            presence: true,
             inclusion: 100.years.ago..18.years.ago
+
+  validates :given_names, presence: true
+  validates :family_name, presence: true
 
   def save
     return false unless valid?
