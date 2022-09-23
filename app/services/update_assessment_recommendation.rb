@@ -33,6 +33,10 @@ class UpdateAssessmentRecommendation
 
   def new_application_form_state
     return "awarded" if assessment.award?
+    #TODO: maybe we should move this out of here into the FI request service
+    if assessment.request_further_information?
+      return "further_information_requested"
+    end
     "declined" if assessment.decline?
   end
 end
