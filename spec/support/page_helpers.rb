@@ -231,4 +231,9 @@ module PageHelpers
     @request_further_information_form =
       PageObjects::AssessorInterface::RequestFurtherInformation.new
   end
+
+  def further_information_request_preview_page
+    @further_information_request_preview_page ||=
+      PageObjects::AssessorInterface::FurtherInformationRequestPreview.new
+  end
 end

@@ -17,6 +17,14 @@ RSpec.describe "Assessor requesting further information", type: :system do
       application_id:,
       assessment_id:,
     )
+
+    when_i_click_continue
+    then_i_see_the(
+      :further_information_request_preview_page,
+      application_id:,
+      assessment_id:,
+      further_information_request_id:,
+    )
   end
 
   private
@@ -68,5 +76,9 @@ RSpec.describe "Assessor requesting further information", type: :system do
 
   def assessor
     @assessor ||= create(:staff, :confirmed)
+  end
+
+  def further_information_request_id
+    FurtherInformationRequest.last.id
   end
 end
