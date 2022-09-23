@@ -10,10 +10,17 @@ RSpec.describe "Teacher further information", type: :system do
   it "shows start page" do
     when_i_visit_the(:further_information_requested_start_page)
     then_i_see_the(:further_information_requested_start_page)
+
+    when_i_click_the_start_button
+    then_i_see_the(:further_information_requested_page)
   end
 
   def given_there_is_an_application_form
     application_form
+  end
+
+  def when_i_click_the_start_button
+    further_information_requested_start_page.start_button.click
   end
 
   def teacher

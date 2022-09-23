@@ -160,6 +160,8 @@ Rails.application.routes.draw do
           get "delete", on: :member
         end
       end
+
+      resources :further_information_requests, only: %i[show]
     end
   end
 
