@@ -5,7 +5,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     given_the_service_is_open
     given_an_assessor_exists
     given_there_is_an_application_form
-    given_i_am_authorized_as_an_assessor_user(assessor)
+    given_i_am_authorized_as_a_user(assessor)
   end
 
   it "allows passing the personal information" do
