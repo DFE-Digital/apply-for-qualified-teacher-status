@@ -10,6 +10,12 @@ module PageObjects
         new_states.find { |radio_item| radio_item.label.text == "Award QTS" }
       end
 
+      def request_further_information
+        new_states.find do |radio_item|
+          radio_item.label.text == "Request further information"
+        end
+      end
+
       def decline_qts
         new_states.find { |radio_item| radio_item.label.text == "Decline QTS" }
       end
