@@ -77,6 +77,16 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
+    trait :further_information_requested do
+      state { "further_information_requested" }
+      submitted_at { Time.zone.now }
+    end
+
+    trait :further_information_received do
+      state { "further_information_received" }
+      submitted_at { Time.zone.now }
+    end
+
     trait :awarded do
       state { "awarded" }
       submitted_at { Time.zone.now }

@@ -56,14 +56,14 @@ RSpec.describe ApplicationFormStatusTag::Component, type: :component do
       it { is_expected.to eq("govuk-tag govuk-tag--blue app-task-list__tag") }
     end
 
-    context "with an 'request_further_information' status" do
-      let(:status) { :request_further_information }
+    context "with a 'further_information_requested' status" do
+      let(:status) { :further_information_requested }
 
       it { is_expected.to eq("govuk-tag govuk-tag--yellow app-task-list__tag") }
     end
 
-    context "with an 'received_further_information' status" do
-      let(:status) { :received_further_information }
+    context "with a 'further_information_received' status" do
+      let(:status) { :further_information_received }
 
       it { is_expected.to eq("govuk-tag govuk-tag--purple app-task-list__tag") }
     end

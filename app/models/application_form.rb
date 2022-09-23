@@ -70,6 +70,8 @@ class ApplicationForm < ApplicationRecord
          draft: "draft",
          submitted: "submitted",
          initial_assessment: "initial_assessment",
+         further_information_requested: "further_information_requested",
+         further_information_received: "further_information_received",
          awarded: "awarded",
          declined: "declined",
        }
