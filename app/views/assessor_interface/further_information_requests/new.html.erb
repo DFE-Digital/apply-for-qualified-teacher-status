@@ -1,3 +1,5 @@
+<% content_for :back_link_url, edit_assessor_interface_application_form_assessment_path(@application_form, @assessment) %>
+
 <h1 class="govuk-heading-xl">Compose and send your further information request email</h1>
 <%= form_for [:assessor_interface, @application_form, @assessment, @further_information_request] do |form| %> 
   <%= form.govuk_submit %>
