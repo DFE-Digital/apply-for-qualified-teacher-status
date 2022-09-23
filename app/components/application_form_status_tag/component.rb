@@ -2,7 +2,7 @@ module ApplicationFormStatusTag
   class Component < ViewComponent::Base
     attr_reader :class_context
 
-    def initialize(key:, status:, class_context:)
+    def initialize(key:, status:, class_context: nil)
       super
       @key = key
       @status = status.to_sym
@@ -15,6 +15,10 @@ module ApplicationFormStatusTag
 
     def text
       I18n.t("application_form.status.#{@status}")
+    end
+
+    def classes
+      class_context ? ["#{class_context}__tag"] : []
     end
 
     COLOURS = {
