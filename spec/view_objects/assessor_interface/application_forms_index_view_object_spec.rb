@@ -180,6 +180,14 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             id: "initial_assessment",
             label: "Initial assessment (0)",
           ),
+          OpenStruct.new(
+            id: "further_information_requested",
+            label: "Further information requested (0)",
+          ),
+          OpenStruct.new(
+            id: "further_information_received",
+            label: "Further information received (0)",
+          ),
           OpenStruct.new(id: "awarded", label: "Awarded (0)"),
           OpenStruct.new(id: "declined", label: "Declined (0)"),
         ],
@@ -188,22 +196,32 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
     context "with application forms" do
       before do
-        create_list(:application_form, 2, :submitted)
-        create_list(:application_form, 3, :initial_assessment)
-        create_list(:application_form, 4, :awarded)
-        create_list(:application_form, 5, :declined)
+        create_list(:application_form, 1, :submitted)
+        create_list(:application_form, 2, :initial_assessment)
+        create_list(:application_form, 3, :further_information_requested)
+        create_list(:application_form, 4, :further_information_received)
+        create_list(:application_form, 5, :awarded)
+        create_list(:application_form, 6, :declined)
       end
 
       it do
         is_expected.to eq(
           [
-            OpenStruct.new(id: "submitted", label: "Not started (2)"),
+            OpenStruct.new(id: "submitted", label: "Not started (1)"),
             OpenStruct.new(
               id: "initial_assessment",
-              label: "Initial assessment (3)",
+              label: "Initial assessment (2)",
             ),
-            OpenStruct.new(id: "awarded", label: "Awarded (4)"),
-            OpenStruct.new(id: "declined", label: "Declined (5)"),
+            OpenStruct.new(
+              id: "further_information_requested",
+              label: "Further information requested (3)",
+            ),
+            OpenStruct.new(
+              id: "further_information_received",
+              label: "Further information received (4)",
+            ),
+            OpenStruct.new(id: "awarded", label: "Awarded (5)"),
+            OpenStruct.new(id: "declined", label: "Declined (6)"),
           ],
         )
       end

@@ -48,6 +48,7 @@ namespace :example_data do
     Qualification.delete_all
     WorkHistory.delete_all
     TimelineEvent.delete_all
+    Note.delete_all
     ApplicationForm.delete_all
     Teacher.delete_all
   end
@@ -128,5 +129,21 @@ def application_form_traits_for(region)
       with_age_range
       with_subjects
     ] + evidential_traits << :submitted,
+    %i[
+      with_personal_information
+      with_completed_qualification
+      with_identification_document
+      with_age_range
+      with_subjects
+    ] + evidential_traits << :further_information_requested,
+    %i[
+      with_personal_information
+      with_alternative_name
+      with_name_change_document
+      with_completed_qualification
+      with_identification_document
+      with_age_range
+      with_subjects
+    ] + evidential_traits << :further_information_requested,
   ]
 end

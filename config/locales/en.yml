@@ -24,8 +24,8 @@ en:
       not_started: Not started
       in_progress: In progress
       initial_assessment: Initial assessment
-      request_further_information: Request further information
-      received_further_information: Received further information
+      further_information_requested: Further information requested
+      further_information_received: Further information received
       awarded: Awarded
       declined: Declined
       draft: Draft
