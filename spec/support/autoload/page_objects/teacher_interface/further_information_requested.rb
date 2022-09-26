@@ -5,6 +5,7 @@ module PageObjects
 
       element :heading, ".govuk-heading-l"
       section :task_list, TaskList, ".app-task-list"
+      element :save_and_sign_out_button, ".govuk-button"
     end
   end
 end
