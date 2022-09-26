@@ -17,6 +17,8 @@
 #
 FactoryBot.define do
   factory :further_information_request do
+    association :assessment
+
     trait :requested do
       state { "requested" }
     end
