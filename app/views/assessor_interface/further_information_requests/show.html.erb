@@ -1,3 +1,7 @@
 <% content_for :back_link_url, new_assessor_interface_application_form_assessment_further_information_request_path(@application_form, @assessment) %>
 
 <h1 class="govuk-heading-xl">Further information request email preview</h1>
+
+<div class="app-email-preview">
+  <%= @further_information_request.email_content %>
+</div>
