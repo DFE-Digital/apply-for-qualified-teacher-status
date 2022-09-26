@@ -36,7 +36,6 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
-      it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
   end
 end
