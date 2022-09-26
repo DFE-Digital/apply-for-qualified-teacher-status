@@ -65,4 +65,15 @@
     <br />
     <strong><%= @application_form.reference %></strong>
   <% end %>
+
+  <p class="govuk-body">We’ve received your application for QTS and we’ve sent you a confirmation email.</p>
+  <p class="govuk-body">Keep the email safe, as you may need your reference number for future correspondence about your application.</p>
+
+  <h2 class="govuk-heading-m">What happens next</h2>
+  <p class="govuk-body">We aim to review your application within 1 month. If we need more information, we’ll email you again.</p>
+  <p class="govuk-body">We aim to reach a final decision on applications within 90 days of submission.</p>
+
+  <h2 class="govuk-heading-s govuk-!-font-weight-regular">If you have any questions, contact:</h2>
+  <p class="govuk-body"><a class="govuk-link" href="mailto:<%= t('service.email') %>"><%= t('service.email') %></a>.</p>
+  <p class="govuk-body"><a class="govuk-link" href="https://docs.google.com/forms/d/1OpMhXJ1blJu2qFqW7VWwKnfjIoU-5SmOLXdgI0Z_kZg/viewform?edit_requested=true">What did you think of this service?</a> (takes 30 seconds)</p>
 <% end %>
