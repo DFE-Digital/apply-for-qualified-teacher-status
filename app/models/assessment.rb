@@ -23,7 +23,12 @@ class Assessment < ApplicationRecord
   has_many :further_information_requests
 
   enum :recommendation,
-       { unknown: "unknown", award: "award", decline: "decline" },
+       {
+         unknown: "unknown",
+         award: "award",
+         decline: "decline",
+         request_further_information: "request_further_information",
+       },
        default: :unknown
 
   validates :recommendation,
@@ -48,9 +53,14 @@ class Assessment < ApplicationRecord
     sections.any? { |section| section.state == :action_required }
   end
 
+  alias_method :can_request_further_information?, :can_decline?
+
   def available_recommendations
     [].tap do |recommendations|
       recommendations << "award" if can_award?
+      if can_request_further_information?
+        recommendations << "request_further_information"
+      end
       recommendations << "decline" if can_decline?
     end
   end

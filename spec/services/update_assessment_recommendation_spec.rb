@@ -35,4 +35,32 @@ RSpec.describe UpdateAssessmentRecommendation do
       it { is_expected.to eq("awarded") }
     end
   end
+
+  context "request further information recommendataion" do
+    let(:new_recommendation) { :request_further_information }
+
+    describe "recommendation" do
+      subject(:recommendation) { assessment.recommendation }
+
+      it { is_expected.to eq("unknown") }
+
+      context "after calling the service" do
+        before { call }
+
+        it { is_expected.to eq("request_further_information") }
+      end
+    end
+
+    describe "application form status" do
+      subject(:state) { application_form.state }
+
+      it { is_expected.to eq("submitted") }
+
+      context "after calling the service" do
+        before { call }
+
+        it { is_expected.to eq("further_information_requested") }
+      end
+    end
+  end
 end

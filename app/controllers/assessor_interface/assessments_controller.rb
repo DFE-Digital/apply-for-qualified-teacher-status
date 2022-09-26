@@ -11,7 +11,7 @@ module AssessorInterface
            user: current_staff,
            new_recommendation: assessment_params[:recommendation],
          )
-        redirect_to [:assessor_interface, @application_form]
+        redirect_to post_update_redirect_path
       else
         render :edit, status: :unprocessable_entity
       end
@@ -31,6 +31,20 @@ module AssessorInterface
 
     def assessment_params
       params.require(:assessment).permit(:recommendation)
+    end
+
+    def post_update_redirect_path
+      if @assessment.request_further_information?
+        return [
+          :new,
+          :assessor_interface,
+          @application_form,
+          @assessment,
+          :further_information_request
+        ]
+      end
+
+      [:assessor_interface, @application_form]
     end
   end
 end

@@ -26,6 +26,7 @@ en:
       assessment:
         recommendation_options:
           award: Award QTS
+          request_further_information: Request further information
           decline: Decline QTS
       assessor_interface_create_note_form:
         text: Add a note to this application

@@ -36,6 +36,7 @@ RSpec.describe Assessment, type: :model do
         unknown: "unknown",
         award: "award",
         decline: "decline",
+        request_further_information: "request_further_information",
       ).backed_by_column_of_type(:string)
     end
   end
@@ -158,6 +159,26 @@ RSpec.describe Assessment, type: :model do
     end
   end
 
+  describe "#can_request_further_information?" do
+    subject(:can_decline?) { assessment.can_request_further_information? }
+
+    context "with a passed assessment" do
+      before do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+        create(:assessment_section, :qualifications, :passed, assessment:)
+      end
+      it { is_expected.to be false }
+    end
+
+    context "with a failed assessment" do
+      before do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+        create(:assessment_section, :qualifications, :failed, assessment:)
+      end
+      it { is_expected.to be true }
+    end
+  end
+
   describe "#available_recommendations" do
     subject(:available_recommendations) { assessment.available_recommendations }
 
@@ -169,6 +190,15 @@ RSpec.describe Assessment, type: :model do
     context "with a decline-able assessment" do
       before { expect(assessment).to receive(:can_decline?).and_return(true) }
       it { is_expected.to include("decline") }
+    end
+
+    context "with can_request_further_information-able assessment" do
+      before do
+        expect(assessment).to receive(
+          :can_request_further_information?,
+        ).and_return(true)
+      end
+      it { is_expected.to include("request_further_information") }
     end
   end
 end

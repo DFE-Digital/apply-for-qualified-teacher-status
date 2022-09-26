@@ -109,6 +109,8 @@ module SystemHelpers
     click_button "Continue", visible: false
   end
 
+  alias_method :when_i_click_continue, :and_i_click_continue
+
   def and_i_receive_a_teacher_confirmation_email
     message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil

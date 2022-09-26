@@ -25,6 +25,9 @@ Rails.application.routes.draw do
                   path: "/sections",
                   param: :key,
                   only: %i[show update]
+        resources :further_information_requests,
+                  path: "/further-information-requests",
+                  only: %i[new create show]
       end
     end
   end

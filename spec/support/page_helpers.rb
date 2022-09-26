@@ -231,4 +231,14 @@ module PageHelpers
     @registration_number_form =
       PageObjects::TeacherInterface::RegistrationNumberForm.new
   end
+
+  def request_further_information_page
+    @request_further_information_form =
+      PageObjects::AssessorInterface::RequestFurtherInformation.new
+  end
+
+  def further_information_request_preview_page
+    @further_information_request_preview_page ||=
+      PageObjects::AssessorInterface::FurtherInformationRequestPreview.new
+  end
 end
