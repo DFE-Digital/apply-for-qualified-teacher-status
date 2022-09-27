@@ -75,6 +75,11 @@ module PageHelpers
       PageObjects::TeacherInterface::FurtherInformationRequestedStart.new
   end
 
+  def further_information_required_page
+    @further_information_required_page =
+      PageObjects::TeacherInterface::FurtherInformationRequired.new
+  end
+
   def ineligible_page
     @ineligible_page = PageObjects::EligibilityInterface::Ineligible.new
   end

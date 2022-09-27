@@ -20,6 +20,26 @@ RSpec.describe "Teacher further information", type: :system do
     then_i_see_the(:signed_out_page)
   end
 
+  it "allows filling in a text item" do
+    when_i_visit_the(
+      :further_information_requested_page,
+      request_id: further_information_request.id,
+    )
+
+    when_i_click_the_text_task_list_item
+    then_i_see_the(:further_information_required_page)
+  end
+
+  it "allows filling in a document item" do
+    when_i_visit_the(
+      :further_information_requested_page,
+      request_id: further_information_request.id,
+    )
+
+    when_i_click_the_document_task_list_item
+    then_i_see_the(:further_information_required_page)
+  end
+
   def given_there_is_an_application_form
     application_form
   end
@@ -40,6 +60,32 @@ RSpec.describe "Teacher further information", type: :system do
       further_information_requested_page.task_list.sections.first.items.second
     expect(item.link.text).to eq("Document")
     expect(item.status_tag.text).to eq("NOT STARTED")
+  end
+
+  def when_i_click_the_text_task_list_item
+    further_information_requested_page
+      .task_list
+      .sections
+      .first
+      .items
+      .first
+      .link
+      .click
+  end
+
+  def when_i_click_the_document_task_list_item
+    further_information_requested_page
+      .task_list
+      .sections
+      .first
+      .items
+      .second
+      .link
+      .click
+  end
+
+  def and_i_click_back
+    further_information_required_page.back_link.click
   end
 
   def when_i_click_the_save_and_sign_out_button
@@ -68,5 +114,9 @@ RSpec.describe "Teacher further information", type: :system do
         )
         application_form
       end
+  end
+
+  def further_information_request
+    application_form.assessment.further_information_requests.first
   end
 end
