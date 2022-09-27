@@ -5,7 +5,11 @@
 <h3 class="govuk-heading-s">Notes from the assessor</h3>
 <p class="govuk-inset-text"><%= @further_information_request_item.assessor_notes %></p>
 
-<%= form_with model: @further_information_request_item_form, url: teacher_interface_application_form_further_information_request_further_information_request_item_path, method: :put do |f| %>
+<%= form_with model: @further_information_request_item_text_form, url: teacher_interface_application_form_further_information_request_further_information_request_item_path, method: :put do |f| %>
+  <% if @further_information_request_item.text? %>
+    <%= f.govuk_text_area :response, label: { size: "s" } %>
+  <% end %>
+
   <% if @further_information_request_item.document? %>
     <p class="govuk-body">You can upload this document on the next screen.</p>
   <% end %>
