@@ -1,7 +1,18 @@
 <% content_for :back_link_url, new_assessor_interface_application_form_assessment_further_information_request_path(@application_form, @assessment) %>
 
-<h1 class="govuk-heading-xl">Further information request email preview</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Further information request email preview</h1>
+  </div>
+</div>
 
-<div class="app-email-preview">
-  <%= @further_information_request.email_content %>
+<div class="app-email-preview govuk-body">
+  <div class="app-email-preview__header">
+    <div class="app-email-preview__header__logo">
+      GOV.UK
+    </div>
+  </div>
+  <div class="app-email-preview__content">
+    <%= @email_preview.html_safe %>
+  </div>
 </div>
