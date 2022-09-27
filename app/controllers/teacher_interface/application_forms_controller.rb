@@ -24,8 +24,19 @@ module TeacherInterface
     end
 
     def show
-      unless @application_form
+      unless application_form
         redirect_to %i[new teacher_interface application_form]
+        return
+      end
+
+      if application_form.further_information_requested?
+        @further_information_request =
+          FurtherInformationRequest
+            .joins(:assessment)
+            .requested
+            .where(assessments: { application_form: })
+            .order(:created_at)
+            .first
       end
     end
 

@@ -21,4 +21,8 @@ class FurtherInformationRequestItem < ApplicationRecord
   has_one :document, as: :documentable
 
   enum :information_type, { text: "text", document: "document" }
+
+  def state
+    :not_started
+  end
 end

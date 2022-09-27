@@ -59,6 +59,7 @@
   </div>
   <p class="govuk-body">You must add all of the requested information, so the assessor can continue reviewing your QTS application.</p>
   <p class="govuk-body">The next screen will take you to the first section you need to complete.</p>
+  <%= govuk_start_button(text: "Start now", href: teacher_interface_application_form_further_information_request_path(@further_information_request)) %>
 <% else %>
   <%= govuk_panel(title_text: "Application complete") do %>
     Your reference number

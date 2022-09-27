@@ -30,4 +30,14 @@ RSpec.describe FurtherInformationRequestItem do
       document: "document",
     ).backed_by_column_of_type(:string)
   end
+
+  subject(:further_information_request_item) do
+    create(:further_information_request_item)
+  end
+
+  describe "#state" do
+    subject(:state) { further_information_request_item.state }
+
+    it { is_expected.to eq(:not_started) }
+  end
 end

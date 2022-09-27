@@ -1,0 +1,32 @@
+<% content_for :page_title, "Apply for qualified teacher status (QTS)" %>
+<% content_for :back_link_url, teacher_interface_application_form_path %>
+
+<h1 class="govuk-heading-l">Apply for qualified teacher status (QTS)</h1>
+
+<ol class="app-task-list">
+  <li>
+    <h2 class="app-task-list__section">
+      Further information requested
+    </h2>
+
+    <ul class="app-task-list__items">
+      <% @further_information_request.items.each do |item| %>
+        <li class="app-task-list__item">
+            <span class="app-task-list__task-name">
+              <%= link_to t(".items.title.#{item.information_type}"),
+                          edit_teacher_interface_application_form_further_information_request_further_information_request_item_path(@further_information_request, item),
+                          aria: { describedby: "#{item.id}-status" } %>
+            </span>
+
+          <%= render(ApplicationFormStatusTag::Component.new(
+            key: item.id,
+            status: item.state,
+            class_context: "app-task-list"
+          )) %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+</ol>
+
+<%= govuk_button_link_to "Save and sign out", destroy_teacher_session_path, secondary: true %>

@@ -494,7 +494,9 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_personal_information
-    teacher_application_page.click_item("Enter your personal information")
+    teacher_application_page.task_list.click_item(
+      "Enter your personal information",
+    )
   end
 
   def when_i_fill_in_the_name_and_date_of_birth_form
@@ -533,7 +535,9 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_qualifications
-    teacher_application_page.click_item("Add your teaching qualifications")
+    teacher_application_page.task_list.click_item(
+      "Add your teaching qualifications",
+    )
   end
 
   def when_i_fill_in_qualifications
@@ -568,7 +572,9 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_subjects
-    teacher_application_page.click_item("Enter the subjects you can teach")
+    teacher_application_page.task_list.click_item(
+      "Enter the subjects you can teach",
+    )
   end
 
   def and_i_click_add_another_subject
@@ -580,7 +586,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_work_history
-    teacher_application_page.click_item("Add your work history")
+    teacher_application_page.task_list.click_item("Add your work history")
   end
 
   def when_i_fill_in_has_work_history
@@ -599,7 +605,9 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_registration_number
-    teacher_application_page.click_item("Enter your registration number")
+    teacher_application_page.task_list.click_item(
+      "Enter your registration number",
+    )
   end
 
   def when_i_fill_in_registration_number
@@ -608,7 +616,9 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_click_written_statement
-    teacher_application_page.click_item("Upload your written statement")
+    teacher_application_page.task_list.click_item(
+      "Upload your written statement",
+    )
   end
 
   def when_i_click_delete

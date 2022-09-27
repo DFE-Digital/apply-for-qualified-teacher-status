@@ -160,6 +160,12 @@ Rails.application.routes.draw do
           get "delete", on: :member
         end
       end
+
+      resources :further_information_requests, only: %i[show] do
+        resources :further_information_request_items,
+                  path: "/items",
+                  only: %i[edit]
+      end
     end
   end
 
