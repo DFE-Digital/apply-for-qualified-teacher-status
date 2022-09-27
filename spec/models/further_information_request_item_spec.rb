@@ -43,7 +43,17 @@ RSpec.describe FurtherInformationRequestItem do
         further_information_request_item.update!(information_type: "text")
       end
 
-      it { is_expected.to eq(:not_started) }
+      context "without a response" do
+        it { is_expected.to eq(:not_started) }
+      end
+
+      context "with a response" do
+        before do
+          further_information_request_item.update!(response: "response")
+        end
+
+        it { is_expected.to eq(:completed) }
+      end
     end
 
     context "with document information" do
@@ -52,7 +62,9 @@ RSpec.describe FurtherInformationRequestItem do
         further_information_request_item.document = create(:document)
       end
 
-      it { is_expected.to eq(:not_started) }
+      context "without an upload" do
+        it { is_expected.to eq(:not_started) }
+      end
 
       context "with an upload" do
         before do

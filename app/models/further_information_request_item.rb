@@ -23,6 +23,12 @@ class FurtherInformationRequestItem < ApplicationRecord
   enum :information_type, { text: "text", document: "document" }
 
   def state
-    document? && document.uploaded? ? :completed : :not_started
+    completed? ? :completed : :not_started
+  end
+
+  private
+
+  def completed?
+    (text? && response.present?) || (document? && document.uploaded?)
   end
 end
