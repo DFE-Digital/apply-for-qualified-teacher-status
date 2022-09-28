@@ -4,7 +4,7 @@ en:
     hint:
       assessment:
         recommendation: You've completed your review of this QTS application and marked all sections as complete to your satisfaction.
-      assessment_section:
+      assessor_interface_assessment_section_form:
         selected_failure_reasons: Select all options that are relevant to you.
       assessor_interface_create_note_form:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
@@ -60,7 +60,7 @@ en:
     legend:
       assessment:
         recommendation: QTS review completed
-      assessment_section:
+      assessor_interface_assessment_section_form:
         selected_failure_reasons: What are the reasons for your recommendation?
       qualification:
         add_another: Add another qualification?

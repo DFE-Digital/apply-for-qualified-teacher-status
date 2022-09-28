@@ -13,6 +13,7 @@ module PageObjects
         sections :failure_reason_checkbox_items,
                  PageObjects::GovukCheckboxItem,
                  ".govuk-checkboxes__item"
+        elements :failure_reason_note_textareas, ".govuk-textarea"
         element :continue_button, "button"
       end
     end

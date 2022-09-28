@@ -148,6 +148,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
       .first
       .checkbox
       .click
+    check_personal_information_page
+      .form
+      .failure_reason_note_textareas
+      .first.fill_in with: "Note."
     check_personal_information_page.form.continue_button.click
   end
 
@@ -178,6 +182,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
       .first
       .checkbox
       .click
+    check_qualifications_page
+      .form
+      .failure_reason_note_textareas
+      .first.fill_in with: "Note."
     check_qualifications_page.form.continue_button.click
   end
 
@@ -219,6 +227,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
       .first
       .checkbox
       .click
+    check_work_history_page
+      .form
+      .failure_reason_note_textareas
+      .first.fill_in with: "Note."
     check_work_history_page.form.continue_button.click
   end
 
@@ -256,6 +268,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
       .first
       .checkbox
       .click
+    check_professional_standing_page
+      .form
+      .failure_reason_note_textareas
+      .first.fill_in with: "Note."
     check_professional_standing_page.form.continue_button.click
   end
 
