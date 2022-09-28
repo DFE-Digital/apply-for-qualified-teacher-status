@@ -148,5 +148,26 @@ RSpec.describe Document, type: :model do
         end
       end
     end
+
+    context "with a further information request" do
+      let(:further_information_request_item) do
+        build(:further_information_request_item)
+      end
+
+      before do
+        document.documentable = further_information_request_item
+        document.document_type = :further_information_request
+      end
+
+      it do
+        is_expected.to eq(
+          [
+            :teacher_interface,
+            :application_form,
+            further_information_request_item.further_information_request,
+          ],
+        )
+      end
+    end
   end
 end
