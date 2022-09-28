@@ -7,7 +7,7 @@ module TeacherInterface
     def edit
       if document.uploads.empty?
         redirect_to new_teacher_interface_application_form_document_upload_path(
-                      @document,
+                      document,
                     )
       end
 
@@ -22,10 +22,10 @@ module TeacherInterface
       if @add_another_upload_form.valid?
         if @add_another_upload_form.add_another
           redirect_to new_teacher_interface_application_form_document_upload_path(
-                        @document,
+                        document,
                       )
         else
-          redirect_to document.continue_url
+          redirect_to DocumentContinueRedirection.call(document:)
         end
       else
         render :edit, status: :unprocessable_entity
