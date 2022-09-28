@@ -2,5 +2,6 @@
 
 <h1 class="govuk-heading-xl">Compose and send your further information request email</h1>
 <%= form_for [:assessor_interface, @application_form, @assessment, @further_information_request] do |form| %> 
+  <%= form.govuk_text_area :email_content, label: { text: "Email content" } %>
   <%= form.govuk_submit %>
 <%- end -%>

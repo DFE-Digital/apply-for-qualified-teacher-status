@@ -121,6 +121,9 @@ en:
       hint: This means you have all the qualifications needed to teach in a state school. You'll need to provide evidence of this if you apply for QTS.
 
   mailer:
+    further_information:
+      required:
+        subject: Further information required
     teacher:
       application_received:
         subject: We’ve received your application for qualified teacher status (QTS)
