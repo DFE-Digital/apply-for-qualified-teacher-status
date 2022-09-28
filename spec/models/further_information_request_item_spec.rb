@@ -38,6 +38,29 @@ RSpec.describe FurtherInformationRequestItem do
   describe "#state" do
     subject(:state) { further_information_request_item.state }
 
-    it { is_expected.to eq(:not_started) }
+    context "with text information" do
+      before do
+        further_information_request_item.update!(information_type: "text")
+      end
+
+      it { is_expected.to eq(:not_started) }
+    end
+
+    context "with document information" do
+      before do
+        further_information_request_item.update!(information_type: "document")
+        further_information_request_item.document = create(:document)
+      end
+
+      it { is_expected.to eq(:not_started) }
+
+      context "with an upload" do
+        before do
+          create(:upload, document: further_information_request_item.document)
+        end
+
+        it { is_expected.to eq(:completed) }
+      end
+    end
   end
 end
