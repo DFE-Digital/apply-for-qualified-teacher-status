@@ -6,6 +6,12 @@ module PageObjects
       element :back_link, ".govuk-back-link"
       element :heading, ".govuk-heading-l"
       element :assessor_notes, ".govuk-inset-text"
+
+      section :form, "form" do
+        element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
+        element :save_and_come_back_later_button,
+                ".govuk-button.govuk-button--secondary"
+      end
     end
   end
 end

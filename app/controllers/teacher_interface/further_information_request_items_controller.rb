@@ -4,8 +4,24 @@ module TeacherInterface
 
     def edit
       @further_information_request_item = further_information_request_item
-      @further_information_request =
-        further_information_request_item.further_information_request
+      @further_information_request = further_information_request
+    end
+
+    def update
+      if params[:next] == "save_and_continue"
+        redirect_to [
+                      :edit,
+                      :teacher_interface,
+                      :application_form,
+                      further_information_request_item.document,
+                    ]
+      else
+        redirect_to [
+                      :teacher_interface,
+                      :application_form,
+                      further_information_request,
+                    ]
+      end
     end
 
     private
@@ -24,6 +40,11 @@ module TeacherInterface
             },
           )
           .find(params[:id])
+    end
+
+    def further_information_request
+      @further_information_request =
+        further_information_request_item.further_information_request
     end
   end
 end

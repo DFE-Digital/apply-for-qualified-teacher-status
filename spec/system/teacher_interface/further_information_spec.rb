@@ -38,6 +38,15 @@ RSpec.describe "Teacher further information", type: :system do
 
     when_i_click_the_document_task_list_item
     then_i_see_the(:further_information_required_page)
+    and_i_click_continue
+    then_i_see_the(:upload_document_page)
+
+    when_i_upload_a_file
+    then_i_see_the(:document_form_page)
+
+    when_i_dont_need_to_upload_another_file
+    then_i_see_the(:further_information_requested_page)
+    and_i_see_a_completed_document_task_list_item
   end
 
   def given_there_is_an_application_form
@@ -56,10 +65,13 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def and_i_see_the_document_task_list_item
-    item =
-      further_information_requested_page.task_list.sections.first.items.second
-    expect(item.link.text).to eq("Document")
-    expect(item.status_tag.text).to eq("NOT STARTED")
+    expect(document_task_list_item.link.text).to eq("Document")
+    expect(document_task_list_item.status_tag.text).to eq("NOT STARTED")
+  end
+
+  def and_i_see_a_completed_document_task_list_item
+    expect(document_task_list_item.link.text).to eq("Document")
+    expect(document_task_list_item.status_tag.text).to eq("COMPLETED")
   end
 
   def when_i_click_the_text_task_list_item
@@ -74,18 +86,19 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def when_i_click_the_document_task_list_item
-    further_information_requested_page
-      .task_list
-      .sections
-      .first
-      .items
-      .second
-      .link
-      .click
+    document_task_list_item.link.click
   end
 
-  def and_i_click_back
-    further_information_required_page.back_link.click
+  def when_i_upload_a_file
+    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+      file_fixture("upload.pdf"),
+    )
+    upload_document_page.form.continue_button.click
+  end
+
+  def when_i_dont_need_to_upload_another_file
+    document_form_page.form.no_radio_item.input.click
+    document_form_page.form.continue_button.click
   end
 
   def when_i_click_the_save_and_sign_out_button
@@ -118,5 +131,9 @@ RSpec.describe "Teacher further information", type: :system do
 
   def further_information_request
     application_form.assessment.further_information_requests.first
+  end
+
+  def document_task_list_item
+    further_information_requested_page.task_list.find_item("Document")
   end
 end

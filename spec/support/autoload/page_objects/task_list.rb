@@ -2,15 +2,12 @@ module PageObjects
   class TaskList < SitePrism::Section
     sections :sections, TaskListSection, ".app-task-list > li"
 
-    def find_item(link_text)
-      sections
-        .flat_map(&:items)
-        .map(&:link)
-        .find { |link| link.text == link_text }
+    def find_item(text)
+      sections.flat_map(&:items).find { |item| item.link.text == text }
     end
 
     def click_item(link_text)
-      find_item(link_text).click
+      find_item(link_text).link.click
     end
   end
 end
