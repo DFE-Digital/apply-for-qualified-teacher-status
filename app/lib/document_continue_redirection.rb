@@ -8,7 +8,11 @@ class DocumentContinueRedirection
   end
 
   def call
-    send("#{document.document_type}_url")
+    if document.for_further_information_request?
+      further_information_request_url
+    else
+      send("#{document.document_type}_url")
+    end
   end
 
   private

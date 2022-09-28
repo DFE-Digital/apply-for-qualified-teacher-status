@@ -65,10 +65,7 @@ RSpec.describe DocumentContinueRedirection do
         build(:further_information_request_item)
       end
 
-      before do
-        document.documentable = further_information_request_item
-        document.document_type = :further_information_request
-      end
+      before { document.documentable = further_information_request_item }
 
       it do
         is_expected.to eq(
