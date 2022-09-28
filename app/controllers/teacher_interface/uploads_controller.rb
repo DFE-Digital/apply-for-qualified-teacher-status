@@ -19,7 +19,9 @@ module TeacherInterface
                                            @document,
                                          ]
       elsif @upload_form.blank?
-        redirect_to_if_save_and_continue document.continue_url
+        redirect_to_if_save_and_continue DocumentContinueRedirection.call(
+                                           document:,
+                                         )
       else
         render :new, status: :unprocessable_entity
       end

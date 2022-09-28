@@ -47,37 +47,4 @@ class Document < ApplicationRecord
   def uploaded?
     !uploads.empty?
   end
-
-  def continue_url
-    case document_type
-    when "name_change"
-      %i[check teacher_interface application_form personal_information]
-    when "qualification_certificate"
-      [
-        :edit,
-        :teacher_interface,
-        :application_form,
-        documentable.transcript_document,
-      ]
-    when "qualification_transcript"
-      if documentable.is_teaching_qualification?
-        [
-          :part_of_university_degree,
-          :teacher_interface,
-          :application_form,
-          documentable,
-        ]
-      else
-        %i[check teacher_interface application_form qualifications]
-      end
-    when "further_information_request"
-      [
-        :teacher_interface,
-        :application_form,
-        documentable.further_information_request,
-      ]
-    else
-      %i[teacher_interface application_form]
-    end
-  end
 end
