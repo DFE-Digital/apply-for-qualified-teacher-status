@@ -7,7 +7,7 @@
 #  failure_reasons          :string           default([]), is an Array
 #  key                      :string           not null
 #  passed                   :boolean
-#  selected_failure_reasons :string           default([]), is an Array
+#  selected_failure_reasons :jsonb            not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  assessment_id            :bigint           not null
@@ -59,7 +59,7 @@ class AssessmentSection < ApplicationRecord
 
   def prepare_selected_failure_reasons
     return if selected_failure_reasons.nil?
-    selected_failure_reasons.compact_blank!
+    selected_failure_reasons.try(:compact_blank!)
     selected_failure_reasons.clear if passed
   end
 end

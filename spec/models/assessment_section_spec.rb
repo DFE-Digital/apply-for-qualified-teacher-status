@@ -9,7 +9,7 @@
 #  failure_reasons          :string           default([]), is an Array
 #  key                      :string           not null
 #  passed                   :boolean
-#  selected_failure_reasons :string           default([]), is an Array
+#  selected_failure_reasons :jsonb            not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  assessment_id            :bigint           not null

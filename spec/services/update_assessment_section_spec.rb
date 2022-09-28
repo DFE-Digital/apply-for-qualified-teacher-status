@@ -38,7 +38,7 @@ RSpec.describe UpdateAssessmentSection do
     it "sets the failure reasons" do
       expect { subject }.to change {
         assessment_section.selected_failure_reasons
-      }.from([]).to([selected_failure_reason])
+      }.from({}).to([selected_failure_reason])
     end
 
     it "changes the assessor" do
