@@ -51,21 +51,6 @@ RSpec.describe AssessmentSection, type: :model do
     end
   end
 
-  context "when passed" do
-    before do
-      assessment_section.update!(
-        key: :personal_information,
-        passed: false,
-        selected_failure_reasons: %w[failure_reason],
-      )
-    end
-
-    it "clears selected failure reasons" do
-      assessment_section.update!(passed: true)
-      expect(assessment_section.selected_failure_reasons).to be_empty
-    end
-  end
-
   describe "#state" do
     subject(:state) { assessment_section.state }
 
