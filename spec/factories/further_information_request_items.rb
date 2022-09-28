@@ -26,6 +26,7 @@ FactoryBot.define do
 
     trait :with_document_response do
       information_type { "document" }
+      association :document, :further_information_request
     end
   end
 end

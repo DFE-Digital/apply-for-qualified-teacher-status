@@ -70,6 +70,12 @@ class Document < ApplicationRecord
       else
         %i[check teacher_interface application_form qualifications]
       end
+    when "further_information_request"
+      [
+        :teacher_interface,
+        :application_form,
+        documentable.further_information_request,
+      ]
     else
       %i[teacher_interface application_form]
     end

@@ -164,7 +164,7 @@ Rails.application.routes.draw do
       resources :further_information_requests, only: %i[show] do
         resources :further_information_request_items,
                   path: "/items",
-                  only: %i[edit]
+                  only: %i[edit update]
       end
     end
   end

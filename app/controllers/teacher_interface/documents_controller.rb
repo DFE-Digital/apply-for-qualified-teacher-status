@@ -1,16 +1,17 @@
 module TeacherInterface
   class DocumentsController < BaseController
-    before_action :redirect_unless_application_form_is_draft
+    before_action :redirect_unless_draft_or_further_information
     before_action :load_application_form
     before_action :load_document
 
     def edit
-      @add_another_upload_form = AddAnotherUploadForm.new
       if document.uploads.empty?
         redirect_to new_teacher_interface_application_form_document_upload_path(
                       @document,
                     )
       end
+
+      @add_another_upload_form = AddAnotherUploadForm.new
     end
 
     def update

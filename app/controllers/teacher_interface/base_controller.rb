@@ -20,7 +20,14 @@ class TeacherInterface::BaseController < ApplicationController
   def document
     @document ||=
       Document.where(
-        documentable: [application_form] + application_form.qualifications,
+        documentable:
+          [application_form] + application_form.qualifications +
+            (
+              application_form
+                .assessment
+                &.further_information_requests
+                &.flat_map(&:items) || []
+            ),
       ).find(params[:document_id] || params[:id])
   end
 
@@ -35,6 +42,16 @@ class TeacherInterface::BaseController < ApplicationController
   def redirect_unless_application_form_is_draft
     unless application_form.draft?
       redirect_to %i[teacher_interface application_form]
+    end
+  end
+
+  def redirect_unless_draft_or_further_information
+    if document.further_information_request?
+      unless document.documentable.further_information_request.requested?
+        redirect_to %i[teacher_interface application_form]
+      end
+    else
+      redirect_unless_application_form_is_draft
     end
   end
 end
