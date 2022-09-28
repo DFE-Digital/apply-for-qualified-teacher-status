@@ -37,4 +37,14 @@ class TeacherInterface::BaseController < ApplicationController
       redirect_to %i[teacher_interface application_form]
     end
   end
+
+  def redirect_unless_draft_or_further_information
+    if document.further_information_request?
+      unless document.documentable.further_information_request.requested?
+        redirect_to %i[teacher_interface application_form]
+      end
+    else
+      redirect_unless_application_form_is_draft
+    end
+  end
 end
