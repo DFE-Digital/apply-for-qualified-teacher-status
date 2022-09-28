@@ -7,7 +7,7 @@
 #  failure_reasons          :string           default([]), is an Array
 #  key                      :string           not null
 #  passed                   :boolean
-#  selected_failure_reasons :string           default([]), is an Array
+#  selected_failure_reasons :jsonb            not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  assessment_id            :bigint           not null
@@ -48,18 +48,8 @@ class AssessmentSection < ApplicationRecord
             presence: true,
             if: -> { passed == false }
 
-  before_validation :prepare_selected_failure_reasons
-
   def state
     return :not_started if passed.nil?
     passed ? :completed : :action_required
-  end
-
-  private
-
-  def prepare_selected_failure_reasons
-    return if selected_failure_reasons.nil?
-    selected_failure_reasons.compact_blank!
-    selected_failure_reasons.clear if passed
   end
 end

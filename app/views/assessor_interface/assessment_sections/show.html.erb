@@ -52,20 +52,22 @@
   <% end %>
 </ul>
 
-<%= form_with model: @assessment_section_view_object.assessment_section, 
+<%= form_with model: @assessment_section_form,
   url: assessor_interface_application_form_assessment_assessment_section_path(
     @assessment_section_view_object.application_form, @assessment_section_view_object.assessment, @assessment_section_view_object.assessment_section.key
-  ) do |f| %>
+  ), method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?", size: "s" } do %>
     <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
     <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
-      <%= f.govuk_collection_check_boxes :selected_failure_reasons,
-                                         @assessment_section_view_object.assessment_section.failure_reasons.map { |id| OpenStruct.new(id:, label: t(".failure_reasons.#{id}")) },
-                                         :id,
-                                         :label,
-                                         legend: { size: "s" } %>
+      <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" } do %>
+        <% @assessment_section_view_object.assessment_section.failure_reasons.each do |failure_reason| %>
+          <%= f.govuk_check_box "#{failure_reason}_checked", true, label: { text: t(".failure_reasons.#{failure_reason}") } do %>
+            <%= f.govuk_text_area "#{failure_reason}_notes", label: { text: "Note to the applicant", size: "s" }, hint: { text: "Use this space to tell the applicant what they need to do. Make sure your instructions are clear." } %>
+          <% end %>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
 

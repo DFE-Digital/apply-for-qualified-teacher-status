@@ -9,7 +9,7 @@
 #  failure_reasons          :string           default([]), is an Array
 #  key                      :string           not null
 #  passed                   :boolean
-#  selected_failure_reasons :string           default([]), is an Array
+#  selected_failure_reasons :jsonb            not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  assessment_id            :bigint           not null
@@ -48,21 +48,6 @@ RSpec.describe AssessmentSection, type: :model do
       before { assessment_section.passed = false }
 
       it { is_expected.to validate_presence_of(:selected_failure_reasons) }
-    end
-  end
-
-  context "when passed" do
-    before do
-      assessment_section.update!(
-        key: :personal_information,
-        passed: false,
-        selected_failure_reasons: %w[failure_reason],
-      )
-    end
-
-    it "clears selected failure reasons" do
-      assessment_section.update!(passed: true)
-      expect(assessment_section.selected_failure_reasons).to be_empty
     end
   end
 
