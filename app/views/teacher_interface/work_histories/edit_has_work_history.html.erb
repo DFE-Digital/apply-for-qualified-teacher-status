@@ -2,7 +2,7 @@
 <% content_for :back_link_url,  @application_form.work_histories.empty? ?
                                  teacher_interface_application_form_path :
                                  teacher_interface_application_form_work_histories_path %>
-                                 
+
 
 <%= form_with model: @has_work_history_form, url: [:has_work_history, :teacher_interface, :application_form, :work_histories] do |f| %>
   <%= f.govuk_error_summary %>
@@ -12,8 +12,8 @@
                                        :value,
                                        :label,
                                        legend: { text: "Have you worked professionally as a teacher?", size: "l", tag: "h1" },
-                                       hint: { text: "If you’re a recent university graduate, or you've just completed your teacher training, you may not have held a professional teaching position yet." } %>
+                                       hint: { text: "If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet." } %>
 
   <%= render "shared/save_submit_buttons", f: %>
-  
+
 <% end %>

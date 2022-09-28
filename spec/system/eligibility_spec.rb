@@ -297,8 +297,8 @@ RSpec.describe "Eligibility check", type: :system do
 
   def and_i_see_the_ineligible_qualification_text
     expect(ineligible_page.reasons).to have_content(
-      "You have not completed a formal teacher training course, for example, an undergraduate teaching " \
-        "degree or postgraduate teacher training course.",
+      "You have not completed a formal teaching qualification, for example, an undergraduate teaching degree " \
+        "or postgraduate teaching qualification.",
     )
   end
 
