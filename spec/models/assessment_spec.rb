@@ -160,13 +160,16 @@ RSpec.describe Assessment, type: :model do
   end
 
   describe "#can_request_further_information?" do
-    subject(:can_decline?) { assessment.can_request_further_information? }
+    subject(:can_request_further_information?) do
+      assessment.can_request_further_information?
+    end
 
     context "with a passed assessment" do
       before do
         create(:assessment_section, :personal_information, :passed, assessment:)
         create(:assessment_section, :qualifications, :passed, assessment:)
       end
+
       it { is_expected.to be false }
     end
 
@@ -175,7 +178,25 @@ RSpec.describe Assessment, type: :model do
         create(:assessment_section, :personal_information, :passed, assessment:)
         create(:assessment_section, :qualifications, :failed, assessment:)
       end
+
       it { is_expected.to be true }
+    end
+
+    context "with a declined assessment" do
+      before do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+        create(
+          :assessment_section,
+          :qualifications,
+          :failed,
+          assessment:,
+          selected_failure_reasons: {
+            duplicate_application: "Notes.",
+          },
+        )
+      end
+
+      it { is_expected.to be false }
     end
   end
 
@@ -183,18 +204,18 @@ RSpec.describe Assessment, type: :model do
     subject(:available_recommendations) { assessment.available_recommendations }
 
     context "with an award-able assessment" do
-      before { expect(assessment).to receive(:can_award?).and_return(true) }
+      before { allow(assessment).to receive(:can_award?).and_return(true) }
       it { is_expected.to include("award") }
     end
 
     context "with a decline-able assessment" do
-      before { expect(assessment).to receive(:can_decline?).and_return(true) }
+      before { allow(assessment).to receive(:can_decline?).and_return(true) }
       it { is_expected.to include("decline") }
     end
 
     context "with can_request_further_information-able assessment" do
       before do
-        expect(assessment).to receive(
+        allow(assessment).to receive(
           :can_request_further_information?,
         ).and_return(true)
       end

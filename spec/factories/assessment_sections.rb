@@ -31,7 +31,7 @@ FactoryBot.define do
 
     trait :failed do
       passed { false }
-      selected_failure_reasons { %w[failure_reason] }
+      selected_failure_reasons { { failure_reason: "Notes." } }
     end
 
     trait :personal_information do

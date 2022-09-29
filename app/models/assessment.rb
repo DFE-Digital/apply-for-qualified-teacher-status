@@ -50,10 +50,12 @@ class Assessment < ApplicationRecord
   end
 
   def can_decline?
-    sections.any? { |section| section.state == :action_required }
+    action_required?
   end
 
-  alias_method :can_request_further_information?, :can_decline?
+  def can_request_further_information?
+    action_required? && !must_decline?
+  end
 
   def available_recommendations
     [].tap do |recommendations|
@@ -63,5 +65,15 @@ class Assessment < ApplicationRecord
       end
       recommendations << "decline" if can_decline?
     end
+  end
+
+  private
+
+  def action_required?
+    sections.any? { |section| section.state == :action_required }
+  end
+
+  def must_decline?
+    sections.any?(&:declines_assessment?)
   end
 end
