@@ -10,8 +10,14 @@ module AssessorInterface
     def create
       @further_information_request =
         assessment.further_information_requests.create!(
-          further_information_request_params,
+          further_information_request_params.merge(
+            items:
+              FurtherInformationRequestItemsFactory.call(
+                assessment_sections: assessment.sections,
+              ),
+          ),
         )
+
       redirect_to [
                     :assessor_interface,
                     application_form,

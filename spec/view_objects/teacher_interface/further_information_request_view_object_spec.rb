@@ -42,6 +42,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
         :further_information_request_item,
         :with_document_response,
         further_information_request:,
+        document: create(:document, :identification_document),
       )
     end
 
