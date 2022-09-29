@@ -69,4 +69,32 @@ RSpec.describe AssessmentSection, type: :model do
       it { is_expected.to eq(:not_started) }
     end
   end
+
+  describe "#declines_assessment?" do
+    subject(:declines_assessment?) { assessment_section.declines_assessment? }
+
+    context "with a decline failure reason" do
+      before do
+        assessment_section.selected_failure_reasons = {
+          duplicate_application: "Duplicate.",
+        }
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "with no decline failure reasons" do
+      before do
+        assessment_section.selected_failure_reasons = {
+          identification_document_expired: "Expired.",
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "with no failure reasons" do
+      it { is_expected.to be false }
+    end
+  end
 end
