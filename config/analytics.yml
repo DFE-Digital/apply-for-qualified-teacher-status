@@ -114,6 +114,7 @@
     - further_information_request_id
     - assessor_notes
     - response
+    - failure_reason
   :notes:
     - id
     - application_form_id

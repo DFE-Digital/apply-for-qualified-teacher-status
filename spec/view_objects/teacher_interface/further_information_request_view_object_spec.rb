@@ -52,7 +52,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
         [
           {
             key: text_item.id,
-            text: "Text",
+            text: "Tell us more about the subjects you can teach",
             href: [
               :edit,
               :teacher_interface,

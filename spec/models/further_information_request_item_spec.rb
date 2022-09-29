@@ -4,6 +4,7 @@
 #
 #  id                             :bigint           not null, primary key
 #  assessor_notes                 :text
+#  failure_reason                 :string           default(""), not null
 #  information_type               :string
 #  response                       :text
 #  created_at                     :datetime         not null
@@ -14,7 +15,6 @@
 #
 #  index_fi_request_items_on_fi_request_id  (further_information_request_id)
 #
-#frozen_string_literal :true
 
 require "rails_helper"
 

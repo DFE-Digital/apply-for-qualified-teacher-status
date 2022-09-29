@@ -47,7 +47,9 @@ module TeacherInterface
     def item_text(item)
       case item.information_type
       when "text"
-        item.information_type.humanize
+        I18n.t(
+          "teacher_interface.further_information_request.show.failure_reason.#{item.failure_reason}",
+        )
       when "document"
         "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
       end

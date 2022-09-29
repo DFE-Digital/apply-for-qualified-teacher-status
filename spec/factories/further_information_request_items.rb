@@ -6,6 +6,7 @@
 #
 #  id                             :bigint           not null, primary key
 #  assessor_notes                 :text
+#  failure_reason                 :string           default(""), not null
 #  information_type               :string
 #  response                       :text
 #  created_at                     :datetime         not null
@@ -22,6 +23,7 @@ FactoryBot.define do
 
     trait :with_text_response do
       information_type { "text" }
+      failure_reason { "qualifications_dont_support_subjects" }
     end
 
     trait :with_document_response do

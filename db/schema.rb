@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_28_084959) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_29_080026) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -148,6 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_084959) do
     t.text "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "failure_reason", default: "", null: false
     t.index ["further_information_request_id"], name: "index_fi_request_items_on_fi_request_id"
   end
 
