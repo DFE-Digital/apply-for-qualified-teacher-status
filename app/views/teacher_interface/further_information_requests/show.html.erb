@@ -10,18 +10,14 @@
     </h2>
 
     <ul class="app-task-list__items">
-      <% @further_information_request.items.each do |item| %>
+      <% @view_object.task_items.each do |item| %>
         <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <%= link_to t(".items.title.#{item.information_type}"),
-                          edit_teacher_interface_application_form_further_information_request_further_information_request_item_path(@further_information_request, item),
-                          aria: { describedby: "#{item.id}-status" } %>
-            </span>
+          <span class="app-task-list__task-name">
+            <%= link_to item[:text], item[:href], aria: { describedby: "#{item[:key]}-status" } %>
+          </span>
 
           <%= render(ApplicationFormStatusTag::Component.new(
-            key: item.id,
-            status: item.state,
-            class_context: "app-task-list"
+            **item.slice(:key, :status).merge(class_context: "app-task-list")
           )) %>
         </li>
       <% end %>

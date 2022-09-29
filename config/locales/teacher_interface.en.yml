@@ -1,0 +1,9 @@
+en:
+  teacher_interface:
+    further_information_request:
+      show:
+        failure_reason:
+          qualifications_dont_support_subjects: Tell us more about the subjects you can teach
+          qualifications_dont_match_those_entered: Tell us more about your qualifications
+          satisfactory_evidence_work_history: Tell us more about your work history
+          registration_number: Tell us your registration number

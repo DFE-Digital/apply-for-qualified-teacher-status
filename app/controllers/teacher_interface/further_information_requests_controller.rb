@@ -1,20 +1,8 @@
 module TeacherInterface
   class FurtherInformationRequestsController < BaseController
-    before_action :load_application_form
-
     def show
-      @further_information_request = further_information_request
-    end
-
-    private
-
-    def further_information_request
-      @further_information_request ||=
-        FurtherInformationRequest
-          .joins(:assessment)
-          .requested
-          .where(assessments: { application_form: })
-          .find(params[:id])
+      @view_object =
+        FurtherInformationRequestViewObject.new(current_teacher:, params:)
     end
   end
 end

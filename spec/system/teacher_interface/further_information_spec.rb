@@ -63,22 +63,18 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def and_i_see_the_text_task_list_item
-    expect(text_task_list_item.link.text).to eq("Text")
     expect(text_task_list_item.status_tag.text).to eq("NOT STARTED")
   end
 
   def and_i_see_a_completed_text_task_list_item
-    expect(text_task_list_item.link.text).to eq("Text")
     expect(text_task_list_item.status_tag.text).to eq("COMPLETED")
   end
 
   def and_i_see_the_document_task_list_item
-    expect(document_task_list_item.link.text).to eq("Document")
     expect(document_task_list_item.status_tag.text).to eq("NOT STARTED")
   end
 
   def and_i_see_a_completed_document_task_list_item
-    expect(document_task_list_item.link.text).to eq("Document")
     expect(document_task_list_item.status_tag.text).to eq("COMPLETED")
   end
 
@@ -134,6 +130,7 @@ RSpec.describe "Teacher further information", type: :system do
           :further_information_request_item,
           :with_document_response,
           further_information_request: request,
+          document: create(:document, :written_statement),
         )
         application_form
       end
@@ -144,10 +141,14 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def text_task_list_item
-    further_information_requested_page.task_list.find_item("Text")
+    further_information_requested_page.task_list.find_item(
+      "Tell us more about the subjects you can teach",
+    )
   end
 
   def document_task_list_item
-    further_information_requested_page.task_list.find_item("Document")
+    further_information_requested_page.task_list.find_item(
+      "Upload your written statement document",
+    )
   end
 end

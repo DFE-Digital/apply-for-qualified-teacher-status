@@ -6,6 +6,7 @@
 #
 #  id                             :bigint           not null, primary key
 #  assessor_notes                 :text
+#  failure_reason                 :string           default(""), not null
 #  information_type               :string
 #  response                       :text
 #  created_at                     :datetime         not null
