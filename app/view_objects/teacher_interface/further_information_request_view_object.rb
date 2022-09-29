@@ -14,7 +14,7 @@ module TeacherInterface
         .map do |item|
           {
             key: item.id,
-            text: item.information_type.humanize,
+            text: item_text(item),
             href: [
               :edit,
               :teacher_interface,
@@ -42,6 +42,15 @@ module TeacherInterface
           .requested
           .where(assessments: { application_form: })
           .find(params[:id])
+    end
+
+    def item_text(item)
+      case item.information_type
+      when "text"
+        item.information_type.humanize
+      when "document"
+        "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
+      end
     end
   end
 end

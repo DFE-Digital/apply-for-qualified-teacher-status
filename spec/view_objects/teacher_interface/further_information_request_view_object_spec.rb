@@ -64,7 +64,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
           },
           {
             key: document_item.id,
-            text: "Document",
+            text: "Upload your identity document",
             href: [
               :edit,
               :teacher_interface,
