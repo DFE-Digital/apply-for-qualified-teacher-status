@@ -52,4 +52,21 @@ class AssessmentSection < ApplicationRecord
     return :not_started if passed.nil?
     passed ? :completed : :action_required
   end
+
+  DECLINE_FAILURE_REASONS = %w[
+    duplicate_application
+    applicant_already_qts
+    teaching_qualifications_from_ineligible_country
+    teaching_qualifications_not_at_required_level
+    not_qualified_to_teach_mainstream
+    teaching_hours_not_fulfilled
+    authorisation_to_teach
+    teaching_qualification
+    age_ranges_subjects
+    full_professional_status
+  ].freeze
+
+  def declines_assessment?
+    DECLINE_FAILURE_REASONS.intersection(selected_failure_reasons.keys).present?
+  end
 end
