@@ -92,3 +92,7 @@ en:
           attributes:
             text:
               blank: Enter the note
+        assessor_interface/assessor_assignment_form:
+          attributes:
+            assessor_id:
+              blank: Select an assessor to assign

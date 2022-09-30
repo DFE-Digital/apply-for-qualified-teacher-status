@@ -168,10 +168,6 @@ en:
           attributes:
             teach_children:
               inclusion: Tell us whether you’re qualified to teach children aged between 5 and 16
-        assessor_interface/assessor_assignment_form:
-          attributes:
-            assessor_id:
-              blank: Select an assessor to assign
 
   activerecord:
     errors:
