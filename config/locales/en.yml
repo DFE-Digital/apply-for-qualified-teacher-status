@@ -168,36 +168,6 @@ en:
           attributes:
             teach_children:
               inclusion: Tell us whether you’re qualified to teach children aged between 5 and 16
-        teacher_interface/name_and_date_of_birth_form:
-          attributes:
-            date_of_birth:
-              too_young: You must be 18 or over to use this service
-              invalid: Enter your date of birth in the format 27 3 1980
-              too_old: Your date of birth cannot be that far in the past
-            given_names:
-              blank: Enter your given names
-            family_name:
-              blank: Enter your family name
-        teacher_interface/alternative_name_form:
-          attributes:
-            alternative_given_names:
-              blank: Enter your alternate given names
-            alternative_family_name:
-              blank: Enter your alternate family name
-            has_alternative_name:
-              inclusion: Tell us whether you have an alternative name
-        teacher_interface/add_another_upload_form:
-          attributes:
-            add_another:
-              inclusion: Select whether you need to upload another page
-        teacher_interface/delete_upload_form:
-          attributes:
-            confirm:
-              inclusion: Select whether you want to delete this file
-        teacher_interface/new_session_form:
-          attributes:
-            email:
-              blank: Enter your email address
         assessor_interface/assessor_assignment_form:
           attributes:
             assessor_id:
