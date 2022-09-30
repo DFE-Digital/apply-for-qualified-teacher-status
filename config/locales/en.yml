@@ -138,37 +138,6 @@ en:
           qualification: You have not completed a formal teaching qualification, for example, an undergraduate teaching degree or postgraduate teaching qualification.
           teach_children: You are not qualified to teach children who are aged somewhere between 5 and 16 years.
 
-    errors:
-      models:
-        eligibility_interface/completed_requirements_form:
-          attributes:
-            completed_requirements:
-              inclusion: Tell us if you have completed all requirements to work as a qualified teacher
-        eligibility_interface/country_form:
-          attributes:
-            location:
-              blank: Tell us where you’re currently recognised as a teacher
-        eligibility_interface/degree_form:
-          attributes:
-            degree:
-              inclusion: Tell us whether you have a university degree
-        eligibility_interface/misconduct_form:
-          attributes:
-            misconduct:
-              inclusion: Tell us whether your employment record has any sanctions or restrictions
-        eligibility_interface/qualification_form:
-          attributes:
-            qualification:
-              inclusion: Tell us if you have a teaching qualification
-        eligibility_interface/region_form:
-          attributes:
-            region_id:
-              blank: Tell us where you’re currently recognised as a teacher
-        eligibility_interface/teach_children_form:
-          attributes:
-            teach_children:
-              inclusion: Tell us whether you’re qualified to teach children aged between 5 and 16
-
   activerecord:
     errors:
       models:
