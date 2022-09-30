@@ -7,6 +7,10 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
 
   let(:application_form) { build(:application_form) }
 
+  let(:given_names) { "" }
+  let(:family_name) { "" }
+  let(:date_of_birth) { "" }
+
   describe "validations" do
     subject(:form) do
       described_class.new(
@@ -18,33 +22,56 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
     end
 
     context "when date of birth and names are blank" do
-      let(:given_names) { "" }
-      let(:family_name) { "" }
-      let(:date_of_birth) { "" }
-
-      it { is_expected.to_not be_valid }
-    end
-
-    context "when date of birth is less than 18 years ago" do
-      let(:date_of_birth) { Time.zone.now }
-      let(:given_names) { "given_name" }
-      let(:family_name) { "family_name" }
       it { is_expected.to_not be_valid }
     end
 
     context "when date of birth is more than 18 years ago but less than 100 years ago" do
-      let(:date_of_birth) { Date.new(2003, 1, 1) }
+      let(:date_of_birth) { 20.years.ago }
       let(:given_names) { "given_name" }
       let(:family_name) { "family_name" }
       it { is_expected.to be_valid }
     end
 
-    context "when date of birth is greater than 100 years ago" do
-      let(:date_of_birth) { Date.new(1900, 1, 1) }
-      let(:given_names) { "given_name" }
-      let(:family_name) { "family_name" }
+    context "with an invalid DOB" do
+      subject(:dob_error_message) { form.errors[:date_of_birth] }
 
-      it { is_expected.to_not be_valid }
+      before { form.valid? }
+
+      context "when DOB less than 18 years ago" do
+        let(:date_of_birth) { 17.years.ago }
+
+        it { is_expected.to eq(["You must be 18 or over to use this service"]) }
+      end
+
+      context "when DOB more than 100 years ago" do
+        let(:date_of_birth) { 101.years.ago }
+
+        it do
+          is_expected.to eq(
+            ["Your date of birth cannot be that far in the past"],
+          )
+        end
+      end
+
+      context "when DOB has a 2 digit year" do
+        let(:date_of_birth) { "10/04/80" }
+
+        it do
+          is_expected.to eq(
+            ["Enter your date of birth in the format 27 3 1980"],
+          )
+        end
+      end
+
+      context "when DOB is an invalid date" do
+        let(:date_of_birth) { "31/13/1980" }
+
+        it do
+          is_expected.to eq(
+            ["Enter your date of birth in the format 27 3 1980"],
+          )
+        end
+      end
     end
   end
 
