@@ -9,12 +9,7 @@ class TeacherInterface::NameAndDateOfBirthForm
   attribute :date_of_birth, :date
 
   validates :application_form, presence: true
-  validates :date_of_birth,
-            comparison: {
-              less_than: Time.zone.today,
-            },
-            presence: true,
-            inclusion: 100.years.ago..18.years.ago
+  validate :date_of_birth_valid
 
   validates :given_names, presence: true
   validates :family_name, presence: true
@@ -26,5 +21,17 @@ class TeacherInterface::NameAndDateOfBirthForm
     application_form.family_name = family_name
     application_form.date_of_birth = date_of_birth
     application_form.save!
+  end
+
+  def date_of_birth_valid
+    if !date_of_birth.is_a?(Date)
+      errors.add(:date_of_birth, :invalid)
+    elsif date_of_birth.year.digits.length != 4
+      errors.add(:date_of_birth, :invalid)
+    elsif date_of_birth > 18.years.ago
+      errors.add(:date_of_birth, :too_young)
+    elsif date_of_birth < 100.years.ago
+      errors.add(:date_of_birth, :too_old)
+    end
   end
 end
