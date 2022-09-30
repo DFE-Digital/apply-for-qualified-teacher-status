@@ -35,9 +35,10 @@ RSpec.describe "Assessor requesting further information", type: :system do
       application_id:,
       assessment_id:,
     )
+    and_i_see_the_further_information_request_items
 
     when_i_enter_email_content
-    when_i_click_continue
+    and_i_click_continue
     then_i_see_the(
       :further_information_request_preview_page,
       application_id:,
@@ -53,25 +54,23 @@ RSpec.describe "Assessor requesting further information", type: :system do
     application_form
   end
 
-  def when_i_visit_the_complete_assessment_page
-    complete_assessment_page.load(application_id: application_form.id)
-  end
-
-  def then_i_see_the_complete_assessment_form
-    expect(complete_assessment_page.award_qts).to be_visible
-    expect(complete_assessment_page.decline_qts).to be_visible
-  end
-
   def when_i_select_request_further_information
     complete_assessment_page.request_further_information.input.choose
   end
 
-  def when_i_enter_email_content
-    request_further_information_page.email_content.fill_in with: "I am an email"
+  def and_i_see_the_further_information_request_items
+    expect(request_further_information_page.items.count).to eq(1)
+    expect(request_further_information_page.items.first.heading.text).to eq(
+      "The qualifications do not support the teaching subjects entered.",
+    )
+    expect(
+      request_further_information_page.items.first.assessor_notes.text,
+    ).to eq("A note.")
   end
 
-  def then_the_application_form_is_awarded
-    expect(assessor_application_page.overview.status.text).to eq("AWARDED")
+  def when_i_enter_email_content
+    request_further_information_page.form.email_content_textarea.fill_in with:
+      "I am an email"
   end
 
   def and_i_see_the_email_preview
@@ -90,8 +89,11 @@ RSpec.describe "Assessor requesting further information", type: :system do
       ).tap do |application_form|
         application_form.assessment.sections << create(
           :assessment_section,
-          :personal_information,
+          :qualifications,
           :failed,
+          selected_failure_reasons: {
+            qualifications_dont_support_subjects: "A note.",
+          },
         )
       end
   end

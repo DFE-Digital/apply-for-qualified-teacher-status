@@ -70,6 +70,7 @@ en:
           age_ranges_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
+
   components:
     timeline_entry:
       title:
