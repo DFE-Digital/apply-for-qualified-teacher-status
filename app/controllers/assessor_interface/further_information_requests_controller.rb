@@ -1,10 +1,13 @@
 module AssessorInterface
   class FurtherInformationRequestsController < BaseController
-    layout "full_from_desktop", only: %i[show]
-
     def new
       @further_information_request =
-        assessment.further_information_requests.build
+        assessment.further_information_requests.build(
+          items:
+            FurtherInformationRequestItemsFactory.call(
+              assessment_sections: assessment.sections,
+            ),
+        )
     end
 
     def create
