@@ -6,3 +6,5 @@ en:
     teacher:
       application_received:
         subject: We’ve received your application for qualified teacher status (QTS)
+      further_information_requested:
+        subject: We need more information for your application for qualified teacher status (QTS)

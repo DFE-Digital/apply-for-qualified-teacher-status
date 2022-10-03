@@ -38,4 +38,46 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("abc") }
     end
   end
+
+  describe "#further_information_requested" do
+    subject(:mail) do
+      described_class.with(
+        teacher:,
+        further_information_request:,
+      ).further_information_requested
+    end
+
+    let(:further_information_request) do
+      create(:further_information_request, email_content: "Email content.")
+    end
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      it do
+        is_expected.to eq(
+          "We need more information for your application for qualified teacher status (QTS)",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      it { is_expected.to include("Dear First Last") }
+      it do
+        is_expected.to include(
+          "The assessor reviewing your QTS application needs more information.",
+        )
+      end
+      it { is_expected.to include("Email content.") }
+      it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
+    end
+  end
 end
