@@ -7,6 +7,7 @@ gem "rails", "~> 7.0.4"
 
 gem "azure-storage-blob"
 gem "bootsnap", require: false
+gem "business"
 gem "cssbundling-rails"
 gem "devise"
 gem "devise_invitable"

@@ -93,6 +93,7 @@ GEM
     bootsnap (1.13.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    business (2.3.0)
     capybara (3.37.1)
       addressable
       matrix
@@ -474,6 +475,7 @@ DEPENDENCIES
   annotate
   azure-storage-blob
   bootsnap
+  business
   capybara (~> 3.37)
   climate_control
   cssbundling-rails
