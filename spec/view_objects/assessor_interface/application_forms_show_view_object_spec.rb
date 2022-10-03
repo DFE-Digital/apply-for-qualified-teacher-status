@@ -78,17 +78,31 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it { is_expected.to eq(%i[initial_assessment]) }
     end
+
+    describe "further_information" do
+      subject(:further_information) { assessment_tasks[:further_information] }
+
+      it { is_expected.to be_nil }
+
+      context "with further information" do
+        before { create(:further_information_request, assessment:) }
+
+        it { is_expected.to eq([:review_requested_information]) }
+      end
+    end
   end
 
   describe "#assessment_task_path" do
     subject(:assessment_task_path) do
-      view_object.assessment_task_path(section, item)
+      view_object.assessment_task_path(section, item, index)
     end
 
     let(:application_form) { create(:application_form) }
     let!(:assessment) { create(:assessment, application_form:) }
 
     let(:params) { { id: application_form.id } }
+
+    let(:index) { 0 }
 
     context "with submitted details section" do
       let(:section) { :submitted_details }
@@ -111,6 +125,22 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         )
       end
     end
+
+    context "with further_information section" do
+      let(:section) { :further_information }
+      let(:item) { :review_requested_information }
+
+      let!(:further_information_request) do
+        create(:further_information_request, assessment:)
+      end
+
+      it do
+        is_expected.to eq(
+          "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
+            "/further-information-requests/#{further_information_request.id}",
+        )
+      end
+    end
   end
 
   describe "#assessment_task_status" do
@@ -123,8 +153,10 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     let(:params) { { id: application_form.id } }
 
     subject(:assessment_task_status) do
-      view_object.assessment_task_status(section, item)
+      view_object.assessment_task_status(section, item, index)
     end
+
+    let(:index) { 0 }
 
     context "with submitted details section" do
       let(:section) { :submitted_details }
@@ -149,7 +181,22 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           before { assessment.award! }
           it { is_expected.to eq(:completed) }
         end
+
+        context "with further information request" do
+          before { create(:further_information_request, assessment:) }
+
+          it { is_expected.to eq(:further_information_requested) }
+        end
       end
+    end
+
+    context "with further_information section" do
+      let(:section) { :further_information }
+      let(:item) { :review_requested_information }
+
+      before { create(:further_information_request, assessment:) }
+
+      it { is_expected.to eq(:draft) }
     end
   end
 end

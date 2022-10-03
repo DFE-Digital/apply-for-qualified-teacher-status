@@ -12,6 +12,7 @@ en:
             work_history: Check work history
             professional_standing: Check professional standing
             initial_assessment: Initial assessment recommendation
+            review_requested_information: Review requested information from applicant
     assessment_sections:
       show:
         title:
