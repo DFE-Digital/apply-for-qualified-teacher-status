@@ -27,5 +27,9 @@ FactoryBot.define do
     trait :confirmed do
       confirmed_at { Time.zone.now }
     end
+
+    trait :with_application_form do
+      association :application_form
+    end
   end
 end

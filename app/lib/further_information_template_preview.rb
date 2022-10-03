@@ -20,9 +20,9 @@ class FurtherInformationTemplatePreview
     client.generate_template_preview(
       GOVUK_NOTIFY_TEMPLATE_ID,
       personalisation: {
-        to:,
-        subject:,
-        body:,
+        to: mail.to.first,
+        subject: mail.subject,
+        body: mail.body.encoded,
       },
     ).html
   end
@@ -31,19 +31,14 @@ class FurtherInformationTemplatePreview
 
   attr_reader :teacher, :further_information_request
 
-  def to
-    teacher.email
-  end
-
-  def subject
-    I18n.t("mailer.further_information.required.subject")
-  end
-
-  def body
-    further_information_request.email_content
-  end
-
   def client
     @client ||= Notifications::Client.new(ENV.fetch("GOVUK_NOTIFY_API_KEY"))
+  end
+
+  def mail
+    TeacherMailer.with(
+      teacher:,
+      further_information_request:,
+    ).further_information_requested
   end
 end
