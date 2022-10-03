@@ -11,6 +11,7 @@ class SubmitApplicationForm
 
     application_form.subjects.compact_blank!
     application_form.submitted_at = Time.zone.now
+    application_form.working_days_since_submission = 0
 
     ChangeApplicationFormState.call(
       application_form:,
