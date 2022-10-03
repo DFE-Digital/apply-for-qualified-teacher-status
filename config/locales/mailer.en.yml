@@ -1,0 +1,8 @@
+en:
+  mailer:
+    further_information:
+      required:
+        subject: Further information required
+    teacher:
+      application_received:
+        subject: We’ve received your application for qualified teacher status (QTS)
