@@ -46,6 +46,15 @@ RSpec.describe "Assessor requesting further information", type: :system do
       further_information_request_id:,
     )
     and_i_see_the_email_preview
+
+    when_i_click_send_to_applicant
+    then_i_see_the(
+      :further_information_request_page,
+      application_id:,
+      assessment_id:,
+      further_information_request_id:,
+    )
+    and_i_receive_a_further_information_requested_email
   end
 
   private
@@ -77,6 +86,20 @@ RSpec.describe "Assessor requesting further information", type: :system do
     expect(
       further_information_request_preview_page.email_preview,
     ).to have_content("I am an email")
+  end
+
+  def when_i_click_send_to_applicant
+    further_information_request_preview_page.form.send_to_applicant_button.click
+  end
+
+  def and_i_receive_a_further_information_requested_email
+    message = ActionMailer::Base.deliveries.last
+    expect(message).to_not be_nil
+
+    expect(message.subject).to eq(
+      "We need more information for your application for qualified teacher status (QTS)",
+    )
+    expect(message.to).to include(application_form.teacher.email)
   end
 
   def application_form

@@ -247,6 +247,11 @@ module PageHelpers
       PageObjects::AssessorInterface::RequestFurtherInformation.new
   end
 
+  def further_information_request_page
+    @further_information_request_page ||=
+      PageObjects::AssessorInterface::FurtherInformationRequest.new
+  end
+
   def further_information_request_preview_page
     @further_information_request_preview_page ||=
       PageObjects::AssessorInterface::FurtherInformationRequestPreview.new

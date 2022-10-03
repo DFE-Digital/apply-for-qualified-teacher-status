@@ -27,7 +27,7 @@ Rails.application.routes.draw do
                   only: %i[show update]
         resources :further_information_requests,
                   path: "/further-information-requests",
-                  only: %i[new create show]
+                  only: %i[new create show edit update]
       end
     end
   end
