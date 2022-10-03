@@ -4,7 +4,7 @@ RSpec.describe FurtherInformationTemplatePreview do
   let(:further_information_request) do
     create(:further_information_request, email_content: "raw email")
   end
-  let(:teacher) { create(:teacher) }
+  let(:teacher) { create(:teacher, :with_application_form) }
   let(:notify_key) { "notify-key" }
   let(:notify_client) do
     double(generate_template_preview: notify_template_preview)
@@ -43,8 +43,9 @@ RSpec.describe FurtherInformationTemplatePreview do
         instance_of(String),
         personalisation: {
           to: teacher.email,
-          subject: "Further information required",
-          body: "raw email",
+          subject:
+            "We need more information for your application for qualified teacher status (QTS)",
+          body: instance_of(String),
         },
       )
       subject

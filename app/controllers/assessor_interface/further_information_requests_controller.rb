@@ -22,6 +22,7 @@ module AssessorInterface
         )
 
       redirect_to [
+                    :edit,
                     :assessor_interface,
                     application_form,
                     assessment,
@@ -30,27 +31,59 @@ module AssessorInterface
     end
 
     def show
-      @further_information_request =
-        assessment.further_information_requests.find(params[:id])
+      @application_form = application_form
+      @assessment = assessment
+      @further_information_request = further_information_request
+    end
+
+    def edit
+      @application_form = application_form
+      @assessment = assessment
+      @further_information_request = further_information_request
+
       @email_preview =
         FurtherInformationTemplatePreview.with(
           teacher:,
-          further_information_request: @further_information_request,
+          further_information_request:,
         ).render
     end
 
+    def update
+      TeacherMailer
+        .with(teacher:, further_information_request:)
+        .further_information_requested
+        .deliver_later
+
+      further_information_request.requested!
+
+      redirect_to [
+                    :assessor_interface,
+                    application_form,
+                    assessment,
+                    further_information_request,
+                  ]
+    end
+
     private
+
+    def further_information_request
+      @further_information_request ||=
+        assessment.further_information_requests.find(params[:id])
+    end
 
     def assessment
       @assessment ||= application_form.assessment
     end
 
-    def application_form
-      @application_form ||= ApplicationForm.find(params[:application_form_id])
+    def teacher
+      @teacher ||= application_form.teacher
     end
 
-    def teacher
-      application_form.teacher
+    def application_form
+      @application_form ||=
+        ApplicationForm.includes(
+          assessment: :further_information_requests,
+        ).find(params[:application_form_id])
     end
 
     def further_information_request_params
