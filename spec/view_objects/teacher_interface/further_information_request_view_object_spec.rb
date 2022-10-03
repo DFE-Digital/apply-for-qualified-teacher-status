@@ -20,6 +20,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
     let(:further_information_request) do
       create(
         :further_information_request,
+        :requested,
         assessment: create(:assessment, application_form:),
       )
     end

@@ -27,10 +27,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
         professional_standing
       ].select { |key| assessment_section_keys.include?(key) }
 
-    { submitted_details:, recommendation: %i[initial_assessment] }
+    further_information =
+      further_information_requests.map { :review_requested_information }
+
+    {
+      submitted_details:,
+      recommendation: %i[initial_assessment],
+      further_information:,
+    }.compact_blank
   end
 
-  def assessment_task_path(section, item)
+  def assessment_task_path(section, item, index)
     case section
     when :submitted_details
       url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
@@ -39,22 +46,37 @@ class AssessorInterface::ApplicationFormsShowViewObject
         item,
       )
     when :recommendation
-      return nil unless assessment.sections_finished?
+      status = assessment_task_status(section, item, index)
+
+      return nil unless status == :not_started
 
       url_helpers.edit_assessor_interface_application_form_assessment_path(
         application_form,
         assessment,
       )
+    when :further_information
+      further_information_request = further_information_requests[index]
+      return nil unless further_information_request.draft?
+
+      url_helpers.assessor_interface_application_form_assessment_further_information_request_path(
+        application_form,
+        assessment,
+        further_information_request,
+      )
     end
   end
 
-  def assessment_task_status(section, item)
+  def assessment_task_status(section, item, index)
     case section
     when :submitted_details
       assessment.sections.find { |s| s.key == item.to_s }.state
     when :recommendation
+      return :cannot_start_yet unless assessment.sections_finished?
       return :completed if assessment.finished?
-      assessment.sections_finished? ? :not_started : :cannot_start_yet
+      return :not_started if further_information_requests.empty?
+      :further_information_requested
+    when :further_information
+      further_information_requests[index].state.to_sym
     end
   end
 
@@ -64,6 +86,11 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def assessment
     @assessment ||= application_form.assessment
+  end
+
+  def further_information_requests
+    @further_information_requests ||=
+      assessment.further_information_requests.order(:created_at).to_a
   end
 
   def url_helpers

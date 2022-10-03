@@ -21,6 +21,6 @@ class FurtherInformationRequest < ApplicationRecord
            inverse_of: :further_information_request
 
   enum :state,
-       { requested: "requested", received: "received" },
-       default: :requested
+       { draft: "draft", requested: "requested", received: "received" },
+       default: :draft
 end
