@@ -1,5 +1,7 @@
 module TeacherInterface
   class WorkHistoriesController < BaseController
+    include HandleApplicationFormSection
+
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
     before_action :load_work_history, only: %i[edit update delete destroy]
@@ -60,11 +62,12 @@ module TeacherInterface
         HasWorkHistoryForm.new(
           has_work_history_form_params.merge(application_form:),
         )
-      if @has_work_history_form.save(validate: true)
-        redirect_to_if_save_and_continue has_work_history_next_url
-      else
-        render :edit_has_work_history, status: :unprocessable_entity
-      end
+
+      handle_application_form_section(
+        form: @has_work_history_form,
+        if_success_then_redirect: has_work_history_next_url,
+        if_failure_then_render: :edit_has_work_history,
+      )
     end
 
     def edit
@@ -100,9 +103,7 @@ module TeacherInterface
     end
 
     def has_work_history_next_url
-      if application_form.has_work_history.nil?
-        %i[teacher_interface application_form]
-      elsif application_form.has_work_history?
+      if @has_work_history_form.has_work_history
         if application_form.work_histories.empty?
           %i[new teacher_interface application_form work_history]
         else

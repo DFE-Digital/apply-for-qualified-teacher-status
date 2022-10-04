@@ -15,10 +15,15 @@ module TeacherInterface
     end
 
     def update
-      add_another =
-        params.dig(:teacher_interface_add_another_upload_form, :add_another)
       @add_another_upload_form =
-        TeacherInterface::AddAnotherUploadForm.new(add_another:)
+        TeacherInterface::AddAnotherUploadForm.new(
+          add_another:
+            params.dig(
+              :teacher_interface_add_another_upload_form,
+              :add_another,
+            ),
+        )
+
       if @add_another_upload_form.valid?
         if @add_another_upload_form.add_another
           redirect_to new_teacher_interface_application_form_document_upload_path(

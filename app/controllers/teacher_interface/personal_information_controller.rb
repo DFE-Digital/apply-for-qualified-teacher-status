@@ -1,5 +1,7 @@
 module TeacherInterface
   class PersonalInformationController < BaseController
+    include HandleApplicationFormSection
+
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
 
@@ -27,7 +29,6 @@ module TeacherInterface
     def name_and_date_of_birth
       @name_and_date_of_birth_form =
         NameAndDateOfBirthForm.new(
-          application_form:,
           given_names: application_form.given_names,
           family_name: application_form.family_name,
           date_of_birth: application_form.date_of_birth,
@@ -39,22 +40,22 @@ module TeacherInterface
         NameAndDateOfBirthForm.new(
           name_and_date_of_birth_params.merge(application_form:),
         )
-      if @name_and_date_of_birth_form.save(validate: true)
-        redirect_to_if_save_and_continue %i[
-                                           alternative_name
-                                           teacher_interface
-                                           application_form
-                                           personal_information
-                                         ]
-      else
-        render :name_and_date_of_birth, status: :unprocessable_entity
-      end
+
+      handle_application_form_section(
+        form: @name_and_date_of_birth_form,
+        if_success_then_redirect: %i[
+          alternative_name
+          teacher_interface
+          application_form
+          personal_information
+        ],
+        if_failure_then_render: :name_and_date_of_birth,
+      )
     end
 
     def alternative_name
       @alternative_name_form =
         AlternativeNameForm.new(
-          application_form:,
           has_alternative_name: application_form.has_alternative_name,
           alternative_given_names: application_form.alternative_given_names,
           alternative_family_name: application_form.alternative_family_name,
@@ -66,11 +67,12 @@ module TeacherInterface
         AlternativeNameForm.new(
           alternative_name_params.merge(application_form:),
         )
-      if @alternative_name_form.save(validate: true)
-        redirect_to_if_save_and_continue alternative_name_next_url
-      else
-        render :alternative_name, status: :unprocessable_entity
-      end
+
+      handle_application_form_section(
+        form: @alternative_name_form,
+        if_success_then_redirect: alternative_name_next_url,
+        if_failure_then_render: :alternative_name,
+      )
     end
 
     def check
@@ -95,7 +97,7 @@ module TeacherInterface
     end
 
     def alternative_name_next_url
-      if application_form.has_alternative_name
+      if @alternative_name_form.has_alternative_name
         [
           :edit,
           :teacher_interface,
