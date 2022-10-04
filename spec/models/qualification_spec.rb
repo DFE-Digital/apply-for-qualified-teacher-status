@@ -29,15 +29,6 @@ RSpec.describe Qualification, type: :model do
 
   describe "validations" do
     it { is_expected.to be_valid }
-
-    context "with invalid dates" do
-      before do
-        qualification.start_date = Date.new(2020, 1, 1)
-        qualification.complete_date = Date.new(2019, 1, 1)
-      end
-
-      it { is_expected.to_not be_valid }
-    end
   end
 
   describe "#status" do
