@@ -44,6 +44,20 @@ RSpec.describe SubmitApplicationForm do
     end
   end
 
+  describe "setting working days since submission" do
+    subject(:working_days_since_submission) do
+      application_form.working_days_since_submission
+    end
+
+    it { is_expected.to be_nil }
+
+    context "when calling the service" do
+      before { call }
+
+      it { is_expected.to eq(0) }
+    end
+  end
+
   describe "recording timeline event" do
     subject(:timeline_event) { TimelineEvent.find_by(application_form:) }
 

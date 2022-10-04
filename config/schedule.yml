@@ -1,0 +1,3 @@
+update_working_days_since_submission:
+  cron: "0 3 * * *"
+  class: UpdateWorkingDaysSinceSubmissionJob

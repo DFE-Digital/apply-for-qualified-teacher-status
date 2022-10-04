@@ -7,6 +7,7 @@ gem "rails", "~> 7.0.4"
 
 gem "azure-storage-blob"
 gem "bootsnap", require: false
+gem "business"
 gem "cssbundling-rails"
 gem "devise"
 gem "devise_invitable"
@@ -23,6 +24,7 @@ gem "ruby-vips"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sidekiq"
+gem "sidekiq-cron"
 gem "sitemap_generator"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Windows
 
