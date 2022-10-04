@@ -26,9 +26,6 @@
 class WorkHistory < ApplicationRecord
   belongs_to :application_form
 
-  validates :email, valid_for_notify: true, allow_blank: true
-  validates :end_date, presence: true, allow_nil: true, unless: :still_employed?
-
   scope :ordered, -> { order(start_date: :asc, created_at: :asc) }
 
   def status

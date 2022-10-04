@@ -30,11 +30,6 @@ RSpec.describe WorkHistory, type: :model do
 
   describe "validations" do
     it { is_expected.to be_valid }
-
-    context "when not still employed" do
-      before { work_history.still_employed = false }
-      it { is_expected.to validate_presence_of(:end_date).allow_nil }
-    end
   end
 
   describe "#status" do
