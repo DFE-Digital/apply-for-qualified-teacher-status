@@ -599,13 +599,16 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_work_history
-    fill_in "work-history-school-name-field", with: "School name"
-    fill_in "work-history-city-field", with: "City"
-    fill_in "work-history-country-code-field", with: "France"
-    fill_in "work-history-job-field", with: "Job"
-    fill_in "work-history-email-field", with: "test@example.com"
-    fill_in "work_history_start_date_2i", with: "1"
-    fill_in "work_history_start_date_1i", with: "2000"
+    fill_in "teacher-interface-work-history-form-school-name-field",
+            with: "School name"
+    fill_in "teacher-interface-work-history-form-city-field", with: "City"
+    fill_in "teacher-interface-work-history-form-country-code-field",
+            with: "France"
+    fill_in "teacher-interface-work-history-form-job-field", with: "Job"
+    fill_in "teacher-interface-work-history-form-email-field",
+            with: "test@example.com"
+    fill_in "teacher_interface_work_history_form_start_date_2i", with: "1"
+    fill_in "teacher_interface_work_history_form_start_date_1i", with: "2000"
     choose "Yes", visible: false
   end
 
