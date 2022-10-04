@@ -39,7 +39,7 @@ module TeacherInterface
         NameAndDateOfBirthForm.new(
           name_and_date_of_birth_params.merge(application_form:),
         )
-      if @name_and_date_of_birth_form.save
+      if @name_and_date_of_birth_form.save(validate: true)
         redirect_to_if_save_and_continue %i[
                                            alternative_name
                                            teacher_interface
@@ -66,7 +66,7 @@ module TeacherInterface
         AlternativeNameForm.new(
           alternative_name_params.merge(application_form:),
         )
-      if @alternative_name_form.save
+      if @alternative_name_form.save(validate: true)
         redirect_to_if_save_and_continue alternative_name_next_url
       else
         render :alternative_name, status: :unprocessable_entity

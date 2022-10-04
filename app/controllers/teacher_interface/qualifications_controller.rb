@@ -93,7 +93,7 @@ module TeacherInterface
             qualification: @qualification,
           ),
         )
-      if @part_of_university_degree_form.save
+      if @part_of_university_degree_form.save(validate: true)
         if @qualification.part_of_university_degree.nil? ||
              @qualification.part_of_university_degree
           redirect_to_if_save_and_continue %i[

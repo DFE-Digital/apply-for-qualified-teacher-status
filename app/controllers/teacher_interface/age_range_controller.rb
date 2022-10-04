@@ -15,7 +15,7 @@ module TeacherInterface
     def update
       @age_range_form =
         AgeRangeForm.new(age_range_form_params.merge(application_form:))
-      if @age_range_form.save
+      if @age_range_form.save(validate: true)
         redirect_to %i[teacher_interface application_form]
       else
         render :edit, status: :unprocessable_entity

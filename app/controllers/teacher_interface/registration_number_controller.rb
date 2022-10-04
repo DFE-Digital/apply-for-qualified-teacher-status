@@ -16,7 +16,7 @@ module TeacherInterface
         RegistrationNumberForm.new(
           registration_number_form_params.merge(application_form:),
         )
-      if @registration_number_form.save
+      if @registration_number_form.save(validate: true)
         redirect_to %i[teacher_interface application_form]
       else
         render :edit, status: :unprocessable_entity

@@ -1,21 +1,18 @@
-class TeacherInterface::DeleteUploadForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+# frozen_string_literal: true
 
-  attr_accessor :upload
+module TeacherInterface
+  class DeleteUploadForm < BaseForm
+    attribute :confirm, :boolean
+    attr_accessor :upload
 
-  attribute :confirm, :boolean
+    validates :confirm, inclusion: { in: [true, false] }
+    validates :upload, presence: true, if: :confirm
 
-  validates :confirm, inclusion: { in: [true, false] }
-  validates :upload, presence: true, if: :confirm
-
-  def save!
-    return unless valid?
-
-    if confirm
-      upload.attachment.purge
-      upload.destroy!
+    def update_model
+      if confirm
+        upload.attachment.purge
+        upload.destroy!
+      end
     end
-    true
   end
 end

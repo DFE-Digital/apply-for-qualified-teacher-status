@@ -1,29 +1,26 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
-  describe "validations" do
-    it { is_expected.to validate_presence_of(:application_form) }
-  end
-
   let(:application_form) { build(:application_form) }
 
-  let(:given_names) { "" }
-  let(:family_name) { "" }
-  let(:date_of_birth) { "" }
+  subject(:form) do
+    described_class.new(
+      application_form:,
+      given_names:,
+      family_name:,
+      date_of_birth:,
+    )
+  end
 
   describe "validations" do
-    subject(:form) do
-      described_class.new(
-        application_form:,
-        given_names:,
-        family_name:,
-        date_of_birth:,
-      )
-    end
+    let(:given_names) { "" }
+    let(:family_name) { "" }
+    let(:date_of_birth) { "" }
 
-    context "when date of birth and names are blank" do
-      it { is_expected.to_not be_valid }
-    end
+    it { is_expected.to validate_presence_of(:application_form) }
+    it { is_expected.to validate_presence_of(:given_names) }
+    it { is_expected.to validate_presence_of(:family_name) }
+    it { is_expected.to validate_presence_of(:date_of_birth) }
 
     context "when date of birth is more than 18 years ago but less than 100 years ago" do
       let(:date_of_birth) { 20.years.ago }
@@ -76,16 +73,11 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
   end
 
   describe "#save" do
-    let(:form) do
-      described_class.new(
-        application_form:,
-        given_names: "Given",
-        family_name: "Family",
-        date_of_birth: Date.new(2000, 1, 1),
-      )
-    end
+    let(:given_names) { "Given" }
+    let(:family_name) { "Family" }
+    let(:date_of_birth) { Date.new(2000, 1, 1) }
 
-    before { form.save }
+    before { form.save(validate: true) }
 
     it "saves the application form" do
       expect(application_form.given_names).to eq("Given")

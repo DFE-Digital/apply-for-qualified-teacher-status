@@ -11,17 +11,13 @@ module TeacherInterface
 
     def create
       @upload_form = UploadForm.new(upload_form_params.merge(document:))
-      if @upload_form.save
+      if @upload_form.save(validate: true)
         redirect_to_if_save_and_continue [
                                            :edit,
                                            :teacher_interface,
                                            :application_form,
                                            @document,
                                          ]
-      elsif @upload_form.blank?
-        redirect_to_if_save_and_continue DocumentContinueRedirection.call(
-                                           document:,
-                                         )
       else
         render :new, status: :unprocessable_entity
       end
@@ -35,7 +31,7 @@ module TeacherInterface
       confirm = params.dig(:teacher_interface_delete_upload_form, :confirm)
       @delete_upload_form =
         TeacherInterface::DeleteUploadForm.new(confirm:, upload: @upload)
-      if @delete_upload_form.save!
+      if @delete_upload_form.save(validate: true)
         redirect_to [:edit, :teacher_interface, :application_form, @document]
       else
         render :delete, status: :unprocessable_entity

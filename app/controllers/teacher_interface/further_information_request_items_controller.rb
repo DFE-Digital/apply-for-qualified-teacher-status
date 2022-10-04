@@ -37,7 +37,7 @@ module TeacherInterface
         )
 
       if params[:next] == "save_and_continue"
-        if @further_information_request_item_text_form.save
+        if @further_information_request_item_text_form.save(validate: true)
           redirect_to_further_information_request
         else
           render :edit, status: :unprocessable_entity

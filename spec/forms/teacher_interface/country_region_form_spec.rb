@@ -80,9 +80,11 @@ RSpec.describe TeacherInterface::CountryRegionForm, type: :model do
       )
     end
 
+    before { form.save(validate: true) }
+
     it "creates an application form" do
-      application_form = form.save
-      expect(application_form.teacher).to eq(teacher)
+      application_form = teacher.application_form
+      expect(application_form).to_not be_nil
       expect(application_form.region).to eq(region)
     end
   end

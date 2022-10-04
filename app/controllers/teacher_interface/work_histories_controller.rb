@@ -60,7 +60,7 @@ module TeacherInterface
         HasWorkHistoryForm.new(
           has_work_history_form_params.merge(application_form:),
         )
-      if @has_work_history_form.save
+      if @has_work_history_form.save(validate: true)
         redirect_to_if_save_and_continue has_work_history_next_url
       else
         render :edit_has_work_history, status: :unprocessable_entity
