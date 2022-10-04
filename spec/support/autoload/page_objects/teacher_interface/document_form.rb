@@ -12,7 +12,10 @@ module PageObjects
         section :no_radio_item,
                 PageObjects::GovukRadioItem,
                 ".govuk-radios__item:nth-of-type(2)"
-        element :continue_button, "button"
+
+        element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
+        element :save_and_come_back_later_button,
+                ".govuk-button.govuk-button--secondary"
       end
     end
   end

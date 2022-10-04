@@ -18,6 +18,7 @@
     end
   end
 end %>
+
 <%= form_with model: @add_another_upload_form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
@@ -28,5 +29,5 @@ end %>
     <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
   <% end %>
 
-  <%= f.govuk_submit "Continue", prevent_double_click: false %>
+  <%= render "shared/save_submit_buttons", f: %>
 <% end %>

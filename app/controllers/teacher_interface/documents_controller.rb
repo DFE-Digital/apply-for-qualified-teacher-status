@@ -1,5 +1,7 @@
 module TeacherInterface
   class DocumentsController < BaseController
+    include HandleApplicationFormSection
+
     before_action :redirect_unless_draft_or_further_information
     before_action :load_application_form
     before_action :load_document
@@ -24,17 +26,19 @@ module TeacherInterface
             ),
         )
 
-      if @add_another_upload_form.valid?
-        if @add_another_upload_form.add_another
-          redirect_to new_teacher_interface_application_form_document_upload_path(
-                        document,
-                      )
-        else
-          redirect_to DocumentContinueRedirection.call(document:)
-        end
-      else
-        render :edit, status: :unprocessable_entity
-      end
+      handle_application_form_section(
+        form: @add_another_upload_form,
+        if_success_then_redirect: -> do
+          if @add_another_upload_form.add_another
+            new_teacher_interface_application_form_document_upload_path(
+              document,
+            )
+          else
+            DocumentContinueRedirection.call(document:)
+          end
+        end,
+        if_failure_then_render: :edit,
+      )
     end
   end
 end
