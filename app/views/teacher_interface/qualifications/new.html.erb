@@ -1,8 +1,8 @@
 <% content_for :page_title, I18n.t("application_form.tasks.sections.qualifications") %>
-<% content_for :back_link_url, @qualification.new_record? && @application_form.qualifications.empty? ?
+<% content_for :back_link_url, @application_form.qualifications.empty? ?
                                  teacher_interface_application_form_path :
                                  teacher_interface_application_form_qualifications_path %>
 
-<%= render "heading", qualification: @qualification %>
+<%= render "heading", qualification: @qualification_form.qualification %>
 
-<%= render "form", application_form: @application_form, qualification: @qualification %>
+<%= render "form", qualification_form: @qualification_form, qualification: @qualification_form.qualification %>

@@ -541,15 +541,20 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_qualifications
-    fill_in "qualification-title-field", with: "Title"
-    fill_in "qualification-institution-name-field", with: "Name"
-    fill_in "qualification-institution-country-code-field", with: "France"
-    fill_in "qualification_start_date_2i", with: "1"
-    fill_in "qualification_start_date_1i", with: "2000"
-    fill_in "qualification_complete_date_2i", with: "1"
-    fill_in "qualification_complete_date_1i", with: "2020"
-    fill_in "qualification_certificate_date_2i", with: "1"
-    fill_in "qualification_certificate_date_1i", with: "2000"
+    fill_in "teacher-interface-qualification-form-title-field", with: "Title"
+    fill_in "teacher-interface-qualification-form-institution-name-field",
+            with: "Name"
+    fill_in "teacher-interface-qualification-form-institution-country-code-field",
+            with: "France"
+    fill_in "teacher_interface_qualification_form_start_date_2i", with: "1"
+    fill_in "teacher_interface_qualification_form_start_date_1i", with: "2000"
+    fill_in "teacher_interface_qualification_form_complete_date_2i", with: "1"
+    fill_in "teacher_interface_qualification_form_complete_date_1i",
+            with: "2020"
+    fill_in "teacher_interface_qualification_form_certificate_date_2i",
+            with: "1"
+    fill_in "teacher_interface_qualification_form_certificate_date_1i",
+            with: "2000"
   end
 
   def when_i_fill_in_the_upload_certificate_form

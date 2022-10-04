@@ -19,9 +19,11 @@ var loadCountryAutoComplete = () => {
     ) ??
     document.getElementById("work-history-country-code-field") ??
     document.getElementById("work-history-country-code-field-error") ??
-    document.getElementById("qualification-institution-country-code-field") ??
     document.getElementById(
-      "qualification-institution-country-code-field-error"
+      "teacher-interface-qualification-form-institution-country-code-field"
+    ) ??
+    document.getElementById(
+      "teacher-interface-qualification-form-institution-country-code-field-error"
     ) ??
     document.getElementById("assessor-interface-filter-form-location-field") ??
     document.getElementById(
