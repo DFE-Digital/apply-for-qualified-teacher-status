@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe ProofOfRecognitionHelper do
-  let(:region) { double(status_check_written?: status, sanction_check_written?: sanction) }
+  let(:region) do
+    double(status_check_written?: status, sanction_check_written?: sanction)
+  end
   let(:status) { false }
   let(:sanction) { false }
 
@@ -15,10 +17,10 @@ RSpec.describe ProofOfRecognitionHelper do
         is_expected.to match_array(
           [
             "that you've completed a teaching qualification/teacher training",
-            "that you’ve successfully completed any period of professional experience "\
-            "comparable to an induction period (if required)",
+            "that you’ve successfully completed any period of professional experience " \
+              "comparable to an induction period (if required)",
             "the age ranges and subjects you’re qualified to teach",
-          ]
+          ],
         )
       end
     end
@@ -29,9 +31,9 @@ RSpec.describe ProofOfRecognitionHelper do
       it do
         is_expected.to match_array(
           [
-            "that your authorisation to teach has never been suspended, barred, "\
-            "cancelled, revoked or restricted, and that you have no sanctions against you",
-          ]
+            "that your authorisation to teach has never been suspended, barred, " \
+              "cancelled, revoked or restricted, and that you have no sanctions against you",
+          ],
         )
       end
     end
@@ -44,13 +46,13 @@ RSpec.describe ProofOfRecognitionHelper do
         is_expected.to match_array(
           [
             "that you've completed a teaching qualification/teacher training",
-            "that you’ve successfully completed any period of professional experience comparable "\
-            "to an induction period (if required)",
+            "that you’ve successfully completed any period of professional experience comparable " \
+              "to an induction period (if required)",
             "the age ranges and subjects you’re qualified to teach",
-            "that your authorisation to teach has never been suspended, barred, cancelled, "\
-            "revoked or restricted, and that you have no sanctions against you",
-            "that you’re qualified to teach at state or government schools"
-          ]
+            "that your authorisation to teach has never been suspended, barred, cancelled, " \
+              "revoked or restricted, and that you have no sanctions against you",
+            "that you’re qualified to teach at state or government schools",
+          ],
         )
       end
     end
@@ -62,20 +64,32 @@ RSpec.describe ProofOfRecognitionHelper do
     context "written status only" do
       let(:status) { true }
 
-      it { is_expected.to eq("The authority or territory that recognises you as a teacher must confirm:") }
+      it do
+        is_expected.to eq(
+          "The authority or territory that recognises you as a teacher must confirm:",
+        )
+      end
     end
 
     context "written sanction only" do
       let(:sanction) { true }
 
-      it { is_expected.to eq("The education department or authority must also confirm in writing:") }
+      it do
+        is_expected.to eq(
+          "The education department or authority must also confirm in writing:",
+        )
+      end
     end
 
     context "both" do
       let(:sanction) { true }
       let(:status) { true }
 
-      it { is_expected.to eq("The authority or territory that recognises you as a teacher must confirm:") }
+      it do
+        is_expected.to eq(
+          "The authority or territory that recognises you as a teacher must confirm:",
+        )
+      end
     end
   end
 end

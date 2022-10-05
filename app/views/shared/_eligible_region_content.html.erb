@@ -50,34 +50,14 @@
         <% end %>
       <% end %>
 
-      <% if region.status_check_written? && region.sanction_check_written? %>
-        <p class="govuk-body">
-          The authority or territory that recognises you as a teacher must confirm:
-        </p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>that you've completed a teaching qualification/teacher training</li>
-          <li>that you’ve successfully completed any period of professional experience comparable to an induction period (if required)</li>
-          <li>that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and that you have no sanctions against you</li>
-          <li>the age ranges and subjects you’re qualified to teach</li>
-          <li>that you’re qualified to teach at state or government schools</li>
-        </ul>
-        <% elsif region.status_check_written? %>
-          <p class="govuk-body">
-            The authority or territory that recognises you as a teacher must confirm:
-          </p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>that you've completed a teaching qualification/teacher training</li>
-            <li>that you’ve successfully completed any period of professional experience comparable to an induction period (if required)</li>
-            <li>the age ranges and subjects you’re qualified to teach</li>
-          </ul>
-        <% elsif region.sanction_check_written? %>
-          <p class="govuk-body">
-            The education department or authority must also confirm in writing:
-          </p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and that you have no sanctions against you</li>
-          </ul>
-      <% end %>
+      <p class="govuk-body">
+        <%= proof_of_recognition_description_for(region:) %>
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <%- proof_of_recognition_requirements_for(region:).each do |requirement|%>
+          <li><%= requirement %></li>
+        <%- end -%>
+      </ul>
 
       <% if region.status_check_written? || region.sanction_check_written? %>
         <p class="govuk-body">
