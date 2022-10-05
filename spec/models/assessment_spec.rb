@@ -5,17 +5,22 @@
 # Table name: assessments
 #
 #  id                  :bigint           not null, primary key
+#  age_range_max       :integer
+#  age_range_min       :integer
 #  recommendation      :string           default("unknown"), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  age_range_note_id   :bigint
 #  application_form_id :bigint           not null
 #
 # Indexes
 #
+#  index_assessments_on_age_range_note_id    (age_range_note_id)
 #  index_assessments_on_application_form_id  (application_form_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (age_range_note_id => notes.id)
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
 require "rails_helper"
@@ -26,6 +31,7 @@ RSpec.describe Assessment, type: :model do
   describe "associations" do
     it { is_expected.to have_many(:sections) }
     it { is_expected.to have_many(:further_information_requests) }
+    it { is_expected.to belong_to(:age_range_note).optional }
   end
 
   describe "validations" do

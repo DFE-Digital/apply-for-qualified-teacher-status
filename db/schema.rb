@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_05_080511) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_05_143211) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_080511) do
     t.string "recommendation", default: "unknown", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "age_range_min"
+    t.integer "age_range_max"
+    t.bigint "age_range_note_id"
+    t.index ["age_range_note_id"], name: "index_assessments_on_age_range_note_id"
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 
@@ -309,6 +313,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_080511) do
   add_foreign_key "application_forms", "teachers"
   add_foreign_key "assessment_sections", "assessments"
   add_foreign_key "assessments", "application_forms"
+  add_foreign_key "assessments", "notes", column: "age_range_note_id"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "staff", column: "author_id"
