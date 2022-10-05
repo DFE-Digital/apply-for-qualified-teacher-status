@@ -22,7 +22,6 @@
 <p class="govuk-body">On the next screen, you’ll see a preview of the email.</p>
 
 <%= form_with model: [:assessor_interface, @application_form, @assessment, @further_information_request] do |f| %>
-  <%= f.govuk_text_area :email_content, label: { size: "s" } %>
   <%= f.govuk_submit do %>
     <%= govuk_button_link_to "Back to overview", assessor_interface_application_form_path(@application_form), secondary: true %>
   <% end %>
