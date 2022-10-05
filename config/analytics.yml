@@ -106,7 +106,6 @@
     - created_at
     - updated_at
     - assessment_id
-    - email_content
   :further_information_request_items:
     - id
     - information_type
