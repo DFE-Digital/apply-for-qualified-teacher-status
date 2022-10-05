@@ -73,7 +73,7 @@ RSpec.describe AssessmentFactory do
           expect(section.checks).to eq(
             %w[
               qualifications_meet_level_6_or_equivalent
-              teaching_qualifcations_completed_in_eligible_country
+              teaching_qualifications_completed_in_eligible_country
               qualified_in_mainstream_education
               has_teacher_qualification_certificate
               has_teacher_qualification_transcript

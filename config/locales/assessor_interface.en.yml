@@ -26,7 +26,7 @@ en:
           duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
           applicant_already_qts: applicant does not already hold QTS and induction exemption
           qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 academic qualification or equivalent)
-          teaching_qualifcations_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
+          teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
           qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
           has_teacher_qualification_certificate: teacher qualification certificate is present (and translation if required)
           has_teacher_qualfication_transcript: teacher qualification transcript is present (and translation if required)
