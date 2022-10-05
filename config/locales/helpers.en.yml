@@ -32,8 +32,6 @@ en:
           decline: Decline QTS
       assessor_interface_create_note_form:
         text: Add a note to this application
-      further_information_request:
-        email_content: Email content
       qualification:
         add_another_options:
           true: "Yes"

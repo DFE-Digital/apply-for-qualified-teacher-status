@@ -17,7 +17,6 @@ class TeacherMailer < ApplicationMailer
     teacher = params[:teacher]
 
     @date = "[date]"
-    @extra_content = params[:further_information_request].email_content
 
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,

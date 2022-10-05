@@ -9,7 +9,6 @@ module PageObjects
       end
 
       section :form, "form" do
-        element :email_content_textarea, ".govuk-textarea"
         element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
         element :back_to_overview_button,
                 ".govuk-button.govuk-button--secondary"

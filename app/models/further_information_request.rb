@@ -3,7 +3,6 @@
 # Table name: further_information_requests
 #
 #  id            :bigint           not null, primary key
-#  email_content :text
 #  received_at   :datetime
 #  state         :string           not null
 #  created_at    :datetime         not null

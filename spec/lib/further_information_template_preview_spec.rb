@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe FurtherInformationTemplatePreview do
-  let(:further_information_request) do
-    create(:further_information_request, email_content: "raw email")
-  end
+  let(:further_information_request) { create(:further_information_request) }
   let(:teacher) { create(:teacher, :with_application_form) }
   let(:notify_key) { "notify-key" }
   let(:notify_client) do

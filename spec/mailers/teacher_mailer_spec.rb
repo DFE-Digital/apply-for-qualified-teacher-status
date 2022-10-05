@@ -47,9 +47,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       ).further_information_requested
     end
 
-    let(:further_information_request) do
-      create(:further_information_request, email_content: "Email content.")
-    end
+    let(:further_information_request) { create(:further_information_request) }
 
     describe "#subject" do
       subject(:subject) { mail.subject }
@@ -76,7 +74,6 @@ RSpec.describe TeacherMailer, type: :mailer do
           "The assessor reviewing your QTS application needs more information.",
         )
       end
-      it { is_expected.to include("Email content.") }
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
   end

@@ -37,8 +37,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
     )
     and_i_see_the_further_information_request_items
 
-    when_i_enter_email_content
-    and_i_click_continue
+    when_i_click_continue
     then_i_see_the(
       :further_information_request_preview_page,
       application_id:,
@@ -75,11 +74,6 @@ RSpec.describe "Assessor requesting further information", type: :system do
     expect(
       request_further_information_page.items.first.assessor_notes.text,
     ).to eq("A note.")
-  end
-
-  def when_i_enter_email_content
-    request_further_information_page.form.email_content_textarea.fill_in with:
-      "I am an email"
   end
 
   def and_i_see_the_email_preview
