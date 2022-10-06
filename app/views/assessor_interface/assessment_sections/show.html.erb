@@ -13,17 +13,17 @@
              application_form: @assessment_section_view_object.application_form,
              changeable: false %>
 <% when "qualifications" %>
+  <%= render "shared/application_form/qualifications_summary",
+             application_form: @assessment_section_view_object.application_form,
+             qualifications: @assessment_section_view_object.qualifications,
+             changeable: false %>
+<% when "age_range_subjects" %>
   <%= render "shared/application_form/age_range_summary",
              application_form: @assessment_section_view_object.application_form,
              changeable: false %>
 
   <%= render "shared/application_form/subjects_summary",
              application_form: @assessment_section_view_object.application_form,
-             changeable: false %>
-
-  <%= render "shared/application_form/qualifications_summary",
-             application_form: @assessment_section_view_object.application_form,
-             qualifications: @assessment_section_view_object.qualifications,
              changeable: false %>
 <% when "work_history" %>
   <%= render "shared/application_form/work_history_summary",

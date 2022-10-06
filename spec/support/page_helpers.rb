@@ -256,4 +256,9 @@ module PageHelpers
     @further_information_request_preview_page ||=
       PageObjects::AssessorInterface::FurtherInformationRequestPreview.new
   end
+
+  def verify_age_range_subjects_page
+    @verify_age_range_subjects_page ||=
+      PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
+  end
 end

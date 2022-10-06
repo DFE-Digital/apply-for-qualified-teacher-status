@@ -32,6 +32,10 @@ module PageObjects
         task_item_for("Check qualifications")
       end
 
+      def age_range_subjects_task
+        task_item_for("Verify age range and subjects")
+      end
+
       def work_history_task
         task_item_for("Check work history")
       end
