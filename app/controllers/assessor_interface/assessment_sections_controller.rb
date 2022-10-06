@@ -5,10 +5,8 @@ module AssessorInterface
     def show
       @assessment_section_form =
         assessment_section_form.new(
-          assessment_section:,
           user: current_staff,
-          passed: assessment_section.passed,
-          selected_failure_reasons: assessment_section.selected_failure_reasons,
+          **AssessmentSectionForm.initial_attributes(assessment_section)
         )
     end
 
