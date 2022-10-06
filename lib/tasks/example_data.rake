@@ -43,11 +43,11 @@ namespace :example_data do
 
     Staff.where(email: assessors.map { |assessor| assessor[:email] }).delete_all
 
+    TimelineEvent.delete_all
     AssessmentSection.delete_all
     Assessment.delete_all
     Qualification.delete_all
     WorkHistory.delete_all
-    TimelineEvent.delete_all
     Note.delete_all
     ApplicationForm.delete_all
     Teacher.delete_all
