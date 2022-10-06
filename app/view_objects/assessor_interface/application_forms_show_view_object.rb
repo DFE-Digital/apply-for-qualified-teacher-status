@@ -23,6 +23,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       %i[
         personal_information
         qualifications
+        age_range_subjects
         work_history
         professional_standing
       ].select { |key| assessment_section_keys.include?(key) }

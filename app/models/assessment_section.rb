@@ -28,6 +28,7 @@ class AssessmentSection < ApplicationRecord
        {
          personal_information: "personal_information",
          qualifications: "qualifications",
+         age_range_subjects: "age_range_subjects",
          work_history: "work_history",
          professional_standing: "professional_standing",
        }
@@ -62,7 +63,7 @@ class AssessmentSection < ApplicationRecord
     teaching_hours_not_fulfilled
     authorisation_to_teach
     teaching_qualification
-    age_ranges_subjects
+    confirm_age_range_subjects
     full_professional_status
   ].freeze
 

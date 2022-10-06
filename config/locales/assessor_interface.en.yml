@@ -9,15 +9,18 @@ en:
           items:
             personal_information: Check personal information
             qualifications: Check qualifications
+            age_range_subjects: Verify age range and subjects
             work_history: Check work history
             professional_standing: Check professional standing
             initial_assessment: Initial assessment recommendation
             review_requested_information: Review requested information from applicant
+
     assessment_sections:
       show:
         title:
           personal_information: Check personal information
           qualifications: Check qualifications
+          age_range_subjects: Verify age range and subjects
           work_history: Check work history
           professional_standing: Check professional standing
         checks:
@@ -26,7 +29,7 @@ en:
           duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
           applicant_already_qts: applicant does not already hold QTS and induction exemption
           qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 academic qualification or equivalent)
-          teaching_qualifcations_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
+          teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
           qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
           has_teacher_qualification_certificate: teacher qualification certificate is present (and translation if required)
           has_teacher_qualfication_transcript: teacher qualification transcript is present (and translation if required)
@@ -34,6 +37,7 @@ en:
           has_university_degree_transcript: university degree transcript is present (and translation if required)
           has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
           has_additional_degree_transcript: additional degree transcript is present (and translation if required)
+          age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
           email_contact_current_employer: the applicant has entered an email contact for their current/most recent employer
           satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
           registration_number: registration number provided and verified
@@ -41,7 +45,7 @@ en:
           written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
           authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present
           teaching_qualification: confirmation of the applicant’s teaching qualification
-          age_ranges_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
+          confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
           qualified_to_teach: the applicant is qualified to teach at state or government schools
           full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
         failure_reasons:
@@ -62,13 +66,14 @@ en:
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           qualifications_dont_support_subjects: The qualifications do not support the teaching subjects entered.
           qualifications_dont_match_those_entered: The qualifications do not match what was entered on the form.
+          age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
           registration_number: We could not verify the reference number using the online checker.
           written_statement_illegible: The letter from the country or state’s authority is illegible.
           written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
           authorisation_to_teach: Sanctions or restrictions were detected on professional record.
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
-          age_ranges_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
+          confirm_age_range_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
 

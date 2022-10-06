@@ -21,7 +21,7 @@ RSpec.describe AssessmentFactory do
       subject(:sections) { call.sections }
 
       it "creates two sections" do
-        expect(sections.count).to eq(2)
+        expect(sections.count).to eq(3)
       end
 
       describe "personal information section" do
@@ -73,7 +73,7 @@ RSpec.describe AssessmentFactory do
           expect(section.checks).to eq(
             %w[
               qualifications_meet_level_6_or_equivalent
-              teaching_qualifcations_completed_in_eligible_country
+              teaching_qualifications_completed_in_eligible_country
               qualified_in_mainstream_education
               has_teacher_qualification_certificate
               has_teacher_qualification_transcript
@@ -98,6 +98,22 @@ RSpec.describe AssessmentFactory do
               qualifications_dont_support_subjects
               qualifications_dont_match_those_entered
             ],
+          )
+        end
+      end
+
+      describe "age range and subjects section" do
+        it "is created" do
+          expect(sections.age_range_subjects.count).to eq(1)
+        end
+
+        it "has the right checks and failure reasons" do
+          section = sections.age_range_subjects.first
+          expect(section.checks).to eq(
+            %w[qualified_in_mainstream_education age_range_subjects_matches],
+          )
+          expect(section.failure_reasons).to eq(
+            %w[not_qualified_to_teach_mainstream age_range],
           )
         end
       end
@@ -149,7 +165,7 @@ RSpec.describe AssessmentFactory do
                 written_statement_recent
                 authorisation_to_teach
                 teaching_qualification
-                age_ranges_subjects
+                confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
               ],
@@ -160,7 +176,7 @@ RSpec.describe AssessmentFactory do
                 written_statement_recent
                 authorisation_to_teach
                 teaching_qualification
-                age_ranges_subjects
+                confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
               ],
@@ -182,7 +198,7 @@ RSpec.describe AssessmentFactory do
                 registration_number
                 authorisation_to_teach
                 teaching_qualification
-                age_ranges_subjects
+                confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
               ],
@@ -192,7 +208,7 @@ RSpec.describe AssessmentFactory do
                 registration_number
                 authorisation_to_teach
                 teaching_qualification
-                age_ranges_subjects
+                confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
               ],
