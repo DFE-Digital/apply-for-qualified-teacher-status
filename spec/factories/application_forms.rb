@@ -53,9 +53,15 @@ FactoryBot.define do
     association :teacher
     association :region, :national
 
-    needs_work_history { false }
-    needs_written_statement { false }
-    needs_registration_number { false }
+    needs_work_history do
+      region.status_check_none? || region.sanction_check_none?
+    end
+    needs_written_statement do
+      region.status_check_written? || region.sanction_check_written?
+    end
+    needs_registration_number do
+      region.status_check_online? || region.sanction_check_online?
+    end
 
     trait :submitted do
       state { "submitted" }

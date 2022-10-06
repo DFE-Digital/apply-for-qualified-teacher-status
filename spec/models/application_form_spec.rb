@@ -49,7 +49,14 @@
 require "rails_helper"
 
 RSpec.describe ApplicationForm, type: :model do
-  subject(:application_form) { create(:application_form) }
+  subject(:application_form) do
+    create(
+      :application_form,
+      needs_work_history: false,
+      needs_written_statement: false,
+      needs_registration_number: false,
+    )
+  end
 
   describe "associations" do
     it { is_expected.to have_many(:notes) }

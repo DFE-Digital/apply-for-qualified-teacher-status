@@ -3,7 +3,15 @@
 require "rails_helper"
 
 RSpec.describe AssessmentFactory do
-  let(:application_form) { create(:application_form) }
+  let(:application_form) do
+    create(
+      :application_form,
+      needs_work_history: false,
+      needs_written_statement: false,
+      needs_registration_number: false,
+    )
+  end
+
   describe "#call" do
     subject(:call) { described_class.call(application_form:) }
 
