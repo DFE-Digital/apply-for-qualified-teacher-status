@@ -11,17 +11,11 @@ class AssessorInterface::CreateNoteForm
   validates :application_form, :author, :text, presence: true
 
   def save!
-    return false unless valid?
-
-    ActiveRecord::Base.transaction do
-      note = Note.create!(application_form:, author:, text:)
-
-      TimelineEvent.create!(
-        application_form:,
-        event_type: "note_created",
-        creator: author,
-        note:,
-      )
+    if valid?
+      CreateNote.call(application_form:, author:, text:)
+      true
+    else
+      false
     end
   end
 end
