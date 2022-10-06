@@ -28,6 +28,7 @@ class AssessmentSection < ApplicationRecord
        {
          personal_information: "personal_information",
          qualifications: "qualifications",
+         age_range_subjects: "age_range_subjects",
          work_history: "work_history",
          professional_standing: "professional_standing",
        }

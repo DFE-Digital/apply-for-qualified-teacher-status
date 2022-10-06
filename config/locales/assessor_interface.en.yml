@@ -9,15 +9,18 @@ en:
           items:
             personal_information: Check personal information
             qualifications: Check qualifications
+            age_range_subjects: Verify age range and subjects
             work_history: Check work history
             professional_standing: Check professional standing
             initial_assessment: Initial assessment recommendation
             review_requested_information: Review requested information from applicant
+
     assessment_sections:
       show:
         title:
           personal_information: Check personal information
           qualifications: Check qualifications
+          age_range_subjects: Verify age range and subjects
           work_history: Check work history
           professional_standing: Check professional standing
         checks:
@@ -34,6 +37,7 @@ en:
           has_university_degree_transcript: university degree transcript is present (and translation if required)
           has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
           has_additional_degree_transcript: additional degree transcript is present (and translation if required)
+          age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
           email_contact_current_employer: the applicant has entered an email contact for their current/most recent employer
           satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
           registration_number: registration number provided and verified
@@ -62,6 +66,7 @@ en:
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           qualifications_dont_support_subjects: The qualifications do not support the teaching subjects entered.
           qualifications_dont_match_those_entered: The qualifications do not match what was entered on the form.
+          age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
           registration_number: We could not verify the reference number using the online checker.
           written_statement_illegible: The letter from the country or state’s authority is illegible.

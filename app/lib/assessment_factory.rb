@@ -11,6 +11,7 @@ class AssessmentFactory
     sections = [
       personal_information_section,
       qualifications_section,
+      age_range_subjects_section,
       work_history_section,
       professional_standing_section,
     ].compact
@@ -76,6 +77,14 @@ class AssessmentFactory
     ].compact
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
+  end
+
+  def age_range_subjects_section
+    checks = %i[qualified_in_mainstream_education age_range_subjects_matches]
+
+    failure_reasons = %i[not_qualified_to_teach_mainstream age_range]
+
+    AssessmentSection.new(key: "age_range_subjects", checks:, failure_reasons:)
   end
 
   def work_history_section

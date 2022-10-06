@@ -37,6 +37,7 @@ RSpec.describe AssessmentSection, type: :model do
       is_expected.to define_enum_for(:key).with_values(
         personal_information: "personal_information",
         qualifications: "qualifications",
+        age_range_subjects: "age_range_subjects",
         work_history: "work_history",
         professional_standing: "professional_standing",
       ).backed_by_column_of_type(:string)

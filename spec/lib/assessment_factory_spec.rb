@@ -21,7 +21,7 @@ RSpec.describe AssessmentFactory do
       subject(:sections) { call.sections }
 
       it "creates two sections" do
-        expect(sections.count).to eq(2)
+        expect(sections.count).to eq(3)
       end
 
       describe "personal information section" do
@@ -98,6 +98,22 @@ RSpec.describe AssessmentFactory do
               qualifications_dont_support_subjects
               qualifications_dont_match_those_entered
             ],
+          )
+        end
+      end
+
+      describe "age range and subjects section" do
+        it "is created" do
+          expect(sections.age_range_subjects.count).to eq(1)
+        end
+
+        it "has the right checks and failure reasons" do
+          section = sections.age_range_subjects.first
+          expect(section.checks).to eq(
+            %w[qualified_in_mainstream_education age_range_subjects_matches],
+          )
+          expect(section.failure_reasons).to eq(
+            %w[not_qualified_to_teach_mainstream age_range],
           )
         end
       end
