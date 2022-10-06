@@ -1,4 +1,4 @@
-<%= form_with model: [:teacher_interface, :application_form, work_history] do |f| %>
+<%= form_with model: work_history_form, url: [:teacher_interface, :application_form, work_history], method: work_history.new_record? ? :post : :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_fieldset legend: { text: I18n.t(work_history.current_or_most_recent_role? ? "application_form.work_history.current_or_most_recent_role" : "application_form.work_history.previous_role") } do %>
@@ -40,5 +40,5 @@
     <% end %>
   <% end %>
 
-  <%= f.govuk_submit "Continue", prevent_double_click: false %>
+  <%= render "shared/save_submit_buttons", f: %>
 <% end %>

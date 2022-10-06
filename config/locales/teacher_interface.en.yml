@@ -13,8 +13,8 @@ en:
         teacher_interface/name_and_date_of_birth_form:
           attributes:
             date_of_birth:
+              blank: Enter your date of birth in the format 27 3 1980
               too_young: You must be 18 or over to use this service
-              invalid: Enter your date of birth in the format 27 3 1980
               too_old: Your date of birth cannot be that far in the past
             given_names:
               blank: Enter your given names

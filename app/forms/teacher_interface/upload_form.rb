@@ -1,38 +1,36 @@
-class TeacherInterface::UploadForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+# frozen_string_literal: true
 
-  attr_accessor :document
+module TeacherInterface
+  class UploadForm < BaseForm
+    attr_accessor :document
+    attribute :original_attachment
+    attribute :translated_attachment
 
-  attribute :original_attachment
-  attribute :translated_attachment
+    validates :document, presence: true
+    validates :original_attachment, file_upload: true
+    validates :translated_attachment, file_upload: true
+    validate :attachment_present
 
-  validates :document, presence: true
-  validates :original_attachment, file_upload: true
-  validates :translated_attachment, file_upload: true
+    def update_model
+      if original_attachment.present?
+        document.uploads.create!(
+          attachment: original_attachment,
+          translation: false,
+        )
+      end
 
-  def blank?
-    original_attachment.blank? && translated_attachment.blank?
-  end
-
-  def save
-    return false unless valid?
-    return false if blank?
-
-    if original_attachment.present?
-      document.uploads.create!(
-        attachment: original_attachment,
-        translation: false,
-      )
+      if translated_attachment.present?
+        document.uploads.create!(
+          attachment: translated_attachment,
+          translation: true,
+        )
+      end
     end
 
-    if translated_attachment.present?
-      document.uploads.create!(
-        attachment: translated_attachment,
-        translation: true,
-      )
+    def attachment_present
+      if original_attachment.blank? && translated_attachment.blank?
+        errors.add(:original_attachment, :blank)
+      end
     end
-
-    true
   end
 end

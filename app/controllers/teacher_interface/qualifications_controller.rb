@@ -1,16 +1,9 @@
 module TeacherInterface
   class QualificationsController < BaseController
+    include HandleApplicationFormSection
+
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
-    before_action :load_qualification,
-                  only: %i[
-                    edit
-                    update
-                    edit_part_of_university_degree
-                    update_part_of_university_degree
-                    delete
-                    destroy
-                  ]
 
     def index
       if application_form.task_item_completed?(:qualifications, :qualifications)
@@ -32,21 +25,30 @@ module TeacherInterface
     end
 
     def new
-      @qualification = Qualification.new(application_form:)
+      @qualification_form =
+        QualificationForm.new(
+          qualification: Qualification.new(application_form:),
+        )
     end
 
     def create
-      @qualification = application_form.qualifications.new(qualification_params)
-      if @qualification.save
-        redirect_to_if_save_and_continue [
-                                           :edit,
-                                           :teacher_interface,
-                                           :application_form,
-                                           @qualification.certificate_document,
-                                         ]
-      else
-        render :new, status: :unprocessable_entity
-      end
+      qualification = Qualification.new(application_form:)
+
+      @qualification_form =
+        QualificationForm.new(qualification_form_params.merge(qualification:))
+
+      handle_application_form_section(
+        form: @qualification_form,
+        if_success_then_redirect: -> do
+          [
+            :edit,
+            :teacher_interface,
+            :application_form,
+            qualification.certificate_document,
+          ]
+        end,
+        if_failure_then_render: :new,
+      )
     end
 
     def add_another
@@ -63,70 +65,88 @@ module TeacherInterface
     end
 
     def edit
+      @qualification = qualification
+
+      @qualification_form =
+        QualificationForm.new(
+          qualification:,
+          title: qualification.title,
+          institution_name: qualification.institution_name,
+          institution_country_code: qualification.institution_country_code,
+          start_date: qualification.start_date,
+          complete_date: qualification.complete_date,
+          certificate_date: qualification.certificate_date,
+        )
     end
 
     def update
-      if @qualification.update(qualification_params)
-        redirect_to_if_save_and_continue [
-                                           :edit,
-                                           :teacher_interface,
-                                           :application_form,
-                                           @qualification.certificate_document,
-                                         ]
-      else
-        render :edit, status: :unprocessable_entity
-      end
+      @qualification = qualification
+
+      @qualification_form =
+        QualificationForm.new(qualification_form_params.merge(qualification:))
+
+      handle_application_form_section(
+        form: @qualification_form,
+        if_success_then_redirect: [
+          :edit,
+          :teacher_interface,
+          :application_form,
+          qualification.certificate_document,
+        ],
+        if_failure_then_render: :edit,
+      )
     end
 
     def edit_part_of_university_degree
+      @qualification = qualification
+
       @part_of_university_degree_form =
         PartOfUniversityDegreeForm.new(
-          qualification: @qualification,
-          part_of_university_degree: @qualification.part_of_university_degree,
+          qualification:,
+          part_of_university_degree: qualification.part_of_university_degree,
         )
     end
 
     def update_part_of_university_degree
+      @qualification = qualification
+
       @part_of_university_degree_form =
         PartOfUniversityDegreeForm.new(
-          part_of_university_degree_form_params.merge(
-            qualification: @qualification,
-          ),
+          part_of_university_degree_form_params.merge(qualification:),
         )
-      if @part_of_university_degree_form.save
-        if @qualification.part_of_university_degree.nil? ||
-             @qualification.part_of_university_degree
-          redirect_to_if_save_and_continue %i[
-                                             check
-                                             teacher_interface
-                                             application_form
-                                             qualifications
-                                           ]
-        else
-          if application_form.degree_qualifications.empty?
-            degree_qualification = application_form.qualifications.create!
-          end
 
-          redirect_to_if_save_and_continue [
-                                             :edit,
-                                             :teacher_interface,
-                                             :application_form,
-                                             degree_qualification,
-                                           ]
-        end
-      else
-        render :edit_part_of_university_degree, status: :unprocessable_entity
-      end
+      handle_application_form_section(
+        form: @part_of_university_degree_form,
+        if_success_then_redirect: -> do
+          if @part_of_university_degree_form.part_of_university_degree ||
+               @part_of_university_degree_form.part_of_university_degree.nil?
+            %i[check teacher_interface application_form qualifications]
+          else
+            if application_form.degree_qualifications.empty?
+              application_form.qualifications.create!
+            end
+
+            [
+              :edit,
+              :teacher_interface,
+              :application_form,
+              application_form.degree_qualifications.first,
+            ]
+          end
+        end,
+        if_failure_then_render: :edit_part_of_university_degree,
+      )
     end
 
     def delete
+      @qualification = qualification
     end
 
     def destroy
       if ActiveModel::Type::Boolean.new.cast(
            params.dig(:qualification, :confirm),
          )
-        @qualification.destroy!
+        qualification.destroy!
       end
 
       redirect_to %i[check teacher_interface application_form qualifications]
@@ -134,26 +154,19 @@ module TeacherInterface
 
     private
 
-    def load_qualification
-      @qualification = application_form.qualifications.find(params[:id])
+    def qualification
+      @qualification ||= application_form.qualifications.find(params[:id])
     end
 
-    def qualification_params
-      params
-        .require(:qualification)
-        .permit(
-          :title,
-          :institution_name,
-          :institution_country_code,
-          :start_date,
-          :complete_date,
-          :certificate_date,
-        )
-        .tap do |params|
-          params[:institution_country_code] = CountryCode.from_location(
-            params[:institution_country_code],
-          )
-        end
+    def qualification_form_params
+      params.require(:teacher_interface_qualification_form).permit(
+        :title,
+        :institution_name,
+        :institution_country_code,
+        :start_date,
+        :complete_date,
+        :certificate_date,
+      )
     end
 
     def part_of_university_degree_form_params

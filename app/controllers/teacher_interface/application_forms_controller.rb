@@ -16,7 +16,7 @@ module TeacherInterface
 
       if @country_region_form.needs_region?
         render :new
-      elsif @country_region_form.save
+      elsif @country_region_form.save(validate: true)
         redirect_to teacher_interface_application_form_path
       else
         render :new, status: :unprocessable_entity

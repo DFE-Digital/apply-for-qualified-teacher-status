@@ -1,17 +1,15 @@
-class TeacherInterface::PartOfUniversityDegreeForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+# frozen_string_literal: true
 
-  attr_accessor :qualification
+module TeacherInterface
+  class PartOfUniversityDegreeForm < BaseForm
+    attr_accessor :qualification
+    validates :qualification, presence: true
 
-  attribute :part_of_university_degree, :boolean
+    attribute :part_of_university_degree, :boolean
+    validates :part_of_university_degree, inclusion: { in: [true, false] }
 
-  validates :qualification, presence: true
-
-  def save
-    return false unless valid?
-
-    qualification.part_of_university_degree = part_of_university_degree
-    qualification.save!
+    def update_model
+      qualification.update!(part_of_university_degree:)
+    end
   end
 end

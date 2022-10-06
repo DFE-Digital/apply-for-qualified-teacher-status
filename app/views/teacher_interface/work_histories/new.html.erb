@@ -1,8 +1,8 @@
 <% content_for :page_title, I18n.t("application_form.tasks.sections.work_history") %>
-<% content_for :back_link_url, @work_history.new_record? && @application_form.work_histories.empty? ?
+<% content_for :back_link_url, @application_form.work_histories.empty? ?
                                  teacher_interface_application_form_path :
                                  teacher_interface_application_form_work_histories_path %>
 
 <%= render "heading" %>
 
-<%= render "form", application_form: @application_form, work_history: @work_history %>
+<%= render "form", work_history_form: @work_history_form, work_history: @work_history_form.work_history %>

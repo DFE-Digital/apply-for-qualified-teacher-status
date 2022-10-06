@@ -1,5 +1,7 @@
 module TeacherInterface
   class FurtherInformationRequestItemsController < BaseController
+    include HandleApplicationFormSection
+
     before_action :load_application_form,
                   :load_further_information_request_and_item
 
@@ -36,23 +38,18 @@ module TeacherInterface
           ),
         )
 
-      if params[:next] == "save_and_continue"
-        if @further_information_request_item_text_form.save
-          redirect_to_further_information_request
-        else
-          render :edit, status: :unprocessable_entity
-        end
-      else
-        @further_information_request_item_text_form.update_model
-        redirect_to_further_information_request
-      end
+      handle_application_form_section(
+        form: @further_information_request_item_text_form,
+        if_success_then_redirect: further_information_request_redirection,
+        if_failure_then_render: :edit,
+      )
     end
 
     def update_document
       if params[:next] == "save_and_continue"
-        redirect_to_document
+        redirect_to document_redirection
       else
-        redirect_to_further_information_request
+        redirect_to further_information_request_redirection
       end
     end
 
@@ -82,21 +79,17 @@ module TeacherInterface
       ).permit(:response)
     end
 
-    def redirect_to_further_information_request
-      redirect_to [
-                    :teacher_interface,
-                    :application_form,
-                    further_information_request,
-                  ]
+    def further_information_request_redirection
+      [:teacher_interface, :application_form, further_information_request]
     end
 
-    def redirect_to_document
-      redirect_to [
-                    :edit,
-                    :teacher_interface,
-                    :application_form,
-                    further_information_request_item.document,
-                  ]
+    def document_redirection
+      [
+        :edit,
+        :teacher_interface,
+        :application_form,
+        further_information_request_item.document,
+      ]
     end
   end
 end

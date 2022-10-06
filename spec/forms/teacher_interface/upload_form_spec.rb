@@ -15,7 +15,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
     subject(:valid?) { upload_form.valid? }
 
     context "with nil attachments" do
-      it { is_expected.to be true }
+      it { is_expected.to be false }
     end
 
     context "with an original attachment" do
@@ -70,7 +70,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
   end
 
   describe "#save" do
-    before { upload_form.save }
+    before { upload_form.save(validate: true) }
 
     context "with an original attachment" do
       let(:original_attachment) do

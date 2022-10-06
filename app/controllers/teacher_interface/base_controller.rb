@@ -31,14 +31,6 @@ class TeacherInterface::BaseController < ApplicationController
       ).find(params[:document_id] || params[:id])
   end
 
-  def redirect_to_if_save_and_continue(*args)
-    if params[:next] == "save_and_continue"
-      redirect_to(*args)
-    else
-      redirect_to %i[teacher_interface application_form]
-    end
-  end
-
   def redirect_unless_application_form_is_draft
     unless application_form.draft?
       redirect_to %i[teacher_interface application_form]

@@ -1,8 +1,9 @@
 module TeacherInterface
   class WorkHistoriesController < BaseController
+    include HandleApplicationFormSection
+
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
-    before_action :load_work_history, only: %i[edit update delete destroy]
 
     def index
       if application_form.task_item_completed?(:work_history, :work_history)
@@ -22,16 +23,26 @@ module TeacherInterface
     end
 
     def new
-      @work_history = WorkHistory.new(application_form:)
+      @work_history_form =
+        WorkHistoryForm.new(work_history: WorkHistory.new(application_form:))
     end
 
     def create
-      @work_history = application_form.work_histories.new(work_history_params)
-      if @work_history.save
-        redirect_to %i[check teacher_interface application_form work_histories]
-      else
-        render :new, status: :unprocessable_entity
-      end
+      work_history = WorkHistory.new(application_form:)
+
+      @work_history_form =
+        WorkHistoryForm.new(work_history_form_params.merge(work_history:))
+
+      handle_application_form_section(
+        form: @work_history_form,
+        if_success_then_redirect: %i[
+          check
+          teacher_interface
+          application_form
+          work_histories
+        ],
+        if_failure_then_render: :new,
+      )
     end
 
     def add_another
@@ -60,32 +71,58 @@ module TeacherInterface
         HasWorkHistoryForm.new(
           has_work_history_form_params.merge(application_form:),
         )
-      if @has_work_history_form.save
-        redirect_to_if_save_and_continue has_work_history_next_url
-      else
-        render :edit_has_work_history, status: :unprocessable_entity
-      end
+
+      handle_application_form_section(
+        form: @has_work_history_form,
+        if_success_then_redirect: has_work_history_next_url,
+        if_failure_then_render: :edit_has_work_history,
+      )
     end
 
     def edit
+      @work_history = work_history
+
+      @work_history_form =
+        WorkHistoryForm.new(
+          work_history:,
+          city: work_history.city,
+          country_code: work_history.country_code,
+          email: work_history.email,
+          end_date: work_history.end_date,
+          job: work_history.job,
+          school_name: work_history.school_name,
+          start_date: work_history.start_date,
+          still_employed: work_history.still_employed,
+        )
     end
 
     def update
-      if @work_history.update(work_history_params)
-        redirect_to %i[check teacher_interface application_form work_histories]
-      else
-        render :edit, status: :unprocessable_entity
-      end
+      @work_history = work_history
+
+      @work_history_form =
+        WorkHistoryForm.new(work_history_form_params.merge(work_history:))
+
+      handle_application_form_section(
+        form: @work_history_form,
+        if_success_then_redirect: %i[
+          check
+          teacher_interface
+          application_form
+          work_histories
+        ],
+        if_failure_then_render: :edit,
+      )
     end
 
     def delete
+      @work_history = work_history
     end
 
     def destroy
       if ActiveModel::Type::Boolean.new.cast(
            params.dig(:work_history, :confirm),
          )
-        @work_history.destroy!
+        work_history.destroy!
       end
 
       redirect_to %i[check teacher_interface application_form work_histories]
@@ -100,9 +137,7 @@ module TeacherInterface
     end
 
     def has_work_history_next_url
-      if application_form.has_work_history.nil?
-        %i[teacher_interface application_form]
-      elsif application_form.has_work_history?
+      if @has_work_history_form.has_work_history
         if application_form.work_histories.empty?
           %i[new teacher_interface application_form work_history]
         else
@@ -118,28 +153,21 @@ module TeacherInterface
       end
     end
 
-    def load_work_history
-      @work_history = application_form.work_histories.find(params[:id])
+    def work_history
+      @work_history ||= application_form.work_histories.find(params[:id])
     end
 
-    def work_history_params
-      params
-        .require(:work_history)
-        .permit(
-          :city,
-          :country_code,
-          :email,
-          :end_date,
-          :job,
-          :school_name,
-          :start_date,
-          :still_employed,
-        )
-        .tap do |params|
-          params[:country_code] = CountryCode.from_location(
-            params[:country_code],
-          )
-        end
+    def work_history_form_params
+      params.require(:teacher_interface_work_history_form).permit(
+        :city,
+        :country_code,
+        :email,
+        :end_date,
+        :job,
+        :school_name,
+        :start_date,
+        :still_employed,
+      )
     end
   end
 end

@@ -1,5 +1,7 @@
 module TeacherInterface
   class AgeRangeController < BaseController
+    include HandleApplicationFormSection
+
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
 
@@ -15,11 +17,12 @@ module TeacherInterface
     def update
       @age_range_form =
         AgeRangeForm.new(age_range_form_params.merge(application_form:))
-      if @age_range_form.save
-        redirect_to %i[teacher_interface application_form]
-      else
-        render :edit, status: :unprocessable_entity
-      end
+
+      handle_application_form_section(
+        form: @age_range_form,
+        if_success_then_redirect: %i[teacher_interface application_form],
+        if_failure_then_render: :edit,
+      )
     end
 
     private

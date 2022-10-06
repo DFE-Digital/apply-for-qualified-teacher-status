@@ -1,17 +1,15 @@
-class TeacherInterface::HasWorkHistoryForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+# frozen_string_literal: true
 
-  attr_accessor :application_form
+module TeacherInterface
+  class HasWorkHistoryForm < BaseForm
+    attr_accessor :application_form
+    attribute :has_work_history, :boolean
 
-  attribute :has_work_history, :boolean
+    validates :application_form, presence: true
+    validates :has_work_history, inclusion: { in: [true, false] }
 
-  validates :application_form, presence: true
-
-  def save
-    return false unless valid?
-
-    application_form.has_work_history = has_work_history
-    application_form.save!
+    def update_model
+      application_form.update!(has_work_history:)
+    end
   end
 end

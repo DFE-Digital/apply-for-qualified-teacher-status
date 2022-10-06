@@ -1,60 +1,28 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::PartOfUniversityDegreeForm, type: :model do
-  subject(:part_of_university_degree_form) do
+  let(:qualification) { build(:qualification) }
+
+  subject(:form) do
     described_class.new(qualification:, part_of_university_degree:)
   end
 
-  let(:qualification) { build(:qualification) }
-  let(:part_of_university_degree) { nil }
+  describe "validations" do
+    let(:part_of_university_degree) { "" }
 
-  it { is_expected.to validate_presence_of(:qualification) }
-
-  describe "#valid?" do
-    subject(:valid?) { part_of_university_degree_form.valid? }
-
-    context "with a blank value" do
-      let(:part_of_university_degree) { "" }
-
-      it { is_expected.to be true }
-    end
-
-    context "with a true value" do
-      let(:part_of_university_degree) { "true" }
-
-      it { is_expected.to be true }
-    end
-
-    context "with a false value" do
-      let(:part_of_university_degree) { "false" }
-
-      it { is_expected.to be true }
+    it { is_expected.to validate_presence_of(:qualification) }
+    it do
+      is_expected.to allow_values(true, false).for(:part_of_university_degree)
     end
   end
 
   describe "#save" do
-    subject(:part_of_university_degree_value) do
-      qualification.part_of_university_degree
-    end
+    let(:part_of_university_degree) { "true" }
 
-    before { part_of_university_degree_form.save }
+    before { form.save(validate: true) }
 
-    context "with a blank value" do
-      let(:part_of_university_degree) { "" }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "with a true value" do
-      let(:part_of_university_degree) { "true" }
-
-      it { is_expected.to be true }
-    end
-
-    context "with a false value" do
-      let(:part_of_university_degree) { "false" }
-
-      it { is_expected.to be false }
+    it "saves the application form" do
+      expect(qualification.part_of_university_degree).to eq(true)
     end
   end
 end

@@ -1,8 +1,11 @@
-class TeacherInterface::AddAnotherUploadForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+# frozen_string_literal: true
 
-  attribute :add_another, :boolean
+module TeacherInterface
+  class AddAnotherUploadForm < BaseForm
+    attribute :add_another, :boolean
+    validates :add_another, inclusion: { in: [true, false] }
 
-  validates :add_another, inclusion: { in: [true, false] }
+    def update_model
+    end
+  end
 end

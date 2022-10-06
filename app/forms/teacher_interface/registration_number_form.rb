@@ -1,16 +1,15 @@
-class TeacherInterface::RegistrationNumberForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+# frozen_string_literal: true
 
-  attr_accessor :application_form
-  attribute :registration_number, :string
+module TeacherInterface
+  class RegistrationNumberForm < BaseForm
+    attr_accessor :application_form
+    attribute :registration_number, :string
 
-  validates :application_form, presence: true
+    validates :application_form, presence: true
+    validates :registration_number, presence: true
 
-  def save
-    return false unless valid?
-
-    application_form.registration_number = registration_number
-    application_form.save!
+    def update_model
+      application_form.update!(registration_number:)
+    end
   end
 end

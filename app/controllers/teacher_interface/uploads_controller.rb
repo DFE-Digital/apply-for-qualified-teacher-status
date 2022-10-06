@@ -1,5 +1,7 @@
 module TeacherInterface
   class UploadsController < BaseController
+    include HandleApplicationFormSection
+
     before_action :redirect_unless_draft_or_further_information
     before_action :load_application_form
     before_action :load_document
@@ -11,20 +13,17 @@ module TeacherInterface
 
     def create
       @upload_form = UploadForm.new(upload_form_params.merge(document:))
-      if @upload_form.save
-        redirect_to_if_save_and_continue [
-                                           :edit,
-                                           :teacher_interface,
-                                           :application_form,
-                                           @document,
-                                         ]
-      elsif @upload_form.blank?
-        redirect_to_if_save_and_continue DocumentContinueRedirection.call(
-                                           document:,
-                                         )
-      else
-        render :new, status: :unprocessable_entity
-      end
+
+      handle_application_form_section(
+        form: @upload_form,
+        if_success_then_redirect: [
+          :edit,
+          :teacher_interface,
+          :application_form,
+          @document,
+        ],
+        if_failure_then_render: :new,
+      )
     end
 
     def delete
@@ -32,10 +31,13 @@ module TeacherInterface
     end
 
     def destroy
-      confirm = params.dig(:teacher_interface_delete_upload_form, :confirm)
       @delete_upload_form =
-        TeacherInterface::DeleteUploadForm.new(confirm:, upload: @upload)
-      if @delete_upload_form.save!
+        TeacherInterface::DeleteUploadForm.new(
+          confirm: params.dig(:teacher_interface_delete_upload_form, :confirm),
+          upload: @upload,
+        )
+
+      if @delete_upload_form.save(validate: true)
         redirect_to [:edit, :teacher_interface, :application_form, @document]
       else
         render :delete, status: :unprocessable_entity

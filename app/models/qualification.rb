@@ -28,19 +28,6 @@ class Qualification < ApplicationRecord
 
   scope :ordered, -> { order(created_at: :asc) }
 
-  validates :start_date,
-            comparison: {
-              allow_nil: true,
-              less_than: :complete_date,
-            },
-            if: -> { complete_date.present? }
-  validates :complete_date,
-            comparison: {
-              allow_nil: true,
-              greater_than: :start_date,
-            },
-            if: -> { start_date.present? }
-
   before_create :build_documents
 
   def status

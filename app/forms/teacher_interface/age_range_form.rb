@@ -1,30 +1,27 @@
-class TeacherInterface::AgeRangeForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+# frozen_string_literal: true
 
-  attr_accessor :application_form
-  attribute :minimum, :integer
-  attribute :maximum, :integer
+module TeacherInterface
+  class AgeRangeForm < BaseForm
+    attr_accessor :application_form
+    attribute :minimum, :string
+    attribute :maximum, :string
 
-  validates :application_form, presence: true
-  validates :minimum,
-            numericality: {
-              only_integer: true,
-              allow_nil: true,
-              greater_than_or_equal_to: 0,
-            }
-  validates :maximum,
-            numericality: {
-              only_integer: true,
-              allow_nil: true,
-              greater_than_or_equal_to: :minimum,
-            }
+    validates :application_form, presence: true
+    validates :minimum,
+              presence: true,
+              numericality: {
+                only_integer: true,
+                greater_than_or_equal_to: 0,
+              }
+    validates :maximum,
+              presence: true,
+              numericality: {
+                only_integer: true,
+                greater_than_or_equal_to: :minimum,
+              }
 
-  def save
-    return false unless valid?
-
-    application_form.age_range_min = minimum
-    application_form.age_range_max = maximum
-    application_form.save!
+    def update_model
+      application_form.update!(age_range_min: minimum, age_range_max: maximum)
+    end
   end
 end
