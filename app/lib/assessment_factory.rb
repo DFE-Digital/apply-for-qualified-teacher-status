@@ -103,7 +103,7 @@ class AssessmentFactory
       (:written_statement_recent if application_form.needs_written_statement),
       :authorisation_to_teach,
       :teaching_qualification,
-      :age_ranges_subjects,
+      :confirm_age_range_subjects,
       :qualified_to_teach,
       :full_professional_status,
     ].compact
@@ -116,7 +116,7 @@ class AssessmentFactory
       (:written_statement_recent if application_form.needs_written_statement),
       :authorisation_to_teach,
       :teaching_qualification,
-      :age_ranges_subjects,
+      :confirm_age_range_subjects,
       :qualified_to_teach,
       :full_professional_status,
     ].compact

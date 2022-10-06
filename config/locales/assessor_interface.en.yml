@@ -41,7 +41,7 @@ en:
           written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
           authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present
           teaching_qualification: confirmation of the applicant’s teaching qualification
-          age_ranges_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
+          confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
           qualified_to_teach: the applicant is qualified to teach at state or government schools
           full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
         failure_reasons:
@@ -68,7 +68,7 @@ en:
           written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
           authorisation_to_teach: Sanctions or restrictions were detected on professional record.
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
-          age_ranges_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
+          confirm_age_range_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
 

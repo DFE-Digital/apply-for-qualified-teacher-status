@@ -62,7 +62,7 @@ class AssessmentSection < ApplicationRecord
     teaching_hours_not_fulfilled
     authorisation_to_teach
     teaching_qualification
-    age_ranges_subjects
+    confirm_age_range_subjects
     full_professional_status
   ].freeze
 

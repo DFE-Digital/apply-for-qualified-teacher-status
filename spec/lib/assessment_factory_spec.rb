@@ -149,7 +149,7 @@ RSpec.describe AssessmentFactory do
                 written_statement_recent
                 authorisation_to_teach
                 teaching_qualification
-                age_ranges_subjects
+                confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
               ],
@@ -160,7 +160,7 @@ RSpec.describe AssessmentFactory do
                 written_statement_recent
                 authorisation_to_teach
                 teaching_qualification
-                age_ranges_subjects
+                confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
               ],
@@ -182,7 +182,7 @@ RSpec.describe AssessmentFactory do
                 registration_number
                 authorisation_to_teach
                 teaching_qualification
-                age_ranges_subjects
+                confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
               ],
@@ -192,7 +192,7 @@ RSpec.describe AssessmentFactory do
                 registration_number
                 authorisation_to_teach
                 teaching_qualification
-                age_ranges_subjects
+                confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
               ],
