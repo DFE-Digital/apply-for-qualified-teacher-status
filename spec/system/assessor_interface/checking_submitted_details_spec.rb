@@ -68,7 +68,8 @@ RSpec.describe "Assessor check submitted details", type: :system do
     )
     then_i_see_the_age_range_and_subjects
 
-    when_i_choose_verify_age_range_subjects_yes
+    when_i_fill_in_age_range
+    and_i_choose_verify_age_range_subjects_yes
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_verify_age_range_subjects_completed
   end
@@ -81,7 +82,8 @@ RSpec.describe "Assessor check submitted details", type: :system do
     )
     then_i_see_the_age_range_and_subjects
 
-    when_i_choose_verify_age_range_subjects_no
+    when_i_fill_in_age_range
+    and_i_choose_verify_age_range_subjects_no
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_verify_age_range_subjects_action_required
   end
@@ -236,12 +238,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
     )
   end
 
-  def when_i_choose_verify_age_range_subjects_yes
+  def when_i_fill_in_age_range
+    verify_age_range_subjects_page.age_range_form.minimum.fill_in with: "7"
+    verify_age_range_subjects_page.age_range_form.maximum.fill_in with: "11"
+    verify_age_range_subjects_page.age_range_form.note.fill_in with: "A note."
+  end
+
+  def and_i_choose_verify_age_range_subjects_yes
     verify_age_range_subjects_page.form.yes_radio_item.input.click
     verify_age_range_subjects_page.form.continue_button.click
   end
 
-  def when_i_choose_verify_age_range_subjects_no
+  def and_i_choose_verify_age_range_subjects_no
     verify_age_range_subjects_page.form.no_radio_item.input.click
     verify_age_range_subjects_page
       .form

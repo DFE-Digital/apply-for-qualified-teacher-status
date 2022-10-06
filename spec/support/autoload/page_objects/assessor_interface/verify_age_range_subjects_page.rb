@@ -11,6 +11,15 @@ module PageObjects
 
       sections :cards, AgeRangeSubjectCard, ".govuk-summary-list__card"
 
+      section :age_range_form, "form" do
+        element :minimum,
+                "#assessor-interface-assessment-section-form-age-range-min-field"
+        element :maximum,
+                "#assessor-interface-assessment-section-form-age-range-max-field"
+        element :note,
+                "#assessor-interface-assessment-section-form-age-range-note-field"
+      end
+
       def age_range
         cards&.first
       end

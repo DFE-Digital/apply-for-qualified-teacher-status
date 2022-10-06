@@ -103,3 +103,7 @@ en:
           attributes:
             assessor_id:
               blank: Select an assessor to assign
+        assessor_interface/assessment_section_form:
+          attributes:
+            selected_failure_reasons:
+              blank: Select the reasons for your recommendation

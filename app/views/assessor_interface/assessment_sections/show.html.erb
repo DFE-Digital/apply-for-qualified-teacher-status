@@ -57,12 +57,21 @@
   ), method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
+  <% if @assessment_section_view_object.assessment_section.age_range_subjects? %>
+    <h2 class="govuk-heading-m">What age range is the applicant qualified to teach?</h2>
+    <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the age range they entered if you agree, or enter a new range.</p>
+
+    <%= f.govuk_number_field :age_range_min, width: 3 %>
+    <%= f.govuk_number_field :age_range_max, width: 3 %>
+    <%= f.govuk_text_area :age_range_note %>
+  <% end %>
+
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?", size: "s" } do %>
     <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
     <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
       <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" } do %>
         <% @assessment_section_view_object.assessment_section.failure_reasons.each do |failure_reason| %>
-          <%= f.govuk_check_box "#{failure_reason}_checked", true, label: { text: t(".failure_reasons.#{failure_reason}") } do %>
+          <%= f.govuk_check_box "#{failure_reason}_checked", true, label: { text: t(".failure_reasons.#{failure_reason}") }, link_errors: true do %>
             <%= f.govuk_text_area "#{failure_reason}_notes", label: { text: "Note to the applicant", size: "s" }, hint: { text: "Use this space to tell the applicant what they need to do. Make sure your instructions are clear." } %>
           <% end %>
         <% end %>
