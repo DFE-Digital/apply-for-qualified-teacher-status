@@ -58,7 +58,7 @@ end
 group :test do
   gem "capybara", "~> 3.37"
   gem "climate_control"
-  gem "cuprite", "~> 0.13"
+  gem "cuprite", "~> 0.14"
   gem "rspec"
   gem "rspec-rails", "~> 6.0.0.rc1"
   gem "shoulda-matchers", "~> 5.2"
