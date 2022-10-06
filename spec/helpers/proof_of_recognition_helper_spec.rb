@@ -48,9 +48,9 @@ RSpec.describe ProofOfRecognitionHelper do
             "that you've completed a teaching qualification/teacher training",
             "that you’ve successfully completed any period of professional experience comparable " \
               "to an induction period (if required)",
-            "the age ranges and subjects you’re qualified to teach",
             "that your authorisation to teach has never been suspended, barred, cancelled, " \
               "revoked or restricted, and that you have no sanctions against you",
+            "the age ranges and subjects you’re qualified to teach",
             "that you’re qualified to teach at state or government schools",
           ],
         )

@@ -1,26 +1,14 @@
 module ProofOfRecognitionHelper
-  WRITTEN_STATUS_REASONS = [
-    "that you've completed a teaching qualification/teacher training",
-    "that you’ve successfully completed any period of professional experience " \
-      "comparable to an induction period (if required)",
-    "the age ranges and subjects you’re qualified to teach",
-  ].freeze
-
-  WRITTEN_SANCTION_REASONS = [
-    "that your authorisation to teach has never been suspended, barred, " \
-      "cancelled, revoked or restricted, and that you have no sanctions against you",
-  ].freeze
-
   def proof_of_recognition_requirements_for(region:)
     if region.status_check_written? && region.sanction_check_written?
       return(
-        WRITTEN_STATUS_REASONS + WRITTEN_SANCTION_REASONS +
+        written_status_reasons.insert(2, *written_sanction_reasons) +
           ["that you’re qualified to teach at state or government schools"]
       )
     end
 
-    return WRITTEN_STATUS_REASONS if region.status_check_written?
-    return WRITTEN_SANCTION_REASONS if region.sanction_check_written?
+    return written_status_reasons if region.status_check_written?
+    return written_sanction_reasons if region.sanction_check_written?
     []
   end
 
@@ -33,5 +21,23 @@ module ProofOfRecognitionHelper
     if region.sanction_check_written?
       "The education department or authority must also confirm in writing:"
     end
+  end
+
+  private
+
+  def written_status_reasons
+    [
+      "that you've completed a teaching qualification/teacher training",
+      "that you’ve successfully completed any period of professional experience " \
+        "comparable to an induction period (if required)",
+      "the age ranges and subjects you’re qualified to teach",
+    ]
+  end
+
+  def written_sanction_reasons
+    [
+      "that your authorisation to teach has never been suspended, barred, " \
+        "cancelled, revoked or restricted, and that you have no sanctions against you",
+    ]
   end
 end
