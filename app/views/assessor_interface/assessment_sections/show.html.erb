@@ -72,7 +72,11 @@
       <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" } do %>
         <% @assessment_section_view_object.assessment_section.failure_reasons.each do |failure_reason| %>
           <%= f.govuk_check_box "#{failure_reason}_checked", true, label: { text: t(".failure_reasons.#{failure_reason}") }, link_errors: true do %>
-            <%= f.govuk_text_area "#{failure_reason}_notes", label: { text: "Note to the applicant", size: "s" }, hint: { text: "Use this space to tell the applicant what they need to do. Make sure your instructions are clear." } %>
+            <%= f.govuk_text_area "#{failure_reason}_notes", 
+              label: { text: "Note to the applicant", size: "s" }, 
+              hint: { text: "Use this space to tell the applicant what they need to do. Make sure your instructions are clear."},
+              placeholder: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
+              %>
           <% end %>
         <% end %>
       <% end %>
