@@ -7,6 +7,7 @@
 #  age_range_min                 :integer
 #  alternative_family_name       :text             default(""), not null
 #  alternative_given_names       :text             default(""), not null
+#  confirmed_no_sanctions        :boolean          default(FALSE)
 #  date_of_birth                 :date
 #  family_name                   :text             default(""), not null
 #  given_names                   :text             default(""), not null
