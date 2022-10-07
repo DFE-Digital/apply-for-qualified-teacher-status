@@ -6,6 +6,7 @@ en:
         recommendation: You've completed your review of this QTS application and marked all sections as complete to your satisfaction.
       assessor_interface_assessment_section_form:
         selected_failure_reasons: Select all options that are relevant to you.
+        failure_reason_notes: Use this space to tell the applicant what they need to do. Make sure your instructions are clear.
       assessor_interface_create_note_form:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
       qualification:
@@ -36,6 +37,7 @@ en:
         age_range_min: From
         age_range_max: To
         age_range_note: If you've entered a new range please explain why (optional)
+        failure_reason_notes: Note to the applicant
       qualification:
         add_another_options:
           true: "Yes"
@@ -61,6 +63,9 @@ en:
         add_another_options:
           true: "Yes"
           false: "No"
+    placeholder:
+      assessor_interface_assessment_section_form:
+        failure_reason_notes: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
     legend:
       assessment:
         recommendation: QTS review completed
