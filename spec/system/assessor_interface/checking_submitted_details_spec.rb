@@ -60,6 +60,34 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_see_check_qualifications_action_required
   end
 
+  it "allows passing the age range and subjects" do
+    when_i_visit_the(
+      :verify_age_range_subjects_page,
+      application_id:,
+      assessment_id:,
+    )
+    then_i_see_the_age_range_and_subjects
+
+    when_i_fill_in_age_range
+    and_i_choose_verify_age_range_subjects_yes
+    then_i_see_the(:assessor_application_page, application_id:)
+    and_i_see_verify_age_range_subjects_completed
+  end
+
+  it "allows failing the age range and subjects" do
+    when_i_visit_the(
+      :verify_age_range_subjects_page,
+      application_id:,
+      assessment_id:,
+    )
+    then_i_see_the_age_range_and_subjects
+
+    when_i_fill_in_age_range
+    and_i_choose_verify_age_range_subjects_no
+    then_i_see_the(:assessor_application_page, application_id:)
+    and_i_see_verify_age_range_subjects_action_required
+  end
+
   it "allows passing the work history" do
     when_i_visit_the(:check_work_history_page, application_id:, assessment_id:)
     then_i_see_the_work_history
@@ -201,6 +229,53 @@ RSpec.describe "Assessor check submitted details", type: :system do
     )
   end
 
+  def then_i_see_the_age_range_and_subjects
+    expect(verify_age_range_subjects_page.age_range.heading.text).to eq(
+      "Enter the age range you can teach",
+    )
+    expect(verify_age_range_subjects_page.subjects.heading.text).to eq(
+      "Enter the subjects you can teach",
+    )
+  end
+
+  def when_i_fill_in_age_range
+    verify_age_range_subjects_page.age_range_form.minimum.fill_in with: "7"
+    verify_age_range_subjects_page.age_range_form.maximum.fill_in with: "11"
+    verify_age_range_subjects_page.age_range_form.note.fill_in with: "A note."
+  end
+
+  def and_i_choose_verify_age_range_subjects_yes
+    verify_age_range_subjects_page.form.yes_radio_item.input.click
+    verify_age_range_subjects_page.form.continue_button.click
+  end
+
+  def and_i_choose_verify_age_range_subjects_no
+    verify_age_range_subjects_page.form.no_radio_item.input.click
+    verify_age_range_subjects_page
+      .form
+      .failure_reason_checkbox_items
+      .first
+      .checkbox
+      .click
+    verify_age_range_subjects_page
+      .form
+      .failure_reason_note_textareas
+      .first.fill_in with: "Note."
+    verify_age_range_subjects_page.form.continue_button.click
+  end
+
+  def and_i_see_verify_age_range_subjects_completed
+    expect(assessor_application_page.age_range_subjects_task.status.text).to eq(
+      "COMPLETED",
+    )
+  end
+
+  def and_i_see_verify_age_range_subjects_action_required
+    expect(assessor_application_page.age_range_subjects_task.status.text).to eq(
+      "ACTION REQUIRED",
+    )
+  end
+
   def then_i_see_the_work_history
     most_recent_role = application_form.work_histories.first
     expect(check_work_history_page.most_recent_role.school_name.text).to eq(
@@ -307,6 +382,11 @@ RSpec.describe "Assessor check submitted details", type: :system do
         create(
           :assessment_section,
           :qualifications,
+          assessment: application_form.assessment,
+        )
+        create(
+          :assessment_section,
+          :age_range_subjects,
           assessment: application_form.assessment,
         )
         create(

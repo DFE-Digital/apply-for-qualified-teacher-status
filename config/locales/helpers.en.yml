@@ -32,6 +32,10 @@ en:
           decline: Decline QTS
       assessor_interface_create_note_form:
         text: Add a note to this application
+      assessor_interface_assessment_section_form:
+        age_range_min: From
+        age_range_max: To
+        age_range_note: If you've entered a new range please explain why (optional)
       qualification:
         add_another_options:
           true: "Yes"

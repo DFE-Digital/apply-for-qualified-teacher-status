@@ -12,7 +12,7 @@ module PageObjects
       sections :cards, QualificationCard, ".govuk-summary-list__card"
 
       def teaching_qualification
-        cards&.third
+        cards&.first
       end
     end
   end

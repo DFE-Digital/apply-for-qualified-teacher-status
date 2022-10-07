@@ -68,15 +68,29 @@ class AssessorInterface::AssessmentSectionForm
       klass
     end
 
+    def initial_attributes(assessment_section)
+      {
+        assessment_section:,
+        passed: assessment_section.passed,
+        selected_failure_reasons: assessment_section.selected_failure_reasons,
+      }
+    end
+
     def permit_parameters(params)
+      args, kwargs = permittable_parameters
+      params.permit(:passed, *args, **kwargs)
+    end
+
+    protected
+
+    def permittable_parameters
       args =
         attribute_names.filter { |attr_name| attr_name.ends_with?("_notes") }
       kwargs =
         attribute_names
           .filter { |attr_name| attr_name.ends_with?("_checked") }
           .index_with { |_key| [] }
-
-      params.permit(:passed, *args, **kwargs)
+      [args, kwargs]
     end
   end
 end

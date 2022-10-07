@@ -75,6 +75,14 @@ FactoryBot.define do
       end
     end
 
+    trait :age_range_subjects do
+      key { "age_range_subjects" }
+      checks do
+        %w[qualified_in_mainstream_education age_range_subjects_matches]
+      end
+      failure_reasons { %w[not_qualified_to_teach_mainstream age_range] }
+    end
+
     trait :work_history do
       key { "work_history" }
       checks { %w[satisfactory_evidence_work_history] }

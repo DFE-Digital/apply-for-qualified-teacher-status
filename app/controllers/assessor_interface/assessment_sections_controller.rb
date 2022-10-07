@@ -5,10 +5,10 @@ module AssessorInterface
     def show
       @assessment_section_form =
         assessment_section_form.new(
-          assessment_section:,
           user: current_staff,
-          passed: assessment_section.passed,
-          selected_failure_reasons: assessment_section.selected_failure_reasons,
+          **assessment_section_form_class.initial_attributes(
+            assessment_section,
+          ),
         )
     end
 
@@ -43,7 +43,15 @@ module AssessorInterface
     end
 
     def assessment_section_form
-      AssessmentSectionForm.for_assessment_section(assessment_section)
+      assessment_section_form_class.for_assessment_section(assessment_section)
+    end
+
+    def assessment_section_form_class
+      if assessment_section.age_range_subjects?
+        AgeRangeSubjectsForm
+      else
+        AssessmentSectionForm
+      end
     end
 
     def assessment_section_form_params
