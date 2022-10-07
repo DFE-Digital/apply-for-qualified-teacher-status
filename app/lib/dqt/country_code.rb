@@ -1,4 +1,6 @@
-class DqtCountryCode
+# frozen_string_literal: true
+
+class DQT::CountryCode
   class << self
     def for_code(code)
       # Cyprus (European Union)
