@@ -64,6 +64,26 @@
     <%= f.govuk_number_field :age_range_min, width: 3 %>
     <%= f.govuk_number_field :age_range_max, width: 3 %>
     <%= f.govuk_text_area :age_range_note %>
+
+    <h2 class="govuk-heading-m">Which subjects can the applicant teach in England?</h2>
+    <p class="govuk-hint">You can enter up to three</p>
+    <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the subjects they entered if you agree, or edit them.</p>
+
+    <% (1..3).map { |i| "subject_#{i}" }.each do |field| %>
+      <%= render DfE::Autocomplete::View.new(
+        f,
+        attribute_name: field,
+        form_field: f.govuk_select(
+          field,
+          options_for_select(
+            Subject.all.map { |subject| [subject.name, subject.id] }.unshift([nil, nil]),
+            f.object.send(field),
+          ),
+        )
+      ) %>
+    <% end %>
+
+    <%= f.govuk_text_area :subjects_note %>
   <% end %>
 
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?", size: "s" } do %>

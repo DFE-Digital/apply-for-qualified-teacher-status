@@ -69,6 +69,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_age_range_and_subjects
 
     when_i_fill_in_age_range
+    and_i_fill_in_subjects
     and_i_choose_verify_age_range_subjects_yes
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_verify_age_range_subjects_completed
@@ -83,6 +84,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_age_range_and_subjects
 
     when_i_fill_in_age_range
+    and_i_fill_in_subjects
     and_i_choose_verify_age_range_subjects_no
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_verify_age_range_subjects_action_required
@@ -242,6 +244,13 @@ RSpec.describe "Assessor check submitted details", type: :system do
     verify_age_range_subjects_page.age_range_form.minimum.fill_in with: "7"
     verify_age_range_subjects_page.age_range_form.maximum.fill_in with: "11"
     verify_age_range_subjects_page.age_range_form.note.fill_in with: "A note."
+  end
+
+  def and_i_fill_in_subjects
+    verify_age_range_subjects_page.subjects_form.first_field.fill_in with:
+      "Physics"
+    verify_age_range_subjects_page.subjects_form.note_textarea.fill_in with:
+      "Another note."
   end
 
   def and_i_choose_verify_age_range_subjects_yes

@@ -20,6 +20,17 @@ module PageObjects
                 "#assessor-interface-assessment-section-form-age-range-note-field"
       end
 
+      section :subjects_form, "form" do
+        element :first_field,
+                "#assessor-interface-assessment-section-form-subject-1-field"
+        element :second_field,
+                "#assessor-interface-assessment-section-form-subject-2-field"
+        element :third_field,
+                "#assessor-interface-assessment-section-form-subject-3-field"
+        element :note_textarea,
+                "#assessor-interface-assessment-section-form-subjects-note-field"
+      end
+
       def age_range
         cards&.first
       end
