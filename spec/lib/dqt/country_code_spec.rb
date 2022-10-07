@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe DqtCountryCode do
+RSpec.describe DQT::CountryCode do
   describe "#for_code" do
     subject(:dqt_code) { described_class.for_code(code) }
 
