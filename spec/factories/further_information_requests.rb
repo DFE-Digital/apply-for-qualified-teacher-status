@@ -27,5 +27,20 @@ FactoryBot.define do
       state { "received" }
       received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
+
+    trait :with_items do
+      after(:create) do |further_information_request, _evaluator|
+        create(
+          :further_information_request_item,
+          :with_text_response,
+          further_information_request:,
+        )
+        create(
+          :further_information_request_item,
+          :with_document_response,
+          further_information_request:,
+        )
+      end
+    end
   end
 end

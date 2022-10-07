@@ -20,6 +20,7 @@
 FactoryBot.define do
   factory :further_information_request_item do
     association :further_information_request
+    assessor_notes { Faker::Lorem.paragraph }
 
     trait :with_text_response do
       information_type { "text" }
@@ -28,7 +29,8 @@ FactoryBot.define do
 
     trait :with_document_response do
       information_type { "document" }
-      association :document
+
+      after(:create) { |item| create(:document, documentable: item) }
     end
   end
 end

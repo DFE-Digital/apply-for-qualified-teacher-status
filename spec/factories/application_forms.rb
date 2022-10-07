@@ -91,7 +91,12 @@ FactoryBot.define do
 
       after(:create) do |application_form, _evaluator|
         assessment = create(:assessment, application_form:)
-        create(:further_information_request, :requested, assessment:)
+        create(
+          :further_information_request,
+          :requested,
+          :with_items,
+          assessment:,
+        )
       end
     end
 
