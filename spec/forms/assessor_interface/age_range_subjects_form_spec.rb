@@ -39,6 +39,11 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
     end
 
     it { is_expected.to_not validate_presence_of(:age_range_note) }
+
+    it { is_expected.to validate_presence_of(:subject_1) }
+    it { is_expected.to_not validate_presence_of(:subject_2) }
+    it { is_expected.to_not validate_presence_of(:subject_3) }
+    it { is_expected.to_not validate_presence_of(:subjects_note) }
   end
 
   describe "#save" do
@@ -52,7 +57,12 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
 
     describe "with valid attributes and no note" do
       let(:attributes) do
-        { passed: true, age_range_min: "7", age_range_max: "11" }
+        {
+          passed: true,
+          age_range_min: "7",
+          age_range_max: "11",
+          subject_1: "Subject",
+        }
       end
 
       it { is_expected.to be true }
@@ -63,6 +73,9 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
         expect(assessment.age_range_min).to eq(7)
         expect(assessment.age_range_max).to eq(11)
         expect(assessment.age_range_note).to be_nil
+
+        expect(assessment.subjects).to eq(%w[Subject])
+        expect(assessment.subjects_note).to be_nil
       end
     end
 
@@ -73,6 +86,8 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
           age_range_min: "7",
           age_range_max: "11",
           age_range_note: "A note.",
+          subject_1: "Subject",
+          subjects_note: "Another note.",
         }
       end
 
@@ -82,6 +97,7 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
         save # rubocop:disable Rails/SaveBang
 
         expect(assessment.age_range_note.text).to eq("A note.")
+        expect(assessment.subjects_note.text).to eq("Another note.")
       end
     end
   end
