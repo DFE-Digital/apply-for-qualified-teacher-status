@@ -25,4 +25,8 @@
   </li>
 </ol>
 
+<% if @view_object.can_check_answers? %>
+  <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_further_information_request_path(@view_object.further_information_request) %>
+<% end %>
+
 <%= govuk_button_link_to "Save and sign out", destroy_teacher_session_path, secondary: true %>

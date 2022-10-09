@@ -24,6 +24,11 @@ module PageHelpers
     @assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
   end
 
+  def check_further_information_request_answers_page
+    @check_further_information_request_answers_page =
+      PageObjects::TeacherInterface::CheckFurtherInformationRequestAnswers.new
+  end
+
   def check_personal_information_page
     @check_personal_information_page ||=
       PageObjects::AssessorInterface::CheckPersonalInformation.new

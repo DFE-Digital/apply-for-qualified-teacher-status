@@ -7,6 +7,15 @@ module TeacherInterface
       @params = params
     end
 
+    def further_information_request
+      @further_information_request ||=
+        FurtherInformationRequest
+          .joins(:assessment)
+          .requested
+          .where(assessments: { application_form: })
+          .find(params[:id])
+    end
+
     def task_items
       further_information_request
         .items
@@ -37,15 +46,6 @@ module TeacherInterface
 
     def application_form
       @application_form ||= current_teacher.application_form
-    end
-
-    def further_information_request
-      @further_information_request ||=
-        FurtherInformationRequest
-          .joins(:assessment)
-          .requested
-          .where(assessments: { application_form: })
-          .find(params[:id])
     end
 
     def item_text(item)

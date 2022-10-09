@@ -30,7 +30,9 @@ FactoryBot.define do
     trait :with_document_response do
       information_type { "document" }
 
-      after(:create) { |item| create(:document, documentable: item) }
+      after(:create) do |item|
+        create(:document, :identification_document, documentable: item)
+      end
     end
 
     trait :completed do
