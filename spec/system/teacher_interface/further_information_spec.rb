@@ -48,6 +48,7 @@ RSpec.describe "Teacher further information", type: :system do
 
     when_i_click_the_check_your_answers_button
     then_i_see_the(:check_further_information_request_answers_page)
+    and_i_see_the_check_your_answers_items
   end
 
   def given_there_is_an_application_form
@@ -109,6 +110,18 @@ RSpec.describe "Teacher further information", type: :system do
 
   def when_i_click_the_check_your_answers_button
     further_information_requested_page.check_your_answers_button.click
+  end
+
+  def and_i_see_the_check_your_answers_items
+    rows = check_further_information_request_answers_page.summary_list.rows
+
+    expect(rows.count).to eq(2)
+
+    expect(rows.first.key.text).to eq(
+      "Tell us more about the subjects you can teach",
+    )
+
+    expect(rows.second.key.text).to eq("Upload your written statement document")
   end
 
   def teacher
