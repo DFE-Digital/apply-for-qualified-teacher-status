@@ -39,7 +39,7 @@ FactoryBot.define do
       response { Faker::Lorem.paragraph if text? }
 
       after(:create) do |item, _evaluator|
-        create(:upload, document: item) if item.document?
+        create(:upload, document: item.document) if item.document?
       end
     end
   end

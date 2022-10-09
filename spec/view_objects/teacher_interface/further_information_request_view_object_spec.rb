@@ -39,7 +39,6 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
         :further_information_request_item,
         :with_document_response,
         further_information_request:,
-        document: create(:document, :identification_document),
       )
     end
 
@@ -99,6 +98,58 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
       end
 
       it { is_expected.to be true }
+    end
+  end
+
+  describe "#check_your_answers_fields" do
+    let!(:text_item) do
+      create(
+        :further_information_request_item,
+        :with_text_response,
+        :completed,
+        further_information_request:,
+      )
+    end
+    let!(:document_item) do
+      create(
+        :further_information_request_item,
+        :with_document_response,
+        :completed,
+        further_information_request:,
+      )
+    end
+
+    subject(:check_your_answers_fields) do
+      view_object.check_your_answers_fields
+    end
+
+    it do
+      is_expected.to eq(
+        {
+          text_item.id => {
+            title: "Tell us more about the subjects you can teach",
+            href: [
+              :edit,
+              :teacher_interface,
+              :application_form,
+              further_information_request,
+              text_item,
+            ],
+            value: text_item.response,
+          },
+          document_item.id => {
+            title: "Upload your identity document",
+            href: [
+              :edit,
+              :teacher_interface,
+              :application_form,
+              further_information_request,
+              document_item,
+            ],
+            value: document_item.document,
+          },
+        },
+      )
     end
   end
 end
