@@ -27,6 +27,10 @@ module TeacherInterface
         end
     end
 
+    def can_check_answers?
+      further_information_request.items.all?(&:completed?)
+    end
+
     private
 
     attr_reader :current_teacher, :params

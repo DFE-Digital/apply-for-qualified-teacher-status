@@ -32,5 +32,13 @@ FactoryBot.define do
 
       after(:create) { |item| create(:document, documentable: item) }
     end
+
+    trait :completed do
+      response { Faker::Lorem.paragraph if text? }
+
+      after(:create) do |item, _evaluator|
+        create(:upload, document: item) if item.document?
+      end
+    end
   end
 end
