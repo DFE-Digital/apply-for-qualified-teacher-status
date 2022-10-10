@@ -16,12 +16,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @upload_form,
-        if_success_then_redirect: [
-          :edit,
-          :teacher_interface,
-          :application_form,
-          @document,
-        ],
+        if_success_then_redirect: document_path,
         if_failure_then_render: :new,
       )
     end
@@ -38,7 +33,7 @@ module TeacherInterface
         )
 
       if @delete_upload_form.save(validate: true)
-        redirect_to [:edit, :teacher_interface, :application_form, @document]
+        redirect_to document_path
       else
         render :delete, status: :unprocessable_entity
       end
@@ -59,6 +54,13 @@ module TeacherInterface
       )[
         :teacher_interface_upload_form
       ] || {}
+    end
+
+    def document_path
+      edit_teacher_interface_application_form_document_path(
+        @document,
+        next: params[:next],
+      )
     end
   end
 end

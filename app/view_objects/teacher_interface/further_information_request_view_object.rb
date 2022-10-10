@@ -7,6 +7,15 @@ module TeacherInterface
       @params = params
     end
 
+    def further_information_request
+      @further_information_request ||=
+        FurtherInformationRequest
+          .joins(:assessment)
+          .requested
+          .where(assessments: { application_form: })
+          .find(params[:id])
+    end
+
     def task_items
       further_information_request
         .items
@@ -27,21 +36,35 @@ module TeacherInterface
         end
     end
 
+    def can_check_answers?
+      further_information_request.items.all?(&:completed?)
+    end
+
+    def check_your_answers_fields
+      further_information_request
+        .items
+        .order(:created_at)
+        .each_with_object({}) do |item, memo|
+          memo[item.id] = {
+            title: item_text(item),
+            value: item.text? ? item.response : item.document,
+            href: [
+              :edit,
+              :teacher_interface,
+              :application_form,
+              further_information_request,
+              item,
+            ],
+          }
+        end
+    end
+
     private
 
     attr_reader :current_teacher, :params
 
     def application_form
       @application_form ||= current_teacher.application_form
-    end
-
-    def further_information_request
-      @further_information_request ||=
-        FurtherInformationRequest
-          .joins(:assessment)
-          .requested
-          .where(assessments: { application_form: })
-          .find(params[:id])
     end
 
     def item_text(item)

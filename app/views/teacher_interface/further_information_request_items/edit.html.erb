@@ -1,11 +1,13 @@
 <% content_for :page_title, "Apply for qualified teacher status (QTS)" %>
-<% content_for :back_link_url, teacher_interface_application_form_further_information_request_path %>
+<% content_for :back_link_url, back_link_url(teacher_interface_application_form_further_information_request_path(@further_information_request)) %>
 
 <h1 class="govuk-heading-l">Further information required</h1>
 <h3 class="govuk-heading-s">Notes from the assessor</h3>
 <p class="govuk-inset-text"><%= @further_information_request_item.assessor_notes %></p>
 
 <%= form_with model: @further_information_request_item_text_form, url: teacher_interface_application_form_further_information_request_further_information_request_item_path, method: :put do |f| %>
+  <%= hidden_field_tag :next, params[:next] %>
+
   <% if @further_information_request_item.text? %>
     <%= f.govuk_text_area :response, label: { size: "s" } %>
   <% end %>
@@ -14,7 +16,5 @@
     <p class="govuk-body">You can upload this document on the next screen.</p>
   <% end %>
 
-  <%= f.govuk_submit name: "next", value: "save_and_continue", prevent_double_click: false do %>
-    <%= f.govuk_submit "Save and come back later", name: "next", value: "save_and_return", secondary: true, prevent_double_click: false %>
-  <% end %>
+  <%= render "shared/save_submit_buttons", f: %>
 <% end %>

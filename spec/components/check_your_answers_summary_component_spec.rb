@@ -117,7 +117,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
       expect(a.text.strip).to eq("Change string")
-      expect(a.attribute("href").value).to eq("/string")
+      expect(a.attribute("href").value).to eq("/string?next=%2F")
     end
   end
 
@@ -136,7 +136,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
       expect(a.text.strip).to eq("Change number")
-      expect(a.attribute("href").value).to eq("/number")
+      expect(a.attribute("href").value).to eq("/number?next=%2F")
     end
   end
 
@@ -157,7 +157,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
       expect(a.text.strip).to eq("Change date")
-      expect(a.attribute("href").value).to eq("/date")
+      expect(a.attribute("href").value).to eq("/date?next=%2F")
     end
   end
 
@@ -180,7 +180,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
       expect(a.text.strip).to eq("Change date without day")
-      expect(a.attribute("href").value).to eq("/date_without_day")
+      expect(a.attribute("href").value).to eq("/date_without_day?next=%2F")
     end
   end
 
@@ -201,7 +201,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
       expect(a.text.strip).to eq("Change a custom key")
-      expect(a.attribute("href").value).to eq("/custom_key")
+      expect(a.attribute("href").value).to eq("/custom_key?next=%2F")
     end
   end
 
@@ -220,7 +220,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
       expect(a.text.strip).to eq("Change nil value")
-      expect(a.attribute("href").value).to eq("/nil_value")
+      expect(a.attribute("href").value).to eq("/nil_value?next=%2F")
     end
   end
 
@@ -239,7 +239,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
       expect(a.text.strip).to eq("Change boolean")
-      expect(a.attribute("href").value).to eq("/boolean")
+      expect(a.attribute("href").value).to eq("/boolean?next=%2F")
     end
   end
 
@@ -263,7 +263,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
       expect(a.text.strip).to eq("Change document")
-      expect(a.attribute("href").value).to eq("/document")
+      expect(a.attribute("href").value).to eq("/document?next=%2F")
     end
   end
 
@@ -282,7 +282,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
       expect(a.text.strip).to eq("Change array")
-      expect(a.attribute("href").value).to eq("/array")
+      expect(a.attribute("href").value).to eq("/array?next=%2F")
     end
   end
 
@@ -309,7 +309,9 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
         a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
         expect(a.text.strip).to eq("Change translatable document")
-        expect(a.attribute("href").value).to eq("/translatable-document")
+        expect(a.attribute("href").value).to eq(
+          "/translatable-document?next=%2F",
+        )
       end
     end
 
@@ -335,7 +337,9 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
         a = row.at_css(".govuk-summary-list__actions .govuk-link")
 
         expect(a.text.strip).to eq("Change translatable document translation")
-        expect(a.attribute("href").value).to eq("/translatable-document")
+        expect(a.attribute("href").value).to eq(
+          "/translatable-document?next=%2F",
+        )
       end
     end
 

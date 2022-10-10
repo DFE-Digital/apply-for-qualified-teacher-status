@@ -48,7 +48,7 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
     end
 
     context "when save and come back later" do
-      let(:params) { { next: "save_and_return" } }
+      let(:params) { { button: "save_and_return" } }
 
       before { allow(form).to receive(:save).and_return(true) }
 
@@ -57,6 +57,15 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
           %i[teacher_interface application_form],
         )
         handle_application_form_section
+      end
+
+      context "with a next path" do
+        before { params[:next] = "/next" }
+
+        it "redirects to application form" do
+          expect(controller).to receive(:redirect_to).with("/next")
+          handle_application_form_section
+        end
       end
     end
   end

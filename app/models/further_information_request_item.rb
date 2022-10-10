@@ -27,8 +27,6 @@ class FurtherInformationRequestItem < ApplicationRecord
     completed? ? :completed : :not_started
   end
 
-  private
-
   def completed?
     (text? && response.present?) || (document? && document.uploaded?)
   end

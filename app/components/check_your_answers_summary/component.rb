@@ -32,8 +32,7 @@ module CheckYourAnswersSummary
     end
 
     def has_translation?(field)
-      object = model.send(field[:key])
-
+      object = value_for(field)
       return false unless object.is_a?(Document)
       object.translated_uploads.any?
     end
@@ -53,12 +52,30 @@ module CheckYourAnswersSummary
       fields.filter_map { |key, options| options&.merge(key:) }
     end
 
+    def value_for(field)
+      field[:value].presence || model.send(field[:key])
+    end
+
+    def href_for(field)
+      path = field.fetch(:href)
+      next_path = request.path
+
+      if path.is_a?(String)
+        return "#{path}?#{URI.encode_www_form(next: next_path)}"
+      end
+
+      Rails.application.routes.url_helpers.polymorphic_path(
+        path,
+        next: next_path,
+      )
+    end
+
     def row_for_field(field)
       {
         key: field[:key],
         title: row_title_for(field),
-        value: format_value(model.send(field[:key]), field),
-        href: changeable ? field.fetch(:href) : nil,
+        value: format_value(value_for(field), field),
+        href: changeable ? href_for(field) : nil,
       }
     end
 
