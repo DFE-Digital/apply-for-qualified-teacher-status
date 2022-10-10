@@ -35,7 +35,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def then_the_application_form_is_awarded
-    expect(assessor_application_page.overview.status.text).to eq("AWARDED")
+    expect(assessor_application_page.overview.status_tag.text).to eq("AWARDED")
   end
 
   def application_form
