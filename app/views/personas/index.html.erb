@@ -28,13 +28,14 @@
             row.cell(header: true, text: "Country bucket")
             row.cell(header: true, text: "Status check")
             row.cell(header: true, text: "Sanction check")
-            row.cell(header: true, text: "Submitted?")
+            row.cell(header: true, text: "Status")
+            row.cell(header: true, text: "Email address")
             row.cell(header: true, text: "Actions")
           end
         end
 
         table.body do |body|
-          @teacher_personas.each do |persona|
+          @teacher_personas.each_with_index do |persona, index|
             body.row do |row|
               row.cell do
                 bucket = region_bucket_for_teacher_persona(persona)
@@ -43,13 +44,16 @@
 
               row.cell { persona_check_tag(persona[:status_check]) }
               row.cell { persona_check_tag(persona[:sanction_check]) }
-
               row.cell do
-                persona[:submitted] ? govuk_tag(text: "Yes", colour: "green") : govuk_tag(text: "No", colour: "red")
+                render(ApplicationFormStatusTag::Component.new(
+                  key: "#{index}",
+                  status: persona[:state],
+                ))
               end
+              row.cell { persona[:teacher].email }
 
               row.cell do
-                govuk_button_to "Sign in as #{persona[:teacher].email}", teacher_sign_in_persona_path(persona[:teacher])
+                govuk_button_to "Sign&nbsp;in".html_safe, teacher_sign_in_persona_path(persona[:teacher])
               end
             end
           end
