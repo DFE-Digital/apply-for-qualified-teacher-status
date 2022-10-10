@@ -1,9 +1,10 @@
 module PageObjects
   module TeacherInterface
     class SubmittedApplication < SitePrism::Page
-      element :heading_1, ".govuk-heading-xl"
-      element :heading_2, ".govuk-panel__title"
-      element :reference, ".govuk-panel__body"
+      set_url "/teacher/application"
+
+      element :heading, ".govuk-heading-xl"
+      section :panel, GovukPanel, ".govuk-panel"
     end
   end
 end

@@ -5,6 +5,7 @@ module PageObjects
 
       element :heading, ".govuk-heading-xl"
       section :summary_list, GovukSummaryList, ".govuk-summary-list"
+      element :submit_button, ".govuk-button"
     end
   end
 end

@@ -113,7 +113,8 @@ RSpec.describe "Teacher application", type: :system do
     and_i_see_check_your_work_history
 
     when_i_click_submit
-    then_i_see_the_submitted_application_page
+    then_i_see_the(:submitted_application_page)
+    and_i_see_the_submitted_application_information
     and_i_receive_an_application_email
   end
 
@@ -216,7 +217,8 @@ RSpec.describe "Teacher application", type: :system do
     and_i_see_check_registration_number
 
     when_i_click_submit
-    then_i_see_the_submitted_application_page
+    then_i_see_the(:submitted_application_page)
+    and_i_see_the_submitted_application_information
     and_i_receive_an_application_email
   end
 
@@ -322,7 +324,8 @@ RSpec.describe "Teacher application", type: :system do
     and_i_see_check_proof_of_recognition
 
     when_i_click_submit
-    then_i_see_the_submitted_application_page
+    then_i_see_the(:submitted_application_page)
+    and_i_see_the_submitted_application_information
     and_i_receive_an_application_email
   end
 
@@ -1082,26 +1085,12 @@ RSpec.describe "Teacher application", type: :system do
     expect(check_your_answers_page).to have_content("Registration number")
   end
 
-  def then_i_see_the_submitted_application_page
-    application_form = ApplicationForm.last
-
-    expect(submitted_application_page).to have_current_path(
-      "/teacher/application",
-    )
-    expect(submitted_application_page).to have_title(
-      "Apply for qualified teacher status (QTS)",
-    )
-    expect(submitted_application_page.heading_1.text).to have_content(
-      "Apply for qualified teacher status (QTS)",
-    )
-    expect(submitted_application_page.heading_2.text).to have_content(
+  def and_i_see_the_submitted_application_information
+    expect(submitted_application_page.panel.title.text).to eq(
       "Application complete",
     )
-    expect(submitted_application_page.reference).to have_content(
-      "Your reference number",
-    )
-    expect(submitted_application_page.reference).to have_content(
-      application_form.reference,
+    expect(submitted_application_page.panel.body.text).to eq(
+      "Your reference number\n#{ApplicationForm.last.reference}",
     )
   end
 

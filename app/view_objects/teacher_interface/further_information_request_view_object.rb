@@ -40,6 +40,8 @@ module TeacherInterface
       further_information_request.items.all?(&:completed?)
     end
 
+    alias_method :can_submit?, :can_check_answers?
+
     def check_your_answers_fields
       further_information_request
         .items
