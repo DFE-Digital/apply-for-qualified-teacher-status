@@ -40,6 +40,10 @@ en:
           attributes:
             email:
               blank: Enter your email address
+        teacher_interface/sanction_confirmation_form:
+          attributes:
+            confirmed_no_sanctions:
+              blank: You must confirm that you have no sanctions or restrictions
   application_form:
     status:
       not_started: Not started
