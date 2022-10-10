@@ -172,15 +172,24 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         before { assessment_section.update!(passed: true) }
         it { is_expected.to eq(:not_started) }
 
-        context "with a finished assessment" do
+        context "and award" do
           before { assessment.award! }
           it { is_expected.to eq(:completed) }
         end
 
-        context "with further information request" do
-          before { create(:further_information_request, assessment:) }
+        context "and decline" do
+          before { assessment.decline! }
+          it { is_expected.to eq(:completed) }
+        end
 
-          it { is_expected.to eq(:further_information_requested) }
+        context "and request further information" do
+          before { assessment.request_further_information! }
+          it { is_expected.to eq(:in_progress) }
+
+          context "and further information requested" do
+            before { create(:further_information_request, assessment:) }
+            it { is_expected.to eq(:completed) }
+          end
         end
       end
     end
