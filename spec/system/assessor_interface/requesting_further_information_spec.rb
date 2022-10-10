@@ -37,12 +37,11 @@ RSpec.describe "Assessor requesting further information", type: :system do
     )
     and_i_see_the_further_information_request_items
 
-    when_i_click_continue
+    when_i_click_continue_to_email_button
     then_i_see_the(
       :further_information_request_preview_page,
       application_id:,
       assessment_id:,
-      further_information_request_id:,
     )
     and_i_see_the_email_preview
 
@@ -74,6 +73,10 @@ RSpec.describe "Assessor requesting further information", type: :system do
     expect(
       request_further_information_page.items.first.assessor_notes.text,
     ).to eq("A note.")
+  end
+
+  def when_i_click_continue_to_email_button
+    request_further_information_page.continue_button.click
   end
 
   def and_i_see_the_email_preview

@@ -36,11 +36,11 @@ module AssessorInterface
     def post_update_redirect_path
       if @assessment.request_further_information?
         return [
-          :new,
+          :preview,
           :assessor_interface,
           @application_form,
           @assessment,
-          :further_information_request
+          :further_information_requests
         ]
       end
 

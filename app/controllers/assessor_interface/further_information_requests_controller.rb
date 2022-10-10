@@ -1,58 +1,23 @@
 module AssessorInterface
   class FurtherInformationRequestsController < BaseController
+    before_action :load_application_form_and_assessment,
+                  only: %i[preview new show]
+    before_action :load_new_further_information_request, only: %i[preview new]
+
+    def preview
+    end
+
     def new
-      @further_information_request =
-        assessment.further_information_requests.build(
-          items:
-            FurtherInformationRequestItemsFactory.call(
-              assessment_sections: assessment.sections,
-            ),
-        )
-    end
-
-    def create
-      @further_information_request =
-        assessment.further_information_requests.create!(
-          items:
-            FurtherInformationRequestItemsFactory.call(
-              assessment_sections: assessment.sections,
-            ),
-        )
-
-      redirect_to [
-                    :edit,
-                    :assessor_interface,
-                    application_form,
-                    assessment,
-                    @further_information_request,
-                  ]
-    end
-
-    def show
-      @application_form = application_form
-      @assessment = assessment
-      @further_information_request = further_information_request
-    end
-
-    def edit
-      @application_form = application_form
-      @assessment = assessment
-      @further_information_request = further_information_request
-
       @email_preview =
         FurtherInformationTemplatePreview.with(
           teacher:,
-          further_information_request:,
+          further_information_request: @further_information_request,
         ).render
     end
 
-    def update
-      TeacherMailer
-        .with(teacher:, further_information_request:)
-        .further_information_requested
-        .deliver_later
-
-      further_information_request.requested!
+    def create
+      further_information_request =
+        CreateFurtherInformationRequest.call(assessment:, user: current_staff)
 
       redirect_to [
                     :assessor_interface,
@@ -62,7 +27,26 @@ module AssessorInterface
                   ]
     end
 
+    def show
+      @further_information_request = further_information_request
+    end
+
     private
+
+    def load_application_form_and_assessment
+      @application_form = application_form
+      @assessment = assessment
+    end
+
+    def load_new_further_information_request
+      @further_information_request =
+        assessment.further_information_requests.build(
+          items:
+            FurtherInformationRequestItemsFactory.call(
+              assessment_sections: assessment.sections,
+            ),
+        )
+    end
 
     def further_information_request
       @further_information_request ||=
