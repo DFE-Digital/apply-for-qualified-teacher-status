@@ -151,7 +151,7 @@ RSpec.describe "Teacher further information", type: :system do
 
   def and_i_see_the_further_information_received_information
     expect(submitted_application_page.panel.title.text).to eq(
-      "Application complete",
+      "Further information successfully submitted",
     )
     expect(submitted_application_page.panel.body.text).to eq(
       "Your reference number\n#{ApplicationForm.last.reference}",
