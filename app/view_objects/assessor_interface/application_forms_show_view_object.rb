@@ -68,7 +68,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
       return :in_progress if assessment_editable?
       :completed
     when :further_information
-      further_information_requests[index].state.to_sym
+      further_information_request = further_information_requests[index]
+      return :cannot_start_yet if further_information_request.requested?
+      :not_started
     end
   end
 

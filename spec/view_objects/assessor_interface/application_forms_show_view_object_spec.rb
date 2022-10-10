@@ -198,9 +198,15 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       let(:section) { :further_information }
       let(:item) { :review_requested_information }
 
-      before { create(:further_information_request, assessment:) }
+      context "and a requested further information request" do
+        before { create(:further_information_request, :requested, assessment:) }
+        it { is_expected.to eq(:cannot_start_yet) }
+      end
 
-      it { is_expected.to eq(:requested) }
+      context "and a received further information request" do
+        before { create(:further_information_request, :received, assessment:) }
+        it { is_expected.to eq(:not_started) }
+      end
     end
   end
 end
