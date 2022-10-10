@@ -32,9 +32,11 @@ module TeacherInterface
           if @add_another_upload_form.add_another
             new_teacher_interface_application_form_document_upload_path(
               document,
+              next: params[:next],
             )
           else
-            DocumentContinueRedirection.call(document:)
+            params[:next].presence ||
+              DocumentContinueRedirection.call(document:)
           end
         end,
         if_failure_then_render: :edit,

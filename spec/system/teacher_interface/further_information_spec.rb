@@ -49,6 +49,15 @@ RSpec.describe "Teacher further information", type: :system do
     when_i_click_the_check_your_answers_button
     then_i_see_the(:check_further_information_request_answers_page)
     and_i_see_the_check_your_answers_items
+
+    when_i_click_the_text_check_your_answers_item
+    and_i_click_continue
+    then_i_see_the(:check_further_information_request_answers_page)
+
+    when_i_click_the_document_check_your_answers_item
+    and_i_click_continue
+    when_i_dont_need_to_upload_another_file
+    then_i_see_the(:check_further_information_request_answers_page)
   end
 
   def given_there_is_an_application_form
@@ -121,7 +130,15 @@ RSpec.describe "Teacher further information", type: :system do
       "Tell us more about the subjects you can teach",
     )
 
-    expect(rows.second.key.text).to eq("Upload your written statement document")
+    expect(rows.second.key.text).to eq("Upload your identity document")
+  end
+
+  def when_i_click_the_text_check_your_answers_item
+    text_check_answers_item.actions.first.link.click
+  end
+
+  def when_i_click_the_document_check_your_answers_item
+    document_check_answers_item.actions.first.link.click
   end
 
   def teacher
@@ -143,9 +160,17 @@ RSpec.describe "Teacher further information", type: :system do
     )
   end
 
+  def text_check_answers_item
+    check_further_information_request_answers_page.summary_list.rows.first
+  end
+
   def document_task_list_item
     further_information_requested_page.task_list.find_item(
       "Upload your identity document",
     )
+  end
+
+  def document_check_answers_item
+    check_further_information_request_answers_page.summary_list.rows.second
   end
 end

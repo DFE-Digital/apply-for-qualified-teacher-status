@@ -40,16 +40,16 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @further_information_request_item_text_form,
-        if_success_then_redirect: further_information_request_redirection,
+        if_success_then_redirect: further_information_request_path,
         if_failure_then_render: :edit,
       )
     end
 
     def update_document
       if params[:button] == "save_and_continue"
-        redirect_to document_redirection
+        redirect_to document_path
       else
-        redirect_to further_information_request_redirection
+        redirect_to further_information_request_path
       end
     end
 
@@ -79,17 +79,16 @@ module TeacherInterface
       ).permit(:response)
     end
 
-    def further_information_request_redirection
-      [:teacher_interface, :application_form, further_information_request]
+    def further_information_request_path
+      params[:next].presence ||
+        [:teacher_interface, :application_form, further_information_request]
     end
 
-    def document_redirection
-      [
-        :edit,
-        :teacher_interface,
-        :application_form,
+    def document_path
+      edit_teacher_interface_application_form_document_path(
         further_information_request_item.document,
-      ]
+        next: params[:next],
+      )
     end
   end
 end

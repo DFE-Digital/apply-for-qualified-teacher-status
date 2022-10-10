@@ -85,6 +85,8 @@
 <% end %>
 
 <%= form_with model: @upload_form, url: [:teacher_interface, :application_form, @document, :uploads] do |f| %>
+  <%= hidden_field_tag :next, params[:next] %>
+
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_file_field :original_attachment,

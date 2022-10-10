@@ -12,7 +12,7 @@
       row.value(text: upload.attachment.filename)
       row.action(
         text: "Delete",
-        href: delete_teacher_interface_application_form_document_upload_path(@document, upload),
+        href: delete_teacher_interface_application_form_document_upload_path(@document, upload, next: params[:next]),
         visually_hidden_text: upload.attachment.filename
       )
     end
@@ -20,6 +20,8 @@
 end %>
 
 <%= form_with model: @add_another_upload_form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
+  <%= hidden_field_tag :next, params[:next] %>
+
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_radio_buttons_fieldset :add_another,
