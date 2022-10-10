@@ -57,7 +57,9 @@ module CheckYourAnswersSummary
     end
 
     def href_for(field)
-      path = field.fetch(:href)
+      path = field[:href]
+      return nil if path.blank?
+
       next_path = request.path
 
       if path.is_a?(String)
