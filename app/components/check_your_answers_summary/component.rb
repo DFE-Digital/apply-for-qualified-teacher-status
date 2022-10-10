@@ -56,12 +56,26 @@ module CheckYourAnswersSummary
       field[:value].presence || model.send(field[:key])
     end
 
+    def href_for(field)
+      path = field.fetch(:href)
+      next_path = request.path
+
+      if path.is_a?(String)
+        return "#{path}?#{URI.encode_www_form(next: next_path)}"
+      end
+
+      Rails.application.routes.url_helpers.polymorphic_path(
+        path,
+        next: next_path,
+      )
+    end
+
     def row_for_field(field)
       {
         key: field[:key],
         title: row_title_for(field),
         value: format_value(value_for(field), field),
-        href: changeable ? field.fetch(:href) : nil,
+        href: changeable ? href_for(field) : nil,
       }
     end
 
