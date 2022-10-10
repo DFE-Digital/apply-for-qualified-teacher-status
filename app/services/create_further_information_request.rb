@@ -22,7 +22,6 @@ class CreateFurtherInformationRequest
             FurtherInformationRequestItemsFactory.call(
               assessment_sections: assessment.sections,
             ),
-          state: :requested,
         )
       end
 

@@ -134,12 +134,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         create(:further_information_request, assessment:)
       end
 
-      it do
-        is_expected.to eq(
-          "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
-            "/further-information-requests/#{further_information_request.id}/edit",
-        )
-      end
+      it { is_expected.to be_nil }
     end
   end
 
@@ -196,7 +191,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       before { create(:further_information_request, assessment:) }
 
-      it { is_expected.to eq(:draft) }
+      it { is_expected.to eq(:requested) }
     end
   end
 end

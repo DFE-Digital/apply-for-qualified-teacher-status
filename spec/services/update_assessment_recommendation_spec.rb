@@ -52,14 +52,8 @@ RSpec.describe UpdateAssessmentRecommendation do
     end
 
     describe "application form status" do
-      subject(:state) { application_form.state }
-
-      it { is_expected.to eq("submitted") }
-
-      context "after calling the service" do
-        before { call }
-
-        it { is_expected.to eq("further_information_requested") }
+      it "doesn't change the state" do
+        expect { call }.to_not change(application_form, :state)
       end
     end
   end
