@@ -9,5 +9,7 @@
                                        :itself,
                                        legend: { size: "xl", tag: "h1" } %>
 
-  <%= f.govuk_submit %>
+  <%= f.govuk_submit prevent_double_click: false do %>
+    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <% end %>
 <% end %>
