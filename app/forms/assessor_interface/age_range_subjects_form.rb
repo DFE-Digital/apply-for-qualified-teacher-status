@@ -18,21 +18,19 @@ class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSec
               greater_than_or_equal_to: :age_range_min,
             }
 
+  attribute :subject_1, :string
+  attribute :subject_2, :string
+  attribute :subject_3, :string
+  attribute :subjects_note, :string
+
+  validates :subject_1, presence: true
+
   def save
     return false unless valid?
 
     ActiveRecord::Base.transaction do
-      existing_note = assessment.age_range_note
-
-      note =
-        if age_range_note != existing_note&.text
-          CreateNote.call(application_form:, author: user, text: age_range_note)
-        else
-          existing_note
-        end
-
-      assessment.update!(age_range_min:, age_range_max:, age_range_note: note)
-
+      update_age_range
+      update_subjects
       super
     end
 
@@ -46,17 +44,50 @@ class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSec
         age_range_min: assessment.age_range_min,
         age_range_max: assessment.age_range_max,
         age_range_note: assessment.age_range_note&.text,
+        subject_1: assessment.subjects.first,
+        subject_2: assessment.subjects.second,
+        subject_3: assessment.subjects.third,
+        subjects_note: assessment.subjects_note&.text,
       )
     end
 
     def permittable_parameters
       args, kwargs = super
-      args += %i[age_range_min age_range_max age_range_note]
+      args += %i[
+        age_range_min
+        age_range_max
+        age_range_note
+        subject_1
+        subject_2
+        subject_3
+        subjects_note
+      ]
       [args, kwargs]
     end
   end
 
   private
+
+  def update_age_range
+    note = find_or_create_note(assessment.age_range_note, age_range_note)
+    assessment.update!(age_range_min:, age_range_max:, age_range_note: note)
+  end
+
+  def update_subjects
+    subjects = [subject_1, subject_2, subject_3].compact_blank
+    note = find_or_create_note(assessment.subjects_note, subjects_note)
+    assessment.update!(subjects:, subjects_note: note)
+  end
+
+  def find_or_create_note(existing_note, new_text)
+    if new_text != existing_note&.text
+      if new_text.present?
+        CreateNote.call(application_form:, author: user, text: new_text)
+      end
+    else
+      existing_note
+    end
+  end
 
   def assessment
     @assessment ||= assessment_section.assessment

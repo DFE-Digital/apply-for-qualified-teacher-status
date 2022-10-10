@@ -1,10 +1,21 @@
 GIT
-  remote: https://github.com/DFE-Digital/dfe-analytics
+  remote: https://github.com/DFE-Digital/dfe-analytics.git
   revision: 4f7369d0e1bde1f9252ac0f94f37b543fd279161
   specs:
     dfe-analytics (1.5.3)
       google-cloud-bigquery (~> 1.38)
       request_store_rails (~> 2)
+
+GIT
+  remote: https://github.com/DFE-Digital/dfe-autocomplete.git
+  revision: 7bf95631e7c912795b1994b04bfd86997d8bd2ff
+  specs:
+    dfe-autocomplete (0.1.0)
+      actionview (>= 7.0.2.3)
+      activemodel (>= 7.0.2.3)
+      govuk-components
+      rails (>= 7.0.2.3)
+      view_component
 
 GEM
   remote: https://rubygems.org/
@@ -493,6 +504,7 @@ DEPENDENCIES
   devise-passwordless
   devise_invitable
   dfe-analytics!
+  dfe-autocomplete!
   dotenv-rails
   factory_bot_rails
   faker

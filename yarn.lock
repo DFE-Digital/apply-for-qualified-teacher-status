@@ -81,6 +81,12 @@ corejs-typeahead@^1.1.1:
   dependencies:
     jquery ">=1.11"
 
+"dfe-autocomplete@github:DFE-Digital/dfe-autocomplete":
+  version "0.0.1"
+  resolved "https://codeload.github.com/DFE-Digital/dfe-autocomplete/tar.gz/7bf95631e7c912795b1994b04bfd86997d8bd2ff"
+  dependencies:
+    accessible-autocomplete "^2.0.4"
+
 esbuild-android-64@0.15.10:
   version "0.15.10"
   resolved "https://registry.yarnpkg.com/esbuild-android-64/-/esbuild-android-64-0.15.10.tgz#8a59a84acbf2eca96996cadc35642cf055c494f0"

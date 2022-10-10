@@ -1,3 +1,4 @@
+import dfeAutocomplete from "dfe-autocomplete";
 import { initAll } from "govuk-frontend";
 import openregisterLocationPicker from "govuk-country-and-territory-autocomplete";
 
@@ -46,3 +47,4 @@ var loadCountryAutoComplete = () => {
 };
 
 loadCountryAutoComplete();
+dfeAutocomplete({});

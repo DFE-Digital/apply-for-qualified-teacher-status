@@ -66,6 +66,8 @@
     - age_range_min
     - age_range_max
     - age_range_note_id
+    - subjects
+    - subjects_note_id
   :countries:
     - id
     - code
