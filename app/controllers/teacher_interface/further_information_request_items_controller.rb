@@ -46,7 +46,7 @@ module TeacherInterface
     end
 
     def update_document
-      if params[:next] == "save_and_continue"
+      if params[:button] == "save_and_continue"
         redirect_to document_redirection
       else
         redirect_to further_information_request_redirection

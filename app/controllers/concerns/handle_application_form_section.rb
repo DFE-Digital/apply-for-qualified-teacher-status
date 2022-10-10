@@ -8,7 +8,7 @@ module HandleApplicationFormSection
     if_success_then_redirect:,
     if_failure_then_render:
   )
-    save_and_continue = params[:next] == "save_and_continue"
+    save_and_continue = params[:button] == "save_and_continue"
 
     if form.save(validate: save_and_continue)
       if save_and_continue

@@ -48,7 +48,7 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
     end
 
     context "when save and come back later" do
-      let(:params) { { next: "save_and_return" } }
+      let(:params) { { button: "save_and_return" } }
 
       before { allow(form).to receive(:save).and_return(true) }
 
