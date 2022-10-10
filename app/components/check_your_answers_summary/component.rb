@@ -53,7 +53,7 @@ module CheckYourAnswersSummary
     end
 
     def value_for(field)
-      field[:value].presence || model.send(field[:key])
+      field.include?(:value) ? field[:value] : model.send(field[:key])
     end
 
     def href_for(field)

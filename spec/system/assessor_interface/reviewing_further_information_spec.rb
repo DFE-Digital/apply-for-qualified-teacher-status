@@ -17,6 +17,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       assessment_id:,
       further_information_request_id:,
     )
+    and_i_see_the_check_your_answers_items
   end
 
   private
@@ -31,6 +32,18 @@ RSpec.describe "Assessor reviewing further information", type: :system do
 
   def and_i_click_review_requested_information
     assessor_application_page.review_requested_information_task.link.click
+  end
+
+  def and_i_see_the_check_your_answers_items
+    rows = review_further_information_request_page.summary_list.rows
+
+    expect(rows.count).to eq(2)
+
+    expect(rows.first.key.text).to eq(
+      "Tell us more about the subjects you can teach",
+    )
+
+    expect(rows.second.key.text).to eq("Upload your identity document")
   end
 
   def application_form
@@ -59,6 +72,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       create(
         :further_information_request,
         :received,
+        :with_items,
         assessment: application_form.assessment,
       )
   end

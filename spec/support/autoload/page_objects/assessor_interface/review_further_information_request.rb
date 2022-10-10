@@ -5,6 +5,7 @@ module PageObjects
                 "/further-information-requests/{further_information_request_id}/edit"
 
       element :heading, ".govuk-heading-xl"
+      section :summary_list, GovukSummaryList, ".govuk-summary-list"
     end
   end
 end

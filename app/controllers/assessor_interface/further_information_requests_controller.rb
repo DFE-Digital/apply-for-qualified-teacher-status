@@ -3,8 +3,6 @@ module AssessorInterface
     before_action :load_application_form_and_assessment,
                   only: %i[preview new show edit]
     before_action :load_new_further_information_request, only: %i[preview new]
-    before_action :load_existing_further_information_request,
-                  only: %i[show edit]
 
     def preview
     end
@@ -30,9 +28,11 @@ module AssessorInterface
     end
 
     def show
+      @further_information_request = further_information_request
     end
 
     def edit
+      @view_object = FurtherInformationRequestViewObject.new(params:)
     end
 
     private
@@ -50,10 +50,6 @@ module AssessorInterface
               assessment_sections: assessment.sections,
             ),
         )
-    end
-
-    def load_existing_further_information_request
-      @further_information_request = further_information_request
     end
 
     def further_information_request

@@ -1,4 +1,10 @@
 <% content_for :title, t(".title") %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
 
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+<%= render(CheckYourAnswersSummary::Component.new(
+  model: @view_object.further_information_request,
+  title: t(".check_your_answers"),
+  fields: @view_object.check_your_answers_fields
+)) %>
