@@ -58,6 +58,15 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
         )
         handle_application_form_section
       end
+
+      context "with a next path" do
+        before { params[:next] = "/next" }
+
+        it "redirects to application form" do
+          expect(controller).to receive(:redirect_to).with("/next")
+          handle_application_form_section
+        end
+      end
     end
   end
 end

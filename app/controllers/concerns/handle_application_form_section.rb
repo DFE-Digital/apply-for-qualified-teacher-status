@@ -15,7 +15,8 @@ module HandleApplicationFormSection
         redirect_to if_success_then_redirect.try(:call) ||
                       if_success_then_redirect
       else
-        redirect_to %i[teacher_interface application_form]
+        redirect_to params[:next].presence ||
+                      %i[teacher_interface application_form]
       end
     else
       render if_failure_then_render, status: :unprocessable_entity
