@@ -15,6 +15,12 @@ en:
             initial_assessment: Initial assessment recommendation
             review_requested_information: Review requested information from applicant
 
+    assessments:
+      edit:
+        hint:
+          can_award: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
+          cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
+
     assessment_sections:
       show:
         title:

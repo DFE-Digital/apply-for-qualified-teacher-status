@@ -7,7 +7,8 @@
   <%= f.govuk_collection_radio_buttons :recommendation,
                                        @assessment.available_recommendations,
                                        :itself,
-                                       legend: { size: "xl", tag: "h1" } %>
+                                       legend: { size: "xl", tag: "h1" },
+                                       hint: { text: t(@assessment.can_award? ? ".hint.can_award" : ".hint.cant_award") } %>
 
   <%= f.govuk_submit prevent_double_click: false do %>
     <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
