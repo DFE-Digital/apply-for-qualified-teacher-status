@@ -61,18 +61,25 @@
   <p class="govuk-body">The next screen will take you to the first section you need to complete.</p>
   <%= govuk_start_button(text: "Start now", href: teacher_interface_application_form_further_information_request_path(@further_information_request)) %>
 <% else %>
-  <%= govuk_panel(title_text: "Application complete") do %>
+  <%= govuk_panel(title_text: @application_form.further_information_received? ? "Further information successfully submitted" : "Application complete") do %>
     Your reference number
     <br />
     <strong><%= @application_form.reference %></strong>
   <% end %>
 
-  <p class="govuk-body">We’ve received your application for QTS and we’ve sent you a confirmation email.</p>
-  <p class="govuk-body">Keep the email safe, as you may need your reference number for future correspondence about your application.</p>
+  <% if @application_form.further_information_received? %>
+    <h3 class="govuk-heading-m">You’ve successfully submitted your further information</h3>
+    <p class="govuk-body">We’ve sent you an email to confirm that we’ve received it.</p>
+    <p class="govuk-body">Once the assessor has checked the documents to make sure you’ve provided all of the requested information, they’ll continue reviewing your QTS application.</p>
+    <p class="govuk-body">You can now close this page.</p>
+  <% else %>
+    <p class="govuk-body">We’ve received your application for QTS and we’ve sent you a confirmation email.</p>
+    <p class="govuk-body">Keep the email safe, as you may need your reference number for future correspondence about your application.</p>
 
-  <h2 class="govuk-heading-m">What happens next</h2>
-  <p class="govuk-body">We aim to review your application within 1 month. If we need more information, we’ll email you again.</p>
-  <p class="govuk-body">We aim to reach a final decision on QTS applications within 80 working days (4 months) of submission.</p>
+    <h2 class="govuk-heading-m">What happens next</h2>
+    <p class="govuk-body">We aim to review your application within 1 month. If we need more information, we’ll email you again.</p>
+    <p class="govuk-body">We aim to reach a final decision on QTS applications within 80 working days (4 months) of submission.</p>
+  <% end %>
 
   <h2 class="govuk-heading-s govuk-!-font-weight-regular">If you have any questions, contact:</h2>
   <p class="govuk-body"><a class="govuk-link" href="mailto:<%= t('service.email') %>"><%= t('service.email') %></a>.</p>

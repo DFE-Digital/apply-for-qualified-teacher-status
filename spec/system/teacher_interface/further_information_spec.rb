@@ -58,6 +58,10 @@ RSpec.describe "Teacher further information", type: :system do
     and_i_click_continue
     when_i_dont_need_to_upload_another_file
     then_i_see_the(:check_further_information_request_answers_page)
+
+    when_i_submit_the_further_information
+    then_i_see_the(:submitted_application_page)
+    and_i_see_the_further_information_received_information
   end
 
   def given_there_is_an_application_form
@@ -139,6 +143,19 @@ RSpec.describe "Teacher further information", type: :system do
 
   def when_i_click_the_document_check_your_answers_item
     document_check_answers_item.actions.first.link.click
+  end
+
+  def when_i_submit_the_further_information
+    check_further_information_request_answers_page.submit_button.click
+  end
+
+  def and_i_see_the_further_information_received_information
+    expect(submitted_application_page.panel.title.text).to eq(
+      "Further information successfully submitted",
+    )
+    expect(submitted_application_page.panel.body.text).to eq(
+      "Your reference number\n#{ApplicationForm.last.reference}",
+    )
   end
 
   def teacher

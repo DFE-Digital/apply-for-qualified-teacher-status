@@ -8,6 +8,15 @@ module TeacherInterface
     def edit
     end
 
+    def update
+      SubmitFurtherInformationRequest.call(
+        further_information_request: @view_object.further_information_request,
+        user: current_teacher,
+      )
+
+      redirect_to %i[teacher_interface application_form]
+    end
+
     private
 
     def load_view_object
