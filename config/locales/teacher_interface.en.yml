@@ -58,12 +58,16 @@ en:
               blank: Enter the contact name
             contact_email:
               blank: Enter the contact email
-            start_date:
-              blank: Enter the start date
             still_employed:
               inclusion: Select whether you are still employed
             end_date:
-              blank: Enter the end date
+              blank: Enter an end date
+              before_start_date: End date must be after start date
+              invalid: End date is invalid
+            start_date:
+              blank: Enter a start date
+              invalid: Start date is invalid
+              future: Start date must be in the past
   application_form:
     status:
       not_started: Not started
