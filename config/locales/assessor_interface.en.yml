@@ -77,6 +77,11 @@ en:
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
 
+    further_information_requests:
+      edit:
+        title: Review further information from applicant
+        check_your_answers: Further information requested
+
   components:
     timeline_entry:
       title:

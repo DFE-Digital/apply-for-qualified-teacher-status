@@ -130,11 +130,24 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       let(:section) { :further_information }
       let(:item) { :review_requested_information }
 
-      let!(:further_information_request) do
-        create(:further_information_request, assessment:)
+      context "and a requested further information request" do
+        let!(:further_information_request) do
+          create(:further_information_request, :requested, assessment:)
+        end
+        it { is_expected.to be_nil }
       end
 
-      it { is_expected.to be_nil }
+      context "and a received further information request" do
+        let!(:further_information_request) do
+          create(:further_information_request, :received, assessment:)
+        end
+        it do
+          is_expected.to eq(
+            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
+              "/further-information-requests/#{further_information_request.id}/edit",
+          )
+        end
+      end
     end
   end
 

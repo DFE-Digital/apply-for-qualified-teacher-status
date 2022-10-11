@@ -53,11 +53,13 @@ module CheckYourAnswersSummary
     end
 
     def value_for(field)
-      field[:value].presence || model.send(field[:key])
+      field.include?(:value) ? field[:value] : model.send(field[:key])
     end
 
     def href_for(field)
-      path = field.fetch(:href)
+      path = field[:href]
+      return nil if path.blank?
+
       next_path = request.path
 
       if path.is_a?(String)

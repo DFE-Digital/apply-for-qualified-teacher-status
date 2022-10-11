@@ -166,7 +166,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_personal_information_completed
     expect(
-      assessor_application_page.personal_information_task.status.text,
+      assessor_application_page.personal_information_task.status_tag.text,
     ).to eq("COMPLETED")
   end
 
@@ -187,7 +187,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_personal_information_action_required
     expect(
-      assessor_application_page.personal_information_task.status.text,
+      assessor_application_page.personal_information_task.status_tag.text,
     ).to eq("ACTION REQUIRED")
   end
 
@@ -220,13 +220,13 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_qualifications_completed
-    expect(assessor_application_page.qualifications_task.status.text).to eq(
+    expect(assessor_application_page.qualifications_task.status_tag.text).to eq(
       "COMPLETED",
     )
   end
 
   def and_i_see_check_qualifications_action_required
-    expect(assessor_application_page.qualifications_task.status.text).to eq(
+    expect(assessor_application_page.qualifications_task.status_tag.text).to eq(
       "ACTION REQUIRED",
     )
   end
@@ -274,15 +274,15 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_verify_age_range_subjects_completed
-    expect(assessor_application_page.age_range_subjects_task.status.text).to eq(
-      "COMPLETED",
-    )
+    expect(
+      assessor_application_page.age_range_subjects_task.status_tag.text,
+    ).to eq("COMPLETED")
   end
 
   def and_i_see_verify_age_range_subjects_action_required
-    expect(assessor_application_page.age_range_subjects_task.status.text).to eq(
-      "ACTION REQUIRED",
-    )
+    expect(
+      assessor_application_page.age_range_subjects_task.status_tag.text,
+    ).to eq("ACTION REQUIRED")
   end
 
   def then_i_see_the_work_history
@@ -298,7 +298,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_work_history_completed
-    expect(assessor_application_page.work_history_task.status.text).to eq(
+    expect(assessor_application_page.work_history_task.status_tag.text).to eq(
       "COMPLETED",
     )
   end
@@ -319,7 +319,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_see_check_work_history_action_required
-    expect(assessor_application_page.work_history_task.status.text).to eq(
+    expect(assessor_application_page.work_history_task.status_tag.text).to eq(
       "ACTION REQUIRED",
     )
   end
@@ -340,7 +340,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_professional_standing_completed
     expect(
-      assessor_application_page.professional_standing_task.status.text,
+      assessor_application_page.professional_standing_task.status_tag.text,
     ).to eq("COMPLETED")
   end
 
@@ -361,7 +361,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_professional_standing_action_required
     expect(
-      assessor_application_page.professional_standing_task.status.text,
+      assessor_application_page.professional_standing_task.status_tag.text,
     ).to eq("ACTION REQUIRED")
   end
 

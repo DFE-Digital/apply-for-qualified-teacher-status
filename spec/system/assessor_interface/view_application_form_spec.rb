@@ -35,10 +35,10 @@ RSpec.describe "Assessor view application form", type: :system do
   end
 
   def and_i_see_the_assessment_tasks
-    expect(assessor_application_page.task_list.tasks.count).to eq(2)
+    expect(assessor_application_page.task_list.sections.count).to eq(2)
 
     first_section_links =
-      assessor_application_page.task_list.tasks.first.items.map do |item|
+      assessor_application_page.task_list.sections.first.items.map do |item|
         item.name.text
       end
 
@@ -47,7 +47,7 @@ RSpec.describe "Assessor view application form", type: :system do
     )
 
     second_section_links =
-      assessor_application_page.task_list.tasks.second.items.map do |item|
+      assessor_application_page.task_list.sections.second.items.map do |item|
         item.name.text
       end
 

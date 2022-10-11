@@ -12,42 +12,30 @@ module PageObjects
         element :status, "div:nth-of-type(9) > dd:nth-of-type(1)"
       end
 
-      section :task_list, "ol.app-task-list" do
-        sections :tasks, "ol.app-task-list > li" do
-          sections :items, "li.app-task-list__item" do
-            section :name, ".app-task-list__task-name" do
-              element :link, "a"
-            end
-
-            element :status, "strong"
-          end
-        end
-      end
+      section :task_list, TaskList, ".app-task-list"
 
       def personal_information_task
-        task_item_for("Check personal information")
+        task_list.find_item("Check personal information")
       end
 
       def qualifications_task
-        task_item_for("Check qualifications")
+        task_list.find_item("Check qualifications")
       end
 
       def age_range_subjects_task
-        task_item_for("Verify age range and subjects")
+        task_list.find_item("Verify age range and subjects")
       end
 
       def work_history_task
-        task_item_for("Check work history")
+        task_list.find_item("Check work history")
       end
 
       def professional_standing_task
-        task_item_for("Check professional standing")
+        task_list.find_item("Check professional standing")
       end
 
-      private
-
-      def task_item_for(text)
-        task_list.tasks.first.items.find { |item| item.name.text == text }
+      def review_requested_information_task
+        task_list.find_item("Review requested information from applicant")
       end
     end
   end

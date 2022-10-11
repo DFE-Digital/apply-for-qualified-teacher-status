@@ -38,7 +38,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     }.compact_blank
   end
 
-  def assessment_task_path(section, item, _index)
+  def assessment_task_path(section, item, index)
     case section
     when :submitted_details
       url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
@@ -53,6 +53,16 @@ class AssessorInterface::ApplicationFormsShowViewObject
         url_helpers.edit_assessor_interface_application_form_assessment_path(
           application_form,
           assessment,
+        )
+      end
+    when :further_information
+      further_information_request = further_information_requests[index]
+
+      if further_information_request.received?
+        url_helpers.edit_assessor_interface_application_form_assessment_further_information_request_path(
+          application_form,
+          assessment,
+          further_information_request,
         )
       end
     end

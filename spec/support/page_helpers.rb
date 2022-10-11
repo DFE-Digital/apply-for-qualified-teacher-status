@@ -113,6 +113,11 @@ module PageHelpers
     @region_page ||= PageObjects::EligibilityInterface::Region.new
   end
 
+  def review_further_information_request_page
+    @review_further_information_request_page ||=
+      PageObjects::AssessorInterface::ReviewFurtherInformationRequest.new
+  end
+
   def start_page
     @start_page ||= PageObjects::EligibilityInterface::Start.new
   end
