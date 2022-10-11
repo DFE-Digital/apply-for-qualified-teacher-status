@@ -2,8 +2,6 @@ en:
   helpers:
     caption: {}
     hint:
-      assessment:
-        recommendation: You've completed your review of this QTS application and marked all sections as complete to your satisfaction.
       assessor_interface_assessment_section_form:
         selected_failure_reasons: Select all options that are relevant to you.
         failure_reason_notes: Use this space to tell the applicant what they need to do. Make sure your instructions are clear.
