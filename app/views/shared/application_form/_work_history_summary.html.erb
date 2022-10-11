@@ -43,7 +43,7 @@
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, work_history]
       },
-      end_date: work_history.still_employed ? {
+      end_date: !work_history.still_employed ? {
         title: "Role end date",
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, work_history]
