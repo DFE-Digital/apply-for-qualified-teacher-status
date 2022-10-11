@@ -61,7 +61,7 @@ group :test do
   gem "climate_control"
   gem "cuprite", "~> 0.14"
   gem "rspec"
-  gem "rspec-rails", "~> 6.0.0.rc1"
+  gem "rspec-rails", "~> 6.0.0"
   gem "shoulda-matchers", "~> 5.2"
   gem "site_prism"
 end
