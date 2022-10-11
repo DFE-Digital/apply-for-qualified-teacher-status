@@ -38,7 +38,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     }.compact_blank
   end
 
-  def assessment_task_path(section, item, index)
+  def assessment_task_path(section, item, _index)
     case section
     when :submitted_details
       url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
@@ -47,14 +47,14 @@ class AssessorInterface::ApplicationFormsShowViewObject
         item,
       )
     when :recommendation
-      status = assessment_task_status(section, item, index)
+      return nil unless assessment.sections_finished?
 
-      return nil unless status == :not_started
-
-      url_helpers.edit_assessor_interface_application_form_assessment_path(
-        application_form,
-        assessment,
-      )
+      if assessment_editable?
+        url_helpers.edit_assessor_interface_application_form_assessment_path(
+          application_form,
+          assessment,
+        )
+      end
     end
   end
 
@@ -64,11 +64,13 @@ class AssessorInterface::ApplicationFormsShowViewObject
       assessment.sections.find { |s| s.key == item.to_s }.state
     when :recommendation
       return :cannot_start_yet unless assessment.sections_finished?
-      return :completed if assessment.finished?
-      return :not_started if further_information_requests.empty?
-      :further_information_requested
+      return :not_started if assessment.unknown?
+      return :in_progress if assessment_editable?
+      :completed
     when :further_information
-      further_information_requests[index].state.to_sym
+      further_information_request = further_information_requests[index]
+      return :cannot_start_yet if further_information_request.requested?
+      :not_started
     end
   end
 
@@ -78,6 +80,14 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def assessment
     @assessment ||= application_form.assessment
+  end
+
+  def assessment_editable?
+    assessment.unknown? ||
+      (
+        assessment.request_further_information? &&
+          further_information_requests.empty?
+      )
   end
 
   def further_information_requests
