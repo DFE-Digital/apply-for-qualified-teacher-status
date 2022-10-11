@@ -112,6 +112,7 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_check_your_answers_page
     and_i_see_check_your_work_history
 
+    when_i_confirm_i_have_no_sanctions
     when_i_click_submit
     then_i_see_the(:submitted_application_page)
     and_i_see_the_submitted_application_information
@@ -216,6 +217,7 @@ RSpec.describe "Teacher application", type: :system do
     and_i_see_check_proof_of_recognition
     and_i_see_check_registration_number
 
+    when_i_confirm_i_have_no_sanctions
     when_i_click_submit
     then_i_see_the(:submitted_application_page)
     and_i_see_the_submitted_application_information
@@ -323,6 +325,7 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_check_your_answers_page
     and_i_see_check_proof_of_recognition
 
+    when_i_confirm_i_have_no_sanctions
     when_i_click_submit
     then_i_see_the(:submitted_application_page)
     and_i_see_the_submitted_application_information
@@ -487,6 +490,7 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_click_submit
     click_button "Submit your application"
   end
+  alias_method :and_i_click_submit, :when_i_click_submit
 
   def when_i_click_continue
     click_link "Continue"
@@ -1059,12 +1063,11 @@ RSpec.describe "Teacher application", type: :system do
     expect(check_your_answers_page.heading.text).to eq(
       "Check your answers before submitting your application",
     )
-    expect(check_your_answers_page.heading_1.text).to have_content("About you")
-    expect(check_your_answers_page.heading_2.text).to have_content(
-      "Who you can teach",
-    )
-    expect(check_your_answers_page.content).to have_content("Minimum age\t7")
-    expect(check_your_answers_page.content).to have_content("Maximum age\t11")
+    expect(check_your_answers_page.about_you_section).to be_visible
+    expect(check_your_answers_page.who_you_can_teach_section).to be_visible
+
+    expect(check_your_answers_page).to have_content("Minimum age\t7")
+    expect(check_your_answers_page).to have_content("Maximum age\t11")
     expect(check_your_answers_page).to have_content("Subjects\tSubject")
     expect(check_your_answers_page).to have_content(
       "Your teaching qualification",
@@ -1072,13 +1075,11 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def and_i_see_check_your_work_history
-    expect(check_your_answers_page).to have_content("Your work history")
+    expect(check_your_answers_page.work_history_section).to be_visible
   end
 
   def and_i_see_check_proof_of_recognition
-    expect(check_your_answers_page.heading_3.text).to have_content(
-      "Proof that you’re recognised as a teacher",
-    )
+    expect(check_your_answers_page.proof_of_recognition_section).to be_visible
   end
 
   def and_i_see_check_registration_number
@@ -1099,5 +1100,9 @@ RSpec.describe "Teacher application", type: :system do
     expect(delete_confirmation_page.heading).to have_content(
       "Are you sure you want to delete",
     )
+  end
+
+  def when_i_confirm_i_have_no_sanctions
+    check_your_answers_page.confirm_no_sanctions.click
   end
 end

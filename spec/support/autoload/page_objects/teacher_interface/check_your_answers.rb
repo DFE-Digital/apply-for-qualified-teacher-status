@@ -3,10 +3,16 @@ module PageObjects
     class CheckYourAnswers < SitePrism::Page
       element :heading, "h1"
       element :content_title, "app-task-list_section"
-      element :heading_1, ".govuk-heading-m:nth-of-type(1)"
-      element :heading_2, ".govuk-heading-m:nth-of-type(2)"
-      element :heading_3, ".govuk-heading-m:nth-of-type(3)"
-      element :content, ".govuk-summary-list__card:nth-of-type(4)"
+      element :about_you_section, "section#app-application-form-about-you"
+      element :who_you_can_teach_section,
+              "section#app-application-form-who-you-can-teach"
+      element :work_history_section, "section#app-application-form-work-history"
+      element :proof_of_recognition_section,
+              "section#app-application-form-proof-of-recognition"
+      element :submission_declaration_section,
+              "section#app-application-form-submission-declaration"
+
+      element :confirm_no_sanctions, ".govuk-checkboxes__input", visible: false
     end
   end
 end
