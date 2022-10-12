@@ -612,7 +612,9 @@ RSpec.describe "Teacher application", type: :system do
     fill_in "teacher-interface-work-history-form-country-code-field",
             with: "France"
     fill_in "teacher-interface-work-history-form-job-field", with: "Job"
-    fill_in "teacher-interface-work-history-form-email-field",
+    fill_in "teacher-interface-work-history-form-contact-name-field",
+            with: "First Last"
+    fill_in "teacher-interface-work-history-form-contact-email-field",
             with: "test@example.com"
     fill_in "teacher_interface_work_history_form_start_date_2i", with: "1"
     fill_in "teacher_interface_work_history_form_start_date_1i", with: "2000"

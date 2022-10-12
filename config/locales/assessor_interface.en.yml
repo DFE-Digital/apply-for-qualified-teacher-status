@@ -53,7 +53,7 @@ en:
           has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
           has_additional_degree_transcript: additional degree transcript is present (and translation if required)
           age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
-          email_contact_current_employer: the applicant has entered an email contact for their current/most recent employer
+          email_contact_current_employer: the applicant has entered the name and email address of a contact for their current/most recent employer
           satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
           registration_number: registration number provided and verified
           written_statement_present: letter from the country or state’s competent authority provided
