@@ -133,7 +133,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-passwordless (0.7.0)
+    devise-passwordless (0.7.1)
       devise
     devise_invitable (2.0.6)
       actionmailer (>= 5.0)
