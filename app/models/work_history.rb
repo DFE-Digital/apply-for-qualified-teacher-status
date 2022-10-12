@@ -35,7 +35,8 @@ class WorkHistory < ApplicationRecord
       city,
       country_code,
       job,
-      email,
+      contact_name,
+      contact_email,
       start_date,
       still_employed,
     ]

@@ -33,7 +33,8 @@ FactoryBot.define do
       city { "City" }
       country_code { Country::CODES.cycle }
       job { "Job" }
-      email { "school@example.com" }
+      contact_name { Faker::Name.name }
+      contact_email { "school@example.com" }
       start_date { Date.new(2020, 1, 1) }
       still_employed { true }
     end
