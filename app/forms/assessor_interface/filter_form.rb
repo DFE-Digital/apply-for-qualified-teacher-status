@@ -5,6 +5,7 @@ class AssessorInterface::FilterForm
   attr_accessor :assessor_ids,
                 :location,
                 :name,
+                :reference,
                 :states,
                 :submitted_at_before,
                 :submitted_at_after

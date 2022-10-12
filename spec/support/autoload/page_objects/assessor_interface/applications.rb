@@ -13,6 +13,10 @@ module PageObjects
         element :country, "input"
       end
 
+      section :reference_filter, "#app-applications-filters-reference" do
+        element :reference, "input"
+      end
+
       section :name_filter, "#app-applications-filters-name" do
         element :name, "input"
       end

@@ -40,6 +40,8 @@ en:
         subject_3: Subject 3 (optional)
         subjects_note: If you've edited the subjects please explain why (optional)
         failure_reason_notes: Note to the applicant
+      assessor_interface_filter_form:
+        reference: Application reference number
       qualification:
         add_another_options:
           true: "Yes"
@@ -68,6 +70,8 @@ en:
     placeholder:
       assessor_interface_assessment_section_form:
         failure_reason_notes: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
+      assessor_interface_filter_form:
+        reference: "Example: 210245"
     legend:
       assessment:
         recommendation: QTS review completed
