@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_07_134833) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_12_140253) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -300,12 +300,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_07_134833) do
     t.text "city", default: "", null: false
     t.text "country_code", default: "", null: false
     t.text "job", default: "", null: false
-    t.text "email", default: "", null: false
+    t.text "contact_email", default: "", null: false
     t.date "start_date"
     t.boolean "still_employed"
     t.date "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "contact_name", default: "", null: false
     t.index ["application_form_id"], name: "index_work_histories_on_application_form_id"
   end
 
