@@ -55,6 +55,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       assessor_interface_filter_form: [
         :location,
         :name,
+        :reference,
         :submitted_at_before,
         :submitted_at_after,
         { assessor_ids: [], states: [] },
@@ -85,6 +86,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ::Filters::Assessor,
           ::Filters::Country,
           ::Filters::Name,
+          ::Filters::Reference,
           ::Filters::SubmittedAt,
         ]
         filters.reduce(
