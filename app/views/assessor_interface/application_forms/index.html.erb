@@ -1,17 +1,17 @@
-<% content_for :page_title, "Applications" %>
+<% content_for :page_title, t(".title") %>
 
-<h1 class="govuk-heading-xl">Applications</h1>
+<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
 <div class="govuk-grid-column-one-third app-application-forms__filters">
-  <h2 class="govuk-heading-m">Filters</h2>
+  <h2 class="govuk-heading-m"><%= t(".filters.title") %></h2>
 
   <%= form_with model: @view_object.filter_form, method: :get, url: assessor_interface_application_forms_path, class: "app-application-forms__filter-form" do |f| %>
-    <%= f.govuk_submit "Apply filters" do %>
-      <%= govuk_link_to "Clear selection"%>
+    <%= f.govuk_submit t(".filters.apply") do %>
+      <%= govuk_link_to t(".filters.clear") %>
     <%- end -%>
 
     <section id="app-applications-filters-assessor">
-      <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { text: "Assessor name", size: "s" }, small: true do %>
+      <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { size: "s" }, small: true do %>
         <%- @view_object.assessor_filter_options.each do |option| -%>
           <%= f.govuk_check_box :assessor_ids, option.id, label: { text: option.name }, checked: @view_object.filter_form.assessor_ids&.include?(option.id.to_s) %>
         <%- end -%>
@@ -19,10 +19,7 @@
     </section>
 
     <section id="app-applications-filters-country">
-      <%= f.govuk_select :location,
-                         @view_object.country_filter_options,
-                         label: { text: "Country trained in", size: "s" },
-                         options: { include_blank: true } %>
+      <%= f.govuk_select :location, @view_object.country_filter_options, label: { size: "s" }, options: { include_blank: true } %>
     </section>
 
     <section id="app-applications-filters-reference">
@@ -30,18 +27,18 @@
     </section>
 
     <section id="app-applications-filters-name">
-      <%= f.govuk_text_field :name, label: { text: "Applicant name", size: "s" } %>
+      <%= f.govuk_text_field :name, label: { size: "s" } %>
     </section>
 
     <section id="app-applications-filters-submitted-at">
-      <%= f.govuk_fieldset legend: { text: "Created date", size: "s" } do %>
-        <%= f.govuk_date_field :submitted_at_after, legend: { text: "Start date", size: "s" } %>
-        <%= f.govuk_date_field :submitted_at_before, legend: { text: "End date", size: "s" } %>
+      <%= f.govuk_fieldset legend: { text: I18n.t("helpers.legend.assessor_interface_filter_form.submitted_at"), size: "s" } do %>
+        <%= f.govuk_date_field :submitted_at_after, legend: { size: "s" } %>
+        <%= f.govuk_date_field :submitted_at_before, legend: { size: "s" } %>
       <% end %>
     </section>
 
     <section id="app-applications-filters-state">
-      <%= f.govuk_check_boxes_fieldset :states, legend: { text: "Status of application", size: "s" }, small: true do %>
+      <%= f.govuk_check_boxes_fieldset :states, legend: { size: "s" }, small: true do %>
         <%- @view_object.state_filter_options.each do |option| -%>
           <%= f.govuk_check_box :states, option.id, label: { text: option.label }, checked: @view_object.filter_form.states&.include?(option.id) %>
         <%- end -%>
@@ -61,8 +58,6 @@
 
     <%= govuk_pagination(pagy: @view_object.application_forms_pagy) %>
   <% else %>
-    <h2 class="govuk-heading-m">
-      No applications found. Use the filters on the left to try again or refine your search.
-    </h2>
+    <h2 class="govuk-heading-m"><%= t(".results.empty") %></h2>
   <% end %>
 </div>

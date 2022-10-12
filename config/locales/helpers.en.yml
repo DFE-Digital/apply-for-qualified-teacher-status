@@ -41,6 +41,8 @@ en:
         subjects_note: If you've edited the subjects please explain why (optional)
         failure_reason_notes: Note to the applicant
       assessor_interface_filter_form:
+        location: Country trained in
+        name: Applicant name
         reference: Application reference number
       qualification:
         add_another_options:
@@ -77,6 +79,12 @@ en:
         recommendation: QTS review completed
       assessor_interface_assessment_section_form:
         selected_failure_reasons: What are the reasons for your recommendation?
+      assessor_interface_filter_form:
+        assessor_ids: Assessor name
+        states: Status of application
+        submitted_at: Created date
+        submitted_at_after: Start date
+        submitted_at_before: End date
       qualification:
         add_another: Add another qualification?
       teacher_interface_alternative_name_form:
