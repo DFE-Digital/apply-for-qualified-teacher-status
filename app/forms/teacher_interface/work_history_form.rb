@@ -9,7 +9,8 @@ module TeacherInterface
     attribute :school_name, :string
     attribute :city, :string
     attribute :country_code, :string
-    attribute :email, :string
+    attribute :contact_name, :string
+    attribute :contact_email, :string
     attribute :start_date, :date
     attribute :still_employed, :boolean
     attribute :end_date, :date
@@ -18,7 +19,8 @@ module TeacherInterface
     validates :school_name, presence: true
     validates :city, presence: true
     validates :country_code, presence: true
-    validates :email, presence: true, valid_for_notify: true
+    validates :contact_name, presence: true
+    validates :contact_email, presence: true, valid_for_notify: true
     validates :start_date, presence: true
     validates :still_employed, inclusion: [true, false]
     validates :end_date, presence: true, unless: :still_employed
@@ -33,7 +35,8 @@ module TeacherInterface
         school_name:,
         city:,
         country_code:,
-        email:,
+        contact_name:,
+        contact_email:,
         start_date:,
         still_employed:,
         end_date:,
