@@ -3,8 +3,9 @@
                                  teacher_interface_application_form_path :
                                  teacher_interface_application_form_work_histories_path %>
 
-
 <%= form_with model: @has_work_history_form, url: [:has_work_history, :teacher_interface, :application_form, :work_histories] do |f| %>
+  <%= hidden_field_tag :next, params[:next] %>
+
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :has_work_history,
@@ -15,5 +16,4 @@
                                        hint: { text: "If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet." } %>
 
   <%= render "shared/save_submit_buttons", f: %>
-
 <% end %>

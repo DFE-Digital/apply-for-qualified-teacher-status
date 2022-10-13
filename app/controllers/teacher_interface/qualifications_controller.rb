@@ -87,12 +87,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @qualification_form,
-        if_success_then_redirect: [
-          :edit,
-          :teacher_interface,
-          :application_form,
-          qualification.certificate_document,
-        ],
+        if_success_then_redirect: update_success_path,
         if_failure_then_render: :edit,
       )
     end
@@ -117,23 +112,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @part_of_university_degree_form,
-        if_success_then_redirect: -> do
-          if @part_of_university_degree_form.part_of_university_degree ||
-               @part_of_university_degree_form.part_of_university_degree.nil?
-            %i[check teacher_interface application_form qualifications]
-          else
-            if application_form.degree_qualifications.empty?
-              application_form.qualifications.create!
-            end
-
-            [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              application_form.degree_qualifications.first,
-            ]
-          end
-        end,
+        if_success_then_redirect: -> { part_of_university_degree_success_path },
         if_failure_then_render: :edit_part_of_university_degree,
       )
     end
@@ -149,7 +128,7 @@ module TeacherInterface
         qualification.destroy!
       end
 
-      redirect_to %i[check teacher_interface application_form qualifications]
+      redirect_to check_success_path
     end
 
     private
@@ -173,6 +152,41 @@ module TeacherInterface
       params.require(:teacher_interface_part_of_university_degree_form).permit(
         :part_of_university_degree,
       )
+    end
+
+    def update_success_path
+      params[:next].presence ||
+        [
+          :edit,
+          :teacher_interface,
+          :application_form,
+          qualification.certificate_document,
+        ]
+    end
+
+    def part_of_university_degree_success_path
+      if @part_of_university_degree_form.part_of_university_degree ||
+           @part_of_university_degree_form.part_of_university_degree.nil?
+        check_success_path
+      else
+        if application_form.degree_qualifications.empty?
+          application_form.qualifications.create!
+        elsif params[:next].present?
+          return params[:next]
+        end
+
+        [
+          :edit,
+          :teacher_interface,
+          :application_form,
+          application_form.degree_qualifications.first,
+        ]
+      end
+    end
+
+    def check_success_path
+      params[:next].presence ||
+        %i[check teacher_interface application_form qualifications]
     end
   end
 end

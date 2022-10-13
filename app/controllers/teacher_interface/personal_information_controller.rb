@@ -43,12 +43,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @name_and_date_of_birth_form,
-        if_success_then_redirect: %i[
-          alternative_name
-          teacher_interface
-          application_form
-          personal_information
-        ],
+        if_success_then_redirect: name_and_date_of_birth_success_path,
         if_failure_then_render: :name_and_date_of_birth,
       )
     end
@@ -70,7 +65,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @alternative_name_form,
-        if_success_then_redirect: alternative_name_next_url,
+        if_success_then_redirect: -> { alternative_name_success_path },
         if_failure_then_render: :alternative_name,
       )
     end
@@ -96,16 +91,25 @@ module TeacherInterface
       )
     end
 
-    def alternative_name_next_url
-      if @alternative_name_form.has_alternative_name
-        [
-          :edit,
-          :teacher_interface,
-          :application_form,
-          application_form.name_change_document,
+    def name_and_date_of_birth_success_path
+      params[:next].presence ||
+        %i[
+          alternative_name
+          teacher_interface
+          application_form
+          personal_information
         ]
+    end
+
+    def alternative_name_success_path
+      if @alternative_name_form.has_alternative_name
+        edit_teacher_interface_application_form_document_path(
+          application_form.name_change_document,
+          next: params[:next],
+        )
       else
-        %i[check teacher_interface application_form personal_information]
+        params[:next].presence ||
+          %i[check teacher_interface application_form personal_information]
       end
     end
   end

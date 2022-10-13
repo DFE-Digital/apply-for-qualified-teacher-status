@@ -10,6 +10,7 @@ module TeacherInterface
       if document.uploads.empty?
         redirect_to new_teacher_interface_application_form_document_upload_path(
                       document,
+                      next: params[:next],
                     )
       end
 

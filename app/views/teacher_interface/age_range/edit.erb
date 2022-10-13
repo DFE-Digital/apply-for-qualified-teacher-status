@@ -6,6 +6,8 @@
 <p class="govuk-hint"><%= I18n.t("application_form.age_range.hint") %></p>
 
 <%= form_with model: @age_range_form, url: %i[age_range teacher_interface application_form] do |f| %>
+  <%= hidden_field_tag :next, params[:next] %>
+
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_number_field :minimum, width: 3 %>
