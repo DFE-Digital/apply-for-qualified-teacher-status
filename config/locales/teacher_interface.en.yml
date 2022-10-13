@@ -44,6 +44,26 @@ en:
           attributes:
             confirmed_no_sanctions:
               blank: You must confirm that you have no sanctions or restrictions
+        teacher_interface/work_history_form:
+          attributes:
+            job:
+              blank: Enter the job
+            school_name:
+              blank: Enter the school name
+            city:
+              blank: Enter the city
+            country_code:
+              blank: Enter the country
+            contact_name:
+              blank: Enter the contact name
+            contact_email:
+              blank: Enter the contact email
+            start_date:
+              blank: Enter the start date
+            still_employed:
+              inclusion: Select whether you are still employed
+            end_date:
+              blank: Enter the end date
   application_form:
     status:
       not_started: Not started

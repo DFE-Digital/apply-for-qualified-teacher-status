@@ -11,7 +11,9 @@
                        options: { include_blank: true } %>
 
     <%= f.govuk_text_field :job, label: { text: "Your job role" } %>
-    <%= f.govuk_text_field :email, label: { text: "Contact email address for this organisation" } %>
+
+    <%= f.govuk_text_field :contact_name %>
+    <%= f.govuk_text_field :contact_email %>
   <% end %>
 
   <%= govuk_details(summary_text: "Why do we ask this?") do %>

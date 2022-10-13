@@ -4,8 +4,9 @@
 #
 #  id                  :bigint           not null, primary key
 #  city                :text             default(""), not null
+#  contact_email       :text             default(""), not null
+#  contact_name        :text             default(""), not null
 #  country_code        :text             default(""), not null
-#  email               :text             default(""), not null
 #  end_date            :date
 #  job                 :text             default(""), not null
 #  school_name         :text             default(""), not null
@@ -32,7 +33,8 @@ FactoryBot.define do
       city { "City" }
       country_code { Country::CODES.cycle }
       job { "Job" }
-      email { "school@example.com" }
+      contact_name { Faker::Name.name }
+      contact_email { "school@example.com" }
       start_date { Date.new(2020, 1, 1) }
       still_employed { true }
     end

@@ -221,7 +221,8 @@
     - city
     - country_code
     - job
-    - email
+    - contact_email
+    - contact_name
     - start_date
     - still_employed
     - end_date

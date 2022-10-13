@@ -4,8 +4,9 @@
 #
 #  id                  :bigint           not null, primary key
 #  city                :text             default(""), not null
+#  contact_email       :text             default(""), not null
+#  contact_name        :text             default(""), not null
 #  country_code        :text             default(""), not null
-#  email               :text             default(""), not null
 #  end_date            :date
 #  job                 :text             default(""), not null
 #  school_name         :text             default(""), not null
@@ -34,7 +35,8 @@ class WorkHistory < ApplicationRecord
       city,
       country_code,
       job,
-      email,
+      contact_name,
+      contact_email,
       start_date,
       still_employed,
     ]

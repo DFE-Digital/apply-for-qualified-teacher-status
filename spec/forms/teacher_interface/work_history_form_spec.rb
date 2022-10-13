@@ -10,7 +10,8 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
       school_name:,
       city:,
       country_code:,
-      email:,
+      contact_name:,
+      contact_email:,
       start_date:,
       still_employed:,
       end_date:,
@@ -22,7 +23,8 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
     let(:school_name) { "" }
     let(:city) { "" }
     let(:country_code) { "" }
-    let(:email) { "" }
+    let(:contact_name) { "" }
+    let(:contact_email) { "" }
     let(:start_date) { "" }
     let(:still_employed) { "" }
     let(:end_date) { "" }
@@ -31,7 +33,8 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
     it { is_expected.to validate_presence_of(:school_name) }
     it { is_expected.to validate_presence_of(:city) }
     it { is_expected.to validate_presence_of(:country_code) }
-    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_presence_of(:contact_name) }
+    it { is_expected.to validate_presence_of(:contact_email) }
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to allow_values(true, false).for(:still_employed) }
 
@@ -53,7 +56,8 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
     let(:school_name) { "School" }
     let(:city) { "City" }
     let(:country_code) { "country:FR" }
-    let(:email) { "school@example.com" }
+    let(:contact_name) { "First Last" }
+    let(:contact_email) { "school@example.com" }
     let(:start_date) { "2020-01-01" }
     let(:still_employed) { "true" }
     let(:end_date) { "" }
@@ -65,6 +69,8 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
       expect(work_history.school_name).to eq("School")
       expect(work_history.city).to eq("City")
       expect(work_history.country_code).to eq("FR")
+      expect(work_history.contact_name).to eq("First Last")
+      expect(work_history.contact_email).to eq("school@example.com")
       expect(work_history.start_date).to eq(Date.new(2020, 1, 1))
       expect(work_history.still_employed).to be true
       expect(work_history.end_date).to be_nil
