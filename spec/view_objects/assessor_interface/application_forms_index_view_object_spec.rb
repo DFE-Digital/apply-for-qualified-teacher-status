@@ -32,16 +32,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       it { is_expected.to include(application_form) }
 
-      context "with a name filter" do
-        before do
-          expect_any_instance_of(Filters::Name).to receive(:apply).and_return(
-            ApplicationForm.none,
-          )
-        end
-
-        it { is_expected.to be_empty }
-      end
-
       context "with an assessor filter" do
         before do
           expect_any_instance_of(Filters::Assessor).to receive(
@@ -55,6 +45,26 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       context "with a country filter" do
         before do
           expect_any_instance_of(Filters::Country).to receive(
+            :apply,
+          ).and_return(ApplicationForm.none)
+        end
+
+        it { is_expected.to be_empty }
+      end
+
+      context "with a name filter" do
+        before do
+          expect_any_instance_of(Filters::Name).to receive(:apply).and_return(
+            ApplicationForm.none,
+          )
+        end
+
+        it { is_expected.to be_empty }
+      end
+
+      context "with a reference filter" do
+        before do
+          expect_any_instance_of(Filters::Reference).to receive(
             :apply,
           ).and_return(ApplicationForm.none)
         end
@@ -240,6 +250,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             assessor_ids: ["assessor_id"],
             location: "location",
             name: "name",
+            reference: "reference",
             states: ["state"],
           },
           location_autocomplete: "location_autocomplete",
@@ -254,6 +265,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
               "assessor_ids" => ["assessor_id"],
               "location" => "location",
               "name" => "name",
+              "reference" => "reference",
               "states" => ["state"],
             },
             "location_autocomplete" => "location_autocomplete",

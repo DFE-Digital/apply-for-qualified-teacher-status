@@ -1,6 +1,15 @@
 en:
   assessor_interface:
     application_forms:
+      index:
+        title: Applications
+        filters:
+          title: Filters
+          apply: Apply filters
+          clear: Clear selection
+        results:
+          empty: No applications found. Use the filters on the left to try again or refine your search.
+
       show:
         assessment_tasks:
           sections:

@@ -19,6 +19,10 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     then_i_see_a_list_of_applications_filtered_by_country
 
     when_i_clear_the_filters
+    and_i_apply_the_reference_filter
+    then_i_see_a_list_of_applications_filtered_by_reference
+
+    when_i_clear_the_filters
     and_i_apply_the_name_filter
     then_i_see_a_list_of_applications_filtered_by_name
 
@@ -73,6 +77,16 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     )
   end
 
+  def and_i_apply_the_reference_filter
+    applications_page.reference_filter.reference.set("CHER")
+    applications_page.apply_filters.click
+  end
+
+  def then_i_see_a_list_of_applications_filtered_by_reference
+    expect(applications_page.search_results.count).to eq(1)
+    expect(applications_page.search_results.first.name.text).to eq("Cher Bert")
+  end
+
   def and_i_apply_the_name_filter
     applications_page.name_filter.name.set("cher")
     applications_page.apply_filters.click
@@ -118,6 +132,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         given_names: "Cher",
         family_name: "Bert",
         submitted_at: Date.new(2019, 12, 1),
+        reference: "CHERBERT",
       ),
       create(
         :application_form,
