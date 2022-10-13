@@ -47,7 +47,9 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
       it "must be valid" do
         form.start_date = { 1 => 2022, 2 => 13, 3 => 1 }
         form.valid?
-        expect(form.errors[:start_date]).to eq(["Start date is invalid"])
+        expect(form.errors[:start_date]).to eq(
+          ["Start date is not a valid date"],
+        )
       end
 
       it "must be in the past" do
@@ -81,7 +83,7 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
         it "must be valid" do
           form.end_date = { 1 => 2022, 2 => 13, 3 => 1 }
           form.valid?
-          expect(form.errors[:end_date]).to eq(["End date is invalid"])
+          expect(form.errors[:end_date]).to eq(["End date is not a valid date"])
         end
 
         it "must be after start_date" do
