@@ -12,13 +12,17 @@ module CheckYourAnswersSummary
       @title = title
       @fields = fields
       @changeable = changeable
-      @delete_link_to = changeable ? delete_link_to : nil
+      @delete_link_to = delete_link_to
     end
 
     attr_reader :title
 
     def rows
       fields_with_translations.map { |field| row_for_field(field) }
+    end
+
+    def delete_link_to
+      path_with_next(@delete_link_to) if changeable && @delete_link_to
     end
 
     private
@@ -57,9 +61,12 @@ module CheckYourAnswersSummary
     end
 
     def href_for(field)
-      path = field[:href]
-      return nil if path.blank?
+      if (path = field[:href]).present?
+        path_with_next(path)
+      end
+    end
 
+    def path_with_next(path)
       next_path = request.path
 
       if path.is_a?(String)

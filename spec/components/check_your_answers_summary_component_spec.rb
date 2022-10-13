@@ -86,7 +86,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
     it "renders a link" do
       a = component.at_css(".govuk-summary-list__card-actions a")
       expect(a.text.strip).to eq("Delete")
-      expect(a.attribute("href").value).to eq("/delete")
+      expect(a.attribute("href").value).to eq("/delete?next=%2F")
     end
   end
 
