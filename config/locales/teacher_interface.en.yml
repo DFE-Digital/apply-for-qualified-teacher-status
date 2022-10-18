@@ -46,24 +46,30 @@ en:
               blank: You must confirm that you have no sanctions or restrictions
         teacher_interface/work_history_form:
           attributes:
-            job:
-              blank: Enter the job
-            school_name:
-              blank: Enter the school name
-            city:
-              blank: Enter the city
-            country_code:
-              blank: Enter the country
             contact_name:
-              blank: Enter the contact name
+              blank: Enter a contact name
             contact_email:
-              blank: Enter the contact email
-            start_date:
-              blank: Enter the start date
-            still_employed:
-              inclusion: Select whether you are still employed
+              blank: Enter a contact email
             end_date:
-              blank: Enter the end date
+              blank: Enter an end date
+              before_start_date: End date must be after start date
+              invalid: End date is not a valid date
+            start_date:
+              blank: Enter a start date
+              invalid: Start date is not a valid date
+              future: Start date must be in the past
+            school_name:
+              blank: Enter a school name
+            city:
+              blank: Enter a city
+            country_code:
+              blank: Enter a country
+            job:
+              blank: Enter a job role
+            email:
+              blank: Enter an email
+            still_employed:
+              inclusion: Tell us whether you are still employed at this school
   application_form:
     status:
       not_started: Not started

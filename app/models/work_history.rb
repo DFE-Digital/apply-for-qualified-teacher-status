@@ -27,7 +27,7 @@
 class WorkHistory < ApplicationRecord
   belongs_to :application_form
 
-  scope :ordered, -> { order(start_date: :asc, created_at: :asc) }
+  scope :ordered, -> { order(start_date: :desc, created_at: :desc) }
 
   def status
     values = [

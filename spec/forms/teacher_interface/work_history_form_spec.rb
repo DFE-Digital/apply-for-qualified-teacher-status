@@ -38,16 +38,63 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to allow_values(true, false).for(:still_employed) }
 
-    context "when still employed" do
-      let(:still_employed) { "true" }
+    describe "start_date" do
+      it "is required" do
+        form.valid?
+        expect(form.errors[:start_date]).to eq(["Enter a start date"])
+      end
 
-      it { is_expected.to_not validate_presence_of(:end_date) }
+      it "must be valid" do
+        form.start_date = { 1 => 2022, 2 => 13, 3 => 1 }
+        form.valid?
+        expect(form.errors[:start_date]).to eq(
+          ["Start date is not a valid date"],
+        )
+      end
+
+      it "must be in the past" do
+        future = 1.month.from_now
+        form.start_date = { 1 => future.year, 2 => future.month, 3 => 1 }
+        form.valid?
+        expect(form.errors[:start_date]).to eq(
+          ["Start date must be in the past"],
+        )
+      end
     end
 
-    context "when not still employed" do
-      let(:still_employed) { "false" }
+    describe "end_date" do
+      context "when still employed" do
+        let(:still_employed) { "true" }
 
-      it { is_expected.to validate_presence_of(:end_date) }
+        it "isn't required" do
+          form.valid?
+          expect(form.errors[:end_date]).to eq([])
+        end
+      end
+
+      context "when not still employed" do
+        let(:still_employed) { "false" }
+
+        it "is required" do
+          form.valid?
+          expect(form.errors[:end_date]).to eq(["Enter an end date"])
+        end
+
+        it "must be valid" do
+          form.end_date = { 1 => 2022, 2 => 13, 3 => 1 }
+          form.valid?
+          expect(form.errors[:end_date]).to eq(["End date is not a valid date"])
+        end
+
+        it "must be after start_date" do
+          form.end_date = { 1 => 2022, 2 => 10, 3 => 1 }
+          form.start_date = { 1 => 2022, 2 => 11, 3 => 1 }
+          form.valid?
+          expect(form.errors[:end_date]).to eq(
+            ["End date must be after start date"],
+          )
+        end
+      end
     end
   end
 
@@ -58,7 +105,7 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
     let(:country_code) { "country:FR" }
     let(:contact_name) { "First Last" }
     let(:contact_email) { "school@example.com" }
-    let(:start_date) { "2020-01-01" }
+    let(:start_date) { { 1 => 2020, 2 => 10, 3 => 1 } }
     let(:still_employed) { "true" }
     let(:end_date) { "" }
 
@@ -71,7 +118,7 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
       expect(work_history.country_code).to eq("FR")
       expect(work_history.contact_name).to eq("First Last")
       expect(work_history.contact_email).to eq("school@example.com")
-      expect(work_history.start_date).to eq(Date.new(2020, 1, 1))
+      expect(work_history.start_date).to eq(Date.new(2020, 10, 1))
       expect(work_history.still_employed).to be true
       expect(work_history.end_date).to be_nil
     end
