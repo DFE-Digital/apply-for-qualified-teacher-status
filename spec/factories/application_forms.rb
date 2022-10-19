@@ -171,7 +171,7 @@ FactoryBot.define do
 
     trait :with_completed_qualification do
       after(:create) do |application_form, _evaluator|
-        application_form.qualifications << build(:qualification, :completed)
+        create(:qualification, :completed, application_form:)
       end
     end
 
@@ -180,12 +180,13 @@ FactoryBot.define do
       has_work_history { true }
 
       after(:create) do |application_form, _evaluator|
-        application_form.work_histories << build(:work_history, :completed)
+        create(:work_history, :completed, application_form:)
       end
     end
 
     trait :with_written_statement do
       needs_written_statement { true }
+
       after(:create) do |application_form, _evaluator|
         create(:upload, document: application_form.written_statement_document)
       end

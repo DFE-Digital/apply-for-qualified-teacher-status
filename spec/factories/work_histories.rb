@@ -31,7 +31,7 @@ FactoryBot.define do
     trait :completed do
       school_name { "School" }
       city { "City" }
-      country_code { Country::CODES.cycle }
+      sequence :country_code, Country::CODES.cycle
       job { "Job" }
       contact_name { Faker::Name.name }
       contact_email { "school@example.com" }
