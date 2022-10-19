@@ -61,6 +61,10 @@ class EligibilityCheck < ApplicationRecord
     CountryCode.to_location(country_code)
   end
 
+  def england_or_wales?
+    country_code == "GB-ENG" || country_code == "GB-WLS"
+  end
+
   def ineligible_reasons
     [
       region.nil? ? :country : nil,
