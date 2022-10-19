@@ -65,6 +65,20 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_see_the_ineligible_misconduct_text
   end
 
+  it "ineligible england or wales" do
+    when_i_visit_the(:start_page)
+
+    when_i_press_start_now
+    when_i_select_england
+    then_i_see_the(:ineligible_page)
+    and_i_see_the_ineligible_england_or_wales_text
+
+    when_i_press_back
+    when_i_select_wales
+    then_i_see_the(:ineligible_page)
+    and_i_see_the_ineligible_england_or_wales_text
+  end
+
   it "trying to skip steps" do
     when_i_visit_the(:start_page)
     then_i_see_the(:start_page)
@@ -204,6 +218,14 @@ RSpec.describe "Eligibility check", type: :system do
     country_page.submit(country: "Italy")
   end
 
+  def when_i_select_england
+    country_page.submit(country: "England")
+  end
+
+  def when_i_select_wales
+    country_page.submit(country: "Wales")
+  end
+
   def when_i_dont_select_a_country
     country_page.form.continue_button.click
   end
@@ -269,11 +291,20 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def and_i_see_the_ineligible_country_text
-    expect(ineligible_page.heading).to have_content(
+    expect(ineligible_page.heading.text).to eq(
       "You’re not eligible to apply for qualified teacher status (QTS) in England",
     )
     expect(ineligible_page.body).to have_content(
       "Teachers applying from Spain are not currently eligible to use this service.",
+    )
+  end
+
+  def and_i_see_the_ineligible_england_or_wales_text
+    expect(ineligible_page.heading.text).to eq(
+      "You’re not eligible to apply for qualified teacher status (QTS) in England",
+    )
+    expect(ineligible_page.body).to have_content(
+      "This service is for qualified teachers who trained outside of England",
     )
   end
 
