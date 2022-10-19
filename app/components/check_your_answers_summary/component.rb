@@ -2,6 +2,7 @@ module CheckYourAnswersSummary
   class Component < ViewComponent::Base
     def initialize(
       model:,
+      id:,
       title:,
       fields:,
       changeable: true,
@@ -9,6 +10,7 @@ module CheckYourAnswersSummary
     )
       super
       @model = model
+      @id = "app-check-your-answers-summary-#{id}"
       @title = title
       @fields = fields
       @changeable = changeable
@@ -27,7 +29,7 @@ module CheckYourAnswersSummary
 
     private
 
-    attr_reader :model, :fields, :changeable
+    attr_reader :id, :model, :fields, :changeable
 
     def fields_with_translations
       fields_as_array.flat_map do |field|

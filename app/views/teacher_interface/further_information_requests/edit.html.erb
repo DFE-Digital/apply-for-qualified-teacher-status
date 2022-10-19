@@ -6,6 +6,7 @@
 </h1>
 
 <%= render(CheckYourAnswersSummary::Component.new(
+  id: "check-your-answers",
   model: @view_object.further_information_request,
   title: t(".check_your_answers"),
   fields: @view_object.check_your_answers_fields
