@@ -99,7 +99,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         )
       end
 
-      it { is_expected.to eq([application_form_2, application_form_1]) }
+      it { is_expected.to eq([application_form_1, application_form_2]) }
     end
 
     context "with lots of application forms" do
