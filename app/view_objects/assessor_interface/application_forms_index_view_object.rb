@@ -75,7 +75,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
         ::Filters::State.apply(
           scope: application_forms_without_state_filter,
           params: filter_params,
-        ).order(submitted_at: :desc),
+        ).order(submitted_at: :asc),
       )
   end
 
