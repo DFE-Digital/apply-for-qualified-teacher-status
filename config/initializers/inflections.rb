@@ -3,5 +3,6 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "DfE"
   inflect.acronym "DQT"
+  inflect.acronym "TRN"
   inflect.uncountable %w[staff]
 end
