@@ -139,7 +139,6 @@ Rails.application.routes.draw do
 
         get "subjects", to: "subjects#edit"
         post "subjects", to: "subjects#update"
-        get "subjects/delete", to: "subjects#delete"
 
         get "registration_number", to: "registration_number#edit"
         post "registration_number", to: "registration_number#update"

@@ -21,10 +21,4 @@ RSpec.describe TeacherInterface::SubjectsController, type: :controller do
 
     include_examples "redirect unless application form is draft"
   end
-
-  describe "GET delete" do
-    subject(:perform) { get :delete }
-
-    include_examples "redirect unless application form is draft"
-  end
 end

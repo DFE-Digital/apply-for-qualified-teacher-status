@@ -130,6 +130,10 @@ en:
           attributes:
             confirmed_no_sanctions:
               blank: You must confirm that you have no sanctions or restrictions
+        teacher_interface/subjects_form:
+          attributes:
+            subject_1:
+              blank: Enter your first subject
         teacher_interface/work_history_form:
           attributes:
             contact_name:

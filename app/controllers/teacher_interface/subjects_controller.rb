@@ -1,42 +1,43 @@
 module TeacherInterface
   class SubjectsController < BaseController
+    include HandleApplicationFormSection
+
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
 
     def edit
+      @subjects_form =
+        SubjectsForm.new(
+          application_form:,
+          subject_1: application_form.subjects.first,
+          subject_2: application_form.subjects.second,
+          subject_3: application_form.subjects.third,
+        )
     end
 
     def update
-      if application_form.update(subjects_params)
-        if params[:create] == "true"
-          application_form.subjects.push("")
-          application_form.save!
+      @subjects_form =
+        SubjectsForm.new(subjects_form_params.merge(application_form:))
 
-          redirect_to subjects_teacher_interface_application_form_path(
-                        next: params[:next],
-                      )
-        else
-          redirect_to params[:next].presence ||
-                        %i[teacher_interface application_form]
-        end
-      else
-        render :new, status: unprocessable_entity
-      end
-    end
-
-    def delete
-      application_form.subjects.delete_at(params[:index].to_i)
-      application_form.save!
-
-      redirect_to subjects_teacher_interface_application_form_path(
-                    next: params[:next],
-                  )
+      handle_application_form_section(
+        form: @subjects_form,
+        if_success_then_redirect:,
+        if_failure_then_render: :edit,
+      )
     end
 
     private
 
-    def subjects_params
-      params.require(:application_form).permit(subjects: [])
+    def subjects_form_params
+      params.require(:teacher_interface_subjects_form).permit(
+        :subject_1,
+        :subject_2,
+        :subject_3,
+      )
+    end
+
+    def if_success_then_redirect
+      params[:next].presence || %i[teacher_interface application_form]
     end
   end
 end
