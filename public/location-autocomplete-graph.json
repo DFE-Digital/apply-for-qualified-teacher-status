@@ -914,7 +914,7 @@
       "en-GB": "Gabon"
     }
   },
-  "country:GB-SCT": {
+  "country:GB-ENG": {
     "edges": {
       "from": []
     },
@@ -926,7 +926,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Scotland"
+      "en-GB": "England"
     }
   },
   "country:GB-NIR": {
@@ -942,6 +942,36 @@
     "names": {
       "cy": false,
       "en-GB": "Northern Ireland"
+    }
+  },
+  "country:GB-SCT": {
+    "edges": {
+      "from": []
+    },
+    "meta": {
+      "canonical": true,
+      "canonical-mask": 1,
+      "display-name": true,
+      "stable-name": true
+    },
+    "names": {
+      "cy": false,
+      "en-GB": "Scotland"
+    }
+  },
+  "country:GB-WLS": {
+    "edges": {
+      "from": []
+    },
+    "meta": {
+      "canonical": true,
+      "canonical-mask": 1,
+      "display-name": true,
+      "stable-name": true
+    },
+    "names": {
+      "cy": false,
+      "en-GB": "Wales"
     }
   },
   "country:GD": {
@@ -5862,6 +5892,21 @@
     "names": {
       "cy": false,
       "en-GB": "Curaçao"
+    }
+  },
+  "nym:Cymru": {
+    "edges": {
+      "from": ["country:GB-WLS"]
+    },
+    "meta": {
+      "canonical": false,
+      "canonical-mask": 0,
+      "display-name": true,
+      "stable-name": true
+    },
+    "names": {
+      "cy": false,
+      "en-GB": "Cymru"
     }
   },
   "nym:Czechia": {
@@ -23984,6 +24029,21 @@
       "en-GB": "Mayotte"
     }
   },
+  "uk:ENG": {
+    "edges": {
+      "from": ["country:GB-ENG"]
+    },
+    "meta": {
+      "canonical": false,
+      "canonical-mask": 0,
+      "display-name": true,
+      "stable-name": true
+    },
+    "names": {
+      "cy": false,
+      "en-GB": "England"
+    }
+  },
   "uk:NIR": {
     "edges": {
       "from": ["country:GB-NIR"]
@@ -24012,6 +24072,21 @@
     "names": {
       "cy": false,
       "en-GB": "Scotland"
+    }
+  },
+  "uk:WLS": {
+    "edges": {
+      "from": ["country:GB-WLS"]
+    },
+    "meta": {
+      "canonical": false,
+      "canonical-mask": 0,
+      "display-name": true,
+      "stable-name": true
+    },
+    "names": {
+      "cy": false,
+      "en-GB": "Wales"
     }
   }
 }

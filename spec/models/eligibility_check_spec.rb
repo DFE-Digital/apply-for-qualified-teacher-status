@@ -35,6 +35,26 @@ RSpec.describe EligibilityCheck, type: :model do
     end
   end
 
+  describe "#england_or_wales?" do
+    subject(:england_or_wales?) { eligibility_check.england_or_wales? }
+
+    shared_examples "works correctly" do |country_code, expected_value|
+      context "with #{country_code} country code" do
+        before { eligibility_check.country_code = country_code }
+        it { is_expected.to eq(expected_value) }
+      end
+    end
+
+    it { is_expected.to be false }
+
+    include_examples "works correctly", "GB-ENG", true
+    include_examples "works correctly", "GB-WLS", true
+
+    (Country::CODES - %w[GB-ENG GB-WLS]).each do |country_code|
+      include_examples "works correctly", country_code, false
+    end
+  end
+
   describe "#ineligible_reasons" do
     subject(:ineligible_reasons) { eligibility_check.ineligible_reasons }
 
