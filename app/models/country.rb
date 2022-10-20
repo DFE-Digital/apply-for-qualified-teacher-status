@@ -30,6 +30,9 @@ class Country < ApplicationRecord
       CountryCode.from_location(row.last)
     end
 
+  CODES_IN_EUROPEAN_ECONOMIC_AREA =
+    YAML.load(File.read("lib/countries-in-european-economic-area.yaml"))
+
   validates :code, inclusion: { in: CODES }
 
   alias_method :country, :itself
