@@ -138,11 +138,11 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def when_i_click_the_text_check_your_answers_item
-    text_check_answers_item.actions.first.link.click
+    text_check_answers_item.actions.link.click
   end
 
   def when_i_click_the_document_check_your_answers_item
-    document_check_answers_item.actions.first.link.click
+    document_check_answers_item.actions.link.click
   end
 
   def when_i_submit_the_further_information

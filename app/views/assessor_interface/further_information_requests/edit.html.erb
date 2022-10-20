@@ -4,6 +4,7 @@
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
 <%= render(CheckYourAnswersSummary::Component.new(
+  id: "further-information-requested",
   model: @view_object.further_information_request,
   title: t(".check_your_answers"),
   fields: @view_object.check_your_answers_fields

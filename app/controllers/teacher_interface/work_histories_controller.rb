@@ -35,12 +35,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @work_history_form,
-        if_success_then_redirect: %i[
-          check
-          teacher_interface
-          application_form
-          work_histories
-        ],
+        if_success_then_redirect: update_success_path,
         if_failure_then_render: :new,
       )
     end
@@ -74,7 +69,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @has_work_history_form,
-        if_success_then_redirect: has_work_history_next_url,
+        if_success_then_redirect: -> { has_work_history_success_path },
         if_failure_then_render: :edit_has_work_history,
       )
     end
@@ -87,7 +82,8 @@ module TeacherInterface
           work_history:,
           city: work_history.city,
           country_code: work_history.country_code,
-          email: work_history.email,
+          contact_email: work_history.contact_email,
+          contact_name: work_history.contact_name,
           end_date: work_history.end_date,
           job: work_history.job,
           school_name: work_history.school_name,
@@ -104,12 +100,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @work_history_form,
-        if_success_then_redirect: %i[
-          check
-          teacher_interface
-          application_form
-          work_histories
-        ],
+        if_success_then_redirect: update_success_path,
         if_failure_then_render: :edit,
       )
     end
@@ -125,7 +116,7 @@ module TeacherInterface
         work_history.destroy!
       end
 
-      redirect_to %i[check teacher_interface application_form work_histories]
+      redirect_to update_success_path
     end
 
     private
@@ -136,20 +127,24 @@ module TeacherInterface
       )
     end
 
-    def has_work_history_next_url
+    def has_work_history_success_path
       if @has_work_history_form.has_work_history
         if application_form.work_histories.empty?
-          %i[new teacher_interface application_form work_history]
+          new_teacher_interface_application_form_work_history_path(
+            next: params[:next],
+          )
         else
-          [
-            :edit,
-            :teacher_interface,
-            :application_form,
-            application_form.work_histories.ordered.first,
-          ]
+          params[:next].presence ||
+            [
+              :edit,
+              :teacher_interface,
+              :application_form,
+              application_form.work_histories.ordered.first,
+            ]
         end
       else
-        %i[check teacher_interface application_form work_histories]
+        params[:next].presence ||
+          %i[check teacher_interface application_form work_histories]
       end
     end
 
@@ -169,6 +164,11 @@ module TeacherInterface
         :start_date,
         :still_employed,
       )
+    end
+
+    def update_success_path
+      params[:next].presence ||
+        %i[check teacher_interface application_form work_histories]
     end
   end
 end

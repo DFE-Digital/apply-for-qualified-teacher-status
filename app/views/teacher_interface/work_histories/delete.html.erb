@@ -2,6 +2,8 @@
 <% content_for :back_link_url, teacher_interface_application_form_work_histories_path %>
 
 <%= form_with model: [:teacher_interface, :application_form, @work_history], method: :delete do |f| %>
+  <%= hidden_field_tag :next, params[:next] %>
+
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :confirm,

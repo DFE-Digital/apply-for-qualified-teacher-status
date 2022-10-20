@@ -1,4 +1,5 @@
 <%= render(CheckYourAnswersSummary::Component.new(
+  id: "add-work-history",
   model: application_form,
   title: I18n.t("application_form.tasks.items.work_history"),
   fields: {
@@ -12,6 +13,7 @@
 
 <% work_histories.each do |work_history| %>
   <%= render(CheckYourAnswersSummary::Component.new(
+    id: "work-history-#{work_history.id}",
     model: work_history,
     title: I18n.t(work_history.current_or_most_recent_role? ? "application_form.work_history.current_or_most_recent_role" : "application_form.work_history.previous_role"),
     fields: {

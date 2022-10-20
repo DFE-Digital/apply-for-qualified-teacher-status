@@ -6,6 +6,8 @@
 <p class="govuk-hint"><%= I18n.t("application_form.subjects.hint") %></p>
 
 <%= form_with model: @application_form, url: %i[subjects teacher_interface application_form], method: :post do |f| %>
+  <%= hidden_field_tag :next, params[:next] %>
+
   <%= f.govuk_error_summary %>
 
   <% if @application_form.subjects.empty? %>
@@ -22,7 +24,7 @@
                          class: "govuk-input",
                          value: %>
         <% if index != 0 %>
-          <%= govuk_link_to "Remove", subjects_delete_teacher_interface_application_form_path(index:) %>
+          <%= govuk_link_to "Remove", subjects_delete_teacher_interface_application_form_path(index:, next: params[:next]) %>
         <% end %>
       </div>
     <% end %>

@@ -12,9 +12,12 @@ module TeacherInterface
           application_form.subjects.push("")
           application_form.save!
 
-          redirect_to %i[subjects teacher_interface application_form]
+          redirect_to subjects_teacher_interface_application_form_path(
+                        next: params[:next],
+                      )
         else
-          redirect_to %i[teacher_interface application_form]
+          redirect_to params[:next].presence ||
+                        %i[teacher_interface application_form]
         end
       else
         render :new, status: unprocessable_entity
@@ -25,7 +28,9 @@ module TeacherInterface
       application_form.subjects.delete_at(params[:index].to_i)
       application_form.save!
 
-      redirect_to %i[subjects teacher_interface application_form]
+      redirect_to subjects_teacher_interface_application_form_path(
+                    next: params[:next],
+                  )
     end
 
     private

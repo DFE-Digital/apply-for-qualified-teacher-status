@@ -2,6 +2,7 @@ module CheckYourAnswersSummary
   class Component < ViewComponent::Base
     def initialize(
       model:,
+      id:,
       title:,
       fields:,
       changeable: true,
@@ -9,10 +10,11 @@ module CheckYourAnswersSummary
     )
       super
       @model = model
+      @id = "app-check-your-answers-summary-#{id}"
       @title = title
       @fields = fields
       @changeable = changeable
-      @delete_link_to = changeable ? delete_link_to : nil
+      @delete_link_to = delete_link_to
     end
 
     attr_reader :title
@@ -21,9 +23,13 @@ module CheckYourAnswersSummary
       fields_with_translations.map { |field| row_for_field(field) }
     end
 
+    def delete_link_to
+      path_with_next(@delete_link_to) if changeable && @delete_link_to
+    end
+
     private
 
-    attr_reader :model, :fields, :changeable
+    attr_reader :id, :model, :fields, :changeable
 
     def fields_with_translations
       fields_as_array.flat_map do |field|
@@ -57,9 +63,12 @@ module CheckYourAnswersSummary
     end
 
     def href_for(field)
-      path = field[:href]
-      return nil if path.blank?
+      if (path = field[:href]).present?
+        path_with_next(path)
+      end
+    end
 
+    def path_with_next(path)
       next_path = request.path
 
       if path.is_a?(String)

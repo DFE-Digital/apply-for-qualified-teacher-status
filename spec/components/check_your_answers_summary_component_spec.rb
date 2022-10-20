@@ -6,6 +6,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   subject(:component) do
     render_inline(
       described_class.new(
+        id:,
         model:,
         title:,
         fields:,
@@ -14,6 +15,8 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       ),
     )
   end
+
+  let(:id) { "id" }
 
   let(:model) do
     double(
@@ -76,6 +79,12 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   let(:changeable) { true }
   let(:delete_link_to) { nil }
 
+  it "renders the card with an id" do
+    expect(
+      component.css(".govuk-summary-list__card").attribute("id").value,
+    ).to eq("app-check-your-answers-summary-id")
+  end
+
   it "renders the title" do
     expect(component.css(".govuk-summary-list__card-title").text).to eq("Title")
   end
@@ -86,7 +95,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
     it "renders a link" do
       a = component.at_css(".govuk-summary-list__card-actions a")
       expect(a.text.strip).to eq("Delete")
-      expect(a.attribute("href").value).to eq("/delete")
+      expect(a.attribute("href").value).to eq("/delete?next=%2F")
     end
   end
 

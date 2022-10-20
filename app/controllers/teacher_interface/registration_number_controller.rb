@@ -21,7 +21,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @registration_number_form,
-        if_success_then_redirect: %i[teacher_interface application_form],
+        if_success_then_redirect:,
         if_failure_then_render: :edit,
       )
     end
@@ -32,6 +32,10 @@ module TeacherInterface
       params.require(:teacher_interface_registration_number_form).permit(
         :registration_number,
       )
+    end
+
+    def if_success_then_redirect
+      params[:next].presence || %i[teacher_interface application_form]
     end
   end
 end
