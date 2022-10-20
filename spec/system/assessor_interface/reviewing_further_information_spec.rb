@@ -61,7 +61,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
           :failed,
           assessment:,
           selected_failure_reasons: {
-            qualifications_dont_support_subjects: "A note.",
+            qualifications_dont_match_subjects: "A note.",
           },
         )
       end

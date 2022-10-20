@@ -68,7 +68,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
   def and_i_see_the_further_information_request_items
     expect(request_further_information_page.items.count).to eq(1)
     expect(request_further_information_page.items.first.heading.text).to eq(
-      "The qualifications do not support the teaching subjects entered.",
+      "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
     )
     expect(
       request_further_information_page.items.first.assessor_notes.text,
@@ -112,7 +112,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
           :qualifications,
           :failed,
           selected_failure_reasons: {
-            qualifications_dont_support_subjects: "A note.",
+            qualifications_dont_match_subjects: "A note.",
           },
         )
       end

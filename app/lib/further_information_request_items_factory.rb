@@ -43,8 +43,8 @@ class FurtherInformationRequestItemsFactory
   end
 
   TEXT_FAILURE_REASONS = %w[
-    qualifications_dont_support_subjects
-    qualifications_dont_match_those_entered
+    qualifications_dont_match_subjects
+    qualifications_dont_match_other_details
     satisfactory_evidence_work_history
   ].freeze
 
@@ -54,9 +54,9 @@ class FurtherInformationRequestItemsFactory
     "identification_document_mismatch" => :name_change,
     "name_change_document_illegible" => :name_change,
     "teaching_certificate_illegible" => :qualification_certificate,
-    "teaching_qualification_illegible" => :qualification_transcript,
+    "teaching_transcript_illegible" => :qualification_transcript,
     "degree_certificate_illegible" => :qualification_certificate,
-    "degree_qualification_illegible" => :qualification_transcript,
+    "degree_transcript_illegible" => :qualification_transcript,
     "application_and_qualification_names_do_not_match" => :name_change,
     "written_statement_illegible" => :written_statement,
     "written_statement_recent" => :written_statement,

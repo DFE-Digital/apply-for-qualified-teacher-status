@@ -94,17 +94,17 @@ RSpec.describe AssessmentFactory do
 
           expect(section.failure_reasons).to eq(
             %w[
+              application_and_qualification_names_do_not_match
               teaching_qualifications_from_ineligible_country
               teaching_qualifications_not_at_required_level
+              teaching_hours_not_fulfilled
               not_qualified_to_teach_mainstream
+              qualifications_dont_match_subjects
+              qualifications_dont_match_other_details
               teaching_certificate_illegible
-              teaching_qualification_illegible
+              teaching_transcript_illegible
               degree_certificate_illegible
               degree_transcript_illegible
-              application_and_qualification_names_do_not_match
-              teaching_hours_not_fulfilled
-              qualifications_dont_support_subjects
-              qualifications_dont_match_those_entered
             ],
           )
         end

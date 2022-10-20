@@ -72,15 +72,15 @@ en:
           applicant_already_qts: The applicant already holds QTS and induction exemption.
           teaching_qualifications_from_ineligible_country: Teaching qualifications were completed in an ineligible country.
           teaching_qualifications_not_at_required_level: Teaching qualifications do not meet the required academic level.
-          not_qualified_to_teach_mainstream: Not qualified to teach in mainstream education.
+          not_qualified_to_teach_mainstream: Applicant is not qualified to teach in mainstream education.
           teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible.
-          teaching_qualification_illegible: The teaching qualification transcript (or translation) is illegible.
+          teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible.
           degree_certificate_illegible: The university degree certificate (or translation) is illegible.
           degree_transcript_illegible: University degree transcript (or translation) is illegible.
           application_and_qualification_names_do_not_match: The name on the online application form is different from 1 or more qualification documents, but no evidence of change of name was provided.
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
-          qualifications_dont_support_subjects: The qualifications do not support the teaching subjects entered.
-          qualifications_dont_match_those_entered: The qualifications do not match what was entered on the form.
+          qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
+          qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
           age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
           registration_number: We could not verify the reference number using the online checker.
