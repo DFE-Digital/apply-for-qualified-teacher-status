@@ -24,6 +24,18 @@ RSpec.describe UpdateAssessmentRecommendation do
     end
   end
 
+  describe "assessment recommendation date" do
+    subject(:recommended_at) { assessment.recommended_at }
+
+    it { is_expected.to be_nil }
+
+    context "after calling the service" do
+      before { call }
+
+      it { is_expected.to_not be_nil }
+    end
+  end
+
   describe "application form status" do
     subject(:state) { application_form.state }
 

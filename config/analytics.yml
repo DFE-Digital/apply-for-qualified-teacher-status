@@ -69,6 +69,7 @@
     - age_range_note_id
     - subjects
     - subjects_note_id
+    - recommended_at
   :countries:
     - id
     - code

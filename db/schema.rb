@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_12_140253) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_173812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,6 +101,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_140253) do
     t.bigint "age_range_note_id"
     t.text "subjects", default: [], null: false, array: true
     t.bigint "subjects_note_id"
+    t.date "recommended_at"
     t.index ["age_range_note_id"], name: "index_assessments_on_age_range_note_id"
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
     t.index ["subjects_note_id"], name: "index_assessments_on_subjects_note_id"

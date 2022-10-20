@@ -8,6 +8,7 @@
 #  age_range_max       :integer
 #  age_range_min       :integer
 #  recommendation      :string           default("unknown"), not null
+#  recommended_at      :date
 #  subjects            :text             default([]), not null, is an Array
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
