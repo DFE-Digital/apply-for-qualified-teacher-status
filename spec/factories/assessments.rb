@@ -29,5 +29,10 @@
 FactoryBot.define do
   factory :assessment do
     association :application_form
+
+    trait :award do
+      recommendation { "award" }
+      recommended_at { Time.zone.now }
+    end
   end
 end
