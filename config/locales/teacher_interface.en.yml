@@ -7,69 +7,7 @@ en:
           qualifications_dont_match_those_entered: Tell us more about your qualifications
           satisfactory_evidence_work_history: Tell us more about your work history
           registration_number: Tell us your registration number
-  activemodel:
-    errors:
-      models:
-        teacher_interface/name_and_date_of_birth_form:
-          attributes:
-            date_of_birth:
-              blank: Enter your date of birth in the format 27 3 1980
-              too_young: You must be 18 or over to use this service
-              too_old: Your date of birth cannot be that far in the past
-            given_names:
-              blank: Enter your given names
-            family_name:
-              blank: Enter your family name
-        teacher_interface/alternative_name_form:
-          attributes:
-            alternative_given_names:
-              blank: Enter your alternate given names
-            alternative_family_name:
-              blank: Enter your alternate family name
-            has_alternative_name:
-              inclusion: Tell us whether you have an alternative name
-        teacher_interface/add_another_upload_form:
-          attributes:
-            add_another:
-              inclusion: Select whether you need to upload another page
-        teacher_interface/delete_upload_form:
-          attributes:
-            confirm:
-              inclusion: Select whether you want to delete this file
-        teacher_interface/new_session_form:
-          attributes:
-            email:
-              blank: Enter your email address
-        teacher_interface/sanction_confirmation_form:
-          attributes:
-            confirmed_no_sanctions:
-              blank: You must confirm that you have no sanctions or restrictions
-        teacher_interface/work_history_form:
-          attributes:
-            contact_name:
-              blank: Enter a contact name
-            contact_email:
-              blank: Enter a contact email
-            end_date:
-              blank: Enter an end date
-              before_start_date: End date must be after start date
-              invalid: End date is not a valid date
-            start_date:
-              blank: Enter a start date
-              invalid: Start date is not a valid date
-              future: Start date must be in the past
-            school_name:
-              blank: Enter a school name
-            city:
-              blank: Enter a city
-            country_code:
-              blank: Enter a country
-            job:
-              blank: Enter a job role
-            email:
-              blank: Enter an email
-            still_employed:
-              inclusion: Tell us whether you are still employed at this school
+
   application_form:
     status:
       not_started: Not started
@@ -154,3 +92,67 @@ en:
       title: Overview
       application_history: Application history
       view_timeline: View timeline of this applications actions
+
+  activemodel:
+    errors:
+      models:
+        teacher_interface/alternative_name_form:
+          attributes:
+            alternative_given_names:
+              blank: Enter your alternate given names
+            alternative_family_name:
+              blank: Enter your alternate family name
+            has_alternative_name:
+              inclusion: Tell us whether you have an alternative name
+        teacher_interface/add_another_upload_form:
+          attributes:
+            add_another:
+              inclusion: Select whether you need to upload another page
+        teacher_interface/delete_upload_form:
+          attributes:
+            confirm:
+              inclusion: Select whether you want to delete this file
+        teacher_interface/name_and_date_of_birth_form:
+          attributes:
+            date_of_birth:
+              blank: Enter your date of birth in the format 27 3 1980
+              too_young: You must be 18 or over to use this service
+              too_old: Your date of birth cannot be that far in the past
+            given_names:
+              blank: Enter your given names
+            family_name:
+              blank: Enter your family name
+        teacher_interface/new_session_form:
+          attributes:
+            email:
+              blank: Enter your email address
+        teacher_interface/sanction_confirmation_form:
+          attributes:
+            confirmed_no_sanctions:
+              blank: You must confirm that you have no sanctions or restrictions
+        teacher_interface/work_history_form:
+          attributes:
+            contact_name:
+              blank: Enter a contact name
+            contact_email:
+              blank: Enter a contact email
+            end_date:
+              blank: Enter an end date
+              before_start_date: End date must be after start date
+              invalid: End date is not a valid date
+            start_date:
+              blank: Enter a start date
+              invalid: Start date is not a valid date
+              future: Start date must be in the past
+            school_name:
+              blank: Enter a school name
+            city:
+              blank: Enter a city
+            country_code:
+              blank: Enter a country
+            job:
+              blank: Enter a job role
+            email:
+              blank: Enter an email
+            still_employed:
+              inclusion: Tell us whether you are still employed at this school
