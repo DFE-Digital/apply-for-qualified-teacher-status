@@ -88,6 +88,13 @@
     - documentable_id
     - created_at
     - updated_at
+  :dqt_trn_requests:
+    - id
+    - application_form_id
+    - request_id
+    - state
+    - created_at
+    - updated_at
   :eligibility_checks:
     - id
     - free_of_sanctions
