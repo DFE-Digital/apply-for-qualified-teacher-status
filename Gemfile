@@ -65,4 +65,5 @@ group :test do
   gem "rspec-rails", "~> 6.0.1"
   gem "shoulda-matchers", "~> 5.2"
   gem "site_prism"
+  gem "webmock"
 end

@@ -7,13 +7,15 @@ if Rails.env.production?
   abort("The Rails environment is running in production mode!")
 end
 require "rspec/rails"
-# Add additional requires below this line. Rails is not loaded until this point!
+
 require "capybara/cuprite"
 require "dfe/analytics/testing"
 require "support/page_helpers"
 require "site_prism"
 require "site_prism/all_there"
 require "view_component/test_helpers"
+require "webmock/rspec"
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
