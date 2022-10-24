@@ -22,6 +22,10 @@ module ApplicationFormHelper
         I18n.t("application_form.summary.country"),
         CountryName.from_country(application_form.region.country),
       ],
+      [
+        I18n.t("application_form.summary.email"),
+        application_form.teacher.email,
+      ],
       [I18n.t("application_form.summary.region"), application_form.region.name],
       [
         I18n.t("application_form.summary.submitted_at"),

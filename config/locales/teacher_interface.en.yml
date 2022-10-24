@@ -79,6 +79,7 @@ en:
     summary:
       name: Name
       country: Country trained in
+      email: Email
       region: State/territory trained in
       submitted_at: Created on
       days_remaining_sla: Days remaining in SLA

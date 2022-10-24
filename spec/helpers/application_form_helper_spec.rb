@@ -58,6 +58,15 @@ RSpec.describe ApplicationFormHelper do
           },
           {
             key: {
+              text: "Email",
+            },
+            value: {
+              text: application_form.teacher.email,
+            },
+            actions: [],
+          },
+          {
+            key: {
               text: "State/territory trained in",
             },
             value: {
