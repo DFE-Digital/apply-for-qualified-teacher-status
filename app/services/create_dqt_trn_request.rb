@@ -15,6 +15,10 @@ class CreateDQTTRNRequest
       DQT::Client::CreateTRNRequest.call(request_id:, application_form:),
     )
 
+    if dqt_trn_request.pending?
+      UpdateDQTTRNRequestJob.set(wait: 1.hour).perform_later(dqt_trn_request)
+    end
+
     dqt_trn_request
   end
 

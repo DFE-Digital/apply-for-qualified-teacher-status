@@ -27,6 +27,10 @@ RSpec.describe CreateDQTTRNRequest do
     it "sets the teacher TRN" do
       expect { call }.to change(teacher, :trn).from(nil).to("abcdef")
     end
+
+    it "doesn't schedule an update job" do
+      expect { call }.to_not have_enqueued_job(UpdateDQTTRNRequestJob)
+    end
   end
 
   context "with a failure response" do
@@ -53,6 +57,12 @@ RSpec.describe CreateDQTTRNRequest do
 
     it "doesn't set the teacher TRN" do
       expect { call_rescue_exception }.to_not change(teacher, :trn)
+    end
+
+    it "doesn't schedule an update job" do
+      expect { call_rescue_exception }.to_not have_enqueued_job(
+        UpdateDQTTRNRequestJob,
+      )
     end
   end
 end
