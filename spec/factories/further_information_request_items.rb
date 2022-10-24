@@ -24,7 +24,7 @@ FactoryBot.define do
 
     trait :with_text_response do
       information_type { "text" }
-      failure_reason { "qualifications_dont_support_subjects" }
+      failure_reason { "qualifications_dont_match_subjects" }
     end
 
     trait :with_document_response do

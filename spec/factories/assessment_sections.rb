@@ -64,13 +64,13 @@ FactoryBot.define do
           teaching_qualifications_not_at_required_level
           not_qualified_to_teach_mainstream
           teaching_certificate_illegible
-          teaching_qualification_illegible
+          teaching_transcript_illegible
           degree_certificate_illegible
           degree_transcript_illegible
           application_and_qualification_names_do_not_match
           teaching_hours_not_fulfilled
-          qualifications_dont_support_subjects
-          qualifications_dont_match_those_entered
+          qualifications_dont_match_subjects
+          qualifications_dont_match_other_details
         ]
       end
     end

@@ -27,7 +27,7 @@ RSpec.describe FurtherInformationRequestItemsFactory do
           :qualifications,
           :failed,
           selected_failure_reasons: {
-            qualifications_dont_support_subjects: "Subjects.",
+            qualifications_dont_match_subjects: "Subjects.",
             unknown_reason: "Unknown.",
           },
         ),
@@ -52,9 +52,7 @@ RSpec.describe FurtherInformationRequestItemsFactory do
 
       it "has attributes" do
         expect(item).to be_text
-        expect(item.failure_reason).to eq(
-          "qualifications_dont_support_subjects",
-        )
+        expect(item.failure_reason).to eq("qualifications_dont_match_subjects")
         expect(item.assessor_notes).to eq("Subjects.")
       end
     end
