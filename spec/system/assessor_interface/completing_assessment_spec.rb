@@ -3,22 +3,56 @@
 require "rails_helper"
 
 RSpec.describe "Assessor completing assessment", type: :system do
-  it "completes an assessment" do
+  it "award" do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(assessor)
-    given_there_is_an_application_form
+    given_there_is_an_awardable_application_form
 
     when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
 
     when_i_select_award_qts
     and_i_click_continue
+    then_i_see_the(:confirm_assessment_page, application_id:, assessment_id:)
+
+    when_i_confirm_declaration
     then_the_application_form_is_awarded
+  end
+
+  it "decline" do
+    given_the_service_is_open
+    given_i_am_authorized_as_a_user(assessor)
+    given_there_is_a_declinable_application_form
+
+    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
+
+    when_i_select_decline_qts
+    and_i_click_continue
+    then_the_application_form_is_declined
   end
 
   private
 
-  def given_there_is_an_application_form
-    application_form
+  def given_there_is_an_awardable_application_form
+    @application_form ||=
+      create(:application_form, :with_personal_information, :submitted)
+
+    assessment = create(:assessment, application_form:)
+
+    create(:assessment_section, :personal_information, :passed, assessment:)
+  end
+
+  def given_there_is_a_declinable_application_form
+    @application_form ||=
+      create(
+        :application_form,
+        :with_personal_information,
+        :submitted,
+        :with_assessment,
+      )
+
+    assessment = create(:assessment, application_form:)
+
+    create(:assessment_section, :personal_information, :failed, assessment:)
   end
 
   def when_i_visit_the_complete_assessment_page
@@ -34,18 +68,21 @@ RSpec.describe "Assessor completing assessment", type: :system do
     complete_assessment_page.award_qts.input.choose
   end
 
+  def when_i_select_decline_qts
+    complete_assessment_page.decline_qts.input.choose
+  end
+
+  def when_i_confirm_declaration
+    confirm_assessment_page.form.confirm_declaration.click
+    confirm_assessment_page.form.submit_button.click
+  end
+
   def then_the_application_form_is_awarded
     expect(assessor_application_page.overview.status.text).to eq("AWARDED")
   end
 
-  def application_form
-    @application_form ||=
-      create(
-        :application_form,
-        :with_personal_information,
-        :submitted,
-        :with_assessment,
-      )
+  def then_the_application_form_is_declined
+    expect(assessor_application_page.overview.status.text).to eq("DECLINED")
   end
 
   def application_id
@@ -59,4 +96,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def assessor
     @assessor ||= create(:staff, :confirmed)
   end
+
+  attr_reader :application_form
 end

@@ -13,7 +13,12 @@ class UpdateAssessmentRecommendation
     return true if assessment.recommendation == new_recommendation
 
     ActiveRecord::Base.transaction do
-      next false unless assessment.update(recommendation: new_recommendation)
+      unless assessment.update(
+               recommendation: new_recommendation,
+               recommended_at: Time.zone.now,
+             )
+        next false
+      end
 
       if (new_state = new_application_form_state)
         ChangeApplicationFormState.call(

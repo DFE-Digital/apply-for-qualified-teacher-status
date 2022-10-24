@@ -1,7 +1,7 @@
 <% content_for :page_title, t("helpers.legend.assessment.recommendation") %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<%= form_with model: [:assessor_interface, @application_form, @assessment] do |f| %>
+<%= form_with model: @confirm_recommendation_form, url: [:confirm, :assessor_interface, @application_form, @assessment] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :recommendation,
