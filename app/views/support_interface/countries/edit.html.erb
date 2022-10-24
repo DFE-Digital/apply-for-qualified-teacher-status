@@ -9,6 +9,8 @@
 
   <%= f.govuk_text_field :teaching_authority_certificate, label: { text: "Teaching authority certificate" } %>
 
+  <%= f.govuk_check_box :teaching_authority_checks_sanctions, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Teaching authority checks sanctions" } %>
+
   <%= f.govuk_text_area :all_regions,
                         value: @all_regions,
                         label: { text: "Regions" },
