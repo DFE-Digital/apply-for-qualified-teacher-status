@@ -49,6 +49,7 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
       subject(:text) { dl.text.strip }
 
       it { is_expected.to include("Country trained in") }
+      it { is_expected.to include("Email") }
       it { is_expected.to include("State/territory trained in") }
       it { is_expected.to include("Created on") }
       it { is_expected.to include("Days remaining in SLA") }

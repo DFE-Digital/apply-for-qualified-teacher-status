@@ -7,9 +7,9 @@ module PageObjects
 
       section :overview, "#app-application-overview" do
         element :name, "div:nth-of-type(1) > dd:nth-of-type(1)"
-        element :assessor_name, "div:nth-of-type(6) > dd:nth-of-type(1)"
-        element :reviewer_name, "div:nth-of-type(7) > dd:nth-of-type(1)"
-        element :status, "div:nth-of-type(9) > dd:nth-of-type(1)"
+        element :assessor_name, "div:nth-of-type(7) > dd:nth-of-type(1)"
+        element :reviewer_name, "div:nth-of-type(8) > dd:nth-of-type(1)"
+        element :status, "div:nth-of-type(10) > dd:nth-of-type(1)"
       end
 
       section :task_list, TaskList, ".app-task-list"
