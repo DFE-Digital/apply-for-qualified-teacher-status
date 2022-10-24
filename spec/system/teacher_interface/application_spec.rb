@@ -426,27 +426,6 @@ RSpec.describe "Teacher application", type: :system do
     then_i_see_the_qualifications_summary
   end
 
-  it "allows adding and removing subjects" do
-    given_an_eligible_eligibility_check_with_none_country_checks
-
-    when_i_click_apply_for_qts
-    and_i_sign_up
-    then_i_see_the_teacher_application_page
-    and_i_see_the_work_history_is_not_started
-
-    when_i_click_subjects
-    then_i_see_the_subjects_form
-
-    when_i_fill_in_subjects
-    and_i_click_add_another_subject
-    then_i_see_the_two_subjects_form
-
-    when_i_click_remove
-    then_i_see_the_subjects_form
-    and_i_click_continue
-    then_i_see_completed_subjects_section
-  end
-
   it "allows skipping name change document" do
     given_an_eligible_eligibility_check_with_none_country_checks
 
@@ -590,12 +569,9 @@ RSpec.describe "Teacher application", type: :system do
     )
   end
 
-  def and_i_click_add_another_subject
-    click_button "Add another subject"
-  end
-
   def when_i_fill_in_subjects
-    fill_in "application-form-subjects-field", with: "Subject"
+    fill_in "teacher-interface-subjects-form-subject-1-field", with: "Subject1"
+    fill_in "teacher-interface-subjects-form-subject-2-field", with: "Subject2"
   end
 
   def when_i_click_work_history
@@ -1097,7 +1073,7 @@ RSpec.describe "Teacher application", type: :system do
     subject_row =
       check_your_answers_page.who_you_can_teach.subjects_summary_list.rows.first
     expect(subject_row.key.text).to eq("Subjects")
-    expect(subject_row.value.text).to eq("Subject")
+    expect(subject_row.value.text).to eq("Subject1\nSubject2")
   end
 
   def and_i_see_check_your_work_history

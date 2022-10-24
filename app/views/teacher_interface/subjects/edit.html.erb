@@ -5,33 +5,13 @@
 <h1 class="govuk-heading-l"><%= I18n.t("application_form.subjects.heading") %></h1>
 <p class="govuk-hint"><%= I18n.t("application_form.subjects.hint") %></p>
 
-<%= form_with model: @application_form, url: %i[subjects teacher_interface application_form], method: :post do |f| %>
+<%= form_with model: @subjects_form, url: %i[subjects teacher_interface application_form] do |f| %>
   <%= hidden_field_tag :next, params[:next] %>
 
   <%= f.govuk_error_summary %>
 
-  <% if @application_form.subjects.empty? %>
-    <%= f.govuk_text_field :subjects, multiple: true %>
-  <% else %>
-    <% @application_form.subjects.each_with_index do |value, index| %>
-      <div class="govuk-form-group">
-        <%= f.label :subjects,
-                    for: "application_form_subjects_#{index}",
-                    class: "govuk-label" %>
-        <%= f.text_field :subjects,
-                         id: "application_form_subjects_#{index}",
-                         multiple: true,
-                         class: "govuk-input",
-                         value: %>
-        <% if index != 0 %>
-          <%= govuk_link_to "Remove", subjects_delete_teacher_interface_application_form_path(index:, next: params[:next]) %>
-        <% end %>
-      </div>
-    <% end %>
-  <% end %>
-
-  <% if @application_form.subjects.count <= 2 %>
-    <%= f.govuk_submit "Add another subject", secondary: true, name: "create", value: "true" %>
+  <% (1..3).map { |i| :"subject_#{i}" }.each do |field| %>
+    <%= f.govuk_text_field field %>
   <% end %>
 
   <%= render "shared/save_submit_buttons", f: %>

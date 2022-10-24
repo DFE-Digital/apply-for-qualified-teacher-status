@@ -65,6 +65,10 @@ en:
         email: Email address
       teacher_interface_registration_number_form:
         registration_number: What is your registration number?
+      teacher_interface_subjects_form:
+        subject_1: Subject 1
+        subject_2: Subject 2 (optional)
+        subject_3: Subject 3 (optional)
       teacher_interface_work_history_form:
         contact_name: Contact’s full name
         contact_email: Contact email address for this organisation
