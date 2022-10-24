@@ -54,6 +54,11 @@ module PageHelpers
       PageObjects::AssessorInterface::CompleteAssessment.new
   end
 
+  def confirm_assessment_page
+    @confirm_assessment_page ||=
+      PageObjects::AssessorInterface::ConfirmAssessment.new
+  end
+
   def country_page
     @country_page ||= PageObjects::EligibilityInterface::Country.new
   end
