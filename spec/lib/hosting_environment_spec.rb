@@ -76,5 +76,26 @@ RSpec.describe HostingEnvironment do
         end
       end
     end
+
+    context "when the environment is pentest" do
+      let(:hosting_environment) { "pentest" }
+      let(:application_name) { "apply-for-qts-in-england-pentest" }
+
+      it do
+        is_expected.to eq(
+          "apply-for-qts-in-england-pentest.london.cloudapps.digital",
+        )
+      end
+
+      context "running on a worker" do
+        let(:application_name) { "apply-for-qts-in-england-pentest-worker" }
+
+        it do
+          is_expected.to eq(
+            "apply-for-qts-in-england-pentest.london.cloudapps.digital",
+          )
+        end
+      end
+    end
   end
 end

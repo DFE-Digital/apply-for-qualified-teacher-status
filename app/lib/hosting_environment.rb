@@ -20,7 +20,9 @@ module HostingEnvironment
 
     def host
       return "apply-for-qts-in-england.education.gov.uk" if production?
-      return "#{application_name}.london.cloudapps.digital" if review?
+      if review? || pentest?
+        return "#{application_name}.london.cloudapps.digital"
+      end
 
       "#{name}.apply-for-qts-in-england.education.gov.uk"
     end
@@ -39,6 +41,10 @@ module HostingEnvironment
 
     def review?
       name == "review"
+    end
+
+    def pentest?
+      name == "pentest"
     end
 
     def application_name
