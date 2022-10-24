@@ -129,3 +129,8 @@ en:
               blank: Enter the subject
             selected_failure_reasons:
               blank: Select the reasons for your recommendation
+        assessor_interface/confirm_recommendation_form:
+          attributes:
+            recommendation:
+              blank: Select your recommendation
+              inclusion: Select your recommendation

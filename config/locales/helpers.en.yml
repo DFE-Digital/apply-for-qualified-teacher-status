@@ -24,7 +24,7 @@ en:
       work_history:
         add_another: You can use the next section to tell us about additional work history.
     label:
-      assessment:
+      assessor_interface_confirm_recommendation_form:
         recommendation_options:
           award: Award QTS
           request_further_information: Request further information
@@ -78,10 +78,10 @@ en:
       assessor_interface_filter_form:
         reference: "Example: 210245"
     legend:
-      assessment:
-        recommendation: QTS review completed
       assessor_interface_assessment_section_form:
         selected_failure_reasons: What are the reasons for your recommendation?
+      assessor_interface_confirm_recommendation_form:
+        recommendation: QTS review completed
       assessor_interface_filter_form:
         assessor_ids: Assessor name
         states: Status of application
