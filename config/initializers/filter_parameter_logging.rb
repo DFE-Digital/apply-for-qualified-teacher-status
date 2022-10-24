@@ -7,10 +7,12 @@ Rails.application.config.filter_parameters += %i[
   passw
   secret
   token
+  confirmation_token
   _key
   crypt
   salt
   certificate
   otp
   ssn
+  email
 ]
