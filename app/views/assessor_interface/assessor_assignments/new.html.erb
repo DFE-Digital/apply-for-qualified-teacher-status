@@ -1,18 +1,17 @@
-<h1 class="govuk-heading-l">
-  Select an assessor
-</h1>
+<% content_for :page_title, "Select an assessor" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<%= form_for @assessor_assignment_form, url: assessor_interface_application_form_assign_assessor_path(@application_form) do |form| %>
-    <%= form.govuk_error_summary %>
+<div class="app-inline-action">
+  <h1 class="govuk-heading-xl">Select an assessor</h1>
+  <%= govuk_button_link_to "Add&nbsp;note".html_safe, new_assessor_interface_application_form_note_path(@application_form), secondary: true %>
+</div>
 
-    <%= form.govuk_collection_radio_buttons :assessor_id,
-      Staff.all,
-      :id,
-      :name,
-      legend: nil
-    %>
-    <%= form.govuk_submit "Continue" do %>
-      <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
-    <%- end -%>
-<%- end -%>
+<%= form_with model: @assessor_assignment_form, url: assessor_interface_application_form_assign_assessor_path(@application_form) do |f| %>
+  <%= f.govuk_error_summary %>
 
+  <%= f.govuk_collection_radio_buttons :assessor_id, Staff.all, :id, :name, legend: nil %>
+
+  <%= f.govuk_submit do %>
+    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <% end %>
+<% end %>
