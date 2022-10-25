@@ -65,7 +65,7 @@ class ApplicationForm < ApplicationRecord
   has_one :assessment
   has_many :notes
 
-  before_create :build_documents
+  before_save :build_documents, if: :new_record?
 
   before_validation :assign_reference
   validates :reference, presence: true, uniqueness: true, length: 3..31
@@ -104,6 +104,8 @@ class ApplicationForm < ApplicationRecord
   }.freeze
 
   STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }
+
+  before_save -> { ApplicationFormStatusUpdater.call(application_form: self) }
 
   scope :active, -> { not_draft }
 

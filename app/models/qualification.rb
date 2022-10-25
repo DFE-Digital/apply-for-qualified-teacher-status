@@ -23,6 +23,8 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
 class Qualification < ApplicationRecord
+  include ApplicationFormStatusUpdatable
+
   belongs_to :application_form
   has_many :documents, as: :documentable
 

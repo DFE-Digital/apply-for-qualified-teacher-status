@@ -17,6 +17,8 @@
 #  fk_rails_...  (document_id => documents.id)
 #
 class Upload < ApplicationRecord
+  include ApplicationFormStatusUpdatable
+
   belongs_to :document
 
   has_one_attached :attachment
@@ -32,5 +34,16 @@ class Upload < ApplicationRecord
 
   def url
     attachment.url(expires_in: 5.minutes)
+  end
+
+  private
+
+  def application_form
+    @application_form ||=
+      if document.documentable.is_a?(ApplicationForm)
+        document.documentable
+      else
+        document.documentable.try(:application_form)
+      end
   end
 end
