@@ -19,6 +19,7 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_websites
     when_i_fill_teaching_authority_other
     when_i_fill_teaching_authority_certificate
+    when_i_fill_teaching_authority_checks_sanctions
     when_i_fill_regions
     and_i_save
     then_i_see_country_contact_preview
@@ -171,6 +172,10 @@ RSpec.describe "Countries support", type: :system do
     fill_in "region-teaching-authority-certificate-field", with: "Certificate"
   rescue Capybara::ElementNotFound
     fill_in "country-teaching-authority-certificate-field", with: "Certificate"
+  end
+
+  def when_i_fill_teaching_authority_checks_sanctions
+    check "country-teaching-authority-checks-sanctions-1-field", visible: false
   end
 
   def and_i_save

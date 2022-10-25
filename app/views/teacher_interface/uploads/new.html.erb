@@ -42,7 +42,7 @@
 
     <p class="govuk-body">It must confirm:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <%- proof_of_recognition_requirements_for(region: @application_form.region ).each do |requirement| %>
+      <%- proof_of_recognition_requirements_for(region: @application_form.region).each do |requirement| %>
         <li><%= requirement %></li>
       <%- end -%>
     </ul>

@@ -2,13 +2,13 @@ module ProofOfRecognitionHelper
   def proof_of_recognition_requirements_for(region:)
     if region.status_check_written? && region.sanction_check_written?
       return(
-        written_status_reasons.insert(2, *written_sanction_reasons) +
+        written_status_reasons.insert(2, *written_sanction_reasons(region)) +
           ["that you’re qualified to teach at state or government schools"]
       )
     end
 
     return written_status_reasons if region.status_check_written?
-    return written_sanction_reasons if region.sanction_check_written?
+    return written_sanction_reasons(region) if region.sanction_check_written?
     []
   end
 
@@ -34,10 +34,14 @@ module ProofOfRecognitionHelper
     ]
   end
 
-  def written_sanction_reasons
-    [
-      "that your authorisation to teach has never been suspended, barred, " \
-        "cancelled, revoked or restricted, and that you have no sanctions against you",
-    ]
+  def written_sanction_reasons(region)
+    if region.country.teaching_authority_checks_sanctions?
+      [
+        "that your authorisation to teach has never been suspended, barred, " \
+          "cancelled, revoked or restricted, and that you have no sanctions against you",
+      ]
+    else
+      []
+    end
   end
 end
