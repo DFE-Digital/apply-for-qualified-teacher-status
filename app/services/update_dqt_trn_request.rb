@@ -8,13 +8,9 @@ class UpdateDQTTRNRequest
   end
 
   def call
-    suppress(Faraday::Error) do
-      dqt_trn_request.update_from_dqt_response(
-        DQT::Client::ReadTRNRequest.call(
-          request_id: dqt_trn_request.request_id,
-        ),
-      )
-    end
+    dqt_trn_request.update_from_dqt_response(
+      DQT::Client::ReadTRNRequest.call(request_id: dqt_trn_request.request_id),
+    )
   end
 
   private
