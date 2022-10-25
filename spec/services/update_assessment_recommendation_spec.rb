@@ -48,8 +48,26 @@ RSpec.describe UpdateAssessmentRecommendation do
     end
   end
 
+  describe "DQT TRN request job" do
+    it "queues a job" do
+      expect { call }.to have_enqueued_job(CreateDQTTRNRequestJob).with(
+        application_form,
+      )
+    end
+  end
+
+  context "decline recommendataion" do
+    let(:new_recommendation) { "decline" }
+
+    describe "DQT TRN request job" do
+      it "doesn't queue a job" do
+        expect { call }.to_not have_enqueued_job(CreateDQTTRNRequestJob)
+      end
+    end
+  end
+
   context "request further information recommendataion" do
-    let(:new_recommendation) { :request_further_information }
+    let(:new_recommendation) { "request_further_information" }
 
     describe "recommendation" do
       subject(:recommendation) { assessment.recommendation }
@@ -66,6 +84,12 @@ RSpec.describe UpdateAssessmentRecommendation do
     describe "application form status" do
       it "doesn't change the state" do
         expect { call }.to_not change(application_form, :state)
+      end
+    end
+
+    describe "DQT TRN request job" do
+      it "doesn't queue a job" do
+        expect { call }.to_not have_enqueued_job(CreateDQTTRNRequestJob)
       end
     end
   end

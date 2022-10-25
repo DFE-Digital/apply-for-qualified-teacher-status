@@ -7,6 +7,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(assessor)
     given_there_is_an_awardable_application_form
+    given_i_can_request_dqt_api
 
     when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
 
@@ -38,7 +39,12 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def given_there_is_an_awardable_application_form
     @application_form ||=
-      create(:application_form, :with_personal_information, :submitted)
+      create(
+        :application_form,
+        :with_personal_information,
+        :with_completed_qualification,
+        :submitted,
+      )
 
     assessment = create(:assessment, application_form:)
 
@@ -57,6 +63,19 @@ RSpec.describe "Assessor completing assessment", type: :system do
     assessment = create(:assessment, application_form:)
 
     create(:assessment_section, :personal_information, :failed, assessment:)
+  end
+
+  def given_i_can_request_dqt_api
+    uri_template =
+      Addressable::Template.new(
+        "https://test-teacher-qualifications-api.education.gov.uk/v2/trn-requests/{request_id}",
+      )
+    stub_request(:put, uri_template).to_return(
+      body: "{}",
+      headers: {
+        "Content-Type" => "application/json",
+      },
+    )
   end
 
   def when_i_visit_the_complete_assessment_page
