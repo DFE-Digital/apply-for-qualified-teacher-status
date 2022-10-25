@@ -2,32 +2,40 @@
 #
 # Table name: application_forms
 #
-#  id                            :bigint           not null, primary key
-#  age_range_max                 :integer
-#  age_range_min                 :integer
-#  alternative_family_name       :text             default(""), not null
-#  alternative_given_names       :text             default(""), not null
-#  confirmed_no_sanctions        :boolean          default(FALSE)
-#  date_of_birth                 :date
-#  family_name                   :text             default(""), not null
-#  given_names                   :text             default(""), not null
-#  has_alternative_name          :boolean
-#  has_work_history              :boolean
-#  needs_registration_number     :boolean          not null
-#  needs_work_history            :boolean          not null
-#  needs_written_statement       :boolean          not null
-#  reference                     :string(31)       not null
-#  registration_number           :text
-#  state                         :string           default("draft"), not null
-#  subjects                      :text             default([]), not null, is an Array
-#  submitted_at                  :datetime
-#  working_days_since_submission :integer
-#  created_at                    :datetime         not null
-#  updated_at                    :datetime         not null
-#  assessor_id                   :bigint
-#  region_id                     :bigint           not null
-#  reviewer_id                   :bigint
-#  teacher_id                    :bigint           not null
+#  id                             :bigint           not null, primary key
+#  age_range_max                  :integer
+#  age_range_min                  :integer
+#  age_range_status               :string           default("not_started"), not null
+#  alternative_family_name        :text             default(""), not null
+#  alternative_given_names        :text             default(""), not null
+#  confirmed_no_sanctions         :boolean          default(FALSE)
+#  date_of_birth                  :date
+#  family_name                    :text             default(""), not null
+#  given_names                    :text             default(""), not null
+#  has_alternative_name           :boolean
+#  has_work_history               :boolean
+#  identification_document_status :string           default("not_started"), not null
+#  needs_registration_number      :boolean          not null
+#  needs_work_history             :boolean          not null
+#  needs_written_statement        :boolean          not null
+#  personal_information_status    :string           default("not_started"), not null
+#  qualifications_status          :string           default("not_started"), not null
+#  reference                      :string(31)       not null
+#  registration_number            :text
+#  registration_number_status     :string           default("not_started"), not null
+#  state                          :string           default("draft"), not null
+#  subjects                       :text             default([]), not null, is an Array
+#  subjects_status                :string           default("not_started"), not null
+#  submitted_at                   :datetime
+#  work_history_status            :string           default("not_started"), not null
+#  working_days_since_submission  :integer
+#  written_statement_status       :string           default("not_started"), not null
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  assessor_id                    :bigint
+#  region_id                      :bigint           not null
+#  reviewer_id                    :bigint
+#  teacher_id                     :bigint           not null
 #
 # Indexes
 #
@@ -59,8 +67,108 @@ RSpec.describe ApplicationForm, type: :model do
     )
   end
 
-  describe "associations" do
+  describe "columns" do
     it { is_expected.to have_many(:notes) }
+
+    it do
+      is_expected.to define_enum_for(:state).with_values(
+        draft: "draft",
+        submitted: "submitted",
+        initial_assessment: "initial_assessment",
+        further_information_requested: "further_information_requested",
+        further_information_received: "further_information_received",
+        awarded: "awarded",
+        declined: "declined",
+      ).backed_by_column_of_type(:string)
+    end
+
+    it do
+      is_expected.to define_enum_for(:personal_information_status)
+        .with_values(
+          not_started: "not_started",
+          in_progress: "in_progress",
+          completed: "completed",
+        )
+        .with_prefix(:personal_information_status)
+        .backed_by_column_of_type(:string)
+    end
+
+    it do
+      is_expected.to define_enum_for(:identification_document_status)
+        .with_values(
+          not_started: "not_started",
+          in_progress: "in_progress",
+          completed: "completed",
+        )
+        .with_prefix(:identification_document_status)
+        .backed_by_column_of_type(:string)
+    end
+
+    it do
+      is_expected.to define_enum_for(:qualifications_status)
+        .with_values(
+          not_started: "not_started",
+          in_progress: "in_progress",
+          completed: "completed",
+        )
+        .with_prefix(:qualifications_status)
+        .backed_by_column_of_type(:string)
+    end
+
+    it do
+      is_expected.to define_enum_for(:age_range_status)
+        .with_values(
+          not_started: "not_started",
+          in_progress: "in_progress",
+          completed: "completed",
+        )
+        .with_prefix(:age_range_status)
+        .backed_by_column_of_type(:string)
+    end
+
+    it do
+      is_expected.to define_enum_for(:subjects_status)
+        .with_values(
+          not_started: "not_started",
+          in_progress: "in_progress",
+          completed: "completed",
+        )
+        .with_prefix(:subjects_status)
+        .backed_by_column_of_type(:string)
+    end
+
+    it do
+      is_expected.to define_enum_for(:work_history_status)
+        .with_values(
+          not_started: "not_started",
+          in_progress: "in_progress",
+          completed: "completed",
+        )
+        .with_prefix(:work_history_status)
+        .backed_by_column_of_type(:string)
+    end
+
+    it do
+      is_expected.to define_enum_for(:registration_number_status)
+        .with_values(
+          not_started: "not_started",
+          in_progress: "in_progress",
+          completed: "completed",
+        )
+        .with_prefix(:registration_number_status)
+        .backed_by_column_of_type(:string)
+    end
+
+    it do
+      is_expected.to define_enum_for(:written_statement_status)
+        .with_values(
+          not_started: "not_started",
+          in_progress: "in_progress",
+          completed: "completed",
+        )
+        .with_prefix(:written_statement_status)
+        .backed_by_column_of_type(:string)
+    end
   end
 
   describe "validations" do
@@ -79,18 +187,6 @@ RSpec.describe ApplicationForm, type: :model do
       is_expected.to validate_length_of(:reference).is_at_least(3).is_at_most(
         31,
       )
-    end
-
-    it do
-      is_expected.to define_enum_for(:state).with_values(
-        draft: "draft",
-        submitted: "submitted",
-        initial_assessment: "initial_assessment",
-        further_information_requested: "further_information_requested",
-        further_information_received: "further_information_received",
-        awarded: "awarded",
-        declined: "declined",
-      ).backed_by_column_of_type(:string)
     end
 
     context "with the same assessor and reviewer" do

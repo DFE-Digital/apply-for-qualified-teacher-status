@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_24_123047) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_25_095046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_123047) do
     t.boolean "needs_registration_number", null: false
     t.integer "working_days_since_submission"
     t.boolean "confirmed_no_sanctions", default: false
+    t.string "personal_information_status", default: "not_started", null: false
+    t.string "identification_document_status", default: "not_started", null: false
+    t.string "qualifications_status", default: "not_started", null: false
+    t.string "age_range_status", default: "not_started", null: false
+    t.string "subjects_status", default: "not_started", null: false
+    t.string "work_history_status", default: "not_started", null: false
+    t.string "registration_number_status", default: "not_started", null: false
+    t.string "written_statement_status", default: "not_started", null: false
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["family_name"], name: "index_application_forms_on_family_name"
     t.index ["given_names"], name: "index_application_forms_on_given_names"
