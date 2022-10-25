@@ -5,6 +5,8 @@ module PageObjects
 
       element :back_link, "a", text: "Back"
 
+      element :add_note_button, ".app-inline-action .govuk-button"
+
       section :overview, "#app-application-overview" do
         element :name, "div:nth-of-type(1) > dd:nth-of-type(1)"
         element :assessor_name, "div:nth-of-type(7) > dd:nth-of-type(1)"

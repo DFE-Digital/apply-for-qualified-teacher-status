@@ -9,8 +9,14 @@ RSpec.describe "Creating a note", type: :system do
     given_there_is_an_application_form
     given_an_assessor_exists
 
-    when_i_visit_the(:create_note_page, application_id: application_form.id)
-    and_i_create_a_note
+    when_i_visit_the(
+      :assessor_application_page,
+      application_id: application_form.id,
+    )
+    and_i_click_add_note
+    then_i_see_the(:create_note_page, application_id: application_form.id)
+
+    when_i_create_a_note
     then_i_see_the(
       :assessor_application_page,
       application_id: application_form.id,
@@ -31,7 +37,11 @@ RSpec.describe "Creating a note", type: :system do
     assessor
   end
 
-  def and_i_create_a_note
+  def and_i_click_add_note
+    assessor_application_page.add_note_button.click
+  end
+
+  def when_i_create_a_note
     create_note_page.form.text_textarea.fill_in with: "A note."
     create_note_page.form.submit_button.click
   end
