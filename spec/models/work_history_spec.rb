@@ -33,54 +33,7 @@ RSpec.describe WorkHistory, type: :model do
     it { is_expected.to be_valid }
   end
 
-  describe "#status" do
-    subject(:status) { work_history.status }
-
-    it { is_expected.to eq(:not_started) }
-
-    context "when partially filled out" do
-      before { work_history.update!(country_code: "FR") }
-
-      it { is_expected.to eq(:in_progress) }
-    end
-
-    context "when fully filled out and still employed" do
-      before do
-        work_history.update!(
-          school_name: "School",
-          city: "City",
-          country_code: "FR",
-          job: "Job",
-          contact_name: "First Last",
-          contact_email: "school@example.com",
-          start_date: Date.new(2020, 1, 1),
-          still_employed: true,
-        )
-      end
-
-      it { is_expected.to eq(:completed) }
-    end
-
-    context "when fully filled out and not still employed" do
-      before do
-        work_history.update!(
-          school_name: "School",
-          city: "City",
-          country_code: "FR",
-          job: "Job",
-          contact_name: "First Last",
-          contact_email: "school@example.com",
-          start_date: Date.new(2020, 1, 1),
-          end_date: Date.new(2020, 12, 1),
-          still_employed: false,
-        )
-      end
-
-      it { is_expected.to eq(:completed) }
-    end
-  end
-
-  describe ".ordered" do
+  describe "#ordered" do
     let(:newest) { create(:work_history, start_date: 1.week.ago) }
     let(:oldest) { create(:work_history, start_date: 1.month.ago) }
 

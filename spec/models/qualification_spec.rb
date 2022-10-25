@@ -31,37 +31,6 @@ RSpec.describe Qualification, type: :model do
     it { is_expected.to be_valid }
   end
 
-  describe "#status" do
-    subject(:status) { qualification.status }
-
-    it { is_expected.to eq(:not_started) }
-
-    context "when partially filled out" do
-      before { qualification.update!(title: "Title") }
-
-      it { is_expected.to eq(:in_progress) }
-    end
-
-    context "when fully filled out" do
-      before do
-        qualification.update!(
-          title: "Title",
-          institution_name: "Institution name",
-          institution_country_code: "FR",
-          start_date: Date.new(2020, 1, 1),
-          complete_date: Date.new(2021, 1, 1),
-          certificate_date: Date.new(2021, 1, 1),
-          part_of_university_degree: true,
-        )
-
-        create(:upload, document: qualification.certificate_document)
-        create(:upload, document: qualification.transcript_document)
-      end
-
-      it { is_expected.to eq(:completed) }
-    end
-  end
-
   describe "#is_teaching_qualification?" do
     subject(:is_teaching_qualification?) do
       qualification.is_teaching_qualification?
@@ -110,9 +79,7 @@ RSpec.describe Qualification, type: :model do
     it { is_expected.to be false }
 
     context "is a university degree" do
-      before { qualification.save! }
-
-      subject(:can_delete?) { second_qualification.can_delete? }
+      subject(:can_delete?) { second_qualification.reload.can_delete? }
 
       let(:second_qualification) do
         create(:qualification, application_form: qualification.application_form)

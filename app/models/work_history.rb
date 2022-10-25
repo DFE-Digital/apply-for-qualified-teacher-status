@@ -25,31 +25,11 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
 class WorkHistory < ApplicationRecord
+  include ApplicationFormStatusUpdatable
+
   belongs_to :application_form
 
   scope :ordered, -> { order(start_date: :desc, created_at: :desc) }
-
-  def status
-    values = [
-      school_name,
-      city,
-      country_code,
-      job,
-      contact_name,
-      contact_email,
-      start_date,
-      still_employed,
-    ]
-
-    if still_employed == false
-      values.pop
-      values.append(end_date)
-    end
-
-    return :not_started if values.all?(&:blank?)
-    return :completed if values.all?(&:present?)
-    :in_progress
-  end
 
   def current_or_most_recent_role?
     application_form.work_histories.empty? ||

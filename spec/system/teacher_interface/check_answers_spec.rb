@@ -15,7 +15,7 @@ RSpec.describe "Teacher application", type: :system do
       then_i_see_the(:check_your_answers_page)
     end
 
-    when_i_click_change_links(:about_you, :identity_document) do
+    when_i_click_change_links(:about_you, :identification_document) do
       and_i_dont_need_to_upload_another_file
       then_i_see_the(:check_your_answers_page)
     end

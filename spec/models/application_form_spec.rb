@@ -285,7 +285,7 @@ RSpec.describe ApplicationForm, type: :model do
       it do
         is_expected.to eq(
           {
-            about_you: %i[personal_information identity_document],
+            about_you: %i[personal_information identification_document],
             qualifications: %i[qualifications age_range subjects],
             work_history: %i[work_history],
           },
@@ -299,7 +299,7 @@ RSpec.describe ApplicationForm, type: :model do
       it do
         is_expected.to eq(
           {
-            about_you: %i[personal_information identity_document],
+            about_you: %i[personal_information identification_document],
             qualifications: %i[qualifications age_range subjects],
             proof_of_recognition: %i[written_statement],
           },
@@ -313,7 +313,7 @@ RSpec.describe ApplicationForm, type: :model do
       it do
         is_expected.to eq(
           {
-            about_you: %i[personal_information identity_document],
+            about_you: %i[personal_information identification_document],
             qualifications: %i[qualifications age_range subjects],
             proof_of_recognition: %i[registration_number],
           },
@@ -329,13 +329,13 @@ RSpec.describe ApplicationForm, type: :model do
       is_expected.to eq(
         {
           about_you: {
-            personal_information: :not_started,
-            identity_document: :not_started,
+            personal_information: "not_started",
+            identification_document: "not_started",
           },
           qualifications: {
-            qualifications: :not_started,
-            age_range: :not_started,
-            subjects: :not_started,
+            qualifications: "not_started",
+            age_range: "not_started",
+            subjects: "not_started",
           },
         },
       )
@@ -348,16 +348,16 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: {
-              personal_information: :not_started,
-              identity_document: :not_started,
+              personal_information: "not_started",
+              identification_document: "not_started",
             },
             qualifications: {
-              qualifications: :not_started,
-              age_range: :not_started,
-              subjects: :not_started,
+              qualifications: "not_started",
+              age_range: "not_started",
+              subjects: "not_started",
             },
             work_history: {
-              work_history: :not_started,
+              work_history: "not_started",
             },
           },
         )
@@ -371,16 +371,16 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: {
-              personal_information: :not_started,
-              identity_document: :not_started,
+              personal_information: "not_started",
+              identification_document: "not_started",
             },
             qualifications: {
-              qualifications: :not_started,
-              age_range: :not_started,
-              subjects: :not_started,
+              qualifications: "not_started",
+              age_range: "not_started",
+              subjects: "not_started",
             },
             proof_of_recognition: {
-              written_statement: :not_started,
+              written_statement: "not_started",
             },
           },
         )
@@ -394,253 +394,19 @@ RSpec.describe ApplicationForm, type: :model do
         is_expected.to eq(
           {
             about_you: {
-              personal_information: :not_started,
-              identity_document: :not_started,
+              personal_information: "not_started",
+              identification_document: "not_started",
             },
             qualifications: {
-              qualifications: :not_started,
-              age_range: :not_started,
-              subjects: :not_started,
+              qualifications: "not_started",
+              age_range: "not_started",
+              subjects: "not_started",
             },
             proof_of_recognition: {
-              registration_number: :not_started,
+              registration_number: "not_started",
             },
           },
         )
-      end
-    end
-
-    describe "about you section" do
-      subject(:about_you_status) { task_statuses[:about_you] }
-
-      describe "personal information item" do
-        subject(:personal_information_status) do
-          about_you_status[:personal_information]
-        end
-
-        context "with some fields set" do
-          before { application_form.update!(given_names: "Given") }
-
-          it { is_expected.to eq(:in_progress) }
-        end
-
-        context "with all fields set" do
-          before do
-            application_form.update!(
-              given_names: "Given",
-              family_name: "Family",
-              date_of_birth: Date.new(2000, 1, 1),
-            )
-          end
-
-          context "without an alternative name" do
-            before { application_form.update!(has_alternative_name: false) }
-
-            it { is_expected.to eq(:completed) }
-          end
-
-          context "with an alternative name" do
-            before do
-              application_form.update!(
-                has_alternative_name: true,
-                alternative_given_names: "Alt Given",
-                alternative_family_name: "Alt Family",
-              )
-
-              create(:upload, document: application_form.name_change_document)
-            end
-
-            it { is_expected.to eq(:completed) }
-          end
-        end
-      end
-
-      describe "identity document item" do
-        subject(:identity_document_status) do
-          about_you_status[:identity_document]
-        end
-
-        context "without uploads" do
-          it { is_expected.to eq(:not_started) }
-        end
-
-        context "with uploads" do
-          before do
-            create(:upload, document: application_form.identification_document)
-          end
-
-          it { is_expected.to eq(:completed) }
-        end
-      end
-    end
-
-    describe "qualifications section" do
-      subject(:qualifications_status) { task_statuses[:qualifications] }
-
-      describe "qualifications item" do
-        subject(:qualifications_item_status) do
-          qualifications_status[:qualifications]
-        end
-
-        context "with no qualifications" do
-          it { is_expected.to eq(:not_started) }
-        end
-
-        context "with some incomplete qualifications" do
-          before { create(:qualification, application_form:) }
-
-          it { is_expected.to eq(:in_progress) }
-        end
-
-        context "with all complete qualifications and not part of university degree" do
-          before do
-            create(
-              :qualification,
-              :completed,
-              part_of_university_degree: false,
-              application_form:,
-            )
-            create(:qualification, :completed, application_form:)
-          end
-
-          it { is_expected.to eq(:completed) }
-        end
-
-        context "with all complete qualifications and part of university degree" do
-          before do
-            create(
-              :qualification,
-              :completed,
-              part_of_university_degree: true,
-              application_form:,
-            )
-          end
-
-          it { is_expected.to eq(:completed) }
-        end
-      end
-
-      describe "age range item" do
-        subject(:age_range_status) { qualifications_status[:age_range] }
-
-        it { is_expected.to eq(:not_started) }
-
-        context "with some age range" do
-          before { application_form.update!(age_range_min: 7) }
-
-          it { is_expected.to eq(:in_progress) }
-        end
-
-        context "with all age range" do
-          before do
-            application_form.update!(age_range_min: 7, age_range_max: 11)
-          end
-
-          it { is_expected.to eq(:completed) }
-        end
-      end
-
-      describe "subjects item" do
-        subject(:subjects_status) { qualifications_status[:subjects] }
-
-        it { is_expected.to eq(:not_started) }
-
-        context "with blank subjects" do
-          before { application_form.update!(subjects: [""]) }
-
-          it { is_expected.to eq(:in_progress) }
-        end
-
-        context "with a subject" do
-          before { application_form.update!(subjects: ["Maths"]) }
-
-          it { is_expected.to eq(:completed) }
-        end
-      end
-    end
-
-    describe "work history section" do
-      before { application_form.needs_work_history = true }
-
-      subject(:work_history_status) { task_statuses[:work_history] }
-
-      describe "work history item" do
-        subject(:personal_information_status) do
-          work_history_status[:work_history]
-        end
-
-        context "with no work history" do
-          it { is_expected.to eq(:not_started) }
-        end
-
-        context "with no work history required" do
-          before { application_form.update!(has_work_history: false) }
-
-          it { is_expected.to eq(:completed) }
-        end
-
-        context "with work history required" do
-          before { application_form.update!(has_work_history: true) }
-
-          context "with some incomplete work history" do
-            before { create(:work_history, application_form:) }
-
-            it { is_expected.to eq(:in_progress) }
-          end
-
-          context "with all complete work history" do
-            before { create(:work_history, :completed, application_form:) }
-
-            it { is_expected.to eq(:completed) }
-          end
-        end
-      end
-    end
-
-    describe "proof of recognition section" do
-      subject(:proof_of_recognition_status) do
-        task_statuses[:proof_of_recognition]
-      end
-
-      describe "written statement item" do
-        before { application_form.needs_written_statement = true }
-
-        subject(:written_statement_status) do
-          proof_of_recognition_status[:written_statement]
-        end
-
-        context "without uploads" do
-          it { is_expected.to eq(:not_started) }
-        end
-
-        context "with uploads" do
-          before do
-            create(
-              :upload,
-              document: application_form.written_statement_document,
-            )
-          end
-
-          it { is_expected.to eq(:completed) }
-        end
-      end
-
-      describe "registration number item" do
-        before { application_form.needs_registration_number = true }
-
-        subject(:registration_number_status) do
-          proof_of_recognition_status[:registration_number]
-        end
-
-        context "without a registration number" do
-          it { is_expected.to eq(:not_started) }
-        end
-
-        context "with a registration number" do
-          before { application_form.update!(registration_number: "ABC") }
-
-          it { is_expected.to eq(:completed) }
-        end
       end
     end
   end

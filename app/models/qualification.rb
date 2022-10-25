@@ -30,27 +30,6 @@ class Qualification < ApplicationRecord
 
   before_create :build_documents
 
-  def status
-    values = [
-      title,
-      institution_name,
-      institution_country_code,
-      start_date,
-      complete_date,
-      certificate_date,
-      certificate_document.uploaded?,
-      transcript_document.uploaded?,
-    ]
-
-    if is_teaching_qualification? && part_of_university_degree != false
-      values.push(part_of_university_degree)
-    end
-
-    return :not_started if values.all?(&:blank?)
-    return :completed if values.all?(&:present?)
-    :in_progress
-  end
-
   def is_teaching_qualification?
     application_form.qualifications.empty? ||
       application_form.qualifications.min_by(&:created_at) == self
