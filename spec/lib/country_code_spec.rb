@@ -40,4 +40,47 @@ RSpec.describe CountryCode do
       it { is_expected.to eq("country:US") }
     end
   end
+
+  shared_examples "true with codes" do |codes|
+    codes.each do |code|
+      context "with #{code} code" do
+        let(:code) { code }
+        it { is_expected.to be true }
+      end
+    end
+
+    (Country::CODES - codes).each do |code|
+      context "with #{code} code" do
+        let(:code) { code }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe "#england?" do
+    subject(:england?) { described_class.england?(code) }
+    include_examples "true with codes", %w[GB-ENG]
+  end
+
+  describe "#wales?" do
+    subject(:wales?) { described_class.wales?(code) }
+    include_examples "true with codes", %w[GB-WLS]
+  end
+
+  describe "#scotland?" do
+    subject(:scotland?) { described_class.scotland?(code) }
+    include_examples "true with codes", %w[GB-SCT]
+  end
+
+  describe "#northern_ireland?" do
+    subject(:northern_ireland?) { described_class.northern_ireland?(code) }
+    include_examples "true with codes", %w[GB-NIR]
+  end
+
+  describe "#european_economic_area?" do
+    subject(:european_economic_area?) do
+      described_class.european_economic_area?(code)
+    end
+    include_examples "true with codes", Country::CODES_IN_EUROPEAN_ECONOMIC_AREA
+  end
 end

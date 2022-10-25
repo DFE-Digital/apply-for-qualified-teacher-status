@@ -62,7 +62,7 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def england_or_wales?
-    country_code == "GB-ENG" || country_code == "GB-WLS"
+    CountryCode.england?(country_code) || CountryCode.wales?(country_code)
   end
 
   def ineligible_reasons

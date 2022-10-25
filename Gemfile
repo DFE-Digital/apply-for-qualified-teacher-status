@@ -12,6 +12,7 @@ gem "cssbundling-rails"
 gem "devise"
 gem "devise_invitable"
 gem "devise-passwordless"
+gem "faraday"
 gem "indefinite_article"
 gem "jsbundling-rails"
 gem "okcomputer"
@@ -64,4 +65,5 @@ group :test do
   gem "rspec-rails", "~> 6.0.1"
   gem "shoulda-matchers", "~> 5.2"
   gem "site_prism"
+  gem "webmock"
 end

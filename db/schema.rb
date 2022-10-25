@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_20_173812) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_23_123629) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -128,6 +128,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_173812) do
     t.datetime "updated_at", null: false
     t.index ["document_type"], name: "index_documents_on_document_type"
     t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable"
+  end
+
+  create_table "dqt_trn_requests", force: :cascade do |t|
+    t.bigint "application_form_id", null: false
+    t.uuid "request_id", null: false
+    t.string "state", default: "pending", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_form_id"], name: "index_dqt_trn_requests_on_application_form_id"
   end
 
   create_table "eligibility_checks", force: :cascade do |t|
@@ -265,6 +274,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_173812) do
     t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.string "trn"
     t.index ["email"], name: "index_teachers_on_email", unique: true
   end
 
@@ -321,6 +331,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_173812) do
   add_foreign_key "assessments", "application_forms"
   add_foreign_key "assessments", "notes", column: "age_range_note_id"
   add_foreign_key "assessments", "notes", column: "subjects_note_id"
+  add_foreign_key "dqt_trn_requests", "application_forms"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "staff", column: "author_id"
