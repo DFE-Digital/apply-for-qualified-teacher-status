@@ -57,7 +57,6 @@ module DQT
         providerUkprn: nil,
         countryCode:
           CountryCode.for_code(degree_qualification.institution_country_code),
-        subject: degree_qualification.title,
         class: "NotKnown",
         date: degree_qualification.certificate_date.iso8601,
         heQualificationType: "Unknown",
