@@ -59,15 +59,19 @@ class Assessment < ApplicationRecord
   end
 
   def can_award?
-    sections.all? { |section| section.state == :completed }
+    sections.all? { |section| section.state == :completed } ||
+      (
+        further_information_requests.present? &&
+          further_information_requests.all?(&:passed)
+      )
   end
 
   def can_decline?
-    action_required?
+    action_required? || further_information_requests.any?(&:failed)
   end
 
   def can_request_further_information?
-    action_required? && !must_decline?
+    action_required? && !must_decline? && further_information_requests.empty?
   end
 
   def available_recommendations

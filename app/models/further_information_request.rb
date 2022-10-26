@@ -24,4 +24,8 @@ class FurtherInformationRequest < ApplicationRecord
   enum :state,
        { requested: "requested", received: "received" },
        default: :requested
+
+  def failed
+    passed == false
+  end
 end
