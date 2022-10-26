@@ -30,6 +30,15 @@ FactoryBot.define do
       received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
+    trait :passed do
+      passed { true }
+    end
+
+    trait :failed do
+      passed { false }
+      failure_reason { "Notes." }
+    end
+
     trait :with_items do
       after(:create) do |further_information_request, _evaluator|
         create(

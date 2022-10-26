@@ -148,6 +148,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           )
         end
       end
+
+      context "and a passed further information request" do
+        let!(:further_information_request) do
+          create(:further_information_request, :received, :passed, assessment:)
+        end
+        it { is_expected.to be_nil }
+      end
+
+      context "and a failed further information request" do
+        let!(:further_information_request) do
+          create(:further_information_request, :received, :failed, assessment:)
+        end
+        it { is_expected.to be_nil }
+      end
     end
   end
 
@@ -219,6 +233,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "and a received further information request" do
         before { create(:further_information_request, :received, assessment:) }
         it { is_expected.to eq(:not_started) }
+      end
+
+      context "and a passed further information request" do
+        before do
+          create(:further_information_request, :received, :passed, assessment:)
+        end
+        it { is_expected.to eq(:completed) }
+      end
+
+      context "and a failed further information request" do
+        before do
+          create(:further_information_request, :received, :failed, assessment:)
+        end
+        it { is_expected.to eq(:completed) }
       end
     end
   end

@@ -58,7 +58,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :further_information
       further_information_request = further_information_requests[index]
 
-      if further_information_request.received?
+      if further_information_request.received? &&
+           further_information_request.passed.nil?
         url_helpers.edit_assessor_interface_application_form_assessment_further_information_request_path(
           application_form,
           assessment,
@@ -80,7 +81,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :further_information
       further_information_request = further_information_requests[index]
       return :cannot_start_yet if further_information_request.requested?
-      :not_started
+      return :not_started if further_information_request.passed.nil?
+      :completed
     end
   end
 
