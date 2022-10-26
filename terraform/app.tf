@@ -16,6 +16,8 @@ locals {
     AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.forms.name,
     AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.forms.primary_access_key,
     AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
+
+    DQT_API_URL = var.dqt_api_url
   })
   logstash_endpoint = data.azurerm_key_vault_secret.secrets["LOGSTASH-ENDPOINT"].value
 }

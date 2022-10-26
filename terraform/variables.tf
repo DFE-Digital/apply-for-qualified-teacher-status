@@ -98,6 +98,10 @@ variable "region_name" {
   type    = string
 }
 
+variable "dqt_api_url" {
+  type = string
+}
+
 locals {
   apply_qts_routes = flatten([
     cloudfoundry_route.apply_qts_public,
