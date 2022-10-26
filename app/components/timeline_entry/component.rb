@@ -58,5 +58,11 @@ module TimelineEntry
     def note_created_vars
       { text: timeline_event.note.text }
     end
+
+    def further_information_request_assessed_vars
+      {
+        further_information_request: timeline_event.further_information_request,
+      }
+    end
   end
 end

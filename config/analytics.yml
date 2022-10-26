@@ -228,6 +228,7 @@
     - new_state
     - assessment_section_id
     - note_id
+    - further_information_request_id
   :uploads:
     - id
     - document_id
