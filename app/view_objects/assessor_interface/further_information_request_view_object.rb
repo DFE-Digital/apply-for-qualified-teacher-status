@@ -19,9 +19,8 @@ class AssessorInterface::FurtherInformationRequestViewObject
         .find(params[:id])
   end
 
-  def application_form
-    further_information_request.assessment.application_form
-  end
+  delegate :assessment, to: :further_information_request
+  delegate :application_form, to: :assessment
 
   def check_your_answers_fields
     further_information_request

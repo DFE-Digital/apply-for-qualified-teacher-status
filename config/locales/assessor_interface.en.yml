@@ -157,3 +157,9 @@ en:
               inclusion: Select your recommendation
             confirm:
               blank: You must confirm that you have reviewed this QTS application
+        assessor_interface/further_information_request_form:
+          attributes:
+            passed:
+              inclusion: Choose whether the applicant completed this section to your satisfaction
+            failure_reason:
+              blank: Enter why this section is not completed to your satisfaction

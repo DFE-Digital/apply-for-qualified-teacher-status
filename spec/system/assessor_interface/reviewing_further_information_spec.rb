@@ -3,12 +3,14 @@
 require "rails_helper"
 
 RSpec.describe "Assessor reviewing further information", type: :system do
-  it "reviewing further information" do
+  before do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(assessor)
     given_there_is_an_application_form_with_failure_reasons
     given_there_is_further_information_received
+  end
 
+  it "review complete" do
     when_i_visit_the(:assessor_application_page, application_id:)
     and_i_click_review_requested_information
     then_i_see_the(
@@ -18,6 +20,24 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       further_information_request_id:,
     )
     and_i_see_the_check_your_answers_items
+
+    when_i_mark_the_section_as_complete
+    then_i_see_the(:assessor_application_page, application_id:)
+  end
+
+  it "review incomplete" do
+    when_i_visit_the(:assessor_application_page, application_id:)
+    and_i_click_review_requested_information
+    then_i_see_the(
+      :review_further_information_request_page,
+      application_id:,
+      assessment_id:,
+      further_information_request_id:,
+    )
+    and_i_see_the_check_your_answers_items
+
+    when_i_mark_the_section_as_incomplete
+    then_i_see_the(:assessor_application_page, application_id:)
   end
 
   private
@@ -44,6 +64,18 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     )
 
     expect(rows.second.key.text).to eq("Upload your identity document")
+  end
+
+  def when_i_mark_the_section_as_complete
+    review_further_information_request_page.form.yes_radio_item.input.click
+    review_further_information_request_page.form.continue_button.click
+  end
+
+  def when_i_mark_the_section_as_incomplete
+    review_further_information_request_page.form.no_radio_item.input.click
+    review_further_information_request_page.form.failure_reason_textarea.fill_in with:
+      "Failure reason"
+    review_further_information_request_page.form.continue_button.click
   end
 
   def application_form
