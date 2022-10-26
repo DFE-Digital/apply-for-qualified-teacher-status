@@ -47,6 +47,8 @@ module DQT
         subject3: subjects.third,
         ageRangeFrom: assessment.age_range_min,
         ageRangeTo: assessment.age_range_max,
+        trainingCountryCode:
+          CountryCode.for_code(teaching_qualification.institution_country_code),
       }
     end
 
