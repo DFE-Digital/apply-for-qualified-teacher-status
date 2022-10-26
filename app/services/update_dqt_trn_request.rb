@@ -9,11 +9,13 @@ class UpdateDQTTRNRequest
 
   def call
     dqt_trn_request.update_from_dqt_response(
-      DQT::Client::ReadTRNRequest.call(request_id: dqt_trn_request.request_id),
+      DQT::Client::ReadTRNRequest.call(request_id:),
     )
   end
 
   private
 
   attr_reader :dqt_trn_request
+
+  delegate :request_id, to: :dqt_trn_request
 end
