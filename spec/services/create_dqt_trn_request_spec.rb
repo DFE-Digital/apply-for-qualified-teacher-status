@@ -36,17 +36,23 @@ RSpec.describe CreateDQTTRNRequest do
       )
     end
 
+    let(:call_rescue_exception) do
+      call
+    rescue StandardError
+      Faraday::BadRequestError
+    end
+
     it "creates a DQTTRNRequest" do
-      expect { call }.to change(DQTTRNRequest, :count).by(1)
+      expect { call_rescue_exception }.to change(DQTTRNRequest, :count).by(1)
     end
 
     it "marks the request as pending" do
-      call
+      call_rescue_exception
       expect(DQTTRNRequest.first.pending?).to be true
     end
 
     it "doesn't set the teacher TRN" do
-      expect { call }.to_not change(teacher, :trn)
+      expect { call_rescue_exception }.to_not change(teacher, :trn)
     end
   end
 end
