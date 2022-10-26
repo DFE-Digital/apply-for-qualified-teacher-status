@@ -20,7 +20,7 @@ en:
       teacher_interface_new_session_form:
         email: Enter the email address you used to register, and we will send you a link to sign in.
       teacher_interface_registration_number_form:
-        registration_number: Your country has an online register of teachers. If you have a reference number, enter it on this screen. If you do not have one, just select ‘Continue’.
+        registration_number: Your country has an online register of teachers. If you have a registration number, enter it on this screen. If you do not have one, just select ‘Continue’.
       work_history:
         add_another: You can use the next section to tell us about additional work history.
     label:

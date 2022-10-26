@@ -83,7 +83,7 @@ en:
           qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
           age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
-          registration_number: We could not verify the reference number using the online checker.
+          registration_number: We could not verify the registration number using the online checker.
           written_statement_illegible: The letter from the country or state’s authority is illegible.
           written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
           authorisation_to_teach: Sanctions or restrictions were detected on professional record.
