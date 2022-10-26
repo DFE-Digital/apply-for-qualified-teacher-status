@@ -62,6 +62,7 @@ RSpec.describe DQT::TRNRequestParams do
             subject1: "100425",
             subject2: "100321",
             subject3: nil,
+            trainingCountryCode: "FR",
           },
           lastName: "Family",
           middleName: nil,
