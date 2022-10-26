@@ -73,7 +73,6 @@ RSpec.describe DQT::TRNRequestParams do
             date: "1996-01-01",
             heQualificationType: "Unknown",
             providerUkprn: nil,
-            subject: "Master of Physics and French",
           },
           recognitionRoute: "OverseasTrainedTeachers",
           teacherType: "OverseasQualifiedTeacher",
