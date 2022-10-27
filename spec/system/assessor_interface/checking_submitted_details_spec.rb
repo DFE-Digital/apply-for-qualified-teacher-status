@@ -328,7 +328,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     expect(
       check_professional_standing_page
         .proof_of_recognition
-        .reference_number
+        .registration_number
         .text,
     ).to eq(application_form.registration_number)
   end
