@@ -25,7 +25,10 @@ class UpdateAssessmentRecommendation
       end
 
       if assessment.award?
-        CreateDQTTRNRequestJob.perform_later(application_form)
+        CreateDQTTRNRequestJob.perform_later(
+          SecureRandom.uuid,
+          application_form,
+        )
       end
 
       true

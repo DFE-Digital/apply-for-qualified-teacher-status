@@ -51,7 +51,7 @@ RSpec.describe UpdateAssessmentRecommendation do
   describe "DQT TRN request job" do
     it "queues a job" do
       expect { call }.to have_enqueued_job(CreateDQTTRNRequestJob).with(
-        application_form,
+        a_kind_of(String), application_form
       )
     end
   end

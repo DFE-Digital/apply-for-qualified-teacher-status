@@ -7,6 +7,7 @@ RSpec.describe UpdateDQTTRNRequest do
   let(:dqt_trn_request) do
     create(
       :dqt_trn_request,
+      :pending,
       application_form: create(:application_form, teacher:),
     )
   end
