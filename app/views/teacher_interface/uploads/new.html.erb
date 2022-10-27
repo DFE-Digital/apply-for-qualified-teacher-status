@@ -38,7 +38,7 @@
       This is called <%= region_certificate_phrase(@application_form.region) %>.
     </p>
 
-    <div class="govuk-inset-text">If this document is not written in English, you’ll also need to upload a translation.</div>
+    <div class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</div>
 
     <p class="govuk-body">It must confirm:</p>
     <ul class="govuk-list govuk-list--bullet">
@@ -64,6 +64,8 @@
         Upload your university degree certificate
       <% end %>
     </h1>
+
+    <div class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</div>
   <% elsif @document.qualification_transcript? %>
     <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 
@@ -90,7 +92,7 @@
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_file_field :original_attachment,
-                         label: { text: "Select a file to upload" },
+                         label: { text: "Select a file to upload", class: "govuk-heading-m" },
                          hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 50MB." } %>
 
   <% if @document.qualification_transcript? %>
