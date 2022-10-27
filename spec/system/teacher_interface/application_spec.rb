@@ -658,7 +658,7 @@ RSpec.describe "Teacher application", type: :system do
       "Enter the age range you can teach\nNOT STARTED",
     )
 
-    expect(teacher_application_page).to have_content("Check your answers")
+    expect(teacher_application_page).not_to have_content("Check your answers")
   end
 
   def and_i_see_the_work_history_is_not_started

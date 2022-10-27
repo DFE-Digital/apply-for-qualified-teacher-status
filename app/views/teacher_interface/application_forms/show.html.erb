@@ -45,7 +45,9 @@
   </ol>
 
   <div class="govuk-button-group">
-    <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_path %>
+    <%- if @application_form.can_submit? -%>
+      <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_path %>
+    <%- end -%>
     <%= govuk_button_link_to "Save and sign out", destroy_teacher_session_path, secondary: true %>
   </div>
 <% elsif @application_form.further_information_requested? %>
