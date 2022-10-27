@@ -29,6 +29,25 @@ en:
         hint:
           can_award: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
+      confirm:
+        heading:
+          award: You’re about to award QTS
+          decline: You’re about to decline QTS
+        instruction:
+          award: Read the declaration and if you’re happy to award QTS, select ‘Accept and award QTS’.
+          decline: If you’re happy to proceed, read the declaration and if you want to decline, select ‘Continue’.
+        declaration:
+          award: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
+          decline: I’ve reviewed this QTS application and the applicant does not meet all the requirements. I understand that by continuing, this application for qualified teacher status will be declined.
+        button:
+          award: Accept and award QTS
+          decline: Accept and decline QTS
+        assessment_section:
+          personal_information: Personal information
+          qualifications: Qualifications
+          age_range_subjects: Age range and subjects
+          work_history: Work history
+          professional_standing: Professional standing
 
     assessment_sections:
       show:

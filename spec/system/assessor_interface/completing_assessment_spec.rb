@@ -27,6 +27,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_select_decline_qts
     and_i_click_continue
+    then_i_see_the(:confirm_assessment_page, application_id:, assessment_id:)
+    and_i_see_failure_reasons
+
+    when_i_confirm_declaration
     then_the_application_form_is_declined
   end
 
@@ -70,6 +74,13 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def when_i_select_decline_qts
     complete_assessment_page.decline_qts.input.choose
+  end
+
+  def and_i_see_failure_reasons
+    failure_reason_item =
+      confirm_assessment_page.failure_reason_lists.first.items.first
+    expect(failure_reason_item.heading.text).to eq("Failure Reason")
+    expect(failure_reason_item.note.text).to eq("Notes.")
   end
 
   def when_i_confirm_declaration
