@@ -3,6 +3,7 @@ module AssessorInterface
     before_action :load_application_form_and_assessment,
                   only: %i[preview new show edit]
     before_action :load_new_further_information_request, only: %i[preview new]
+    before_action :load_view_object, only: %i[edit update]
 
     def preview
     end
@@ -32,7 +33,31 @@ module AssessorInterface
     end
 
     def edit
-      @view_object = FurtherInformationRequestViewObject.new(params:)
+      @further_information_request_form =
+        FurtherInformationRequestForm.new(
+          further_information_request: view_object.further_information_request,
+          user: current_staff,
+          passed: view_object.further_information_request.passed,
+          failure_reason:
+            view_object.further_information_request.failure_reason,
+        )
+    end
+
+    def update
+      @further_information_request_form =
+        FurtherInformationRequestForm.new(
+          further_information_request_form.merge(
+            further_information_request:
+              view_object.further_information_request,
+            user: current_staff,
+          ),
+        )
+
+      if @further_information_request_form.save
+        redirect_to [:assessor_interface, view_object.application_form]
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
 
     private
@@ -50,6 +75,10 @@ module AssessorInterface
               assessment_sections: assessment.sections,
             ),
         )
+    end
+
+    def load_view_object
+      @view_object = view_object
     end
 
     def further_information_request
@@ -70,6 +99,16 @@ module AssessorInterface
         ApplicationForm.includes(
           assessment: :further_information_requests,
         ).find(params[:application_form_id])
+    end
+
+    def view_object
+      @view_object ||= FurtherInformationRequestViewObject.new(params:)
+    end
+
+    def further_information_request_form
+      params.require(
+        :assessor_interface_further_information_request_form,
+      ).permit(:passed, :failure_reason)
     end
   end
 end

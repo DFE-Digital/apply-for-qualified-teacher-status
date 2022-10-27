@@ -82,4 +82,20 @@ RSpec.describe TimelineEntry::Component, type: :component do
       expect(component.text).to include(creator.name)
     end
   end
+
+  context "further information request assessed" do
+    let(:timeline_event) do
+      create(:timeline_event, :further_information_request_assessed)
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "Further information request has been assessed.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
 end

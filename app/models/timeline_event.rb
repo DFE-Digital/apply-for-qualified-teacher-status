@@ -4,32 +4,35 @@
 #
 # Table name: timeline_events
 #
-#  id                    :bigint           not null, primary key
-#  annotation            :string           default(""), not null
-#  creator_type          :string
-#  event_type            :string           not null
-#  new_state             :string           default(""), not null
-#  old_state             :string           default(""), not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  application_form_id   :bigint           not null
-#  assessment_section_id :bigint
-#  assignee_id           :bigint
-#  creator_id            :integer
-#  note_id               :bigint
+#  id                             :bigint           not null, primary key
+#  annotation                     :string           default(""), not null
+#  creator_type                   :string
+#  event_type                     :string           not null
+#  new_state                      :string           default(""), not null
+#  old_state                      :string           default(""), not null
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  application_form_id            :bigint           not null
+#  assessment_section_id          :bigint
+#  assignee_id                    :bigint
+#  creator_id                     :integer
+#  further_information_request_id :bigint
+#  note_id                        :bigint
 #
 # Indexes
 #
-#  index_timeline_events_on_application_form_id    (application_form_id)
-#  index_timeline_events_on_assessment_section_id  (assessment_section_id)
-#  index_timeline_events_on_assignee_id            (assignee_id)
-#  index_timeline_events_on_note_id                (note_id)
+#  index_timeline_events_on_application_form_id             (application_form_id)
+#  index_timeline_events_on_assessment_section_id           (assessment_section_id)
+#  index_timeline_events_on_assignee_id                     (assignee_id)
+#  index_timeline_events_on_further_information_request_id  (further_information_request_id)
+#  index_timeline_events_on_note_id                         (note_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
+#  fk_rails_...  (further_information_request_id => further_information_requests.id)
 #  fk_rails_...  (note_id => notes.id)
 #
 class TimelineEvent < ApplicationRecord
@@ -42,6 +45,8 @@ class TimelineEvent < ApplicationRecord
          state_changed: "state_changed",
          assessment_section_recorded: "assessment_section_recorded",
          note_created: "note_created",
+         further_information_request_assessed:
+           "further_information_request_assessed",
        }
   validates :event_type, inclusion: { in: event_types.values }
 
@@ -67,4 +72,12 @@ class TimelineEvent < ApplicationRecord
   belongs_to :note, optional: true
   validates :note, presence: true, if: :note_created?
   validates :note, absence: true, unless: :note_created?
+
+  belongs_to :further_information_request, optional: true
+  validates :further_information_request,
+            presence: true,
+            if: :further_information_request_assessed?
+  validates :further_information_request,
+            absence: true,
+            unless: :further_information_request_assessed?
 end

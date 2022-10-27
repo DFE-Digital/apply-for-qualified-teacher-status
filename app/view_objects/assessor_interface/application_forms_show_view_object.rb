@@ -28,14 +28,14 @@ class AssessorInterface::ApplicationFormsShowViewObject
         professional_standing
       ].select { |key| assessment_section_keys.include?(key) }
 
+    recommendation =
+      %i[initial_assessment] +
+        further_information_requests.map { :second_assessment }
+
     further_information =
       further_information_requests.map { :review_requested_information }
 
-    {
-      submitted_details:,
-      recommendation: %i[initial_assessment],
-      further_information:,
-    }.compact_blank
+    { submitted_details:, recommendation:, further_information: }.compact_blank
   end
 
   def assessment_task_path(section, item, index)
@@ -49,7 +49,11 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :recommendation
       return nil unless assessment.sections_finished?
 
-      if assessment_editable?
+      if (item == :initial_assessment && assessment_editable?) ||
+           (
+             item == :second_assessment &&
+               assessment.request_further_information?
+           )
         url_helpers.edit_assessor_interface_application_form_assessment_path(
           application_form,
           assessment,
@@ -58,7 +62,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :further_information
       further_information_request = further_information_requests[index]
 
-      if further_information_request.received?
+      if further_information_request.received? &&
+           further_information_request.passed.nil?
         url_helpers.edit_assessor_interface_application_form_assessment_further_information_request_path(
           application_form,
           assessment,
@@ -73,14 +78,23 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :submitted_details
       assessment.sections.find { |s| s.key == item.to_s }.state
     when :recommendation
-      return :cannot_start_yet unless assessment.sections_finished?
-      return :not_started if assessment.unknown?
-      return :in_progress if assessment_editable?
-      :completed
+      case item
+      when :initial_assessment
+        return :cannot_start_yet unless assessment.sections_finished?
+        return :not_started if assessment.unknown?
+        return :in_progress if assessment_editable?
+        :completed
+      when :second_assessment
+        further_information_request = further_information_requests[index - 1]
+        return :cannot_start_yet if further_information_request.passed.nil?
+        return :not_started if assessment.request_further_information?
+        :completed
+      end
     when :further_information
       further_information_request = further_information_requests[index]
       return :cannot_start_yet if further_information_request.requested?
-      :not_started
+      return :not_started if further_information_request.passed.nil?
+      :completed
     end
   end
 

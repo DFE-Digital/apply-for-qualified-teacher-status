@@ -4,12 +4,14 @@
 #
 # Table name: further_information_requests
 #
-#  id            :bigint           not null, primary key
-#  received_at   :datetime
-#  state         :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  assessment_id :bigint
+#  id             :bigint           not null, primary key
+#  failure_reason :string           default(""), not null
+#  passed         :boolean
+#  received_at    :datetime
+#  state          :string           not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  assessment_id  :bigint
 #
 # Indexes
 #

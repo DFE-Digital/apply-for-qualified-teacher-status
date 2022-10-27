@@ -127,6 +127,16 @@ RSpec.describe Assessment, type: :model do
         create(:assessment_section, :personal_information, :failed, assessment:)
       end
       it { is_expected.to be false }
+
+      context "with a passed further information request" do
+        before { create(:further_information_request, :passed, assessment:) }
+        it { is_expected.to be true }
+      end
+
+      context "with a failed further information request" do
+        before { create(:further_information_request, :failed, assessment:) }
+        it { is_expected.to be false }
+      end
     end
 
     context "with a mixture of assessments" do
@@ -168,6 +178,16 @@ RSpec.describe Assessment, type: :model do
       end
       it { is_expected.to be true }
     end
+
+    context "with a passed further information request" do
+      before { create(:further_information_request, :passed, assessment:) }
+      it { is_expected.to be false }
+    end
+
+    context "with a failed further information request" do
+      before { create(:further_information_request, :failed, assessment:) }
+      it { is_expected.to be true }
+    end
   end
 
   describe "#can_request_further_information?" do
@@ -207,6 +227,11 @@ RSpec.describe Assessment, type: :model do
         )
       end
 
+      it { is_expected.to be false }
+    end
+
+    context "with an existing further information request" do
+      before { create(:further_information_request, assessment:) }
       it { is_expected.to be false }
     end
   end

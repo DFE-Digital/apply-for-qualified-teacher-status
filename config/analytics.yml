@@ -129,6 +129,8 @@
     - created_at
     - updated_at
     - assessment_id
+    - passed
+    - failure_reason
   :further_information_request_items:
     - id
     - information_type
@@ -226,6 +228,7 @@
     - new_state
     - assessment_section_id
     - note_id
+    - further_information_request_id
   :uploads:
     - id
     - document_id

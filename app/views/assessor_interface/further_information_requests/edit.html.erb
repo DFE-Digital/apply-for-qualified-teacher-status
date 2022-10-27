@@ -9,3 +9,18 @@
   title: t(".check_your_answers"),
   fields: @view_object.check_your_answers_fields
 )) %>
+
+<%= form_with model: @further_information_request_form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { size: "s" } do %>
+    <%= f.govuk_radio_button :passed, :true, link_errors: true %>
+    <%= f.govuk_radio_button :passed, :false do %>
+      <%= f.govuk_text_area :failure_reason %>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_submit prevent_double_click: false do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @view_object.application_form] %>
+  <% end %>
+<% end %>
