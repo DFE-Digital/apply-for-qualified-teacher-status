@@ -530,7 +530,7 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_fill_in_qualifications
     fill_in "teacher-interface-qualification-form-title-field", with: "Title"
     fill_in "teacher-interface-qualification-form-institution-name-field",
-            with: "Name"
+            with: "Institution Name"
     fill_in "teacher-interface-qualification-form-institution-country-code-field",
             with: "France"
     fill_in "teacher_interface_qualification_form_start_date_2i", with: "1"
@@ -805,28 +805,28 @@ RSpec.describe "Teacher application", type: :system do
   def then_i_see_the_upload_certificate_form
     expect(upload_document_page).to have_title("Upload a document")
     expect(upload_document_page.heading.text).to eq(
-      "Upload your certificate for Name",
+      "Upload your Institution Name certificate",
     )
   end
 
   def then_i_see_the_upload_degree_certificate_form
     expect(upload_document_page).to have_title("Upload a document")
     expect(upload_document_page.heading.text).to eq(
-      "Upload your certificate for Name",
+      "Upload your Institution Name certificate",
     )
   end
 
   def then_i_see_the_upload_transcript_form
     expect(upload_document_page).to have_title("Upload a document")
     expect(upload_document_page.heading.text).to eq(
-      "Upload your transcript for Name",
+      "Upload your Institution Name transcript",
     )
   end
 
   def then_i_see_the_upload_degree_transcript_form
     expect(upload_document_page).to have_title("Upload a document")
     expect(upload_document_page.heading.text).to eq(
-      "Upload your transcript for Name",
+      "Upload your Institution Name transcript",
     )
   end
 
@@ -953,7 +953,7 @@ RSpec.describe "Teacher application", type: :system do
       "Qualification title\tTitle",
     )
     expect(qualification_summary_page.summary_card).to have_content(
-      "Name of institution\tName",
+      "Name of institution\tInstitution Name",
     )
     expect(qualification_summary_page.summary_card).to have_content(
       "Country of institution\tFrance",

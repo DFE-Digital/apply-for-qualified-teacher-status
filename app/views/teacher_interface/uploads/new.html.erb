@@ -38,7 +38,7 @@
       This is called <%= region_certificate_phrase(@application_form.region) %>.
     </p>
 
-    <div class="govuk-inset-text">If this document is not written in English, you’ll also need to upload a translation.</div>
+    <div class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</div>
 
     <p class="govuk-body">It must confirm:</p>
     <ul class="govuk-list govuk-list--bullet">
@@ -57,19 +57,21 @@
 
     <h1 class="govuk-heading-l">
       <% if @document.documentable.institution_name.present? %>
-        Upload your <%= I18n.t("document.document_type.qualification_certificate") %> for <%= @document.documentable.institution_name %>
+        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_certificate") %> 
       <% elsif @document.documentable.is_teaching_qualification? %>
         Upload your teaching qualification certificate
       <% else %>
         Upload your university degree certificate
       <% end %>
     </h1>
+
+    <div class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</div>
   <% elsif @document.qualification_transcript? %>
     <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 
     <h1 class="govuk-heading-l">
       <% if @document.documentable.institution_name.present? %>
-        Upload your <%= I18n.t("document.document_type.qualification_transcript") %> for <%= @document.documentable.institution_name %>
+        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_transcript") %>
       <% elsif @document.documentable.is_teaching_qualification? %>
         Upload your teaching qualification transcript
       <% else %>
@@ -90,7 +92,7 @@
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_file_field :original_attachment,
-                         label: { text: "Select a file to upload" },
+                         label: { text: "Select a file to upload", class: "govuk-heading-m" },
                          hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 50MB." } %>
 
   <% if @document.qualification_transcript? %>
@@ -101,9 +103,9 @@
 
   <% if @document.translatable? %>
     <%= f.govuk_radio_buttons_fieldset :written_in_english, legend: { size: "m", text: "Is your document written in English?" } do %>
-      <%= f.govuk_radio_button :written_in_english, :true, label: { text: "Yes" }, link_errors: true, checked: false %>
+      <%= f.govuk_radio_button :written_in_english, :true, label: { text: "Yes" }, link_errors: true %>
 
-      <%= f.govuk_radio_button :written_in_english, :false, label: { text: "No, I’ll upload a translation as well" }, checked: false do %>
+      <%= f.govuk_radio_button :written_in_english, :false, label: { text: "No, I’ll upload a translation as well" } do %>
         <%= f.govuk_file_field :translated_attachment,
                                label: { text: "Select a file to upload" },
                                hint: { text: "You can upload your files in PDF, JPG or DOC format. Each file must be no larger than 50MB." } %>
