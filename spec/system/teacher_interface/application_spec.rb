@@ -796,9 +796,7 @@ RSpec.describe "Teacher application", type: :system do
 
   def then_i_see_the_degree_qualifications_form
     expect(qualifications_form_page).to have_title("Your qualifications")
-    expect(qualifications_form_page.heading.text).to eq(
-      "Your university degree",
-    )
+    expect(qualifications_form_page.heading.text).to eq("University degree")
     expect(qualifications_form_page.body).to have_content(
       "Tell us about your university degree qualification.",
     )
