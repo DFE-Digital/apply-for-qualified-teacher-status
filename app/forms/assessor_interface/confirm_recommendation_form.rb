@@ -31,6 +31,6 @@ class AssessorInterface::ConfirmRecommendationForm
   end
 
   def needs_confirmation?
-    recommendation == "award"
+    %w[award decline].include?(recommendation)
   end
 end

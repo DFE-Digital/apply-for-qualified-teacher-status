@@ -25,8 +25,6 @@ en:
         add_another: You can use the next section to tell us about additional work history.
     label:
       assessor_interface_confirm_recommendation_form:
-        confirm_options:
-          true: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
         recommendation_options:
           award: Award QTS
           request_further_information: Request further information
