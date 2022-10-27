@@ -24,12 +24,7 @@ class UpdateAssessmentRecommendation
         ChangeApplicationFormState.call(application_form:, user:, new_state:)
       end
 
-      if assessment.award?
-        CreateDQTTRNRequestJob.perform_later(
-          SecureRandom.uuid,
-          application_form,
-        )
-      end
+      CreateDQTTRNRequest.call(application_form:) if assessment.award?
 
       true
     end

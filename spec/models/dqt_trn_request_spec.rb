@@ -43,46 +43,4 @@ RSpec.describe DQTTRNRequest, type: :model do
   it "defaults to the initial state" do
     expect(dqt_trn_request.initial?).to be true
   end
-
-  describe "#update_from_dqt_response" do
-    subject(:update_from_dqt_response) do
-      dqt_trn_request.update_from_dqt_response(response)
-    end
-
-    context "with a response that doesn't contain a TRN" do
-      let(:response) { { trn: "abcdef" } }
-
-      it "changes the state to complete" do
-        expect { update_from_dqt_response }.to change(
-          dqt_trn_request,
-          :state,
-        ).to("complete")
-      end
-
-      it "sets the TRN on the teacher" do
-        expect { update_from_dqt_response }.to change(
-          dqt_trn_request.application_form.teacher,
-          :trn,
-        ).to("abcdef")
-      end
-    end
-
-    context "with a response that contains a TRN" do
-      let(:response) { {} }
-
-      it "changes the state to pending" do
-        expect { update_from_dqt_response }.to change(
-          dqt_trn_request,
-          :state,
-        ).to("pending")
-      end
-
-      it "doesn't change the TRN on the teacher" do
-        expect { update_from_dqt_response }.to_not change(
-          dqt_trn_request.application_form.teacher,
-          :trn,
-        )
-      end
-    end
-  end
 end

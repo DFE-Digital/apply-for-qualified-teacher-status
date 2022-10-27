@@ -24,13 +24,4 @@ class DQTTRNRequest < ApplicationRecord
        { initial: "initial", pending: "pending", complete: "complete" },
        default: :initial
   validates :state, presence: true, inclusion: { in: states.values }
-
-  def update_from_dqt_response(response)
-    if (trn = response[:trn]).present?
-      application_form.teacher.update!(trn:)
-      complete!
-    else
-      pending!
-    end
-  end
 end
