@@ -36,7 +36,7 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     then_i_see_completed_personal_information_section
 
-    when_i_click_identity_document
+    when_i_click_identification_document
     then_i_see_the_upload_identification_form
 
     when_i_fill_in_the_upload_identification_form
@@ -45,7 +45,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_no
     and_i_click_continue
-    then_i_see_completed_identity_document_section
+    then_i_see_completed_identification_document_section
 
     when_i_click_qualifications
     then_i_see_the_qualifications_form
@@ -149,7 +149,7 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     then_i_see_completed_personal_information_section
 
-    when_i_click_identity_document
+    when_i_click_identification_document
     then_i_see_the_upload_identification_form
 
     when_i_fill_in_the_upload_identification_form
@@ -158,7 +158,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_no
     and_i_click_continue
-    then_i_see_completed_identity_document_section
+    then_i_see_completed_identification_document_section
 
     when_i_click_qualifications
     then_i_see_the_qualifications_form
@@ -254,7 +254,7 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     then_i_see_completed_personal_information_section
 
-    when_i_click_identity_document
+    when_i_click_identification_document
     then_i_see_the_upload_identification_form
 
     when_i_fill_in_the_upload_identification_form
@@ -263,7 +263,7 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_no
     and_i_click_continue
-    then_i_see_completed_identity_document_section
+    then_i_see_completed_identification_document_section
 
     when_i_click_qualifications
     then_i_see_the_qualifications_form
@@ -512,7 +512,7 @@ RSpec.describe "Teacher application", type: :system do
                 Rails.root.join(file_fixture("upload.pdf"))
   end
 
-  def when_i_click_identity_document
+  def when_i_click_identification_document
     click_link "Upload your identity document"
   end
 
@@ -943,7 +943,7 @@ RSpec.describe "Teacher application", type: :system do
     )
   end
 
-  def then_i_see_completed_identity_document_section
+  def then_i_see_completed_identification_document_section
     expect(teacher_application_page.app_task_list).to have_content(
       "Upload your identity document\nCOMPLETED",
     )

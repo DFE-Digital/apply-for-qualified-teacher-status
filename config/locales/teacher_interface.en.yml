@@ -30,7 +30,7 @@ en:
         proof_of_recognition: Proof that you’re recognised as a teacher
       items:
         personal_information: Enter your personal information
-        identity_document: Upload your identity document
+        identification_document: Upload your identity document
         qualifications: Add your teaching qualifications
         age_range: Enter the age range you can teach
         subjects: Enter the subjects you can teach

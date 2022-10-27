@@ -23,33 +23,14 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
 class Qualification < ApplicationRecord
+  include ApplicationFormStatusUpdatable
+
   belongs_to :application_form
   has_many :documents, as: :documentable
 
   scope :ordered, -> { order(created_at: :asc) }
 
   before_create :build_documents
-
-  def status
-    values = [
-      title,
-      institution_name,
-      institution_country_code,
-      start_date,
-      complete_date,
-      certificate_date,
-      certificate_document.uploaded?,
-      transcript_document.uploaded?,
-    ]
-
-    if is_teaching_qualification? && part_of_university_degree != false
-      values.push(part_of_university_degree)
-    end
-
-    return :not_started if values.all?(&:blank?)
-    return :completed if values.all?(&:present?)
-    :in_progress
-  end
 
   def is_teaching_qualification?
     application_form.qualifications.empty? ||

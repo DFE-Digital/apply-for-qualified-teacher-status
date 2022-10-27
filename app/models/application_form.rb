@@ -2,32 +2,40 @@
 #
 # Table name: application_forms
 #
-#  id                            :bigint           not null, primary key
-#  age_range_max                 :integer
-#  age_range_min                 :integer
-#  alternative_family_name       :text             default(""), not null
-#  alternative_given_names       :text             default(""), not null
-#  confirmed_no_sanctions        :boolean          default(FALSE)
-#  date_of_birth                 :date
-#  family_name                   :text             default(""), not null
-#  given_names                   :text             default(""), not null
-#  has_alternative_name          :boolean
-#  has_work_history              :boolean
-#  needs_registration_number     :boolean          not null
-#  needs_work_history            :boolean          not null
-#  needs_written_statement       :boolean          not null
-#  reference                     :string(31)       not null
-#  registration_number           :text
-#  state                         :string           default("draft"), not null
-#  subjects                      :text             default([]), not null, is an Array
-#  submitted_at                  :datetime
-#  working_days_since_submission :integer
-#  created_at                    :datetime         not null
-#  updated_at                    :datetime         not null
-#  assessor_id                   :bigint
-#  region_id                     :bigint           not null
-#  reviewer_id                   :bigint
-#  teacher_id                    :bigint           not null
+#  id                             :bigint           not null, primary key
+#  age_range_max                  :integer
+#  age_range_min                  :integer
+#  age_range_status               :string           default("not_started"), not null
+#  alternative_family_name        :text             default(""), not null
+#  alternative_given_names        :text             default(""), not null
+#  confirmed_no_sanctions         :boolean          default(FALSE)
+#  date_of_birth                  :date
+#  family_name                    :text             default(""), not null
+#  given_names                    :text             default(""), not null
+#  has_alternative_name           :boolean
+#  has_work_history               :boolean
+#  identification_document_status :string           default("not_started"), not null
+#  needs_registration_number      :boolean          not null
+#  needs_work_history             :boolean          not null
+#  needs_written_statement        :boolean          not null
+#  personal_information_status    :string           default("not_started"), not null
+#  qualifications_status          :string           default("not_started"), not null
+#  reference                      :string(31)       not null
+#  registration_number            :text
+#  registration_number_status     :string           default("not_started"), not null
+#  state                          :string           default("draft"), not null
+#  subjects                       :text             default([]), not null, is an Array
+#  subjects_status                :string           default("not_started"), not null
+#  submitted_at                   :datetime
+#  work_history_status            :string           default("not_started"), not null
+#  working_days_since_submission  :integer
+#  written_statement_status       :string           default("not_started"), not null
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  assessor_id                    :bigint
+#  region_id                      :bigint           not null
+#  reviewer_id                    :bigint
+#  teacher_id                     :bigint           not null
 #
 # Indexes
 #
@@ -57,7 +65,7 @@ class ApplicationForm < ApplicationRecord
   has_one :assessment
   has_many :notes
 
-  before_create :build_documents
+  before_save :build_documents, if: :new_record?
 
   before_validation :assign_reference
   validates :reference, presence: true, uniqueness: true, length: 3..31
@@ -78,6 +86,27 @@ class ApplicationForm < ApplicationRecord
          declined: "declined",
        }
 
+  STATUS_COLUMNS = %i[
+    personal_information_status
+    identification_document_status
+    qualifications_status
+    age_range_status
+    subjects_status
+    work_history_status
+    registration_number_status
+    written_statement_status
+  ].freeze
+
+  STATUS_VALUES = {
+    not_started: "not_started",
+    in_progress: "in_progress",
+    completed: "completed",
+  }.freeze
+
+  STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }
+
+  before_save -> { ApplicationFormStatusUpdater.call(application_form: self) }
+
   scope :active, -> { not_draft }
 
   def assign_reference
@@ -97,7 +126,7 @@ class ApplicationForm < ApplicationRecord
     @tasks ||=
       begin
         hash = {}
-        hash.merge!(about_you: %i[personal_information identity_document])
+        hash.merge!(about_you: %i[personal_information identification_document])
         hash.merge!(qualifications: %i[qualifications age_range subjects])
         hash.merge!(work_history: %i[work_history]) if needs_work_history
 
@@ -123,12 +152,12 @@ class ApplicationForm < ApplicationRecord
 
   def completed_task_sections
     task_statuses
-      .filter { |_, statuses| statuses.values.all?(:completed) }
+      .filter { |_, statuses| statuses.values.all?("completed") }
       .map { |section, _| section }
   end
 
   def task_item_completed?(section, item)
-    task_statuses.dig(section, item) == :completed
+    task_statuses.dig(section, item) == "completed"
   end
 
   def can_submit?
@@ -138,7 +167,7 @@ class ApplicationForm < ApplicationRecord
   def path_for_task_item(key)
     url_helpers = Rails.application.routes.url_helpers
 
-    if key == :identity_document
+    if key == :identification_document
       return(
         url_helpers.edit_teacher_interface_application_form_document_path(
           identification_document,
@@ -199,86 +228,6 @@ class ApplicationForm < ApplicationRecord
   end
 
   def task_item_status(key)
-    case key
-    when :personal_information
-      personal_information_status
-    when :identity_document
-      identification_document.uploaded? ? :completed : :not_started
-    when :qualifications
-      qualifications_status
-    when :age_range
-      status_for_values(age_range_min, age_range_max)
-    when :subjects
-      subjects_status
-    when :work_history
-      work_history_status
-    when :registration_number
-      registration_number.nil? ? :not_started : :completed
-    when :written_statement
-      written_statement_document.uploaded? ? :completed : :not_started
-    else
-      :not_started
-    end
-  end
-
-  def personal_information_status
-    values = [given_names, family_name, date_of_birth]
-
-    if has_alternative_name.nil?
-      values.append(nil)
-    elsif has_alternative_name
-      values.append(
-        alternative_given_names,
-        alternative_family_name,
-        name_change_document&.uploaded?,
-      )
-    else
-      values.append(true)
-    end
-
-    status_for_values(*values)
-  end
-
-  def qualifications_status
-    return :not_started if qualifications.empty?
-
-    part_of_university_degree = teaching_qualification.part_of_university_degree
-    if part_of_university_degree.nil? ||
-         (!part_of_university_degree && qualifications.count == 1)
-      return :in_progress
-    end
-
-    all_complete =
-      qualifications.all? { |qualification| qualification.status == :completed }
-
-    all_complete ? :completed : :in_progress
-  end
-
-  def subjects_status
-    return :not_started if subjects.empty?
-    return :in_progress if subjects.compact_blank.empty?
-    :completed
-  end
-
-  def work_history_status
-    return :not_started if has_work_history.nil?
-
-    if !has_work_history ||
-         (
-           !work_histories.empty? &&
-             work_histories.all? do |work_history|
-               work_history.status == :completed
-             end
-         )
-      return :completed
-    end
-
-    :in_progress
-  end
-
-  def status_for_values(*values)
-    return :not_started if values.all?(&:blank?)
-    return :completed if values.all?(&:present?)
-    :in_progress
+    send("#{key}_status")
   end
 end

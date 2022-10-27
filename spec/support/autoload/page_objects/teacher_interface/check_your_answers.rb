@@ -10,7 +10,7 @@ module PageObjects
         section :personal_information_summary_list,
                 GovukSummaryList,
                 "#app-check-your-answers-summary-personal-information"
-        section :identity_document_summary_list,
+        section :identification_document_summary_list,
                 GovukSummaryList,
                 "#app-check-your-answers-summary-identity-document"
       end

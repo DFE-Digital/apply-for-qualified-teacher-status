@@ -10,8 +10,7 @@ class AssessorInterface::ReviewerAssignmentForm
   def save!
     return false unless valid?
 
-    application_form.reviewer_id = reviewer_id
-    application_form.save!
+    application_form.update!(reviewer_id:)
     create_timeline_event!
   end
 
