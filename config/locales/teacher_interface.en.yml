@@ -135,6 +135,13 @@ en:
           attributes:
             subject_1:
               blank: Enter your first subject
+        teacher_interface/upload_form:
+          attributes:
+            original_attachment:
+              blank: Select a file to upload
+            translated_attachment:
+              blank: Select a translation to upload
+
         teacher_interface/work_history_form:
           attributes:
             contact_name:

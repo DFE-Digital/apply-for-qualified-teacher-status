@@ -2,12 +2,18 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::UploadForm, type: :model do
   subject(:upload_form) do
-    described_class.new(document:, original_attachment:, translated_attachment:)
+    described_class.new(
+      document:,
+      original_attachment:,
+      translated_attachment:,
+      written_in_english:,
+    )
   end
 
   let(:document) { create(:document) }
   let(:original_attachment) { nil }
   let(:translated_attachment) { nil }
+  let(:written_in_english) { nil }
 
   it { is_expected.to validate_presence_of(:document) }
 
@@ -30,6 +36,12 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
     end
 
     context "with an translated attachment" do
+      let(:original_attachment) do
+        ActionDispatch::Http::UploadedFile.new(
+          tempfile: file_fixture("upload.pdf"),
+          type: "application/pdf",
+        )
+      end
       let(:translated_attachment) do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
@@ -38,6 +50,18 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
       end
 
       it { is_expected.to be true }
+    end
+
+    context "written_in_english 'No'" do
+      let(:written_in_english) { "false" }
+      let(:original_attachment) do
+        ActionDispatch::Http::UploadedFile.new(
+          tempfile: file_fixture("upload.pdf"),
+          type: "application/pdf",
+        )
+      end
+
+      it { is_expected.to be false }
     end
 
     context "with an invalid content type" do
@@ -88,6 +112,14 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
     end
 
     context "with a translated attachment" do
+      let(:original_attachment) do
+        ActionDispatch::Http::UploadedFile.new(
+          tempfile: file_fixture("upload.pdf"),
+          filename: "upload.pdf",
+          type: "application/pdf",
+        )
+      end
+
       let(:translated_attachment) do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
@@ -96,9 +128,9 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         )
       end
 
-      it "creates an upload" do
-        expect(document.uploads.count).to eq(1)
-        expect(document.uploads.first.translation).to be(true)
+      it "creates two uploads" do
+        expect(document.uploads.count).to eq(2)
+        expect(document.uploads.second.translation).to be(true)
       end
     end
   end

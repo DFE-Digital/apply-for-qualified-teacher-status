@@ -5,6 +5,7 @@ module TeacherInterface
     attr_accessor :document
     attribute :original_attachment
     attribute :translated_attachment
+    attribute :written_in_english, type: :boolean
 
     validates :document, presence: true
     validates :original_attachment, file_upload: true
@@ -28,8 +29,9 @@ module TeacherInterface
     end
 
     def attachment_present
-      if original_attachment.blank? && translated_attachment.blank?
-        errors.add(:original_attachment, :blank)
+      errors.add(:original_attachment, :blank) if original_attachment.blank?
+      if written_in_english == "false" && translated_attachment.blank?
+        errors.add(:translated_attachment, :blank)
       end
     end
   end

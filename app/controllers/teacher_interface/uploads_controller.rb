@@ -50,6 +50,7 @@ module TeacherInterface
         teacher_interface_upload_form: %i[
           original_attachment
           translated_attachment
+          written_in_english
         ],
       )[
         :teacher_interface_upload_form
