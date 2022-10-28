@@ -21,7 +21,10 @@ Rails.application.routes.draw do
       resources :timeline_events, only: :index
 
       resources :assessments, only: %i[edit update] do
-        post "declare", to: "assessments#declare", on: :member
+        member do
+          post "declare", to: "assessments#declare"
+          post "confirm", to: "assessments#confirm"
+        end
 
         resources :assessment_sections,
                   path: "/sections",

@@ -1,4 +1,4 @@
-<% content_for :page_title, "You’re about to award QTS" %>
+<% content_for :page_title, t(".heading.#{@assessment_recommendation_form.recommendation}") %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <h1 class="govuk-heading-xl"><%= t(".heading.#{@assessment_recommendation_form.recommendation}") %></h1>
@@ -31,7 +31,7 @@
 <p class="govuk-body"><%= t(".instruction.#{@assessment_recommendation_form.recommendation}") %></p>
 <p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
 
-<%= form_with model: @assessment_recommendation_form, url: [:assessor_interface, @application_form, @assessment], method: :put do |f| %>
+<%= form_with model: @assessment_recommendation_form, url: [:confirm, :assessor_interface, @application_form, @assessment] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.hidden_field :recommendation %>

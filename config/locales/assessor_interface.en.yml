@@ -49,6 +49,16 @@ en:
           age_range_subjects: Age range and subjects
           work_history: Work history
           professional_standing: Professional standing
+      confirm:
+        legend:
+          award: Award this QTS application?
+          decline: Decline this QTS application?
+        hint:
+          award: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
+          decline: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
+        inclusion:
+          award: Select ‘Yes’ to award, or ‘No’ to cancel.
+          decline: Select ‘Yes’ to decline, or ‘No’ to cancel.
 
     assessment_sections:
       show:

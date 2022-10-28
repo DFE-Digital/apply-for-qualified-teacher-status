@@ -54,6 +54,11 @@ module PageHelpers
       PageObjects::AssessorInterface::CompleteAssessment.new
   end
 
+  def confirm_assessment_recommendation_page
+    @confirm_assessment_recommendation_page ||=
+      PageObjects::AssessorInterface::ConfirmAssessmentRecommendation.new
+  end
+
   def declare_assessment_recommendation_page
     @declare_assessment_recommendation_page ||=
       PageObjects::AssessorInterface::DeclareAssessmentRecommendation.new

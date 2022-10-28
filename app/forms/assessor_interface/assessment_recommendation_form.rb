@@ -7,13 +7,25 @@ class AssessorInterface::AssessmentRecommendationForm
   attr_accessor :assessment, :user
   attribute :recommendation, :string
   attribute :declaration, :boolean
+  attribute :confirmation, :boolean
 
   validates :assessment, :user, :recommendation, presence: true
-  validates :declaration, presence: true, if: :needs_declaration?
   validate :recommendation_allowed
+  validates :declaration, presence: true, if: :needs_declaration?
+  validates :confirmation,
+            inclusion: {
+              in: [true, false],
+              message: ->(object, _) {
+                I18n.t(
+                  "assessor_interface.assessments.confirm.inclusion.#{object.recommendation}",
+                )
+              },
+            },
+            if: :needs_confirmation?
 
   def save
     return false unless valid?
+    return true if needs_confirmation? && !confirmation
 
     UpdateAssessmentRecommendation.call(
       assessment:,
@@ -32,5 +44,9 @@ class AssessorInterface::AssessmentRecommendationForm
 
   def needs_declaration?
     %w[award decline].include?(recommendation)
+  end
+
+  def needs_confirmation?
+    needs_declaration? && declaration
   end
 end

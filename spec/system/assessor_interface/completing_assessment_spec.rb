@@ -20,6 +20,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_check_declaration
+    when_i_check_confirmation
     then_the_application_form_is_awarded
   end
 
@@ -40,6 +41,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     and_i_see_failure_reasons
 
     when_i_check_declaration
+    when_i_check_confirmation
     then_the_application_form_is_declined
   end
 
@@ -117,6 +119,11 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def when_i_check_declaration
     declare_assessment_recommendation_page.form.declaration_checkbox.click
     declare_assessment_recommendation_page.form.submit_button.click
+  end
+
+  def when_i_check_confirmation
+    confirm_assessment_recommendation_page.form.yes_radio_item.input.click
+    confirm_assessment_recommendation_page.form.continue_button.click
   end
 
   def then_the_application_form_is_awarded
