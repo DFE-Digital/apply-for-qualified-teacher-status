@@ -13,9 +13,13 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_select_award_qts
     and_i_click_continue
-    then_i_see_the(:confirm_assessment_page, application_id:, assessment_id:)
+    then_i_see_the(
+      :declare_assessment_recommendation_page,
+      application_id:,
+      assessment_id:,
+    )
 
-    when_i_confirm_declaration
+    when_i_check_declaration
     then_the_application_form_is_awarded
   end
 
@@ -28,10 +32,14 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_select_decline_qts
     and_i_click_continue
-    then_i_see_the(:confirm_assessment_page, application_id:, assessment_id:)
+    then_i_see_the(
+      :declare_assessment_recommendation_page,
+      application_id:,
+      assessment_id:,
+    )
     and_i_see_failure_reasons
 
-    when_i_confirm_declaration
+    when_i_check_declaration
     then_the_application_form_is_declined
   end
 
@@ -97,14 +105,18 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def and_i_see_failure_reasons
     failure_reason_item =
-      confirm_assessment_page.failure_reason_lists.first.items.first
+      declare_assessment_recommendation_page
+        .failure_reason_lists
+        .first
+        .items
+        .first
     expect(failure_reason_item.heading.text).to eq("Failure Reason")
     expect(failure_reason_item.note.text).to eq("Notes.")
   end
 
-  def when_i_confirm_declaration
-    confirm_assessment_page.form.confirm_declaration.click
-    confirm_assessment_page.form.submit_button.click
+  def when_i_check_declaration
+    declare_assessment_recommendation_page.form.declaration_checkbox.click
+    declare_assessment_recommendation_page.form.submit_button.click
   end
 
   def then_the_application_form_is_awarded

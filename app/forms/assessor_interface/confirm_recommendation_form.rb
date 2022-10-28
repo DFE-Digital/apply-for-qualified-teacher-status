@@ -6,10 +6,10 @@ class AssessorInterface::ConfirmRecommendationForm
 
   attr_accessor :assessment, :user
   attribute :recommendation, :string
-  attribute :confirm, :boolean
+  attribute :declaration, :boolean
 
   validates :assessment, :user, :recommendation, presence: true
-  validates :confirm, presence: true, if: :needs_confirmation?
+  validates :declaration, presence: true, if: :needs_declaration?
   validate :recommendation_allowed
 
   def save
@@ -30,7 +30,7 @@ class AssessorInterface::ConfirmRecommendationForm
     end
   end
 
-  def needs_confirmation?
+  def needs_declaration?
     %w[award decline].include?(recommendation)
   end
 end

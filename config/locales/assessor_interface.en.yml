@@ -30,7 +30,7 @@ en:
         hint:
           can_award: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
-      confirm:
+      declare:
         heading:
           award: You’re about to award QTS
           decline: You’re about to decline QTS

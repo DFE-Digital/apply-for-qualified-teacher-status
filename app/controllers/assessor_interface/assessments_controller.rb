@@ -11,7 +11,7 @@ module AssessorInterface
         )
     end
 
-    def confirm
+    def declare
       @confirm_recommendation_form =
         ConfirmRecommendationForm.new(
           confirm_recommendation_form_params.merge(
@@ -20,8 +20,8 @@ module AssessorInterface
           ),
         )
 
-      if @confirm_recommendation_form.needs_confirmation?
-        render :confirm
+      if @confirm_recommendation_form.needs_declaration?
+        render :declare
       elsif @confirm_recommendation_form.save
         redirect_to post_update_redirect_path
       else
@@ -41,7 +41,7 @@ module AssessorInterface
       if @confirm_recommendation_form.save
         redirect_to post_update_redirect_path
       else
-        render :confirm, status: :unprocessable_entity
+        render :declare, status: :unprocessable_entity
       end
     end
 
@@ -63,7 +63,7 @@ module AssessorInterface
     def confirm_recommendation_form_params
       params.require(:assessor_interface_confirm_recommendation_form).permit(
         :recommendation,
-        :confirm,
+        :declaration,
       )
     end
 

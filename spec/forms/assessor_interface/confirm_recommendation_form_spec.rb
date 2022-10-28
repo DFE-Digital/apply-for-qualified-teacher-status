@@ -14,12 +14,12 @@ RSpec.describe AssessorInterface::ConfirmRecommendationForm, type: :model do
     it { is_expected.to validate_presence_of(:assessment) }
     it { is_expected.to validate_presence_of(:user) }
     it { is_expected.to validate_presence_of(:recommendation) }
-    it { is_expected.to_not validate_presence_of(:confirm) }
+    it { is_expected.to_not validate_presence_of(:declaration) }
 
     context "with an awarded recommendation" do
       let(:attributes) { { recommendation: "award" } }
 
-      it { is_expected.to validate_presence_of(:confirm) }
+      it { is_expected.to validate_presence_of(:declaration) }
     end
 
     context "with an award-able assessment" do
@@ -65,7 +65,7 @@ RSpec.describe AssessorInterface::ConfirmRecommendationForm, type: :model do
     end
 
     describe "with valid attributes" do
-      let(:attributes) { { confirm: "true", recommendation: "award" } }
+      let(:attributes) { { recommendation: "award", declaration: "true" } }
 
       before { allow(assessment).to receive(:can_award?).and_return(true) }
 
