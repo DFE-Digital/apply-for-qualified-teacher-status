@@ -1,6 +1,12 @@
 class TeacherMailer < ApplicationMailer
   before_action :set_name
 
+  GOVUK_NOTIFY_TEMPLATE_ID =
+    ENV.fetch(
+      "GOVUK_NOTIFY_TEMPLATE_ID_TEACHER",
+      "95adafaf-0920-4623-bddc-340853c047af",
+    )
+
   def application_received
     teacher = params[:teacher]
 
@@ -26,12 +32,6 @@ class TeacherMailer < ApplicationMailer
   end
 
   private
-
-  GOVUK_NOTIFY_TEMPLATE_ID =
-    ENV.fetch(
-      "GOVUK_NOTIFY_TEMPLATE_ID_TEACHER",
-      "95adafaf-0920-4623-bddc-340853c047af",
-    )
 
   def set_name
     application_form = params[:teacher].application_form

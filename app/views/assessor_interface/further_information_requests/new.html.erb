@@ -3,17 +3,11 @@
 
 <h1 class="govuk-heading-xl">Further information request email preview</h1>
 
-<div class="app-email-preview govuk-body">
-  <div class="app-email-preview__header">
-    <div class="app-email-preview__header__logo">
-      GOV.UK
-    </div>
-  </div>
-
-  <div class="app-email-preview__content">
-    <%= @email_preview.html_safe %>
-  </div>
-</div>
+<%= render(PreviewTeacherMailer::Component.new(
+  name: :further_information_requested,
+  teacher: @application_form.teacher,
+  further_information_request: @further_information_request
+)) %>
 
 <%= form_with model: [:assessor_interface, @application_form, @assessment, @further_information_request] do |f| %>
   <%= f.govuk_submit "Send email to applicant" do %>

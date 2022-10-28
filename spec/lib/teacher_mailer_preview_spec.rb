@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe FurtherInformationTemplatePreview do
+RSpec.describe TeacherMailerPreview do
   let(:further_information_request) { create(:further_information_request) }
   let(:teacher) { create(:teacher, :with_application_form) }
   let(:notify_key) { "notify-key" }
@@ -21,9 +21,12 @@ RSpec.describe FurtherInformationTemplatePreview do
     )
   end
 
-  describe "render" do
+  describe "render preview" do
     subject do
-      described_class.with(teacher:, further_information_request:).render
+      described_class.with(
+        teacher:,
+        further_information_request:,
+      ).further_information_requested
     end
 
     it { is_expected.to eq("email html") }
