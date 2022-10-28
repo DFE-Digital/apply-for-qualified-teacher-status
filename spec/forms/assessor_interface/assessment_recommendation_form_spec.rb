@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe AssessorInterface::ConfirmRecommendationForm, type: :model do
+RSpec.describe AssessorInterface::AssessmentRecommendationForm, type: :model do
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
   let(:user) { create(:staff, :confirmed) }

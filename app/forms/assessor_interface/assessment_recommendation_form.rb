@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AssessorInterface::ConfirmRecommendationForm
+class AssessorInterface::AssessmentRecommendationForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 

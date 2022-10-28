@@ -1,9 +1,9 @@
 <% content_for :page_title, "You’re about to award QTS" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<h1 class="govuk-heading-xl"><%= t(".heading.#{@confirm_recommendation_form.recommendation}") %></h1>
+<h1 class="govuk-heading-xl"><%= t(".heading.#{@assessment_recommendation_form.recommendation}") %></h1>
 
-<% if @confirm_recommendation_form.recommendation == "award" %>
+<% if @assessment_recommendation_form.recommendation == "award" %>
   <p class="govuk-body-l">You’re about to award QTS to <%= application_form_full_name(@application_form) %>.</p>
 <% else %>
   <p class="govuk-body-l">You’re about to decline this QTS application from <%= application_form_full_name(@application_form) %> for the following reasons:</p>
@@ -28,10 +28,10 @@
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 
-<p class="govuk-body"><%= t(".instruction.#{@confirm_recommendation_form.recommendation}") %></p>
+<p class="govuk-body"><%= t(".instruction.#{@assessment_recommendation_form.recommendation}") %></p>
 <p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
 
-<%= form_with model: @confirm_recommendation_form, url: [:assessor_interface, @application_form, @assessment], method: :put do |f| %>
+<%= form_with model: @assessment_recommendation_form, url: [:assessor_interface, @application_form, @assessment], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.hidden_field :recommendation %>
@@ -42,10 +42,10 @@
                           false,
                           multiple: false,
                           link_errors: true,
-                          label: { text: t(".declaration.#{@confirm_recommendation_form.recommendation}") } %>
+                          label: { text: t(".declaration.#{@assessment_recommendation_form.recommendation}") } %>
   <% end %>
 
-  <%= f.govuk_submit t(".button.#{@confirm_recommendation_form.recommendation}"), prevent_double_click: false do %>
+  <%= f.govuk_submit t(".button.#{@assessment_recommendation_form.recommendation}"), prevent_double_click: false do %>
     <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
   <% end %>
 <% end %>

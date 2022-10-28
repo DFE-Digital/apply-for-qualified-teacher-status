@@ -3,8 +3,8 @@ module AssessorInterface
     before_action :load_assessment_and_application_form
 
     def edit
-      @confirm_recommendation_form =
-        ConfirmRecommendationForm.new(
+      @assessment_recommendation_form =
+        AssessmentRecommendationForm.new(
           assessment:,
           user: current_staff,
           recommendation: assessment.recommendation,
@@ -12,17 +12,17 @@ module AssessorInterface
     end
 
     def declare
-      @confirm_recommendation_form =
-        ConfirmRecommendationForm.new(
-          confirm_recommendation_form_params.merge(
+      @assessment_recommendation_form =
+        AssessmentRecommendationForm.new(
+          assessment_recommendation_form_params.merge(
             assessment:,
             user: current_staff,
           ),
         )
 
-      if @confirm_recommendation_form.needs_declaration?
+      if @assessment_recommendation_form.needs_declaration?
         render :declare
-      elsif @confirm_recommendation_form.save
+      elsif @assessment_recommendation_form.save
         redirect_to post_update_redirect_path
       else
         render :edit, status: :unprocessable_entity
@@ -30,15 +30,15 @@ module AssessorInterface
     end
 
     def update
-      @confirm_recommendation_form =
-        ConfirmRecommendationForm.new(
-          confirm_recommendation_form_params.merge(
+      @assessment_recommendation_form =
+        AssessmentRecommendationForm.new(
+          assessment_recommendation_form_params.merge(
             assessment:,
             user: current_staff,
           ),
         )
 
-      if @confirm_recommendation_form.save
+      if @assessment_recommendation_form.save
         redirect_to post_update_redirect_path
       else
         render :declare, status: :unprocessable_entity
@@ -60,8 +60,8 @@ module AssessorInterface
           .find(params[:id])
     end
 
-    def confirm_recommendation_form_params
-      params.require(:assessor_interface_confirm_recommendation_form).permit(
+    def assessment_recommendation_form_params
+      params.require(:assessor_interface_assessment_recommendation_form).permit(
         :recommendation,
         :declaration,
       )
