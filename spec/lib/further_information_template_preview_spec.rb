@@ -23,7 +23,10 @@ RSpec.describe FurtherInformationTemplatePreview do
 
   describe "render" do
     subject do
-      described_class.with(teacher:, further_information_request:).render
+      described_class.with(
+        teacher:,
+        further_information_request:,
+      ).further_information_requested
     end
 
     it { is_expected.to eq("email html") }

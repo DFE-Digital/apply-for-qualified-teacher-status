@@ -13,7 +13,7 @@ module AssessorInterface
         FurtherInformationTemplatePreview.with(
           teacher:,
           further_information_request: @further_information_request,
-        ).render
+        ).further_information_requested
     end
 
     def create

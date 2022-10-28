@@ -10,15 +10,13 @@ class FurtherInformationTemplatePreview
     @params = params
   end
 
-  def render
-    client.generate_template_preview(
-      TeacherMailer::GOVUK_NOTIFY_TEMPLATE_ID,
-      personalisation: {
-        to: mail.to.first,
-        subject: mail.subject,
-        body: mail.body.encoded,
-      },
-    ).html
+  def respond_to_missing?(name)
+    mailer.respond_to?(name)
+  end
+
+  def method_missing(name)
+    mail = mailer.send(name)
+    generate_preview(mail)
   end
 
   private
@@ -29,7 +27,18 @@ class FurtherInformationTemplatePreview
     @client ||= Notifications::Client.new(ENV.fetch("GOVUK_NOTIFY_API_KEY"))
   end
 
-  def mail
-    TeacherMailer.with(teacher:, **params).further_information_requested
+  def mailer
+    @mailer ||= TeacherMailer.with(teacher:, **params)
+  end
+
+  def generate_preview(mail)
+    client.generate_template_preview(
+      TeacherMailer::GOVUK_NOTIFY_TEMPLATE_ID,
+      personalisation: {
+        to: mail.to.first,
+        subject: mail.subject,
+        body: mail.body.encoded,
+      },
+    ).html
   end
 end
