@@ -9,11 +9,6 @@ module AssessorInterface
     end
 
     def new
-      @email_preview =
-        TeacherMailerPreview.with(
-          teacher:,
-          further_information_request: @further_information_request,
-        ).further_information_requested
     end
 
     def create
