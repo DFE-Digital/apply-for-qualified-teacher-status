@@ -1,13 +1,13 @@
 class FurtherInformationTemplatePreview
   class << self
-    def with(teacher:, further_information_request:)
-      new(teacher:, further_information_request:)
+    def with(teacher:, **params)
+      new(teacher:, params:)
     end
   end
 
-  def initialize(teacher:, further_information_request:)
+  def initialize(teacher:, params:)
     @teacher = teacher
-    @further_information_request = further_information_request
+    @params = params
   end
 
   def render
@@ -23,16 +23,13 @@ class FurtherInformationTemplatePreview
 
   private
 
-  attr_reader :teacher, :further_information_request
+  attr_reader :teacher, :params
 
   def client
     @client ||= Notifications::Client.new(ENV.fetch("GOVUK_NOTIFY_API_KEY"))
   end
 
   def mail
-    TeacherMailer.with(
-      teacher:,
-      further_information_request:,
-    ).further_information_requested
+    TeacherMailer.with(teacher:, **params).further_information_requested
   end
 end
