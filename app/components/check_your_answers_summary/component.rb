@@ -116,9 +116,13 @@ module CheckYourAnswersSummary
       scope
         .order(:created_at)
         .select { |upload| upload.attachment.present? }
-        .map { |upload| link_to(upload.name, upload.url) }
+        .map { |upload| uploaded_document_link(upload) }
         .join(", ")
         .html_safe
+    end
+
+    def uploaded_document_link(upload)
+      link_to(upload.name, upload.url, target: :_blank, rel: :noopener)
     end
   end
 end
