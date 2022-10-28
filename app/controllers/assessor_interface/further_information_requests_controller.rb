@@ -10,7 +10,7 @@ module AssessorInterface
 
     def new
       @email_preview =
-        FurtherInformationTemplatePreview.with(
+        TeacherMailerPreview.with(
           teacher:,
           further_information_request: @further_information_request,
         ).further_information_requested

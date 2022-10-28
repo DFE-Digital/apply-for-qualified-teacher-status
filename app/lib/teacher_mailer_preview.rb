@@ -1,4 +1,4 @@
-class FurtherInformationTemplatePreview
+class TeacherMailerPreview
   class << self
     def with(teacher:, **params)
       new(teacher:, params:)
