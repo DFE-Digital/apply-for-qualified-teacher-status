@@ -57,7 +57,6 @@ RSpec.describe DQT::TRNRequestParams do
             ageRangeTo: 11,
             programmeStartDate: "1990-01-01",
             programmeEndDate: "1995-01-01",
-            programmeType: "OverseasTrainedTeacherProgramme",
             providerUkprn: nil,
             subject1: "100425",
             subject2: "100321",

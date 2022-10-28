@@ -41,7 +41,6 @@ module DQT
         providerUkprn: nil,
         programmeStartDate: teaching_qualification.start_date.iso8601,
         programmeEndDate: teaching_qualification.complete_date.iso8601,
-        programmeType: "OverseasTrainedTeacherProgramme",
         subject1: subjects.first,
         subject2: subjects.second,
         subject3: subjects.third,
