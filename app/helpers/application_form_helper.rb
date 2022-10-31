@@ -26,7 +26,14 @@ module ApplicationFormHelper
         I18n.t("application_form.summary.email"),
         application_form.teacher.email,
       ],
-      [I18n.t("application_form.summary.region"), application_form.region.name],
+      (
+        if application_form.region.name.present?
+          [
+            I18n.t("application_form.summary.region"),
+            application_form.region.name,
+          ]
+        end
+      ),
       [
         I18n.t("application_form.summary.submitted_at"),
         application_form.submitted_at.strftime("%e %B %Y"),
@@ -49,21 +56,21 @@ module ApplicationFormHelper
         ],
       ],
       (
-       if include_reviewer
-         [
-           I18n.t("application_form.summary.reviewer"),
-           application_form.reviewer&.name ||
-           I18n.t("application_form.summary.unassigned"),
-           [
-             {
-               href:
-               assessor_interface_application_form_assign_reviewer_path(
-                 application_form,
-               ),
-             },
-           ],
-         ]
-       end
+        if include_reviewer
+          [
+            I18n.t("application_form.summary.reviewer"),
+            application_form.reviewer&.name ||
+              I18n.t("application_form.summary.unassigned"),
+            [
+              {
+                href:
+                  assessor_interface_application_form_assign_reviewer_path(
+                    application_form,
+                  ),
+              },
+            ],
+          ]
+        end
       ),
       (
         if include_reference

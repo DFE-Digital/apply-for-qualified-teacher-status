@@ -60,7 +60,7 @@ FactoryBot.define do
     sequence(:reference) { |n| n.to_s.rjust(7, "0") }
     state { "draft" }
     association :teacher
-    association :region, :national
+    association :region
 
     needs_work_history do
       region.status_check_none? || region.sanction_check_none?

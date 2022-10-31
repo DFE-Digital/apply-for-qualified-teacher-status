@@ -145,19 +145,35 @@ RSpec.describe ApplicationFormHelper do
         ],
       )
     end
-    context "include_reviewer false" do
 
+    context "include_reviewer false" do
       subject(:summary_rows_without_reviewer) do
         application_form_summary_rows(
           application_form,
           include_name: true,
           include_reference: true,
-          include_reviewer: false
+          include_reviewer: false,
         )
       end
 
       it "does not return the reviewer element" do
-        expect(summary_rows_without_reviewer.find {|row| row[:key][:text] == "Reviewer"}).to be_nil
+        expect(
+          summary_rows_without_reviewer.find do |row|
+            row[:key][:text] == "Reviewer"
+          end,
+        ).to be_nil
+      end
+    end
+
+    context "region has an empty name" do
+      before { application_form.region.update(name: "") }
+
+      it "does not return the region element" do
+        expect(
+          summary_rows.find do |row|
+            row[:key][:text] == "State/territory trained in"
+          end,
+        ).to be_nil
       end
     end
   end
