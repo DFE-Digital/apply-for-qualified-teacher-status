@@ -117,12 +117,17 @@ module CheckYourAnswersSummary
         .order(:created_at)
         .select { |upload| upload.attachment.present? }
         .map { |upload| uploaded_document_link(upload) }
-        .join(", ")
+        .join("<br />")
         .html_safe
     end
 
     def uploaded_document_link(upload)
-      link_to(upload.name, upload.url, target: :_blank, rel: :noopener)
+      link_to(
+        "#{upload.name} (opens in a new tab)",
+        upload.url,
+        target: :_blank,
+        rel: :noopener,
+      )
     end
   end
 end
