@@ -1,0 +1,12 @@
+<% content_for :page_title, "Application" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
+
+<%= govuk_panel(title_text: "QTS application #{@view_object.application_form.reference} has been #{@view_object.status.downcase}") %>
+
+<p class="govuk-body">The status of this application has been changed to ’<%= @view_object.status %>‘.</p>
+<p class="govuk-body">The application will be deleted after 90 days unless the applicant chooses to appeal.</p>
+
+<div class="govuk-button-group">
+  <%= govuk_button_link_to "Back to application list", assessor_interface_application_forms_path %>
+  <%= govuk_button_link_to "See application overview", assessor_interface_application_form_path(@view_object.application_form), secondary: true %>
+</div>
