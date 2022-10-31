@@ -33,6 +33,7 @@
        ) %>
     <% header.navigation_item(text: "Sidekiq", href: support_interface_sidekiq_web_path) %>
     <% header.navigation_item(text: "Assessor case management", href: assessor_interface_root_path) %>
+    <% header.navigation_item(text: "Sign out", href: destroy_staff_session_path) %>
   <% when "teacher" %>
     <% if current_teacher %>
       <% header.navigation_item(text: "Sign out", href: destroy_teacher_session_path) %>
