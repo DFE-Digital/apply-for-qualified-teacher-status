@@ -199,5 +199,9 @@ FactoryBot.define do
         create(:upload, document: application_form.written_statement_document)
       end
     end
+
+    trait :with_reviewer do
+      association :reviewer, factory: :staff
+    end
   end
 end

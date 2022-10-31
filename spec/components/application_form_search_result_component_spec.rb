@@ -11,6 +11,7 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
     create(
       :application_form,
       :submitted,
+      :with_reviewer,
       given_names: "Given",
       family_name: "Family",
     )
@@ -56,6 +57,15 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
       it { is_expected.to include("Assigned to") }
       it { is_expected.to include("Reviewer") }
       it { is_expected.to include("Status") }
+
+      context "where there is no reviewer assigned" do
+        before do
+          application_form.update(reviewer: nil)
+        end
+
+        it { is_expected.not_to include("Reviewer") }
+      end
     end
+
   end
 end

@@ -145,5 +145,20 @@ RSpec.describe ApplicationFormHelper do
         ],
       )
     end
+    context "include_reviewer false" do
+
+      subject(:summary_rows_without_reviewer) do
+        application_form_summary_rows(
+          application_form,
+          include_name: true,
+          include_reference: true,
+          include_reviewer: false
+        )
+      end
+
+      it "does not return the reviewer element" do
+        expect(summary_rows_without_reviewer.find {|row| row[:key][:text] == "Reviewer"}).to be_nil
+      end
+    end
   end
 end
