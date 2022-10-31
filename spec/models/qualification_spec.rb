@@ -85,16 +85,27 @@ RSpec.describe Qualification, type: :model do
         create(:qualification, application_form: qualification.application_form)
       end
 
-      context "with qualification part of degree" do
+      context "and qualification part of degree" do
         before { qualification.update!(part_of_university_degree: true) }
 
         it { is_expected.to be true }
       end
 
-      context "with qualification not part of degree" do
+      context "and qualification not part of degree" do
         before { qualification.update!(part_of_university_degree: false) }
 
         it { is_expected.to be false }
+
+        context "and more than 2 degree qualifications" do
+          before do
+            create(
+              :qualification,
+              application_form: qualification.application_form,
+            )
+          end
+
+          it { is_expected.to be true }
+        end
       end
     end
   end
