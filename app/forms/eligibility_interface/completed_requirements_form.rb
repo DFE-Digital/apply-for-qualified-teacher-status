@@ -1,20 +1,16 @@
 class EligibilityInterface::CompletedRequirementsForm
   include ActiveModel::Model
+  include ActiveModel::Attributes
 
   attr_accessor :eligibility_check
-  attr_reader :completed_requirements
+  attribute :completed_requirements, :boolean
 
   validates :eligibility_check, presence: true
   validates :completed_requirements, inclusion: { in: [true, false] }
 
-  def completed_requirements=(value)
-    @completed_requirements = ActiveModel::Type::Boolean.new.cast(value)
-  end
-
   def save
     return false unless valid?
 
-    eligibility_check.completed_requirements = completed_requirements
-    eligibility_check.save!
+    eligibility_check.update!(completed_requirements:)
   end
 end

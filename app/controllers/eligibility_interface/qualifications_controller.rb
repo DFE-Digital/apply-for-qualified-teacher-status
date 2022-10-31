@@ -3,7 +3,8 @@ module EligibilityInterface
     include EnforceEligibilityQuestionOrder
 
     def new
-      @qualification_form = QualificationForm.new
+      @qualification_form =
+        QualificationForm.new(qualification: eligibility_check.qualification)
     end
 
     def create

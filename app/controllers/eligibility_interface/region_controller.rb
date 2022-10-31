@@ -5,7 +5,7 @@ module EligibilityInterface
     before_action :load_regions
 
     def new
-      @region_form = RegionForm.new
+      @region_form = RegionForm.new(region_id: eligibility_check.region_id)
     end
 
     def create

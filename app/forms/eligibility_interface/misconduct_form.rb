@@ -1,20 +1,16 @@
 class EligibilityInterface::MisconductForm
   include ActiveModel::Model
+  include ActiveModel::Attributes
 
   attr_accessor :eligibility_check
-  attr_reader :misconduct
+  attribute :misconduct, :boolean
 
   validates :eligibility_check, presence: true
   validates :misconduct, inclusion: { in: [true, false] }
 
-  def misconduct=(value)
-    @misconduct = ActiveModel::Type::Boolean.new.cast(value)
-  end
-
   def save
     return false unless valid?
 
-    eligibility_check.free_of_sanctions = !misconduct
-    eligibility_check.save!
+    eligibility_check.update!(free_of_sanctions: !misconduct)
   end
 end

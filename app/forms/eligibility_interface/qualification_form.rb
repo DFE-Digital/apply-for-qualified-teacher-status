@@ -1,20 +1,16 @@
 class EligibilityInterface::QualificationForm
   include ActiveModel::Model
+  include ActiveModel::Attributes
 
   attr_accessor :eligibility_check
-  attr_reader :qualification
+  attribute :qualification, :boolean
 
   validates :eligibility_check, presence: true
   validates :qualification, inclusion: { in: [true, false] }
 
-  def qualification=(value)
-    @qualification = ActiveModel::Type::Boolean.new.cast(value)
-  end
-
   def save
     return false unless valid?
 
-    eligibility_check.qualification = qualification
-    eligibility_check.save!
+    eligibility_check.update!(qualification:)
   end
 end

@@ -3,7 +3,8 @@ module EligibilityInterface
     include EnforceEligibilityQuestionOrder
 
     def new
-      @completed_requirements_form = CompletedRequirementsForm.new
+      @completed_requirements_form =
+        CompletedRequirementsForm.new(eligibility_check.completed_requirements)
     end
 
     def create

@@ -1,19 +1,15 @@
 <% content_for :page_title, "#{'Error: ' if @teach_children_form.errors.any?}Are you qualified to teach children who are aged somewhere between 5 and 16 years?" %>
 <% content_for :back_link_url, back_link_url(eligibility_interface_degree_path) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @teach_children_form, url: eligibility_interface_teach_children_url, method: :post do |f| %>
-      <%= f.govuk_error_summary %>
-      <%= f.govuk_collection_radio_buttons(
-        :teach_children,
-        [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
-        :value,
-        :label,
-        legend: { size: 'l', tag: 'h1', text: 'Are you qualified to teach children who are aged somewhere between 5 and 16 years?' },
-        hint: { text: 'You do not need to be qualified to teach this full age range. For example, you might be qualified to teach children aged 5 to 11, or 14 to 16.' }
-      ) %>
-      <%= f.govuk_submit prevent_double_click: false %>
-    <% end %>
-  </div>
-</div>
+<%= form_with model: @teach_children_form, url: eligibility_interface_teach_children_url, method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.govuk_collection_radio_buttons(
+    :teach_children,
+    [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
+    :value,
+    :label,
+    legend: { size: 'l', tag: 'h1', text: 'Are you qualified to teach children who are aged somewhere between 5 and 16 years?' },
+    hint: { text: 'You do not need to be qualified to teach this full age range. For example, you might be qualified to teach children aged 5 to 11, or 14 to 16.' }
+  ) %>
+  <%= f.govuk_submit prevent_double_click: false %>
+<% end %>

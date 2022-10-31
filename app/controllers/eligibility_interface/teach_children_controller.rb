@@ -3,7 +3,8 @@ module EligibilityInterface
     include EnforceEligibilityQuestionOrder
 
     def new
-      @teach_children_form = TeachChildrenForm.new
+      @teach_children_form =
+        TeachChildrenForm.new(teach_children: eligibility_check.teach_children)
     end
 
     def create

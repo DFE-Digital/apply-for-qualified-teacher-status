@@ -9,7 +9,6 @@ class EligibilityInterface::CountryForm
   def save
     return false unless valid?
 
-    eligibility_check.country_code = CountryCode.from_location(location)
-    eligibility_check.save!
+    eligibility_check.update!(country_code: CountryCode.from_location(location))
   end
 end
