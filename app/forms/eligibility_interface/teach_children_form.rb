@@ -1,20 +1,16 @@
 class EligibilityInterface::TeachChildrenForm
   include ActiveModel::Model
+  include ActiveModel::Attributes
 
   attr_accessor :eligibility_check
-  attr_reader :teach_children
+  attribute :teach_children, :boolean
 
   validates :eligibility_check, presence: true
   validates :teach_children, inclusion: { in: [true, false] }
 
-  def teach_children=(value)
-    @teach_children = ActiveModel::Type::Boolean.new.cast(value)
-  end
-
   def save
     return false unless valid?
 
-    eligibility_check.teach_children = teach_children
-    eligibility_check.save!
+    eligibility_check.update!(teach_children:)
   end
 end

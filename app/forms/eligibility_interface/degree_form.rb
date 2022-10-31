@@ -1,20 +1,16 @@
 class EligibilityInterface::DegreeForm
   include ActiveModel::Model
+  include ActiveModel::Attributes
 
   attr_accessor :eligibility_check
-  attr_reader :degree
+  attribute :degree, :boolean
 
   validates :eligibility_check, presence: true
   validates :degree, inclusion: { in: [true, false] }
 
-  def degree=(value)
-    @degree = ActiveModel::Type::Boolean.new.cast(value)
-  end
-
   def save
     return false unless valid?
 
-    eligibility_check.degree = degree
-    eligibility_check.save!
+    eligibility_check.update!(degree:)
   end
 end
