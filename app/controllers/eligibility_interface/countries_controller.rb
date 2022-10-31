@@ -3,7 +3,7 @@ module EligibilityInterface
     include EnforceEligibilityQuestionOrder
 
     def new
-      @country_form = CountryForm.new
+      @country_form = CountryForm.new(location: eligibility_check.location)
     end
 
     def create

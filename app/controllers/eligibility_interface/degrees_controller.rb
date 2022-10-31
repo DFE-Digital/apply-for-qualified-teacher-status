@@ -3,7 +3,7 @@ module EligibilityInterface
     include EnforceEligibilityQuestionOrder
 
     def new
-      @degree_form = DegreeForm.new
+      @degree_form = DegreeForm.new(degree: eligibility_check.degree)
     end
 
     def create

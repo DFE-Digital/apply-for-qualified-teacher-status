@@ -3,7 +3,17 @@ module EligibilityInterface
     include EnforceEligibilityQuestionOrder
 
     def new
-      @misconduct_form = MisconductForm.new
+      @misconduct_form =
+        MisconductForm.new(
+          misconduct:
+            (
+              if eligibility_check.free_of_sanctions.nil?
+                nil
+              else
+                !eligibility_check.free_of_sanctions
+              end
+            ),
+        )
     end
 
     def create
