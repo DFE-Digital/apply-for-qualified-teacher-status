@@ -33,13 +33,14 @@ RSpec.describe DQTTRNRequest, type: :model do
 
     it do
       is_expected.to define_enum_for(:state).with_values(
+        initial: "initial",
         pending: "pending",
         complete: "complete",
       ).backed_by_column_of_type(:string)
     end
   end
 
-  it "defaults to a pending state" do
-    expect(dqt_trn_request.pending?).to be true
+  it "defaults to the initial state" do
+    expect(dqt_trn_request.initial?).to be true
   end
 end

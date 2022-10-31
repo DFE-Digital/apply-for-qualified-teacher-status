@@ -10,16 +10,7 @@ class CreateDQTTRNRequest
   def call
     request_id = SecureRandom.uuid
     dqt_trn_request = DQTTRNRequest.create!(request_id:, application_form:)
-
-    dqt_trn_request.update_from_dqt_response(
-      DQT::Client::CreateTRNRequest.call(request_id:, application_form:),
-    )
-
-    if dqt_trn_request.pending?
-      UpdateDQTTRNRequestJob.set(wait: 1.hour).perform_later(dqt_trn_request)
-    end
-
-    dqt_trn_request
+    UpdateDQTTRNRequestJob.perform_later(dqt_trn_request)
   end
 
   private

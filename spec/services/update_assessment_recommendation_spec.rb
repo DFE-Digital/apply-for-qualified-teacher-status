@@ -12,6 +12,10 @@ RSpec.describe UpdateAssessmentRecommendation do
     described_class.call(assessment:, user:, new_recommendation:)
   end
 
+  before do
+    allow(CreateDQTTRNRequest).to receive(:call).with(application_form:)
+  end
+
   describe "assessment recommendation" do
     subject(:recommendation) { assessment.recommendation }
 
@@ -48,8 +52,26 @@ RSpec.describe UpdateAssessmentRecommendation do
     end
   end
 
+  describe "DQT TRN request job" do
+    it "creates a DQT TRN request" do
+      expect(CreateDQTTRNRequest).to receive(:call)
+      call
+    end
+  end
+
+  context "decline recommendataion" do
+    let(:new_recommendation) { "decline" }
+
+    describe "DQT TRN request job" do
+      it "doesn't create a DQT TRN request" do
+        expect(CreateDQTTRNRequest).to_not receive(:call)
+        call
+      end
+    end
+  end
+
   context "request further information recommendataion" do
-    let(:new_recommendation) { :request_further_information }
+    let(:new_recommendation) { "request_further_information" }
 
     describe "recommendation" do
       subject(:recommendation) { assessment.recommendation }
@@ -66,6 +88,13 @@ RSpec.describe UpdateAssessmentRecommendation do
     describe "application form status" do
       it "doesn't change the state" do
         expect { call }.to_not change(application_form, :state)
+      end
+    end
+
+    describe "DQT TRN request" do
+      it "doesn't create a DQT TRN request" do
+        expect(CreateDQTTRNRequest).to_not receive(:call)
+        call
       end
     end
   end

@@ -21,12 +21,10 @@ class UpdateAssessmentRecommendation
       end
 
       if (new_state = new_application_form_state)
-        ChangeApplicationFormState.call(
-          application_form: assessment.application_form,
-          user:,
-          new_state:,
-        )
+        ChangeApplicationFormState.call(application_form:, user:, new_state:)
       end
+
+      CreateDQTTRNRequest.call(application_form:) if assessment.award?
 
       true
     end
@@ -35,6 +33,8 @@ class UpdateAssessmentRecommendation
   private
 
   attr_reader :assessment, :user, :new_recommendation
+
+  delegate :application_form, to: :assessment
 
   def new_application_form_state
     return "awarded" if assessment.award?

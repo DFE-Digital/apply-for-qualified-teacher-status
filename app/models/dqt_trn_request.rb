@@ -20,14 +20,8 @@
 class DQTTRNRequest < ApplicationRecord
   belongs_to :application_form
 
-  enum :state, { pending: "pending", complete: "complete" }, default: :pending
-
+  enum :state,
+       { initial: "initial", pending: "pending", complete: "complete" },
+       default: :initial
   validates :state, presence: true, inclusion: { in: states.values }
-
-  def update_from_dqt_response(response)
-    if (trn = response[:trn]).present?
-      application_form.teacher.update!(trn:)
-      complete!
-    end
-  end
 end

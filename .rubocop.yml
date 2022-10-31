@@ -25,3 +25,7 @@ Style/MethodCalledOnDoEndBlock:
 Layout/LineLength:
   Exclude:
     - spec/helpers/application_form_helper_spec.rb
+
+Lint/SuppressedException:
+  Exclude:
+    - spec/jobs/update_dqt_trn_request_job_spec.rb
