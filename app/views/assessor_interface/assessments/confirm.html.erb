@@ -1,51 +1,19 @@
-<% content_for :page_title, "You’re about to award QTS" %>
+<% content_for :page_title, t(".legend.#{@assessment_recommendation_form.recommendation}") %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<h1 class="govuk-heading-xl"><%= t(".heading.#{@confirm_recommendation_form.recommendation}") %></h1>
-
-<% if @confirm_recommendation_form.recommendation == "award" %>
-  <p class="govuk-body-l">You’re about to award QTS to <%= application_form_full_name(@application_form) %>.</p>
-<% else %>
-  <p class="govuk-body-l">You’re about to decline this QTS application from <%= application_form_full_name(@application_form) %> for the following reasons:</p>
-
-  <h2 class="govuk-heading-l">Your decline reasons and notes</h2>
-
-  <% @assessment.sections.each do |section| %>
-    <% if section.selected_failure_reasons.present? %>
-      <h3 class="govuk-heading-m"><%= t(".assessment_section.#{section.key}") %></h3>
-      <ul class="govuk-list">
-        <% section.selected_failure_reasons.each do |key, note| %>
-          <li>
-            <h4 class="govuk-heading-s"><%= t("assessor_interface.assessment_sections.show.failure_reasons.#{key}") %></h4>
-            <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
-            <%= govuk_inset_text(text: note) %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-  <% end %>
-<% end %>
-
-<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-
-<p class="govuk-body"><%= t(".instruction.#{@confirm_recommendation_form.recommendation}") %></p>
-<p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
-
-<%= form_with model: @confirm_recommendation_form, url: [:assessor_interface, @application_form, @assessment], method: :put do |f| %>
+<%= form_with model: @assessment_recommendation_form, url: [:assessor_interface, @application_form, @assessment], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.hidden_field :recommendation %>
+  <%= f.hidden_field :declaration %>
 
-  <%= f.govuk_check_boxes_fieldset :confirm, small: true do %>
-    <%= f.govuk_check_box :confirm,
-                          true,
-                          false,
-                          multiple: false,
-                          link_errors: true,
-                          label: { text: t(".declaration.#{@confirm_recommendation_form.recommendation}") } %>
+  <%= f.govuk_radio_buttons_fieldset :confirmation,
+                                     inline: true,
+                                     legend: { text: t(".legend.#{@assessment_recommendation_form.recommendation}"), size: "l", tag: "h1" },
+                                     hint: { text: t(".hint.#{@assessment_recommendation_form.recommendation}") } do %>
+    <%= f.govuk_radio_button :confirmation, :true, link_errors: true %>
+    <%= f.govuk_radio_button :confirmation, :false %>
   <% end %>
 
-  <%= f.govuk_submit t(".button.#{@confirm_recommendation_form.recommendation}"), prevent_double_click: false do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
-  <% end %>
+  <%= f.govuk_submit prevent_double_click: false %>
 <% end %>

@@ -30,7 +30,7 @@ en:
         hint:
           can_award: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
-      confirm:
+      declare:
         heading:
           award: You’re about to award QTS
           decline: You’re about to decline QTS
@@ -49,6 +49,16 @@ en:
           age_range_subjects: Age range and subjects
           work_history: Work history
           professional_standing: Professional standing
+      confirm:
+        legend:
+          award: Award this QTS application?
+          decline: Decline this QTS application?
+        hint:
+          award: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
+          decline: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
+        inclusion:
+          award: Select ‘Yes’ to award, or ‘No’ to cancel.
+          decline: Select ‘Yes’ to decline, or ‘No’ to cancel.
 
     assessment_sections:
       show:
@@ -145,19 +155,19 @@ en:
           attributes:
             assessor_id:
               blank: Select an assessor to assign
+        assessor_interface/assessment_recommendation_form:
+          attributes:
+            recommendation:
+              blank: Select your recommendation
+              inclusion: Select your recommendation
+            declaration:
+              blank: You must confirm that you have reviewed this QTS application
         assessor_interface/assessment_section_form:
           attributes:
             subject_1:
               blank: Enter the subject
             selected_failure_reasons:
               blank: Select the reasons for your recommendation
-        assessor_interface/confirm_recommendation_form:
-          attributes:
-            recommendation:
-              blank: Select your recommendation
-              inclusion: Select your recommendation
-            confirm:
-              blank: You must confirm that you have reviewed this QTS application
         assessor_interface/further_information_request_form:
           attributes:
             passed:
