@@ -29,15 +29,14 @@ module TeacherInterface
         return
       end
 
-      if application_form.further_information_requested?
-        @further_information_request =
-          FurtherInformationRequest
-            .joins(:assessment)
-            .requested
-            .where(assessments: { application_form: })
-            .order(:created_at)
-            .first
-      end
+      @assessment = application_form.assessment
+
+      @further_information_request =
+        FurtherInformationRequest
+          .joins(:assessment)
+          .where(assessments: { application_form: })
+          .order(:created_at)
+          .first
     end
 
     def edit
