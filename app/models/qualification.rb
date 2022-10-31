@@ -52,7 +52,7 @@ class Qualification < ApplicationRecord
       application_form.teaching_qualification&.part_of_university_degree
     return true if part_of_university_degree.nil? || part_of_university_degree
 
-    application_form.qualifications.ordered.second != self
+    application_form.qualifications.count > 2
   end
 
   def institution_country_name
