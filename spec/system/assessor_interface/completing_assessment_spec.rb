@@ -3,6 +3,24 @@
 require "rails_helper"
 
 RSpec.describe "Assessor completing assessment", type: :system do
+  let(:notify_key) { "notify-key" }
+  let(:notify_client) do
+    double(generate_template_preview: notify_template_preview)
+  end
+  let(:notify_template_preview) { double(html: "I am an email") }
+
+  around do |example|
+    ClimateControl.modify GOVUK_NOTIFY_API_KEY: notify_key do
+      example.run
+    end
+  end
+
+  before do
+    allow(Notifications::Client).to receive(:new).with(notify_key).and_return(
+      notify_client,
+    )
+  end
+
   it "award" do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(assessor)
@@ -44,6 +62,14 @@ RSpec.describe "Assessor completing assessment", type: :system do
     and_i_see_failure_reasons
 
     when_i_check_declaration
+    then_i_see_the(
+      :preview_assessment_recommendation_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_send_the_email
+
     when_i_check_confirmation
     then_i_see_the(:assessor_application_status_page, application_id:)
 
@@ -125,6 +151,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def when_i_check_declaration
     declare_assessment_recommendation_page.form.declaration_checkbox.click
     declare_assessment_recommendation_page.form.submit_button.click
+  end
+
+  def when_i_send_the_email
+    preview_assessment_recommendation_page.form.send_button.click
   end
 
   def when_i_check_confirmation

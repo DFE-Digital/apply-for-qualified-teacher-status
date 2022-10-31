@@ -120,6 +120,11 @@ module PageHelpers
     @personas_page ||= PageObjects::Personas.new
   end
 
+  def preview_assessment_recommendation_page
+    @preview_assessment_recommendation_page ||=
+      PageObjects::AssessorInterface::PreviewAssessmentRecommendation.new
+  end
+
   def qualification_page
     @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
   end

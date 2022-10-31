@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :assessments, only: %i[edit update] do
         member do
           post "declare", to: "assessments#declare"
+          post "preview", to: "assessments#preview"
           post "confirm", to: "assessments#confirm"
         end
 
