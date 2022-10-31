@@ -14,7 +14,6 @@ module ApplicationFormOverview
         application_form,
         include_name: true,
         include_reference: true,
-        include_notes: false,
       ) +
         [
           {

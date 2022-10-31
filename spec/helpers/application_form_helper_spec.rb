@@ -31,7 +31,6 @@ RSpec.describe ApplicationFormHelper do
         application_form,
         include_name: true,
         include_reference: true,
-        include_notes: true,
       )
     end
 
@@ -140,15 +139,6 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text:
                 "<strong class=\"govuk-tag govuk-tag--grey app-search-result__item__tag\" id=\"application-form-#{application_form.id}-status\">Not started</strong>\n",
-            },
-            actions: [],
-          },
-          {
-            key: {
-              text: "Notes",
-            },
-            value: {
-              text: "Not implemented",
             },
             actions: [],
           },

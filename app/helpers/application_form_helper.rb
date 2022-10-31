@@ -6,8 +6,7 @@ module ApplicationFormHelper
   def application_form_summary_rows(
     application_form,
     include_name:,
-    include_reference:,
-    include_notes:
+    include_reference:
   )
     [
       (
@@ -79,11 +78,6 @@ module ApplicationFormHelper
           ),
         ),
       ],
-      (
-        if include_notes
-          [I18n.t("application_form.summary.notes"), "Not implemented"]
-        end
-      ),
     ].compact.map do |key, value, actions|
       { key: { text: key }, value: { text: value }, actions: actions || [] }
     end

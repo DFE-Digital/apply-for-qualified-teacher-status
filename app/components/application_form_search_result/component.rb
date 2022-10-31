@@ -22,7 +22,6 @@ module ApplicationFormSearchResult
         application_form,
         include_name: false,
         include_reference: false,
-        include_notes: true,
       )
     end
 
