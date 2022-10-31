@@ -91,38 +91,58 @@ module CheckYourAnswersSummary
     end
 
     def format_value(value, field)
-      return "" if value.nil?
-
-      if value.is_a?(Date)
-        format = field[:format] == :without_day ? "%B %Y" : "%e %B %Y"
-        return value.strftime(format).strip
+      case value
+      when nil
+        ""
+      when Date
+        format_date(value, field)
+      when Upload
+        format_upload(value)
+      when Document
+        format_document(value, field)
+      when Array
+        format_array(value, field)
+      when true
+        "Yes"
+      when false
+        "No"
+      else
+        value.to_s
       end
-
-      return file_links_for(value, field[:translation]) if value.is_a?(Document)
-
-      if value.is_a?(Array)
-        return value.map { |v| format_value(v, field) }.join("<br />").html_safe
-      end
-
-      return "Yes" if value == true
-      return "No" if value == false
-
-      value.to_s
     end
 
-    def file_links_for(document, translations)
+    def format_date(date, field)
+      format = field[:format] == :without_day ? "%B %Y" : "%e %B %Y"
+      date.strftime(format).strip
+    end
+
+    def format_document(document, field)
       scope =
-        translations ? document.translated_uploads : document.original_uploads
-      scope
-        .order(:created_at)
-        .select { |upload| upload.attachment.present? }
-        .map { |upload| uploaded_document_link(upload) }
-        .join(", ")
-        .html_safe
+        (
+          if field[:translation]
+            document.translated_uploads
+          else
+            document.original_uploads
+          end
+        )
+
+      uploads =
+        scope.order(:created_at).select { |upload| upload.attachment.present? }
+
+      format_array(uploads, field)
     end
 
-    def uploaded_document_link(upload)
-      link_to(upload.name, upload.url, target: :_blank, rel: :noopener)
+    def format_upload(upload)
+      link_to(
+        "#{upload.name} (opens in a new tab)",
+        upload.url,
+        target: :_blank,
+        rel: :noopener,
+      )
+    end
+
+    def format_array(list, field)
+      list.map { |v| format_value(v, field) }.join("<br />").html_safe
     end
   end
 end
