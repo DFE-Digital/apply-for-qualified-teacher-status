@@ -98,6 +98,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
     end
   end
 
+  def status
+    application_form.state.humanize
+  end
+
   private
 
   attr_reader :params

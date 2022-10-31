@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     root to: redirect("/assessor/applications")
 
     resources :application_forms, path: "/applications", only: %i[index show] do
+      get "status", to: "application_forms#status", on: :member
+
       get "assign-assessor", to: "assessor_assignments#new"
       post "assign-assessor", to: "assessor_assignments#create"
       get "assign-reviewer", to: "reviewer_assignments#new"

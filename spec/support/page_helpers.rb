@@ -12,6 +12,11 @@ module PageHelpers
       PageObjects::AssessorInterface::Application.new
   end
 
+  def assessor_application_status_page
+    @assessor_application_status_page ||=
+      PageObjects::AssessorInterface::ApplicationStatus.new
+  end
+
   def applications_page
     @applications_page ||= PageObjects::AssessorInterface::Applications.new
   end
