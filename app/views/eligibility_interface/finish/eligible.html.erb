@@ -1,17 +1,13 @@
 <% content_for :page_title, 'You’re eligible' %>
 <% content_for :back_link_url, back_link_url %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= render "shared/eligible_region_content", region: @region %>
+<%= render "shared/eligible_region_content", region: @region %>
 
-    <% if FeatureFlag.active?(:teacher_applications) && @region && @region.application_form_enabled %>
-      <%= govuk_start_button(text: "Apply for QTS", href: new_teacher_registration_path) %>
-    <% else %>
-      <p class="govuk-body">You’ll make your application on the Teaching Regulation Agency website.</p>
-      <%= govuk_start_button(text: "Apply for QTS", href: @mutual_recognition_url) %>
-    <% end %>
+<% if FeatureFlag.active?(:teacher_applications) && @region && @region.application_form_enabled %>
+  <%= govuk_start_button(text: "Apply for QTS", href: new_teacher_registration_path) %>
+<% else %>
+  <p class="govuk-body">You’ll make your application on the Teaching Regulation Agency website.</p>
+  <%= govuk_start_button(text: "Apply for QTS", href: @mutual_recognition_url) %>
+<% end %>
 
-    <%= render "shared/help_us_to_improve_this_service" %>
-  </div>
-</div>
+<%= render "shared/help_us_to_improve_this_service" %>

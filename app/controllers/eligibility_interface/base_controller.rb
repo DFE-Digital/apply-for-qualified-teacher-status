@@ -2,6 +2,8 @@ module EligibilityInterface
   class BaseController < ApplicationController
     include EligibilityCurrentNamespace
 
+    layout "two_thirds"
+
     before_action :load_region
     after_action :save_eligibility_check_id
 

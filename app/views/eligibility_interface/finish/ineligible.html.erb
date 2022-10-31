@@ -1,38 +1,34 @@
 <% content_for :page_title, "You’re not eligible" %>
 <% content_for :back_link_url, back_link_url %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      You’re not eligible to apply for qualified teacher status (QTS) in England
-    </h1>
+<h1 class="govuk-heading-xl">
+  You’re not eligible to apply for qualified teacher status (QTS) in England
+</h1>
 
-    <% if @eligibility_check.ineligible_reasons.include?(:country) %>
-      <% if @eligibility_check.england_or_wales? %>
-        <p class="govuk-body">This service is for qualified teachers who trained outside of England who want to apply for qualified teacher status (QTS) to teach in English schools.</p>
-        <p class="govuk-body">If you trained in England or Wales, or have not yet qualified, learn more about <%= govuk_link_to "other routes to QTS", "https://getintoteaching.education.gov.uk/train-to-be-a-teacher" %>.</p>
-      <% else %>
-        <p class="govuk-body">Teachers applying from <%= CountryName.from_eligibility_check(@eligibility_check, with_definite_article: true) %> are not currently eligible to use this service. However, you can <%= govuk_link_to "apply for QTS using alternative routes", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#qts-exemption-for-teachers-from-outside-the-uk" %>.</p>
-      <% end %>
-    <% else %>
-      <p class="govuk-body">This is because:</p>
+<% if @eligibility_check.ineligible_reasons.include?(:country) %>
+  <% if @eligibility_check.england_or_wales? %>
+    <p class="govuk-body">This service is for qualified teachers who trained outside of England who want to apply for qualified teacher status (QTS) to teach in English schools.</p>
+    <p class="govuk-body">If you trained in England or Wales, or have not yet qualified, learn more about <%= govuk_link_to "other routes to QTS", "https://getintoteaching.education.gov.uk/train-to-be-a-teacher" %>.</p>
+  <% else %>
+    <p class="govuk-body">Teachers applying from <%= CountryName.from_eligibility_check(@eligibility_check, with_definite_article: true) %> are not currently eligible to use this service. However, you can <%= govuk_link_to "apply for QTS using alternative routes", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#qts-exemption-for-teachers-from-outside-the-uk" %>.</p>
+  <% end %>
+<% else %>
+  <p class="govuk-body">This is because:</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <% @eligibility_check.ineligible_reasons.each do |reason| %>
-          <li><%= I18n.t("activemodel.attributes.eligibility_check.ineligible_reason.#{reason}", country_name: CountryName.from_eligibility_check(@eligibility_check, with_definite_article: true)) %></li>
-        <% end %>
-      </ul>
+  <ul class="govuk-list govuk-list--bullet">
+    <% @eligibility_check.ineligible_reasons.each do |reason| %>
+      <li><%= I18n.t("activemodel.attributes.eligibility_check.ineligible_reason.#{reason}", country_name: CountryName.from_eligibility_check(@eligibility_check, with_definite_article: true)) %></li>
     <% end %>
+  </ul>
+<% end %>
 
-    <% unless @eligibility_check.ineligible_reasons.include?(:misconduct) || @eligibility_check.england_or_wales? %>
-      <p class="govuk-body">You can also <%= govuk_link_to "learn more about teaching in England", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" %>.</p>
-    <% end %>
+<% unless @eligibility_check.ineligible_reasons.include?(:misconduct) || @eligibility_check.england_or_wales? %>
+  <p class="govuk-body">You can also <%= govuk_link_to "learn more about teaching in England", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" %>.</p>
+<% end %>
 
-    <% if @eligibility_check.ineligible_reasons.include?(:country) %>
-      <%= render "shared/help_us_to_improve_this_service" %>
-    <% else %>
-      <p class="govuk-body">If you have any questions about QTS contact the help team at:</p>
-      <p class="govuk-body"><a class="govuk-link" href="mailto:<%= I18n.t("service.email") %>"><%= I18n.t("service.email") %></a></p>
-    <% end %>
-  </div>
-</div>
+<% if @eligibility_check.ineligible_reasons.include?(:country) %>
+  <%= render "shared/help_us_to_improve_this_service" %>
+<% else %>
+  <p class="govuk-body">If you have any questions about QTS contact the help team at:</p>
+  <p class="govuk-body"><a class="govuk-link" href="mailto:<%= I18n.t("service.email") %>"><%= I18n.t("service.email") %></a></p>
+<% end %>

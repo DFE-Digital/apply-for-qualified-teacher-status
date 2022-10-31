@@ -1,40 +1,36 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      Check your eligibility to apply for qualified teacher status (QTS) in England
-    </h1>
+<h1 class="govuk-heading-xl">
+  Check your eligibility to apply for qualified teacher status (QTS) in England
+</h1>
 
-    <h2 class = "govuk-heading-m">
-      Who this service is for
-    </h2>
+<h2 class = "govuk-heading-m">
+  Who this service is for
+</h2>
 
-    <p class="govuk-body">This service is for qualified teachers who trained outside of England who want to apply for qualified teacher status (QTS) to teach in English schools.</p>
+<p class="govuk-body">This service is for qualified teachers who trained outside of England who want to apply for qualified teacher status (QTS) to teach in English schools.</p>
 
-    <p class="govuk-body">If you trained in England or Wales, or have not yet qualified, learn more about <%= govuk_link_to "other routes to QTS", "https://getintoteaching.education.gov.uk/train-to-be-a-teacher" %>.
+<p class="govuk-body">If you trained in England or Wales, or have not yet qualified, learn more about <%= govuk_link_to "other routes to QTS", "https://getintoteaching.education.gov.uk/train-to-be-a-teacher" %>.
 
-    <p class="govuk-body">Use this service to:</p>
+<p class="govuk-body">Use this service to:</p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>check whether you’re eligible to apply for QTS</li>
-      <li>understand the types of evidence you’ll need to provide</li>
-    </ul>
+<ul class="govuk-list govuk-list--bullet">
+  <li>check whether you’re eligible to apply for QTS</li>
+  <li>understand the types of evidence you’ll need to provide</li>
+</ul>
 
-    <p class="govuk-body">We’ll ask some questions to check your eligibility to apply for QTS in England. This should take about 5 minutes.</p>
+<p class="govuk-body">We’ll ask some questions to check your eligibility to apply for QTS in England. This should take about 5 minutes.</p>
 
-    <p class="govuk-body">There’s no charge to apply for QTS. You do not need to be in the UK to use this service.</p>
+<p class="govuk-body">There’s no charge to apply for QTS. You do not need to be in the UK to use this service.</p>
 
-    <% if FeatureFlag.active?(:teacher_applications) %>
-      <p class="govuk-body">
-        If you’ve already started your application using this service, you can
-        <%= govuk_link_to "sign in to continue working on it", :create_or_new_teacher_session %>.
-      </p>
-    <% end %>
+<% if FeatureFlag.active?(:teacher_applications) %>
+  <p class="govuk-body">
+    If you’ve already started your application using this service, you can
+    <%= govuk_link_to "sign in to continue working on it", :create_or_new_teacher_session %>.
+  </p>
+<% end %>
 
-    <%= form_with url: eligibility_interface_start_path, method: :post do |f| %>
-      <button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-9" data-module="govuk-button" data-prevent-double-click="true">
-        Start now
-        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" focusable="false" aria-hidden="true"><path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path></svg>
-      </button>
-    <% end %>
-  </div>
-</div>
+<%= form_with url: eligibility_interface_start_path, method: :post do |f| %>
+  <button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-9" data-module="govuk-button" data-prevent-double-click="true">
+    Start now
+    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" focusable="false" aria-hidden="true"><path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path></svg>
+  </button>
+<% end %>

@@ -1,23 +1,19 @@
 <% content_for :page_title, "#{'Error: ' if @degree_form.errors.any?}Do you have a university degree?" %>
 <% content_for :back_link_url, back_link_url(eligibility_interface_qualifications_path) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @degree_form, url: eligibility_interface_degree_url, method: :post do |f| %>
-      <%= f.govuk_error_summary %>
-      <%= f.govuk_collection_radio_buttons(
-        :degree,
-        [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
-        :value,
-        :label,
-        legend: { size: 'l', tag: 'h1', text: 'Do you have a university degree?' },
-        hint: { text: 'Your degree could include your teaching qualification, or it could be a degree in another subject.' }
-      ) %>
-      <%= f.govuk_submit prevent_double_click: false %>
-    <% end %>
-    <%= govuk_details(
-      summary_text: "Why we ask this",
-      text: "Teaching is a graduate-level profession in England, which means you must be able to show that you’ve completed a university degree."
-    ) %>
-  </div>
-</div>
+<%= form_with model: @degree_form, url: eligibility_interface_degree_url, method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.govuk_collection_radio_buttons(
+    :degree,
+    [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
+    :value,
+    :label,
+    legend: { size: 'l', tag: 'h1', text: 'Do you have a university degree?' },
+    hint: { text: 'Your degree could include your teaching qualification, or it could be a degree in another subject.' }
+  ) %>
+  <%= f.govuk_submit prevent_double_click: false %>
+<% end %>
+<%= govuk_details(
+  summary_text: "Why we ask this",
+  text: "Teaching is a graduate-level profession in England, which means you must be able to show that you’ve completed a university degree."
+) %>
