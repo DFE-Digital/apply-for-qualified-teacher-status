@@ -42,7 +42,7 @@ class PersonasController < ApplicationController
     %w[online written none]
       .product(
         %w[online written none],
-        %w[draft submitted further_information_requested],
+        %w[draft submitted further_information_requested awarded declined],
       )
       .tap { |personas| personas.insert(2, *personas.slice!(8, 2)) }
       .map do |status_check, sanction_check, state|
