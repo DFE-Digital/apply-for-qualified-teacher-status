@@ -11,11 +11,17 @@ module TeacherInterface
       elsif application_form.qualifications.empty?
         redirect_to %i[new teacher_interface application_form qualification]
       else
+        ordered_qualifications = application_form.qualifications.ordered
+
+        qualification =
+          ordered_qualifications.find(&:incomplete?) ||
+            ordered_qualifications.first
+
         redirect_to [
                       :edit,
                       :teacher_interface,
                       :application_form,
-                      application_form.qualifications.ordered.first,
+                      qualification,
                     ]
       end
     end
