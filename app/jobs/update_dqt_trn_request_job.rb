@@ -27,6 +27,11 @@ class UpdateDQTTRNRequestJob < ApplicationJob
         dqt_trn_request.application_form.teacher.update!(trn:)
         dqt_trn_request.complete!
       end
+
+      TeacherMailer
+        .with(teacher: dqt_trn_request.application_form.teacher)
+        .application_awarded
+        .deliver_later
     end
 
     raise StillPending if dqt_trn_request.pending?

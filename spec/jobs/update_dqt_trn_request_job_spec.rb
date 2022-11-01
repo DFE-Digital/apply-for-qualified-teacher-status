@@ -32,6 +32,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect { perform }.to change(teacher, :trn).to("abcdef")
         end
 
+        it "sends an email" do
+          expect { perform }.to have_enqueued_mail(
+            TeacherMailer,
+            :application_awarded,
+          )
+        end
+
         it "doesn't raise an error" do
           expect { perform }.to_not raise_error
         end
@@ -53,6 +60,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect { perform_rescue_exception }.to_not change(teacher, :trn)
         end
 
+        it "doesn't send an email" do
+          expect { perform_rescue_exception }.to_not have_enqueued_mail(
+            TeacherMailer,
+            :application_awarded,
+          )
+        end
+
         it "raises the error" do
           expect { perform }.to raise_error(Faraday::BadRequestError)
         end
@@ -70,6 +84,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
         it "doesn't change the TRN on the teacher" do
           expect { perform_rescue_exception }.to_not change(teacher, :trn)
+        end
+
+        it "doesn't send an email" do
+          expect { perform_rescue_exception }.to_not have_enqueued_mail(
+            TeacherMailer,
+            :application_awarded,
+          )
         end
 
         it "raises a still pending error" do
@@ -99,6 +120,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect { perform }.to change(teacher, :trn).to("abcdef")
         end
 
+        it "sends an email" do
+          expect { perform }.to have_enqueued_mail(
+            TeacherMailer,
+            :application_awarded,
+          )
+        end
+
         it "doesn't raise an error" do
           expect { perform }.to_not raise_error
         end
@@ -120,6 +148,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect { perform_rescue_exception }.to_not change(teacher, :trn)
         end
 
+        it "doesn't send an email" do
+          expect { perform_rescue_exception }.to_not have_enqueued_mail(
+            TeacherMailer,
+            :application_awarded,
+          )
+        end
+
         it "raises the error" do
           expect { perform }.to raise_error(Faraday::BadRequestError)
         end
@@ -137,6 +172,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
         it "doesn't change the TRN on the teacher" do
           expect { perform_rescue_exception }.to_not change(teacher, :trn)
+        end
+
+        it "doesn't send an email" do
+          expect { perform_rescue_exception }.to_not have_enqueued_mail(
+            TeacherMailer,
+            :application_awarded,
+          )
         end
 
         it "raises a still pending error" do
@@ -157,6 +199,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
       it "doesn't change the TRN on the teacher" do
         expect { perform }.to_not change(teacher, :trn)
+      end
+
+      it "doesn't send an email" do
+        expect { perform }.to_not have_enqueued_mail(
+          TeacherMailer,
+          :application_awarded,
+        )
       end
 
       it "doesn't raise an error" do
