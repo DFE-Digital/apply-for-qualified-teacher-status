@@ -12,7 +12,30 @@ RSpec.describe TeacherMailer, type: :mailer do
     )
   end
 
-  describe "application_received" do
+  describe "#application_declined" do
+    subject(:mail) { described_class.with(teacher:).application_declined }
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      it { is_expected.to eq("Your QTS application has been declined") }
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("abc") }
+    end
+  end
+
+  describe "#application_received" do
     subject(:mail) { described_class.with(teacher:).application_received }
 
     describe "#subject" do

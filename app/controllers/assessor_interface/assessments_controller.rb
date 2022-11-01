@@ -29,6 +29,26 @@ module AssessorInterface
       end
     end
 
+    def preview
+      @assessment_recommendation_form =
+        AssessmentRecommendationForm.new(
+          assessment_recommendation_form_params.merge(
+            assessment:,
+            user: current_staff,
+          ),
+        )
+
+      if @assessment_recommendation_form.needs_preview?
+        render :preview
+      elsif @assessment_recommendation_form.needs_confirmation?
+        render :confirm
+      elsif @assessment_recommendation_form.save
+        redirect_to post_update_redirect_path
+      else
+        render :declare, status: :unprocessable_entity
+      end
+    end
+
     def confirm
       @assessment_recommendation_form =
         AssessmentRecommendationForm.new(
@@ -60,6 +80,8 @@ module AssessorInterface
         redirect_to post_update_redirect_path
       elsif @assessment_recommendation_form.needs_confirmation?
         render :confirm, status: :unprocessable_entity
+      elsif @assessment_recommendation_form.needs_preview?
+        render :preview, status: :unprocessable_entity
       elsif @assessment_recommendation_form.needs_declaration?
         render :declare, status: :unprocessable_entity
       else

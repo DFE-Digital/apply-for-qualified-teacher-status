@@ -31,7 +31,7 @@
 <p class="govuk-body"><%= t(".instruction.#{@assessment_recommendation_form.recommendation}") %></p>
 <p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
 
-<%= form_with model: @assessment_recommendation_form, url: [:confirm, :assessor_interface, @application_form, @assessment] do |f| %>
+<%= form_with model: @assessment_recommendation_form, url: [:preview, :assessor_interface, @application_form, @assessment] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.hidden_field :recommendation %>

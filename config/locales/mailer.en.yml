@@ -1,6 +1,8 @@
 en:
   mailer:
     teacher:
+      application_declined:
+        subject: Your QTS application has been declined
       application_received:
         subject: We’ve received your application for qualified teacher status (QTS)
       further_information_requested:

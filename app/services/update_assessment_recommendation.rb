@@ -24,6 +24,10 @@ class UpdateAssessmentRecommendation
         ChangeApplicationFormState.call(application_form:, user:, new_state:)
       end
 
+      if assessment.decline?
+        TeacherMailer.with(teacher:).application_declined.deliver_later
+      end
+
       CreateDQTTRNRequest.call(application_form:) if assessment.award?
 
       true
@@ -35,6 +39,7 @@ class UpdateAssessmentRecommendation
   attr_reader :assessment, :user, :new_recommendation
 
   delegate :application_form, to: :assessment
+  delegate :teacher, to: :application_form
 
   def new_application_form_state
     return "awarded" if assessment.award?

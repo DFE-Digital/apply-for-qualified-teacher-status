@@ -46,6 +46,10 @@ class AssessorInterface::AssessmentRecommendationForm
     %w[award decline].include?(recommendation)
   end
 
+  def needs_preview?
+    recommendation == "decline"
+  end
+
   def needs_confirmation?
     needs_declaration? && declaration
   end

@@ -1,0 +1,22 @@
+<% content_for :page_title, t(".heading") %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+<p class="govuk-body-l"><%= t(".subheading") %></p>
+<p class="govuk-body-l"><%= t(".description") %></p>
+
+<%= render(PreviewTeacherMailer::Component.new(
+  name: :application_declined,
+  teacher: @application_form.teacher
+)) %>
+
+<%= form_with model: @assessment_recommendation_form, url: [:confirm, :assessor_interface, @application_form, @assessment] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.hidden_field :recommendation %>
+  <%= f.hidden_field :declaration %>
+
+  <%= f.govuk_submit t(".button"), prevent_double_click: false do %>
+    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <% end %>
+<% end %>
