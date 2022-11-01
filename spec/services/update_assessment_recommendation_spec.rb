@@ -52,15 +52,37 @@ RSpec.describe UpdateAssessmentRecommendation do
     end
   end
 
-  describe "DQT TRN request job" do
-    it "creates a DQT TRN request" do
-      expect(CreateDQTTRNRequest).to receive(:call)
-      call
+  context "award recommendation" do
+    let(:new_recommendation) { "award" }
+
+    describe "application declined email" do
+      it "doesn't send an email" do
+        expect { call }.to_not have_enqueued_mail(
+          TeacherMailer,
+          :application_declined,
+        )
+      end
+    end
+
+    describe "DQT TRN request job" do
+      it "creates a DQT TRN request" do
+        expect(CreateDQTTRNRequest).to receive(:call)
+        call
+      end
     end
   end
 
-  context "decline recommendataion" do
+  context "decline recommendation" do
     let(:new_recommendation) { "decline" }
+
+    describe "application declined email" do
+      it "sends an email" do
+        expect { call }.to have_enqueued_mail(
+          TeacherMailer,
+          :application_declined,
+        )
+      end
+    end
 
     describe "DQT TRN request job" do
       it "doesn't create a DQT TRN request" do
@@ -88,6 +110,15 @@ RSpec.describe UpdateAssessmentRecommendation do
     describe "application form status" do
       it "doesn't change the state" do
         expect { call }.to_not change(application_form, :state)
+      end
+    end
+
+    describe "application declined email" do
+      it "doesn't send an email" do
+        expect { call }.to_not have_enqueued_mail(
+          TeacherMailer,
+          :application_declined,
+        )
       end
     end
 
