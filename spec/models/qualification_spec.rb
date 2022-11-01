@@ -110,6 +110,37 @@ RSpec.describe Qualification, type: :model do
     end
   end
 
+  describe "#complete?" do
+    subject(:complete?) { qualification.complete? }
+
+    it { is_expected.to be false }
+
+    context "with a partially complete qualification" do
+      before { qualification.update!(title: "Title") }
+
+      it { is_expected.to be false }
+    end
+
+    context "with a complete qualification" do
+      before do
+        qualification.update!(
+          title: "Title",
+          institution_name: "Institution name",
+          institution_country_code: "FR",
+          start_date: Date.new(2020, 1, 1),
+          complete_date: Date.new(2021, 1, 1),
+          certificate_date: Date.new(2021, 1, 1),
+          part_of_university_degree: true,
+        )
+
+        create(:upload, document: qualification.certificate_document)
+        create(:upload, document: qualification.transcript_document)
+      end
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe "#institution_country_location" do
     subject(:institution_country_location) do
       qualification.institution_country_location

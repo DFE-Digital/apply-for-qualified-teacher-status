@@ -73,32 +73,7 @@ class ApplicationFormStatusUpdater
       return :in_progress
     end
 
-    all_complete =
-      qualifications.all? do |qualification|
-        qualification_complete?(qualification)
-      end
-
-    all_complete ? :completed : :in_progress
-  end
-
-  def qualification_complete?(qualification)
-    values = [
-      qualification.title,
-      qualification.institution_name,
-      qualification.institution_country_code,
-      qualification.start_date,
-      qualification.complete_date,
-      qualification.certificate_date,
-      qualification.certificate_document.uploaded?,
-      qualification.transcript_document.uploaded?,
-    ]
-
-    if qualification.is_teaching_qualification? &&
-         qualification.part_of_university_degree != false
-      values.push(qualification.part_of_university_degree)
-    end
-
-    values.all?(&:present?)
+    qualifications.all?(&:complete?) ? :completed : :in_progress
   end
 
   def age_range_status

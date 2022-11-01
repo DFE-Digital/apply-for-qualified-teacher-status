@@ -55,6 +55,29 @@ class Qualification < ApplicationRecord
     application_form.qualifications.count > 2
   end
 
+  def complete?
+    values = [
+      title,
+      institution_name,
+      institution_country_code,
+      start_date,
+      complete_date,
+      certificate_date,
+      certificate_document.uploaded?,
+      transcript_document.uploaded?,
+    ]
+
+    if is_teaching_qualification? && part_of_university_degree != false
+      values.push(part_of_university_degree)
+    end
+
+    values.all?(&:present?)
+  end
+
+  def incomplete?
+    !complete?
+  end
+
   def institution_country_name
     CountryName.from_code(institution_country_code)
   end
