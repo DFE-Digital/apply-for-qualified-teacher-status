@@ -13,9 +13,10 @@ RSpec.describe TeacherInterface::AgeRangeForm, type: :model do
 
     it { is_expected.to validate_presence_of(:minimum) }
     it do
-      is_expected.to validate_numericality_of(
-        :minimum,
-      ).only_integer.is_greater_than_or_equal_to(0)
+      is_expected.to validate_numericality_of(:minimum)
+        .only_integer
+        .is_greater_than_or_equal_to(4)
+        .is_less_than_or_equal_to(18)
     end
 
     it { is_expected.to validate_presence_of(:maximum) }
@@ -23,9 +24,10 @@ RSpec.describe TeacherInterface::AgeRangeForm, type: :model do
     context "when minimum is set" do
       let(:minimum) { "7" }
       it do
-        is_expected.to validate_numericality_of(
-          :maximum,
-        ).only_integer.is_greater_than_or_equal_to(7)
+        is_expected.to validate_numericality_of(:maximum)
+          .only_integer
+          .is_greater_than_or_equal_to(7)
+          .is_less_than_or_equal_to(18)
       end
     end
   end

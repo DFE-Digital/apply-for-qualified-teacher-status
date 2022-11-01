@@ -97,6 +97,20 @@ en:
   activemodel:
     errors:
       models:
+        teacher_interface/age_range_form:
+          attributes:
+            minimum:
+              blank: Enter age from
+              not_a_number: Enter age from
+              not_an_integer: Enter age from
+              greater_than_or_equal_to: Age from must be %{count} or more
+              less_than_or_equal_to: Age from must be %{count} or less
+            maximum:
+              blank: Enter age to
+              not_a_number: Enter age to
+              not_an_integer: Enter age to
+              greater_than_or_equal_to: Age to must be %{count} or more
+              less_than_or_equal_to: Age to must be %{count} or less
         teacher_interface/alternative_name_form:
           attributes:
             alternative_given_names:
