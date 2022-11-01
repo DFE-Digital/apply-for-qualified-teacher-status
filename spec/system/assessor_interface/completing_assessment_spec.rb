@@ -38,6 +38,19 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_check_declaration
+    then_i_see_the(
+      :preview_assessment_recommendation_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_send_the_email
+    then_i_see_the(
+      :confirm_assessment_recommendation_page,
+      application_id:,
+      assessment_id:,
+    )
+
     when_i_check_confirmation
     then_i_see_the(:assessor_application_status_page, application_id:)
 
@@ -69,6 +82,11 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_send_the_email
+    then_i_see_the(
+      :confirm_assessment_recommendation_page,
+      application_id:,
+      assessment_id:,
+    )
 
     when_i_check_confirmation
     then_i_see_the(:assessor_application_status_page, application_id:)

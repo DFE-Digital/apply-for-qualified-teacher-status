@@ -16,7 +16,7 @@
   <%= f.hidden_field :recommendation %>
   <%= f.hidden_field :declaration %>
 
-  <%= f.govuk_submit t(".button"), prevent_double_click: false do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <%= f.govuk_submit prevent_double_click: false do %>
+    <%= govuk_link_to t(".cancel"), assessor_interface_application_form_path(@application_form) %>
   <% end %>
 <% end %>
