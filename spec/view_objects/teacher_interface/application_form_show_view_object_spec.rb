@@ -51,4 +51,30 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
       it { is_expected.to_not be_nil }
     end
   end
+
+  describe "#declined_due_to_sanctions?" do
+    subject(:declined_due_to_sanctions?) do
+      view_object.declined_due_to_sanctions?
+    end
+
+    it { is_expected.to be false }
+
+    context "with sanctions" do
+      before do
+        application_form = create(:application_form, teacher: current_teacher)
+        assessment = create(:assessment, application_form:)
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          selected_failure_reasons: {
+            authorisation_to_teach: "Sanctions found.",
+          },
+          assessment:,
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+  end
 end

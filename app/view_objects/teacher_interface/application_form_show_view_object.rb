@@ -22,6 +22,16 @@ class TeacherInterface::ApplicationFormShowViewObject
         .first
   end
 
+  def declined_due_to_sanctions?
+    return false if assessment.nil?
+
+    assessment.sections.any? do |section|
+      section.selected_failure_reasons.any? do |key, _|
+        key == "authorisation_to_teach"
+      end
+    end
+  end
+
   private
 
   attr_reader :current_teacher

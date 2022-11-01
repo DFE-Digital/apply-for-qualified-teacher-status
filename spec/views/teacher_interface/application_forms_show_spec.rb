@@ -29,6 +29,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
       it { is_expected.to match(/Your QTS application has been declined/) }
       it { is_expected.to match(/Notes/) }
+      it { is_expected.to match(/you can make a new application in future/) }
     end
 
     context "and a further information request" do
@@ -46,6 +47,25 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
       it { is_expected.to match(/Your QTS application has been declined/) }
       it { is_expected.to match(/A note/) }
+      it { is_expected.to match(/you can make a new application in future/) }
+    end
+
+    context "and with sanctions" do
+      before do
+        create(
+          :assessment_section,
+          :failed,
+          key: :personal_information,
+          selected_failure_reasons: {
+            authorisation_to_teach: "Sanctions.",
+          },
+          assessment:,
+        )
+      end
+
+      it do
+        is_expected.to_not match(/you can make a new application in future/)
+      end
     end
   end
 end
