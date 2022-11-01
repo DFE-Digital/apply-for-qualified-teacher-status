@@ -17,6 +17,7 @@ class UpdateDQTTRNRequestJob < ApplicationJob
     if (trn = response[:trn]).present?
       update_teacher_trn(dqt_trn_request, trn)
       send_award_email(dqt_trn_request)
+      update_application_form(dqt_trn_request)
       dqt_trn_request.complete!
     end
 
@@ -41,9 +42,19 @@ class UpdateDQTTRNRequestJob < ApplicationJob
   end
 
   def send_award_email(dqt_trn_request)
+    return if dqt_trn_request.application_form.awarded?
+
     TeacherMailer
       .with(teacher: dqt_trn_request.application_form.teacher)
       .application_awarded
       .deliver_later
+  end
+
+  def update_application_form(dqt_trn_request)
+    ChangeApplicationFormState.call(
+      application_form: dqt_trn_request.application_form,
+      user: "DQT",
+      new_state: "awarded",
+    )
   end
 end

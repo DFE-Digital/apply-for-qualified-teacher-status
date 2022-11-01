@@ -6,7 +6,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
   describe "#perform" do
     subject(:perform) { described_class.new.perform(dqt_trn_request) }
 
-    let(:teacher) { dqt_trn_request.application_form.teacher }
+    let(:application_form) { dqt_trn_request.application_form }
+    let(:teacher) { application_form.teacher }
 
     let(:perform_rescue_exception) do
       perform
@@ -39,6 +40,15 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           )
         end
 
+        it "changes the application form status" do
+          expect(ChangeApplicationFormState).to receive(:call).with(
+            application_form:,
+            user: "DQT",
+            new_state: "awarded",
+          )
+          perform
+        end
+
         it "doesn't raise an error" do
           expect { perform }.to_not raise_error
         end
@@ -67,6 +77,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           )
         end
 
+        it "doesn't change the application form status" do
+          expect(ChangeApplicationFormState).to_not receive(:call)
+          perform_rescue_exception
+        end
+
         it "raises the error" do
           expect { perform }.to raise_error(Faraday::BadRequestError)
         end
@@ -91,6 +106,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
             TeacherMailer,
             :application_awarded,
           )
+        end
+
+        it "doesn't change the application form status" do
+          expect(ChangeApplicationFormState).to_not receive(:call)
+          perform_rescue_exception
         end
 
         it "raises a still pending error" do
@@ -127,6 +147,15 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           )
         end
 
+        it "changes the application form status" do
+          expect(ChangeApplicationFormState).to receive(:call).with(
+            application_form:,
+            user: "DQT",
+            new_state: "awarded",
+          )
+          perform
+        end
+
         it "doesn't raise an error" do
           expect { perform }.to_not raise_error
         end
@@ -155,6 +184,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           )
         end
 
+        it "doesn't change the application form status" do
+          expect(ChangeApplicationFormState).to_not receive(:call)
+          perform_rescue_exception
+        end
+
         it "raises the error" do
           expect { perform }.to raise_error(Faraday::BadRequestError)
         end
@@ -179,6 +213,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
             TeacherMailer,
             :application_awarded,
           )
+        end
+
+        it "doesn't change the application form status" do
+          expect(ChangeApplicationFormState).to_not receive(:call)
+          perform_rescue_exception
         end
 
         it "raises a still pending error" do
@@ -206,6 +245,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           TeacherMailer,
           :application_awarded,
         )
+      end
+
+      it "doesn't change the application form status" do
+        expect(ChangeApplicationFormState).to_not receive(:call)
+        perform
       end
 
       it "doesn't raise an error" do

@@ -16,18 +16,25 @@ class ChangeApplicationFormState
 
     ActiveRecord::Base.transaction do
       application_form.update!(state: new_state)
-
-      TimelineEvent.create!(
-        application_form:,
-        event_type: "state_changed",
-        creator: user,
-        new_state:,
-        old_state:,
-      )
+      create_timeline_event(old_state:)
     end
   end
 
   private
 
   attr_reader :application_form, :user, :new_state
+
+  def create_timeline_event(old_state:)
+    creator = user.is_a?(String) ? nil : user
+    creator_name = user.is_a?(String) ? user : ""
+
+    TimelineEvent.create!(
+      application_form:,
+      event_type: "state_changed",
+      creator:,
+      creator_name:,
+      new_state:,
+      old_state:,
+    )
+  end
 end
