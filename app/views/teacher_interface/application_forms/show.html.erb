@@ -2,9 +2,9 @@
 
 <h1 class="govuk-heading-xl">Apply for qualified teacher status (QTS)</h1>
 
-<% if @application_form.draft? %>
+<% if @view_object.application_form.draft? %>
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
-    <% if @application_form.can_submit? %>
+    <% if @view_object.application_form.can_submit? %>
       Application complete
     <% else %>
       Application incomplete
@@ -12,11 +12,11 @@
   </h2>
 
   <p class="govuk-body govuk-!-margin-bottom-7">
-    You have completed <%= @application_form.completed_task_sections.count %> of <%= @application_form.tasks.count %> sections.
+    You have completed <%= @view_object.application_form.completed_task_sections.count %> of <%= @view_object.application_form.tasks.count %> sections.
   </p>
 
   <ol class="app-task-list">
-    <% @application_form.tasks.each_with_index do |(section, items), index| %>
+    <% @view_object.application_form.tasks.each_with_index do |(section, items), index| %>
       <li>
         <h2 class="app-task-list__section">
           <span class="app-task-list__section-number"><%= index + 1 %>. </span>
@@ -28,13 +28,13 @@
             <li class="app-task-list__item">
               <span class="app-task-list__task-name">
                 <%= link_to I18n.t("application_form.tasks.items.#{item}"),
-                            @application_form.path_for_task_item(item),
+                            @view_object.application_form.path_for_task_item(item),
                             aria: { describedby: "#{item}-status" } %>
               </span>
 
               <%= render(ApplicationFormStatusTag::Component.new(
                 key: item,
-                status: @application_form.task_statuses.dig(section, item),
+                status: @view_object.application_form.task_statuses.dig(section, item),
                 class_context: "app-task-list"
               )) %>
             </li>
@@ -45,15 +45,15 @@
   </ol>
 
   <div class="govuk-button-group">
-    <%- if @application_form.can_submit? -%>
+    <%- if @view_object.application_form.can_submit? -%>
       <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_path %>
     <%- end -%>
     <%= govuk_button_link_to "Save and sign out", destroy_teacher_session_path, secondary: true %>
   </div>
-<% elsif @application_form.further_information_requested? %>
+<% elsif @view_object.application_form.further_information_requested? %>
   <h2 class="govuk-heading-m">We need some more information</h2>
   <p class="govuk-body">The status of your qualified teacher status application is currently:</p>
-  <p class="govuk-body"><%= render(ApplicationFormStatusTag::Component.new(key: "state", status: @application_form.state)) %></p>
+  <p class="govuk-body"><%= render(ApplicationFormStatusTag::Component.new(key: "state", status: @view_object.application_form.state)) %></p>
   <h3 class="govuk-heading-m">What you need to do</h3>
   <p class="govuk-body">The assessor needs you to provide some additional information so they can continue reviewing your application.</p>
   <div class="govuk-inset-text">
@@ -61,19 +61,19 @@
   </div>
   <p class="govuk-body">You must add all of the requested information, so the assessor can continue reviewing your QTS application.</p>
   <p class="govuk-body">The next screen will take you to the first section you need to complete.</p>
-  <%= govuk_start_button(text: "Start now", href: teacher_interface_application_form_further_information_request_path(@further_information_request)) %>
-<% elsif @application_form.declined? %>
+  <%= govuk_start_button(text: "Start now", href: teacher_interface_application_form_further_information_request_path(@view_object.further_information_request)) %>
+<% elsif @view_object.application_form.declined? %>
   <h2 class="govuk-heading-l">Your QTS application has been declined</h2>
 
   <h3 class="govuk-heading-m">Notes from the assessor:</h3>
 
-  <% if @further_information_request.present? %>
-    <% @further_information_request.items.each do |item| %>
+  <% if @view_object.further_information_request.present? %>
+    <% @view_object.further_information_request.items.each do |item| %>
       <h4 class="govuk-heading-s"><%= I18n.t("assessor_interface.assessment_sections.show.failure_reasons.#{item.failure_reason}") %></h4>
       <%= govuk_inset_text(text: item.assessor_notes) %>
     <% end %>
   <% else %>
-    <% @assessment.sections.each do |section| %>
+    <% @view_object.assessment.sections.each do |section| %>
       <% if section.selected_failure_reasons.present? %>
         <h4 class="govuk-heading-s"><%= t(".assessment_section.#{section.key}") %></h4>
         <ul class="govuk-list">
@@ -90,31 +90,33 @@
 
   <h3 class="govuk-heading-m">What you can do next</h3>
 
-  <p class="govuk-body">While your QTS application was declined this time, you can make a new application in future, if you’re able to address the decline reasons we’ve set out.</p>
-  <p class="govuk-body">You may want to explore other routes to teaching in England. QTS is not a requirement to teach in independent (private) schools, academies, free schools and in the further education (FE) sector in England.</p>
+  <% unless @view_object.declined_due_to_sanctions? %>
+    <p class="govuk-body">While your QTS application was declined this time, you can make a new application in future, if you’re able to address the decline reasons we’ve set out.</p>
+    <p class="govuk-body">You may want to explore other routes to teaching in England. QTS is not a requirement to teach in independent (private) schools, academies, free schools and in the further education (FE) sector in England.</p>
 
-  <p class="govuk-body">You can find out more about working in these sectors from:</p>
+    <p class="govuk-body">You can find out more about working in these sectors from:</p>
 
-  <ul class="govuk-list">
-    <li><%= govuk_link_to "Independent Schools Council", "http://www.isc.co.uk/" %></li>
-    <li><%= govuk_link_to "The Education & Training Foundation", "http://www.et-foundation.co.uk/" %></li>
-    <li><%= govuk_link_to "Academies and Free Schools", "https://www.gov.uk/types-of-school" %></li>
-  </ul>
+    <ul class="govuk-list">
+      <li><%= govuk_link_to "Independent Schools Council", "http://www.isc.co.uk/" %></li>
+      <li><%= govuk_link_to "The Education & Training Foundation", "http://www.et-foundation.co.uk/" %></li>
+      <li><%= govuk_link_to "Academies and Free Schools", "https://www.gov.uk/types-of-school" %></li>
+    </ul>
 
-  <p class="govuk-body">For further information on other routes to gaining QTS visit <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" class="govuk-link">Get into teaching</a>.</p>
-  <p class="govuk-body">You can also learn more about <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/train-to-teach-in-england-as-an-international-student" class="govuk-link">training to teach in England</a>.</p>
+    <p class="govuk-body">For further information on other routes to gaining QTS visit <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" class="govuk-link">Get into teaching</a>.</p>
+    <p class="govuk-body">You can also learn more about <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/train-to-teach-in-england-as-an-international-student" class="govuk-link">training to teach in England</a>.</p>
 
-  <p class="govuk-body">You have the right of appeal to the Head of Teacher Qualifications and/or the County Court against this decision.</p>
+    <p class="govuk-body">You have the right of appeal to the Head of Teacher Qualifications and/or the County Court against this decision.</p>
+  <% end %>
 
   <p class="govuk-body">If you want to appeal, you should inform QTS Enquiries and do so within 4 months of this notification.</p>
 <% else %>
-  <%= govuk_panel(title_text: @application_form.further_information_received? ? "Further information successfully submitted" : "Application complete") do %>
+  <%= govuk_panel(title_text: @view_object.application_form.further_information_received? ? "Further information successfully submitted" : "Application complete") do %>
     Your reference number
     <br />
-    <strong><%= @application_form.reference %></strong>
+    <strong><%= @view_object.application_form.reference %></strong>
   <% end %>
 
-  <% if @application_form.further_information_received? %>
+  <% if @view_object.application_form.further_information_received? %>
     <h3 class="govuk-heading-m">You’ve successfully submitted your further information</h3>
     <p class="govuk-body">We’ve sent you an email to confirm that we’ve received it.</p>
     <p class="govuk-body">Once the assessor has checked the documents to make sure you’ve provided all of the requested information, they’ll continue reviewing your QTS application.</p>

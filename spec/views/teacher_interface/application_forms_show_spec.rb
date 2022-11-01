@@ -3,12 +3,13 @@ require "rails_helper"
 RSpec.describe "teacher_interface/application_forms/show.html.erb",
                type: :view do
   before do
-    assign(:application_form, application_form)
-    assign(:assessment, assessment)
-    assign(:further_information_request, further_information_request)
+    assign(
+      :view_object,
+      TeacherInterface::ApplicationFormShowViewObject.new(
+        current_teacher: application_form.teacher,
+      ),
+    )
   end
-
-  let(:further_information_request) { nil }
 
   subject { render }
 
@@ -28,12 +29,14 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
       it { is_expected.to match(/Your QTS application has been declined/) }
       it { is_expected.to match(/Notes/) }
+      it { is_expected.to match(/you can make a new application in future/) }
     end
 
     context "and a further information request" do
       let(:further_information_request) do
         create(:further_information_request, assessment:)
       end
+
       before do
         create(
           :further_information_request_item,
@@ -44,6 +47,25 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
       it { is_expected.to match(/Your QTS application has been declined/) }
       it { is_expected.to match(/A note/) }
+      it { is_expected.to match(/you can make a new application in future/) }
+    end
+
+    context "and with sanctions" do
+      before do
+        create(
+          :assessment_section,
+          :failed,
+          key: :personal_information,
+          selected_failure_reasons: {
+            authorisation_to_teach: "Sanctions.",
+          },
+          assessment:,
+        )
+      end
+
+      it do
+        is_expected.to_not match(/you can make a new application in future/)
+      end
     end
   end
 end
