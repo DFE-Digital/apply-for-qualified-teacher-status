@@ -8,27 +8,18 @@ module TeacherInterface
     attribute :title, :string
     attribute :institution_name, :string
     attribute :institution_country_code, :string
-    attribute :start_date, :date
-    attribute :complete_date, :date
-    attribute :certificate_date, :date
+    attribute :start_date
+    attribute :complete_date
+    attribute :certificate_date
 
     validates :qualification, presence: true
     validates :title, presence: true
     validates :institution_name, presence: true
     validates :institution_country_code, presence: true
-    validates :start_date, presence: true
-    validates :complete_date, presence: true
-    validates :start_date,
-              comparison: {
-                less_than: :complete_date,
-              },
-              if: -> { complete_date.present? }
-    validates :complete_date,
-              comparison: {
-                greater_than: :start_date,
-              },
-              if: -> { start_date.present? }
-    validates :certificate_date, presence: true
+    validates :start_date, date: true
+    validates :complete_date, date: true
+    validates :certificate_date, date: true
+    validates_with DateComparisonValidator, later_field: :complete_date
 
     def institution_country_code=(value)
       super(CountryCode.from_location(value))

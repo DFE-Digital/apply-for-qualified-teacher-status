@@ -41,14 +41,16 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
     describe "start_date" do
       it "is required" do
         form.valid?
-        expect(form.errors[:start_date]).to eq(["Enter a start date"])
+        expect(form.errors[:start_date]).to eq(
+          ["Enter the start date in the format 27 3 1980"],
+        )
       end
 
       it "must be valid" do
         form.start_date = { 1 => 2022, 2 => 13, 3 => 1 }
         form.valid?
         expect(form.errors[:start_date]).to eq(
-          ["Start date is not a valid date"],
+          ["Enter the start date in the format 27 3 1980"],
         )
       end
 
@@ -77,13 +79,17 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
 
         it "is required" do
           form.valid?
-          expect(form.errors[:end_date]).to eq(["Enter an end date"])
+          expect(form.errors[:end_date]).to eq(
+            ["Enter the end date in the format 27 3 1980"],
+          )
         end
 
         it "must be valid" do
           form.end_date = { 1 => 2022, 2 => 13, 3 => 1 }
           form.valid?
-          expect(form.errors[:end_date]).to eq(["End date is not a valid date"])
+          expect(form.errors[:end_date]).to eq(
+            ["Enter the end date in the format 27 3 1980"],
+          )
         end
 
         it "must be after start_date" do

@@ -32,8 +32,8 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     it { is_expected.to validate_presence_of(:certificate_date) }
 
     context "with invalid dates" do
-      let(:start_date) { Date.new(2020, 1, 1) }
-      let(:complete_date) { Date.new(2019, 1, 1) }
+      let(:start_date) { { 1 => 2020, 2 => 1, 3 => 1 } }
+      let(:complete_date) { { 1 => 2019, 2 => 1, 3 => 1 } }
 
       it { is_expected.to_not be_valid }
     end
@@ -43,9 +43,9 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     let(:title) { "Title" }
     let(:institution_name) { "Institution name" }
     let(:institution_country_code) { "country:FR" }
-    let(:start_date) { "2020-01-01" }
-    let(:complete_date) { "2022-01-01" }
-    let(:certificate_date) { "2022-06-01" }
+    let(:start_date) { { 1 => 2020, 2 => 1, 3 => 1 } }
+    let(:complete_date) { { 1 => 2022, 2 => 1, 3 => 1 } }
+    let(:certificate_date) { { 1 => 2022, 2 => 6, 3 => 1 } }
 
     before { form.save(validate: true) }
 
