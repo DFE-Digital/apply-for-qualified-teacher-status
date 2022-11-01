@@ -23,7 +23,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
     it { is_expected.to validate_presence_of(:date_of_birth) }
 
     context "when date of birth is more than 18 years ago but less than 100 years ago" do
-      let(:date_of_birth) { 20.years.ago }
+      let(:date_of_birth) { { 1 => 1990, 2 => 1, 3 => 1 } }
       let(:given_names) { "given_name" }
       let(:family_name) { "family_name" }
       it { is_expected.to be_valid }
@@ -35,13 +35,13 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
       before { form.valid? }
 
       context "when DOB less than 18 years ago" do
-        let(:date_of_birth) { 17.years.ago }
+        let(:date_of_birth) { { 1 => 2022, 2 => 1, 3 => 1 } }
 
         it { is_expected.to eq(["You must be 18 or over to use this service"]) }
       end
 
       context "when DOB more than 100 years ago" do
-        let(:date_of_birth) { 101.years.ago }
+        let(:date_of_birth) { { 1 => 1800, 2 => 1, 3 => 1 } }
 
         it do
           is_expected.to eq(
@@ -51,7 +51,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
       end
 
       context "when DOB has a 2 digit year" do
-        let(:date_of_birth) { "10/04/80" }
+        let(:date_of_birth) { { 1 => 80, 2 => 1, 3 => 1 } }
 
         it do
           is_expected.to eq(
@@ -61,7 +61,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
       end
 
       context "when DOB is an invalid date" do
-        let(:date_of_birth) { "31/13/1980" }
+        let(:date_of_birth) { { 1 => 1990, 2 => 13, 3 => 31 } }
 
         it do
           is_expected.to eq(
@@ -75,7 +75,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
   describe "#save" do
     let(:given_names) { "Given" }
     let(:family_name) { "Family" }
-    let(:date_of_birth) { Date.new(2000, 1, 1) }
+    let(:date_of_birth) { { 1 => 2000, 2 => 1, 3 => 1 } }
 
     before { form.save(validate: true) }
 

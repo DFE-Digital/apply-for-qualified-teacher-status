@@ -117,6 +117,8 @@ en:
           attributes:
             date_of_birth:
               blank: Enter your date of birth in the format 27 3 1980
+              invalid: Enter your date of birth in the format 27 3 1980
+              future: Your date of birth must be in the past
               too_young: You must be 18 or over to use this service
               too_old: Your date of birth cannot be that far in the past
             given_names:
@@ -127,6 +129,21 @@ en:
           attributes:
             email:
               blank: Enter your email address
+        teacher_interface/qualification_form:
+          attributes:
+            start_date:
+              blank: Enter the start date in the format 27 3 1980
+              invalid: Enter the start date in the format 27 3 1980
+              future: Start date must be in the past
+            complete_date:
+              blank: Enter the complete date in the format 27 3 1980
+              invalid: Enter the complete date in the format 27 3 1980
+              future: Complete date must be in the past
+              comparison: Complete date must be after start date
+            certificate_date:
+              blank: Enter the certificate date in the format 27 3 1980
+              invalid: Enter the certificate date in the format 27 3 1980
+              future: Certificate date must be in the past
         teacher_interface/sanction_confirmation_form:
           attributes:
             confirmed_no_sanctions:
@@ -141,7 +158,6 @@ en:
               blank: Select a file to upload
             translated_attachment:
               blank: Select a translation to upload
-
         teacher_interface/work_history_form:
           attributes:
             contact_name:
@@ -149,12 +165,13 @@ en:
             contact_email:
               blank: Enter a contact email
             end_date:
-              blank: Enter an end date
-              before_start_date: End date must be after start date
-              invalid: End date is not a valid date
+              blank: Enter the end date in the format 27 3 1980
+              invalid: Enter the end date in the format 27 3 1980
+              future: End date must be in the past
+              comparison: End date must be after start date
             start_date:
-              blank: Enter a start date
-              invalid: Start date is not a valid date
+              blank: Enter the start date in the format 27 3 1980
+              invalid: Enter the start date in the format 27 3 1980
               future: Start date must be in the past
             school_name:
               blank: Enter a school name
