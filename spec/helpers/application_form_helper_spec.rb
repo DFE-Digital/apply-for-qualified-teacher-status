@@ -31,7 +31,6 @@ RSpec.describe ApplicationFormHelper do
         application_form,
         include_name: true,
         include_reference: true,
-        include_notes: true,
       )
     end
 
@@ -85,10 +84,10 @@ RSpec.describe ApplicationFormHelper do
           },
           {
             key: {
-              text: "Days remaining in SLA",
+              text: "Working days since submission",
             },
             value: {
-              text: "Not implemented",
+              text: "0 days",
             },
             actions: [],
           },
@@ -143,17 +142,39 @@ RSpec.describe ApplicationFormHelper do
             },
             actions: [],
           },
-          {
-            key: {
-              text: "Notes",
-            },
-            value: {
-              text: "Not implemented",
-            },
-            actions: [],
-          },
         ],
       )
+    end
+
+    context "include_reviewer false" do
+      subject(:summary_rows_without_reviewer) do
+        application_form_summary_rows(
+          application_form,
+          include_name: true,
+          include_reference: true,
+          include_reviewer: false,
+        )
+      end
+
+      it "does not return the reviewer element" do
+        expect(
+          summary_rows_without_reviewer.find do |row|
+            row[:key][:text] == "Reviewer"
+          end,
+        ).to be_nil
+      end
+    end
+
+    context "region has an empty name" do
+      before { application_form.region.update(name: "") }
+
+      it "does not return the region element" do
+        expect(
+          summary_rows.find do |row|
+            row[:key][:text] == "State/territory trained in"
+          end,
+        ).to be_nil
+      end
     end
   end
 end

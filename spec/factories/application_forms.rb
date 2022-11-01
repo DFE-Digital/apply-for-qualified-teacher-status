@@ -60,7 +60,7 @@ FactoryBot.define do
     sequence(:reference) { |n| n.to_s.rjust(7, "0") }
     state { "draft" }
     association :teacher
-    association :region, :national
+    association :region
 
     needs_work_history do
       region.status_check_none? || region.sanction_check_none?
@@ -198,6 +198,10 @@ FactoryBot.define do
       after(:create) do |application_form, _evaluator|
         create(:upload, document: application_form.written_statement_document)
       end
+    end
+
+    trait :with_reviewer do
+      association :reviewer, factory: :staff
     end
   end
 end

@@ -7,7 +7,7 @@ module ApplicationFormHelper
     application_form,
     include_name:,
     include_reference:,
-    include_notes:
+    include_reviewer: true
   )
     [
       (
@@ -26,14 +26,21 @@ module ApplicationFormHelper
         I18n.t("application_form.summary.email"),
         application_form.teacher.email,
       ],
-      [I18n.t("application_form.summary.region"), application_form.region.name],
+      (
+        if application_form.region.name.present?
+          [
+            I18n.t("application_form.summary.region"),
+            application_form.region.name,
+          ]
+        end
+      ),
       [
         I18n.t("application_form.summary.submitted_at"),
         application_form.submitted_at.strftime("%e %B %Y"),
       ],
       [
-        I18n.t("application_form.summary.days_remaining_sla"),
-        "Not implemented",
+        I18n.t("application_form.summary.days_since_submission"),
+        pluralize(application_form.working_days_since_submission, "day"),
       ],
       [
         I18n.t("application_form.summary.assessor"),
@@ -48,19 +55,23 @@ module ApplicationFormHelper
           },
         ],
       ],
-      [
-        I18n.t("application_form.summary.reviewer"),
-        application_form.reviewer&.name ||
-          I18n.t("application_form.summary.unassigned"),
-        [
-          {
-            href:
-              assessor_interface_application_form_assign_reviewer_path(
-                application_form,
-              ),
-          },
-        ],
-      ],
+      (
+        if include_reviewer
+          [
+            I18n.t("application_form.summary.reviewer"),
+            application_form.reviewer&.name ||
+              I18n.t("application_form.summary.unassigned"),
+            [
+              {
+                href:
+                  assessor_interface_application_form_assign_reviewer_path(
+                    application_form,
+                  ),
+              },
+            ],
+          ]
+        end
+      ),
       (
         if include_reference
           [
@@ -79,11 +90,6 @@ module ApplicationFormHelper
           ),
         ),
       ],
-      (
-        if include_notes
-          [I18n.t("application_form.summary.notes"), "Not implemented"]
-        end
-      ),
     ].compact.map do |key, value, actions|
       { key: { text: key }, value: { text: value }, actions: actions || [] }
     end

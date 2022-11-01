@@ -22,7 +22,7 @@ module ApplicationFormSearchResult
         application_form,
         include_name: false,
         include_reference: false,
-        include_notes: true,
+        include_reviewer: application_form.reviewer.present?,
       )
     end
 

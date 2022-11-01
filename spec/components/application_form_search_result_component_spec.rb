@@ -11,6 +11,7 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
     create(
       :application_form,
       :submitted,
+      :with_reviewer,
       given_names: "Given",
       family_name: "Family",
     )
@@ -52,11 +53,16 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
       it { is_expected.to include("Email") }
       it { is_expected.to include("State/territory trained in") }
       it { is_expected.to include("Created on") }
-      it { is_expected.to include("Days remaining in SLA") }
+      it { is_expected.to include("Working days since submission") }
       it { is_expected.to include("Assigned to") }
       it { is_expected.to include("Reviewer") }
       it { is_expected.to include("Status") }
-      it { is_expected.to include("Notes") }
+
+      context "where there is no reviewer assigned" do
+        before { application_form.update(reviewer: nil) }
+
+        it { is_expected.not_to include("Reviewer") }
+      end
     end
   end
 end
