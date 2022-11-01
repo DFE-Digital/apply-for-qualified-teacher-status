@@ -38,6 +38,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       initial_assessment
       further_information_requested
       further_information_received
+      awarded_pending_checks
       awarded
       declined
     ]

@@ -42,7 +42,7 @@ class UpdateAssessmentRecommendation
   delegate :teacher, to: :application_form
 
   def new_application_form_state
-    return "awarded" if assessment.award?
+    return "awarded_pending_checks" if assessment.award?
     return "declined" if assessment.decline?
     nil
   end

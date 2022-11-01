@@ -78,6 +78,7 @@ RSpec.describe ApplicationForm, type: :model do
         further_information_requested: "further_information_requested",
         further_information_received: "further_information_received",
         awarded: "awarded",
+        awarded_pending_checks: "awarded_pending_checks",
         declined: "declined",
       ).backed_by_column_of_type(:string)
     end

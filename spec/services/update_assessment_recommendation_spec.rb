@@ -48,7 +48,7 @@ RSpec.describe UpdateAssessmentRecommendation do
     context "after calling the service" do
       before { call }
 
-      it { is_expected.to eq("awarded") }
+      it { is_expected.to eq("awarded_pending_checks") }
     end
   end
 
