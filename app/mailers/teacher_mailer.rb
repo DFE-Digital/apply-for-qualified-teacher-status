@@ -1,13 +1,25 @@
 class TeacherMailer < ApplicationMailer
   before_action :set_name
   before_action :set_reference,
-                only: %i[application_declined application_received]
+                only: %i[
+                  application_awarded
+                  application_declined
+                  application_received
+                ]
 
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
       "GOVUK_NOTIFY_TEMPLATE_ID_TEACHER",
       "95adafaf-0920-4623-bddc-340853c047af",
     )
+
+  def application_awarded
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: params[:teacher].email,
+      subject: I18n.t("mailer.teacher.application_awarded.subject"),
+    )
+  end
 
   def application_declined
     view_mail(
