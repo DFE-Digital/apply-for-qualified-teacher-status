@@ -1,7 +1,7 @@
 <div class="moj-timeline__item">
   <div class="moj-timeline__header">
     <h2 class="moj-timeline__title"><%= t("components.timeline_entry.title.#{timeline_event.event_type}") %></h2>
-    <p class="moj-timeline__byline">by <%= timeline_event.creator.try(:name).presence || timeline_event.creator.email %></p>
+    <p class="moj-timeline__byline">by <%= creator %></p>
   </div>
 
   <p class="moj-timeline__date">

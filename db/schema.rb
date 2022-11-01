@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_26_143332) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_01_134536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -303,6 +303,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_26_143332) do
     t.bigint "assessment_section_id"
     t.bigint "note_id"
     t.bigint "further_information_request_id"
+    t.string "creator_name", default: "", null: false
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
