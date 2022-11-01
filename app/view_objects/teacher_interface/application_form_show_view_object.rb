@@ -5,8 +5,12 @@ class TeacherInterface::ApplicationFormShowViewObject
     @current_teacher = current_teacher
   end
 
+  def teacher
+    @current_teacher
+  end
+
   def application_form
-    @application_form ||= current_teacher.application_form
+    @application_form ||= teacher.application_form
   end
 
   def assessment
@@ -31,8 +35,4 @@ class TeacherInterface::ApplicationFormShowViewObject
       end
     end
   end
-
-  private
-
-  attr_reader :current_teacher
 end
