@@ -3,12 +3,13 @@ require "rails_helper"
 RSpec.describe "teacher_interface/application_forms/show.html.erb",
                type: :view do
   before do
-    assign(:application_form, application_form)
-    assign(:assessment, assessment)
-    assign(:further_information_request, further_information_request)
+    assign(
+      :view_object,
+      TeacherInterface::ApplicationFormShowViewObject.new(
+        current_teacher: application_form.teacher,
+      ),
+    )
   end
-
-  let(:further_information_request) { nil }
 
   subject { render }
 
@@ -34,6 +35,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       let(:further_information_request) do
         create(:further_information_request, assessment:)
       end
+
       before do
         create(
           :further_information_request_item,

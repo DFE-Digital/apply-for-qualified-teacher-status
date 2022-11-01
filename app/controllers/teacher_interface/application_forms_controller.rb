@@ -24,19 +24,11 @@ module TeacherInterface
     end
 
     def show
-      unless application_form
+      @view_object = ApplicationFormShowViewObject.new(current_teacher:)
+
+      if @view_object.application_form.nil?
         redirect_to %i[new teacher_interface application_form]
-        return
       end
-
-      @assessment = application_form.assessment
-
-      @further_information_request =
-        FurtherInformationRequest
-          .joins(:assessment)
-          .where(assessments: { application_form: })
-          .order(:created_at)
-          .first
     end
 
     def edit
