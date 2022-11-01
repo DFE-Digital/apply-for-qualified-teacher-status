@@ -5,7 +5,7 @@
 # Table name: dqt_trn_requests
 #
 #  id                  :bigint           not null, primary key
-#  state               :string           default("pending"), not null
+#  state               :string           default("initial"), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  application_form_id :bigint           not null

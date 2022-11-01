@@ -6,6 +6,16 @@ RSpec.describe TimelineEntry::Component, type: :component do
   subject(:component) { render_inline(described_class.new(timeline_event:)) }
   let(:creator) { timeline_event.creator }
 
+  context "with a creator name" do
+    let(:timeline_event) do
+      create(:timeline_event, :state_changed, creator_name: "DQT", creator: nil)
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("by DQT")
+    end
+  end
+
   context "assessor assigned" do
     let(:timeline_event) { create(:timeline_event, :assessor_assigned) }
     let(:assignee) { timeline_event.assignee }

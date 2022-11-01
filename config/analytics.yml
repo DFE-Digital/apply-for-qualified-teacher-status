@@ -221,6 +221,7 @@
     - annotation
     - creator_id
     - creator_type
+    - creator_name
     - created_at
     - updated_at
     - assignee_id

@@ -4,6 +4,7 @@
 #
 #  id                             :bigint           not null, primary key
 #  annotation                     :string           default(""), not null
+#  creator_name                   :string           default(""), not null
 #  creator_type                   :string
 #  event_type                     :string           not null
 #  new_state                      :string           default(""), not null

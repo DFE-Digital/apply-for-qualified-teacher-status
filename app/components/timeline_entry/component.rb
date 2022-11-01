@@ -7,6 +7,12 @@ module TimelineEntry
 
     attr_reader :timeline_event
 
+    def creator
+      timeline_event.creator_name.presence ||
+        timeline_event.creator.try(:name).presence ||
+        timeline_event.creator.email
+    end
+
     def description_vars
       send("#{timeline_event.event_type}_vars")
     end

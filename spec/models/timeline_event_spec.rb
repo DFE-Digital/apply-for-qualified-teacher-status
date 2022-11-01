@@ -4,6 +4,7 @@
 #
 #  id                             :bigint           not null, primary key
 #  annotation                     :string           default(""), not null
+#  creator_name                   :string           default(""), not null
 #  creator_type                   :string
 #  event_type                     :string           not null
 #  new_state                      :string           default(""), not null
@@ -45,6 +46,21 @@ RSpec.describe TimelineEvent do
   end
 
   describe "validations" do
+    it { is_expected.to validate_presence_of(:creator) }
+    it { is_expected.to validate_presence_of(:creator_name) }
+
+    context "with a creator reference" do
+      before { timeline_event.creator = create(:staff) }
+
+      it { is_expected.to_not validate_presence_of(:creator_name) }
+    end
+
+    context "with a creator name" do
+      before { timeline_event.creator_name = "DQT" }
+
+      it { is_expected.to_not validate_presence_of(:creator) }
+    end
+
     it do
       is_expected.to define_enum_for(:event_type).with_values(
         assessor_assigned: "assessor_assigned",

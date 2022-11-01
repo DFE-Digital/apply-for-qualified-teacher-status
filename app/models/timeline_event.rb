@@ -6,6 +6,7 @@
 #
 #  id                             :bigint           not null, primary key
 #  annotation                     :string           default(""), not null
+#  creator_name                   :string           default(""), not null
 #  creator_type                   :string
 #  event_type                     :string           not null
 #  new_state                      :string           default(""), not null
@@ -37,7 +38,12 @@
 #
 class TimelineEvent < ApplicationRecord
   belongs_to :application_form
-  belongs_to :creator, polymorphic: true
+  belongs_to :creator, polymorphic: true, optional: true
+
+  validates :creator, presence: true, unless: -> { creator_name.present? }
+  validates :creator_name,
+            presence: true,
+            unless: -> { creator_id.present? && creator_type.present? }
 
   enum event_type: {
          assessor_assigned: "assessor_assigned",
