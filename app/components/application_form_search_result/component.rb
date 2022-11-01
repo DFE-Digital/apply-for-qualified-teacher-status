@@ -21,7 +21,7 @@ module ApplicationFormSearchResult
       application_form_summary_rows(
         application_form,
         include_name: false,
-        include_reference: false,
+        include_reference: true,
         include_reviewer: application_form.reviewer.present?,
       )
     end
