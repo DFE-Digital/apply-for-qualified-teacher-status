@@ -39,8 +39,8 @@ module ApplicationFormHelper
         application_form.submitted_at.strftime("%e %B %Y"),
       ],
       [
-        I18n.t("application_form.summary.days_remaining_sla"),
-        "Not implemented",
+        I18n.t("application_form.summary.days_since_submission"),
+        pluralize(application_form.working_days_since_submission, "day"),
       ],
       [
         I18n.t("application_form.summary.assessor"),

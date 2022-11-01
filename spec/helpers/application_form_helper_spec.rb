@@ -84,10 +84,10 @@ RSpec.describe ApplicationFormHelper do
           },
           {
             key: {
-              text: "Days remaining in SLA",
+              text: "Working days since submission",
             },
             value: {
-              text: "Not implemented",
+              text: "0 days",
             },
             actions: [],
           },

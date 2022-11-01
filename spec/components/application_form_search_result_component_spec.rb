@@ -53,7 +53,7 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
       it { is_expected.to include("Email") }
       it { is_expected.to include("State/territory trained in") }
       it { is_expected.to include("Created on") }
-      it { is_expected.to include("Days remaining in SLA") }
+      it { is_expected.to include("Working days since submission") }
       it { is_expected.to include("Assigned to") }
       it { is_expected.to include("Reviewer") }
       it { is_expected.to include("Status") }

@@ -82,7 +82,7 @@ en:
       email: Email
       region: State/territory trained in
       submitted_at: Created on
-      days_remaining_sla: Days remaining in SLA
+      days_since_submission: Working days since submission
       assessor: Assigned to
       reviewer: Reviewer
       reference: Reference
