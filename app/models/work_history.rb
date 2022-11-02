@@ -39,8 +39,4 @@ class WorkHistory < ApplicationRecord
   def country_name
     CountryName.from_code(country_code)
   end
-
-  def country_location
-    CountryCode.to_location(country_code)
-  end
 end

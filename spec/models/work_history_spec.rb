@@ -74,16 +74,4 @@ RSpec.describe WorkHistory, type: :model do
       it { is_expected.to eq(false) }
     end
   end
-
-  describe "#country_location" do
-    subject(:country_location) { work_history.country_location }
-
-    it { is_expected.to be_nil }
-
-    context "with a country code" do
-      before { work_history.country_code = "GB-SCT" }
-
-      it { is_expected.to eq("country:GB-SCT") }
-    end
-  end
 end

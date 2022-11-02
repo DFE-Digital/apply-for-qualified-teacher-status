@@ -140,18 +140,4 @@ RSpec.describe Qualification, type: :model do
       it { is_expected.to be true }
     end
   end
-
-  describe "#institution_country_location" do
-    subject(:institution_country_location) do
-      qualification.institution_country_location
-    end
-
-    it { is_expected.to be_nil }
-
-    context "with a country code" do
-      before { qualification.institution_country_code = "GB-SCT" }
-
-      it { is_expected.to eq("country:GB-SCT") }
-    end
-  end
 end

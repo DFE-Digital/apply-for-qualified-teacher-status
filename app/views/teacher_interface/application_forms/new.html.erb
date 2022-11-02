@@ -22,7 +22,7 @@
     <% end %>
   <% else %>
     <%= f.govuk_select :location,
-                       options_for_select(locations),
+                       options_for_select(locations, @country_region_form.location),
                        hint: { text: I18n.t("eligibility_check.country.hint") },
                        label: { text: I18n.t("eligibility_check.country.label"), size: "l", tag: "h1" },
                        options: { include_blank: true } %>
