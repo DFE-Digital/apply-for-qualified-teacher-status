@@ -127,6 +127,10 @@ en:
           attributes:
             confirm:
               inclusion: Select whether you want to delete this file
+        teacher_interface/has_work_history_form:
+          attributes:
+            has_work_history:
+              inclusion: Select whether you have worked professionally as a teacher
         teacher_interface/name_and_date_of_birth_form:
           attributes:
             date_of_birth:
