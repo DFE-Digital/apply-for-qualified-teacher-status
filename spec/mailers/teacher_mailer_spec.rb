@@ -100,7 +100,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         is_expected.to eq(
-          "We need more information for your application for qualified teacher status (QTS)",
+          "We need some more information to progress your QTS application",
         )
       end
     end
