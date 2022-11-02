@@ -19244,6 +19244,26 @@
       "en-GB": "United Arab Republic"
     }
   },
+  "nym:United Kingdom": {
+    "edges": {
+      "from": [
+        "country:GB-ENG",
+        "country:GB-WLS",
+        "country:GB-SCT",
+        "country:GB-NIR"
+      ]
+    },
+    "meta": {
+      "canonical": false,
+      "canonical-mask": 0,
+      "display-name": true,
+      "stable-name": true
+    },
+    "names": {
+      "cy": false,
+      "en-GB": "United Kingdom"
+    }
+  },
   "nym:United Mexican States": {
     "edges": {
       "from": ["country:MX"]
