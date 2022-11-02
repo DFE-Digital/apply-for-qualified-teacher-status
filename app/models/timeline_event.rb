@@ -58,9 +58,6 @@ class TimelineEvent < ApplicationRecord
 
   belongs_to :assignee, class_name: "Staff", optional: true
   validates :assignee,
-            presence: true,
-            if: -> { assessor_assigned? || reviewer_assigned? }
-  validates :assignee,
             absence: true,
             unless: -> { assessor_assigned? || reviewer_assigned? }
 
