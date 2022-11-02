@@ -52,8 +52,8 @@ en:
       preview:
         heading: Check and send the email
         subheading: This screen shows how the email to the applicant will look.
-        description: Make sure you’re happy with the content, then select ‘Send email to applicant’, or select ‘Cancel’ to return to the application.
-        button: Send email to applicant
+        description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
+        cancel: Cancel
       confirm:
         legend:
           award: Award this QTS application?

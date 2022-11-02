@@ -13,6 +13,23 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
   subject { render }
 
+  context "when awarded pending checks" do
+    let(:application_form) do
+      create(:application_form, :awarded_pending_checks)
+    end
+
+    it { is_expected.to match(/Application complete/) }
+    it { is_expected.to match(/We’ve received your application for QTS/) }
+  end
+
+  context "when awarded" do
+    let(:teacher) { create(:teacher, trn: "ABCDEF") }
+    let(:application_form) { create(:application_form, :awarded, teacher:) }
+
+    it { is_expected.to match(/Your QTS application was successful/) }
+    it { is_expected.to match(/ABCDEF/) }
+  end
+
   context "when declined" do
     let(:application_form) { create(:application_form, :declined) }
     let(:assessment) { create(:assessment, application_form:) }

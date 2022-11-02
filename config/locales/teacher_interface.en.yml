@@ -15,6 +15,7 @@ en:
       initial_assessment: Initial assessment
       further_information_requested: Further information requested
       further_information_received: Further information received
+      awarded_pending_checks: Awarded pending checks
       awarded: Awarded
       declined: Declined
       draft: Draft

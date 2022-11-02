@@ -6,7 +6,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
   describe "#perform" do
     subject(:perform) { described_class.new.perform(dqt_trn_request) }
 
-    let(:teacher) { dqt_trn_request.application_form.teacher }
+    let(:application_form) { dqt_trn_request.application_form }
+    let(:teacher) { application_form.teacher }
 
     let(:perform_rescue_exception) do
       perform
@@ -28,8 +29,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("complete")
         end
 
-        it "sets the TRN on the teacher" do
-          expect { perform }.to change(teacher, :trn).to("abcdef")
+        it "awards QTS" do
+          expect(AwardQTS).to receive(:call).with(
+            application_form:,
+            user: "DQT",
+            trn: "abcdef",
+          )
+          perform
         end
 
         it "doesn't raise an error" do
@@ -49,8 +55,9 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("initial")
         end
 
-        it "doesn't change the TRN on the teacher" do
-          expect { perform_rescue_exception }.to_not change(teacher, :trn)
+        it "doesn't award QTS" do
+          expect(AwardQTS).to_not receive(:call)
+          perform_rescue_exception
         end
 
         it "raises the error" do
@@ -68,8 +75,9 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("pending")
         end
 
-        it "doesn't change the TRN on the teacher" do
-          expect { perform_rescue_exception }.to_not change(teacher, :trn)
+        it "doesn't award QTS" do
+          expect(AwardQTS).to_not receive(:call)
+          perform_rescue_exception
         end
 
         it "raises a still pending error" do
@@ -95,8 +103,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("complete")
         end
 
-        it "sets the TRN on the teacher" do
-          expect { perform }.to change(teacher, :trn).to("abcdef")
+        it "awards QTS" do
+          expect(AwardQTS).to receive(:call).with(
+            application_form:,
+            user: "DQT",
+            trn: "abcdef",
+          )
+          perform
         end
 
         it "doesn't raise an error" do
@@ -116,8 +129,9 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("pending")
         end
 
-        it "doesn't change the TRN on the teacher" do
-          expect { perform_rescue_exception }.to_not change(teacher, :trn)
+        it "doesn't award QTS" do
+          expect(AwardQTS).to_not receive(:call)
+          perform_rescue_exception
         end
 
         it "raises the error" do
@@ -135,8 +149,9 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("pending")
         end
 
-        it "doesn't change the TRN on the teacher" do
-          expect { perform_rescue_exception }.to_not change(teacher, :trn)
+        it "doesn't award QTS" do
+          expect(AwardQTS).to_not receive(:call)
+          perform_rescue_exception
         end
 
         it "raises a still pending error" do
@@ -155,8 +170,9 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         expect(dqt_trn_request.reload.state).to eq("complete")
       end
 
-      it "doesn't change the TRN on the teacher" do
-        expect { perform }.to_not change(teacher, :trn)
+      it "doesn't award QTS" do
+        expect(AwardQTS).to_not receive(:call)
+        perform
       end
 
       it "doesn't raise an error" do

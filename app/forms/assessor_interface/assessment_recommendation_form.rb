@@ -47,10 +47,8 @@ class AssessorInterface::AssessmentRecommendationForm
   end
 
   def needs_preview?
-    recommendation == "decline"
-  end
-
-  def needs_confirmation?
     needs_declaration? && declaration
   end
+
+  alias_method :needs_confirmation?, :needs_preview?
 end

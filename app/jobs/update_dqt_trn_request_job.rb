@@ -23,10 +23,13 @@ class UpdateDQTTRNRequestJob < ApplicationJob
     dqt_trn_request.pending! if dqt_trn_request.initial?
 
     if (trn = response[:trn]).present?
-      ActiveRecord::Base.transaction do
-        dqt_trn_request.application_form.teacher.update!(trn:)
-        dqt_trn_request.complete!
-      end
+      AwardQTS.call(
+        application_form: dqt_trn_request.application_form,
+        user: "DQT",
+        trn:,
+      )
+
+      dqt_trn_request.complete!
     end
 
     raise StillPending if dqt_trn_request.pending?

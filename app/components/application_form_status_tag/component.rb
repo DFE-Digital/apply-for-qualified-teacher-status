@@ -28,6 +28,7 @@ module ApplicationFormStatusTag
       initial_assessment: "blue",
       further_information_requested: "yellow",
       further_information_received: "purple",
+      awarded_pending_checks: "green",
       awarded: "green",
       declined: "red",
       draft: "grey",
