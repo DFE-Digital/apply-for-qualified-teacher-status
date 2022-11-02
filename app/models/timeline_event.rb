@@ -64,8 +64,14 @@ class TimelineEvent < ApplicationRecord
             absence: true,
             unless: -> { assessor_assigned? || reviewer_assigned? }
 
-  validates :old_state, :new_state, presence: true, if: :state_changed?
-  validates :old_state, :new_state, absence: true, unless: :state_changed?
+  validates :old_state,
+            :new_state,
+            presence: true,
+            if: -> { state_changed? || assessment_section_recorded? }
+  validates :old_state,
+            :new_state,
+            absence: true,
+            unless: -> { state_changed? || assessment_section_recorded? }
 
   belongs_to :assessment_section, optional: true
   validates :assessment_section,

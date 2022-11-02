@@ -10,10 +10,12 @@ class UpdateAssessmentSection
   end
 
   def call
+    old_state = assessment_section.state
+
     ActiveRecord::Base.transaction do
       next false unless assessment_section.update(params)
 
-      create_timeline_event
+      create_timeline_event(old_state:)
       update_application_form_assessor
       update_application_form_state
 
@@ -25,12 +27,14 @@ class UpdateAssessmentSection
 
   attr_reader :assessment_section, :user, :params
 
-  def create_timeline_event
+  def create_timeline_event(old_state:)
     TimelineEvent.create!(
       creator: user,
       event_type: :assessment_section_recorded,
       assessment_section:,
       application_form:,
+      old_state:,
+      new_state: assessment_section.state,
     )
   end
 

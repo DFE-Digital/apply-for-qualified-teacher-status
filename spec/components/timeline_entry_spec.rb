@@ -68,7 +68,11 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
   context "assessment section recorded" do
     let(:timeline_event) do
-      create(:timeline_event, :assessment_section_recorded)
+      create(
+        :timeline_event,
+        :assessment_section_recorded,
+        new_state: "completed",
+      )
     end
 
     it "describes the event" do
