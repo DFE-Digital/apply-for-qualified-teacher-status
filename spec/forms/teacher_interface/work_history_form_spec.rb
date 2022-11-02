@@ -9,7 +9,7 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
       job:,
       school_name:,
       city:,
-      country_code:,
+      country_location:,
       contact_name:,
       contact_email:,
       start_date:,
@@ -22,7 +22,7 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
     let(:job) { "" }
     let(:school_name) { "" }
     let(:city) { "" }
-    let(:country_code) { "" }
+    let(:country_location) { "" }
     let(:contact_name) { "" }
     let(:contact_email) { "" }
     let(:start_date) { "" }
@@ -32,7 +32,7 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
     it { is_expected.to validate_presence_of(:job) }
     it { is_expected.to validate_presence_of(:school_name) }
     it { is_expected.to validate_presence_of(:city) }
-    it { is_expected.to validate_presence_of(:country_code) }
+    it { is_expected.to validate_presence_of(:country_location) }
     it { is_expected.to validate_presence_of(:contact_name) }
     it { is_expected.to validate_presence_of(:contact_email) }
     it { is_expected.to validate_presence_of(:start_date) }
@@ -104,18 +104,28 @@ RSpec.describe TeacherInterface::WorkHistoryForm, type: :model do
     end
   end
 
+  context "with a country code" do
+    subject(:country_location) do
+      described_class.new(country_code: "FR").country_location
+    end
+
+    it { is_expected.to eq("country:FR") }
+  end
+
   describe "#save" do
     let(:job) { "Job" }
     let(:school_name) { "School" }
     let(:city) { "City" }
-    let(:country_code) { "country:FR" }
+    let(:country_location) { "country:FR" }
     let(:contact_name) { "First Last" }
     let(:contact_email) { "school@example.com" }
     let(:start_date) { { 1 => 2020, 2 => 10, 3 => 1 } }
     let(:still_employed) { "true" }
     let(:end_date) { "" }
 
-    before { form.save(validate: true) }
+    subject(:save) { form.save(validate: true) }
+
+    before { expect(save).to be true }
 
     it "saves the work history" do
       expect(work_history.job).to eq("Job")

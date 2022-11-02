@@ -7,8 +7,8 @@
     <%= f.govuk_text_field :title, label: { text: I18n.t("application_form.qualifications.form.fields.title.#{qualification.locale_key}") } %>
     <%= f.govuk_text_field :institution_name, label: { text: I18n.t("application_form.qualifications.form.fields.institution_name") } %>
 
-    <%= f.govuk_select :institution_country_code,
-                       options_for_select(locations, qualification.institution_country_location),
+    <%= f.govuk_select :institution_country_location,
+                       options_for_select(locations, qualification_form.institution_country_location),
                        label: { text: I18n.t("application_form.qualifications.form.fields.institution_country") },
                        options: { include_blank: true } %>
   <% end %>

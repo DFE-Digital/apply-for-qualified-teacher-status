@@ -8,7 +8,7 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
       qualification:,
       title:,
       institution_name:,
-      institution_country_code:,
+      institution_country_location:,
       start_date:,
       complete_date:,
       certificate_date:,
@@ -18,7 +18,7 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
   describe "validations" do
     let(:title) { "" }
     let(:institution_name) { "" }
-    let(:institution_country_code) { "" }
+    let(:institution_country_location) { "" }
     let(:start_date) { "" }
     let(:complete_date) { "" }
     let(:certificate_date) { "" }
@@ -26,7 +26,7 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     it { is_expected.to validate_presence_of(:qualification) }
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:institution_name) }
-    it { is_expected.to validate_presence_of(:institution_country_code) }
+    it { is_expected.to validate_presence_of(:institution_country_location) }
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to validate_presence_of(:complete_date) }
     it { is_expected.to validate_presence_of(:certificate_date) }
@@ -39,15 +39,27 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     end
   end
 
+  context "with a country code" do
+    subject(:institution_country_location) do
+      described_class.new(
+        institution_country_code: "FR",
+      ).institution_country_location
+    end
+
+    it { is_expected.to eq("country:FR") }
+  end
+
   describe "#save" do
     let(:title) { "Title" }
     let(:institution_name) { "Institution name" }
-    let(:institution_country_code) { "country:FR" }
+    let(:institution_country_location) { "country:FR" }
     let(:start_date) { { 1 => 2020, 2 => 1, 3 => 1 } }
     let(:complete_date) { { 1 => 2022, 2 => 1, 3 => 1 } }
     let(:certificate_date) { { 1 => 2022, 2 => 6, 3 => 1 } }
 
-    before { form.save(validate: true) }
+    subject(:save) { form.save(validate: true) }
+
+    before { expect(save).to be true }
 
     it "saves the qualification" do
       expect(qualification.title).to eq("Title")

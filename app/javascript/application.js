@@ -19,16 +19,16 @@ var loadCountryAutoComplete = () => {
       "teacher-interface-country-region-form-location-field-error"
     ) ??
     document.getElementById(
-      "teacher-interface-work-history-form-country-code-field"
+      "teacher-interface-work-history-form-country-location-field"
     ) ??
     document.getElementById(
-      "teacher-interface-work-history-form-country-code-field-error"
+      "teacher-interface-work-history-form-country-location-field-error"
     ) ??
     document.getElementById(
-      "teacher-interface-qualification-form-institution-country-code-field"
+      "teacher-interface-qualification-form-institution-country-location-field"
     ) ??
     document.getElementById(
-      "teacher-interface-qualification-form-institution-country-code-field-error"
+      "teacher-interface-qualification-form-institution-country-location-field-error"
     ) ??
     document.getElementById("assessor-interface-filter-form-location-field") ??
     document.getElementById(

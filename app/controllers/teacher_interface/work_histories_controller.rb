@@ -155,7 +155,7 @@ module TeacherInterface
     def work_history_form_params
       params.require(:teacher_interface_work_history_form).permit(
         :city,
-        :country_code,
+        :country_location,
         :contact_name,
         :contact_email,
         :end_date,

@@ -531,7 +531,7 @@ RSpec.describe "Teacher application", type: :system do
     fill_in "teacher-interface-qualification-form-title-field", with: "Title"
     fill_in "teacher-interface-qualification-form-institution-name-field",
             with: "Institution Name"
-    fill_in "teacher-interface-qualification-form-institution-country-code-field",
+    fill_in "teacher-interface-qualification-form-institution-country-location-field",
             with: "France"
     fill_in "teacher_interface_qualification_form_start_date_2i", with: "1"
     fill_in "teacher_interface_qualification_form_start_date_1i", with: "2000"
@@ -586,7 +586,7 @@ RSpec.describe "Teacher application", type: :system do
     fill_in "teacher-interface-work-history-form-school-name-field",
             with: "School name"
     fill_in "teacher-interface-work-history-form-city-field", with: "City"
-    fill_in "teacher-interface-work-history-form-country-code-field",
+    fill_in "teacher-interface-work-history-form-country-location-field",
             with: "France"
     fill_in "teacher-interface-work-history-form-job-field", with: "Job"
     fill_in "teacher-interface-work-history-form-contact-name-field",

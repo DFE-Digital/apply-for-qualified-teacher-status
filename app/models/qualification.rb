@@ -82,10 +82,6 @@ class Qualification < ApplicationRecord
     CountryName.from_code(institution_country_code)
   end
 
-  def institution_country_location
-    CountryCode.to_location(institution_country_code)
-  end
-
   def certificate_document
     documents.find(&:qualification_certificate?)
   end

@@ -8,7 +8,7 @@ module TeacherInterface
     attribute :job, :string
     attribute :school_name, :string
     attribute :city, :string
-    attribute :country_code, :string
+    attribute :country_location, :string
     attribute :contact_name, :string
     attribute :contact_email, :string
     attribute :start_date
@@ -18,7 +18,7 @@ module TeacherInterface
     validates :job, presence: true
     validates :school_name, presence: true
     validates :city, presence: true
-    validates :country_code, presence: true
+    validates :country_location, presence: true
     validates :contact_name, presence: true
     validates :contact_email, presence: true, valid_for_notify: true
     validates :start_date, date: true
@@ -26,8 +26,12 @@ module TeacherInterface
     validates :still_employed, inclusion: [true, false]
     validates_with DateComparisonValidator, unless: :still_employed
 
-    def country_code=(value)
-      super(CountryCode.from_location(value))
+    def initialize(values)
+      if (country_code = values.delete(:country_code))
+        values[:country_location] = CountryCode.to_location(country_code)
+      end
+
+      super(values)
     end
 
     def update_model
@@ -42,6 +46,12 @@ module TeacherInterface
         still_employed:,
         end_date:,
       )
+    end
+
+    private
+
+    def country_code
+      CountryCode.from_location(country_location)
     end
   end
 end

@@ -147,7 +147,7 @@ module TeacherInterface
       params.require(:teacher_interface_qualification_form).permit(
         :title,
         :institution_name,
-        :institution_country_code,
+        :institution_country_location,
         :start_date,
         :complete_date,
         :certificate_date,

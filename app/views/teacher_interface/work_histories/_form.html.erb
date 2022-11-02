@@ -7,8 +7,8 @@
     <%= f.govuk_text_field :school_name, label: { text: "School name" } %>
     <%= f.govuk_text_field :city, label: { text: "City" } %>
 
-    <%= f.govuk_select :country_code,
-                       options_for_select(locations, work_history.country_location),
+    <%= f.govuk_select :country_location,
+                       options_for_select(locations, work_history_form.country_location),
                        label: { text: "Country" },
                        options: { include_blank: true } %>
 
