@@ -122,7 +122,13 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     assessment = create(:assessment, application_form:)
 
-    create(:assessment_section, :personal_information, :failed, assessment:)
+    create(
+      :assessment_section,
+      :personal_information,
+      :failed,
+      :declines_assessment,
+      assessment:,
+    )
   end
 
   def given_i_can_request_dqt_api
@@ -162,7 +168,9 @@ RSpec.describe "Assessor completing assessment", type: :system do
         .first
         .items
         .first
-    expect(failure_reason_item.heading.text).to eq("Failure Reason")
+    expect(failure_reason_item.heading.text).to eq(
+      "There’s already another in-flight application for this applicant.",
+    )
     expect(failure_reason_item.note.text).to eq("Notes.")
   end
 
