@@ -54,7 +54,7 @@ module TimelineEntry
           render(
             ApplicationFormStatusTag::Component.new(
               key: timeline_event.id,
-              status: section.state,
+              status: timeline_event.new_state,
               class_context: "timeline-event",
             ),
           ),

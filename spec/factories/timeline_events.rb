@@ -66,6 +66,8 @@ FactoryBot.define do
           assessment: build(:assessment, application_form:),
         )
       end
+      old_state { %i[not_started action_required completed].sample }
+      new_state { %i[not_started action_required completed].sample }
     end
 
     trait :note_created do

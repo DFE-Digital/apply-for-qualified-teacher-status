@@ -110,8 +110,8 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :assessment_section_recorded }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
+      it { is_expected.to validate_presence_of(:old_state) }
+      it { is_expected.to validate_presence_of(:new_state) }
       it { is_expected.to validate_presence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
