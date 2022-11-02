@@ -57,7 +57,7 @@
 
     <h1 class="govuk-heading-l">
       <% if @document.documentable.institution_name.present? %>
-        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_certificate") %> 
+        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_certificate") %>
       <% elsif @document.documentable.is_teaching_qualification? %>
         Upload your teaching qualification certificate
       <% else %>
