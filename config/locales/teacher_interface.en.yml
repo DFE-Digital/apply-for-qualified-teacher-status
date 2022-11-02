@@ -127,6 +127,10 @@ en:
           attributes:
             confirm:
               inclusion: Select whether you want to delete this file
+        teacher_interface/has_work_history_form:
+          attributes:
+            has_work_history:
+              inclusion: Select whether you have worked professionally as a teacher
         teacher_interface/name_and_date_of_birth_form:
           attributes:
             date_of_birth:
@@ -145,6 +149,12 @@ en:
               blank: Enter your email address
         teacher_interface/qualification_form:
           attributes:
+            title:
+              blank: Enter the qualification title
+            institution_name:
+              blank: Enter the name of the institution
+            institution_country_code:
+              blank: Enter the country of the institution
             start_date:
               blank: Enter the start date in the format 27 3 1980
               invalid: Enter the start date in the format 27 3 1980

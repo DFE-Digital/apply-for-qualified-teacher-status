@@ -17,6 +17,8 @@ en:
         alternative_family_name: Enter just your family name
       teacher_interface_further_information_request_item_text_form:
         response: Use the text box below to respond to the assessor’s question.
+      teacher_interface_has_work_history_form:
+        has_work_history: If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet.
       teacher_interface_new_session_form:
         email: Enter the email address you used to register, and we will send you a link to sign in.
       teacher_interface_registration_number_form:
@@ -69,6 +71,10 @@ en:
         maximum: To
       teacher_interface_further_information_request_item_text_form:
         response: Enter your response
+      teacher_interface_has_work_history_form:
+        has_work_history_options:
+          true: "Yes"
+          false: "No"
       teacher_interface_new_session_form:
         email: Email address
       teacher_interface_registration_number_form:
@@ -107,5 +113,7 @@ en:
         add_another: Add another qualification?
       teacher_interface_alternative_name_form:
         has_alternative_name: Does your name appear differently on your ID documents or qualifications?
+      teacher_interface_has_work_history_form:
+        has_work_history: Have you worked professionally as a teacher?
       work_history:
         add_another: Add another workplace?

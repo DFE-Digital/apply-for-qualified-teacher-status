@@ -9,11 +9,9 @@
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :has_work_history,
-                                       [OpenStruct.new(label: "Yes", value: true), OpenStruct.new(label: "No", value: false)],
+                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
                                        :value,
-                                       :label,
-                                       legend: { text: "Have you worked professionally as a teacher?", size: "l", tag: "h1" },
-                                       hint: { text: "If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet." } %>
+                                       legend: { size: "l", tag: "h1" } %>
 
   <%= f.govuk_submit name: "button", value: "save_and_continue", prevent_double_click: false%>
 <% end %>
