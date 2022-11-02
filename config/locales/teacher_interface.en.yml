@@ -149,6 +149,12 @@ en:
               blank: Enter your email address
         teacher_interface/qualification_form:
           attributes:
+            title:
+              blank: Enter the qualification title
+            institution_name:
+              blank: Enter the name of the institution
+            institution_country_code:
+              blank: Enter the country of the institution
             start_date:
               blank: Enter the start date in the format 27 3 1980
               invalid: Enter the start date in the format 27 3 1980
