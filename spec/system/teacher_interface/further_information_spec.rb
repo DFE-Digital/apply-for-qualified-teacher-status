@@ -62,6 +62,7 @@ RSpec.describe "Teacher further information", type: :system do
     when_i_submit_the_further_information
     then_i_see_the(:submitted_application_page)
     and_i_see_the_further_information_received_information
+    and_i_receive_a_further_information_received_email
   end
 
   def given_there_is_an_application_form
@@ -156,6 +157,16 @@ RSpec.describe "Teacher further information", type: :system do
     expect(submitted_application_page.panel.body.text).to eq(
       "Your reference number\n#{ApplicationForm.last.reference}",
     )
+  end
+
+  def and_i_receive_a_further_information_received_email
+    message = ActionMailer::Base.deliveries.last
+    expect(message).to_not be_nil
+
+    expect(message.subject).to eq(
+      "We’ve received the additional information you sent us",
+    )
+    expect(message.to).to include(application_form.teacher.email)
   end
 
   def teacher
