@@ -45,7 +45,7 @@ RSpec.describe TeacherMailerPreview do
         personalisation: {
           to: teacher.email,
           subject:
-            "We need more information for your application for qualified teacher status (QTS)",
+            "We need some more information to progress your QTS application",
           body: instance_of(String),
         },
       )

@@ -94,7 +94,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
     expect(message).to_not be_nil
 
     expect(message.subject).to eq(
-      "We need more information for your application for qualified teacher status (QTS)",
+      "We need some more information to progress your QTS application",
     )
     expect(message.to).to include(application_form.teacher.email)
   end

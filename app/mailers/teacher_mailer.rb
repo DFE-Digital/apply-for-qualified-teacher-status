@@ -5,6 +5,7 @@ class TeacherMailer < ApplicationMailer
                   application_awarded
                   application_declined
                   application_received
+                  further_information_received
                 ]
 
   GOVUK_NOTIFY_TEMPLATE_ID =
@@ -37,14 +38,18 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
-  def further_information_requested
-    teacher = params[:teacher]
-
-    @date = "[date]"
-
+  def further_information_received
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
-      to: teacher.email,
+      to: params[:teacher].email,
+      subject: I18n.t("mailer.teacher.further_information_received.subject"),
+    )
+  end
+
+  def further_information_requested
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: params[:teacher].email,
       subject: I18n.t("mailer.teacher.further_information_requested.subject"),
     )
   end

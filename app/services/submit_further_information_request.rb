@@ -20,6 +20,8 @@ class SubmitFurtherInformationRequest
         new_state: :further_information_received,
       )
     end
+
+    TeacherMailer.with(teacher:).further_information_received.deliver_later
   end
 
   class AlreadySubmitted < StandardError
@@ -33,4 +35,6 @@ class SubmitFurtherInformationRequest
     @application_form ||=
       further_information_request.assessment.application_form
   end
+
+  delegate :teacher, to: :application_form
 end

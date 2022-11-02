@@ -85,6 +85,35 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
   end
 
+  describe "#further_information_received" do
+    subject(:mail) do
+      described_class.with(teacher:).further_information_received
+    end
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      it do
+        is_expected.to eq(
+          "We’ve received the additional information you sent us",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("abc") }
+    end
+  end
+
   describe "#further_information_requested" do
     subject(:mail) do
       described_class.with(
@@ -100,7 +129,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         is_expected.to eq(
-          "We need more information for your application for qualified teacher status (QTS)",
+          "We need some more information to progress your QTS application",
         )
       end
     end

@@ -25,10 +25,7 @@ class CreateFurtherInformationRequest
         )
       end
 
-    TeacherMailer
-      .with(teacher:, further_information_request:)
-      .further_information_requested
-      .deliver_later
+    TeacherMailer.with(teacher:).further_information_requested.deliver_later
 
     further_information_request
   end

@@ -38,6 +38,13 @@ RSpec.describe SubmitFurtherInformationRequest do
     ).from(false).to(true)
   end
 
+  it "sends an email" do
+    expect { call }.to have_enqueued_mail(
+      TeacherMailer,
+      :further_information_received,
+    )
+  end
+
   describe "recording timeline event" do
     subject(:timeline_event) do
       TimelineEvent.state_changed.where(application_form:).last
