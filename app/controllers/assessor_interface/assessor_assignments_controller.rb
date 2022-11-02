@@ -16,7 +16,7 @@ module AssessorInterface
           assessor_id: assessor_params[:assessor_id],
         )
 
-      if @assessor_assignment_form.save!
+      if @assessor_assignment_form.save
         redirect_to assessor_interface_application_form_path(application_form)
       else
         render :new

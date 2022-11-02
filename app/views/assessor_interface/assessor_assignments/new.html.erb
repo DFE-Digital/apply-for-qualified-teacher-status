@@ -9,7 +9,11 @@
 <%= form_with model: @assessor_assignment_form, url: assessor_interface_application_form_assign_assessor_path(@application_form) do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_collection_radio_buttons :assessor_id, Staff.all, :id, :name, legend: nil %>
+  <%= f.govuk_collection_radio_buttons :assessor_id,
+                                       [OpenStruct.new(id: "", name: t("application_form.summary.unassigned"))] + Staff.all,
+                                       :id,
+                                       :name,
+                                       legend: nil %>
 
   <%= f.govuk_submit do %>
     <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>

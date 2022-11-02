@@ -16,7 +16,7 @@ module AssessorInterface
           reviewer_id: reviewer_params[:reviewer_id],
         )
 
-      if @reviewer_assignment_form.save!
+      if @reviewer_assignment_form.save
         redirect_to assessor_interface_application_form_path(application_form)
       else
         render :new
