@@ -29,22 +29,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("complete")
         end
 
-        it "sets the TRN on the teacher" do
-          expect { perform }.to change(teacher, :trn).to("abcdef")
-        end
-
-        it "sends an email" do
-          expect { perform }.to have_enqueued_mail(
-            TeacherMailer,
-            :application_awarded,
-          )
-        end
-
-        it "changes the application form status" do
-          expect(ChangeApplicationFormState).to receive(:call).with(
+        it "awards QTS" do
+          expect(AwardQTS).to receive(:call).with(
             application_form:,
             user: "DQT",
-            new_state: "awarded",
+            trn: "abcdef",
           )
           perform
         end
@@ -66,19 +55,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("initial")
         end
 
-        it "doesn't change the TRN on the teacher" do
-          expect { perform_rescue_exception }.to_not change(teacher, :trn)
-        end
-
-        it "doesn't send an email" do
-          expect { perform_rescue_exception }.to_not have_enqueued_mail(
-            TeacherMailer,
-            :application_awarded,
-          )
-        end
-
-        it "doesn't change the application form status" do
-          expect(ChangeApplicationFormState).to_not receive(:call)
+        it "doesn't award QTS" do
+          expect(AwardQTS).to_not receive(:call)
           perform_rescue_exception
         end
 
@@ -97,19 +75,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("pending")
         end
 
-        it "doesn't change the TRN on the teacher" do
-          expect { perform_rescue_exception }.to_not change(teacher, :trn)
-        end
-
-        it "doesn't send an email" do
-          expect { perform_rescue_exception }.to_not have_enqueued_mail(
-            TeacherMailer,
-            :application_awarded,
-          )
-        end
-
-        it "doesn't change the application form status" do
-          expect(ChangeApplicationFormState).to_not receive(:call)
+        it "doesn't award QTS" do
+          expect(AwardQTS).to_not receive(:call)
           perform_rescue_exception
         end
 
@@ -136,22 +103,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("complete")
         end
 
-        it "sets the TRN on the teacher" do
-          expect { perform }.to change(teacher, :trn).to("abcdef")
-        end
-
-        it "sends an email" do
-          expect { perform }.to have_enqueued_mail(
-            TeacherMailer,
-            :application_awarded,
-          )
-        end
-
-        it "changes the application form status" do
-          expect(ChangeApplicationFormState).to receive(:call).with(
+        it "awards QTS" do
+          expect(AwardQTS).to receive(:call).with(
             application_form:,
             user: "DQT",
-            new_state: "awarded",
+            trn: "abcdef",
           )
           perform
         end
@@ -173,19 +129,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("pending")
         end
 
-        it "doesn't change the TRN on the teacher" do
-          expect { perform_rescue_exception }.to_not change(teacher, :trn)
-        end
-
-        it "doesn't send an email" do
-          expect { perform_rescue_exception }.to_not have_enqueued_mail(
-            TeacherMailer,
-            :application_awarded,
-          )
-        end
-
-        it "doesn't change the application form status" do
-          expect(ChangeApplicationFormState).to_not receive(:call)
+        it "doesn't award QTS" do
+          expect(AwardQTS).to_not receive(:call)
           perform_rescue_exception
         end
 
@@ -204,19 +149,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           expect(dqt_trn_request.reload.state).to eq("pending")
         end
 
-        it "doesn't change the TRN on the teacher" do
-          expect { perform_rescue_exception }.to_not change(teacher, :trn)
-        end
-
-        it "doesn't send an email" do
-          expect { perform_rescue_exception }.to_not have_enqueued_mail(
-            TeacherMailer,
-            :application_awarded,
-          )
-        end
-
-        it "doesn't change the application form status" do
-          expect(ChangeApplicationFormState).to_not receive(:call)
+        it "doesn't award QTS" do
+          expect(AwardQTS).to_not receive(:call)
           perform_rescue_exception
         end
 
@@ -236,19 +170,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         expect(dqt_trn_request.reload.state).to eq("complete")
       end
 
-      it "doesn't change the TRN on the teacher" do
-        expect { perform }.to_not change(teacher, :trn)
-      end
-
-      it "doesn't send an email" do
-        expect { perform }.to_not have_enqueued_mail(
-          TeacherMailer,
-          :application_awarded,
-        )
-      end
-
-      it "doesn't change the application form status" do
-        expect(ChangeApplicationFormState).to_not receive(:call)
+      it "doesn't award QTS" do
+        expect(AwardQTS).to_not receive(:call)
         perform
       end
 

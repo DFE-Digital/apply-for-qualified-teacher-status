@@ -19,7 +19,7 @@
 #
 FactoryBot.define do
   factory :dqt_trn_request do
-    association :application_form, :submitted
+    association :application_form, :awarded_pending_checks
 
     request_id { SecureRandom.uuid }
   end
