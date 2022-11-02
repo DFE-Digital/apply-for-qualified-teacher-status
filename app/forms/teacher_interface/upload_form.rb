@@ -10,7 +10,7 @@ module TeacherInterface
     validates :document, presence: true
     validates :original_attachment, file_upload: true
     validates :translated_attachment, file_upload: true
-    validate :attachment_present
+    validate :attachments_present
 
     def update_model
       if original_attachment.present?
@@ -28,10 +28,20 @@ module TeacherInterface
       end
     end
 
-    def attachment_present
-      errors.add(:original_attachment, :blank) if original_attachment.blank?
-      if written_in_english == "false" && translated_attachment.blank?
-        errors.add(:translated_attachment, :blank)
+    def attachments_present
+      has_errors =
+        original_attachment.blank? ||
+          (written_in_english == "false" && translated_attachment.blank?)
+
+      # We lose any uploaded documents if the form isn't valid - the user has to upload both again,
+      # so we should show both errors even if there was only one.
+
+      if has_errors
+        errors.add(:original_attachment, :blank)
+
+        if written_in_english == "false"
+          errors.add(:translated_attachment, :blank)
+        end
       end
     end
   end
