@@ -151,41 +151,74 @@ RSpec.describe Assessment, type: :model do
   describe "#can_decline?" do
     subject(:can_decline?) { assessment.can_decline? }
 
-    context "with an unfinished assessment" do
+    context "with an unfinished section" do
       before { create(:assessment_section, :personal_information, assessment:) }
 
       it { is_expected.to be false }
     end
 
-    context "with a passed assessment" do
+    context "with a passed section" do
       before do
         create(:assessment_section, :personal_information, :passed, assessment:)
       end
       it { is_expected.to be false }
     end
 
-    context "with a failed assessment" do
+    context "with a failed section" do
       before do
         create(:assessment_section, :personal_information, :failed, assessment:)
+      end
+      it { is_expected.to be false }
+    end
+
+    context "with a failed section which declines the assessment" do
+      before do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          :declines_assessment,
+          assessment:,
+        )
       end
       it { is_expected.to be true }
     end
 
-    context "with a mixture of assessments" do
+    context "with a mixture of sections" do
       before do
         create(:assessment_section, :personal_information, :passed, assessment:)
         create(:assessment_section, :qualifications, :failed, assessment:)
+      end
+      it { is_expected.to be false }
+    end
+
+    context "with a mixture of sections which declines the assessment" do
+      before do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+        create(
+          :assessment_section,
+          :qualifications,
+          :failed,
+          :declines_assessment,
+          assessment:,
+        )
       end
       it { is_expected.to be true }
     end
 
     context "with a passed further information request" do
-      before { create(:further_information_request, :passed, assessment:) }
+      before do
+        create(:assessment_section, :personal_information, :failed, assessment:)
+        create(:further_information_request, :passed, assessment:)
+      end
       it { is_expected.to be false }
     end
 
     context "with a failed further information request" do
-      before { create(:further_information_request, :failed, assessment:) }
+      before do
+        create(:assessment_section, :personal_information, :failed, assessment:)
+        create(:further_information_request, :failed, assessment:)
+      end
       it { is_expected.to be true }
     end
   end
@@ -220,13 +253,10 @@ RSpec.describe Assessment, type: :model do
           :assessment_section,
           :qualifications,
           :failed,
+          :declines_assessment,
           assessment:,
-          selected_failure_reasons: {
-            duplicate_application: "Notes.",
-          },
         )
       end
-
       it { is_expected.to be false }
     end
 

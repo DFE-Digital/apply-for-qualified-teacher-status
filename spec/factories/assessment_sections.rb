@@ -34,6 +34,12 @@ FactoryBot.define do
       selected_failure_reasons { { failure_reason: "Notes." } }
     end
 
+    trait :declines_assessment do
+      selected_failure_reasons do
+        { AssessmentSection::DECLINE_FAILURE_REASONS.first => "Notes." }
+      end
+    end
+
     trait :personal_information do
       key { "personal_information" }
       checks { %w[identification_document_present] }
