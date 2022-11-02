@@ -7,5 +7,7 @@ en:
         subject: Your QTS application has been declined
       application_received:
         subject: We’ve received your application for qualified teacher status (QTS)
+      further_information_received:
+        subject: We’ve received the additional information you sent us
       further_information_requested:
         subject: We need some more information to progress your QTS application
