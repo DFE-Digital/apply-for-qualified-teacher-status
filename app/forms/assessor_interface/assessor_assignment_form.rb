@@ -1,20 +1,27 @@
+# frozen_string_literal: true
+
 class AssessorInterface::AssessorAssignmentForm
   include ActiveModel::Model
   include ActiveModel::Attributes
-  include ActiveRecord::AttributeAssignment
 
   attr_accessor :application_form, :staff
   attribute :assessor_id, :string
 
-  validates :application_form, :staff, :assessor_id, presence: true
+  validates :application_form, :staff, presence: true
 
-  def save!
+  def save
     return false unless valid?
 
     AssignApplicationFormAssessor.call(
       application_form:,
       user: staff,
-      assessor: Staff.find(assessor_id),
+      assessor:,
     )
+  end
+
+  private
+
+  def assessor
+    assessor_id.present? ? Staff.find(assessor_id) : nil
   end
 end

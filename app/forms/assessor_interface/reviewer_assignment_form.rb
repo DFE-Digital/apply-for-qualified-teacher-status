@@ -1,27 +1,27 @@
+# frozen_string_literal: true
+
 class AssessorInterface::ReviewerAssignmentForm
   include ActiveModel::Model
   include ActiveModel::Attributes
-  include ActiveRecord::AttributeAssignment
 
   attr_accessor :application_form, :staff
   attribute :reviewer_id, :string
 
-  validates :application_form, :staff, :reviewer_id, presence: true
-  def save!
+  validates :application_form, :staff, presence: true
+
+  def save
     return false unless valid?
 
-    application_form.update!(reviewer_id:)
-    create_timeline_event!
+    AssignApplicationFormReviewer.call(
+      application_form:,
+      user: staff,
+      reviewer:,
+    )
   end
 
   private
 
-  def create_timeline_event!
-    TimelineEvent.create!(
-      application_form:,
-      event_type: "reviewer_assigned",
-      creator: staff,
-      assignee_id: reviewer_id,
-    )
+  def reviewer
+    reviewer_id.present? ? Staff.find(reviewer_id) : nil
   end
 end

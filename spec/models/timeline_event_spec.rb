@@ -76,7 +76,7 @@ RSpec.describe TimelineEvent do
     context "with an assessor assigned event type" do
       before { timeline_event.event_type = :assessor_assigned }
 
-      it { is_expected.to validate_presence_of(:assignee) }
+      it { is_expected.to_not validate_presence_of(:assignee) }
       it { is_expected.to validate_absence_of(:old_state) }
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
@@ -87,7 +87,7 @@ RSpec.describe TimelineEvent do
     context "with an reviewer assigned event type" do
       before { timeline_event.event_type = :reviewer_assigned }
 
-      it { is_expected.to validate_presence_of(:assignee) }
+      it { is_expected.to_not validate_presence_of(:assignee) }
       it { is_expected.to validate_absence_of(:old_state) }
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }

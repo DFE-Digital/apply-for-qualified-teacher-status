@@ -41,7 +41,11 @@ module TimelineEntry
     end
 
     def assessor_assigned_vars
-      { assignee_name: timeline_event.assignee.name }
+      {
+        assignee_name:
+          timeline_event.assignee&.name.presence ||
+            I18n.t("application_form.summary.unassigned"),
+      }
     end
 
     alias_method :reviewer_assigned_vars, :assessor_assigned_vars

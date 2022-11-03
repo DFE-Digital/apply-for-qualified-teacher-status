@@ -11,7 +11,11 @@ RSpec.describe "Assigning an assessor", type: :system do
 
     when_i_visit_the(:assign_assessor_page, application_id: application_form.id)
     and_i_select_an_assessor
-    then_the_assessor_is_assigned_to_the_application_form
+    then_i_see_the(
+      :assessor_application_page,
+      application_id: application_form.id,
+    )
+    and_the_assessor_is_assigned_to_the_application_form
   end
 
   it "assigns a reviewer" do
@@ -22,7 +26,11 @@ RSpec.describe "Assigning an assessor", type: :system do
 
     when_i_visit_the(:assign_reviewer_page, application_id: application_form.id)
     and_i_select_a_reviewer
-    then_the_assessor_is_assigned_as_reviewer_to_the_application_form
+    then_i_see_the(
+      :assessor_application_page,
+      application_id: application_form.id,
+    )
+    and_the_assessor_is_assigned_as_reviewer_to_the_application_form
   end
 
   private
@@ -36,11 +44,11 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def and_i_select_an_assessor
-    assign_assessor_page.assessors.first.input.click
+    assign_assessor_page.assessors.second.input.click
     assign_assessor_page.continue_button.click
   end
 
-  def then_the_assessor_is_assigned_to_the_application_form
+  def and_the_assessor_is_assigned_to_the_application_form
     expect(assessor_application_page.overview.assessor_name.text).to eq(
       assessor.name,
     )
@@ -51,11 +59,11 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def and_i_select_a_reviewer
-    assign_reviewer_page.reviewers.first.input.click
+    assign_reviewer_page.reviewers.second.input.click
     assign_reviewer_page.continue_button.click
   end
 
-  def then_the_assessor_is_assigned_as_reviewer_to_the_application_form
+  def and_the_assessor_is_assigned_as_reviewer_to_the_application_form
     expect(assessor_application_page.overview.reviewer_name.text).to eq(
       assessor.name,
     )
