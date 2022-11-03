@@ -53,6 +53,8 @@ class Staff < ApplicationRecord
          :lockable,
          :invitable
 
+  self.timeout_in = 20.minutes
+
   validates :name, presence: true
 
   def send_devise_notification(notification, *args)
