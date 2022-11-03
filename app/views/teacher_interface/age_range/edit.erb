@@ -10,9 +10,13 @@
 
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_number_field :minimum, width: 3 %>
+  <%= f.govuk_number_field :minimum,
+                           width: 3,
+                           label: { text: t("helpers.label.teacher_interface_age_range_form.minimum").html_safe } %>
 
-  <%= f.govuk_number_field :maximum, width: 3 %>
+  <%= f.govuk_number_field :maximum,
+                           width: 3,
+                           label: { text: t("helpers.label.teacher_interface_age_range_form.maximum").html_safe } %>
 
   <%= govuk_details(summary_text: "About age ranges and grades") do %>
     <p>
