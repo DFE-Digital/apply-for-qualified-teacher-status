@@ -22,7 +22,8 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     and_i_see_the_check_your_answers_items
 
     when_i_mark_the_section_as_complete
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:complete_assessment_page, application_id:)
+    and_i_see_an_award_qts_option
   end
 
   it "review incomplete" do
@@ -37,7 +38,8 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     and_i_see_the_check_your_answers_items
 
     when_i_mark_the_section_as_incomplete
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:complete_assessment_page, application_id:)
+    and_i_see_a_decline_qts_option
   end
 
   private
@@ -71,11 +73,19 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     review_further_information_request_page.form.continue_button.click
   end
 
+  def and_i_see_an_award_qts_option
+    expect(complete_assessment_page.award_qts).to_not be_nil
+  end
+
   def when_i_mark_the_section_as_incomplete
     review_further_information_request_page.form.no_radio_item.input.click
     review_further_information_request_page.form.failure_reason_textarea.fill_in with:
       "Failure reason"
     review_further_information_request_page.form.continue_button.click
+  end
+
+  def and_i_see_a_decline_qts_option
+    expect(complete_assessment_page.decline_qts).to_not be_nil
   end
 
   def application_form
