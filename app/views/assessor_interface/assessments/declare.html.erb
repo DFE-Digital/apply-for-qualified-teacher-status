@@ -3,7 +3,7 @@
 
 <h1 class="govuk-heading-xl"><%= t(".heading.#{@assessment_recommendation_form.recommendation}") %></h1>
 
-<% if @assessment_recommendation_form.recommendation == "award" %>
+<% if @assessment_recommendation_form.award? %>
   <p class="govuk-body-l">You’re about to award QTS to <%= application_form_full_name(@application_form) %>.</p>
 <% else %>
   <p class="govuk-body-l">You’re about to decline this QTS application from <%= application_form_full_name(@application_form) %> for the following reasons:</p>

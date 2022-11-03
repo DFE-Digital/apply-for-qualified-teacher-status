@@ -34,6 +34,10 @@ class AssessorInterface::AssessmentRecommendationForm
     )
   end
 
+  def award?
+    recommendation == "award"
+  end
+
   def recommendation_allowed
     return if assessment.blank? || recommendation.blank?
 
