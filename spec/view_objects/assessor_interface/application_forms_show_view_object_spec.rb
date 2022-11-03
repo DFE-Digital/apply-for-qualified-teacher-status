@@ -77,12 +77,6 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       subject(:recommendation) { assessment_tasks.fetch(:recommendation) }
 
       it { is_expected.to eq(%i[initial_assessment]) }
-
-      context "with further information" do
-        before { create(:further_information_request, assessment:) }
-
-        it { is_expected.to eq(%i[initial_assessment second_assessment]) }
-      end
     end
 
     describe "further_information" do
@@ -126,21 +120,6 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       context "and initial assessment" do
         let(:item) { :initial_assessment }
-
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/edit",
-          )
-        end
-      end
-
-      context "and second assessment" do
-        let(:item) { :second_assessment }
-
-        before do
-          assessment.request_further_information!
-          create(:further_information_request, assessment:)
-        end
 
         it do
           is_expected.to eq(
@@ -246,37 +225,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           end
         end
       end
-
-      context "second assessment" do
-        let(:item) { :second_assessment }
-
-        before { assessment.request_further_information! }
-
-        context "with unfinished further information request" do
-          before { create(:further_information_request, assessment:) }
-          it { is_expected.to eq(:cannot_start_yet) }
-        end
-
-        context "with finished further information request" do
-          before { create(:further_information_request, :passed, assessment:) }
-          it { is_expected.to eq(:not_started) }
-
-          context "and award" do
-            before { assessment.award! }
-            it { is_expected.to eq(:completed) }
-          end
-
-          context "and decline" do
-            before { assessment.decline! }
-            it { is_expected.to eq(:completed) }
-          end
-        end
-      end
     end
 
     context "with further_information section" do
       let(:section) { :further_information }
       let(:item) { :review_requested_information }
+
+      before { assessment.request_further_information! }
 
       context "and a requested further information request" do
         before { create(:further_information_request, :requested, assessment:) }
@@ -292,11 +247,27 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         before do
           create(:further_information_request, :received, :passed, assessment:)
         end
+        it { is_expected.to eq(:in_progress) }
+      end
+
+      context "and a failed further information request" do
+        before do
+          create(:further_information_request, :received, :failed, assessment:)
+        end
+        it { is_expected.to eq(:in_progress) }
+      end
+
+      context "and a passed further information request with finished assessment" do
+        before do
+          assessment.award!
+          create(:further_information_request, :received, :passed, assessment:)
+        end
         it { is_expected.to eq(:completed) }
       end
 
       context "and a failed further information request" do
         before do
+          assessment.decline!
           create(:further_information_request, :received, :failed, assessment:)
         end
         it { is_expected.to eq(:completed) }
