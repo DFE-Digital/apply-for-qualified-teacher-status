@@ -3,7 +3,7 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", label: { text: "Email" } %>
+  <%= f.govuk_email_field :email, autocomplete: "email", label: { text: "Email" } %>
   <%= f.govuk_password_field :password, autocomplete: "current-password", label: { text: "Password" } %>
 
   <% if devise_mapping.rememberable? %>
