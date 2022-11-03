@@ -89,4 +89,76 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       it { is_expected.to eq(false) }
     end
   end
+
+  describe "notes_label_key_for" do
+    subject { super().notes_label_key_for(failure_reason:) }
+
+    context "with a decline failure reason" do
+      let(:failure_reason) { AssessmentSection::DECLINE_FAILURE_REASONS.sample }
+
+      it do
+        is_expected.to eq(
+          "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes_decline",
+        )
+      end
+    end
+
+    context "with a not decline failure reason" do
+      let(:failure_reason) { "there-once-was-a-cat-with-a-hungry-belly" }
+
+      it do
+        is_expected.to eq(
+          "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes",
+        )
+      end
+    end
+  end
+
+  describe "notes_hint_key_for" do
+    subject { super().notes_hint_key_for(failure_reason:) }
+
+    context "with a decline failure reason" do
+      let(:failure_reason) { AssessmentSection::DECLINE_FAILURE_REASONS.sample }
+
+      it do
+        is_expected.to eq(
+          "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes_decline",
+        )
+      end
+    end
+
+    context "with a not decline failure reason" do
+      let(:failure_reason) { "soon-may-the-kitty-man-come" }
+
+      it do
+        is_expected.to eq(
+          "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes",
+        )
+      end
+    end
+  end
+
+  describe "notes_placeholder_key_for" do
+    subject { super().notes_placeholder_key_for(failure_reason:) }
+
+    context "with a decline failure reason" do
+      let(:failure_reason) { AssessmentSection::DECLINE_FAILURE_REASONS.sample }
+
+      it do
+        is_expected.to eq(
+          "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes_decline",
+        )
+      end
+    end
+
+    context "with a not decline failure reason" do
+      let(:failure_reason) { "with-birds-and-mice-and-some-tasty-nums" }
+
+      it do
+        is_expected.to eq(
+          "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes",
+        )
+      end
+    end
+  end
 end
