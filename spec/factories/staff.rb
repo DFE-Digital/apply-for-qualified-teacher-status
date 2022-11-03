@@ -45,7 +45,7 @@
 FactoryBot.define do
   factory :staff do
     sequence(:email) { |n| "test#{n}@example.org" }
-    password { "example" }
+    password { "example123" }
     name { Faker::Name.name }
 
     trait :confirmed do
