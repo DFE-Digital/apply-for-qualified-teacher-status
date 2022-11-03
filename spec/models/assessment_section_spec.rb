@@ -98,4 +98,20 @@ RSpec.describe AssessmentSection, type: :model do
       it { is_expected.to be false }
     end
   end
+
+  describe ".decline_failure_reason?" do
+    subject { described_class.decline_failure_reason?(failure_reason:) }
+
+    context "with a decline failure reason" do
+      let(:failure_reason) { described_class::DECLINE_FAILURE_REASONS.sample }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "with a non-decline failure reason" do
+      let(:failure_reason) { :fitter_happier_more_productive }
+
+      it { is_expected.to eq(false) }
+    end
+  end
 end

@@ -60,7 +60,7 @@ class AssessorInterface::AssessmentSectionForm
       assessment_section.failure_reasons.each do |failure_reason|
         klass.attribute "#{failure_reason}_checked", :boolean
         klass.attribute "#{failure_reason}_notes", :string
-        next if decline_failure_reason?(failure_reason)
+        next if AssessmentSection.decline_failure_reason?(failure_reason:)
 
         klass.validates "#{failure_reason}_notes",
                         presence: true,
@@ -81,10 +81,6 @@ class AssessorInterface::AssessmentSectionForm
     def permit_parameters(params)
       args, kwargs = permittable_parameters
       params.permit(:passed, *args, **kwargs)
-    end
-
-    def decline_failure_reason?(failure_reason)
-      AssessmentSection::DECLINE_FAILURE_REASONS.include?(failure_reason)
     end
 
     protected

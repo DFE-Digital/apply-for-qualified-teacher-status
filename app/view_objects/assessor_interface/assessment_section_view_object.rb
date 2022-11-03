@@ -56,14 +56,14 @@ module AssessorInterface
 
     attr_reader :params
 
-    def decline_failure_reason?(failure_reason)
-      AssessmentSection::DECLINE_FAILURE_REASONS.include?(failure_reason)
-    end
-
     def build_key(failure_reason, key_section)
       key =
         "helpers.#{key_section}.assessor_interface_assessment_section_form.failure_reason_notes"
-      decline_failure_reason?(failure_reason) ? "#{key}_decline" : key
+      if AssessmentSection.decline_failure_reason?(failure_reason:)
+        "#{key}_decline"
+      else
+        key
+      end
     end
   end
 end

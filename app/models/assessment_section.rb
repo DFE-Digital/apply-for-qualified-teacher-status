@@ -67,6 +67,10 @@ class AssessmentSection < ApplicationRecord
     full_professional_status
   ].freeze
 
+  def self.decline_failure_reason?(failure_reason:)
+    DECLINE_FAILURE_REASONS.include?(failure_reason.to_s)
+  end
+
   def declines_assessment?
     DECLINE_FAILURE_REASONS.intersection(selected_failure_reasons.keys).present?
   end
