@@ -172,9 +172,11 @@ en:
               blank: Enter the subject
             selected_failure_reasons:
               blank: Select the reasons for your recommendation
+            passed:
+              inclusion: Select whether the applicant completed this section to your satisfaction
         assessor_interface/further_information_request_form:
           attributes:
             passed:
-              inclusion: Choose whether the applicant completed this section to your satisfaction
+              inclusion: Select whether the applicant completed this section to your satisfaction
             failure_reason:
               blank: Enter why this section is not completed to your satisfaction
