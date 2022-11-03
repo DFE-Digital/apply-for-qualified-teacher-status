@@ -4,22 +4,31 @@ require "rails_helper"
 
 RSpec.describe ApplicationFormStatusTag::Component, type: :component do
   subject(:component) do
-    render_inline(described_class.new(key:, status:, class_context:))
+    render_inline(described_class.new(key:, status:, class_context:, context:))
   end
 
   let(:key) { "key" }
   let(:status) { :awarded }
   let(:class_context) { "app-task-list" }
+  let(:context) { :teacher }
 
   describe "text" do
     subject(:text) { component.text.strip }
 
     it { is_expected.to eq("Awarded") }
 
-    context "submitted" do
+    context "submitted with assessor context" do
       let(:status) { :submitted }
+      let(:context) { :assessor }
 
       it { is_expected.to eq("Not started") }
+    end
+
+    context "submitted with teacher context" do
+      let(:status) { :submitted }
+      let(:context) { :teacher }
+
+      it { is_expected.to eq("Submitted") }
     end
   end
 
@@ -44,8 +53,15 @@ RSpec.describe ApplicationFormStatusTag::Component, type: :component do
       it { is_expected.to eq("govuk-tag govuk-tag--blue app-task-list__tag") }
     end
 
-    context "with a 'completed' status" do
+    context "with a 'completed' status and not assessor" do
       let(:status) { :completed }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--blue app-task-list__tag") }
+    end
+
+    context "with a 'completed' status and is assessor" do
+      let(:status) { :completed }
+      let(:context) { :assessor }
 
       it { is_expected.to eq("govuk-tag govuk-tag--green app-task-list__tag") }
     end

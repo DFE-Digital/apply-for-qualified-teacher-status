@@ -2,11 +2,12 @@ module ApplicationFormStatusTag
   class Component < ViewComponent::Base
     attr_reader :class_context
 
-    def initialize(key:, status:, class_context: nil)
+    def initialize(key:, status:, class_context: nil, context: :teacher)
       super
       @key = key
       @status = status.to_sym
       @class_context = class_context
+      @context = context
     end
 
     def id
@@ -14,7 +15,9 @@ module ApplicationFormStatusTag
     end
 
     def text
-      I18n.t("application_form.status.#{@status}")
+      key_with_context = "application_form.status.#{@status}.#{@context}"
+      key_without_context = "application_form.status.#{@status}"
+      I18n.t(key_with_context, default: I18n.t(key_without_context))
     end
 
     def classes
@@ -33,11 +36,15 @@ module ApplicationFormStatusTag
       draft: "grey",
       submitted: "grey",
       cannot_start_yet: "grey",
-      completed: "green",
+      completed: {
+        assessor: "green",
+        teacher: "blue",
+      },
     }.freeze
 
     def colour
-      COLOURS[@status]
+      colours = COLOURS[@status]
+      colours.is_a?(String) ? colours : colours.fetch(@context)
     end
   end
 end
