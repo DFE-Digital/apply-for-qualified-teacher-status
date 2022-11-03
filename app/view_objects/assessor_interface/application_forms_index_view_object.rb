@@ -43,7 +43,9 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     ]
 
     states.map do |state|
-      text = I18n.t("application_form.status.#{state}")
+      key_with_context = "application_form.status.#{state}.assessor"
+      key_without_context = "application_form.status.#{state}"
+      text = I18n.t(key_with_context, default: I18n.t(key_without_context))
       OpenStruct.new(id: state, label: "#{text} (#{counts.fetch(state, 0)})")
     end
   end
