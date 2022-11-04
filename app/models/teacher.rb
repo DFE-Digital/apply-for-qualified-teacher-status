@@ -28,6 +28,8 @@ class Teacher < ApplicationRecord
          :timeoutable,
          :trackable
 
+  self.timeout_in = 1.hour
+
   has_one :application_form
 
   validates :email,
