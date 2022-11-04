@@ -5,6 +5,10 @@ module PageObjects
 
       element :heading, "h1"
 
+      section :email_preview, ".app-email-preview" do
+        element :content, ".app-email-preview__content"
+      end
+
       section :form, "form" do
         element :send_button, ".govuk-button"
       end

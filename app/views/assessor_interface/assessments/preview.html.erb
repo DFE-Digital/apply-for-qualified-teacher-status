@@ -6,7 +6,7 @@
 <p class="govuk-body-l"><%= t(".description") %></p>
 
 <%= render(PreviewTeacherMailer::Component.new(
-  name: :application_declined,
+  name: @assessment_recommendation_form.award? ? :application_awarded : :application_declined,
   teacher: @application_form.teacher,
 )) %>
 
