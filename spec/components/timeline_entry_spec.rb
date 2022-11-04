@@ -47,9 +47,16 @@ RSpec.describe TimelineEntry::Component, type: :component do
   end
 
   context "state changed" do
-    let(:timeline_event) { create(:timeline_event, :state_changed) }
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :state_changed,
+        old_state: "submitted",
+        new_state: "awarded",
+      )
+    end
     let(:old_state) do
-      I18n.t("application_form.status.#{timeline_event.old_state}")
+      I18n.t("application_form.status.#{timeline_event.old_state}.assessor")
     end
     let(:new_state) do
       I18n.t("application_form.status.#{timeline_event.new_state}")

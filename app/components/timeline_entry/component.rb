@@ -27,6 +27,7 @@ module TimelineEntry
               key: timeline_event.id,
               status: timeline_event.old_state,
               class_context: "timeline-event",
+              context: :assessor,
             ),
           ),
         new_state:
@@ -35,6 +36,7 @@ module TimelineEntry
               key: timeline_event.id,
               status: timeline_event.new_state,
               class_context: "timeline-event",
+              context: :assessor,
             ),
           ),
       }
@@ -60,6 +62,7 @@ module TimelineEntry
               key: timeline_event.id,
               status: timeline_event.new_state,
               class_context: "timeline-event",
+              context: :assessor,
             ),
           ),
       }
