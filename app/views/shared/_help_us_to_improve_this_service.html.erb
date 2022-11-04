@@ -7,5 +7,9 @@
 
   <p class="govuk-body">If you’d like to help, follow the link below. If you match our search criteria, we’ll be in touch.</p>
 
-  <p class="govuk-body"><%= govuk_link_to "I’d like to take part", "https://docs.google.com/forms/d/e/1FAIpQLSfjsMHqaiNP2cUUpmbeOkHRM96afrsj1TmTIEs-k4yit0JqBA/viewform?usp=sharing" %></p>
+  <p class="govuk-body">
+    <%= govuk_link_to "https://docs.google.com/forms/d/e/1FAIpQLSfjsMHqaiNP2cUUpmbeOkHRM96afrsj1TmTIEs-k4yit0JqBA/viewform?usp=sharing" do %>
+      I’d like to take part <span class="govuk-visually-hidden">in improving this service</span>
+    <% end %>
+  </p>
 </aside>
