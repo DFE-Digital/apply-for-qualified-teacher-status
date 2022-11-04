@@ -1,4 +1,4 @@
-<% content_for :page_title, I18n.t("application_form.tasks.items.subjects") %>
+<% content_for :page_title, "#{"Error: " if @subjects_form.errors.any?}#{t("application_form.tasks.items.subjects")}" %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>

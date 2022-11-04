@@ -1,4 +1,4 @@
-<% content_for :page_title, I18n.t("application_form.tasks.sections.work_history") %>
+<% content_for :page_title, "#{"Error: " if @work_history_form.errors.any?}#{t("application_form.tasks.sections.work_history")}" %>
 <% content_for :back_link_url, @application_form.work_histories.empty? ?
                                  teacher_interface_application_form_path :
                                  teacher_interface_application_form_work_histories_path %>

@@ -1,4 +1,4 @@
-<% content_for :page_title, I18n.t("application_form.tasks.sections.qualifications") %>
+<% content_for :page_title, "#{"Error: " if @qualification_form.errors.any?}#{t("application_form.tasks.sections.qualifications")}" %>
 <% content_for :back_link_url, @application_form.qualifications.empty? ?
                                  teacher_interface_application_form_path :
                                  teacher_interface_application_form_qualifications_path %>

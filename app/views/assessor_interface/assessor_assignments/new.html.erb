@@ -1,4 +1,4 @@
-<% content_for :page_title, "Select an assessor" %>
+<% content_for :page_title, "#{"Error: " if @assessor_assignment_form.errors.any?}Select an assessor" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <div class="app-inline-action">

@@ -1,4 +1,4 @@
-<% content_for :page_title, t(".title.#{@assessment_section_view_object.assessment_section.key}") %>
+<% content_for :page_title, "#{"Error: " if @assessment_section_form.errors.any?}#{t(".title.#{@assessment_section_view_object.assessment_section.key}")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@assessment_section_view_object.application_form) %>
 
 <div class="app-inline-action">
@@ -7,7 +7,7 @@
 </div>
 
 <% case @assessment_section_view_object.assessment_section.key %>
-<% when "personal_information" %> 
+<% when "personal_information" %>
   <%= render "shared/application_form/personal_information_summary",
              application_form: @assessment_section_view_object.application_form,
              changeable: false %>

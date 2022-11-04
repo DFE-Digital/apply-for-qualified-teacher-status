@@ -1,4 +1,4 @@
-<% content_for :page_title, "About you" %>
+<% content_for :page_title, "#{"Error: " if @name_and_date_of_birth_form.errors.any?}About you" %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <span class="govuk-caption-l">About you</span>

@@ -1,4 +1,4 @@
-<% content_for :page_title, t("helpers.legend.assessor_interface_assessment_recommendation_form.recommendation") %>
+<% content_for :page_title, "#{"Error: " if @assessment_recommendation_form.errors.any?}#{t("helpers.legend.assessor_interface_assessment_recommendation_form.recommendation")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @assessment_recommendation_form, url: [:declare, :assessor_interface, @application_form, @assessment] do |f| %>
