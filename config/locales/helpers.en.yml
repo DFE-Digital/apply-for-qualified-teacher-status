@@ -67,8 +67,8 @@ en:
         alternative_given_names: Alternate given names
         alternative_family_name: Alternate family name
       teacher_interface_age_range_form:
-        minimum: From
-        maximum: To
+        minimum: <span class="govuk-visually-hidden">Age</span> From
+        maximum: <span class="govuk-visually-hidden">Age</span> To
       teacher_interface_further_information_request_item_text_form:
         response: Enter your response
       teacher_interface_has_work_history_form:

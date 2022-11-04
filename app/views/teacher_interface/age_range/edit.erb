@@ -2,17 +2,23 @@
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-<h1 class="govuk-heading-l"><%= I18n.t("application_form.age_range.heading") %></h1>
-<p class="govuk-hint"><%= I18n.t("application_form.age_range.hint") %></p>
 
 <%= form_with model: @age_range_form, url: %i[age_range teacher_interface application_form] do |f| %>
   <%= hidden_field_tag :next, params[:next] %>
 
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_number_field :minimum, width: 3 %>
+  <%= f.govuk_fieldset legend: { text: t("application_form.age_range.heading"), tag: "h1", size: "l" } do %>
+    <p class="govuk-hint"><%= t("application_form.age_range.hint") %></p>
 
-  <%= f.govuk_number_field :maximum, width: 3 %>
+    <%= f.govuk_number_field :minimum,
+                             width: 3,
+                             label: { text: t("helpers.label.teacher_interface_age_range_form.minimum").html_safe } %>
+
+    <%= f.govuk_number_field :maximum,
+                             width: 3,
+                             label: { text: t("helpers.label.teacher_interface_age_range_form.maximum").html_safe } %>
+  <% end %>
 
   <%= govuk_details(summary_text: "About age ranges and grades") do %>
     <p>
