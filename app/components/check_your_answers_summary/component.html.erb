@@ -6,7 +6,9 @@
       <div class="govuk-summary-list__card-actions">
         <ul class="govuk-summary-list__card-actions-list">
           <li class="govuk-summary-list__card-actions-list-item">
-            <%= govuk_link_to("Delete", delete_link_to) %>
+            <%= govuk_link_to(delete_link_to) do %>
+              Delete <span class="govuk-visually-hidden"><%= title.downcase %></span>
+            <% end %>
           </li>
         </ul>
       </div>
