@@ -7,8 +7,11 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
     create(
       :assessment_section,
       key: "personal_information",
-      failure_reasons: %i[reason_a reason_b reason_c],
+      failure_reasons: [:reason_a, :reason_b, decline_failure_reason],
     )
+  end
+  let(:decline_failure_reason) do
+    AssessmentSection::DECLINE_FAILURE_REASONS.sample.to_sym
   end
   let(:user) { create(:staff, :confirmed) }
   let(:attributes) { {} }
@@ -35,28 +38,32 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
     context "when reasons are checked" do
       let(:attributes) do
         {
-          passed: false,
-          reason_a_checked: true,
-          reason_b_checked: true,
-          reason_c_checked: true,
+          :passed => false,
+          :reason_a_checked => true,
+          :reason_b_checked => true,
+          "#{decline_failure_reason}_checked".to_sym => true,
         }
       end
 
       it { is_expected.to validate_presence_of(:reason_a_notes) }
       it { is_expected.to validate_presence_of(:reason_b_notes) }
-      it { is_expected.to validate_presence_of(:reason_c_notes) }
+      it do
+        is_expected.not_to validate_presence_of(
+          "#{decline_failure_reason}_notes".to_sym,
+        )
+      end
     end
 
     context "when reasons are checked and notes are provided" do
       let(:attributes) do
         {
-          passed: false,
-          reason_a_checked: true,
-          reason_a_notes: "Notes.",
-          reason_b_checked: true,
-          reason_b_notes: "Notes.",
-          reason_c_checked: true,
-          reason_c_notes: "Notes.",
+          :passed => false,
+          :reason_a_checked => true,
+          :reason_a_notes => "Notes.",
+          :reason_b_checked => true,
+          :reason_b_notes => "Notes.",
+          "#{decline_failure_reason}_checked".to_sym => true,
+          "#{decline_failure_reason}_notes".to_sym => "Notes",
         }
       end
 
@@ -123,11 +130,11 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
     describe "with valid attributes and failed" do
       let(:attributes) do
         {
-          passed: false,
-          reason_a_checked: true,
-          reason_a_notes: "Notes.",
-          reason_b_checked: false,
-          reason_c_checked: false,
+          :passed => false,
+          :reason_a_checked => true,
+          :reason_a_notes => "Notes.",
+          :reason_b_checked => false,
+          "#{decline_failure_reason}_checked" => false,
         }
       end
 

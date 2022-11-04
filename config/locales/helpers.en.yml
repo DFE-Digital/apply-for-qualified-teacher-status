@@ -5,6 +5,7 @@ en:
       assessor_interface_assessment_section_form:
         selected_failure_reasons: Select all options that are relevant to you.
         failure_reason_notes: Use this space to tell the applicant what they need to do. Make sure your instructions are clear.
+        failure_reason_notes_decline: As this reason triggers a decline, you do not need to add a note, but you can use the space below to add anything you feel might be helpful, if you want to.
       assessor_interface_create_note_form:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
       qualification:
@@ -44,7 +45,8 @@ en:
         subject_2: Subject 2 (optional)
         subject_3: Subject 3 (optional)
         subjects_note: If you've edited the subjects please explain why (optional)
-        failure_reason_notes: Note to the applicant
+        failure_reason_notes: "Note to the applicant"
+        failure_reason_notes_decline: "Note to the applicant (optional)"
       assessor_interface_filter_form:
         location: Country trained in
         name: Applicant name
@@ -93,6 +95,7 @@ en:
     placeholder:
       assessor_interface_assessment_section_form:
         failure_reason_notes: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
+        failure_reason_notes_decline: "Example: We declined this QTS application as you already have another application in progress."
       assessor_interface_filter_form:
         reference: "Example: 210245"
     legend:

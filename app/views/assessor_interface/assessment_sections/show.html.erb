@@ -7,7 +7,7 @@
 </div>
 
 <% case @assessment_section_view_object.assessment_section.key %>
-<% when "personal_information" %>
+<% when "personal_information" %> 
   <%= render "shared/application_form/personal_information_summary",
              application_form: @assessment_section_view_object.application_form,
              changeable: false %>
@@ -92,14 +92,14 @@
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?", size: "s" } do %>
     <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
     <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
-      <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" } do %>
+      <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" }  do %>
         <% @assessment_section_view_object.assessment_section.failure_reasons.each do |failure_reason| %>
-          <%= f.govuk_check_box "#{failure_reason}_checked", true, label: { text: t(".failure_reasons.#{failure_reason}") }, link_errors: true do %>
-            <%= f.govuk_text_area "#{failure_reason}_notes",
-                                  label: { text: t("helpers.label.assessor_interface_assessment_section_form.failure_reason_notes"), size: "s" },
-                                  hint: { text: t("helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes") },
-                                  placeholder: t("helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes")
-             %>
+          <%= f.govuk_check_box "#{failure_reason}_checked".to_sym, true, label: { text: t(".failure_reasons.#{failure_reason}") }, link_errors: true do %>
+            <%= f.govuk_text_area "#{failure_reason}_notes".to_sym,
+              label: { text: t(@assessment_section_view_object.notes_label_key_for(failure_reason: failure_reason)), size: "s" },
+              hint: { text: t(@assessment_section_view_object.notes_hint_key_for(failure_reason: failure_reason)) },
+              placeholder: t(@assessment_section_view_object.notes_placeholder_key_for(failure_reason: failure_reason))
+            %>
           <% end %>
         <% end %>
       <% end %>
