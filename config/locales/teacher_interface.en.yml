@@ -148,6 +148,8 @@ en:
               blank: Enter your family name
         teacher_interface/new_session_form:
           attributes:
+            create_or_sign_in:
+              blank: Select whether you have used the service before
             email:
               blank: Enter your email address
         teacher_interface/qualification_form:

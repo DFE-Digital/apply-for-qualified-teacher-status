@@ -37,6 +37,8 @@ class Teachers::SessionsController < Devise::SessionsController
       end
 
       redirect_to teacher_check_email_path(email: @new_session_form.email)
+    elsif @new_session_form.create_or_sign_in.blank?
+      render :new_or_create, status: :unprocessable_entity
     else
       render :new, status: :unprocessable_entity
     end
