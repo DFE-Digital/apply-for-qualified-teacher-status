@@ -19,7 +19,9 @@ en:
       awarded: Awarded
       declined: Declined
       draft: Draft
-      submitted: Not started
+      submitted:
+        assessor: Not started
+        teacher: Submitted
       completed: Completed
       action_required: Action required
       cannot_start_yet: Cannot start yet
