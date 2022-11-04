@@ -1,4 +1,4 @@
-<% content_for :page_title, t(".heading.#{@assessment_recommendation_form.recommendation}") %>
+<% content_for :page_title, "#{"Error: " if @assessment_recommendation_form.errors.any?}#{t(".heading.#{@assessment_recommendation_form.recommendation}")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <h1 class="govuk-heading-xl"><%= t(".heading.#{@assessment_recommendation_form.recommendation}") %></h1>

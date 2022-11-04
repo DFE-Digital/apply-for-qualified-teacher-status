@@ -1,4 +1,4 @@
-<% content_for :title, t(".title") %>
+<% content_for :page_title, "#{"Error: " if @further_information_request_form.errors.any?}#{t(".title")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
 
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>

@@ -1,4 +1,4 @@
-<% content_for :page_title, I18n.t("application_form.tasks.items.registration_number") %>
+<% content_for :page_title, "#{"Error: " if @registration_number_form.errors.any?}#{t("application_form.tasks.items.registration_number")}" %>
 <% content_for :back_link_url, teacher_interface_application_form_path %>
 
 <%= form_with model: @registration_number_form, url: %i[registration_number teacher_interface application_form] do |f| %>
