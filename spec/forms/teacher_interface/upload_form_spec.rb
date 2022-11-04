@@ -29,6 +29,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
           type: "application/pdf",
+          filename: "upload.pdf",
         )
       end
 
@@ -40,12 +41,14 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
           type: "application/pdf",
+          filename: "upload.pdf",
         )
       end
       let(:translated_attachment) do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
           type: "application/pdf",
+          filename: "upload.pdf",
         )
       end
 
@@ -58,6 +61,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
           type: "application/pdf",
+          filename: "upload.pdf",
         )
       end
 
@@ -69,6 +73,19 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.txt"),
           type: "text/plain",
+          filename: "upload.txt",
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "with an invalid extension" do
+      let(:original_attachment) do
+        ActionDispatch::Http::UploadedFile.new(
+          tempfile: file_fixture("upload.txt"),
+          type: "application/pdf",
+          filename: "upload.txt",
         )
       end
 
@@ -80,6 +97,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
           type: "application/pdf",
+          filename: "upload.pdf",
         )
       end
 
@@ -100,8 +118,8 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
       let(:original_attachment) do
         ActionDispatch::Http::UploadedFile.new(
           tempfile: file_fixture("upload.pdf"),
-          filename: "upload.pdf",
           type: "application/pdf",
+          filename: "upload.pdf",
         )
       end
 

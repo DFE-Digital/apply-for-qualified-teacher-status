@@ -18,6 +18,7 @@ RSpec.describe FileUploadValidator do
       ActionDispatch::Http::UploadedFile.new(
         tempfile: file_fixture("upload.pdf"),
         type: "application/pdf",
+        filename: "upload.pdf",
       )
     end
 
@@ -29,6 +30,19 @@ RSpec.describe FileUploadValidator do
       ActionDispatch::Http::UploadedFile.new(
         tempfile: file_fixture("upload.txt"),
         type: "text/plain",
+        filename: "upload.txt",
+      )
+    end
+
+    it { is_expected.to_not be_valid }
+  end
+
+  context "with an invalid extension" do
+    let(:file) do
+      ActionDispatch::Http::UploadedFile.new(
+        tempfile: file_fixture("upload.txt"),
+        type: "application/pdf",
+        filename: "upload.txt",
       )
     end
 
@@ -40,6 +54,7 @@ RSpec.describe FileUploadValidator do
       ActionDispatch::Http::UploadedFile.new(
         tempfile: file_fixture("upload.pdf"),
         type: "application/pdf",
+        filename: "upload.pdf",
       )
     end
 
