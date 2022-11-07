@@ -1,3 +1,5 @@
+<% content_for :page_title, 'Accessibility statement' %>
+
 #Accessibility statement for Apply for qualified teacher status (QTS) in England
 
 This accessibility statement is for Apply for qualified teacher status (QTS) in England.
