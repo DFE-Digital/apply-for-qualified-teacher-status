@@ -4,6 +4,7 @@ class FileUploadValidator < ActiveModel::EachValidator
   CONTENT_TYPES = {
     ".png" => "image/png",
     ".jpg" => "image/jpeg",
+    ".jpeg" => "image/jpeg",
     ".pdf" => "application/pdf",
     ".doc" => "application/msword",
     ".docx" =>
@@ -18,7 +19,7 @@ class FileUploadValidator < ActiveModel::EachValidator
     end
 
     content_type = value.content_type
-    extension = File.extname(value.original_filename)
+    extension = File.extname(value.original_filename).downcase
 
     if !CONTENT_TYPES.values.include?(content_type) ||
          !CONTENT_TYPES.keys.include?(extension)

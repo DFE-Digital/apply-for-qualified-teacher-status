@@ -25,6 +25,30 @@ RSpec.describe FileUploadValidator do
     it { is_expected.to be_valid }
   end
 
+  context "with a valid file with an uppercase extension" do
+    let(:file) do
+      ActionDispatch::Http::UploadedFile.new(
+        tempfile: file_fixture("id_example.JPG"),
+        type: "image/jpeg",
+        filename: "id_example.JPG",
+      )
+    end
+
+    it { is_expected.to be_valid }
+  end
+
+  context "with a jpeg extension" do
+    let(:file) do
+      ActionDispatch::Http::UploadedFile.new(
+        tempfile: file_fixture("id_example.JPG"),
+        type: "image/jpeg",
+        filename: "id_example.jpeg",
+      )
+    end
+
+    it { is_expected.to be_valid }
+  end
+
   context "with an invalid content type" do
     let(:file) do
       ActionDispatch::Http::UploadedFile.new(
