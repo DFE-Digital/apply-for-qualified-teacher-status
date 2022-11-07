@@ -3,6 +3,7 @@
 # Table name: staff
 #
 #  id                     :bigint           not null, primary key
+#  assessor               :boolean          default(FALSE)
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -50,6 +51,10 @@ FactoryBot.define do
 
     trait :confirmed do
       confirmed_at { Time.zone.now }
+    end
+
+    trait :assessor do
+      assessor { true }
     end
   end
 end

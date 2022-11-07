@@ -80,6 +80,6 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def assessor
-    @assessor ||= create(:staff, :confirmed)
+    @assessor ||= create(:staff, :assessor, :confirmed)
   end
 end
