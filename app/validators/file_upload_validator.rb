@@ -11,15 +11,21 @@ class FileUploadValidator < ActiveModel::EachValidator
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   }.freeze
 
-  def validate_each(record, attribute, value)
-    return if value.nil?
+  def validate_each(record, attribute, uploaded_file)
+    return if uploaded_file.nil?
 
-    if value.size >= MAX_FILE_SIZE
+    if uploaded_file.size >= MAX_FILE_SIZE
       record.errors.add attribute, :file_size_too_big
     end
 
-    content_type = value.content_type
-    extension = File.extname(value.original_filename).downcase
+    content_type =
+      Marcel::MimeType.for(
+        uploaded_file,
+        name: uploaded_file.original_filename,
+        declared_type: uploaded_file.content_type,
+      )
+
+    extension = File.extname(uploaded_file.original_filename).downcase
 
     if !CONTENT_TYPES.values.include?(content_type) ||
          !CONTENT_TYPES.keys.include?(extension)
