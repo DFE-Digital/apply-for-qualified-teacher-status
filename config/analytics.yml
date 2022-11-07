@@ -200,6 +200,7 @@
     - invited_by_id
     - invitations_count
     - name
+    - assessor
   :teachers:
     - id
     - email

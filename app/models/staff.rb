@@ -3,6 +3,7 @@
 # Table name: staff
 #
 #  id                     :bigint           not null, primary key
+#  assessor               :boolean          default(FALSE)
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -56,6 +57,8 @@ class Staff < ApplicationRecord
   self.timeout_in = 20.minutes
 
   validates :name, presence: true
+
+  scope :assessors, -> { where(assessor: true) }
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

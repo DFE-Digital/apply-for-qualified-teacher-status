@@ -3,6 +3,7 @@
 # Table name: staff
 #
 #  id                     :bigint           not null, primary key
+#  assessor               :boolean          default(FALSE)
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -58,5 +59,23 @@ RSpec.describe Staff, type: :model do
     it { is_expected.to validate_presence_of(:password) }
 
     it { is_expected.to validate_presence_of(:name) }
+  end
+
+  describe "scopes" do
+    describe ".assessors" do
+      subject { described_class.assessors }
+
+      context "when assessor == true" do
+        let(:assessor) { create(:staff, :assessor) }
+
+        it { is_expected.to include(assessor) }
+      end
+
+      context "when assessor == false" do
+        let(:non_assessor) { create(:staff) }
+
+        it { is_expected.not_to include(non_assessor) }
+      end
+    end
   end
 end
