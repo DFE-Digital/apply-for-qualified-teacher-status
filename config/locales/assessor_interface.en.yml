@@ -49,7 +49,7 @@ en:
           work_history: Work history
           professional_standing: Professional standing
       preview:
-        heading: Check and send the email
+        heading: Check the email
         subheading: This screen shows how the email to the applicant will look.
         description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
         cancel: Cancel
