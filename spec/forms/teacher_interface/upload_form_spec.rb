@@ -26,11 +26,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
     context "with an original attachment" do
       let(:original_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.pdf"),
-          type: "application/pdf",
-          filename: "upload.pdf",
-        )
+        fixture_file_upload("upload.pdf", "application/pdf")
       end
 
       it { is_expected.to be true }
@@ -38,18 +34,10 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
     context "with an translated attachment" do
       let(:original_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.pdf"),
-          type: "application/pdf",
-          filename: "upload.pdf",
-        )
+        fixture_file_upload("upload.pdf", "application/pdf")
       end
       let(:translated_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.pdf"),
-          type: "application/pdf",
-          filename: "upload.pdf",
-        )
+        fixture_file_upload("upload.pdf", "application/pdf")
       end
 
       it { is_expected.to be true }
@@ -58,11 +46,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
     context "written_in_english 'No'" do
       let(:written_in_english) { "false" }
       let(:original_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.pdf"),
-          type: "application/pdf",
-          filename: "upload.pdf",
-        )
+        fixture_file_upload("upload.pdf", "application/pdf")
       end
 
       it { is_expected.to be false }
@@ -70,11 +54,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
     context "with an invalid content type" do
       let(:original_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.txt"),
-          type: "text/plain",
-          filename: "upload.txt",
-        )
+        fixture_file_upload("upload.txt", "text/plain")
       end
 
       it { is_expected.to be false }
@@ -82,11 +62,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
     context "with an invalid extension" do
       let(:original_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.txt"),
-          type: "application/pdf",
-          filename: "upload.txt",
-        )
+        fixture_file_upload("upload.txt", "application/pdf")
       end
 
       it { is_expected.to be false }
@@ -94,11 +70,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
     context "with a large file" do
       let(:original_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.pdf"),
-          type: "application/pdf",
-          filename: "upload.pdf",
-        )
+        fixture_file_upload("upload.pdf", "application/pdf")
       end
 
       before do
@@ -116,11 +88,7 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
     context "with an original attachment" do
       let(:original_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.pdf"),
-          type: "application/pdf",
-          filename: "upload.pdf",
-        )
+        fixture_file_upload("upload.pdf", "application/pdf")
       end
 
       it "creates an upload" do
@@ -131,19 +99,11 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
     context "with a translated attachment" do
       let(:original_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.pdf"),
-          filename: "upload.pdf",
-          type: "application/pdf",
-        )
+        fixture_file_upload("upload.pdf", "application/pdf")
       end
 
       let(:translated_attachment) do
-        ActionDispatch::Http::UploadedFile.new(
-          tempfile: file_fixture("upload.pdf"),
-          filename: "upload.pdf",
-          type: "application/pdf",
-        )
+        fixture_file_upload("upload.pdf", "application/pdf")
       end
 
       it "creates two uploads" do

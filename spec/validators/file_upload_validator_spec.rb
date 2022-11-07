@@ -14,73 +14,31 @@ RSpec.describe FileUploadValidator do
   before { model.file = file }
 
   context "with a valid file" do
-    let(:file) do
-      ActionDispatch::Http::UploadedFile.new(
-        tempfile: file_fixture("upload.pdf"),
-        type: "application/pdf",
-        filename: "upload.pdf",
-      )
-    end
+    let(:file) { fixture_file_upload("upload.pdf", "application/pdf") }
 
     it { is_expected.to be_valid }
   end
 
   context "with a valid file with an uppercase extension" do
-    let(:file) do
-      ActionDispatch::Http::UploadedFile.new(
-        tempfile: file_fixture("id_example.JPG"),
-        type: "image/jpeg",
-        filename: "id_example.JPG",
-      )
-    end
-
-    it { is_expected.to be_valid }
-  end
-
-  context "with a jpeg extension" do
-    let(:file) do
-      ActionDispatch::Http::UploadedFile.new(
-        tempfile: file_fixture("id_example.JPG"),
-        type: "image/jpeg",
-        filename: "id_example.jpeg",
-      )
-    end
+    let(:file) { fixture_file_upload("id_example.JPG", "image/jpeg") }
 
     it { is_expected.to be_valid }
   end
 
   context "with an invalid content type" do
-    let(:file) do
-      ActionDispatch::Http::UploadedFile.new(
-        tempfile: file_fixture("upload.txt"),
-        type: "text/plain",
-        filename: "upload.txt",
-      )
-    end
+    let(:file) { fixture_file_upload("upload.txt", "text/plain") }
 
     it { is_expected.to_not be_valid }
   end
 
   context "with an invalid extension" do
-    let(:file) do
-      ActionDispatch::Http::UploadedFile.new(
-        tempfile: file_fixture("upload.txt"),
-        type: "application/pdf",
-        filename: "upload.txt",
-      )
-    end
+    let(:file) { fixture_file_upload("upload.txt", "application/pdf") }
 
     it { is_expected.to_not be_valid }
   end
 
   context "with a large file" do
-    let(:file) do
-      ActionDispatch::Http::UploadedFile.new(
-        tempfile: file_fixture("upload.pdf"),
-        type: "application/pdf",
-        filename: "upload.pdf",
-      )
-    end
+    let(:file) { fixture_file_upload("upload.pdf", "application/pdf") }
 
     before { allow(file).to receive(:size).and_return(50 * 1024 * 1024) }
 
