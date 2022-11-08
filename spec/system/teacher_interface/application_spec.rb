@@ -740,7 +740,7 @@ RSpec.describe "Teacher application", type: :system do
       "Check your uploaded files – identity document",
     )
     expect(check_your_uploads_page.summary_list_row).to have_content(
-      "File 1\tupload.pdf\tDelete",
+      "File 1\tupload.pdf (opens in a new tab)\tDelete",
     )
   end
 
@@ -750,7 +750,7 @@ RSpec.describe "Teacher application", type: :system do
       "Check your uploaded files – name change document",
     )
     expect(check_your_uploads_page.summary_list_row).to have_content(
-      "File 1\tupload.pdf\tDelete",
+      "File 1\tupload.pdf (opens in a new tab)\tDelete",
     )
   end
 
@@ -760,7 +760,7 @@ RSpec.describe "Teacher application", type: :system do
       "Check your uploaded files – certificate document",
     )
     expect(check_your_uploads_page.summary_list_row).to have_content(
-      "File 1\tupload.pdf\tDelete",
+      "File 1\tupload.pdf (opens in a new tab)\tDelete",
     )
   end
 
@@ -770,7 +770,7 @@ RSpec.describe "Teacher application", type: :system do
       "Check your uploaded files – transcript document",
     )
     expect(check_your_uploads_page.summary_list_row).to have_content(
-      "File 1\tupload.pdf\tDelete",
+      "File 1\tupload.pdf (opens in a new tab)\tDelete",
     )
   end
 
@@ -780,7 +780,7 @@ RSpec.describe "Teacher application", type: :system do
       "Check your uploaded files – written statement document",
     )
     expect(check_your_uploads_page.summary_list_row).to have_content(
-      "File 1\tupload.pdf\tDelete",
+      "File 1\tupload.pdf (opens in a new tab)\tDelete",
     )
   end
 
