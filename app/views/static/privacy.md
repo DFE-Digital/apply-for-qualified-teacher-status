@@ -1,6 +1,6 @@
 <% content_for :page_title, 'Privacy notice' %>
 
-# Service Privacy notice
+# Service privacy notice
 
 ## Who we are
 
@@ -9,6 +9,8 @@ The <%= t(current_namespace, scope: %i[service name]) %> service is run by the [
 an executive agency of the Department for Education (DfE).
 
 Our service allows anyone to check whether they might be eligible to receive qualified teacher status (QTS) in England.
+
+If you’re eligible, you can then use the service to make an application to receive qualified teacher status (QTS) in England.
 
 For the purpose of data protection legislation, DfE is the data controller for
 the data we hold and process.
@@ -27,7 +29,7 @@ For Apply for QTS in England we rely on:
 
 ### The data we collect when we check if you’re eligible to apply
 
-We do not collect any personal data about you when you check if you’re eligible to apply
+We do not collect any personal data about you when you check if you’re eligible to apply.
 
 ### The data we collect when you make an application for QTS in England
 
@@ -37,11 +39,11 @@ We collect a range of data to assess whether you can be awarded QTS in England:
 - last name
 - any previous names (if required)
 - date of birth
-- copies of documents that confirm your - identity such as you passport, driving licence, national identity documents
+- copies of documents that confirm your identity such as your passport, driving licence and national identity documents
 - documents that confirm that your name has changed (where appropriate)
 - email address
 - details of your qualifications and copies of documents that confirm these
-- proof of your professional standing as a teacher in the country where you’re recognised.
+- proof of your professional standing as a teacher in the country where you’re recognised
 - your work history as a teacher
 
 ## The data we collect when you confirm the work history of an applicant
@@ -56,19 +58,20 @@ If a candidate says that you can confirm their work history, they’ll tell us:
 
 ### Processing applications
 
-- Processing applications includes:
+Processing applications includes:
+
 - reviewing your personal data to make a decision about your application for QTS
 - reviewing any further information that is requested from you
 - getting in touch with school leaders you’ve named, to confirm your work history
 - getting in touch if there’s a security issue concerning your data
-- getting in touch with you to ask if you would like to participate in user research
+- getting in touch with you to ask if you'd like to participate in user research
 - analysing application and service usage data
 
 ### Safeguarding and fraud
 
-In order to safeguard children and detect fraudulent activity on our services, it may be necessary to share information about you with relevant organisations.
+To safeguard children and detect fraudulent activity on our services, it may be necessary to share information about you with relevant organisations.
 
-For example, we may need to share information about you with government departments, local authorities, law enforcement agencies, or competent authority.
+For example, we may need to share information about you with government departments, local authorities, law enforcement agencies, or competent authorities.
 
 This list is not exhaustive, as it depends on the type of information we receive about you.
 
@@ -85,7 +88,7 @@ Processing references includes:
 
 If you’re awarded qualified teacher status, you’ll be added to the database of registered teachers in England. Your data is then subject to the [privacy policy](https://teacherservices.education.gov.uk/Resources/Guidance/SelfServiceDataSharingGuidance.pdf) of that service. This will be a permanent record.
 
-The add the following data to the database of qualified teachers:
+They'll add the following data to the database of qualified teachers:
 
 - first name
 - last name
@@ -146,7 +149,7 @@ This includes:
 
 ### External organisations who process data
 
-We share data with our data processors for the purposes of provision of this service. Data protection agreements are in place with each of these processors and they’re required to comply with the UK GDPR and the DPA 2018 as data processors.
+We share data with our data processors for the purposes of providing this service. Data protection agreements are in place with each of these processors and they’re required to comply with the UK GDPR and the DPA 2018 as data processors.
 
 ## Your rights
 
