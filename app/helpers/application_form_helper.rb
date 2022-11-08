@@ -87,6 +87,7 @@ module ApplicationFormHelper
             key: "application-form-#{application_form.id}",
             status: application_form.state,
             class_context: "app-search-result__item",
+            context: :assessor,
           ),
         ),
       ],
