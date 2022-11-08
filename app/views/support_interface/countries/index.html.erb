@@ -3,7 +3,7 @@
 <h1 class="govuk-heading-l">Countries</h1>
 
 <div class="govuk-grid-row">
-  <% @countries.each do |country| %>
+  <% @countries.order(:code).each do |country| %>
     <div class="govuk-width-container">
       <table class="govuk-table">
         <thead class="govuk-table__head">
@@ -18,7 +18,7 @@
         </thead>
 
         <tbody>
-          <% country.regions.each_slice(4) do |regions| %>
+          <% country.regions.order(:name).each_slice(4) do |regions| %>
             <% regions.each do |region| %>
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell govuk-!-width-one-third">
