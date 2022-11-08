@@ -76,17 +76,17 @@ RSpec.describe "Teacher documents", type: :system do
       "Check your uploaded files – written statement document",
     )
     expect(check_uploaded_files_page.files).to have_content(
-      "File 1\tupload.pdf\tDelete",
+      "File 1\tupload.pdf (opens in a new tab)\tDelete",
     )
     expect(check_uploaded_files_page.files).to have_content(
-      "File 2\tupload.pdf\tDelete",
+      "File 2\tupload.pdf (opens in a new tab)\tDelete",
     )
   end
 
   def then_i_see_the_check_your_uploaded_files_page_with_three_files
     then_i_see_the_check_your_uploaded_files_page
     expect(check_uploaded_files_page.files).to have_content(
-      "File 3\tupload.pdf\tDelete",
+      "File 3\tupload.pdf (opens in a new tab)\tDelete",
     )
   end
 end

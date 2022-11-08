@@ -97,7 +97,7 @@ module CheckYourAnswersSummary
       when Date
         format_date(value, field)
       when Upload
-        format_upload(value)
+        helpers.upload_link_to(value)
       when Document
         format_document(value, field)
       when Array
@@ -130,15 +130,6 @@ module CheckYourAnswersSummary
         scope.order(:created_at).select { |upload| upload.attachment.present? }
 
       format_array(uploads, field)
-    end
-
-    def format_upload(upload)
-      link_to(
-        "#{upload.name} (opens in a new tab)",
-        upload.url,
-        target: :_blank,
-        rel: :noopener,
-      )
     end
 
     def format_array(list, field)
