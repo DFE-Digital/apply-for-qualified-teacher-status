@@ -30,4 +30,10 @@ class FurtherInformationRequestItem < ApplicationRecord
   def completed?
     (text? && response.present?) || (document? && document.uploaded?)
   end
+
+  def is_teaching_qualification?
+    %w[teaching_certificate_illegible teaching_transcript_illegible].include?(
+      failure_reason,
+    )
+  end
 end

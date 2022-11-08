@@ -75,4 +75,30 @@ RSpec.describe FurtherInformationRequestItem do
       end
     end
   end
+
+  describe "#is_teaching_qualification?" do
+    subject(:is_teaching_qualification?) do
+      further_information_request_item.is_teaching_qualification?
+    end
+
+    context "with a teaching failure reason" do
+      before do
+        further_information_request_item.update!(
+          failure_reason: "teaching_certificate_illegible",
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "with a degree failure reason" do
+      before do
+        further_information_request_item.update!(
+          failure_reason: "degree_certificate_illegible",
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+  end
 end
