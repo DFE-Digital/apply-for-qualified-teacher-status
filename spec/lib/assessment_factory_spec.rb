@@ -9,6 +9,8 @@ RSpec.describe AssessmentFactory do
       needs_work_history: false,
       needs_written_statement: false,
       needs_registration_number: false,
+      age_range_min: 7,
+      age_range_max: 11,
     )
   end
 
@@ -23,6 +25,8 @@ RSpec.describe AssessmentFactory do
       assessment = call
       expect(assessment.unknown?).to be true
       expect(assessment.application_form).to eq(application_form)
+      expect(assessment.age_range_min).to eq(7)
+      expect(assessment.age_range_max).to eq(11)
     end
 
     describe "sections" do
