@@ -26,12 +26,12 @@ class TeacherInterface::ApplicationFormShowViewObject
         .first
   end
 
-  def declined_due_to_sanctions?
+  def declined_cannot_reapply?
     return false if assessment.nil?
 
     assessment.sections.any? do |section|
       section.selected_failure_reasons.any? do |key, _|
-        key == "authorisation_to_teach"
+        %w[authorisation_to_teach applicant_already_qts].include?(key)
       end
     end
   end
