@@ -20,6 +20,9 @@ module TeacherInterface
     validates :complete_date, date: true
     validates :certificate_date, date: true
     validates_with DateComparisonValidator, later_field: :complete_date
+    validates_with DateComparisonValidator,
+                   earlier_field: :complete_date,
+                   later_field: :certificate_date
 
     def initialize(values)
       if (country_code = values.delete(:institution_country_code))

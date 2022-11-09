@@ -173,6 +173,7 @@ en:
               blank: Enter the certificate date in the format 27 3 1980
               invalid: Enter the certificate date in the format 27 3 1980
               future: Certificate date must be in the past
+              comparison: Certificate date must be after completion date
         teacher_interface/sanction_confirmation_form:
           attributes:
             confirmed_no_sanctions:
