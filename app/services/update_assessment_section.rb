@@ -28,13 +28,16 @@ class UpdateAssessmentSection
   attr_reader :assessment_section, :user, :params
 
   def create_timeline_event(old_state:)
+    new_state = assessment_section.state
+    return if old_state == new_state
+
     TimelineEvent.create!(
       creator: user,
       event_type: :assessment_section_recorded,
       assessment_section:,
       application_form:,
       old_state:,
-      new_state: assessment_section.state,
+      new_state:,
     )
   end
 

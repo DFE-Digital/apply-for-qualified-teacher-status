@@ -16,12 +16,11 @@ RSpec.describe UpdateAssessmentSection do
   let(:params) do
     { passed: false, selected_failure_reasons: [selected_failure_reason] }
   end
+
   subject { described_class.call(assessment_section:, user:, params:) }
 
   context "when the update is successful" do
-    it "returns true" do
-      expect(subject).to eq(true)
-    end
+    it { is_expected.to be true }
 
     it "sets the state" do
       expect { subject }.to change { assessment_section.state }.from(
@@ -65,9 +64,7 @@ RSpec.describe UpdateAssessmentSection do
   context "when the update fails" do
     before { allow(assessment_section).to receive(:update).and_return(false) }
 
-    it "returns false" do
-      expect(subject).to eq(false)
-    end
+    it { is_expected.to be false }
 
     it "doesn't create a timeline event" do
       expect { subject }.to_not(change { TimelineEvent.count })
@@ -79,6 +76,16 @@ RSpec.describe UpdateAssessmentSection do
 
     it "doesn't change the application form state" do
       expect { subject }.to_not(change { application_form.state })
+    end
+  end
+
+  context "when the state is the same" do
+    before { assessment_section.update!(params) }
+
+    it "doesn't create a timeline event" do
+      expect { subject }.to_not(
+        change { TimelineEvent.assessment_section_recorded.count },
+      )
     end
   end
 end
