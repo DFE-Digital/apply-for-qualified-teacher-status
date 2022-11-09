@@ -41,8 +41,6 @@ namespace :example_data do
       raise "THIS TASK CANNOT BE RUN IN PRODUCTION"
     end
 
-    Staff.where(email: assessors.map { |assessor| assessor[:email] }).delete_all
-
     TimelineEvent.delete_all
     AssessmentSection.delete_all
     Assessment.delete_all
@@ -51,6 +49,7 @@ namespace :example_data do
     Note.delete_all
     ApplicationForm.delete_all
     Teacher.delete_all
+    Staff.where(email: assessors.map { |assessor| assessor[:email] }).delete_all
   end
 
   desc "Reset and regenerate example data."
