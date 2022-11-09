@@ -52,29 +52,38 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     end
   end
 
-  describe "#declined_due_to_sanctions?" do
-    subject(:declined_due_to_sanctions?) do
-      view_object.declined_due_to_sanctions?
-    end
+  describe "#declined_cannot_reapply?" do
+    subject(:declined_cannot_reapply?) { view_object.declined_cannot_reapply? }
 
     it { is_expected.to be false }
 
-    context "with sanctions" do
+    context "with failure reasons" do
+      let(:application_form) do
+        create(:application_form, teacher: current_teacher)
+      end
+      let(:assessment) { create(:assessment, application_form:) }
+
       before do
-        application_form = create(:application_form, teacher: current_teacher)
-        assessment = create(:assessment, application_form:)
         create(
           :assessment_section,
           :personal_information,
           :failed,
           selected_failure_reasons: {
-            authorisation_to_teach: "Sanctions found.",
+            failure_reason => "A note.",
           },
           assessment:,
         )
       end
 
-      it { is_expected.to be true }
+      context "with sanctions" do
+        let(:failure_reason) { "authorisation_to_teach" }
+        it { is_expected.to be true }
+      end
+
+      context "with already QTS" do
+        let(:failure_reason) { "applicant_already_qts" }
+        it { is_expected.to be true }
+      end
     end
   end
 end

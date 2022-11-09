@@ -90,7 +90,7 @@
 
   <h3 class="govuk-heading-m">What you can do next</h3>
 
-  <% unless @view_object.declined_due_to_sanctions? %>
+  <% unless @view_object.declined_cannot_reapply? %>
     <p class="govuk-body">While your QTS application was declined this time, you can make a new application in future, if you’re able to address the decline reasons we’ve set out.</p>
     <p class="govuk-body">You may want to explore other routes to teaching in England. QTS is not a requirement to teach in independent (private) schools, academies, free schools and in the further education (FE) sector in England.</p>
 
