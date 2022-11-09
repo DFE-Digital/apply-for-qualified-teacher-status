@@ -97,16 +97,6 @@ FactoryBot.define do
     trait :further_information_requested do
       state { "further_information_requested" }
       submitted_at { Time.zone.now }
-
-      after(:create) do |application_form, _evaluator|
-        assessment = create(:assessment, application_form:)
-        create(
-          :further_information_request,
-          :requested,
-          :with_items,
-          assessment:,
-        )
-      end
     end
 
     trait :further_information_received do

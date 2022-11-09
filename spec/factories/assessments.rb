@@ -34,5 +34,16 @@ FactoryBot.define do
       recommendation { "award" }
       recommended_at { Time.zone.now }
     end
+
+    trait :with_further_information_request do
+      after(:create) do |assessment, _evaluator|
+        create(
+          :further_information_request,
+          :requested,
+          :with_items,
+          assessment:,
+        )
+      end
+    end
   end
 end
