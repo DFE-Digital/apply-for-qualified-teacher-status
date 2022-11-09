@@ -9,6 +9,7 @@
 #  creator_name                   :string           default(""), not null
 #  creator_type                   :string
 #  event_type                     :string           not null
+#  mailer_action_name             :string           default(""), not null
 #  new_state                      :string           default(""), not null
 #  old_state                      :string           default(""), not null
 #  created_at                     :datetime         not null
@@ -53,6 +54,7 @@ class TimelineEvent < ApplicationRecord
          note_created: "note_created",
          further_information_request_assessed:
            "further_information_request_assessed",
+         email_sent: "email_sent",
        }
   validates :event_type, inclusion: { in: event_types.values }
 
@@ -89,4 +91,7 @@ class TimelineEvent < ApplicationRecord
   validates :further_information_request,
             absence: true,
             unless: :further_information_request_assessed?
+
+  validates :mailer_action_name, presence: true, if: :email_sent?
+  validates :mailer_action_name, absence: true, unless: :email_sent?
 end

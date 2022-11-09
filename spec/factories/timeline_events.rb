@@ -7,6 +7,7 @@
 #  creator_name                   :string           default(""), not null
 #  creator_type                   :string
 #  event_type                     :string           not null
+#  mailer_action_name             :string           default(""), not null
 #  new_state                      :string           default(""), not null
 #  old_state                      :string           default(""), not null
 #  created_at                     :datetime         not null
