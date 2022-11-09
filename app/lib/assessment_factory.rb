@@ -16,7 +16,12 @@ class AssessmentFactory
       professional_standing_section,
     ].compact
 
-    Assessment.create!(application_form:, sections:)
+    Assessment.create!(
+      application_form:,
+      sections:,
+      age_range_min: application_form.age_range_min,
+      age_range_max: application_form.age_range_max,
+    )
   end
 
   private
