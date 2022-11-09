@@ -2,7 +2,8 @@ require "rails_helper"
 
 RSpec.describe TeacherMailer, type: :mailer do
   let(:teacher) { create(:teacher, email: "teacher@example.com") }
-  before do
+
+  let!(:application_form) do
     create(
       :application_form,
       teacher:,
@@ -10,6 +11,20 @@ RSpec.describe TeacherMailer, type: :mailer do
       given_names: "First",
       family_name: "Last",
     )
+  end
+
+  shared_examples "observer metadata" do |expected_action_name|
+    describe "#mailer_action_name" do
+      subject(:mailer_action_name) { mail.mailer_action_name }
+
+      it { is_expected.to eq(expected_action_name) }
+    end
+
+    describe "#application_form_id" do
+      subject(:application_form_id) { mail.application_form_id }
+
+      it { is_expected.to eq(application_form.id) }
+    end
   end
 
   describe "#application_awarded" do
@@ -33,6 +48,8 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
     end
+
+    include_examples "observer metadata", "application_awarded"
   end
 
   describe "#application_declined" do
@@ -56,6 +73,8 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
     end
+
+    include_examples "observer metadata", "application_declined"
   end
 
   describe "#application_received" do
@@ -83,6 +102,8 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
     end
+
+    include_examples "observer metadata", "application_received"
   end
 
   describe "#further_information_received" do
@@ -112,6 +133,8 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
     end
+
+    include_examples "observer metadata", "further_information_received"
   end
 
   describe "#further_information_requested" do
@@ -151,5 +174,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
+
+    include_examples "observer metadata", "further_information_requested"
   end
 end

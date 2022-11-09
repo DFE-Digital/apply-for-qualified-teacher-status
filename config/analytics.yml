@@ -231,6 +231,7 @@
     - assessment_section_id
     - note_id
     - further_information_request_id
+    - mailer_action_name
   :uploads:
     - id
     - document_id

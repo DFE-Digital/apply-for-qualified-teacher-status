@@ -7,6 +7,7 @@
 #  creator_name                   :string           default(""), not null
 #  creator_type                   :string
 #  event_type                     :string           not null
+#  mailer_action_name             :string           default(""), not null
 #  new_state                      :string           default(""), not null
 #  old_state                      :string           default(""), not null
 #  created_at                     :datetime         not null
@@ -78,6 +79,11 @@ FactoryBot.define do
     trait :further_information_request_assessed do
       event_type { "further_information_request_assessed" }
       association :further_information_request
+    end
+
+    trait :email_sent do
+      event_type { "email_sent" }
+      mailer_action_name { "application_received" }
     end
   end
 end

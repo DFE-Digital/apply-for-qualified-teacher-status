@@ -131,23 +131,6 @@ en:
         title: Review further information from applicant
         check_your_answers: Further information requested
 
-  components:
-    timeline_entry:
-      title:
-        assessor_assigned: Assessor assigned
-        reviewer_assigned: Reviewer assigned
-        state_changed: Status changed
-        assessment_section_completed: Section completed
-        note_created: Note created
-        further_information_request_assessed: Further information assessed
-      description:
-        assessor_assigned: "%{assignee_name} is assigned as the assessor."
-        reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
-        state_changed: Status changed from %{old_state} to %{new_state}
-        assessment_section_recorded: "%{section_name}: %{section_state}"
-        note_created: "%{text}"
-        further_information_request_assessed: Further information request has been assessed.
-
   activemodel:
     errors:
       models:

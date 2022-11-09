@@ -7,6 +7,7 @@
 #  creator_name                   :string           default(""), not null
 #  creator_type                   :string
 #  event_type                     :string           not null
+#  mailer_action_name             :string           default(""), not null
 #  new_state                      :string           default(""), not null
 #  old_state                      :string           default(""), not null
 #  created_at                     :datetime         not null
@@ -70,6 +71,7 @@ RSpec.describe TimelineEvent do
         note_created: "note_created",
         further_information_request_assessed:
           "further_information_request_assessed",
+        email_sent: "email_sent",
       ).backed_by_column_of_type(:string)
     end
 
@@ -82,6 +84,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
     end
 
     context "with an reviewer assigned event type" do
@@ -93,6 +96,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
     end
 
     context "with a state changed event type" do
@@ -104,6 +108,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
     end
 
     context "with an assessment section recorded event type" do
@@ -115,6 +120,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
     end
 
     context "with a note created event type" do
@@ -126,6 +132,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_presence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
     end
 
     context "with a further information request assessed event type" do
@@ -139,6 +146,19 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_presence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
+    end
+
+    context "with an email sent event type" do
+      before { timeline_event.event_type = :email_sent }
+
+      it { is_expected.to validate_absence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:old_state) }
+      it { is_expected.to validate_absence_of(:new_state) }
+      it { is_expected.to validate_absence_of(:assessment_section) }
+      it { is_expected.to validate_absence_of(:note) }
+      it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_presence_of(:mailer_action_name) }
     end
   end
 end
