@@ -77,5 +77,12 @@ module TimelineEntry
         further_information_request: timeline_event.further_information_request,
       }
     end
+
+    def email_sent_vars
+      {
+        subject:
+          I18n.t("mailer.teacher.#{timeline_event.mailer_action_name}.subject"),
+      }
+    end
   end
 end

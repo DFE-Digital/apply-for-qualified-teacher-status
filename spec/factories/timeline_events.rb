@@ -80,5 +80,10 @@ FactoryBot.define do
       event_type { "further_information_request_assessed" }
       association :further_information_request
     end
+
+    trait :email_sent do
+      event_type { "email_sent" }
+      mailer_action_name { "application_received" }
+    end
   end
 end

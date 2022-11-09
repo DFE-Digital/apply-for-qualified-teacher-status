@@ -119,4 +119,24 @@ RSpec.describe TimelineEntry::Component, type: :component do
       expect(component.text).to include(creator.name)
     end
   end
+
+  context "email sent" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :email_sent,
+        mailer_action_name: "application_received",
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "We’ve received your application for qualified teacher status (QTS)",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
 end
