@@ -21,7 +21,7 @@ class Upload < ApplicationRecord
 
   belongs_to :document
 
-  has_one_attached :attachment
+  has_one_attached :attachment, dependent: :purge_later
   validates :attachment, presence: true
 
   def original?

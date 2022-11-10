@@ -19,7 +19,8 @@ class FurtherInformationRequest < ApplicationRecord
   belongs_to :assessment
   has_many :items,
            class_name: "FurtherInformationRequestItem",
-           inverse_of: :further_information_request
+           inverse_of: :further_information_request,
+           dependent: :destroy
 
   enum :state,
        { requested: "requested", received: "received" },

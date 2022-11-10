@@ -58,12 +58,12 @@
 class ApplicationForm < ApplicationRecord
   belongs_to :teacher
   belongs_to :region
-  has_many :work_histories
-  has_many :qualifications
-  has_many :documents, as: :documentable
+  has_many :work_histories, dependent: :destroy
+  has_many :qualifications, dependent: :destroy
+  has_many :documents, as: :documentable, dependent: :destroy
   has_many :timeline_events
   has_one :assessment
-  has_many :notes
+  has_many :notes, dependent: :destroy
 
   before_save :build_documents, if: :new_record?
 
