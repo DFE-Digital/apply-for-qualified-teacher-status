@@ -4,6 +4,7 @@ class UpdateDQTTRNRequestJob < ApplicationJob
   class StillPending < StandardError
   end
 
+  sidekiq_options retry: false
   retry_on Faraday::Error, wait: :exponentially_longer, attempts: 3
   retry_on StillPending, wait: 30.minutes, attempts: 7 * 24 * 2 # 1 week
 
