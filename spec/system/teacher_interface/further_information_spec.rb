@@ -175,7 +175,16 @@ RSpec.describe "Teacher further information", type: :system do
 
   def application_form
     @application_form ||=
-      create(:application_form, :further_information_requested, teacher:)
+      begin
+        application_form =
+          create(:application_form, :further_information_requested, teacher:)
+        create(
+          :assessment,
+          :with_further_information_request,
+          application_form:,
+        )
+        application_form
+      end
   end
 
   def further_information_request

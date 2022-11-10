@@ -29,7 +29,16 @@ namespace :example_data do
           teacher = FactoryBot.create(:teacher, :confirmed)
           application_form =
             FactoryBot.create(:application_form, *traits, teacher:, region:)
-          AssessmentFactory.call(application_form:)
+          assessment = AssessmentFactory.call(application_form:)
+
+          next unless application_form.further_information_requested?
+
+          FactoryBot.create(
+            :further_information_request,
+            :requested,
+            :with_items,
+            assessment:,
+          )
         end
       end
     end
@@ -41,8 +50,6 @@ namespace :example_data do
       raise "THIS TASK CANNOT BE RUN IN PRODUCTION"
     end
 
-    Staff.where(email: assessors.map { |assessor| assessor[:email] }).delete_all
-
     TimelineEvent.delete_all
     AssessmentSection.delete_all
     Assessment.delete_all
@@ -51,6 +58,7 @@ namespace :example_data do
     Note.delete_all
     ApplicationForm.delete_all
     Teacher.delete_all
+    Staff.where(email: assessors.map { |assessor| assessor[:email] }).delete_all
   end
 
   desc "Reset and regenerate example data."
@@ -135,7 +143,7 @@ def application_form_traits_for(region)
       with_identification_document
       with_age_range
       with_subjects
-    ] + evidential_traits << :further_information_requested,
+    ] + evidential_traits << :submitted << :further_information_requested,
     %i[
       with_personal_information
       with_alternative_name
@@ -144,6 +152,6 @@ def application_form_traits_for(region)
       with_identification_document
       with_age_range
       with_subjects
-    ] + evidential_traits << :further_information_requested,
+    ] + evidential_traits << :submitted << :further_information_requested,
   ]
 end
