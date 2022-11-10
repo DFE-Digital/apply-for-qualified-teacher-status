@@ -2,15 +2,16 @@ require "rails_helper"
 
 RSpec.describe "Features support", type: :system do
   it "allows activating/deactivating features" do
+    given_the_service_is_open
     when_i_am_authorized_as_a_support_user
     when_i_visit_the_feature_flags_page
     then_i_see_the_feature_flags
 
-    when_i_activate_the_service_open_flag
-    then_the_service_open_flag_is_on
+    when_i_activate_the_applications_flag
+    then_the_applications_flag_is_on
 
-    when_i_deactivate_the_service_open_flag
-    then_the_service_open_flag_is_off
+    when_i_deactivate_the_applications_flag
+    then_the_applications_flag_is_off
   end
 
   private
@@ -21,22 +22,22 @@ RSpec.describe "Features support", type: :system do
     expect(page).to have_content("Features")
   end
 
-  def then_the_service_open_flag_is_off
-    expect(page).to have_content("Feature “Service open” deactivated")
-    expect(page).to have_content("Service open\n- Inactive")
+  def then_the_applications_flag_is_off
+    expect(page).to have_content("Feature “Teacher applications” deactivated")
+    expect(page).to have_content("Teacher applications\n- Inactive")
   end
 
-  def then_the_service_open_flag_is_on
-    expect(page).to have_content("Feature “Service open” activated")
-    expect(page).to have_content("Service open\n- Active")
+  def then_the_applications_flag_is_on
+    expect(page).to have_content("Feature “Teacher applications” activated")
+    expect(page).to have_content("Teacher applications\n- Active")
   end
 
-  def when_i_activate_the_service_open_flag
-    click_on "Activate Service open"
+  def when_i_activate_the_applications_flag
+    click_on "Activate Teacher applications"
   end
 
-  def when_i_deactivate_the_service_open_flag
-    click_on "Deactivate Service open"
+  def when_i_deactivate_the_applications_flag
+    click_on "Deactivate Teacher applications"
   end
 
   def when_i_visit_the_feature_flags_page

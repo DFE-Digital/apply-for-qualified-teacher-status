@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Staff support", type: :system do
   it "allows inviting a user" do
-    given_the_service_is_staff_http_basic_auth
-
+    given_the_service_is_open
     when_i_am_authorized_as_a_support_user
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
@@ -17,6 +16,7 @@ RSpec.describe "Staff support", type: :system do
     then_i_see_an_invitation_email
     then_i_see_the_staff_index
     then_i_see_the_invited_staff_user
+    then_i_sign_out
 
     when_i_visit_the_invitation_email
     and_i_fill_password
@@ -27,10 +27,6 @@ RSpec.describe "Staff support", type: :system do
   end
 
   private
-
-  def given_the_service_is_staff_http_basic_auth
-    FeatureFlag.activate(:staff_http_basic_auth)
-  end
 
   def when_i_visit_the_staff_page
     visit support_interface_staff_index_path

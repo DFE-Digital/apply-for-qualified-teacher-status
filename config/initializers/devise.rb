@@ -321,11 +321,6 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  config.warden do |manager|
-    manager.strategies.add(:staff_http_basic_auth, StaffHttpBasicAuthStrategy)
-    manager.default_strategies(scope: :staff).unshift :staff_http_basic_auth
-  end
-
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
   # is mountable, there are some extra configurations to be taken into account.
