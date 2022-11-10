@@ -32,7 +32,7 @@ FactoryBot.define do
       sequence :institution_country_code, Country::CODES.cycle
       start_date { Date.new(2020, 1, 1) }
       complete_date { Date.new(2021, 1, 1) }
-      certificate_date { Date.new(2021, 2, 1) }
+      certificate_date { Date.new(2021, 1, 1) }
       part_of_university_degree { true }
 
       after(:create) do |qualification, _evaluator|
