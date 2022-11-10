@@ -537,11 +537,11 @@ RSpec.describe "Teacher application", type: :system do
     fill_in "teacher_interface_qualification_form_start_date_1i", with: "2000"
     fill_in "teacher_interface_qualification_form_complete_date_2i", with: "1"
     fill_in "teacher_interface_qualification_form_complete_date_1i",
-            with: "2020"
+            with: "2003"
     fill_in "teacher_interface_qualification_form_certificate_date_2i",
             with: "1"
     fill_in "teacher_interface_qualification_form_certificate_date_1i",
-            with: "2000"
+            with: "2004"
   end
 
   def when_i_fill_in_the_upload_certificate_form
