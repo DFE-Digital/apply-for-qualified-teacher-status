@@ -26,7 +26,7 @@ class Qualification < ApplicationRecord
   include ApplicationFormStatusUpdatable
 
   belongs_to :application_form
-  has_many :documents, as: :documentable
+  has_many :documents, as: :documentable, dependent: :destroy
 
   scope :ordered, -> { order(created_at: :asc) }
 

@@ -1,0 +1,24 @@
+# frozen_string_literal: true
+
+class DestroyApplicationForm
+  include ServicePattern
+
+  def initialize(application_form:)
+    @application_form = application_form
+  end
+
+  def call
+    ActiveRecord::Base.transaction do
+      timeline_events.destroy_all
+      assessment.destroy!
+      application_form.destroy!
+      teacher.destroy!
+    end
+  end
+
+  private
+
+  attr_reader :application_form
+
+  delegate :assessment, :teacher, :timeline_events, to: :application_form
+end

@@ -17,7 +17,7 @@
 class Document < ApplicationRecord
   belongs_to :documentable, polymorphic: true
 
-  has_many :uploads
+  has_many :uploads, dependent: :destroy
 
   has_many :original_uploads,
            -> { where(translation: false) },
