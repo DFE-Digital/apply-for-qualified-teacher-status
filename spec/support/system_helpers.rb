@@ -55,18 +55,15 @@ module SystemHelpers
   end
 
   def given_i_am_authorized_as_a_user(user)
-    sign_in(user)
+    sign_in(@user = user)
   end
 
   def when_i_am_authorized_as_an_assessor_user
-    when_i_am_authorized_as_a_support_user
+    sign_in @assessor_user = create(:staff, :assessor, :confirmed)
   end
 
   def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize(
-      ENV.fetch("SUPPORT_USERNAME", "support"),
-      ENV.fetch("SUPPORT_PASSWORD", "support"),
-    )
+    sign_in @support_user = create(:staff, :confirmed)
   end
 
   def when_i_am_authorized_as_a_test_user
@@ -75,6 +72,12 @@ module SystemHelpers
       ENV.fetch("TEST_PASSWORD", "test"),
     )
   end
+
+  def when_i_sign_out
+    [@user, @support_user, @assessor_user].compact.each { |user| sign_out user }
+  end
+
+  alias_method :then_i_sign_out, :when_i_sign_out
 
   def given_the_test_user_is_disabled
     FeatureFlag.deactivate(:staff_test_user)

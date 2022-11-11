@@ -20,13 +20,6 @@ class FeatureFlag
       "Thomas Leese",
     ],
     [
-      :staff_http_basic_auth,
-      "Allow signing in as a staff user using HTTP Basic authentication. " \
-        "This is useful before staff users have been created, but should " \
-        "otherwise be inactive.",
-      "Thomas Leese",
-    ],
-    [
       :staff_test_user,
       "Add extra user with access the eligibility checker for user research. " \
         "When service_open is deactivated, and this flag is enabled, the user will have " \

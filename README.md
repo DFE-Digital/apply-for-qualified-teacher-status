@@ -114,6 +114,20 @@ Setup the project (re-run after `Gemfile` or `package.json` updates, automatical
 bin/setup
 ```
 
+Example data and personas. For development and non-production environments we have an example data generation script that includes persona based logins.
+
+```bash
+bundle exec rake example_data:generate
+```
+
+To enable the 'personas' feature, from the rails console
+
+```ruby
+FeatureFlag.activate(:personas)
+```
+
+Navigate to /personas for persona based logins.
+
 Run the application on `http://localhost:3000`:
 
 ```bash

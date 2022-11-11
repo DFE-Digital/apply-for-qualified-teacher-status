@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Assessor listing application forms", type: :system do
   before do
-    given_the_service_is_staff_http_basic_auth
+    given_the_service_is_open
     given_there_are_application_forms
 
     when_i_am_authorized_as_an_assessor_user
@@ -24,10 +24,6 @@ RSpec.describe "Assessor listing application forms", type: :system do
   end
 
   private
-
-  def given_the_service_is_staff_http_basic_auth
-    FeatureFlag.activate(:staff_http_basic_auth)
-  end
 
   def given_there_are_application_forms
     application_forms
