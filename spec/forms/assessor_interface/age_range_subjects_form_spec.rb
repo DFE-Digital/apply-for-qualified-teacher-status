@@ -96,8 +96,12 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
       it "sets the attributes" do
         save # rubocop:disable Rails/SaveBang
 
-        expect(assessment.age_range_note.text).to eq("A note.")
-        expect(assessment.subjects_note.text).to eq("Another note.")
+        expect(assessment.age_range_note.text).to eq(
+          "Age range changed: A note.",
+        )
+        expect(assessment.subjects_note.text).to eq(
+          "Subjects changed: Another note.",
+        )
       end
     end
   end

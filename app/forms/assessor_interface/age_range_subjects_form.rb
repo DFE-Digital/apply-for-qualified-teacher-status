@@ -69,13 +69,19 @@ class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSec
   private
 
   def update_age_range
-    note = find_or_create_note(assessment.age_range_note, age_range_note)
+    note_text =
+      age_range_note.present? ? "Age range changed: #{age_range_note}" : ""
+
+    note = find_or_create_note(assessment.age_range_note, note_text)
     assessment.update!(age_range_min:, age_range_max:, age_range_note: note)
   end
 
   def update_subjects
+    note_text =
+      subjects_note.present? ? "Subjects changed: #{subjects_note}" : ""
     subjects = [subject_1, subject_2, subject_3].compact_blank
-    note = find_or_create_note(assessment.subjects_note, subjects_note)
+
+    note = find_or_create_note(assessment.subjects_note, note_text)
     assessment.update!(subjects:, subjects_note: note)
   end
 
