@@ -50,4 +50,13 @@ class Document < ApplicationRecord
   def for_further_information_request?
     documentable.is_a?(FurtherInformationRequestItem)
   end
+
+  def application_form
+    @application_form ||=
+      if documentable.is_a?(ApplicationForm)
+        documentable
+      else
+        documentable.try(:application_form)
+      end
+  end
 end

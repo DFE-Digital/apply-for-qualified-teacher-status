@@ -36,14 +36,5 @@ class Upload < ApplicationRecord
     attachment.url(expires_in: 5.minutes)
   end
 
-  private
-
-  def application_form
-    @application_form ||=
-      if document.documentable.is_a?(ApplicationForm)
-        document.documentable
-      else
-        document.documentable.try(:application_form)
-      end
-  end
+  delegate :application_form, to: :document
 end
