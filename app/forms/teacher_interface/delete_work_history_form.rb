@@ -11,5 +11,7 @@ module TeacherInterface
     def update_model
       work_history.destroy! if confirm
     end
+
+    delegate :application_form, to: :work_history
   end
 end

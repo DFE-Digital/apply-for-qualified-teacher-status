@@ -11,5 +11,7 @@ module TeacherInterface
     def update_model
       qualification.destroy! if confirm
     end
+
+    delegate :application_form, to: :qualification
   end
 end

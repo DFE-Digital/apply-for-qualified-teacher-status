@@ -32,6 +32,13 @@ RSpec.describe TeacherInterface::BaseForm, type: :model do
         save # rubocop:disable Rails/SaveBang
         expect(application_form.given_names).to eq(given_names)
       end
+
+      it "updates the application form status" do
+        expect(ApplicationFormStatusUpdater).to receive(:call).with(
+          application_form:,
+        )
+        save # rubocop:disable Rails/SaveBang
+      end
     end
 
     shared_examples "failure" do

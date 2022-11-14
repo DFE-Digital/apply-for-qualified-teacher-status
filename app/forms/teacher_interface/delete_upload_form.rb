@@ -11,5 +11,7 @@ module TeacherInterface
     def update_model
       upload.destroy! if confirm
     end
+
+    delegate :application_form, to: :upload
   end
 end

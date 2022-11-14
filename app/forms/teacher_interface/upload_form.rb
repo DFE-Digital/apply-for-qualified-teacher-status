@@ -28,6 +28,8 @@ module TeacherInterface
       end
     end
 
+    delegate :application_form, to: :document
+
     def attachments_present
       has_errors =
         original_attachment.blank? ||

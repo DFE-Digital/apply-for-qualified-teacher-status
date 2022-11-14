@@ -46,6 +46,8 @@ module TeacherInterface
       )
     end
 
+    delegate :application_form, to: :qualification
+
     private
 
     def institution_country_code

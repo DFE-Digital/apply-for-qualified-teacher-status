@@ -8,15 +8,16 @@ class ApplicationFormStatusUpdater
   end
 
   def call
-    application_form.personal_information_status = personal_information_status
-    application_form.identification_document_status =
-      identification_document_status
-    application_form.qualifications_status = qualifications_status
-    application_form.age_range_status = age_range_status
-    application_form.subjects_status = subjects_status
-    application_form.work_history_status = work_history_status
-    application_form.registration_number_status = registration_number_status
-    application_form.written_statement_status = written_statement_status
+    application_form.update!(
+      personal_information_status:,
+      identification_document_status:,
+      qualifications_status:,
+      age_range_status:,
+      subjects_status:,
+      work_history_status:,
+      registration_number_status:,
+      written_statement_status:,
+    )
   end
 
   private
