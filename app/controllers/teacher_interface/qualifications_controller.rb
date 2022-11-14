@@ -125,16 +125,22 @@ module TeacherInterface
 
     def delete
       @qualification = qualification
+      @delete_qualification_form = DeleteQualificationForm.new
     end
 
     def destroy
-      if ActiveModel::Type::Boolean.new.cast(
-           params.dig(:qualification, :confirm),
-         )
-        qualification.destroy!
-      end
+      @delete_qualification_form =
+        DeleteQualificationForm.new(
+          confirm:
+            params.dig(:teacher_interface_delete_qualification_form, :confirm),
+          qualification:,
+        )
 
-      redirect_to check_success_path
+      if @delete_qualification_form.save(validate: true)
+        redirect_to check_success_path
+      else
+        render :delete, status: :unprocessable_entity
+      end
     end
 
     private

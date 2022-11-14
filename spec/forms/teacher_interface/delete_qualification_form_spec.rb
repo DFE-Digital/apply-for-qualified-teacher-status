@@ -2,39 +2,39 @@
 
 require "rails_helper"
 
-RSpec.describe TeacherInterface::DeleteUploadForm, type: :model do
-  subject(:form) { described_class.new(confirm:, upload:) }
+RSpec.describe TeacherInterface::DeleteQualificationForm, type: :model do
+  subject(:form) { described_class.new(confirm:, qualification:) }
 
   describe "validations" do
     let(:confirm) { "" }
-    let(:upload) { nil }
+    let(:qualification) { nil }
 
     it { is_expected.to allow_values(true, false).for(:confirm) }
 
     context "when confirm is true" do
       let(:confirm) { "true" }
-      it { is_expected.to validate_presence_of(:upload) }
+      it { is_expected.to validate_presence_of(:qualification) }
     end
   end
 
   describe "#save" do
     subject(:save) { form.save(validate: true) }
 
-    let!(:upload) { create(:upload) }
+    let!(:qualification) { create(:qualification) }
 
     context "when confirm is true" do
       let(:confirm) { "true" }
 
-      it "deletes the upload" do
-        expect { save }.to change(Upload, :count).by(-1)
+      it "deletes the qualification" do
+        expect { save }.to change(Qualification, :count).by(-1)
       end
     end
 
     context "when confirm is false" do
       let(:confirm) { "false" }
 
-      it "doesn't delete the upload" do
-        expect { save }.to_not change(Upload, :count)
+      it "doesn't delete the qualification" do
+        expect { save }.to_not change(Qualification, :count)
       end
     end
   end
