@@ -17,8 +17,6 @@
 #  fk_rails_...  (document_id => documents.id)
 #
 class Upload < ApplicationRecord
-  include ApplicationFormStatusUpdatable
-
   belongs_to :document
 
   has_one_attached :attachment, dependent: :purge_later

@@ -106,8 +106,6 @@ class ApplicationForm < ApplicationRecord
 
   STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }
 
-  before_save -> { ApplicationFormStatusUpdater.call(application_form: self) }
-
   scope :active, -> { not_draft }
 
   def assign_reference
