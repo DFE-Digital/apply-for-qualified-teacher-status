@@ -1,10 +1,9 @@
 <% content_for :page_title, "#{"Error: " if @assessment_section_form.errors.any?}#{t(".title.#{@assessment_section_view_object.assessment_section.key}")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@assessment_section_view_object.application_form) %>
 
-<div class="app-inline-action">
-  <h1 class="govuk-heading-xl"><%= t(".title.#{@assessment_section_view_object.assessment_section.key}") %></h1>
-  <%= govuk_button_link_to "Add&nbsp;note".html_safe, new_assessor_interface_application_form_note_path(@assessment_section_view_object.application_form), secondary: true %>
-</div>
+<%= render "shared/assessor_header",
+           title: t(".title.#{@assessment_section_view_object.assessment_section.key}"),
+           application_form: @assessment_section_view_object.application_form %>
 
 <% case @assessment_section_view_object.assessment_section.key %>
 <% when "personal_information" %>

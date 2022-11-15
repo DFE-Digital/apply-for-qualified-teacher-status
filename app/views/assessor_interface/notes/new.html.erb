@@ -2,6 +2,8 @@
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @create_note_form, url: assessor_interface_application_form_notes_path(@application_form) do |f| %>
+  <%= hidden_field_tag :next, params[:next] %>
+
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_text_area :text, label: { tag: "h1", size: "l" }, rows: 5 %>
