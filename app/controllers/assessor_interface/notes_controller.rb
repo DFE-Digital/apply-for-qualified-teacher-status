@@ -13,7 +13,8 @@ module AssessorInterface
         )
 
       if @create_note_form.save!
-        redirect_to [:assessor_interface, application_form]
+        redirect_to params[:next].presence ||
+                      [:assessor_interface, application_form]
       else
         render :new, status: :unprocessable_entity
       end
