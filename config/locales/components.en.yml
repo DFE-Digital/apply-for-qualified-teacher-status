@@ -18,3 +18,8 @@ en:
         note_created: "%{text}"
         further_information_request_assessed: Further information request has been assessed.
         email_sent: "%{subject}"
+        age_range_subjects_verified: |
+          Age range: %{age_range_min} to %{age_range_max}<br />
+          %{age_range_note}<br />
+          Subjects: %{subjects}<br />
+          %{subjects_note}
