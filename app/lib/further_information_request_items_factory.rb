@@ -45,7 +45,9 @@ class FurtherInformationRequestItemsFactory
   TEXT_FAILURE_REASONS = %w[
     qualifications_dont_match_subjects
     qualifications_dont_match_other_details
+    age_range
     satisfactory_evidence_work_history
+    registration_number
   ].freeze
 
   DOCUMENT_FAILURE_REASONS = {
