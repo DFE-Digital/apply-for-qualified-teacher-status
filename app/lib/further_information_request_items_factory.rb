@@ -20,33 +20,27 @@ class FurtherInformationRequestItemsFactory
   def build_further_information_request_items(assessment_section)
     assessment_section
       .selected_failure_reasons
-      .filter_map do |failure_reason, assessor_notes|
+      .map do |failure_reason, assessor_notes|
       build_further_information_request_item(failure_reason, assessor_notes)
     end
   end
 
   def build_further_information_request_item(failure_reason, assessor_notes)
-    if TEXT_FAILURE_REASONS.include?(failure_reason)
-      FurtherInformationRequestItem.new(
-        information_type: :text,
-        failure_reason:,
-        assessor_notes:,
-      )
-    elsif (document_type = DOCUMENT_FAILURE_REASONS[failure_reason]).present?
+    if (document_type = DOCUMENT_FAILURE_REASONS[failure_reason]).present?
       FurtherInformationRequestItem.new(
         information_type: :document,
         failure_reason:,
         assessor_notes:,
         document: Document.new(document_type:),
       )
+    else
+      FurtherInformationRequestItem.new(
+        information_type: :text,
+        failure_reason:,
+        assessor_notes:,
+      )
     end
   end
-
-  TEXT_FAILURE_REASONS = %w[
-    qualifications_dont_match_subjects
-    qualifications_dont_match_other_details
-    satisfactory_evidence_work_history
-  ].freeze
 
   DOCUMENT_FAILURE_REASONS = {
     "identification_document_expired" => :identification,
