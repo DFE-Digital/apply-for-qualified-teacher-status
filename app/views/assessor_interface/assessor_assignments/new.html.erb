@@ -1,10 +1,7 @@
 <% content_for :page_title, "#{"Error: " if @assessor_assignment_form.errors.any?}Select an assessor" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<div class="app-inline-action">
-  <h1 class="govuk-heading-xl">Select an assessor</h1>
-  <%= govuk_button_link_to "Add&nbsp;note".html_safe, new_assessor_interface_application_form_note_path(@application_form), secondary: true %>
-</div>
+<%= render "shared/assessor_header", title: "Select an assessor", application_form: @application_form %>
 
 <%= form_with model: @assessor_assignment_form, url: assessor_interface_application_form_assign_assessor_path(@application_form) do |f| %>
   <%= f.govuk_error_summary %>

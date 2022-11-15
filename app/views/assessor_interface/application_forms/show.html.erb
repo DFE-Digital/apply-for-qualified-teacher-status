@@ -1,10 +1,7 @@
 <% content_for :page_title, "Application" %>
 <% content_for :back_link_url, @view_object.back_link_path %>
 
-<div class="app-inline-action">
-  <h1 class="govuk-heading-xl">Application</h1>
-  <%= govuk_button_link_to "Add&nbsp;note".html_safe, new_assessor_interface_application_form_note_path(@view_object.application_form), secondary: true %>
-</div>
+<%= render "shared/assessor_header", title: "Application", application_form: @view_object.application_form %>
 
 <%= render(ApplicationFormOverview::Component.new(@view_object.application_form)) %>
 
