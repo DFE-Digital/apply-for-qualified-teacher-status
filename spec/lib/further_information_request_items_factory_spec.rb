@@ -28,7 +28,6 @@ RSpec.describe FurtherInformationRequestItemsFactory do
           :failed,
           selected_failure_reasons: {
             qualifications_dont_match_subjects: "Subjects.",
-            unknown_reason: "Unknown.",
           },
         ),
       ]
@@ -55,12 +54,6 @@ RSpec.describe FurtherInformationRequestItemsFactory do
         expect(item.failure_reason).to eq("qualifications_dont_match_subjects")
         expect(item.assessor_notes).to eq("Subjects.")
       end
-    end
-
-    describe "third item" do
-      subject(:item) { items.third }
-
-      it { is_expected.to be_nil }
     end
   end
 end
