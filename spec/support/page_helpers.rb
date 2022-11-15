@@ -29,6 +29,11 @@ module PageHelpers
     @assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
   end
 
+  def check_age_range_subjects_page
+    @check_age_range_subjects_page ||=
+      PageObjects::AssessorInterface::CheckAgeRangeSubjectsPage.new
+  end
+
   def check_further_information_request_answers_page
     @check_further_information_request_answers_page =
       PageObjects::TeacherInterface::CheckFurtherInformationRequestAnswers.new
@@ -285,10 +290,5 @@ module PageHelpers
   def further_information_request_preview_page
     @further_information_request_preview_page ||=
       PageObjects::AssessorInterface::FurtherInformationRequestPreview.new
-  end
-
-  def verify_age_range_subjects_page
-    @verify_age_range_subjects_page ||=
-      PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
   end
 end

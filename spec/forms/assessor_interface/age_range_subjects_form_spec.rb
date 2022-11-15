@@ -3,22 +3,15 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
-  let(:assessment_section) { create(:assessment_section, :age_range_subjects) }
+  let(:assessment) { create(:assessment) }
   let(:user) { create(:staff, :confirmed) }
   let(:attributes) { {} }
 
-  subject(:form) do
-    described_class.for_assessment_section(assessment_section).new(
-      assessment_section:,
-      user:,
-      **attributes,
-    )
-  end
+  subject(:form) { described_class.new(assessment:, user:, **attributes) }
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:assessment_section) }
+    it { is_expected.to validate_presence_of(:assessment) }
     it { is_expected.to validate_presence_of(:user) }
-    it { is_expected.to allow_values(true, false).for(:passed) }
 
     it { is_expected.to validate_presence_of(:age_range_min) }
     it do
@@ -49,20 +42,13 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
   describe "#save" do
     subject(:save) { form.save }
 
-    let(:assessment) { assessment_section.assessment }
-
     describe "when invalid attributes" do
       it { is_expected.to be false }
     end
 
     describe "with valid attributes and no note" do
       let(:attributes) do
-        {
-          passed: true,
-          age_range_min: "7",
-          age_range_max: "11",
-          subject_1: "Subject",
-        }
+        { age_range_min: "7", age_range_max: "11", subject_1: "Subject" }
       end
 
       it { is_expected.to be true }
@@ -88,7 +74,6 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
     describe "with valid attributes and a note" do
       let(:attributes) do
         {
-          passed: true,
           age_range_min: "7",
           age_range_max: "11",
           age_range_note: "A note.",

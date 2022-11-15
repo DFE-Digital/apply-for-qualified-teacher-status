@@ -6,9 +6,7 @@ module AssessorInterface
       @assessment_section_form =
         assessment_section_form.new(
           user: current_staff,
-          **assessment_section_form_class.initial_attributes(
-            assessment_section,
-          ),
+          **AssessmentSectionForm.initial_attributes(assessment_section),
         )
     end
 
@@ -43,15 +41,7 @@ module AssessorInterface
     end
 
     def assessment_section_form
-      assessment_section_form_class.for_assessment_section(assessment_section)
-    end
-
-    def assessment_section_form_class
-      if assessment_section.age_range_subjects?
-        AgeRangeSubjectsForm
-      else
-        AssessmentSectionForm
-      end
+      AssessmentSectionForm.for_assessment_section(assessment_section)
     end
 
     def assessment_section_form_params

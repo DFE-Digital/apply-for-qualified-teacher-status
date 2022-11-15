@@ -62,32 +62,28 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows passing the age range and subjects" do
     when_i_visit_the(
-      :verify_age_range_subjects_page,
+      :check_age_range_subjects_page,
       application_id:,
       assessment_id:,
     )
     then_i_see_the_age_range_and_subjects
 
-    when_i_fill_in_age_range
-    and_i_fill_in_subjects
-    and_i_choose_verify_age_range_subjects_yes
+    and_i_choose_check_age_range_subjects_yes
     then_i_see_the(:assessor_application_page, application_id:)
-    and_i_see_verify_age_range_subjects_completed
+    and_i_see_check_age_range_subjects_completed
   end
 
   it "allows failing the age range and subjects" do
     when_i_visit_the(
-      :verify_age_range_subjects_page,
+      :check_age_range_subjects_page,
       application_id:,
       assessment_id:,
     )
     then_i_see_the_age_range_and_subjects
 
-    when_i_fill_in_age_range
-    and_i_fill_in_subjects
-    and_i_choose_verify_age_range_subjects_no
+    and_i_choose_check_age_range_subjects_no
     then_i_see_the(:assessor_application_page, application_id:)
-    and_i_see_verify_age_range_subjects_action_required
+    and_i_see_check_age_range_subjects_action_required
   end
 
   it "allows passing the work history" do
@@ -232,54 +228,41 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def then_i_see_the_age_range_and_subjects
-    expect(verify_age_range_subjects_page.age_range.heading.text).to eq(
+    expect(check_age_range_subjects_page.age_range.heading.text).to eq(
       "Enter the age range you can teach",
     )
-    expect(verify_age_range_subjects_page.subjects.heading.text).to eq(
+    expect(check_age_range_subjects_page.subjects.heading.text).to eq(
       "Enter the subjects you can teach",
     )
   end
 
-  def when_i_fill_in_age_range
-    verify_age_range_subjects_page.age_range_form.minimum.fill_in with: "7"
-    verify_age_range_subjects_page.age_range_form.maximum.fill_in with: "11"
-    verify_age_range_subjects_page.age_range_form.note.fill_in with: "A note."
+  def and_i_choose_check_age_range_subjects_yes
+    check_age_range_subjects_page.form.yes_radio_item.input.click
+    check_age_range_subjects_page.form.continue_button.click
   end
 
-  def and_i_fill_in_subjects
-    verify_age_range_subjects_page.subjects_form.first_field.fill_in with:
-      "Physics"
-    verify_age_range_subjects_page.subjects_form.note_textarea.fill_in with:
-      "Another note."
-  end
-
-  def and_i_choose_verify_age_range_subjects_yes
-    verify_age_range_subjects_page.form.yes_radio_item.input.click
-    verify_age_range_subjects_page.form.continue_button.click
-  end
-
-  def and_i_choose_verify_age_range_subjects_no
-    verify_age_range_subjects_page.form.no_radio_item.input.click
-    verify_age_range_subjects_page
+  def and_i_choose_check_age_range_subjects_no
+    check_age_range_subjects_page.form.no_radio_item.input.click
+    check_age_range_subjects_page
       .form
       .failure_reason_checkbox_items
       .first
       .checkbox
       .click
-    verify_age_range_subjects_page
+    check_age_range_subjects_page
       .form
       .failure_reason_note_textareas
       .first.fill_in with: "Note."
-    verify_age_range_subjects_page.form.continue_button.click
+    check_age_range_subjects_page.form.continue_button.click
   end
 
-  def and_i_see_verify_age_range_subjects_completed
+  def and_i_see_check_age_range_subjects_completed
     expect(
       assessor_application_page.age_range_subjects_task.status_tag.text,
     ).to eq("COMPLETED")
   end
 
-  def and_i_see_verify_age_range_subjects_action_required
+  def and_i_see_check_age_range_subjects_action_required
     expect(
       assessor_application_page.age_range_subjects_task.status_tag.text,
     ).to eq("ACTION REQUIRED")

@@ -25,7 +25,7 @@ module PageObjects
       end
 
       def age_range_subjects_task
-        task_list.find_item("Verify age range and subjects")
+        task_list.find_item("Check age range and subjects")
       end
 
       def work_history_task

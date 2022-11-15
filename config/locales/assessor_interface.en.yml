@@ -18,7 +18,7 @@ en:
           items:
             personal_information: Check personal information
             qualifications: Check qualifications
-            age_range_subjects: Verify age range and subjects
+            age_range_subjects: Check age range and subjects
             work_history: Check work history
             professional_standing: Check professional standing
             initial_assessment: Initial assessment recommendation
@@ -69,7 +69,7 @@ en:
         title:
           personal_information: Check personal information
           qualifications: Check qualifications
-          age_range_subjects: Verify age range and subjects
+          age_range_subjects: Check age range and subjects
           work_history: Check work history
           professional_standing: Check professional standing
         checks:
