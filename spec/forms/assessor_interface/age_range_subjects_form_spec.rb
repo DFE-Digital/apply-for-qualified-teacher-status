@@ -77,6 +77,12 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
         expect(assessment.subjects).to eq(%w[Subject])
         expect(assessment.subjects_note).to be_blank
       end
+
+      it "creates a timeline event" do
+        timeline_events = TimelineEvent.age_range_subjects_verified
+        expect { save }.to change(timeline_events, :count).by(1)
+        expect(timeline_events.last.assessment).to eq(assessment)
+      end
     end
 
     describe "with valid attributes and a note" do
@@ -98,6 +104,12 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
 
         expect(assessment.age_range_note).to eq("A note.")
         expect(assessment.subjects_note).to eq("Another note.")
+      end
+
+      it "creates a timeline event" do
+        timeline_events = TimelineEvent.age_range_subjects_verified
+        expect { save }.to change(timeline_events, :count).by(1)
+        expect(timeline_events.last.assessment).to eq(assessment)
       end
     end
   end

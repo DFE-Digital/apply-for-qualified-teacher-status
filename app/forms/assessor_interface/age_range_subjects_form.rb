@@ -31,6 +31,7 @@ class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSec
     ActiveRecord::Base.transaction do
       update_age_range
       update_subjects
+      create_timeline_event
       super
     end
 
@@ -77,6 +78,15 @@ class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSec
     subjects = [subject_1, subject_2, subject_3].compact_blank
     note = subjects_note.presence || ""
     assessment.update!(subjects:, subjects_note: note)
+  end
+
+  def create_timeline_event
+    TimelineEvent.create!(
+      creator: user,
+      event_type: :age_range_subjects_verified,
+      application_form:,
+      assessment:,
+    )
   end
 
   def assessment
