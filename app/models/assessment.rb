@@ -28,9 +28,6 @@ class Assessment < ApplicationRecord
   has_many :sections, class_name: "AssessmentSection", dependent: :destroy
   has_many :further_information_requests, dependent: :destroy
 
-  belongs_to :age_range_note, class_name: "Note", optional: true
-  belongs_to :subjects_note, class_name: "Note", optional: true
-
   enum :recommendation,
        {
          unknown: "unknown",
