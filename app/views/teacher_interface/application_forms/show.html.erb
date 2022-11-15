@@ -65,14 +65,9 @@
 <% elsif @view_object.application_form.declined? %>
   <h2 class="govuk-heading-l">Your QTS application has been declined</h2>
 
-  <h3 class="govuk-heading-m">Notes from the assessor:</h3>
+  <% unless @view_object.further_information_request.present? %>
+    <h3 class="govuk-heading-m">Notes from the assessor:</h3>
 
-  <% if @view_object.further_information_request.present? %>
-    <% @view_object.further_information_request.items.each do |item| %>
-      <h4 class="govuk-heading-s"><%= I18n.t("assessor_interface.assessment_sections.show.failure_reasons.#{item.failure_reason}") %></h4>
-      <%= govuk_inset_text(text: item.assessor_notes) %>
-    <% end %>
-  <% else %>
     <% @view_object.assessment.sections.each do |section| %>
       <% if section.selected_failure_reasons.present? %>
         <h4 class="govuk-heading-s"><%= t(".assessment_section.#{section.key}") %></h4>
