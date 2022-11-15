@@ -15,6 +15,7 @@
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #  application_form_id            :bigint           not null
+#  assessment_id                  :bigint
 #  assessment_section_id          :bigint
 #  assignee_id                    :bigint
 #  creator_id                     :integer
@@ -24,6 +25,7 @@
 # Indexes
 #
 #  index_timeline_events_on_application_form_id             (application_form_id)
+#  index_timeline_events_on_assessment_id                   (assessment_id)
 #  index_timeline_events_on_assessment_section_id           (assessment_section_id)
 #  index_timeline_events_on_assignee_id                     (assignee_id)
 #  index_timeline_events_on_further_information_request_id  (further_information_request_id)
@@ -32,6 +34,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
+#  fk_rails_...  (assessment_id => assessments.id)
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
 #  fk_rails_...  (further_information_request_id => further_information_requests.id)
