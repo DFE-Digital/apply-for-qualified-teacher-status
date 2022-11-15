@@ -9,6 +9,7 @@ en:
         note_created: Note created
         further_information_request_assessed: Further information assessed
         email_sent: Email sent
+        age_range_subjects_verified: Age range and subjects verified
       description:
         assessor_assigned: "%{assignee_name} is assigned as the assessor."
         reviewer_assigned: "%{assignee_name} is assigned as the reviewer."

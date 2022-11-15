@@ -11,8 +11,19 @@
   </p>
 
   <div class="moj-timeline__description">
-    <p>
-      <%= t("components.timeline_entry.description.#{timeline_event.event_type}", **description_vars).html_safe %>
-    </p>
+    <% if timeline_event.age_range_subjects_verified? %>
+      <p class="govuk-body">Age range: <%= description_vars[:age_range_min] %> to <%= description_vars[:age_range_max] %></p>
+      <% if (text = description_vars[:age_range_note]).present? %>
+        <p class="govuk-body"><%= text %></p>
+      <% end %>
+      <p class="govuk-body">Subjects: <%= description_vars[:subjects] %></p>
+      <% if (text = description_vars[:subjects_note]).present? %>
+        <p class="govuk-body"><%= text %></p>
+      <% end %>
+    <% else %>
+      <p class="govuk-body">
+        <%= t("components.timeline_entry.description.#{timeline_event.event_type}", **description_vars).html_safe %>
+      </p>
+    <% end %>
   </div>
 </div>

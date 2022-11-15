@@ -58,6 +58,7 @@ class TimelineEvent < ApplicationRecord
          further_information_request_assessed:
            "further_information_request_assessed",
          email_sent: "email_sent",
+         age_range_subjects_verified: "age_range_subjects_verified",
        }
   validates :event_type, inclusion: { in: event_types.values }
 
@@ -97,4 +98,8 @@ class TimelineEvent < ApplicationRecord
 
   validates :mailer_action_name, presence: true, if: :email_sent?
   validates :mailer_action_name, absence: true, unless: :email_sent?
+
+  belongs_to :assessment, optional: true
+  validates :assessment, presence: true, if: :age_range_subjects_verified?
+  validates :assessment, absence: true, unless: :age_range_subjects_verified?
 end
