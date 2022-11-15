@@ -99,18 +99,18 @@ en:
           full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
         failure_reasons:
           identification_document_expired: The ID document has expired.
-          identification_document_illegible: The ID document is illegible.
+          identification_document_illegible: The ID document is illegible or in a format that we cannot accept.
           identification_document_mismatch: The name on the online application form is different from the ID document, but no evidence of change of name was provided.
-          name_change_document_illegible: The evidence of change of name is illegible.
+          name_change_document_illegible: The evidence of change of name is illegible or in a format that we cannot accept.
           duplicate_application: There’s already another in-flight application for this applicant.
           applicant_already_qts: The applicant already holds QTS and induction exemption.
           teaching_qualifications_from_ineligible_country: Teaching qualifications were completed in an ineligible country.
           teaching_qualifications_not_at_required_level: Teaching qualifications do not meet the required academic level.
           not_qualified_to_teach_mainstream: Applicant is not qualified to teach in mainstream education.
-          teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible.
-          teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible.
-          degree_certificate_illegible: The university degree certificate (or translation) is illegible.
-          degree_transcript_illegible: University degree transcript (or translation) is illegible.
+          teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
+          teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
+          degree_certificate_illegible: The university degree certificate (or translation) is illegible or in a format that we cannot accept.
+          degree_transcript_illegible: University degree transcript (or translation) is illegible or in a format that we cannot accept.
           application_and_qualification_names_do_not_match: The name on the online application form is different from 1 or more qualification documents, but no evidence of change of name was provided.
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
@@ -118,7 +118,7 @@ en:
           age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
           registration_number: We could not verify the registration number using the online checker.
-          written_statement_illegible: The letter from the country or state’s authority is illegible.
+          written_statement_illegible: The letter from the country or state’s authority is illegible or in a format that we cannot accept.
           written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
           authorisation_to_teach: Sanctions or restrictions were detected on professional record.
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
