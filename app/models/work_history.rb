@@ -25,8 +25,6 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
 class WorkHistory < ApplicationRecord
-  include ApplicationFormStatusUpdatable
-
   belongs_to :application_form
 
   scope :ordered, -> { order(start_date: :desc, created_at: :desc) }

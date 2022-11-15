@@ -107,16 +107,22 @@ module TeacherInterface
 
     def delete
       @work_history = work_history
+      @delete_work_history_form = DeleteWorkHistoryForm.new
     end
 
     def destroy
-      if ActiveModel::Type::Boolean.new.cast(
-           params.dig(:work_history, :confirm),
-         )
-        work_history.destroy!
-      end
+      @delete_work_history_form =
+        DeleteWorkHistoryForm.new(
+          confirm:
+            params.dig(:teacher_interface_delete_work_history_form, :confirm),
+          work_history:,
+        )
 
-      redirect_to update_success_path
+      if @delete_work_history_form.save(validate: true)
+        redirect_to update_success_path
+      else
+        render :delete, status: :unprocessable_entity
+      end
     end
 
     private

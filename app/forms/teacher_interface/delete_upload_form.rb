@@ -9,10 +9,9 @@ module TeacherInterface
     validates :upload, presence: true, if: :confirm
 
     def update_model
-      if confirm
-        upload.attachment.purge
-        upload.destroy!
-      end
+      upload.destroy! if confirm
     end
+
+    delegate :application_form, to: :upload
   end
 end

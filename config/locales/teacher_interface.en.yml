@@ -126,10 +126,18 @@ en:
           attributes:
             add_another:
               inclusion: Select whether you need to upload another page
+        teacher_interface/delete_qualification_form:
+          attributes:
+            confirm:
+              inclusion: Select whether you want to delete this qualification
         teacher_interface/delete_upload_form:
           attributes:
             confirm:
               inclusion: Select whether you want to delete this file
+        teacher_interface/delete_work_history_form:
+          attributes:
+            confirm:
+              inclusion: Select whether you want to delete this work history
         teacher_interface/has_work_history_form:
           attributes:
             has_work_history:

@@ -48,6 +48,8 @@ module TeacherInterface
       )
     end
 
+    delegate :application_form, to: :work_history
+
     private
 
     def country_code
