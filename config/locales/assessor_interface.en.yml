@@ -1,5 +1,9 @@
 en:
   assessor_interface:
+    age_range_subjects:
+      edit:
+        title: Verify age range and subjects
+
     application_forms:
       index:
         title: Applications
@@ -138,6 +142,13 @@ en:
           attributes:
             text:
               blank: Enter the note
+        assessor_interface/age_range_subjects_form:
+          age_range_min:
+            blank: Enter the from age
+          age_range_max:
+            blank: Enter the to age
+          subject_1:
+            blank: Enter the subject
         assessor_interface/assessor_assignment_form:
           attributes:
             assessor_id:
@@ -151,8 +162,6 @@ en:
               blank: You must confirm that you have reviewed this QTS application
         assessor_interface/assessment_section_form:
           attributes:
-            subject_1:
-              blank: Enter the subject
             selected_failure_reasons:
               blank: Select the reasons for your recommendation
             passed:

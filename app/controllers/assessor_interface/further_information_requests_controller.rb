@@ -49,12 +49,22 @@ module AssessorInterface
         )
 
       if @further_information_request_form.save
-        redirect_to [
-                      :edit,
-                      :assessor_interface,
-                      view_object.application_form,
-                      view_object.assessment,
-                    ]
+        if view_object.assessment.can_award?
+          redirect_to [
+                        :edit,
+                        :assessor_interface,
+                        view_object.application_form,
+                        view_object.assessment,
+                        :age_range_subjects,
+                      ]
+        else
+          redirect_to [
+                        :edit,
+                        :assessor_interface,
+                        view_object.application_form,
+                        view_object.assessment,
+                      ]
+        end
       else
         render :edit, status: :unprocessable_entity
       end

@@ -48,10 +48,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
       return nil unless assessment.sections_finished?
 
       if item == :initial_assessment && assessment_editable?
-        url_helpers.edit_assessor_interface_application_form_assessment_path(
-          application_form,
-          assessment,
-        )
+        if assessment.can_award?
+          url_helpers.edit_assessor_interface_application_form_assessment_age_range_subjects_path(
+            application_form,
+            assessment,
+          )
+        else
+          url_helpers.edit_assessor_interface_application_form_assessment_path(
+            application_form,
+            assessment,
+          )
+        end
       end
     when :further_information
       further_information_request = further_information_requests[index]

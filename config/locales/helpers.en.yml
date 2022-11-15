@@ -27,6 +27,14 @@ en:
       work_history:
         add_another: You can use the next section to tell us about additional work history.
     label:
+      assessor_interface_age_range_subjects_form:
+        age_range_min: From
+        age_range_max: To
+        age_range_note: If you've entered a new range please explain why (optional)
+        subject_1: Subject 1
+        subject_2: Subject 2 (optional)
+        subject_3: Subject 3 (optional)
+        subjects_note: If you've edited the subjects please explain why (optional)
       assessor_interface_assessment_recommendation_form:
         recommendation_options:
           award: Award QTS
@@ -38,13 +46,6 @@ en:
       assessor_interface_create_note_form:
         text: Add a note to this application
       assessor_interface_assessment_section_form:
-        age_range_min: From
-        age_range_max: To
-        age_range_note: If you've entered a new range please explain why (optional)
-        subject_1: Subject 1
-        subject_2: Subject 2 (optional)
-        subject_3: Subject 3 (optional)
-        subjects_note: If you've edited the subjects please explain why (optional)
         failure_reason_notes: "Note to the applicant"
         failure_reason_notes_decline: "Note to the applicant (optional)"
       assessor_interface_filter_form:

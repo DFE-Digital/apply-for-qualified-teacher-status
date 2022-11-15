@@ -22,6 +22,13 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     and_i_see_the_check_your_answers_items
 
     when_i_mark_the_section_as_complete
+    then_i_see_the(
+      :verify_age_range_subjects_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_fill_in_age_range_and_subjects
     then_i_see_the(:complete_assessment_page, application_id:)
     and_i_see_an_award_qts_option
   end
@@ -66,6 +73,19 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     )
 
     expect(rows.second.key.text).to eq("Upload your identity document")
+  end
+
+  def when_i_fill_in_age_range_and_subjects
+    verify_age_range_subjects_page.form.age_range_minimum.fill_in with: "7"
+    verify_age_range_subjects_page.form.age_range_maximum.fill_in with: "11"
+    verify_age_range_subjects_page.form.age_range_note.fill_in with: "A note."
+
+    verify_age_range_subjects_page.form.subjects_first_field.fill_in with:
+      "Physics"
+    verify_age_range_subjects_page.form.subjects_note_textarea.fill_in with:
+      "Another note."
+
+    verify_age_range_subjects_page.form.continue_button.click
   end
 
   def when_i_mark_the_section_as_complete

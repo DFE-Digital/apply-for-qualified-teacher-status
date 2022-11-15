@@ -40,6 +40,7 @@ Rails.application.routes.draw do
               to: "further_information_requests#preview",
               on: :collection
         end
+        resource :age_range_subjects, only: %i[edit update]
       end
     end
   end
