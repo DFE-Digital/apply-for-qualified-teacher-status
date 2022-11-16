@@ -22,14 +22,31 @@ class AssessorInterface::FurtherInformationRequestViewObject
   delegate :assessment, to: :further_information_request
   delegate :application_form, to: :assessment
 
-  def check_your_answers_fields
+  def review_items
     further_information_request
       .items
       .order(:created_at)
-      .each_with_object({}) do |item, memo|
-        memo[item.id] = {
-          title: item_text(item),
-          value: item.text? ? item.response : item.document,
+      .map do |item|
+        {
+          heading:
+            I18n.t(
+              "assessor_interface.assessment_sections.show.failure_reasons.#{item.failure_reason_key}",
+            ),
+          description: item.failure_reason_assessor_feedback,
+          check_your_answers: {
+            id: "further-information-requested-#{item.id}",
+            model: item,
+            title:
+              I18n.t(
+                "assessor_interface.further_information_requests.edit.check_your_answers",
+              ),
+            fields: {
+              item.id => {
+                title: item_text(item),
+                value: item.text? ? item.response : item.document,
+              },
+            },
+          },
         }
       end
   end
