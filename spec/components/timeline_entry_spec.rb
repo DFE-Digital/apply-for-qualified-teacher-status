@@ -139,4 +139,33 @@ RSpec.describe TimelineEntry::Component, type: :component do
       expect(component.text).to include(creator.name)
     end
   end
+
+  context "age range subjects verified" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :age_range_subjects_verified,
+        assessment:
+          create(
+            :assessment,
+            age_range_min: 7,
+            age_range_max: 11,
+            age_range_note: "Age range note.",
+            subjects: %w[ancient_hebrew],
+            subjects_note: "Subjects note.",
+          ),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("Age range: 7 to 11")
+      expect(component.text).to include("Age range note.")
+      expect(component.text).to include("Subjects: Ancient Hebrew")
+      expect(component.text).to include("Subjects note.")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
 end

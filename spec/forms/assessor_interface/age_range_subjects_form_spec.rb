@@ -72,10 +72,16 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
 
         expect(assessment.age_range_min).to eq(7)
         expect(assessment.age_range_max).to eq(11)
-        expect(assessment.age_range_note).to be_nil
+        expect(assessment.age_range_note).to be_blank
 
         expect(assessment.subjects).to eq(%w[Subject])
-        expect(assessment.subjects_note).to be_nil
+        expect(assessment.subjects_note).to be_blank
+      end
+
+      it "creates a timeline event" do
+        timeline_events = TimelineEvent.age_range_subjects_verified
+        expect { save }.to change(timeline_events, :count).by(1)
+        expect(timeline_events.last.assessment).to eq(assessment)
       end
     end
 
@@ -96,12 +102,14 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
       it "sets the attributes" do
         save # rubocop:disable Rails/SaveBang
 
-        expect(assessment.age_range_note.text).to eq(
-          "Age range changed: A note.",
-        )
-        expect(assessment.subjects_note.text).to eq(
-          "Subjects changed: Another note.",
-        )
+        expect(assessment.age_range_note).to eq("A note.")
+        expect(assessment.subjects_note).to eq("Another note.")
+      end
+
+      it "creates a timeline event" do
+        timeline_events = TimelineEvent.age_range_subjects_verified
+        expect { save }.to change(timeline_events, :count).by(1)
+        expect(timeline_events.last.assessment).to eq(assessment)
       end
     end
   end

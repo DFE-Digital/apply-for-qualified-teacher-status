@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_09_101125) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_15_154840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,13 +106,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_101125) do
     t.datetime "updated_at", null: false
     t.integer "age_range_min"
     t.integer "age_range_max"
-    t.bigint "age_range_note_id"
     t.text "subjects", default: [], null: false, array: true
-    t.bigint "subjects_note_id"
     t.date "recommended_at"
-    t.index ["age_range_note_id"], name: "index_assessments_on_age_range_note_id"
+    t.text "age_range_note", default: "", null: false
+    t.text "subjects_note", default: "", null: false
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
-    t.index ["subjects_note_id"], name: "index_assessments_on_subjects_note_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -306,7 +304,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_101125) do
     t.bigint "further_information_request_id"
     t.string "creator_name", default: "", null: false
     t.string "mailer_action_name", default: "", null: false
+    t.bigint "assessment_id"
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
+    t.index ["assessment_id"], name: "index_timeline_events_on_assessment_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
     t.index ["further_information_request_id"], name: "index_timeline_events_on_further_information_request_id"
@@ -345,8 +345,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_101125) do
   add_foreign_key "application_forms", "teachers"
   add_foreign_key "assessment_sections", "assessments"
   add_foreign_key "assessments", "application_forms"
-  add_foreign_key "assessments", "notes", column: "age_range_note_id"
-  add_foreign_key "assessments", "notes", column: "subjects_note_id"
   add_foreign_key "dqt_trn_requests", "application_forms"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "notes", "application_forms"
@@ -355,6 +353,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_101125) do
   add_foreign_key "regions", "countries"
   add_foreign_key "timeline_events", "application_forms"
   add_foreign_key "timeline_events", "assessment_sections"
+  add_foreign_key "timeline_events", "assessments"
   add_foreign_key "timeline_events", "further_information_requests"
   add_foreign_key "timeline_events", "notes"
   add_foreign_key "timeline_events", "staff", column: "assignee_id"

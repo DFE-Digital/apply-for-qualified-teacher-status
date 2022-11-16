@@ -31,6 +31,7 @@ class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSec
     ActiveRecord::Base.transaction do
       update_age_range
       update_subjects
+      create_timeline_event
       super
     end
 
@@ -43,11 +44,11 @@ class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSec
       super.merge(
         age_range_min: assessment.age_range_min,
         age_range_max: assessment.age_range_max,
-        age_range_note: assessment.age_range_note&.text,
+        age_range_note: assessment.age_range_note,
         subject_1: assessment.subjects.first,
         subject_2: assessment.subjects.second,
         subject_3: assessment.subjects.third,
-        subjects_note: assessment.subjects_note&.text,
+        subjects_note: assessment.subjects_note,
       )
     end
 
@@ -69,30 +70,23 @@ class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSec
   private
 
   def update_age_range
-    note_text =
-      age_range_note.present? ? "Age range changed: #{age_range_note}" : ""
-
-    note = find_or_create_note(assessment.age_range_note, note_text)
+    note = age_range_note.presence || ""
     assessment.update!(age_range_min:, age_range_max:, age_range_note: note)
   end
 
   def update_subjects
-    note_text =
-      subjects_note.present? ? "Subjects changed: #{subjects_note}" : ""
     subjects = [subject_1, subject_2, subject_3].compact_blank
-
-    note = find_or_create_note(assessment.subjects_note, note_text)
+    note = subjects_note.presence || ""
     assessment.update!(subjects:, subjects_note: note)
   end
 
-  def find_or_create_note(existing_note, new_text)
-    if new_text != existing_note&.text
-      if new_text.present?
-        CreateNote.call(application_form:, author: user, text: new_text)
-      end
-    else
-      existing_note
-    end
+  def create_timeline_event
+    TimelineEvent.create!(
+      creator: user,
+      event_type: :age_range_subjects_verified,
+      application_form:,
+      assessment:,
+    )
   end
 
   def assessment

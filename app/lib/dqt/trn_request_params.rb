@@ -63,7 +63,7 @@ module DQT
     end
 
     def subjects
-      assessment.subjects.map { |id| Subject.for_id(id.to_sym) }
+      assessment.subjects.map { |id| Subject.for_id(id) }
     end
 
     def teaching_qualification

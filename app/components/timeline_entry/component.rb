@@ -84,5 +84,17 @@ module TimelineEntry
           I18n.t("mailer.teacher.#{timeline_event.mailer_action_name}.subject"),
       }
     end
+
+    def age_range_subjects_verified_vars
+      assessment = timeline_event.assessment
+
+      {
+        age_range_min: assessment.age_range_min,
+        age_range_max: assessment.age_range_max,
+        age_range_note: assessment.age_range_note,
+        subjects: Subject.find(assessment.subjects).map(&:name).join(", "),
+        subjects_note: assessment.subjects_note,
+      }
+    end
   end
 end
