@@ -4,14 +4,14 @@
 #
 # Table name: further_information_request_items
 #
-#  id                             :bigint           not null, primary key
-#  assessor_notes                 :text
-#  failure_reason                 :string           default(""), not null
-#  information_type               :string
-#  response                       :text
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  further_information_request_id :bigint
+#  id                               :bigint           not null, primary key
+#  failure_reason_assessor_feedback :text
+#  failure_reason_key               :string           default(""), not null
+#  information_type                 :string
+#  response                         :text
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  further_information_request_id   :bigint
 #
 # Indexes
 #
@@ -33,7 +33,7 @@ class FurtherInformationRequestItem < ApplicationRecord
 
   def is_teaching_qualification?
     %w[teaching_certificate_illegible teaching_transcript_illegible].include?(
-      failure_reason,
+      failure_reason_key,
     )
   end
 end

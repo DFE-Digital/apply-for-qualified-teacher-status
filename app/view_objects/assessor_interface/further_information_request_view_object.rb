@@ -42,7 +42,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
     case item.information_type
     when "text"
       I18n.t(
-        "teacher_interface.further_information_request.show.failure_reason.#{item.failure_reason}",
+        "teacher_interface.further_information_request.show.failure_reason.#{item.failure_reason_key}",
       )
     when "document"
       "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"

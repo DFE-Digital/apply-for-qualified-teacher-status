@@ -17,9 +17,9 @@
     - has_work_history
     - subjects
   :further_information_requests:
-    - failure_reason
+    - failure_assessor_note
   :further_information_request_items:
-    - assessor_notes
+    - failure_reason_assessor_feedback
     - response
   :notes:
     - text

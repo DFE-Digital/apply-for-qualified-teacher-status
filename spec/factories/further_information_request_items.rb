@@ -4,14 +4,14 @@
 #
 # Table name: further_information_request_items
 #
-#  id                             :bigint           not null, primary key
-#  assessor_notes                 :text
-#  failure_reason                 :string           default(""), not null
-#  information_type               :string
-#  response                       :text
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  further_information_request_id :bigint
+#  id                               :bigint           not null, primary key
+#  failure_reason_assessor_feedback :text
+#  failure_reason_key               :string           default(""), not null
+#  information_type                 :string
+#  response                         :text
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  further_information_request_id   :bigint
 #
 # Indexes
 #
@@ -20,15 +20,16 @@
 FactoryBot.define do
   factory :further_information_request_item do
     association :further_information_request
-    assessor_notes { Faker::Lorem.paragraph }
+    failure_reason_assessor_feedback { Faker::Lorem.paragraph }
 
     trait :with_text_response do
       information_type { "text" }
-      failure_reason { "qualifications_dont_match_subjects" }
+      failure_reason_key { "qualifications_dont_match_subjects" }
     end
 
     trait :with_document_response do
       information_type { "document" }
+      failure_reason_key { "identification_document_illegible" }
 
       after(:create) do |item|
         create(:document, :identification_document, documentable: item)

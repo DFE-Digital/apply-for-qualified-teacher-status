@@ -40,8 +40,8 @@ RSpec.describe FurtherInformationRequestItemsFactory do
 
       it "has attributes" do
         expect(item).to be_document
-        expect(item.failure_reason).to eq("identification_document_expired")
-        expect(item.assessor_notes).to eq("Expired.")
+        expect(item.failure_reason_key).to eq("identification_document_expired")
+        expect(item.failure_reason_assessor_feedback).to eq("Expired.")
         expect(item.document.identification?).to be true
       end
     end
@@ -51,8 +51,10 @@ RSpec.describe FurtherInformationRequestItemsFactory do
 
       it "has attributes" do
         expect(item).to be_text
-        expect(item.failure_reason).to eq("qualifications_dont_match_subjects")
-        expect(item.assessor_notes).to eq("Subjects.")
+        expect(item.failure_reason_key).to eq(
+          "qualifications_dont_match_subjects",
+        )
+        expect(item.failure_reason_assessor_feedback).to eq("Subjects.")
       end
     end
   end

@@ -5,7 +5,7 @@ module PageObjects
 
       element :back_link, ".govuk-back-link"
       element :heading, ".govuk-heading-l"
-      element :assessor_notes, ".govuk-inset-text"
+      element :feedback, ".govuk-inset-text"
 
       section :form, "form" do
         element :response_textarea, ".govuk-textarea"

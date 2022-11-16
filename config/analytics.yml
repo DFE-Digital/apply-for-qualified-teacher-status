@@ -137,9 +137,9 @@
     - created_at
     - updated_at
     - further_information_request_id
-    - assessor_notes
+    - failure_reason_key
+    - failure_reason_assessor_feedback
     - response
-    - failure_reason
   :notes:
     - id
     - application_form_id

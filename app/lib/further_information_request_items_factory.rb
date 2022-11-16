@@ -20,24 +20,30 @@ class FurtherInformationRequestItemsFactory
   def build_further_information_request_items(assessment_section)
     assessment_section
       .selected_failure_reasons
-      .map do |failure_reason, assessor_notes|
-      build_further_information_request_item(failure_reason, assessor_notes)
+      .map do |failure_reason_key, failure_reason_assessor_feedback|
+      build_further_information_request_item(
+        failure_reason_key,
+        failure_reason_assessor_feedback,
+      )
     end
   end
 
-  def build_further_information_request_item(failure_reason, assessor_notes)
-    if (document_type = DOCUMENT_FAILURE_REASONS[failure_reason]).present?
+  def build_further_information_request_item(
+    failure_reason_key,
+    failure_reason_assessor_feedback
+  )
+    if (document_type = DOCUMENT_FAILURE_REASONS[failure_reason_key]).present?
       FurtherInformationRequestItem.new(
         information_type: :document,
-        failure_reason:,
-        assessor_notes:,
+        failure_reason_key:,
+        failure_reason_assessor_feedback:,
         document: Document.new(document_type:),
       )
     else
       FurtherInformationRequestItem.new(
         information_type: :text,
-        failure_reason:,
-        assessor_notes:,
+        failure_reason_key:,
+        failure_reason_assessor_feedback:,
       )
     end
   end
