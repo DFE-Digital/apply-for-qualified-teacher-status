@@ -56,15 +56,8 @@ module TimelineEntry
       section = timeline_event.assessment_section
       {
         section_name: section.key.titleize,
-        section_state:
-          render(
-            ApplicationFormStatusTag::Component.new(
-              key: timeline_event.id,
-              status: timeline_event.new_state,
-              class_context: "timeline-event",
-              context: :assessor,
-            ),
-          ),
+        section_state: timeline_event.new_state,
+        failure_reasons: section.selected_failure_reasons,
       }
     end
 

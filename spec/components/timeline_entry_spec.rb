@@ -74,16 +74,30 @@ RSpec.describe TimelineEntry::Component, type: :component do
   end
 
   context "assessment section recorded" do
+    let(:assessment_section) do
+      create(
+        :assessment_section,
+        :personal_information,
+        :failed,
+        selected_failure_reasons: {
+          identification_document_expired: "A note.",
+        },
+      )
+    end
     let(:timeline_event) do
       create(
         :timeline_event,
         :assessment_section_recorded,
         new_state: "completed",
+        assessment_section:,
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include("Personal Information: Completed")
+      expect(component.text).to include("Personal Information:")
+      expect(component.text).to include("Completed")
+      expect(component.text).to include("The ID document has expired.")
+      expect(component.text).to include("A note.")
     end
 
     it "attributes to the creator" do
