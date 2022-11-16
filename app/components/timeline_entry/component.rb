@@ -66,8 +66,11 @@ module TimelineEntry
     end
 
     def further_information_request_assessed_vars
+      further_information_request = timeline_event.further_information_request
       {
-        further_information_request: timeline_event.further_information_request,
+        passed: further_information_request.passed,
+        failure_assessor_note:
+          further_information_request.failure_assessor_note,
       }
     end
 
