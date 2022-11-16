@@ -6,6 +6,17 @@ Your reference number is:
 
 <%= @reference %>
 
+<%- if @further_information_requested -%>
+Unfortunately, we’re unable to award QTS status.
+
+# What you can do next
+
+While your QTS application was declined this time, you can make a new application in future.
+
+If you choose to reapply, it’s important to make sure that you’re able to provide all of the information and documents required. 
+
+You can sign in to explore other routes to teaching in England:
+<%- else -%>
 Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application.
 
 Unfortunately, we’re unable to award QTS status.
@@ -13,6 +24,7 @@ Unfortunately, we’re unable to award QTS status.
 # Why your QTS application was declined
 
 You can sign in to view the reason why your application was declined:
+<%- end -%>
 
 <%= new_teacher_session_url %>
 

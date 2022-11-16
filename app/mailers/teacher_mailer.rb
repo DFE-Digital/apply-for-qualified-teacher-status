@@ -7,6 +7,7 @@ class TeacherMailer < ApplicationMailer
                   application_received
                   further_information_received
                 ]
+  before_action :set_further_information_requested, only: :application_declined
   after_action :store_observer_metadata
 
   GOVUK_NOTIFY_TEMPLATE_ID =
@@ -58,12 +59,24 @@ class TeacherMailer < ApplicationMailer
   private
 
   def set_name
-    application_form = params[:teacher].application_form
     @name = "#{application_form.given_names} #{application_form.family_name}"
   end
 
   def set_reference
     @reference = params[:teacher].application_form.reference
+  end
+
+  def set_further_information_requested
+    @further_information_requested =
+      assessment.further_information_requests.any?
+  end
+
+  def application_form
+    params[:teacher].application_form
+  end
+
+  def assessment
+    application_form.assessment
   end
 
   def store_observer_metadata
