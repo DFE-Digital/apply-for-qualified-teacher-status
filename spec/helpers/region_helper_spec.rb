@@ -8,7 +8,11 @@ RSpec.describe RegionHelper do
 
     let(:region) { build(:region, country: build(:country, code: "FR")) }
 
-    it { is_expected.to eq("a <span lang=\"FR\">certificate</span>") }
+    it do
+      is_expected.to eq(
+        "a <span lang=\"FR\">letter that proves you’re recognised as a teacher</span>",
+      )
+    end
 
     context "with a region certificate" do
       before { region.teaching_authority_certificate = "region certificate" }
