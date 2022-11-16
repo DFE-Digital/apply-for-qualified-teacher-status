@@ -15,3 +15,5 @@ class TeacherMailerObserver
     )
   end
 end
+
+ActionMailer::Base.register_observer(TeacherMailerObserver)

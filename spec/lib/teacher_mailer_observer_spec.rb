@@ -20,4 +20,14 @@ RSpec.describe TeacherMailerObserver do
     expect(timeline_event.application_form).to eq(application_form)
     expect(timeline_event.mailer_action_name).to eq("application_received")
   end
+
+  it "is called when an email is sent" do
+    application_form = create(:application_form, :submitted)
+    message =
+      TeacherMailer.with(teacher: application_form.teacher).application_received
+
+    expect(TeacherMailerObserver).to receive(:delivered_email).with(message)
+
+    message.deliver_now
+  end
 end
