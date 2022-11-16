@@ -24,9 +24,7 @@ class UpdateAssessmentRecommendation
         ChangeApplicationFormState.call(application_form:, user:, new_state:)
       end
 
-      if assessment.decline?
-        TeacherMailer.with(teacher:).application_declined.deliver_later
-      end
+      send_decline_email if assessment.decline?
 
       CreateDQTTRNRequest.call(application_form:) if assessment.award?
 
@@ -45,5 +43,9 @@ class UpdateAssessmentRecommendation
     return "awarded_pending_checks" if assessment.award?
     return "declined" if assessment.decline?
     nil
+  end
+
+  def send_decline_email
+    TeacherMailer.with(teacher:).application_declined.deliver_later
   end
 end
