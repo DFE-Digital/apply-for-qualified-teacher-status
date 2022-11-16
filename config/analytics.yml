@@ -130,7 +130,7 @@
     - updated_at
     - assessment_id
     - passed
-    - failure_reason
+    - failure_assessor_note
   :further_information_request_items:
     - id
     - information_type

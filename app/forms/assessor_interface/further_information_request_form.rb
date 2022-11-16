@@ -10,8 +10,8 @@ class AssessorInterface::FurtherInformationRequestForm
   attribute :passed, :boolean
   validates :passed, inclusion: [true, false]
 
-  attribute :failure_reason, :string
-  validates :failure_reason, presence: true, if: -> { passed == false }
+  attribute :failure_assessor_note, :string
+  validates :failure_assessor_note, presence: true, if: -> { passed == false }
 
   def save
     return false unless valid?
@@ -21,7 +21,7 @@ class AssessorInterface::FurtherInformationRequestForm
       user:,
       params: {
         passed:,
-        failure_reason:,
+        failure_assessor_note:,
       },
     )
 
