@@ -9,7 +9,12 @@ class FurtherInformationRequestExpirer
   end
 
   def call
-    further_information_request.expired! if expire_request?
+    if expire_request?
+      ActiveRecord::Base.transaction do
+        decline_application
+        further_information_request.expired!
+      end
+    end
 
     further_information_request
   end
@@ -31,5 +36,13 @@ class FurtherInformationRequestExpirer
     return 4.weeks.ago if FOUR_WEEK_COUNTRY_CODES.include?(country.code)
 
     6.weeks.ago
+  end
+
+  def decline_application
+    UpdateAssessmentRecommendation.call(
+      assessment:,
+      user: "Expirer",
+      new_recommendation: "decline",
+    )
   end
 end

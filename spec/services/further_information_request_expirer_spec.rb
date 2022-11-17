@@ -4,13 +4,16 @@ require "rails_helper"
 
 RSpec.describe FurtherInformationRequestExpirer do
   describe ".call" do
+    let(:application_form) { create(:application_form, :submitted, region:) }
+    let(:assessment) { create(:assessment, application_form:) }
+    let(:further_information_request) do
+      create(:further_information_request, created_at:, assessment:)
+    end
+    let(:region) { create(:region, :in_country, country_code: "FR") }
+
     subject { described_class.call(further_information_request:) }
 
     context "with requested FI request" do
-      let(:further_information_request) do
-        create(:further_information_request, created_at:)
-      end
-
       context "when less than six weeks old" do
         let(:created_at) { (6.weeks - 1.hour).ago }
 
@@ -21,17 +24,16 @@ RSpec.describe FurtherInformationRequestExpirer do
         let(:created_at) { (6.weeks + 1.hour).ago }
 
         it { is_expected.to be_expired }
+
+        it "declines the application" do
+          expect(subject.assessment.application_form).to be_declined
+        end
       end
 
       context "when the applicant is from a country with a 4 week expiry" do
         # Australia, Canada, Gibraltar, New Zealand, US
         %w[AU CA GI NZ US].each do |country_code|
           context "from country_code #{country_code}" do
-            let(:further_information_request) do
-              create(:further_information_request, created_at:, assessment:)
-            end
-            let(:application_form) { create(:application_form, region:) }
-            let(:assessment) { create(:assessment, application_form:) }
             let(:region) { create(:region, :in_country, country_code:) }
 
             context "when it is less than four weeks old" do
@@ -44,6 +46,10 @@ RSpec.describe FurtherInformationRequestExpirer do
               let(:created_at) { (4.weeks + 1.hour).ago }
 
               it { is_expected.to be_expired }
+
+              it "declines the application" do
+                expect(subject.assessment.application_form).to be_declined
+              end
             end
           end
         end
