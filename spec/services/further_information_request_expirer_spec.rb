@@ -1,0 +1,69 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+RSpec.describe FurtherInformationRequestExpirer do
+  describe ".call" do
+    subject { described_class.call(further_information_request:) }
+
+    context "with requested FI request" do
+      let(:further_information_request) do
+        create(:further_information_request, created_at:)
+      end
+
+      context "when less than six weeks old" do
+        let(:created_at) { (6.weeks - 1.hour).ago }
+
+        it { is_expected.to be_requested }
+      end
+
+      context "when it is more than six weeks old" do
+        let(:created_at) { (6.weeks + 1.hour).ago }
+
+        it { is_expected.to be_expired }
+      end
+
+      context "when the applicant is from a country with a 4 week expiry" do
+        # Australia, Canada, Gibraltar, New Zealand, US
+        %w[AU CA GI NZ US].each do |country_code|
+          context "from country_code #{country_code}" do
+            let(:further_information_request) do
+              create(:further_information_request, created_at:, assessment:)
+            end
+            let(:application_form) { create(:application_form, region:) }
+            let(:assessment) { create(:assessment, application_form:) }
+            let(:region) { create(:region, :in_country, country_code:) }
+
+            context "when it is less than four weeks old" do
+              let(:created_at) { (4.weeks - 1.hour).ago }
+
+              it { is_expected.to be_requested }
+            end
+
+            context "when it is more than four weeks old from #{country_code}" do
+              let(:created_at) { (4.weeks + 1.hour).ago }
+
+              it { is_expected.to be_expired }
+            end
+          end
+        end
+      end
+    end
+
+    context "with any received FI request" do
+      let(:further_information_request) do
+        create(:further_information_request, :received, created_at: 1.year.ago)
+      end
+
+      it { is_expected.to be_received }
+    end
+
+    context "with any expired FI request" do
+      let(:further_information_request) do
+        create(:further_information_request, :expired, created_at: 1.year.ago)
+      end
+
+      it { is_expected.to be_expired }
+    end
+  end
+end

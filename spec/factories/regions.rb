@@ -67,5 +67,10 @@ FactoryBot.define do
       teaching_authority_emails { [Faker::Internet.email] }
       teaching_authority_websites { [Faker::Internet.url] }
     end
+
+    trait :in_country do
+      transient { country_code { "" } }
+      country { Country.find_or_create_by(code: country_code) }
+    end
   end
 end
