@@ -23,7 +23,7 @@ class FurtherInformationRequest < ApplicationRecord
            dependent: :destroy
 
   enum :state,
-       { requested: "requested", received: "received" },
+       { requested: "requested", received: "received", expired: "expired" },
        default: :requested
 
   def failed

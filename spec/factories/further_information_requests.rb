@@ -39,6 +39,10 @@ FactoryBot.define do
       failure_assessor_note { "Notes." }
     end
 
+    trait :expired do
+      state { "expired" }
+    end
+
     trait :with_items do
       after(:create) do |further_information_request, _evaluator|
         create(
