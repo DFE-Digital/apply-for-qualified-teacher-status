@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_15_154840) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_16_002149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -169,12 +169,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_15_154840) do
 
   create_table "further_information_request_items", force: :cascade do |t|
     t.bigint "further_information_request_id"
-    t.text "assessor_notes"
+    t.text "failure_reason_assessor_feedback"
     t.string "information_type"
     t.text "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "failure_reason", default: "", null: false
+    t.string "failure_reason_key", default: "", null: false
     t.index ["further_information_request_id"], name: "index_fi_request_items_on_fi_request_id"
   end
 
@@ -185,7 +185,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_15_154840) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "passed"
-    t.string "failure_reason", default: "", null: false
+    t.string "failure_assessor_note", default: "", null: false
     t.index ["assessment_id"], name: "index_further_information_requests_on_assessment_id"
   end
 

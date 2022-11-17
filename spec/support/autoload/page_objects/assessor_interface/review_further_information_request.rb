@@ -5,7 +5,7 @@ module PageObjects
                 "/further-information-requests/{further_information_request_id}/edit"
 
       element :heading, ".govuk-heading-xl"
-      section :summary_list, GovukSummaryList, ".govuk-summary-list"
+      sections :summary_lists, GovukSummaryList, ".govuk-summary-list"
 
       section :form, "form" do
         section :yes_radio_item,

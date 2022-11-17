@@ -70,9 +70,9 @@ RSpec.describe "Assessor requesting further information", type: :system do
     expect(request_further_information_page.items.first.heading.text).to eq(
       "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
     )
-    expect(
-      request_further_information_page.items.first.assessor_notes.text,
-    ).to eq("A note.")
+    expect(request_further_information_page.items.first.feedback.text).to eq(
+      "A note.",
+    )
   end
 
   def when_i_click_continue_to_email_button

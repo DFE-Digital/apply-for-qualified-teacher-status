@@ -215,5 +215,5 @@ en:
           attributes:
             passed:
               inclusion: Select whether the applicant completed this section to your satisfaction
-            failure_reason:
+            failure_assessor_note:
               blank: Enter why this section is not completed to your satisfaction

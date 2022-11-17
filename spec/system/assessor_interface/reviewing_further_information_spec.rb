@@ -57,7 +57,8 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def and_i_see_the_check_your_answers_items
-    rows = review_further_information_request_page.summary_list.rows
+    rows =
+      review_further_information_request_page.summary_lists.flat_map(&:rows)
 
     expect(rows.count).to eq(2)
 

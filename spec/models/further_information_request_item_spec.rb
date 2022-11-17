@@ -2,14 +2,14 @@
 #
 # Table name: further_information_request_items
 #
-#  id                             :bigint           not null, primary key
-#  assessor_notes                 :text
-#  failure_reason                 :string           default(""), not null
-#  information_type               :string
-#  response                       :text
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  further_information_request_id :bigint
+#  id                               :bigint           not null, primary key
+#  failure_reason_assessor_feedback :text
+#  failure_reason_key               :string           default(""), not null
+#  information_type                 :string
+#  response                         :text
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  further_information_request_id   :bigint
 #
 # Indexes
 #
@@ -84,7 +84,7 @@ RSpec.describe FurtherInformationRequestItem do
     context "with a teaching failure reason" do
       before do
         further_information_request_item.update!(
-          failure_reason: "teaching_certificate_illegible",
+          failure_reason_key: "teaching_certificate_illegible",
         )
       end
 
@@ -94,7 +94,7 @@ RSpec.describe FurtherInformationRequestItem do
     context "with a degree failure reason" do
       before do
         further_information_request_item.update!(
-          failure_reason: "degree_certificate_illegible",
+          failure_reason_key: "degree_certificate_illegible",
         )
       end
 

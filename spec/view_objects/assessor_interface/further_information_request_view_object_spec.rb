@@ -20,7 +20,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
     }
   end
 
-  describe "#check_your_answers_fields" do
+  describe "#review_items" do
     let!(:text_item) do
       create(
         :further_information_request_item,
@@ -38,22 +38,44 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
       )
     end
 
-    subject(:check_your_answers_fields) do
-      view_object.check_your_answers_fields
-    end
+    subject(:review_items) { view_object.review_items }
 
     it do
       is_expected.to eq(
-        {
-          text_item.id => {
-            title: "Tell us more about the subjects you can teach",
-            value: text_item.response,
+        [
+          {
+            heading:
+              "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
+            description: text_item.failure_reason_assessor_feedback,
+            check_your_answers: {
+              id: "further-information-requested-#{text_item.id}",
+              model: text_item,
+              title: "Further information requested",
+              fields: {
+                text_item.id => {
+                  title: "Tell us more about the subjects you can teach",
+                  value: text_item.response,
+                },
+              },
+            },
           },
-          document_item.id => {
-            title: "Upload your identity document",
-            value: document_item.document,
+          {
+            heading:
+              "The ID document is illegible or in a format that we cannot accept.",
+            description: document_item.failure_reason_assessor_feedback,
+            check_your_answers: {
+              id: "further-information-requested-#{document_item.id}",
+              model: document_item,
+              title: "Further information requested",
+              fields: {
+                document_item.id => {
+                  title: "Upload your identity document",
+                  value: document_item.document,
+                },
+              },
+            },
           },
-        },
+        ],
       )
     end
   end

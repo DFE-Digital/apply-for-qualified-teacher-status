@@ -33,8 +33,8 @@ module AssessorInterface
           further_information_request: view_object.further_information_request,
           user: current_staff,
           passed: view_object.further_information_request.passed,
-          failure_reason:
-            view_object.further_information_request.failure_reason,
+          failure_assessor_note:
+            view_object.further_information_request.failure_assessor_note,
         )
     end
 
@@ -108,7 +108,7 @@ module AssessorInterface
     def further_information_request_form
       params.require(
         :assessor_interface_further_information_request_form,
-      ).permit(:passed, :failure_reason)
+      ).permit(:passed, :failure_assessor_note)
     end
   end
 end

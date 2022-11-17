@@ -5,7 +5,7 @@ module PageObjects
 
       sections :items, ".app-further-information-request-item" do
         element :heading, ".govuk-heading-s"
-        element :assessor_notes, ".govuk-inset-text"
+        element :feedback, ".govuk-inset-text"
       end
 
       element :continue_button, ".govuk-button:not(.govuk-button--secondary)"

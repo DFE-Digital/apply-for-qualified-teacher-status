@@ -130,16 +130,16 @@
     - updated_at
     - assessment_id
     - passed
-    - failure_reason
+    - failure_assessor_note
   :further_information_request_items:
     - id
     - information_type
     - created_at
     - updated_at
     - further_information_request_id
-    - assessor_notes
+    - failure_reason_key
+    - failure_reason_assessor_feedback
     - response
-    - failure_reason
   :notes:
     - id
     - application_form_id

@@ -3,12 +3,11 @@
 
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
-<%= render(CheckYourAnswersSummary::Component.new(
-  id: "further-information-requested",
-  model: @view_object.further_information_request,
-  title: t(".check_your_answers"),
-  fields: @view_object.check_your_answers_fields
-)) %>
+<% @view_object.review_items.each do |item| %>
+  <h2 class="govuk-heading-m"><%= item.fetch(:heading) %></h2>
+  <%= govuk_inset_text(text: item.fetch(:description)) %>
+  <%= render(CheckYourAnswersSummary::Component.new(**item.fetch(:check_your_answers))) %>
+<% end %>
 
 <%= form_with model: @further_information_request_form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
@@ -16,7 +15,7 @@
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { size: "s" } do %>
     <%= f.govuk_radio_button :passed, :true, link_errors: true %>
     <%= f.govuk_radio_button :passed, :false do %>
-      <%= f.govuk_text_area :failure_reason %>
+      <%= f.govuk_text_area :failure_assessor_note %>
     <% end %>
   <% end %>
 

@@ -58,7 +58,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
         create(
           :further_information_request_item,
           further_information_request:,
-          assessor_notes: "A note",
+          failure_reason_assessor_feedback: "A note",
         )
       end
 

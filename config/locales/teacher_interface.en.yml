@@ -5,6 +5,7 @@ en:
         failure_reason:
           qualifications_dont_match_subjects: Tell us more about the subjects you can teach
           qualifications_dont_match_other_details: Tell us more about your qualifications
+          age_range: Tell us more about the age range you can teach
           satisfactory_evidence_work_history: Tell us more about your work history
           registration_number: Tell us your registration number
 

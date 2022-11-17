@@ -17,13 +17,13 @@ RSpec.describe AssessorInterface::FurtherInformationRequestForm, type: :model do
     context "when passed" do
       let(:attributes) { { passed: true } }
 
-      it { is_expected.to_not validate_presence_of(:failure_reason) }
+      it { is_expected.to_not validate_presence_of(:failure_assessor_note) }
     end
 
     context "when not passed" do
       let(:attributes) { { passed: false } }
 
-      it { is_expected.to validate_presence_of(:failure_reason) }
+      it { is_expected.to validate_presence_of(:failure_assessor_note) }
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestForm, type: :model do
     end
 
     context "with valid attributes" do
-      let(:attributes) { { passed: true, failure_reason: "" } }
+      let(:attributes) { { passed: true, failure_assessor_note: "" } }
 
       it "updates the application form" do
         expect { save }.to change(further_information_request, :passed).from(

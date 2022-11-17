@@ -55,7 +55,7 @@ en:
         passed_options:
           true: "Yes"
           false: "No"
-        failure_reason: Explain why this section is not completed to your satisfaction
+        failure_assessor_note: Explain why this section is not completed to your satisfaction
       qualification:
         add_another_options:
           true: "Yes"
