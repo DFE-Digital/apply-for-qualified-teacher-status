@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe TeacherMailer, type: :mailer do
   let(:teacher) { create(:teacher, email: "teacher@example.com") }
+  let(:assessment) { create(:assessment) }
 
   let!(:application_form) do
     create(
@@ -10,6 +11,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       reference: "abc",
       given_names: "First",
       family_name: "Last",
+      assessment:,
     )
   end
 
@@ -72,9 +74,30 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
+      it do
+        is_expected.to include(
+          "You can sign in to view the reason why your application was declined:",
+        )
+      end
     end
 
     include_examples "observer metadata", "application_declined"
+
+    context "further information requested" do
+      let(:assessment) do
+        create(:assessment, :with_further_information_request)
+      end
+
+      describe "#body" do
+        subject(:body) { mail.body.encoded }
+
+        it do
+          is_expected.to include(
+            "You can sign in to explore other routes to teaching in England:",
+          )
+        end
+      end
+    end
   end
 
   describe "#application_received" do
