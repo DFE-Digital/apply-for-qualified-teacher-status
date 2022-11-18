@@ -11,8 +11,10 @@ class FurtherInformationRequestExpirer
   def call
     if expire_request?
       ActiveRecord::Base.transaction do
-        decline_application
+        further_information_request.failure_assessor_note =
+          "Further information not supplied by deadline"
         further_information_request.expired!
+        decline_application
       end
     end
 
