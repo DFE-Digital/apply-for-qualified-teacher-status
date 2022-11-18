@@ -59,6 +59,8 @@ class TimelineEvent < ApplicationRecord
            "further_information_request_assessed",
          email_sent: "email_sent",
          age_range_subjects_verified: "age_range_subjects_verified",
+         further_information_request_expired:
+           "further_information_request_expired",
        }
   validates :event_type, inclusion: { in: event_types.values }
 
@@ -91,10 +93,17 @@ class TimelineEvent < ApplicationRecord
   belongs_to :further_information_request, optional: true
   validates :further_information_request,
             presence: true,
-            if: :further_information_request_assessed?
+            if: -> {
+              further_information_request_assessed? ||
+                further_information_request_expired?
+            }
+
   validates :further_information_request,
             absence: true,
-            unless: :further_information_request_assessed?
+            unless: -> {
+              further_information_request_assessed? ||
+                further_information_request_expired?
+            }
 
   validates :mailer_action_name, presence: true, if: :email_sent?
   validates :mailer_action_name, absence: true, unless: :email_sent?
