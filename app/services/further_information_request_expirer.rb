@@ -14,6 +14,7 @@ class FurtherInformationRequestExpirer
         further_information_request.failure_assessor_note =
           "Further information not supplied by deadline"
         further_information_request.expired!
+        create_timeline_event
         decline_application
       end
     end
@@ -45,6 +46,15 @@ class FurtherInformationRequestExpirer
       assessment:,
       user: "Expirer",
       new_recommendation: "decline",
+    )
+  end
+
+  def create_timeline_event
+    TimelineEvent.create!(
+      application_form:,
+      creator_name: "Expirer",
+      further_information_request:,
+      event_type: "further_information_request_expired",
     )
   end
 end

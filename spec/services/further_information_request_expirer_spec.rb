@@ -27,6 +27,12 @@ RSpec.describe FurtherInformationRequestExpirer do
       it "sets the failure_assessor_note" do
         expect(subject.failure_assessor_note).to eq(expected_assessor_note)
       end
+
+      it "creates the expiry timeline event" do
+        expect { subject }.to change {
+          TimelineEvent.where(further_information_request:).count
+        }.by(1)
+      end
     end
 
     context "with requested FI request" do
