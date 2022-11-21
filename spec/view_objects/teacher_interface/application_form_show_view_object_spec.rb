@@ -106,6 +106,37 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     end
   end
 
+  describe "#show_further_information_request_expired_content?" do
+    let(:application_form) do
+      create(:application_form, teacher: current_teacher)
+    end
+    let(:assessment) { create(:assessment, application_form:) }
+
+    subject(:show_fi_expired) do
+      view_object.show_further_information_request_expired_content?
+    end
+
+    context "when further_information_request is present" do
+      context "and it has expired" do
+        let!(:further_information_request) do
+          create(:further_information_request, :expired, assessment:)
+        end
+        it { is_expected.to eq(true) }
+      end
+
+      context "and it hasn't expired" do
+        let!(:further_information_request) do
+          create(:further_information_request, assessment:)
+        end
+        it { is_expected.to eq(false) }
+      end
+    end
+
+    context "when further_information_request is nil" do
+      it { is_expected.to eq(false) }
+    end
+  end
+
   describe "#declined_cannot_reapply?" do
     subject(:declined_cannot_reapply?) { view_object.declined_cannot_reapply? }
 
