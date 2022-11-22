@@ -200,7 +200,8 @@
     - invited_by_id
     - invitations_count
     - name
-    - assessor
+    - award_decline_permission
+    - support_console_permission
   :teachers:
     - id
     - email
