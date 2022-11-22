@@ -47,6 +47,11 @@ RSpec.describe Region, type: :model do
         .with_prefix(:status_check)
         .backed_by_column_of_type(:string)
     end
+    it do
+      is_expected.to validate_url_of(
+        :teaching_authority_online_checker_url,
+      ).with_message("Enter a valid teaching authority online checker URL")
+    end
   end
 
   describe "#teaching_authority_emails_string" do

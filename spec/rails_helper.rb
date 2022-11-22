@@ -13,6 +13,7 @@ require "dfe/analytics/testing"
 require "support/page_helpers"
 require "site_prism"
 require "site_prism/all_there"
+require "validate_url/rspec_matcher"
 require "view_component/test_helpers"
 require "webmock/rspec"
 

@@ -27,6 +27,11 @@ RSpec.describe Country, type: :model do
   describe "validations" do
     it { is_expected.to validate_inclusion_of(:code).in_array(%w[GB-SCT FR]) }
     it { is_expected.to_not validate_inclusion_of(:code).in_array(%w[ABC]) }
+    it do
+      is_expected.to validate_url_of(
+        :teaching_authority_online_checker_url,
+      ).with_message("Enter a valid teaching authority online checker URL")
+    end
   end
 
   describe "#teaching_authority_emails_string" do

@@ -44,6 +44,9 @@ class Region < ApplicationRecord
        prefix: true
 
   validates :name, uniqueness: { scope: :country_id }
+
   validates :sanction_check, inclusion: { in: sanction_checks.values }
   validates :status_check, inclusion: { in: status_checks.values }
+
+  validates :teaching_authority_online_checker_url, url: { allow_blank: true }
 end

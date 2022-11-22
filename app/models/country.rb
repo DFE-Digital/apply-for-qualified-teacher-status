@@ -37,5 +37,7 @@ class Country < ApplicationRecord
 
   validates :code, inclusion: { in: CODES }
 
+  validates :teaching_authority_online_checker_url, url: { allow_blank: true }
+
   alias_method :country, :itself
 end
