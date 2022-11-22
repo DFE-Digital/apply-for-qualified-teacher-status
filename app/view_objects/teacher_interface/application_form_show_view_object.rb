@@ -34,6 +34,10 @@ class TeacherInterface::ApplicationFormShowViewObject
 
       failure_reasons =
         section.selected_failure_reasons.map do |key, assessor_feedback|
+          unless AssessmentSection.decline_failure_reason?(failure_reason: key)
+            assessor_feedback = ""
+          end
+
           { key:, assessor_feedback: }
         end
 

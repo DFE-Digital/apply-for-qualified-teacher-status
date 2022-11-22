@@ -83,7 +83,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
               assessment_section_key: "personal_information",
               failure_reasons: [
                 { assessor_feedback: "A note.", key: "applicant_already_qts" },
-                { assessor_feedback: "A note.", key: "identification_document_expired" },
+                { assessor_feedback: "", key: "identification_document_expired" },
               ],
             },
           ],

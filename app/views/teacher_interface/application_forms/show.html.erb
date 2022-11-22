@@ -77,7 +77,9 @@
               <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason[:key]}") %>
             </h5>
 
-            <%= govuk_inset_text(text: failure_reason[:assessor_feedback]) %>
+            <% if (text = failure_reason[:assessor_feedback]).present? %>
+              <%= govuk_inset_text(text:) %>
+            <% end %>
           </li>
         <% end %>
       </ul>
