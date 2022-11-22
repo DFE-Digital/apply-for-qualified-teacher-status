@@ -9,7 +9,10 @@ class Staff::InvitationsController < Devise::InvitationsController
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:invite, keys: [:name])
+    devise_parameter_sanitizer.permit(
+      :invite,
+      keys: %i[name award_decline_permission support_console_permission],
+    )
   end
 
   def after_invite_path_for(inviter, invitee)
