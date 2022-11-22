@@ -26,6 +26,21 @@ class TeacherInterface::ApplicationFormShowViewObject
         .first
   end
 
+  def notes_from_assessors
+    return [] if assessment.nil? || further_information_request.present?
+
+    assessment.sections.filter_map do |section|
+      next nil if section.selected_failure_reasons.blank?
+
+      failure_reasons =
+        section.selected_failure_reasons.map do |key, assessor_feedback|
+          { key:, assessor_feedback: }
+        end
+
+      { assessment_section_key: section.key, failure_reasons: }
+    end
+  end
+
   def declined_cannot_reapply?
     return false if assessment.nil?
 
