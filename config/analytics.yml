@@ -189,6 +189,11 @@
     - teaching_authority_certificate
     - teaching_authority_online_checker_url
     - application_form_enabled
+  :reminder_emails:
+    - id
+    - created_at
+    - updated_at
+    - further_information_request_id
   :staff:
     - id
     - email
