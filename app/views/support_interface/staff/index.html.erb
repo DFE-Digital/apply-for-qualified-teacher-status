@@ -22,22 +22,24 @@
     
       summary_list.row do |row|
       row.key { "Assessor" }
-      row.value { if staff.award_decline_permission?
+      row.value do
+         if staff.award_decline_permission?
           govuk_tag(text:"Yes", colour: "green")
         else
           govuk_tag(text:"No", colour: "red")
-        end }
+        end 
+      end
     end
 
     summary_list.row do |row|
       row.key { "Support console access" }
-      row.value { 
+      row.value do
         if staff.support_console_permission?
           govuk_tag(text:"Yes", colour: "green")
         else
           govuk_tag(text:"No", colour: "red")
         end
-      }
+      end
     end
     if staff.created_by_invite?
       summary_list.row do |row|

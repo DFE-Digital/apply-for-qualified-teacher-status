@@ -55,11 +55,11 @@ FactoryBot.define do
     end
 
     trait :with_award_decline_permission do
-      with_award_decline_permission { true }
+      award_decline_permission { true }
     end
 
     trait :with_support_console_permission do
-      with_support_console_permission { true }
+      support_console_permission { true }
     end
   end
 end

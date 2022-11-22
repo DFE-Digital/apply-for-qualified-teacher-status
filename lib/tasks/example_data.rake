@@ -17,16 +17,7 @@ namespace :example_data do
     staff_members = admins + assessors
 
     staff_members.each do |staff|
-      FactoryBot.create(
-        :staff,
-        :confirmed,
-        name: staff[:name],
-        email: staff[:email],
-        award_decline_permission:
-          staff[:award_decline_permission] || false,
-        support_console_permission:
-          staff[:support_console_permission] || false,
-      )
+      FactoryBot.create(:staff, :confirmed, **staff)
     end
 
     Country.all.each do |country|
@@ -89,12 +80,14 @@ def assessors
 end
 
 def admins
-  [{
-    name: "Sally Admin",
-    email: "admin-sally@example.com",
-    support_console_permission: true,
-    award_decline_permission: false,
-  }]
+  [
+    {
+      name: "Sally Admin",
+      email: "admin-sally@example.com",
+      support_console_permission: true,
+      award_decline_permission: false,
+    },
+  ]
 end
 
 def evidential_traits_for(status_check, sanction_check)

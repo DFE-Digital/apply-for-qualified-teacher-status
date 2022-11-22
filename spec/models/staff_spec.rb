@@ -66,7 +66,7 @@ RSpec.describe Staff, type: :model do
     describe ".assessors" do
       subject { described_class.assessors }
 
-      context "when with_award_decline_permission == true" do
+      context "when award_decline_permission == true" do
         let(:with_award_decline_permission) do
           create(:staff, :with_award_decline_permission)
         end
