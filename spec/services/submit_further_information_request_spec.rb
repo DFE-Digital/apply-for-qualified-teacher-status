@@ -38,6 +38,14 @@ RSpec.describe SubmitFurtherInformationRequest do
     ).from(false).to(true)
   end
 
+  it "changes the further information request received at" do
+    freeze_time do
+      expect { call }.to change(further_information_request, :received_at).from(
+        nil,
+      ).to(Time.current)
+    end
+  end
+
   it "sends an email" do
     expect { call }.to have_enqueued_mail(
       TeacherMailer,

@@ -12,7 +12,10 @@ class SubmitFurtherInformationRequest
     raise AlreadySubmitted if further_information_request.received?
 
     ActiveRecord::Base.transaction do
-      further_information_request.received!
+      further_information_request.update!(
+        state: "received",
+        received_at: Time.zone.now,
+      )
 
       ChangeApplicationFormState.call(
         application_form:,
