@@ -13,6 +13,7 @@ class FurtherInformationRequestExpirer
       ActiveRecord::Base.transaction do
         further_information_request.failure_assessor_note =
           "Further information not supplied by deadline"
+        further_information_request.passed = false
         further_information_request.expired!
         create_timeline_event
         decline_application

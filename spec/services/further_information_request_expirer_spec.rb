@@ -28,6 +28,10 @@ RSpec.describe FurtherInformationRequestExpirer do
         expect(subject.failure_assessor_note).to eq(expected_assessor_note)
       end
 
+      it "sets the passed to false" do
+        expect(subject.passed).to eq(false)
+      end
+
       it "creates the expiry timeline event" do
         expect { subject }.to change {
           TimelineEvent.where(further_information_request:).count
