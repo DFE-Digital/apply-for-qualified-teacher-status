@@ -43,6 +43,7 @@ module SupportInterface
         :teaching_authority_websites_string,
         :teaching_authority_certificate,
         :teaching_authority_other,
+        :teaching_authority_online_checker_url,
       )
     end
   end
