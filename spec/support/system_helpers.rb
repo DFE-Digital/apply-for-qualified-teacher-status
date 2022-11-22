@@ -59,7 +59,8 @@ module SystemHelpers
   end
 
   def when_i_am_authorized_as_an_assessor_user
-    sign_in @assessor_user = create(:staff, :assessor, :confirmed)
+    sign_in @assessor_user =
+              create(:staff, :with_award_decline_permission, :confirmed)
   end
 
   def when_i_am_authorized_as_a_support_user

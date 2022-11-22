@@ -9,5 +9,9 @@
 
   <%= f.govuk_text_field :name %>
 
+   <%= f.govuk_check_boxes_fieldset :permissions, legend: { size: "s" }, small: true do %>
+      <%= f.govuk_check_box :support_console_permission, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Support console" } %>
+      <%= f.govuk_check_box :award_decline_permission , 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Assessor" } %>
+    <%- end -%>
   <%= f.govuk_submit t("devise.invitations.new.submit_button") %>
 <% end %>

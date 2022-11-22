@@ -14,13 +14,10 @@ namespace :example_data do
     Faker::Config.locale = "en-GB"
     Faker::UniqueGenerator.clear
 
-    assessors.each do |assessor|
-      FactoryBot.create(
-        :staff,
-        :confirmed,
-        name: assessor[:name],
-        email: assessor[:email],
-      )
+    staff_members = admins + assessors
+
+    staff_members.each do |staff|
+      FactoryBot.create(:staff, :confirmed, **staff)
     end
 
     Country.all.each do |country|
@@ -58,7 +55,7 @@ namespace :example_data do
     Note.delete_all
     ApplicationForm.delete_all
     Teacher.delete_all
-    Staff.where(email: assessors.map { |assessor| assessor[:email] }).delete_all
+    Staff.delete_all
   end
 
   desc "Reset and regenerate example data."
@@ -67,8 +64,29 @@ end
 
 def assessors
   [
-    { name: "Dave Assessor", email: "assessor-dave@example.com" },
-    { name: "Beryl Assessor", email: "assessor-beryl@example.com" },
+    {
+      name: "Dave Assessor",
+      email: "assessor-dave@example.com",
+      support_console_permission: false,
+      award_decline_permission: true,
+    },
+    {
+      name: "Beryl Assessor",
+      email: "assessor-beryl@example.com",
+      support_console_permission: false,
+      award_decline_permission: true,
+    },
+  ]
+end
+
+def admins
+  [
+    {
+      name: "Sally Admin",
+      email: "admin-sally@example.com",
+      support_console_permission: true,
+      award_decline_permission: false,
+    },
   ]
 end
 
