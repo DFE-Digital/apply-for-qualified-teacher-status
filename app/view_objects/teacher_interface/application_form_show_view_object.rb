@@ -34,11 +34,16 @@ class TeacherInterface::ApplicationFormShowViewObject
 
       failure_reasons =
         section.selected_failure_reasons.map do |key, assessor_feedback|
-          unless AssessmentSection.decline_failure_reason?(failure_reason: key)
-            assessor_feedback = ""
-          end
+          is_decline =
+            AssessmentSection.decline_failure_reason?(failure_reason: key)
+          assessor_feedback = "" unless is_decline
 
-          { key:, assessor_feedback: }
+          { key:, is_decline:, assessor_feedback: }
+        end
+
+      failure_reasons =
+        failure_reasons.sort_by do |failure_reason|
+          [failure_reason[:is_decline] ? 0 : 1, failure_reason[:key]]
         end
 
       { assessment_section_key: section.key, failure_reasons: }

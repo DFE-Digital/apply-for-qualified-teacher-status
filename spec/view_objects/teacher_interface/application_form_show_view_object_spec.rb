@@ -69,6 +69,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
           :personal_information,
           :failed,
           selected_failure_reasons: {
+            duplicate_application: "A note.",
             identification_document_expired: "A note.",
             applicant_already_qts: "A note.",
           },
@@ -82,8 +83,21 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
             {
               assessment_section_key: "personal_information",
               failure_reasons: [
-                { assessor_feedback: "A note.", key: "applicant_already_qts" },
-                { assessor_feedback: "", key: "identification_document_expired" },
+                {
+                  assessor_feedback: "A note.",
+                  is_decline: true,
+                  key: "applicant_already_qts",
+                },
+                {
+                  assessor_feedback: "A note.",
+                  is_decline: true,
+                  key: "duplicate_application",
+                },
+                {
+                  assessor_feedback: "",
+                  is_decline: false,
+                  key: "identification_document_expired",
+                },
               ],
             },
           ],
