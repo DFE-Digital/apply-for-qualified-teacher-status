@@ -9,7 +9,7 @@ module AssessorInterface
     def assessment_section
       @assessment_section ||=
         AssessmentSection
-          .includes(assessment: :application_form)
+          .includes(assessment: { application_form: { region: :country } })
           .where(
             assessment_id: params[:assessment_id],
             assessment: {
@@ -23,6 +23,7 @@ module AssessorInterface
     delegate :application_form, to: :assessment
     delegate :registration_number, to: :application_form
     delegate :checks, to: :assessment_section
+    delegate :region, to: :application_form
 
     def qualifications
       application_form.qualifications.ordered
@@ -50,6 +51,16 @@ module AssessorInterface
 
     def notes_placeholder_key_for(failure_reason:)
       build_key(failure_reason, "placeholder")
+    end
+
+    def show_online_checker?
+      online_checker_url.present?
+    end
+
+    def online_checker_url
+      @online_checker_url ||=
+        region.teaching_authority_online_checker_url.presence ||
+          region.country.teaching_authority_online_checker_url
     end
 
     private
