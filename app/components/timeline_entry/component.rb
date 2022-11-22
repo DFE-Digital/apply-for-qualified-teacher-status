@@ -56,15 +56,8 @@ module TimelineEntry
       section = timeline_event.assessment_section
       {
         section_name: section.key.titleize,
-        section_state:
-          render(
-            ApplicationFormStatusTag::Component.new(
-              key: timeline_event.id,
-              status: timeline_event.new_state,
-              class_context: "timeline-event",
-              context: :assessor,
-            ),
-          ),
+        section_state: timeline_event.new_state,
+        failure_reasons: section.selected_failure_reasons,
       }
     end
 
@@ -73,8 +66,11 @@ module TimelineEntry
     end
 
     def further_information_request_assessed_vars
+      further_information_request = timeline_event.further_information_request
       {
-        further_information_request: timeline_event.further_information_request,
+        passed: further_information_request.passed,
+        failure_assessor_note:
+          further_information_request.failure_assessor_note,
       }
     end
 

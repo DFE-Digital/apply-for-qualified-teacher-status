@@ -20,6 +20,33 @@
       <% if (text = description_vars[:subjects_note]).present? %>
         <p class="govuk-body"><%= text %></p>
       <% end %>
+    <% elsif timeline_event.assessment_section_recorded? %>
+      <p class="govuk-body">
+        <%= description_vars[:section_name] %>:
+        <%= render(ApplicationFormStatusTag::Component.new(
+          key: timeline_event.id,
+          status: description_vars[:section_state],
+          class_context: "timeline-event",
+          context: :assessor,
+          )) %>
+      </p>
+
+      <%= govuk_inset_text do %>
+        <ul class="govuk-list--bullet">
+          <% description_vars[:failure_reasons].each do |failure_reason_key, failure_reason_assessor_note| %>
+            <li>
+              <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason_key}") %><br />
+              <%= failure_reason_assessor_note %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% elsif timeline_event.further_information_request_assessed? %>
+      <p class="govuk-body">Further information request has been assessed.</p>
+
+      <% if (failure_assessor_note = description_vars[:failure_assessor_note]).present? %>
+        <%= govuk_inset_text(text: failure_assessor_note) %>
+      <% end %>
     <% else %>
       <p class="govuk-body">
         <%= t("components.timeline_entry.description.#{timeline_event.event_type}", **description_vars).html_safe %>
