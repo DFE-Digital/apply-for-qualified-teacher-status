@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
   include DfE::Analytics::Requests
+  include Pundit::Authorization
 
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
 
