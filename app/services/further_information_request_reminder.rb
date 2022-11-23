@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-#
+
 class FurtherInformationRequestReminder
   include ServicePattern
   include FurtherInformationRequestExpirable
@@ -9,7 +9,10 @@ class FurtherInformationRequestReminder
   end
 
   def call
-    further_information_request.reminder_emails.create! if send_reminder?
+    if send_reminder?
+      send_email
+      record_reminder
+    end
   end
 
   private
@@ -34,5 +37,16 @@ class FurtherInformationRequestReminder
 
   def two_days?
     days_until_expiry <= 2 && number_of_reminders_sent == 2
+  end
+
+  def send_email
+    TeacherMailer
+      .with(teacher:, further_information_request:, due_date:)
+      .further_information_reminder
+      .deliver_later
+  end
+
+  def record_reminder
+    further_information_request.reminder_emails.create!
   end
 end

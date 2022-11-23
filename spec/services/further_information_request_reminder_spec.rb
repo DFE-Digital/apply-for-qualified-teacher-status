@@ -25,6 +25,20 @@ RSpec.describe FurtherInformationRequestReminder do
           ReminderEmail.where(further_information_request:).count
         }.by(1)
       end
+
+      it "sends an email" do
+        expect { subject }.to have_enqueued_mail(
+          TeacherMailer,
+          :further_information_reminder,
+        ).with(
+          params: {
+            teacher:,
+            further_information_request:,
+            due_date:,
+          },
+          args: [],
+        )
+      end
     end
 
     shared_examples_for "an FI request with less than two weeks remaining" do
@@ -103,6 +117,7 @@ RSpec.describe FurtherInformationRequestReminder do
       let(:application_form) { create(:application_form, :submitted, region:) }
       let(:assessment) { create(:assessment, application_form:) }
       let(:region) { create(:region, :in_country, country_code: "FR") }
+      let(:teacher) { application_form.teacher }
 
       let(:further_information_request) do
         create(
@@ -113,6 +128,10 @@ RSpec.describe FurtherInformationRequestReminder do
       end
 
       context "that allows 6 weeks to complete" do
+        let(:due_date) do
+          (further_information_request.created_at + 6.weeks).to_date
+        end
+
         context "with less than two weeks remaining" do
           let(:further_information_requested_at) { (6.weeks - 13.days).ago }
 
@@ -137,6 +156,9 @@ RSpec.describe FurtherInformationRequestReminder do
         %w[AU CA GI NZ US].each do |country_code|
           context "from country_code #{country_code}" do
             let(:region) { create(:region, :in_country, country_code:) }
+            let(:due_date) do
+              (further_information_request.created_at + 4.weeks).to_date
+            end
 
             it_behaves_like "a request that is allowed 4 weeks to complete"
           end
