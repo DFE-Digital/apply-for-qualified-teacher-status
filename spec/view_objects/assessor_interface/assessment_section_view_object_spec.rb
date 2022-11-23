@@ -169,8 +169,39 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
 
     it { is_expected.to be false }
 
+    context "with a professional standing spoke" do
+      before do
+        params[:key] = "professional_standing"
+        assessment_section.update!(key: "professional_standing")
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "with a registration number" do
+      before { application_form.update!(registration_number: "abcdef") }
+
+      it { is_expected.to be false }
+    end
+
     context "with a checker URL" do
       before do
+        region.country.update!(
+          teaching_authority_online_checker_url:
+            "https://www.example.com/checks",
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "with a professional standing spoke and a registration number and a checker URL" do
+      before do
+        params[:key] = "professional_standing"
+        assessment_section.update!(key: "professional_standing")
+
+        application_form.update!(registration_number: "abcdef")
+
         region.country.update!(
           teaching_authority_online_checker_url:
             "https://www.example.com/checks",
