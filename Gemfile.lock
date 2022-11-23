@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-autocomplete.git
-  revision: 7bf95631e7c912795b1994b04bfd86997d8bd2ff
+  revision: 36d80e6b5bba67c92cd9ec6982a4e536d1889aed
   specs:
     dfe-autocomplete (0.1.0)
       actionview (>= 7.0.2.3)
@@ -141,7 +141,6 @@ GEM
       actionmailer (>= 5.0)
       devise (>= 4.6)
     diff-lcs (1.5.0)
-    digest (3.1.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -276,20 +275,14 @@ GEM
     multipart-post (2.2.3)
     net-http-persistent (4.0.1)
       connection_pool (~> 2.2)
-    net-imap (0.2.3)
-      digest
+    net-imap (0.3.1)
       net-protocol
-      strscan
-    net-pop (0.1.1)
-      digest
+    net-pop (0.1.2)
       net-protocol
-      timeout
     net-protocol (0.1.3)
       timeout
-    net-smtp (0.3.1)
-      digest
+    net-smtp (0.3.3)
       net-protocol
-      timeout
     nio4r (2.5.8)
     nokogiri (1.13.9-arm64-darwin)
       racc (~> 1.4)
@@ -447,7 +440,6 @@ GEM
     site_prism-all_there (0.3.2)
     sitemap_generator (6.3.0)
       builder (~> 3.0)
-    strscan (3.0.4)
     syntax_tree (5.0.1)
       prettier_print (>= 1.1.0)
     syntax_tree-haml (2.0.0)
