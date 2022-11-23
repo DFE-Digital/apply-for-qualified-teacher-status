@@ -200,4 +200,49 @@ RSpec.describe TeacherMailer, type: :mailer do
 
     include_examples "observer metadata", "further_information_requested"
   end
+
+  describe "#further_information_reminder" do
+    subject(:mail) do
+      described_class.with(
+        teacher:,
+        further_information_request:,
+        due_date:,
+      ).further_information_reminder
+    end
+
+    let(:further_information_request) { create(:further_information_request) }
+    let(:due_date) { 10.days.from_now }
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      it do
+        is_expected.to eq(
+          "We still need some more information to progress your QTS application",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      it { is_expected.to include("Dear First Last") }
+      it do
+        is_expected.to include(
+          "You must respond to this request by #{due_date.strftime("%e %B %Y")} " \
+            "otherwise your QTS application will be declined.",
+        )
+      end
+      it { is_expected.to include("abc") }
+      it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
+    end
+
+    include_examples "observer metadata", "further_information_reminder"
+  end
 end

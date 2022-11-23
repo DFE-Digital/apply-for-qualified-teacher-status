@@ -1,0 +1,23 @@
+Dear <%= @name %>
+
+# The assessor reviewing your QTS application needs more information
+
+Your reference number is:
+
+<%= @reference %>
+
+# What happens next
+
+You must respond to this request by <%= @due_date.strftime("%e %B %Y") %> otherwise your QTS application will be declined..
+
+Once you respond with all of the information we’ve requested, the assessor will be able to continue reviewing your application.
+
+You can sign in to add the requested information to your application at:
+
+<%= new_teacher_session_url %>
+
+If you have any questions, contact:
+qts.enquiries@education.gov.uk
+
+Kind regards,
+The Teacher Qualifications Team
