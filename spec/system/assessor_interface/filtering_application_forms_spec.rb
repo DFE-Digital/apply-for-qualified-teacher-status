@@ -5,8 +5,6 @@ require "rails_helper"
 RSpec.describe "Assessor filtering application forms", type: :system do
   it "applies the filters" do
     given_the_service_is_open
-    when_i_am_authorized_as_an_assessor_user
-
     given_there_are_application_forms
 
     when_i_am_authorized_as_an_assessor_user
