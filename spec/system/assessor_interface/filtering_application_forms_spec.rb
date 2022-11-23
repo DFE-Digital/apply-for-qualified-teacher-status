@@ -50,7 +50,8 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   end
 
   def and_i_apply_the_assessor_filter
-    applications_page.assessor_filter.assessors.first.checkbox.click
+    expect(applications_page.assessor_filter.assessors.count).to eq(3)
+    applications_page.assessor_filter.assessors.second.checkbox.click
     applications_page.apply_filters.click
   end
 
@@ -127,6 +128,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         region: create(:region, country: create(:country, code: "US")),
         given_names: "Cher",
         family_name: "Bert",
+        assessor: assessors.second,
         submitted_at: Date.new(2019, 12, 1),
         reference: "CHERBERT",
       ),
@@ -136,6 +138,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         region: create(:region, country: create(:country, code: "FR")),
         given_names: "Emma",
         family_name: "Dubois",
+        assessor: assessors.second,
         submitted_at: Date.new(2019, 12, 1),
       ),
       create(
@@ -151,15 +154,16 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         :awarded,
         given_names: "John",
         family_name: "Smith",
+        assessor: assessors.second,
         submitted_at: Date.new(2020, 1, 1),
       ),
     ]
   end
 
   def assessors
-    [
-      create(:staff, :with_award_decline_permission, name: "Wag Staff"),
+    @assessors ||= [
       create(:staff, :with_award_decline_permission, name: "Fal Staff"),
+      create(:staff, :with_award_decline_permission, name: "Wag Staff"),
     ]
   end
 end

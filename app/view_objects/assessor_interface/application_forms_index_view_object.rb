@@ -21,7 +21,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   def assessor_filter_options
-    Staff.assessors
+    Staff.assessors.order(:name)
   end
 
   def country_filter_options
