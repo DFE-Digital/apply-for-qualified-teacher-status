@@ -17,7 +17,13 @@
         <% section.selected_failure_reasons.each do |key, note| %>
           <li>
             <h4 class="govuk-heading-s"><%= t("assessor_interface.assessment_sections.show.failure_reasons.#{key}") %></h4>
-            <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
+
+            <% if AssessmentSection.decline_failure_reason?(failure_reason: key) %>
+              <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
+            <% else %>
+              <p class="govuk-body govuk-!-margin-bottom-2">Your note (the applicant won’t see this):</p>
+            <% end %>
+
             <%= govuk_inset_text(text: note) %>
           </li>
         <% end %>
