@@ -28,6 +28,7 @@ gem "sidekiq"
 gem "sidekiq-cron"
 gem "sitemap_generator"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Windows
+gem "validate_url"
 
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics"
 gem "dfe-autocomplete", github: "DFE-Digital/dfe-autocomplete"

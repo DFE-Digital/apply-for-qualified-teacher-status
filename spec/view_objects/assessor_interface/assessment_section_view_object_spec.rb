@@ -2,12 +2,14 @@
 
 require "rails_helper"
 RSpec.describe AssessorInterface::AssessmentSectionViewObject do
-  subject { described_class.new(params:) }
+  subject(:view_object) { described_class.new(params:) }
+
   let(:assessment_section) do
     create(:assessment_section, :personal_information, assessment:)
   end
   let(:assessment) { create(:assessment, application_form:) }
-  let(:application_form) { create(:application_form) }
+  let(:region) { create(:region) }
+  let(:application_form) { create(:application_form, region:) }
 
   let(:params) do
     {
@@ -159,6 +161,66 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
           "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes",
         )
       end
+    end
+  end
+
+  describe "#show_online_checker?" do
+    subject(:show_online_checker?) { view_object.show_online_checker? }
+
+    it { is_expected.to be false }
+
+    context "with a checker URL" do
+      before do
+        region.country.update!(
+          teaching_authority_online_checker_url:
+            "https://www.example.com/checks",
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+  end
+
+  describe "#online_checker_url" do
+    subject(:online_checker_url) { view_object.online_checker_url }
+
+    it { is_expected.to eq("") }
+
+    context "with a country value set" do
+      before do
+        region.country.update!(
+          teaching_authority_online_checker_url:
+            "https://www.example.com/checks",
+        )
+      end
+
+      it { is_expected.to eq("https://www.example.com/checks") }
+    end
+
+    context "with a region value set" do
+      before do
+        region.update!(
+          teaching_authority_online_checker_url:
+            "https://www.example.com/checks",
+        )
+      end
+
+      it { is_expected.to eq("https://www.example.com/checks") }
+    end
+
+    context "with a country and a region value set" do
+      before do
+        region.country.update!(
+          teaching_authority_online_checker_url:
+            "https://www.example.com/country-checks",
+        )
+        region.update!(
+          teaching_authority_online_checker_url:
+            "https://www.example.com/region-checks",
+        )
+      end
+
+      it { is_expected.to eq("https://www.example.com/region-checks") }
     end
   end
 end

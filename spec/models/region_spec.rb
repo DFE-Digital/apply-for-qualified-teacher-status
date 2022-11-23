@@ -2,21 +2,22 @@
 #
 # Table name: regions
 #
-#  id                             :bigint           not null, primary key
-#  application_form_enabled       :boolean          default(FALSE)
-#  legacy                         :boolean          default(TRUE), not null
-#  name                           :string           default(""), not null
-#  sanction_check                 :string           default("none"), not null
-#  status_check                   :string           default("none"), not null
-#  teaching_authority_address     :text             default(""), not null
-#  teaching_authority_certificate :text             default(""), not null
-#  teaching_authority_emails      :text             default([]), not null, is an Array
-#  teaching_authority_name        :text             default(""), not null
-#  teaching_authority_other       :text             default(""), not null
-#  teaching_authority_websites    :text             default([]), not null, is an Array
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  country_id                     :bigint           not null
+#  id                                    :bigint           not null, primary key
+#  application_form_enabled              :boolean          default(FALSE)
+#  legacy                                :boolean          default(TRUE), not null
+#  name                                  :string           default(""), not null
+#  sanction_check                        :string           default("none"), not null
+#  status_check                          :string           default("none"), not null
+#  teaching_authority_address            :text             default(""), not null
+#  teaching_authority_certificate        :text             default(""), not null
+#  teaching_authority_emails             :text             default([]), not null, is an Array
+#  teaching_authority_name               :text             default(""), not null
+#  teaching_authority_online_checker_url :string           default(""), not null
+#  teaching_authority_other              :text             default(""), not null
+#  teaching_authority_websites           :text             default([]), not null, is an Array
+#  created_at                            :datetime         not null
+#  updated_at                            :datetime         not null
+#  country_id                            :bigint           not null
 #
 # Indexes
 #
@@ -45,6 +46,11 @@ RSpec.describe Region, type: :model do
         .with_values(none: "none", online: "online", written: "written")
         .with_prefix(:status_check)
         .backed_by_column_of_type(:string)
+    end
+    it do
+      is_expected.to validate_url_of(
+        :teaching_authority_online_checker_url,
+      ).with_message("Enter a valid teaching authority online checker URL")
     end
   end
 

@@ -2,17 +2,18 @@
 #
 # Table name: countries
 #
-#  id                                  :bigint           not null, primary key
-#  code                                :string           not null
-#  teaching_authority_address          :text             default(""), not null
-#  teaching_authority_certificate      :text             default(""), not null
-#  teaching_authority_checks_sanctions :boolean          default(TRUE), not null
-#  teaching_authority_emails           :text             default([]), not null, is an Array
-#  teaching_authority_name             :text             default(""), not null
-#  teaching_authority_other            :text             default(""), not null
-#  teaching_authority_websites         :text             default([]), not null, is an Array
-#  created_at                          :datetime         not null
-#  updated_at                          :datetime         not null
+#  id                                    :bigint           not null, primary key
+#  code                                  :string           not null
+#  teaching_authority_address            :text             default(""), not null
+#  teaching_authority_certificate        :text             default(""), not null
+#  teaching_authority_checks_sanctions   :boolean          default(TRUE), not null
+#  teaching_authority_emails             :text             default([]), not null, is an Array
+#  teaching_authority_name               :text             default(""), not null
+#  teaching_authority_online_checker_url :string           default(""), not null
+#  teaching_authority_other              :text             default(""), not null
+#  teaching_authority_websites           :text             default([]), not null, is an Array
+#  created_at                            :datetime         not null
+#  updated_at                            :datetime         not null
 #
 # Indexes
 #
@@ -26,6 +27,11 @@ RSpec.describe Country, type: :model do
   describe "validations" do
     it { is_expected.to validate_inclusion_of(:code).in_array(%w[GB-SCT FR]) }
     it { is_expected.to_not validate_inclusion_of(:code).in_array(%w[ABC]) }
+    it do
+      is_expected.to validate_url_of(
+        :teaching_authority_online_checker_url,
+      ).with_message("Enter a valid teaching authority online checker URL")
+    end
   end
 
   describe "#teaching_authority_emails_string" do
