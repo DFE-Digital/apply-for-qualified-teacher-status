@@ -7,7 +7,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     given_the_service_is_open
     given_there_are_application_forms
 
-    when_i_am_authorized_as_an_assessor_user
+    given_i_am_authorized_as_an_assessor_user
     when_i_visit_the(:applications_page)
 
     when_i_clear_the_filters

@@ -5,7 +5,7 @@ RSpec.describe "Assessor view application form", type: :system do
     given_the_service_is_open
     given_there_is_an_application_form
 
-    when_i_am_authorized_as_an_assessor_user
+    given_i_am_authorized_as_an_assessor_user
     when_i_visit_the(:assessor_application_page, application_id:)
     then_i_see_the_application
     and_i_see_the_assessment_tasks

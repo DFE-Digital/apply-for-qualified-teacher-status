@@ -5,7 +5,7 @@ RSpec.describe "Countries support", type: :system do
     given_countries_exist
 
     given_the_service_is_open
-    when_i_am_authorized_as_a_support_user
+    given_i_am_authorized_as_a_support_user
     when_i_visit_the_countries_page
     then_i_see_the_countries_page
     and_i_see_the_initial_countries

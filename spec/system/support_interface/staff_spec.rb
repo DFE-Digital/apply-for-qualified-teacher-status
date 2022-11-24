@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Staff support", type: :system do
   it "allows inviting a user" do
     given_the_service_is_open
-    when_i_am_authorized_as_a_support_user
+    given_i_am_authorized_as_a_support_user
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
 
