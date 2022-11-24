@@ -13,6 +13,10 @@
       If we’re unable to find you using your registration number, we may need to
       contact you for more information as part of your application.
     </p>
+
+    <% if @teaching_authority_other.present? %>
+      <%= raw GovukMarkdown.render(@teaching_authority_other) %>
+    <% end %>
   <% end %>
 
   <%= render "shared/save_submit_buttons", f: %>

@@ -19,6 +19,7 @@ module SystemHelpers
       application_form_enabled: true,
       status_check: country_check,
       sanction_check: country_check,
+      teaching_authority_other: "Other teaching authority information.",
     )
 
     visit "/eligibility/start"

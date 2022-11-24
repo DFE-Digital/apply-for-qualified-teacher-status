@@ -881,6 +881,11 @@ RSpec.describe "Teacher application", type: :system do
     expect(registration_number_form.heading.text).to eq(
       "What is your registration number?",
     )
+
+    registration_number_form.details.summary.click
+    expect(registration_number_form.details.text).to have_content(
+      "Other teaching authority information.",
+    )
   end
 
   def then_i_see_the_upload_written_statement_form
