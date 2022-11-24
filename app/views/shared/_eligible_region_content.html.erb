@@ -23,93 +23,19 @@
   <%= govuk_accordion do |accordion| %>
 
     <% accordion.section(heading_text: "1. Proof of identity") do %>
-      <p class="govuk-body">You must provide:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>A passport, national identity card or driving licence that shows your date of birth and nationality. This must be valid and have not expired.</li>
-      </ul>
-      <p class="govuk-body">If the name on your proof of identity is different from that on your other documents, you need to provide evidence of your name change (for example, a divorce certificate or name change deed).</p>
+      <%= render "shared/eligible_region_content_components/proof_of_identity" %>
     <% end %>
 
     <% accordion.section(heading_text: "2. Proof of qualifications") do %>
-      <p class="govuk-body">You must provide:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Your certificate from the qualification that led to you being a recognised teacher (this might be your university degree, or a separate qualification).</li>
-        <li>A transcript (or diploma supplement) for that qualification, issued by the awarding body. If your teaching qualification was part of your university degree, use your degree transcript.</li>
-      </ul>
-      <p class="govuk-body">A transcript is a document from the institution where you studied. It lists all the modules or subjects you studied in each year, and the marks or grades you were awarded.
-        Note that you must have completed all of your teaching qualification in <%= CountryName.from_country(region.country, with_definite_article: true) %>.
-      </p>
+      <%= render "shared/eligible_region_content_components/proof_of_qualifications", region: region %>
     <% end %>
 
     <% accordion.section(heading_text: "3. Proof that you’re recognised as a teacher") do %>
-      <% if region.status_check_online? %>
-        <p class="govuk-body">
-          As your education department or authority has an online register of teachers,
-          you’ll need to provide any registration numbers we need to check your record.
-        </p>
-      <% end %>
-
-      <% if region.status_check_online? && region.sanction_check_online? %>
-        <% if region.teaching_authority_other.present? %>
-          <%= raw GovukMarkdown.render(region.teaching_authority_other) %>
-        <% end %>
-      <% end %>
-
-      <p class="govuk-body">
-        <%= proof_of_recognition_description_for(region:) %>
-      </p>
-      <ul class="govuk-list govuk-list--bullet">
-        <%- proof_of_recognition_requirements_for(region:).each do |requirement|%>
-          <li><%= requirement %></li>
-        <%- end -%>
-      </ul>
-
-      <% if region.status_check_written? || region.sanction_check_written? %>
-        <p class="govuk-body">
-          You’ll need to provide <%= region_certificate_phrase(region) %>, which you can obtain by contacting:
-        </p>
-
-        <%= render "shared/teaching_authority_contact_information", region: %>
-      <% end %>
-
-      <% if region.sanction_check_none? %>
-        <p class="govuk-body">
-          You also need to show evidence of your work history.
-        </p>
-        <p class="govuk-body">
-          For each school this should include:
-        </p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>school name</li>
-          <li>school city</li>
-          <li>school country</li>
-          <li>your job role</li>
-          <li>start date</li>
-          <li>end date</li>
-        </ul>
-      <% end %>
+    <%= render "shared/eligible_region_content_components/professional_recognition", region: region %>
     <% end %>
 
     <% accordion.section(heading_text: "4. Certified translations") do %>
-      <p class="govuk-body">If your documents are not written in English, you must provide certified translations (at your own cost) for your:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>qualifications</li>
-        <li>transcripts</li>
-        <li>proof that you’re recognised as a teacher</li>
-      </ul>
-      <p class="govuk-body">You do not need translations for ID or change of name documents.</p>
-
-      <h3 class="govuk-heading-s">About certified translations</h3>
-      <p class="govuk-body">Translations must be carried out by a certified translator, who must state (on the document or a separate certification page) that the translation is a true, accurate and correct rendering of the original.</p>
-      <p class="govuk-body">Each one must include the date of the translation as well as the certified translator’s:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>signature</li>
-        <li>name and contact details</li>
-        <li>official certification seal/stamp or ID number</li>
-      </ul>
-
-      <h3 class="govuk-heading-s">Finding a certified translator</h3>
-      <p class="govuk-body">We cannot recommend translation providers. You may want to explore translators who are members of the <a href="http://www.iti.org.uk/component/itisearch/?view=translators" class="govuk-link" rel="noreferrer noopener" target="_blank">Institute of Translating and Interpretation (opens in a new tab)</a>. Sometimes a university’s language department can also help.</p>
+      <% render "shared/eligible_region_content_components/certified_translation", region: region%>
     <% end %>
   <% end %>
 <% end %>
