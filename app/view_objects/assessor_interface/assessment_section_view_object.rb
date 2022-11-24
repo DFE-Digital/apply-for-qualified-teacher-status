@@ -54,7 +54,8 @@ module AssessorInterface
     end
 
     def show_online_checker?
-      online_checker_url.present?
+      assessment_section.key == "professional_standing" &&
+        show_registration_number_summary && online_checker_url.present?
     end
 
     def online_checker_url
