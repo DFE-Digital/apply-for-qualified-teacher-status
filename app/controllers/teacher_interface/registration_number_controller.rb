@@ -4,6 +4,7 @@ module TeacherInterface
 
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
+    before_action :load_teaching_authority_other
 
     def edit
       @registration_number_form =
@@ -36,6 +37,11 @@ module TeacherInterface
 
     def if_success_then_redirect
       params[:next].presence || %i[teacher_interface application_form]
+    end
+
+    def load_teaching_authority_other
+      @teaching_authority_other =
+        application_form.region.teaching_authority_other
     end
   end
 end
