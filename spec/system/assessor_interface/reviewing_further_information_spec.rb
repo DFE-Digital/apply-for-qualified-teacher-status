@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Assessor reviewing further information", type: :system do
   before do
     given_the_service_is_open
-    given_i_am_authorized_as_a_user(assessor)
+    given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form_with_failure_reasons
     given_there_is_further_information_received
   end
@@ -118,10 +118,6 @@ RSpec.describe "Assessor reviewing further information", type: :system do
         :with_items,
         assessment: application_form.assessment,
       )
-  end
-
-  def assessor
-    @assessor ||= create(:staff, :confirmed)
   end
 
   def application_id

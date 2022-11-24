@@ -1,11 +1,15 @@
+# frozen_string_literal: true
+
 module AssessorInterface
   class FurtherInformationRequestsController < BaseController
+    before_action :authorize_assessor, except: :preview
     before_action :load_application_form_and_assessment,
                   only: %i[preview new show edit]
     before_action :load_new_further_information_request, only: %i[preview new]
     before_action :load_view_object, only: %i[edit update]
 
     def preview
+      authorize :assessor, :show?
     end
 
     def new

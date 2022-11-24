@@ -3,9 +3,8 @@ require "rails_helper"
 RSpec.describe "Assessor check submitted details", type: :system do
   before do
     given_the_service_is_open
-    given_an_assessor_exists
     given_there_is_an_application_form
-    given_i_am_authorized_as_a_user(assessor)
+    given_i_am_authorized_as_an_assessor_user
   end
 
   it "allows passing the personal information" do
@@ -135,10 +134,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   private
-
-  def given_an_assessor_exists
-    assessor
-  end
 
   def given_there_is_an_application_form
     application_form
@@ -363,10 +358,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
     expect(
       assessor_application_page.professional_standing_task.status_tag.text,
     ).to eq("ACTION REQUIRED")
-  end
-
-  def assessor
-    @assessor ||= create(:staff, :confirmed)
   end
 
   def application_form

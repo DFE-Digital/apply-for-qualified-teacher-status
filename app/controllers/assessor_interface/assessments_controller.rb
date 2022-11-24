@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 module AssessorInterface
   class AssessmentsController < BaseController
+    before_action :authorize_assessor, except: %i[declare preview confirm]
+    before_action :authorize_assessor_update, only: %i[declare preview confirm]
     before_action :load_assessment_and_application_form
 
     def edit
@@ -90,6 +94,10 @@ module AssessorInterface
     end
 
     private
+
+    def authorize_assessor_update
+      authorize :assessor, :update?
+    end
 
     def load_assessment_and_application_form
       @assessment = assessment

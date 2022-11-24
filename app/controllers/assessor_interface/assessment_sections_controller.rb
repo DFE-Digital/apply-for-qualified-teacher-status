@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class AssessmentSectionsController < BaseController
+    before_action :authorize_assessor
+
     def show
       @assessment_section_form =
         assessment_section_form.new(

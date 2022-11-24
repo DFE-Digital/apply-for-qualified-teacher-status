@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 module AssessorInterface
   class ReviewerAssignmentsController < BaseController
+    before_action :authorize_assessor
+
     def new
       @reviewer_assignment_form =
         ReviewerAssignmentForm.new(

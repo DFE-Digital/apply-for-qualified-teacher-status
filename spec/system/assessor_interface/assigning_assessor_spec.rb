@@ -3,11 +3,13 @@
 require "rails_helper"
 
 RSpec.describe "Assigning an assessor", type: :system do
-  it "assigns an assessor" do
+  before do
     given_the_service_is_open
-    given_i_am_authorized_as_a_user(assessor)
     given_there_is_an_application_form
-    given_an_assessor_exists
+  end
+
+  it "assigns an assessor" do
+    given_i_am_authorized_as_an_assessor_user
 
     when_i_visit_the(:assign_assessor_page, application_id: application_form.id)
     and_i_select_an_assessor
@@ -19,10 +21,7 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   it "assigns a reviewer" do
-    given_the_service_is_open
-    given_i_am_authorized_as_a_user(assessor)
-    given_there_is_an_application_form
-    given_an_assessor_exists
+    given_i_am_authorized_as_an_assessor_user
 
     when_i_visit_the(:assign_reviewer_page, application_id: application_form.id)
     and_i_select_a_reviewer
@@ -33,14 +32,17 @@ RSpec.describe "Assigning an assessor", type: :system do
     and_the_assessor_is_assigned_as_reviewer_to_the_application_form
   end
 
+  it "requires permission" do
+    given_i_am_authorized_as_a_support_user
+
+    when_i_visit_the(:assign_assessor_page, application_id: application_form.id)
+    then_i_see_the_forbidden_page
+  end
+
   private
 
   def given_there_is_an_application_form
     application_form
-  end
-
-  def given_an_assessor_exists
-    assessor
   end
 
   def and_i_select_an_assessor
@@ -80,6 +82,6 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def assessor
-    @assessor ||= create(:staff, :with_award_decline_permission, :confirmed)
+    @user
   end
 end
