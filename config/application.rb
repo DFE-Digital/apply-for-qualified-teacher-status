@@ -43,6 +43,9 @@ module ApplyForQualifiedTeacherStatus
       "node_modules/govuk-frontend/govuk/assets",
     )
 
+    config.action_dispatch.rescue_responses[
+      "Pundit::NotAuthorizedError"
+    ] = :forbidden
     config.action_mailer.deliver_later_queue_name = "mailer"
 
     config.dqt = config_for(:dqt)
