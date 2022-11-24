@@ -168,6 +168,12 @@ module SystemHelpers
 
     when_i_visit_the_teacher_confirmation_email
   end
+
+  def then_i_see_the_forbidden_page
+    expect(page).to have_title("Forbidden")
+    expect(page).to have_content("Forbidden")
+    expect(page).to have_content("You do not have access to view this page.")
+  end
 end
 
 RSpec.configure { |config| config.include SystemHelpers, type: :system }

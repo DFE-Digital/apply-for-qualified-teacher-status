@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "sidekiq/web"
 
 Rails.application.routes.draw do
@@ -91,7 +93,11 @@ Rails.application.routes.draw do
 
     devise_scope :staff do
       authenticate :staff do
-        mount Sidekiq::Web, at: "sidekiq"
+        constraints(
+          lambda do |request|
+            request.env["warden"].user.support_console_permission?
+          end,
+        ) { mount Sidekiq::Web, at: "sidekiq" }
       end
     end
   end
