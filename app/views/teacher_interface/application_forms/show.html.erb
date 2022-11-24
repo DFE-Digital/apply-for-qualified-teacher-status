@@ -65,21 +65,24 @@
 <% elsif @view_object.application_form.declined? %>
   <h2 class="govuk-heading-l">Your QTS application has been declined</h2>
 
-  <% unless @view_object.further_information_request.present? %>
+  <% if (sections = @view_object.notes_from_assessors).present? %>
     <h3 class="govuk-heading-m">Notes from the assessor:</h3>
 
-    <% @view_object.assessment.sections.each do |section| %>
-      <% if section.selected_failure_reasons.present? %>
-        <h4 class="govuk-heading-s"><%= t(".assessment_section.#{section.key}") %></h4>
-        <ul class="govuk-list">
-          <% section.selected_failure_reasons.each do |key, note| %>
-            <li>
-              <h5 class="govuk-heading-s"><%= t("assessor_interface.assessment_sections.show.failure_reasons.#{key}") %></h5>
-              <%= govuk_inset_text(text: note) %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
+    <% sections.each do |section| %>
+      <h4 class="govuk-heading-s"><%= t(".assessment_section.#{section[:assessment_section_key]}") %></h4>
+      <ul class="govuk-list">
+        <% section[:failure_reasons].each do |failure_reason| %>
+          <li>
+            <h5 class="govuk-body">
+              <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason[:key]}") %>
+            </h5>
+
+            <% if (text = failure_reason[:assessor_feedback]).present? %>
+              <%= govuk_inset_text(text:) %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
   <% end %>
 

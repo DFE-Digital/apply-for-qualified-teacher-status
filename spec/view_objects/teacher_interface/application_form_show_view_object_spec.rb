@@ -52,6 +52,60 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     end
   end
 
+  describe "#notes_from_assessors" do
+    subject(:notes_from_assessors) { view_object.notes_from_assessors }
+
+    it { is_expected.to be_empty }
+
+    context "with failure reasons" do
+      let(:application_form) do
+        create(:application_form, teacher: current_teacher)
+      end
+      let(:assessment) { create(:assessment, application_form:) }
+
+      before do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          selected_failure_reasons: {
+            duplicate_application: "A note.",
+            identification_document_expired: "A note.",
+            applicant_already_qts: "A note.",
+          },
+          assessment:,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          [
+            {
+              assessment_section_key: "personal_information",
+              failure_reasons: [
+                {
+                  assessor_feedback: "A note.",
+                  is_decline: true,
+                  key: "applicant_already_qts",
+                },
+                {
+                  assessor_feedback: "A note.",
+                  is_decline: true,
+                  key: "duplicate_application",
+                },
+                {
+                  assessor_feedback: "",
+                  is_decline: false,
+                  key: "identification_document_expired",
+                },
+              ],
+            },
+          ],
+        )
+      end
+    end
+  end
+
   describe "#declined_cannot_reapply?" do
     subject(:declined_cannot_reapply?) { view_object.declined_cannot_reapply? }
 
