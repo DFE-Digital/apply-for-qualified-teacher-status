@@ -35,13 +35,14 @@ module StatusTag
       cannot_start_yet: "grey",
       completed: {
         assessor: "green",
-        teacher: "blue",
       },
     }.freeze
 
     def colour
       colours = COLOURS[@status]
-      colours.is_a?(String) ? colours : colours.fetch(@context)
+      return nil if colours.nil?
+
+      colours.is_a?(String) ? colours : colours[@context]
     end
 
     delegate :status_text, to: :helpers
