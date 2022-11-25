@@ -1,0 +1,46 @@
+<% if region.status_check_online? %>
+  <p class="govuk-body">
+    As your education department or authority has an online register of teachers,
+    you’ll need to provide any registration numbers we need to check your record.
+  </p>
+<% end %>
+
+<% if region.status_check_online? && region.sanction_check_online? %>
+  <% if region.teaching_authority_other.present? %>
+    <%= raw GovukMarkdown.render(region.teaching_authority_other) %>
+  <% end %>
+<% end %>
+
+<p class="govuk-body">
+  <%= proof_of_recognition_description_for(region:) %>
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <%- proof_of_recognition_requirements_for(region:).each do |requirement|%>
+    <li><%= requirement %></li>
+  <%- end -%>
+</ul>
+
+<% if region.status_check_written? || region.sanction_check_written? %>
+  <p class="govuk-body">
+    You’ll need to provide <%= region_certificate_phrase(region) %>, which you can obtain by contacting:
+  </p>
+
+  <%= render "shared/teaching_authority_contact_information", region: %>
+<% end %>
+
+<% if region.sanction_check_none? %>
+  <p class="govuk-body">
+    You also need to show evidence of your work history.
+  </p>
+  <p class="govuk-body">
+    For each school this should include:
+  </p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>school name</li>
+    <li>school city</li>
+    <li>school country</li>
+    <li>your job role</li>
+    <li>start date</li>
+    <li>end date</li>
+  </ul>
+<% end %>

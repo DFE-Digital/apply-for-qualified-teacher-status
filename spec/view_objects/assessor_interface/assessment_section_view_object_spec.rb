@@ -254,4 +254,17 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       it { is_expected.to eq("https://www.example.com/region-checks") }
     end
   end
+
+  describe "#professional_standing?" do
+    subject(:professional_standing?) { view_object.professional_standing? }
+    it { is_expected.to be false }
+    context "with a professional standing spoke" do
+      before do
+        params[:key] = "professional_standing"
+        assessment_section.update!(key: "professional_standing")
+      end
+
+      it { is_expected.to be true }
+    end
+  end
 end

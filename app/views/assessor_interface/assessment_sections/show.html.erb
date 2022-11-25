@@ -46,10 +46,19 @@
   <% end %>
 <% end %>
 
-<% if @assessment_section_view_object.show_online_checker? %>
-  <h2 class="govuk-heading-s">Online checker</h2>
-  <p class="govuk-body">This authority has an online checker for validating the supplied reference number:</p>
-  <p class="govuk-body"><%= govuk_link_to @assessment_section_view_object.online_checker_url, @assessment_section_view_object.online_checker_url, target: "_blank" %></p>
+<% if @assessment_section_view_object.professional_standing? %>
+  <%= govuk_accordion do |accordion| %>
+    <% if @assessment_section_view_object.show_online_checker? %>
+      <% accordion.section(heading_text: "Online checker") do %>
+        <p class="govuk-body">This authority has an online checker for validating the supplied reference number:</p>
+        <p class="govuk-body"><%= govuk_link_to @assessment_section_view_object.online_checker_url, @assessment_section_view_object.online_checker_url, target: "_blank" %></p>
+      <% end %>
+    <% end %>
+
+    <% accordion.section(heading_text: "Competent authority information shown to applicant") do %>
+      <%= render "shared/eligible_region_content_components/professional_recognition", region: @assessment_section_view_object.region %>
+    <% end %>
+  <% end %>
 <% end %>
 
 <h2 class="govuk-heading-s">Check:</h2>

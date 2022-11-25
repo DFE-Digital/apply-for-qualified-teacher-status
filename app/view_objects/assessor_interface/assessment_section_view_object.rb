@@ -64,6 +64,10 @@ module AssessorInterface
           region.country.teaching_authority_online_checker_url
     end
 
+    def professional_standing?
+      assessment_section.key == "professional_standing"
+    end
+
     private
 
     attr_reader :params
