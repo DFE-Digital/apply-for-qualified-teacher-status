@@ -15,9 +15,7 @@ module ApplicationFormStatusTag
     end
 
     def text
-      key_with_context = "application_form.status.#{@status}.#{@context}"
-      key_without_context = "application_form.status.#{@status}"
-      I18n.t(key_with_context, default: I18n.t(key_without_context))
+      status_text(@status, context: @context)
     end
 
     def classes
@@ -47,5 +45,7 @@ module ApplicationFormStatusTag
       colours = COLOURS[@status]
       colours.is_a?(String) ? colours : colours.fetch(@context)
     end
+
+    delegate :status_text, to: :helpers
   end
 end
