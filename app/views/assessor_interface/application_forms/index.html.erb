@@ -52,7 +52,7 @@
   <% if @view_object.application_forms_records.any? %>
     <ul class="app-search-results">
       <%- @view_object.application_forms_records.each do |application_form| -%>
-        <%= render(ApplicationFormSearchResult::Component.new(application_form:, search_params: @view_object.permitted_params)) %>
+        <%= render(ApplicationFormSearchResult::Component.new(application_form:)) %>
       <%- end -%>
     </ul>
 
