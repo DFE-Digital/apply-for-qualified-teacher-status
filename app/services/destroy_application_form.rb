@@ -10,6 +10,7 @@ class DestroyApplicationForm
   def call
     ActiveRecord::Base.transaction do
       timeline_events.destroy_all
+      dqt_trn_request.destroy!
       assessment.destroy!
       application_form.destroy!
       teacher.destroy!
@@ -20,5 +21,9 @@ class DestroyApplicationForm
 
   attr_reader :application_form
 
-  delegate :assessment, :teacher, :timeline_events, to: :application_form
+  delegate :assessment,
+           :teacher,
+           :timeline_events,
+           :dqt_trn_request,
+           to: :application_form
 end

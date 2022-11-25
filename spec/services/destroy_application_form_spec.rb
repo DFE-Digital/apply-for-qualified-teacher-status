@@ -11,6 +11,7 @@ RSpec.describe DestroyApplicationForm do
       create(:qualification, application_form:)
       create(:work_history, application_form:)
       create(:note, application_form:)
+      create(:dqt_trn_request, application_form:)
 
       assessment =
         create(
@@ -44,4 +45,5 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", TimelineEvent
   include_examples "deletes model", Upload
   include_examples "deletes model", WorkHistory
+  include_examples "deletes model", DQTTRNRequest
 end

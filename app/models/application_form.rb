@@ -62,6 +62,7 @@ class ApplicationForm < ApplicationRecord
   has_many :qualifications, dependent: :destroy
   has_many :documents, as: :documentable, dependent: :destroy
   has_many :timeline_events
+  has_one :dqt_trn_request
   has_one :assessment
   has_many :notes, dependent: :destroy
 
