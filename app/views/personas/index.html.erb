@@ -45,7 +45,7 @@
               row.cell { persona_check_tag(persona[:status_check]) }
               row.cell { persona_check_tag(persona[:sanction_check]) }
               row.cell do
-                render(ApplicationFormStatusTag::Component.new(
+                render(StatusTag::Component.new(
                   key: "#{index}",
                   status: persona[:state],
                 ))

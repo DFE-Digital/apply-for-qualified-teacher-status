@@ -32,7 +32,7 @@
                             aria: { describedby: "#{item}-status" } %>
               </span>
 
-              <%= render(ApplicationFormStatusTag::Component.new(
+              <%= render(StatusTag::Component.new(
                 key: item,
                 status: @view_object.application_form.task_statuses.dig(section, item),
                 class_context: "app-task-list"
@@ -53,7 +53,7 @@
 <% elsif @view_object.application_form.further_information_requested? %>
   <h2 class="govuk-heading-m">We need some more information</h2>
   <p class="govuk-body">The status of your qualified teacher status application is currently:</p>
-  <p class="govuk-body"><%= render(ApplicationFormStatusTag::Component.new(key: "state", status: @view_object.application_form.state)) %></p>
+  <p class="govuk-body"><%= render(StatusTag::Component.new(key: "state", status: @view_object.application_form.state)) %></p>
   <h3 class="govuk-heading-m">What you need to do</h3>
   <p class="govuk-body">The assessor needs you to provide some additional information so they can continue reviewing your application.</p>
   <div class="govuk-inset-text">

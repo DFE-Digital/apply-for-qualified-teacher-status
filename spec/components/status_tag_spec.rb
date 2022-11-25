@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ApplicationFormStatusTag::Component, type: :component do
+RSpec.describe StatusTag::Component, type: :component do
   subject(:component) do
     render_inline(described_class.new(key:, status:, class_context:, context:))
   end
