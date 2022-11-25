@@ -15,6 +15,11 @@ Rails.application.routes.draw do
     root to: redirect("/assessor/applications")
 
     resources :application_forms, path: "/applications", only: %i[index show] do
+      collection do
+        post "filters/apply", to: "application_forms#apply_filters"
+        get "filters/clear", to: "application_forms#clear_filters"
+      end
+
       get "status", to: "application_forms#status", on: :member
 
       get "assign-assessor", to: "assessor_assignments#new"

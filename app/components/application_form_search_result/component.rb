@@ -1,9 +1,8 @@
 module ApplicationFormSearchResult
   class Component < ViewComponent::Base
-    def initialize(application_form:, search_params:)
+    def initialize(application_form:)
       super
       @application_form = application_form
-      @search_params = search_params
     end
 
     def full_name
@@ -11,10 +10,7 @@ module ApplicationFormSearchResult
     end
 
     def href
-      assessor_interface_application_form_path(
-        application_form,
-        search: search_params,
-      )
+      assessor_interface_application_form_path(application_form)
     end
 
     def summary_rows
@@ -28,7 +24,7 @@ module ApplicationFormSearchResult
 
     private
 
-    attr_reader :application_form, :search_params
+    attr_reader :application_form
 
     delegate :application_form_full_name, to: :helpers
     delegate :application_form_summary_rows, to: :helpers
