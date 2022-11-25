@@ -10,22 +10,6 @@ en:
           registration_number: Tell us your registration number
 
   application_form:
-    status:
-      not_started: Not started
-      in_progress: In progress
-      initial_assessment: Initial assessment
-      further_information_requested: Further information requested
-      further_information_received: Further information received
-      awarded_pending_checks: Awarded pending checks
-      awarded: Awarded
-      declined: Declined
-      draft: Draft
-      submitted:
-        assessor: Not started
-        teacher: Submitted
-      completed: Completed
-      action_required: Action required
-      cannot_start_yet: Cannot start yet
     tasks:
       sections:
         about_you: About you

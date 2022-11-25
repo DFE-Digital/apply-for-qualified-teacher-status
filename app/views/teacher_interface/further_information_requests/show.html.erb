@@ -16,7 +16,7 @@
             <%= link_to item[:text], item[:href], aria: { describedby: "#{item[:key]}-status" } %>
           </span>
 
-          <%= render(ApplicationFormStatusTag::Component.new(
+          <%= render(StatusTag::Component.new(
             **item.slice(:key, :status).merge(class_context: "app-task-list")
           )) %>
         </li>

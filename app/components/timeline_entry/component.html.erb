@@ -23,7 +23,7 @@
     <% elsif timeline_event.assessment_section_recorded? %>
       <p class="govuk-body">
         <%= description_vars[:section_name] %>:
-        <%= render(ApplicationFormStatusTag::Component.new(
+        <%= render(StatusTag::Component.new(
           key: timeline_event.id,
           status: description_vars[:section_state],
           class_context: "timeline-event",
