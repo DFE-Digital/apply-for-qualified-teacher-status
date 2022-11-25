@@ -1,7 +1,7 @@
 module AssessorInterface
   class ApplicationFormsController < BaseController
     def index
-      @view_object = ApplicationFormsIndexViewObject.new(params:)
+      @view_object = ApplicationFormsIndexViewObject.new(params:, session:)
       render layout: "full_from_desktop"
     end
 

@@ -4,8 +4,9 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   include ActionView::Helpers::FormOptionsHelper
   include Pagy::Backend
 
-  def initialize(params:)
-    @params = remove_cleared_autocomplete_values(params)
+  def initialize(params:, session:)
+    @params = params
+    @session = session
   end
 
   def application_forms_pagy
@@ -51,25 +52,10 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     end
   end
 
-  def permitted_params
-    params.permit(
-      :location_autocomplete,
-      :page,
-      assessor_interface_filter_form: [
-        :location,
-        :name,
-        :reference,
-        :submitted_at_before,
-        :submitted_at_after,
-        { assessor_ids: [], states: [] },
-      ],
-    )
-  end
-
   private
 
   def filter_params
-    permitted_params[:assessor_interface_filter_form] || {}
+    (session[:filter_params] || {}).with_indifferent_access
   end
 
   def application_forms_with_pagy
@@ -98,14 +84,5 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       end
   end
 
-  def remove_cleared_autocomplete_values(params)
-    if params.include?(:location_autocomplete) &&
-         params[:location_autocomplete].blank?
-      params[:assessor_interface_filter_form]&.delete(:location)
-    end
-
-    params
-  end
-
-  attr_reader :params
+  attr_reader :params, :session
 end

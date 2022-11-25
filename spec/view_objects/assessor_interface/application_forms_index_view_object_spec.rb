@@ -3,11 +3,10 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
-  subject(:view_object) do
-    described_class.new(params: ActionController::Parameters.new(params))
-  end
+  subject(:view_object) { described_class.new(params:, session:) }
 
   let(:params) { {} }
+  let(:session) { {} }
 
   describe "#application_forms_pagy" do
     subject(:application_forms_pagy) { view_object.application_forms_pagy }
@@ -139,43 +138,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
 
     context "when the filter is set" do
-      let(:params) do
-        {
-          assessor_interface_filter_form: {
-            location: "country:US",
-          },
-          location_autocomplete: "United States",
-        }
-      end
-
-      it do
-        is_expected.to include(
-          '<option selected="selected" value="country:US">United States</option>',
-        )
-      end
-    end
-
-    context "when the autocomplete input is cleared" do
-      let(:params) do
-        {
-          assessor_interface_filter_form: {
-            location: "country:US",
-          },
-          location_autocomplete: "",
-        }
-      end
-
-      it do
-        is_expected.to include(
-          '<option value="country:US">United States</option>',
-        )
-      end
-    end
-
-    context "when the autocomplete input isn't being used" do
-      let(:params) do
-        { assessor_interface_filter_form: { location: "country:US" } }
-      end
+      let(:session) { { filter_params: { location: "country:US" } } }
 
       it do
         is_expected.to include(
@@ -250,50 +213,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
           ],
         )
       end
-    end
-  end
-
-  describe "#permitted_params" do
-    subject(:permitted_params) { view_object.permitted_params }
-
-    it { is_expected.to be_empty }
-
-    context "with permitted params" do
-      let(:params) do
-        {
-          assessor_interface_filter_form: {
-            assessor_ids: ["assessor_id"],
-            location: "location",
-            name: "name",
-            reference: "reference",
-            states: ["state"],
-          },
-          location_autocomplete: "location_autocomplete",
-          page: "page",
-        }
-      end
-
-      it do
-        is_expected.to eq(
-          {
-            "assessor_interface_filter_form" => {
-              "assessor_ids" => ["assessor_id"],
-              "location" => "location",
-              "name" => "name",
-              "reference" => "reference",
-              "states" => ["state"],
-            },
-            "location_autocomplete" => "location_autocomplete",
-            "page" => "page",
-          },
-        )
-      end
-    end
-
-    context "with unpermitted params" do
-      let(:params) { { unpermitted: "unpermitted" } }
-
-      it { is_expected.to be_empty }
     end
   end
 end

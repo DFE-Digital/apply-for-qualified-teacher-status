@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AssessorInterface::FilterForm
   include ActiveModel::Model
   include ActiveRecord::AttributeAssignment
