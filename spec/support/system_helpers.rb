@@ -26,7 +26,7 @@ module SystemHelpers
     click_button "Start now"
 
     if FeatureFlag.active?(:teacher_applications)
-      choose "No, I need to check my eligibility", visible: false
+      choose "No, I need to check if I can apply", visible: false
       and_i_click_continue
     end
 
@@ -148,7 +148,7 @@ module SystemHelpers
       "Yes, sign in and continue application",
     )
     expect(teacher_create_or_sign_in_page).to have_content(
-      "No, I need to check my eligibility",
+      "No, I need to check if I can apply",
     )
   end
 

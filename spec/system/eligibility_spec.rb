@@ -304,7 +304,7 @@ RSpec.describe "Eligibility check", type: :system do
       "You’re not eligible to apply for qualified teacher status (QTS) in England",
     )
     expect(ineligible_page.body).to have_content(
-      "This service is for qualified teachers who trained outside of England",
+      "This service is for qualified teachers who trained to teach outside of England",
     )
   end
 
@@ -316,7 +316,7 @@ RSpec.describe "Eligibility check", type: :system do
 
   def and_i_see_the_ineligible_misconduct_text
     expect(ineligible_page.reasons).to have_content(
-      "To teach in England, you must not have any findings of misconduct or restrictions on your practice.",
+      "To teach in England, you must not have any findings of misconduct or restrictions on your employment record.",
     )
   end
 
