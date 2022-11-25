@@ -2,7 +2,8 @@
 
 module AssessorInterface
   class ApplicationFormsController < BaseController
-    before_action :authorize_assessor, except: :status
+    before_action :authorize_assessor,
+                  except: %i[apply_filters clear_filters status]
 
     def index
       @view_object = ApplicationFormsIndexViewObject.new(params:, session:)
@@ -10,6 +11,7 @@ module AssessorInterface
     end
 
     def apply_filters
+      authorize :assessor, :index?
       session[:filter_params] = extract_filter_params(
         remove_cleared_autocomplete_values(params),
       )
@@ -17,6 +19,7 @@ module AssessorInterface
     end
 
     def clear_filters
+      authorize :assessor, :index?
       session[:filter_params] = {}
       redirect_to assessor_interface_application_forms_path(page: params[:page])
     end
