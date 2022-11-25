@@ -31,7 +31,8 @@ module ApplyForQualifiedTeacherStatus
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+
+    config.eager_load_paths << "#{root}/app/policies"
 
     # Don't generate system test files.
     config.generators.system_tests = nil
@@ -42,6 +43,9 @@ module ApplyForQualifiedTeacherStatus
       "node_modules/govuk-frontend/govuk/assets",
     )
 
+    config.action_dispatch.rescue_responses[
+      "Pundit::NotAuthorizedError"
+    ] = :forbidden
     config.action_mailer.deliver_later_queue_name = "mailer"
 
     config.dqt = config_for(:dqt)

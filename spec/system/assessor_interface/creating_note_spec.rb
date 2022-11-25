@@ -5,9 +5,8 @@ require "rails_helper"
 RSpec.describe "Creating a note", type: :system do
   it "creates a note" do
     given_the_service_is_open
-    given_i_am_authorized_as_a_user(assessor)
+    given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form
-    given_an_assessor_exists
 
     when_i_visit_the(
       :assessor_application_page,
@@ -33,10 +32,6 @@ RSpec.describe "Creating a note", type: :system do
     application_form
   end
 
-  def given_an_assessor_exists
-    assessor
-  end
-
   def and_i_click_add_note
     assessor_application_page.add_note_button.click
   end
@@ -57,9 +52,5 @@ RSpec.describe "Creating a note", type: :system do
   def application_form
     @application_form ||=
       create(:application_form, :submitted, :with_assessment)
-  end
-
-  def assessor
-    @assessor ||= create(:staff, :confirmed)
   end
 end

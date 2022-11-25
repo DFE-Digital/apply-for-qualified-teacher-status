@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class SupportInterface::CountriesController < SupportInterface::BaseController
+  before_action :authorize_support, except: :confirm_edit
   before_action :load_country_and_edit_actions, only: %w[confirm_edit update]
 
   def index
@@ -11,6 +14,7 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
   end
 
   def confirm_edit
+    authorize :support, :edit?
     @country.assign_attributes(country_params)
   end
 

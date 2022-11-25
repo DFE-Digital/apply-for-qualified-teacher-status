@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 module AssessorInterface
   class NotesController < BaseController
+    before_action :authorize_assessor
+
     def new
       @application_form = application_form
       @create_note_form = CreateNoteForm.new

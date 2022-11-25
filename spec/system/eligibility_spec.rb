@@ -152,8 +152,8 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_visit_the(:start_page)
     then_access_is_denied
 
-    when_i_am_authorized_as_a_support_user
     given_the_service_is_open
+    given_i_am_authorized_as_a_support_user
     when_i_visit_the(:start_page)
     then_i_see_the(:start_page)
 

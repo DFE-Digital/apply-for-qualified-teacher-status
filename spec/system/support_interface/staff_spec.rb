@@ -1,9 +1,16 @@
 require "rails_helper"
 
 RSpec.describe "Staff support", type: :system do
+  before { given_the_service_is_open }
+
+  it "requires permission" do
+    given_i_am_authorized_as_an_assessor_user
+    when_i_visit_the_staff_page
+    then_i_see_the_forbidden_page
+  end
+
   it "allows inviting a user" do
-    given_the_service_is_open
-    when_i_am_authorized_as_a_support_user
+    given_i_am_authorized_as_a_support_user
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
 
@@ -12,6 +19,7 @@ RSpec.describe "Staff support", type: :system do
 
     when_i_fill_email_address
     and_i_fill_name
+    and_i_choose_support_console_permission
     and_i_send_invitation
     then_i_see_an_invitation_email
     then_i_see_the_staff_index
@@ -85,6 +93,10 @@ RSpec.describe "Staff support", type: :system do
   def and_i_fill_password
     fill_in "staff-password-field", with: "password"
     fill_in "staff-password-confirmation-field", with: "password"
+  end
+
+  def and_i_choose_support_console_permission
+    check "staff-support-console-permission-1-field", visible: false
   end
 
   def and_i_send_invitation

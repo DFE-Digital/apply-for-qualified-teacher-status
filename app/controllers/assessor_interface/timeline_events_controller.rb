@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 module AssessorInterface
   class TimelineEventsController < BaseController
+    before_action :authorize_assessor
+
     def index
       @application_form = ApplicationForm.find(params[:application_form_id])
 
