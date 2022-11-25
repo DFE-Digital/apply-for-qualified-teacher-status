@@ -14,7 +14,7 @@ namespace :example_data do
     Faker::Config.locale = "en-GB"
     Faker::UniqueGenerator.clear
 
-    staff_members = admins + assessors
+    staff_members = admins + assessors + helpdesk_users
 
     staff_members.each do |staff|
       FactoryBot.create(:staff, :confirmed, **staff)
@@ -85,6 +85,17 @@ def admins
       name: "Sally Admin",
       email: "admin-sally@example.com",
       support_console_permission: true,
+      award_decline_permission: false,
+    },
+  ]
+end
+
+def helpdesk_users
+  [
+    {
+      name: "Antonio Helpdesk",
+      email: "helpdesk-antonio@example.com",
+      support_console_permission: false,
       award_decline_permission: false,
     },
   ]
