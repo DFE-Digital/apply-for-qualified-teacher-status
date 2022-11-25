@@ -77,6 +77,7 @@ en:
           name_change_document_present: evidence of name change is present (if the name entered on the form is different to the name on their ID)
           duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
           applicant_already_qts: applicant does not already hold QTS and induction exemption
+          applicant_already_dqt: applicant does not already appear in DQT
           qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 academic qualification or equivalent)
           teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
           qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
@@ -104,6 +105,7 @@ en:
           name_change_document_illegible: The evidence of change of name is illegible or in a format that we cannot accept.
           duplicate_application: There’s already another in-flight application for this applicant.
           applicant_already_qts: The applicant already holds QTS and induction exemption.
+          applicant_already_dqt: There’s a potential existing match for this applicant. We need to ask for an additional identifier.
           teaching_qualifications_from_ineligible_country: Teaching qualifications were completed in an ineligible country.
           teaching_qualifications_not_at_required_level: Teaching qualifications do not meet the required academic level.
           not_qualified_to_teach_mainstream: Applicant is not qualified to teach in mainstream education.
@@ -168,6 +170,8 @@ en:
             duplicate_application_notes:
               blank: Enter a note to the applicant
             applicant_already_qts_notes:
+              blank: Enter a note to the applicant
+            applicant_already_dqt_notes:
               blank: Enter a note to the applicant
             teaching_qualifications_from_ineligible_country_notes:
               blank: Enter a note to the applicant

@@ -34,6 +34,7 @@ class AssessmentFactory
       (:name_change_document_present if application_form.has_alternative_name),
       :duplicate_application,
       :applicant_already_qts,
+      :applicant_already_dqt,
     ].compact
 
     failure_reasons = [
@@ -45,6 +46,7 @@ class AssessmentFactory
       ),
       :duplicate_application,
       :applicant_already_qts,
+      :applicant_already_dqt,
     ].compact
 
     AssessmentSection.new(
