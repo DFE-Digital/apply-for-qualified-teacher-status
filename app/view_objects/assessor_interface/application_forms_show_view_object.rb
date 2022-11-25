@@ -10,12 +10,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
       ApplicationForm.includes(assessment: :sections).find(params[:id])
   end
 
-  def back_link_path
-    url_helpers.assessor_interface_application_forms_path(
-      params[:search]&.permit!,
-    )
-  end
-
   def assessment_tasks
     assessment_section_keys = assessment.sections.map(&:key).map(&:to_sym)
 

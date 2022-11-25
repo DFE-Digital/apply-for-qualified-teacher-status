@@ -23,18 +23,6 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
   end
 
-  describe "#back_link_path" do
-    subject(:back_link_path) { view_object.back_link_path }
-
-    it { is_expected.to eq("/assessor/applications") }
-
-    context "with form params" do
-      let(:params) { { search: { states: %w[awarded] } } }
-
-      it { is_expected.to eq("/assessor/applications?states%5B%5D=awarded") }
-    end
-  end
-
   describe "#assessment_tasks" do
     subject(:assessment_tasks) { view_object.assessment_tasks }
 
