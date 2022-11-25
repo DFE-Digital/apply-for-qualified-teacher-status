@@ -53,7 +53,7 @@ RSpec.describe Filters::Assessor do
     end
 
     it "returns a filtered scope" do
-      expect(subject).to eq(included)
+      expect(subject).to match_array(included)
     end
   end
 
