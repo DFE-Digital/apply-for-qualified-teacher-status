@@ -14,6 +14,12 @@ class UpdateAssessmentSection
 
     ActiveRecord::Base.transaction do
       next false unless assessment_section.update(params)
+      params[:selected_failure_reasons].each do |key, assessor_feedback|
+        assessment_section.assessment_section_failure_reasons.create(
+          key:,
+          assessor_feedback:,
+        )
+      end
 
       create_timeline_event(old_state:)
       update_application_form_assessor

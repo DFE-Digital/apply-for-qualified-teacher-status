@@ -12,10 +12,14 @@ RSpec.describe UpdateAssessmentSection do
       assessment: create(:assessment, application_form:),
     )
   end
-  let(:selected_failure_reason) { assessment_section.failure_reasons.sample }
-  let(:params) do
-    { passed: false, selected_failure_reasons: [selected_failure_reason] }
+  let(:selected_failure_reasons) do
+    { selected_failure_reason_key => selected_failure_reason_assessor_note }
   end
+  let(:selected_failure_reason_key) do
+    assessment_section.failure_reasons.sample
+  end
+  let(:selected_failure_reason_assessor_note) { "Epic fail" }
+  let(:params) { { passed: false, selected_failure_reasons: } }
 
   subject { described_class.call(assessment_section:, user:, params:) }
 
@@ -37,7 +41,16 @@ RSpec.describe UpdateAssessmentSection do
     it "sets the failure reasons" do
       expect { subject }.to change {
         assessment_section.selected_failure_reasons
-      }.from({}).to([selected_failure_reason])
+      }.from({}).to(selected_failure_reasons)
+    end
+
+    it "creates the assessment failure reason records" do
+      expect { subject }.to change {
+        AssessmentSectionFailureReason.where(
+          assessment_section:,
+          key: selected_failure_reason_key,
+        ).count
+      }.by(1)
     end
 
     it "changes the assessor" do
