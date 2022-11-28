@@ -1,9 +1,14 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class PersonalInformationController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
+
+    skip_before_action :push_self, only: :show
 
     def show
       if application_form.task_item_completed?(

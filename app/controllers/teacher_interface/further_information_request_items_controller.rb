@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class FurtherInformationRequestItemsController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :load_application_form,
                   :load_further_information_request_and_item

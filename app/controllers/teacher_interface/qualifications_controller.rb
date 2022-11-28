@@ -1,9 +1,14 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class QualificationsController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
+
+    skip_before_action :push_self, only: :index
 
     def index
       if application_form.task_item_completed?(:qualifications, :qualifications)
@@ -46,6 +51,13 @@ module TeacherInterface
       handle_application_form_section(
         form: @qualification_form,
         if_success_then_redirect: -> do
+          history_stack.replace_self(
+            path:
+              edit_teacher_interface_application_form_qualification_path(
+                qualification,
+              ),
+            origin: false,
+          )
           [
             :teacher_interface,
             :application_form,
@@ -63,6 +75,11 @@ module TeacherInterface
       if ActiveModel::Type::Boolean.new.cast(
            params.dig(:qualification, :add_another),
          )
+        history_stack.replace_self(
+          path: check_teacher_interface_application_form_qualifications_path,
+          origin: true,
+        )
+
         redirect_to %i[new teacher_interface application_form qualification]
       else
         redirect_to %i[teacher_interface application_form]
