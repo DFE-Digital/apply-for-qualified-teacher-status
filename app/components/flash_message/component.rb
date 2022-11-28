@@ -5,7 +5,7 @@ module FlashMessage
 
     def initialize(flash:)
       super
-      @flash = flash.to_hash.symbolize_keys!
+      @flash = flash.to_hash.symbolize_keys
     end
 
     def message_key
