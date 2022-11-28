@@ -1,5 +1,11 @@
 ---
 :shared:
+  :sessions:
+    - id
+    - session_id
+    - data
+    - created_at
+    - updated_at
   :staff:
     - encrypted_password
     - reset_password_token

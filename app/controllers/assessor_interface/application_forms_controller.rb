@@ -36,7 +36,7 @@ module AssessorInterface
     private
 
     def extract_filter_params(params)
-      params[:assessor_interface_filter_form].permit!
+      params[:assessor_interface_filter_form].permit!.to_h
     end
 
     def remove_cleared_autocomplete_values(params)

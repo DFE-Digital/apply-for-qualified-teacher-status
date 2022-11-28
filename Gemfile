@@ -5,6 +5,7 @@ ruby "3.1.2"
 
 gem "rails", "~> 7.0.4"
 
+gem "activerecord-session_store"
 gem "azure-storage-blob"
 gem "bootsnap", require: false
 gem "business"
