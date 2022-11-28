@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_122306) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_135028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,6 +84,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_122306) do
     t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
     t.index ["state"], name: "index_application_forms_on_state"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
+  end
+
+  create_table "assessment_section_failure_reasons", force: :cascade do |t|
+    t.bigint "assessment_section_id", null: false
+    t.string "key", null: false
+    t.text "assessor_feedback"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_section_id"], name: "index_as_failure_reason_assessment_section_id"
   end
 
   create_table "assessment_sections", force: :cascade do |t|
@@ -355,6 +364,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_122306) do
   add_foreign_key "application_forms", "staff", column: "assessor_id"
   add_foreign_key "application_forms", "staff", column: "reviewer_id"
   add_foreign_key "application_forms", "teachers"
+  add_foreign_key "assessment_section_failure_reasons", "assessment_sections"
   add_foreign_key "assessment_sections", "assessments"
   add_foreign_key "assessments", "application_forms"
   add_foreign_key "dqt_trn_requests", "application_forms"

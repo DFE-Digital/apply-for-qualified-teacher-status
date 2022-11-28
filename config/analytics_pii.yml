@@ -16,6 +16,8 @@
     - registration_number
     - has_work_history
     - subjects
+  :assessment_section_failure_reasons:
+    - assessor_feedback
   :further_information_requests:
     - failure_assessor_note
   :further_information_request_items:
