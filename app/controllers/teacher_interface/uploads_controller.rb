@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class UploadsController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :redirect_unless_draft_or_further_information
     before_action :load_application_form
@@ -16,7 +19,15 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @upload_form,
-        if_success_then_redirect: document_path,
+        if_success_then_redirect: -> do
+          history_stack.replace_self(
+            path:
+              edit_teacher_interface_application_form_document_path(document),
+            origin: false,
+            check: false,
+          )
+          document_path
+        end,
         if_failure_then_render: :new,
       )
     end

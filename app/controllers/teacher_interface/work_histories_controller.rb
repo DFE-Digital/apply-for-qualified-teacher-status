@@ -1,9 +1,15 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class WorkHistoriesController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
+
+    skip_before_action :track_history, only: :index
+    define_history_checks :check
 
     def index
       if application_form.task_item_completed?(:work_history, :work_history)
@@ -35,7 +41,17 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @work_history_form,
-        if_success_then_redirect: update_success_path,
+        if_success_then_redirect: -> do
+          history_stack.replace_self(
+            path:
+              edit_teacher_interface_application_form_work_history_path(
+                work_history,
+              ),
+            origin: false,
+            check: false,
+          )
+          update_success_path
+        end,
         if_failure_then_render: :new,
       )
     end
@@ -47,6 +63,12 @@ module TeacherInterface
       if ActiveModel::Type::Boolean.new.cast(
            params.dig(:work_history, :add_another),
          )
+        history_stack.replace_self(
+          path: check_teacher_interface_application_form_work_histories_path,
+          origin: false,
+          check: true,
+        )
+
         redirect_to %i[new teacher_interface application_form work_history]
       else
         redirect_to %i[teacher_interface application_form]

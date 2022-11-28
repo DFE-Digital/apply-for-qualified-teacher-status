@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class FurtherInformationRequestItemsController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :load_application_form,
                   :load_further_information_request_and_item
@@ -47,6 +50,7 @@ module TeacherInterface
 
     def update_document
       if params[:button] == "save_and_continue"
+        history_stack.pop
         redirect_to document_path
       else
         redirect_to further_information_request_path

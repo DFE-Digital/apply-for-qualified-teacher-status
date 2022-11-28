@@ -1,8 +1,16 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class ApplicationFormsController < BaseController
+    include HistoryTrackable
+
     before_action :redirect_unless_application_form_is_draft,
                   only: %i[edit update]
     before_action :load_application_form, except: %i[new create]
+
+    define_history_origins :show
+    define_history_resets :show
+    define_history_checks :edit
 
     def new
       @country_region_form = CountryRegionForm.new
