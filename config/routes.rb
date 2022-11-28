@@ -215,6 +215,10 @@ Rails.application.routes.draw do
         as: "teacher_signed_out"
   end
 
+  resource :history, only: %i[] do
+    get "back", to: "history#back", on: :collection
+  end
+
   resources :personas, only: %i[index] do
     member do
       post "staff", to: "personas#staff_sign_in", as: "staff_sign_in"
