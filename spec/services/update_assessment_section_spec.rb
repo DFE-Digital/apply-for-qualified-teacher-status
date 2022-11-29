@@ -13,12 +13,12 @@ RSpec.describe UpdateAssessmentSection do
     )
   end
   let(:selected_failure_reasons) do
-    { selected_failure_reason_key => selected_failure_reason_assessor_note }
+    { selected_failure_reason_key => selected_failure_reason_assessor_feedback }
   end
   let(:selected_failure_reason_key) do
     assessment_section.failure_reasons.sample
   end
-  let(:selected_failure_reason_assessor_note) { "Epic fail" }
+  let(:selected_failure_reason_assessor_feedback) { "Epic fail" }
   let(:params) { { passed: false, selected_failure_reasons: } }
 
   subject { described_class.call(assessment_section:, user:, params:) }
@@ -51,6 +51,36 @@ RSpec.describe UpdateAssessmentSection do
           key: selected_failure_reason_key,
         ).count
       }.by(1)
+    end
+
+    context "when the failure reason already exists" do
+      context "when the feedback has been updated" do
+        before do
+          assessment_section.assessment_section_failure_reasons.create(
+            key: selected_failure_reason_key,
+            assessor_feedback: "I need updating",
+          )
+        end
+
+        it "doesn't create a new assessment failure reason record" do
+          expect { subject }.not_to(
+            change do
+              AssessmentSectionFailureReason.where(
+                assessment_section:,
+                key: selected_failure_reason_key,
+              ).count
+            end,
+          )
+        end
+
+        it "updates the existing record" do
+          expect { subject }.to change {
+            AssessmentSectionFailureReason.find_by(
+              key: selected_failure_reason_key,
+            ).assessor_feedback
+          }.to(selected_failure_reason_assessor_feedback)
+        end
+      end
     end
 
     it "changes the assessor" do
