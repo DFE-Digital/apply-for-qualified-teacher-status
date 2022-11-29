@@ -7,7 +7,7 @@ module PageObjects
     end
 
     def click_item(link_text)
-      find_item(link_text).link.click
+      find_item(link_text).click
     end
   end
 end
