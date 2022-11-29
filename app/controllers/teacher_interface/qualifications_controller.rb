@@ -47,7 +47,6 @@ module TeacherInterface
         form: @qualification_form,
         if_success_then_redirect: -> do
           [
-            :edit,
             :teacher_interface,
             :application_form,
             qualification.certificate_document,
@@ -169,7 +168,6 @@ module TeacherInterface
     def update_success_path
       params[:next].presence ||
         [
-          :edit,
           :teacher_interface,
           :application_form,
           qualification.certificate_document,

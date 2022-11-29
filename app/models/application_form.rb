@@ -169,7 +169,7 @@ class ApplicationForm < ApplicationRecord
 
     if key == :identification_document
       return(
-        url_helpers.edit_teacher_interface_application_form_document_path(
+        url_helpers.teacher_interface_application_form_document_path(
           identification_document,
         )
       )
@@ -177,7 +177,7 @@ class ApplicationForm < ApplicationRecord
 
     if key == :written_statement
       return(
-        url_helpers.edit_teacher_interface_application_form_document_path(
+        url_helpers.teacher_interface_application_form_document_path(
           written_statement_document,
         )
       )

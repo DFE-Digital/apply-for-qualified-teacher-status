@@ -103,7 +103,7 @@ module TeacherInterface
 
     def alternative_name_success_path
       if @alternative_name_form.has_alternative_name
-        edit_teacher_interface_application_form_document_path(
+        teacher_interface_application_form_document_path(
           application_form.name_change_document,
           next: params[:next],
         )
