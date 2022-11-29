@@ -6,7 +6,7 @@ class HistoryStack
   end
 
   def push_self(request, origin:, reset: false)
-    push(path: request.path, origin:, reset:)
+    push(path: request.fullpath, origin:, reset:)
   end
 
   def replace_self(path:, origin:)
