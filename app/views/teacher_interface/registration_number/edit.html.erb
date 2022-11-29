@@ -8,15 +8,15 @@
 
   <%= f.govuk_text_field :registration_number, label: { size: "l", tag: "h1" } %>
 
+  <% if @teaching_authority_other.present? %>
+    <%= raw GovukMarkdown.render(@teaching_authority_other) %>
+  <% end %>
+
   <%= govuk_details(summary_text: "When we might need more information") do %>
     <p>
       If we’re unable to find you using your registration number, we may need to
       contact you for more information as part of your application.
     </p>
-
-    <% if @teaching_authority_other.present? %>
-      <%= raw GovukMarkdown.render(@teaching_authority_other) %>
-    <% end %>
   <% end %>
 
   <%= render "shared/save_submit_buttons", f: %>

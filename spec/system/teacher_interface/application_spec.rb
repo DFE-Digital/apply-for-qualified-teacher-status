@@ -883,7 +883,7 @@ RSpec.describe "Teacher application", type: :system do
     )
 
     registration_number_form.details.summary.click
-    expect(registration_number_form.details.text).to have_content(
+    expect(registration_number_form).to have_content(
       "Other teaching authority information.",
     )
   end
