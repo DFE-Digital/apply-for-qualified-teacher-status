@@ -7,6 +7,11 @@ module PageHelpers
     send(page.to_sym).load(**args)
   end
 
+  def add_another_qualification_page
+    @add_another_qualification_page ||=
+      PageObjects::TeacherInterface::AddAnotherQualification.new
+  end
+
   def assessor_application_page
     @assessor_application_page ||=
       PageObjects::AssessorInterface::Application.new
@@ -81,6 +86,11 @@ module PageHelpers
     @degree_page ||= PageObjects::EligibilityInterface::Degree.new
   end
 
+  def edit_qualification_page
+    @edit_qualification_page ||=
+      PageObjects::TeacherInterface::EditQualification.new
+  end
+
   def eligible_page
     @eligible_page = PageObjects::EligibilityInterface::Eligible.new
   end
@@ -110,6 +120,16 @@ module PageHelpers
 
   def misconduct_page
     @misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
+  end
+
+  def new_qualification_page
+    @new_qualification_page ||=
+      PageObjects::TeacherInterface::NewQualification.new
+  end
+
+  def part_of_university_degree_page
+    @part_of_university_degree_page ||=
+      PageObjects::TeacherInterface::PartOfUniversityDegree.new
   end
 
   def performance_page
@@ -145,6 +165,11 @@ module PageHelpers
   def teach_children_page
     @teach_children_page ||=
       PageObjects::EligibilityInterface::TeachChildren.new
+  end
+
+  def teacher_check_qualifications_page
+    @teacher_check_qualifications_page ||=
+      PageObjects::TeacherInterface::CheckQualifications.new
   end
 
   def timeline_page

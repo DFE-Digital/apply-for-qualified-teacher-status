@@ -7,5 +7,9 @@ module PageObjects
         element :link, ".govuk-link"
       end
     end
+
+    def find_row(key:)
+      rows.find { |row| row.key.text == key }
+    end
   end
 end

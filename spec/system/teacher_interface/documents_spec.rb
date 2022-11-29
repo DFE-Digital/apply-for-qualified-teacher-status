@@ -45,11 +45,13 @@ RSpec.describe "Teacher documents", type: :system do
   end
 
   def when_i_upload_a_document
-    attach_file "teacher-interface-upload-form-original-attachment-field",
-                Rails.root.join(file_fixture("upload.pdf"))
-    choose "No, I’ll upload a translation as well", visible: false
-    attach_file "teacher-interface-upload-form-translated-attachment-field",
-                Rails.root.join(file_fixture("upload.pdf"))
+    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+      file_fixture("upload.pdf"),
+    )
+    upload_document_page.form.written_in_english_items.second.choose
+    upload_document_page.form.translated_attachment.attach_file Rails.root.join(
+      file_fixture("upload.pdf"),
+    )
   end
 
   def when_i_click_delete_on_the_first_document

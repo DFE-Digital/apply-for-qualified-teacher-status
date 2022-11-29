@@ -517,41 +517,38 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_the_upload_identification_form
-    attach_file "teacher-interface-upload-form-original-attachment-field",
-                Rails.root.join(file_fixture("upload.pdf"))
-  end
-
-  def when_i_click_qualifications
-    teacher_application_page.task_list.click_item(
-      "Add your teaching qualifications",
+    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+      file_fixture("upload.pdf"),
     )
   end
 
+  def when_i_click_qualifications
+    teacher_application_page.qualifications_task_item.click
+  end
+
   def when_i_fill_in_qualifications
-    fill_in "teacher-interface-qualification-form-title-field", with: "Title"
-    fill_in "teacher-interface-qualification-form-institution-name-field",
-            with: "Institution Name"
-    fill_in "teacher-interface-qualification-form-institution-country-location-field",
-            with: "France"
-    fill_in "teacher_interface_qualification_form_start_date_2i", with: "1"
-    fill_in "teacher_interface_qualification_form_start_date_1i", with: "2000"
-    fill_in "teacher_interface_qualification_form_complete_date_2i", with: "1"
-    fill_in "teacher_interface_qualification_form_complete_date_1i",
-            with: "2003"
-    fill_in "teacher_interface_qualification_form_certificate_date_2i",
-            with: "1"
-    fill_in "teacher_interface_qualification_form_certificate_date_1i",
-            with: "2004"
+    qualifications_form_page.form.title.fill_in with: "Title"
+    qualifications_form_page.form.institution_name.fill_in with:
+      "Institution Name"
+    qualifications_form_page.form.institution_country.fill_in with: "France"
+    qualifications_form_page.form.start_date_month.fill_in with: "1"
+    qualifications_form_page.form.start_date_year.fill_in with: "2000"
+    qualifications_form_page.form.complete_date_month.fill_in with: "1"
+    qualifications_form_page.form.complete_date_year.fill_in with: "2003"
+    qualifications_form_page.form.certificate_date_month.fill_in with: "1"
+    qualifications_form_page.form.certificate_date_year.fill_in with: "2004"
   end
 
   def when_i_fill_in_the_upload_certificate_form
-    attach_file "teacher-interface-upload-form-original-attachment-field",
-                Rails.root.join(file_fixture("upload.pdf"))
+    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+      file_fixture("upload.pdf"),
+    )
   end
 
   def when_i_fill_in_the_upload_transcript_form
-    attach_file "teacher-interface-upload-form-original-attachment-field",
-                Rails.root.join(file_fixture("upload.pdf"))
+    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+      file_fixture("upload.pdf"),
+    )
   end
 
   def when_i_click_age_range

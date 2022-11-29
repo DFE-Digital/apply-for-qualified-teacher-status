@@ -3,5 +3,7 @@ module PageObjects
     element :name, "span"
     element :link, "a"
     element :status_tag, ".govuk-tag"
+
+    def_delegator :link, :click
   end
 end
