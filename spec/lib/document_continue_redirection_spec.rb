@@ -35,7 +35,6 @@ RSpec.describe DocumentContinueRedirection do
       it do
         is_expected.to eq(
           [
-            :edit,
             :teacher_interface,
             :application_form,
             qualification.transcript_document,

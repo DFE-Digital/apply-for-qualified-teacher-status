@@ -178,7 +178,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :documents, only: %i[edit update] do
+      resources :documents, only: %i[show edit update] do
         resources :uploads, only: %i[new create destroy] do
           get "delete", on: :member
         end

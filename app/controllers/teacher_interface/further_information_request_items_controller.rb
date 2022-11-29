@@ -85,7 +85,7 @@ module TeacherInterface
     end
 
     def document_path
-      edit_teacher_interface_application_form_document_path(
+      teacher_interface_application_form_document_path(
         further_information_request_item.document,
         next: params[:next],
       )

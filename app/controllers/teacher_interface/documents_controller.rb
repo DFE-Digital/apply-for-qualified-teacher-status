@@ -6,14 +6,21 @@ module TeacherInterface
     before_action :load_application_form
     before_action :load_document
 
-    def edit
+    def show
       if document.uploads.empty?
         redirect_to new_teacher_interface_application_form_document_upload_path(
                       document,
                       next: params[:next],
                     )
+      else
+        redirect_to edit_teacher_interface_application_form_document_path(
+                      document,
+                      next: params[:next],
+                    )
       end
+    end
 
+    def edit
       @add_another_upload_form = AddAnotherUploadForm.new
     end
 
