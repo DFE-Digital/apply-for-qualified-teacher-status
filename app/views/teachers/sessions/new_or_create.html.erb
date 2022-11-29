@@ -1,6 +1,8 @@
 <% content_for :back_link_url, back_link_url(eligibility_interface_start_path) %>
 
-<h1 class="govuk-heading-l">Check your eligibility to apply for qualified teacher status (QTS) in England</h1>
+<h1 class="govuk-heading-l">
+  Check your eligibility to apply for qualified teacher status (QTS) in England
+</h1>
 
 <%= form_with model: @new_session_form, url: session_path(resource_name) do |f| %>
   <%= f.govuk_error_summary %>
@@ -10,7 +12,7 @@
       <%= f.govuk_email_field :email, autocomplete: "email" %>
     <% end %>
 
-    <%= f.govuk_radio_button :create_or_sign_in, "create", label: { text: "No, I need to check my eligibility" } %>
+    <%= f.govuk_radio_button :create_or_sign_in, "create", label: { text: "No, I need to check if I can apply" } %>
   <% end %>
 
   <%= f.govuk_submit %>

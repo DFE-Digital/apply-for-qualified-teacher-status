@@ -56,7 +56,7 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
     # dev & test environments have this feature enabled currently but production does
     # not. We can remove this conditional when the feature is released
     if page.has_content?("Have you used the service before?")
-      choose "No, I need to check my eligibility", visible: false
+      choose "No, I need to check if I can apply", visible: false
       click_button "Continue"
     end
   end
