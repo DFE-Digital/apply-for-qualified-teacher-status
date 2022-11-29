@@ -38,7 +38,11 @@
       This is called <%= region_certificate_phrase(@application_form.region) %>.
     </p>
 
-    <div class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</div>
+    <p class="govuk-body govuk-!-font-weight-bold">
+      You must supply the exact type of document named here. We cannot accept any other document as proof that you’re recognised as a teacher.
+    </p>
+
+    <p class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</p>
 
     <p class="govuk-body">It must confirm:</p>
     <ul class="govuk-list govuk-list--bullet">
@@ -48,7 +52,7 @@
     </ul>
     <p class="govuk-body">This written confirmation must be dated within 3 months of you applying for QTS.</p>
 
-    <%= govuk_details(summary_text: "I do not have this yet") do %>
+    <%= govuk_details(summary_text: "How to get this") do %>
       <p class="govuk-body">If you do not have this yet, you can obtain it by contacting:</p>
       <%= render "shared/teaching_authority_contact_information", region: @application_form.region %>
     <% end %>
