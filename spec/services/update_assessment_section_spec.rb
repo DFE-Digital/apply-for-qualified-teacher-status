@@ -81,6 +81,28 @@ RSpec.describe UpdateAssessmentSection do
           }.to(selected_failure_reason_assessor_feedback)
         end
       end
+
+      context "when the failure reason is no longer selected" do
+        let(:different_key) do
+          (
+            assessment_section.failure_reasons -
+              Array(selected_failure_reason_key)
+          ).sample
+        end
+
+        before do
+          assessment_section.assessment_section_failure_reasons.create(
+            key: different_key,
+            assessor_feedback: "I need deleting",
+          )
+        end
+
+        it "deletes the now unselected failure reason" do
+          expect { subject }.to change {
+            AssessmentSectionFailureReason.where(key: different_key).count
+          }.by(-1)
+        end
+      end
     end
 
     it "changes the assessor" do
