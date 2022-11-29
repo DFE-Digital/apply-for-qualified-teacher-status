@@ -8,7 +8,7 @@ RSpec.describe HistoryStack do
   describe "#push_self" do
     subject(:push_self) { history_stack.push_self(request, origin:, reset:) }
 
-    let(:request) { double(fullpath: "/path?page=1") }
+    let(:request) { double(path: "/path") }
 
     context "with an empty session" do
       let(:session) { {} }
@@ -19,13 +19,13 @@ RSpec.describe HistoryStack do
 
         it "stores the stack in the session" do
           expect { push_self }.to change { session }.to(
-            { history_stack: [{ origin: true, path: "/path?page=1" }] },
+            { history_stack: [{ origin: true, path: "/path" }] },
           )
         end
 
         it "doesn't store it twice" do
           expect { 2.times { push_self } }.to change { session }.to(
-            { history_stack: [{ origin: true, path: "/path?page=1" }] },
+            { history_stack: [{ origin: true, path: "/path" }] },
           )
         end
       end
@@ -35,7 +35,7 @@ RSpec.describe HistoryStack do
 
         it "stores the stack in the session" do
           expect { push_self }.to change { session }.to(
-            { history_stack: [{ origin: false, path: "/path?page=1" }] },
+            { history_stack: [{ origin: false, path: "/path" }] },
           )
         end
       end
@@ -50,7 +50,7 @@ RSpec.describe HistoryStack do
 
         it "stores the stack in the session" do
           expect { push_self }.to change { session }.to(
-            { history_stack: [{ origin: false, path: "/path?page=1" }] },
+            { history_stack: [{ origin: false, path: "/path" }] },
           )
         end
       end
@@ -63,7 +63,7 @@ RSpec.describe HistoryStack do
             {
               history_stack: [
                 { origin: true, path: "/origin" },
-                { origin: false, path: "/path?page=1" },
+                { origin: false, path: "/path" },
               ],
             },
           )
@@ -75,7 +75,7 @@ RSpec.describe HistoryStack do
   describe "#replace_self" do
     subject(:replace_self) { history_stack.replace_self(path:, origin:) }
 
-    let(:path) { "/path?page=1" }
+    let(:path) { "/path" }
 
     context "with an empty session" do
       let(:session) { {} }
@@ -85,13 +85,13 @@ RSpec.describe HistoryStack do
 
         it "stores the stack in the session" do
           expect { replace_self }.to change { session }.to(
-            { history_stack: [{ origin: true, path: "/path?page=1" }] },
+            { history_stack: [{ origin: true, path: "/path" }] },
           )
         end
 
         it "doesn't store it twice" do
           expect { 2.times { replace_self } }.to change { session }.to(
-            { history_stack: [{ origin: true, path: "/path?page=1" }] },
+            { history_stack: [{ origin: true, path: "/path" }] },
           )
         end
       end
@@ -101,7 +101,7 @@ RSpec.describe HistoryStack do
 
         it "stores the stack in the session" do
           expect { replace_self }.to change { session }.to(
-            { history_stack: [{ origin: false, path: "/path?page=1" }] },
+            { history_stack: [{ origin: false, path: "/path" }] },
           )
         end
       end
@@ -113,7 +113,7 @@ RSpec.describe HistoryStack do
 
       it "stores the stack in the session" do
         expect { replace_self }.to change { session }.to(
-          { history_stack: [{ origin: false, path: "/path?page=1" }] },
+          { history_stack: [{ origin: false, path: "/path" }] },
         )
       end
     end
