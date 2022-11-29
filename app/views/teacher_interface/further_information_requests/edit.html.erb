@@ -1,5 +1,5 @@
 <% content_for :page_title, "Check your answers before submitting your application" %>
-<% content_for :back_link_url, teacher_interface_application_form_further_information_request_path(@view_object.further_information_request) %>
+<% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_further_information_request_path(@view_object.further_information_request)) %>
 
 <h1 class="govuk-heading-xl">
   Check your answers before submitting your application
