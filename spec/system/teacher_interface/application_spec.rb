@@ -69,7 +69,30 @@ RSpec.describe "Teacher application", type: :system do
     when_i_choose_no
     and_i_click_continue
 
-    when_i_choose_yes
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_qualifications_summary
+
+    when_i_click_continue
+    then_i_see_the_university_degree_form
+
+    when_i_fill_in_qualifications
+    and_i_click_continue
+    then_i_see_the_upload_certificate_form
+
+    when_i_fill_in_the_upload_certificate_form
+    and_i_click_continue
+    then_i_see_the_check_your_certificate_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_upload_transcript_form
+
+    when_i_fill_in_the_upload_transcript_form
+    and_i_click_continue
+    then_i_see_the_check_your_transcript_uploads
+
+    when_i_choose_no
     and_i_click_continue
     then_i_see_the_qualifications_summary
 
@@ -788,6 +811,14 @@ RSpec.describe "Teacher application", type: :system do
     )
     expect(qualifications_form_page.body).to have_content(
       "This is the qualification that led to you being recognised as a teacher.",
+    )
+  end
+
+  def then_i_see_the_university_degree_form
+    expect(qualifications_form_page).to have_title("Your qualifications")
+    expect(qualifications_form_page.heading.text).to eq("University degree")
+    expect(qualifications_form_page.body).to have_content(
+      "Tell us about your university degree qualification.",
     )
   end
 

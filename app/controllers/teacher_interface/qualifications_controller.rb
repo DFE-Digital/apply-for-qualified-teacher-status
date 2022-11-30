@@ -9,7 +9,7 @@ module TeacherInterface
     before_action :load_application_form
 
     skip_before_action :track_history, only: :index
-    define_history_checks :check
+    define_history_checks :check_collection
 
     def index
       if application_form.task_item_completed?(:qualifications, :qualifications)
@@ -32,7 +32,7 @@ module TeacherInterface
       end
     end
 
-    def check
+    def check_collection
       @qualifications = application_form.qualifications.ordered
     end
 
@@ -143,10 +143,29 @@ module TeacherInterface
       handle_application_form_section(
         form: @part_of_university_degree_form,
         if_success_then_redirect: ->(check_path) do
-          part_of_university_degree_success_path(check_path)
+          if @part_of_university_degree_form.part_of_university_degree ==
+               false && application_form.degree_qualifications.empty?
+            application_form.qualifications.create!
+          end
+
+          return check_path if check_path
+
+          if qualification.is_last_qualification?
+            %i[check teacher_interface application_form qualifications]
+          else
+            [:check, :teacher_interface, :application_form, qualification]
+          end
         end,
         if_failure_then_render: :edit_part_of_university_degree,
       )
+    end
+
+    def check_member
+      @qualification = qualification
+
+      qualifications = application_form.qualifications.ordered.to_a
+      @next_qualification =
+        qualifications[qualifications.index(qualification) + 1]
     end
 
     def delete
@@ -190,26 +209,6 @@ module TeacherInterface
       params.require(:teacher_interface_part_of_university_degree_form).permit(
         :part_of_university_degree,
       )
-    end
-
-    def part_of_university_degree_success_path(check_path)
-      if @part_of_university_degree_form.part_of_university_degree ||
-           @part_of_university_degree_form.part_of_university_degree.nil?
-        check_path ||
-          %i[check teacher_interface application_form qualifications]
-      else
-        if application_form.degree_qualifications.empty?
-          application_form.qualifications.create!
-        end
-
-        check_path ||
-          [
-            :edit,
-            :teacher_interface,
-            :application_form,
-            application_form.degree_qualifications.first,
-          ]
-      end
     end
   end
 end

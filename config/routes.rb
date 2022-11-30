@@ -137,7 +137,7 @@ Rails.application.routes.draw do
 
       resources :qualifications, except: %i[show] do
         collection do
-          get "check", to: "qualifications#check"
+          get "check", to: "qualifications#check_collection"
 
           get "add_another", to: "qualifications#add_another"
           post "add_another", to: "qualifications#submit_add_another"
@@ -145,6 +145,8 @@ Rails.application.routes.draw do
 
         member do
           get "delete"
+
+          get "check", to: "qualifications#check_member"
 
           get "part_of_university_degree",
               to: "qualifications#edit_part_of_university_degree"

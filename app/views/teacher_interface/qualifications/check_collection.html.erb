@@ -1,11 +1,8 @@
 <% content_for :page_title, I18n.t("application_form.tasks.sections.qualifications") %>
-<% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_path) %>
+<% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_qualifications_path) %>
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 <h1 class="govuk-heading-l">Check your answers</h1>
-
-<p class="govuk-body-l">Check the answers you’ve provided about your teaching qualification.</p>
-<p class="govuk-body">If your teaching qualification was separate from your university degree, you can tell us about your degree in the next section.</p>
 
 <%= render "shared/application_form/qualifications_summary",
            application_form: @application_form,

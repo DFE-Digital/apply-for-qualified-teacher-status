@@ -16,8 +16,8 @@ RSpec.describe TeacherInterface::QualificationsController, type: :controller do
     include_examples "redirect unless application form is draft"
   end
 
-  describe "GET check" do
-    subject(:perform) { get :check }
+  describe "GET check_collection" do
+    subject(:perform) { get :check_collection }
 
     include_examples "redirect unless application form is draft"
   end
@@ -78,6 +78,14 @@ RSpec.describe TeacherInterface::QualificationsController, type: :controller do
     subject(:perform) do
       patch :update_part_of_university_degree, params: { id: qualification.id }
     end
+
+    include_examples "redirect unless application form is draft"
+  end
+
+  describe "GET check_member" do
+    let(:qualification) { create(:qualification, application_form:) }
+
+    subject(:perform) { get :check_member, params: { id: qualification.id } }
 
     include_examples "redirect unless application form is draft"
   end

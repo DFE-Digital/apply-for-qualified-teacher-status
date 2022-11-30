@@ -1,0 +1,16 @@
+<% content_for :page_title, t("application_form.tasks.sections.qualifications") %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_qualifications_path) %>
+
+<span class="govuk-caption-l"><%= t("application_form.tasks.sections.qualifications") %></span>
+<h1 class="govuk-heading-l">Check your answers</h1>
+
+<%= render "shared/application_form/qualifications_summary",
+           application_form: @application_form,
+           qualifications: [@qualification],
+           changeable: true %>
+
+<% if @next_qualification %>
+  <%= govuk_button_link_to "Continue", [:edit, :teacher_interface, :application_form, @next_qualification] %>
+<% else %>
+  <%= govuk_button_link_to "Continue", %i[check teacher_interface application_form qualifications] %>
+<% end %>
