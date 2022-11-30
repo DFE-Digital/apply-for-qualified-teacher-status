@@ -1,6 +1,4 @@
 <%= form_with model: qualification_form, url: [:teacher_interface, :application_form, qualification], method: qualification.new_record? ? :post : :put do |f| %>
-  <%= hidden_field_tag :next, params[:next] %>
-
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_fieldset legend: { text: I18n.t("application_form.qualifications.form.title.#{qualification.locale_key}") } do %>

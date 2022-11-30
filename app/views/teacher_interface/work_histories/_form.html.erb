@@ -1,6 +1,4 @@
 <%= form_with model: work_history_form, url: [:teacher_interface, :application_form, work_history], method: work_history.new_record? ? :post : :put do |f| %>
-  <%= hidden_field_tag :next, params[:next] %>
-
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_fieldset legend: { text: I18n.t(work_history.current_or_most_recent_role? ? "application_form.work_history.current_or_most_recent_role" : "application_form.work_history.previous_role") } do %>

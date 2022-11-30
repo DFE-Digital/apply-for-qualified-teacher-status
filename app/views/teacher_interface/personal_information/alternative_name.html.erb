@@ -4,8 +4,6 @@
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.about_you") %></span>
 
 <%= form_with model: @alternative_name_form, url: [:alternative_name, :teacher_interface, :application_form, :personal_information] do |f| %>
-  <%= hidden_field_tag :next, params[:next] %>
-
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_radio_buttons_fieldset :has_alternative_name, legend: { size: "l", tag: "h1" } do %>
