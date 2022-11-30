@@ -8,7 +8,8 @@ module TeacherInterface
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
 
-    skip_before_action :push_self, only: :index
+    skip_before_action :push_self, only: %i[index check]
+    before_action :push_self_as_check, only: :check
 
     def index
       if application_form.task_item_completed?(:qualifications, :qualifications)
@@ -57,7 +58,9 @@ module TeacherInterface
                 qualification,
               ),
             origin: false,
+            check: false,
           )
+
           [
             :teacher_interface,
             :application_form,
@@ -77,7 +80,8 @@ module TeacherInterface
          )
         history_stack.replace_self(
           path: check_teacher_interface_application_form_qualifications_path,
-          origin: true,
+          origin: false,
+          check: true,
         )
 
         redirect_to %i[new teacher_interface application_form qualification]

@@ -8,8 +8,9 @@ module TeacherInterface
                   only: %i[edit update]
     before_action :load_application_form, except: %i[new create]
 
-    skip_before_action :push_self, only: :show
+    skip_before_action :push_self
     before_action :push_self_as_origin_and_reset, only: :show
+    before_action :push_self_as_check, only: :edit
 
     def new
       @country_region_form = CountryRegionForm.new

@@ -6,8 +6,9 @@ module TeacherInterface
 
     before_action :load_view_object
 
-    skip_before_action :push_self, only: :show
+    skip_before_action :push_self
     before_action :push_self_as_origin, only: :show
+    before_action :push_self_as_check, only: :edit
 
     def show
     end

@@ -8,7 +8,8 @@ module TeacherInterface
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
 
-    skip_before_action :push_self, only: :show
+    skip_before_action :push_self, only: %i[show check]
+    before_action :push_self_as_check, only: :check
 
     def show
       if application_form.task_item_completed?(

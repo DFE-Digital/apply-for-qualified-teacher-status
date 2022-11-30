@@ -24,6 +24,7 @@ module TeacherInterface
             path:
               edit_teacher_interface_application_form_document_path(document),
             origin: false,
+            check: false,
           )
           document_path
         end,
