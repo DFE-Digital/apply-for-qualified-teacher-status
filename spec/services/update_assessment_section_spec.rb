@@ -12,10 +12,14 @@ RSpec.describe UpdateAssessmentSection do
       assessment: create(:assessment, application_form:),
     )
   end
-  let(:selected_failure_reason) { assessment_section.failure_reasons.sample }
-  let(:params) do
-    { passed: false, selected_failure_reasons: [selected_failure_reason] }
+  let(:selected_failure_reasons) do
+    { selected_failure_reason_key => selected_failure_reason_assessor_feedback }
   end
+  let(:selected_failure_reason_key) do
+    assessment_section.failure_reasons.sample
+  end
+  let(:selected_failure_reason_assessor_feedback) { "Epic fail" }
+  let(:params) { { passed: false, selected_failure_reasons: } }
 
   subject { described_class.call(assessment_section:, user:, params:) }
 
@@ -37,7 +41,68 @@ RSpec.describe UpdateAssessmentSection do
     it "sets the failure reasons" do
       expect { subject }.to change {
         assessment_section.selected_failure_reasons
-      }.from({}).to([selected_failure_reason])
+      }.from({}).to(selected_failure_reasons)
+    end
+
+    it "creates the assessment failure reason records" do
+      expect { subject }.to change {
+        AssessmentSectionFailureReason.where(
+          assessment_section:,
+          key: selected_failure_reason_key,
+        ).count
+      }.by(1)
+    end
+
+    context "when the failure reason already exists" do
+      context "when the feedback has been updated" do
+        before do
+          assessment_section.assessment_section_failure_reasons.create(
+            key: selected_failure_reason_key,
+            assessor_feedback: "I need updating",
+          )
+        end
+
+        it "doesn't create a new assessment failure reason record" do
+          expect { subject }.not_to(
+            change do
+              AssessmentSectionFailureReason.where(
+                assessment_section:,
+                key: selected_failure_reason_key,
+              ).count
+            end,
+          )
+        end
+
+        it "updates the existing record" do
+          expect { subject }.to change {
+            AssessmentSectionFailureReason.find_by(
+              key: selected_failure_reason_key,
+            ).assessor_feedback
+          }.to(selected_failure_reason_assessor_feedback)
+        end
+      end
+
+      context "when the failure reason is no longer selected" do
+        let(:different_key) do
+          (
+            assessment_section.failure_reasons -
+              Array(selected_failure_reason_key)
+          ).sample
+        end
+
+        before do
+          assessment_section.assessment_section_failure_reasons.create(
+            key: different_key,
+            assessor_feedback: "I need deleting",
+          )
+        end
+
+        it "deletes the now unselected failure reason" do
+          expect { subject }.to change {
+            AssessmentSectionFailureReason.where(key: different_key).count
+          }.by(-1)
+        end
+      end
     end
 
     it "changes the assessor" do
