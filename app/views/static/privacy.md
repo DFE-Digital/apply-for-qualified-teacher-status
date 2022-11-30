@@ -101,7 +101,7 @@ They'll add the following data to the database of qualified teachers:
 
 We use some user data to improve our services. For example, we’ll look at any feedback you give us about our services so we can improve them.
 
-We may contact you to ask if you’d like to participate in user research. This helps us improve our services and policies. You do not have to participate, and choosing to participate or not will not affect your application in any way. You can opt out of being contacted for user research at any time using the form below – you’ll still receive all other communications about your application. [Opt out of the user research database](https://docs.google.com/forms/d/e/1FAIpQLSeTqO6uiA_pt38S9Hl3XMG2aQ05Z5TuoFhLFWXTW4Zhau2y-g/viewform?usp=sf_link).
+We may contact you to ask if you’d like to participate in user research. This helps us improve our services and policies. You do not have to participate, and choosing to participate or not will not affect your application in any way. You can opt out of being contacted for user research at any time using the form below – you’ll still receive all other communications about your application. [Opt out of the user research database](https://docs.google.com/forms/d/e/1FAIpQLSeTqO6uiA_pt38S9Hl3XMG2aQ05Z5TuoFhLFWXTW4Zhau2y-g/viewform).
 
 ## Getting insight to make government policy better
 
