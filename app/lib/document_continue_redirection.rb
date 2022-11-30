@@ -19,6 +19,8 @@ class DocumentContinueRedirection
 
   attr_reader :document
 
+  delegate :documentable, to: :document
+
   def identification_url
     %i[teacher_interface application_form]
   end
@@ -28,23 +30,21 @@ class DocumentContinueRedirection
   end
 
   def qualification_certificate_url
-    [
-      :teacher_interface,
-      :application_form,
-      document.documentable.transcript_document,
-    ]
+    [:teacher_interface, :application_form, documentable.transcript_document]
   end
 
   def qualification_transcript_url
-    if document.documentable.is_teaching_qualification?
+    if documentable.is_teaching_qualification?
       [
         :part_of_university_degree,
         :teacher_interface,
         :application_form,
-        document.documentable,
+        documentable,
       ]
-    else
+    elsif documentable.is_last_qualification?
       %i[check teacher_interface application_form qualifications]
+    else
+      [:check, :teacher_interface, :application_form, documentable]
     end
   end
 
@@ -56,7 +56,7 @@ class DocumentContinueRedirection
     [
       :teacher_interface,
       :application_form,
-      document.documentable.further_information_request,
+      documentable.further_information_request,
     ]
   end
 end
