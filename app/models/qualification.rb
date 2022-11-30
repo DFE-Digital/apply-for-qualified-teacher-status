@@ -39,6 +39,10 @@ class Qualification < ApplicationRecord
     !is_teaching_qualification?
   end
 
+  def is_last_qualification?
+    application_form.qualifications.ordered.last == self
+  end
+
   def locale_key
     is_teaching_qualification? ? "teaching_qualification" : "university_degree"
   end

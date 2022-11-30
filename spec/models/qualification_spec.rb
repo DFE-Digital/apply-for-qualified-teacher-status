@@ -73,6 +73,22 @@ RSpec.describe Qualification, type: :model do
     end
   end
 
+  describe "#is_university_degree?" do
+    subject(:is_last_qualification?) { qualification.is_last_qualification? }
+
+    before { qualification.save! }
+
+    it { is_expected.to be true }
+
+    context "with a second qualification" do
+      before do
+        create(:qualification, application_form: qualification.application_form)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe "#can_delete?" do
     subject(:can_delete?) { qualification.can_delete? }
 
