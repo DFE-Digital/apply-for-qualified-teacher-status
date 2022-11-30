@@ -65,6 +65,10 @@
 <% elsif @view_object.application_form.declined? %>
   <h2 class="govuk-heading-l">Your QTS application has been declined</h2>
 
+  <%- if @view_object.show_further_information_request_expired_content? -%>
+    <%= govuk_inset_text(text:t(".further_information_request_expired")) %>
+  <%- end -%>
+  
   <% if (sections = @view_object.notes_from_assessors).present? %>
     <h3 class="govuk-heading-m">Notes from the assessor:</h3>
 

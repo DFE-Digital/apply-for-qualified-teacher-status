@@ -74,6 +74,16 @@ module TimelineEntry
       }
     end
 
+    def further_information_request_expired_vars
+      {
+        further_information_request: timeline_event.further_information_request,
+        date_requested:
+          timeline_event.further_information_request.created_at.strftime(
+            "%e %B %Y at %l:%M %P",
+          ),
+      }
+    end
+
     def email_sent_vars
       {
         subject:

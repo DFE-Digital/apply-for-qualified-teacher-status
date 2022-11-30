@@ -77,6 +77,8 @@ RSpec.describe TimelineEvent do
           "further_information_request_assessed",
         email_sent: "email_sent",
         age_range_subjects_verified: "age_range_subjects_verified",
+        further_information_request_expired:
+          "further_information_request_expired",
       ).backed_by_column_of_type(:string)
     end
 
@@ -148,6 +150,21 @@ RSpec.describe TimelineEvent do
     context "with a further information request assessed event type" do
       before do
         timeline_event.event_type = :further_information_request_assessed
+      end
+
+      it { is_expected.to validate_absence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:old_state) }
+      it { is_expected.to validate_absence_of(:new_state) }
+      it { is_expected.to validate_absence_of(:assessment_section) }
+      it { is_expected.to validate_absence_of(:note) }
+      it { is_expected.to validate_presence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:assessment) }
+    end
+
+    context "with a further information request expired event type" do
+      before do
+        timeline_event.event_type = :further_information_request_expired
       end
 
       it { is_expected.to validate_absence_of(:assignee) }

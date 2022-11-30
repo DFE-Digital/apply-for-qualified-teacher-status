@@ -59,4 +59,8 @@ class TeacherInterface::ApplicationFormShowViewObject
       end
     end
   end
+
+  def show_further_information_request_expired_content?
+    further_information_request.present? && further_information_request.expired?
+  end
 end
