@@ -19,14 +19,15 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @upload_form,
-        if_success_then_redirect: -> do
+        if_success_then_redirect: ->(_check_path) do
           history_stack.replace_self(
             path:
               edit_teacher_interface_application_form_document_path(document),
             origin: false,
             check: false,
           )
-          document_path
+
+          [:teacher_interface, :application_form, document]
         end,
         if_failure_then_render: :new,
       )
@@ -44,7 +45,7 @@ module TeacherInterface
         )
 
       if @delete_upload_form.save(validate: true)
-        redirect_to document_path
+        redirect_to [:teacher_interface, :application_form, document]
       else
         render :delete, status: :unprocessable_entity
       end
@@ -66,13 +67,6 @@ module TeacherInterface
       )[
         :teacher_interface_upload_form
       ] || {}
-    end
-
-    def document_path
-      teacher_interface_application_form_document_path(
-        @document,
-        next: params[:next],
-      )
     end
   end
 end

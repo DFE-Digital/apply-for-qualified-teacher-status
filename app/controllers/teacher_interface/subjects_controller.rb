@@ -22,11 +22,7 @@ module TeacherInterface
       @subjects_form =
         SubjectsForm.new(subjects_form_params.merge(application_form:))
 
-      handle_application_form_section(
-        form: @subjects_form,
-        if_success_then_redirect:,
-        if_failure_then_render: :edit,
-      )
+      handle_application_form_section(form: @subjects_form)
     end
 
     private
@@ -37,10 +33,6 @@ module TeacherInterface
         :subject_2,
         :subject_3,
       )
-    end
-
-    def if_success_then_redirect
-      params[:next].presence || %i[teacher_interface application_form]
     end
   end
 end
