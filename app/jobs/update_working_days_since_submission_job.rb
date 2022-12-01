@@ -5,10 +5,7 @@ class UpdateWorkingDaysSinceSubmissionJob < ApplicationJob
       .find_each do |application_form|
         working_days_since_submission =
           calendar.business_days_between(application_form.submitted_at, today)
-        application_form.update_column(
-          :working_days_since_submission,
-          working_days_since_submission,
-        )
+        application_form.update!(working_days_since_submission:)
       end
   end
 
