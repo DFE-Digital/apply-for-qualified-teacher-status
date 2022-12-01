@@ -32,7 +32,7 @@ FactoryBot.define do
       failure_reason_key { "identification_document_illegible" }
 
       after(:create) do |item|
-        create(:document, :identification_document, documentable: item)
+        create(:document, :identification, documentable: item)
       end
     end
 

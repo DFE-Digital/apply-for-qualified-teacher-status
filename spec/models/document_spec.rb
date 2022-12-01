@@ -28,6 +28,7 @@ RSpec.describe Document, type: :model do
         name_change: "name_change",
         qualification_certificate: "qualification_certificate",
         qualification_transcript: "qualification_transcript",
+        qualification_document: "qualification_document",
         written_statement: "written_statement",
       ).backed_by_column_of_type(:string)
     end

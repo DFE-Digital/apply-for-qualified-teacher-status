@@ -33,20 +33,34 @@ FactoryBot.define do
       end
     end
 
+    trait :name_change do
+      document_type { "name_change" }
+      association :documentable, factory: :application_form
+    end
+
+    trait :identification do
+      document_type { "identification" }
+      association :documentable, factory: :application_form
+    end
+
     trait :written_statement do
       document_type { "written_statement" }
+      association :documentable, factory: :application_form
     end
 
     trait :qualification_certificate do
       document_type { "qualification_certificate" }
+      association :documentable, factory: :qualification
     end
 
     trait :qualification_transcript do
       document_type { "qualification_transcript" }
+      association :documentable, factory: :qualification
     end
 
-    trait :identification_document do
-      document_type { "identification" }
+    trait :qualification_document do
+      document_type { "qualification_document" }
+      association :documentable, factory: :further_information_request_item
     end
   end
 end
