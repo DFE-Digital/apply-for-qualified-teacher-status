@@ -28,9 +28,10 @@ class UpdateAssessmentSection
           .update(assessor_feedback:)
       end
 
-      create_timeline_event(old_state:)
-      update_application_form_assessor
       update_application_form_state
+      update_application_form_assessor
+      create_timeline_event(old_state:)
+      update_assessment_started_at
 
       true
     end
@@ -39,6 +40,29 @@ class UpdateAssessmentSection
   private
 
   attr_reader :assessment_section, :user, :params
+
+  delegate :assessment, to: :assessment_section
+  delegate :application_form, to: :assessment
+
+  def update_application_form_state
+    if application_form.submitted?
+      ChangeApplicationFormState.call(
+        application_form:,
+        user:,
+        new_state: "initial_assessment",
+      )
+    end
+  end
+
+  def update_application_form_assessor
+    if application_form.assessor.nil?
+      AssignApplicationFormAssessor.call(
+        application_form:,
+        user:,
+        assessor: user,
+      )
+    end
+  end
 
   def create_timeline_event(old_state:)
     new_state = assessment_section.state
@@ -54,27 +78,8 @@ class UpdateAssessmentSection
     )
   end
 
-  def update_application_form_assessor
-    if application_form.assessor.nil?
-      AssignApplicationFormAssessor.call(
-        application_form:,
-        user:,
-        assessor: user,
-      )
-    end
-  end
-
-  def update_application_form_state
-    if application_form.submitted?
-      ChangeApplicationFormState.call(
-        application_form:,
-        user:,
-        new_state: "initial_assessment",
-      )
-    end
-  end
-
-  def application_form
-    assessment_section.assessment.application_form
+  def update_assessment_started_at
+    return if assessment.started_at
+    assessment.update!(started_at: Time.zone.now)
   end
 end
