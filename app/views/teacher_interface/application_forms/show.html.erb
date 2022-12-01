@@ -2,6 +2,8 @@
 
 <h1 class="govuk-heading-xl">Apply for qualified teacher status (QTS)</h1>
 
+<%= render "shared/apply_by_february_2023" %>
+
 <% if @view_object.application_form.draft? %>
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
     <% if @view_object.application_form.can_submit? %>
@@ -68,7 +70,7 @@
   <%- if @view_object.show_further_information_request_expired_content? -%>
     <%= govuk_inset_text(text:t(".further_information_request_expired")) %>
   <%- end -%>
-  
+
   <% if (sections = @view_object.notes_from_assessors).present? %>
     <h3 class="govuk-heading-m">Notes from the assessor:</h3>
 

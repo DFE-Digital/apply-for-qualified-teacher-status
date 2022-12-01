@@ -28,6 +28,10 @@ class CountryCode
       Country::CODES_IN_EUROPEAN_ECONOMIC_AREA.include?(code)
     end
 
+    def eligible_in_february_2023?(code)
+      Country::CODES_ELIGIBLE_IN_FEBRUARY_2023.include?(code)
+    end
+
     LOCATIONS_BY_COUNTRY_CODE =
       Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST
         .map { |row| [CountryCode.from_location(row.last), row.last] }
