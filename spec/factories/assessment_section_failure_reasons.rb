@@ -19,6 +19,6 @@
 #
 FactoryBot.define do
   factory :assessment_section_failure_reason do
-    key { AssessmentSectionFailureReason::ALL_FAILURE_REASONS.sample.to_s }
+    key { FailureReasons::ALL.sample.to_s }
   end
 end
