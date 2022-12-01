@@ -19,7 +19,9 @@ RSpec.describe DestroyApplicationForm do
           :with_further_information_request,
           application_form:,
         )
-      create(:assessment_section, :personal_information, assessment:)
+      assessment_section =
+        create(:assessment_section, :personal_information, assessment:)
+      create(:assessment_section_failure_reason, assessment_section:)
     end
   end
 
@@ -36,6 +38,7 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", ApplicationForm
   include_examples "deletes model", Assessment
   include_examples "deletes model", AssessmentSection
+  include_examples "deletes model", AssessmentSectionFailureReason
   include_examples "deletes model", Document, 12, 6
   include_examples "deletes model", FurtherInformationRequest
   include_examples "deletes model", FurtherInformationRequestItem, 4, 2
