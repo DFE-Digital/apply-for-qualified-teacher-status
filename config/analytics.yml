@@ -79,6 +79,7 @@
     - recommendation
     - created_at
     - updated_at
+    - started_at
     - age_range_min
     - age_range_max
     - age_range_note

@@ -10,6 +10,7 @@
 #  age_range_note      :text             default(""), not null
 #  recommendation      :string           default("unknown"), not null
 #  recommended_at      :date
+#  started_at          :datetime
 #  subjects            :text             default([]), not null, is an Array
 #  subjects_note       :text             default(""), not null
 #  created_at          :datetime         not null
