@@ -146,6 +146,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
       create(
         :application_form,
         :submitted,
+        region: create(:region, country: create(:country, code: "ES")),
         given_names: "Arnold",
         family_name: "Drummond",
         assessor: assessors.first,
@@ -154,6 +155,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
       create(
         :application_form,
         :awarded,
+        region: create(:region, country: create(:country, code: "PT")),
         given_names: "John",
         family_name: "Smith",
         assessor: assessors.second,
