@@ -18,7 +18,7 @@
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #
 FactoryBot.define do
-  factory :assessment_section_failure_reasons do
+  factory :assessment_section_failure_reason do
     key { AssessmentSectionFailureReason::ALL_FAILURE_REASONS.sample.to_s }
   end
 end

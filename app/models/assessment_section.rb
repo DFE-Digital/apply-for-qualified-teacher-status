@@ -23,7 +23,7 @@
 #
 class AssessmentSection < ApplicationRecord
   belongs_to :assessment
-  has_many :assessment_section_failure_reasons
+  has_many :assessment_section_failure_reasons, dependent: :destroy
 
   enum :key,
        {
