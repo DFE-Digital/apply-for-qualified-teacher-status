@@ -248,6 +248,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_110957) do
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
 
+  create_table "reminder_emails", force: :cascade do |t|
+    t.bigint "further_information_request_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["further_information_request_id"], name: "index_reminder_emails_on_further_information_request_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -378,6 +385,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_110957) do
   add_foreign_key "notes", "staff", column: "author_id"
   add_foreign_key "qualifications", "application_forms"
   add_foreign_key "regions", "countries"
+  add_foreign_key "reminder_emails", "further_information_requests"
   add_foreign_key "timeline_events", "application_forms"
   add_foreign_key "timeline_events", "assessment_sections"
   add_foreign_key "timeline_events", "assessments"

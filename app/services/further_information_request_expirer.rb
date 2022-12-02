@@ -2,7 +2,7 @@
 
 class FurtherInformationRequestExpirer
   include ServicePattern
-  FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
+  include FurtherInformationRequestExpirable
 
   def initialize(further_information_request:)
     @further_information_request = further_information_request
@@ -26,10 +26,6 @@ class FurtherInformationRequestExpirer
   private
 
   attr_reader :further_information_request
-  delegate :assessment, to: :further_information_request
-  delegate :application_form, to: :assessment
-  delegate :region, to: :application_form
-  delegate :country, to: :region
 
   def expire_request?
     further_information_request.requested? &&
@@ -37,9 +33,7 @@ class FurtherInformationRequestExpirer
   end
 
   def expire_if_older_than
-    return 4.weeks.ago if FOUR_WEEK_COUNTRY_CODES.include?(country.code)
-
-    6.weeks.ago
+    time_allowed.ago
   end
 
   def decline_application

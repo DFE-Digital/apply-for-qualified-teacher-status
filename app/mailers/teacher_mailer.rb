@@ -6,8 +6,10 @@ class TeacherMailer < ApplicationMailer
                   application_declined
                   application_received
                   further_information_received
+                  further_information_reminder
                 ]
   before_action :set_further_information_requested, only: :application_declined
+  before_action :set_due_date, only: :further_information_reminder
   after_action :store_observer_metadata
 
   GOVUK_NOTIFY_TEMPLATE_ID =
@@ -56,6 +58,14 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def further_information_reminder
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: params[:teacher].email,
+      subject: I18n.t("mailer.teacher.further_information_reminder.subject"),
+    )
+  end
+
   private
 
   def set_name
@@ -64,6 +74,10 @@ class TeacherMailer < ApplicationMailer
 
   def set_reference
     @reference = params[:teacher].application_form.reference
+  end
+
+  def set_due_date
+    @due_date = params[:due_date]
   end
 
   def set_further_information_requested

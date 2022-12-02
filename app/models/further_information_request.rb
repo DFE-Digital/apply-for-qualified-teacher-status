@@ -23,6 +23,8 @@ class FurtherInformationRequest < ApplicationRecord
            inverse_of: :further_information_request,
            dependent: :destroy
 
+  has_many :reminder_emails
+
   enum :state,
        { requested: "requested", received: "received", expired: "expired" },
        default: :requested
