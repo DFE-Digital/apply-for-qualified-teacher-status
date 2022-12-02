@@ -55,10 +55,6 @@ class AssessmentSection < ApplicationRecord
     passed ? :completed : :action_required
   end
 
-  def self.decline_failure_reason?(failure_reason:)
-    FailureReasons::DECLINABLE.include?(failure_reason.to_s)
-  end
-
   def declines_assessment?
     FailureReasons::DECLINABLE.intersection(
       selected_failure_reasons.keys,

@@ -75,11 +75,7 @@ module AssessorInterface
     def build_key(failure_reason, key_section)
       key =
         "helpers.#{key_section}.assessor_interface_assessment_section_form.failure_reason_notes"
-      if AssessmentSection.decline_failure_reason?(failure_reason:)
-        "#{key}_decline"
-      else
-        key
-      end
+      FailureReasons.decline?(failure_reason:) ? "#{key}_decline" : key
     end
   end
 end

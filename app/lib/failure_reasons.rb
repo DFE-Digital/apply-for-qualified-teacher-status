@@ -35,4 +35,8 @@ class FailureReasons
   ].freeze
 
   ALL = (DECLINABLE + FURTHER_INFORMATIONABLE).freeze
+
+  def self.decline?(failure_reason:)
+    DECLINABLE.include?(failure_reason.to_s)
+  end
 end
