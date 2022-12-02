@@ -3,19 +3,17 @@
 require "rails_helper"
 
 RSpec.describe DocumentContinueRedirection do
-  let(:document) { create(:document) }
-
   describe "#call" do
     subject(:call) { described_class.call(document:) }
 
     context "with an identity document" do
-      before { document.document_type = :identification }
+      let(:document) { create(:document, :identification) }
 
       it { is_expected.to eq(%i[teacher_interface application_form]) }
     end
 
     context "with a name change document" do
-      before { document.document_type = :name_change }
+      let(:document) { create(:document, :name_change) }
 
       it do
         is_expected.to eq(
@@ -24,48 +22,80 @@ RSpec.describe DocumentContinueRedirection do
       end
     end
 
-    context "with a qualification" do
-      let(:qualification) { build(:qualification) }
-
-      before { document.documentable = qualification }
-
-      context "and a certificate document" do
-        before { document.document_type = :qualification_certificate }
-
-        it do
-          is_expected.to eq(
-            [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              qualification.transcript_document,
-            ],
-          )
-        end
+    context "with a qualification certificate" do
+      let(:qualification) { create(:qualification) }
+      let(:document) do
+        create(
+          :document,
+          :qualification_certificate,
+          documentable: qualification,
+        )
       end
 
-      context "with a transcript document" do
-        before { document.document_type = :qualification_transcript }
+      it do
+        is_expected.to eq(
+          [
+            :edit,
+            :teacher_interface,
+            :application_form,
+            qualification.transcript_document,
+          ],
+        )
+      end
+    end
 
-        it do
-          is_expected.to eq(
-            [
-              :part_of_university_degree,
-              :teacher_interface,
-              :application_form,
-              qualification,
-            ],
-          )
-        end
+    context "with a qualification transcript" do
+      let(:qualification) { create(:qualification) }
+      let(:document) do
+        create(
+          :document,
+          :qualification_transcript,
+          documentable: qualification,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          [
+            :part_of_university_degree,
+            :teacher_interface,
+            :application_form,
+            qualification,
+          ],
+        )
+      end
+    end
+
+    context "with a qualification document" do
+      let(:further_information_request_item) do
+        create(:further_information_request_item)
+      end
+      let(:document) do
+        create(
+          :document,
+          :qualification_document,
+          documentable: further_information_request_item,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          [
+            :teacher_interface,
+            :application_form,
+            further_information_request_item.further_information_request,
+          ],
+        )
       end
     end
 
     context "with a further information request" do
       let(:further_information_request_item) do
-        build(:further_information_request_item)
+        create(:further_information_request_item)
       end
-
-      before { document.documentable = further_information_request_item }
+      let(:document) do
+        create(:document, documentable: further_information_request_item)
+      end
 
       it do
         is_expected.to eq(

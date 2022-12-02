@@ -25,6 +25,7 @@ en:
       name_change: name change
       qualification_certificate: certificate
       qualification_transcript: transcript
+      qualification_document: qualification
       written_statement: written statement
 
   activerecord:

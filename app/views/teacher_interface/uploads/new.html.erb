@@ -84,6 +84,8 @@
     </h1>
 
     <p class="govuk-body"><%= I18n.t("application_form.qualifications.upload.transcript.description") %></p>
+  <% elsif @document.qualification_document? %>
+    <h1 class="govuk-heading-l">Upload your qualification document</h1>
   <% end %>
 <% else %>
   <h1 class="govuk-heading-l">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>

@@ -31,6 +31,7 @@ class Document < ApplicationRecord
   TRANSLATABLE_TYPES = %w[
     qualification_certificate
     qualification_transcript
+    qualification_document
     written_statement
   ].freeze
   DOCUMENT_TYPES = (UNTRANSLATABLE_TYPES + TRANSLATABLE_TYPES).freeze
