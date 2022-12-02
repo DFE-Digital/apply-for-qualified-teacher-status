@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_01_213602) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_02_110957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -200,6 +200,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_01_213602) do
     t.datetime "updated_at", null: false
     t.boolean "passed"
     t.string "failure_assessor_note", default: "", null: false
+    t.integer "working_days_received_to_recommendation"
     t.index ["assessment_id"], name: "index_further_information_requests_on_assessment_id"
   end
 
