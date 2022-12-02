@@ -28,7 +28,7 @@
 #
 FactoryBot.define do
   factory :assessment do
-    association :application_form
+    association :application_form, :submitted
 
     trait :award do
       recommendation { "award" }

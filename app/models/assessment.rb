@@ -47,6 +47,9 @@ class Assessment < ApplicationRecord
               in: recommendations.values,
             }
 
+  scope :started, -> { where.not(started_at: nil) }
+  scope :recommended, -> { where.not(recommended_at: nil) }
+
   def finished?
     sections_finished? && (award? || decline?)
   end
