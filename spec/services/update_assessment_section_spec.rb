@@ -5,12 +5,9 @@ require "rails_helper"
 RSpec.describe UpdateAssessmentSection do
   let(:user) { build(:staff, id: 1) }
   let(:application_form) { create(:application_form, :submitted) }
+  let(:assessment) { create(:assessment, application_form:) }
   let(:assessment_section) do
-    create(
-      :assessment_section,
-      :personal_information,
-      assessment: create(:assessment, application_form:),
-    )
+    create(:assessment_section, :personal_information, assessment:)
   end
   let(:selected_failure_reasons) do
     { selected_failure_reason_key => selected_failure_reason_assessor_feedback }
@@ -124,6 +121,18 @@ RSpec.describe UpdateAssessmentSection do
         "submitted",
       ).to("initial_assessment")
     end
+
+    it "changes the assessment started at" do
+      expect { subject }.to change(assessment, :started_at).from(nil)
+    end
+
+    context "with an existing assessment started at" do
+      before { assessment.update!(started_at: Date.new(2021, 1, 1)) }
+
+      it "doesn't change the assessor" do
+        expect { subject }.to_not change(assessment, :started_at)
+      end
+    end
   end
 
   context "when the update fails" do
@@ -141,6 +150,10 @@ RSpec.describe UpdateAssessmentSection do
 
     it "doesn't change the application form state" do
       expect { subject }.to_not(change { application_form.state })
+    end
+
+    it "doesn't change the assessment started at" do
+      expect { subject }.to_not change(assessment, :started_at)
     end
   end
 

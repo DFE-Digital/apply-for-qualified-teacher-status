@@ -4,7 +4,8 @@ trim_sessions_job:
 
 update_working_days_since_submission:
   cron: "0 3 * * *"
-  class: UpdateWorkingDaysSinceSubmissionJob
+  class: UpdateWorkingDaysJob
+
 expire_further_information_requests:
   cron: "0 2 * * *"
   class: ExpireFurtherInformationRequestsJob

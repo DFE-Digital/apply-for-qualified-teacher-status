@@ -79,12 +79,16 @@
     - recommendation
     - created_at
     - updated_at
+    - started_at
     - age_range_min
     - age_range_max
     - age_range_note
     - subjects
     - subjects_note
     - recommended_at
+    - working_days_submission_to_recommendation
+    - working_days_submission_to_started
+    - working_days_started_to_recommendation
   :countries:
     - id
     - code
@@ -139,6 +143,7 @@
     - assessment_id
     - passed
     - failure_assessor_note
+    - working_days_received_to_recommendation
   :further_information_request_items:
     - id
     - information_type
