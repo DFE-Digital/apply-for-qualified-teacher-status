@@ -1,9 +1,15 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class QualificationsController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
+
+    skip_before_action :track_history, only: :index
+    define_history_checks :check
 
     def index
       if application_form.task_item_completed?(:qualifications, :qualifications)
@@ -45,9 +51,17 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @qualification_form,
-        if_success_then_redirect: -> do
+        if_success_then_redirect: ->(_check_path) do
+          history_stack.replace_self(
+            path:
+              edit_teacher_interface_application_form_qualification_path(
+                qualification,
+              ),
+            origin: false,
+            check: false,
+          )
+
           [
-            :edit,
             :teacher_interface,
             :application_form,
             qualification.certificate_document,
@@ -64,6 +78,12 @@ module TeacherInterface
       if ActiveModel::Type::Boolean.new.cast(
            params.dig(:qualification, :add_another),
          )
+        history_stack.replace_self(
+          path: check_teacher_interface_application_form_qualifications_path,
+          origin: false,
+          check: true,
+        )
+
         redirect_to %i[new teacher_interface application_form qualification]
       else
         redirect_to %i[teacher_interface application_form]
@@ -93,7 +113,11 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @qualification_form,
-        if_success_then_redirect: update_success_path,
+        if_success_then_redirect: [
+          :teacher_interface,
+          :application_form,
+          qualification.certificate_document,
+        ],
         if_failure_then_render: :edit,
       )
     end
@@ -118,7 +142,9 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @part_of_university_degree_form,
-        if_success_then_redirect: -> { part_of_university_degree_success_path },
+        if_success_then_redirect: ->(check_path) do
+          part_of_university_degree_success_path(check_path)
+        end,
         if_failure_then_render: :edit_part_of_university_degree,
       )
     end
@@ -137,7 +163,7 @@ module TeacherInterface
         )
 
       if @delete_qualification_form.save(validate: true)
-        redirect_to check_success_path
+        redirect_to %i[check teacher_interface application_form qualifications]
       else
         render :delete, status: :unprocessable_entity
       end
@@ -166,39 +192,24 @@ module TeacherInterface
       )
     end
 
-    def update_success_path
-      params[:next].presence ||
-        [
-          :edit,
-          :teacher_interface,
-          :application_form,
-          qualification.certificate_document,
-        ]
-    end
-
-    def part_of_university_degree_success_path
+    def part_of_university_degree_success_path(check_path)
       if @part_of_university_degree_form.part_of_university_degree ||
            @part_of_university_degree_form.part_of_university_degree.nil?
-        check_success_path
+        check_path ||
+          %i[check teacher_interface application_form qualifications]
       else
         if application_form.degree_qualifications.empty?
           application_form.qualifications.create!
-        elsif params[:next].present?
-          return params[:next]
         end
 
-        [
-          :edit,
-          :teacher_interface,
-          :application_form,
-          application_form.degree_qualifications.first,
-        ]
+        check_path ||
+          [
+            :edit,
+            :teacher_interface,
+            :application_form,
+            application_form.degree_qualifications.first,
+          ]
       end
-    end
-
-    def check_success_path
-      params[:next].presence ||
-        %i[check teacher_interface application_form qualifications]
     end
   end
 end

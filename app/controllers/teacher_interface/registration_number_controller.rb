@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class RegistrationNumberController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
@@ -20,11 +23,7 @@ module TeacherInterface
           registration_number_form_params.merge(application_form:),
         )
 
-      handle_application_form_section(
-        form: @registration_number_form,
-        if_success_then_redirect:,
-        if_failure_then_render: :edit,
-      )
+      handle_application_form_section(form: @registration_number_form)
     end
 
     private
@@ -33,10 +32,6 @@ module TeacherInterface
       params.require(:teacher_interface_registration_number_form).permit(
         :registration_number,
       )
-    end
-
-    def if_success_then_redirect
-      params[:next].presence || %i[teacher_interface application_form]
     end
 
     def load_teaching_authority_other

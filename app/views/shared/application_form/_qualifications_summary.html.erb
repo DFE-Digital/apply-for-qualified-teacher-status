@@ -32,10 +32,10 @@
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
       certificate_document: {
-        href: [:edit, :teacher_interface, :application_form, qualification.certificate_document],
+        href: [:teacher_interface, :application_form, qualification.certificate_document],
       },
       transcript_document: {
-        href: [:edit, :teacher_interface, :application_form, qualification.transcript_document],
+        href: [:teacher_interface, :application_form, qualification.transcript_document],
       },
       part_of_university_degree: qualification.is_teaching_qualification? ? {
         title: "Part of your university degree?",

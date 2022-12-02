@@ -1,6 +1,13 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class FurtherInformationRequestsController < BaseController
+    include HistoryTrackable
+
     before_action :load_view_object
+
+    define_history_origins :show
+    define_history_checks :edit
 
     def show
     end

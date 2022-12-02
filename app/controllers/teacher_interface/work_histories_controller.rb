@@ -1,9 +1,15 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class WorkHistoriesController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
+
+    skip_before_action :track_history, only: :index
+    define_history_checks :check
 
     def index
       if application_form.task_item_completed?(:work_history, :work_history)
@@ -35,7 +41,18 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @work_history_form,
-        if_success_then_redirect: update_success_path,
+        if_success_then_redirect: ->(_check_path) do
+          history_stack.replace_self(
+            path:
+              edit_teacher_interface_application_form_work_history_path(
+                work_history,
+              ),
+            origin: false,
+            check: false,
+          )
+
+          %i[check teacher_interface application_form work_histories]
+        end,
         if_failure_then_render: :new,
       )
     end
@@ -47,6 +64,12 @@ module TeacherInterface
       if ActiveModel::Type::Boolean.new.cast(
            params.dig(:work_history, :add_another),
          )
+        history_stack.replace_self(
+          path: check_teacher_interface_application_form_work_histories_path,
+          origin: false,
+          check: true,
+        )
+
         redirect_to %i[new teacher_interface application_form work_history]
       else
         redirect_to %i[teacher_interface application_form]
@@ -69,7 +92,9 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @has_work_history_form,
-        if_success_then_redirect: -> { has_work_history_success_path },
+        if_success_then_redirect: ->(check_path) do
+          has_work_history_success_path(check_path)
+        end,
         if_failure_then_render: :edit_has_work_history,
       )
     end
@@ -100,8 +125,12 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @work_history_form,
-        if_success_then_redirect: update_success_path,
-        if_failure_then_render: :edit,
+        if_success_then_redirect: %i[
+          check
+          teacher_interface
+          application_form
+          work_histories
+        ],
       )
     end
 
@@ -119,7 +148,7 @@ module TeacherInterface
         )
 
       if @delete_work_history_form.save(validate: true)
-        redirect_to update_success_path
+        redirect_to %i[check teacher_interface application_form work_histories]
       else
         render :delete, status: :unprocessable_entity
       end
@@ -133,14 +162,12 @@ module TeacherInterface
       )
     end
 
-    def has_work_history_success_path
+    def has_work_history_success_path(check_path)
       if @has_work_history_form.has_work_history
         if application_form.work_histories.empty?
-          new_teacher_interface_application_form_work_history_path(
-            next: params[:next],
-          )
+          new_teacher_interface_application_form_work_history_path
         else
-          params[:next].presence ||
+          check_path ||
             [
               :edit,
               :teacher_interface,
@@ -149,7 +176,7 @@ module TeacherInterface
             ]
         end
       else
-        params[:next].presence ||
+        check_path ||
           %i[check teacher_interface application_form work_histories]
       end
     end
@@ -170,11 +197,6 @@ module TeacherInterface
         :start_date,
         :still_employed,
       )
-    end
-
-    def update_success_path
-      params[:next].presence ||
-        %i[check teacher_interface application_form work_histories]
     end
   end
 end

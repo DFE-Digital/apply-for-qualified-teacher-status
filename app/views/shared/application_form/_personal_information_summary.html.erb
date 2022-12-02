@@ -23,7 +23,7 @@
       href: %i[alternative_name teacher_interface application_form personal_information]
     } : nil,
     name_change_document: application_form.has_alternative_name? ? {
-      href: [:edit, :teacher_interface, :application_form, application_form.name_change_document]
+      href: [:teacher_interface, :application_form, application_form.name_change_document]
     } : nil,
   },
   changeable:

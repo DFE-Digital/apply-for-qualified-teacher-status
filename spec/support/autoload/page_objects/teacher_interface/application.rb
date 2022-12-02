@@ -11,6 +11,10 @@ module PageObjects
       element :save_and_sign_out, ".govuk-button:nth-of-type(2)"
 
       section :task_list, TaskList, ".app-task-list"
+
+      def qualifications_task_item
+        task_list.find_item("Add your teaching qualifications")
+      end
     end
   end
 end

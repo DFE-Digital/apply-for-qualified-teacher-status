@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Teacher application", type: :system do
+RSpec.describe "Teacher application check answers", type: :system do
   before do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(teacher)

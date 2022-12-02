@@ -10,7 +10,13 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
   end
 
   subject(:controller) { controller_class.new }
-  before { allow(controller).to receive(:params).and_return(params) }
+
+  let(:session) { {} }
+
+  before do
+    allow(controller).to receive(:params).and_return(params)
+    allow(controller).to receive(:session).and_return(session)
+  end
 
   describe "#handle_application_form_section" do
     let(:form) { double }
@@ -59,11 +65,18 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
         handle_application_form_section
       end
 
-      context "with a next path" do
-        before { params[:next] = "/next" }
+      context "with a check entry in the history" do
+        let(:session) do
+          {
+            history_stack: [
+              { path: "/check", check: true },
+              { path: "/current" },
+            ],
+          }
+        end
 
         it "redirects to application form" do
-          expect(controller).to receive(:redirect_to).with("/next")
+          expect(controller).to receive(:redirect_to).with("/check")
           handle_application_form_section
         end
       end

@@ -24,7 +24,7 @@ module CheckYourAnswersSummary
     end
 
     def delete_link_to
-      path_with_next(@delete_link_to) if changeable && @delete_link_to
+      @delete_link_to if changeable && @delete_link_to
     end
 
     private
@@ -63,22 +63,11 @@ module CheckYourAnswersSummary
     end
 
     def href_for(field)
-      if (path = field[:href]).present?
-        path_with_next(path)
-      end
-    end
+      return if (path = field[:href]).blank?
 
-    def path_with_next(path)
-      next_path = request.path
+      return path if path.is_a?(String)
 
-      if path.is_a?(String)
-        return "#{path}?#{URI.encode_www_form(next: next_path)}"
-      end
-
-      Rails.application.routes.url_helpers.polymorphic_path(
-        path,
-        next: next_path,
-      )
+      Rails.application.routes.url_helpers.polymorphic_path(path)
     end
 
     def row_for_field(field)

@@ -178,7 +178,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :documents, only: %i[edit update] do
+      resources :documents, only: %i[show edit update] do
         resources :uploads, only: %i[new create destroy] do
           get "delete", on: :member
         end
@@ -213,6 +213,10 @@ Rails.application.routes.draw do
     get "/teacher/signed_out",
         to: "teachers/sessions#signed_out",
         as: "teacher_signed_out"
+  end
+
+  resource :history, only: %i[] do
+    get "back", to: "history#back", on: :collection
   end
 
   resources :personas, only: %i[index] do

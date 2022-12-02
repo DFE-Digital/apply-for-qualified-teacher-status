@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module TeacherInterface
   class AgeRangeController < BaseController
     include HandleApplicationFormSection
+    include HistoryTrackable
 
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
@@ -18,11 +21,7 @@ module TeacherInterface
       @age_range_form =
         AgeRangeForm.new(age_range_form_params.merge(application_form:))
 
-      handle_application_form_section(
-        form: @age_range_form,
-        if_success_then_redirect:,
-        if_failure_then_render: :edit,
-      )
+      handle_application_form_section(form: @age_range_form)
     end
 
     private
@@ -32,10 +31,6 @@ module TeacherInterface
         :minimum,
         :maximum,
       )
-    end
-
-    def if_success_then_redirect
-      params[:next].presence || %i[teacher_interface application_form]
     end
   end
 end

@@ -29,7 +29,6 @@ class DocumentContinueRedirection
 
   def qualification_certificate_url
     [
-      :edit,
       :teacher_interface,
       :application_form,
       document.documentable.transcript_document,
