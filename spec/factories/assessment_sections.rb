@@ -36,7 +36,7 @@ FactoryBot.define do
 
     trait :declines_assessment do
       selected_failure_reasons do
-        { AssessmentSection::DECLINE_FAILURE_REASONS.first => "Notes." }
+        { FailureReasons::DECLINABLE.first => "Notes." }
       end
     end
 

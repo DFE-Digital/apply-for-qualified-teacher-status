@@ -103,7 +103,7 @@ RSpec.describe AssessmentSection, type: :model do
     subject { described_class.decline_failure_reason?(failure_reason:) }
 
     context "with a decline failure reason" do
-      let(:failure_reason) { described_class::DECLINE_FAILURE_REASONS.sample }
+      let(:failure_reason) { FailureReasons::DECLINABLE.sample }
 
       it { is_expected.to eq(true) }
     end
