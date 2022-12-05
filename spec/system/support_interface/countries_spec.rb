@@ -24,6 +24,8 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
     when_i_fill_teaching_authority_other
+    when_i_fill_teaching_authority_sanction_information
+    when_i_fill_teaching_authority_status_information
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_online_checker_url
     when_i_fill_teaching_authority_checks_sanctions
@@ -45,6 +47,8 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
     when_i_fill_teaching_authority_other
+    when_i_fill_teaching_authority_sanction_information
+    when_i_fill_teaching_authority_status_information
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_online_checker_url
     and_i_save_and_preview
@@ -192,6 +196,22 @@ RSpec.describe "Countries support", type: :system do
 
   def when_i_fill_teaching_authority_checks_sanctions
     check "country-teaching-authority-checks-sanctions-1-field", visible: false
+  end
+
+  def when_i_fill_teaching_authority_sanction_information
+    fill_in "region-teaching-authority-sanction-information-field",
+            with: "Sanction information"
+  rescue Capybara::ElementNotFound
+    fill_in "country-teaching-authority-sanction-information-field",
+            with: "Sanction information"
+  end
+
+  def when_i_fill_teaching_authority_status_information
+    fill_in "region-teaching-authority-status-information-field",
+            with: "Status information"
+  rescue Capybara::ElementNotFound
+    fill_in "country-teaching-authority-status-information-field",
+            with: "Status information"
   end
 
   def and_i_save
