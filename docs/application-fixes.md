@@ -6,9 +6,9 @@ There are currently some operations that need to be done as developer tasks unti
 
 When an application has been declined but is later awarded e.g. following an appeal
 
-NB: this process will cause an email to be sent to the user so double check the correct application is being awarded.
+**Note:** this process will cause an email to be sent to the user so double check the correct application is being awarded.
 
-- get the application ID from the URL - `/assessor/applications/<application-id>`
+> You can find the ID of the application from the URL: `/assessor/applications/<application-id>`
 
 In a production console:
 
@@ -29,3 +29,31 @@ CreateDQTTRNRequest.call(application_form: application_form)
 ```
 
 Check the application is in awarded state in the UI and that the sidekiq jobs have gone through.
+
+## Rollback further information request
+
+When further information has been requested on an application and we need to ask the applicant to submit it again.
+
+**Note:** this process will lose any information provided already by the teacher, you might want to record a note that this is happening.
+
+> You can find the ID of the application from the URL: `/assessor/applications/<application-id>`
+
+In a production console:
+
+```ruby
+# find the application form and user who is performing the change
+application_form = ApplicationForm.find(...)
+user = Staff.find_by(name: ...)
+
+# set some useful variables
+assessment = application_form.assessment
+further_information_request = assessment.further_information_requests.first
+
+# delete the FI requests and reset the assessment state
+TimelineEvent.where(further_information_request:).destroy_all
+further_information_request.destroy!
+assessment.update!(recommendation: "unknown", recommended_at: nil)
+
+# change back the application form state
+ChangeApplicationFormState.call(application_form:, user:, new_state: "initial_assessment")
+```
