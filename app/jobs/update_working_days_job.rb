@@ -35,9 +35,8 @@ class UpdateWorkingDaysJob < ApplicationJob
 
   def update_assessments_started_to_recommendation
     Assessment
-      .includes(:application_form)
-      .started
-      .recommended
+      .where.not(started_at: nil)
+      .where.not(recommended_at: nil)
       .find_each do |assessment|
         assessment.update!(
           working_days_started_to_recommendation:
@@ -53,8 +52,8 @@ class UpdateWorkingDaysJob < ApplicationJob
     Assessment
       .joins(:application_form)
       .includes(:application_form)
-      .recommended
       .where.not(application_forms: { submitted_at: nil })
+      .where.not(recommended_at: nil)
       .find_each do |assessment|
         assessment.update!(
           working_days_submission_to_recommendation:
@@ -70,8 +69,8 @@ class UpdateWorkingDaysJob < ApplicationJob
     Assessment
       .joins(:application_form)
       .includes(:application_form)
-      .started
       .where.not(application_forms: { submitted_at: nil })
+      .where.not(started_at: nil)
       .find_each do |assessment|
         assessment.update!(
           working_days_submission_to_started:
@@ -87,8 +86,8 @@ class UpdateWorkingDaysJob < ApplicationJob
     FurtherInformationRequest
       .joins(:assessment)
       .includes(:assessment)
-      .received
-      .merge(Assessment.recommended)
+      .where.not(received_at: nil)
+      .where.not(assessment: { recommended_at: nil })
       .find_each do |further_information_request|
         further_information_request.update!(
           working_days_received_to_recommendation:
