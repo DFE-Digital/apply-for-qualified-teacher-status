@@ -96,7 +96,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     subject { super().notes_label_key_for(failure_reason:) }
 
     context "with a decline failure reason" do
-      let(:failure_reason) { AssessmentSection::DECLINE_FAILURE_REASONS.sample }
+      let(:failure_reason) { FailureReasons::DECLINABLE.sample }
 
       it do
         is_expected.to eq(
@@ -120,7 +120,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     subject { super().notes_hint_key_for(failure_reason:) }
 
     context "with a decline failure reason" do
-      let(:failure_reason) { AssessmentSection::DECLINE_FAILURE_REASONS.sample }
+      let(:failure_reason) { FailureReasons::DECLINABLE.sample }
 
       it do
         is_expected.to eq(
@@ -144,7 +144,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     subject { super().notes_placeholder_key_for(failure_reason:) }
 
     context "with a decline failure reason" do
-      let(:failure_reason) { AssessmentSection::DECLINE_FAILURE_REASONS.sample }
+      let(:failure_reason) { FailureReasons::DECLINABLE.sample }
 
       it do
         is_expected.to eq(

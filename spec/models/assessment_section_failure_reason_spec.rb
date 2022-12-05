@@ -25,9 +25,7 @@ RSpec.describe AssessmentSectionFailureReason do
   describe "validations" do
     it { is_expected.to validate_presence_of(:key) }
     it do
-      is_expected.to validate_inclusion_of(:key).in_array(
-        described_class::ALL_FAILURE_REASONS.map(&:to_s),
-      )
+      is_expected.to validate_inclusion_of(:key).in_array(FailureReasons::ALL)
     end
   end
 end

@@ -60,7 +60,7 @@ class AssessorInterface::AssessmentSectionForm
       assessment_section.failure_reasons.each do |failure_reason|
         klass.attribute "#{failure_reason}_checked", :boolean
         klass.attribute "#{failure_reason}_notes", :string
-        next if AssessmentSection.decline_failure_reason?(failure_reason:)
+        next if FailureReasons.decline?(failure_reason:)
 
         klass.validates "#{failure_reason}_notes",
                         presence: true,

@@ -10,9 +10,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       failure_reasons: [:reason_a, :reason_b, decline_failure_reason],
     )
   end
-  let(:decline_failure_reason) do
-    AssessmentSection::DECLINE_FAILURE_REASONS.sample.to_sym
-  end
+  let(:decline_failure_reason) { FailureReasons::DECLINABLE.sample.to_sym }
   let(:user) { create(:staff, :confirmed) }
   let(:attributes) { {} }
 
