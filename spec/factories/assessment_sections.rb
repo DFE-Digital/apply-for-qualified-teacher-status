@@ -24,6 +24,7 @@
 FactoryBot.define do
   factory :assessment_section do
     association :assessment
+    key { AssessmentSection.keys.keys.sample }
 
     trait :passed do
       passed { true }

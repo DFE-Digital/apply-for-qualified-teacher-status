@@ -24,4 +24,6 @@ class AssessmentSectionFailureReason < ApplicationRecord
 
   validates :key, presence: true
   validates :key, inclusion: { in: FailureReasons::ALL }
+
+  scope :declinable, -> { where(key: FailureReasons::DECLINABLE) }
 end
