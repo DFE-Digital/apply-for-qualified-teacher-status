@@ -102,6 +102,8 @@
     - teaching_authority_name
     - teaching_authority_checks_sanctions
     - teaching_authority_online_checker_url
+    - teaching_authority_status_information
+    - teaching_authority_sanction_information
   :documents:
     - id
     - document_type
@@ -189,6 +191,8 @@
     - teaching_authority_certificate
     - teaching_authority_online_checker_url
     - application_form_enabled
+    - teaching_authority_status_information
+    - teaching_authority_sanction_information
   :reminder_emails:
     - id
     - created_at
