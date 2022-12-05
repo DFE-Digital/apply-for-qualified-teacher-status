@@ -43,12 +43,8 @@ class AssessmentSection < ApplicationRecord
               in: keys.values,
             }
 
-  validates :selected_failure_reasons,
-            absence: true,
-            if: -> { passed || passed.nil? }
-  validates :selected_failure_reasons,
-            presence: true,
-            if: -> { passed == false }
+  validates  :assessment_section_failure_reasons, presence: true, if: -> { passed == false }
+  validates  :assessment_section_failure_reasons, absence: true, if: ->  { passed || passed.nil? }
 
   def state
     return :not_started if passed.nil?
@@ -56,8 +52,6 @@ class AssessmentSection < ApplicationRecord
   end
 
   def declines_assessment?
-    FailureReasons::DECLINABLE.intersection(
-      selected_failure_reasons.keys,
-    ).present?
+    assessment_section_failure_reasons.declinable.any?
   end
 end
