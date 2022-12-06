@@ -48,6 +48,7 @@ namespace :example_data do
     end
 
     TimelineEvent.delete_all
+    AssessmentSectionFailureReason.delete_all
     AssessmentSection.delete_all
     Assessment.delete_all
     Qualification.delete_all
