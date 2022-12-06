@@ -17,7 +17,7 @@ RSpec.describe "Teacher further information", type: :system do
     and_i_see_the_document_task_list_item
 
     when_i_click_the_save_and_sign_out_button
-    then_i_see_the(:signed_out_page)
+    then_i_see_the(:teacher_signed_out_page)
   end
 
   it "check your answers" do

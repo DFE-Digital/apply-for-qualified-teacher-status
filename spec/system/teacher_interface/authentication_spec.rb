@@ -7,70 +7,66 @@ RSpec.describe "Teacher authentication", type: :system do
     given_countries_exist
 
     when_i_visit_the(:teacher_sign_up_page)
-    then_i_see_the_sign_up_form
-    when_i_fill_create_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    then_i_see_the(:teacher_sign_up_page)
+
+    when_i_sign_up
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the_teacher_confirmation_email
-    then_i_see_successful_confirmation
+    then_i_see_the(:teacher_new_application_page)
 
     given_i_clear_my_session
 
     when_i_visit_the(:teacher_create_or_sign_in_page)
-    then_i_see_the_create_and_sign_in_form
+    then_i_see_the(:teacher_create_or_sign_in_page)
 
-    when_i_choose_yes_sign_in
-    and_i_fill_sign_in_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    when_i_choose_yes_and_sign_in
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_magic_link_email
 
     when_i_visit_the_magic_link_email
-    then_i_see_the_new_application_form
+    then_i_see_the(:teacher_new_application_page)
 
     given_i_clear_my_session
 
     when_i_visit_the(:teacher_sign_in_page)
     then_i_see_the(:teacher_sign_in_page)
-    and_i_fill_sign_in_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+
+    when_i_sign_in
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_magic_link_email
 
     given_i_clear_my_session
 
     when_i_visit_the(:teacher_sign_up_page)
-    then_i_see_the_sign_up_form
+    then_i_see_the(:teacher_sign_up_page)
 
-    when_i_fill_create_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    when_i_sign_up
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_magic_link_email
 
     when_i_visit_the_magic_link_email
-    then_i_see_the_new_application_form
+    then_i_see_the(:teacher_new_application_page)
 
     when_i_select_a_country
-    and_i_click_continue
 
     when_i_click_save_and_sign_out
-    then_i_see_the_signed_out_page
+    then_i_see_the(:teacher_signed_out_page)
   end
 
   it "sign out with navigation link" do
     when_i_visit_the(:teacher_sign_up_page)
+    then_i_see_the(:teacher_sign_up_page)
 
-    when_i_fill_create_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    when_i_sign_up
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the_teacher_confirmation_email
 
     when_i_click_sign_out
-    then_i_see_the_signed_out_page
+    then_i_see_the(:teacher_signed_out_page)
   end
 
   it "sign up with invalid email address" do
@@ -81,72 +77,62 @@ RSpec.describe "Teacher authentication", type: :system do
 
   it "sign in when unconfirmed" do
     when_i_visit_the(:teacher_create_or_sign_in_page)
-    then_i_see_the_create_and_sign_in_form
+    then_i_see_the(:teacher_create_or_sign_in_page)
 
-    when_i_choose_yes_sign_in
-    and_i_fill_sign_in_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    when_i_choose_yes_and_sign_in
+    then_i_see_the(:teacher_check_email_page)
   end
 
   it "sign in invalid email" do
     when_i_visit_the(:teacher_sign_up_page)
-    then_i_see_the_sign_up_form
+    then_i_see_the(:teacher_sign_up_page)
 
-    when_i_fill_create_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    when_i_sign_up
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the(:teacher_create_or_sign_in_page)
-    then_i_see_the_create_and_sign_in_form
+    then_i_see_the(:teacher_create_or_sign_in_page)
 
-    when_i_choose_yes_sign_in
-    and_i_fill_sign_in_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    when_i_choose_yes_and_sign_in
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_teacher_confirmation_email
   end
 
   it "confirming email twice" do
     when_i_visit_the(:teacher_sign_up_page)
-    then_i_see_the_sign_up_form
+    then_i_see_the(:teacher_sign_up_page)
 
-    when_i_fill_create_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    when_i_sign_up
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the_teacher_confirmation_email
-    then_i_see_successful_confirmation
+    then_i_see_the(:teacher_new_application_page)
 
     given_i_clear_my_session
 
     when_i_visit_the_teacher_confirmation_email
-    then_i_see_the_create_and_sign_in_form
+    then_i_see_the(:teacher_create_or_sign_in_page)
     and_i_see_already_confirmed_message
   end
 
   it "sign in with same token" do
-    given_countries_exist
-
     when_i_visit_the(:teacher_sign_up_page)
-    then_i_see_the_sign_up_form
+    then_i_see_the(:teacher_sign_up_page)
     and_i_sign_up
 
     given_i_clear_my_session
 
     when_i_visit_the(:teacher_create_or_sign_in_page)
-    then_i_see_the_create_and_sign_in_form
+    then_i_see_the(:teacher_create_or_sign_in_page)
 
-    when_i_choose_yes_sign_in
-    and_i_fill_sign_in_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    when_i_choose_yes_and_sign_in
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_magic_link_email
 
     when_i_visit_the_magic_link_email
-    then_i_see_the_new_application_form
+    then_i_see_the(:teacher_new_application_page)
 
     given_i_clear_my_session
 
@@ -155,29 +141,27 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   it "signing up with existing email address" do
-    given_countries_exist
-
     when_i_visit_the(:teacher_sign_up_page)
-    then_i_see_the_sign_up_form
-    when_i_fill_create_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    then_i_see_the(:teacher_sign_up_page)
+
+    when_i_sign_up
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_teacher_confirmation_email
 
     when_i_visit_the_teacher_confirmation_email
-    then_i_see_successful_confirmation
+    then_i_see_the(:teacher_new_application_page)
 
     given_i_clear_my_session
 
     when_i_visit_the(:teacher_sign_up_page)
-    then_i_see_the_sign_up_form
-    when_i_fill_create_teacher_email_address
-    and_i_click_continue
-    then_i_see_the_check_your_email_page
+    then_i_see_the(:teacher_sign_up_page)
+
+    when_i_sign_up
+    then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_magic_link_email
 
     when_i_visit_the_magic_link_email
-    then_i_see_the_new_application_form
+    then_i_see_the(:teacher_new_application_page)
   end
 
   private
@@ -187,7 +171,19 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def given_i_clear_my_session
-    page.driver.clear_cookies
+    Capybara.reset_sessions!
+  end
+
+  def when_i_sign_up
+    teacher_sign_up_page.submit(email: "test@example.com")
+  end
+
+  def when_i_sign_in
+    teacher_sign_in_page.submit(email: "test@example.com")
+  end
+
+  def when_i_choose_yes_and_sign_in
+    teacher_create_or_sign_in_page.submit_sign_in(email: "test@example.com")
   end
 
   def when_i_visit_the_magic_link_email
@@ -198,13 +194,8 @@ RSpec.describe "Teacher authentication", type: :system do
     visit "#{uri.path}?#{uri.query}"
   end
 
-  def when_i_choose_yes_sign_in
-    choose "Yes, sign in", visible: false
-  end
-
   def when_i_select_a_country
-    fill_in "teacher-interface-country-region-form-location-field",
-            with: "Scotland"
+    country_page.submit(country: "Scotland")
   end
 
   def when_i_click_sign_out
@@ -215,51 +206,9 @@ RSpec.describe "Teacher authentication", type: :system do
     click_link "Save and sign out"
   end
 
-  def then_i_see_the_sign_up_form
-    expect(teacher_sign_up_page.heading.text).to eq("Your email address")
-    expect(teacher_sign_up_page.email_heading).to have_content(
-      "Your email address",
-    )
-    expect(teacher_sign_up_page.hint).to have_content(
-      "We’ll use this to send you a link to continue with your QTS application.",
-    )
-  end
-
-  def then_i_see_the_check_your_email_page
-    expect(check_email_page).to have_title("Check your email")
-    expect(check_email_page.heading.text).to eq("Check your email")
-  end
-
-  def then_i_see_successful_confirmation
-    expect(new_application_form_page.heading.text).to eq(
-      "In which country are you currently recognised as a teacher?",
-    )
-  end
-
-  def then_i_see_the_new_application_form
-    expect(new_application_form_page.heading.text).to eq(
-      "In which country are you currently recognised as a teacher?",
-    )
-  end
-
   def then_i_see_the_blank_email_address_message
-    expect(page).to have_content("Enter your email address")
+    expect(teacher_sign_up_page).to have_content("Enter your email address")
   end
-
-  def then_i_see_the_signed_out_page
-    expect(signed_out_page.body_content).to have_content(
-      "We’ve signed you out of the Apply for qualified teacher status (QTS) service.",
-    )
-    expect(signed_out_page.body_content).to have_content(
-      "We’ve saved the information you’ve added to your application so far.",
-    )
-  end
-
-  alias_method :and_i_fill_create_teacher_email_address,
-               :when_i_fill_create_teacher_email_address
-
-  alias_method :and_i_fill_sign_in_teacher_email_address,
-               :when_i_fill_sign_in_teacher_email_address
 
   def and_i_receive_a_magic_link_email
     message = ActionMailer::Base.deliveries.last
@@ -267,10 +216,6 @@ RSpec.describe "Teacher authentication", type: :system do
 
     expect(message.subject).to eq("Your QTS application link")
     expect(message.to).to include("test@example.com")
-  end
-
-  def and_i_click_continue
-    click_button "Continue", visible: false
   end
 
   def and_i_see_already_confirmed_message
