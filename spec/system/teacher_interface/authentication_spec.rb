@@ -171,7 +171,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def given_i_clear_my_session
-    page.driver.clear_cookies
+    Capybara.reset_sessions!
   end
 
   def when_i_sign_up
