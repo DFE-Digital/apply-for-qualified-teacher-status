@@ -5,7 +5,7 @@
 <%= form_with model: @new_session_form, url: session_path(resource_name) do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.hidden_field :create_or_sign_in %>
+  <%= f.hidden_field :sign_in_or_sign_up %>
   <%= f.govuk_email_field :email, autocomplete: "email", label: { size: "m" } %>
 
   <%= f.govuk_submit %>
