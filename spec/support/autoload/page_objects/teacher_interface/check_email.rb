@@ -1,7 +1,7 @@
 module PageObjects
   module TeacherInterface
-    class SignedOut < SitePrism::Page
-      set_url "/teacher/signed_out"
+    class CheckEmail < SitePrism::Page
+      set_url "/teacher/check_email?{?email}"
 
       element :heading, "h1"
 

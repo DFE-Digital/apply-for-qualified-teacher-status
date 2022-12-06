@@ -167,9 +167,22 @@ module PageHelpers
       PageObjects::EligibilityInterface::TeachChildren.new
   end
 
+  def teacher_check_email_page
+    @teacher_check_email_page = PageObjects::TeacherInterface::CheckEmail.new
+  end
+
   def teacher_check_qualifications_page
     @teacher_check_qualifications_page ||=
       PageObjects::TeacherInterface::CheckQualifications.new
+  end
+
+  def teacher_new_application_page
+    @teacher_new_application_page =
+      PageObjects::TeacherInterface::NewApplication.new
+  end
+
+  def teacher_signed_out_page
+    @teacher_signed_out_page = PageObjects::TeacherInterface::SignedOut.new
   end
 
   def timeline_page
@@ -198,26 +211,8 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckUploadedFiles.new
   end
 
-  def check_email_page
-    @check_email_page = PageObjects::TeacherInterface::CheckYourEmail.new
-  end
-
-  def new_application_form_page
-    @new_application_form_page =
-      PageObjects::TeacherInterface::NewApplicationForm.new
-  end
-
-  def signed_out_page
-    @signed_out_page = PageObjects::TeacherInterface::SignedOut.new
-  end
-
   def teacher_application_page
     @teacher_application_page = PageObjects::TeacherInterface::Application.new
-  end
-
-  def new_teacher_form_page
-    @new_teacher_form_page =
-      PageObjects::TeacherInterface::NewApplicationForm.new
   end
 
   def subjects_form_page

@@ -108,15 +108,6 @@ module SystemHelpers
 
   alias_method :and_i_choose_no, :when_i_choose_no
 
-  def when_i_fill_create_teacher_email_address
-    fill_in "teacher-email-field", with: "test@example.com"
-  end
-
-  def when_i_fill_sign_in_teacher_email_address
-    fill_in "teacher-interface-new-session-form-email-field",
-            with: "test@example.com"
-  end
-
   def and_i_click_continue
     click_button "Continue", visible: false
   end
@@ -139,21 +130,6 @@ module SystemHelpers
     visit "#{uri.path}?#{uri.query}"
   end
 
-  def then_i_see_the_create_and_sign_in_form
-    expect(teacher_create_or_sign_in_page).to have_title(
-      "Apply for qualified teacher status (QTS) in England",
-    )
-    expect(teacher_create_or_sign_in_page).to have_content(
-      "Have you used the service before?",
-    )
-    expect(teacher_create_or_sign_in_page).to have_content(
-      "Yes, sign in and continue application",
-    )
-    expect(teacher_create_or_sign_in_page).to have_content(
-      "No, I need to check if I can apply",
-    )
-  end
-
   def then_i_see_the_sign_in_form
     expect(teacher_sign_in_page).to have_title(
       "Apply for qualified teacher status (QTS) in England",
@@ -162,10 +138,8 @@ module SystemHelpers
   end
 
   def and_i_sign_up
-    when_i_fill_create_teacher_email_address
-    and_i_click_continue
+    teacher_sign_up_page.submit(email: "test@example.com")
     and_i_receive_a_teacher_confirmation_email
-
     when_i_visit_the_teacher_confirmation_email
   end
 

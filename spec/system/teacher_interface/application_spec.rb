@@ -447,9 +447,9 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   it "allows starting an application form without a session" do
-    when_i_visit_the_sign_up_page
+    when_i_visit_the(:teacher_sign_up_page)
     and_i_sign_up
-    then_i_see_the_new_teacher_application_page
+    then_i_see_the(:teacher_new_application_page)
   end
 
   private
@@ -619,19 +619,6 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_fill_in_the_upload_written_statement_form
     attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
-  end
-
-  def when_i_visit_the_sign_up_page
-    new_teacher_form_page.load
-  end
-
-  def then_i_see_the_new_teacher_application_page
-    expect(new_teacher_form_page).to have_current_path(
-      "/teacher/application/new",
-    )
-    expect(new_teacher_form_page.heading.text).to eq(
-      "In which country are you currently recognised as a teacher?",
-    )
   end
 
   def then_i_see_the_teacher_application_page
