@@ -33,10 +33,10 @@
 
       <%= govuk_inset_text do %>
         <ul class="govuk-list--bullet">
-          <% description_vars[:failure_reasons].each do |failure_reason_key, failure_reason_assessor_note| %>
+          <% description_vars[:failure_reasons].each do |failure_reason| %>
             <li>
-              <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason_key}") %><br />
-              <%= failure_reason_assessor_note %>
+              <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason.key}") %><br />
+              <%= failure_reason.assessor_feedback %>
             </li>
           <% end %>
         </ul>
