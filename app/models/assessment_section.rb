@@ -43,8 +43,12 @@ class AssessmentSection < ApplicationRecord
               in: keys.values,
             }
 
-  validates  :assessment_section_failure_reasons, presence: true, if: -> { passed == false }
-  validates  :assessment_section_failure_reasons, absence: true, if: ->  { passed || passed.nil? }
+  validates :assessment_section_failure_reasons,
+            presence: true,
+            if: -> { passed == false }
+  validates :assessment_section_failure_reasons,
+            absence: true,
+            if: -> { passed || passed.nil? }
 
   def state
     return :not_started if passed.nil?
