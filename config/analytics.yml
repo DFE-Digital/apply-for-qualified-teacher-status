@@ -241,6 +241,8 @@
     - current_sign_in_ip
     - last_sign_in_ip
     - trn
+    - otp_guesses
+    - otp_created_at
   :timeline_events:
     - id
     - event_type

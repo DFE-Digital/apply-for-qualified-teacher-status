@@ -11,6 +11,9 @@
 #  email                :string           default(""), not null
 #  last_sign_in_at      :datetime
 #  last_sign_in_ip      :string
+#  otp_created_at       :datetime
+#  otp_guesses          :integer          default(0), not null
+#  secret_key           :string
 #  sign_in_count        :integer          default(0), not null
 #  trn                  :string
 #  unconfirmed_email    :string
@@ -26,6 +29,7 @@
 FactoryBot.define do
   factory :teacher do
     sequence(:email) { |n| "teacher#{n}@example.org" }
+    uuid { SecureRandom.uuid }
 
     trait :confirmed do
       confirmed_at { Time.zone.now }
