@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_05_102028) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_07_120352) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -322,7 +323,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_102028) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "trn"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["email"], name: "index_teachers_on_email", unique: true
+    t.index ["uuid"], name: "index_teachers_on_uuid", unique: true
   end
 
   create_table "timeline_events", force: :cascade do |t|
