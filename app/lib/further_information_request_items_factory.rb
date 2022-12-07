@@ -19,11 +19,11 @@ class FurtherInformationRequestItemsFactory
 
   def build_further_information_request_items(assessment_section)
     assessment_section
-      .selected_failure_reasons
-      .map do |failure_reason_key, failure_reason_assessor_feedback|
+      .assessment_section_failure_reasons
+      .map do |failure_reason|
       build_further_information_request_item(
-        failure_reason_key,
-        failure_reason_assessor_feedback,
+        failure_reason.key,
+        failure_reason.assessor_feedback,
       )
     end
   end
