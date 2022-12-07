@@ -89,6 +89,11 @@ en:
   activemodel:
     errors:
       models:
+        teachers/otp_form:
+          attributes:
+            otp:
+              blank: Enter your code
+              wrong_length: Enter a valid code
         teacher_interface/age_range_form:
           attributes:
             minimum:
