@@ -7,26 +7,28 @@ class UpdateAssessmentSection
     @assessment_section = assessment_section
     @params = params
     @user = user
+    @selected_failure_reasons = params.delete(:selected_failure_reasons)
   end
 
   def call
     old_state = assessment_section.state
 
     ActiveRecord::Base.transaction do
-      next false unless assessment_section.update(params)
+      selected_keys = selected_failure_reasons.keys
 
-      selected_keys = params[:selected_failure_reasons].keys
       assessment_section
         .assessment_section_failure_reasons
         .where.not(key: selected_keys)
         .destroy_all
 
-      params[:selected_failure_reasons].each do |key, assessor_feedback|
+      selected_failure_reasons.each do |key, assessor_feedback|
         assessment_section
           .assessment_section_failure_reasons
           .find_or_initialize_by(key:)
           .update(assessor_feedback:)
       end
+
+      next false unless assessment_section.update(params)
 
       update_application_form_state
       update_application_form_assessor
@@ -39,7 +41,7 @@ class UpdateAssessmentSection
 
   private
 
-  attr_reader :assessment_section, :user, :params
+  attr_reader :assessment_section, :user, :params, :selected_failure_reasons
 
   delegate :assessment, to: :assessment_section
   delegate :application_form, to: :assessment
