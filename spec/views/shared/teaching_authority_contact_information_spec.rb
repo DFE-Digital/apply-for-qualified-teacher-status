@@ -53,21 +53,4 @@ RSpec.describe "Teaching authority contact information", type: :view do
     it { is_expected.to include(region.teaching_authority_address) }
     it { is_expected.to include(country.teaching_authority_address) }
   end
-
-  context "with a region with teaching authority other" do
-    let(:region) { create(:region, teaching_authority_other: "Other") }
-
-    it { is_expected.to match(/Other/) }
-  end
-
-  context "with a country with teaching authority other" do
-    let(:region) do
-      create(
-        :region,
-        country: create(:country, teaching_authority_other: "Other"),
-      )
-    end
-
-    it { is_expected.to match(/Other/) }
-  end
 end

@@ -26,6 +26,8 @@ RSpec.describe "Eligible region content", type: :view do
           create(:country, teaching_authority_certificate: "certificate"),
         status_check: :written,
         sanction_check: :written,
+        teaching_authority_status_information: "Status information",
+        teaching_authority_sanction_information: "Sanction information",
         teaching_authority_address: "address",
       )
     end

@@ -52,6 +52,25 @@
     </ul>
     <p class="govuk-body">This written confirmation must be dated within 3 months of you applying for QTS.</p>
 
+    <% if @application_form.region.status_check_written? %>
+      <% if @application_form.region.teaching_authority_status_information.present?%>
+        <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_status_information) %>
+      <% end %>
+
+      <% if @application_form.region.country.teaching_authority_status_information.present?%>
+        <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_status_information) %>
+      <% end %>
+    <% end %>
+
+    <% if @application_form.region.sanction_check_written? %>
+      <% if @application_form.region.teaching_authority_sanction_information.present?%>
+        <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_sanction_information) %>
+      <% end %>
+      <% if @application_form.region.country.teaching_authority_sanction_information.present?%>
+        <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_sanction_information) %>
+      <% end %>
+    <% end %>
+
     <%= govuk_details(summary_text: "How to get this") do %>
       <p class="govuk-body">If you do not have this yet, you can obtain it by contacting:</p>
       <%= render "shared/teaching_authority_contact_information", region: @application_form.region %>
