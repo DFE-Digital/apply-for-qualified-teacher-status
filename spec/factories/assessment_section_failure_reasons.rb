@@ -30,5 +30,13 @@ FactoryBot.define do
     trait :declinable do
       key { FailureReasons::DECLINABLE.sample }
     end
+
+    trait :with_sanctions do
+      key { "authorisation_to_teach" }
+    end
+
+    trait :with_already_qts do
+      key { "applicant_already_qts" }
+    end
   end
 end
