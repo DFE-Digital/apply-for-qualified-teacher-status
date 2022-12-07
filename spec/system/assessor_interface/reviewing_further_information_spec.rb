@@ -98,15 +98,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       ).tap do |application_form|
         assessment =
           create(:assessment, :request_further_information, application_form:)
-        create(
-          :assessment_section,
-          :qualifications,
-          :failed,
-          assessment:,
-          selected_failure_reasons: {
-            qualifications_dont_match_subjects: "A note.",
-          },
-        )
+        create(:assessment_section, :qualifications, :failed, assessment:)
       end
   end
 

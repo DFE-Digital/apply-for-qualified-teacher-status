@@ -72,15 +72,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
     context "and with sanctions" do
       before do
-        create(
-          :assessment_section,
-          :failed,
-          key: :personal_information,
-          selected_failure_reasons: {
-            authorisation_to_teach: "Sanctions.",
-          },
-          assessment:,
-        )
+        create(:assessment_section, :declines_with_sanctions, assessment:)
       end
 
       it do

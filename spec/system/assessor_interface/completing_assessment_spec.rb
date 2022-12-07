@@ -125,8 +125,14 @@ RSpec.describe "Assessor completing assessment", type: :system do
     create(
       :assessment_section,
       :personal_information,
-      :failed,
-      :declines_assessment,
+      :with_selected_failure_reasons,
+      selected_assessment_section_failure_reasons: [
+        build(
+          :assessment_section_failure_reason,
+          assessor_feedback: @assessor_feedback = "Note.",
+          key: @key = "applicant_already_qts",
+        ),
+      ],
       assessment:,
     )
   end
@@ -169,9 +175,9 @@ RSpec.describe "Assessor completing assessment", type: :system do
         .items
         .first
     expect(failure_reason_item.heading.text).to eq(
-      "There’s already another in-flight application for this applicant.",
+      "The applicant already holds QTS and induction exemption.",
     )
-    expect(failure_reason_item.note.text).to eq("Notes.")
+    expect(failure_reason_item.note.text).to eq("Note.")
   end
 
   def when_i_check_declaration
