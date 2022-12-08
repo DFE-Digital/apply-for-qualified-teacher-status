@@ -63,7 +63,6 @@
     - passed
     - checks
     - failure_reasons
-    - selected_failure_reasons
     - created_at
     - updated_at
   :assessment_section_failure_reasons:

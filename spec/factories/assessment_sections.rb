@@ -2,15 +2,14 @@
 #
 # Table name: assessment_sections
 #
-#  id                       :bigint           not null, primary key
-#  checks                   :string           default([]), is an Array
-#  failure_reasons          :string           default([]), is an Array
-#  key                      :string           not null
-#  passed                   :boolean
-#  selected_failure_reasons :jsonb            not null
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  assessment_id            :bigint           not null
+#  id              :bigint           not null, primary key
+#  checks          :string           default([]), is an Array
+#  failure_reasons :string           default([]), is an Array
+#  key             :string           not null
+#  passed          :boolean
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  assessment_id   :bigint           not null
 #
 # Indexes
 #

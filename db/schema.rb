@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_07_120352) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_07_183958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -104,7 +104,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_120352) do
     t.string "failure_reasons", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "selected_failure_reasons", default: {}, null: false
     t.index ["assessment_id", "key"], name: "index_assessment_sections_on_assessment_id_and_key", unique: true
     t.index ["assessment_id"], name: "index_assessment_sections_on_assessment_id"
   end
