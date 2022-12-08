@@ -18,8 +18,8 @@ RSpec.describe "Teacher authentication", type: :system do
 
     given_i_clear_my_session
 
-    when_i_visit_the(:teacher_create_or_sign_in_page)
-    then_i_see_the(:teacher_create_or_sign_in_page)
+    when_i_visit_the(:teacher_sign_in_or_sign_up_page)
+    then_i_see_the(:teacher_sign_in_or_sign_up_page)
 
     when_i_choose_yes_and_sign_in
     then_i_see_the(:teacher_check_email_page)
@@ -76,8 +76,8 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   it "sign in when unconfirmed" do
-    when_i_visit_the(:teacher_create_or_sign_in_page)
-    then_i_see_the(:teacher_create_or_sign_in_page)
+    when_i_visit_the(:teacher_sign_in_or_sign_up_page)
+    then_i_see_the(:teacher_sign_in_or_sign_up_page)
 
     when_i_choose_yes_and_sign_in
     then_i_see_the(:teacher_check_email_page)
@@ -91,8 +91,8 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_teacher_confirmation_email
 
-    when_i_visit_the(:teacher_create_or_sign_in_page)
-    then_i_see_the(:teacher_create_or_sign_in_page)
+    when_i_visit_the(:teacher_sign_in_or_sign_up_page)
+    then_i_see_the(:teacher_sign_in_or_sign_up_page)
 
     when_i_choose_yes_and_sign_in
     then_i_see_the(:teacher_check_email_page)
@@ -113,7 +113,7 @@ RSpec.describe "Teacher authentication", type: :system do
     given_i_clear_my_session
 
     when_i_visit_the_teacher_confirmation_email
-    then_i_see_the(:teacher_create_or_sign_in_page)
+    then_i_see_the(:teacher_sign_in_or_sign_up_page)
     and_i_see_already_confirmed_message
   end
 
@@ -124,8 +124,8 @@ RSpec.describe "Teacher authentication", type: :system do
 
     given_i_clear_my_session
 
-    when_i_visit_the(:teacher_create_or_sign_in_page)
-    then_i_see_the(:teacher_create_or_sign_in_page)
+    when_i_visit_the(:teacher_sign_in_or_sign_up_page)
+    then_i_see_the(:teacher_sign_in_or_sign_up_page)
 
     when_i_choose_yes_and_sign_in
     then_i_see_the(:teacher_check_email_page)
@@ -183,7 +183,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def when_i_choose_yes_and_sign_in
-    teacher_create_or_sign_in_page.submit_sign_in(email: "test@example.com")
+    teacher_sign_in_or_sign_up_page.submit_sign_in(email: "test@example.com")
   end
 
   def when_i_visit_the_magic_link_email

@@ -6,7 +6,7 @@ class Teachers::SessionsController < Devise::SessionsController
 
   def new
     @new_session_form =
-      TeacherInterface::NewSessionForm.new(create_or_sign_in: "sign_in")
+      TeacherInterface::NewSessionForm.new(sign_in_or_sign_up: "sign_in")
   end
 
   def new_or_create
@@ -17,11 +17,11 @@ class Teachers::SessionsController < Devise::SessionsController
     @new_session_form =
       TeacherInterface::NewSessionForm.new(
         email: new_session_form_params[:email],
-        create_or_sign_in: new_session_form_params[:create_or_sign_in],
+        sign_in_or_sign_up: new_session_form_params[:sign_in_or_sign_up],
       )
 
     if @new_session_form.valid?
-      if @new_session_form.create?
+      if @new_session_form.sign_up?
         redirect_to :eligibility_interface_countries
         return
       end
@@ -37,7 +37,7 @@ class Teachers::SessionsController < Devise::SessionsController
       end
 
       redirect_to teacher_check_email_path(email: @new_session_form.email)
-    elsif @new_session_form.create_or_sign_in.blank?
+    elsif @new_session_form.sign_in_or_sign_up.blank?
       render :new_or_create, status: :unprocessable_entity
     else
       render :new, status: :unprocessable_entity
@@ -47,7 +47,7 @@ class Teachers::SessionsController < Devise::SessionsController
   def new_session_form_params
     params.require(:teacher_interface_new_session_form).permit(
       :email,
-      :create_or_sign_in,
+      :sign_in_or_sign_up,
     )
   end
 

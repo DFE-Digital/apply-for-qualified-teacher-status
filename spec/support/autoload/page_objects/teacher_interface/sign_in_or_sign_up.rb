@@ -1,7 +1,7 @@
 module PageObjects
   module TeacherInterface
-    class CreateOrSignIn < SitePrism::Page
-      set_url "/teacher/create_or_sign_in"
+    class SignInOrSignUp < SitePrism::Page
+      set_url "/teacher/sign_in_or_sign_up"
 
       element :heading, "h1"
 
