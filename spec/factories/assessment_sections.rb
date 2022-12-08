@@ -4,7 +4,6 @@
 #
 #  id              :bigint           not null, primary key
 #  checks          :string           default([]), is an Array
-#  failure_reasons :string           default([]), is an Array
 #  key             :string           not null
 #  passed          :boolean
 #  created_at      :datetime         not null

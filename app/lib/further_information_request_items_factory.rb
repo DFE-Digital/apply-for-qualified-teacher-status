@@ -18,9 +18,7 @@ class FurtherInformationRequestItemsFactory
   attr_reader :further_information_request, :assessment_sections
 
   def build_further_information_request_items(assessment_section)
-    assessment_section
-      .assessment_section_failure_reasons
-      .map do |failure_reason|
+    assessment_section.selected_failure_reasons.map do |failure_reason|
       build_further_information_request_item(
         failure_reason.key,
         failure_reason.assessor_feedback,

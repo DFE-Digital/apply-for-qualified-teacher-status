@@ -74,8 +74,7 @@ class AssessorInterface::AssessmentSectionForm
       {
         assessment_section:,
         passed: assessment_section.passed,
-        selected_failure_reasons:
-          assessment_section.assessment_section_failure_reasons,
+        selected_failure_reasons: assessment_section.selected_failure_reasons,
       }
     end
 

@@ -45,7 +45,7 @@ RSpec.describe UpdateAssessmentSection do
     context "when the failure reason already exists" do
       context "when the feedback has been updated" do
         before do
-          assessment_section.assessment_section_failure_reasons.create(
+          assessment_section.selected_failure_reasons.create(
             key: selected_failure_reason_key,
             assessor_feedback: "I need updating",
           )
@@ -80,7 +80,7 @@ RSpec.describe UpdateAssessmentSection do
         end
 
         before do
-          assessment_section.assessment_section_failure_reasons.create(
+          assessment_section.selected_failure_reasons.create(
             key: different_key,
             assessor_feedback: "I need deleting",
           )

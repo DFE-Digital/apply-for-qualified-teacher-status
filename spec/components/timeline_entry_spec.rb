@@ -87,9 +87,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
       )
     end
 
-    let(:failure_reason) do
-      assessment_section.assessment_section_failure_reasons.first
-    end
+    let(:failure_reason) { assessment_section.selected_failure_reasons.first }
     let(:expected_failure_reason_text) do
       I18n.t(
         "assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason.key}",
