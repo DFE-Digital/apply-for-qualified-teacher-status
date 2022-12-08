@@ -19,11 +19,8 @@ RSpec.describe FurtherInformationRequestItemsFactory do
       create(
         :assessment_section,
         :personal_information,
-        :with_selected_failure_reasons,
-        selected_assessment_section_failure_reasons: [
-          failure_reason_one,
-          failure_reason_two,
-        ],
+        :failed,
+        selected_failure_reasons: [failure_reason_one, failure_reason_two],
       )
     end
 
@@ -31,8 +28,8 @@ RSpec.describe FurtherInformationRequestItemsFactory do
       create(
         :assessment_section,
         :qualifications,
-        :with_selected_failure_reasons,
-        selected_assessment_section_failure_reasons: [failure_reason_three],
+        :failed,
+        selected_failure_reasons: [failure_reason_three],
       )
     end
 

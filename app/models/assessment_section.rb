@@ -22,7 +22,9 @@
 #
 class AssessmentSection < ApplicationRecord
   belongs_to :assessment
-  has_many :assessment_section_failure_reasons, dependent: :destroy
+  has_many :selected_failure_reasons,
+           class_name: "AssessmentSectionFailureReason",
+           dependent: :destroy
 
   enum :key,
        {
@@ -42,10 +44,10 @@ class AssessmentSection < ApplicationRecord
               in: keys.values,
             }
 
-  validates :assessment_section_failure_reasons,
+  validates :selected_failure_reasons,
             presence: true,
             if: -> { passed == false }
-  validates :assessment_section_failure_reasons,
+  validates :selected_failure_reasons,
             absence: true,
             if: -> { passed || passed.nil? }
 
@@ -55,6 +57,6 @@ class AssessmentSection < ApplicationRecord
   end
 
   def declines_assessment?
-    assessment_section_failure_reasons.declinable.any?
+    selected_failure_reasons.declinable.any?
   end
 end
