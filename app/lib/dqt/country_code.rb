@@ -12,6 +12,18 @@ class DQT::CountryCode
       # Antarctica and Oceania not otherwise specified
       return "XX" if %w[AQ BAT IO TF HM].include?(code)
 
+      # England
+      return "XF" if code == "GB-ENG"
+
+      # Wales
+      return "XI" if code == "GB-WLS"
+
+      # Scotland
+      return "XH" if code == "GB-SCT"
+
+      # Northern Ireland
+      return "XG" if code == "GB-NIR"
+
       code
     end
   end
