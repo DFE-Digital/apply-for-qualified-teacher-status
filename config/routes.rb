@@ -195,21 +195,33 @@ Rails.application.routes.draw do
   devise_for :teachers,
              path: "/teacher",
              controllers: {
-               confirmations: "teachers/confirmations",
                registrations: "teachers/registrations",
                sessions: "teachers/sessions",
              }
 
   devise_scope :teacher do
+    get "/teacher/sign_in",
+        to: "teachers/sessions#new",
+        as: "new_teacher_session"
+    post "/teacher/sign_in",
+         to: "teachers/sessions#create",
+         as: "teacher_session"
     get "/teacher/sign_in_or_sign_up",
         to: "teachers/sessions#new_or_create",
         as: "create_or_new_teacher_session"
-    get "/teacher/magic_link",
-        to: "teachers/magic_links#show",
-        as: "teacher_magic_link"
-    get "/teacher/check_email",
-        to: "teachers/sessions#check_email",
-        as: "teacher_check_email"
+
+    get "/teacher/otp/new", to: "teachers/otp#new", as: "new_teacher_otp"
+    post "/teacher/otp", to: "teachers/otp#create", as: "teacher_otp"
+    get "/teacher/otp/retry/:error",
+        to: "teachers/otp#retry",
+        as: "retry_teacher_otp",
+        constraints: {
+          error: /(expired)|(exhausted)/,
+        }
+
+    get "/teacher/sign_out",
+        to: "teachers/sessions#destroy",
+        as: "destroy_teacher_session"
     get "/teacher/signed_out",
         to: "teachers/sessions#signed_out",
         as: "teacher_signed_out"

@@ -27,11 +27,8 @@
 #  index_teachers_on_uuid   (uuid) UNIQUE
 #
 class Teacher < ApplicationRecord
-  devise :magic_link_authenticatable,
-         :confirmable,
-         :registerable,
-         :timeoutable,
-         :trackable
+  devise :registerable, :timeoutable, :trackable
+  include Devise::Models::OtpAuthenticatable
 
   self.timeout_in = 1.hour
 

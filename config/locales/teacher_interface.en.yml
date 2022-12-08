@@ -1,4 +1,10 @@
 en:
+  teachers:
+    otp:
+      retry:
+        expired: Your security code has expired. Try again.
+        exhausted: You've had too many incorrect sign in attempts. Try again.
+
   teacher_interface:
     further_information_request:
       show:

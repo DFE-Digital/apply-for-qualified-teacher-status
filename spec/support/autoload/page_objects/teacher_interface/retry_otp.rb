@@ -1,7 +1,7 @@
 module PageObjects
   module TeacherInterface
-    class CheckEmail < SitePrism::Page
-      set_url "/teacher/check_email?{?email}"
+    class RetryOtp < SitePrism::Page
+      set_url "/teacher/otp/retry{/error}"
 
       element :heading, "h1"
 

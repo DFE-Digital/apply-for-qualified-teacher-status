@@ -8,16 +8,14 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   layout "two_thirds"
 
   def create
-    if (self.resource = Teacher.find_by(email: sign_up_params[:email]))
-      if resource.active_for_authentication?
-        resource.send_magic_link
-      else
-        resource.resend_confirmation_instructions
-      end
+    self.resource = Teacher.find_or_initialize_by(sign_up_params)
 
-      redirect_to teacher_check_email_path
+    if resource.save
+      resource.create_otp
+      resource.send_otp
+      redirect_to new_teacher_otp_path(uuid: resource.reload.uuid)
     else
-      super
+      render :new, status: :unprocessable_entity
     end
   end
 
