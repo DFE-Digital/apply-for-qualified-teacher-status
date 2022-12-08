@@ -141,8 +141,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-passwordless (0.7.1)
-      devise
     devise_invitable (2.0.6)
       actionmailer (>= 5.0)
       devise (>= 4.6)
@@ -511,7 +509,6 @@ DEPENDENCIES
   cuprite (~> 0.14)
   debug
   devise
-  devise-passwordless
   devise_invitable
   dfe-analytics!
   dfe-autocomplete!
