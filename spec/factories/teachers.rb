@@ -27,10 +27,6 @@ FactoryBot.define do
     sequence(:email) { |n| "teacher#{n}@example.org" }
     uuid { SecureRandom.uuid }
 
-    trait :confirmed do
-      confirmed_at { Time.zone.now }
-    end
-
     trait :with_application_form do
       association :application_form
     end

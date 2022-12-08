@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe DQT::TRNRequestParams do
   describe "#call" do
-    let(:teacher) { create(:teacher, :confirmed, email: "teacher@example.com") }
+    let(:teacher) { create(:teacher, email: "teacher@example.com") }
 
     let(:application_form) do
       create(

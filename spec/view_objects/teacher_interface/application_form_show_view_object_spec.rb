@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
   subject(:view_object) { described_class.new(current_teacher:) }
 
-  let(:current_teacher) { create(:teacher, :confirmed) }
+  let(:current_teacher) { create(:teacher) }
 
   describe "#application_form" do
     subject(:application_form) { view_object.application_form }

@@ -279,7 +279,7 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def teacher
-    @teacher ||= create(:teacher, :confirmed)
+    @teacher ||= create(:teacher)
   end
 
   def application_form

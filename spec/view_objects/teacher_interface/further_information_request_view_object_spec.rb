@@ -10,7 +10,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
     )
   end
 
-  let(:current_teacher) { create(:teacher, :confirmed) }
+  let(:current_teacher) { create(:teacher) }
   let(:application_form) { create(:application_form, teacher: current_teacher) }
   let(:further_information_request) do
     create(

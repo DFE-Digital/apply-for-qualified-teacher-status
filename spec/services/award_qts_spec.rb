@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe AwardQTS do
-  let(:teacher) { create(:teacher, :confirmed) }
+  let(:teacher) { create(:teacher) }
   let(:user) { create(:staff, :confirmed) }
   let(:trn) { "abcdef" }
 

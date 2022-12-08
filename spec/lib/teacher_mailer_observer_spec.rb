@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe TeacherMailerObserver do
-  let(:teacher) { create(:teacher, :confirmed) }
+  let(:teacher) { create(:teacher) }
   let!(:application_form) { create(:application_form, teacher:) }
   let(:message) { TeacherMailer.with(teacher:).application_received }
 
