@@ -29,8 +29,8 @@ en:
         subject: "Email Changed"
       password_change:
         subject: "Password Changed"
-      magic_link:
-        subject: "Your QTS application link"
+      otp:
+        subject: "Confirm your email address"
     omniauth_callbacks:
       failure: 'Could not authenticate you from %{kind} because "%{reason}".'
       success: "Successfully authenticated from %{kind} account."
