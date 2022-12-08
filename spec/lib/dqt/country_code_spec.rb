@@ -51,5 +51,29 @@ RSpec.describe DQT::CountryCode do
 
       it { is_expected.to eq("XX") }
     end
+
+    context "with England" do
+      let(:code) { "GB-ENG" }
+
+      it { is_expected.to eq("XF") }
+    end
+
+    context "with Wales" do
+      let(:code) { "GB-WLS" }
+
+      it { is_expected.to eq("XI") }
+    end
+
+    context "with Scotland" do
+      let(:code) { "GB-SCT" }
+
+      it { is_expected.to eq("XH") }
+    end
+
+    context "with Northern Ireland" do
+      let(:code) { "GB-NIR" }
+
+      it { is_expected.to eq("XG") }
+    end
   end
 end
