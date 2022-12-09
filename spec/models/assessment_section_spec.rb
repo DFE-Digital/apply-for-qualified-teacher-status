@@ -46,7 +46,7 @@ RSpec.describe AssessmentSection, type: :model do
       before do
         assessment_section.passed = true
         assessment_section.selected_failure_reasons << build(
-          :assessment_section_failure_reason,
+          :selected_failure_reason,
         )
       end
 
@@ -89,11 +89,7 @@ RSpec.describe AssessmentSection, type: :model do
 
     context "with a decline failure reason" do
       before do
-        create(
-          :assessment_section_failure_reason,
-          :declinable,
-          assessment_section:,
-        )
+        create(:selected_failure_reason, :declinable, assessment_section:)
       end
 
       it { is_expected.to be true }
@@ -101,11 +97,7 @@ RSpec.describe AssessmentSection, type: :model do
 
     context "with no decline failure reasons" do
       before do
-        create(
-          :assessment_section_failure_reason,
-          :fi_requestable,
-          assessment_section:,
-        )
+        create(:selected_failure_reason, :fi_requestable, assessment_section:)
       end
 
       it { is_expected.to be false }

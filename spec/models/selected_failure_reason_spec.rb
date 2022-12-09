@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: assessment_section_failure_reasons
+# Table name: selected_failure_reasons
 #
 #  id                    :bigint           not null, primary key
 #  assessor_feedback     :text
@@ -21,7 +21,7 @@
 #
 require "rails_helper"
 
-RSpec.describe AssessmentSectionFailureReason do
+RSpec.describe SelectedFailureReason do
   describe "validations" do
     it { is_expected.to validate_presence_of(:key) }
     it do
@@ -33,22 +33,22 @@ RSpec.describe AssessmentSectionFailureReason do
     subject { described_class.declinable }
 
     context "where a record has a key that is declinable" do
-      let(:assessment_section_failure_reason) do
-        create(:assessment_section_failure_reason, :declinable)
+      let(:selected_failure_reason) do
+        create(:selected_failure_reason, :declinable)
       end
 
       it "is returned" do
-        expect(subject).to eq([assessment_section_failure_reason])
+        expect(subject).to eq([selected_failure_reason])
       end
     end
 
     context "where a record has a key that isn't declinable" do
-      let(:assessment_section_failure_reason) do
-        create(:assessment_section_failure_reason, :fi_requestable)
+      let(:selected_failure_reason) do
+        create(:selected_failure_reason, :fi_requestable)
       end
 
       it "is not returned" do
-        expect(subject).not_to eq([assessment_section_failure_reason])
+        expect(subject).not_to eq([selected_failure_reason])
       end
     end
   end

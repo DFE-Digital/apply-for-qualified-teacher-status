@@ -65,13 +65,6 @@
     - failure_reasons
     - created_at
     - updated_at
-  :assessment_section_failure_reasons:
-    - id
-    - assessment_section_id
-    - key
-    - assessor_feedback
-    - created_at
-    - updated_at
   :assessments:
     - id
     - application_form_id
@@ -197,6 +190,13 @@
     - created_at
     - updated_at
     - further_information_request_id
+  :selected_failure_reasons:
+    - id
+    - created_at
+    - updated_at
+    - key
+    - assessor_feedback
+    - assessment_section_id
   :staff:
     - id
     - email

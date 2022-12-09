@@ -128,7 +128,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       :failed,
       selected_failure_reasons: [
         build(
-          :assessment_section_failure_reason,
+          :selected_failure_reason,
           assessor_feedback: @assessor_feedback = "Note.",
           key: @key = "applicant_already_qts",
         ),

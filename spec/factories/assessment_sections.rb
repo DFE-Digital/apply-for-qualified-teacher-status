@@ -4,6 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  checks          :string           default([]), is an Array
+#  failure_reasons :string           default([]), is an Array
 #  key             :string           not null
 #  passed          :boolean
 #  created_at      :datetime         not null
@@ -31,28 +32,28 @@ FactoryBot.define do
     trait :failed do
       passed { false }
       selected_failure_reasons do
-        [build(:assessment_section_failure_reason, :fi_requestable)]
+        [build(:selected_failure_reason, :fi_requestable)]
       end
     end
 
     trait :declines_assessment do
       passed { false }
       selected_failure_reasons do
-        [build(:assessment_section_failure_reason, :declinable)]
+        [build(:selected_failure_reason, :declinable)]
       end
     end
 
     trait :declines_with_sanctions do
       passed { false }
       selected_failure_reasons do
-        [build(:assessment_section_failure_reason, :with_sanctions)]
+        [build(:selected_failure_reason, :with_sanctions)]
       end
     end
 
     trait :declines_with_already_qts do
       passed { false }
       selected_failure_reasons do
-        [build(:assessment_section_failure_reason, :with_already_qts)]
+        [build(:selected_failure_reason, :with_already_qts)]
       end
     end
 

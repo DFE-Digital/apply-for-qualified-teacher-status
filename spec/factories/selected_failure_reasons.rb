@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: assessment_section_failure_reasons
+# Table name: selected_failure_reasons
 #
 #  id                    :bigint           not null, primary key
 #  assessor_feedback     :text
@@ -18,7 +18,7 @@
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #
 FactoryBot.define do
-  factory :assessment_section_failure_reason do
+  factory :selected_failure_reason do
     association :assessment_section
     key { FailureReasons::ALL.sample }
 

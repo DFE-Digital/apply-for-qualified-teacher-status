@@ -35,7 +35,7 @@ RSpec.describe UpdateAssessmentSection do
 
     it "creates the assessment failure reason records" do
       expect { subject }.to change {
-        AssessmentSectionFailureReason.where(
+        SelectedFailureReason.where(
           assessment_section:,
           key: selected_failure_reason_key,
         ).count
@@ -54,7 +54,7 @@ RSpec.describe UpdateAssessmentSection do
         it "doesn't create a new assessment failure reason record" do
           expect { subject }.not_to(
             change do
-              AssessmentSectionFailureReason.where(
+              SelectedFailureReason.where(
                 assessment_section:,
                 key: selected_failure_reason_key,
               ).count
@@ -64,7 +64,7 @@ RSpec.describe UpdateAssessmentSection do
 
         it "updates the existing record" do
           expect { subject }.to change {
-            AssessmentSectionFailureReason.find_by(
+            SelectedFailureReason.find_by(
               key: selected_failure_reason_key,
             ).assessor_feedback
           }.to(selected_failure_reason_assessor_feedback)
@@ -88,7 +88,7 @@ RSpec.describe UpdateAssessmentSection do
 
         it "deletes the now unselected failure reason" do
           expect { subject }.to change {
-            AssessmentSectionFailureReason.where(key: different_key).count
+            SelectedFailureReason.where(key: different_key).count
           }.by(-1)
         end
       end

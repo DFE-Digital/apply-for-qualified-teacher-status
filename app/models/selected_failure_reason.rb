@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: assessment_section_failure_reasons
+# Table name: selected_failure_reasons
 #
 #  id                    :bigint           not null, primary key
 #  assessor_feedback     :text
@@ -19,7 +19,7 @@
 #
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #
-class AssessmentSectionFailureReason < ApplicationRecord
+class SelectedFailureReason < ApplicationRecord
   belongs_to :assessment_section
 
   validates :key, presence: true

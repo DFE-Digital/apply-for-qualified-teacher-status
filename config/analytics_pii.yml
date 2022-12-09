@@ -16,8 +16,6 @@
     - registration_number
     - has_work_history
     - subjects
-  :assessment_section_failure_reasons:
-    - assessor_feedback
   :further_information_requests:
     - failure_assessor_note
   :further_information_request_items:
@@ -33,6 +31,8 @@
     - complete_date
     - certificate_date
     - part_of_university_degree
+  :selected_failure_reasons:
+    - assessor_feedback
   :staff:
     - email
     - unconfirmed_email
