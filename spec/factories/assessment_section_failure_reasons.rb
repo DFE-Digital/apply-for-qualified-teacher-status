@@ -19,6 +19,24 @@
 #
 FactoryBot.define do
   factory :assessment_section_failure_reason do
-    key { FailureReasons::ALL.sample.to_s }
+    association :assessment_section
+    key { FailureReasons::ALL.sample }
+
+    trait :fi_requestable do
+      key { FailureReasons::FURTHER_INFORMATIONABLE.sample }
+      assessor_feedback { "We need more things please" }
+    end
+
+    trait :declinable do
+      key { FailureReasons::DECLINABLE.sample }
+    end
+
+    trait :with_sanctions do
+      key { "authorisation_to_teach" }
+    end
+
+    trait :with_already_qts do
+      key { "applicant_already_qts" }
+    end
   end
 end

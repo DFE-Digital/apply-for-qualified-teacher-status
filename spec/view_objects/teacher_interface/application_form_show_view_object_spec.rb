@@ -62,19 +62,11 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         create(:application_form, teacher: current_teacher)
       end
       let(:assessment) { create(:assessment, application_form:) }
-
-      before do
-        create(
-          :assessment_section,
-          :personal_information,
-          :failed,
-          selected_failure_reasons: {
-            duplicate_application: "A note.",
-            identification_document_expired: "A note.",
-            applicant_already_qts: "A note.",
-          },
-          assessment:,
-        )
+      let(:assessment_section) do
+        create(:assessment_section, :personal_information, :failed, assessment:)
+      end
+      let!(:failure_reasons) do
+        assessment_section.assessment_section_failure_reasons
       end
 
       it do
@@ -82,23 +74,14 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
           [
             {
               assessment_section_key: "personal_information",
-              failure_reasons: [
-                {
-                  assessor_feedback: "A note.",
-                  is_decline: true,
-                  key: "applicant_already_qts",
-                },
-                {
-                  assessor_feedback: "A note.",
-                  is_decline: true,
-                  key: "duplicate_application",
-                },
-                {
-                  assessor_feedback: "",
-                  is_decline: false,
-                  key: "identification_document_expired",
-                },
-              ],
+              failure_reasons:
+                failure_reasons.map do |failure_reason|
+                  {
+                    assessor_feedback: failure_reason.assessor_feedback,
+                    is_decline: false,
+                    key: failure_reason.key,
+                  }
+                end,
             },
           ],
         )
@@ -148,25 +131,29 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
       end
       let(:assessment) { create(:assessment, application_form:) }
 
-      before do
-        create(
-          :assessment_section,
-          :personal_information,
-          :failed,
-          selected_failure_reasons: {
-            failure_reason => "A note.",
-          },
-          assessment:,
-        )
-      end
-
       context "with sanctions" do
-        let(:failure_reason) { "authorisation_to_teach" }
+        let!(:assessment_section) do
+          create(
+            :assessment_section,
+            :personal_information,
+            :declines_with_sanctions,
+            assessment:,
+          )
+        end
+
         it { is_expected.to be true }
       end
 
       context "with already QTS" do
-        let(:failure_reason) { "applicant_already_qts" }
+        let!(:assessment_section) do
+          create(
+            :assessment_section,
+            :personal_information,
+            :declines_with_already_qts,
+            assessment:,
+          )
+        end
+
         it { is_expected.to be true }
       end
     end

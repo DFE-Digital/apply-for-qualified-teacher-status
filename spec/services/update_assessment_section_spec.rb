@@ -12,9 +12,7 @@ RSpec.describe UpdateAssessmentSection do
   let(:selected_failure_reasons) do
     { selected_failure_reason_key => selected_failure_reason_assessor_feedback }
   end
-  let(:selected_failure_reason_key) do
-    assessment_section.failure_reasons.sample
-  end
+  let(:selected_failure_reason_key) { "identification_document_expired" }
   let(:selected_failure_reason_assessor_feedback) { "Epic fail" }
   let(:params) { { passed: false, selected_failure_reasons: } }
 
@@ -33,12 +31,6 @@ RSpec.describe UpdateAssessmentSection do
       expect { subject }.to change {
         TimelineEvent.assessment_section_recorded.count
       }.by(1)
-    end
-
-    it "sets the failure reasons" do
-      expect { subject }.to change {
-        assessment_section.selected_failure_reasons
-      }.from({}).to(selected_failure_reasons)
     end
 
     it "creates the assessment failure reason records" do
@@ -158,7 +150,10 @@ RSpec.describe UpdateAssessmentSection do
   end
 
   context "when the state is the same" do
-    before { assessment_section.update!(params) }
+    let(:other_params) { { passed: false, selected_failure_reasons: } }
+    before do
+      described_class.call(assessment_section:, user:, params: other_params)
+    end
 
     it "doesn't create a timeline event" do
       expect { subject }.to_not(

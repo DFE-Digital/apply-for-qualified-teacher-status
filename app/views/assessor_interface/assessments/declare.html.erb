@@ -11,20 +11,20 @@
   <h2 class="govuk-heading-l">Your decline reasons and notes</h2>
 
   <% @assessment.sections.each do |section| %>
-    <% if section.selected_failure_reasons.present? %>
+    <% if section.assessment_section_failure_reasons.present? %>
       <h3 class="govuk-heading-m"><%= t(".assessment_section.#{section.key}") %></h3>
       <ul class="govuk-list">
-        <% section.selected_failure_reasons.each do |key, note| %>
+        <% section.assessment_section_failure_reasons.each do |failure_reason| %>
           <li>
-            <h4 class="govuk-heading-s"><%= t("assessor_interface.assessment_sections.show.failure_reasons.#{key}") %></h4>
+            <h4 class="govuk-heading-s"><%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason.key}") %></h4>
 
-            <% if FailureReasons.decline?(failure_reason: key) %>
+            <% if FailureReasons.decline?(failure_reason: failure_reason.key) %>
               <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
             <% else %>
               <p class="govuk-body govuk-!-margin-bottom-2">Your note (the applicant won’t see this):</p>
             <% end %>
 
-            <%= govuk_inset_text(text: note) %>
+            <%= govuk_inset_text(text: failure_reason.assessor_feedback) %>
           </li>
         <% end %>
       </ul>

@@ -24,6 +24,7 @@
 FactoryBot.define do
   factory :assessment_section do
     association :assessment
+    key { AssessmentSection.keys.keys.sample }
 
     trait :passed do
       passed { true }
@@ -31,12 +32,37 @@ FactoryBot.define do
 
     trait :failed do
       passed { false }
-      selected_failure_reasons { { failure_reason: "Notes." } }
+      assessment_section_failure_reasons do
+        [build(:assessment_section_failure_reason, :fi_requestable)]
+      end
     end
 
     trait :declines_assessment do
-      selected_failure_reasons do
-        { FailureReasons::DECLINABLE.first => "Notes." }
+      passed { false }
+      assessment_section_failure_reasons do
+        [build(:assessment_section_failure_reason, :declinable)]
+      end
+    end
+
+    trait :declines_with_sanctions do
+      passed { false }
+      assessment_section_failure_reasons do
+        [build(:assessment_section_failure_reason, :with_sanctions)]
+      end
+    end
+
+    trait :declines_with_already_qts do
+      passed { false }
+      assessment_section_failure_reasons do
+        [build(:assessment_section_failure_reason, :with_already_qts)]
+      end
+    end
+
+    trait :with_selected_failure_reasons do
+      passed { false }
+      transient { selected_assessment_section_failure_reasons { [] } }
+      assessment_section_failure_reasons do
+        selected_assessment_section_failure_reasons
       end
     end
 

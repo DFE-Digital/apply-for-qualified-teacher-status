@@ -91,17 +91,18 @@ RSpec.describe Assessment, type: :model do
     end
 
     context "with a passed assessment" do
-      before { assessment_section.update!(passed: true) }
+      let!(:assessment_section) do
+        create(:assessment_section, :passed, assessment:)
+      end
+
       it { is_expected.to be true }
     end
 
     context "with a failed assessment" do
-      before do
-        assessment_section.update!(
-          passed: false,
-          selected_failure_reasons: %w[failure_reason],
-        )
+      let!(:assessment_section) do
+        create(:assessment_section, :failed, assessment:)
       end
+
       it { is_expected.to be true }
     end
   end

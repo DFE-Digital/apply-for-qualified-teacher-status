@@ -27,9 +27,9 @@ class AssessorInterface::AssessmentSectionForm
   end
 
   def selected_failure_reasons=(value)
-    value.each do |failure_reason, notes|
-      send("#{failure_reason}_checked=", true)
-      send("#{failure_reason}_notes=", notes)
+    value.each do |failure_reason|
+      send("#{failure_reason.key}_checked=", true)
+      send("#{failure_reason.key}_notes=", failure_reason.assessor_feedback)
     end
   end
 
@@ -74,7 +74,8 @@ class AssessorInterface::AssessmentSectionForm
       {
         assessment_section:,
         passed: assessment_section.passed,
-        selected_failure_reasons: assessment_section.selected_failure_reasons,
+        selected_failure_reasons:
+          assessment_section.assessment_section_failure_reasons,
       }
     end
 
