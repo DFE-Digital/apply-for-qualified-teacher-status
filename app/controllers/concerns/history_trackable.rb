@@ -11,15 +11,15 @@ module HistoryTrackable
   end
 
   class_methods do
-    def define_history_origins(*actions)
+    def define_history_origin(*actions)
       self.history_origin_actions = actions.map(&:to_s)
     end
 
-    def define_history_checks(*actions)
+    def define_history_check(*actions)
       self.history_check_actions = actions.map(&:to_s)
     end
 
-    def define_history_resets(*actions)
+    def define_history_reset(*actions)
       self.history_reset_actions = actions.map(&:to_s)
     end
   end

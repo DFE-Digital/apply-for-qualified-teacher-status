@@ -6,8 +6,8 @@ module TeacherInterface
 
     before_action :load_view_object
 
-    define_history_origins :show
-    define_history_checks :edit
+    define_history_origin :show
+    define_history_check :edit
 
     def show
     end
