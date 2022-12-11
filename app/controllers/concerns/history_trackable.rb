@@ -15,8 +15,9 @@ module HistoryTrackable
       self.history_origin_actions = actions.map(&:to_s)
     end
 
-    def define_history_check(*actions)
-      self.history_check_actions = actions.map(&:to_s)
+    def define_history_check(*actions, identifier: true)
+      self.history_check_actions ||= {}
+      actions.each { |action| history_check_actions[action.to_s] = identifier }
     end
 
     def define_history_reset(*actions)
@@ -28,8 +29,13 @@ module HistoryTrackable
 
   def track_history
     origin = (history_origin_actions || []).include?(action_name)
-    check = (history_check_actions || []).include?(action_name)
+
+    check_identifier = (history_check_actions || {}).fetch(action_name, false)
+    check =
+      check_identifier.is_a?(Symbol) ? send(check_identifier) : check_identifier
+
     reset = (history_reset_actions || []).include?(action_name)
+
     history_stack.push_self(request, origin:, check:, reset:)
   end
 
