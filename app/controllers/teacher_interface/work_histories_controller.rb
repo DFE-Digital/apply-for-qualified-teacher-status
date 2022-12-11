@@ -9,7 +9,9 @@ module TeacherInterface
     before_action :load_application_form
 
     skip_before_action :track_history, only: :index
-    define_history_check :check
+
+    define_history_check :check_collection
+    define_history_check :check_member, identifier: :check_member_identifier
 
     def index
       if application_form.task_item_completed?(:work_history, :work_history)
@@ -24,8 +26,11 @@ module TeacherInterface
       end
     end
 
-    def check
+    def check_collection
       @work_histories = application_form.work_histories.ordered
+      @came_from_add_another =
+        history_stack.last_entry&.fetch(:path) ==
+          add_another_teacher_interface_application_form_work_histories_path
     end
 
     def new
@@ -51,7 +56,7 @@ module TeacherInterface
             check: false,
           )
 
-          %i[check teacher_interface application_form work_histories]
+          [:check, :teacher_interface, :application_form, work_history]
         end,
         if_failure_then_render: :new,
       )
@@ -72,7 +77,7 @@ module TeacherInterface
 
         redirect_to %i[new teacher_interface application_form work_history]
       else
-        redirect_to %i[teacher_interface application_form]
+        redirect_to %i[check teacher_interface application_form work_histories]
       end
     end
 
@@ -125,13 +130,22 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @work_history_form,
-        if_success_then_redirect: %i[
-          check
-          teacher_interface
-          application_form
-          work_histories
+        check_identifier: check_member_identifier,
+        if_success_then_redirect: [
+          :check,
+          :teacher_interface,
+          :application_form,
+          work_history,
         ],
       )
+    end
+
+    def check_member
+      @work_history = work_history
+
+      work_histories = application_form.work_histories.ordered.to_a
+      @next_work_history =
+        work_histories[work_histories.index(work_history) + 1]
     end
 
     def delete
@@ -197,6 +211,10 @@ module TeacherInterface
         :start_date,
         :still_employed,
       )
+    end
+
+    def check_member_identifier
+      "work-history:#{work_history.id}"
     end
   end
 end

@@ -20,7 +20,8 @@ module PageObjects
                 GovukSummaryList,
                 ".govuk-summary-list__card" \
                   ":not(#app-check-your-answers-summary-age-range)" \
-                  ":not(#app-check-your-answers-summary-subjects)"
+                  ":not(#app-check-your-answers-summary-subjects)",
+                match: :first
         section :age_range_summary_list,
                 GovukSummaryList,
                 "#app-check-your-answers-summary-age-range"

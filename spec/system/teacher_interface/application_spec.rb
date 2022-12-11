@@ -69,13 +69,40 @@ RSpec.describe "Teacher application", type: :system do
     when_i_choose_no
     and_i_click_continue
 
-    when_i_choose_yes
+    when_i_choose_no
     and_i_click_continue
-    then_i_see_the_qualifications_summary
+    then_i_see_the(:teacher_check_qualification_page)
+    and_i_see_the_qualification_summary
+
+    when_i_click_continue
+    then_i_see_the_university_degree_form
+
+    when_i_fill_in_qualifications
+    and_i_click_continue
+    then_i_see_the_upload_certificate_form
+
+    when_i_fill_in_the_upload_certificate_form
+    and_i_click_continue
+    then_i_see_the_check_your_certificate_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the_upload_transcript_form
+
+    when_i_fill_in_the_upload_transcript_form
+    and_i_click_continue
+    then_i_see_the_check_your_transcript_uploads
+
+    when_i_choose_no
+    and_i_click_continue
+    then_i_see_the(:teacher_check_qualification_page)
 
     when_i_click_continue
     and_i_choose_no
     and_i_click_continue
+    then_i_see_the(:teacher_check_qualifications_page)
+
+    when_i_click_continue
     then_i_see_completed_qualifications_section
 
     when_i_click_age_range
@@ -101,11 +128,15 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_work_history
     and_i_click_continue
-    then_i_see_the_work_history_summary
+    then_i_see_the(:teacher_check_work_history_page)
+    and_i_see_the_work_history_summary
 
     when_i_click_continue
     and_i_choose_no
     and_i_click_continue
+    then_i_see_the(:teacher_check_work_histories_page)
+
+    when_i_click_continue
     then_i_see_completed_work_history_section
 
     when_i_click_check_your_answers
@@ -184,11 +215,15 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_yes
     and_i_click_continue
-    then_i_see_the_qualifications_summary
+    then_i_see_the(:teacher_check_qualification_page)
+    and_i_see_the_qualification_summary
 
     when_i_click_continue
     and_i_choose_no
     and_i_click_continue
+    then_i_see_the(:teacher_check_qualifications_page)
+
+    when_i_click_continue
     then_i_see_completed_qualifications_section
 
     when_i_click_age_range
@@ -289,11 +324,15 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_yes
     and_i_click_continue
-    then_i_see_the_qualifications_summary
+    then_i_see_the(:teacher_check_qualification_page)
+    and_i_see_the_qualification_summary
 
     when_i_click_continue
     and_i_choose_no
     and_i_click_continue
+    then_i_see_the(:teacher_check_qualifications_page)
+
+    when_i_click_continue
     then_i_see_completed_qualifications_section
 
     when_i_click_age_range
@@ -349,14 +388,21 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_fill_in_work_history
     and_i_click_continue
-    then_i_see_the_work_history_summary
+    then_i_see_the(:teacher_check_work_history_page)
+    and_i_see_the_work_history_summary
+
+    when_i_click_continue
+    and_i_choose_no
+    and_i_click_continue
+    then_i_see_the(:teacher_check_work_histories_page)
 
     when_i_click_delete
     then_i_see_delete_confirmation_form
 
     when_i_choose_yes
     and_i_click_continue
-    then_i_see_the_empty_work_history_summary
+    then_i_see_the(:teacher_check_work_histories_page)
+    and_i_see_the_empty_work_history_summary
   end
 
   it "allows delete qualifications" do
@@ -391,7 +437,8 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_yes
     and_i_click_continue
-    then_i_see_the_qualifications_summary
+    then_i_see_the(:teacher_check_qualification_page)
+    and_i_see_the_qualification_summary
 
     when_i_click_continue
     and_i_choose_yes
@@ -416,14 +463,19 @@ RSpec.describe "Teacher application", type: :system do
 
     when_i_choose_no
     and_i_click_continue
-    then_i_see_the_qualifications_summary
+    then_i_see_the(:teacher_check_qualification_page)
+
+    when_i_click_continue
+    and_i_choose_no
+    and_i_click_continue
+    then_i_see_the(:teacher_check_qualifications_page)
 
     when_i_click_delete
     then_i_see_delete_confirmation_form
 
     when_i_choose_yes
     and_i_click_continue
-    then_i_see_the_qualifications_summary
+    then_i_see_the(:teacher_check_qualifications_page)
   end
 
   it "allows skipping name change document" do
@@ -778,6 +830,14 @@ RSpec.describe "Teacher application", type: :system do
     )
   end
 
+  def then_i_see_the_university_degree_form
+    expect(qualifications_form_page).to have_title("Your qualifications")
+    expect(qualifications_form_page.heading.text).to eq("University degree")
+    expect(qualifications_form_page.body).to have_content(
+      "Tell us about your university degree qualification.",
+    )
+  end
+
   def then_i_see_the_degree_qualifications_form
     expect(qualifications_form_page).to have_title("Your qualifications")
     expect(qualifications_form_page.heading.text).to eq("University degree")
@@ -935,15 +995,14 @@ RSpec.describe "Teacher application", type: :system do
     )
   end
 
-  def then_i_see_the_qualifications_summary
-    expect(qualification_summary_page.heading.text).to eq("Check your answers")
-    expect(qualification_summary_page.summary_card).to have_content(
+  def and_i_see_the_qualification_summary
+    expect(teacher_check_qualification_page.summary_list).to have_content(
       "Qualification title\tTitle",
     )
-    expect(qualification_summary_page.summary_card).to have_content(
+    expect(teacher_check_qualification_page.summary_list).to have_content(
       "Name of institution\tInstitution Name",
     )
-    expect(qualification_summary_page.summary_card).to have_content(
+    expect(teacher_check_qualification_page.summary_list).to have_content(
       "Country of institution\tFrance",
     )
   end
@@ -966,43 +1025,34 @@ RSpec.describe "Teacher application", type: :system do
     )
   end
 
-  def then_i_see_the_work_history_summary
-    expect(work_history_summary_page.heading.text).to eq(
-      "Your work history in education",
-    )
-    expect(work_history_summary_page.summary_card_1).to have_content(
-      "Have you worked professionally as a teacher?\tYes",
-    )
-    expect(work_history_summary_page.summary_card_2).to have_content(
-      "Your current or most recent role",
-    )
-    expect(work_history_summary_page.summary_card_2).to have_content(
+  def and_i_see_the_work_history_summary
+    expect(teacher_check_work_history_page.summary_list).to have_content(
       "School name\tSchool name",
     )
-    expect(work_history_summary_page.summary_card_2).to have_content(
+    expect(teacher_check_work_history_page.summary_list).to have_content(
       "City of institution\tCity",
     )
-    expect(work_history_summary_page.summary_card_2).to have_content(
+    expect(teacher_check_work_history_page.summary_list).to have_content(
       "Country of institution\tFrance",
     )
-    expect(work_history_summary_page.summary_card_2).to have_content(
+    expect(teacher_check_work_history_page.summary_list).to have_content(
       "Your job role\tJob",
     )
-    expect(work_history_summary_page.summary_card_2).to have_content(
+    expect(teacher_check_work_history_page.summary_list).to have_content(
       "Contact email address\ttest@example.com",
     )
-    expect(work_history_summary_page.summary_card_2).to have_content(
+    expect(teacher_check_work_history_page.summary_list).to have_content(
       "Role start date\tJanuary 2000",
     )
   end
 
-  def then_i_see_the_empty_work_history_summary
-    expect(work_history_summary_page.heading.text).to eq(
-      "Your work history in education",
+  def and_i_see_the_empty_work_history_summary
+    expect(teacher_check_work_histories_page.heading.text).to eq(
+      "Check your answers",
     )
-    expect(work_history_summary_page.summary_card_1).to have_content(
-      "Have you worked professionally as a teacher?\tYes",
-    )
+    expect(
+      teacher_check_work_histories_page.summary_lists.first,
+    ).to have_content("Have you worked professionally as a teacher?\tYes")
   end
 
   def then_i_see_completed_work_history_section
@@ -1034,9 +1084,7 @@ RSpec.describe "Teacher application", type: :system do
 
     qualification_summary_list =
       check_your_answers_page.who_you_can_teach.qualification_summary_list
-    expect(qualification_summary_list).to have_content(
-      "Your teaching qualification",
-    )
+    expect(qualification_summary_list).to have_content("Qualification title")
 
     minimum_age_row =
       check_your_answers_page

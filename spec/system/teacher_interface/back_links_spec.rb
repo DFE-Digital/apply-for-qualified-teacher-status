@@ -77,7 +77,7 @@ RSpec.describe "Teacher back links", type: :system do
     then_i_see_the(:edit_qualification_page, qualification_id: qualification.id)
 
     # edit_qualification_page -> document_form_page -> document_form_page -> part_of_university_degree_page
-    #  -> teacher_check_qualifications_page
+    #  -> teacher_check_qualification_page
     #  <- teacher_application_page
 
     when_i_click_continue
@@ -93,7 +93,7 @@ RSpec.describe "Teacher back links", type: :system do
     )
 
     when_i_choose_part_of_university_degree
-    then_i_see_the(:teacher_check_qualifications_page)
+    then_i_see_the(:teacher_check_qualification_page)
 
     when_i_click_back
     then_i_see_the(:teacher_application_page)

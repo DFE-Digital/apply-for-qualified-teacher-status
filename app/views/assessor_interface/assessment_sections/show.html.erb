@@ -30,6 +30,7 @@
 <% when "work_history" %>
   <%= render "shared/application_form/work_history_summary",
              application_form: @assessment_section_view_object.application_form,
+             show_has_work_history: true,
              work_histories: @assessment_section_view_object.work_histories,
              changeable: false %>
 <% when "professional_standing" %>

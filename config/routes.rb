@@ -137,7 +137,7 @@ Rails.application.routes.draw do
 
       resources :qualifications, except: %i[show] do
         collection do
-          get "check", to: "qualifications#check"
+          get "check", to: "qualifications#check_collection"
 
           get "add_another", to: "qualifications#add_another"
           post "add_another", to: "qualifications#submit_add_another"
@@ -145,6 +145,8 @@ Rails.application.routes.draw do
 
         member do
           get "delete"
+
+          get "check", to: "qualifications#check_member"
 
           get "part_of_university_degree",
               to: "qualifications#edit_part_of_university_degree"
@@ -165,16 +167,19 @@ Rails.application.routes.draw do
       end
 
       resources :work_histories, except: %i[show] do
-        get "delete", on: :member
-
         collection do
-          get "check", to: "work_histories#check"
+          get "check", to: "work_histories#check_collection"
 
           get "add_another", to: "work_histories#add_another"
           post "add_another", to: "work_histories#submit_add_another"
 
           get "has_work_history", to: "work_histories#edit_has_work_history"
           post "has_work_history", to: "work_histories#update_has_work_history"
+        end
+
+        member do
+          get "check", to: "work_histories#check_member"
+          get "delete"
         end
       end
 
