@@ -62,5 +62,6 @@ class FurtherInformationRequestItemsFactory
     "written_statement_illegible" => :written_statement,
     "written_statement_recent" => :written_statement,
     "qualified_to_teach" => :written_statement,
+    "registration_number" => :written_statement,
   }.freeze
 end

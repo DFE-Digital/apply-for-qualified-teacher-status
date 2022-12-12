@@ -49,7 +49,7 @@ RSpec.describe FurtherInformationRequestItemsFactory do
       )
     end
     let(:failure_reason_three) do
-      build(:assessment_section_failure_reason, key: "registration_number")
+      build(:assessment_section_failure_reason, key: "duplicate_application")
     end
 
     it { is_expected.to_not be_empty }
