@@ -54,6 +54,6 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   end
 
   def teacher_requires_application_form?
-    resource.application_form.nil?
+    resource.persisted? && resource.application_form.nil?
   end
 end
