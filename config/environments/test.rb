@@ -58,4 +58,8 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
 
   config.autoload_paths << "#{root}/spec/support/autoload"
+
+  #limit log size to 50mb
+  config.logger =
+    ActiveSupport::Logger.new(config.paths["log"].first, 1, 50.megabytes)
 end
