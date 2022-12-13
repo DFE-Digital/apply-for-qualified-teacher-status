@@ -45,25 +45,23 @@ RSpec.describe AssessmentSection, type: :model do
     context "when passed" do
       before do
         assessment_section.passed = true
-        assessment_section.assessment_section_failure_reasons << build(
-          :assessment_section_failure_reason,
+        assessment_section.selected_failure_reasons << build(
+          :selected_failure_reason,
         )
       end
 
       it "is expected to be invalid?" do
         assessment_section.valid?
-        expect(
-          assessment_section.errors[:assessment_section_failure_reasons],
-        ).to eq(["must be blank"])
+        expect(assessment_section.errors[:selected_failure_reasons]).to eq(
+          ["must be blank"],
+        )
       end
     end
 
     context "when not passed" do
       before { assessment_section.passed = false }
 
-      it do
-        is_expected.to validate_presence_of(:assessment_section_failure_reasons)
-      end
+      it { is_expected.to validate_presence_of(:selected_failure_reasons) }
     end
   end
 
@@ -91,11 +89,7 @@ RSpec.describe AssessmentSection, type: :model do
 
     context "with a decline failure reason" do
       before do
-        create(
-          :assessment_section_failure_reason,
-          :declinable,
-          assessment_section:,
-        )
+        create(:selected_failure_reason, :declinable, assessment_section:)
       end
 
       it { is_expected.to be true }
@@ -103,11 +97,7 @@ RSpec.describe AssessmentSection, type: :model do
 
     context "with no decline failure reasons" do
       before do
-        create(
-          :assessment_section_failure_reason,
-          :fi_requestable,
-          assessment_section:,
-        )
+        create(:selected_failure_reason, :fi_requestable, assessment_section:)
       end
 
       it { is_expected.to be false }

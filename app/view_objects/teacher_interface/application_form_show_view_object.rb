@@ -30,10 +30,10 @@ class TeacherInterface::ApplicationFormShowViewObject
     return [] if assessment.nil? || further_information_request.present?
 
     assessment.sections.filter_map do |section|
-      next nil if section.assessment_section_failure_reasons.empty?
+      next nil if section.selected_failure_reasons.empty?
 
       failure_reasons =
-        section.assessment_section_failure_reasons.map do |failure_reason|
+        section.selected_failure_reasons.map do |failure_reason|
           is_decline =
             FailureReasons.decline?(failure_reason: failure_reason.key)
 
@@ -57,7 +57,7 @@ class TeacherInterface::ApplicationFormShowViewObject
     return false if assessment.nil?
 
     assessment.sections.any? do |section|
-      section.assessment_section_failure_reasons.any? do |failure_reason|
+      section.selected_failure_reasons.any? do |failure_reason|
         %w[authorisation_to_teach applicant_already_qts].include?(
           failure_reason.key,
         )

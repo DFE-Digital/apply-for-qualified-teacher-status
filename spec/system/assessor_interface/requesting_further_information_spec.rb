@@ -110,10 +110,10 @@ RSpec.describe "Assessor requesting further information", type: :system do
         application_form.assessment.sections << create(
           :assessment_section,
           :qualifications,
-          :with_selected_failure_reasons,
-          selected_assessment_section_failure_reasons: [
+          :failed,
+          selected_failure_reasons: [
             build(
-              :assessment_section_failure_reason,
+              :selected_failure_reason,
               key: "qualifications_dont_match_subjects",
               assessor_feedback: "A note.",
             ),

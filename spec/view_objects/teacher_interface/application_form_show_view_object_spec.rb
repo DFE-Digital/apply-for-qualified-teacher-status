@@ -65,9 +65,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
       let(:assessment_section) do
         create(:assessment_section, :personal_information, :failed, assessment:)
       end
-      let!(:failure_reasons) do
-        assessment_section.assessment_section_failure_reasons
-      end
+      let!(:failure_reasons) { assessment_section.selected_failure_reasons }
 
       it do
         is_expected.to eq(

@@ -17,13 +17,13 @@ class UpdateAssessmentSection
       selected_keys = selected_failure_reasons.keys
 
       assessment_section
-        .assessment_section_failure_reasons
+        .selected_failure_reasons
         .where.not(key: selected_keys)
         .destroy_all
 
       selected_failure_reasons.each do |key, assessor_feedback|
         assessment_section
-          .assessment_section_failure_reasons
+          .selected_failure_reasons
           .find_or_initialize_by(key:)
           .update(assessor_feedback:)
       end

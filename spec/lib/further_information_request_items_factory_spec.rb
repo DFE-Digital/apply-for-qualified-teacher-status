@@ -19,11 +19,8 @@ RSpec.describe FurtherInformationRequestItemsFactory do
       create(
         :assessment_section,
         :personal_information,
-        :with_selected_failure_reasons,
-        selected_assessment_section_failure_reasons: [
-          failure_reason_one,
-          failure_reason_two,
-        ],
+        :failed,
+        selected_failure_reasons: [failure_reason_one, failure_reason_two],
       )
     end
 
@@ -31,33 +28,25 @@ RSpec.describe FurtherInformationRequestItemsFactory do
       create(
         :assessment_section,
         :qualifications,
-        :with_selected_failure_reasons,
-        selected_assessment_section_failure_reasons: [failure_reason_three],
+        :failed,
+        selected_failure_reasons: [failure_reason_three],
       )
     end
 
     let(:failure_reason_one) do
-      build(
-        :assessment_section_failure_reason,
-        key: "identification_document_expired",
-      )
+      build(:selected_failure_reason, key: "identification_document_expired")
     end
     let(:failure_reason_two) do
-      build(
-        :assessment_section_failure_reason,
-        assessor_feedback: "More stuff needed",
-      )
+      build(:selected_failure_reason, assessor_feedback: "More stuff needed")
     end
     let(:failure_reason_three) do
-      build(:assessment_section_failure_reason, key: "duplicate_application")
+      build(:selected_failure_reason, key: "duplicate_application")
     end
 
     it { is_expected.to_not be_empty }
 
     it "creates an item for each failure reason" do
-      expect { subject }.to change { AssessmentSectionFailureReason.count }.by(
-        3,
-      )
+      expect { subject }.to change { SelectedFailureReason.count }.by(3)
     end
 
     it "sets the information type" do
