@@ -865,11 +865,8 @@ RSpec.describe "Teacher application", type: :system do
     expect(registration_number_form.heading.text).to eq(
       "What is your registration number?",
     )
-
-    registration_number_form.details.summary.click
-    expect(registration_number_form).to have_content(
-      "Other teaching authority information.",
-    )
+    expect(registration_number_form).to have_content("Status information")
+    expect(registration_number_form).to have_content("Sanction information")
   end
 
   def then_i_see_the_upload_written_statement_form
@@ -877,6 +874,8 @@ RSpec.describe "Teacher application", type: :system do
     expect(upload_document_page.heading.text).to eq(
       "Upload your written statement",
     )
+    expect(upload_document_page).to have_content("Status information")
+    expect(upload_document_page).to have_content("Sanction information")
   end
 
   def then_i_see_the_personal_information_summary

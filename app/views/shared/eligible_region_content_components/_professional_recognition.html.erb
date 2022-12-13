@@ -3,11 +3,22 @@
     As your education department or authority has an online register of teachers,
     you’ll need to provide any registration numbers we need to check your record.
   </p>
+  <% if region.teaching_authority_status_information.present?%>
+    <%= raw GovukMarkdown.render(region.teaching_authority_status_information) %>
+  <% end %>
+
+  <% if region.country.teaching_authority_status_information.present?%>
+    <%= raw GovukMarkdown.render(region.country.teaching_authority_status_information) %>
+  <% end %>
 <% end %>
 
-<% if region.status_check_online? && region.sanction_check_online? %>
-  <% if region.teaching_authority_other.present? %>
-    <%= raw GovukMarkdown.render(region.teaching_authority_other) %>
+<% if region.sanction_check_online? %>
+  <% if region.teaching_authority_sanction_information.present?%>
+   <%= raw GovukMarkdown.render(region.teaching_authority_sanction_information) %>
+  <% end %>
+
+  <% if region.country.teaching_authority_sanction_information.present?%>
+    <%= raw GovukMarkdown.render(region.country.teaching_authority_sanction_information) %>
   <% end %>
 <% end %>
 
@@ -28,6 +39,27 @@
   <%= render "shared/teaching_authority_contact_information", region: %>
 <% end %>
 
+<% if region.status_check_written? %>
+  <% if region.teaching_authority_status_information.present?%>
+    <%= raw GovukMarkdown.render(region.teaching_authority_status_information) %>
+  <% end %>
+
+  <% if region.country.teaching_authority_status_information.present?%>
+    <%= raw GovukMarkdown.render(region.country.teaching_authority_status_information) %>
+  <% end %>
+  
+<% end %>
+
+<% if region.sanction_check_written? %>
+  <% if region.teaching_authority_sanction_information.present?%> 
+    <%= raw GovukMarkdown.render(region.teaching_authority_sanction_information) %>
+  <% end %>
+
+  <% if region.country.teaching_authority_sanction_information.present?%>
+    <%= raw GovukMarkdown.render(region.country.teaching_authority_sanction_information) %>
+  <% end %>
+<% end %>
+
 <% if region.sanction_check_none? %>
   <p class="govuk-body">
     You also need to show evidence of your work history.
@@ -43,4 +75,11 @@
     <li>start date</li>
     <li>end date</li>
   </ul>
+<% end %>
+
+<% if region.teaching_authority_other.present? %>
+  <%= raw GovukMarkdown.render(region.teaching_authority_other) %>
+<% end %>
+<% if region.country.teaching_authority_other.present?%>
+  <%= raw GovukMarkdown.render(region.country.teaching_authority_other) %>
 <% end %>
