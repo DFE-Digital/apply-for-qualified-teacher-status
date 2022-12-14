@@ -254,7 +254,7 @@ GEM
     io-console (0.5.11)
     irb (1.5.1)
       reline (>= 0.3.0)
-    jsbundling-rails (1.0.3)
+    jsbundling-rails (1.1.1)
       railties (>= 6.0.0)
     json (2.6.2)
     jwt (2.5.0)
