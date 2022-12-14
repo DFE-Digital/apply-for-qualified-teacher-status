@@ -14,11 +14,11 @@
     <% if timeline_event.age_range_subjects_verified? %>
       <p class="govuk-body">Age range: <%= description_vars[:age_range_min] %> to <%= description_vars[:age_range_max] %></p>
       <% if (text = description_vars[:age_range_note]).present? %>
-        <p class="govuk-body"><%= text %></p>
+        <%= simple_format text %>
       <% end %>
       <p class="govuk-body">Subjects: <%= description_vars[:subjects] %></p>
       <% if (text = description_vars[:subjects_note]).present? %>
-        <p class="govuk-body"><%= text %></p>
+        <%= simple_format text %>
       <% end %>
     <% elsif timeline_event.assessment_section_recorded? %>
       <p class="govuk-body">
@@ -35,8 +35,10 @@
         <ul class="govuk-list--bullet">
           <% description_vars[:failure_reasons].each do |failure_reason| %>
             <li>
-              <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason.key}") %><br />
-              <%= failure_reason.assessor_feedback %>
+              <p class="govuk-body">
+                <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason.key}") %>
+              </p>
+              <%= simple_format failure_reason.assessor_feedback %>
             </li>
           <% end %>
         </ul>
@@ -45,11 +47,13 @@
       <p class="govuk-body">Further information request has been assessed.</p>
 
       <% if (failure_assessor_note = description_vars[:failure_assessor_note]).present? %>
-        <%= govuk_inset_text(text: failure_assessor_note) %>
+        <%= govuk_inset_text do %>
+          <%= simple_format failure_assessor_note %>
+        <% end %>
       <% end %>
     <% else %>
       <p class="govuk-body">
-        <%= t("components.timeline_entry.description.#{timeline_event.event_type}", **description_vars).html_safe %>
+        <%= simple_format t("components.timeline_entry.description.#{timeline_event.event_type}", **description_vars).html_safe %>
       </p>
     <% end %>
   </div>

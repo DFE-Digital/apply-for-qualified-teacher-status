@@ -24,7 +24,9 @@
               <p class="govuk-body govuk-!-margin-bottom-2">Your note (the applicant won’t see this):</p>
             <% end %>
 
-            <%= govuk_inset_text(text: failure_reason.assessor_feedback) %>
+            <%= govuk_inset_text do %>
+              <%= simple_format failure_reason.assessor_feedback %>
+            <% end %>
           </li>
         <% end %>
       </ul>

@@ -14,7 +14,10 @@
   <section class="app-further-information-request-item">
     <h3 class="govuk-heading-s"><%= I18n.t("assessor_interface.assessment_sections.show.failure_reasons.#{item.failure_reason_key}") %></h3>
     <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
-    <p class="govuk-inset-text"><%= item.failure_reason_assessor_feedback %></p>
+
+    <%= govuk_inset_text do %>
+      <%= simple_format item.failure_reason_assessor_feedback %>
+    <% end %>
   </section>
 <% end %>
 
