@@ -52,7 +52,7 @@ class PersonasController < ApplicationController
   def load_teacher_personas
     all_teachers =
       Teacher.includes(
-        application_form: {
+        application_forms: {
           region: [],
           documents: :uploads,
           qualifications: {

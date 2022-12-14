@@ -2,7 +2,9 @@ require "rails_helper"
 
 RSpec.describe TeacherMailerPreview do
   let(:further_information_request) { create(:further_information_request) }
-  let(:teacher) { create(:teacher, :with_application_form) }
+  let(:teacher) do
+    further_information_request.assessment.application_form.teacher
+  end
   let(:notify_key) { "notify-key" }
   let(:notify_client) do
     double(generate_template_preview: notify_template_preview)

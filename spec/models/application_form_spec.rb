@@ -68,8 +68,6 @@ RSpec.describe ApplicationForm, type: :model do
   end
 
   describe "columns" do
-    it { is_expected.to have_many(:notes) }
-
     it do
       is_expected.to define_enum_for(:state).with_values(
         draft: "draft",
@@ -170,6 +168,11 @@ RSpec.describe ApplicationForm, type: :model do
         .with_prefix(:written_statement_status)
         .backed_by_column_of_type(:string)
     end
+  end
+
+  describe "associations" do
+    it { is_expected.to belong_to(:teacher) }
+    it { is_expected.to have_many(:notes) }
   end
 
   describe "validations" do

@@ -28,7 +28,7 @@ class Teacher < ApplicationRecord
 
   self.timeout_in = 1.hour
 
-  has_one :application_form
+  has_many :application_forms
 
   validates :email,
             presence: true,
@@ -38,6 +38,10 @@ class Teacher < ApplicationRecord
               if: :will_save_change_to_email?,
             },
             valid_for_notify: true
+
+  def application_form
+    @application_form ||= application_forms.order(created_at: :desc).first
+  end
 
   def send_otp(*)
     otp = Devise::Otp.derive_otp(secret_key)
