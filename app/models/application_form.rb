@@ -88,6 +88,8 @@ class ApplicationForm < ApplicationRecord
          declined: "declined",
        }
 
+  delegate :country, to: :region, allow_nil: true
+
   STATUS_COLUMNS = %i[
     personal_information_status
     identification_document_status

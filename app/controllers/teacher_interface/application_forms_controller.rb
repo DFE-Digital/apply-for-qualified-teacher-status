@@ -13,16 +13,28 @@ module TeacherInterface
     define_history_check :edit
 
     def new
-      @country_region_form = CountryRegionForm.new
+      existing_application_form = current_teacher.application_form
+
+      @already_applied = existing_application_form.present?
+      @needs_region = false
+
+      @country_region_form =
+        CountryRegionForm.new(
+          location:
+            CountryCode.to_location(existing_application_form&.country&.code),
+        )
     end
 
     def create
+      @already_applied = current_teacher.application_form.present?
+
       @country_region_form =
         CountryRegionForm.new(
           country_region_form_params.merge(teacher: current_teacher),
         )
 
       if @country_region_form.needs_region?
+        @needs_region = true
         render :new
       elsif @country_region_form.save(validate: true)
         redirect_to teacher_interface_application_form_path

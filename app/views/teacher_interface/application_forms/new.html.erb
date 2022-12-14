@@ -1,13 +1,19 @@
-<% if @country_region_form.needs_region? %>
+<% if @needs_region %>
   <% content_for :page_title, I18n.t("eligibility_check.region.label") %>
 <% else %>
   <% content_for :page_title, I18n.t("eligibility_check.country.label") %>
 <% end %>
 
+<% if @already_applied %>
+  <aside>
+    <%= govuk_warning_text(text: "If you reapply for QTS, you will not be able to review the details of your previous application.") %>
+  </aside>
+<% end %>
+
 <%= form_with model: @country_region_form, url: %i[teacher_interface application_form] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <% if @country_region_form.needs_region? %>
+  <% if @needs_region %>
     <%= f.hidden_field :location %>
 
     <%= f.govuk_radio_buttons_fieldset :region_id,
