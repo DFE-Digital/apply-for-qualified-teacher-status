@@ -86,6 +86,7 @@ class ApplicationForm < ApplicationRecord
          awarded_pending_checks: "awarded_pending_checks",
          awarded: "awarded",
          declined: "declined",
+         potential_duplicate_in_dqt: "potential_duplicate_in_dqt",
        }
 
   delegate :country, to: :region, allow_nil: true

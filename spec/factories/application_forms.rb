@@ -119,6 +119,11 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
+    trait :potential_duplicate_in_dqt do
+      state { "potential_duplicate_in_dqt" }
+      submitted_at { Time.zone.now }
+    end
+
     trait :with_assessment do
       after(:create) do |application_form, _evaluator|
         create(:assessment, application_form:)
