@@ -29,7 +29,7 @@ module TimelineEntry
               class_context: "timeline-event",
               context: :assessor,
             ),
-          ),
+          ).strip,
         new_state:
           render(
             StatusTag::Component.new(
@@ -38,7 +38,7 @@ module TimelineEntry
               class_context: "timeline-event",
               context: :assessor,
             ),
-          ),
+          ).strip,
       }
     end
 

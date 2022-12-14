@@ -84,7 +84,7 @@
             </h5>
 
             <% if (text = failure_reason[:assessor_feedback]).present? %>
-              <%= govuk_inset_text(text:) %>
+              <%= govuk_inset_text { simple_format text } %>
             <% end %>
           </li>
         <% end %>
