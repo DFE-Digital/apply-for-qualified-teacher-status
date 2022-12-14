@@ -78,8 +78,7 @@ SET
 DELETE FROM "sessions";
 
 -- Staff
--- Keep logins?
--- no update required 
+DELETE FROM staff;
 
 -- Teacher
 UPDATE "teachers"
