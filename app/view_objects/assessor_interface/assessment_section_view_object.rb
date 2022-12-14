@@ -53,11 +53,6 @@ module AssessorInterface
       build_key(failure_reason, "placeholder")
     end
 
-    def show_online_checker?
-      assessment_section.key == "professional_standing" &&
-        show_registration_number_summary && online_checker_url.present?
-    end
-
     def online_checker_url
       @online_checker_url ||=
         region.teaching_authority_online_checker_url.presence ||
