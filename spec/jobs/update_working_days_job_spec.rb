@@ -45,6 +45,25 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       end
     end
 
+    describe "assessment working days since started" do
+      let(:not_started_assessment) { create(:assessment) }
+      let(:friday_assessment) do
+        create(:assessment, started_at: friday_application_form.submitted_at)
+      end
+
+      it "ignores not started assessments" do
+        expect { perform }.to_not(
+          change { not_started_assessment.reload.working_days_since_started },
+        )
+      end
+
+      it "sets the working days" do
+        expect { perform }.to change {
+          friday_assessment.reload.working_days_since_started
+        }.to(2)
+      end
+    end
+
     describe "assessment working days started to recommendation" do
       let(:recommended_assessment) do
         create(
@@ -113,6 +132,30 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       it "sets the working days" do
         expect { perform }.to change {
           recommended_assessment.reload.working_days_submission_to_started
+        }.to(2)
+      end
+    end
+
+    describe "further information request days since received" do
+      let(:requested_fi_request) { create(:further_information_request) }
+      let(:received_fi_request) do
+        create(
+          :further_information_request,
+          :received,
+          assessment: create(:assessment, recommended_at: tuesday_today),
+          received_at: friday_application_form.submitted_at,
+        )
+      end
+
+      it "ignores requested further information requests" do
+        expect { perform }.to_not(
+          change { requested_fi_request.reload.working_days_since_received },
+        )
+      end
+
+      it "sets the working days" do
+        expect { perform }.to change {
+          received_fi_request.reload.working_days_since_received
         }.to(2)
       end
     end
