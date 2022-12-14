@@ -195,6 +195,11 @@ module PageHelpers
     @teacher_confirm_otp_page = PageObjects::TeacherInterface::ConfirmOtp.new
   end
 
+  def teacher_declined_application_page
+    @teacher_declined_application_page ||=
+      PageObjects::TeacherInterface::DeclinedApplication.new
+  end
+
   def teacher_new_application_page
     @teacher_new_application_page =
       PageObjects::TeacherInterface::NewApplication.new
