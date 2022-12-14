@@ -167,9 +167,28 @@ module PageHelpers
       PageObjects::EligibilityInterface::TeachChildren.new
   end
 
+  def teacher_check_email_page
+    @teacher_check_email_page = PageObjects::TeacherInterface::CheckEmail.new
+  end
+
+  def teacher_check_qualification_page
+    @teacher_check_qualification_page ||=
+      PageObjects::TeacherInterface::CheckQualification.new
+  end
+
   def teacher_check_qualifications_page
     @teacher_check_qualifications_page ||=
       PageObjects::TeacherInterface::CheckQualifications.new
+  end
+
+  def teacher_check_work_history_page
+    @teacher_check_work_history_page ||=
+      PageObjects::TeacherInterface::CheckWorkHistory.new
+  end
+
+  def teacher_check_work_histories_page
+    @teacher_check_work_histories_page ||=
+      PageObjects::TeacherInterface::CheckWorkHistories.new
   end
 
   def teacher_confirm_otp_page
@@ -242,11 +261,6 @@ module PageHelpers
       PageObjects::TeacherInterface::PersonalInformationSummary.new
   end
 
-  def qualification_summary_page
-    @qualification_summary_page =
-      PageObjects::TeacherInterface::QualificationSummary.new
-  end
-
   def qualifications_form_page
     @qualifications_form_page =
       PageObjects::TeacherInterface::QualificationsForm.new
@@ -260,11 +274,6 @@ module PageHelpers
   def check_your_answers_page
     @check_your_answers_page =
       PageObjects::TeacherInterface::CheckYourAnswers.new
-  end
-
-  def work_history_summary_page
-    @work_history_summary_page =
-      PageObjects::TeacherInterface::WorkHistorySummary.new
   end
 
   def upload_document_page

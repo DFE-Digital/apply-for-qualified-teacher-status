@@ -19,7 +19,7 @@
 <% if @application_form.needs_work_history %>
   <section id="app-application-form-work-history">
     <h2 class="govuk-heading-m">Your work history</h2>
-    <%= render "shared/application_form/work_history_summary", application_form: @application_form, work_histories: @application_form.work_histories.ordered, changeable: true %>
+    <%= render "shared/application_form/work_history_summary", application_form: @application_form, show_has_work_history: true, work_histories: @application_form.work_histories.ordered, changeable: true %>
   </section>
 <% end %>
 

@@ -9,7 +9,7 @@ module TeacherInterface
     before_action :load_application_form
 
     skip_before_action :track_history, only: :show
-    define_history_checks :check
+    define_history_check :check
 
     def show
       if application_form.task_item_completed?(

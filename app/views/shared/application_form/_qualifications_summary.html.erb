@@ -2,7 +2,7 @@
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "qualification-#{qualification.id}",
     model: qualification,
-    title: I18n.t("application_form.qualifications.heading.title.#{qualification.locale_key}"),
+    title: qualification.title,
     fields: {
       title: {
         title: I18n.t("application_form.qualifications.form.fields.title.#{qualification.locale_key}"),

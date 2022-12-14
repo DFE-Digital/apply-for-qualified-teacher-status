@@ -1,0 +1,17 @@
+<% content_for :page_title, I18n.t("application_form.tasks.sections.work_history") %>
+<% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_work_histories_path) %>
+
+<span class="govuk-caption-l"><%= t("application_form.tasks.sections.work_history") %></span>
+<h1 class="govuk-heading-l">Check your answers</h1>
+
+<%= render "shared/application_form/work_history_summary",
+           application_form: @application_form,
+           show_has_work_history: false,
+           work_histories: [@work_history],
+           changeable: true %>
+
+<% if @next_work_history %>
+  <%= govuk_button_link_to "Continue", [:edit, :teacher_interface, :application_form, @next_work_history] %>
+<% else %>
+  <%= govuk_button_link_to "Continue", %i[add_another teacher_interface application_form work_histories] %>
+<% end %>

@@ -16,8 +16,8 @@ RSpec.describe TeacherInterface::WorkHistoriesController, type: :controller do
     include_examples "redirect unless application form is draft"
   end
 
-  describe "GET check" do
-    subject(:perform) { get :check }
+  describe "GET check_collection" do
+    subject(:perform) { get :check_collection }
 
     include_examples "redirect unless application form is draft"
   end
@@ -70,6 +70,14 @@ RSpec.describe TeacherInterface::WorkHistoriesController, type: :controller do
     let(:work_history) { create(:work_history, application_form:) }
 
     subject(:perform) { patch :update, params: { id: work_history.id } }
+
+    include_examples "redirect unless application form is draft"
+  end
+
+  describe "GET check_member" do
+    let(:work_history) { create(:work_history, application_form:) }
+
+    subject(:perform) { get :check_member, params: { id: work_history.id } }
 
     include_examples "redirect unless application form is draft"
   end

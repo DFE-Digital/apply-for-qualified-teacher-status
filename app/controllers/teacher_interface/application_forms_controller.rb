@@ -8,9 +8,9 @@ module TeacherInterface
                   only: %i[edit update]
     before_action :load_application_form, except: %i[new create]
 
-    define_history_origins :show
-    define_history_resets :show
-    define_history_checks :edit
+    define_history_origin :show
+    define_history_reset :show
+    define_history_check :edit
 
     def new
       @country_region_form = CountryRegionForm.new
