@@ -52,11 +52,22 @@
     </div>
 
     <%= govuk_footer(
-      meta_items_title: 'Footer links',
-      meta_items: {
-        'Accessibility': '/accessibility',
-        'Cookies': '/cookies',
-        'Privacy': '/privacy',
-      }) %>
+        meta_items_title: 'Footer links', 
+        meta_items: {
+          'Accessibility': '/accessibility',
+          'Cookies': '/cookies',
+          'Privacy': '/privacy'
+        } ) do |footer| %>
+      <% footer.navigation do %>
+        <% if current_teacher %>
+          <div class="govuk-footer__section">
+            <h3 style = "margin-left: 100px">Get help</h3>
+            <p>If you‘re having difficulty completing your application form, contact: <a class="govuk-link"
+            href="mailto:<%= t('service.email') %>"><%= t('service.email') %></a> for support.</p>
+            <p>We‘ll aim to respond to you within 2 working days.</p>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
   </body>
 </html>
