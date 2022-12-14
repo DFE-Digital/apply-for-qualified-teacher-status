@@ -78,6 +78,7 @@
     - subjects
     - subjects_note
     - recommended_at
+    - working_days_since_started
     - working_days_submission_to_recommendation
     - working_days_submission_to_started
     - working_days_started_to_recommendation
@@ -137,6 +138,7 @@
     - assessment_id
     - passed
     - failure_assessor_note
+    - working_days_since_received
     - working_days_received_to_recommendation
   :further_information_request_items:
     - id

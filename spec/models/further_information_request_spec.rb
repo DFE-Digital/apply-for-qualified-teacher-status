@@ -10,6 +10,7 @@
 #  received_at                             :datetime
 #  state                                   :string           not null
 #  working_days_received_to_recommendation :integer
+#  working_days_since_received             :integer
 #  created_at                              :datetime         not null
 #  updated_at                              :datetime         not null
 #  assessment_id                           :bigint

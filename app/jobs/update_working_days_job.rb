@@ -2,11 +2,13 @@
 
 class UpdateWorkingDaysJob < ApplicationJob
   def perform
-    update_application_forms_working_days_since_submission
+    update_application_forms_since_submission
+    update_assessments_since_started
     update_assessments_started_to_recommendation
     update_assessments_submission_to_recommendation
     update_assessments_submission_to_started
-    update_further_information_requests_received
+    update_further_information_requests_since_received
+    update_further_information_requests_received_to_recommendation
   end
 
   private
@@ -19,7 +21,7 @@ class UpdateWorkingDaysJob < ApplicationJob
     @today ||= Time.zone.now
   end
 
-  def update_application_forms_working_days_since_submission
+  def update_application_forms_since_submission
     ApplicationForm
       .where.not(submitted_at: nil)
       .find_each do |application_form|
@@ -29,6 +31,17 @@ class UpdateWorkingDaysJob < ApplicationJob
               application_form.submitted_at,
               today,
             ),
+        )
+      end
+  end
+
+  def update_assessments_since_started
+    Assessment
+      .where.not(started_at: nil)
+      .find_each do |assessment|
+        assessment.update!(
+          working_days_since_started:
+            calendar.business_days_between(assessment.started_at, today),
         )
       end
   end
@@ -82,7 +95,21 @@ class UpdateWorkingDaysJob < ApplicationJob
       end
   end
 
-  def update_further_information_requests_received
+  def update_further_information_requests_since_received
+    FurtherInformationRequest
+      .where.not(received_at: nil)
+      .find_each do |further_information_request|
+        further_information_request.update!(
+          working_days_since_received:
+            calendar.business_days_between(
+              further_information_request.received_at,
+              today,
+            ),
+        )
+      end
+  end
+
+  def update_further_information_requests_received_to_recommendation
     FurtherInformationRequest
       .joins(:assessment)
       .includes(:assessment)
