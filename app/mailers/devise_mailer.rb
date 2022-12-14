@@ -1,6 +1,4 @@
-require "devise/passwordless/mailer"
-
-class DeviseMailer < Devise::Passwordless::Mailer
+class DeviseMailer < Devise::Mailer
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
       "GOVUK_NOTIFY_TEMPLATE_ID_DEVISE",
@@ -10,5 +8,10 @@ class DeviseMailer < Devise::Passwordless::Mailer
   def devise_mail(record, action, opts = {}, &_block)
     initialize_from_record(record)
     view_mail(GOVUK_NOTIFY_TEMPLATE_ID, headers_for(action, opts))
+  end
+
+  def otp(record, otp, opts = {})
+    @otp = otp
+    devise_mail(record, :otp, opts)
   end
 end

@@ -29,14 +29,12 @@ class Teachers::SessionsController < Devise::SessionsController
       self.resource = resource_class.find_by(email: @new_session_form.email)
 
       if resource
-        if resource.active_for_authentication?
-          resource.send_magic_link
-        else
-          resource.resend_confirmation_instructions
-        end
+        resource.create_otp
+        resource.send_otp
+        redirect_to new_teacher_otp_path(uuid: resource.uuid)
+      else
+        redirect_to :eligibility_interface_countries
       end
-
-      redirect_to teacher_check_email_path(email: @new_session_form.email)
     elsif @new_session_form.sign_in_or_sign_up.blank?
       render :new_or_create, status: :unprocessable_entity
     else
@@ -57,10 +55,6 @@ class Teachers::SessionsController < Devise::SessionsController
     respond_to_on_destroy
   end
 
-  def check_email
-    @email = params[:email]
-  end
-
   def signed_out
   end
 
@@ -72,13 +66,5 @@ class Teachers::SessionsController < Devise::SessionsController
 
   def after_sign_out_path_for(_resource)
     teacher_signed_out_path
-  end
-
-  def translation_scope
-    if action_name == "create"
-      "devise.passwordless"
-    else
-      super
-    end
   end
 end

@@ -325,6 +325,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_083343) do
     t.string "last_sign_in_ip"
     t.string "trn"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.string "secret_key"
+    t.integer "otp_guesses", default: 0, null: false
+    t.datetime "otp_created_at", precision: nil
     t.index ["email"], name: "index_teachers_on_email", unique: true
     t.index ["uuid"], name: "index_teachers_on_uuid", unique: true
   end

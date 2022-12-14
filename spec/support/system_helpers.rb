@@ -1,4 +1,5 @@
 module SystemHelpers
+  include PageHelpers
   include Warden::Test::Helpers
 
   def given_the_service_is_open
@@ -116,20 +117,18 @@ module SystemHelpers
 
   alias_method :when_i_click_continue, :and_i_click_continue
 
-  def and_i_receive_a_teacher_confirmation_email
+  def and_i_receive_a_teacher_otp_email
     message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
-    expect(message.subject).to eq("Your QTS application link")
+    expect(message.subject).to eq("Confirm your email address")
     expect(message.to).to include("test@example.com")
   end
 
-  def when_i_visit_the_teacher_confirmation_email
+  def when_i_fill_in_the_teacher_otp
     message = ActionMailer::Base.deliveries.last
-    uri = URI.parse(URI.extract(message.body.encoded).first)
-    expect(uri.path).to eq("/teacher/confirmation")
-    expect(uri.query).to include("confirmation_token=")
-    visit "#{uri.path}?#{uri.query}"
+    otp = message.body.encoded.lines.third.chomp
+    teacher_confirm_otp_page.submit(otp:)
   end
 
   def then_i_see_the_sign_in_form
@@ -141,8 +140,8 @@ module SystemHelpers
 
   def and_i_sign_up
     teacher_sign_up_page.submit(email: "test@example.com")
-    and_i_receive_a_teacher_confirmation_email
-    when_i_visit_the_teacher_confirmation_email
+    and_i_receive_a_teacher_otp_email
+    when_i_fill_in_the_teacher_otp
   end
 
   def then_i_see_the_forbidden_page

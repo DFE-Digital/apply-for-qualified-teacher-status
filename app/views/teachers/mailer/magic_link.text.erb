@@ -1,7 +1,0 @@
-Hello <%= @resource.email %>
-
-Use the link below to log in and continue your QTS application.
-
-<%= teacher_magic_link_url(email: @resource.email, token: @token) %>
-
-Note that the link will expire in <%= Devise.passwordless_login_within.inspect %>.

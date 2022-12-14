@@ -167,18 +167,22 @@ module PageHelpers
       PageObjects::EligibilityInterface::TeachChildren.new
   end
 
-  def teacher_check_email_page
-    @teacher_check_email_page = PageObjects::TeacherInterface::CheckEmail.new
-  end
-
   def teacher_check_qualifications_page
     @teacher_check_qualifications_page ||=
       PageObjects::TeacherInterface::CheckQualifications.new
   end
 
+  def teacher_confirm_otp_page
+    @teacher_confirm_otp_page = PageObjects::TeacherInterface::ConfirmOtp.new
+  end
+
   def teacher_new_application_page
     @teacher_new_application_page =
       PageObjects::TeacherInterface::NewApplication.new
+  end
+
+  def teacher_retry_otp_page
+    @teacher_retry_otp_page = PageObjects::TeacherInterface::RetryOtp.new
   end
 
   def teacher_signed_out_page

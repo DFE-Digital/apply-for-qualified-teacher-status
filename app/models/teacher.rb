@@ -11,6 +11,9 @@
 #  email                :string           default(""), not null
 #  last_sign_in_at      :datetime
 #  last_sign_in_ip      :string
+#  otp_created_at       :datetime
+#  otp_guesses          :integer          default(0), not null
+#  secret_key           :string
 #  sign_in_count        :integer          default(0), not null
 #  trn                  :string
 #  unconfirmed_email    :string
@@ -24,11 +27,8 @@
 #  index_teachers_on_uuid   (uuid) UNIQUE
 #
 class Teacher < ApplicationRecord
-  devise :magic_link_authenticatable,
-         :confirmable,
-         :registerable,
-         :timeoutable,
-         :trackable
+  devise :registerable, :timeoutable, :trackable
+  include Devise::Models::OtpAuthenticatable
 
   self.timeout_in = 1.hour
 
@@ -43,9 +43,9 @@ class Teacher < ApplicationRecord
             },
             valid_for_notify: true
 
-  def send_magic_link(*)
-    token = Devise::Passwordless::LoginToken.encode(self)
-    send_devise_notification(:magic_link, token, {})
+  def send_otp(*)
+    otp = Devise::Otp.derive_otp(secret_key)
+    send_devise_notification(:otp, otp)
   end
 
   def send_devise_notification(notification, *args)
