@@ -5,7 +5,7 @@
 
 <%= render "shared/apply_by_february_2023" %>
 
-<% if FeatureFlag.active?(:teacher_applications) && @region && @region.application_form_enabled %>
+<% if FeatureFlags::FeatureFlag.active?(:teacher_applications) && @region && @region.application_form_enabled %>
   <p class="govuk-body">Use our new application form to apply for QTS.</p>
   <%= govuk_start_button(text: "Apply for QTS", href: new_teacher_registration_path) %>
 <% else %>

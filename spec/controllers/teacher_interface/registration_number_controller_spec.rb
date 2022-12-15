@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::RegistrationNumberController,
                type: :controller do
-  before { FeatureFlag.activate(:service_open) }
+  before { FeatureFlags::FeatureFlag.activate(:service_open) }
 
   let(:teacher) { create(:teacher) }
   let(:application_form) { create(:application_form, teacher:) }

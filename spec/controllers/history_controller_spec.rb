@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe HistoryController, type: :controller do
-  before { FeatureFlag.activate(:service_open) }
+  before { FeatureFlags::FeatureFlag.activate(:service_open) }
 
   describe "GET back" do
     let(:default) { "/fallback" }

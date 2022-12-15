@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
 
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
 
-  before_action :authenticate, unless: -> { FeatureFlag.active?(:service_open) }
+  before_action :authenticate,
+                unless: -> { FeatureFlags::FeatureFlag.active?(:service_open) }
 
   def current_user
     nil
@@ -25,7 +26,7 @@ class ApplicationController < ActionController::Base
       },
     ]
 
-    if FeatureFlag.active?(:staff_test_user)
+    if FeatureFlags::FeatureFlag.active?(:staff_test_user)
       valid_credentials.push(
         {
           username: ENV.fetch("TEST_USERNAME", "test"),

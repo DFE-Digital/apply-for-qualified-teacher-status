@@ -42,11 +42,11 @@ RSpec.describe "Personas", type: :system do
   private
 
   def given_personas_are_activated
-    FeatureFlag.activate(:personas)
+    FeatureFlags::FeatureFlag.activate(:personas)
   end
 
   def given_personas_are_deactivated
-    FeatureFlag.deactivate(:personas)
+    FeatureFlags::FeatureFlag.deactivate(:personas)
   end
 
   def given_personas_exist
