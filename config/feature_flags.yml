@@ -9,6 +9,11 @@ feature_flags:
     description: >
       Add English language proficiency content to the eligible page.
 
+  eligibility_work_experience:
+    author: Thomas Leese
+    description: >
+      Add a question to the eligibility checker asking about work experience.
+
   personas:
     author: Thomas Leese
     description: >
