@@ -17,6 +17,13 @@ GIT
       rails (>= 7.0.2.3)
       view_component
 
+GIT
+  remote: https://github.com/DFE-Digital/govuk_feature_flags.git
+  revision: 4a35c50117f78b315bf3db3cdb2ec73f01a6f5ba
+  specs:
+    govuk_feature_flags (0.1.0)
+      rails (>= 7.0.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -518,6 +525,7 @@ DEPENDENCIES
   faraday
   govuk-components
   govuk_design_system_formbuilder
+  govuk_feature_flags!
   govuk_markdown
   indefinite_article
   jsbundling-rails
