@@ -10,6 +10,7 @@
 #  free_of_sanctions      :boolean
 #  qualification          :boolean
 #  teach_children         :boolean
+#  work_experience        :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  region_id              :bigint

@@ -10,6 +10,7 @@
 #  free_of_sanctions      :boolean
 #  qualification          :boolean
 #  teach_children         :boolean
+#  work_experience        :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  region_id              :bigint
@@ -21,6 +22,14 @@
 class EligibilityCheck < ApplicationRecord
   belongs_to :region, optional: true
   has_one :application
+
+  enum :work_experience,
+       {
+         under_9_months: "under_9_months",
+         between_9_and_20_months: "between_9_and_20_months",
+         over_20_months: "over_20_months",
+       },
+       prefix: true
 
   scope :complete, -> { where.not(completed_at: nil) }
   scope :eligible,

@@ -172,6 +172,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_21_104331) do
     t.bigint "region_id"
     t.datetime "completed_at"
     t.boolean "completed_requirements"
+    t.string "work_experience"
   end
 
   create_table "english_language_providers", force: :cascade do |t|
