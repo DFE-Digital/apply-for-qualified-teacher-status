@@ -43,6 +43,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       awarded_pending_checks
       awarded
       declined
+      potential_duplicate_in_dqt
     ]
 
     states.map do |state|

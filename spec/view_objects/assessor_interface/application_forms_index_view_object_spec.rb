@@ -173,6 +173,10 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
           ),
           OpenStruct.new(id: "awarded", label: "Awarded (0)"),
           OpenStruct.new(id: "declined", label: "Declined (0)"),
+          OpenStruct.new(
+            id: "potential_duplicate_in_dqt",
+            label: "Potential duplicate in DQT (0)",
+          ),
         ],
       )
     end
@@ -186,6 +190,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         create_list(:application_form, 5, :awarded_pending_checks)
         create_list(:application_form, 6, :awarded)
         create_list(:application_form, 7, :declined)
+        create_list(:application_form, 1, :potential_duplicate_in_dqt)
       end
 
       it do
@@ -210,6 +215,10 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             ),
             OpenStruct.new(id: "awarded", label: "Awarded (6)"),
             OpenStruct.new(id: "declined", label: "Declined (7)"),
+            OpenStruct.new(
+              id: "potential_duplicate_in_dqt",
+              label: "Potential duplicate in DQT (1)",
+            ),
           ],
         )
       end
