@@ -20,4 +20,13 @@ class SupportPolicy < ApplicationPolicy
   def destroy?
     user.support_console_permission?
   end
+
+  # Feature flags
+  def activate?
+    user.support_console_permission?
+  end
+
+  def deactivate?
+    user.support_console_permission?
+  end
 end

@@ -3,7 +3,7 @@
 class SupportInterface::BaseController < ApplicationController
   include SupportCurrentNamespace
 
-  before_action :authenticate_staff!
+  before_action :authenticate_staff!, :authorize_support
   after_action :verify_authorized
 
   def authorize_support

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SupportInterface::CountriesController < SupportInterface::BaseController
-  before_action :authorize_support, except: :confirm_edit
+  skip_before_action :authorize_support, only: :confirm_edit
   before_action :load_country_and_edit_actions, only: %w[confirm_edit update]
 
   def index
