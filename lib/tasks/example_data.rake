@@ -23,7 +23,7 @@ namespace :example_data do
     Country.all.each do |country|
       country.regions.each do |region|
         application_form_traits_for(region).each do |traits|
-          teacher = FactoryBot.create(:teacher, :confirmed)
+          teacher = FactoryBot.create(:teacher)
           application_form =
             FactoryBot.create(:application_form, *traits, teacher:, region:)
           assessment = AssessmentFactory.call(application_form:)

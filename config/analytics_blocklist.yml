@@ -13,5 +13,4 @@
     - unlock_token
     - invitation_token
   :teachers:
-    - confirmation_token
     - secret_key

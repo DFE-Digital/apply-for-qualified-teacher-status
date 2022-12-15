@@ -99,7 +99,7 @@ RSpec.describe "Teacher application check answers", type: :system do
   end
 
   def teacher
-    @teacher ||= create(:teacher, :confirmed)
+    @teacher ||= create(:teacher)
   end
 
   def application_form
