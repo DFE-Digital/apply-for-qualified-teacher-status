@@ -32,7 +32,7 @@ class PersonasController < ApplicationController
   private
 
   def ensure_feature_active
-    unless FeatureFlag.active?(:personas)
+    unless FeatureFlags::FeatureFlag.active?(:personas)
       flash[:warning] = "Personas feature not active."
       redirect_to :root
     end

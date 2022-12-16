@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_14_083343) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_15_102100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -165,6 +165,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_083343) do
     t.bigint "region_id"
     t.datetime "completed_at"
     t.boolean "completed_requirements"
+  end
+
+  create_table "feature_flags_features", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "active", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_feature_flags_features_on_name", unique: true
   end
 
   create_table "features", force: :cascade do |t|

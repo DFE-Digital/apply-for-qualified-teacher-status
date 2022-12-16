@@ -78,13 +78,7 @@ Rails.application.routes.draw do
   namespace :support_interface, path: "/support" do
     root to: redirect("/support/features")
 
-    get "/features", to: "feature_flags#index"
-    post "/features/:feature_name/activate",
-         to: "feature_flags#activate",
-         as: :activate_feature
-    post "/features/:feature_name/deactivate",
-         to: "feature_flags#deactivate",
-         as: :deactivate_feature
+    mount FeatureFlags::Engine, at: "features"
 
     resources :countries, only: %i[index edit update] do
       post "confirm_edit", on: :member

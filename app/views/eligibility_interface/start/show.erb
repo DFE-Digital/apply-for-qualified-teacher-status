@@ -21,7 +21,7 @@
 
 <p class="govuk-body">There’s no charge to apply for QTS. You do not need to be in the UK to use this service.</p>
 
-<% if FeatureFlag.active?(:teacher_applications) %>
+<% if FeatureFlags::FeatureFlag.active?(:teacher_applications) %>
   <p class="govuk-body">
     If you’ve already started your application using this service, you can
     <%= govuk_link_to "sign in to continue working on it", :create_or_new_teacher_session %>.

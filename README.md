@@ -123,7 +123,7 @@ bundle exec rake example_data:generate
 To enable the 'personas' feature, from the rails console
 
 ```ruby
-FeatureFlag.activate(:personas)
+FeatureFlags::FeatureFlag.activate(:personas)
 ```
 
 Navigate to /personas for persona based logins.

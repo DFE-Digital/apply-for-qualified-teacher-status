@@ -48,6 +48,6 @@ RSpec.describe "Features support", type: :system do
   end
 
   def when_i_visit_the_feature_flags_page
-    visit support_interface_features_path
+    visit support_interface_feature_flags_path
   end
 end

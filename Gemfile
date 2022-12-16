@@ -36,6 +36,7 @@ gem "dfe-analytics", github: "DFE-Digital/dfe-analytics"
 gem "dfe-autocomplete", github: "DFE-Digital/dfe-autocomplete"
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
+gem "govuk_feature_flags", github: "DFE-Digital/govuk_feature_flags"
 gem "govuk_markdown"
 gem "mail-notify"
 

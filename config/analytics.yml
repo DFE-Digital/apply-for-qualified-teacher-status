@@ -129,6 +129,12 @@
     - active
     - created_at
     - updated_at
+  :feature_flags_features:
+    - id
+    - name
+    - active
+    - created_at
+    - updated_at
   :further_information_requests:
     - id
     - received_at

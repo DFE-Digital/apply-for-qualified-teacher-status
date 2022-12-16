@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SupportInterface::RegionsController < SupportInterface::BaseController
-  before_action :authorize_support, except: :preview
+  skip_before_action :authorize_support, only: :preview
 
   def edit
     @region = Region.find(params[:id])

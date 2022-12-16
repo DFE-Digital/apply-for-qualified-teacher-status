@@ -3,15 +3,15 @@ module SystemHelpers
   include Warden::Test::Helpers
 
   def given_the_service_is_open
-    FeatureFlag.activate(:service_open)
+    FeatureFlags::FeatureFlag.activate(:service_open)
   end
 
   def given_the_service_is_closed
-    FeatureFlag.deactivate(:service_open)
+    FeatureFlags::FeatureFlag.deactivate(:service_open)
   end
 
   def given_the_service_allows_teacher_applications
-    FeatureFlag.activate(:teacher_applications)
+    FeatureFlags::FeatureFlag.activate(:teacher_applications)
   end
 
   def given_an_eligible_eligibility_check(country_check:)
@@ -28,7 +28,7 @@ module SystemHelpers
     visit "/eligibility/start"
     click_button "Start now"
 
-    if FeatureFlag.active?(:teacher_applications)
+    if FeatureFlags::FeatureFlag.active?(:teacher_applications)
       choose "No, I need to check if I can apply", visible: false
       and_i_click_continue
     end
@@ -92,11 +92,11 @@ module SystemHelpers
   alias_method :then_i_sign_out, :when_i_sign_out
 
   def given_the_test_user_is_disabled
-    FeatureFlag.deactivate(:staff_test_user)
+    FeatureFlags::FeatureFlag.deactivate(:staff_test_user)
   end
 
   def given_the_test_user_is_enabled
-    FeatureFlag.activate(:staff_test_user)
+    FeatureFlags::FeatureFlag.activate(:staff_test_user)
   end
 
   def when_i_choose_yes
