@@ -13,7 +13,7 @@ class DestroyApplicationForm
       dqt_trn_request&.destroy!
       assessment&.destroy!
       application_form.destroy!
-      teacher.destroy!
+      teacher.destroy! unless teacher.application_forms.exists?
     end
   end
 

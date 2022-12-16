@@ -167,6 +167,10 @@ module PageHelpers
       PageObjects::EligibilityInterface::TeachChildren.new
   end
 
+  def teacher_application_page
+    @teacher_application_page = PageObjects::TeacherInterface::Application.new
+  end
+
   def teacher_check_email_page
     @teacher_check_email_page = PageObjects::TeacherInterface::CheckEmail.new
   end
@@ -193,6 +197,11 @@ module PageHelpers
 
   def teacher_confirm_otp_page
     @teacher_confirm_otp_page = PageObjects::TeacherInterface::ConfirmOtp.new
+  end
+
+  def teacher_declined_application_page
+    @teacher_declined_application_page ||=
+      PageObjects::TeacherInterface::DeclinedApplication.new
   end
 
   def teacher_new_application_page
@@ -232,10 +241,6 @@ module PageHelpers
   def check_uploaded_files_page
     @check_uploaded_files_page =
       PageObjects::TeacherInterface::CheckUploadedFiles.new
-  end
-
-  def teacher_application_page
-    @teacher_application_page = PageObjects::TeacherInterface::Application.new
   end
 
   def subjects_form_page

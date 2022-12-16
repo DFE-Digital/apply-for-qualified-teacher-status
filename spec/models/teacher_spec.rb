@@ -35,4 +35,33 @@ RSpec.describe Teacher, type: :model do
       is_expected.to validate_uniqueness_of(:email).ignoring_case_sensitivity
     end
   end
+
+  describe "associations" do
+    it { is_expected.to have_many(:application_forms) }
+  end
+
+  describe "#application_form" do
+    subject(:application_form) { teacher.application_form }
+
+    context "without an application form" do
+      it { is_expected.to be_nil }
+    end
+
+    context "with an application form" do
+      let!(:application_form) { create(:application_form, teacher:) }
+
+      it { is_expected.to eq(application_form) }
+    end
+
+    context "with two application forms" do
+      let!(:first_application_form) do
+        create(:application_form, teacher:, created_at: Date.new(2020, 1, 1))
+      end
+      let!(:second_application_form) do
+        create(:application_form, teacher:, created_at: Date.new(2020, 6, 1))
+      end
+
+      it { is_expected.to eq(second_application_form) }
+    end
+  end
 end

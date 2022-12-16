@@ -26,9 +26,5 @@ FactoryBot.define do
   factory :teacher do
     sequence(:email) { |n| "teacher#{n}@example.org" }
     uuid { SecureRandom.uuid }
-
-    trait :with_application_form do
-      association :application_form
-    end
   end
 end
