@@ -36,6 +36,7 @@ module StatusTag
       completed: {
         assessor: "green",
       },
+      potential_duplicate_in_dqt: "red",
     }.freeze
 
     def colour

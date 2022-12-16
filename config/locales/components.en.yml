@@ -16,6 +16,7 @@ en:
       completed: Completed
       action_required: Action required
       cannot_start_yet: Cannot start yet
+      potential_duplicate_in_dqt: Potential duplicate in DQT
 
     timeline_entry:
       title:
