@@ -81,12 +81,27 @@ class EligibilityCheck < ApplicationRecord
       qualification == false ? :qualification : nil,
       teach_children == false ? :teach_children : nil,
       free_of_sanctions == false ? :misconduct : nil,
+      (
+        if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) &&
+             work_experience_under_9_months?
+          :work_experience
+        else
+          nil
+        end
+      ),
     ].compact
   end
 
   def eligible?
     region.present? && degree && qualification && teach_children &&
-      free_of_sanctions
+      free_of_sanctions &&
+      (
+        if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
+          !work_experience_under_9_months?
+        else
+          true
+        end
+      )
   end
 
   def country_eligibility_status
@@ -114,7 +129,14 @@ class EligibilityCheck < ApplicationRecord
     end
 
     return :eligibility unless free_of_sanctions.nil?
-    return :misconduct unless teach_children.nil?
+
+    if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
+      return :misconduct unless work_experience.nil?
+      return :work_experience unless teach_children.nil?
+    else
+      return :misconduct unless teach_children.nil?
+    end
+
     return :teach_children unless degree.nil?
     return :degree unless qualification.nil?
     return :qualification if region.present?

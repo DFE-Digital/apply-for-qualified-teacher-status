@@ -26,6 +26,7 @@ module EnforceEligibilityQuestionOrder
       qualification: eligibility_interface_qualifications_path,
       degree: eligibility_interface_degree_path,
       teach_children: eligibility_interface_teach_children_path,
+      work_experience: eligibility_interface_work_experience_path,
       misconduct: eligibility_interface_misconduct_path,
     }
   end
