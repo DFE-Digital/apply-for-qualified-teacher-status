@@ -12,6 +12,8 @@ en:
         location: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
       eligibility_interface_region_form:
         region_id: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
+      eligibility_interface_work_experience_form:
+        work_experience: We need to know how long you’ve been employed as a teacher, since completing your teaching qualification.
       qualification:
         add_another: You can use the next section to tell us about additional degrees if you want to.
       teacher:
@@ -69,6 +71,11 @@ en:
         failure_assessor_note: Explain why this section is not completed to your satisfaction
       eligibility_interface_country_form:
         location: In which country are you currently recognised as a teacher?
+      eligibility_interface_work_experience_form:
+        work_experience_options:
+          under_9_months: Under 9 months
+          between_9_and_20_months: 9 months – 20 months
+          over_20_months: More than 20 months
       english_language_provider:
         name: Name
         b2_level_requirement: B2 level requirement
@@ -142,6 +149,8 @@ en:
         passed: Has the applicant completed this section to your satisfaction?
       eligibility_interface_region_form:
         region_id: In which state/territory are you currently recognised as a teacher?
+      eligibility_interface_work_experience_form:
+        work_experience: How long have you been employed as a recognised teacher?
       qualification:
         add_another: Add another qualification?
       teacher_interface_alternative_name_form:
