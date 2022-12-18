@@ -37,10 +37,10 @@
 # Indexes
 #
 #  index_staff_on_confirmation_token    (confirmation_token) UNIQUE
-#  index_staff_on_email                 (email) UNIQUE
 #  index_staff_on_invitation_token      (invitation_token) UNIQUE
 #  index_staff_on_invited_by            (invited_by_type,invited_by_id)
 #  index_staff_on_invited_by_id         (invited_by_id)
+#  index_staff_on_lower_email           (lower((email)::text)) UNIQUE
 #  index_staff_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_staff_on_unlock_token          (unlock_token) UNIQUE
 #
