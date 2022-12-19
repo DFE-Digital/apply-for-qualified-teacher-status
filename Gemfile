@@ -67,7 +67,7 @@ group :test do
   gem "cuprite", "~> 0.14"
   gem "rspec"
   gem "rspec-rails", "~> 6.0.1"
-  gem "shoulda-matchers", "~> 5.2"
+  gem "shoulda-matchers", "~> 5.3"
   gem "site_prism"
   gem "webmock"
 end
