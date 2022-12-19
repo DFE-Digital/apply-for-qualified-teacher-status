@@ -26,7 +26,7 @@ class Teachers::SessionsController < Devise::SessionsController
         return
       end
 
-      self.resource = resource_class.find_by(email: @new_session_form.email)
+      self.resource = resource_class.find_by_email(@new_session_form.email)
 
       if resource
         resource.create_otp

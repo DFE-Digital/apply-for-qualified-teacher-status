@@ -8,7 +8,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   layout "two_thirds"
 
   def create
-    self.resource = Teacher.find_or_initialize_by(sign_up_params)
+    self.resource = Teacher.find_or_initialize_by_email(sign_up_params[:email])
 
     if resource.save
       resource.create_otp

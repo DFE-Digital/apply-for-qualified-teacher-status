@@ -45,6 +45,8 @@
 #  index_staff_on_unlock_token          (unlock_token) UNIQUE
 #
 class Staff < ApplicationRecord
+  include Emailable
+
   devise :database_authenticatable,
          :confirmable,
          :recoverable,
