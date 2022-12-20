@@ -125,76 +125,6 @@ class ApplicationForm < ApplicationRecord
     self.reference = (max_reference + 1).to_s.rjust(7, "0")
   end
 
-  def tasks
-    @tasks ||=
-      begin
-        hash = {}
-        hash.merge!(about_you: %i[personal_information identification_document])
-        hash.merge!(qualifications: %i[qualifications age_range subjects])
-        hash.merge!(work_history: %i[work_history]) if needs_work_history
-
-        if needs_written_statement || needs_registration_number
-          hash.merge!(
-            proof_of_recognition: [
-              needs_registration_number ? :registration_number : nil,
-              needs_written_statement ? :written_statement : nil,
-            ].compact,
-          )
-        end
-
-        hash
-      end
-  end
-
-  def task_statuses
-    @task_statuses ||=
-      tasks.transform_values do |items|
-        items.index_with { |item| task_item_status(item) }
-      end
-  end
-
-  def completed_task_sections
-    task_statuses
-      .filter { |_, statuses| statuses.values.all?("completed") }
-      .map { |section, _| section }
-  end
-
-  def task_item_completed?(section, item)
-    task_statuses.dig(section, item) == "completed"
-  end
-
-  def can_submit?
-    completed_task_sections.count == tasks.count
-  end
-
-  def path_for_task_item(key)
-    url_helpers = Rails.application.routes.url_helpers
-
-    if key == :identification_document
-      return(
-        url_helpers.teacher_interface_application_form_document_path(
-          identification_document,
-        )
-      )
-    end
-
-    if key == :written_statement
-      return(
-        url_helpers.teacher_interface_application_form_document_path(
-          written_statement_document,
-        )
-      )
-    end
-
-    key = :work_histories if key == :work_history
-
-    begin
-      url_helpers.send("teacher_interface_application_form_#{key}_path")
-    rescue NoMethodError
-      url_helpers.send("#{key}_teacher_interface_application_form_path")
-    end
-  end
-
   def teaching_qualification
     qualifications.find(&:is_teaching_qualification?)
   end
@@ -228,9 +158,5 @@ class ApplicationForm < ApplicationRecord
          assessor_id == reviewer_id
       errors.add(:reviewer, :same_as_assessor)
     end
-  end
-
-  def task_item_status(key)
-    send("#{key}_status")
   end
 end

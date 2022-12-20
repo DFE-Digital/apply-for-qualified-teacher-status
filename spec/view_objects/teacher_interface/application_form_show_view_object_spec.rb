@@ -52,6 +52,240 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     end
   end
 
+  describe "#tasks" do
+    subject(:tasks) { view_object.tasks }
+
+    context "with needs work history" do
+      before do
+        create(
+          :application_form,
+          teacher: current_teacher,
+          needs_work_history: true,
+          needs_written_statement: false,
+          needs_registration_number: false,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: %i[personal_information identification_document],
+            qualifications: %i[qualifications age_range subjects],
+            work_history: %i[work_history],
+          },
+        )
+      end
+    end
+
+    context "with needs written statement" do
+      before do
+        create(
+          :application_form,
+          teacher: current_teacher,
+          needs_work_history: false,
+          needs_written_statement: true,
+          needs_registration_number: false,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: %i[personal_information identification_document],
+            qualifications: %i[qualifications age_range subjects],
+            proof_of_recognition: %i[written_statement],
+          },
+        )
+      end
+    end
+
+    context "with needs registration number" do
+      before do
+        create(
+          :application_form,
+          teacher: current_teacher,
+          needs_work_history: false,
+          needs_written_statement: false,
+          needs_registration_number: true,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: %i[personal_information identification_document],
+            qualifications: %i[qualifications age_range subjects],
+            proof_of_recognition: %i[registration_number],
+          },
+        )
+      end
+    end
+  end
+
+  describe "#task_statuses" do
+    subject(:task_statuses) { view_object.task_statuses }
+
+    context "with no extra requirements" do
+      before do
+        create(
+          :application_form,
+          teacher: current_teacher,
+          needs_work_history: false,
+          needs_written_statement: false,
+          needs_registration_number: false,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: {
+              personal_information: "not_started",
+              identification_document: "not_started",
+            },
+            qualifications: {
+              qualifications: "not_started",
+              age_range: "not_started",
+              subjects: "not_started",
+            },
+          },
+        )
+      end
+    end
+
+    context "with work history" do
+      before do
+        create(
+          :application_form,
+          teacher: current_teacher,
+          needs_work_history: true,
+          needs_written_statement: false,
+          needs_registration_number: false,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: {
+              personal_information: "not_started",
+              identification_document: "not_started",
+            },
+            qualifications: {
+              qualifications: "not_started",
+              age_range: "not_started",
+              subjects: "not_started",
+            },
+            work_history: {
+              work_history: "not_started",
+            },
+          },
+        )
+      end
+    end
+
+    context "with written statement" do
+      before do
+        create(
+          :application_form,
+          teacher: current_teacher,
+          needs_work_history: false,
+          needs_written_statement: true,
+          needs_registration_number: false,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: {
+              personal_information: "not_started",
+              identification_document: "not_started",
+            },
+            qualifications: {
+              qualifications: "not_started",
+              age_range: "not_started",
+              subjects: "not_started",
+            },
+            proof_of_recognition: {
+              written_statement: "not_started",
+            },
+          },
+        )
+      end
+    end
+
+    context "with registration number" do
+      before do
+        create(
+          :application_form,
+          teacher: current_teacher,
+          needs_work_history: false,
+          needs_written_statement: false,
+          needs_registration_number: true,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: {
+              personal_information: "not_started",
+              identification_document: "not_started",
+            },
+            qualifications: {
+              qualifications: "not_started",
+              age_range: "not_started",
+              subjects: "not_started",
+            },
+            proof_of_recognition: {
+              registration_number: "not_started",
+            },
+          },
+        )
+      end
+    end
+  end
+
+  describe "#completed_task_sections" do
+    subject(:completed_task_sections) { view_object.completed_task_sections }
+
+    let!(:application_form) do
+      create(:application_form, teacher: current_teacher)
+    end
+
+    context "without any completed sections" do
+      it { is_expected.to be_empty }
+    end
+
+    context "with a completed section" do
+      before do
+        application_form.update!(
+          personal_information_status: "completed",
+          identification_document_status: "completed",
+        )
+      end
+
+      it { is_expected.to match_array(:about_you) }
+    end
+  end
+
+  describe "#can_submit?" do
+    subject(:can_submit?) { view_object.can_submit? }
+
+    context "without any completed sections" do
+      before { create(:application_form, teacher: current_teacher) }
+
+      it { is_expected.to be false }
+    end
+
+    context "with a completed application form" do
+      before { create(:application_form, :completed, teacher: current_teacher) }
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe "#notes_from_assessors" do
     subject(:notes_from_assessors) { view_object.notes_from_assessors }
 
