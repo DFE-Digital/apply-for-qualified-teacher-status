@@ -85,8 +85,6 @@ class EligibilityCheck < ApplicationRecord
         if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) &&
              work_experience_under_9_months?
           :work_experience
-        else
-          nil
         end
       ),
     ].compact

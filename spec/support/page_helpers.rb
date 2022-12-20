@@ -365,4 +365,9 @@ module PageHelpers
     @verify_age_range_subjects_page ||=
       PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
   end
+
+  def work_experience_page
+    @work_experience_page ||=
+      PageObjects::EligibilityInterface::WorkExperience.new
+  end
 end
