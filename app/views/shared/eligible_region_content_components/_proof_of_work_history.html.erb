@@ -1,0 +1,16 @@
+<p class="govuk-body">You’ll need to show you’ve been employed as a teacher in a school for 1 UK school year (9 months of active teaching time) or more.</p>
+
+<p class="govuk-body">We’ll ask you to provide the name and email address of a contact who we can ask to confirm that your professional work experience:</p>
+
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>was in a full-time role where your main function was as a teacher (rather than other responsibilities in school)</li>
+  <li>was gained working with children aged 5-16 (although we can accept experience with children aged 3-4 or 17-19 if the educational setting also included children aged 5-16)</li>
+  <li>involved being responsible for a minimum of 4 children</li>
+</ul>
+
+<p class="govuk-body">If the assessor recommends awarding QTS, you understand that we’ll contact the references you’ve provided to verify your work history before the award is issued.</p>
+
+<% if eligibility_check&.work_experience_between_9_and_20_months? %>
+  <p class="govuk-body">Note that as a teacher with more than 1 year of professional experience, but less than 2 years, you’ll need to complete a 2-year ‘statutory induction’ period as a newly qualified teacher.</p>
+  <p class="govuk-body"><a href="https://www.gov.uk/government/publications/induction-for-newly-qualified-teachers-nqts">Learn more about statutory induction periods for newly qualified teachers.</a></p>
+<% end %>

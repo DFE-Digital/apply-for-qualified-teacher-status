@@ -2,8 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Eligible region content", type: :view do
   let(:region) { nil }
+  let(:eligibility_check) { nil }
 
-  subject { render("shared/eligible_region_content", region:) }
+  subject do
+    render "shared/eligible_region_content", region:, eligibility_check:
+  end
 
   it { is_expected.to match(/You’re eligible/) }
   it { is_expected.to_not match(/What we’ll ask for/) }
@@ -99,6 +102,31 @@ RSpec.describe "Eligible region content", type: :view do
       it do
         is_expected.to match(
           /We need to understand your level of English language proficiency/,
+        )
+      end
+    end
+  end
+
+  context "with work experience" do
+    before { FeatureFlags::FeatureFlag.activate(:eligibility_work_experience) }
+
+    let(:region) { create(:region) }
+
+    it { is_expected.to match(/You’ll need to show you’ve been employed/) }
+    it do
+      is_expected.to_not match(
+        /you’ll need to complete a 2-year ‘statutory induction’/,
+      )
+    end
+
+    context "with an eligibility check that requires an induction" do
+      let(:eligibility_check) do
+        create(:eligibility_check, work_experience: "between_9_and_20_months")
+      end
+
+      it do
+        is_expected.to match(
+          /you’ll need to complete a 2-year ‘statutory induction’/,
         )
       end
     end
