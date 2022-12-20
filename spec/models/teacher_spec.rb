@@ -19,8 +19,8 @@
 #
 # Indexes
 #
-#  index_teachers_on_email  (email) UNIQUE
-#  index_teachers_on_uuid   (uuid) UNIQUE
+#  index_teacher_on_lower_email  (lower((email)::text)) UNIQUE
+#  index_teachers_on_uuid        (uuid) UNIQUE
 #
 require "rails_helper"
 

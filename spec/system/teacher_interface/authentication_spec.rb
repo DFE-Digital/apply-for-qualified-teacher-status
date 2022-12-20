@@ -55,6 +55,27 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_signed_out_page)
   end
 
+  it "allows signing up and signing in with case insensitive" do
+    given_countries_exist
+
+    when_i_visit_the(:teacher_sign_up_page)
+    then_i_see_the(:teacher_sign_up_page)
+
+    when_i_sign_up
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
+
+    given_i_clear_my_session
+
+    when_i_visit_the(:teacher_sign_in_page)
+    then_i_see_the(:teacher_sign_in_page)
+
+    when_i_sign_in_with_different_case
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
+    and_only_one_teacher_exists
+  end
+
   it "sign out with navigation link" do
     when_i_visit_the(:teacher_sign_up_page)
     then_i_see_the(:teacher_sign_up_page)
@@ -148,6 +169,10 @@ RSpec.describe "Teacher authentication", type: :system do
     teacher_sign_in_page.submit(email: "test@example.com")
   end
 
+  def when_i_sign_in_with_different_case
+    teacher_sign_in_page.submit(email: "TEST@example.com")
+  end
+
   def when_i_choose_yes_and_sign_in
     teacher_sign_in_or_sign_up_page.submit_sign_in(email: "test@example.com")
   end
@@ -172,5 +197,9 @@ RSpec.describe "Teacher authentication", type: :system do
     expect(teacher_sign_up_page).to have_content(
       "Your email address is already confirmed, please sign in.",
     )
+  end
+
+  def and_only_one_teacher_exists
+    expect(Teacher.count).to eq(1)
   end
 end

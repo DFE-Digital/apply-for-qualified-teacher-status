@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_15_105051) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_202149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -301,8 +301,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_15_105051) do
     t.text "name", default: "", null: false
     t.boolean "award_decline_permission", default: false
     t.boolean "support_console_permission", default: false, null: false
+    t.index "lower((email)::text)", name: "index_staff_on_lower_email", unique: true
     t.index ["confirmation_token"], name: "index_staff_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_staff_on_email", unique: true
     t.index ["invitation_token"], name: "index_staff_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_staff_on_invited_by_id"
     t.index ["invited_by_type", "invited_by_id"], name: "index_staff_on_invited_by"
@@ -324,7 +324,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_15_105051) do
     t.string "secret_key"
     t.integer "otp_guesses", default: 0, null: false
     t.datetime "otp_created_at", precision: nil
-    t.index ["email"], name: "index_teachers_on_email", unique: true
+    t.index "lower((email)::text)", name: "index_teacher_on_lower_email", unique: true
     t.index ["uuid"], name: "index_teachers_on_uuid", unique: true
   end
 
