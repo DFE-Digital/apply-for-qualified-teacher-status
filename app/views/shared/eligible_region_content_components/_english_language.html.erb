@@ -1,0 +1,69 @@
+<p class="govuk-body">We need to understand your level of English language proficiency. You can provide evidence in any of the following ways:</p>
+
+<ul class="govuk-list govuk-list--number">
+  <li>
+    <h3 class="govuk-heading-s">Show you were born or hold citizenship of a country that’s exempt from English language requirements</h3>
+    <p class="govuk-body">You can show this when you upload a copy of your passport or the official identification document for that country.</p>
+  </li>
+
+  <li>
+    <h3 class="govuk-heading-s">Show you were taught in English in a country that’s exempt from English language requirements</h3>
+    <p class="govuk-body">You can show this when you upload the transcript from your degree qualification.</p>
+  </li>
+
+  <li>
+    <h3 class="govuk-heading-s">Show you were taught in English, but in a country that’s NOT exempt from English language requirements</h3>
+    <p class="govuk-body">Upload the ‘Medium of instruction’ (MOI) from your degree qualification. You can get this by contacting the institution where you studied.</p>
+  </li>
+
+  <li>
+    <h3 class="govuk-heading-s">Show you hold an approved English language certificate</h3>
+    <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 of the Common European Framework of Reference for Languages (CEFR) scale. This is higher than the B1 proficiency the UK Home Office requires when people apply for UK citizenship, because you’ll be instructing students in English.</p>
+    <p class="govuk-body">The test must be on the list of approved English language tests and awarded within the last 2 years before the date of your application.</p>
+  </li>
+</ul>
+
+<%= govuk_details(summary_text: "Which countries are exempt?") do %>
+  <p class="govuk-body">
+    The following countries are exempt from English language proficiency requirements:
+  </p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>Antigua and Barbuda</li>
+    <li>Australia</li>
+    <li>The Bahamas</li>
+    <li>Barbados</li>
+    <li>Belize</li>
+    <li>Canada</li>
+    <li>Dominica</li>
+    <li>Grenada</li>
+    <li>Guyana</li>
+    <li>Jamaica</li>
+    <li>Ireland</li>
+    <li>Malta</li>
+    <li>New Zealand</li>
+    <li>St Kitts and Nevis</li>
+    <li>St Lucia</li>
+    <li>St Vincent and the Grenadines</li>
+    <li>Trinidad and Tobago</li>
+    <li>USA</li>
+    <li>England</li>
+    <li>Scotland</li>
+    <li>Northern Ireland</li>
+    <li>Wales</li>
+  </ul>
+<% end %>
+
+<p class="govuk-body">Learn more about <a href="https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale" class="govuk-link">level B2 English language</a>.</p>
+
+<p class="govuk-body">Find out about <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link">approved test providers</a>.</p>
+
+<%= govuk_details(summary_text: "What about multiple nationalities?") do %>
+  <p class="govuk-body">
+    If you’re a national of more than 1 country and both are exempt from English language requirements, you can choose which of them you use to apply for QTS. Remember, you must be able to show a passport (or the recognised identity document for that country).
+  </p>
+
+  <p class="govuk-body">
+    If you hold a second nationality that is not exempt (and you apply for QTS using that nationality) you’ll need to prove your English language proficiency using one of the other methods.
+  </p>
+<% end %>

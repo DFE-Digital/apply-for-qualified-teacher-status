@@ -3,9 +3,7 @@ require "rails_helper"
 RSpec.describe "Eligible region content", type: :view do
   let(:region) { nil }
 
-  before { render "shared/eligible_region_content", region: }
-
-  subject { rendered }
+  subject { render("shared/eligible_region_content", region:) }
 
   it { is_expected.to match(/You’re eligible/) }
   it { is_expected.to_not match(/What we’ll ask for/) }
@@ -80,5 +78,29 @@ RSpec.describe "Eligible region content", type: :view do
     let(:region) { create(:region, status_check: :none, sanction_check: :none) }
 
     it { is_expected.to match(/show evidence of your work history/) }
+  end
+
+  describe "English language proficiency" do
+    let(:region) { create(:region) }
+
+    context "when feature is inactive" do
+      it do
+        is_expected.to_not match(
+          /We need to understand your level of English language proficiency/,
+        )
+      end
+    end
+
+    context "when feature is active" do
+      before do
+        FeatureFlags::FeatureFlag.activate(:eligibility_english_language)
+      end
+
+      it do
+        is_expected.to match(
+          /We need to understand your level of English language proficiency/,
+        )
+      end
+    end
   end
 end
