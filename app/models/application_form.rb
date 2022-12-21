@@ -155,6 +155,10 @@ class ApplicationForm < ApplicationRecord
     documents.find(&:name_change?)
   end
 
+  def english_language_medium_of_instruction_document
+    documents.find(&:medium_of_instruction?)
+  end
+
   def written_statement_document
     documents.find(&:written_statement?)
   end
@@ -164,6 +168,7 @@ class ApplicationForm < ApplicationRecord
   def build_documents
     documents.build(document_type: :identification)
     documents.build(document_type: :name_change)
+    documents.build(document_type: :medium_of_instruction)
     documents.build(document_type: :written_statement)
   end
 

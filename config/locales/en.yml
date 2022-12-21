@@ -23,6 +23,7 @@ en:
     document_type:
       identification: identity
       name_change: name change
+      medium_of_instruction: medium of instruction
       qualification_certificate: certificate
       qualification_transcript: transcript
       qualification_document: qualification
