@@ -325,6 +325,16 @@ module PageHelpers
       PageObjects::AssessorInterface::FurtherInformationRequestPreview.new
   end
 
+  def support_edit_english_language_provider_page
+    @support_edit_english_language_provider_page ||=
+      PageObjects::SupportInterface::EditEnglishLanguageProvider.new
+  end
+
+  def support_english_language_providers_index_page
+    @support_english_language_providers_index_page ||=
+      PageObjects::SupportInterface::EnglishLanguageProvidersIndex.new
+  end
+
   def verify_age_range_subjects_page
     @verify_age_range_subjects_page ||=
       PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new

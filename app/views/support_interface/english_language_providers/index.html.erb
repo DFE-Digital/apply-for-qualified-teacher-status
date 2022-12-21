@@ -1,0 +1,26 @@
+<% content_for :page_title, "English language test providers" %>
+
+<h1 class="govuk-heading-l">English language test providers</h1>
+
+<% @english_language_providers.each do |english_language_provider| %>
+  <article>
+    <h2 class="govuk-heading-m"><%= govuk_link_to english_language_provider.name, [:edit, :support_interface, english_language_provider] %></h2>
+
+    <%= govuk_summary_list(actions: false) do |summary_list|
+      summary_list.row do |row|
+        row.key { "B2 level requirement" }
+        row.value { english_language_provider.b2_level_requirement }
+      end
+
+      summary_list.row do |row|
+        row.key { "Reference name" }
+        row.value { english_language_provider.reference_name }
+      end
+
+      summary_list.row do |row|
+        row.key { "Reference hint" }
+        row.value { english_language_provider.reference_hint }
+      end
+    end %>
+  </article>
+<% end %>

@@ -64,6 +64,11 @@ en:
         failure_assessor_note: Explain why this section is not completed to your satisfaction
       eligibility_interface_country_form:
         location: In which country are you currently recognised as a teacher?
+      english_language_provider:
+        name: Name
+        b2_level_requirement: B2 level requirement
+        reference_name: Reference name
+        reference_hint: Reference hint
       qualification:
         add_another_options:
           true: "Yes"

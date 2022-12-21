@@ -84,6 +84,8 @@ Rails.application.routes.draw do
       post "confirm_edit", on: :member
     end
 
+    resources :english_language_providers, only: %i[index edit update]
+
     resources :regions, only: %i[edit update] do
       get "preview", on: :member
     end
