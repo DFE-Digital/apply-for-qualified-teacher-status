@@ -142,6 +142,11 @@ en:
           attributes:
             exempt:
               inclusion: Select whether you are exempt
+        teacher_interface/english_language_proof_method_form:
+          attributes:
+            proof_method:
+              blank: Select your method of validation
+              inclusion: Select your method of validation
         teacher_interface/has_work_history_form:
           attributes:
             has_work_history:
