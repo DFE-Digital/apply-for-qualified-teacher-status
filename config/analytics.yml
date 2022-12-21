@@ -56,6 +56,12 @@
     - needs_written_statement
     - needs_registration_number
     - confirmed_no_sanctions
+    - english_language_status
+    - english_language_citizenship_exempt
+    - english_language_qualification_exempt
+    - english_language_proof_method
+    - english_language_provider_id
+    - english_language_provider_reference
   :assessment_sections:
     - id
     - assessment_id

@@ -2,55 +2,63 @@
 #
 # Table name: application_forms
 #
-#  id                             :bigint           not null, primary key
-#  age_range_max                  :integer
-#  age_range_min                  :integer
-#  age_range_status               :string           default("not_started"), not null
-#  alternative_family_name        :text             default(""), not null
-#  alternative_given_names        :text             default(""), not null
-#  confirmed_no_sanctions         :boolean          default(FALSE)
-#  date_of_birth                  :date
-#  family_name                    :text             default(""), not null
-#  given_names                    :text             default(""), not null
-#  has_alternative_name           :boolean
-#  has_work_history               :boolean
-#  identification_document_status :string           default("not_started"), not null
-#  needs_registration_number      :boolean          not null
-#  needs_work_history             :boolean          not null
-#  needs_written_statement        :boolean          not null
-#  personal_information_status    :string           default("not_started"), not null
-#  qualifications_status          :string           default("not_started"), not null
-#  reference                      :string(31)       not null
-#  registration_number            :text
-#  registration_number_status     :string           default("not_started"), not null
-#  state                          :string           default("draft"), not null
-#  subjects                       :text             default([]), not null, is an Array
-#  subjects_status                :string           default("not_started"), not null
-#  submitted_at                   :datetime
-#  work_history_status            :string           default("not_started"), not null
-#  working_days_since_submission  :integer
-#  written_statement_status       :string           default("not_started"), not null
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  assessor_id                    :bigint
-#  region_id                      :bigint           not null
-#  reviewer_id                    :bigint
-#  teacher_id                     :bigint           not null
+#  id                                    :bigint           not null, primary key
+#  age_range_max                         :integer
+#  age_range_min                         :integer
+#  age_range_status                      :string           default("not_started"), not null
+#  alternative_family_name               :text             default(""), not null
+#  alternative_given_names               :text             default(""), not null
+#  confirmed_no_sanctions                :boolean          default(FALSE)
+#  date_of_birth                         :date
+#  english_language_citizenship_exempt   :boolean
+#  english_language_proof_method         :string
+#  english_language_provider_reference   :text             default(""), not null
+#  english_language_qualification_exempt :boolean
+#  english_language_status               :string           default("not_started"), not null
+#  family_name                           :text             default(""), not null
+#  given_names                           :text             default(""), not null
+#  has_alternative_name                  :boolean
+#  has_work_history                      :boolean
+#  identification_document_status        :string           default("not_started"), not null
+#  needs_registration_number             :boolean          not null
+#  needs_work_history                    :boolean          not null
+#  needs_written_statement               :boolean          not null
+#  personal_information_status           :string           default("not_started"), not null
+#  qualifications_status                 :string           default("not_started"), not null
+#  reference                             :string(31)       not null
+#  registration_number                   :text
+#  registration_number_status            :string           default("not_started"), not null
+#  state                                 :string           default("draft"), not null
+#  subjects                              :text             default([]), not null, is an Array
+#  subjects_status                       :string           default("not_started"), not null
+#  submitted_at                          :datetime
+#  work_history_status                   :string           default("not_started"), not null
+#  working_days_since_submission         :integer
+#  written_statement_status              :string           default("not_started"), not null
+#  created_at                            :datetime         not null
+#  updated_at                            :datetime         not null
+#  assessor_id                           :bigint
+#  english_language_provider_id          :bigint
+#  region_id                             :bigint           not null
+#  reviewer_id                           :bigint
+#  teacher_id                            :bigint           not null
 #
 # Indexes
 #
-#  index_application_forms_on_assessor_id  (assessor_id)
-#  index_application_forms_on_family_name  (family_name)
-#  index_application_forms_on_given_names  (given_names)
-#  index_application_forms_on_reference    (reference) UNIQUE
-#  index_application_forms_on_region_id    (region_id)
-#  index_application_forms_on_reviewer_id  (reviewer_id)
-#  index_application_forms_on_state        (state)
-#  index_application_forms_on_teacher_id   (teacher_id)
+#  index_application_forms_on_assessor_id                   (assessor_id)
+#  index_application_forms_on_english_language_provider_id  (english_language_provider_id)
+#  index_application_forms_on_family_name                   (family_name)
+#  index_application_forms_on_given_names                   (given_names)
+#  index_application_forms_on_reference                     (reference) UNIQUE
+#  index_application_forms_on_region_id                     (region_id)
+#  index_application_forms_on_reviewer_id                   (reviewer_id)
+#  index_application_forms_on_state                         (state)
+#  index_application_forms_on_teacher_id                    (teacher_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (assessor_id => staff.id)
+#  fk_rails_...  (english_language_provider_id => english_language_providers.id)
 #  fk_rails_...  (region_id => regions.id)
 #  fk_rails_...  (reviewer_id => staff.id)
 #  fk_rails_...  (teacher_id => teachers.id)
