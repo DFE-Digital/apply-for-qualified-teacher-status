@@ -147,6 +147,11 @@ en:
             proof_method:
               blank: Select your method of validation
               inclusion: Select your method of validation
+        teacher_interface/english_language_provider_form:
+          attributes:
+            provider_id:
+              blank: Select your approved English language test provider
+              inclusion: Select your approved English language test provider
         teacher_interface/has_work_history_form:
           attributes:
             has_work_history:
