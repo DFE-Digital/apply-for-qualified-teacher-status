@@ -152,6 +152,10 @@ en:
             provider_id:
               blank: Select your approved English language test provider
               inclusion: Select your approved English language test provider
+        teacher_interface/english_language_provider_reference_form:
+          attributes:
+            reference:
+              blank: Enter your reference number
         teacher_interface/has_work_history_form:
           attributes:
             has_work_history:
