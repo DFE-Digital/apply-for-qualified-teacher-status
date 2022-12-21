@@ -1,4 +1,9 @@
 feature_flags:
+  application_english_language:
+    author: Thomas Leese
+    description: >
+      Add English language proficiency question to the application form.
+
   eligibility_english_language:
     author: Thomas Leese
     description: >
