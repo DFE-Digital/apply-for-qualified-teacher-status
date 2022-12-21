@@ -281,7 +281,9 @@ RSpec.describe ApplicationForm, type: :model do
   it "attaches empty documents" do
     expect(application_form.identification_document).to_not be_nil
     expect(application_form.name_change_document).to_not be_nil
-    expect(application_form.english_language_medium_of_instruction_document).to_not be_nil
+    expect(
+      application_form.english_language_medium_of_instruction_document,
+    ).to_not be_nil
     expect(application_form.written_statement_document).to_not be_nil
   end
 

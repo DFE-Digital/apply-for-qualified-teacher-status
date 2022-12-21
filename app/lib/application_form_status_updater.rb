@@ -14,6 +14,7 @@ class ApplicationFormStatusUpdater
       qualifications_status:,
       age_range_status:,
       subjects_status:,
+      english_language_status:,
       work_history_status:,
       registration_number_status:,
       written_statement_status:,
@@ -37,6 +38,12 @@ class ApplicationFormStatusUpdater
            :age_range_min,
            :age_range_max,
            :subjects,
+           :english_language_citizenship_exempt,
+           :english_language_qualification_exempt,
+           :english_language_proof_method,
+           :english_language_medium_of_instruction_document,
+           :english_language_provider,
+           :english_language_provider_reference,
            :has_work_history,
            :work_histories,
            :registration_number,
@@ -85,6 +92,37 @@ class ApplicationFormStatusUpdater
     return :not_started if subjects.empty?
     return :in_progress if subjects.compact_blank.empty?
     :completed
+  end
+
+  def english_language_status
+    if english_language_citizenship_exempt ||
+         english_language_qualification_exempt
+      return :completed
+    end
+
+    case english_language_proof_method
+    when "medium_of_instruction"
+      if english_language_medium_of_instruction_document.uploaded?
+        :completed
+      else
+        :in_progress
+      end
+    when "provider"
+      status_for_values(
+        english_language_proof_method,
+        english_language_provider,
+        english_language_provider_reference,
+      )
+    else
+      if [
+           english_language_citizenship_exempt,
+           english_language_qualification_exempt,
+         ].all?(&:nil?)
+        :not_started
+      else
+        :in_progress
+      end
+    end
   end
 
   def work_history_status

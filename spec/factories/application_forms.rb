@@ -208,6 +208,24 @@ FactoryBot.define do
       end
     end
 
+    trait :with_english_language_medium_of_instruction do
+      english_language_proof_method { "medium_of_instruction" }
+
+      after(:create) do |application_form, _evaluator|
+        create(
+          :upload,
+          document:
+            application_form.english_language_medium_of_instruction_document,
+        )
+      end
+    end
+
+    trait :with_english_language_provider do
+      english_language_proof_method { "provider" }
+      association :english_language_provider
+      english_language_provider_reference { "reference" }
+    end
+
     trait :with_work_history do
       needs_work_history { true }
       has_work_history { true }
