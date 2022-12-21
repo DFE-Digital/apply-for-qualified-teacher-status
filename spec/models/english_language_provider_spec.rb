@@ -1,0 +1,27 @@
+# frozen_string_literal: true
+
+# == Schema Information
+#
+# Table name: english_language_providers
+#
+#  id                   :bigint           not null, primary key
+#  b2_level_requirement :text             not null
+#  name                 :string           not null
+#  reference_hint       :text             not null
+#  reference_name       :string           not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
+
+require "rails_helper"
+
+RSpec.describe EnglishLanguageProvider, type: :model do
+  subject(:english_language_provider) { build(:english_language_provider) }
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:b2_level_requirement) }
+    it { is_expected.to validate_presence_of(:reference_name) }
+    it { is_expected.to validate_presence_of(:reference_hint) }
+  end
+end
