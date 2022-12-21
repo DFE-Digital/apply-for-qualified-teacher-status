@@ -86,6 +86,7 @@ FactoryBot.define do
       qualifications_status { "completed" }
       age_range_status { "completed" }
       subjects_status { "completed" }
+      english_language_status { "completed" }
       work_history_status { "completed" }
       registration_number_status { "completed" }
       written_statement_status { "completed" }

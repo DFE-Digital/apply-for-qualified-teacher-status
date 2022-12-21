@@ -66,6 +66,7 @@
 class ApplicationForm < ApplicationRecord
   belongs_to :teacher
   belongs_to :region
+  belongs_to :english_language_provider, optional: true
   has_many :work_histories, dependent: :destroy
   has_many :qualifications, dependent: :destroy
   has_many :documents, as: :documentable, dependent: :destroy
@@ -84,6 +85,10 @@ class ApplicationForm < ApplicationRecord
   validate :assessor_and_reviewer_must_be_different
 
   validates :submitted_at, presence: true, unless: :draft?
+
+  enum :english_language_proof_method,
+       { medium_of_instruction: "medium_of_instruction", provider: "provider" },
+       prefix: true
 
   enum state: {
          draft: "draft",
@@ -105,6 +110,7 @@ class ApplicationForm < ApplicationRecord
     qualifications_status
     age_range_status
     subjects_status
+    english_language_status
     work_history_status
     registration_number_status
     written_statement_status

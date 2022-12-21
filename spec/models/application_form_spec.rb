@@ -91,6 +91,16 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
+      is_expected.to define_enum_for(:english_language_proof_method)
+        .with_values(
+          medium_of_instruction: "medium_of_instruction",
+          provider: "provider",
+        )
+        .with_prefix(:english_language_proof_method)
+        .backed_by_column_of_type(:string)
+    end
+
+    it do
       is_expected.to define_enum_for(:personal_information_status)
         .with_values(
           not_started: "not_started",
@@ -146,6 +156,17 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
+      is_expected.to define_enum_for(:english_language_status)
+        .with_values(
+          not_started: "not_started",
+          in_progress: "in_progress",
+          completed: "completed",
+        )
+        .with_prefix(:english_language_status)
+        .backed_by_column_of_type(:string)
+    end
+
+    it do
       is_expected.to define_enum_for(:work_history_status)
         .with_values(
           not_started: "not_started",
@@ -182,6 +203,7 @@ RSpec.describe ApplicationForm, type: :model do
   describe "associations" do
     it { is_expected.to belong_to(:teacher) }
     it { is_expected.to have_many(:notes) }
+    it { is_expected.to belong_to(:english_language_provider).optional }
   end
 
   describe "validations" do
