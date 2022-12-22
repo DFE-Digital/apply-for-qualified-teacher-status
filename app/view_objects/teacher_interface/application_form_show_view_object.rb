@@ -26,6 +26,11 @@ class TeacherInterface::ApplicationFormShowViewObject
     hash = {}
     hash.merge!(about_you: %i[personal_information identification_document])
     hash.merge!(qualifications: %i[qualifications age_range subjects])
+
+    if FeatureFlags::FeatureFlag.active?(:application_english_language)
+      hash.merge!(english_language: %i[english_language])
+    end
+
     hash.merge!(work_history: %i[work_history]) if needs_work_history
 
     if needs_written_statement || needs_registration_number

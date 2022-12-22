@@ -120,6 +120,36 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         )
       end
     end
+
+    context "with English language active" do
+      before(:all) do
+        FeatureFlags::FeatureFlag.activate(:application_english_language)
+      end
+
+      after(:all) do
+        FeatureFlags::FeatureFlag.deactivate(:application_english_language)
+      end
+
+      before do
+        create(
+          :application_form,
+          teacher: current_teacher,
+          needs_work_history: false,
+          needs_written_statement: false,
+          needs_registration_number: false,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: %i[personal_information identification_document],
+            english_language: %i[english_language],
+            qualifications: %i[qualifications age_range subjects],
+          },
+        )
+      end
+    end
   end
 
   describe "#task_statuses" do
