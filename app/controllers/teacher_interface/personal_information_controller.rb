@@ -12,10 +12,7 @@ module TeacherInterface
     define_history_check :check
 
     def show
-      if application_form.task_item_completed?(
-           :about_you,
-           :personal_information,
-         )
+      if application_form.personal_information_status_completed?
         redirect_to %i[
                       check
                       teacher_interface

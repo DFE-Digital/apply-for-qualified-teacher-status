@@ -14,7 +14,7 @@ module TeacherInterface
     define_history_check :check_member, identifier: :check_member_identifier
 
     def index
-      if application_form.task_item_completed?(:work_history, :work_history)
+      if application_form.work_history_status_completed?
         redirect_to %i[check teacher_interface application_form work_histories]
       else
         redirect_to %i[

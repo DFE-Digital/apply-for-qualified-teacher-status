@@ -35,7 +35,7 @@
   </section>
 <% end %>
 
-<% if @application_form.can_submit? %>
+<% if @view_object.can_submit? %>
   <section id="app-application-form-submission-declaration">
     <%= form_with model: @sanction_confirmation_form, url: [:teacher_interface, :application_form], method: :put do |f| %>
       <%= f.govuk_error_summary %>

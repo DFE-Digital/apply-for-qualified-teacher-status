@@ -14,7 +14,7 @@ module TeacherInterface
     define_history_check :check_member, identifier: :check_member_identifier
 
     def index
-      if application_form.task_item_completed?(:qualifications, :qualifications)
+      if application_form.qualifications_status_completed?
         redirect_to %i[check teacher_interface application_form qualifications]
       elsif application_form.qualifications.empty?
         redirect_to %i[new teacher_interface application_form qualification]

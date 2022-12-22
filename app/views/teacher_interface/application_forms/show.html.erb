@@ -6,7 +6,7 @@
 
 <% if @view_object.application_form.draft? %>
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
-    <% if @view_object.application_form.can_submit? %>
+    <% if @view_object.can_submit? %>
       Application complete
     <% else %>
       Application incomplete
@@ -14,11 +14,11 @@
   </h2>
 
   <p class="govuk-body govuk-!-margin-bottom-7">
-    You have completed <%= @view_object.application_form.completed_task_sections.count %> of <%= @view_object.application_form.tasks.count %> sections.
+    You have completed <%= @view_object.completed_task_sections.count %> of <%= @view_object.tasks.count %> sections.
   </p>
 
   <ol class="app-task-list">
-    <% @view_object.application_form.tasks.each_with_index do |(section, items), index| %>
+    <% @view_object.tasks.each_with_index do |(section, items), index| %>
       <li>
         <h2 class="app-task-list__section">
           <span class="app-task-list__section-number"><%= index + 1 %>. </span>
@@ -30,13 +30,13 @@
             <li class="app-task-list__item">
               <span class="app-task-list__task-name">
                 <%= link_to I18n.t("application_form.tasks.items.#{item}"),
-                            @view_object.application_form.path_for_task_item(item),
+                            @view_object.path_for_task_item(item),
                             aria: { describedby: "#{item}-status" } %>
               </span>
 
               <%= render(StatusTag::Component.new(
                 key: item,
-                status: @view_object.application_form.task_statuses.dig(section, item),
+                status: @view_object.task_statuses.dig(section, item),
                 class_context: "app-task-list"
               )) %>
             </li>
@@ -47,7 +47,7 @@
   </ol>
 
   <div class="govuk-button-group">
-    <%- if @view_object.application_form.can_submit? -%>
+    <%- if @view_object.can_submit? -%>
       <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_path %>
     <%- end -%>
     <%= govuk_button_link_to "Save and sign out", destroy_teacher_session_path, secondary: true %>

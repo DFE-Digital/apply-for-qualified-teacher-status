@@ -72,6 +72,17 @@ FactoryBot.define do
       region.status_check_online? || region.sanction_check_online?
     end
 
+    trait :completed do
+      personal_information_status { "completed" }
+      identification_document_status { "completed" }
+      qualifications_status { "completed" }
+      age_range_status { "completed" }
+      subjects_status { "completed" }
+      work_history_status { "completed" }
+      registration_number_status { "completed" }
+      written_statement_status { "completed" }
+    end
+
     trait :submitted do
       state { "submitted" }
       submitted_at { Time.zone.now }
