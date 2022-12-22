@@ -27,7 +27,7 @@ RSpec.describe "Teacher back links", type: :system do
 
     when_i_click_qualifications
     and_i_fill_in_qualification
-    then_i_see_the(:upload_document_page)
+    then_i_see_the(:teacher_upload_document_page)
 
     when_i_click_back
     then_i_see_the(:edit_qualification_page, qualification_id: qualification.id)
@@ -40,10 +40,10 @@ RSpec.describe "Teacher back links", type: :system do
 
     when_i_click_qualifications
     and_i_click_continue
-    then_i_see_the(:upload_document_page)
+    then_i_see_the(:teacher_upload_document_page)
 
     when_i_upload_a_document
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_click_back
     then_i_see_the(:edit_qualification_page, qualification_id: qualification.id)
@@ -53,13 +53,13 @@ RSpec.describe "Teacher back links", type: :system do
     #  <- document_form_page <- document_form_page <- edit_qualification_page
 
     when_i_click_continue
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_upload_another_document
-    then_i_see_the(:upload_document_page)
+    then_i_see_the(:teacher_upload_document_page)
 
     when_i_upload_a_document
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_upload_another_document
     then_i_see_the(
@@ -68,10 +68,10 @@ RSpec.describe "Teacher back links", type: :system do
     )
 
     when_i_click_back
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_click_back
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_click_back
     then_i_see_the(:edit_qualification_page, qualification_id: qualification.id)
@@ -81,10 +81,10 @@ RSpec.describe "Teacher back links", type: :system do
     #  <- teacher_application_page
 
     when_i_click_continue
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_upload_another_document
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_upload_another_document
     then_i_see_the(
@@ -122,7 +122,7 @@ RSpec.describe "Teacher back links", type: :system do
     #  <- teacher_check_qualifications_page
 
     when_i_click_change_certificate_document_title
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_click_back
     then_i_see_the(:teacher_check_qualifications_page)
@@ -130,7 +130,7 @@ RSpec.describe "Teacher back links", type: :system do
     # teacher_check_qualifications_page -> document_form_page -> teacher_check_qualifications_page
 
     when_i_click_change_certificate_document_title
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_upload_another_document
     then_i_see_the(:teacher_check_qualifications_page)
@@ -139,13 +139,13 @@ RSpec.describe "Teacher back links", type: :system do
     #  <- document_form_page <- teacher_check_qualifications_page
 
     when_i_click_change_certificate_document_title
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_do_upload_another_document
-    then_i_see_the(:upload_document_page)
+    then_i_see_the(:teacher_upload_document_page)
 
     when_i_click_back
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_click_back
     then_i_see_the(:teacher_check_qualifications_page)
@@ -154,13 +154,13 @@ RSpec.describe "Teacher back links", type: :system do
     #  <- teacher_check_qualifications_page
 
     when_i_click_change_certificate_document_title
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_do_upload_another_document
-    then_i_see_the(:upload_document_page)
+    then_i_see_the(:teacher_upload_document_page)
 
     when_i_upload_a_document
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_click_back
     then_i_see_the(:teacher_check_qualifications_page)
@@ -169,13 +169,13 @@ RSpec.describe "Teacher back links", type: :system do
     #  -> teacher_check_qualifications_page
 
     when_i_click_change_certificate_document_title
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_do_upload_another_document
-    then_i_see_the(:upload_document_page)
+    then_i_see_the(:teacher_upload_document_page)
 
     when_i_upload_a_document
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_upload_another_document
     then_i_see_the(:teacher_check_qualifications_page)
@@ -231,21 +231,21 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def when_i_upload_a_document
-    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+    teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
-    upload_document_page.form.written_in_english_items.first.choose
-    upload_document_page.form.continue_button.click
+    teacher_upload_document_page.form.written_in_english_items.first.choose
+    teacher_upload_document_page.form.continue_button.click
   end
 
   def when_i_dont_upload_another_document
-    document_form_page.form.no_radio_item.choose
-    document_form_page.form.continue_button.click
+    teacher_check_document_page.form.no_radio_item.choose
+    teacher_check_document_page.form.continue_button.click
   end
 
   def when_i_do_upload_another_document
-    document_form_page.form.yes_radio_item.choose
-    document_form_page.form.continue_button.click
+    teacher_check_document_page.form.yes_radio_item.choose
+    teacher_check_document_page.form.continue_button.click
   end
 
   def when_i_choose_part_of_university_degree

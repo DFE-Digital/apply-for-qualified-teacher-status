@@ -15,6 +15,10 @@ module PageObjects
       def qualifications_task_item
         task_list.find_item("Add your teaching qualifications")
       end
+
+      def english_language_task_item
+        task_list.find_item("Verify your English language proficiency")
+      end
     end
   end
 end

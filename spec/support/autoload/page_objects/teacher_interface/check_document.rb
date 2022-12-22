@@ -1,6 +1,6 @@
 module PageObjects
   module TeacherInterface
-    class DocumentForm < SitePrism::Page
+    class CheckDocument < SitePrism::Page
       set_url "/teacher/application/documents/{document_id}/edit"
 
       element :heading, "h1"

@@ -171,8 +171,18 @@ module PageHelpers
     @teacher_application_page = PageObjects::TeacherInterface::Application.new
   end
 
+  def teacher_check_document_page
+    @teacher_check_document_page =
+      PageObjects::TeacherInterface::CheckDocument.new
+  end
+
   def teacher_check_email_page
     @teacher_check_email_page = PageObjects::TeacherInterface::CheckEmail.new
+  end
+
+  def teacher_check_english_language_page
+    @teacher_check_english_language_page ||=
+      PageObjects::TeacherInterface::CheckEnglishLanguage.new
   end
 
   def teacher_check_qualification_page
@@ -202,6 +212,26 @@ module PageHelpers
   def teacher_declined_application_page
     @teacher_declined_application_page ||=
       PageObjects::TeacherInterface::DeclinedApplication.new
+  end
+
+  def teacher_english_language_exemption_page
+    @teacher_english_language_exemption_page ||=
+      PageObjects::TeacherInterface::EnglishLanguageExemption.new
+  end
+
+  def teacher_english_language_proof_method_page
+    @teacher_english_language_proof_method_page ||=
+      PageObjects::TeacherInterface::EnglishLanguageProofMethod.new
+  end
+
+  def teacher_english_language_provider_page
+    @teacher_english_language_provider_page ||=
+      PageObjects::TeacherInterface::EnglishLanguageProvider.new
+  end
+
+  def teacher_english_language_provider_reference_page
+    @teacher_english_language_provider_reference_page ||=
+      PageObjects::TeacherInterface::EnglishLanguageProviderReference.new
   end
 
   def teacher_new_application_page
@@ -234,8 +264,9 @@ module PageHelpers
     @teacher_sign_up_page = PageObjects::TeacherInterface::SignUp.new
   end
 
-  def document_form_page
-    @document_form_page = PageObjects::TeacherInterface::DocumentForm.new
+  def teacher_upload_document_page
+    @teacher_upload_document_page =
+      PageObjects::TeacherInterface::UploadDocument.new
   end
 
   def check_uploaded_files_page
@@ -279,11 +310,6 @@ module PageHelpers
   def check_your_answers_page
     @check_your_answers_page =
       PageObjects::TeacherInterface::CheckYourAnswers.new
-  end
-
-  def upload_document_page
-    @upload_document_page =
-      PageObjects::TeacherInterface::UploadDocumentForm.new
   end
 
   def submitted_application_page

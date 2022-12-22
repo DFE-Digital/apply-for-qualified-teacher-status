@@ -45,11 +45,11 @@ RSpec.describe "Teacher documents", type: :system do
   end
 
   def when_i_upload_a_document
-    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+    teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
-    upload_document_page.form.written_in_english_items.second.choose
-    upload_document_page.form.translated_attachment.attach_file Rails.root.join(
+    teacher_upload_document_page.form.written_in_english_items.second.choose
+    teacher_upload_document_page.form.translated_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
   end
@@ -59,15 +59,15 @@ RSpec.describe "Teacher documents", type: :system do
   end
 
   def then_i_see_document_form
-    expect(document_form_page).to have_title("Upload a document")
-    expect(document_form_page.heading.text).to eq(
+    expect(teacher_check_document_page).to have_title("Upload a document")
+    expect(teacher_check_document_page.heading.text).to eq(
       "Upload your written statement",
     )
   end
 
   def then_i_see_the_next_page_document_form
-    expect(document_form_page).to have_title("Upload a document")
-    expect(document_form_page.heading.text).to eq(
+    expect(teacher_check_document_page).to have_title("Upload a document")
+    expect(teacher_check_document_page.heading.text).to eq(
       "Upload the next page of your written statement document",
     )
   end
