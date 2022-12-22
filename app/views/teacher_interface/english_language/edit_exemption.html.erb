@@ -1,0 +1,52 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".#{@exemption_field}.heading")}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<span class="govuk-caption-l"><%= t("application_form.tasks.sections.english_language") %></span>
+<h1 class="govuk-heading-l"><%= t(".#{@exemption_field}.heading") %></h1>
+
+<p class="govuk-body"><%= t(".#{@exemption_field}.description") %></p>
+<p class="govuk-body"><%= t(".#{@exemption_field}.evidence") %></p>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Antigua and Barbuda</li>
+      <li>Australia</li>
+      <li>The Bahamas</li>
+      <li>Barbados</li>
+      <li>Belize</li>
+      <li>Canada</li>
+      <li>Dominica</li>
+      <li>Grenada</li>
+      <li>Guyana</li>
+      <li>Jamaica</li>
+      <li>Ireland</li>
+    </ul>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Malta</li>
+      <li>New Zealand</li>
+      <li>St Kitts and Nevis</li>
+      <li>St Lucia</li>
+      <li>St Vincent and the Grenadines</li>
+      <li>Trinidad and Tobago</li>
+      <li>USA</li>
+      <li>England</li>
+      <li>Scotland</li>
+      <li>Northern Ireland</li>
+      <li>Wales</li>
+    </ul>
+  </div>
+</div>
+
+<%= form_with model: @form, url: exemption_teacher_interface_application_form_english_language_path(@exemption_field) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons :exempt,
+                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
+                                       :value,
+                                       legend: nil %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>

@@ -1,0 +1,23 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".heading")}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<span class="govuk-caption-l"><%= t("application_form.tasks.sections.english_language") %></span>
+<h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+<p class="govuk-body"><%= t(".description") %></p>
+
+<%= form_with model: @form, url: %i[provider teacher_interface application_form english_language] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons :provider_id,
+                                       @providers,
+                                       :id,
+                                       :name %>
+
+  <%= govuk_details(summary_text: "About approved providers") do %>
+    <p class="govuk-body">
+      To apply for QTS you need to show that you’ve passed a Secure English Language Test (SELT) at B2 level, from one of the approved providers on the list, within the last 2 years. We cannot accept English language tests from a provider that does not appear on the list.
+    </p>
+  <% end %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>

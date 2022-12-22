@@ -163,6 +163,10 @@ class ApplicationForm < ApplicationRecord
     documents.find(&:written_statement?)
   end
 
+  def english_language_exempt?
+    english_language_citizenship_exempt || english_language_qualification_exempt
+  end
+
   private
 
   def build_documents

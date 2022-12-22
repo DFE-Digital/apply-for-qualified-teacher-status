@@ -1,0 +1,33 @@
+<%= render(CheckYourAnswersSummary::Component.new(
+  id: "english-language",
+  model: application_form,
+  title: I18n.t("application_form.tasks.items.english_language"),
+  fields: {
+    english_language_citizenship_exempt: {
+      title: t("teacher_interface.english_language.edit_exemption.citizenship.heading"),
+      href: exemption_teacher_interface_application_form_english_language_path("citizenship")
+    },
+    english_language_qualification_exempt: !application_form.english_language_citizenship_exempt ? {
+      title: t("teacher_interface.english_language.edit_exemption.qualification.heading"),
+      href: exemption_teacher_interface_application_form_english_language_path("qualification")
+    } : nil,
+    english_language_proof_method: !application_form.english_language_exempt? ? {
+      title: "Chosen verification method",
+      value: application_form.english_language_proof_method_medium_of_instruction? ? "Medium of instruction" : "Approved test provider",
+      href: %i[proof_method teacher_interface application_form english_language]
+    } : nil,
+    english_language_medium_of_instruction_document: !application_form.english_language_exempt? && application_form.english_language_proof_method_medium_of_instruction? ? {
+      title: "Medium of instruction",
+      href: [:teacher_interface, :application_form, application_form.english_language_medium_of_instruction_document]
+    } : nil,
+    english_language_provider: !application_form.english_language_exempt? && application_form.english_language_proof_method_provider? ? {
+      title: "Your approved provider",
+      href: %i[provider teacher_interface application_form english_language]
+    } : nil,
+    english_language_provider_reference: !application_form.english_language_exempt? && application_form.english_language_proof_method_provider? ? {
+      title: "Your reference number",
+      href: %i[provider_reference teacher_interface application_form english_language]
+    } : nil,
+  },
+  changeable:
+)) %>
