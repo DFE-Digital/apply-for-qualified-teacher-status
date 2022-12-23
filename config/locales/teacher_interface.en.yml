@@ -267,6 +267,14 @@ en:
               blank: Enter an email
             still_employed:
               inclusion: Tell us whether you are still employed at this school
+        teacher_interface/work_history_contact_form:
+          attributes:
+            contact_name:
+              blank: Enter the full name
+            contact_job:
+              blank: Enter this person’s job title
+            contact_email:
+              blank: Enter the email address
         teacher_interface/work_history_school_form:
           attributes:
             meets_all_requirements:
