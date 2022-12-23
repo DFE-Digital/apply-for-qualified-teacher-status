@@ -62,6 +62,8 @@ module TeacherInterface
     end
 
     def update
+      @view_object = ApplicationFormShowViewObject.new(current_teacher:)
+
       if (
            @sanction_confirmation_form =
              SanctionConfirmationForm.new(
