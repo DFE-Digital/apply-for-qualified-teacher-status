@@ -8,6 +8,10 @@ en:
         failure_reason_notes_decline: As this reason triggers a decline, you do not need to add a note, but you can use the space below to add anything you feel might be helpful, if you want to.
       assessor_interface_create_note_form:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
+      eligibility_interface_country_form:
+        location: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
+      eligibility_interface_region_form:
+        region_id: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
       qualification:
         add_another: You can use the next section to tell us about additional degrees if you want to.
       teacher:
@@ -22,6 +26,8 @@ en:
         has_work_history: If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet.
       teacher_interface_new_session_form:
         email: Enter the email address you used to register, and we will send you a code to sign in.
+      teacher_interface_qualification_form:
+        institution_country_location: This must be the country in which you’re recognised as a teacher.
       teacher_interface_registration_number_form:
         registration_number: Your country has an online register of teachers. If you have a registration number, enter it on this screen. If you do not have one, just select ‘Continue’.
       work_history:
@@ -56,6 +62,8 @@ en:
           true: "Yes"
           false: "No"
         failure_assessor_note: Explain why this section is not completed to your satisfaction
+      eligibility_interface_country_form:
+        location: In which country are you currently recognised as a teacher?
       qualification:
         add_another_options:
           true: "Yes"
@@ -79,6 +87,8 @@ en:
           false: "No"
       teacher_interface_new_session_form:
         email: Email address
+      teacher_interface_qualification_form:
+        institution_country_location: Country of institution
       teacher_interface_registration_number_form:
         registration_number: What is your registration number?
       teacher_interface_subjects_form:
@@ -112,6 +122,8 @@ en:
         submitted_at_before: End date
       assessor_interface_further_information_request_form:
         passed: Has the applicant completed this section to your satisfaction?
+      eligibility_interface_region_form:
+        region_id: In which state/territory are you currently recognised as a teacher?
       qualification:
         add_another: Add another qualification?
       teacher_interface_alternative_name_form:

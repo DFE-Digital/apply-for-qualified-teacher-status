@@ -7,7 +7,6 @@
 
     <%= f.govuk_select :institution_country_location,
                        options_for_select(locations, qualification_form.institution_country_location),
-                       label: { text: I18n.t("application_form.qualifications.form.fields.institution_country") },
                        options: { include_blank: true } %>
   <% end %>
 
