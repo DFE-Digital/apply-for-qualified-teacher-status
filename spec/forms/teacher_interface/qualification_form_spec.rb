@@ -1,7 +1,13 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::QualificationForm, type: :model do
-  let(:qualification) { build(:qualification) }
+  let(:application_form) do
+    create(
+      :application_form,
+      region: create(:region, :in_country, country_code: "FR"),
+    )
+  end
+  let(:qualification) { build(:qualification, application_form:) }
 
   subject(:form) do
     described_class.new(
@@ -27,9 +33,25 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:institution_name) }
     it { is_expected.to validate_presence_of(:institution_country_location) }
+    it do
+      is_expected.to validate_inclusion_of(
+        :institution_country_location,
+      ).in_array(%w[country:FR])
+    end
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to validate_presence_of(:complete_date) }
     it { is_expected.to validate_presence_of(:certificate_date) }
+
+    context "with a university degree" do
+      # create the teaching qualification first
+      before { create(:qualification, application_form:) }
+
+      it do
+        is_expected.to_not validate_inclusion_of(
+          :institution_country_location,
+        ).in_array(%w[country:FR])
+      end
+    end
 
     context "with invalid dates" do
       let(:start_date) { { 1 => 2020, 2 => 1, 3 => 1 } }

@@ -283,7 +283,12 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def application_form
-    @application_form ||= create(:application_form, teacher:)
+    @application_form ||=
+      create(
+        :application_form,
+        teacher:,
+        region: create(:region, :in_country, country_code: "FR"),
+      )
   end
 
   def qualification

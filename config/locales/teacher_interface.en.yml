@@ -166,7 +166,7 @@ en:
               blank: Enter the qualification title
             institution_name:
               blank: Enter the name of the institution
-            institution_country_code:
+            institution_country_location:
               blank: Enter the country of the institution
               inclusion: The country of institution must be the country in which you’re recognised as a teacher.
             start_date:
