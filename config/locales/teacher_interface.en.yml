@@ -267,3 +267,28 @@ en:
               blank: Enter an email
             still_employed:
               inclusion: Tell us whether you are still employed at this school
+        teacher_interface/work_history_school_form:
+          attributes:
+            meets_all_requirements:
+              blank: The role must meet all the requirements
+            school_name:
+              blank: Enter the school name
+            city:
+              blank: Enter the city
+            country_location:
+              blank: Enter the country
+            job:
+              blank: Enter the job role
+            hours_per_week:
+              blank: Enter the hours per week
+            start_date:
+              blank: Enter the start date in the format 3 1980
+              invalid: Enter the start date in the format 3 1980
+              future: Start date must be in the past
+            still_employed:
+              inclusion: Tell us whether you are still employed at this school
+            end_date:
+              blank: Enter the end date in the format 3 1980
+              invalid: Enter the end date in the format 3 1980
+              future: End date must be in the past
+              comparison: End date must be after start date

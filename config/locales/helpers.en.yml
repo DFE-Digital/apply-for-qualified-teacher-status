@@ -37,6 +37,10 @@ en:
         institution_country_location: This must be the country in which you’re recognised as a teacher.
       teacher_interface_registration_number_form:
         registration_number: Your country has an online register of teachers. If you have a registration number, enter it on this screen. If you do not have one, just select ‘Continue’.
+      teacher_interface_work_history_school_form:
+        hours_per_week: In roles where you worked under 30 hours per week we may need to ask for more information when we assess your application.
+        start_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
+        end_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
       work_history:
         add_another: You can use the next section to tell us about additional work history.
     label:
@@ -123,6 +127,14 @@ en:
       teacher_interface_work_history_form:
         contact_name: Contact’s full name
         contact_email: Contact email address for this organisation
+      teacher_interface_work_history_school_form:
+        school_name: Name of school
+        country_location: Country
+        job: What was the job title or role?
+        hours_per_week: Approximately how many hours per week did you work in this role?
+        still_employed_options:
+          true: "Yes"
+          false: "No"
       work_history:
         add_another_options:
           true: "Yes"
@@ -161,5 +173,9 @@ en:
         provider_id: Select your approved provider from the list
       teacher_interface_has_work_history_form:
         has_work_history: Have you worked professionally as a teacher?
+      teacher_interface_work_history_school_form:
+        start_date: When did you start this role?
+        still_employed: Are you still employed at this school?
+        end_date: Your end date
       work_history:
         add_another: Add another workplace?
