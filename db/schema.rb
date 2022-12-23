@@ -392,6 +392,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_110153) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "contact_name", default: "", null: false
+    t.integer "hours_per_week"
+    t.boolean "start_date_is_estimate", default: false, null: false
+    t.boolean "end_date_is_estimate", default: false, null: false
+    t.string "contact_job", default: "", null: false
     t.index ["application_form_id"], name: "index_work_histories_on_application_form_id"
   end
 
