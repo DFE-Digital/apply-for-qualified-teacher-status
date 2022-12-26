@@ -35,6 +35,16 @@ en:
           age_range: Tell us more about the age range you can teach
           satisfactory_evidence_work_history: Tell us more about your work history
           registration_number: Tell us your registration number
+    new_regs:
+      work_histories:
+        add_another:
+          title: Add another role
+        check_collection:
+          title: Check your answers
+        check_member:
+          title: Check your answers
+        delete:
+          title: Delete work history
 
   application_form:
     tasks:
@@ -93,6 +103,12 @@ en:
     work_history:
       current_or_most_recent_role: Your current or most recent role
       previous_role: Previous role
+      school:
+        heading:
+          current_or_most_recent_role: Add your current or most recent role
+          previous_role: Add another role
+      contact:
+        heading: Who should we contact to verify this role?
     summary:
       name: Name
       country: Country trained in

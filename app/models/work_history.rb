@@ -38,6 +38,14 @@ class WorkHistory < ApplicationRecord
       application_form.work_histories.ordered.first == self
   end
 
+  def locale_key
+    if current_or_most_recent_role?
+      "current_or_most_recent_role"
+    else
+      "previous_role"
+    end
+  end
+
   def country_name
     CountryName.from_code(country_code)
   end

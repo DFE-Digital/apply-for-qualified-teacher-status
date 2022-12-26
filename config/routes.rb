@@ -209,6 +209,30 @@ Rails.application.routes.draw do
         end
       end
 
+      namespace :new_regs do
+        resources :work_histories, except: %i[show edit update] do
+          collection do
+            get "check", to: "work_histories#check_collection"
+
+            get "add_another"
+            post "add_another", to: "work_histories#submit_add_another"
+
+            get "requirements_unmet", to: "work_histories#requirements_unmet"
+          end
+
+          member do
+            get "school", to: "work_histories#edit_school"
+            post "school", to: "work_histories#update_school"
+
+            get "contact", to: "work_histories#edit_contact"
+            post "contact", to: "work_histories#update_contact"
+
+            get "check", to: "work_histories#check_member"
+            get "delete"
+          end
+        end
+      end
+
       resources :documents, only: %i[show edit update] do
         resources :uploads, only: %i[new create destroy] do
           get "delete", on: :member

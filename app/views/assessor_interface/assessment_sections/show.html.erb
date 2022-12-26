@@ -28,11 +28,17 @@
              application_form: @assessment_section_view_object.application_form,
              changeable: false %>
 <% when "work_history" %>
-  <%= render "shared/application_form/work_history_summary",
-             application_form: @assessment_section_view_object.application_form,
-             show_has_work_history: true,
-             work_histories: @assessment_section_view_object.work_histories,
-             changeable: false %>
+  <% if FeatureFlags::FeatureFlag.active?(:application_work_history) %>
+    <%= render "shared/application_form/new_regs_work_history_summary",
+               work_histories: @assessment_section_view_object.work_histories,
+               changeable: false %>
+  <% else %>
+    <%= render "shared/application_form/work_history_summary",
+               application_form: @assessment_section_view_object.application_form,
+               show_has_work_history: true,
+               work_histories: @assessment_section_view_object.work_histories,
+               changeable: false %>
+  <% end %>
 <% when "professional_standing" %>
   <% if @assessment_section_view_object.show_registration_number_summary %>
     <%= render "shared/application_form/registration_number_summary",

@@ -91,6 +91,10 @@ en:
           false: "No"
       teacher:
         email: Email address
+      teacher_interface_add_another_work_history_form:
+        add_another_options:
+          true: "Yes"
+          false: "No"
       teacher_interface_alternative_name_form:
         has_alternative_name_options:
           true: Yes – I’ll upload another document to prove this
@@ -100,6 +104,10 @@ en:
       teacher_interface_age_range_form:
         minimum: <span class="govuk-visually-hidden">Age</span> From
         maximum: <span class="govuk-visually-hidden">Age</span> To
+      teacher_interface_delete_work_history_form:
+        confirm_options:
+          true: "Yes"
+          false: "No"
       teacher_interface_english_language_exemption_form:
         exempt_options:
           true: "Yes"
@@ -169,6 +177,8 @@ en:
         work_experience: How long have you been employed as a recognised teacher?
       qualification:
         add_another: Add another qualification?
+      teacher_interface_add_another_work_history_form:
+        add_another: Add another role?
       teacher_interface_alternative_name_form:
         has_alternative_name: Does your name appear differently on your ID documents or qualifications?
       teacher_interface_english_language_proof_method_form:
