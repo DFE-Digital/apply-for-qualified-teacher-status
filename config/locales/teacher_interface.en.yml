@@ -145,6 +145,10 @@ en:
           attributes:
             add_another:
               inclusion: Select whether you need to upload another page
+        teacher_interface/add_another_work_history_form:
+          attributes:
+            add_another:
+              inclusion: Select whether you need to add another work history
         teacher_interface/delete_qualification_form:
           attributes:
             confirm:
