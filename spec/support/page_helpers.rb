@@ -167,6 +167,11 @@ module PageHelpers
       PageObjects::EligibilityInterface::TeachChildren.new
   end
 
+  def teacher_add_another_work_history_page
+    @teacher_add_another_work_history_page ||=
+      PageObjects::TeacherInterface::AddAnotherWorkHistory.new
+  end
+
   def teacher_application_page
     @teacher_application_page = PageObjects::TeacherInterface::Application.new
   end
@@ -214,6 +219,25 @@ module PageHelpers
       PageObjects::TeacherInterface::DeclinedApplication.new
   end
 
+  def teacher_delete_form_page
+    @teacher_delete_form_page = PageObjects::TeacherInterface::DeleteForm.new
+  end
+
+  def teacher_delete_work_history_page
+    @teacher_delete_work_history_page =
+      PageObjects::TeacherInterface::DeleteWorkHistory.new
+  end
+
+  def teacher_edit_work_history_contact_page
+    @teacher_edit_work_history_contact_page ||=
+      PageObjects::TeacherInterface::EditWorkHistoryContact.new
+  end
+
+  def teacher_edit_work_history_school_page
+    @teacher_edit_work_history_school_page ||=
+      PageObjects::TeacherInterface::EditWorkHistorySchool.new
+  end
+
   def teacher_english_language_exemption_page
     @teacher_english_language_exemption_page ||=
       PageObjects::TeacherInterface::EnglishLanguageExemption.new
@@ -237,6 +261,11 @@ module PageHelpers
   def teacher_new_application_page
     @teacher_new_application_page =
       PageObjects::TeacherInterface::NewApplication.new
+  end
+
+  def teacher_new_work_history_page
+    @teacher_new_work_history_page ||=
+      PageObjects::TeacherInterface::NewWorkHistory.new
   end
 
   def teacher_retry_otp_page
@@ -280,11 +309,6 @@ module PageHelpers
 
   def work_history_form_page
     @work_history_form_page = PageObjects::TeacherInterface::WorkHistoryForm.new
-  end
-
-  def delete_confirmation_page
-    @delete_confirmation_page =
-      PageObjects::TeacherInterface::DeleteConfirmationForm.new
   end
 
   def written_statement_page
