@@ -190,7 +190,12 @@ FactoryBot.define do
 
     trait :with_completed_qualification do
       after(:create) do |application_form, _evaluator|
-        create(:qualification, :completed, application_form:)
+        create(
+          :qualification,
+          :completed,
+          application_form:,
+          institution_country_code: application_form.country.code,
+        )
       end
     end
 

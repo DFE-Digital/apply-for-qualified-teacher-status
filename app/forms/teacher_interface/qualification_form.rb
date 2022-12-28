@@ -15,7 +15,14 @@ module TeacherInterface
     validates :qualification, presence: true
     validates :title, presence: true
     validates :institution_name, presence: true
-    validates :institution_country_location, presence: true
+    validates :institution_country_location,
+              presence: true,
+              inclusion: {
+                in: ->(form) {
+                  [CountryCode.to_location(form.application_form.country.code)]
+                },
+              },
+              if: -> { qualification&.is_teaching_qualification? }
     validates :start_date, date: true
     validates :complete_date, date: true
     validates :certificate_date, date: true

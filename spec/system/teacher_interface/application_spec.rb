@@ -582,7 +582,8 @@ RSpec.describe "Teacher application", type: :system do
     qualifications_form_page.form.title.fill_in with: "Title"
     qualifications_form_page.form.institution_name.fill_in with:
       "Institution Name"
-    qualifications_form_page.form.institution_country.fill_in with: "France"
+    qualifications_form_page.form.institution_country.fill_in with:
+      CountryName.from_country(application_form.country)
     qualifications_form_page.form.start_date_month.fill_in with: "1"
     qualifications_form_page.form.start_date_year.fill_in with: "2000"
     qualifications_form_page.form.complete_date_month.fill_in with: "1"
@@ -1003,7 +1004,7 @@ RSpec.describe "Teacher application", type: :system do
       "Name of institution\tInstitution Name",
     )
     expect(teacher_check_qualification_page.summary_list).to have_content(
-      "Country of institution\tFrance",
+      "Country of institution\t#{CountryName.from_country(application_form.country)}",
     )
   end
 
@@ -1129,7 +1130,7 @@ RSpec.describe "Teacher application", type: :system do
       "Application complete",
     )
     expect(submitted_application_page.panel.body.text).to eq(
-      "Your reference number\n#{ApplicationForm.last.reference}",
+      "Your reference number\n#{application_form.reference}",
     )
   end
 
@@ -1146,5 +1147,9 @@ RSpec.describe "Teacher application", type: :system do
       .form
       .confirm_no_sanctions
       .click
+  end
+
+  def application_form
+    @application_form ||= ApplicationForm.last
   end
 end
