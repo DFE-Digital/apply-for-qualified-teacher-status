@@ -22,8 +22,13 @@ class UpdateDQTTRNRequestJob < ApplicationJob
       end
 
     dqt_trn_request.pending! if dqt_trn_request.initial?
+
     if response[:potential_duplicate]
-      dqt_trn_request.application_form.potential_duplicate_in_dqt!
+      ChangeApplicationFormState.call(
+        application_form: dqt_trn_request.application_form,
+        user: "DQT",
+        new_state: "potential_duplicate_in_dqt",
+      )
     end
 
     if (trn = response[:trn]).present?

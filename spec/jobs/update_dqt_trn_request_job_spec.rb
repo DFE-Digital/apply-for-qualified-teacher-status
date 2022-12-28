@@ -142,9 +142,12 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           end
 
           it "sets the application form to potential_duplicate_in_dqt" do
-            expect { perform_rescue_exception }.to change {
-              application_form.potential_duplicate_in_dqt?
-            }.from(false).to(true)
+            expect(ChangeApplicationFormState).to receive(:call).with(
+              application_form:,
+              user: "DQT",
+              new_state: "potential_duplicate_in_dqt",
+            )
+            perform_rescue_exception
           end
         end
       end
