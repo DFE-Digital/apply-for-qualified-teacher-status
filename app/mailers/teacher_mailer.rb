@@ -34,6 +34,17 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def application_not_submitted
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: params[:teacher].email,
+      subject:
+        I18n.t(
+          "mailer.teacher.application_not_submitted.subject.#{params[:duration]}",
+        ),
+    )
+  end
+
   def application_received
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
@@ -69,7 +80,13 @@ class TeacherMailer < ApplicationMailer
   private
 
   def set_name
-    @name = "#{application_form.given_names} #{application_form.family_name}"
+    @name =
+      if application_form.given_names.present? ||
+           application_form.family_name.present?
+        "#{application_form.given_names} #{application_form.family_name}"
+      else
+        "applicant"
+      end
   end
 
   def set_reference
