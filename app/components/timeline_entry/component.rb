@@ -87,7 +87,10 @@ module TimelineEntry
     def email_sent_vars
       {
         subject:
-          I18n.t("mailer.teacher.#{timeline_event.mailer_action_name}.subject"),
+          timeline_event.message_subject.presence ||
+            I18n.t(
+              "mailer.teacher.#{timeline_event.mailer_action_name}.subject",
+            ),
       }
     end
 
