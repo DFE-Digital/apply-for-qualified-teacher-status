@@ -82,7 +82,7 @@ en:
           teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
           qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
           has_teacher_qualification_certificate: teacher qualification certificate is present (and translation if required)
-          has_teacher_qualfication_transcript: teacher qualification transcript is present (and translation if required)
+          has_teacher_qualification_transcript: teacher qualification transcript is present (and translation if required)
           has_university_degree_certificate: university degree qualification certificate is present (and translation if required)
           has_university_degree_transcript: university degree transcript is present (and translation if required)
           has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
