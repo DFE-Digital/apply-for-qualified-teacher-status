@@ -30,7 +30,12 @@ class FurtherInformationRequestItemsFactory
     failure_reason_key,
     failure_reason_assessor_feedback
   )
-    if (document_type = DOCUMENT_FAILURE_REASONS[failure_reason_key]).present?
+    if (
+         document_type =
+           FailureReasons.further_information_request_document_type(
+             failure_reason: failure_reason_key,
+           )
+       ).present?
       FurtherInformationRequestItem.new(
         information_type: :document,
         failure_reason_key:,
@@ -45,23 +50,4 @@ class FurtherInformationRequestItemsFactory
       )
     end
   end
-
-  DOCUMENT_FAILURE_REASONS = {
-    "identification_document_expired" => :identification,
-    "identification_document_illegible" => :identification,
-    "identification_document_mismatch" => :name_change,
-    "name_change_document_illegible" => :name_change,
-    "teaching_certificate_illegible" => :qualification_certificate,
-    "teaching_transcript_illegible" => :qualification_transcript,
-    "degree_certificate_illegible" => :qualification_certificate,
-    "degree_transcript_illegible" => :qualification_transcript,
-    "additional_degree_certificate_illegible" => :qualification_certificate,
-    "additional_degree_transcript_illegible" => :qualification_transcript,
-    "qualifications_dont_match_subjects" => :qualification_document,
-    "application_and_qualification_names_do_not_match" => :name_change,
-    "written_statement_illegible" => :written_statement,
-    "written_statement_recent" => :written_statement,
-    "qualified_to_teach" => :written_statement,
-    "registration_number" => :written_statement,
-  }.freeze
 end
