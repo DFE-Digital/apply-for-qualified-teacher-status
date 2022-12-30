@@ -81,6 +81,8 @@ class AssessmentFactory
       teaching_transcript_illegible
       degree_certificate_illegible
       degree_transcript_illegible
+      additional_degree_certificate_illegible
+      additional_degree_transcript_illegible
     ]
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)

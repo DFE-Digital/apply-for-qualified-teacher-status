@@ -55,6 +55,8 @@ class FurtherInformationRequestItemsFactory
     "teaching_transcript_illegible" => :qualification_transcript,
     "degree_certificate_illegible" => :qualification_certificate,
     "degree_transcript_illegible" => :qualification_transcript,
+    "additional_degree_certificate_illegible" => :qualification_certificate,
+    "additional_degree_transcript_illegible" => :qualification_transcript,
     "qualifications_dont_match_subjects" => :qualification_document,
     "application_and_qualification_names_do_not_match" => :name_change,
     "written_statement_illegible" => :written_statement,
