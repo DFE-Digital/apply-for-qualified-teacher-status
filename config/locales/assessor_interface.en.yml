@@ -112,7 +112,9 @@ en:
           teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
           teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
           degree_certificate_illegible: The university degree certificate (or translation) is illegible or in a format that we cannot accept.
-          degree_transcript_illegible: University degree transcript (or translation) is illegible or in a format that we cannot accept.
+          degree_transcript_illegible: The university degree transcript (or translation) is illegible or in a format that we cannot accept.
+          additional_degree_certificate_illegible: An additional degree certificate (or translation) is illegible or in a format that we cannot accept.
+          additional_degree_transcript_illegible: An additional degree transcript (or translation) is illegible or in a format that we cannot accept.
           application_and_qualification_names_do_not_match: The name on the online application form is different from 1 or more qualification documents, but no evidence of change of name was provided.
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
@@ -186,6 +188,10 @@ en:
             degree_certificate_illegible_notes:
               blank: Enter a note to the applicant
             degree_transcript_illegible_notes:
+              blank: Enter a note to the applicant
+            additional_degree_certificate_illegible_notes:
+              blank: Enter a note to the applicant
+            additional_degree_transcript_illegible_notes:
               blank: Enter a note to the applicant
             application_and_qualification_names_do_not_match_notes:
               blank: Enter a note to the applicant
