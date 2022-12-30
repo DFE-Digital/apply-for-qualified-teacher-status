@@ -1,60 +1,67 @@
 # frozen_string_literal: true
 
 class FailureReasons
-  DECLINABLE = %w[
-    duplicate_application
-    applicant_already_qts
-    teaching_qualifications_from_ineligible_country
-    teaching_qualifications_not_at_required_level
-    not_qualified_to_teach_mainstream
-    teaching_hours_not_fulfilled
-    authorisation_to_teach
-    teaching_qualification
-    confirm_age_range_subjects
-    full_professional_status
+  DECLINABLE = [
+    DUPLICATE_APPLICATION = "duplicate_application",
+    APPLICANT_ALREADY_QTS = "applicant_already_qts",
+    TEACHING_QUALIFICATIONS_FROM_INELIGIBLE_COUNTRY =
+      "teaching_qualifications_from_ineligible_country",
+    TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL =
+      "teaching_qualifications_not_at_required_level",
+    NOT_QUALIFIED_TO_TEACH_MAINSTREAM = "not_qualified_to_teach_mainstream",
+    TEACHING_HOURS_NOT_FULFILLED = "teaching_hours_not_fulfilled",
+    AGE_RANGE = "age_range",
+    AUTHORISATION_TO_TEACH = "authorisation_to_teach",
+    TEACHING_QUALIFICATION = "teaching_qualification",
+    CONFIRM_AGE_RANGE_SUBJECTS = "confirm_age_range_subjects",
+    FULL_PROFESSIONAL_STATUS = "full_professional_status",
   ].freeze
 
-  FURTHER_INFORMATIONABLE = %w[
-    identification_document_expired
-    identification_document_illegible
-    identification_document_mismatch
-    name_change_document_illegible
-    applicant_already_dqt
-    application_and_qualification_names_do_not_match
-    qualifications_dont_match_subjects
-    qualifications_dont_match_other_details
-    teaching_certificate_illegible
-    teaching_transcript_illegible
-    degree_certificate_illegible
-    degree_transcript_illegible
-    additional_degree_certificate_illegible
-    additional_degree_transcript_illegible
-    satisfactory_evidence_work_history
-    registration_number
-    written_statement_illegible
-    written_statement_recent
-    qualified_to_teach
+  FURTHER_INFORMATIONABLE = [
+    IDENTIFICATION_DOCUMENT_EXPIRED = "identification_document_expired",
+    IDENTIFICATION_DOCUMENT_ILLEGIBLE = "identification_document_illegible",
+    IDENTIFICATION_DOCUMENT_MISMATCH = "identification_document_mismatch",
+    NAME_CHANGE_DOCUMENT_ILLEGIBLE = "name_change_document_illegible",
+    APPLICANT_ALREADY_DQT = "applicant_already_dqt",
+    APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH =
+      "application_and_qualification_names_do_not_match",
+    QUALIFICATIONS_DONT_MATCH_SUBJECTS = "qualifications_dont_match_subjects",
+    QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS =
+      "qualifications_dont_match_other_details",
+    TEACHING_CERTIFICATE_ILLEGIBLE = "teaching_certificate_illegible",
+    TEACHING_TRANSCRIPT_ILLEGIBLE = "teaching_transcript_illegible",
+    DEGREE_CERTIFICATE_ILLEGIBLE = "degree_certificate_illegible",
+    DEGREE_TRANSCRIPT_ILLEGIBLE = "degree_transcript_illegible",
+    ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE =
+      "additional_degree_certificate_illegible",
+    ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE =
+      "additional_degree_transcript_illegible",
+    SATISFACTORY_EVIDENCE_WORK_HISTORY = "satisfactory_evidence_work_history",
+    REGISTRATION_NUMBER = "registration_number",
+    WRITTEN_STATEMENT_ILLEGIBLE = "written_statement_illegible",
+    WRITTEN_STATEMENT_RECENT = "written_statement_recent",
+    QUALIFIED_TO_TEACH = "qualified_to_teach",
   ].freeze
 
   ALL = (DECLINABLE + FURTHER_INFORMATIONABLE).freeze
 
   DOCUMENT_FAILURE_REASONS = {
-    "identification_document_expired" => :identification,
-    "identification_document_illegible" => :identification,
-    "identification_document_mismatch" => :name_change,
-    "name_change_document_illegible" => :name_change,
-    "teaching_certificate_illegible" => :qualification_certificate,
-    "teaching_transcript_illegible" => :qualification_transcript,
-    "degree_certificate_illegible" => :qualification_certificate,
-    "degree_transcript_illegible" => :qualification_transcript,
-    "additional_degree_certificate_illegible" => :qualification_certificate,
-    "additional_degree_transcript_illegible" => :qualification_transcript,
-    "qualifications_dont_match_subjects" => :qualification_document,
-    "application_and_qualification_names_do_not_match" => :name_change,
-    "written_statement_illegible" => :written_statement,
-    "written_statement_recent" => :written_statement,
-    "qualified_to_teach" => :written_statement,
-    "registration_number" => :written_statement,
+    IDENTIFICATION_DOCUMENT_EXPIRED => :identification,
+    IDENTIFICATION_DOCUMENT_ILLEGIBLE => :identification,
+    IDENTIFICATION_DOCUMENT_MISMATCH => :name_change,
+    NAME_CHANGE_DOCUMENT_ILLEGIBLE => :name_change,
+    TEACHING_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
+    TEACHING_TRANSCRIPT_ILLEGIBLE => :qualification_transcript,
+    DEGREE_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
+    DEGREE_TRANSCRIPT_ILLEGIBLE => :qualification_transcript,
+    ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
+    ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE => :qualification_transcript,
+    QUALIFICATIONS_DONT_MATCH_SUBJECTS => :qualification_document,
+    APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH => :name_change,
+    WRITTEN_STATEMENT_ILLEGIBLE => :written_statement,
+    WRITTEN_STATEMENT_RECENT => :written_statement,
+    QUALIFIED_TO_TEACH => :written_statement,
+    REGISTRATION_NUMBER => :written_statement,
   }.freeze
 
   def self.decline?(failure_reason:)

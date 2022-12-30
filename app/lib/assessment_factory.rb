@@ -38,15 +38,17 @@ class AssessmentFactory
     ].compact
 
     failure_reasons = [
-      :identification_document_expired,
-      :identification_document_illegible,
-      :identification_document_mismatch,
+      FailureReasons::IDENTIFICATION_DOCUMENT_EXPIRED,
+      FailureReasons::IDENTIFICATION_DOCUMENT_ILLEGIBLE,
+      FailureReasons::IDENTIFICATION_DOCUMENT_MISMATCH,
       (
-        :name_change_document_illegible if application_form.has_alternative_name
+        if application_form.has_alternative_name
+          FailureReasons::NAME_CHANGE_DOCUMENT_ILLEGIBLE
+        end
       ),
-      :duplicate_application,
-      :applicant_already_qts,
-      :applicant_already_dqt,
+      FailureReasons::DUPLICATE_APPLICATION,
+      FailureReasons::APPLICANT_ALREADY_QTS,
+      FailureReasons::APPLICANT_ALREADY_DQT,
     ].compact
 
     AssessmentSection.new(
@@ -69,20 +71,20 @@ class AssessmentFactory
       has_additional_degree_transcript
     ]
 
-    failure_reasons = %i[
-      application_and_qualification_names_do_not_match
-      teaching_qualifications_from_ineligible_country
-      teaching_qualifications_not_at_required_level
-      teaching_hours_not_fulfilled
-      not_qualified_to_teach_mainstream
-      qualifications_dont_match_subjects
-      qualifications_dont_match_other_details
-      teaching_certificate_illegible
-      teaching_transcript_illegible
-      degree_certificate_illegible
-      degree_transcript_illegible
-      additional_degree_certificate_illegible
-      additional_degree_transcript_illegible
+    failure_reasons = [
+      FailureReasons::APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH,
+      FailureReasons::TEACHING_QUALIFICATIONS_FROM_INELIGIBLE_COUNTRY,
+      FailureReasons::TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL,
+      FailureReasons::TEACHING_HOURS_NOT_FULFILLED,
+      FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
+      FailureReasons::QUALIFICATIONS_DONT_MATCH_SUBJECTS,
+      FailureReasons::QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS,
+      FailureReasons::TEACHING_CERTIFICATE_ILLEGIBLE,
+      FailureReasons::TEACHING_TRANSCRIPT_ILLEGIBLE,
+      FailureReasons::DEGREE_CERTIFICATE_ILLEGIBLE,
+      FailureReasons::DEGREE_TRANSCRIPT_ILLEGIBLE,
+      FailureReasons::ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE,
+      FailureReasons::ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE,
     ]
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
@@ -91,7 +93,10 @@ class AssessmentFactory
   def age_range_subjects_section
     checks = %i[qualified_in_mainstream_education age_range_subjects_matches]
 
-    failure_reasons = %i[not_qualified_to_teach_mainstream age_range]
+    failure_reasons = [
+      FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
+      FailureReasons::AGE_RANGE,
+    ]
 
     AssessmentSection.new(key: "age_range_subjects", checks:, failure_reasons:)
   end
@@ -104,7 +109,7 @@ class AssessmentFactory
       satisfactory_evidence_work_history
     ]
 
-    failure_reasons = %i[satisfactory_evidence_work_history]
+    failure_reasons = [FailureReasons::SATISFACTORY_EVIDENCE_WORK_HISTORY]
 
     AssessmentSection.new(key: "work_history", checks:, failure_reasons:)
   end
@@ -127,16 +132,26 @@ class AssessmentFactory
     ].compact
 
     failure_reasons = [
-      application_form.needs_registration_number ? :registration_number : nil,
       (
-        :written_statement_illegible if application_form.needs_written_statement
+        if application_form.needs_registration_number
+          FailureReasons::REGISTRATION_NUMBER
+        end
       ),
-      (:written_statement_recent if application_form.needs_written_statement),
-      :authorisation_to_teach,
-      :teaching_qualification,
-      :confirm_age_range_subjects,
-      :qualified_to_teach,
-      :full_professional_status,
+      (
+        if application_form.needs_written_statement
+          FailureReasons::WRITTEN_STATEMENT_ILLEGIBLE
+        end
+      ),
+      (
+        if application_form.needs_written_statement
+          FailureReasons::WRITTEN_STATEMENT_RECENT
+        end
+      ),
+      FailureReasons::AUTHORISATION_TO_TEACH,
+      FailureReasons::TEACHING_QUALIFICATION,
+      FailureReasons::CONFIRM_AGE_RANGE_SUBJECTS,
+      FailureReasons::QUALIFIED_TO_TEACH,
+      FailureReasons::FULL_PROFESSIONAL_STATUS,
     ].compact
 
     AssessmentSection.new(
