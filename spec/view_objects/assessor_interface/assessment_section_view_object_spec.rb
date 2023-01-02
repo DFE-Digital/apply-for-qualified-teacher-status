@@ -66,13 +66,13 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
   describe "show_registration_number_summary" do
     subject { super().show_registration_number_summary }
 
-    context "registration number is present" do
-      before { application_form.update(registration_number: "1233445") }
+    context "registration number is needed" do
+      before { application_form.update(needs_registration_number: true) }
       it { is_expected.to eq(true) }
     end
 
-    context "registration number not present" do
-      before { application_form.update(registration_number: nil) }
+    context "registration number is not needed" do
+      before { application_form.update(needs_registration_number: false) }
       it { is_expected.to eq(false) }
     end
   end
@@ -80,14 +80,13 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
   describe "show_written_statement_summary" do
     subject { super().show_written_statement_summary }
 
-    context "written statement is present" do
-      let(:application_form) do
-        create(:application_form, :with_written_statement)
-      end
+    context "written statement is needed" do
+      before { application_form.update(needs_written_statement: true) }
       it { is_expected.to eq(true) }
     end
 
-    context "written statement is not present" do
+    context "written statement is not needed" do
+      before { application_form.update(needs_written_statement: false) }
       it { is_expected.to eq(false) }
     end
   end
