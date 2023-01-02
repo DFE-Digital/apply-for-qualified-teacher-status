@@ -129,6 +129,10 @@
       <%= f.govuk_radio_button :written_in_english, :true, label: { text: "Yes" }, link_errors: true %>
 
       <%= f.govuk_radio_button :written_in_english, :false, label: { text: "No, I’ll upload a certified translation as well" } do %>
+        <p class="govuk-body">
+          This must be a certified translation showing the translator’s signature, name, contact details and official stamp or ID number, plus the date of translation.
+        </p>
+
         <%= f.govuk_file_field :translated_attachment,
                                label: { text: "Select a file to upload" },
                                hint: { text: "You can upload your files in PDF, JPG, PNG, DOCX or DOC format. Each file must be no larger than 50MB." } %>
