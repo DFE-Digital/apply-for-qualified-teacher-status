@@ -8,6 +8,7 @@
 #  age_range_status                      :string           default("not_started"), not null
 #  alternative_family_name               :text             default(""), not null
 #  alternative_given_names               :text             default(""), not null
+#  awarded_at                            :datetime
 #  confirmed_no_sanctions                :boolean          default(FALSE)
 #  date_of_birth                         :date
 #  english_language_citizenship_exempt   :boolean
@@ -85,6 +86,7 @@ class ApplicationForm < ApplicationRecord
   validate :assessor_and_reviewer_must_be_different
 
   validates :submitted_at, presence: true, unless: :draft?
+  validates :awarded_at, presence: true, if: :awarded?
 
   enum :english_language_proof_method,
        { medium_of_instruction: "medium_of_instruction", provider: "provider" },

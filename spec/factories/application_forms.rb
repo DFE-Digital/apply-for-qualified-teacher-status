@@ -8,6 +8,7 @@
 #  age_range_status                      :string           default("not_started"), not null
 #  alternative_family_name               :text             default(""), not null
 #  alternative_given_names               :text             default(""), not null
+#  awarded_at                            :datetime
 #  confirmed_no_sanctions                :boolean          default(FALSE)
 #  date_of_birth                         :date
 #  english_language_citizenship_exempt   :boolean
@@ -132,6 +133,7 @@ FactoryBot.define do
     trait :awarded do
       state { "awarded" }
       submitted_at { Time.zone.now }
+      awarded_at { Time.zone.now }
     end
 
     trait :declined do
