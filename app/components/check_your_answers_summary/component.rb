@@ -74,7 +74,9 @@ module CheckYourAnswersSummary
       {
         key: field[:key],
         title: row_title_for(field),
-        value: format_value(value_for(field), field),
+        value:
+          format_value(value_for(field), field).presence ||
+            "<em>None provided</em>".html_safe,
         href: changeable ? href_for(field) : nil,
       }
     end

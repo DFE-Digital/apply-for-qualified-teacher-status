@@ -34,11 +34,11 @@ module AssessorInterface
     end
 
     def show_registration_number_summary
-      registration_number.present?
+      application_form.needs_registration_number?
     end
 
     def show_written_statement_summary
-      application_form.written_statement_document.uploaded?
+      application_form.needs_written_statement?
     end
 
     def notes_label_key_for(failure_reason:)

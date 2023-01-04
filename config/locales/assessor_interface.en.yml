@@ -90,7 +90,7 @@ en:
           age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
           email_contact_current_employer: the applicant has entered the name and email address of a contact for their current/most recent employer
           satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
-          registration_number: registration number provided and verified
+          registration_number: registration number provided and verified (where applicable)
           written_statement_present: letter from the country or state’s competent authority provided
           written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
           authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present

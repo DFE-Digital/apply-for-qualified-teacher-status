@@ -222,7 +222,9 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
     end
 
     it "renders the value" do
-      expect(row.at_css(".govuk-summary-list__value").text).to eq("")
+      expect(row.at_css(".govuk-summary-list__value").text).to eq(
+        "None provided",
+      )
     end
 
     it "renders the change link" do
