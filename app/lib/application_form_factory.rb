@@ -23,7 +23,8 @@ class ApplicationFormFactory
   attr_reader :teacher, :region
 
   def needs_work_history
-    region.status_check_none? || region.sanction_check_none?
+    FeatureFlags::FeatureFlag.active?(:application_work_history) ||
+      region.status_check_none? || region.sanction_check_none?
   end
 
   def needs_written_statement
