@@ -1,4 +1,9 @@
 feature_flags:
+  eligibility_english_language:
+    author: Thomas Leese
+    description: >
+      Add English language proficiency content to the eligible page.
+
   personas:
     author: Thomas Leese
     description: >
