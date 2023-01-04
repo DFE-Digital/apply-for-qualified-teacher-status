@@ -9,7 +9,11 @@ RSpec.describe DQT::TRNRequestParams do
     let(:application_form) do
       create(
         :application_form,
+        :awarded,
         teacher:,
+        created_at: Date.new(2020, 1, 1),
+        submitted_at: Date.new(2020, 1, 1),
+        awarded_at: Date.new(2020, 1, 7),
         region: create(:region, country: create(:country, code: "AU")),
         date_of_birth: Date.new(1960, 1, 1),
         given_names: "Given",
@@ -22,7 +26,6 @@ RSpec.describe DQT::TRNRequestParams do
         :assessment,
         :award,
         application_form:,
-        recommended_at: Date.new(2020, 1, 1),
         age_range_min: 7,
         age_range_max: 11,
         subjects: %w[physics french_language],
@@ -77,6 +80,16 @@ RSpec.describe DQT::TRNRequestParams do
           teacherType: "OverseasQualifiedTeacher",
         },
       )
+    end
+
+    context "with a new regulations application form" do
+      around do |example|
+        ClimateControl.modify(NEW_REGS_DATE: "2020-01-01") { example.run }
+      end
+
+      it "should use the assessed date" do
+        expect(call[:qtsDate]).to eq("2020-01-07")
+      end
     end
   end
 end

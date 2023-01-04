@@ -27,7 +27,7 @@ module DQT
           RecognitionRoute.for_country_code(
             application_form.region.country.code,
           ),
-        qtsDate: assessment.recommended_at.iso8601,
+        qtsDate: qts_decision_at.to_date.iso8601,
         inductionRequired: false,
       }
     end
@@ -77,6 +77,14 @@ module DQT
         else
           application_form.degree_qualifications.first
         end
+    end
+
+    def qts_decision_at
+      if application_form.created_under_new_regulations?
+        application_form.awarded_at
+      else
+        application_form.submitted_at
+      end
     end
   end
 end
