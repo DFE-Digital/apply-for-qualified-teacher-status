@@ -272,6 +272,7 @@
     - note_id
     - further_information_request_id
     - mailer_action_name
+    - message_subject
     - assessment_id
   :uploads:
     - id

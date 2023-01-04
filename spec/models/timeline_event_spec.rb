@@ -8,6 +8,7 @@
 #  creator_type                   :string
 #  event_type                     :string           not null
 #  mailer_action_name             :string           default(""), not null
+#  message_subject                :string           default(""), not null
 #  new_state                      :string           default(""), not null
 #  old_state                      :string           default(""), not null
 #  created_at                     :datetime         not null
@@ -92,6 +93,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
     end
 
@@ -105,6 +107,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
     end
 
@@ -118,6 +121,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
     end
 
@@ -131,6 +135,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
     end
 
@@ -144,6 +149,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
     end
 
@@ -159,6 +165,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_presence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
     end
 
@@ -174,6 +181,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_presence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
     end
 
@@ -187,6 +195,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_presence_of(:mailer_action_name) }
+      it { is_expected.to validate_presence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
     end
 
@@ -200,6 +209,7 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_presence_of(:assessment) }
     end
   end
