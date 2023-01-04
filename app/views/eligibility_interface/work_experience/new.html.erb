@@ -1,0 +1,23 @@
+<% content_for :page_title, "#{'Error: ' if @work_experience_form.errors.any?}#{t("helpers.legend.eligibility_interface_work_experience_form.work_experience")}" %>
+<% content_for :back_link_url, back_link_url(eligibility_interface_teach_children_path) %>
+
+<%= form_with model: @work_experience_form, url: eligibility_interface_work_experience_path, method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons(
+    :work_experience,
+    EligibilityCheck.work_experiences.keys,
+    :itself,
+    legend: { size: "l", tag: "h1" }
+  ) %>
+
+  <p class="govuk-body">We’ll ask for email addresses for contacts who can verify your work history (in English). If you’re successful, we’ll contact them before awarding QTS.</p>
+
+  <%= govuk_details(summary_text: "How to calculate your work experience") do %>
+    <p>We need to know how long you’ve spent actively teaching. This can include scheduled school holiday periods, but cannot include any other time you’ve spent away from teaching.</p>
+    <p>To work out your experience, add up the time you’ve spent employed as a teacher, including any scheduled school holidays.</p>
+    <p>If you have 9 months or more (this is equivalent to 1 academic year) but less than 20 months (this is equivalent to 2 academic years), you may still be awarded QTS, but you’ll need to complete a 2-year ‘statutory induction’ period as a newly qualified teacher.</p>
+  <% end %>
+
+  <%= f.govuk_submit %>
+<% end %>

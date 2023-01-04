@@ -10,6 +10,7 @@
 #  free_of_sanctions      :boolean
 #  qualification          :boolean
 #  teach_children         :boolean
+#  work_experience        :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  region_id              :bigint
@@ -22,6 +23,17 @@ require "rails_helper"
 
 RSpec.describe EligibilityCheck, type: :model do
   let(:eligibility_check) { EligibilityCheck.new }
+
+  it do
+    is_expected.to define_enum_for(:work_experience)
+      .with_values(
+        under_9_months: "under_9_months",
+        between_9_and_20_months: "between_9_and_20_months",
+        over_20_months: "over_20_months",
+      )
+      .with_prefix
+      .backed_by_column_of_type(:string)
+  end
 
   describe "#location" do
     subject(:location) { eligibility_check.location }

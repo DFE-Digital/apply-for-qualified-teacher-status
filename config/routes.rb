@@ -73,6 +73,8 @@ Rails.application.routes.draw do
     post "region", to: "region#create"
     get "teach-children", to: "teach_children#new"
     post "teach-children", to: "teach_children#create"
+    get "work-experience", to: "work_experience#new"
+    post "work-experience", to: "work_experience#create"
   end
 
   namespace :support_interface, path: "/support" do

@@ -10,6 +10,7 @@
 #  free_of_sanctions      :boolean
 #  qualification          :boolean
 #  teach_children         :boolean
+#  work_experience        :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  region_id              :bigint
@@ -21,6 +22,14 @@
 class EligibilityCheck < ApplicationRecord
   belongs_to :region, optional: true
   has_one :application
+
+  enum :work_experience,
+       {
+         under_9_months: "under_9_months",
+         between_9_and_20_months: "between_9_and_20_months",
+         over_20_months: "over_20_months",
+       },
+       prefix: true
 
   scope :complete, -> { where.not(completed_at: nil) }
   scope :eligible,
@@ -72,12 +81,25 @@ class EligibilityCheck < ApplicationRecord
       qualification == false ? :qualification : nil,
       teach_children == false ? :teach_children : nil,
       free_of_sanctions == false ? :misconduct : nil,
+      (
+        if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) &&
+             work_experience_under_9_months?
+          :work_experience
+        end
+      ),
     ].compact
   end
 
   def eligible?
     region.present? && degree && qualification && teach_children &&
-      free_of_sanctions
+      free_of_sanctions &&
+      (
+        if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
+          !work_experience_under_9_months?
+        else
+          true
+        end
+      )
   end
 
   def country_eligibility_status
@@ -105,7 +127,14 @@ class EligibilityCheck < ApplicationRecord
     end
 
     return :eligibility unless free_of_sanctions.nil?
-    return :misconduct unless teach_children.nil?
+
+    if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
+      return :misconduct unless work_experience.nil?
+      return :work_experience unless teach_children.nil?
+    else
+      return :misconduct unless teach_children.nil?
+    end
+
     return :teach_children unless degree.nil?
     return :degree unless qualification.nil?
     return :qualification if region.present?

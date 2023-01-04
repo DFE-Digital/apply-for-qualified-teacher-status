@@ -129,6 +129,7 @@
     - region_id
     - completed_at
     - completed_requirements
+    - work_experience
   :english_language_providers:
     - id
     - name

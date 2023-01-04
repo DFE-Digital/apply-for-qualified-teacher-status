@@ -13,7 +13,7 @@ module EligibilityInterface
           teach_children_form_params.merge(eligibility_check:),
         )
       if @teach_children_form.save
-        redirect_to paths[:misconduct]
+        redirect_to paths[:work_experience]
       else
         render :new, status: :unprocessable_entity
       end

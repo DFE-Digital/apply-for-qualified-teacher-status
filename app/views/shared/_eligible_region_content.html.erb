@@ -39,6 +39,12 @@
       <%= render "shared/eligible_region_content_components/professional_recognition", region: %>
     <% end %>
 
+    <% if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) %>
+      <% accordion.section(heading_text: "Proof of work history") do %>
+        <%= render "shared/eligible_region_content_components/proof_of_work_history", region:, eligibility_check: %>
+      <% end %>
+    <% end %>
+
     <% accordion.section(heading_text: "Certified translations") do %>
       <% render "shared/eligible_region_content_components/certified_translation", region: %>
     <% end %>
