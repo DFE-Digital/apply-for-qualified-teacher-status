@@ -102,6 +102,11 @@ variable "dqt_api_url" {
   type = string
 }
 
+variable "new_regs_date" {
+  type    = string
+  default = "2023-02-01"
+}
+
 locals {
   apply_qts_routes = flatten([
     cloudfoundry_route.apply_qts_public,
