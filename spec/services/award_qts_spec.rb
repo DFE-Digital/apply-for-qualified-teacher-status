@@ -41,6 +41,14 @@ RSpec.describe AwardQTS do
       )
       call
     end
+
+    it "sets the awarded at date" do
+      freeze_time do
+        expect { call }.to change(application_form, :awarded_at).to(
+          Time.zone.now,
+        )
+      end
+    end
   end
 
   context "with an awarded application form" do
@@ -60,6 +68,10 @@ RSpec.describe AwardQTS do
     it "doesn't change the status" do
       expect(ChangeApplicationFormState).to_not receive(:call)
       call
+    end
+
+    it "doesn't change the awarded at date" do
+      expect { call }.to_not change(application_form, :awarded_at)
     end
   end
 end

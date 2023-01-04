@@ -16,6 +16,8 @@ class AwardQTS
     ActiveRecord::Base.transaction do
       teacher.update!(trn:)
 
+      application_form.update!(awarded_at: Time.zone.now)
+
       ChangeApplicationFormState.call(
         application_form:,
         user:,

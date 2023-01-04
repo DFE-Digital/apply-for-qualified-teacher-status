@@ -51,6 +51,7 @@
     - assessor_id
     - reviewer_id
     - submitted_at
+    - awarded_at
     - working_days_since_submission
     - needs_work_history
     - needs_written_statement

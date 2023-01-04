@@ -8,6 +8,7 @@
 #  age_range_status                      :string           default("not_started"), not null
 #  alternative_family_name               :text             default(""), not null
 #  alternative_given_names               :text             default(""), not null
+#  awarded_at                            :datetime
 #  confirmed_no_sanctions                :boolean          default(FALSE)
 #  date_of_birth                         :date
 #  english_language_citizenship_exempt   :boolean
@@ -242,6 +243,23 @@ RSpec.describe ApplicationForm, type: :model do
 
       context "with submitted_at" do
         before { application_form.submitted_at = Time.zone.now }
+
+        it { is_expected.to be_valid }
+      end
+    end
+
+    context "when awarded" do
+      before do
+        application_form.assign_attributes(
+          state: "awarded",
+          submitted_at: Time.zone.now,
+        )
+      end
+
+      it { is_expected.to_not be_valid }
+
+      context "with awarded_at" do
+        before { application_form.awarded_at = Time.zone.now }
 
         it { is_expected.to be_valid }
       end
