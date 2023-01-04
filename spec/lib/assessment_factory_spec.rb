@@ -116,6 +116,50 @@ RSpec.describe AssessmentFactory do
             ],
           )
         end
+
+        context "with a new regulations application form" do
+          let(:application_form) { create(:application_form, :new_regs) }
+
+          it "has the right checks and failure reasons" do
+            section = sections.qualifications.first
+
+            expect(section.checks).to eq(
+              %w[
+                qualifications_meet_level_6_or_equivalent
+                teaching_qualifications_completed_in_eligible_country
+                qualified_in_mainstream_education
+                has_teacher_qualification_certificate
+                has_teacher_qualification_transcript
+                has_university_degree_certificate
+                has_university_degree_transcript
+                has_additional_qualification_certificate
+                has_additional_degree_transcript
+                teaching_qualification_pedagogy
+                teaching_qualification_1_year
+              ],
+            )
+
+            expect(section.failure_reasons).to eq(
+              %w[
+                application_and_qualification_names_do_not_match
+                teaching_qualifications_from_ineligible_country
+                teaching_qualifications_not_at_required_level
+                teaching_hours_not_fulfilled
+                teaching_qualification_pedagogy
+                teaching_qualification_1_year
+                not_qualified_to_teach_mainstream
+                qualifications_dont_match_subjects
+                qualifications_dont_match_other_details
+                teaching_certificate_illegible
+                teaching_transcript_illegible
+                degree_certificate_illegible
+                degree_transcript_illegible
+                additional_degree_certificate_illegible
+                additional_degree_transcript_illegible
+              ],
+            )
+          end
+        end
       end
 
       describe "age range and subjects section" do

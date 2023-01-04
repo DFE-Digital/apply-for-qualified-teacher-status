@@ -59,23 +59,43 @@ class AssessmentFactory
   end
 
   def qualifications_section
-    checks = %i[
-      qualifications_meet_level_6_or_equivalent
-      teaching_qualifications_completed_in_eligible_country
-      qualified_in_mainstream_education
-      has_teacher_qualification_certificate
-      has_teacher_qualification_transcript
-      has_university_degree_certificate
-      has_university_degree_transcript
-      has_additional_qualification_certificate
-      has_additional_degree_transcript
-    ]
+    checks = [
+      "qualifications_meet_level_6_or_equivalent",
+      "teaching_qualifications_completed_in_eligible_country",
+      "qualified_in_mainstream_education",
+      "has_teacher_qualification_certificate",
+      "has_teacher_qualification_transcript",
+      "has_university_degree_certificate",
+      "has_university_degree_transcript",
+      "has_additional_qualification_certificate",
+      "has_additional_degree_transcript",
+      (
+        if application_form.created_under_new_regulations?
+          "teaching_qualification_pedagogy"
+        end
+      ),
+      (
+        if application_form.created_under_new_regulations?
+          "teaching_qualification_1_year"
+        end
+      ),
+    ].compact
 
     failure_reasons = [
       FailureReasons::APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH,
       FailureReasons::TEACHING_QUALIFICATIONS_FROM_INELIGIBLE_COUNTRY,
       FailureReasons::TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL,
       FailureReasons::TEACHING_HOURS_NOT_FULFILLED,
+      (
+        if application_form.created_under_new_regulations?
+          FailureReasons::TEACHING_QUALIFICATION_PEDAGOGY
+        end
+      ),
+      (
+        if application_form.created_under_new_regulations?
+          FailureReasons::TEACHING_QUALIFICATION_1_YEAR
+        end
+      ),
       FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
       FailureReasons::QUALIFICATIONS_DONT_MATCH_SUBJECTS,
       FailureReasons::QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS,
@@ -85,7 +105,7 @@ class AssessmentFactory
       FailureReasons::DEGREE_TRANSCRIPT_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE,
-    ]
+    ].compact
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
   end
