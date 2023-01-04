@@ -1,0 +1,25 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("helpers.legend.teacher_interface_english_language_proof_method_form.proof_method")}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<%= form_with model: @form, url: %i[proof_method teacher_interface application_form english_language] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l"><%= t("application_form.tasks.sections.english_language") %></span>
+
+  <%= f.govuk_collection_radio_buttons :proof_method,
+                                       [OpenStruct.new(value: "medium_of_instruction"), OpenStruct.new(value: "provider")],
+                                       :value,
+                                       legend: { tag: "h1", size: "l" } %>
+
+  <%= govuk_details(summary_text: "About approved providers") do %>
+    <p class="govuk-body">
+      To apply for QTS you must use an approved provider. We cannot accept English language tests from a provider that does not appear on the list.
+    </p>
+
+    <p class="govuk-body">
+      See the list of <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link" rel="noreferrer noopener" target="_blank">approved providers (opens in new tab)</a>.
+    </p>
+  <% end %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>

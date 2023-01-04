@@ -28,6 +28,11 @@
          active: request.path.start_with?("/support/countries") || request.path.start_with?("/support/regions")
        ) %>
       <% header.navigation_item(
+         text: "English language test providers",
+         href: main_app.support_interface_english_language_providers_path,
+         active: request.path.start_with?("/support/english_language_providers")
+      ) %>
+      <% header.navigation_item(
          text: "Staff",
          href: main_app.support_interface_staff_index_path,
          active: request.path.start_with?("/support/staff")

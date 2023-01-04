@@ -146,6 +146,76 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
     end
 
+    describe "english language" do
+      subject(:english_language_status) do
+        application_form.english_language_status
+      end
+
+      context "with no information provided yet" do
+        let(:application_form) { create(:application_form) }
+        it { is_expected.to eq("not_started") }
+      end
+
+      context "when exempt by citizenship" do
+        let(:application_form) do
+          create(:application_form, english_language_citizenship_exempt: true)
+        end
+        it { is_expected.to eq("completed") }
+      end
+
+      context "when exempt by qualification" do
+        let(:application_form) do
+          create(:application_form, english_language_qualification_exempt: true)
+        end
+        it { is_expected.to eq("completed") }
+      end
+
+      context "when not exempt" do
+        let(:application_form) do
+          create(
+            :application_form,
+            english_language_citizenship_exempt: false,
+            english_language_qualification_exempt: false,
+          )
+        end
+        it { is_expected.to eq("in_progress") }
+      end
+
+      context "when medium of instruction" do
+        let(:application_form) do
+          create(
+            :application_form,
+            english_language_proof_method: "medium_of_instruction",
+          )
+        end
+        it { is_expected.to eq("in_progress") }
+      end
+
+      context "when medium of instruction and uploaded" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :with_english_language_medium_of_instruction,
+          )
+        end
+        it { is_expected.to eq("completed") }
+      end
+
+      context "when provider" do
+        let(:application_form) do
+          create(:application_form, english_language_proof_method: "provider")
+        end
+        it { is_expected.to eq("in_progress") }
+      end
+
+      context "when provider and reference given" do
+        let(:application_form) do
+          create(:application_form, :with_english_language_provider)
+        end
+        it { is_expected.to eq("completed") }
+      end
+    end
+
     describe "work history" do
       subject(:work_history_status) { application_form.work_history_status }
 

@@ -37,10 +37,10 @@ RSpec.describe "Teacher further information", type: :system do
     when_i_click_the_document_task_list_item
     then_i_see_the(:further_information_required_page)
     and_i_click_continue
-    then_i_see_the(:upload_document_page)
+    then_i_see_the(:teacher_upload_document_page)
 
     when_i_upload_a_file
-    then_i_see_the(:document_form_page)
+    then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_need_to_upload_another_file
     then_i_see_the(:further_information_requested_page)
@@ -103,15 +103,15 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def when_i_upload_a_file
-    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+    teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
-    upload_document_page.form.continue_button.click
+    teacher_upload_document_page.form.continue_button.click
   end
 
   def when_i_dont_need_to_upload_another_file
-    document_form_page.form.no_radio_item.input.click
-    document_form_page.form.continue_button.click
+    teacher_check_document_page.form.no_radio_item.input.click
+    teacher_check_document_page.form.continue_button.click
   end
 
   def and_i_click_continue

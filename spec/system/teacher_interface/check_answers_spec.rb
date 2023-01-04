@@ -23,7 +23,7 @@ RSpec.describe "Teacher application check answers", type: :system do
 
   it "who you can teach section" do
     when_i_click_change_links(:who_you_can_teach, :qualification) do
-      if document_form_page.displayed?(0)
+      if teacher_check_document_page.displayed?(0)
         and_i_dont_need_to_upload_another_file
       else
         and_i_click_continue
@@ -50,7 +50,7 @@ RSpec.describe "Teacher application check answers", type: :system do
     end
 
     when_i_click_change_links(:work_history, :work_history) do
-      if document_form_page.displayed?(0)
+      if teacher_check_document_page.displayed?(0)
         and_i_dont_need_to_upload_another_file
       else
         and_i_click_continue
@@ -94,8 +94,8 @@ RSpec.describe "Teacher application check answers", type: :system do
   end
 
   def and_i_dont_need_to_upload_another_file
-    document_form_page.form.no_radio_item.input.click
-    document_form_page.form.continue_button.click
+    teacher_check_document_page.form.no_radio_item.input.click
+    teacher_check_document_page.form.continue_button.click
   end
 
   def teacher

@@ -1,6 +1,6 @@
 module PageObjects
   module TeacherInterface
-    class UploadDocumentForm < SitePrism::Page
+    class UploadDocument < SitePrism::Page
       set_url "/teacher/application/documents/{document_id}/uploads/new"
 
       element :heading, "h1"

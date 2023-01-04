@@ -1,0 +1,31 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".#{@exemption_field}.heading")}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<span class="govuk-caption-l"><%= t("application_form.tasks.sections.english_language") %></span>
+<h1 class="govuk-heading-l"><%= t(".#{@exemption_field}.heading") %></h1>
+
+<p class="govuk-body"><%= t(".#{@exemption_field}.description") %></p>
+<p class="govuk-body"><%= t(".#{@exemption_field}.evidence") %></p>
+
+<div class="govuk-grid-row">
+  <% english_language_exempt_countries.in_groups(2, false) do |exempt_countries| %>
+    <div class="govuk-grid-column-one-half">
+      <ul class="govuk-list govuk-list--bullet">
+        <% exempt_countries.each do |exempt_country| %>
+          <li><%= exempt_country %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<%= form_with model: @form, url: exemption_teacher_interface_application_form_english_language_path(@exemption_field) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons :exempt,
+                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
+                                       :value,
+                                       legend: nil %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>

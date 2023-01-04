@@ -26,6 +26,9 @@
       <li>a marriage or civil partnership certificate</li>
       <li>proof that you’ve legally changed your name for another reason.</li>
     </ul>
+  <% elsif @document.medium_of_instruction? %>
+    <h1 class="govuk-heading-l">Upload the Medium of instruction (MOI) from your university degree</h1>
+    <p class="govuk-body">This document must confirm that the primary language used to teach this degree course was English.</p>
   <% elsif @document.written_statement? %>
     <span class="govuk-caption-l">Proof that you’re recognised as a teacher</span>
     <h1 class="govuk-heading-l">Upload your written statement</h1>

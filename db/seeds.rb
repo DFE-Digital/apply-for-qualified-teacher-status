@@ -707,6 +707,47 @@ COUNTRIES = {
   "FI" => [],
 }.freeze
 
+ENGLISH_LANGUAGE_PROVIDERS = [
+  {
+    name: "IELTS SELT Consortium",
+    b2_level_requirement: "a score of at least 5.5",
+    reference_name: "Test Report Form Number",
+    reference_hint: "Your Test Report Form Number is 15-18 digits long.",
+  },
+  {
+    name: "LanguageCert",
+    b2_level_requirement: "a score of at least 33/50",
+    reference_name: "Unique Reference Number",
+    reference_hint:
+      "Your Unique Reference Number contains numbers, letters and dashes " \
+        "in this format: PPC/230619/04501/09980013402512496",
+  },
+  {
+    name: "Pearson",
+    b2_level_requirement: "a score of at least 59",
+    reference_name: "Score Report Code",
+    reference_hint:
+      "Your Score Report Code is 10 characters long. It may contain both letters " \
+        "and numbers, or just numbers.",
+  },
+  {
+    name: "PSI Services (UK) Ltd",
+    b2_level_requirement: "a pass",
+    reference_name: "Unique Reference Number",
+    reference_hint:
+      "Your PSI Services (UK) Ltd Unique Reference Number contains numbers, " \
+        "letters and dashes in this format: PSI/280920/YTLQVG2Z/W2N4UVNN",
+  },
+  {
+    name: "Trinity College London",
+    b2_level_requirement: "a pass",
+    reference_name: "Certificate Number",
+    reference_hint:
+      "Your Trinity College London Certificate Number contains numbers, letters " \
+        "and special characters in this format: 1-630439614:1-123456780",
+  },
+].freeze
+
 COUNTRIES.each do |code, regions|
   country = Country.find_or_create_by!(code:)
 
@@ -722,4 +763,10 @@ COUNTRIES.each do |code, regions|
       country.regions.create!(region)
     end
   end
+end
+
+ENGLISH_LANGUAGE_PROVIDERS.each do |english_language_provider|
+  EnglishLanguageProvider.find_or_initialize_by(
+    name: english_language_provider[:name],
+  ).update!(english_language_provider.except(:name))
 end

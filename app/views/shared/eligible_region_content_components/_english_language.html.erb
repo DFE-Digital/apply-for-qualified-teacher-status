@@ -29,28 +29,9 @@
   </p>
 
   <ul class="govuk-list govuk-list--bullet">
-    <li>Antigua and Barbuda</li>
-    <li>Australia</li>
-    <li>The Bahamas</li>
-    <li>Barbados</li>
-    <li>Belize</li>
-    <li>Canada</li>
-    <li>Dominica</li>
-    <li>Grenada</li>
-    <li>Guyana</li>
-    <li>Jamaica</li>
-    <li>Ireland</li>
-    <li>Malta</li>
-    <li>New Zealand</li>
-    <li>St Kitts and Nevis</li>
-    <li>St Lucia</li>
-    <li>St Vincent and the Grenadines</li>
-    <li>Trinidad and Tobago</li>
-    <li>USA</li>
-    <li>England</li>
-    <li>Scotland</li>
-    <li>Northern Ireland</li>
-    <li>Wales</li>
+    <% english_language_exempt_countries.each do |exempt_country| %>
+      <li><%= exempt_country %></li>
+    <% end %>
   </ul>
 <% end %>
 

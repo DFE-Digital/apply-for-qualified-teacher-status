@@ -27,7 +27,11 @@ class Document < ApplicationRecord
            -> { where(translation: true) },
            class_name: "Upload"
 
-  UNTRANSLATABLE_TYPES = %w[identification name_change].freeze
+  UNTRANSLATABLE_TYPES = %w[
+    identification
+    name_change
+    medium_of_instruction
+  ].freeze
   TRANSLATABLE_TYPES = %w[
     qualification_certificate
     qualification_transcript

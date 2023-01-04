@@ -84,6 +84,8 @@ Rails.application.routes.draw do
       post "confirm_edit", on: :member
     end
 
+    resources :english_language_providers, only: %i[index edit update]
+
     resources :regions, only: %i[edit update] do
       get "preview", on: :member
     end
@@ -146,6 +148,34 @@ Rails.application.routes.draw do
               to: "qualifications#edit_part_of_university_degree"
           post "part_of_university_degree",
                to: "qualifications#update_part_of_university_degree"
+        end
+      end
+
+      resource :english_language,
+               controller: :english_language,
+               path: "/english-language",
+               only: %i[show] do
+        member do
+          constraints exemption_field: /citizenship|qualification/ do
+            get "exemption/:exemption_field",
+                to: "english_language#edit_exemption",
+                as: "exemption"
+            post "exemption/:exemption_field",
+                 to: "english_language#update_exemption"
+          end
+
+          get "proof-method", to: "english_language#edit_proof_method"
+          post "proof-method", to: "english_language#update_proof_method"
+
+          get "provider", to: "english_language#edit_provider"
+          post "provider", to: "english_language#update_provider"
+
+          get "provider-reference",
+              to: "english_language#edit_provider_reference"
+          post "provider-reference",
+               to: "english_language#update_provider_reference"
+
+          get "check", to: "english_language#check"
         end
       end
 

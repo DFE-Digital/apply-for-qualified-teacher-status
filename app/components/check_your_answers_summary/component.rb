@@ -91,6 +91,8 @@ module CheckYourAnswersSummary
         format_document(value, field)
       when Array
         format_array(value, field)
+      when EnglishLanguageProvider
+        value.name
       when true
         "Yes"
       when false

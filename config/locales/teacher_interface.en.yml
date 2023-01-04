@@ -6,6 +6,26 @@ en:
         exhausted: You've had too many incorrect sign in attempts. Try again.
 
   teacher_interface:
+    application_forms:
+      show:
+        further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
+    english_language:
+      check:
+        heading: Check your answers
+      edit_exemption:
+        citizenship:
+          heading: Were you born in or hold citizenship of any of the countries below?
+          description: If you were born in, or hold citizenship of any of the following countries, you’re exempt from English language requirements.
+          evidence: You’ll need to provide a passport or other official form of identification. You can do this in the ‘About you’ section of the application form.
+        qualification:
+          heading: Was your teaching qualification or university degree taught in any of the following countries?
+          description: If your teaching qualification or university degree was taught in any of the following countries, you’re exempt from English language requirements.
+          evidence: You’ll need to provide the transcript from the qualification as evidence. You can do this in the ‘Your qualifications’ section of the application form.
+      edit_provider:
+        heading: Tell us about your approved English language test provider
+        description: We need to know which of the approved providers you used for your English language proficiency test.
+      edit_provider_reference:
+        heading: English language proficiency
     further_information_request:
       show:
         failure_reason:
@@ -15,15 +35,13 @@ en:
           age_range: Tell us more about the age range you can teach
           satisfactory_evidence_work_history: Tell us more about your work history
           registration_number: Tell us your registration number
-    application_forms:
-      show:
-        further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
 
   application_form:
     tasks:
       sections:
         about_you: About you
         qualifications: Your qualifications
+        english_language: Your English language proficiency
         work_history: Your work history
         proof_of_recognition: Proof that you’re recognised as a teacher
       items:
@@ -32,6 +50,7 @@ en:
         qualifications: Add your teaching qualifications
         age_range: Enter the age range you can teach
         subjects: Enter the subjects you can teach
+        english_language: Verify your English language proficiency
         work_history: Add your work history
         registration_number: Enter your registration number
         written_statement: Upload your written statement
@@ -138,6 +157,24 @@ en:
           attributes:
             confirm:
               inclusion: Select whether you want to delete this work history
+        teacher_interface/english_language_exemption_form:
+          attributes:
+            exempt:
+              inclusion: Select whether you are exempt
+        teacher_interface/english_language_proof_method_form:
+          attributes:
+            proof_method:
+              blank: Select your method of validation
+              inclusion: Select your method of validation
+        teacher_interface/english_language_provider_form:
+          attributes:
+            provider_id:
+              blank: Select your approved English language test provider
+              inclusion: Select your approved English language test provider
+        teacher_interface/english_language_provider_reference_form:
+          attributes:
+            reference:
+              blank: Enter your reference number
         teacher_interface/has_work_history_form:
           attributes:
             has_work_history:

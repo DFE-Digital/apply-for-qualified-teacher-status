@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+module TeacherInterface
+  class EnglishLanguageProviderReferenceForm < BaseForm
+    attr_accessor :application_form
+    attribute :reference, :string
+
+    validates :application_form, presence: true
+    validates :reference, presence: true
+
+    def update_model
+      application_form.update!(english_language_provider_reference: reference)
+    end
+  end
+end

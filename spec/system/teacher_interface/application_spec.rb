@@ -569,7 +569,7 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_the_upload_identification_form
-    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+    teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
   end
@@ -593,13 +593,13 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def when_i_fill_in_the_upload_certificate_form
-    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+    teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
   end
 
   def when_i_fill_in_the_upload_transcript_form
-    upload_document_page.form.original_attachment.attach_file Rails.root.join(
+    teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
   end
@@ -758,8 +758,8 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_upload_name_change_form
-    expect(upload_document_page).to have_title("Upload a document")
-    expect(upload_document_page.heading.text).to eq(
+    expect(teacher_upload_document_page).to have_title("Upload a document")
+    expect(teacher_upload_document_page.heading.text).to eq(
       "Upload proof of your change of name",
     )
   end
@@ -848,29 +848,29 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_upload_certificate_form
-    expect(upload_document_page).to have_title("Upload a document")
-    expect(upload_document_page.heading.text).to eq(
+    expect(teacher_upload_document_page).to have_title("Upload a document")
+    expect(teacher_upload_document_page.heading.text).to eq(
       "Upload your Institution Name certificate",
     )
   end
 
   def then_i_see_the_upload_degree_certificate_form
-    expect(upload_document_page).to have_title("Upload a document")
-    expect(upload_document_page.heading.text).to eq(
+    expect(teacher_upload_document_page).to have_title("Upload a document")
+    expect(teacher_upload_document_page.heading.text).to eq(
       "Upload your Institution Name certificate",
     )
   end
 
   def then_i_see_the_upload_transcript_form
-    expect(upload_document_page).to have_title("Upload a document")
-    expect(upload_document_page.heading.text).to eq(
+    expect(teacher_upload_document_page).to have_title("Upload a document")
+    expect(teacher_upload_document_page.heading.text).to eq(
       "Upload your Institution Name transcript",
     )
   end
 
   def then_i_see_the_upload_degree_transcript_form
-    expect(upload_document_page).to have_title("Upload a document")
-    expect(upload_document_page.heading.text).to eq(
+    expect(teacher_upload_document_page).to have_title("Upload a document")
+    expect(teacher_upload_document_page.heading.text).to eq(
       "Upload your Institution Name transcript",
     )
   end
@@ -931,12 +931,12 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_the_upload_written_statement_form
-    expect(upload_document_page).to have_title("Upload a document")
-    expect(upload_document_page.heading.text).to eq(
+    expect(teacher_upload_document_page).to have_title("Upload a document")
+    expect(teacher_upload_document_page.heading.text).to eq(
       "Upload your written statement",
     )
-    expect(upload_document_page).to have_content("Status information")
-    expect(upload_document_page).to have_content("Sanction information")
+    expect(teacher_upload_document_page).to have_content("Status information")
+    expect(teacher_upload_document_page).to have_content("Sanction information")
   end
 
   def then_i_see_the_personal_information_summary

@@ -26,6 +26,7 @@ RSpec.describe Document, type: :model do
       is_expected.to define_enum_for(:document_type).with_values(
         identification: "identification",
         name_change: "name_change",
+        medium_of_instruction: "medium_of_instruction",
         qualification_certificate: "qualification_certificate",
         qualification_transcript: "qualification_transcript",
         qualification_document: "qualification_document",
