@@ -15,13 +15,13 @@ module AssessorInterface
       session[:filter_params] = extract_filter_params(
         remove_cleared_autocomplete_values(params),
       )
-      redirect_to assessor_interface_application_forms_path(page: params[:page])
+      redirect_to assessor_interface_application_forms_path
     end
 
     def clear_filters
       authorize :assessor, :index?
       session[:filter_params] = {}
-      redirect_to assessor_interface_application_forms_path(page: params[:page])
+      redirect_to assessor_interface_application_forms_path
     end
 
     def show
