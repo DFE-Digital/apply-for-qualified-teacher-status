@@ -124,12 +124,27 @@ class AssessmentFactory
   def work_history_section
     return nil unless application_form.needs_work_history
 
-    checks = %i[
-      email_contact_current_employer
-      satisfactory_evidence_work_history
-    ]
+    under_new_regs =
+      application_form.created_under_new_regulations? &&
+        FeatureFlags::FeatureFlag.active?(:application_work_history)
 
-    failure_reasons = [FailureReasons::SATISFACTORY_EVIDENCE_WORK_HISTORY]
+    checks =
+      if under_new_regs
+        %i[verify_school_details work_history_references]
+      else
+        %i[email_contact_current_employer satisfactory_evidence_work_history]
+      end
+
+    failure_reasons =
+      if under_new_regs
+        [
+          FailureReasons::WORK_HISTORY_BREAK,
+          FailureReasons::ALTERNATIVE_REFERENCE_EMAIL_ADDRESS,
+          FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
+        ]
+      else
+        [FailureReasons::SATISFACTORY_EVIDENCE_WORK_HISTORY]
+      end
 
     AssessmentSection.new(key: "work_history", checks:, failure_reasons:)
   end
