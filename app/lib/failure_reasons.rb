@@ -24,6 +24,7 @@ class FailureReasons
       "additional_degree_certificate_illegible",
     ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE =
       "additional_degree_transcript_illegible",
+    ALTERNATIVE_REFERENCE_EMAIL_ADDRESS = "alternative_reference_email_address",
     APPLICANT_ALREADY_DQT = "applicant_already_dqt",
     APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH =
       "application_and_qualification_names_do_not_match",
@@ -39,8 +40,10 @@ class FailureReasons
     QUALIFIED_TO_TEACH = "qualified_to_teach",
     REGISTRATION_NUMBER = "registration_number",
     SATISFACTORY_EVIDENCE_WORK_HISTORY = "satisfactory_evidence_work_history",
+    SCHOOL_DETAILS_CANNOT_BE_VERIFIED = "school_details_cannot_be_verified",
     TEACHING_CERTIFICATE_ILLEGIBLE = "teaching_certificate_illegible",
     TEACHING_TRANSCRIPT_ILLEGIBLE = "teaching_transcript_illegible",
+    WORK_HISTORY_BREAK = "work_history_break",
     WRITTEN_STATEMENT_ILLEGIBLE = "written_statement_illegible",
     WRITTEN_STATEMENT_RECENT = "written_statement_recent",
   ].freeze
