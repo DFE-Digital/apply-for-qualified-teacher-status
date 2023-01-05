@@ -9,6 +9,17 @@ jobs:
   backup:
     name: Backup PaaS Database ( Production )
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13.9
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     environment:
       name: production
     steps:
@@ -77,3 +88,30 @@ jobs:
           SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
           SLACK_COLOR: failure
           SLACK_FOOTER: Sent from backup job in database-backup workflow
+
+      - name: Sanitise the Database backup
+        run: |
+          echo "::group::Restore backup to pre-production database"
+          createdb ${DATABASE_NAME} && psql -f ${{ env.BACKUP_FILE_NAME }}.sql -d ${DATABASE_NAME}
+          echo "::endgroup::"
+
+          echo "::group::Sanitise user data"
+          psql -d ${DATABASE_NAME} -f db/scripts/sanitise.sql
+          echo "::endgroup::"
+
+          echo "::group::Backup Sanitised Database"
+          pg_dump --encoding utf8 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f backup_sanitised.sql
+          echo "::endgroup::"
+        env:
+          DATABASE_NAME: apply-for-qualified-teacher-status
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGHOST: localhost
+          PGPORT: 5432
+
+      - name: Upload Sanitised Backup
+        uses: actions/upload-artifact@v3
+        with:
+          name: backup_sanitised
+          path: backup_sanitised.sql
+          retention-days: 3
