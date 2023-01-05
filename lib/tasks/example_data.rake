@@ -31,6 +31,7 @@ namespace :example_data do
     end
 
     TimelineEvent.delete_all
+    ReferenceRequest.delete_all
     FurtherInformationRequest.delete_all
     SelectedFailureReason.delete_all
     AssessmentSection.delete_all
@@ -143,14 +144,23 @@ def create_application_forms(new_regs:)
 
       assessment = AssessmentFactory.call(application_form:)
 
-      next unless application_form.further_information_requested?
-
-      FactoryBot.create(
-        :further_information_request,
-        :requested,
-        :with_items,
-        assessment:,
-      )
+      if application_form.further_information_requested?
+        FactoryBot.create(
+          :further_information_request,
+          :requested,
+          :with_items,
+          assessment:,
+        )
+      elsif (work_history = assessment.application_form.work_histories.first) &&
+            rand(2).zero?
+        reference_request_trait = ReferenceRequest.states.keys.sample
+        FactoryBot.create(
+          :reference_request,
+          reference_request_trait,
+          assessment:,
+          work_history:,
+        )
+      end
     end
   end
 end
