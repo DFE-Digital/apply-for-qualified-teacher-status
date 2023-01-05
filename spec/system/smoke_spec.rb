@@ -17,6 +17,7 @@ require "support/autoload/page_objects/eligibility_interface/qualification"
 require "support/autoload/page_objects/eligibility_interface/region"
 require "support/autoload/page_objects/eligibility_interface/start"
 require "support/autoload/page_objects/eligibility_interface/teach_children"
+require "support/autoload/page_objects/eligibility_interface/work_experience"
 
 Capybara.javascript_driver = :cuprite
 Capybara.always_include_port = false
@@ -37,7 +38,8 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
     and_i_select_a_state
     and_i_have_a_teaching_qualification
     and_i_have_a_university_degree
-    and_i_am_qualified_to_teach
+    and_i_am_qualified_to_teach_children
+    and_i_have_work_experience
     and_i_dont_have_sanctions
     then_i_should_be_eligible_to_apply
   end
@@ -77,8 +79,18 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
     degree_page.submit_yes
   end
 
-  def and_i_am_qualified_to_teach
+  def and_i_am_qualified_to_teach_children
     teach_children_page.submit_yes
+  end
+
+  def and_i_have_work_experience
+    # dev & test environments have this feature enabled currently but production does
+    # not. We can remove this conditional when the feature is released
+    if page.has_content?(
+         "How long have you been employed as a recognised teacher?",
+       )
+      work_experience_page.submit_over_20_months
+    end
   end
 
   def and_i_dont_have_sanctions
@@ -112,6 +124,11 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   def teach_children_page
     @teach_children_page ||=
       PageObjects::EligibilityInterface::TeachChildren.new
+  end
+
+  def work_experience_page
+    @work_experience_page ||=
+      PageObjects::EligibilityInterface::WorkExperience.new
   end
 
   def misconduct_page
