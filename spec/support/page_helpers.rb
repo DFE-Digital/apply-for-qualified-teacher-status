@@ -268,6 +268,16 @@ module PageHelpers
       PageObjects::TeacherInterface::NewWorkHistory.new
   end
 
+  def teacher_reference_received_page
+    @teacher_reference_received_page ||=
+      PageObjects::TeacherInterface::ReferenceReceived.new
+  end
+
+  def teacher_reference_requested_page
+    @teacher_reference_requested_page ||=
+      PageObjects::TeacherInterface::ReferenceRequested.new
+  end
+
   def teacher_retry_otp_page
     @teacher_retry_otp_page = PageObjects::TeacherInterface::RetryOtp.new
   end

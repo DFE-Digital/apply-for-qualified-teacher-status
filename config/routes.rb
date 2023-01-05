@@ -245,6 +245,11 @@ Rails.application.routes.draw do
                   only: %i[edit update]
       end
     end
+
+    resources :reference_requests,
+              path: "/references",
+              param: :slug,
+              only: %i[show]
   end
 
   devise_for :teachers,
