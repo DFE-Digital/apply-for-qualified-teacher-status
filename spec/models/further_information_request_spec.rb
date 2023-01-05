@@ -22,15 +22,11 @@
 require "rails_helper"
 
 RSpec.describe FurtherInformationRequest do
+  subject(:further_information_request) { build(:further_information_request) }
+
+  it_behaves_like "a requestable"
+
   describe "associations" do
     it { is_expected.to belong_to(:assessment) }
-  end
-
-  it do
-    is_expected.to define_enum_for(:state).with_values(
-      requested: "requested",
-      received: "received",
-      expired: "expired",
-    ).backed_by_column_of_type(:string)
   end
 end

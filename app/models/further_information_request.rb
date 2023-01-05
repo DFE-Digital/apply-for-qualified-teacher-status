@@ -18,6 +18,8 @@
 #  index_further_information_requests_on_assessment_id  (assessment_id)
 #
 class FurtherInformationRequest < ApplicationRecord
+  include Requestable
+
   belongs_to :assessment
   has_many :items,
            class_name: "FurtherInformationRequestItem",
@@ -25,10 +27,6 @@ class FurtherInformationRequest < ApplicationRecord
            dependent: :destroy
 
   has_many :reminder_emails
-
-  enum :state,
-       { requested: "requested", received: "received", expired: "expired" },
-       default: :requested
 
   def failed
     passed == false
