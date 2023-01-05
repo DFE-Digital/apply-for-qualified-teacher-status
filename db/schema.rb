@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_04_140156) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_05_085100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -205,7 +205,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_04_140156) do
   end
 
   create_table "further_information_requests", force: :cascade do |t|
-    t.bigint "assessment_id"
+    t.bigint "assessment_id", null: false
     t.string "state", null: false
     t.datetime "received_at"
     t.datetime "created_at", null: false
