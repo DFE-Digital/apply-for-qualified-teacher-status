@@ -370,13 +370,11 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def when_i_have_more_than_20_months_work_experience
-    work_experience_page.form.radio_items.third.choose
-    work_experience_page.form.continue_button.click
+    work_experience_page.submit_over_20_months
   end
 
   def when_i_have_under_9_months_work_experience
-    work_experience_page.form.radio_items.first.choose
-    work_experience_page.form.continue_button.click
+    work_experience_page.submit_under_9_months
   end
 
   def when_i_have_a_misconduct_record
