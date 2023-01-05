@@ -1,0 +1,24 @@
+<% content_for :page_title, t(".title") %>
+
+<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+<%= render(CheckYourAnswersSummary::Component.new(
+  id: "reference-request-#{@reference_request.id}",
+  model: @reference_request,
+  title: t(".reference_requested"),
+  fields: {
+    dates_response: {
+    },
+    hours_response: {
+    },
+    children_response: {
+    },
+    lessons_response: {
+    },
+    reports_response: {
+    },
+    additional_information_response: {
+    },
+  },
+  changeable: true
+)) %>

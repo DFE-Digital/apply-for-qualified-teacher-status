@@ -51,6 +51,9 @@ en:
     reference_requests:
       show:
         title: You’ve been asked to act as a reference
+      edit:
+        title: Check your answers
+        reference_requested: Reference requested
 
   application_form:
     tasks:

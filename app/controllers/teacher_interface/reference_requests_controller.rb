@@ -9,11 +9,18 @@ module TeacherInterface
 
     define_history_origin :show
     define_history_reset :show
+    define_history_check :edit
 
     def show
       @reference_request =
         ReferenceRequest.not_expired.find_by!(slug: params[:slug])
       @application_form = reference_request.application_form
+      @work_history = reference_request.work_history
+    end
+
+    def edit
+      @reference_request =
+        ReferenceRequest.requested.find_by!(slug: params[:slug])
       @work_history = reference_request.work_history
     end
 

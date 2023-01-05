@@ -200,6 +200,11 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckQualifications.new
   end
 
+  def teacher_check_reference_request_answers_page
+    @teacher_check_reference_request_answers_page ||=
+      PageObjects::TeacherInterface::CheckReferenceRequestAnswers.new
+  end
+
   def teacher_check_work_history_page
     @teacher_check_work_history_page ||=
       PageObjects::TeacherInterface::CheckWorkHistory.new
