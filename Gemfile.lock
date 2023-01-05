@@ -454,7 +454,7 @@ GEM
     site_prism-all_there (0.3.2)
     sitemap_generator (6.3.0)
       builder (~> 3.0)
-    syntax_tree (5.1.0)
+    syntax_tree (5.2.0)
       prettier_print (>= 1.2.0)
     syntax_tree-haml (3.0.0)
       haml (>= 5.2, != 6.0.0)
