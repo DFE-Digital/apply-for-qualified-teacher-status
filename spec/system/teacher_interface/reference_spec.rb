@@ -13,11 +13,7 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_reference_requested_page, slug:)
     and_i_see_the_work_history_details
 
-    reference_request.update!(
-      children_response: true,
-      lessons_response: true,
-      reports_response: true,
-    )
+    reference_request.update!(lessons_response: true, reports_response: true)
 
     when_i_click_start_now
     then_i_see_the(:teacher_edit_reference_request_dates_page, slug:)
@@ -26,6 +22,9 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_edit_reference_request_hours_page, slug:)
 
     when_i_choose_yes_for_hours
+    then_i_see_the(:teacher_edit_reference_request_children_page, slug:)
+
+    when_i_choose_yes_for_children
     then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
     and_i_see_the_answers
 
@@ -53,7 +52,11 @@ RSpec.describe "Teacher reference", type: :system do
   end
 
   def when_i_choose_yes_for_hours
-    teacher_edit_reference_request_dates_page.submit_yes
+    teacher_edit_reference_request_hours_page.submit_yes
+  end
+
+  def when_i_choose_yes_for_children
+    teacher_edit_reference_request_children_page.submit_yes
   end
 
   def and_i_see_the_answers
@@ -70,6 +73,11 @@ RSpec.describe "Teacher reference", type: :system do
       "Did they work approximately 30 hours per week in this role?",
     )
     expect(summary_list.rows.second.value.text).to eq("Yes")
+
+    expect(summary_list.rows.third.key.text).to eq(
+      "Did the applicant work unsupervised with children aged somewhere between 5 and 16 years?",
+    )
+    expect(summary_list.rows.third.value.text).to eq("Yes")
   end
 
   def when_i_submit_the_response

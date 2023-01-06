@@ -256,6 +256,9 @@ Rails.application.routes.draw do
 
         get "hours", to: "reference_requests#edit_hours"
         post "hours", to: "reference_requests#update_hours"
+
+        get "children", to: "reference_requests#edit_children"
+        post "children", to: "reference_requests#update_children"
       end
     end
   end

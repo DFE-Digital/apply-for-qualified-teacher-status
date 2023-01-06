@@ -71,8 +71,30 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect: edit_teacher_interface_reference_request_path,
+        if_success_then_redirect:
+          children_teacher_interface_reference_request_path,
         if_failure_then_render: :edit_hours,
+      )
+    end
+
+    def edit_children
+      @form =
+        ReferenceRequestChildrenResponseForm.new(
+          reference_request:,
+          children_response: reference_request.children_response,
+        )
+    end
+
+    def update_children
+      @form =
+        ReferenceRequestChildrenResponseForm.new(
+          children_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect: edit_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_children,
       )
     end
 
@@ -95,6 +117,12 @@ module TeacherInterface
       params.require(
         :teacher_interface_reference_request_hours_response_form,
       ).permit(:hours_response)
+    end
+
+    def children_response_form_params
+      params.require(
+        :teacher_interface_reference_request_children_response_form,
+      ).permit(:children_response)
     end
   end
 end
