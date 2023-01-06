@@ -13,8 +13,6 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_reference_requested_page, slug:)
     and_i_see_the_work_history_details
 
-    reference_request.update!(reports_response: true)
-
     when_i_click_start_now
     then_i_see_the(:teacher_edit_reference_request_dates_page, slug:)
 
@@ -28,6 +26,9 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_edit_reference_request_lessons_page, slug:)
 
     when_i_choose_yes_for_lessons
+    then_i_see_the(:teacher_edit_reference_request_reports_page, slug:)
+
+    when_i_choose_yes_for_reports
     then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
     and_i_see_the_answers
 
@@ -66,6 +67,10 @@ RSpec.describe "Teacher reference", type: :system do
     teacher_edit_reference_request_lessons_page.submit_yes
   end
 
+  def when_i_choose_yes_for_reports
+    teacher_edit_reference_request_reports_page.submit_yes
+  end
+
   def and_i_see_the_answers
     summary_list = teacher_check_reference_request_answers_page.summary_list
 
@@ -91,6 +96,12 @@ RSpec.describe "Teacher reference", type: :system do
         " to at least 4 students at a time?",
     )
     expect(summary_list.rows.fourth.value.text).to eq("Yes")
+
+    expect(summary_list.rows.fifth.key.text).to eq(
+      "Was the applicant solely responsible for assessing and reporting on the progress of" \
+        " the students?",
+    )
+    expect(summary_list.rows.fifth.value.text).to eq("Yes")
   end
 
   def when_i_submit_the_response

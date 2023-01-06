@@ -262,6 +262,9 @@ Rails.application.routes.draw do
 
         get "lessons", to: "reference_requests#edit_lessons"
         post "lessons", to: "reference_requests#update_lessons"
+
+        get "reports", to: "reference_requests#edit_reports"
+        post "reports", to: "reference_requests#update_reports"
       end
     end
   end
