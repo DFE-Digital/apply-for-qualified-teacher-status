@@ -265,6 +265,10 @@ en:
           attributes:
             lessons_response:
               inclusion: Tell us whether the applicant was solely responsible for planning, preparing and delivering lessons to at least 4 students at a time
+        teacher_interface/reference_request_reports_response_form:
+          attributes:
+            reports_response:
+              inclusion: Tell us whether the applicant was solely responsible for assessing and reporting on the progress of the students
         teacher_interface/sanction_confirmation_form:
           attributes:
             confirmed_no_sanctions:
