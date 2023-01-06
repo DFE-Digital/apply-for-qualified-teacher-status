@@ -253,6 +253,10 @@ en:
           attributes:
             dates_response:
               inclusion: Tell us whether the applicant worked at the school for the dates they provided
+        teacher_interface/reference_request_hours_response_form:
+          attributes:
+            hours_response:
+              inclusion: Tell us whether the applicant worked at the school for approximately the number of hours per week they provided
         teacher_interface/sanction_confirmation_form:
           attributes:
             confirmed_no_sanctions:
