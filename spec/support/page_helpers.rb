@@ -248,6 +248,11 @@ module PageHelpers
       PageObjects::TeacherInterface::EditReferenceRequestHours.new
   end
 
+  def teacher_edit_reference_request_lessons_page
+    @teacher_edit_reference_request_lessons_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestLessons.new
+  end
+
   def teacher_edit_work_history_contact_page
     @teacher_edit_work_history_contact_page ||=
       PageObjects::TeacherInterface::EditWorkHistoryContact.new

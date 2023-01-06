@@ -259,6 +259,9 @@ Rails.application.routes.draw do
 
         get "children", to: "reference_requests#edit_children"
         post "children", to: "reference_requests#update_children"
+
+        get "lessons", to: "reference_requests#edit_lessons"
+        post "lessons", to: "reference_requests#update_lessons"
       end
     end
   end

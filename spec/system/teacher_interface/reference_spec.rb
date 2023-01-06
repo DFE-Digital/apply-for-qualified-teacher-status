@@ -13,7 +13,7 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_reference_requested_page, slug:)
     and_i_see_the_work_history_details
 
-    reference_request.update!(lessons_response: true, reports_response: true)
+    reference_request.update!(reports_response: true)
 
     when_i_click_start_now
     then_i_see_the(:teacher_edit_reference_request_dates_page, slug:)
@@ -25,6 +25,9 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_edit_reference_request_children_page, slug:)
 
     when_i_choose_yes_for_children
+    then_i_see_the(:teacher_edit_reference_request_lessons_page, slug:)
+
+    when_i_choose_yes_for_lessons
     then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
     and_i_see_the_answers
 
@@ -59,6 +62,10 @@ RSpec.describe "Teacher reference", type: :system do
     teacher_edit_reference_request_children_page.submit_yes
   end
 
+  def when_i_choose_yes_for_lessons
+    teacher_edit_reference_request_lessons_page.submit_yes
+  end
+
   def and_i_see_the_answers
     summary_list = teacher_check_reference_request_answers_page.summary_list
 
@@ -78,6 +85,12 @@ RSpec.describe "Teacher reference", type: :system do
       "Did the applicant work unsupervised with children aged somewhere between 5 and 16 years?",
     )
     expect(summary_list.rows.third.value.text).to eq("Yes")
+
+    expect(summary_list.rows.fourth.key.text).to eq(
+      "Was the applicant solely responsible for planning, preparing and delivering lessons" \
+        " to at least 4 students at a time?",
+    )
+    expect(summary_list.rows.fourth.value.text).to eq("Yes")
   end
 
   def when_i_submit_the_response

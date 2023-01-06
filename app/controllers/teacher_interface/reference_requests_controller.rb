@@ -93,8 +93,30 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect: edit_teacher_interface_reference_request_path,
+        if_success_then_redirect:
+          lessons_teacher_interface_reference_request_path,
         if_failure_then_render: :edit_children,
+      )
+    end
+
+    def edit_lessons
+      @form =
+        ReferenceRequestLessonsResponseForm.new(
+          reference_request:,
+          lessons_response: reference_request.lessons_response,
+        )
+    end
+
+    def update_lessons
+      @form =
+        ReferenceRequestLessonsResponseForm.new(
+          lessons_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect: edit_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_lessons,
       )
     end
 
@@ -123,6 +145,12 @@ module TeacherInterface
       params.require(
         :teacher_interface_reference_request_children_response_form,
       ).permit(:children_response)
+    end
+
+    def lessons_response_form_params
+      params.require(
+        :teacher_interface_reference_request_lessons_response_form,
+      ).permit(:lessons_response)
     end
   end
 end
