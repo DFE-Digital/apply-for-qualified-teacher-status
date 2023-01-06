@@ -9,7 +9,7 @@ module HandleApplicationFormSection
     if_success_then_redirect: %i[teacher_interface application_form],
     if_failure_then_render: :edit
   )
-    save_and_continue = params[:button] == "save_and_continue"
+    save_and_continue = params[:button] != "save_and_return"
 
     if form.save(validate: save_and_continue)
       check_path = check_path_if_previous(check_identifier)

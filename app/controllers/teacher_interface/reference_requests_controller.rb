@@ -20,12 +20,34 @@ module TeacherInterface
     end
 
     def edit
+      @work_history = reference_request.work_history
     end
 
     def update
       reference_request.received! if reference_request.responses_given?
 
       redirect_to teacher_interface_reference_request_path
+    end
+
+    def edit_dates
+      @form =
+        ReferenceRequestDatesResponseForm.new(
+          reference_request:,
+          dates_response: reference_request.dates_response,
+        )
+    end
+
+    def update_dates
+      @form =
+        ReferenceRequestDatesResponseForm.new(
+          dates_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect: edit_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_dates,
+      )
     end
 
     private
@@ -35,11 +57,12 @@ module TeacherInterface
     def load_requested_reference_request
       @reference_request =
         ReferenceRequest.requested.find_by!(slug: params[:slug])
-      @work_history = reference_request.work_history
     end
 
-    private
-
-    attr_reader :reference_request
+    def dates_response_form_params
+      params.require(
+        :teacher_interface_reference_request_dates_response_form,
+      ).permit(:dates_response)
+    end
   end
 end

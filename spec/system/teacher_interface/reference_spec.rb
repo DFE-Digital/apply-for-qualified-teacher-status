@@ -14,14 +14,16 @@ RSpec.describe "Teacher reference", type: :system do
     and_i_see_the_work_history_details
 
     reference_request.update!(
-      dates_response: true,
       hours_response: true,
       children_response: true,
       lessons_response: true,
       reports_response: true,
     )
 
-    when_i_visit_the(:teacher_check_reference_request_answers_page, slug:)
+    when_i_click_start_now
+    then_i_see_the(:teacher_edit_reference_request_dates_page, slug:)
+
+    when_i_choose_yes_for_dates
     then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
     and_i_see_the_answers
 
@@ -40,10 +42,23 @@ RSpec.describe "Teacher reference", type: :system do
     )
   end
 
+  def when_i_click_start_now
+    teacher_reference_requested_page.start_button.click
+  end
+
+  def when_i_choose_yes_for_dates
+    teacher_edit_reference_request_dates_page.submit_yes
+  end
+
   def and_i_see_the_answers
-    expect(
-      teacher_check_reference_request_answers_page.summary_list,
-    ).to be_visible
+    summary_list = teacher_check_reference_request_answers_page.summary_list
+
+    expect(summary_list).to be_visible
+
+    expect(summary_list.rows.first.key.text).to eq(
+      "Did the applicant work at the school for the dates they provided?",
+    )
+    expect(summary_list.rows.first.value.text).to eq("Yes")
   end
 
   def when_i_submit_the_response

@@ -16,6 +16,8 @@
   <% end %>
 
   <p class="govuk-body">We need to to ask you a few questions about the applicant’s role. It should take no longer than 5 minutes.</p>
+
+  <%= govuk_start_button(text: "Start now", href: dates_teacher_interface_reference_request_path) %>
 <% else %>
   <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
 

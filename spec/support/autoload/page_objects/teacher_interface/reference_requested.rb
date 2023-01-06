@@ -6,6 +6,7 @@ module PageObjects
       set_url "/teacher/references/{slug}"
 
       element :work_history_details, ".govuk-inset-text p"
+      element :start_button, ".govuk-button"
     end
   end
 end

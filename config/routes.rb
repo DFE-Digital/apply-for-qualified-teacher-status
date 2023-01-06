@@ -249,7 +249,12 @@ Rails.application.routes.draw do
     resources :reference_requests,
               path: "/references",
               param: :slug,
-              only: %i[show edit update]
+              only: %i[show edit update] do
+      member do
+        get "dates", to: "reference_requests#edit_dates"
+        post "dates", to: "reference_requests#update_dates"
+      end
+    end
   end
 
   devise_for :teachers,
