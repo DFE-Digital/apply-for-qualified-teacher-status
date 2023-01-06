@@ -60,5 +60,6 @@
   <%= f.hidden_field :teaching_authority_other, value: @country.teaching_authority_other %>
   <%= f.hidden_field :teaching_authority_online_checker_url, value: @country.teaching_authority_online_checker_url %>
   <%= f.hidden_field :teaching_authority_checks_sanctions, value: @country.teaching_authority_checks_sanctions %>
+  <%= f.hidden_field :eligibility_enabled, value: @country.eligibility_enabled %>
   <%= f.govuk_submit "Confirm save", prevent_double_click: false %>
 <% end %>
