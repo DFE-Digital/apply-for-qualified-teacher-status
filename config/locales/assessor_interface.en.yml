@@ -73,62 +73,62 @@ en:
           work_history: Check work history
           professional_standing: Check professional standing
         checks:
-          identification_document_present: a valid ID document is present
-          name_change_document_present: evidence of name change is present (if the name entered on the form is different to the name on their ID)
-          duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
-          applicant_already_qts: applicant does not already hold QTS and induction exemption
+          age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
           applicant_already_dqt: applicant does not already appear in DQT
-          qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 academic qualification or equivalent)
-          teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
-          qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
+          applicant_already_qts: applicant does not already hold QTS and induction exemption
+          authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present
+          confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
+          duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
+          email_contact_current_employer: the applicant has entered the name and email address of a contact for their current/most recent employer
+          full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
+          has_additional_degree_transcript: additional degree transcript is present (and translation if required)
+          has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
           has_teacher_qualification_certificate: teaching qualification certificate is present (and translation if required)
           has_teacher_qualification_transcript: teaching qualification transcript is present (and translation if required)
           has_university_degree_certificate: university degree qualification certificate is present (and translation if required)
           has_university_degree_transcript: university degree transcript is present (and translation if required)
-          has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
-          has_additional_degree_transcript: additional degree transcript is present (and translation if required)
-          age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
-          email_contact_current_employer: the applicant has entered the name and email address of a contact for their current/most recent employer
-          satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
+          identification_document_present: a valid ID document is present
+          name_change_document_present: evidence of name change is present (if the name entered on the form is different to the name on their ID)
+          qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 academic qualification or equivalent)
+          qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
+          qualified_to_teach: the applicant is qualified to teach at state or government schools
           registration_number: registration number provided and verified (where applicable)
+          satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
+          teaching_qualification: confirmation of the applicant’s teaching qualification
+          teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
           written_statement_present: letter from the country or state’s competent authority provided
           written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
-          authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present
-          teaching_qualification: confirmation of the applicant’s teaching qualification
-          confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
-          qualified_to_teach: the applicant is qualified to teach at state or government schools
-          full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
         failure_reasons:
+          additional_degree_certificate_illegible: An additional degree certificate (or translation) is illegible or in a format that we cannot accept.
+          additional_degree_transcript_illegible: An additional degree transcript (or translation) is illegible or in a format that we cannot accept.
+          age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
+          applicant_already_dqt: There’s a potential existing match for this applicant. We need to ask for an additional identifier.
+          applicant_already_qts: The applicant already holds QTS and induction exemption.
+          application_and_qualification_names_do_not_match: The name on the online application form is different from 1 or more qualification documents, but no evidence of change of name was provided.
+          authorisation_to_teach: Sanctions or restrictions were detected on professional record.
+          confirm_age_range_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
+          degree_certificate_illegible: The university degree certificate (or translation) is illegible or in a format that we cannot accept.
+          degree_transcript_illegible: The university degree transcript (or translation) is illegible or in a format that we cannot accept.
+          duplicate_application: There’s already another in-flight application for this applicant.
+          full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible or in a format that we cannot accept.
           identification_document_mismatch: The name on the online application form is different from the ID document, but no evidence of change of name was provided.
           name_change_document_illegible: The evidence of change of name is illegible or in a format that we cannot accept.
-          duplicate_application: There’s already another in-flight application for this applicant.
-          applicant_already_qts: The applicant already holds QTS and induction exemption.
-          applicant_already_dqt: There’s a potential existing match for this applicant. We need to ask for an additional identifier.
+          not_qualified_to_teach_mainstream: Applicant is not qualified to teach in mainstream education.
+          qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
+          qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
+          qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
+          registration_number: We could not verify the registration number using the online checker.
+          satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
+          teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
+          teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
+          teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
           teaching_qualifications_from_ineligible_country: Teaching qualifications were completed in an ineligible country.
           teaching_qualifications_not_at_required_level: Teaching qualifications do not meet the required academic level.
-          not_qualified_to_teach_mainstream: Applicant is not qualified to teach in mainstream education.
-          teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
           teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
-          degree_certificate_illegible: The university degree certificate (or translation) is illegible or in a format that we cannot accept.
-          degree_transcript_illegible: The university degree transcript (or translation) is illegible or in a format that we cannot accept.
-          additional_degree_certificate_illegible: An additional degree certificate (or translation) is illegible or in a format that we cannot accept.
-          additional_degree_transcript_illegible: An additional degree transcript (or translation) is illegible or in a format that we cannot accept.
-          application_and_qualification_names_do_not_match: The name on the online application form is different from 1 or more qualification documents, but no evidence of change of name was provided.
-          teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
-          qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
-          qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
-          age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
-          satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
-          registration_number: We could not verify the registration number using the online checker.
           written_statement_illegible: The letter from the country or state’s authority is illegible or in a format that we cannot accept.
           written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
-          authorisation_to_teach: Sanctions or restrictions were detected on professional record.
-          teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
-          confirm_age_range_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
-          qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
-          full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
 
     further_information_requests:
       edit:
@@ -161,6 +161,30 @@ en:
               blank: Select the reasons for your recommendation
             passed:
               inclusion: Select whether the applicant completed this section to your satisfaction
+            additional_degree_certificate_illegible_notes:
+              blank: Enter a note to the applicant
+            additional_degree_transcript_illegible_notes:
+              blank: Enter a note to the applicant
+            age_range_notes:
+              blank: Enter a note to the applicant
+            applicant_already_dqt_notes:
+              blank: Enter a note to the applicant
+            applicant_already_qts_notes:
+              blank: Enter a note to the applicant
+            application_and_qualification_names_do_not_match_notes:
+              blank: Enter a note to the applicant
+            authorisation_to_teach_notes:
+              blank: Enter a note to the applicant
+            confirm_age_range_subjects_notes:
+              blank: Enter a note to the applicant
+            degree_certificate_illegible_notes:
+              blank: Enter a note to the applicant
+            degree_transcript_illegible_notes:
+              blank: Enter a note to the applicant
+            duplicate_application_notes:
+              blank: Enter a note to the applicant
+            full_professional_status_notes:
+              blank: Enter a note to the applicant
             identification_document_expired_notes:
               blank: Enter a note to the applicant
             identification_document_illegible_notes:
@@ -169,57 +193,33 @@ en:
               blank: Enter a note to the applicant
             name_change_document_illegible_notes:
               blank: Enter a note to the applicant
-            duplicate_application_notes:
+            not_qualified_to_teach_mainstream_notes:
               blank: Enter a note to the applicant
-            applicant_already_qts_notes:
+            qualifications_dont_match_other_details_notes:
               blank: Enter a note to the applicant
-            applicant_already_dqt_notes:
+            qualifications_dont_match_subjects_notes:
+              blank: Enter a note to the applicant
+            qualified_to_teach_notes:
+              blank: Enter a note to the applicant
+            registration_number_notes:
+              blank: Enter a note to the applicant
+            satisfactory_evidence_work_history_notes:
+              blank: Enter a note to the applicant
+            teaching_certificate_illegible_notes:
+              blank: Enter a note to the applicant
+            teaching_hours_not_fulfilled_notes:
+              blank: Enter a note to the applicant
+            teaching_qualification_notes:
               blank: Enter a note to the applicant
             teaching_qualifications_from_ineligible_country_notes:
               blank: Enter a note to the applicant
             teaching_qualifications_not_at_required_level_notes:
               blank: Enter a note to the applicant
-            not_qualified_to_teach_mainstream_notes:
-              blank: Enter a note to the applicant
-            teaching_certificate_illegible_notes:
-              blank: Enter a note to the applicant
             teaching_transcript_illegible_notes:
-              blank: Enter a note to the applicant
-            degree_certificate_illegible_notes:
-              blank: Enter a note to the applicant
-            degree_transcript_illegible_notes:
-              blank: Enter a note to the applicant
-            additional_degree_certificate_illegible_notes:
-              blank: Enter a note to the applicant
-            additional_degree_transcript_illegible_notes:
-              blank: Enter a note to the applicant
-            application_and_qualification_names_do_not_match_notes:
-              blank: Enter a note to the applicant
-            teaching_hours_not_fulfilled_notes:
-              blank: Enter a note to the applicant
-            qualifications_dont_match_subjects_notes:
-              blank: Enter a note to the applicant
-            qualifications_dont_match_other_details_notes:
-              blank: Enter a note to the applicant
-            age_range_notes:
-              blank: Enter a note to the applicant
-            satisfactory_evidence_work_history_notes:
-              blank: Enter a note to the applicant
-            registration_number_notes:
               blank: Enter a note to the applicant
             written_statement_illegible_notes:
               blank: Enter a note to the applicant
             written_statement_recent_notes:
-              blank: Enter a note to the applicant
-            authorisation_to_teach_notes:
-              blank: Enter a note to the applicant
-            teaching_qualification_notes:
-              blank: Enter a note to the applicant
-            confirm_age_range_subjects_notes:
-              blank: Enter a note to the applicant
-            qualified_to_teach_notes:
-              blank: Enter a note to the applicant
-            full_professional_status_notes:
               blank: Enter a note to the applicant
         assessor_interface/further_information_request_form:
           attributes:

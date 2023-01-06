@@ -29,12 +29,12 @@ en:
     further_information_request:
       show:
         failure_reason:
-          applicant_already_dqt: Additional personal information
-          qualifications_dont_match_subjects: Tell us more about the subjects you can teach
-          qualifications_dont_match_other_details: Tell us more about your qualifications
           age_range: Tell us more about the age range you can teach
-          satisfactory_evidence_work_history: Tell us more about your work history
+          applicant_already_dqt: Additional personal information
+          qualifications_dont_match_other_details: Tell us more about your qualifications
+          qualifications_dont_match_subjects: Tell us more about the subjects you can teach
           registration_number: Tell us your registration number
+          satisfactory_evidence_work_history: Tell us more about your work history
     new_regs:
       work_histories:
         add_another:
