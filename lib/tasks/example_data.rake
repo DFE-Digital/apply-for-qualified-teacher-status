@@ -26,6 +26,9 @@ namespace :example_data do
           teacher = FactoryBot.create(:teacher)
           application_form =
             FactoryBot.create(:application_form, *traits, teacher:, region:)
+
+          next if application_form.draft?
+
           assessment = AssessmentFactory.call(application_form:)
 
           next unless application_form.further_information_requested?
@@ -48,6 +51,7 @@ namespace :example_data do
     end
 
     TimelineEvent.delete_all
+    FurtherInformationRequest.delete_all
     SelectedFailureReason.delete_all
     AssessmentSection.delete_all
     Assessment.delete_all
@@ -118,32 +122,6 @@ def application_form_traits_for(region)
 
   [
     [],
-    [:with_personal_information],
-    %i[with_personal_information with_alternative_name],
-    %i[
-      with_personal_information
-      with_alternative_name
-      with_name_change_document
-    ],
-    %i[with_personal_information with_completed_qualification],
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-    ],
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-    ],
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-    ],
     %i[
       with_personal_information
       with_completed_qualification
@@ -160,24 +138,6 @@ def application_form_traits_for(region)
     ] + evidential_traits << :submitted,
     %i[
       with_personal_information
-      with_alternative_name
-      with_name_change_document
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-    ] + evidential_traits << :submitted,
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-    ] + evidential_traits << :submitted << :further_information_requested,
-    %i[
-      with_personal_information
-      with_alternative_name
-      with_name_change_document
       with_completed_qualification
       with_identification_document
       with_age_range
