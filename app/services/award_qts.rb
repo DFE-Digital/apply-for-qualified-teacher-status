@@ -11,7 +11,13 @@ class AwardQTS
 
   def call
     return if application_form.awarded?
-    raise MustBePendingChecks unless application_form.awarded_pending_checks?
+
+    unless application_form.awarded_pending_checks? ||
+             application_form.potential_duplicate_in_dqt?
+      raise InvalidState
+    end
+
+    raise MissingTRN if trn.blank?
 
     ActiveRecord::Base.transaction do
       teacher.update!(trn:)
@@ -28,7 +34,10 @@ class AwardQTS
     TeacherMailer.with(teacher:).application_awarded.deliver_later
   end
 
-  class MustBePendingChecks < StandardError
+  class InvalidState < StandardError
+  end
+
+  class MissingTRN < StandardError
   end
 
   private

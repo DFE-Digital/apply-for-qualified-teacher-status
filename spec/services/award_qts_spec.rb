@@ -13,7 +13,7 @@ RSpec.describe AwardQTS do
     let(:application_form) { create(:application_form, :submitted, teacher:) }
 
     it "raises an error" do
-      expect { call }.to raise_error(AwardQTS::MustBePendingChecks)
+      expect { call }.to raise_error(AwardQTS::InvalidState)
     end
   end
 
@@ -47,6 +47,56 @@ RSpec.describe AwardQTS do
         expect { call }.to change(application_form, :awarded_at).to(
           Time.zone.now,
         )
+      end
+    end
+
+    context "without a TRN" do
+      let(:trn) { "" }
+
+      it "raises an error" do
+        expect { call }.to raise_error(AwardQTS::MissingTRN)
+      end
+    end
+  end
+
+  context "with a potential duplicate in QTS application form" do
+    let(:application_form) do
+      create(:application_form, :potential_duplicate_in_dqt, teacher:)
+    end
+
+    it "sets the TRN" do
+      expect { call }.to change(teacher, :trn).to("abcdef")
+    end
+
+    it "sends an email" do
+      expect { call }.to have_enqueued_mail(
+        TeacherMailer,
+        :application_awarded,
+      ).with(params: { teacher: }, args: [])
+    end
+
+    it "changes the status" do
+      expect(ChangeApplicationFormState).to receive(:call).with(
+        application_form:,
+        user:,
+        new_state: "awarded",
+      )
+      call
+    end
+
+    it "sets the awarded at date" do
+      freeze_time do
+        expect { call }.to change(application_form, :awarded_at).to(
+          Time.zone.now,
+        )
+      end
+    end
+
+    context "without a TRN" do
+      let(:trn) { "" }
+
+      it "raises an error" do
+        expect { call }.to raise_error(AwardQTS::MissingTRN)
       end
     end
   end

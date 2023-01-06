@@ -11,11 +11,13 @@ class UpdateDQTTRNRequestJob < ApplicationJob
   def perform(dqt_trn_request)
     return if dqt_trn_request.complete?
 
+    application_form = dqt_trn_request.application_form
+
     response =
       if dqt_trn_request.initial?
         DQT::Client::CreateTRNRequest.call(
           request_id: dqt_trn_request.request_id,
-          application_form: dqt_trn_request.application_form,
+          application_form:,
         )
       else
         DQT::Client::ReadTRNRequest.call(request_id: dqt_trn_request.request_id)
@@ -25,19 +27,12 @@ class UpdateDQTTRNRequestJob < ApplicationJob
 
     if response[:potential_duplicate]
       ChangeApplicationFormState.call(
-        application_form: dqt_trn_request.application_form,
+        application_form:,
         user: "DQT",
         new_state: "potential_duplicate_in_dqt",
       )
-    end
-
-    if (trn = response[:trn]).present?
-      AwardQTS.call(
-        application_form: dqt_trn_request.application_form,
-        user: "DQT",
-        trn:,
-      )
-
+    else
+      AwardQTS.call(application_form:, user: "DQT", trn: response[:trn])
       dqt_trn_request.complete!
     end
 
