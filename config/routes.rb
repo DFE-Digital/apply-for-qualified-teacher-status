@@ -253,6 +253,9 @@ Rails.application.routes.draw do
       member do
         get "dates", to: "reference_requests#edit_dates"
         post "dates", to: "reference_requests#update_dates"
+
+        get "hours", to: "reference_requests#edit_hours"
+        post "hours", to: "reference_requests#update_hours"
       end
     end
   end

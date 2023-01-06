@@ -1,0 +1,15 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("helpers.legend.teacher_interface_reference_request_hours_response_form.hours_response", count: @work_history.hours_per_week)}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_reference_request_path) %>
+
+<%= form_with model: @form, url: hours_teacher_interface_reference_request_path do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l">Question 2 of 5</span>
+
+  <%= f.govuk_collection_radio_buttons :hours_response,
+                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
+                                       :value,
+                                       legend: { tag: "h1", size: "l", text: t("helpers.legend.teacher_interface_reference_request_hours_response_form.hours_response", count: @work_history.hours_per_week) } %>
+
+  <%= f.govuk_submit %>
+<% end %>
