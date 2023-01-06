@@ -25,7 +25,8 @@
       <%= govuk_table do |table|
         table.head do |head|
           head.row do |row|
-            row.cell(header: true, text: "Country bucket")
+            row.cell(header: true, text: "Bucket")
+            row.cell(header: true, text: "Country")
             row.cell(header: true, text: "Status check")
             row.cell(header: true, text: "Sanction check")
             row.cell(header: true, text: "Status")
@@ -41,6 +42,7 @@
                 bucket = region_bucket_for_teacher_persona(persona)
                 govuk_tag(text: bucket) if bucket
               end
+              row.cell { CountryName.from_country(persona[:teacher].application_form.country) }
 
               row.cell { persona_check_tag(persona[:status_check]) }
               row.cell { persona_check_tag(persona[:sanction_check]) }
