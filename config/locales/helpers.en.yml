@@ -126,6 +126,10 @@ en:
         email: Email address
       teacher_interface_qualification_form:
         institution_country_location: Country of institution
+      teacher_interface_reference_request_dates_response_form:
+        dates_response_options:
+          true: "Yes"
+          false: "No"
       teacher_interface_registration_number_form:
         registration_number: What is your registration number?
       teacher_interface_subjects_form:
@@ -187,6 +191,8 @@ en:
         provider_id: Select your approved provider from the list
       teacher_interface_has_work_history_form:
         has_work_history: Have you worked professionally as a teacher?
+      teacher_interface_reference_request_dates_response_form:
+        dates_response: Did the applicant work at the school for the dates they provided?
       teacher_interface_work_history_school_form:
         start_date: When did you start this role?
         still_employed: Are you still employed at this school?
