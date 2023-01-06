@@ -14,6 +14,14 @@ module PersonasHelper
     end
   end
 
+  def persona_yes_no_tag(value)
+    if value
+      govuk_tag(text: "Yes", colour: "green")
+    else
+      govuk_tag(text: "No", colour: "red")
+    end
+  end
+
   REGION_BUCKETS = {
     { status_check: "online", sanction_check: "online" } => 1,
     { status_check: "written", sanction_check: "written" } => 2,

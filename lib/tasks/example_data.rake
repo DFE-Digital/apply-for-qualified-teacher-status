@@ -20,25 +20,8 @@ namespace :example_data do
       FactoryBot.create(:staff, :confirmed, **staff)
     end
 
-    Region.all.each do |region|
-      application_form_traits_for(region).each do |traits|
-        application_form =
-          FactoryBot.create(:application_form, *traits, region:)
-
-        next if application_form.draft?
-
-        assessment = AssessmentFactory.call(application_form:)
-
-        next unless application_form.further_information_requested?
-
-        FactoryBot.create(
-          :further_information_request,
-          :requested,
-          :with_items,
-          assessment:,
-        )
-      end
-    end
+    create_application_forms(new_regs: false)
+    create_application_forms(new_regs: true)
   end
 
   desc "Reset database suitable for generating example data."
@@ -141,4 +124,33 @@ def application_form_traits_for(region)
       with_subjects
     ] + evidential_traits << :submitted << :further_information_requested,
   ]
+end
+
+def create_application_forms(new_regs:)
+  new_regs_date = Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
+  old_regs_date = new_regs_date - 1.day
+
+  Region.all.each do |region|
+    application_form_traits_for(region).each do |traits|
+      traits << :new_regs if new_regs
+
+      created_at = new_regs ? new_regs_date : old_regs_date
+
+      application_form =
+        FactoryBot.create(:application_form, *traits, region:, created_at:)
+
+      next if application_form.draft?
+
+      assessment = AssessmentFactory.call(application_form:)
+
+      next unless application_form.further_information_requested?
+
+      FactoryBot.create(
+        :further_information_request,
+        :requested,
+        :with_items,
+        assessment:,
+      )
+    end
+  end
 end

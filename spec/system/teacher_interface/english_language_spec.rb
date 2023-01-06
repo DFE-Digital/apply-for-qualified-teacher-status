@@ -287,7 +287,7 @@ RSpec.describe "Teacher English language", type: :system do
   end
 
   def application_form
-    @application_form ||= create(:application_form, teacher:)
+    @application_form ||= create(:application_form, :new_regs, teacher:)
   end
 
   def english_language_providers
