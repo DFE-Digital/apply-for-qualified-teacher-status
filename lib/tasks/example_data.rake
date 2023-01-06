@@ -20,26 +20,23 @@ namespace :example_data do
       FactoryBot.create(:staff, :confirmed, **staff)
     end
 
-    Country.all.each do |country|
-      country.regions.each do |region|
-        application_form_traits_for(region).each do |traits|
-          teacher = FactoryBot.create(:teacher)
-          application_form =
-            FactoryBot.create(:application_form, *traits, teacher:, region:)
+    Region.all.each do |region|
+      application_form_traits_for(region).each do |traits|
+        application_form =
+          FactoryBot.create(:application_form, *traits, region:)
 
-          next if application_form.draft?
+        next if application_form.draft?
 
-          assessment = AssessmentFactory.call(application_form:)
+        assessment = AssessmentFactory.call(application_form:)
 
-          next unless application_form.further_information_requested?
+        next unless application_form.further_information_requested?
 
-          FactoryBot.create(
-            :further_information_request,
-            :requested,
-            :with_items,
-            assessment:,
-          )
-        end
+        FactoryBot.create(
+          :further_information_request,
+          :requested,
+          :with_items,
+          assessment:,
+        )
       end
     end
   end
