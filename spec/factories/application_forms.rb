@@ -148,6 +148,7 @@ FactoryBot.define do
 
     trait :new_regs do
       created_at { Date.new(2023, 2, 1) }
+      needs_work_history { true }
     end
 
     trait :with_assessment do

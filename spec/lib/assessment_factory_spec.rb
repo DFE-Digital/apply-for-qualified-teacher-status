@@ -203,6 +203,33 @@ RSpec.describe AssessmentFactory do
             )
           end
         end
+
+        context "with a new regulations application form" do
+          let(:application_form) { create(:application_form, :new_regs) }
+
+          before(:all) do
+            FeatureFlags::FeatureFlag.activate(:application_work_history)
+          end
+          after(:all) do
+            FeatureFlags::FeatureFlag.deactivate(:application_work_history)
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.work_history.first
+
+            expect(section.checks).to eq(
+              %w[verify_school_details work_history_references],
+            )
+
+            expect(section.failure_reasons).to eq(
+              %w[
+                work_history_break
+                alternative_reference_email_address
+                school_details_cannot_be_verified
+              ],
+            )
+          end
+        end
       end
 
       describe "professional standing section" do
