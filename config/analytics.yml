@@ -93,6 +93,7 @@
     - id
     - code
     - created_at
+    - eligibility_enabled
     - updated_at
     - teaching_authority_address
     - teaching_authority_emails

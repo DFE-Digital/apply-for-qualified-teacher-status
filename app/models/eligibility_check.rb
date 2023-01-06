@@ -61,8 +61,13 @@ class EligibilityCheck < ApplicationRecord
 
   def country_code=(value)
     super(value)
-
-    regions = Region.joins(:country).where(country: { code: value })
+    regions =
+      Region.joins(:country).where(
+        country: {
+          eligibility_enabled: true,
+          code: value,
+        },
+      )
     self.region = regions.count == 1 ? regions.first : nil
   end
 
@@ -104,7 +109,11 @@ class EligibilityCheck < ApplicationRecord
 
   def country_eligibility_status
     return region_eligibility_status if region
-    Country.exists?(code: country_code) ? :region : :ineligible
+    if Country.where(eligibility_enabled: true).exists?(code: country_code)
+      :region
+    else
+      :ineligible
+    end
   end
 
   def region_eligibility_status
