@@ -146,6 +146,10 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
+    trait :new_regs do
+      created_at { Date.new(2023, 2, 1) }
+    end
+
     trait :with_assessment do
       after(:create) do |application_form, _evaluator|
         create(:assessment, application_form:)
