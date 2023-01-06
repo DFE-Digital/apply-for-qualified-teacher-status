@@ -6,6 +6,7 @@ module PageObjects
       set_url "/teacher/references/{slug}/edit"
 
       section :summary_list, GovukSummaryList, ".govuk-summary-list"
+      element :submit_button, ".govuk-button"
     end
   end
 end

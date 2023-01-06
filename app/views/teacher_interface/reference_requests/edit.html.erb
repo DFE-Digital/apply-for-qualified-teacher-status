@@ -22,3 +22,9 @@
   },
   changeable: true
 )) %>
+
+<% if @reference_request.responses_given? %>
+  <h3 class="govuk-heading-m">Submitting your response</h3>
+  <p class="govuk-body">By selecting the ‘Submit your response’ button, you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
+  <%= govuk_button_to "Submit your response", teacher_interface_reference_request_path, method: :patch %>
+<% end %>

@@ -25,9 +25,7 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
     and_i_see_the_answers
 
-    reference_request.update!(state: "received", received_at: Time.zone.now)
-
-    when_i_visit_the(:teacher_reference_received_page, slug:)
+    when_i_submit_the_response
     then_i_see_the(:teacher_reference_received_page, slug:)
     and_i_see_the_confirmation_panel
   end
@@ -46,6 +44,10 @@ RSpec.describe "Teacher reference", type: :system do
     expect(
       teacher_check_reference_request_answers_page.summary_list,
     ).to be_visible
+  end
+
+  def when_i_submit_the_response
+    teacher_check_reference_request_answers_page.submit_button.click
   end
 
   def and_i_see_the_confirmation_panel
