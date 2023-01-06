@@ -9,7 +9,7 @@
 #  age_range_min                             :integer
 #  age_range_note                            :text             default(""), not null
 #  recommendation                            :string           default("unknown"), not null
-#  recommended_at                            :date
+#  recommended_at                            :datetime
 #  started_at                                :datetime
 #  subjects                                  :text             default([]), not null, is an Array
 #  subjects_note                             :text             default(""), not null
