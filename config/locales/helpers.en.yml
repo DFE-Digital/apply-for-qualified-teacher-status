@@ -126,6 +126,8 @@ en:
         email: Email address
       teacher_interface_qualification_form:
         institution_country_location: Country of institution
+      teacher_interface_reference_request_additional_information_response_form:
+        additional_information_response: Is there anything else you’d like to tell us about this applicant?
       teacher_interface_reference_request_children_response_form:
         children_response_options:
           true: "Yes"
