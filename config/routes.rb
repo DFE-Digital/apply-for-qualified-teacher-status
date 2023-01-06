@@ -265,6 +265,11 @@ Rails.application.routes.draw do
 
         get "reports", to: "reference_requests#edit_reports"
         post "reports", to: "reference_requests#update_reports"
+
+        get "additional-information",
+            to: "reference_requests#edit_additional_information"
+        post "additional-information",
+             to: "reference_requests#update_additional_information"
       end
     end
   end

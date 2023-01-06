@@ -29,6 +29,12 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_edit_reference_request_reports_page, slug:)
 
     when_i_choose_yes_for_reports
+    then_i_see_the(
+      :teacher_edit_reference_request_additional_information_page,
+      slug:,
+    )
+
+    when_i_fill_in_additional_information
     then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
     and_i_see_the_answers
 
@@ -71,37 +77,48 @@ RSpec.describe "Teacher reference", type: :system do
     teacher_edit_reference_request_reports_page.submit_yes
   end
 
+  def when_i_fill_in_additional_information
+    teacher_edit_reference_request_additional_information_page.submit(
+      additional_information: "Some information.",
+    )
+  end
+
   def and_i_see_the_answers
     summary_list = teacher_check_reference_request_answers_page.summary_list
 
     expect(summary_list).to be_visible
 
-    expect(summary_list.rows.first.key.text).to eq(
+    expect(summary_list.rows[0].key.text).to eq(
       "Did the applicant work at the school for the dates they provided?",
     )
-    expect(summary_list.rows.first.value.text).to eq("Yes")
+    expect(summary_list.rows[0].value.text).to eq("Yes")
 
-    expect(summary_list.rows.second.key.text).to eq(
+    expect(summary_list.rows[1].key.text).to eq(
       "Did they work approximately 30 hours per week in this role?",
     )
-    expect(summary_list.rows.second.value.text).to eq("Yes")
+    expect(summary_list.rows[1].value.text).to eq("Yes")
 
-    expect(summary_list.rows.third.key.text).to eq(
+    expect(summary_list.rows[2].key.text).to eq(
       "Did the applicant work unsupervised with children aged somewhere between 5 and 16 years?",
     )
-    expect(summary_list.rows.third.value.text).to eq("Yes")
+    expect(summary_list.rows[2].value.text).to eq("Yes")
 
-    expect(summary_list.rows.fourth.key.text).to eq(
+    expect(summary_list.rows[3].key.text).to eq(
       "Was the applicant solely responsible for planning, preparing and delivering lessons" \
         " to at least 4 students at a time?",
     )
-    expect(summary_list.rows.fourth.value.text).to eq("Yes")
+    expect(summary_list.rows[3].value.text).to eq("Yes")
 
-    expect(summary_list.rows.fifth.key.text).to eq(
+    expect(summary_list.rows[4].key.text).to eq(
       "Was the applicant solely responsible for assessing and reporting on the progress of" \
         " the students?",
     )
-    expect(summary_list.rows.fifth.value.text).to eq("Yes")
+    expect(summary_list.rows[4].value.text).to eq("Yes")
+
+    expect(summary_list.rows[5].key.text).to eq(
+      "Is there anything else you’d like to tell us about this applicant?",
+    )
+    expect(summary_list.rows[5].value.text).to eq("Some information.")
   end
 
   def when_i_submit_the_response

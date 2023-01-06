@@ -137,8 +137,31 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect: edit_teacher_interface_reference_request_path,
+        if_success_then_redirect:
+          additional_information_teacher_interface_reference_request_path,
         if_failure_then_render: :edit_reports,
+      )
+    end
+
+    def edit_additional_information
+      @form =
+        ReferenceRequestAdditionalInformationResponseForm.new(
+          reference_request:,
+          additional_information_response:
+            reference_request.additional_information_response,
+        )
+    end
+
+    def update_additional_information
+      @form =
+        ReferenceRequestAdditionalInformationResponseForm.new(
+          additional_information_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect: edit_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_additional_information,
       )
     end
 
@@ -179,6 +202,12 @@ module TeacherInterface
       params.require(
         :teacher_interface_reference_request_reports_response_form,
       ).permit(:reports_response)
+    end
+
+    def additional_information_response_form_params
+      params.require(
+        :teacher_interface_reference_request_additional_information_response_form,
+      ).permit(:additional_information_response)
     end
   end
 end

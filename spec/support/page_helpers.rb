@@ -233,6 +233,11 @@ module PageHelpers
       PageObjects::TeacherInterface::DeleteWorkHistory.new
   end
 
+  def teacher_edit_reference_request_additional_information_page
+    @teacher_edit_reference_request_additional_information_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestAdditionalInformation.new
+  end
+
   def teacher_edit_reference_request_children_page
     @teacher_edit_reference_request_children_page ||=
       PageObjects::TeacherInterface::EditReferenceRequestChildren.new
