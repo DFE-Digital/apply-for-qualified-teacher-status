@@ -126,19 +126,29 @@ class ApplicationFormStatusUpdater
   end
 
   def work_history_status
-    return :not_started if has_work_history.nil?
+    all_work_histories_complete =
+      work_histories.all? do |work_history|
+        work_history_complete?(work_history)
+      end
 
-    if !has_work_history ||
-         (
-           !work_histories.empty? &&
-             work_histories.all? do |work_history|
-               work_history_complete?(work_history)
-             end
-         )
-      return :completed
+    if work_history_feature_active?
+      return :not_started if work_histories.empty?
+      return :in_progress unless all_work_histories_complete
+
+      months_count = WorkHistoryDuration.new(application_form:).count_months
+      return :in_progress unless months_count >= 9
+
+      :completed
+    else
+      return :not_started if has_work_history.nil?
+
+      if !has_work_history ||
+           (!work_histories.empty? && all_work_histories_complete)
+        :completed
+      else
+        :in_progress
+      end
     end
-
-    :in_progress
   end
 
   def work_history_complete?(work_history)
@@ -158,6 +168,10 @@ class ApplicationFormStatusUpdater
       values.append(work_history.end_date)
     end
 
+    if work_history_feature_active?
+      values += [work_history.hours_per_week, work_history.contact_job]
+    end
+
     values.all?(&:present?)
   end
 
@@ -173,5 +187,9 @@ class ApplicationFormStatusUpdater
     return :not_started if values.all?(&:blank?)
     return :completed if values.all?(&:present?)
     :in_progress
+  end
+
+  def work_history_feature_active?
+    FeatureFlags::FeatureFlag.active?(:application_work_history)
   end
 end

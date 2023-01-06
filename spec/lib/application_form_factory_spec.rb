@@ -24,6 +24,28 @@ RSpec.describe ApplicationFormFactory do
       end
     end
 
+    context "when new regulations are active" do
+      before(:all) do
+        FeatureFlags::FeatureFlag.activate(:application_work_history)
+      end
+      after(:all) do
+        FeatureFlags::FeatureFlag.deactivate(:application_work_history)
+      end
+
+      let(:region) { create(:region) }
+
+      it "creates an application form" do
+        expect { call }.to change(ApplicationForm, :count).by(1)
+      end
+
+      it "sets the rules" do
+        application_form = call
+        expect(application_form.needs_work_history).to be true
+        expect(application_form.needs_written_statement).to be false
+        expect(application_form.needs_registration_number).to be false
+      end
+    end
+
     context "with a written checks region" do
       let(:region) { create(:region, :written_checks) }
 

@@ -288,10 +288,15 @@
     - city
     - country_code
     - job
-    - contact_email
     - contact_name
+    - contact_email
+    - contact_job
+    - end_date_is_estimate
     - start_date
+    - start_date_is_estimate
     - still_employed
     - end_date
+    - end_date_is_estimate
+    - hours_per_week
     - created_at
     - updated_at

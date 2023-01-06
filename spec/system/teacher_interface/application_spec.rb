@@ -1052,7 +1052,7 @@ RSpec.describe "Teacher application", type: :system do
       "Check your answers",
     )
     expect(
-      teacher_check_work_histories_page.summary_lists.first,
+      teacher_check_work_histories_page.summary_list_cards.first,
     ).to have_content("Have you worked professionally as a teacher?\tYes")
   end
 
@@ -1135,8 +1135,8 @@ RSpec.describe "Teacher application", type: :system do
   end
 
   def then_i_see_delete_confirmation_form
-    expect(delete_confirmation_page).to have_title("Delete")
-    expect(delete_confirmation_page.heading).to have_content(
+    expect(teacher_delete_form_page).to have_title("Delete")
+    expect(teacher_delete_form_page.heading).to have_content(
       "Are you sure you want to delete",
     )
   end

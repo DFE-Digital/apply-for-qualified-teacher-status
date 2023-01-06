@@ -1,0 +1,62 @@
+# frozen_string_literal: true
+
+module TeacherInterface
+  class WorkHistorySchoolForm < BaseForm
+    include ActiveRecord::AttributeAssignment
+
+    attr_accessor :work_history
+    attribute :meets_all_requirements, :boolean
+    attribute :school_name, :string
+    attribute :city, :string
+    attribute :country_location, :string
+    attribute :job, :string
+    attribute :hours_per_week, :integer
+    attribute :start_date
+    attribute :start_date_is_estimate, :boolean
+    attribute :still_employed, :boolean
+    attribute :end_date
+    attribute :end_date_is_estimate, :boolean
+
+    validates :meets_all_requirements, presence: true
+    validates :school_name, presence: true
+    validates :city, presence: true
+    validates :country_location, presence: true
+    validates :job, presence: true
+    validates :hours_per_week, presence: true
+    validates :start_date, date: true
+    validates :still_employed, inclusion: [true, false]
+    validates :end_date, date: true, unless: :still_employed
+    validates_with DateComparisonValidator, unless: :still_employed
+
+    def initialize(values)
+      if (country_code = values.delete(:country_code))
+        values[:country_location] = CountryCode.to_location(country_code)
+      end
+
+      super(values)
+    end
+
+    def update_model
+      work_history.update!(
+        school_name:,
+        city:,
+        country_code:,
+        job:,
+        hours_per_week:,
+        start_date:,
+        start_date_is_estimate: start_date_is_estimate || false,
+        still_employed:,
+        end_date:,
+        end_date_is_estimate: end_date_is_estimate || false,
+      )
+    end
+
+    delegate :application_form, to: :work_history
+
+    private
+
+    def country_code
+      CountryCode.from_location(country_location)
+    end
+  end
+end

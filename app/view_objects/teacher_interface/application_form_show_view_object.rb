@@ -62,28 +62,27 @@ class TeacherInterface::ApplicationFormShowViewObject
   end
 
   def path_for_task_item(key)
-    if key == :identification_document
-      return(
-        url_helpers.teacher_interface_application_form_document_path(
-          application_form.identification_document,
-        )
+    case key
+    when :identification_document
+      url_helpers.teacher_interface_application_form_document_path(
+        application_form.identification_document,
       )
-    end
-
-    if key == :written_statement
-      return(
-        url_helpers.teacher_interface_application_form_document_path(
-          application_form.written_statement_document,
-        )
+    when :written_statement
+      url_helpers.teacher_interface_application_form_document_path(
+        application_form.written_statement_document,
       )
-    end
-
-    key = :work_histories if key == :work_history
-
-    begin
-      url_helpers.send("teacher_interface_application_form_#{key}_path")
-    rescue NoMethodError
-      url_helpers.send("#{key}_teacher_interface_application_form_path")
+    when :work_history
+      if FeatureFlags::FeatureFlag.active?(:application_work_history)
+        url_helpers.teacher_interface_application_form_new_regs_work_histories_path
+      else
+        url_helpers.teacher_interface_application_form_work_histories_path
+      end
+    else
+      begin
+        url_helpers.send("teacher_interface_application_form_#{key}_path")
+      rescue NoMethodError
+        url_helpers.send("#{key}_teacher_interface_application_form_path")
+      end
     end
   end
 

@@ -1,0 +1,40 @@
+<% content_for :page_title, t(".title") %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_new_regs_work_histories_path) %>
+
+<h1 class="govuk-heading-l">You’ve told us about <%= pluralize(@months_count, "month") %> of work experience so far</h1>
+
+<h2 class="govuk-heading-s">How we calculate your work experience</h2>
+
+<p class="govuk-body">We use a 30-hour working week to calculate your experience.</p>
+
+<p class="govuk-body">If you add a role where you worked <span class="govuk-!-font-weight-bold">under</span> 30 hours per week, we’ll convert the hours you enter into 30-hour weeks. That means the number of months you’ve added so far may be smaller than you expected.</p>
+
+<div class="govuk-inset-text">
+  For example, if you tell us about a role where you worked 15 hours per week for 18 months, we’ll convert this to 9 months of 30-hour weeks. We’ll then add this role to your total as 9 months.
+</div>
+
+<h3 class="govuk-heading-s">Adding more roles</h3>
+
+<p class="govuk-body">You can add as many roles as you want, but you must show at least 9 months of active teaching experience.</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>If you have more than 9 months but under 20, you may be awarded QTS, but you’ll need to do a 2-year period of statutory induction.</li>
+  <li>If you have more than 20 months, there’s no need to do an induction period.</li>
+</ul>
+
+<%= govuk_details(summary_text: "I do not have more than 9 months of teaching experience") do %>
+  <p class="govuk-body">QTS requires a minimum of 9 months of active teaching experience. We can keep your application open for 6 months, so you can continue later, if you gain enough experience in that time.</p>
+
+  <p class="govuk-body">Alternatively, you can <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" class="govuk-link" rel="noreferrer noopener" target="_blank">explore other ways to teach in England (opens in new tab)</a>.</p>
+<% end %>
+
+<%= form_with model: @form, url: %i[add_another teacher_interface application_form new_regs work_histories], method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons :add_another,
+                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
+                                       :value,
+                                       legend: { tag: "h2", size: "m" } %>
+
+  <%= f.govuk_submit %>
+<% end %>

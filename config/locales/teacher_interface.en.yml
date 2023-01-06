@@ -35,6 +35,16 @@ en:
           age_range: Tell us more about the age range you can teach
           satisfactory_evidence_work_history: Tell us more about your work history
           registration_number: Tell us your registration number
+    new_regs:
+      work_histories:
+        add_another:
+          title: Add another role
+        check_collection:
+          title: Check your answers
+        check_member:
+          title: Check your answers
+        delete:
+          title: Delete work history
 
   application_form:
     tasks:
@@ -93,6 +103,12 @@ en:
     work_history:
       current_or_most_recent_role: Your current or most recent role
       previous_role: Previous role
+      school:
+        heading:
+          current_or_most_recent_role: Add your current or most recent role
+          previous_role: Add another role
+      contact:
+        heading: Who should we contact to verify this role?
     summary:
       name: Name
       country: Country trained in
@@ -145,6 +161,10 @@ en:
           attributes:
             add_another:
               inclusion: Select whether you need to upload another page
+        teacher_interface/add_another_work_history_form:
+          attributes:
+            add_another:
+              inclusion: Select whether you need to add another work history
         teacher_interface/delete_qualification_form:
           attributes:
             confirm:
@@ -267,3 +287,36 @@ en:
               blank: Enter an email
             still_employed:
               inclusion: Tell us whether you are still employed at this school
+        teacher_interface/work_history_contact_form:
+          attributes:
+            contact_name:
+              blank: Enter the full name
+            contact_job:
+              blank: Enter this person’s job title
+            contact_email:
+              blank: Enter the email address
+        teacher_interface/work_history_school_form:
+          attributes:
+            meets_all_requirements:
+              blank: The role must meet all the requirements
+            school_name:
+              blank: Enter the school name
+            city:
+              blank: Enter the city
+            country_location:
+              blank: Enter the country
+            job:
+              blank: Enter the job role
+            hours_per_week:
+              blank: Enter the hours per week
+            start_date:
+              blank: Enter the start date in the format 3 1980
+              invalid: Enter the start date in the format 3 1980
+              future: Start date must be in the past
+            still_employed:
+              inclusion: Tell us whether you are still employed at this school
+            end_date:
+              blank: Enter the end date in the format 3 1980
+              invalid: Enter the end date in the format 3 1980
+              future: End date must be in the past
+              comparison: End date must be after start date

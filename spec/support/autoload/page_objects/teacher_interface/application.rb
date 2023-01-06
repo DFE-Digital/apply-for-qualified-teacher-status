@@ -19,6 +19,10 @@ module PageObjects
       def english_language_task_item
         task_list.find_item("Verify your English language proficiency")
       end
+
+      def work_history_task_item
+        task_list.find_item("Add your work history")
+      end
     end
   end
 end

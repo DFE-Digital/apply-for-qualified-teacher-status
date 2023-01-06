@@ -263,6 +263,47 @@ RSpec.describe ApplicationFormStatusUpdater do
           it { is_expected.to eq("completed") }
         end
       end
+
+      context "when new regulations are active" do
+        before(:all) do
+          FeatureFlags::FeatureFlag.activate(:application_work_history)
+        end
+        after(:all) do
+          FeatureFlags::FeatureFlag.deactivate(:application_work_history)
+        end
+
+        context "with has no work history" do
+          let(:application_form) do
+            create(:application_form, has_work_history: false)
+          end
+          it { is_expected.to eq("not_started") }
+        end
+
+        context "with has work history but no work history" do
+          let(:application_form) do
+            create(:application_form, has_work_history: true)
+          end
+          it { is_expected.to eq("not_started") }
+        end
+
+        context "with an incomplete work history" do
+          let(:application_form) do
+            create(:application_form).tap do |application_form|
+              create(:work_history, application_form:)
+            end
+          end
+          it { is_expected.to eq("in_progress") }
+        end
+
+        context "with a complete work history" do
+          let(:application_form) do
+            create(:application_form).tap do |application_form|
+              create(:work_history, :completed, application_form:)
+            end
+          end
+          it { is_expected.to eq("completed") }
+        end
+      end
     end
 
     describe "written statement" do
