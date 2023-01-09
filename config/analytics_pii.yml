@@ -31,6 +31,8 @@
     - complete_date
     - certificate_date
     - part_of_university_degree
+  :reference_requests:
+    - additional_information_response
   :selected_failure_reasons:
     - assessor_feedback
   :staff:

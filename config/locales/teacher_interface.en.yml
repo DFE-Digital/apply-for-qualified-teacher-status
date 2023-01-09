@@ -48,6 +48,12 @@ en:
           title: Check your answers
         delete:
           title: Delete work history
+    reference_requests:
+      show:
+        title: You’ve been asked to act as a reference
+      edit:
+        title: Check your answers
+        reference_requested: Reference requested
 
   application_form:
     tasks:
@@ -243,6 +249,26 @@ en:
               invalid: Enter the certificate date in the format 27 3 1980
               future: Certificate date must be in the past
               comparison: Certificate date must be after completion date
+        teacher_interface/reference_request_children_response_form:
+          attributes:
+            children_response:
+              inclusion: Tell us whether the applicant worked unsupervised with children aged somewhere between 5 and 16 years
+        teacher_interface/reference_request_dates_response_form:
+          attributes:
+            dates_response:
+              inclusion: Tell us whether the applicant worked at the school for the dates they provided
+        teacher_interface/reference_request_hours_response_form:
+          attributes:
+            hours_response:
+              inclusion: Tell us whether the applicant worked at the school for approximately the number of hours per week they provided
+        teacher_interface/reference_request_lessons_response_form:
+          attributes:
+            lessons_response:
+              inclusion: Tell us whether the applicant was solely responsible for planning, preparing and delivering lessons to at least 4 students at a time
+        teacher_interface/reference_request_reports_response_form:
+          attributes:
+            reports_response:
+              inclusion: Tell us whether the applicant was solely responsible for assessing and reporting on the progress of the students
         teacher_interface/sanction_confirmation_form:
           attributes:
             confirmed_no_sanctions:

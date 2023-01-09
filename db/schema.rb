@@ -242,6 +242,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_130126) do
     t.index ["application_form_id"], name: "index_qualifications_on_application_form_id"
   end
 
+  create_table "reference_requests", force: :cascade do |t|
+    t.string "slug", null: false
+    t.bigint "assessment_id", null: false
+    t.bigint "work_history_id", null: false
+    t.string "state", null: false
+    t.datetime "received_at"
+    t.boolean "dates_response"
+    t.boolean "hours_response"
+    t.boolean "children_response"
+    t.boolean "lessons_response"
+    t.boolean "reports_response"
+    t.text "additional_information_response", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_reference_requests_on_assessment_id"
+    t.index ["slug"], name: "index_reference_requests_on_slug", unique: true
+    t.index ["work_history_id"], name: "index_reference_requests_on_work_history_id"
+  end
+
   create_table "regions", force: :cascade do |t|
     t.bigint "country_id", null: false
     t.string "name", default: "", null: false
@@ -415,6 +434,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_130126) do
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "staff", column: "author_id"
   add_foreign_key "qualifications", "application_forms"
+  add_foreign_key "reference_requests", "assessments"
+  add_foreign_key "reference_requests", "work_histories"
   add_foreign_key "regions", "countries"
   add_foreign_key "reminder_emails", "further_information_requests"
   add_foreign_key "selected_failure_reasons", "assessment_sections"

@@ -27,7 +27,12 @@ RSpec.describe "Personas", type: :system do
       when_i_visit_the(:personas_page)
 
       when_i_sign_in_as_a_teacher_persona
-      then_i_see_the_teacher_application_form_page
+      then_i_see_the(:teacher_application_page)
+
+      when_i_visit_the(:personas_page)
+
+      when_i_sign_in_as_a_reference_persona
+      then_i_see_the(:teacher_reference_requested_page)
     end
   end
 
@@ -54,6 +59,8 @@ RSpec.describe "Personas", type: :system do
 
     teacher = create(:teacher, email: "teacher@example.com")
     create(:application_form, teacher:)
+
+    create(:reference_request, :requested)
   end
 
   def when_i_sign_in_as_a_staff_persona
@@ -62,6 +69,10 @@ RSpec.describe "Personas", type: :system do
 
   def when_i_sign_in_as_a_teacher_persona
     personas_page.teachers.buttons.first.click
+  end
+
+  def when_i_sign_in_as_a_reference_persona
+    personas_page.references.buttons.first.click
   end
 
   def and_i_see_no_personas
@@ -76,10 +87,5 @@ RSpec.describe "Personas", type: :system do
 
   def and_i_see_the_feature_disabled_message
     expect(personas_page).to have_content("Personas feature not active.")
-  end
-
-  def then_i_see_the_teacher_application_form_page
-    expect(page).to have_content("Application incomplete")
-    expect(page).to have_content("You have completed 0 of 3 sections.")
   end
 end

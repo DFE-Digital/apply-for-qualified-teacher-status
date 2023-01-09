@@ -1,0 +1,15 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("helpers.legend.teacher_interface_reference_request_lessons_response_form.lessons_response")}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_reference_request_path) %>
+
+<%= form_with model: @form, url: lessons_teacher_interface_reference_request_path do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l">Question 4 of 5</span>
+
+  <%= f.govuk_collection_radio_buttons :lessons_response,
+                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
+                                       :value,
+                                       legend: { tag: "h1", size: "l" } %>
+
+  <%= f.govuk_submit %>
+<% end %>

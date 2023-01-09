@@ -1,0 +1,29 @@
+<% content_for :page_title, t(".title") %>
+
+<% if @reference_request.requested? %>
+  <h1 class="govuk-heading-xl"><%= t("service.name.teacher") %></h1>
+
+  <h2 class="govuk-heading-m"><%= t(".title") %></h2>
+
+  <p class="govuk-body"><%= application_form_full_name(@application_form) %> is applying for qualified teacher status (QTS) in England.</p>
+
+  <p class="govuk-body">As part of our assessment, we need to understand their work history and experience. They’ve provided your details to help us verify that they worked at:</p>
+
+  <%= govuk_inset_text do %>
+    <p class="govuk-body">
+      <%= @work_history.school_name %> from <%= @work_history.start_date.strftime("%B %Y") %> to <%= (@work_history.end_date || Time.zone.today).strftime("%B %Y") %>
+    </p>
+  <% end %>
+
+  <p class="govuk-body">We need to to ask you a few questions about the applicant’s role. It should take no longer than 5 minutes.</p>
+
+  <%= govuk_start_button(text: "Start now", href: dates_teacher_interface_reference_request_path) %>
+<% else %>
+  <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
+
+  <h3 class="govuk-heading-m">Thank you for submitting your response.</h3>
+
+  <p class="govuk-body">The QTS assessor will now review your response and continue their review of the applicant.</p>
+
+  <p class="govuk-body">You do not need to do anything else. You can now close this page.</p>
+<% end %>

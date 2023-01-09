@@ -1,11 +1,18 @@
+# frozen_string_literal: true
+
 class PersonasController < ApplicationController
   include EligibilityCurrentNamespace
 
   before_action :ensure_feature_active
-  before_action :load_teacher_personas
+  before_action :load_teacher_personas, only: :index
 
   def index
     @staff = Staff.all
+
+    @reference_requests =
+      ReferenceRequest.states.values.filter_map do |state|
+        ReferenceRequest.find_by(state:)
+      end
   end
 
   def staff_sign_in

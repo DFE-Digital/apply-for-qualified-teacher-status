@@ -46,5 +46,16 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :with_reference_request do
+      after(:create) do |assessment, _evaluator|
+        create(
+          :reference_request,
+          :requested,
+          assessment:,
+          work_history: assessment.application_form.work_histories.first,
+        )
+      end
+    end
   end
 end

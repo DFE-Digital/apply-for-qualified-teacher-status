@@ -200,6 +200,11 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckQualifications.new
   end
 
+  def teacher_check_reference_request_answers_page
+    @teacher_check_reference_request_answers_page ||=
+      PageObjects::TeacherInterface::CheckReferenceRequestAnswers.new
+  end
+
   def teacher_check_work_history_page
     @teacher_check_work_history_page ||=
       PageObjects::TeacherInterface::CheckWorkHistory.new
@@ -226,6 +231,36 @@ module PageHelpers
   def teacher_delete_work_history_page
     @teacher_delete_work_history_page =
       PageObjects::TeacherInterface::DeleteWorkHistory.new
+  end
+
+  def teacher_edit_reference_request_additional_information_page
+    @teacher_edit_reference_request_additional_information_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestAdditionalInformation.new
+  end
+
+  def teacher_edit_reference_request_children_page
+    @teacher_edit_reference_request_children_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestChildren.new
+  end
+
+  def teacher_edit_reference_request_dates_page
+    @teacher_edit_reference_request_dates_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestDates.new
+  end
+
+  def teacher_edit_reference_request_hours_page
+    @teacher_edit_reference_request_hours_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestHours.new
+  end
+
+  def teacher_edit_reference_request_lessons_page
+    @teacher_edit_reference_request_lessons_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestLessons.new
+  end
+
+  def teacher_edit_reference_request_reports_page
+    @teacher_edit_reference_request_reports_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestReports.new
   end
 
   def teacher_edit_work_history_contact_page
@@ -266,6 +301,16 @@ module PageHelpers
   def teacher_new_work_history_page
     @teacher_new_work_history_page ||=
       PageObjects::TeacherInterface::NewWorkHistory.new
+  end
+
+  def teacher_reference_received_page
+    @teacher_reference_received_page ||=
+      PageObjects::TeacherInterface::ReferenceReceived.new
+  end
+
+  def teacher_reference_requested_page
+    @teacher_reference_requested_page ||=
+      PageObjects::TeacherInterface::ReferenceRequested.new
   end
 
   def teacher_retry_otp_page

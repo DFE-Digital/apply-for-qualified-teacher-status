@@ -245,6 +245,33 @@ Rails.application.routes.draw do
                   only: %i[edit update]
       end
     end
+
+    resources :reference_requests,
+              path: "/references",
+              param: :slug,
+              only: %i[show edit update] do
+      member do
+        get "dates", to: "reference_requests#edit_dates"
+        post "dates", to: "reference_requests#update_dates"
+
+        get "hours", to: "reference_requests#edit_hours"
+        post "hours", to: "reference_requests#update_hours"
+
+        get "children", to: "reference_requests#edit_children"
+        post "children", to: "reference_requests#update_children"
+
+        get "lessons", to: "reference_requests#edit_lessons"
+        post "lessons", to: "reference_requests#update_lessons"
+
+        get "reports", to: "reference_requests#edit_reports"
+        post "reports", to: "reference_requests#update_reports"
+
+        get "additional-information",
+            to: "reference_requests#edit_additional_information"
+        post "additional-information",
+             to: "reference_requests#update_additional_information"
+      end
+    end
   end
 
   devise_for :teachers,

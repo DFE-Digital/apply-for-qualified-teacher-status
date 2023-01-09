@@ -185,6 +185,21 @@
     - created_at
     - updated_at
     - part_of_university_degree
+  :reference_requests:
+    - id
+    - slug
+    - assessment_id
+    - work_history_id
+    - state
+    - received_at
+    - dates_response
+    - hours_response
+    - children_response
+    - lessons_response
+    - reports_response
+    - additional_information_response
+    - created_at
+    - updated_at
   :regions:
     - id
     - country_id
