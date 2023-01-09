@@ -132,6 +132,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         let!(:further_information_request) do
           create(:further_information_request, :received, assessment:)
         end
+
+        before do
+          assessment.update!(recommendation: "request_further_information")
+        end
+
         it do
           is_expected.to eq(
             "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \

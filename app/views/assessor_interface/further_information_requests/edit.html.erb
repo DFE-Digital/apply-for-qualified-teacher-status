@@ -9,7 +9,7 @@
   <%= render(CheckYourAnswersSummary::Component.new(**item.fetch(:check_your_answers))) %>
 <% end %>
 
-<% if policy(:assessor).update? %>
+<% if policy(:assessor).update? && @view_object.further_information_request.passed.nil? %>
   <%= form_with model: @further_information_request_form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
     <%= f.govuk_error_summary %>
 

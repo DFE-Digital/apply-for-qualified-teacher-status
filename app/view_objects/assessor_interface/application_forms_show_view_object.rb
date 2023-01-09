@@ -51,10 +51,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       further_information_request = further_information_requests[index]
 
       if further_information_request.received? &&
-           (
-             further_information_request.passed.nil? ||
-               assessment.request_further_information?
-           )
+           assessment.request_further_information?
         url_helpers.edit_assessor_interface_application_form_assessment_further_information_request_path(
           application_form,
           assessment,
