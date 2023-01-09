@@ -30,7 +30,6 @@ en:
       show:
         failure_reason:
           age_range: Tell us more about the age range you can teach
-          alternative_reference_email_address: Provide an alternative email address for this reference
           applicant_already_dqt: Additional personal information
           qualifications_dont_match_other_details: Tell us more about your qualifications
           qualifications_dont_match_subjects: Tell us more about the subjects you can teach

@@ -106,7 +106,6 @@ en:
           additional_degree_certificate_illegible: An additional degree certificate (or translation) is illegible or in a format that we cannot accept.
           additional_degree_transcript_illegible: An additional degree transcript (or translation) is illegible or in a format that we cannot accept.
           age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
-          alternative_reference_email_address: We need to query whether the applicant can provide an alternative email address, for example, where the address provided uses a web-based service, such as Gmail.com.
           applicant_already_dqt: There’s a potential existing match for this applicant. We need to ask for an additional identifier.
           applicant_already_qts: The applicant already holds QTS and induction exemption.
           application_and_qualification_names_do_not_match: The name on the online application form is different from 1 or more qualification documents, but no evidence of change of name was provided.
@@ -175,8 +174,6 @@ en:
             additional_degree_transcript_illegible_notes:
               blank: Enter a note to the applicant
             age_range_notes:
-              blank: Enter a note to the applicant
-            alternative_reference_email_address_notes:
               blank: Enter a note to the applicant
             applicant_already_dqt_notes:
               blank: Enter a note to the applicant

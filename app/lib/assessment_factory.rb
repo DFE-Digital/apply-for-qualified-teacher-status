@@ -139,7 +139,6 @@ class AssessmentFactory
       if under_new_regs
         [
           FailureReasons::WORK_HISTORY_BREAK,
-          FailureReasons::ALTERNATIVE_REFERENCE_EMAIL_ADDRESS,
           FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
         ]
       else

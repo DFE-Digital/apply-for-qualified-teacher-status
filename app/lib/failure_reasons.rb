@@ -24,7 +24,6 @@ class FailureReasons
       "additional_degree_certificate_illegible",
     ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE =
       "additional_degree_transcript_illegible",
-    ALTERNATIVE_REFERENCE_EMAIL_ADDRESS = "alternative_reference_email_address",
     APPLICANT_ALREADY_DQT = "applicant_already_dqt",
     APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH =
       "application_and_qualification_names_do_not_match",

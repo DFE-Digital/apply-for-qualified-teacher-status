@@ -222,11 +222,7 @@ RSpec.describe AssessmentFactory do
             )
 
             expect(section.failure_reasons).to eq(
-              %w[
-                work_history_break
-                alternative_reference_email_address
-                school_details_cannot_be_verified
-              ],
+              %w[work_history_break school_details_cannot_be_verified],
             )
           end
         end
