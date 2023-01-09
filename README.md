@@ -56,6 +56,7 @@ Install dependencies using your preferred method, using `asdf` or `rbenv` or
 # The first time
 brew install asdf # Mac-specific
 asdf plugin add ruby
+asdf plugin add postgres # Unless you are managing postgres yourself
 asdf plugin add nodejs
 asdf plugin add yarn
 asdf plugin add terraform
@@ -75,12 +76,20 @@ brew install libvips
 
 #### PostgreSQL
 
-You’ll need to install PostgreSQL 13.x. The way to do this is different on each operating system, but on macOS you can try the following:
+You’ll need to install PostgreSQL 13.x. This can be installed via `asdf`, otherwise the way to do this is different on each operating system.
+
+On macOS you can try the following:
 
 ```bash
 brew install postgresql@13
 # Add to utilities to the path
 echo 'export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"' >> ~/.zshrc
+```
+
+Start `postgres` database service if installed via `asdf`:
+
+```sh
+pg_ctl start
 ```
 
 Set up the `postgres` user if it doesn't exist:
