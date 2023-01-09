@@ -43,10 +43,16 @@ class PersonasController < ApplicationController
       .product(
         %w[online written none],
         %w[draft submitted further_information_requested awarded declined],
+        [true, false],
       )
       .tap { |personas| personas.insert(2, *personas.slice!(8, 2)) }
-      .map do |status_check, sanction_check, state|
-        { status_check:, sanction_check:, state: }
+      .map do |status_check, sanction_check, state, created_under_new_regulations|
+        {
+          status_check:,
+          sanction_check:,
+          state:,
+          created_under_new_regulations:,
+        }
       end
 
   def load_teacher_personas
@@ -73,7 +79,9 @@ class PersonasController < ApplicationController
 
             region.status_check == persona[:status_check] &&
               region.sanction_check == persona[:sanction_check] &&
-              application_form.state == persona[:state]
+              application_form.state == persona[:state] &&
+              application_form.created_under_new_regulations? ==
+                persona[:created_under_new_regulations]
           end
 
         persona.merge(teacher: found_teacher) if found_teacher

@@ -133,6 +133,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
       before do
         create(
           :application_form,
+          :new_regs,
           teacher: current_teacher,
           needs_work_history: false,
           needs_written_statement: false,

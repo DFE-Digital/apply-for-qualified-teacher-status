@@ -20,25 +20,8 @@ namespace :example_data do
       FactoryBot.create(:staff, :confirmed, **staff)
     end
 
-    Country.all.each do |country|
-      country.regions.each do |region|
-        application_form_traits_for(region).each do |traits|
-          teacher = FactoryBot.create(:teacher)
-          application_form =
-            FactoryBot.create(:application_form, *traits, teacher:, region:)
-          assessment = AssessmentFactory.call(application_form:)
-
-          next unless application_form.further_information_requested?
-
-          FactoryBot.create(
-            :further_information_request,
-            :requested,
-            :with_items,
-            assessment:,
-          )
-        end
-      end
-    end
+    create_application_forms(new_regs: false)
+    create_application_forms(new_regs: true)
   end
 
   desc "Reset database suitable for generating example data."
@@ -48,6 +31,7 @@ namespace :example_data do
     end
 
     TimelineEvent.delete_all
+    FurtherInformationRequest.delete_all
     SelectedFailureReason.delete_all
     AssessmentSection.delete_all
     Assessment.delete_all
@@ -118,32 +102,6 @@ def application_form_traits_for(region)
 
   [
     [],
-    [:with_personal_information],
-    %i[with_personal_information with_alternative_name],
-    %i[
-      with_personal_information
-      with_alternative_name
-      with_name_change_document
-    ],
-    %i[with_personal_information with_completed_qualification],
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-    ],
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-    ],
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-    ],
     %i[
       with_personal_information
       with_completed_qualification
@@ -160,28 +118,39 @@ def application_form_traits_for(region)
     ] + evidential_traits << :submitted,
     %i[
       with_personal_information
-      with_alternative_name
-      with_name_change_document
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-    ] + evidential_traits << :submitted,
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-    ] + evidential_traits << :submitted << :further_information_requested,
-    %i[
-      with_personal_information
-      with_alternative_name
-      with_name_change_document
       with_completed_qualification
       with_identification_document
       with_age_range
       with_subjects
     ] + evidential_traits << :submitted << :further_information_requested,
   ]
+end
+
+def create_application_forms(new_regs:)
+  new_regs_date = Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
+  old_regs_date = new_regs_date - 1.day
+
+  Region.all.each do |region|
+    application_form_traits_for(region).each do |traits|
+      traits << :new_regs if new_regs
+
+      created_at = new_regs ? new_regs_date : old_regs_date
+
+      application_form =
+        FactoryBot.create(:application_form, *traits, region:, created_at:)
+
+      next if application_form.draft?
+
+      assessment = AssessmentFactory.call(application_form:)
+
+      next unless application_form.further_information_requested?
+
+      FactoryBot.create(
+        :further_information_request,
+        :requested,
+        :with_items,
+        assessment:,
+      )
+    end
+  end
 end
