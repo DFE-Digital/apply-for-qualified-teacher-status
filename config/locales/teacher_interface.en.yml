@@ -228,7 +228,7 @@ en:
               blank: Enter the name of the institution
             institution_country_location:
               blank: Enter the country of the institution
-              inclusion: The country of institution must be the country in which you’re recognised as a teacher.
+              inclusion: You must have completed your teacher training in the country where you’re recognised as a teacher to be eligible for QTS.
             start_date:
               blank: Enter the start date in the format 27 3 1980
               invalid: Enter the start date in the format 27 3 1980
