@@ -705,6 +705,15 @@ COUNTRIES = {
   "PT" => [],
   "DK" => [],
   "FI" => [],
+  "GH" => [],
+  "HK" => [],
+  "IN" => [],
+  "JM" => [],
+  "NG" => [],
+  "SG" => [],
+  "ZA" => [],
+  "UA" => [],
+  "ZW" => [],
 }.freeze
 
 ENGLISH_LANGUAGE_PROVIDERS = [
