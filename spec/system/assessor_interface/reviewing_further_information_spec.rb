@@ -42,6 +42,21 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     and_i_see_a_decline_qts_option
   end
 
+  it "further information request passed" do
+    @further_information_request.update!(passed: true)
+
+    when_i_visit_the(:assessor_application_page, application_id:)
+    and_i_click_review_requested_information
+    then_i_see_the(
+      :review_further_information_request_page,
+      application_id:,
+      assessment_id:,
+      further_information_request_id:,
+    )
+    and_i_see_the_check_your_answers_items
+    and_i_do_not_see_the_review_further_information_form
+  end
+
   private
 
   def given_there_is_an_application_form_with_failure_reasons
@@ -87,6 +102,10 @@ RSpec.describe "Assessor reviewing further information", type: :system do
 
   def and_i_see_a_decline_qts_option
     expect(complete_assessment_page.decline_qts).to_not be_nil
+  end
+
+  def and_i_do_not_see_the_review_further_information_form
+    expect(review_further_information_request_page).not_to have_form
   end
 
   def application_form
