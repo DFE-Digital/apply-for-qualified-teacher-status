@@ -38,8 +38,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           perform
         end
 
-        it "doesn't raise an error" do
-          expect { perform }.to_not raise_error
+        it "doesn't queue another job" do
+          expect { perform }.to_not have_enqueued_job(UpdateDQTTRNRequestJob)
         end
       end
 
@@ -78,13 +78,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "marks the request as pending" do
-          perform_rescue_exception
+          perform
           expect(dqt_trn_request.reload.state).to eq("pending")
         end
 
         it "doesn't award QTS" do
           expect(AwardQTS).to_not receive(:call)
-          perform_rescue_exception
+          perform
         end
 
         it "changes the state" do
@@ -93,13 +93,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
             user: "DQT",
             new_state: "potential_duplicate_in_dqt",
           )
-          perform_rescue_exception
+          perform
         end
 
-        it "raises a still pending error" do
-          expect { perform }.to raise_error(
-            UpdateDQTTRNRequestJob::StillPending,
-          )
+        it "queues another job" do
+          expect { perform }.to have_enqueued_job(UpdateDQTTRNRequestJob)
         end
       end
     end
@@ -128,8 +126,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           perform
         end
 
-        it "doesn't raise an error" do
-          expect { perform }.to_not raise_error
+        it "doesn't queue another job" do
+          expect { perform }.to_not have_enqueued_job(UpdateDQTTRNRequestJob)
         end
       end
 
@@ -168,13 +166,13 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "marks the request as pending" do
-          perform_rescue_exception
+          perform
           expect(dqt_trn_request.reload.state).to eq("pending")
         end
 
         it "doesn't award QTS" do
           expect(AwardQTS).to_not receive(:call)
-          perform_rescue_exception
+          perform
         end
 
         it "changes the state" do
@@ -183,13 +181,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
             user: "DQT",
             new_state: "potential_duplicate_in_dqt",
           )
-          perform_rescue_exception
+          perform
         end
 
-        it "raises a still pending error" do
-          expect { perform }.to raise_error(
-            UpdateDQTTRNRequestJob::StillPending,
-          )
+        it "queues another job" do
+          expect { perform }.to have_enqueued_job(UpdateDQTTRNRequestJob)
         end
       end
     end
@@ -209,11 +205,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
       it "doesn't change the state" do
         expect(ChangeApplicationFormState).to_not receive(:call)
-        perform_rescue_exception
+        perform
       end
 
-      it "doesn't raise an error" do
-        expect { perform }.to_not raise_error
+      it "doesn't queue another job" do
+        expect { perform }.to_not have_enqueued_job(UpdateDQTTRNRequestJob)
       end
     end
   end

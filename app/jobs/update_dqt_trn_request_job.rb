@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class UpdateDQTTRNRequestJob < ApplicationJob
-  class StillPending < StandardError
-  end
+  sidekiq_options retry: 10
 
   def perform(dqt_trn_request)
     return if dqt_trn_request.complete?
@@ -32,6 +31,8 @@ class UpdateDQTTRNRequestJob < ApplicationJob
       dqt_trn_request.complete!
     end
 
-    raise StillPending if dqt_trn_request.pending?
+    if dqt_trn_request.pending?
+      UpdateDQTTRNRequestJob.set(wait: 1.hour).perform_later(dqt_trn_request)
+    end
   end
 end
