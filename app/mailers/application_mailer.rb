@@ -1,6 +1,12 @@
 class ApplicationMailer < Mail::Notify::Mailer
   default from: "qts.enquiries@education.gov.uk"
 
+  GOVUK_NOTIFY_TEMPLATE_ID =
+    ENV.fetch(
+      "GOVUK_NOTIFY_TEMPLATE_ID_APPLICATION",
+      "95adafaf-0920-4623-bddc-340853c047af",
+    )
+
   after_action :store_observer_metadata
 
   def store_observer_metadata

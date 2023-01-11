@@ -13,12 +13,6 @@ class TeacherMailer < ApplicationMailer
   before_action :set_further_information_requested, only: :application_declined
   before_action :set_due_date, only: :further_information_reminder
 
-  GOVUK_NOTIFY_TEMPLATE_ID =
-    ENV.fetch(
-      "GOVUK_NOTIFY_TEMPLATE_ID_TEACHER",
-      "95adafaf-0920-4623-bddc-340853c047af",
-    )
-
   def application_awarded
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
