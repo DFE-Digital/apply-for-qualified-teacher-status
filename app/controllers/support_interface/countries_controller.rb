@@ -65,6 +65,8 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
 
   def country_params
     params.require(:country).permit(
+      :eligibility_enabled,
+      :eligibility_skip_questions,
       :teaching_authority_name,
       :teaching_authority_address,
       :teaching_authority_emails_string,
@@ -75,7 +77,6 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
       :teaching_authority_status_information,
       :teaching_authority_checks_sanctions,
       :teaching_authority_online_checker_url,
-      :eligibility_enabled,
     )
   end
 end

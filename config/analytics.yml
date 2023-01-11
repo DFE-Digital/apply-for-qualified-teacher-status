@@ -93,8 +93,9 @@
     - id
     - code
     - created_at
-    - eligibility_enabled
     - updated_at
+    - eligibility_enabled
+    - eligibility_skip_questions
     - teaching_authority_address
     - teaching_authority_emails
     - teaching_authority_websites

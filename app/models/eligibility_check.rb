@@ -109,19 +109,22 @@ class EligibilityCheck < ApplicationRecord
 
   def country_eligibility_status
     return region_eligibility_status if region
-    if Country.where(eligibility_enabled: true).exists?(code: country_code)
-      :region
-    else
-      :ineligible
-    end
+    country_exists? ? :region : :ineligible
   end
 
   def region_eligibility_status
-    region.legacy ? :legacy : :eligible
+    if region.legacy || region.country.eligibility_skip_questions
+      :skip_questions
+    else
+      :eligible
+    end
   end
 
   def country_regions
-    Region.joins(:country).where(country: { code: country_code }).order(:name)
+    Region
+      .joins(:country)
+      .where(country: { eligibility_enabled: true, code: country_code })
+      .order(:name)
   end
 
   def complete!
@@ -129,9 +132,8 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def status
-    # Ineligible and legacy countries aren't required to answer all the questions
-    if (country_code.present? && country_eligibility_status == :ineligible) ||
-         country_eligibility_status == :legacy
+    if country_code.present? &&
+         %i[ineligible skip_questions].include?(country_eligibility_status)
       return :eligibility
     end
 
@@ -150,5 +152,11 @@ class EligibilityCheck < ApplicationRecord
     return :region if country_code.present?
 
     :country
+  end
+
+  private
+
+  def country_exists?
+    Country.where(eligibility_enabled: true).exists?(code: country_code)
   end
 end

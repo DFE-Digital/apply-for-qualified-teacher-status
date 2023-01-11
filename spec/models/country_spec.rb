@@ -5,6 +5,7 @@
 #  id                                      :bigint           not null, primary key
 #  code                                    :string           not null
 #  eligibility_enabled                     :boolean          default(TRUE), not null
+#  eligibility_skip_questions              :boolean          default(FALSE), not null
 #  teaching_authority_address              :text             default(""), not null
 #  teaching_authority_certificate          :text             default(""), not null
 #  teaching_authority_checks_sanctions     :boolean          default(TRUE), not null
