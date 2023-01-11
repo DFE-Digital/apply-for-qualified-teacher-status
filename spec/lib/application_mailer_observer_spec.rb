@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe TeacherMailerObserver do
+RSpec.describe ApplicationMailerObserver do
   let(:teacher) { create(:teacher) }
   let!(:application_form) { create(:application_form, teacher:) }
   let(:message) { TeacherMailer.with(teacher:).application_received }
@@ -18,6 +18,7 @@ RSpec.describe TeacherMailerObserver do
 
     expect(timeline_event.event_type).to eq("email_sent")
     expect(timeline_event.application_form).to eq(application_form)
+    expect(timeline_event.mailer_class_name).to eq("TeacherMailer")
     expect(timeline_event.mailer_action_name).to eq("application_received")
     expect(timeline_event.message_subject).to eq(
       "We’ve received your application for qualified teacher status (QTS)",
@@ -29,7 +30,7 @@ RSpec.describe TeacherMailerObserver do
     message =
       TeacherMailer.with(teacher: application_form.teacher).application_received
 
-    expect(TeacherMailerObserver).to receive(:delivered_email).with(message)
+    expect(ApplicationMailerObserver).to receive(:delivered_email).with(message)
 
     message.deliver_now
   end
