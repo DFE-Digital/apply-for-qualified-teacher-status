@@ -40,6 +40,10 @@ module ProofOfRecognitionHelper
         "that your authorisation to teach has never been suspended, barred, " \
           "cancelled, revoked or restricted, and that you have no sanctions against you",
       ]
+    elsif region.application_form_skip_work_history?
+      [
+        "if you have completed your induction in #{CountryName.from_region(region, with_definite_article: true)}",
+      ]
     else
       []
     end

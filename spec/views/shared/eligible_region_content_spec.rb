@@ -108,7 +108,8 @@ RSpec.describe "Eligible region content", type: :view do
   end
 
   context "with work experience" do
-    before { FeatureFlags::FeatureFlag.activate(:eligibility_work_experience) }
+    before { FeatureFlags::FeatureFlag.activate(:application_work_history) }
+    after { FeatureFlags::FeatureFlag.deactivate(:application_work_history) }
 
     let(:region) { create(:region) }
 
@@ -128,6 +129,14 @@ RSpec.describe "Eligible region content", type: :view do
         is_expected.to match(
           /you’ll need to complete a 2-year ‘statutory induction’/,
         )
+      end
+    end
+
+    context "with a region which skips the work history" do
+      let(:region) { create(:region, application_form_skip_work_history: true) }
+
+      it do
+        is_expected.to_not match(/You’ll need to show you’ve been employed/)
       end
     end
   end

@@ -39,7 +39,7 @@
       <%= render "shared/eligible_region_content_components/professional_recognition", region: %>
     <% end %>
 
-    <% if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) %>
+    <% if FeatureFlags::FeatureFlag.active?(:application_work_history) && !region.application_form_skip_work_history %>
       <% accordion.section(heading_text: "Proof of work history") do %>
         <%= render "shared/eligible_region_content_components/proof_of_work_history", region:, eligibility_check: %>
       <% end %>

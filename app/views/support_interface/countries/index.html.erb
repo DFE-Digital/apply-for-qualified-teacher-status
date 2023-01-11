@@ -40,6 +40,10 @@
 
                     <% if region.application_form_enabled %>
                       <%= govuk_tag(text: "Applications enabled", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
+
+                      <% if region.application_form_skip_work_history %>
+                        <%= govuk_tag(text: "Skips work history", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
+                      <% end %>
                     <% else %>
                       <%= govuk_tag(text: "Applications disabled", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
                     <% end %>
