@@ -10,6 +10,7 @@
 #  creator_type                   :string
 #  event_type                     :string           not null
 #  mailer_action_name             :string           default(""), not null
+#  mailer_class_name              :string           default(""), not null
 #  message_subject                :string           default(""), not null
 #  new_state                      :string           default(""), not null
 #  old_state                      :string           default(""), not null
@@ -106,11 +107,13 @@ class TimelineEvent < ApplicationRecord
                 further_information_request_expired?
             }
 
-  validates :mailer_action_name,
+  validates :mailer_class_name,
+            :mailer_action_name,
             :message_subject,
             presence: true,
             if: :email_sent?
-  validates :mailer_action_name,
+  validates :mailer_class_name,
+            :mailer_action_name,
             :message_subject,
             absence: true,
             unless: :email_sent?
