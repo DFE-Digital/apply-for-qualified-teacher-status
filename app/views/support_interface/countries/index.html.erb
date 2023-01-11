@@ -31,15 +31,20 @@
                   </a>
                 </td>
                 <td class="govuk-table__cell">
-                  <% if region.legacy %>
-                    <%= govuk_tag(text: "Eligibility Inactive", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
+                  <% if country.eligibility_enabled %>
+                    <%= govuk_tag(text: "Eligibility enabled", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
+
+                    <% if country.eligibility_skip_questions || region.legacy %>
+                      <%= govuk_tag(text: "Skips questions", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
+                    <% end %>
+
+                    <% if region.application_form_enabled %>
+                      <%= govuk_tag(text: "Applications enabled", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
+                    <% else %>
+                      <%= govuk_tag(text: "Applications disabled", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
+                    <% end %>
                   <% else %>
-                    <%= govuk_tag(text: "Eligibility Active", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
-                  <% end %>
-                  <% if region.application_form_enabled? %>
-                    <%= govuk_tag(text: "Application Form Active", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
-                  <% else %>
-                    <%= govuk_tag(text: "Application Form Inactive", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
+                    <%= govuk_tag(text: "Eligibility disabled", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
                   <% end %>
                 </td>
               </tr>
