@@ -15,20 +15,6 @@ RSpec.describe TeacherMailer, type: :mailer do
     )
   end
 
-  shared_examples "observer metadata" do |expected_action_name|
-    describe "#mailer_action_name" do
-      subject(:mailer_action_name) { mail.mailer_action_name }
-
-      it { is_expected.to eq(expected_action_name) }
-    end
-
-    describe "#application_form_id" do
-      subject(:application_form_id) { mail.application_form_id }
-
-      it { is_expected.to eq(application_form.id) }
-    end
-  end
-
   describe "#application_awarded" do
     subject(:mail) { described_class.with(teacher:).application_awarded }
 
@@ -51,7 +37,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("abc") }
     end
 
-    include_examples "observer metadata", "application_awarded"
+    it_behaves_like "an observable mailer", "application_awarded"
   end
 
   describe "#application_declined" do
@@ -81,7 +67,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
     end
 
-    include_examples "observer metadata", "application_declined"
+    it_behaves_like "an observable mailer", "application_declined"
 
     context "further information requested" do
       let(:assessment) do
@@ -144,7 +130,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
 
-    include_examples "observer metadata", "application_not_submitted"
+    it_behaves_like "an observable mailer", "application_not_submitted"
   end
 
   describe "#application_received" do
@@ -173,7 +159,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("abc") }
     end
 
-    include_examples "observer metadata", "application_received"
+    it_behaves_like "an observable mailer", "application_received"
   end
 
   describe "#further_information_received" do
@@ -204,7 +190,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("abc") }
     end
 
-    include_examples "observer metadata", "further_information_received"
+    it_behaves_like "an observable mailer", "further_information_received"
   end
 
   describe "#further_information_requested" do
@@ -245,7 +231,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
 
-    include_examples "observer metadata", "further_information_requested"
+    it_behaves_like "an observable mailer", "further_information_requested"
   end
 
   describe "#further_information_reminder" do
@@ -290,6 +276,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
 
-    include_examples "observer metadata", "further_information_reminder"
+    it_behaves_like "an observable mailer", "further_information_reminder"
   end
 end

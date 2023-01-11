@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TeacherMailer < ApplicationMailer
   before_action :set_name
   before_action :set_reference,
@@ -10,7 +12,6 @@ class TeacherMailer < ApplicationMailer
                 ]
   before_action :set_further_information_requested, only: :application_declined
   before_action :set_due_date, only: :further_information_reminder
-  after_action :store_observer_metadata
 
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
@@ -108,16 +109,5 @@ class TeacherMailer < ApplicationMailer
 
   def assessment
     application_form.assessment
-  end
-
-  def store_observer_metadata
-    mailer_action_name = action_name
-    application_form_id = params[:teacher].application_form.id
-
-    message.instance_variable_set(:@mailer_action_name, mailer_action_name)
-    message.instance_variable_set(:@application_form_id, application_form_id)
-
-    message.class.send(:attr_reader, :mailer_action_name)
-    message.class.send(:attr_reader, :application_form_id)
   end
 end
