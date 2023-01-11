@@ -216,6 +216,13 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_legacy_service
   end
 
+  it "can skip questions" do
+    when_i_visit_the(:start_page)
+    when_i_press_start_now
+    when_i_select_a_skip_questions_country
+    then_i_see_the(:eligible_page)
+  end
+
   it "handles countries with multiple regions" do
     when_i_visit_the(:start_page)
     when_i_press_start_now
@@ -275,6 +282,12 @@ RSpec.describe "Eligibility check", type: :system do
   def given_countries_exist
     create(:country, :with_national_region, code: "GB-SCT")
     create(:country, :with_legacy_region, code: "FR")
+    create(
+      :country,
+      :with_national_region,
+      code: "PT",
+      eligibility_skip_questions: true,
+    )
 
     it = create(:country, code: "IT")
     create(:region, country: it, name: "Region")
@@ -299,6 +312,10 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_select_a_legacy_country
     country_page.submit(country: "France")
+  end
+
+  def when_i_select_a_skip_questions_country
+    country_page.submit(country: "Portugal")
   end
 
   def when_i_select_a_multiple_region_country
