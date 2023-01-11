@@ -18,6 +18,7 @@ RSpec.describe ApplicationMailerObserver do
 
     expect(timeline_event.event_type).to eq("email_sent")
     expect(timeline_event.application_form).to eq(application_form)
+    expect(timeline_event.mailer_class_name).to eq("TeacherMailer")
     expect(timeline_event.mailer_action_name).to eq("application_received")
     expect(timeline_event.message_subject).to eq(
       "We’ve received your application for qualified teacher status (QTS)",
