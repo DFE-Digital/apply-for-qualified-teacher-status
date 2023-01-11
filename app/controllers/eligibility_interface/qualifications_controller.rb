@@ -13,7 +13,7 @@ module EligibilityInterface
           qualification_form_params.merge(eligibility_check:),
         )
       if @qualification_form.save
-        redirect_to paths[:degree]
+        redirect_to next_path
       else
         render :new, status: :unprocessable_entity
       end
@@ -25,6 +25,18 @@ module EligibilityInterface
       params.require(:eligibility_interface_qualification_form).permit(
         :qualification,
       )
+    end
+
+    def next_path
+      if eligibility_check.skip_additional_questions?
+        if eligibility_check.eligible?
+          eligibility_interface_eligible_path
+        else
+          eligibility_interface_ineligible_path
+        end
+      else
+        paths[:degree]
+      end
     end
   end
 end

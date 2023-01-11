@@ -220,6 +220,9 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_visit_the(:start_page)
     when_i_press_start_now
     when_i_select_a_skip_questions_country
+    then_i_see_the(:qualification_page)
+
+    when_i_have_a_qualification
     then_i_see_the(:eligible_page)
   end
 

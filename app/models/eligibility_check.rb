@@ -79,32 +79,47 @@ class EligibilityCheck < ApplicationRecord
     CountryCode.england?(country_code) || CountryCode.wales?(country_code)
   end
 
+  def skip_additional_questions?
+    region&.country&.eligibility_skip_questions || false
+  end
+
   def ineligible_reasons
-    [
-      region.nil? ? :country : nil,
-      degree == false ? :degree : nil,
-      qualification == false ? :qualification : nil,
-      teach_children == false ? :teach_children : nil,
-      free_of_sanctions == false ? :misconduct : nil,
-      (
-        if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) &&
-             work_experience_under_9_months?
-          :work_experience
-        end
-      ),
-    ].compact
+    if skip_additional_questions?
+      [
+        (:country if region.nil?),
+        (:qualification if qualification == false),
+      ].compact
+    else
+      [
+        (:country if region.nil?),
+        (:qualification if qualification == false),
+        (:degree if degree == false),
+        (:teach_children if teach_children == false),
+        (:misconduct if free_of_sanctions == false),
+        (
+          if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) &&
+               work_experience_under_9_months?
+            :work_experience
+          end
+        ),
+      ].compact
+    end
   end
 
   def eligible?
-    region.present? && degree && qualification && teach_children &&
-      free_of_sanctions &&
-      (
-        if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
-          !work_experience_under_9_months?
-        else
-          true
-        end
-      )
+    if skip_additional_questions?
+      region.present? && qualification
+    else
+      region.present? && qualification && degree && teach_children &&
+        free_of_sanctions &&
+        (
+          if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
+            !work_experience_under_9_months?
+          else
+            true
+          end
+        )
+    end
   end
 
   def country_eligibility_status
@@ -113,11 +128,7 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def region_eligibility_status
-    if region.legacy || region.country.eligibility_skip_questions
-      :skip_questions
-    else
-      :eligible
-    end
+    region.legacy ? :legacy : :eligible
   end
 
   def country_regions
@@ -133,8 +144,12 @@ class EligibilityCheck < ApplicationRecord
 
   def status
     if country_code.present? &&
-         %i[ineligible skip_questions].include?(country_eligibility_status)
+         %i[ineligible legacy].include?(country_eligibility_status)
       return :eligibility
+    end
+
+    if skip_additional_questions?
+      return qualification.nil? ? :qualification : :eligibility
     end
 
     return :eligibility unless free_of_sanctions.nil?
