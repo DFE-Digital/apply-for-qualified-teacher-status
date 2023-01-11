@@ -28,7 +28,19 @@ class FurtherInformationRequest < ApplicationRecord
 
   has_many :reminder_emails
 
+  delegate :application_form, to: :assessment
+
+  FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
+
   def failed
     passed == false
+  end
+
+  def expires_after
+    if FOUR_WEEK_COUNTRY_CODES.include?(application_form.country.code)
+      4.weeks
+    else
+      6.weeks
+    end
   end
 end

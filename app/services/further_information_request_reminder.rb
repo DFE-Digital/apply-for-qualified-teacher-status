@@ -2,7 +2,6 @@
 
 class FurtherInformationRequestReminder
   include ServicePattern
-  include FurtherInformationRequestExpirable
 
   def initialize(further_information_request:)
     @further_information_request = further_information_request
@@ -19,6 +18,12 @@ class FurtherInformationRequestReminder
 
   attr_reader :further_information_request
 
+  delegate :application_form,
+           :assessment,
+           :expired_at,
+           to: :further_information_request
+  delegate :teacher, to: :application_form
+
   def send_reminder?
     two_weeks? || one_week? || two_days?
   end
@@ -27,21 +32,30 @@ class FurtherInformationRequestReminder
     further_information_request.reminder_emails.count
   end
 
+  def days_until_expired
+    today = Time.zone.today
+    (expired_at.to_date - today).to_i
+  end
+
   def two_weeks?
-    days_until_expiry <= 14 && number_of_reminders_sent.zero?
+    days_until_expired <= 14 && number_of_reminders_sent.zero?
   end
 
   def one_week?
-    days_until_expiry <= 7 && number_of_reminders_sent == 1
+    days_until_expired <= 7 && number_of_reminders_sent == 1
   end
 
   def two_days?
-    days_until_expiry <= 2 && number_of_reminders_sent == 2
+    days_until_expired <= 2 && number_of_reminders_sent == 2
   end
 
   def send_email
     TeacherMailer
-      .with(teacher:, further_information_request:, due_date:)
+      .with(
+        teacher:,
+        further_information_request:,
+        due_date: expired_at.to_date,
+      )
       .further_information_reminder
       .deliver_later
   end
