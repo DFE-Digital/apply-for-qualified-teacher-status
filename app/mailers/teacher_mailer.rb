@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TeacherMailer < ApplicationMailer
+  include ApplicationFormHelper
+
   before_action :set_name
   before_action :set_reference,
                 only: %i[
@@ -12,6 +14,8 @@ class TeacherMailer < ApplicationMailer
                 ]
   before_action :set_further_information_requested, only: :application_declined
   before_action :set_due_date, only: :further_information_reminder
+
+  helper :application_form
 
   def application_awarded
     view_mail(
@@ -75,13 +79,7 @@ class TeacherMailer < ApplicationMailer
   private
 
   def set_name
-    @name =
-      if application_form.given_names.present? ||
-           application_form.family_name.present?
-        "#{application_form.given_names} #{application_form.family_name}"
-      else
-        "applicant"
-      end
+    @name = application_form_full_name(application_form)
   end
 
   def set_reference
