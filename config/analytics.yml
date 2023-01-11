@@ -209,15 +209,16 @@
     - updated_at
     - status_check
     - sanction_check
-    - teaching_authority_address
     - legacy
+    - application_form_enabled
+    - application_form_skip_work_history
+    - teaching_authority_address
     - teaching_authority_emails
     - teaching_authority_websites
     - teaching_authority_name
     - teaching_authority_other
     - teaching_authority_certificate
     - teaching_authority_online_checker_url
-    - application_form_enabled
     - teaching_authority_status_information
     - teaching_authority_sanction_information
     - teaching_authority_provides_written_statement
