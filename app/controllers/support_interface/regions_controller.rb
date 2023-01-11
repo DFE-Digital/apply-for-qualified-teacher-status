@@ -40,6 +40,7 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
     params.require(:region).permit(
       :legacy,
       :application_form_enabled,
+      :application_form_skip_work_history,
       :sanction_check,
       :status_check,
       :teaching_authority_name,
