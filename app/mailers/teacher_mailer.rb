@@ -66,6 +66,14 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def references_requested
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject: I18n.t("mailer.teacher.references_requested.subject"),
+    )
+  end
+
   private
 
   def teacher
