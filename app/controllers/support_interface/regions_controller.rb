@@ -51,6 +51,7 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
       :teaching_authority_status_information,
       :teaching_authority_other,
       :teaching_authority_online_checker_url,
+      :teaching_authority_provides_written_statement,
     )
   end
 end
