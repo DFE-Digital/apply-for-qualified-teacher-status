@@ -16,4 +16,8 @@ module Requestable
       update!(state: "received", received_at: Time.zone.now)
     end
   end
+
+  def expired_at
+    created_at + expires_after
+  end
 end

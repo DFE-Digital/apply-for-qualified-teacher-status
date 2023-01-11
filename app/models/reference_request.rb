@@ -56,6 +56,10 @@ class ReferenceRequest < ApplicationRecord
     responses.all?(&:present?)
   end
 
+  def expires_after
+    6.weeks
+  end
+
   private
 
   def responses

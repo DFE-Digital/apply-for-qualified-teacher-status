@@ -2,7 +2,6 @@
 
 class FurtherInformationRequestExpirer
   include ServicePattern
-  include FurtherInformationRequestExpirable
 
   def initialize(further_information_request:)
     @further_information_request = further_information_request
@@ -27,13 +26,11 @@ class FurtherInformationRequestExpirer
 
   attr_reader :further_information_request
 
+  delegate :application_form, :assessment, to: :further_information_request
+
   def expire_request?
     further_information_request.requested? &&
-      further_information_request.created_at < expire_if_older_than
-  end
-
-  def expire_if_older_than
-    time_allowed.ago
+      Time.zone.now >= further_information_request.expired_at
   end
 
   def decline_application
