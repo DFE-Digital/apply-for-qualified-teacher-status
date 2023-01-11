@@ -3,8 +3,10 @@ require "rails_helper"
 RSpec.describe ProofOfRecognitionHelper do
   let(:region) do
     double(
+      name: "Region Name",
       status_check_written?: status,
       sanction_check_written?: sanction,
+      application_form_skip_work_history?: application_form_skip_work_history,
       country:
         double(
           teaching_authority_checks_sanctions?:
@@ -14,6 +16,7 @@ RSpec.describe ProofOfRecognitionHelper do
   end
   let(:status) { false }
   let(:sanction) { false }
+  let(:application_form_skip_work_history) { false }
   let(:teaching_authority_checks_sanctions) { true }
 
   describe "proof_of_recognition_requirements_for" do
@@ -66,11 +69,23 @@ RSpec.describe ProofOfRecognitionHelper do
       end
     end
 
-    context "with a country where authority doesn't change sanctions" do
+    context "with a country where authority doesn't check sanctions" do
       let(:sanction) { true }
       let(:teaching_authority_checks_sanctions) { false }
 
       it { is_expected.to be_empty }
+    end
+
+    context "with a country where authority doesn't check sanctions and the region skips work history" do
+      let(:sanction) { true }
+      let(:teaching_authority_checks_sanctions) { false }
+      let(:application_form_skip_work_history) { true }
+
+      it do
+        is_expected.to match_array(
+          ["if you have completed your induction in Region Name"],
+        )
+      end
     end
   end
 
