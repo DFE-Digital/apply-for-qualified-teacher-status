@@ -178,7 +178,7 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when the region exists and is legacy" do
       before { eligibility_check.region = create(:region, :legacy) }
 
-      it { is_expected.to eq(:skip_questions) }
+      it { is_expected.to eq(:legacy) }
     end
 
     context "when the region exists and country skips questions" do
@@ -192,7 +192,7 @@ RSpec.describe EligibilityCheck, type: :model do
 
       before { eligibility_check.country_code = country.code }
 
-      it { is_expected.to eq(:skip_questions) }
+      it { is_expected.to eq(:eligible) }
     end
 
     context "when the country doesn't exist" do
@@ -216,7 +216,7 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when the region exists and is legacy" do
       before { eligibility_check.region = create(:region, :legacy) }
 
-      it { is_expected.to eq(:skip_questions) }
+      it { is_expected.to eq(:legacy) }
     end
 
     context "when the region exists and country skips questions" do
@@ -228,7 +228,7 @@ RSpec.describe EligibilityCheck, type: :model do
           )
       end
 
-      it { is_expected.to eq(:skip_questions) }
+      it { is_expected.to eq(:eligible) }
     end
   end
 
