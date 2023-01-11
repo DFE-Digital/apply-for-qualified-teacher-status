@@ -1,0 +1,14 @@
+Dear <%= @work_history.contact_name %>
+
+We still need you to confirm some information about <%= application_form_full_name(@application_form) %> as part of their application for qualified teacher status (QTS) in England.
+
+We recently contacted you to ask you to help us confirm that the information [Applicant name] has provided about their work history and experience is accurate.
+
+Please follow the link below and answer the questions by <%= @reference_request.expired_at.strftime("%e %B %Y") %>. If we do not receive your response by this date, it could affect the outcome for the applicant.
+
+<%= teacher_interface_reference_request_url(@reference_request) %>
+
+It should take no longer than 5 minutes.
+
+Kind regards,
+The Teacher Qualifications Team (part of the Teaching Regulation Agency)

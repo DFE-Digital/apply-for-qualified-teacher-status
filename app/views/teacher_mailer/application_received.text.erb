@@ -1,10 +1,10 @@
-Dear <%= @name %>
+Dear <%= application_form_full_name(@application_form) %>
 
 # We’ve received your application for qualified teacher status (QTS)
 
 Your reference number is:
 
-<%= @reference %>
+<%= @application_form.reference %>
 
 # What happens next
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TeacherMailer, type: :mailer do
@@ -277,5 +279,38 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     it_behaves_like "an observable mailer", "further_information_reminder"
+  end
+
+  describe "#references_requested" do
+    subject(:mail) { described_class.with(teacher:).references_requested }
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      it do
+        is_expected.to eq(
+          "Your qualified teacher status application – we’ve contacted your references",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      it { is_expected.to include("Dear First Last") }
+      it do
+        is_expected.to include(
+          "We’ve contacted the references you provided to verify your work history",
+        )
+      end
+    end
+
+    it_behaves_like "an observable mailer", "references_requested"
   end
 end

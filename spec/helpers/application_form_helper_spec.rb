@@ -23,6 +23,12 @@ RSpec.describe ApplicationFormHelper do
     subject(:full_name) { application_form_full_name(application_form) }
 
     it { is_expected.to eq("Given Family") }
+
+    context "without names" do
+      before { application_form.update!(given_names: "", family_name: "") }
+
+      it { is_expected.to eq("applicant") }
+    end
   end
 
   describe "#application_form_summary_rows" do

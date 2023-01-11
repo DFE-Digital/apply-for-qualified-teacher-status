@@ -1,5 +1,10 @@
 en:
   mailer:
+    referee:
+      reference_reminder:
+        subject: We still need you to verify %{name}’s application for qualified teacher status (QTS)
+      reference_requested:
+        subject: Please help us to verify %{name}’s application for qualified teacher status (QTS)
     teacher:
       application_awarded:
         subject: Your QTS application was successful
@@ -18,3 +23,5 @@ en:
         subject: We need some more information to progress your QTS application
       further_information_reminder:
         subject: We still need some more information to progress your QTS application
+      references_requested:
+        subject: Your qualified teacher status application – we’ve contacted your references

@@ -1,6 +1,13 @@
+# frozen_string_literal: true
+
 module ApplicationFormHelper
   def application_form_full_name(application_form)
-    "#{application_form.given_names} #{application_form.family_name}"
+    if application_form.given_names.present? ||
+         application_form.family_name.present?
+      "#{application_form.given_names} #{application_form.family_name}".strip
+    else
+      "applicant"
+    end
   end
 
   def application_form_summary_rows(

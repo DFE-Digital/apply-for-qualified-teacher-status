@@ -1,10 +1,10 @@
-Dear <%= @name %>
+Dear <%= application_form_full_name(@application_form) %>
 
 # Your QTS application has been declined
 
 Your reference number is:
 
-<%= @reference %>
+<%= @application_form.reference %>
 
 Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application.
 
