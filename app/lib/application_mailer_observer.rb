@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TeacherMailerObserver
+class ApplicationMailerObserver
   def self.delivered_email(message)
     mailer_action_name = message.try(:mailer_action_name)
     application_form_id = message.try(:application_form_id)
@@ -21,4 +21,4 @@ class TeacherMailerObserver
   end
 end
 
-ActionMailer::Base.register_observer(TeacherMailerObserver)
+ActionMailer::Base.register_observer(ApplicationMailerObserver)
