@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_11_102451) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_11_112551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -141,6 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_102451) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "eligibility_enabled", default: true, null: false
+    t.boolean "eligibility_skip_questions", default: false, null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
