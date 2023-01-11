@@ -142,6 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_124208) do
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "eligibility_enabled", default: true, null: false
     t.boolean "eligibility_skip_questions", default: false, null: false
+    t.text "qualifications_information", default: "", null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
@@ -282,6 +283,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_124208) do
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "application_form_skip_work_history", default: false, null: false
+    t.text "qualifications_information", default: "", null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end

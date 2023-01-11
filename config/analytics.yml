@@ -106,6 +106,7 @@
     - teaching_authority_online_checker_url
     - teaching_authority_status_information
     - teaching_authority_sanction_information
+    - qualifications_information
   :documents:
     - id
     - document_type
@@ -222,6 +223,7 @@
     - teaching_authority_status_information
     - teaching_authority_sanction_information
     - teaching_authority_provides_written_statement
+    - qualifications_information
   :reminder_emails:
     - id
     - created_at
