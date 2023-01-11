@@ -1,10 +1,10 @@
-Dear <%= @name %>
+Dear <%= application_form_full_name(@application_form) %>
 
 # Your QTS application was successful
 
 Your reference number is:
 
-<%= @reference %>
+<%= @application_form.reference %>
 
 We’re pleased to tell you that the assessor has now completed their review of your application and you’ve been awarded qualified teacher status (QTS).
 
