@@ -28,7 +28,7 @@ module DQT
             application_form.region.country.code,
           ),
         qtsDate: qts_decision_at.to_date.iso8601,
-        inductionRequired: false,
+        inductionRequired: induction_required,
       }
     end
 
@@ -84,6 +84,14 @@ module DQT
         application_form.awarded_at
       else
         application_form.submitted_at
+      end
+    end
+
+    def induction_required
+      if application_form.created_under_new_regulations?
+        assessment.induction_required
+      else
+        false
       end
     end
   end
