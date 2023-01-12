@@ -25,11 +25,23 @@ COUNTRIES = {
   "GI" => [],
   "GB-SCT" => {
     eligibility_skip_questions: true,
-    regions: [{ application_form_skip_work_history: true }],
+    regions: [
+      {
+        status_check: "online",
+        sanction_check: "written",
+        application_form_skip_work_history: true,
+      },
+    ],
   },
   "GB-NIR" => {
     eligibility_skip_questions: true,
-    regions: [{ application_form_skip_work_history: true }],
+    regions: [
+      {
+        status_check: "online",
+        sanction_check: "written",
+        application_form_skip_work_history: true,
+      },
+    ],
   },
   "AT" => [],
   "CH" => [],
