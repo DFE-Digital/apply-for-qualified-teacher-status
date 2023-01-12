@@ -85,6 +85,7 @@
     - subjects
     - subjects_note
     - recommended_at
+    - induction_required
     - working_days_since_started
     - working_days_submission_to_recommendation
     - working_days_submission_to_started

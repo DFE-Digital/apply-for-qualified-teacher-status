@@ -8,6 +8,7 @@
 #  age_range_max                             :integer
 #  age_range_min                             :integer
 #  age_range_note                            :text             default(""), not null
+#  induction_required                        :boolean
 #  recommendation                            :string           default("unknown"), not null
 #  recommended_at                            :datetime
 #  started_at                                :datetime
