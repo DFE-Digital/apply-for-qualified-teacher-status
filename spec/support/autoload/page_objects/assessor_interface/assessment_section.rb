@@ -4,12 +4,12 @@ module PageObjects
       element :heading, "h1"
 
       section :form, "form" do
-        section :yes_radio_item,
-                PageObjects::GovukRadioItem,
-                ".govuk-radios__item:nth-of-type(1)"
-        section :no_radio_item,
-                PageObjects::GovukRadioItem,
-                ".govuk-radios__item:nth-of-type(2)"
+        element :yes_radio_item,
+                "#assessor-interface-assessment-section-form-passed-true-field",
+                visible: false
+        element :no_radio_item,
+                "#assessor-interface-assessment-section-form-passed-field",
+                visible: false
         sections :failure_reason_checkbox_items,
                  PageObjects::GovukCheckboxItem,
                  ".govuk-checkboxes__item"

@@ -11,6 +11,15 @@ module PageObjects
 
       sections :cards, ProfessionalStandingCard, ".govuk-summary-list__card"
 
+      section :induction_required_form, "form" do
+        element :no_radio_item,
+                "#assessor-interface-assessment-section-form-induction-required-false-field",
+                visible: false
+        element :yes_radio_item,
+                "#assessor-interface-assessment-section-form-induction-required-true-field",
+                visible: false
+      end
+
       def proof_of_recognition
         cards&.first
       end

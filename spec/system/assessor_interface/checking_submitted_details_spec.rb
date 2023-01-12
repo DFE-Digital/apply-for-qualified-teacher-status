@@ -133,10 +133,33 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_see_check_professional_standing_action_required
   end
 
+  it "allows passing the professional standing without work history" do
+    given_application_form_doesnt_need_work_history
+
+    when_i_visit_the(
+      :check_professional_standing_page,
+      application_id:,
+      assessment_id:,
+    )
+    then_i_see_the_professional_standing
+
+    when_i_choose_full_registration
+    and_i_choose_check_professional_standing_yes
+    then_i_see_the(:assessor_application_page, application_id:)
+    and_i_see_check_professional_standing_completed
+  end
+
   private
 
   def given_there_is_an_application_form
     application_form
+  end
+
+  def given_application_form_doesnt_need_work_history
+    application_form.update!(
+      needs_work_history: false,
+      created_at: Date.new(2023, 2, 1),
+    )
   end
 
   def then_i_see_the_personal_information
@@ -149,7 +172,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_personal_information_yes
-    check_personal_information_page.form.yes_radio_item.input.click
+    check_personal_information_page.form.yes_radio_item.choose
     check_personal_information_page.form.continue_button.click
   end
 
@@ -166,7 +189,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_personal_information_no
-    check_personal_information_page.form.no_radio_item.input.click
+    check_personal_information_page.form.no_radio_item.choose
     check_personal_information_page
       .form
       .failure_reason_checkbox_items
@@ -195,12 +218,12 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_qualifications_yes
-    check_qualifications_page.form.yes_radio_item.input.click
+    check_qualifications_page.form.yes_radio_item.choose
     check_qualifications_page.form.continue_button.click
   end
 
   def when_i_choose_check_qualifications_no
-    check_qualifications_page.form.no_radio_item.input.click
+    check_qualifications_page.form.no_radio_item.choose
     check_qualifications_page
       .form
       .failure_reason_checkbox_items
@@ -249,12 +272,12 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_choose_verify_age_range_subjects_yes
-    verify_age_range_subjects_page.form.yes_radio_item.input.click
+    verify_age_range_subjects_page.form.yes_radio_item.choose
     verify_age_range_subjects_page.form.continue_button.click
   end
 
   def and_i_choose_verify_age_range_subjects_no
-    verify_age_range_subjects_page.form.no_radio_item.input.click
+    verify_age_range_subjects_page.form.no_radio_item.choose
     verify_age_range_subjects_page
       .form
       .failure_reason_checkbox_items
@@ -288,7 +311,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_work_history_yes
-    check_work_history_page.form.yes_radio_item.input.click
+    check_work_history_page.form.yes_radio_item.choose
     check_work_history_page.form.continue_button.click
   end
 
@@ -299,7 +322,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_work_history_no
-    check_work_history_page.form.no_radio_item.input.click
+    check_work_history_page.form.no_radio_item.choose
     check_work_history_page
       .form
       .failure_reason_checkbox_items
@@ -329,8 +352,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_professional_standing_yes
-    check_professional_standing_page.form.yes_radio_item.input.click
+    check_professional_standing_page.form.yes_radio_item.choose
     check_professional_standing_page.form.continue_button.click
+  end
+
+  alias_method :and_i_choose_check_professional_standing_yes,
+               :when_i_choose_check_professional_standing_yes
+
+  def when_i_choose_full_registration
+    check_professional_standing_page
+      .induction_required_form
+      .no_radio_item
+      .choose
   end
 
   def and_i_see_check_professional_standing_completed
@@ -340,7 +373,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_professional_standing_no
-    check_professional_standing_page.form.no_radio_item.input.click
+    check_professional_standing_page.form.no_radio_item.choose
     check_professional_standing_page
       .form
       .failure_reason_checkbox_items
@@ -372,6 +405,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
             :with_personal_information,
             :submitted,
             :with_assessment,
+            region: create(:region, :in_country, country_code: "GB-SCT"),
           )
 
         create(
