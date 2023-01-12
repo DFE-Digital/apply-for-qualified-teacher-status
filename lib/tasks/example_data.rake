@@ -89,19 +89,21 @@ def helpdesk_users
   ]
 end
 
-def evidential_traits_for(status_check, sanction_check)
-  args = [status_check, sanction_check]
+def evidential_traits_for(region, new_regs)
+  checks = [region.status_check, region.sanction_check]
 
   [].tap do |traits|
-    traits << :with_work_history if args.include?("none")
-    traits << :with_written_statement if args.include?("written")
-    traits << :with_registration_number if args.include?("online")
+    if (checks.include?("none") || new_regs) &&
+         !region.application_form_skip_work_history
+      traits << :with_work_history
+    end
+    traits << :with_written_statement if checks.include?("written")
+    traits << :with_registration_number if checks.include?("online")
   end
 end
 
-def application_form_traits_for(region)
-  evidential_traits =
-    evidential_traits_for(region.status_check, region.sanction_check)
+def application_form_traits_for(region, new_regs)
+  evidential_traits = evidential_traits_for(region, new_regs)
 
   [
     [],
@@ -134,9 +136,7 @@ def create_application_forms(new_regs:)
   old_regs_date = new_regs_date - 1.day
 
   Region.all.each do |region|
-    application_form_traits_for(region).each do |traits|
-      traits << :new_regs if new_regs
-
+    application_form_traits_for(region, new_regs).each do |traits|
       created_at = new_regs ? new_regs_date : old_regs_date
 
       application_form =
