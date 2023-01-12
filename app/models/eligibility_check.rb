@@ -84,42 +84,34 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def ineligible_reasons
-    if skip_additional_questions?
-      [
-        (:country if region.nil?),
-        (:qualification if qualification == false),
-      ].compact
-    else
-      [
-        (:country if region.nil?),
-        (:qualification if qualification == false),
-        (:degree if degree == false),
-        (:teach_children if teach_children == false),
-        (:misconduct if free_of_sanctions == false),
-        (
-          if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) &&
-               work_experience_under_9_months?
-            :work_experience
-          end
-        ),
-      ].compact
-    end
+    work_experience_ineligible =
+      FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) &&
+        work_experience_under_9_months?
+
+    [
+      (:country if region.nil?),
+      (:qualification if qualification == false),
+      (:degree if degree == false),
+      (:teach_children if teach_children == false),
+      (:misconduct if free_of_sanctions == false),
+      (:work_experience if work_experience_ineligible),
+    ].compact
   end
 
   def eligible?
-    if skip_additional_questions?
-      region.present? && qualification
-    else
-      region.present? && qualification && degree && teach_children &&
-        free_of_sanctions &&
-        (
-          if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
-            !work_experience_under_9_months?
-          else
-            true
-          end
-        )
+    if skip_additional_questions? && region.present? && qualification
+      return true
     end
+
+    region.present? && qualification && degree && teach_children &&
+      free_of_sanctions &&
+      (
+        if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
+          !work_experience_under_9_months?
+        else
+          true
+        end
+      )
   end
 
   def country_eligibility_status
@@ -148,8 +140,8 @@ class EligibilityCheck < ApplicationRecord
       return :eligibility
     end
 
-    if skip_additional_questions?
-      return qualification.nil? ? :qualification : :eligibility
+    if skip_additional_questions? && region.present? && qualification
+      return :eligibility
     end
 
     return :eligibility unless free_of_sanctions.nil?
