@@ -40,10 +40,6 @@ module AssessorInterface
         AssessmentSectionViewObject.new(params:)
     end
 
-    def assessment_section
-      assessment_section_view_object.assessment_section
-    end
-
     def assessment_section_form
       assessment_section_form_class.for_assessment_section(assessment_section)
     end
@@ -51,6 +47,10 @@ module AssessorInterface
     def assessment_section_form_class
       if assessment_section.age_range_subjects?
         AgeRangeSubjectsForm
+      elsif assessment_section.professional_standing? &&
+            application_form.created_under_new_regulations? &&
+            !application_form.needs_work_history
+        InductionRequiredForm
       else
         AssessmentSectionForm
       end
@@ -61,5 +61,9 @@ module AssessorInterface
         params.require(:assessor_interface_assessment_section_form),
       )
     end
+
+    delegate :assessment_section,
+             :application_form,
+             to: :assessment_section_view_object
   end
 end

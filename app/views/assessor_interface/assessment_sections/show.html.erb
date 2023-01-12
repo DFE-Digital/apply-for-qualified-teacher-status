@@ -81,7 +81,7 @@
   ), method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
-  <% if @assessment_section_view_object.assessment_section.age_range_subjects? %>
+  <% if @assessment_section_form.is_a?(AssessorInterface::AgeRangeSubjectsForm) %>
     <h2 class="govuk-heading-m">What age range is the applicant qualified to teach?</h2>
     <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the age range they entered if you agree, or enter a new range.</p>
 
@@ -110,7 +110,18 @@
     <%= f.govuk_text_area :subjects_note %>
   <% end %>
 
-  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?", size: "s" } do %>
+  <% if @assessment_section_form.is_a?(AssessorInterface::InductionRequiredForm) %>
+    <%= f.govuk_collection_radio_buttons :induction_required,
+                                         [
+                                           OpenStruct.new(value: :false, label: t(".induction_required.false.#{@assessment_section_view_object.country.code}")),
+                                           OpenStruct.new(value: :true, label: t(".induction_required.true.#{@assessment_section_view_object.country.code}"))
+                                         ],
+                                         :value,
+                                         :label,
+                                         legend: { text: t(".induction_required.legend.#{@assessment_section_view_object.country.code}") } %>
+  <% end %>
+
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?" } do %>
     <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
     <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
       <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" }  do %>

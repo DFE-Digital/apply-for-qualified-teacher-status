@@ -21,7 +21,7 @@ RSpec.describe DQT::TRNRequestParams do
       )
     end
 
-    before do
+    let!(:assessment) do
       create(
         :assessment,
         :award,
@@ -30,7 +30,9 @@ RSpec.describe DQT::TRNRequestParams do
         age_range_max: 11,
         subjects: %w[physics french_language],
       )
+    end
 
+    before do
       create(
         :qualification,
         :completed,
@@ -89,6 +91,22 @@ RSpec.describe DQT::TRNRequestParams do
 
       it "should use the assessed date" do
         expect(call[:qtsDate]).to eq("2020-01-07")
+      end
+
+      describe "induction required" do
+        subject(:induction_required) { call[:inductionRequired] }
+
+        it { is_expected.to be_nil }
+
+        context "when induction is required" do
+          before { assessment.update!(induction_required: true) }
+          it { is_expected.to be true }
+        end
+
+        context "when induction is not required" do
+          before { assessment.update!(induction_required: false) }
+          it { is_expected.to be false }
+        end
       end
     end
   end

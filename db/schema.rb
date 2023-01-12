@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_11_124208) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_12_093403) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -123,6 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_124208) do
     t.integer "working_days_submission_to_recommendation"
     t.integer "working_days_submission_to_started"
     t.integer "working_days_since_started"
+    t.boolean "induction_required"
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 

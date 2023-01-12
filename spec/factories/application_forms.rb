@@ -72,7 +72,8 @@ FactoryBot.define do
     association :region
 
     needs_work_history do
-      region.status_check_none? || region.sanction_check_none?
+      (region.status_check_none? || region.sanction_check_none?) &&
+        !region.application_form_skip_work_history
     end
     needs_written_statement do
       region.status_check_written? || region.sanction_check_written?

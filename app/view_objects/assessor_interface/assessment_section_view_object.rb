@@ -23,7 +23,7 @@ module AssessorInterface
     delegate :application_form, to: :assessment
     delegate :registration_number, to: :application_form
     delegate :checks, to: :assessment_section
-    delegate :region, to: :application_form
+    delegate :region, :country, to: :application_form
 
     def qualifications
       application_form.qualifications.ordered

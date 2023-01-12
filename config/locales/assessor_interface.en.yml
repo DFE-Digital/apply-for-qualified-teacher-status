@@ -137,6 +137,16 @@ en:
           work_history_break: We need more information about a break in the applicant’s work history.
           written_statement_illegible: The letter from the country or state’s authority is illegible or in a format that we cannot accept.
           written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
+        induction_required:
+          legend:
+            GB-SCT: What level of registration does the applicant have?
+            GB-NIR: Has applicant completed Induction?
+          false:
+            GB-SCT: Full registration
+            GB-NIR: "Yes"
+          true:
+            GB-SCT: Provisional registration
+            GB-NIR: "No"
 
     further_information_requests:
       edit:
@@ -243,3 +253,7 @@ en:
               inclusion: Select whether the applicant completed this section to your satisfaction
             failure_assessor_note:
               blank: Enter why this section is not completed to your satisfaction
+        assessor_interface/induction_required_form:
+          attributes:
+            induction_required:
+              inclusion: Select whether the teacher requires induction
