@@ -23,8 +23,14 @@ COUNTRIES = {
   "SI" => [],
   "NZ" => [],
   "GI" => [],
-  "GB-SCT" => [],
-  "GB-NIR" => [],
+  "GB-SCT" => {
+    eligibility_skip_questions: true,
+    regions: [{ application_form_skip_work_history: true }],
+  },
+  "GB-NIR" => {
+    eligibility_skip_questions: true,
+    regions: [{ application_form_skip_work_history: true }],
+  },
   "AT" => [],
   "CH" => [],
   "GR" => [],
@@ -232,6 +238,35 @@ COUNTRIES = {
   "ZW" => [],
 }.freeze
 
+DEFAULT_COUNTRY = { eligibility_enabled: true }.freeze
+
+DEFAULT_REGION = {
+  name: "",
+  legacy: false,
+  application_form_enabled: true,
+}.freeze
+
+COUNTRIES.each do |code, value|
+  regions = value.is_a?(Hash) ? value[:regions] : value
+  country_hash = value.is_a?(Hash) ? value.except(:regions) : {}
+
+  country =
+    Country
+      .find_or_initialize_by(code:)
+      .tap { |c| c.update!(DEFAULT_COUNTRY.merge(country_hash)) }
+
+  regions << {} if regions.empty?
+
+  regions
+    .map { |region| DEFAULT_REGION.merge(region) }
+    .each do |region|
+      country
+        .regions
+        .find_or_initialize_by(name: region[:name])
+        .update!(region.except(:name))
+    end
+end
+
 ENGLISH_LANGUAGE_PROVIDERS = [
   {
     name: "IELTS SELT Consortium",
@@ -272,25 +307,6 @@ ENGLISH_LANGUAGE_PROVIDERS = [
         "and special characters in this format: 1-630439614:1-123456780",
   },
 ].freeze
-
-COUNTRIES.each do |code, regions|
-  country = Country.find_or_create_by!(code:)
-
-  if regions.empty?
-    country
-      .regions
-      .find_or_create_by!(name: "")
-      .update!(legacy: false, application_form_enabled: true)
-  else
-    regions.each do |region|
-      next if country.regions.where(name: region[:name]).any?
-
-      country.regions.create!(
-        region.merge(legacy: false, application_form_enabled: true),
-      )
-    end
-  end
-end
 
 ENGLISH_LANGUAGE_PROVIDERS.each do |english_language_provider|
   EnglishLanguageProvider.find_or_initialize_by(
