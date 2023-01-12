@@ -28,12 +28,9 @@ module EligibilityInterface
     end
 
     def next_path
-      if eligibility_check.skip_additional_questions?
-        if eligibility_check.eligible?
-          eligibility_interface_eligible_path
-        else
-          eligibility_interface_ineligible_path
-        end
+      if eligibility_check.skip_additional_questions? &&
+           eligibility_check.eligible?
+        eligibility_interface_eligible_path
       else
         paths[:degree]
       end

@@ -216,7 +216,7 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the_legacy_service
   end
 
-  it "can skip questions" do
+  it "can skip questions with qualification" do
     when_i_visit_the(:start_page)
     when_i_press_start_now
     when_i_select_a_skip_questions_country
@@ -224,6 +224,29 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_have_a_qualification
     then_i_see_the(:eligible_page)
+  end
+
+  it "can skip questions without qualification" do
+    when_i_visit_the(:start_page)
+    when_i_press_start_now
+    when_i_select_a_skip_questions_country
+    then_i_see_the(:qualification_page)
+
+    when_i_dont_have_a_qualification
+    then_i_see_the(:degree_page)
+
+    when_i_dont_have_a_degree
+    then_i_see_the(:teach_children_page)
+
+    when_i_cant_teach_children
+    then_i_see_the(:misconduct_page)
+
+    when_i_have_a_misconduct_record
+    then_i_see_the(:ineligible_page)
+    and_i_see_the_ineligible_degree_text
+    and_i_see_the_ineligible_qualification_text
+    and_i_see_the_ineligible_teach_children_text
+    and_i_see_the_ineligible_misconduct_text
   end
 
   it "handles countries with multiple regions" do
