@@ -50,8 +50,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :further_information
       further_information_request = further_information_requests[index]
 
-      if further_information_request.received? &&
-           assessment.request_further_information?
+      if further_information_request.received?
         url_helpers.edit_assessor_interface_application_form_assessment_further_information_request_path(
           application_form,
           assessment,

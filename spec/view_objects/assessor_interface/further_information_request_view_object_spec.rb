@@ -79,4 +79,40 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
       )
     end
   end
+
+  describe "#can_update?" do
+    subject(:can_update?) { view_object.can_update? }
+
+    context "when not passed and not recommended" do
+      before do
+        further_information_request.update!(passed: nil)
+        assessment.request_further_information!
+      end
+      it { is_expected.to be true }
+    end
+
+    context "when passed and not recommended" do
+      before do
+        further_information_request.update!(passed: true)
+        assessment.request_further_information!
+      end
+      it { is_expected.to be true }
+    end
+
+    context "when not passed and recommended" do
+      before do
+        further_information_request.update!(passed: nil)
+        assessment.award!
+      end
+      it { is_expected.to be true }
+    end
+
+    context "when passed and recommended" do
+      before do
+        further_information_request.update!(passed: true)
+        assessment.award!
+      end
+      it { is_expected.to be false }
+    end
+  end
 end
