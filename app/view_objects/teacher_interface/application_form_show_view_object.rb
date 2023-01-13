@@ -62,6 +62,18 @@ class TeacherInterface::ApplicationFormShowViewObject
     completed_task_sections.count == tasks.count
   end
 
+  def text_for_task_item(key)
+    if key == :written_statement
+      if application_form.teaching_authority_provides_written_statement
+        I18n.t("application_form.tasks.items.written_statement.provide")
+      else
+        I18n.t("application_form.tasks.items.written_statement.upload")
+      end
+    else
+      I18n.t("application_form.tasks.items.#{key}")
+    end
+  end
+
   def path_for_task_item(key)
     case key
     when :identification_document
@@ -69,9 +81,13 @@ class TeacherInterface::ApplicationFormShowViewObject
         application_form.identification_document,
       )
     when :written_statement
-      url_helpers.teacher_interface_application_form_document_path(
-        application_form.written_statement_document,
-      )
+      if application_form.teaching_authority_provides_written_statement
+        url_helpers.edit_teacher_interface_application_form_written_statement_path
+      else
+        url_helpers.teacher_interface_application_form_document_path(
+          application_form.written_statement_document,
+        )
+      end
     when :work_history
       if FeatureFlags::FeatureFlag.active?(:application_work_history)
         url_helpers.teacher_interface_application_form_new_regs_work_histories_path

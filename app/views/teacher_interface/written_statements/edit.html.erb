@@ -1,0 +1,31 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("application_form.tasks.items.written_statement.provide")}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<%= form_with model: @form, url: %i[teacher_interface application_form written_statement], method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l"><%= t("application_form.tasks.sections.proof_of_recognition") %></span>
+  <h1 class="govuk-heading-l"><%= t("application_form.tasks.items.written_statement.provide") %></h1>
+
+  <%= render "shared/eligible_region_content_components/professional_recognition",
+             region: @application_form.region,
+             teaching_authority_provides_written_statement: @application_form.teaching_authority_provides_written_statement %>
+
+  <p class="govuk-body">
+    Check the box below to confirm you understand that it’s your responsibility to request this document.
+  </p>
+
+  <%= f.govuk_check_boxes_fieldset :written_statement_confirmation, legend: nil, small: true do %>
+    <%= f.govuk_check_box :written_statement_confirmation,
+                          true,
+                          false,
+                          multiple: false,
+                          link_errors: true,
+                          label: {
+                            text: "I understand that it’s my responsibility to request written evidence from #{region_teaching_authority_name_phrase(@application_form.region)} to be sent directly to #{govuk_link_to t("service.email"), "mailto:#{t("service.email")}"}.".html_safe,
+                            size: "s",
+                          } %>
+  <% end %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>
