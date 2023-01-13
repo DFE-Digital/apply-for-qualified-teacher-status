@@ -21,6 +21,7 @@ RSpec.describe ApplicationFormFactory do
         expect(application_form.needs_work_history).to be true
         expect(application_form.needs_written_statement).to be false
         expect(application_form.needs_registration_number).to be false
+        expect(application_form.reduced_evidence_accepted).to be false
       end
     end
 
@@ -44,6 +45,7 @@ RSpec.describe ApplicationFormFactory do
           expect(application_form.needs_work_history).to be true
           expect(application_form.needs_written_statement).to be false
           expect(application_form.needs_registration_number).to be false
+          expect(application_form.reduced_evidence_accepted).to be false
         end
       end
 
@@ -61,6 +63,7 @@ RSpec.describe ApplicationFormFactory do
           expect(application_form.needs_work_history).to be false
           expect(application_form.needs_written_statement).to be false
           expect(application_form.needs_registration_number).to be false
+          expect(application_form.reduced_evidence_accepted).to be false
         end
       end
     end
@@ -80,6 +83,7 @@ RSpec.describe ApplicationFormFactory do
           application_form.teaching_authority_provides_written_statement,
         ).to be false
         expect(application_form.needs_registration_number).to be false
+        expect(application_form.reduced_evidence_accepted).to be false
       end
 
       context "when teaching authority provides the written statement" do
@@ -108,6 +112,20 @@ RSpec.describe ApplicationFormFactory do
         expect(application_form.needs_work_history).to be false
         expect(application_form.needs_written_statement).to be false
         expect(application_form.needs_registration_number).to be true
+        expect(application_form.reduced_evidence_accepted).to be false
+      end
+    end
+
+    context "when reduced evidence is accepted" do
+      let(:region) { create(:region, :reduced_evidence_accepted) }
+
+      it "creates an application form" do
+        expect { call }.to change(ApplicationForm, :count).by(1)
+      end
+
+      it "sets the rules" do
+        application_form = call
+        expect(application_form.reduced_evidence_accepted).to be true
       end
     end
   end

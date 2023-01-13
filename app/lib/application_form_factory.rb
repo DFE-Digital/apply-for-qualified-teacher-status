@@ -16,12 +16,15 @@ class ApplicationFormFactory
       needs_written_statement:,
       teaching_authority_provides_written_statement:,
       needs_registration_number:,
+      reduced_evidence_accepted:,
     )
   end
 
   private
 
   attr_reader :teacher, :region
+
+  delegate :reduced_evidence_accepted, to: :region
 
   def needs_work_history
     if FeatureFlags::FeatureFlag.active?(:application_work_history)
