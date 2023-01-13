@@ -30,6 +30,7 @@ RSpec.describe "Eligible region content", type: :view do
         teaching_authority_status_information: "Status information",
         teaching_authority_sanction_information: "Sanction information",
         teaching_authority_address: "address",
+        qualifications_information: "qualifications info",
       )
     end
 
@@ -37,6 +38,7 @@ RSpec.describe "Eligible region content", type: :view do
     it { is_expected.to match(/You’ll need to provide a/) }
     it { is_expected.to match(/certificate/) }
     it { is_expected.to match(/address/) }
+    it { is_expected.to match(/qualifications info/) }
   end
 
   context "with an online status check and written sanction check" do

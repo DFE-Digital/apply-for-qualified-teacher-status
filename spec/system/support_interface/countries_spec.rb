@@ -29,6 +29,7 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_online_checker_url
     when_i_fill_teaching_authority_checks_sanctions
+    when_i_fill_qualifications_information
     when_i_fill_regions
     and_i_save
     then_i_see_country_contact_preview
@@ -51,6 +52,7 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_status_information
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_online_checker_url
+    when_i_fill_qualifications_information
     and_i_save_and_preview
     then_i_see_the_preview
     and_i_see_a_success_banner
@@ -110,6 +112,7 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_content("Website")
     expect(page).to have_content("Certificate")
     expect(page).to have_content("Other")
+    expect(page).to have_content("Qualifications information")
   end
 
   def then_i_see_region_changes_confirmation
@@ -130,6 +133,8 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_content("You’re eligible to apply")
     expect(page).to have_content("Preparing to apply")
     expect(page).to have_content("Certified translations")
+    click_on "Proof of qualifications"
+    expect(page).to have_content("Qualifications information")
   end
 
   def when_i_fill_regions
@@ -212,6 +217,14 @@ RSpec.describe "Countries support", type: :system do
   rescue Capybara::ElementNotFound
     fill_in "country-teaching-authority-status-information-field",
             with: "Status information"
+  end
+
+  def when_i_fill_qualifications_information
+    fill_in "region-qualifications-information-field",
+            with: "Qualifications information"
+  rescue Capybara::ElementNotFound
+    fill_in "country-qualifications-information-field",
+            with: "Qualifications information"
   end
 
   def and_i_save

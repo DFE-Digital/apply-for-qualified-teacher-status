@@ -18,6 +18,7 @@ module SystemHelpers
     country = create(:country, :with_national_region, code: "GB-SCT")
     country.regions.first.update!(
       application_form_enabled: true,
+      qualifications_information: "Qualifications information",
       status_check: country_check,
       sanction_check: country_check,
       teaching_authority_status_information: "Status information",

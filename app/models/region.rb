@@ -6,6 +6,7 @@
 #  application_form_enabled                      :boolean          default(FALSE)
 #  application_form_skip_work_history            :boolean          default(FALSE), not null
 #  legacy                                        :boolean          default(TRUE), not null
+#  qualifications_information                    :text             default(""), not null
 #  name                                          :string           default(""), not null
 #  sanction_check                                :string           default("none"), not null
 #  status_check                                  :string           default("none"), not null

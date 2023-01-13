@@ -826,15 +826,18 @@ RSpec.describe "Teacher application", type: :system do
     expect(qualifications_form_page.heading.text).to eq(
       "Your teaching qualification",
     )
-    expect(qualifications_form_page.body).to have_content(
+    expect(qualifications_form_page.body.first).to have_content(
       "This is the qualification that led to you being recognised as a teacher.",
+    )
+    expect(qualifications_form_page.body.last).to have_content(
+      "Qualifications information",
     )
   end
 
   def then_i_see_the_university_degree_form
     expect(qualifications_form_page).to have_title("Your qualifications")
     expect(qualifications_form_page.heading.text).to eq("University degree")
-    expect(qualifications_form_page.body).to have_content(
+    expect(qualifications_form_page.body.first).to have_content(
       "Tell us about your university degree qualification.",
     )
   end
@@ -842,7 +845,7 @@ RSpec.describe "Teacher application", type: :system do
   def then_i_see_the_degree_qualifications_form
     expect(qualifications_form_page).to have_title("Your qualifications")
     expect(qualifications_form_page.heading.text).to eq("University degree")
-    expect(qualifications_form_page.body).to have_content(
+    expect(qualifications_form_page.body.first).to have_content(
       "Tell us about your university degree qualification.",
     )
   end
