@@ -243,7 +243,17 @@ COUNTRIES = {
   "HK" => [],
   "IN" => [],
   "JM" => [],
-  "NG" => [],
+  "NG" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_provides_written_statement: true,
+      teaching_authority_name:
+        "Teachers Registration Council of Nigeria (TRCN)",
+      teaching_authority_certificate: "Letter of Professional Standing",
+      teaching_authority_emails: %w[LoPs@trcn.gov.ng],
+    },
+  ],
   "SG" => [],
   "ZA" => [],
   "UA" => [],

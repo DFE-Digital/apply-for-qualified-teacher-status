@@ -3,6 +3,7 @@
     As your education department or authority has an online register of teachers,
     you’ll need to provide any registration numbers we need to check your record.
   </p>
+
   <% if region.teaching_authority_status_information.present?%>
     <%= raw GovukMarkdown.render(region.teaching_authority_status_information) %>
   <% end %>
@@ -22,36 +23,55 @@
   <% end %>
 <% end %>
 
-<p class="govuk-body">
-  <%= proof_of_recognition_description_for(region:) %>
-</p>
-<ul class="govuk-list govuk-list--bullet">
-  <%- proof_of_recognition_requirements_for(region:).each do |requirement|%>
-    <li><%= requirement %></li>
-  <%- end -%>
-</ul>
-
 <% if region.status_check_written? || region.sanction_check_written? %>
-  <p class="govuk-body">
-    You’ll need to provide <%= region_certificate_phrase(region) %>, which you can obtain by contacting:
-  </p>
+  <% if teaching_authority_provides_written_statement %>
+    <p class="govuk-body">
+      We need a document called <%= region_certificate_phrase(region) %> from <%= region_teaching_authority_name_phrase(region) %>.
+    </p>
 
-  <%= render "shared/teaching_authority_contact_information", region: %>
+    <p class="govuk-body">
+      You should request it by emailing <%= region_teaching_authority_emails_phrase(region) %>.
+    </p>
+
+    <p class="govuk-body">
+      You cannot provide this document yourself – instead, you must contact <%= region_teaching_authority_name_phrase(region) %> and ask them to send it directly to us at <a class="govuk-link" href="mailto:<%= t("service.email") %>"><%= t("service.email") %></a>.
+    </p>
+  <% end %>
+
+  <p class="govuk-body"><%= proof_of_recognition_description_for(region:) %></p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <%- proof_of_recognition_requirements_for(region:).each do |requirement|%>
+      <li><%= requirement %></li>
+    <%- end -%>
+  </ul>
+
+  <% if teaching_authority_provides_written_statement %>
+    <p class="govuk-body">
+      If we do not receive the document within 90 days of the date that you submit your application, we’ll need to close your application.
+    </p>
+  <% else %>
+    <p class="govuk-body">
+      You’ll need to provide <%= region_certificate_phrase(region) %>, which you can obtain by contacting:
+    </p>
+
+    <%= render "shared/teaching_authority_contact_information", region: %>
+  <% end %>
 <% end %>
 
 <% if region.status_check_written? %>
-  <% if region.teaching_authority_status_information.present?%>
+  <% if region.teaching_authority_status_information.present? %>
     <%= raw GovukMarkdown.render(region.teaching_authority_status_information) %>
   <% end %>
 
-  <% if region.country.teaching_authority_status_information.present?%>
+  <% if region.country.teaching_authority_status_information.present? %>
     <%= raw GovukMarkdown.render(region.country.teaching_authority_status_information) %>
   <% end %>
-  
+
 <% end %>
 
 <% if region.sanction_check_written? %>
-  <% if region.teaching_authority_sanction_information.present?%> 
+  <% if region.teaching_authority_sanction_information.present?%>
     <%= raw GovukMarkdown.render(region.teaching_authority_sanction_information) %>
   <% end %>
 
@@ -80,6 +100,7 @@
 <% if region.teaching_authority_other.present? %>
   <%= raw GovukMarkdown.render(region.teaching_authority_other) %>
 <% end %>
+
 <% if region.country.teaching_authority_other.present?%>
   <%= raw GovukMarkdown.render(region.country.teaching_authority_other) %>
 <% end %>
