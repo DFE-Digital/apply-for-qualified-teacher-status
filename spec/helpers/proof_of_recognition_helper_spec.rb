@@ -6,6 +6,8 @@ RSpec.describe ProofOfRecognitionHelper do
       name: "Region Name",
       status_check_written?: status,
       sanction_check_written?: sanction,
+      teaching_authority_provides_written_statement?:
+        teaching_authority_provides_written_statement,
       application_form_skip_work_history?: application_form_skip_work_history,
       country:
         double(
@@ -16,6 +18,7 @@ RSpec.describe ProofOfRecognitionHelper do
   end
   let(:status) { false }
   let(:sanction) { false }
+  let(:teaching_authority_provides_written_statement) { false }
   let(:application_form_skip_work_history) { false }
   let(:teaching_authority_checks_sanctions) { true }
 
@@ -121,6 +124,12 @@ RSpec.describe ProofOfRecognitionHelper do
           "The authority or territory that recognises you as a teacher must confirm:",
         )
       end
+    end
+
+    context "a country which provides the written statement" do
+      let(:teaching_authority_provides_written_statement) { true }
+
+      it { is_expected.to eq("The document must confirm:") }
     end
   end
 end

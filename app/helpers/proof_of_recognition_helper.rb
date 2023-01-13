@@ -13,12 +13,11 @@ module ProofOfRecognitionHelper
   end
 
   def proof_of_recognition_description_for(region:)
-    if region.status_check_written?
-      return(
-        "The authority or territory that recognises you as a teacher must confirm:"
-      )
-    end
-    if region.sanction_check_written?
+    if region.teaching_authority_provides_written_statement?
+      "The document must confirm:"
+    elsif region.status_check_written?
+      "The authority or territory that recognises you as a teacher must confirm:"
+    elsif region.sanction_check_written?
       "The education department or authority must also confirm in writing:"
     end
   end
