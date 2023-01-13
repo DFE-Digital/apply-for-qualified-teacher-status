@@ -8,6 +8,7 @@
 #  legacy                                        :boolean          default(TRUE), not null
 #  name                                          :string           default(""), not null
 #  qualifications_information                    :text             default(""), not null
+#  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  sanction_check                                :string           default("none"), not null
 #  status_check                                  :string           default("none"), not null
 #  teaching_authority_address                    :text             default(""), not null

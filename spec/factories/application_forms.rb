@@ -26,6 +26,7 @@
 #  needs_written_statement                       :boolean          not null
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualifications_status                         :string           default("not_started"), not null
+#  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
@@ -83,6 +84,7 @@ FactoryBot.define do
     needs_registration_number do
       region.status_check_online? || region.sanction_check_online?
     end
+    reduced_evidence_accepted { region.reduced_evidence_accepted }
 
     trait :completed do
       personal_information_status { "completed" }

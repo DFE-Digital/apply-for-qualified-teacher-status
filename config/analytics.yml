@@ -57,6 +57,7 @@
     - needs_written_statement
     - needs_registration_number
     - teaching_authority_provides_written_statement
+    - written_statement_confirmation
     - confirmed_no_sanctions
     - english_language_status
     - english_language_citizenship_exempt
@@ -64,7 +65,7 @@
     - english_language_proof_method
     - english_language_provider_id
     - english_language_provider_reference
-    - written_statement_confirmation
+    - reduced_evidence_accepted
   :assessment_sections:
     - id
     - assessment_id
@@ -216,6 +217,7 @@
     - legacy
     - application_form_enabled
     - application_form_skip_work_history
+    - reduced_evidence_accepted
     - teaching_authority_address
     - teaching_authority_emails
     - teaching_authority_websites
