@@ -19,8 +19,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
         .find(params[:id])
   end
 
-  delegate :assessment, to: :further_information_request
-  delegate :application_form, to: :assessment
+  delegate :application_form, :assessment, to: :further_information_request
 
   def review_items
     further_information_request
@@ -49,6 +48,11 @@ class AssessorInterface::FurtherInformationRequestViewObject
           },
         }
       end
+  end
+
+  def can_update?
+    further_information_request.passed.nil? ||
+      assessment.request_further_information?
   end
 
   private

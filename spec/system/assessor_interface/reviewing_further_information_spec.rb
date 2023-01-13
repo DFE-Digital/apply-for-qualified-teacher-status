@@ -42,8 +42,9 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     and_i_see_a_decline_qts_option
   end
 
-  it "further information request passed" do
-    @further_information_request.update!(passed: true)
+  it "further information request passed and assessment finished" do
+    further_information_request.update!(passed: true)
+    further_information_request.assessment.award!
 
     when_i_visit_the(:assessor_application_page, application_id:)
     and_i_click_review_requested_information
