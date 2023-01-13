@@ -47,6 +47,8 @@ class ApplicationFormStatusUpdater
            :has_work_history,
            :work_histories,
            :registration_number,
+           :teaching_authority_provides_written_statement,
+           :written_statement_confirmation,
            :written_statement_document,
            to: :application_form
 
@@ -180,7 +182,14 @@ class ApplicationFormStatusUpdater
   end
 
   def written_statement_status
-    written_statement_document.uploaded? ? :completed : :not_started
+    completed =
+      if teaching_authority_provides_written_statement
+        written_statement_confirmation
+      else
+        written_statement_document.uploaded?
+      end
+
+    completed ? :completed : :not_started
   end
 
   def status_for_values(*values)
