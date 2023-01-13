@@ -12,6 +12,16 @@
               <h2 class="govuk-heading-m">
                 <%= govuk_link_to CountryName.from_country(country), edit_support_interface_country_path(country) %>
                 <code class="govuk-tag app-country-code-tag govuk-!-margin-left-2"><%= country.code %></code>
+
+                <% if country.eligibility_enabled %>
+                  <%= govuk_tag(text: "Eligible", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
+                <% else %>
+                  <%= govuk_tag(text: "Ineligible", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
+                <% end %>
+
+                <% if country.eligibility_skip_questions %>
+                  <%= govuk_tag(text: "Skips questions", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
+                <% end %>
               </h2>
             </th>
           </tr>
@@ -30,25 +40,24 @@
                     <% end %>
                   </a>
                 </td>
-                <td class="govuk-table__cell">
-                  <% if country.eligibility_enabled %>
-                    <%= govuk_tag(text: "Eligibility enabled", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
 
-                    <% if country.eligibility_skip_questions || region.legacy %>
-                      <%= govuk_tag(text: "Skips questions", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
+                <td class="govuk-table__cell">
+                  <% if region.legacy && !country.eligibility_skip_questions %>
+                    <%= govuk_tag(text: "Skips questions", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
+                  <% end %>
+
+                  <% if region.application_form_enabled %>
+                    <%= govuk_tag(text: "Applications enabled", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
+
+                    <% if region.application_form_skip_work_history %>
+                      <%= govuk_tag(text: "Skips work history", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
                     <% end %>
 
-                    <% if region.application_form_enabled %>
-                      <%= govuk_tag(text: "Applications enabled", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
-
-                      <% if region.application_form_skip_work_history %>
-                        <%= govuk_tag(text: "Skips work history", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
-                      <% end %>
-                    <% else %>
-                      <%= govuk_tag(text: "Applications disabled", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
+                    <% if region.reduced_evidence_accepted %>
+                      <%= govuk_tag(text: "Accepts reduced evidence", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
                     <% end %>
                   <% else %>
-                    <%= govuk_tag(text: "Eligibility disabled", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
+                    <%= govuk_tag(text: "Applications disabled", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
                   <% end %>
                 </td>
               </tr>
