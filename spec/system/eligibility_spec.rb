@@ -94,7 +94,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_have_a_misconduct_record
     then_i_see_the(:ineligible_page)
     and_i_see_the_ineligible_degree_text
-    and_i_see_the_ineligible_qualification_text
+    and_i_see_the_ineligible_qualification_text_with_eligible_country
     and_i_see_the_ineligible_teach_children_text
     and_i_see_the_ineligible_misconduct_text
   end
@@ -128,7 +128,7 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_have_a_misconduct_record
     then_i_see_the(:ineligible_page)
     and_i_see_the_ineligible_degree_text
-    and_i_see_the_ineligible_qualification_text
+    and_i_see_the_ineligible_qualification_text_with_eligible_country
     and_i_see_the_ineligible_teach_children_text
     and_i_see_the_ineligible_work_experience_text
     and_i_see_the_ineligible_misconduct_text
@@ -244,7 +244,8 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_have_a_misconduct_record
     then_i_see_the(:ineligible_page)
     and_i_see_the_ineligible_degree_text
-    and_i_see_the_ineligible_qualification_text
+    and_i_see_the_ineligible_qualification_text_with_skip_questions_country
+    and_i_see_the_ineligible_degree_text
     and_i_see_the_ineligible_teach_children_text
     and_i_see_the_ineligible_misconduct_text
   end
@@ -488,10 +489,17 @@ RSpec.describe "Eligibility check", type: :system do
     )
   end
 
-  def and_i_see_the_ineligible_qualification_text
+  def and_i_see_the_ineligible_qualification_text_with_eligible_country
     expect(ineligible_page.reasons).to have_content(
-      "You have not completed a formal teaching qualification, for example, an undergraduate teaching degree " \
-        "or postgraduate teaching qualification.",
+      "You have not completed a formal teaching qualification in Scotland, for example, an undergraduate teaching " \
+        "degree or postgraduate teaching qualification.",
+    )
+  end
+
+  def and_i_see_the_ineligible_qualification_text_with_skip_questions_country
+    expect(ineligible_page.reasons).to have_content(
+      "You have not completed a formal teaching qualification in Portugal, for example, an undergraduate teaching " \
+        "degree or postgraduate teaching qualification.",
     )
   end
 
