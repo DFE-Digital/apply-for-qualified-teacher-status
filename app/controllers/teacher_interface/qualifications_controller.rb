@@ -50,6 +50,8 @@ module TeacherInterface
     def create
       qualification = Qualification.new(application_form:)
 
+      @view_object = QualificationViewObject.new(qualification:)
+
       @qualification_form =
         QualificationForm.new(qualification_form_params.merge(qualification:))
 
