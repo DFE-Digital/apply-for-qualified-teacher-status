@@ -100,6 +100,7 @@ module TeacherInterface
       @qualification = qualification
 
       @view_object = QualificationViewObject.new(qualification:)
+
       @qualification_form =
         QualificationForm.new(
           qualification:,
@@ -114,6 +115,8 @@ module TeacherInterface
 
     def update
       @qualification = qualification
+
+      @view_object = QualificationViewObject.new(qualification:)
 
       @qualification_form =
         QualificationForm.new(qualification_form_params.merge(qualification:))
