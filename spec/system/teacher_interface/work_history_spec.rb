@@ -38,6 +38,31 @@ RSpec.describe "Teacher work history", type: :system do
     then_i_see_the(:teacher_application_page)
   end
 
+  it "records work history with reduced evidence" do
+    given_the_application_accepts_reduced_evidence
+
+    when_i_visit_the(:teacher_application_page)
+    then_i_see_the(:teacher_application_page)
+    and_i_see_the_work_history_task
+
+    when_i_click_the_work_history_task
+    then_i_see_the(:teacher_new_work_history_page)
+
+    when_i_fill_in_the_school_information
+    then_i_see_the(:teacher_check_work_history_page)
+    and_i_see_the_reduced_evidence_work_history_information
+
+    when_i_click_continue
+    then_i_see_the(:teacher_add_another_work_history_page)
+    and_i_see_the_heading_with_the_number_of_months
+
+    when_i_dont_add_another_work_history
+    then_i_see_the(:teacher_check_work_histories_page)
+
+    when_i_click_continue
+    then_i_see_the(:teacher_application_page)
+  end
+
   it "deletes work history" do
     given_some_work_history_exists
 
@@ -69,6 +94,10 @@ RSpec.describe "Teacher work history", type: :system do
 
   def given_an_application_form_exists
     application_form
+  end
+
+  def given_the_application_accepts_reduced_evidence
+    application_form.update!(reduced_evidence_accepted: true)
   end
 
   def given_some_work_history_exists
@@ -142,6 +171,33 @@ RSpec.describe "Teacher work history", type: :system do
 
     expect(summary_list_rows[9].key.text).to eq("Contact email address")
     expect(summary_list_rows[9].value.text).to eq("contact@example.com")
+  end
+
+  def and_i_see_the_reduced_evidence_work_history_information
+    summary_list_rows = teacher_check_work_history_page.summary_list.rows
+
+    expect(summary_list_rows.count).to eq(7)
+
+    expect(summary_list_rows[0].key.text).to eq("School name")
+    expect(summary_list_rows[0].value.text).to eq("School")
+
+    expect(summary_list_rows[1].key.text).to eq("City of institution")
+    expect(summary_list_rows[1].value.text).to eq("City")
+
+    expect(summary_list_rows[2].key.text).to eq("Country of institution")
+    expect(summary_list_rows[2].value.text).to eq("France")
+
+    expect(summary_list_rows[3].key.text).to eq("Your job role")
+    expect(summary_list_rows[3].value.text).to eq("Job")
+
+    expect(summary_list_rows[4].key.text).to eq("Hours per week")
+    expect(summary_list_rows[4].value.text).to eq("30")
+
+    expect(summary_list_rows[5].key.text).to eq("Role start date")
+    expect(summary_list_rows[5].value.text).to eq("January 2020")
+
+    expect(summary_list_rows[6].key.text).to eq("Role end date")
+    expect(summary_list_rows[6].value.text).to eq("December 2021")
   end
 
   def when_i_click_continue
