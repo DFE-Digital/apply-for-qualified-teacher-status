@@ -22,11 +22,16 @@
     } : nil,
     english_language_provider: !application_form.english_language_exempt? && application_form.english_language_proof_method_provider? ? {
       title: "Your approved provider",
-      href: %i[provider teacher_interface application_form english_language]
+      href: %i[provider teacher_interface application_form english_language],
+      value: application_form.english_language_provider.presence || "Other",
     } : nil,
-    english_language_provider_reference: !application_form.english_language_exempt? && application_form.english_language_proof_method_provider? ? {
+    english_language_provider_reference: !application_form.english_language_exempt? && application_form.english_language_proof_method_provider? && !application_form.english_language_provider_other ? {
       title: "Your reference number",
       href: %i[provider_reference teacher_interface application_form english_language]
+    } : nil,
+    english_language_proficiency_document: !application_form.english_language_exempt? && application_form.english_language_proof_method_provider? && application_form.english_language_provider_other ? {
+      title: "English language proficiency test",
+      href: [:teacher_interface, :application_form, application_form.english_language_proficiency_document]
     } : nil,
   },
   changeable:
