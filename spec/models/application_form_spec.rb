@@ -13,6 +13,7 @@
 #  date_of_birth                                 :date
 #  english_language_citizenship_exempt           :boolean
 #  english_language_proof_method                 :string
+#  english_language_provider_other               :boolean          default(FALSE), not null
 #  english_language_provider_reference           :text             default(""), not null
 #  english_language_qualification_exempt         :boolean
 #  english_language_status                       :string           default("not_started"), not null
@@ -226,6 +227,14 @@ RSpec.describe ApplicationForm, type: :model do
       is_expected.to validate_length_of(:reference).is_at_least(3).is_at_most(
         31,
       )
+    end
+
+    it { is_expected.to_not validate_absence_of(:english_language_provider) }
+
+    context "with an other english language provider" do
+      before { application_form.update!(english_language_provider_other: true) }
+
+      it { is_expected.to validate_absence_of(:english_language_provider) }
     end
 
     context "with the same assessor and reviewer" do
