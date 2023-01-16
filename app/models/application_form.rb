@@ -164,6 +164,10 @@ class ApplicationForm < ApplicationRecord
     documents.find(&:medium_of_instruction?)
   end
 
+  def english_language_proficiency_document
+    documents.find(&:english_language_proficiency?)
+  end
+
   def written_statement_document
     documents.find(&:written_statement?)
   end
@@ -182,6 +186,7 @@ class ApplicationForm < ApplicationRecord
     documents.build(document_type: :identification)
     documents.build(document_type: :name_change)
     documents.build(document_type: :medium_of_instruction)
+    documents.build(document_type: :english_language_proficiency)
     documents.build(document_type: :written_statement)
   end
 

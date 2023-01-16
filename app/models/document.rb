@@ -31,6 +31,7 @@ class Document < ApplicationRecord
     identification
     name_change
     medium_of_instruction
+    english_language_proficiency
   ].freeze
   TRANSLATABLE_TYPES = %w[
     qualification_certificate
