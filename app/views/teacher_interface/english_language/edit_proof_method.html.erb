@@ -11,15 +11,7 @@
                                        :value,
                                        legend: { tag: "h1", size: "l" } %>
 
-  <%= govuk_details(summary_text: "About approved providers") do %>
-    <p class="govuk-body">
-      To apply for QTS you must use an approved provider. We cannot accept English language tests from a provider that does not appear on the list.
-    </p>
-
-    <p class="govuk-body">
-      See the list of <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link" rel="noreferrer noopener" target="_blank">approved providers (opens in new tab)</a>.
-    </p>
-  <% end %>
+  <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
 
   <%= render "shared/save_submit_buttons", f: %>
 <% end %>
