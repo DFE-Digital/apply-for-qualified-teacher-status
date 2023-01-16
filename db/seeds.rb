@@ -256,7 +256,7 @@ COUNTRIES = {
   ],
   "SG" => [],
   "ZA" => [],
-  "UA" => [],
+  "UA" => [{ reduced_evidence_accepted: true }],
   "ZW" => [],
 }.freeze
 

@@ -26,6 +26,7 @@
 #  needs_written_statement                       :boolean          not null
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualifications_status                         :string           default("not_started"), not null
+#  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
