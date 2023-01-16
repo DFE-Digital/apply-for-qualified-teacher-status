@@ -14,6 +14,7 @@ class ApplicationFormFactory
       region:,
       needs_work_history:,
       needs_written_statement:,
+      teaching_authority_provides_written_statement:,
       needs_registration_number:,
     )
   end
@@ -33,6 +34,8 @@ class ApplicationFormFactory
   def needs_written_statement
     region.status_check_written? || region.sanction_check_written?
   end
+
+  delegate :teaching_authority_provides_written_statement, to: :region
 
   def needs_registration_number
     region.status_check_online? || region.sanction_check_online?

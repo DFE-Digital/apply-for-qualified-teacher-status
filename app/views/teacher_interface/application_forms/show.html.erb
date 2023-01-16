@@ -29,7 +29,7 @@
           <% items.each do |item| %>
             <li class="app-task-list__item">
               <span class="app-task-list__task-name">
-                <%= link_to I18n.t("application_form.tasks.items.#{item}"),
+                <%= link_to @view_object.text_for_task_item(item),
                             @view_object.path_for_task_item(item),
                             aria: { describedby: "#{item}-status" } %>
               </span>

@@ -311,16 +311,41 @@ RSpec.describe ApplicationFormStatusUpdater do
         application_form.written_statement_status
       end
 
-      context "with no upload" do
-        let(:application_form) { create(:application_form) }
-        it { is_expected.to eq("not_started") }
+      context "when teaching authority provides the written statement" do
+        context "without confirmation" do
+          let(:application_form) do
+            create(
+              :application_form,
+              :teaching_authority_provides_written_statement,
+              :with_written_statement,
+            )
+          end
+          it { is_expected.to eq("completed") }
+        end
+
+        context "with confirmation" do
+          let(:application_form) do
+            create(
+              :application_form,
+              :teaching_authority_provides_written_statement,
+            )
+          end
+          it { is_expected.to eq("not_started") }
+        end
       end
 
-      context "with an upload" do
-        let(:application_form) do
-          create(:application_form, :with_written_statement)
+      context "when teacher provides the written statement" do
+        context "with no upload" do
+          let(:application_form) { create(:application_form) }
+          it { is_expected.to eq("not_started") }
         end
-        it { is_expected.to eq("completed") }
+
+        context "with an upload" do
+          let(:application_form) do
+            create(:application_form, :with_written_statement)
+          end
+          it { is_expected.to eq("completed") }
+        end
       end
     end
 

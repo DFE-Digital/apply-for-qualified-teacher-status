@@ -71,7 +71,9 @@ en:
         english_language: Verify your English language proficiency
         work_history: Add your work history
         registration_number: Enter your registration number
-        written_statement: Upload your written statement
+        written_statement:
+          upload: Upload your written statement
+          provide: Provide your written statement
     qualifications:
       heading:
         title:
@@ -348,3 +350,7 @@ en:
               invalid: Enter the end date in the format 3 1980
               future: End date must be in the past
               comparison: End date must be after start date
+        teacher_interface/written_statement_confirmation_form:
+          attributes:
+            written_statement_confirmation:
+              blank: You must confirm that you understand that it’s your responsibility to request written evidence

@@ -273,6 +273,11 @@ module PageHelpers
       PageObjects::TeacherInterface::EditWorkHistorySchool.new
   end
 
+  def teacher_edit_written_statement_page
+    @teacher_edit_written_statement_page ||=
+      PageObjects::TeacherInterface::EditWrittenStatement.new
+  end
+
   def teacher_english_language_exemption_page
     @teacher_english_language_exemption_page ||=
       PageObjects::TeacherInterface::EnglishLanguageExemption.new

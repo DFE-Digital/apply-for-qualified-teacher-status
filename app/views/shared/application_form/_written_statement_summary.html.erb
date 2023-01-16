@@ -1,12 +1,27 @@
-<%= render(CheckYourAnswersSummary::Component.new(
-  id: "written-statement",
-  model: application_form,
-  title: I18n.t("application_form.tasks.items.written_statement"),
-  fields: {
-    written_statement_document: {
-      title: "Written statement",
-      href: [:teacher_interface, :application_form, application_form.written_statement_document]
+<% if application_form.teaching_authority_provides_written_statement %>
+  <%= render(CheckYourAnswersSummary::Component.new(
+    id: "written-statement",
+    model: application_form,
+    title: I18n.t("application_form.tasks.items.written_statement.provide"),
+    fields: {
+      written_statement_confirmation: {
+        title: "Written statement confirmed",
+        href: [:edit, :teacher_interface, :application_form, :written_statement]
+      },
     },
-  },
-  changeable:
-)) %>
+    changeable:
+  )) %>
+<% else %>
+  <%= render(CheckYourAnswersSummary::Component.new(
+    id: "written-statement",
+    model: application_form,
+    title: I18n.t("application_form.tasks.items.written_statement.upload"),
+    fields: {
+      written_statement_document: {
+        title: "Written statement",
+        href: [:teacher_interface, :application_form, application_form.written_statement_document]
+      },
+    },
+    changeable:
+  )) %>
+<% end %>

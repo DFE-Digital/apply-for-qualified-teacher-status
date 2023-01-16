@@ -76,7 +76,23 @@ RSpec.describe ApplicationFormFactory do
         application_form = call
         expect(application_form.needs_work_history).to be false
         expect(application_form.needs_written_statement).to be true
+        expect(
+          application_form.teaching_authority_provides_written_statement,
+        ).to be false
         expect(application_form.needs_registration_number).to be false
+      end
+
+      context "when teaching authority provides the written statement" do
+        before do
+          region.update!(teaching_authority_provides_written_statement: true)
+        end
+
+        it "sets the rules" do
+          application_form = call
+          expect(
+            application_form.teaching_authority_provides_written_statement,
+          ).to be true
+        end
       end
     end
 

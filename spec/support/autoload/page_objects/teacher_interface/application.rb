@@ -23,6 +23,14 @@ module PageObjects
       def work_history_task_item
         task_list.find_item("Add your work history")
       end
+
+      def upload_written_statement_task_item
+        task_list.find_item("Upload your written statement")
+      end
+
+      def provide_written_statement_task_item
+        task_list.find_item("Provide your written statement")
+      end
     end
   end
 end
