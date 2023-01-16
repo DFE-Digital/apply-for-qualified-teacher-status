@@ -138,18 +138,15 @@ module TeacherInterface
     end
 
     def edit_provider
-      @providers = EnglishLanguageProvider.order(:created_at)
-
       @form =
         EnglishLanguageProviderForm.new(
           application_form:,
           provider_id: application_form.english_language_provider_id,
+          provider_other: application_form.english_language_provider_other,
         )
     end
 
     def update_provider
-      @providers = EnglishLanguageProvider.order(:created_at)
-
       @form =
         EnglishLanguageProviderForm.new(
           provider_params.merge(application_form:),
@@ -157,12 +154,23 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect: %i[
-          provider_reference
-          teacher_interface
-          application_form
-          english_language
-        ],
+        if_success_then_redirect: ->(check_path) do
+          check_path ||
+            if @form.other?
+              [
+                :teacher_interface,
+                :application_form,
+                application_form.english_language_proficiency_document,
+              ]
+            else
+              %i[
+                provider_reference
+                teacher_interface
+                application_form
+                english_language
+              ]
+            end
+        end,
         if_failure_then_render: :edit_provider,
       )
     end

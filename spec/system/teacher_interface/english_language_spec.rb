@@ -115,6 +115,44 @@ RSpec.describe "Teacher English language", type: :system do
     and_i_see_the_my_provider_reference
   end
 
+  it "other provider" do
+    given_there_are_english_language_providers
+    given_the_application_form_accepts_reduced_evidence
+
+    when_i_visit_the(:teacher_application_page)
+    then_i_see_the(:teacher_application_page)
+    and_i_see_the_english_language_task
+
+    when_i_click_the_english_language_task
+    then_i_see_the(
+      :teacher_english_language_exemption_page,
+      exemption_field: "citizenship",
+    )
+
+    when_i_am_not_exempt
+    then_i_see_the(
+      :teacher_english_language_exemption_page,
+      exemption_field: "qualification",
+    )
+
+    when_i_am_not_exempt
+    then_i_see_the(:teacher_english_language_proof_method_page)
+
+    when_i_use_a_provider_reference
+    then_i_see_the(:teacher_english_language_provider_page)
+    and_i_see_the_providers_with_an_other
+
+    when_i_select_the_other_provider
+    then_i_see_the(:teacher_upload_document_page)
+
+    when_i_upload_a_file
+    then_i_see_the(:teacher_check_document_page)
+
+    when_i_dont_need_to_upload_another_file
+    then_i_see_the(:teacher_check_english_language_page)
+    and_i_see_the_my_other_provider
+  end
+
   private
 
   def given_english_language_is_active
@@ -131,6 +169,10 @@ RSpec.describe "Teacher English language", type: :system do
 
   def given_there_are_english_language_providers
     english_language_providers
+  end
+
+  def given_the_application_form_accepts_reduced_evidence
+    application_form.update!(reduced_evidence_accepted: true)
   end
 
   def and_i_see_the_english_language_task
@@ -280,6 +322,66 @@ RSpec.describe "Teacher English language", type: :system do
       teacher_check_english_language_page.summary_list.rows.fifth
     expect(reference_summary_list_row.key.text).to eq("Your reference number")
     expect(reference_summary_list_row.value.text).to eq("abc")
+  end
+
+  def and_i_see_the_providers_with_an_other
+    expect(teacher_english_language_provider_page.form.radio_items.count).to eq(
+      6,
+    )
+
+    5.times do |i|
+      expect(
+        teacher_english_language_provider_page.form.radio_items[i].text,
+      ).to eq(english_language_providers[i].name)
+    end
+
+    expect(
+      teacher_english_language_provider_page.form.radio_items[5].text,
+    ).to eq("Other approved provider")
+  end
+
+  def when_i_select_the_other_provider
+    teacher_english_language_provider_page.form.radio_items.last.choose
+    teacher_english_language_provider_page.form.continue_button.click
+  end
+
+  def when_i_upload_a_file
+    teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
+      file_fixture("upload.pdf"),
+    )
+    teacher_upload_document_page.form.continue_button.click
+  end
+
+  def when_i_dont_need_to_upload_another_file
+    teacher_check_document_page.form.no_radio_item.input.click
+    teacher_check_document_page.form.continue_button.click
+  end
+
+  def and_i_see_the_my_other_provider
+    expect(teacher_check_english_language_page.summary_list.rows.count).to eq(5)
+
+    proof_method_summary_list_row =
+      teacher_check_english_language_page.summary_list.rows.third
+    expect(proof_method_summary_list_row.key.text).to eq(
+      "Chosen verification method",
+    )
+    expect(proof_method_summary_list_row.value.text).to eq(
+      "Approved test provider",
+    )
+
+    provider_summary_list_row =
+      teacher_check_english_language_page.summary_list.rows.fourth
+    expect(provider_summary_list_row.key.text).to eq("Your approved provider")
+    expect(provider_summary_list_row.value.text).to eq("Other")
+
+    reference_summary_list_row =
+      teacher_check_english_language_page.summary_list.rows.fifth
+    expect(reference_summary_list_row.key.text).to eq(
+      "English language proficiency test",
+    )
+    expect(reference_summary_list_row.value.text).to eq(
+      "upload.pdf (opens in a new tab)",
+    )
   end
 
   def teacher

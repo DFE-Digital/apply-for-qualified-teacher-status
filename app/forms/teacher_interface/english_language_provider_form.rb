@@ -13,9 +13,7 @@ module TeacherInterface
               }
 
     def initialize(values)
-      if values.delete(:provider_other)
-        values[:provider_id] = "other"
-      end
+      values[:provider_id] = "other" if values.delete(:provider_other)
 
       super(values)
     end
