@@ -42,7 +42,9 @@ class ApplicationFormStatusUpdater
            :english_language_qualification_exempt,
            :english_language_proof_method,
            :english_language_medium_of_instruction_document,
+           :english_language_proficiency_document,
            :english_language_provider,
+           :english_language_provider_other,
            :english_language_provider_reference,
            :has_work_history,
            :work_histories,
@@ -104,17 +106,17 @@ class ApplicationFormStatusUpdater
 
     case english_language_proof_method
     when "medium_of_instruction"
-      if english_language_medium_of_instruction_document.uploaded?
-        :completed
-      else
-        :in_progress
-      end
+      status_for_document(english_language_medium_of_instruction_document)
     when "provider"
-      status_for_values(
-        english_language_proof_method,
-        english_language_provider,
-        english_language_provider_reference,
-      )
+      if english_language_provider_other
+        status_for_document(english_language_proficiency_document)
+      else
+        status_for_values(
+          english_language_proof_method,
+          english_language_provider,
+          english_language_provider_reference,
+        )
+      end
     else
       if [
            english_language_citizenship_exempt,
@@ -196,6 +198,10 @@ class ApplicationFormStatusUpdater
     return :not_started if values.all?(&:blank?)
     return :completed if values.all?(&:present?)
     :in_progress
+  end
+
+  def status_for_document(document)
+    document.uploaded? ? :completed : :in_progress
   end
 
   def work_history_feature_active?

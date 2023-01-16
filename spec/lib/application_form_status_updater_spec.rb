@@ -214,6 +214,13 @@ RSpec.describe ApplicationFormStatusUpdater do
         end
         it { is_expected.to eq("completed") }
       end
+
+      context "when other provider and uploaded" do
+        let(:application_form) do
+          create(:application_form, :with_english_language_proficiency_document)
+        end
+        it { is_expected.to eq("completed") }
+      end
     end
 
     describe "work history" do

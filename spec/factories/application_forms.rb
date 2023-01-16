@@ -233,6 +233,17 @@ FactoryBot.define do
       end
     end
 
+    trait :with_english_language_proficiency_document do
+      with_english_language_provider
+
+      after(:create) do |application_form, _evaluator|
+        create(
+          :upload,
+          document: application_form.english_language_proficiency_document,
+        )
+      end
+    end
+
     trait :with_english_language_provider do
       english_language_proof_method { "provider" }
       association :english_language_provider
