@@ -77,13 +77,7 @@ module TeacherInterface
               check: false,
             )
 
-            [
-              :contact,
-              :teacher_interface,
-              :application_form,
-              :new_regs,
-              @work_history,
-            ]
+            after_school_path(@work_history)
           end,
           if_failure_then_render: :new,
         )
@@ -163,13 +157,7 @@ module TeacherInterface
         handle_application_form_section(
           form: @form,
           check_identifier: check_member_identifier,
-          if_success_then_redirect: [
-            :contact,
-            :teacher_interface,
-            :application_form,
-            :new_regs,
-            work_history,
-          ],
+          if_success_then_redirect: after_school_path(work_history),
         )
       end
 
@@ -277,6 +265,26 @@ module TeacherInterface
 
       def check_member_identifier
         "work-history:#{work_history.id}"
+      end
+
+      def after_school_path(work_history)
+        if application_form.reduced_evidence_accepted
+          [
+            :check,
+            :teacher_interface,
+            :application_form,
+            :new_regs,
+            work_history,
+          ]
+        else
+          [
+            :contact,
+            :teacher_interface,
+            :application_form,
+            :new_regs,
+            work_history,
+          ]
+        end
       end
     end
   end
