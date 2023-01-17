@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_16_135601) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_17_211010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -290,6 +290,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_16_135601) do
     t.boolean "application_form_skip_work_history", default: false, null: false
     t.text "qualifications_information", default: "", null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
+    t.boolean "teaching_authority_requires_submission_email", default: false, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
