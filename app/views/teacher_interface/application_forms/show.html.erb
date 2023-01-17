@@ -2,8 +2,6 @@
 
 <h1 class="govuk-heading-xl">Apply for qualified teacher status (QTS)</h1>
 
-<%= render "shared/apply_by_february_2023" %>
-
 <% if @view_object.application_form.draft? %>
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
     <% if @view_object.can_submit? %>
@@ -16,6 +14,17 @@
   <p class="govuk-body govuk-!-margin-bottom-7">
     You have completed <%= @view_object.completed_task_sections.count %> of <%= @view_object.tasks.count %> sections.
   </p>
+
+  <% if @view_object.application_form.created_under_new_regulations? %>
+    <%= govuk_inset_text do %>
+      <p class="govuk-body">
+        You started this application on <%= @view_object.started_at %>.
+        Applications must be completed within 6 months, so you’ll need to complete it before <%= @view_object.expires_at %>.
+      </p>
+    <% end %>
+  <% else %>
+    <%= render "shared/apply_by_february_2023" %>
+  <% end %>
 
   <ol class="app-task-list">
     <% @view_object.tasks.each_with_index do |(section, items), index| %>
