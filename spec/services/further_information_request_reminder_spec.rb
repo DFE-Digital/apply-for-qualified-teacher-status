@@ -93,6 +93,26 @@ RSpec.describe FurtherInformationRequestReminder do
       end
     end
 
+    shared_examples_for "a request that is allowed 6 weeks to complete" do
+      context "with less than two weeks remaining" do
+        let(:further_information_requested_at) { (6.weeks - 13.days).ago }
+
+        it_behaves_like "an FI request with less than two weeks remaining"
+      end
+
+      context "with less than one week remaining" do
+        let(:further_information_requested_at) { (6.weeks - 5.days).ago }
+
+        it_behaves_like "an FI request with less than one week remaining"
+      end
+
+      context "with one day remaining" do
+        let(:further_information_requested_at) { (6.weeks - 47.hours).ago }
+
+        it_behaves_like "an FI request with less than two days remaining"
+      end
+    end
+
     shared_examples_for "a request that is allowed 4 weeks to complete" do
       context "with less than two weeks remaining" do
         let(:further_information_requested_at) { (4.weeks - 13.days).ago }
@@ -132,35 +152,39 @@ RSpec.describe FurtherInformationRequestReminder do
           (further_information_request.created_at + 6.weeks).to_date
         end
 
-        context "with less than two weeks remaining" do
-          let(:further_information_requested_at) { (6.weeks - 13.days).ago }
-
-          it_behaves_like "an FI request with less than two weeks remaining"
-        end
-
-        context "with less than one week remaining" do
-          let(:further_information_requested_at) { (6.weeks - 5.days).ago }
-
-          it_behaves_like "an FI request with less than one week remaining"
-        end
-
-        context "with one day remaining" do
-          let(:further_information_requested_at) { (6.weeks - 47.hours).ago }
-
-          it_behaves_like "an FI request with less than two days remaining"
-        end
+        it_behaves_like "a request that is allowed 6 weeks to complete"
       end
 
       context "when the applicant is from a country with a 4 week expiry" do
-        # Australia, Canada, Gibraltar, New Zealand, US
-        %w[AU CA GI NZ US].each do |country_code|
-          context "from country_code #{country_code}" do
-            let(:region) { create(:region, :in_country, country_code:) }
-            let(:due_date) do
-              (further_information_request.created_at + 4.weeks).to_date
-            end
+        context "when created under the new regulations" do
+          let(:application_form) do
+            create(:application_form, :submitted, :new_regs, region:)
+          end
 
-            it_behaves_like "a request that is allowed 4 weeks to complete"
+          # Australia, Canada, Gibraltar, New Zealand, US
+          %w[AU CA GI NZ US].each do |country_code|
+            context "from country_code #{country_code}" do
+              let(:region) { create(:region, :in_country, country_code:) }
+              let(:due_date) do
+                (further_information_request.created_at + 6.weeks).to_date
+              end
+
+              it_behaves_like "a request that is allowed 6 weeks to complete"
+            end
+          end
+        end
+
+        context "when not created under the new regulations" do
+          # Australia, Canada, Gibraltar, New Zealand, US
+          %w[AU CA GI NZ US].each do |country_code|
+            context "from country_code #{country_code}" do
+              let(:region) { create(:region, :in_country, country_code:) }
+              let(:due_date) do
+                (further_information_request.created_at + 4.weeks).to_date
+              end
+
+              it_behaves_like "a request that is allowed 4 weeks to complete"
+            end
           end
         end
       end
