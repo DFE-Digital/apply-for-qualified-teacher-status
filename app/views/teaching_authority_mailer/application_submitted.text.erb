@@ -1,0 +1,27 @@
+Dear <%= region_teaching_authority_name(@region) %>
+
+We can confirm that the following person has made an application to us for qualified teacher status (QTS) in England:
+
+<%= application_form_full_name(@application_form) %>
+
+Date of birth: <%= @application_form.date_of_birth.to_fs(:long_ordinal_uk) %>
+
+The applicant has provided us with the following details about their teaching qualification:
+
+Title: <%= qualification_title(@qualification) %>
+Institution studied at: <%= @qualification.institution_name %>
+Date started: <%= @qualification.start_date.to_fs(:long_ordinal_uk) %>
+Date ended: <%= @qualification.complete_date.to_fs(:long_ordinal_uk) %>
+
+They’ve told us that they’re qualified to teach children <%= @application_form.subjects.to_sentence %> from age <%= @application_form.age_range_min %> to <%= @application_form.age_range_max %> years old.
+
+We’d be grateful if you could provide written evidence of their professional standing as a teacher in <%= CountryName.from_region(@region, with_definite_article: true) %>, and email it to us at:
+
+ApplyQTS.Verification@education.gov.uk
+
+Please include their QTS application reference number <%= @application_form.reference %>.
+
+Kind regards,
+Teaching Regulation Agency (TRA)
+
+TRA is an executive agency, sponsored by the Department for Education. We have responsibility for the regulation of the teaching profession in England.

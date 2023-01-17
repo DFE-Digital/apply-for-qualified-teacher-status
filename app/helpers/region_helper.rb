@@ -9,11 +9,13 @@ module RegionHelper
     "#{certificate.indefinite_article} #{tag.span(certificate, lang: region.country.code)}".html_safe
   end
 
+  def region_teaching_authority_name(region)
+    region.teaching_authority_name.presence ||
+      region.country.teaching_authority_name.presence || "teaching authority"
+  end
+
   def region_teaching_authority_name_phrase(region)
-    name =
-      region.teaching_authority_name.presence ||
-        region.country.teaching_authority_name.presence || "teaching authority"
-    "the #{name}"
+    "the #{region_teaching_authority_name(region)}"
   end
 
   def region_teaching_authority_emails_phrase(region)
