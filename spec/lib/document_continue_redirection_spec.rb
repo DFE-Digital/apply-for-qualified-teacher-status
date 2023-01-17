@@ -32,6 +32,16 @@ RSpec.describe DocumentContinueRedirection do
       end
     end
 
+    context "with an english language proficiency document" do
+      let(:document) { create(:document, :english_language_proficiency) }
+
+      it do
+        is_expected.to eq(
+          %i[check teacher_interface application_form english_language],
+        )
+      end
+    end
+
     context "with a qualification certificate" do
       let(:qualification) { create(:qualification) }
       let(:document) do

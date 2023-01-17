@@ -13,6 +13,7 @@
 #  date_of_birth                                 :date
 #  english_language_citizenship_exempt           :boolean
 #  english_language_proof_method                 :string
+#  english_language_provider_other               :boolean          default(FALSE), not null
 #  english_language_provider_reference           :text             default(""), not null
 #  english_language_qualification_exempt         :boolean
 #  english_language_status                       :string           default("not_started"), not null
@@ -95,6 +96,10 @@ class ApplicationForm < ApplicationRecord
        { medium_of_instruction: "medium_of_instruction", provider: "provider" },
        prefix: true
 
+  validates :english_language_provider,
+            absence: true,
+            if: :english_language_provider_other
+
   enum state: {
          draft: "draft",
          submitted: "submitted",
@@ -164,6 +169,10 @@ class ApplicationForm < ApplicationRecord
     documents.find(&:medium_of_instruction?)
   end
 
+  def english_language_proficiency_document
+    documents.find(&:english_language_proficiency?)
+  end
+
   def written_statement_document
     documents.find(&:written_statement?)
   end
@@ -182,6 +191,7 @@ class ApplicationForm < ApplicationRecord
     documents.build(document_type: :identification)
     documents.build(document_type: :name_change)
     documents.build(document_type: :medium_of_instruction)
+    documents.build(document_type: :english_language_proficiency)
     documents.build(document_type: :written_statement)
   end
 

@@ -29,6 +29,11 @@
   <% elsif @document.medium_of_instruction? %>
     <h1 class="govuk-heading-l">Upload the Medium of instruction (MOI) from your university degree</h1>
     <p class="govuk-body">This document must confirm that the primary language used to teach this degree course was English.</p>
+  <% elsif @document.english_language_proficiency? %>
+    <h1 class="govuk-heading-l">Upload evidence of English Proficiency test</h1>
+    <p class="govuk-body">This document must confirm that you have an English Language Proficiency Test from an approved provider at level B2 of the Common European Framework of Reference for Languages (CEFR) scale.</p>
+    <p class="govuk-body">The test must be on the list of approved English language tests and awarded within the last 2 years before the date of your application.</p>
+    <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
   <% elsif @document.written_statement? %>
     <span class="govuk-caption-l">Proof that you’re recognised as a teacher</span>
     <h1 class="govuk-heading-l">Upload your written statement</h1>

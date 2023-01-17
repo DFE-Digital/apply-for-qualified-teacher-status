@@ -27,6 +27,7 @@ RSpec.describe Document, type: :model do
         identification: "identification",
         name_change: "name_change",
         medium_of_instruction: "medium_of_instruction",
+        english_language_proficiency: "english_language_proficiency",
         qualification_certificate: "qualification_certificate",
         qualification_transcript: "qualification_transcript",
         qualification_document: "qualification_document",

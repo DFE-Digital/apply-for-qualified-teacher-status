@@ -9,13 +9,46 @@ module TeacherInterface
     validates :provider_id,
               presence: true,
               inclusion: {
-                in: ->(_form) {
-                  EnglishLanguageProvider.pluck(:id).map(&:to_s)
-                },
+                in: ->(form) { form.providers.map(&:id) },
               }
 
+    def initialize(values)
+      values[:provider_id] = "other" if values.delete(:provider_other)
+
+      super(values)
+    end
+
     def update_model
-      application_form.update!(english_language_provider_id: provider_id)
+      if provider_id == "other"
+        application_form.update!(
+          english_language_provider_id: nil,
+          english_language_provider_other: true,
+        )
+      else
+        application_form.update!(
+          english_language_provider_id: provider_id,
+          english_language_provider_other: false,
+        )
+      end
+    end
+
+    OTHER_PROVIDER =
+      OpenStruct.new(id: "other", name: "Other approved provider")
+
+    def providers
+      EnglishLanguageProvider
+        .order(:created_at)
+        .pluck(:id, :name)
+        .map { |id, name| OpenStruct.new(id: id.to_s, name:) }
+        .tap do |providers|
+          if application_form&.reduced_evidence_accepted
+            providers << OTHER_PROVIDER
+          end
+        end
+    end
+
+    def other?
+      provider_id == "other"
     end
   end
 end

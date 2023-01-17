@@ -13,6 +13,7 @@
 #  date_of_birth                                 :date
 #  english_language_citizenship_exempt           :boolean
 #  english_language_proof_method                 :string
+#  english_language_provider_other               :boolean          default(FALSE), not null
 #  english_language_provider_reference           :text             default(""), not null
 #  english_language_qualification_exempt         :boolean
 #  english_language_status                       :string           default("not_started"), not null
@@ -228,6 +229,17 @@ FactoryBot.define do
           :upload,
           document:
             application_form.english_language_medium_of_instruction_document,
+        )
+      end
+    end
+
+    trait :with_english_language_proficiency_document do
+      with_english_language_provider
+
+      after(:create) do |application_form, _evaluator|
+        create(
+          :upload,
+          document: application_form.english_language_proficiency_document,
         )
       end
     end

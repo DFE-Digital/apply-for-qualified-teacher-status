@@ -33,6 +33,10 @@ class DocumentContinueRedirection
     %i[check teacher_interface application_form english_language]
   end
 
+  def english_language_proficiency_url
+    %i[check teacher_interface application_form english_language]
+  end
+
   def qualification_certificate_url
     [:teacher_interface, :application_form, documentable.transcript_document]
   end

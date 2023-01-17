@@ -9,15 +9,11 @@
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :provider_id,
-                                       @providers,
+                                       @form.providers,
                                        :id,
                                        :name %>
 
-  <%= govuk_details(summary_text: "About approved providers") do %>
-    <p class="govuk-body">
-      To apply for QTS you need to show that you’ve passed a Secure English Language Test (SELT) at B2 level, from one of the approved providers on the list, within the last 2 years. We cannot accept English language tests from a provider that does not appear on the list.
-    </p>
-  <% end %>
+  <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
 
   <%= render "shared/save_submit_buttons", f: %>
 <% end %>
