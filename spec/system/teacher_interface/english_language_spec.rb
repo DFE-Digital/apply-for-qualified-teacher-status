@@ -254,7 +254,9 @@ RSpec.describe "Teacher English language", type: :system do
 
     document_summary_list_row =
       teacher_check_english_language_page.summary_list.rows.fourth
-    expect(document_summary_list_row.key.text).to eq("Medium of instruction")
+    expect(document_summary_list_row.key.text).to eq(
+      "Medium of instruction document",
+    )
     expect(document_summary_list_row.value.text).to eq(
       "upload.pdf (opens in a new tab)",
     )
