@@ -91,8 +91,7 @@ RSpec.describe "Eligible region content", type: :view do
   end
 
   describe "English language proficiency" do
-    let(:region) { create(:region) }
-
+    let(:region) { create(:region, reduced_evidence_accepted: false) }
     context "when feature is inactive" do
       it do
         is_expected.to_not match(
@@ -118,7 +117,7 @@ RSpec.describe "Eligible region content", type: :view do
     before { FeatureFlags::FeatureFlag.activate(:application_work_history) }
     after { FeatureFlags::FeatureFlag.deactivate(:application_work_history) }
 
-    let(:region) { create(:region) }
+    let(:region) { create(:region, reduced_evidence_accepted: false) }
 
     it { is_expected.to match(/You’ll need to show you’ve been employed/) }
     it do
@@ -155,6 +154,22 @@ RSpec.describe "Eligible region content", type: :view do
       it do
         is_expected.to_not match(/Proof that you’re recognised as a teacher/)
       end
+    end
+
+    context "with a region which accepts reduced evidence" do
+      let(:region) { create(:region, reduced_evidence_accepted: true) }
+
+      it do
+        is_expected.to match(
+          /You'll need to tell us about any professional teaching work experience where you/,
+        )
+      end
+    end
+
+    context "with a region which does not accept reduced evidence" do
+      let(:region) { create(:region, reduced_evidence_accepted: false) }
+
+      it { is_expected.to match(/You’ll need to show you’ve been employed/) }
     end
   end
 end

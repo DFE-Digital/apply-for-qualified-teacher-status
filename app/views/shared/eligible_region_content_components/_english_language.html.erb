@@ -37,8 +37,11 @@
 
 <p class="govuk-body">Learn more about <a href="https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale" class="govuk-link">level B2 English language</a>.</p>
 
-<p class="govuk-body">Find out about <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link">approved test providers</a>.</p>
-
+<% if region.reduced_evidence_accepted %>
+  <p class="govuk-body">Find out about <a href="https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" class="govuk-link">approved test providers</a>.</p>
+<% else %>
+  <p class="govuk-body">Find out about <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link">approved test providers</a>.</p>
+<% end %>
 <%= govuk_details(summary_text: "What about multiple nationalities?") do %>
   <p class="govuk-body">
     If you’re a national of more than 1 country and both are exempt from English language requirements, you can choose which of them you use to apply for QTS. Remember, you must be able to show a passport (or the recognised identity document for that country).
