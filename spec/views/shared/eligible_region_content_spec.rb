@@ -16,6 +16,7 @@ RSpec.describe "Eligible region content", type: :view do
       create(:region, status_check: :online, sanction_check: :online)
     end
 
+    it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
     it { is_expected.to match(/has an online register of teachers/) }
   end
 
@@ -34,6 +35,7 @@ RSpec.describe "Eligible region content", type: :view do
       )
     end
 
+    it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
     it { is_expected.to match(/recognises you as a teacher must confirm/) }
     it { is_expected.to match(/You’ll need to provide a/) }
     it { is_expected.to match(/certificate/) }
@@ -53,6 +55,7 @@ RSpec.describe "Eligible region content", type: :view do
       )
     end
 
+    it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
     it { is_expected.to match(/has an online register of teachers/) }
     it { is_expected.to match(/must also confirm in writing/) }
     it { is_expected.to match(/You’ll need to provide a/) }
@@ -72,6 +75,7 @@ RSpec.describe "Eligible region content", type: :view do
       )
     end
 
+    it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
     it { is_expected.to match(/recognises you as a teacher must confirm/) }
     it { is_expected.to match(/You’ll need to provide a/) }
     it { is_expected.to match(/certificate/) }
@@ -82,6 +86,7 @@ RSpec.describe "Eligible region content", type: :view do
   context "with no status check and no sanction check" do
     let(:region) { create(:region, status_check: :none, sanction_check: :none) }
 
+    it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
     it { is_expected.to match(/show evidence of your work history/) }
   end
 
@@ -139,6 +144,16 @@ RSpec.describe "Eligible region content", type: :view do
 
       it do
         is_expected.to_not match(/You’ll need to show you’ve been employed/)
+      end
+    end
+
+    context "with no status check and no sanction check" do
+      let(:region) do
+        create(:region, status_check: :none, sanction_check: :none)
+      end
+
+      it do
+        is_expected.to_not match(/Proof that you’re recognised as a teacher/)
       end
     end
   end
