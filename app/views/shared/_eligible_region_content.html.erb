@@ -39,10 +39,12 @@
       <% end %>
     <% end %>
 
-    <% accordion.section(heading_text: "Proof that you’re recognised as a teacher") do %>
-      <%= render "shared/eligible_region_content_components/professional_recognition",
-                 region:,
-                 teaching_authority_provides_written_statement: region.teaching_authority_provides_written_statement %>
+    <% unless FeatureFlags::FeatureFlag.active?(:application_work_history) && region.status_check_none? && region.sanction_check_none? %>
+      <% accordion.section(heading_text: "Proof that you’re recognised as a teacher") do %>
+        <%= render "shared/eligible_region_content_components/professional_recognition",
+                   region:,
+                   teaching_authority_provides_written_statement: region.teaching_authority_provides_written_statement %>
+      <% end %>
     <% end %>
 
     <% if FeatureFlags::FeatureFlag.active?(:application_work_history) && !region.application_form_skip_work_history %>
