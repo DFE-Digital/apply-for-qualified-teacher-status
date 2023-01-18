@@ -33,6 +33,10 @@ module AssessorInterface
       application_form.work_histories.ordered
     end
 
+    def work_history_months_count
+      @months_count = WorkHistoryDuration.new(application_form:).count_months
+    end
+
     def show_registration_number_summary
       application_form.needs_registration_number?
     end
@@ -57,6 +61,10 @@ module AssessorInterface
       @online_checker_url ||=
         region.teaching_authority_online_checker_url.presence ||
           region.country.teaching_authority_online_checker_url
+    end
+
+    def work_history?
+      assessment_section.key == "work_history"
     end
 
     def professional_standing?

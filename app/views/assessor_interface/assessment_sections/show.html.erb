@@ -53,7 +53,11 @@
   <% end %>
 <% end %>
 
-<% if @assessment_section_view_object.professional_standing? %>
+<% if @assessment_section_view_object.application_form.created_under_new_regulations? && @assessment_section_view_object.work_history? %>
+  <h2 class="govuk-heading-m">
+    This applicant has provided <%= @assessment_section_view_object.work_history_months_count %> months of work experience in total.
+  </h2>
+<% elsif @assessment_section_view_object.professional_standing? %>
   <%= govuk_accordion do |accordion| %>
     <% if (online_checker_url = @assessment_section_view_object.online_checker_url).present? %>
       <% accordion.section(heading_text: "Online checker") do %>
