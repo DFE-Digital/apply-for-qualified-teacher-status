@@ -17,7 +17,7 @@
       href: %i[proof_method teacher_interface application_form english_language]
     } : nil,
     english_language_medium_of_instruction_document: !application_form.english_language_exempt? && application_form.english_language_proof_method_medium_of_instruction? ? {
-      title: "Medium of instruction",
+      title: "Medium of instruction document",
       href: [:teacher_interface, :application_form, application_form.english_language_medium_of_instruction_document]
     } : nil,
     english_language_provider: !application_form.english_language_exempt? && application_form.english_language_proof_method_provider? ? {
