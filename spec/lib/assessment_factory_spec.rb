@@ -33,7 +33,7 @@ RSpec.describe AssessmentFactory do
       subject(:sections) { call.sections }
 
       it "creates two sections" do
-        expect(sections.count).to eq(3)
+        expect(sections.count).to eq(4)
       end
 
       describe "personal information section" do

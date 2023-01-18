@@ -27,6 +27,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         personal_information
         qualifications
         age_range_subjects
+        english_language_proficiency
         work_history
         professional_standing
       ].select { |key| assessment_section_keys.include?(key) }

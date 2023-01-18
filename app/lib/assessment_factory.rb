@@ -12,6 +12,7 @@ class AssessmentFactory
       personal_information_section,
       qualifications_section,
       age_range_subjects_section,
+      english_language_proficiency_section,
       work_history_section,
       professional_standing_section,
     ].compact
@@ -152,6 +153,41 @@ class AssessmentFactory
     ]
 
     AssessmentSection.new(key: "age_range_subjects", checks:, failure_reasons:)
+  end
+
+  def english_language_proficiency_section
+    checks =
+      if application_form.english_language_exempt?
+        []
+      elsif application_form.english_language_proof_method ==
+            "medium_of_instruction"
+        %i[english_language_moi]
+      else
+        %i[english_language_provider_id]
+      end
+
+    failure_reasons =
+      if application_form.english_language_exempt?
+        []
+      elsif application_form.english_language_proof_method_medium_of_instruction?
+        [
+          FailureReasons::EL_MOI_NOT_TAUGHT_IN_ENGLISH,
+          FailureReasons::EL_MOI_INVALID_FORMAT,
+        ]
+      else
+        [
+          FailureReasons::EL_QUALIFICATION_INVALID,
+          FailureReasons::EL_UNVERIFIABLE_REFERENCE_NUMBER,
+          FailureReasons::EL_GRADE_BELOW_B2,
+          FailureReasons::EL_SELT_EXPIRED,
+        ]
+      end
+
+    AssessmentSection.new(
+      key: "english_language_proficiency",
+      checks:,
+      failure_reasons:,
+    )
   end
 
   def work_history_section
