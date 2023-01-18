@@ -353,4 +353,4 @@ en:
         teacher_interface/written_statement_confirmation_form:
           attributes:
             written_statement_confirmation:
-              blank: You must confirm that you understand that it’s your responsibility to request written evidence
+              blank: You must confirm that you understand it’s your responsibility to request written evidence
