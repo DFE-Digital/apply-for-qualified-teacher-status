@@ -39,7 +39,7 @@ class WorkHistoryDuration
   end
 
   def work_history_hours_per_month(work_history)
-    work_history.hours_per_week * AVERAGE_WEEKS_PER_MONTH
+    [work_history.hours_per_week, 30].min * AVERAGE_WEEKS_PER_MONTH
   end
 
   def work_history_number_of_months(work_history)

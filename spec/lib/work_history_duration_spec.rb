@@ -30,6 +30,20 @@ RSpec.describe WorkHistoryDuration do
       it { is_expected.to eq(12) }
     end
 
+    context "with a finished full time work history with extra hours" do
+      before do
+        create(
+          :work_history,
+          application_form:,
+          start_date: Date.new(2020, 1, 1),
+          end_date: Date.new(2020, 12, 31),
+          hours_per_week: 40,
+        )
+      end
+
+      it { is_expected.to eq(12) }
+    end
+
     context "with a finished part time work history" do
       before do
         create(
