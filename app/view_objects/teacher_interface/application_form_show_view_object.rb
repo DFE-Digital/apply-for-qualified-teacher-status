@@ -22,6 +22,14 @@ class TeacherInterface::ApplicationFormShowViewObject
       assessment&.further_information_requests&.first
   end
 
+  def started_at
+    application_form.created_at.strftime("%e %B %Y")
+  end
+
+  def expires_at
+    (application_form.created_at + 6.months).strftime("%e %B %Y")
+  end
+
   def tasks
     hash = {}
     hash.merge!(about_you: %i[personal_information identification_document])

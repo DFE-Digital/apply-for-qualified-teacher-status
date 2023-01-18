@@ -50,12 +50,14 @@ class Teachers::SessionsController < Devise::SessionsController
   end
 
   def destroy
+    teacher = current_teacher
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     yield if block_given?
-    respond_to_on_destroy
+    redirect_to after_sign_out_path_for(teacher)
   end
 
   def signed_out
+    @duration = params[:new_regulations] == "true" ? "6 months" : "60 days"
   end
 
   protected
@@ -64,7 +66,12 @@ class Teachers::SessionsController < Devise::SessionsController
     stored_location_for(resource) || teacher_interface_root_path
   end
 
-  def after_sign_out_path_for(_resource)
-    teacher_signed_out_path
+  def after_sign_out_path_for(resource)
+    return teacher_signed_out_path unless resource.is_a?(Teacher)
+
+    teacher_signed_out_path(
+      new_regulations:
+        resource.application_form&.created_under_new_regulations?,
+    )
   end
 end

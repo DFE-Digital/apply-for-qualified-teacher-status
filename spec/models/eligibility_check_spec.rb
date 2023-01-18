@@ -408,4 +408,46 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to eq(:eligibility) }
     end
   end
+
+  describe "#created_under_new_regulations?" do
+    subject(:created_under_new_regulations?) do
+      eligibility_check.created_under_new_regulations?
+    end
+
+    context "with default new regulations date" do
+      context "with an old eligibility check" do
+        let(:eligibility_check) do
+          create(:eligibility_check, created_at: Date.new(2020, 1, 1))
+        end
+        it { is_expected.to be false }
+      end
+
+      context "with a new eligibility check" do
+        let(:eligibility_check) do
+          create(:eligibility_check, created_at: Date.new(2024, 1, 1))
+        end
+        it { is_expected.to be true }
+      end
+    end
+
+    context "with a custom new regulations date" do
+      around do |example|
+        ClimateControl.modify(NEW_REGS_DATE: "2023-01-01") { example.run }
+      end
+
+      context "with an old eligibility check" do
+        let(:eligibility_check) do
+          create(:eligibility_check, created_at: Date.new(2021, 12, 31))
+        end
+        it { is_expected.to be false }
+      end
+
+      context "with a new eligibility check" do
+        let(:eligibility_check) do
+          create(:eligibility_check, created_at: Date.new(2023, 1, 1))
+        end
+        it { is_expected.to be true }
+      end
+    end
+  end
 end

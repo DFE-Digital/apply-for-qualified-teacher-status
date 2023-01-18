@@ -9,10 +9,14 @@
 </p>
 
 <%= govuk_inset_text do %>
+  <% if eligibility_check&.created_under_new_regulations? %>
+    <p class="govuk-body">Once you start your application you’ll need to complete it within 6 months.</p>
+  <% end %>
+
+  <p class="govuk-body">You may want to spend some time gathering all the documents you need before you start.</p>
+
   <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) && region && region.application_form_enabled %>
-    You may want to spend some time gathering all the documents you need before you begin your application. Once you start your application, we’ll sign you out if you’re inactive for 60 minutes.
-  <% else %>
-    You may want to spend some time gathering all the documents you need before you begin your application.
+    <p class="govuk-body">Once you start your application, we’ll sign you out if you’re inactive for 60 minutes.</p>
   <% end %>
 <% end %>
 

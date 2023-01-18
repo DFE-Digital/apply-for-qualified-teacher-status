@@ -3,7 +3,9 @@
 
 <%= render "shared/eligible_region_content", region: @region, eligibility_check: @eligibility_check %>
 
-<%= render "shared/apply_by_february_2023" %>
+<% unless @eligibility_check.created_under_new_regulations? %>
+  <%= render "shared/apply_by_february_2023" %>
+<% end %>
 
 <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) && @region && @region.application_form_enabled %>
   <p class="govuk-body">Use our new application form to apply for QTS.</p>
