@@ -25,3 +25,6 @@ en:
         subject: We still need some more information to progress your QTS application
       references_requested:
         subject: Your qualified teacher status application – we’ve contacted your references
+    teaching_authority:
+      application_submitted:
+        subject: "%{name} has made an application for qualified teacher status (QTS) in England"

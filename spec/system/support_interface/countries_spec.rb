@@ -52,6 +52,7 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_status_information
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_online_checker_url
+    when_i_check_teaching_authority_requires_submission_email
     when_i_fill_qualifications_information
     and_i_save_and_preview
     then_i_see_the_preview
@@ -217,6 +218,11 @@ RSpec.describe "Countries support", type: :system do
   rescue Capybara::ElementNotFound
     fill_in "country-teaching-authority-status-information-field",
             with: "Status information"
+  end
+
+  def when_i_check_teaching_authority_requires_submission_email
+    check "region-teaching-authority-requires-submission-email-1-field",
+          visible: false
   end
 
   def when_i_fill_qualifications_information

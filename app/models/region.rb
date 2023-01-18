@@ -18,6 +18,7 @@
 #  teaching_authority_online_checker_url         :string           default(""), not null
 #  teaching_authority_other                      :text             default(""), not null
 #  teaching_authority_provides_written_statement :boolean          default(FALSE), not null
+#  teaching_authority_requires_submission_email  :boolean          default(FALSE), not null
 #  teaching_authority_sanction_information       :string           default(""), not null
 #  teaching_authority_status_information         :string           default(""), not null
 #  teaching_authority_websites                   :text             default([]), not null, is an Array

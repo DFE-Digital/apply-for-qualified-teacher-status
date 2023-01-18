@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe SubmitApplicationForm do
+  let(:region) { create(:region) }
   let(:application_form) do
-    create(:application_form, subjects: ["Maths", "", ""])
+    create(:application_form, region:, subjects: ["Maths", "", ""])
   end
   let(:user) { create(:teacher) }
 
@@ -94,6 +95,28 @@ RSpec.describe SubmitApplicationForm do
         TeacherMailer,
         :application_received,
       ).with(params: { teacher: application_form.teacher }, args: [])
+    end
+  end
+
+  describe "sending application submitted email" do
+    it "doesn't queue an email job" do
+      expect { call }.to_not have_enqueued_mail(
+        TeachingAuthorityMailer,
+        :application_submitted,
+      )
+    end
+
+    context "when teaching authority requires the email" do
+      let(:region) do
+        create(:region, teaching_authority_requires_submission_email: true)
+      end
+
+      it "queues an email job" do
+        expect { call }.to have_enqueued_mail(
+          TeachingAuthorityMailer,
+          :application_submitted,
+        ).with(params: { application_form: }, args: [])
+      end
     end
   end
 end

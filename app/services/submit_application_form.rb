@@ -25,9 +25,18 @@ class SubmitApplicationForm
       .with(teacher: application_form.teacher)
       .application_received
       .deliver_later
+
+    if region.teaching_authority_requires_submission_email
+      TeachingAuthorityMailer
+        .with(application_form:)
+        .application_submitted
+        .deliver_later
+    end
   end
 
   private
 
   attr_reader :application_form, :user
+
+  delegate :region, to: :application_form
 end
