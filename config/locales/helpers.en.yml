@@ -158,9 +158,9 @@ en:
         contact_name: Contact’s full name
         contact_email: Contact email address for this organisation
       teacher_interface_work_history_contact_form:
-        contact_name: Full name
-        contact_job: This person's job title
-        contact_email: Email address
+        contact_name: This person’s full name
+        contact_job: This person’s job title
+        contact_email: This person’s email address
       teacher_interface_work_history_school_form:
         school_name: Name of school
         country_location: Country
