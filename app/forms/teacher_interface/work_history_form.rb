@@ -22,9 +22,9 @@ module TeacherInterface
     validates :contact_name, presence: true
     validates :contact_email, presence: true, valid_for_notify: true
     validates :start_date, date: true
-    validates :end_date, date: true, unless: :still_employed
     validates :still_employed, inclusion: [true, false]
-    validates_with DateComparisonValidator, unless: :still_employed
+    validates :end_date, date: true, if: -> { still_employed == false }
+    validates_with DateComparisonValidator, if: -> { still_employed == false }
 
     def initialize(values)
       if (country_code = values.delete(:country_code))
