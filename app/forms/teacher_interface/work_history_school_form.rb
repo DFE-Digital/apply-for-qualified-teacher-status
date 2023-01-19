@@ -25,8 +25,8 @@ module TeacherInterface
     validates :hours_per_week, presence: true
     validates :start_date, date: true
     validates :still_employed, inclusion: [true, false]
-    validates :end_date, date: true, unless: :still_employed
-    validates_with DateComparisonValidator, unless: :still_employed
+    validates :end_date, date: true, if: -> { still_employed == false }
+    validates_with DateComparisonValidator, if: -> { still_employed == false }
 
     def initialize(values)
       if (country_code = values.delete(:country_code))
