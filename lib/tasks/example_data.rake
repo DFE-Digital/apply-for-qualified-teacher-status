@@ -127,7 +127,7 @@ def application_form_traits_for(region, new_regs)
       with_identification_document
       with_age_range
       with_subjects
-    ] + evidential_traits << :submitted << :further_information_requested,
+    ] + evidential_traits << :submitted << :waiting_on,
   ]
 end
 
@@ -147,7 +147,7 @@ def create_application_forms(new_regs:)
 
       assessment = AssessmentFactory.call(application_form:)
 
-      if application_form.further_information_requested?
+      if application_form.waiting_on?
         FactoryBot.create(
           :further_information_request,
           :requested,

@@ -17,7 +17,7 @@ class SubmitFurtherInformationRequest
       ChangeApplicationFormState.call(
         application_form:,
         user:,
-        new_state: :further_information_received,
+        new_state: "received",
       )
     end
 
