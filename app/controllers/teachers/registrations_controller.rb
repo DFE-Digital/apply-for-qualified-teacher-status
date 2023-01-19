@@ -43,7 +43,8 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   end
 
   def valid_eligibility_check?
-    eligibility_check.present? && eligibility_check.region.present?
+    eligibility_check.present? && eligibility_check.region.present? &&
+      eligibility_check.country.eligibility_enabled?
   end
 
   def eligibility_check
