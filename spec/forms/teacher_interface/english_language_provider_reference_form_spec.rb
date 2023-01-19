@@ -26,5 +26,18 @@ RSpec.describe TeacherInterface::EnglishLanguageProviderReferenceForm,
         :english_language_provider_reference,
       ).to("reference")
     end
+
+    context "with an existing other provider" do
+      let(:application_form) do
+        create(:application_form, :with_english_language_other_provider)
+      end
+
+      it "clears the reference" do
+        expect { save }.to change(
+          application_form,
+          :english_language_provider_other,
+        ).to(false)
+      end
+    end
   end
 end

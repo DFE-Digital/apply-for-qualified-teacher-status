@@ -84,22 +84,16 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect: ->(check_path) do
-          check_path ||
-            if @form.exempt
-              %i[check teacher_interface application_form english_language]
-            elsif @form.citizenship?
-              exemption_teacher_interface_application_form_english_language_path(
-                "qualification",
-              )
-            else
-              %i[
-                proof_method
-                teacher_interface
-                application_form
-                english_language
-              ]
-            end
+        if_success_then_redirect: ->(_check_path) do
+          if @form.exempt
+            %i[check teacher_interface application_form english_language]
+          elsif @form.citizenship?
+            exemption_teacher_interface_application_form_english_language_path(
+              "qualification",
+            )
+          else
+            %i[proof_method teacher_interface application_form english_language]
+          end
         end,
         if_failure_then_render: :edit_exemption,
       )
@@ -121,17 +115,16 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect: ->(check_path) do
-          check_path ||
-            if @form.medium_of_instruction?
-              [
-                :teacher_interface,
-                :application_form,
-                application_form.english_language_medium_of_instruction_document,
-              ]
-            else
-              %i[provider teacher_interface application_form english_language]
-            end
+        if_success_then_redirect: ->(_check_path) do
+          if @form.medium_of_instruction?
+            [
+              :teacher_interface,
+              :application_form,
+              application_form.english_language_medium_of_instruction_document,
+            ]
+          else
+            %i[provider teacher_interface application_form english_language]
+          end
         end,
         if_failure_then_render: :edit_proof_method,
       )
@@ -154,22 +147,21 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect: ->(check_path) do
-          check_path ||
-            if @form.other?
-              [
-                :teacher_interface,
-                :application_form,
-                application_form.english_language_proficiency_document,
-              ]
-            else
-              %i[
-                provider_reference
-                teacher_interface
-                application_form
-                english_language
-              ]
-            end
+        if_success_then_redirect: ->(_check_path) do
+          if @form.other?
+            [
+              :teacher_interface,
+              :application_form,
+              application_form.english_language_proficiency_document,
+            ]
+          else
+            %i[
+              provider_reference
+              teacher_interface
+              application_form
+              english_language
+            ]
+          end
         end,
         if_failure_then_render: :edit_provider,
       )

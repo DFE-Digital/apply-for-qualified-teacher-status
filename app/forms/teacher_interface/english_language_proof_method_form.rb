@@ -12,6 +12,24 @@ module TeacherInterface
 
     def update_model
       application_form.update!(english_language_proof_method: proof_method)
+
+      if medium_of_instruction?
+        application_form.update!(
+          english_language_provider_id: nil,
+          english_language_provider_other: false,
+          english_language_provider_reference: "",
+        )
+
+        application_form
+          .english_language_proficiency_document
+          .uploads
+          .destroy_all
+      else
+        application_form
+          .english_language_medium_of_instruction_document
+          .uploads
+          .destroy_all
+      end
     end
 
     def medium_of_instruction?

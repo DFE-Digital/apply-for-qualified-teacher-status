@@ -42,6 +42,19 @@ RSpec.describe TeacherInterface::EnglishLanguageProviderForm, type: :model do
           :english_language_provider,
         ).to(providers.first)
       end
+
+      context "with an existing English language provider" do
+        let(:application_form) do
+          create(:application_form, :with_english_language_provider)
+        end
+
+        it "clears the reference" do
+          expect { save }.to change(
+            application_form,
+            :english_language_provider_reference,
+          ).to("")
+        end
+      end
     end
 
     context "when other is selected" do
@@ -54,6 +67,19 @@ RSpec.describe TeacherInterface::EnglishLanguageProviderForm, type: :model do
           application_form,
           :english_language_provider_other,
         ).to(true)
+      end
+
+      context "with an existing English language provider" do
+        let(:application_form) do
+          create(:application_form, :with_english_language_provider)
+        end
+
+        it "clears the reference" do
+          expect { save }.to change(
+            application_form,
+            :english_language_provider_reference,
+          ).to("")
+        end
       end
     end
   end

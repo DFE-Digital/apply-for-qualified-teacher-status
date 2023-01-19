@@ -29,5 +29,18 @@ RSpec.describe TeacherInterface::EnglishLanguageExemptionForm, type: :model do
         :english_language_citizenship_exempt,
       ).to(true)
     end
+
+    context "with an existing English language provider" do
+      let(:application_form) do
+        create(:application_form, :with_english_language_provider)
+      end
+
+      it "clears the provider" do
+        expect { save }.to change(
+          application_form,
+          :english_language_provider,
+        ).to(nil)
+      end
+    end
   end
 end

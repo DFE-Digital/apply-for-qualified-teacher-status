@@ -9,7 +9,10 @@ module TeacherInterface
     validates :reference, presence: true
 
     def update_model
-      application_form.update!(english_language_provider_reference: reference)
+      application_form.update!(
+        english_language_provider_reference: reference,
+        english_language_provider_other: false,
+      )
     end
   end
 end

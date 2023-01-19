@@ -250,6 +250,18 @@ FactoryBot.define do
       english_language_provider_reference { "reference" }
     end
 
+    trait :with_english_language_other_provider do
+      english_language_proof_method { "provider" }
+      english_language_provider_other { true }
+
+      after(:create) do |application_form, _evaluator|
+        create(
+          :upload,
+          document: application_form.english_language_proficiency_document,
+        )
+      end
+    end
+
     trait :with_work_history do
       needs_work_history { true }
       has_work_history { true }
