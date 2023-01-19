@@ -61,6 +61,8 @@ class EligibilityCheck < ApplicationRecord
           )
         }
 
+  delegate :country, to: :region, allow_nil: true
+
   def country_code=(value)
     super(value)
     regions =
@@ -82,7 +84,7 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def skip_additional_questions?
-    region&.country&.eligibility_skip_questions || false
+    country&.eligibility_skip_questions || false
   end
 
   def ineligible_reasons

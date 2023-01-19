@@ -16,7 +16,10 @@ module TeacherInterface
     end
 
     def regions
-      Region.joins(:country).where(country: { code: country_code }).order(:name)
+      Region
+        .joins(:country)
+        .where(country: { code: country_code, eligibility_enabled: true })
+        .order(:name)
     end
 
     def needs_region?
