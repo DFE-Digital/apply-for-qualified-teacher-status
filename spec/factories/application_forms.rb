@@ -154,7 +154,7 @@ FactoryBot.define do
 
     trait :new_regs do
       created_at { Date.new(2023, 2, 1) }
-      needs_work_history { true }
+      needs_work_history { !region.application_form_skip_work_history }
     end
 
     trait :with_assessment do
