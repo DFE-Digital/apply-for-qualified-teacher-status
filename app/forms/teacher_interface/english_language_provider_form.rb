@@ -23,12 +23,22 @@ module TeacherInterface
         application_form.update!(
           english_language_provider_id: nil,
           english_language_provider_other: true,
+          english_language_provider_reference: "",
         )
       else
+        if provider_id != application_form.english_language_provider_id
+          application_form.update!(english_language_provider_reference: "")
+        end
+
         application_form.update!(
           english_language_provider_id: provider_id,
           english_language_provider_other: false,
         )
+
+        application_form
+          .english_language_proficiency_document
+          .uploads
+          .destroy_all
       end
     end
 

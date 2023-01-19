@@ -30,5 +30,18 @@ RSpec.describe TeacherInterface::EnglishLanguageProofMethodForm, type: :model do
         :english_language_proof_method_provider?,
       ).to(true)
     end
+
+    context "with an existing English language medium of instruction" do
+      let(:application_form) do
+        create(:application_form, :with_english_language_medium_of_instruction)
+      end
+
+      it "clears the documents" do
+        expect { save }.to change(
+          application_form.english_language_medium_of_instruction_document.uploads,
+          :count,
+        ).to(0)
+      end
+    end
   end
 end
