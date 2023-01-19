@@ -87,6 +87,8 @@ en:
           confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
           duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
           email_contact_current_employer: the applicant has entered the name and email address of a contact for their current/most recent employer
+          english_language_valid_moi:
+          english_language_valid_provider: The applicant has provided a Secure English Language Test (SELT) at level B2 of the Common European Framework of Reference for Languages (CEFR) scale, from the list of approved English language providers and awarded within the last 2 years.
           full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
           has_additional_degree_transcript: additional degree transcript is present (and translation if required)
           has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
@@ -123,6 +125,10 @@ en:
           degree_certificate_illegible: The university degree certificate (or translation) is illegible or in a format that we cannot accept.
           degree_transcript_illegible: The university degree transcript (or translation) is illegible or in a format that we cannot accept.
           duplicate_application: There’s already another in-flight application for this applicant.
+          english_language_qualification_invalid: The applicant’s English language qualification is not from one of the approved providers.
+          english_language_unverifiable_reference_number: Unable to verify the reference number that the applicant has provided.
+          english_language_not_achieved_b2: The applicant provided evidence of a SELT but has not achieved B2 level.
+          english_language_selt_expired: The applicant provided evidence of a SELT but the test was not completed within the last 2 years.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible or in a format that we cannot accept.

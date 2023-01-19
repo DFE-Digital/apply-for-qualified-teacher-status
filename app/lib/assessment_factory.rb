@@ -159,11 +159,10 @@ class AssessmentFactory
     checks =
       if application_form.english_language_exempt?
         []
-      elsif application_form.english_language_proof_method ==
-            "medium_of_instruction"
-        %i[english_language_moi]
+      elsif application_form.english_language_proof_method_medium_of_instruction?
+        %i[english_language_valid_moi]
       else
-        %i[english_language_provider_id]
+        %i[english_language_valid_provider]
       end
 
     failure_reasons =
