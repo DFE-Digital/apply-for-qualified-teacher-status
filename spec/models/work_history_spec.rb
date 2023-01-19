@@ -38,16 +38,11 @@ RSpec.describe WorkHistory, type: :model do
   end
 
   describe "#ordered" do
-    let(:newest) { create(:work_history, start_date: 1.week.ago) }
-    let(:oldest) { create(:work_history, start_date: 1.month.ago) }
-
-    before do
-      oldest
-      newest
-    end
+    let!(:newest) { create(:work_history, created_at: 1.week.ago) }
+    let!(:oldest) { create(:work_history, created_at: 1.month.ago) }
 
     it "orders in reverse order of start date" do
-      expect(described_class.ordered).to eq([newest, oldest])
+      expect(described_class.ordered).to eq([oldest, newest])
     end
   end
 

@@ -77,7 +77,21 @@ module TeacherInterface
 
         redirect_to %i[new teacher_interface application_form work_history]
       else
-        redirect_to %i[check teacher_interface application_form work_histories]
+        came_from_check_collection =
+          history_stack.last_entry&.fetch(:path) ==
+            check_teacher_interface_application_form_work_histories_path
+
+        if came_from_check_collection ||
+             application_form.work_histories.count == 1
+          redirect_to %i[teacher_interface application_form]
+        else
+          redirect_to %i[
+                        check
+                        teacher_interface
+                        application_form
+                        work_histories
+                      ]
+        end
       end
     end
 

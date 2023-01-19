@@ -32,9 +32,6 @@ RSpec.describe "Teacher work history", type: :system do
     and_i_see_the_heading_with_the_number_of_months
 
     when_i_dont_add_another_work_history
-    then_i_see_the(:teacher_check_work_histories_page)
-
-    when_i_click_continue
     then_i_see_the(:teacher_application_page)
   end
 
@@ -57,9 +54,6 @@ RSpec.describe "Teacher work history", type: :system do
     and_i_see_the_heading_with_the_number_of_months
 
     when_i_dont_add_another_work_history
-    then_i_see_the(:teacher_check_work_histories_page)
-
-    when_i_click_continue
     then_i_see_the(:teacher_application_page)
   end
 

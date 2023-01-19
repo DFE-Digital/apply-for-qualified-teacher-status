@@ -31,7 +31,7 @@
 class WorkHistory < ApplicationRecord
   belongs_to :application_form
 
-  scope :ordered, -> { order(start_date: :desc, created_at: :desc) }
+  scope :ordered, -> { order(created_at: :asc) }
 
   def current_or_most_recent_role?
     application_form.work_histories.empty? ||

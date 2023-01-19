@@ -138,6 +138,7 @@ def create_application_forms(new_regs:)
   Region.all.each do |region|
     application_form_traits_for(region, new_regs).each do |traits|
       created_at = new_regs ? new_regs_date : old_regs_date
+      traits.insert(0, :new_regs) if new_regs
 
       application_form =
         FactoryBot.create(:application_form, *traits, region:, created_at:)

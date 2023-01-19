@@ -106,15 +106,30 @@ module TeacherInterface
               check: true,
             )
 
-            redirect_to new_teacher_interface_application_form_new_regs_work_history_path
-          else
             redirect_to %i[
-                          check
+                          new
                           teacher_interface
                           application_form
                           new_regs
-                          work_histories
+                          work_history
                         ]
+          else
+            came_from_check_collection =
+              history_stack.last_entry&.fetch(:path) ==
+                check_teacher_interface_application_form_new_regs_work_histories_path
+
+            if came_from_check_collection ||
+                 application_form.work_histories.count == 1
+              redirect_to %i[teacher_interface application_form]
+            else
+              redirect_to %i[
+                            check
+                            teacher_interface
+                            application_form
+                            new_regs
+                            work_histories
+                          ]
+            end
           end
         else
           render :add_another, status: :unprocessable_entity
