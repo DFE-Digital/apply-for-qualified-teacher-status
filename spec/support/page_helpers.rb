@@ -64,6 +64,11 @@ module PageHelpers
       PageObjects::AssessorInterface::CheckQualifications.new
   end
 
+  def check_english_language_proficiency_page
+    @check_english_language_proficiency_page ||=
+      PageObjects::AssessorInterface::CheckEnglishLanguageProficiency.new
+  end
+
   def check_work_history_page
     @check_work_history_page ||=
       PageObjects::AssessorInterface::CheckWorkHistory.new

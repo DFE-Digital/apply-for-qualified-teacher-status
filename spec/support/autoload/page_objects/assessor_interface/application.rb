@@ -32,6 +32,10 @@ module PageObjects
         task_list.find_item("Verify age range and subjects")
       end
 
+      def english_language_proficiency_task
+        task_list.find_item("English language proficiency")
+      end
+
       def work_history_task
         task_list.find_item("Check work history")
       end

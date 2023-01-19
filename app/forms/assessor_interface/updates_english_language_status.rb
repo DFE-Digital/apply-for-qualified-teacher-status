@@ -18,7 +18,7 @@ module AssessorInterface::UpdatesEnglishLanguageStatus
         super.merge(
           english_language_section_passed:
             (
-              assessment_section.passed &&
+              english_language_section(assessment).passed &&
                 application_form.send(self::EXEMPTION_ATTR)
             ),
         )
@@ -28,6 +28,10 @@ module AssessorInterface::UpdatesEnglishLanguageStatus
         args, kwargs = super
         [args, kwargs.merge(english_language_section_passed: [])]
       end
+
+      def english_language_section(assessment)
+        assessment.sections.find_by(key: "english_language_proficiency")
+      end
     end
 
     private
@@ -36,7 +40,8 @@ module AssessorInterface::UpdatesEnglishLanguageStatus
       return true unless update_english_language_status?
 
       UpdateAssessmentSection.call(
-        assessment_section: english_language_proficiency_section,
+        assessment_section:
+          self.class.english_language_section(assessment_section.assessment),
         user:,
         params: {
           passed: english_language_section_passed,
@@ -49,14 +54,6 @@ module AssessorInterface::UpdatesEnglishLanguageStatus
     def update_english_language_status?
       english_language_section_passed &&
         application_form.send(self.class::EXEMPTION_ATTR)
-    end
-
-    def english_language_proficiency_section
-      @english_language_proficiency_section ||=
-        AssessmentSection.find_by(
-          assessment: assessment_section.assessment,
-          key: "english_language_proficiency",
-        )
     end
 
     def application_form

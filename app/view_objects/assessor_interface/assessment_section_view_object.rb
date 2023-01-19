@@ -71,6 +71,15 @@ module AssessorInterface
       assessment_section.key == "professional_standing"
     end
 
+    def render_form?
+      !render_section_content?
+    end
+
+    def render_section_content?
+      assessment_section.english_language_proficiency? &&
+        application_form.english_language_exempt?
+    end
+
     private
 
     attr_reader :params

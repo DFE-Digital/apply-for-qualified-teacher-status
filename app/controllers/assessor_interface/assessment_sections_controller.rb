@@ -51,6 +51,12 @@ module AssessorInterface
             application_form.created_under_new_regulations? &&
             !application_form.needs_work_history
         InductionRequiredForm
+      elsif application_form.english_language_exempt? &&
+            assessment_section.personal_information?
+        PersonalInformationForm
+      elsif application_form.english_language_exempt? &&
+            assessment_section.qualifications?
+        QualificationsForm
       else
         AssessmentSectionForm
       end

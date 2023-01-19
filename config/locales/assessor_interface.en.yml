@@ -19,6 +19,7 @@ en:
             verification_requests: Verification requests
           items:
             age_range_subjects: Verify age range and subjects
+            english_language_proficiency: English language proficiency
             initial_assessment: Initial assessment recommendation
             personal_information: Check personal information
             professional_standing: Check professional standing
@@ -50,6 +51,7 @@ en:
           personal_information: Personal information
           qualifications: Qualifications
           age_range_subjects: Age range and subjects
+          english_language_proficiency: English language proficiency
           work_history: Work history
           professional_standing: Professional standing
       preview:
@@ -74,6 +76,7 @@ en:
           personal_information: Check personal information
           qualifications: Check qualifications
           age_range_subjects: Verify age range and subjects
+          english_language_proficiency: Check English language proficiency
           work_history: Check work history
           professional_standing: Check professional standing
         checks:
@@ -156,6 +159,11 @@ en:
             GB-SCT: Provisional registration
             GB-NIR: "No"
         professional_standing_request: Third-party professional standing
+        labels:
+          personal_information:
+            english_language_section_passed: This application has indicated English language exemption by birth/citizenship and their ID confirms this.
+          qualifications:
+            english_language_section_passed: This application has indicated English language exemption by qualification and their qualifications confirm this.
 
     further_information_requests:
       edit:
