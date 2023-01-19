@@ -31,8 +31,6 @@ module StatusTag
       declined: "red",
       draft: "grey",
       expired: "red",
-      further_information_received: "purple",
-      further_information_requested: "yellow",
       in_progress: "blue",
       initial_assessment: "blue",
       not_started: "grey",

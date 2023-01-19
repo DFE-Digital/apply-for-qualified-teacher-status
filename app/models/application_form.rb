@@ -110,8 +110,6 @@ class ApplicationForm < ApplicationRecord
          draft: "draft",
          submitted: "submitted",
          initial_assessment: "initial_assessment",
-         further_information_requested: "further_information_requested",
-         further_information_received: "further_information_received",
          waiting_on: "waiting_on",
          received: "received",
          awarded_pending_checks: "awarded_pending_checks",
@@ -119,20 +117,6 @@ class ApplicationForm < ApplicationRecord
          declined: "declined",
          potential_duplicate_in_dqt: "potential_duplicate_in_dqt",
        }
-
-  scope :waiting_on,
-        -> { where(state: %w[further_information_requested waiting_on]) }
-
-  def waiting_on?
-    %w[further_information_requested waiting_on].include?(state)
-  end
-
-  scope :received,
-        -> { where(state: %w[further_information_received received]) }
-
-  def received?
-    %w[further_information_received received].include?(state)
-  end
 
   delegate :country, to: :region, allow_nil: true
 

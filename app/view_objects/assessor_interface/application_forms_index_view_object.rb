@@ -38,8 +38,6 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     states = %w[
       submitted
       initial_assessment
-      further_information_requested
-      further_information_received
       waiting_on
       received
       awarded_pending_checks
