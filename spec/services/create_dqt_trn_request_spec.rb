@@ -3,12 +3,19 @@
 require "rails_helper"
 
 RSpec.describe CreateDQTTRNRequest do
-  let(:application_form) { create(:application_form) }
+  let(:application_form) { create(:application_form, :submitted) }
+  let(:user) { create(:staff) }
 
-  subject(:call) { described_class.call(application_form:) }
+  subject(:call) { described_class.call(application_form:, user:) }
 
   it "creates a DQTTRNRequest" do
     expect { call }.to change(DQTTRNRequest, :count).by(1)
+  end
+
+  it "changes the status" do
+    expect { call }.to change(application_form, :state).to(
+      "awarded_pending_checks",
+    )
   end
 
   it "schedules an update job" do

@@ -25,13 +25,9 @@ class UpdateDQTTRNRequestJob < ApplicationJob
       dqt_trn_request.update!(potential_duplicate:)
     end
 
-    if potential_duplicate
-      ChangeApplicationFormState.call(
-        application_form:,
-        user: "DQT",
-        new_state: "potential_duplicate_in_dqt",
-      )
-    else
+    ApplicationFormStatusUpdater.call(application_form:, user: "DQT")
+
+    unless potential_duplicate
       AwardQTS.call(application_form:, user: "DQT", trn: response[:trn])
       dqt_trn_request.complete!
     end

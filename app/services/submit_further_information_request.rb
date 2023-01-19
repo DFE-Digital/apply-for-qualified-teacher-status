@@ -14,11 +14,7 @@ class SubmitFurtherInformationRequest
     ActiveRecord::Base.transaction do
       further_information_request.received!
 
-      ChangeApplicationFormState.call(
-        application_form:,
-        user:,
-        new_state: "received",
-      )
+      ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
     TeacherMailer.with(teacher:).further_information_received.deliver_later

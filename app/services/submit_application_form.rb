@@ -13,11 +13,7 @@ class SubmitApplicationForm
     application_form.submitted_at = Time.zone.now
     application_form.working_days_since_submission = 0
 
-    ChangeApplicationFormState.call(
-      application_form:,
-      user:,
-      new_state: "submitted",
-    )
+    ApplicationFormStatusUpdater.call(application_form:, user:)
 
     AssessmentFactory.call(application_form:)
 

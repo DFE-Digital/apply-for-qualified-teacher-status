@@ -13,7 +13,9 @@ When an application has been declined but is later awarded e.g. following an app
 In a production console:
 
 ```ruby
-application_form = ApplicationForm.find(<id>) # retrieve the application
+# find the application form and user who is performing the change
+application_form = ApplicationForm.find(...)
+user = Staff.find_by(name: ...)
 
 # set the awarded at date to that provided by the assessor. This is sent to DQT and will form part of the teacher record
 
@@ -25,7 +27,7 @@ application_form.awarded_pending_checks!
 
 # process the award
 
-CreateDQTTRNRequest.call(application_form: application_form)
+CreateDQTTRNRequest.call(application_form:, user:)
 ```
 
 Check the application is in awarded state in the UI and that the sidekiq jobs have gone through.
@@ -55,5 +57,5 @@ further_information_request.destroy!
 assessment.update!(recommendation: "unknown", recommended_at: nil)
 
 # change back the application form state
-ChangeApplicationFormState.call(application_form:, user:, new_state: "initial_assessment")
+ApplicationFormStatusUpdater.call(application_form:, user:)
 ```

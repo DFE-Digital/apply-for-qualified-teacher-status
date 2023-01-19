@@ -23,12 +23,7 @@ class UpdateAssessmentRecommendation
       if assessment.decline?
         DeclineQTS.call(application_form:, user:)
       elsif assessment.award?
-        ChangeApplicationFormState.call(
-          application_form:,
-          user:,
-          new_state: "awarded_pending_checks",
-        )
-        CreateDQTTRNRequest.call(application_form:)
+        CreateDQTTRNRequest.call(application_form:, user:)
       end
 
       true

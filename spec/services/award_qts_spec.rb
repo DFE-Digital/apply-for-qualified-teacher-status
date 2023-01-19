@@ -34,12 +34,7 @@ RSpec.describe AwardQTS do
     end
 
     it "changes the status" do
-      expect(ChangeApplicationFormState).to receive(:call).with(
-        application_form:,
-        user:,
-        new_state: "awarded",
-      )
-      call
+      expect { call }.to change(application_form, :state).to("awarded")
     end
 
     it "sets the awarded at date" do
@@ -76,12 +71,7 @@ RSpec.describe AwardQTS do
     end
 
     it "changes the status" do
-      expect(ChangeApplicationFormState).to receive(:call).with(
-        application_form:,
-        user:,
-        new_state: "awarded",
-      )
-      call
+      expect { call }.to change(application_form, :state).to("awarded")
     end
 
     it "sets the awarded at date" do
@@ -116,8 +106,7 @@ RSpec.describe AwardQTS do
     end
 
     it "doesn't change the status" do
-      expect(ChangeApplicationFormState).to_not receive(:call)
-      call
+      expect { call }.to_not change(application_form, :state)
     end
 
     it "doesn't change the awarded at date" do
