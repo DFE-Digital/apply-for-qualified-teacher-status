@@ -23,5 +23,9 @@ FactoryBot.define do
     association :application_form, :awarded_pending_checks
 
     request_id { SecureRandom.uuid }
+
+    trait :potential_duplicate do
+      potential_duplicate { true }
+    end
   end
 end
