@@ -20,6 +20,7 @@ en:
       submitted:
         assessor: Not started
         teacher: Submitted
+      waiting_on: Waiting on
 
     timeline_entry:
       title:

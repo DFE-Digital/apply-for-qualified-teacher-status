@@ -167,6 +167,8 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             id: "further_information_received",
             label: "Further information received (0)",
           ),
+          OpenStruct.new(id: "waiting_on", label: "Waiting on (0)"),
+          OpenStruct.new(id: "received", label: "Received (0)"),
           OpenStruct.new(
             id: "awarded_pending_checks",
             label: "Awarded pending checks (0)",
@@ -187,6 +189,8 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         create_list(:application_form, 2, :initial_assessment)
         create_list(:application_form, 3, :further_information_requested)
         create_list(:application_form, 4, :further_information_received)
+        create_list(:application_form, 3, :waiting_on)
+        create_list(:application_form, 4, :received)
         create_list(:application_form, 5, :awarded_pending_checks)
         create_list(:application_form, 6, :awarded)
         create_list(:application_form, 7, :declined)
@@ -209,6 +213,8 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
               id: "further_information_received",
               label: "Further information received (4)",
             ),
+            OpenStruct.new(id: "waiting_on", label: "Waiting on (3)"),
+            OpenStruct.new(id: "received", label: "Received (4)"),
             OpenStruct.new(
               id: "awarded_pending_checks",
               label: "Awarded pending checks (5)",

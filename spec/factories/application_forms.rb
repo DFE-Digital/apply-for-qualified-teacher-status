@@ -132,6 +132,16 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
+    trait :waiting_on do
+      state { "waiting_on" }
+      submitted_at { Time.zone.now }
+    end
+
+    trait :received do
+      state { "received" }
+      submitted_at { Time.zone.now }
+    end
+
     trait :awarded_pending_checks do
       state { "awarded_pending_checks" }
       submitted_at { Time.zone.now }
