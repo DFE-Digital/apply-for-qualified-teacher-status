@@ -134,9 +134,6 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     and_i_choose_no
     and_i_click_continue
-    then_i_see_the(:teacher_check_work_histories_page)
-
-    when_i_click_continue
     then_i_see_completed_work_history_section
 
     when_i_click_check_your_answers
@@ -221,9 +218,6 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     and_i_choose_no
     and_i_click_continue
-    then_i_see_the(:teacher_check_qualifications_page)
-
-    when_i_click_continue
     then_i_see_completed_qualifications_section
 
     when_i_click_age_range
@@ -330,9 +324,6 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     and_i_choose_no
     and_i_click_continue
-    then_i_see_the(:teacher_check_qualifications_page)
-
-    when_i_click_continue
     then_i_see_completed_qualifications_section
 
     when_i_click_age_range
@@ -394,6 +385,9 @@ RSpec.describe "Teacher application", type: :system do
     when_i_click_continue
     and_i_choose_no
     and_i_click_continue
+    then_i_see_the(:teacher_application_page)
+
+    when_i_click_work_history
     then_i_see_the(:teacher_check_work_histories_page)
 
     when_i_click_delete
