@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ApplicationFormStatusUpdater do
+RSpec.describe ApplicationFormSectionStatusUpdater do
   describe "#call" do
     before { described_class.call(application_form:) }
 

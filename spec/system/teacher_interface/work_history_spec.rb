@@ -96,7 +96,7 @@ RSpec.describe "Teacher work history", type: :system do
 
   def given_some_work_history_exists
     create_list(:work_history, 3, :completed, application_form:)
-    ApplicationFormStatusUpdater.call(application_form:)
+    ApplicationFormSectionStatusUpdater.call(application_form:)
   end
 
   def and_i_see_the_work_history_task

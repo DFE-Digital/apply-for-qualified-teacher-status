@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApplicationFormStatusUpdater
+class ApplicationFormSectionStatusUpdater
   include ServicePattern
 
   def initialize(application_form:)
