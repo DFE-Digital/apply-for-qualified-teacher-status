@@ -87,7 +87,7 @@ en:
           confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
           duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
           email_contact_current_employer: the applicant has entered the name and email address of a contact for their current/most recent employer
-          english_language_valid_moi:
+          english_language_valid_moi: The applicant’s MOI supports their statement that they were taught in English, in a NON-exempt country.
           english_language_valid_provider: The applicant has provided a Secure English Language Test (SELT) at level B2 of the Common European Framework of Reference for Languages (CEFR) scale, from the list of approved English language providers and awarded within the last 2 years.
           full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
           has_additional_degree_transcript: additional degree transcript is present (and translation if required)
@@ -129,6 +129,8 @@ en:
           english_language_unverifiable_reference_number: Unable to verify the reference number that the applicant has provided.
           english_language_not_achieved_b2: The applicant provided evidence of a SELT but has not achieved B2 level.
           english_language_selt_expired: The applicant provided evidence of a SELT but the test was not completed within the last 2 years.
+          english_language_moi_not_taught_in_english: The applicant’s MOI does not show that they were taught exclusively in English.
+          english_language_moi_invalid_format: The applicant’s MOI is illegible or in a format that we cannot accept.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible or in a format that we cannot accept.

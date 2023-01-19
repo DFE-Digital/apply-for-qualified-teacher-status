@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "Assessor confirms English language exemption", type: :system do
-  it "via the Personal Information section" do
+RSpec.describe "Assessor confirms English language section", type: :system do
+  it "exemption via citizenship in the Personal Information section" do
     given_the_service_is_open
     given_there_is_an_application_form
     and_the_application_states_english_language_exemption_by_citizenship
@@ -28,7 +28,7 @@ RSpec.describe "Assessor confirms English language exemption", type: :system do
     and_the_english_language_section_is_complete
   end
 
-  it "via the Qualifications section" do
+  it "exemption via qualification in the Qualifications section" do
     given_the_service_is_open
     given_there_is_an_application_form
     and_the_application_states_english_language_exemption_by_qualification
@@ -55,6 +55,42 @@ RSpec.describe "Assessor confirms English language exemption", type: :system do
     and_the_english_language_section_is_complete
   end
 
+  it "confirmation of proficiency by SELT from approved provider" do
+    given_the_service_is_open
+    given_there_is_an_application_form
+    and_the_application_english_language_proof_method_is_provider
+    given_i_am_authorized_as_an_assessor_user
+    when_i_visit_the(
+      :check_english_language_proficiency_page,
+      application_id:,
+      assessment_id:,
+    )
+    then_i_am_asked_to_confirm_english_language_proficiency_by_provider
+    and_i_can_see_provider_failure_reasons_if_i_do_not_wish_to_confirm
+    and_i_confirm_the_section_as_complete(
+      check_english_language_proficiency_page,
+    )
+    then_the_english_language_section_is_complete
+  end
+
+  it "confirmation of proficiency by medium of instruction document" do
+    given_the_service_is_open
+    given_there_is_an_application_form
+    and_the_application_english_language_proof_method_is_moi
+    given_i_am_authorized_as_an_assessor_user
+    when_i_visit_the(
+      :check_english_language_proficiency_page,
+      application_id:,
+      assessment_id:,
+    )
+    then_i_am_asked_to_confirm_english_language_proficiency_by_moi
+    and_i_can_see_moi_failure_reasons_if_i_do_not_wish_to_confirm
+    and_i_confirm_the_section_as_complete(
+      check_english_language_proficiency_page,
+    )
+    then_the_english_language_section_is_complete
+  end
+
   private
 
   def given_there_is_an_application_form
@@ -67,6 +103,32 @@ RSpec.describe "Assessor confirms English language exemption", type: :system do
 
   def and_the_application_states_english_language_exemption_by_qualification
     application_form.update!(english_language_qualification_exempt: true)
+  end
+
+  def and_the_application_english_language_proof_method_is_provider
+    application_form.update!(english_language_proof_method: "provider")
+    application_form
+      .assessment
+      .sections
+      .find_by(key: :english_language_proficiency)
+      .update!(
+        checks: ["english_language_valid_provider"],
+        failure_reasons: ["english_language_qualification_invalid"],
+      )
+  end
+
+  def and_the_application_english_language_proof_method_is_moi
+    application_form.update!(
+      english_language_proof_method: "medium_of_instruction",
+    )
+    application_form
+      .assessment
+      .sections
+      .find_by(key: :english_language_proficiency)
+      .update!(
+        checks: ["english_language_valid_moi"],
+        failure_reasons: ["english_language_moi_invalid_format"],
+      )
   end
 
   def then_i_see_the_application
@@ -95,6 +157,56 @@ RSpec.describe "Assessor confirms English language exemption", type: :system do
     check_english_language_proficiency_page.return_button.click
   end
 
+  def then_i_am_asked_to_confirm_english_language_proficiency_by_provider
+    expect(check_english_language_proficiency_page.heading.text).to eq(
+      "Check English language proficiency",
+    )
+    expect(
+      check_english_language_proficiency_page.cards.first.heading.text,
+    ).to eq("Verify your English language proficiency")
+    expect(check_english_language_proficiency_page.checks.text).to eq(
+      I18n.t(
+        "assessor_interface.assessment_sections.show.checks.english_language_valid_provider",
+      ),
+    )
+  end
+
+  def then_i_am_asked_to_confirm_english_language_proficiency_by_moi
+    expect(check_english_language_proficiency_page.heading.text).to eq(
+      "Check English language proficiency",
+    )
+    expect(
+      check_english_language_proficiency_page.cards.first.heading.text,
+    ).to eq("Verify your English language proficiency")
+    expect(check_english_language_proficiency_page.checks.text).to eq(
+      I18n.t(
+        "assessor_interface.assessment_sections.show.checks.english_language_valid_moi",
+      ),
+    )
+  end
+
+  def and_i_can_see_provider_failure_reasons_if_i_do_not_wish_to_confirm
+    check_english_language_proficiency_page.form.no_radio_item.choose
+    expect(
+      check_english_language_proficiency_page.failure_reasons.first.text,
+    ).to eq(
+      I18n.t(
+        "assessor_interface.assessment_sections.show.failure_reasons.english_language_qualification_invalid",
+      ),
+    )
+  end
+
+  def and_i_can_see_moi_failure_reasons_if_i_do_not_wish_to_confirm
+    check_english_language_proficiency_page.form.no_radio_item.choose
+    expect(
+      check_english_language_proficiency_page.failure_reasons.first.text,
+    ).to eq(
+      I18n.t(
+        "assessor_interface.assessment_sections.show.failure_reasons.english_language_moi_invalid_format",
+      ),
+    )
+  end
+
   def and_i_confirm_english_language_exemption(page)
     page.exemption_form.english_language_exempt.check
   end
@@ -115,6 +227,8 @@ RSpec.describe "Assessor confirms English language exemption", type: :system do
   def and_the_english_language_section_is_complete
     assert_section_is_complete(:english_language_proficiency)
   end
+  alias_method :then_the_english_language_section_is_complete,
+               :and_the_english_language_section_is_complete
 
   def assert_section_is_complete(section)
     expect(
