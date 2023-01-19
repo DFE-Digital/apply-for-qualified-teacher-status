@@ -1,5 +1,5 @@
 class ApplicationMailer < Mail::Notify::Mailer
-  default from: "qts.enquiries@education.gov.uk"
+  default from: I18n.t("service.email.enquiries")
 
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
