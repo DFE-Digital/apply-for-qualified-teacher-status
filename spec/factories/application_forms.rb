@@ -11,6 +11,7 @@
 #  awarded_at                                    :datetime
 #  confirmed_no_sanctions                        :boolean          default(FALSE)
 #  date_of_birth                                 :date
+#  declined_at                                   :datetime
 #  english_language_citizenship_exempt           :boolean
 #  english_language_proof_method                 :string
 #  english_language_provider_other               :boolean          default(FALSE), not null
