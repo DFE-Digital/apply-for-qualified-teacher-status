@@ -15,19 +15,4 @@ namespace :application_forms do
     puts "There were #{original_count} draft applications and there are now #{new_count}."
     puts "There are #{ApplicationForm.count} applications overall."
   end
-
-  desc "Generate a countries CSV file for analytics dashboards."
-  task set_declined_at: :environment do
-    ApplicationForm
-      .declined
-      .where(declined_at: nil)
-      .each do |application_form|
-        timeline_event =
-          TimelineEvent.state_changed.find_by(
-            application_form:,
-            new_state: "declined",
-          )
-        application_form.update!(declined_at: timeline_event.created_at)
-      end
-  end
 end
