@@ -277,6 +277,23 @@ RSpec.describe ApplicationForm, type: :model do
         it { is_expected.to be_valid }
       end
     end
+
+    context "when declined" do
+      before do
+        application_form.assign_attributes(
+          state: "declined",
+          submitted_at: Time.zone.now,
+        )
+      end
+
+      it { is_expected.to_not be_valid }
+
+      context "with declined_at" do
+        before { application_form.declined_at = Time.zone.now }
+
+        it { is_expected.to be_valid }
+      end
+    end
   end
 
   describe "scopes" do

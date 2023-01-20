@@ -146,6 +146,7 @@ FactoryBot.define do
     trait :declined do
       state { "declined" }
       submitted_at { Time.zone.now }
+      declined_at { Time.zone.now }
     end
 
     trait :potential_duplicate_in_dqt do
