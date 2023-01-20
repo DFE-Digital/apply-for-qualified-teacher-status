@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 4f7369d0e1bde1f9252ac0f94f37b543fd279161
+  revision: b916b441d1a5579465c52d0772d99dab8e072d73
   specs:
     dfe-analytics (1.5.3)
       google-cloud-bigquery (~> 1.38)
@@ -203,9 +203,9 @@ GEM
       raabro (~> 1.4)
     globalid (1.0.1)
       activesupport (>= 5.0)
-    google-apis-bigquery_v2 (0.41.0)
-      google-apis-core (>= 0.9.0, < 2.a)
-    google-apis-core (0.9.0)
+    google-apis-bigquery_v2 (0.44.0)
+      google-apis-core (>= 0.9.1, < 2.a)
+    google-apis-core (0.9.5)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (>= 0.16.2, < 2.a)
       httpclient (>= 2.8.1, < 3.a)
@@ -214,7 +214,7 @@ GEM
       retriable (>= 2.0, < 4.a)
       rexml
       webrick
-    google-cloud-bigquery (1.39.0)
+    google-cloud-bigquery (1.42.0)
       concurrent-ruby (~> 1.0)
       google-apis-bigquery_v2 (~> 0.1)
       google-cloud-core (~> 1.6)
@@ -226,7 +226,7 @@ GEM
     google-cloud-env (1.6.0)
       faraday (>= 0.17.3, < 3.0)
     google-cloud-errors (1.3.0)
-    googleauth (1.2.0)
+    googleauth (1.3.0)
       faraday (>= 0.17.3, < 3.a)
       jwt (>= 1.4, < 3.0)
       memoist (~> 0.16)
@@ -263,7 +263,7 @@ GEM
     jsbundling-rails (1.1.1)
       railties (>= 6.0.0)
     json (2.6.2)
-    jwt (2.5.0)
+    jwt (2.6.0)
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -323,7 +323,7 @@ GEM
       activesupport (>= 7.0.0)
       rack
       railties (>= 7.0.0)
-    public_suffix (5.0.0)
+    public_suffix (5.0.1)
     puma (6.0.2)
       nio4r (~> 2.0)
     pundit (2.3.0)
