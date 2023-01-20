@@ -34,7 +34,7 @@ feature_flags:
   staff_test_user:
     author: David Feetenby
     description: >
-      Add extra user with access the eligibility checker for user research.
+      Add extra user with access to the eligibility checker for user research.
       When service_open is deactivated, and this flag is enabled, the user will
       have full access to the service. Should be inactive on production.
 
