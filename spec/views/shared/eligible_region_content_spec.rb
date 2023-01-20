@@ -107,7 +107,7 @@ RSpec.describe "Eligible region content", type: :view do
 
       it do
         is_expected.to match(
-          /We need to understand your level of English language proficiency/,
+          /You’ll need to provide your passport or official identification documents for that country as proof/,
         )
       end
     end
@@ -119,7 +119,7 @@ RSpec.describe "Eligible region content", type: :view do
 
     let(:region) { create(:region, reduced_evidence_accepted: false) }
 
-    it { is_expected.to match(/You’ll need to show you’ve been employed/) }
+    it { is_expected.to match(/You need to show you’ve been employed/) }
     it do
       is_expected.to_not match(
         /you’ll need to complete a 2-year ‘statutory induction’/,
@@ -161,7 +161,7 @@ RSpec.describe "Eligible region content", type: :view do
 
       it do
         is_expected.to match(
-          /You'll need to tell us about any professional teaching work experience where you/,
+          /You’ll need to tell us about any professional teaching work experience/,
         )
       end
     end
@@ -169,7 +169,7 @@ RSpec.describe "Eligible region content", type: :view do
     context "with a region which does not accept reduced evidence" do
       let(:region) { create(:region, reduced_evidence_accepted: false) }
 
-      it { is_expected.to match(/You’ll need to show you’ve been employed/) }
+      it { is_expected.to match(/You need to show you’ve been employed/) }
     end
   end
 end

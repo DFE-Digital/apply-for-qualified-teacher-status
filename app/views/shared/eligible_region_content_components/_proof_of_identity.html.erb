@@ -1,9 +1,12 @@
 <p class="govuk-body">You must provide:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>A passport, national identity card or driving licence that shows your date of birth and nationality. 
-      This must be valid and have not expired.</li>
+  <li>passport (must not have expired)</li>
+  <li>birth certificate</li>
+  <li>national identity card that shows your date of birth and nationality (must not have expired)</li>
 </ul>
-<p class="govuk-body">
-  If the name on your proof of identity is different from that on your other documents, 
-  you need to provide evidence of your name change (for example, a divorce certificate or name change deed).
-</p>
+<%= govuk_details(summary_text: "Has your name changed?") do %>
+  <p class="govuk-body">
+    If the name on your proof of identity is different from that on your other documents, 
+    you need to provide evidence of your name change (for example, a marriage certificate or name change deed).
+  </p>
+<% end %>
