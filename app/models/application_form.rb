@@ -94,6 +94,9 @@ class ApplicationForm < ApplicationRecord
 
   validates :submitted_at, presence: true, unless: :draft?
   validates :awarded_at, presence: true, if: :awarded?
+  validates :awarded_at, absence: true, if: :declined?
+  validates :declined_at, presence: true, if: :declined?
+  validates :declined_at, absence: true, if: :awarded?
 
   enum :english_language_proof_method,
        { medium_of_instruction: "medium_of_instruction", provider: "provider" },
