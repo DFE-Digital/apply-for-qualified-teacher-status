@@ -84,7 +84,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_20_100710) do
     t.bigint "english_language_provider_id"
     t.text "english_language_provider_reference", default: "", null: false
     t.datetime "awarded_at"
-    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "written_statement_confirmation", default: false, null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
@@ -290,8 +289,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_20_100710) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
-    t.boolean "application_form_skip_work_history", default: false, null: false
     t.text "qualifications_information", default: "", null: false
+    t.boolean "application_form_skip_work_history", default: false, null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true

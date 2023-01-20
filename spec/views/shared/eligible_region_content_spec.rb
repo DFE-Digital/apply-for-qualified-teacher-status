@@ -36,7 +36,7 @@ RSpec.describe "Eligible region content", type: :view do
     end
 
     it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
-    it { is_expected.to match(/recognises you as a teacher must confirm/) }
+    it { is_expected.to match(/suspended/) }
     it { is_expected.to match(/You’ll need to provide a/) }
     it { is_expected.to match(/certificate/) }
     it { is_expected.to match(/address/) }
@@ -57,7 +57,7 @@ RSpec.describe "Eligible region content", type: :view do
 
     it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
     it { is_expected.to match(/has an online register of teachers/) }
-    it { is_expected.to match(/must also confirm in writing/) }
+    it { is_expected.to match(/restricted or subject to sanctions/) }
     it { is_expected.to match(/You’ll need to provide a/) }
     it { is_expected.to match(/certificate/) }
     it { is_expected.to match(/address/) }
@@ -76,18 +76,15 @@ RSpec.describe "Eligible region content", type: :view do
     end
 
     it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
-    it { is_expected.to match(/recognises you as a teacher must confirm/) }
     it { is_expected.to match(/You’ll need to provide a/) }
     it { is_expected.to match(/certificate/) }
     it { is_expected.to match(/address/) }
-    it { is_expected.to match(/show evidence of your work history/) }
   end
 
   context "with no status check and no sanction check" do
     let(:region) { create(:region, status_check: :none, sanction_check: :none) }
 
     it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
-    it { is_expected.to match(/show evidence of your work history/) }
   end
 
   describe "English language proficiency" do

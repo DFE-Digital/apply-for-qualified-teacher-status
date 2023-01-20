@@ -1,8 +1,8 @@
-<p class="govuk-body">If you were born or hold citizenship of any of these listed countries, you’re exempt from English language requirements:</p>
+<p class="govuk-body">If you were born in or hold citizenship of any of these listed countries, you’re exempt from English language requirements:</p>
 <%= render "shared/english_language_exempt_countries" %>
 
 <p class="govuk-body">You’ll need to provide your passport or official identification documents for that country as proof. </p>
-<p class="govuk-body">If you were not born or do not hold citizenship from any of the exempt countries listed, you can provide evidence of your English language ability in one of the following ways:</p>
+<p class="govuk-body">If you were not born in or do not hold citizenship of any of the exempt countries listed, you can provide evidence of your English language ability in one of the following ways:</p>
 
 <ul class="govuk-list govuk-list--number">
   <li>
@@ -14,15 +14,12 @@
     <h3 class="govuk-heading-s">If your teaching qualification or university degree was taught completely in English, but in a country that’s NOT exempt</h3>
     <p class="govuk-body">Upload a document that shows your teaching qualification or university degree was taught exclusively in the English language – this is an official document that you can request from the institution where you studied.</p>
   </li>
-
-  <li>
-    <h3 class="govuk-heading-s">Show you were taught in English, but in a country that’s NOT exempt from English language requirements</h3>
-    <p class="govuk-body">Upload the ‘Medium of instruction’ (MOI) from your degree qualification. You can get this by contacting the institution where you studied.</p>
-  </li>
 <li>
   <h3 class="govuk-heading-s">If you have an approved English language certificate</h3>
   
-  <% unless region.reduced_evidence_accepted%>
+  <% if region.reduced_evidence_accepted %>
+    <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 from an approved provider.</p>
+  <% else %>
     <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 from one of these approved providers:</p>
     <ul class="govuk-list govuk-list--bullet">
      <% EnglishLanguageProvider.order(:created_at).each do |provider| %>
@@ -30,19 +27,19 @@
       <% end %>
     </ul>
   <% end %>
-  <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 from an approved provider.</p>
+  
   </li>
 </ul>
 
 <p class="govuk-body">The test must be awarded within the last 2 years before the date of your application.</p>
 <% if region.reduced_evidence_accepted %>
-  <p class="govuk-body">Find an <a href="https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" class="govuk-link">approved provider</a>if you need to get an English language certificate.</p>
+  <p class="govuk-body">Find an <a href="https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" class="govuk-link">approved provider</a> if you need to get an English language certificate.</p>
 <% else %>
   <p class="govuk-body">Find an <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link">approved provider</a> if you need to get an English language certificate.</p>
 <% end %>
 <p class="govuk-body">Learn more about <a href="https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale" class="govuk-link">level B2 English language</a></p>
 
-<%= govuk_details(summary_text: "What if you have more than one natonality?") do %>
+<%= govuk_details(summary_text: "What if you have more than one nationality?") do %>
   <p class="govuk-body">
     If you’re a national of more than 1 country and both are exempt from English language requirements, you can choose which of them you use to apply for QTS. Remember, you must be able to show a passport (or the recognised identity document for that country).
   </p>
