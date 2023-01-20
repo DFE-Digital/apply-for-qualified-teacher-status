@@ -87,6 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_20_100710) do
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "written_statement_confirmation", default: false, null: false
+    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "english_language_provider_other", default: false, null: false
     t.datetime "declined_at"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
