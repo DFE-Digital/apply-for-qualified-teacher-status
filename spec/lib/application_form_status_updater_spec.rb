@@ -6,6 +6,22 @@ RSpec.describe ApplicationFormStatusUpdater do
   let(:application_form) { create(:application_form) }
   let(:user) { create(:staff) }
 
+  shared_examples "changes status" do |new_status|
+    it "changes the status to #{new_status}" do
+      expect { call }.to change(application_form, :state).to(new_status)
+    end
+
+    it "records a timeline event" do
+      expect { call }.to change(TimelineEvent.state_changed, :count).by(1)
+
+      timeline_event = TimelineEvent.state_changed.find_by(application_form:)
+
+      expect(timeline_event.creator).to eq(user)
+      expect(timeline_event.old_state).to eq("draft")
+      expect(timeline_event.new_state).to eq(new_status)
+    end
+  end
+
   describe "#call" do
     subject(:call) { described_class.call(application_form:, user:) }
 
@@ -15,11 +31,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         create(:dqt_trn_request, :potential_duplicate, application_form:)
       end
 
-      it "changes the status to potential_duplicate_in_dqt" do
-        expect { call }.to change(application_form, :state).to(
-          "potential_duplicate_in_dqt",
-        )
-      end
+      include_examples "changes status", "potential_duplicate_in_dqt"
     end
 
     context "with a declined_at date" do
@@ -30,9 +42,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         )
       end
 
-      it "changes the status to declined" do
-        expect { call }.to change(application_form, :state).to("declined")
-      end
+      include_examples "changes status", "declined"
     end
 
     context "with an awarded_at date" do
@@ -43,9 +53,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         )
       end
 
-      it "changes the status to awarded" do
-        expect { call }.to change(application_form, :state).to("awarded")
-      end
+      include_examples "changes status", "awarded"
     end
 
     context "with a DQT TRN request" do
@@ -54,11 +62,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         create(:dqt_trn_request, application_form:)
       end
 
-      it "changes the status to potential_duplicate_in_dqt" do
-        expect { call }.to change(application_form, :state).to(
-          "awarded_pending_checks",
-        )
-      end
+      include_examples "changes status", "awarded_pending_checks"
     end
 
     context "with a received FI request" do
@@ -69,9 +73,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         create(:further_information_request, :received, assessment:)
       end
 
-      it "changes the status to received" do
-        expect { call }.to change(application_form, :state).to("received")
-      end
+      include_examples "changes status", "received"
     end
 
     context "with a requested FI request" do
@@ -82,9 +84,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         create(:further_information_request, :requested, assessment:)
       end
 
-      it "changes the status to waiting_on" do
-        expect { call }.to change(application_form, :state).to("waiting_on")
-      end
+      include_examples "changes status", "waiting_on"
     end
 
     context "with a started assessment" do
@@ -93,23 +93,23 @@ RSpec.describe ApplicationFormStatusUpdater do
         create(:assessment, :started, application_form:)
       end
 
-      it "changes the status to initial_assessment" do
-        expect { call }.to change(application_form, :state).to(
-          "initial_assessment",
-        )
-      end
+      include_examples "changes status", "initial_assessment"
     end
 
     context "with a submitted_at date" do
       before { application_form.update!(submitted_at: Time.zone.now) }
 
-      it "changes the status to submitted" do
-        expect { call }.to change(application_form, :state).to("submitted")
-      end
+      include_examples "changes status", "submitted"
     end
 
-    it "doesn't change the status from draft" do
-      expect { call }.to_not change(application_form, :state).from("draft")
+    context "when status is unchanged" do
+      it "doesn't change the status from draft" do
+        expect { call }.to_not change(application_form, :state).from("draft")
+      end
+
+      it "doesn't create a timeline event" do
+        expect { call }.to_not change(TimelineEvent.state_changed, :count)
+      end
     end
   end
 end
