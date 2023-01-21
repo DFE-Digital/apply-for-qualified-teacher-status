@@ -53,11 +53,11 @@ class PersonasController < ApplicationController
         [true, false],
       )
       .tap { |personas| personas.insert(2, *personas.slice!(8, 2)) }
-      .map do |status_check, sanction_check, state, created_under_new_regulations|
+      .map do |status_check, sanction_check, status, created_under_new_regulations|
         {
           status_check:,
           sanction_check:,
-          state:,
+          status:,
           created_under_new_regulations:,
         }
       end
@@ -86,7 +86,7 @@ class PersonasController < ApplicationController
 
             region.status_check == persona[:status_check] &&
               region.sanction_check == persona[:sanction_check] &&
-              application_form.state == persona[:state] &&
+              application_form.status == persona[:status] &&
               application_form.created_under_new_regulations? ==
                 persona[:created_under_new_regulations]
           end

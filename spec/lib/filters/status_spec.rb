@@ -2,11 +2,11 @@
 
 require "rails_helper"
 
-RSpec.describe Filters::State do
+RSpec.describe Filters::Status do
   subject { described_class.apply(scope:, params:) }
 
   context "with states param and a single state" do
-    let(:params) { { states: :draft } }
+    let(:params) { { statuses: :draft } }
     let(:scope) { ApplicationForm.all }
 
     let!(:included) { create(:application_form, :draft) }
@@ -19,7 +19,7 @@ RSpec.describe Filters::State do
   end
 
   context "wth states param and multiple states" do
-    let(:params) { { states: %w[draft submitted] } }
+    let(:params) { { statuses: %w[draft submitted] } }
     let(:scope) { ApplicationForm.all }
 
     let!(:included) do
@@ -37,7 +37,7 @@ RSpec.describe Filters::State do
   end
 
   context "with states param and a blank string" do
-    let(:params) { { states: [""] } }
+    let(:params) { { statuses: [""] } }
     let(:scope) { double }
 
     it "returns the original scope" do

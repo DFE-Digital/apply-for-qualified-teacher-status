@@ -28,7 +28,7 @@ RSpec.describe CreateFurtherInformationRequest do
   end
 
   describe "updating application form state" do
-    subject(:state) { application_form.state }
+    subject(:status) { application_form.status }
 
     it { is_expected.to eq("submitted") }
 

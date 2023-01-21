@@ -79,7 +79,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def status
-    application_form.state.humanize
+    application_form.status.humanize
   end
 
   private
