@@ -35,7 +35,7 @@
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
-#  state                                         :string           default("draft"), not null
+#  status                                        :string           default("draft"), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
 #  submitted_at                                  :datetime
@@ -64,7 +64,7 @@
 #  index_application_forms_on_reference                     (reference) UNIQUE
 #  index_application_forms_on_region_id                     (region_id)
 #  index_application_forms_on_reviewer_id                   (reviewer_id)
-#  index_application_forms_on_state                         (state)
+#  index_application_forms_on_status                        (status)
 #  index_application_forms_on_teacher_id                    (teacher_id)
 #
 # Foreign Keys
@@ -89,7 +89,7 @@ RSpec.describe ApplicationForm, type: :model do
 
   describe "columns" do
     it do
-      is_expected.to define_enum_for(:state).with_values(
+      is_expected.to define_enum_for(:status).with_values(
         draft: "draft",
         submitted: "submitted",
         initial_assessment: "initial_assessment",
