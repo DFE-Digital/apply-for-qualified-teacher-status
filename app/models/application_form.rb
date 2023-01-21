@@ -35,7 +35,7 @@
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
-#  state                                         :string           default("draft"), not null
+#  status                                        :string           default("draft"), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
 #  submitted_at                                  :datetime
@@ -64,7 +64,7 @@
 #  index_application_forms_on_reference                     (reference) UNIQUE
 #  index_application_forms_on_region_id                     (region_id)
 #  index_application_forms_on_reviewer_id                   (reviewer_id)
-#  index_application_forms_on_state                         (state)
+#  index_application_forms_on_status                        (status)
 #  index_application_forms_on_teacher_id                    (teacher_id)
 #
 # Foreign Keys
@@ -112,7 +112,7 @@ class ApplicationForm < ApplicationRecord
             absence: true,
             if: :english_language_provider_other
 
-  enum state: {
+  enum status: {
          draft: "draft",
          submitted: "submitted",
          initial_assessment: "initial_assessment",
@@ -123,8 +123,6 @@ class ApplicationForm < ApplicationRecord
          declined: "declined",
          potential_duplicate_in_dqt: "potential_duplicate_in_dqt",
        }
-
-  alias_attribute :status, :state
 
   delegate :country, to: :region, allow_nil: true
 

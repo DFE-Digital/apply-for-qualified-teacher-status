@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_103414) do
     t.text "subjects", default: [], null: false, array: true
     t.bigint "assessor_id"
     t.bigint "reviewer_id"
-    t.string "state", default: "draft", null: false
+    t.string "status", default: "draft", null: false
     t.datetime "submitted_at"
     t.boolean "needs_work_history", null: false
     t.boolean "needs_written_statement", null: false
@@ -102,7 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_103414) do
     t.index ["reference"], name: "index_application_forms_on_reference", unique: true
     t.index ["region_id"], name: "index_application_forms_on_region_id"
     t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
-    t.index ["state"], name: "index_application_forms_on_state"
+    t.index ["status"], name: "index_application_forms_on_status"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
   end
 
