@@ -8,7 +8,7 @@ class AssessorInterface::FilterForm
                 :location,
                 :name,
                 :reference,
-                :states,
+                :statuses,
                 :submitted_at_before,
                 :submitted_at_after
 end

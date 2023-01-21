@@ -33,9 +33,9 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     )
   end
 
-  def state_filter_options
-    counts = application_forms_without_state_filter.group(:state).count
-    states = %w[
+  def status_filter_options
+    counts = application_forms_without_status_filter.group(:status).count
+    statuses = %w[
       submitted
       initial_assessment
       waiting_on
@@ -46,9 +46,9 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       potential_duplicate_in_dqt
     ]
 
-    states.map do |state|
-      text = status_text(state, context: :assessor)
-      OpenStruct.new(id: state, label: "#{text} (#{counts.fetch(state, 0)})")
+    statuses.map do |status|
+      text = status_text(status, context: :assessor)
+      OpenStruct.new(id: status, label: "#{text} (#{counts.fetch(status, 0)})")
     end
   end
 
@@ -61,15 +61,15 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def application_forms_with_pagy
     @application_forms_with_pagy ||=
       pagy(
-        ::Filters::State.apply(
-          scope: application_forms_without_state_filter,
+        ::Filters::Status.apply(
+          scope: application_forms_without_status_filter,
           params: filter_params,
         ).order(submitted_at: :asc),
       )
   end
 
-  def application_forms_without_state_filter
-    @application_forms_without_state_filter ||=
+  def application_forms_without_status_filter
+    @application_forms_without_status_filter ||=
       begin
         filters = [
           ::Filters::Assessor,

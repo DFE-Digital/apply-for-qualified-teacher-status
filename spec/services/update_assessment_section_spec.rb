@@ -109,7 +109,7 @@ RSpec.describe UpdateAssessmentSection do
     end
 
     it "changes the application form state" do
-      expect { subject }.to change { application_form.state }.from(
+      expect { subject }.to change { application_form.status }.from(
         "submitted",
       ).to("initial_assessment")
     end
@@ -137,11 +137,11 @@ RSpec.describe UpdateAssessmentSection do
     end
 
     it "doesn't change the assessor" do
-      expect { subject }.to_not(change { application_form.assessor })
+      expect { subject }.to_not change(application_form, :assessor)
     end
 
     it "doesn't change the application form state" do
-      expect { subject }.to_not(change { application_form.state })
+      expect { subject }.to_not change(application_form, :status)
     end
 
     it "doesn't change the assessment started at" do

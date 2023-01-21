@@ -71,8 +71,8 @@
             row.cell do
               render(StatusTag::Component.new(
                 key: "teacher-persona-#{index}",
-                status: persona[:state],
-                ))
+                status: persona[:status],
+              ))
             end
             row.cell { persona_yes_no_tag(persona[:created_under_new_regulations]) }
             row.cell { persona[:teacher].email }

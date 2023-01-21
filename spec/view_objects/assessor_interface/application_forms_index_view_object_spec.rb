@@ -71,9 +71,9 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         it { is_expected.to be_empty }
       end
 
-      context "with a state filter" do
+      context "with a status filter" do
         before do
-          expect_any_instance_of(Filters::State).to receive(:apply).and_return(
+          expect_any_instance_of(Filters::Status).to receive(:apply).and_return(
             ApplicationForm.none,
           )
         end
@@ -148,8 +148,8 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
   end
 
-  describe "#state_filter_options" do
-    subject(:state_filter_options) { view_object.state_filter_options }
+  describe "#status_filter_options" do
+    subject(:status_filter_options) { view_object.status_filter_options }
 
     it do
       is_expected.to eq(

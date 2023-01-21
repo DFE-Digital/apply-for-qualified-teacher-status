@@ -124,6 +124,8 @@ class ApplicationForm < ApplicationRecord
          potential_duplicate_in_dqt: "potential_duplicate_in_dqt",
        }
 
+  alias_attribute :status, :state
+
   delegate :country, to: :region, allow_nil: true
 
   STATUS_COLUMNS = %i[

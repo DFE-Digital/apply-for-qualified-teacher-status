@@ -36,8 +36,8 @@ module PageObjects
                 "#assessor_interface_filter_form_submitted_at_before_1i"
       end
 
-      section :state_filter, "#app-applications-filters-state" do
-        sections :states, GovukCheckboxItem, ".govuk-checkboxes__item"
+      section :status_filter, "#app-applications-filters-status" do
+        sections :statuses, GovukCheckboxItem, ".govuk-checkboxes__item"
       end
 
       sections :search_results, ".app-search-results__item" do
