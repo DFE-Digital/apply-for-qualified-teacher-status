@@ -23,6 +23,8 @@
     - response
   :notes:
     - text
+  :professional_standing_requests:
+    - location_note
   :qualifications:
     - title
     - institution_name

@@ -17,6 +17,7 @@ RSpec.describe DestroyApplicationForm do
         create(
           :assessment,
           :with_further_information_request,
+          :with_professional_standing_request,
           :with_reference_request,
           application_form:,
         )
@@ -45,9 +46,10 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", Document, 16, 8
   include_examples "deletes model", FurtherInformationRequest
   include_examples "deletes model", FurtherInformationRequestItem, 4, 2
-  include_examples "deletes model", ReferenceRequest
   include_examples "deletes model", Note
+  include_examples "deletes model", ProfessionalStandingRequest
   include_examples "deletes model", Qualification
+  include_examples "deletes model", ReferenceRequest
   include_examples "deletes model", Teacher
   include_examples "deletes model", TimelineEvent
   include_examples "deletes model", Upload

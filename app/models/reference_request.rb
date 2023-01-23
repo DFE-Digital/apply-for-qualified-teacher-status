@@ -35,7 +35,6 @@ class ReferenceRequest < ApplicationRecord
 
   has_secure_token :slug
 
-  belongs_to :assessment
   belongs_to :work_history
 
   with_options if: :received? do
