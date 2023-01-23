@@ -81,6 +81,50 @@ RSpec.describe SubmitApplicationForm do
     end
   end
 
+  describe "creating professional standing request" do
+    let(:assessment) { Assessment.find_by(application_form:) }
+
+    subject(:professional_standing_request) do
+      ProfessionalStandingRequest.find_by(assessment:)
+    end
+
+    it { is_expected.to be_nil }
+
+    context "after calling the service" do
+      before { call }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when teaching authority provides the written statement" do
+      before do
+        region.update!(teaching_authority_provides_written_statement: true)
+        call
+      end
+
+      it { is_expected.to_not be_nil }
+      it { is_expected.to be_requested }
+    end
+  end
+
+  describe "professional standing request timeline event" do
+    it "doesn't record a timeline event" do
+      expect { call }.to_not have_recorded_timeline_event(
+        :requestable_requested,
+      )
+    end
+
+    context "when teaching authority provides the written statement" do
+      before do
+        region.update!(teaching_authority_provides_written_statement: true)
+      end
+
+      it "records a timeline event" do
+        expect { call }.to have_recorded_timeline_event(:requestable_requested)
+      end
+    end
+  end
+
   describe "sending application received email" do
     it "queues an email job" do
       expect { call }.to have_enqueued_mail(
