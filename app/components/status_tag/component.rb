@@ -24,9 +24,6 @@ module StatusTag
       awarded: "green",
       awarded_pending_checks: "turquoise",
       cannot_start: "grey",
-      completed: {
-        assessor: "green",
-      },
       declined: "red",
       draft: "grey",
       expired: "pink",
@@ -38,6 +35,7 @@ module StatusTag
       received: "purple",
       requested: "yellow",
       submitted: "grey",
+      valid: "green",
       waiting_on: "yellow",
     }.freeze
 

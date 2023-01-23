@@ -18,6 +18,7 @@ en:
       submitted:
         assessor: Not started
         teacher: Submitted
+      valid: Valid
       waiting_on: Waiting on
 
     timeline_entry:
