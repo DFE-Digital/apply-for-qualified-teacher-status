@@ -9,11 +9,20 @@ class ApplicationFormStatusUpdater
   end
 
   def call
-    return if application_form.state == new_state
-
     old_state = application_form.state
 
     ActiveRecord::Base.transaction do
+      application_form.update!(
+        waiting_on_professional_standing:,
+        received_professional_standing:,
+        waiting_on_further_information:,
+        received_further_information:,
+        waiting_on_reference:,
+        received_reference:,
+      )
+
+      next if old_state == new_state
+
       application_form.update!(state: new_state)
       create_timeline_event(old_state:, new_state:)
     end
@@ -22,6 +31,30 @@ class ApplicationFormStatusUpdater
   private
 
   attr_reader :application_form, :user
+
+  def waiting_on_professional_standing
+    waiting_on?(requestables: professional_standing_requests)
+  end
+
+  def received_professional_standing
+    received?(requestables: professional_standing_requests)
+  end
+
+  def waiting_on_further_information
+    waiting_on?(requestables: further_information_requests)
+  end
+
+  def received_further_information
+    received?(requestables: further_information_requests)
+  end
+
+  def waiting_on_reference
+    waiting_on?(requestables: reference_requests)
+  end
+
+  def received_reference
+    received?(requestables: reference_requests)
+  end
 
   def new_state
     @new_state ||=
@@ -33,10 +66,12 @@ class ApplicationFormStatusUpdater
         "awarded"
       elsif dqt_trn_request.present?
         "awarded_pending_checks"
-      elsif further_information_request&.received?
-        "received"
-      elsif further_information_request&.requested?
+      elsif waiting_on_professional_standing ||
+            waiting_on_further_information || waiting_on_reference
         "waiting_on"
+      elsif received_professional_standing || received_further_information ||
+            received_reference
+        "received"
       elsif assessment&.started?
         "initial_assessment"
       elsif application_form.submitted_at.present?
@@ -48,8 +83,25 @@ class ApplicationFormStatusUpdater
 
   delegate :assessment, :dqt_trn_request, :teacher, to: :application_form
 
-  def further_information_request
-    assessment&.further_information_requests&.first
+  def professional_standing_requests
+    @professional_standing_requests ||= []
+  end
+
+  def further_information_requests
+    @further_information_requests ||=
+      assessment&.further_information_requests&.to_a || []
+  end
+
+  def reference_requests
+    @reference_requests ||= assessment&.reference_requests&.to_a || []
+  end
+
+  def waiting_on?(requestables:)
+    requestables.any?(&:requested?)
+  end
+
+  def received?(requestables:)
+    requestables.any?(&:received?)
   end
 
   def create_timeline_event(old_state:, new_state:)
