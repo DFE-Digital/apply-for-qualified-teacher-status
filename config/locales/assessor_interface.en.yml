@@ -149,6 +149,7 @@ en:
           true:
             GB-SCT: Provisional registration
             GB-NIR: "No"
+        professional_standing_request: Third-party professional standing
 
     further_information_requests:
       edit:
