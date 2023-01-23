@@ -65,6 +65,42 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes status", "awarded_pending_checks"
     end
 
+    context "with a requested profession standing request" do
+      let(:assessment) { create(:assessment, application_form:) }
+
+      before do
+        application_form.update!(submitted_at: Time.zone.now)
+        create(:professional_standing_request, :requested, assessment:)
+      end
+
+      include_examples "changes status", "waiting_on"
+
+      it "changes waiting_on_professional_standing" do
+        expect { call }.to change(
+          application_form,
+          :waiting_on_professional_standing,
+        ).from(false).to(true)
+      end
+    end
+
+    context "with a received profession standing request" do
+      let(:assessment) { create(:assessment, application_form:) }
+
+      before do
+        application_form.update!(submitted_at: Time.zone.now)
+        create(:professional_standing_request, :received, assessment:)
+      end
+
+      include_examples "changes status", "submitted"
+
+      it "changes waiting_on_professional_standing" do
+        expect { call }.to change(
+          application_form,
+          :received_professional_standing,
+        ).from(false).to(true)
+      end
+    end
+
     context "with a received FI request" do
       let(:assessment) { create(:assessment, application_form:) }
 

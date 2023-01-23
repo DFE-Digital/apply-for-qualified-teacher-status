@@ -69,12 +69,12 @@ class ApplicationFormStatusUpdater
       elsif waiting_on_professional_standing ||
             waiting_on_further_information || waiting_on_reference
         "waiting_on"
-      elsif received_professional_standing || received_further_information ||
-            received_reference
+      elsif received_further_information || received_reference
         "received"
       elsif assessment&.started?
         "initial_assessment"
-      elsif application_form.submitted_at.present?
+      elsif application_form.submitted_at.present? ||
+            received_professional_standing
         "submitted"
       else
         "draft"
@@ -84,7 +84,9 @@ class ApplicationFormStatusUpdater
   delegate :assessment, :dqt_trn_request, :teacher, to: :application_form
 
   def professional_standing_requests
-    @professional_standing_requests ||= []
+    @professional_standing_requests ||= [
+      assessment&.professional_standing_request,
+    ].compact
   end
 
   def further_information_requests
