@@ -50,6 +50,10 @@ class Assessment < ApplicationRecord
               in: recommendations.values,
             }
 
+  def started?
+    sections.any? { |section| section.state != :not_started }
+  end
+
   def finished?
     sections_finished? && (award? || decline?)
   end

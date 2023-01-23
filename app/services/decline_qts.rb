@@ -13,12 +13,7 @@ class DeclineQTS
 
     ActiveRecord::Base.transaction do
       application_form.update!(declined_at: Time.zone.now)
-
-      ChangeApplicationFormState.call(
-        application_form:,
-        user:,
-        new_state: "declined",
-      )
+      ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
     TeacherMailer.with(teacher:).application_declined.deliver_later

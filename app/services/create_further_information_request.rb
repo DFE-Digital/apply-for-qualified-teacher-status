@@ -11,18 +11,17 @@ class CreateFurtherInformationRequest
   def call
     further_information_request =
       ActiveRecord::Base.transaction do
-        ChangeApplicationFormState.call(
-          application_form:,
-          user:,
-          new_state: "waiting_on",
-        )
+        request =
+          assessment.further_information_requests.create!(
+            items:
+              FurtherInformationRequestItemsFactory.call(
+                assessment_sections: assessment.sections,
+              ),
+          )
 
-        assessment.further_information_requests.create!(
-          items:
-            FurtherInformationRequestItemsFactory.call(
-              assessment_sections: assessment.sections,
-            ),
-        )
+        ApplicationFormStatusUpdater.call(application_form:, user:)
+
+        request
       end
 
     TeacherMailer.with(teacher:).further_information_requested.deliver_later

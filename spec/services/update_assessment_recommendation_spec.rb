@@ -12,10 +12,6 @@ RSpec.describe UpdateAssessmentRecommendation do
     described_class.call(assessment:, user:, new_recommendation:)
   end
 
-  before do
-    allow(CreateDQTTRNRequest).to receive(:call).with(application_form:)
-  end
-
   describe "assessment recommendation" do
     subject(:recommendation) { assessment.recommendation }
 

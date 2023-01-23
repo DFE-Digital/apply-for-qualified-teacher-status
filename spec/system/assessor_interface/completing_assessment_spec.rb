@@ -143,7 +143,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
         "https://test-teacher-qualifications-api.education.gov.uk/v2/trn-requests/{request_id}",
       )
     stub_request(:put, uri_template).to_return(
-      body: '{"trn": "abcdef"}',
+      body: '{"trn": "abcdef", "potential_duplicate": false}',
       headers: {
         "Content-Type" => "application/json",
       },

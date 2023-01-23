@@ -32,6 +32,12 @@ FactoryBot.define do
   factory :assessment do
     association :application_form, :submitted
 
+    trait :started do
+      after(:create) do |assessment, _evaluator|
+        create(:assessment_section, :passed, assessment:)
+      end
+    end
+
     trait :award do
       recommendation { "award" }
       recommended_at { Time.zone.now }

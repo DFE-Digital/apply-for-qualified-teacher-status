@@ -30,10 +30,10 @@ class UpdateAssessmentSection
 
       next false unless assessment_section.update(params)
 
-      update_application_form_state
       update_application_form_assessor
       create_timeline_event(old_state:)
       update_assessment_started_at
+      update_application_form_state
 
       true
     end
@@ -45,16 +45,6 @@ class UpdateAssessmentSection
 
   delegate :assessment, to: :assessment_section
   delegate :application_form, to: :assessment
-
-  def update_application_form_state
-    if application_form.submitted?
-      ChangeApplicationFormState.call(
-        application_form:,
-        user:,
-        new_state: "initial_assessment",
-      )
-    end
-  end
 
   def update_application_form_assessor
     if application_form.assessor.nil?
@@ -83,5 +73,9 @@ class UpdateAssessmentSection
   def update_assessment_started_at
     return if assessment.started_at
     assessment.update!(started_at: Time.zone.now)
+  end
+
+  def update_application_form_state
+    ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 end

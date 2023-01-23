@@ -76,8 +76,10 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "doesn't change the state" do
-          expect(ChangeApplicationFormState).to_not receive(:call)
-          perform_rescue_exception
+          expect { perform_rescue_exception }.to_not change(
+            application_form,
+            :state,
+          )
         end
 
         it "raises the error" do
@@ -109,12 +111,9 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "changes the state" do
-          expect(ChangeApplicationFormState).to receive(:call).with(
-            application_form:,
-            user: "DQT",
-            new_state: "potential_duplicate_in_dqt",
+          expect { perform }.to change(application_form, :state).to(
+            "potential_duplicate_in_dqt",
           )
-          perform
         end
 
         it "queues another job" do
@@ -185,8 +184,10 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "doesn't change the state" do
-          expect(ChangeApplicationFormState).to_not receive(:call)
-          perform_rescue_exception
+          expect { perform_rescue_exception }.to_not change(
+            application_form,
+            :state,
+          )
         end
 
         it "raises the error" do
@@ -221,12 +222,9 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "changes the state" do
-          expect(ChangeApplicationFormState).to receive(:call).with(
-            application_form:,
-            user: "DQT",
-            new_state: "potential_duplicate_in_dqt",
+          expect { perform }.to change(application_form, :state).to(
+            "potential_duplicate_in_dqt",
           )
-          perform
         end
 
         it "queues another job" do
@@ -258,8 +256,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
       end
 
       it "doesn't change the state" do
-        expect(ChangeApplicationFormState).to_not receive(:call)
-        perform
+        expect { perform }.to_not change(application_form, :state)
       end
 
       it "doesn't queue another job" do

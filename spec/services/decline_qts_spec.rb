@@ -19,12 +19,7 @@ RSpec.describe DeclineQTS do
     end
 
     it "changes the status" do
-      expect(ChangeApplicationFormState).to receive(:call).with(
-        application_form:,
-        user:,
-        new_state: "declined",
-      )
-      call
+      expect { call }.to change(application_form, :state).to("declined")
     end
 
     it "sets the declined at date" do
@@ -47,8 +42,7 @@ RSpec.describe DeclineQTS do
     end
 
     it "doesn't change the status" do
-      expect(ChangeApplicationFormState).to_not receive(:call)
-      call
+      expect { call }.to_not change(application_form, :state)
     end
 
     it "doesn't change the declined at date" do

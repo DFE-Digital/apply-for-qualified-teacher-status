@@ -17,7 +17,7 @@ class TeacherInterface::BaseForm
 
   def update_application_form_status
     if respond_to?(:application_form) && !application_form.nil?
-      ApplicationFormStatusUpdater.call(application_form:)
+      ApplicationFormSectionStatusUpdater.call(application_form:)
     end
   end
 end
