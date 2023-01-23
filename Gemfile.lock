@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/govuk_feature_flags.git
-  revision: 01453acc2851022d2e112294101ffebef5ccde52
+  revision: 9eb0b32225a7dbcd33204343ef8a2a05bfeffcd0
   specs:
     govuk_feature_flags (0.1.0)
       rails (>= 7.0.4)
@@ -352,7 +352,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.4)
+    rails-html-sanitizer (1.5.0)
       loofah (~> 2.19, >= 2.19.1)
     railties (7.0.4.1)
       actionpack (= 7.0.4.1)
