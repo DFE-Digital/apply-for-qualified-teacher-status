@@ -7,7 +7,7 @@ class SubmitApplicationForm
   end
 
   def call
-    return if application_form.submitted?
+    return if application_form.submitted_at.present?
 
     application_form.subjects.compact_blank!
     application_form.submitted_at = Time.zone.now
