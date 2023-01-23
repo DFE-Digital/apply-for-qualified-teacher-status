@@ -41,7 +41,10 @@ DELETE FROM "dqt_trn_requests";
 -- no update required
 
 -- Features
--- no update required
+-- make sure the service open flag defaults to off
+UPDATE "feature_flags_features"
+  SET active = false 
+  WHERE name like 'service_open';
 
 -- FurtherInformationRequestItem
 UPDATE "further_information_request_items"
@@ -71,6 +74,9 @@ SET
 -- Region
 -- no update required
 
+-- ReferenceRequest
+-- no update required
+
 -- ReminderEmail
 -- no update required
 
@@ -78,13 +84,12 @@ SET
 DELETE FROM "sessions";
 
 -- Staff
-DELETE FROM staff;
+DELETE FROM "staff";
 
 -- Teacher
 UPDATE "teachers"
 SET
   email = CASE WHEN email IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END,
-  unconfirmed_email = CASE WHEN unconfirmed_email IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END,
   current_sign_in_ip = '0.0.0.0',
   last_sign_in_ip = '0.0.0.0';
 
