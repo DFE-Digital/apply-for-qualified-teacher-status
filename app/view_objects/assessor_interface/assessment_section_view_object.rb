@@ -20,7 +20,7 @@ module AssessorInterface
     end
 
     delegate :assessment, to: :assessment_section
-    delegate :application_form, to: :assessment
+    delegate :application_form, :professional_standing_request, to: :assessment
     delegate :registration_number, to: :application_form
     delegate :checks, to: :assessment_section
     delegate :region, :country, to: :application_form

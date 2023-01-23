@@ -51,6 +51,20 @@
                application_form: @assessment_section_view_object.application_form,
                changeable: false %>
   <% end %>
+
+  <% if (professional_standing_request = @assessment_section_view_object.professional_standing_request).present? %>
+    <%= render(CheckYourAnswersSummary::Component.new(
+      id: "professional-standing-request",
+      model: professional_standing_request,
+      title: t(".professional_standing_request"),
+      fields: {
+        note: {
+          title: "Written statement",
+          value: "<p class=\"govuk-body\">The competent authority has sent the letter of professional standing directly to the TRA. Follow the instructions below to locate it.</p>#{simple_format(professional_standing_request.note)}".html_safe,
+        },
+      },
+    )) %>
+  <% end %>
 <% end %>
 
 <% if @assessment_section_view_object.application_form.created_under_new_regulations? && @assessment_section_view_object.work_history? %>
