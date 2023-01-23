@@ -2,17 +2,17 @@ en:
   components:
     status_tag:
       awarded: Awarded
-      awarded_pending_checks: Awarded pending checks
+      awarded_pending_checks: Award pending
       cannot_start: Cannot start
       completed: Completed
       declined: Declined
       draft: Draft
       expired: Expired
       in_progress: In progress
-      initial_assessment: Initial assessment
+      initial_assessment: Assessment in progress
       invalid: Invalid
       not_started: Not started
-      potential_duplicate_in_dqt: Potential duplicate in DQT
+      potential_duplicate_in_dqt: Potential duplication in DQT
       received: Received
       requested: Waiting on
       submitted:

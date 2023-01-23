@@ -22,7 +22,7 @@ module StatusTag
 
     COLOURS = {
       awarded: "green",
-      awarded_pending_checks: "green",
+      awarded_pending_checks: "turquoise",
       cannot_start: "grey",
       completed: {
         assessor: "green",
@@ -34,7 +34,7 @@ module StatusTag
       initial_assessment: "blue",
       invalid: "red",
       not_started: "grey",
-      potential_duplicate_in_dqt: "red",
+      potential_duplicate_in_dqt: "pink",
       received: "purple",
       requested: "yellow",
       submitted: "grey",
