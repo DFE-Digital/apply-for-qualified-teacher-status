@@ -49,7 +49,7 @@ class PersonasController < ApplicationController
     %w[online written none]
       .product(
         %w[online written none],
-        %w[draft submitted further_information_requested awarded declined],
+        %w[draft submitted waiting_on awarded declined],
         [true, false],
       )
       .tap { |personas| personas.insert(2, *personas.slice!(8, 2)) }

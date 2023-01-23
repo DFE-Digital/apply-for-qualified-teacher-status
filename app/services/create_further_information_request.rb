@@ -14,7 +14,7 @@ class CreateFurtherInformationRequest
         ChangeApplicationFormState.call(
           application_form:,
           user:,
-          new_state: :further_information_requested,
+          new_state: "waiting_on",
         )
 
         assessment.further_information_requests.create!(

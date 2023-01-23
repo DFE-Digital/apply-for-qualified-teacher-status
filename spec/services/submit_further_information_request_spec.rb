@@ -31,11 +31,8 @@ RSpec.describe SubmitFurtherInformationRequest do
     ).to(true)
   end
 
-  it "changes the application form state to further information received" do
-    expect { call }.to change(
-      application_form,
-      :further_information_received?,
-    ).from(false).to(true)
+  it "changes the application form state to received" do
+    expect { call }.to change(application_form, :received?).from(false).to(true)
   end
 
   it "changes the further information request received at" do
@@ -66,7 +63,7 @@ RSpec.describe SubmitFurtherInformationRequest do
       it "sets the attributes correctly" do
         expect(timeline_event.creator).to eq(user)
         expect(timeline_event.old_state).to eq("submitted")
-        expect(timeline_event.new_state).to eq("further_information_received")
+        expect(timeline_event.new_state).to eq("received")
       end
     end
   end

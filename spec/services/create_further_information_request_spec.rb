@@ -35,7 +35,7 @@ RSpec.describe CreateFurtherInformationRequest do
     context "after calling the service" do
       before { call }
 
-      it { is_expected.to eq("further_information_requested") }
+      it { is_expected.to eq("waiting_on") }
     end
   end
 

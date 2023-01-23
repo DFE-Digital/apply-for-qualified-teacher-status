@@ -37,9 +37,10 @@ module StatusTag
       initial_assessment: "blue",
       not_started: "grey",
       potential_duplicate_in_dqt: "red",
-      received: "purple",
-      requested: "yellow",
+      received: "yellow",
+      requested: "purple",
       submitted: "grey",
+      waiting_on: "purple",
     }.freeze
 
     def colour
