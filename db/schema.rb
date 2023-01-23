@@ -168,6 +168,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_20_100710) do
     t.string "state", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "potential_duplicate"
     t.index ["application_form_id"], name: "index_dqt_trn_requests_on_application_form_id"
   end
 

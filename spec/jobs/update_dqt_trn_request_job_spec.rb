@@ -25,8 +25,14 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "marks the request as complete" do
-          perform
-          expect(dqt_trn_request.reload.state).to eq("complete")
+          expect { perform }.to change(dqt_trn_request, :complete?).to(true)
+        end
+
+        it "sets potential duplicate" do
+          expect { perform }.to change(
+            dqt_trn_request,
+            :potential_duplicate,
+          ).to(false)
         end
 
         it "awards QTS" do
@@ -51,8 +57,17 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "leaves the request as initial" do
-          perform_rescue_exception
-          expect(dqt_trn_request.reload.state).to eq("initial")
+          expect { perform_rescue_exception }.to_not change(
+            dqt_trn_request,
+            :state,
+          )
+        end
+
+        it "leaves the potential duplicate" do
+          expect { perform_rescue_exception }.to_not change(
+            dqt_trn_request,
+            :potential_duplicate,
+          )
         end
 
         it "doesn't award QTS" do
@@ -78,8 +93,14 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "marks the request as pending" do
-          perform
-          expect(dqt_trn_request.reload.state).to eq("pending")
+          expect { perform }.to change(dqt_trn_request, :pending?).to(true)
+        end
+
+        it "sets potential duplicate" do
+          expect { perform }.to change(
+            dqt_trn_request,
+            :potential_duplicate,
+          ).to(true)
         end
 
         it "doesn't award QTS" do
@@ -113,8 +134,14 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "marks the request as complete" do
-          perform
-          expect(dqt_trn_request.reload.state).to eq("complete")
+          expect { perform }.to change(dqt_trn_request, :complete?).to(true)
+        end
+
+        it "sets potential duplicate" do
+          expect { perform }.to change(
+            dqt_trn_request,
+            :potential_duplicate,
+          ).to(false)
         end
 
         it "awards QTS" do
@@ -139,8 +166,17 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "leaves the request as pending" do
-          perform_rescue_exception
-          expect(dqt_trn_request.reload.state).to eq("pending")
+          expect { perform_rescue_exception }.to_not change(
+            dqt_trn_request,
+            :state,
+          )
+        end
+
+        it "leaves the potential duplicate" do
+          expect { perform_rescue_exception }.to_not change(
+            dqt_trn_request,
+            :potential_duplicate,
+          )
         end
 
         it "doesn't award QTS" do
@@ -165,9 +201,18 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           )
         end
 
-        it "marks the request as pending" do
-          perform
-          expect(dqt_trn_request.reload.state).to eq("pending")
+        it "leaves the request as pending" do
+          expect { perform_rescue_exception }.to_not change(
+            dqt_trn_request,
+            :state,
+          )
+        end
+
+        it "sets potential duplicate" do
+          expect { perform }.to change(
+            dqt_trn_request,
+            :potential_duplicate,
+          ).to(true)
         end
 
         it "doesn't award QTS" do
@@ -193,9 +238,18 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
     context "with a complete request" do
       let(:dqt_trn_request) { create(:dqt_trn_request, :complete) }
 
-      it "leaves the request as complete" do
-        perform
-        expect(dqt_trn_request.reload.state).to eq("complete")
+      it "leaves the request as pending" do
+        expect { perform_rescue_exception }.to_not change(
+          dqt_trn_request,
+          :state,
+        )
+      end
+
+      it "leaves the potential duplicate" do
+        expect { perform_rescue_exception }.to_not change(
+          dqt_trn_request,
+          :potential_duplicate,
+        )
       end
 
       it "doesn't award QTS" do

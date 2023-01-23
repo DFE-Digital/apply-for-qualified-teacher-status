@@ -125,6 +125,7 @@
     - application_form_id
     - request_id
     - state
+    - potential_duplicate
     - created_at
     - updated_at
   :eligibility_checks:
