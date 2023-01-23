@@ -23,7 +23,7 @@ module StatusTag
     COLOURS = {
       awarded: "green",
       awarded_pending_checks: "green",
-      cannot_start_yet: "grey",
+      cannot_start: "grey",
       completed: {
         assessor: "green",
       },

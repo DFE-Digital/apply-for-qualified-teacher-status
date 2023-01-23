@@ -3,7 +3,7 @@ en:
     status_tag:
       awarded: Awarded
       awarded_pending_checks: Awarded pending checks
-      cannot_start_yet: Cannot start yet
+      cannot_start: Cannot start
       completed: Completed
       declined: Declined
       draft: Draft

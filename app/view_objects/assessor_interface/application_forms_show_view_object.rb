@@ -65,13 +65,13 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :submitted_details
       assessment.sections.find { |s| s.key == item.to_s }.state
     when :recommendation
-      return :cannot_start_yet unless assessment.sections_finished?
+      return :cannot_start unless assessment.sections_finished?
       return :not_started if assessment.unknown?
       return :in_progress if assessment_editable?
       :completed
     when :further_information
       further_information_request = further_information_requests[index]
-      return :cannot_start_yet if further_information_request.requested?
+      return :cannot_start if further_information_request.requested?
       return :not_started if further_information_request.passed.nil?
       return :in_progress if assessment.request_further_information?
       :completed
