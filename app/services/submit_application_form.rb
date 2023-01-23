@@ -9,13 +9,17 @@ class SubmitApplicationForm
   def call
     return if application_form.submitted_at.present?
 
-    application_form.subjects.compact_blank!
-    application_form.submitted_at = Time.zone.now
-    application_form.working_days_since_submission = 0
+    ActiveRecord::Base.transaction do
+      application_form.subjects.compact_blank!
+      application_form.submitted_at = Time.zone.now
+      application_form.working_days_since_submission = 0
 
-    ApplicationFormStatusUpdater.call(application_form:, user:)
+      assessment = AssessmentFactory.call(application_form:)
 
-    AssessmentFactory.call(application_form:)
+      create_professional_standing_request(assessment)
+
+      ApplicationFormStatusUpdater.call(application_form:, user:)
+    end
 
     TeacherMailer
       .with(teacher: application_form.teacher)
@@ -35,4 +39,17 @@ class SubmitApplicationForm
   attr_reader :application_form, :user
 
   delegate :region, to: :application_form
+
+  def create_professional_standing_request(assessment)
+    return unless region.teaching_authority_provides_written_statement
+
+    requestable = ProfessionalStandingRequest.create!(assessment:)
+
+    TimelineEvent.create!(
+      event_type: "requestable_requested",
+      application_form:,
+      creator: user,
+      requestable:,
+    )
+  end
 end
