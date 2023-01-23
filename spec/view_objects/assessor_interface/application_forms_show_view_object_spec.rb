@@ -35,6 +35,18 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     let(:params) { { id: application_form.id } }
 
+    describe "pre-assessment tasks" do
+      subject(:pre_assessment_tasks) { assessment_tasks[:pre_assessment_tasks] }
+
+      it { is_expected.to be_nil }
+
+      context "with a professional standing request" do
+        before { create(:professional_standing_request, assessment:) }
+
+        it { is_expected.to eq(%i[professional_standing_request]) }
+      end
+    end
+
     describe "submitted details" do
       subject(:submitted_details) { assessment_tasks.fetch(:submitted_details) }
 
@@ -91,6 +103,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     let(:params) { { id: application_form.id } }
 
     let(:index) { 0 }
+
+    context "with pre-assessment tasks section" do
+      let(:section) { :pre_assessment_tasks }
+      let(:item) { :professional_standing }
+
+      it { is_expected.to be_nil }
+    end
 
     context "with submitted details section" do
       let(:section) { :submitted_details }

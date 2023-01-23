@@ -13,9 +13,11 @@ en:
       show:
         assessment_tasks:
           sections:
+            pre_assessment_tasks: Pre-assessment tasks
             submitted_details: Check submitted details
             recommendation: Your recommendation
           items:
+            professional_standing_request: Awaiting third-party professional standing
             personal_information: Check personal information
             qualifications: Check qualifications
             age_range_subjects: Verify age range and subjects
