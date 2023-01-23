@@ -63,7 +63,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def assessment_task_status(section, item, index)
     case section
     when :submitted_details
-      assessment.sections.find { |s| s.key == item.to_s }.state
+      assessment.sections.find { |s| s.key == item.to_s }.status
     when :recommendation
       return :cannot_start unless assessment.sections_finished?
       return :not_started if assessment.unknown?

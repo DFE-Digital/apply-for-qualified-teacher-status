@@ -53,7 +53,7 @@ class AssessmentSection < ApplicationRecord
     !passed.nil?
   end
 
-  def state
+  def status
     finished? ? :completed : :not_started
   end
 
