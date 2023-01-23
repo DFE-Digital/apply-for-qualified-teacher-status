@@ -41,6 +41,7 @@ Rails.application.routes.draw do
                   path: "/sections",
                   param: :key,
                   only: %i[show update]
+
         resources :further_information_requests,
                   path: "/further-information-requests",
                   only: %i[new create show edit update] do
@@ -48,6 +49,10 @@ Rails.application.routes.draw do
               to: "further_information_requests#preview",
               on: :collection
         end
+
+        resource :professional_standing_request,
+                 path: "/professional-standing-request",
+                 only: %i[edit update]
       end
     end
   end

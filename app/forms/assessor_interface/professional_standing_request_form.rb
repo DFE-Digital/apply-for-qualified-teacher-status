@@ -30,7 +30,7 @@ class AssessorInterface::ProfessionalStandingRequestForm
     true
   end
 
-  delegate :application_form, to: :professional_standing_request
+  delegate :application_form, :assessment, to: :professional_standing_request
 
   private
 
