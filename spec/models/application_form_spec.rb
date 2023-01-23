@@ -87,8 +87,6 @@ RSpec.describe ApplicationForm, type: :model do
         draft: "draft",
         submitted: "submitted",
         initial_assessment: "initial_assessment",
-        further_information_requested: "further_information_requested",
-        further_information_received: "further_information_received",
         waiting_on: "waiting_on",
         received: "received",
         awarded: "awarded",
