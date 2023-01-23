@@ -33,6 +33,7 @@ namespace :example_data do
     TimelineEvent.delete_all
     DQTTRNRequest.delete_all
     ReminderEmail.delete_all
+    ProfessionalStandingRequest.delete_all
     ReferenceRequest.delete_all
     FurtherInformationRequest.delete_all
     SelectedFailureReason.delete_all
@@ -148,13 +149,21 @@ def create_application_forms(new_regs:)
       assessment = AssessmentFactory.call(application_form:)
 
       if application_form.waiting_on?
-        FactoryBot.create(
-          :further_information_request,
-          :requested,
-          :with_items,
-          assessment:,
-        )
-      elsif (work_history = assessment.application_form.work_histories.first) &&
+        if application_form.needs_written_statement && rand(2).zero?
+          FactoryBot.create(
+            :professional_standing_request,
+            :requested,
+            assessment:,
+          )
+        else
+          FactoryBot.create(
+            :further_information_request,
+            :requested,
+            :with_items,
+            assessment:,
+          )
+        end
+      elsif (work_history = application_form.work_histories.first) &&
             rand(2).zero?
         reference_request_trait = ReferenceRequest.states.keys.sample
         FactoryBot.create(
