@@ -21,7 +21,6 @@ module StatusTag
     end
 
     COLOURS = {
-      action_required: "red",
       awarded: "green",
       awarded_pending_checks: "green",
       cannot_start_yet: "grey",
@@ -33,6 +32,7 @@ module StatusTag
       expired: "red",
       in_progress: "blue",
       initial_assessment: "blue",
+      invalid: "red",
       not_started: "grey",
       potential_duplicate_in_dqt: "red",
       received: "yellow",

@@ -75,7 +75,7 @@ RSpec.describe AssessmentSection, type: :model do
 
     context "with a failed assessment" do
       before { assessment_section.passed = false }
-      it { is_expected.to eq(:action_required) }
+      it { is_expected.to eq(:completed) }
     end
 
     context "with no assessment yet" do

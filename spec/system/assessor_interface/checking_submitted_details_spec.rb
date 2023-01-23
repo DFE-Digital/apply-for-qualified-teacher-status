@@ -30,7 +30,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
     when_i_choose_check_personal_information_no
     then_i_see_the(:assessor_application_page, application_id:)
-    and_i_see_check_personal_information_action_required
+    and_i_see_check_personal_information_completed
   end
 
   it "allows passing the qualifications" do
@@ -56,7 +56,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
     when_i_choose_check_qualifications_no
     then_i_see_the(:assessor_application_page, application_id:)
-    and_i_see_check_qualifications_action_required
+    and_i_see_check_qualifications_completed
   end
 
   it "allows passing the age range and subjects" do
@@ -86,7 +86,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_fill_in_subjects
     and_i_choose_verify_age_range_subjects_no
     then_i_see_the(:assessor_application_page, application_id:)
-    and_i_see_verify_age_range_subjects_action_required
+    and_i_see_verify_age_range_subjects_completed
   end
 
   it "allows passing the work history" do
@@ -104,7 +104,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
     when_i_choose_check_work_history_no
     then_i_see_the(:assessor_application_page, application_id:)
-    and_i_see_check_work_history_action_required
+    and_i_see_check_work_history_completed
   end
 
   it "allows passing the professional standing" do
@@ -130,7 +130,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
     when_i_choose_check_professional_standing_no
     then_i_see_the(:assessor_application_page, application_id:)
-    and_i_see_check_professional_standing_action_required
+    and_i_see_check_professional_standing_completed
   end
 
   it "allows passing the professional standing without work history" do
@@ -203,12 +203,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
     check_personal_information_page.form.continue_button.click
   end
 
-  def and_i_see_check_personal_information_action_required
-    expect(
-      assessor_application_page.personal_information_task.status_tag.text,
-    ).to eq("ACTION REQUIRED")
-  end
-
   def then_i_see_the_qualifications
     teaching_qualification =
       application_form.qualifications.find(&:is_teaching_qualification?)
@@ -240,12 +234,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
   def and_i_see_check_qualifications_completed
     expect(assessor_application_page.qualifications_task.status_tag.text).to eq(
       "COMPLETED",
-    )
-  end
-
-  def and_i_see_check_qualifications_action_required
-    expect(assessor_application_page.qualifications_task.status_tag.text).to eq(
-      "ACTION REQUIRED",
     )
   end
 
@@ -297,12 +285,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
     ).to eq("COMPLETED")
   end
 
-  def and_i_see_verify_age_range_subjects_action_required
-    expect(
-      assessor_application_page.age_range_subjects_task.status_tag.text,
-    ).to eq("ACTION REQUIRED")
-  end
-
   def then_i_see_the_work_history
     most_recent_role = application_form.work_histories.first
     expect(check_work_history_page.most_recent_role.school_name.text).to eq(
@@ -334,12 +316,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
       .failure_reason_note_textareas
       .first.fill_in with: "Note."
     check_work_history_page.form.continue_button.click
-  end
-
-  def and_i_see_check_work_history_action_required
-    expect(assessor_application_page.work_history_task.status_tag.text).to eq(
-      "ACTION REQUIRED",
-    )
   end
 
   def then_i_see_the_professional_standing
@@ -385,12 +361,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
       .failure_reason_note_textareas
       .first.fill_in with: "Note."
     check_professional_standing_page.form.continue_button.click
-  end
-
-  def and_i_see_check_professional_standing_action_required
-    expect(
-      assessor_application_page.professional_standing_task.status_tag.text,
-    ).to eq("ACTION REQUIRED")
   end
 
   def application_form

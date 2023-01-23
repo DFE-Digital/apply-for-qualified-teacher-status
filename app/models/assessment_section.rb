@@ -49,9 +49,12 @@ class AssessmentSection < ApplicationRecord
             absence: true,
             if: -> { passed || passed.nil? }
 
+  def finished?
+    !passed.nil?
+  end
+
   def state
-    return :not_started if passed.nil?
-    passed ? :completed : :action_required
+    finished? ? :completed : :not_started
   end
 
   def declines_assessment?
