@@ -4,6 +4,8 @@ module Requestable
   extend ActiveSupport::Concern
 
   included do
+    belongs_to :assessment
+
     enum :state,
          { requested: "requested", received: "received", expired: "expired" },
          default: "requested"

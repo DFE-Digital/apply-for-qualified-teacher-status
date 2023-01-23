@@ -20,7 +20,6 @@
 class FurtherInformationRequest < ApplicationRecord
   include Requestable
 
-  belongs_to :assessment
   has_many :items,
            class_name: "FurtherInformationRequestItem",
            inverse_of: :further_information_request,
