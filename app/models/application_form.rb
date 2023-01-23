@@ -28,6 +28,9 @@
 #  needs_written_statement                       :boolean          not null
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualifications_status                         :string           default("not_started"), not null
+#  received_further_information                  :boolean          default(FALSE), not null
+#  received_professional_standing                :boolean          default(FALSE), not null
+#  received_reference                            :boolean          default(FALSE), not null
 #  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
@@ -37,6 +40,9 @@
 #  subjects_status                               :string           default("not_started"), not null
 #  submitted_at                                  :datetime
 #  teaching_authority_provides_written_statement :boolean          default(FALSE), not null
+#  waiting_on_further_information                :boolean          default(FALSE), not null
+#  waiting_on_professional_standing              :boolean          default(FALSE), not null
+#  waiting_on_reference                          :boolean          default(FALSE), not null
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
