@@ -74,6 +74,13 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes status", "received"
+
+      it "changes received_further_information" do
+        expect { call }.to change(
+          application_form,
+          :received_further_information,
+        ).from(false).to(true)
+      end
     end
 
     context "with a requested FI request" do
@@ -85,6 +92,47 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes status", "waiting_on"
+
+      it "changes waiting_on_further_information" do
+        expect { call }.to change(
+          application_form,
+          :waiting_on_further_information,
+        ).from(false).to(true)
+      end
+    end
+
+    context "with a received reference request" do
+      let(:assessment) { create(:assessment, application_form:) }
+
+      before do
+        application_form.update!(submitted_at: Time.zone.now)
+        create(:reference_request, :received, assessment:)
+      end
+
+      include_examples "changes status", "received"
+
+      it "changes received_reference" do
+        expect { call }.to change(application_form, :received_reference).from(
+          false,
+        ).to(true)
+      end
+    end
+
+    context "with a requested reference request" do
+      let(:assessment) { create(:assessment, application_form:) }
+
+      before do
+        application_form.update!(submitted_at: Time.zone.now)
+        create(:reference_request, :requested, assessment:)
+      end
+
+      include_examples "changes status", "waiting_on"
+
+      it "changes waiting_on_reference" do
+        expect { call }.to change(application_form, :waiting_on_reference).from(
+          false,
+        ).to(true)
+      end
     end
 
     context "with a started assessment" do
