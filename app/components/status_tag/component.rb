@@ -29,7 +29,7 @@ module StatusTag
       },
       declined: "red",
       draft: "grey",
-      expired: "red",
+      expired: "pink",
       in_progress: "blue",
       initial_assessment: "blue",
       invalid: "red",

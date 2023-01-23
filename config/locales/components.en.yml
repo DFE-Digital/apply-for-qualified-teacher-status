@@ -7,7 +7,7 @@ en:
       completed: Completed
       declined: Declined
       draft: Draft
-      expired: Expired
+      expired: Overdue
       in_progress: In progress
       initial_assessment: Assessment in progress
       invalid: Invalid
