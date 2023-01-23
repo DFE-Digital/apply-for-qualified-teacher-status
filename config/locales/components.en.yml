@@ -14,7 +14,7 @@ en:
       not_started: Not started
       potential_duplicate_in_dqt: Potential duplicate in DQT
       received: Received
-      requested: Requested
+      requested: Waiting on
       submitted:
         assessor: Not started
         teacher: Submitted

@@ -35,10 +35,10 @@ module StatusTag
       invalid: "red",
       not_started: "grey",
       potential_duplicate_in_dqt: "red",
-      received: "yellow",
-      requested: "purple",
+      received: "purple",
+      requested: "yellow",
       submitted: "grey",
-      waiting_on: "purple",
+      waiting_on: "yellow",
     }.freeze
 
     def colour
