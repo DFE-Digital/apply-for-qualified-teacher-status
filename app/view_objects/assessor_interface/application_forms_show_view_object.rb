@@ -47,7 +47,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def assessment_task_path(section, item, index)
     case section
     when :pre_assessment_tasks
-      nil
+      url_helpers.edit_assessor_interface_application_form_professional_standing_request_path(
+        application_form,
+      )
     when :submitted_details
       return nil unless professional_standing_request_received?
 

@@ -26,10 +26,6 @@ module AssessorInterface
 
     private
 
-    def authorize_note
-      authorize :note
-    end
-
     def application_form
       @application_form ||= ApplicationForm.find(params[:application_form_id])
     end

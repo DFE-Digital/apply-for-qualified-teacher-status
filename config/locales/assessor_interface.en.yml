@@ -155,6 +155,10 @@ en:
         title: Review further information from applicant
         check_your_answers: Further information requested
 
+    professional_standing_requests:
+      edit:
+        title: Third-party professional standing – response received
+
   activemodel:
     errors:
       models:

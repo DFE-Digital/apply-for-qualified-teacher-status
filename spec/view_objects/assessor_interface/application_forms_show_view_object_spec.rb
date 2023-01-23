@@ -108,7 +108,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       let(:section) { :pre_assessment_tasks }
       let(:item) { :professional_standing }
 
-      it { is_expected.to be_nil }
+      it do
+        is_expected.to eq(
+          "/assessor/applications/#{application_form.id}/professional-standing-request/edit",
+        )
+      end
     end
 
     context "with submitted details section" do

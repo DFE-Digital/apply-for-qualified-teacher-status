@@ -22,6 +22,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ApplicationStatus.new
   end
 
+  def assessor_edit_professional_standing_request_page
+    @assessor_edit_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::EditProfessionalStandingRequest.new
+  end
+
   def applications_page
     @applications_page ||= PageObjects::AssessorInterface::Applications.new
   end

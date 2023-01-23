@@ -30,6 +30,10 @@ Rails.application.routes.draw do
       resources :notes, only: %i[new create]
       resources :timeline_events, only: :index
 
+      resource :professional_standing_request,
+               path: "/professional-standing-request",
+               only: %i[edit update]
+
       resources :assessments, only: %i[edit update] do
         member do
           post "declare", to: "assessments#declare"
