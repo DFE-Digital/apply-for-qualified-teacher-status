@@ -15,13 +15,13 @@
     <p class="govuk-body">
       You’ll need to provide <%= region_certificate_phrase(region) %>, which you can get by contacting:
     </p>
-    <% if region.sanction_check_none? && region.status_check_written? %>
-      <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
-    <% end %>
   <% end %>
 
-    <%= render "shared/teaching_authority_contact_information", region: %>
-    
+  <%= render "shared/teaching_authority_contact_information", region: %>
+  
+  <% if region.sanction_check_none? && region.status_check_written? %>
+    <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
+  <% end %>
   <p class="govuk-body"><%= proof_of_recognition_description_for(region:) %></p>
 
   <ul class="govuk-list govuk-list--bullet">
@@ -37,6 +37,17 @@
   <% end %>
 <% end %>
 
+<% if region.sanction_check_written? %>
+  <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
+<% end %>
+
+<% if region.status_check_online? || region.sanction_check_online? %>
+  <p class="govuk-body">
+    As your education department or authority has an online register of teachers,
+    you’ll also need to provide any reference numbers we need to check your record.
+  </p>
+<% end %>
+
 <% if region.status_check_written? %>
   <% if region.teaching_authority_status_information.present? %>
     <%= raw GovukMarkdown.render(region.teaching_authority_status_information) %>
@@ -45,7 +56,6 @@
   <% if region.country.teaching_authority_status_information.present? %>
     <%= raw GovukMarkdown.render(region.country.teaching_authority_status_information) %>
   <% end %>
-
 <% end %>
 
 <% if region.sanction_check_written? %>
@@ -56,19 +66,6 @@
   <% if region.country.teaching_authority_sanction_information.present?%>
     <%= raw GovukMarkdown.render(region.country.teaching_authority_sanction_information) %>
   <% end %>
-<% end %>
-
-<% if region.sanction_check_written? %>
-  <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
-<% end %>
-
-<%= render "shared/teaching_authority_contact_information", region: %>
-
-<% if region.status_check_online? || region.sanction_check_online? %>
-  <p class="govuk-body">
-    As your education department or authority has an online register of teachers,
-    you’ll also need to provide any reference numbers we need to check your record.
-  </p>
 <% end %>
 
 <% if region.status_check_online? %>
@@ -92,6 +89,7 @@
 <% end %>
 
 <% unless FeatureFlags::FeatureFlag.active?(:application_work_history) && !region.application_form_skip_work_history %> 
+  <p class="govuk-body"><%= proof_of_recognition_description_for(region:) %></p>
   <ul class="govuk-list govuk-list--bullet">
     <li>school name</li>
     <li>school city</li>
