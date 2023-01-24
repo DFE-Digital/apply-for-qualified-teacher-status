@@ -312,6 +312,8 @@
     - mailer_action_name
     - message_subject
     - assessment_id
+    - requestable_type
+    - requestable_id
   :uploads:
     - id
     - document_id
