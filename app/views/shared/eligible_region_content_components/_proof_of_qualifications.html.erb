@@ -4,10 +4,11 @@
 <p class="govuk-body">We'll need to understand the level to which your qualifications were focussed on developing practical teaching skills.</p>
 <p class="govuk-body">For any qualifications you submit, you’ll need to provide:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>a certificate </li>
+  <li>a certificate</li>
   <li>a transcript (or diploma supplement)</li>
 </ul>
-<%= govuk_details(summary_text: "What is a trancript?") do %>
+
+<%= govuk_details(summary_text: "What is a transcript?") do %>
   <p class="govuk-body">
     A transcript is a document from the institution where you studied. It lists all the modules or subjects you studied in each year, and the marks or grades you were awarded.
     Note that you must have completed all of your teaching qualification in <%= CountryName.from_country(region.country, with_definite_article: true) %>.
