@@ -31,6 +31,7 @@ preprod:
 
 .PHONY: production
 production:
+	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval DEPLOY_ENV=production)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-production)
 	$(eval RESOURCE_NAME_PREFIX=s165p01)
@@ -156,3 +157,20 @@ deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources
 
 validate-azure-resources: set-azure-account  tags# make dev validate-azure-resources
 	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}afqtstfstate${ENV_SHORT}" "tfStorageContainerName=afqts-tfstate" "dbBackupStorageAccountName=${AZURE_BACKUP_STORAGE_ACCOUNT_NAME}" "dbBackupStorageContainerName=${AZURE_BACKUP_STORAGE_CONTAINER_NAME}" "keyVaultName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-kv" --what-if
+
+read-tf-config:
+	$(eval space=$(shell jq -r '.paas_space' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+
+enable-maintenance: read-tf-config ## make dev enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
+	cf target -s ${space}
+	cd service_unavailable_page && cf push
+	cf map-route apply-for-qts-unavailable london.cloudapps.digital --hostname apply-for-qts-in-england-${DEPLOY_ENV}
+	echo Waiting 5s for route to be registered... && sleep 5
+	cf unmap-route apply-for-qts-in-england-${DEPLOY_ENV} london.cloudapps.digital --hostname apply-for-qts-in-england-${DEPLOY_ENV}
+
+disable-maintenance: read-tf-config ## make dev disable-maintenance / make production disable-maintenance CONFIRM_PRODUCTION=y
+	cf target -s ${space}
+	cf map-route apply-for-qts-in-england-${DEPLOY_ENV} london.cloudapps.digital --hostname apply-for-qts-in-england-${DEPLOY_ENV}
+	echo Waiting 5s for route to be registered... && sleep 5
+	cf unmap-route apply-for-qts-unavailable london.cloudapps.digital --hostname apply-for-qts-in-england-${DEPLOY_ENV}
+	cf delete apply-for-qts-unavailable -r -f
