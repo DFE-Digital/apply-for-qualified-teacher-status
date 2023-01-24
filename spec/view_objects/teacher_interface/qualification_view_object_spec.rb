@@ -15,19 +15,23 @@ RSpec.describe TeacherInterface::QualificationViewObject do
         qualification.application_form.region.country.update!(
           qualifications_information: info,
         )
-        expect(view_object.qualifications_information).to eq(info)
+        expect(view_object.qualifications_information).to eq(
+          "Qualifications info",
+        )
       end
     end
 
     context "when region has qualifications information" do
-      it "returns qualifications info for the country" do
+      it "returns qualifications info for the country and the region" do
         qualification.application_form.region.country.update!(
           qualifications_information: "Country specific info",
         )
         qualification.application_form.region.update!(
           qualifications_information: info,
         )
-        expect(view_object.qualifications_information).to eq(info)
+        expect(view_object.qualifications_information).to eq(
+          "Qualifications info\n\nCountry specific info",
+        )
       end
     end
 

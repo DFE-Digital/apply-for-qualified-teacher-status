@@ -10,9 +10,9 @@ class TeacherInterface::QualificationViewObject
   def qualifications_information
     region = qualification.application_form.region
 
-    (
-      region.qualifications_information.presence ||
-        region.country.qualifications_information
-    )
+    [
+      region.qualifications_information,
+      region.country.qualifications_information,
+    ].compact_blank.join("\n\n")
   end
 end

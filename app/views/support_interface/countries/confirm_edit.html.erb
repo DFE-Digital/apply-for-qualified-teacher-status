@@ -21,7 +21,7 @@
 <% if @country.qualifications_information_changed? %>
   <h3 class="govuk-heading-s">Qualifications information</h3>
 
-  <p class="govuk-body"><%= @country.qualifications_information %></p>
+  <%= raw GovukMarkdown.render(@country.qualifications_information) %>
 <% end %>
 
 <% if @diff_actions.present? %>
