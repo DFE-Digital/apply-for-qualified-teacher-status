@@ -156,37 +156,40 @@ class AssessmentFactory
   end
 
   def english_language_proficiency_section
-    checks =
-      if application_form.english_language_exempt?
-        []
-      elsif application_form.english_language_proof_method_medium_of_instruction?
-        %i[english_language_valid_moi]
-      else
-        %i[english_language_valid_provider]
-      end
+    if application_form.created_under_new_regulations? &&
+         FeatureFlags::FeatureFlag.active?(:application_english_language)
+      checks =
+        if application_form.english_language_exempt?
+          []
+        elsif application_form.english_language_proof_method_medium_of_instruction?
+          %i[english_language_valid_moi]
+        else
+          %i[english_language_valid_provider]
+        end
 
-    failure_reasons =
-      if application_form.english_language_exempt?
-        []
-      elsif application_form.english_language_proof_method_medium_of_instruction?
-        [
-          FailureReasons::EL_MOI_NOT_TAUGHT_IN_ENGLISH,
-          FailureReasons::EL_MOI_INVALID_FORMAT,
-        ]
-      else
-        [
-          FailureReasons::EL_QUALIFICATION_INVALID,
-          FailureReasons::EL_UNVERIFIABLE_REFERENCE_NUMBER,
-          FailureReasons::EL_GRADE_BELOW_B2,
-          FailureReasons::EL_SELT_EXPIRED,
-        ]
-      end
+      failure_reasons =
+        if application_form.english_language_exempt?
+          []
+        elsif application_form.english_language_proof_method_medium_of_instruction?
+          [
+            FailureReasons::EL_MOI_NOT_TAUGHT_IN_ENGLISH,
+            FailureReasons::EL_MOI_INVALID_FORMAT,
+          ]
+        else
+          [
+            FailureReasons::EL_QUALIFICATION_INVALID,
+            FailureReasons::EL_UNVERIFIABLE_REFERENCE_NUMBER,
+            FailureReasons::EL_GRADE_BELOW_B2,
+            FailureReasons::EL_SELT_EXPIRED,
+          ]
+        end
 
-    AssessmentSection.new(
-      key: "english_language_proficiency",
-      checks:,
-      failure_reasons:,
-    )
+      AssessmentSection.new(
+        key: "english_language_proficiency",
+        checks:,
+        failure_reasons:,
+      )
+    end
   end
 
   def work_history_section

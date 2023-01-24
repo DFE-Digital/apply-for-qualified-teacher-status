@@ -32,8 +32,8 @@ RSpec.describe AssessmentFactory do
     describe "sections" do
       subject(:sections) { call.sections }
 
-      it "creates two sections" do
-        expect(sections.count).to eq(4)
+      it "creates three sections" do
+        expect(sections.count).to eq(3)
       end
 
       describe "personal information section" do
@@ -250,6 +250,16 @@ RSpec.describe AssessmentFactory do
               %w[not_qualified_to_teach_mainstream age_range],
             )
           end
+        end
+      end
+
+      describe "english language proficiency section" do
+        let(:application_form) { create(:application_form, :new_regs) }
+
+        it "is included in the task list when the EL feature is enabled" do
+          FeatureFlags::FeatureFlag.activate(:application_english_language)
+
+          expect(sections.english_language_proficiency.count).to eq(1)
         end
       end
 
