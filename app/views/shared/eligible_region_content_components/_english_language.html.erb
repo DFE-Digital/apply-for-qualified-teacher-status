@@ -1,48 +1,45 @@
-<p class="govuk-body">We need to understand your level of English language proficiency. You can provide evidence in any of the following ways:</p>
+<p class="govuk-body">If you were born in or hold citizenship of any of these listed countries, you’re exempt from English language requirements:</p>
+<%= render "shared/english_language_exempt_countries" %>
+
+<p class="govuk-body">You’ll need to provide your passport or official identification documents for that country as proof. </p>
+<p class="govuk-body">If you were not born in or do not hold citizenship of any of the exempt countries listed, you can provide evidence of your English language ability in one of the following ways:</p>
 
 <ul class="govuk-list govuk-list--number">
   <li>
-    <h3 class="govuk-heading-s">Show you were born or hold citizenship of a country that’s exempt from English language requirements</h3>
-    <p class="govuk-body">You can show this when you upload a copy of your passport or the official identification document for that country.</p>
+    <h3 class="govuk-heading-s">If your teaching qualification or university degree was taught in an exempt country</h3>
+    <p class="govuk-body">Upload the transcript from your teaching qualification or university degree (which you can request from the institution where you studied).</p>
   </li>
 
   <li>
-    <h3 class="govuk-heading-s">Show you were taught in English in a country that’s exempt from English language requirements</h3>
-    <p class="govuk-body">You can show this when you upload the transcript from your degree qualification.</p>
+    <h3 class="govuk-heading-s">If your teaching qualification or university degree was taught completely in English, but in a country that’s NOT exempt</h3>
+    <p class="govuk-body">Upload a document that shows your teaching qualification or university degree was taught exclusively in the English language – this is an official document that you can request from the institution where you studied.</p>
   </li>
-
-  <li>
-    <h3 class="govuk-heading-s">Show you were taught in English, but in a country that’s NOT exempt from English language requirements</h3>
-    <p class="govuk-body">Upload the ‘Medium of instruction’ (MOI) from your degree qualification. You can get this by contacting the institution where you studied.</p>
-  </li>
-
-  <li>
-    <h3 class="govuk-heading-s">Show you hold an approved English language certificate</h3>
-    <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 of the Common European Framework of Reference for Languages (CEFR) scale. This is higher than the B1 proficiency the UK Home Office requires when people apply for UK citizenship, because you’ll be instructing students in English.</p>
-    <p class="govuk-body">The test must be on the list of approved English language tests and awarded within the last 2 years before the date of your application.</p>
+<li>
+  <h3 class="govuk-heading-s">If you have an approved English language certificate</h3>
+  
+  <% if region.reduced_evidence_accepted %>
+    <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 from an approved provider.</p>
+  <% else %>
+    <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 from one of these approved providers:</p>
+    <ul class="govuk-list govuk-list--bullet">
+     <% EnglishLanguageProvider.order(:created_at).each do |provider| %>
+        <li><%= provider.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  
   </li>
 </ul>
 
-<%= govuk_details(summary_text: "Which countries are exempt?") do %>
-  <p class="govuk-body">
-    The following countries are exempt from English language proficiency requirements:
-  </p>
-
-  <ul class="govuk-list govuk-list--bullet">
-    <% english_language_exempt_countries.each do |exempt_country| %>
-      <li><%= exempt_country %></li>
-    <% end %>
-  </ul>
-<% end %>
-
-<p class="govuk-body">Learn more about <a href="https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale" class="govuk-link">level B2 English language</a>.</p>
-
+<p class="govuk-body">The test must be awarded within the last 2 years before the date of your application.</p>
 <% if region.reduced_evidence_accepted %>
-  <p class="govuk-body">Find out about <a href="https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" class="govuk-link">approved test providers</a>.</p>
+  <p class="govuk-body">Find an <a href="https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" class="govuk-link">approved provider</a> if you need to get an English language certificate.</p>
 <% else %>
-  <p class="govuk-body">Find out about <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link">approved test providers</a>.</p>
+  <p class="govuk-body">Find an <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link">approved provider</a> if you need to get an English language certificate.</p>
 <% end %>
-<%= govuk_details(summary_text: "What about multiple nationalities?") do %>
+<p class="govuk-body">Learn more about <a href="https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale" class="govuk-link">level B2 English language</a></p>
+
+<%= govuk_details(summary_text: "What if you have more than one nationality?") do %>
   <p class="govuk-body">
     If you’re a national of more than 1 country and both are exempt from English language requirements, you can choose which of them you use to apply for QTS. Remember, you must be able to show a passport (or the recognised identity document for that country).
   </p>

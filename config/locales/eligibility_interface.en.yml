@@ -45,3 +45,5 @@ en:
           qualification: You have not completed a formal teaching qualification in %{country_name}, for example, an undergraduate teaching degree or postgraduate teaching qualification.
           teach_children: You are not qualified to teach children who are aged somewhere between 5 and 16 years.
           work_experience: You do not have sufficient work experience as a teacher.
+  eligibility_interface:
+    three_months_before_applying: This must be dated within 3 months of you applying for QTS.

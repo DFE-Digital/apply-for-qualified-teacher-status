@@ -1,11 +1,17 @@
-<p class="govuk-body">You must provide:</p>
+<p class="goxuk-body">You must hold a teaching qualification that’s equivalent to a UK ‘level 6’ or higher.</p>
+<p class="govuk-body"><a href="https://www.gov.uk/what-different-qualification-levels-mean/list-of-qualification-levels" class="govuk-link">Check you hold a qualification that’s equivalent to or higher than a level 6</a></p>
+<p class="govuk-body">If that qualification is equivalent to level 6, but it is NOT a degree, you must also be able to provide evidence that you hold a separate degree.<p>
+<p class="govuk-body">We'll need to understand the level to which your qualifications were focussed on developing practical teaching skills.</p>
+<p class="govuk-body">For any qualifications you submit, you’ll need to provide:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>Your certificate from the qualification that led to you being a recognised teacher (this might be your university degree, or a separate qualification).</li>
-  <li>A transcript (or diploma supplement) for that qualification, issued by the awarding body. If your teaching qualification was part of your university degree, use your degree transcript.</li>
+  <li>a certificate </li>
+  <li>a transcript (or diploma supplement)</li>
 </ul>
-<p class="govuk-body">
-  A transcript is a document from the institution where you studied. It lists all the modules or subjects you studied in each year, and the marks or grades you were awarded.
-  Note that you must have completed all of your teaching qualification in <%= CountryName.from_country(region.country, with_definite_article: true) %>.
-</p>
+<%= govuk_details(summary_text: "What is a trancript?") do %>
+  <p class="govuk-body">
+    A transcript is a document from the institution where you studied. It lists all the modules or subjects you studied in each year, and the marks or grades you were awarded.
+    Note that you must have completed all of your teaching qualification in <%= CountryName.from_country(region.country, with_definite_article: true) %>.
+  </p>
+<% end %>
 
 <p class="govuk-body"><%= region.qualifications_information %></p>

@@ -2,11 +2,14 @@
 
 module RegionHelper
   def region_certificate_phrase(region)
-    certificate =
-      region.teaching_authority_certificate.presence ||
-        region.country.teaching_authority_certificate.presence ||
-        "letter that proves you’re recognised as a teacher"
+    certificate = region_certificate_name(region)
     "#{certificate.indefinite_article} #{tag.span(certificate, lang: region.country.code)}".html_safe
+  end
+
+  def region_certificate_name(region)
+    region.teaching_authority_certificate.presence ||
+      region.country.teaching_authority_certificate.presence ||
+      "letter that proves you’re recognised as a teacher"
   end
 
   def region_teaching_authority_name(region)
