@@ -35,7 +35,7 @@
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
-#  state                                         :string           default("draft"), not null
+#  status                                        :string           default("draft"), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
 #  submitted_at                                  :datetime
@@ -64,7 +64,7 @@
 #  index_application_forms_on_reference                     (reference) UNIQUE
 #  index_application_forms_on_region_id                     (region_id)
 #  index_application_forms_on_reviewer_id                   (reviewer_id)
-#  index_application_forms_on_state                         (state)
+#  index_application_forms_on_status                        (status)
 #  index_application_forms_on_teacher_id                    (teacher_id)
 #
 # Foreign Keys
@@ -78,7 +78,7 @@
 FactoryBot.define do
   factory :application_form do
     sequence(:reference) { |n| n.to_s.rjust(7, "0") }
-    state { "draft" }
+    status { "draft" }
     association :teacher
     association :region
 
@@ -107,7 +107,7 @@ FactoryBot.define do
     end
 
     trait :submitted do
-      state { "submitted" }
+      status { "submitted" }
       submitted_at { Time.zone.now }
       working_days_since_submission { 0 }
 
@@ -124,39 +124,39 @@ FactoryBot.define do
     end
 
     trait :initial_assessment do
-      state { "initial_assessment" }
+      status { "initial_assessment" }
       submitted_at { Time.zone.now }
     end
 
     trait :waiting_on do
-      state { "waiting_on" }
+      status { "waiting_on" }
       submitted_at { Time.zone.now }
     end
 
     trait :received do
-      state { "received" }
+      status { "received" }
       submitted_at { Time.zone.now }
     end
 
     trait :awarded_pending_checks do
-      state { "awarded_pending_checks" }
+      status { "awarded_pending_checks" }
       submitted_at { Time.zone.now }
     end
 
     trait :awarded do
-      state { "awarded" }
+      status { "awarded" }
       submitted_at { Time.zone.now }
       awarded_at { Time.zone.now }
     end
 
     trait :declined do
-      state { "declined" }
+      status { "declined" }
       submitted_at { Time.zone.now }
       declined_at { Time.zone.now }
     end
 
     trait :potential_duplicate_in_dqt do
-      state { "potential_duplicate_in_dqt" }
+      status { "potential_duplicate_in_dqt" }
       submitted_at { Time.zone.now }
     end
 

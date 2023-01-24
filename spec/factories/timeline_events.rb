@@ -58,8 +58,8 @@ FactoryBot.define do
 
     trait :state_changed do
       event_type { "state_changed" }
-      old_state { ApplicationForm.states.keys.sample }
-      new_state { ApplicationForm.states.keys.sample }
+      old_state { ApplicationForm.statuses.keys.sample }
+      new_state { ApplicationForm.statuses.keys.sample }
     end
 
     trait :assessment_section_recorded do
