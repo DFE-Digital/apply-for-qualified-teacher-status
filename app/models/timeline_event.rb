@@ -66,6 +66,9 @@ class TimelineEvent < ApplicationRecord
          age_range_subjects_verified: "age_range_subjects_verified",
          further_information_request_expired:
            "further_information_request_expired",
+         requestable_requested: "requestable_requested",
+         requestable_received: "requestable_received",
+         requestable_expired: "requestable_expired",
        }
   validates :event_type, inclusion: { in: event_types.values }
 
@@ -124,4 +127,21 @@ class TimelineEvent < ApplicationRecord
   belongs_to :assessment, optional: true
   validates :assessment, presence: true, if: :age_range_subjects_verified?
   validates :assessment, absence: true, unless: :age_range_subjects_verified?
+
+  belongs_to :requestable, polymorphic: true, optional: true
+  validates :requestable_id, presence: true, if: :requestable_event_type?
+  validates :requestable_type,
+            presence: true,
+            inclusion: %w[FurtherInformationRequest ReferenceRequest],
+            if: :requestable_event_type?
+  validates :requestable_id,
+            :requestable_type,
+            absence: true,
+            unless: :requestable_event_type?
+
+  private
+
+  def requestable_event_type?
+    requestable_requested? || requestable_received? || requestable_expired?
+  end
 end
