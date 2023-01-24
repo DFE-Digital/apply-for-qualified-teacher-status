@@ -9,7 +9,6 @@
 </p>
 
 <%= govuk_inset_text do %>
-
   <p class="govuk-body">You may want to spend some time gathering all the documents you need before you start your application.</p>
 
   <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) && region && region.application_form_enabled %>
@@ -19,7 +18,6 @@
   <% if eligibility_check&.created_under_new_regulations? %>
     <p class="govuk-body">You’ll need to complete your application within 6 months of starting it.</p>
   <% end %>
-
 <% end %>
 
 <% if region && !region.legacy %>

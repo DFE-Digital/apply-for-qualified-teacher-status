@@ -1,3 +1,5 @@
+<%# Written information %>
+
 <% if region.status_check_written? || region.sanction_check_written? %>
   <% if teaching_authority_provides_written_statement %>
     <p class="govuk-body">
@@ -18,10 +20,11 @@
   <% end %>
 
   <%= render "shared/teaching_authority_contact_information", region: %>
-  
+
   <% if region.sanction_check_none? && region.status_check_written? %>
     <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
   <% end %>
+
   <p class="govuk-body"><%= proof_of_recognition_description_for(region:) %></p>
 
   <ul class="govuk-list govuk-list--bullet">
@@ -30,22 +33,15 @@
     <%- end -%>
   </ul>
 
+  <% unless region.sanction_check_none? && region.status_check_written? %>
+    <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
+  <% end %>
+
   <% if teaching_authority_provides_written_statement %>
     <p class="govuk-body">
       If we do not receive the document within 90 days of the date that you submit your application, we’ll need to close your application.
     </p>
   <% end %>
-<% end %>
-
-<% if region.sanction_check_written? %>
-  <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
-<% end %>
-
-<% if region.status_check_online? || region.sanction_check_online? %>
-  <p class="govuk-body">
-    As your education department or authority has an online register of teachers,
-    you’ll also need to provide any reference numbers we need to check your record.
-  </p>
 <% end %>
 
 <% if region.status_check_written? %>
@@ -68,6 +64,15 @@
   <% end %>
 <% end %>
 
+<%# Online information %>
+
+<% if region.status_check_online? || region.sanction_check_online? %>
+  <p class="govuk-body">
+    As your education department or authority has an online register of teachers,
+    you’ll also need to provide any reference numbers we need to check your record.
+  </p>
+<% end %>
+
 <% if region.status_check_online? %>
   <% if region.teaching_authority_status_information.present?%>
     <%= raw GovukMarkdown.render(region.teaching_authority_status_information) %>
@@ -88,16 +93,27 @@
   <% end %>
 <% end %>
 
-<% unless FeatureFlags::FeatureFlag.active?(:application_work_history) && !region.application_form_skip_work_history %> 
-  <p class="govuk-body"><%= proof_of_recognition_description_for(region:) %></p>
-  <ul class="govuk-list govuk-list--bullet">
-    <li>school name</li>
-    <li>school city</li>
-    <li>school country</li>
-    <li>your job role</li>
-    <li>start date</li>
-    <li>end date</li>
-  </ul>
+<%# "None" information %>
+
+<% unless FeatureFlags::FeatureFlag.active?(:application_work_history) && !region.application_form_skip_work_history %>
+  <% if region.sanction_check_none? || region.status_check_none? %>
+    <p class="govuk-body">
+      You also need to show evidence of your work history.
+    </p>
+
+    <p class="govuk-body">
+      For each school this should include:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>school name</li>
+      <li>school city</li>
+      <li>school country</li>
+      <li>your job role</li>
+      <li>start date</li>
+      <li>end date</li>
+    </ul>
+  <% end %>
 <% end %>
 
 <% if region.teaching_authority_other.present? %>
