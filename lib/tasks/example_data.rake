@@ -103,8 +103,18 @@ def evidential_traits_for(region, new_regs)
   end
 end
 
+def english_language_trait
+  %i[
+    with_english_language_medium_of_instruction
+    with_english_language_provider
+    with_english_language_exemption_by_citizenship
+    with_english_language_exemption_by_qualification
+  ].sample
+end
+
 def application_form_traits_for(region, new_regs)
   evidential_traits = evidential_traits_for(region, new_regs)
+  additional_traits = evidential_traits + [english_language_trait]
 
   [
     [],
@@ -114,21 +124,24 @@ def application_form_traits_for(region, new_regs)
       with_identification_document
       with_age_range
       with_subjects
-    ] + evidential_traits,
+    ] + additional_traits,
     %i[
       with_personal_information
       with_completed_qualification
       with_identification_document
       with_age_range
       with_subjects
-    ] + evidential_traits << :submitted,
+      submitted
+    ] + additional_traits,
     %i[
       with_personal_information
       with_completed_qualification
       with_identification_document
       with_age_range
       with_subjects
-    ] + evidential_traits << :submitted << :waiting_on,
+      submitted
+      waiting_on
+    ] + additional_traits,
   ]
 end
 
