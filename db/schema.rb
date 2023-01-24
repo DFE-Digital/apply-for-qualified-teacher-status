@@ -417,12 +417,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_25_161536) do
     t.bigint "assessment_id"
     t.string "message_subject", default: "", null: false
     t.string "mailer_class_name", default: "", null: false
+    t.string "requestable_type"
+    t.bigint "requestable_id"
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
     t.index ["assessment_id"], name: "index_timeline_events_on_assessment_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
     t.index ["further_information_request_id"], name: "index_timeline_events_on_further_information_request_id"
     t.index ["note_id"], name: "index_timeline_events_on_note_id"
+    t.index ["requestable_type", "requestable_id"], name: "index_timeline_events_on_requestable"
   end
 
   create_table "uploads", force: :cascade do |t|

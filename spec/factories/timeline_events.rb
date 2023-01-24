@@ -12,6 +12,7 @@
 #  message_subject                :string           default(""), not null
 #  new_state                      :string           default(""), not null
 #  old_state                      :string           default(""), not null
+#  requestable_type               :string
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #  application_form_id            :bigint           not null
@@ -21,6 +22,7 @@
 #  creator_id                     :integer
 #  further_information_request_id :bigint
 #  note_id                        :bigint
+#  requestable_id                 :bigint
 #
 # Indexes
 #
@@ -30,6 +32,7 @@
 #  index_timeline_events_on_assignee_id                     (assignee_id)
 #  index_timeline_events_on_further_information_request_id  (further_information_request_id)
 #  index_timeline_events_on_note_id                         (note_id)
+#  index_timeline_events_on_requestable                     (requestable_type,requestable_id)
 #
 # Foreign Keys
 #
