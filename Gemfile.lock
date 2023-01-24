@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: b916b441d1a5579465c52d0772d99dab8e072d73
+  revision: 1854f2abe819f45aeafba8ea7217728d99b872a0
   specs:
     dfe-analytics (1.5.3)
       google-cloud-bigquery (~> 1.38)
@@ -128,7 +128,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     climate_control (1.2.0)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     connection_pool (2.3.0)
     crack (0.4.5)
       rexml
@@ -203,7 +203,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.0.1)
       activesupport (>= 5.0)
-    google-apis-bigquery_v2 (0.44.0)
+    google-apis-bigquery_v2 (0.45.0)
       google-apis-core (>= 0.9.1, < 2.a)
     google-apis-core (0.9.5)
       addressable (~> 2.5, >= 2.5.1)
