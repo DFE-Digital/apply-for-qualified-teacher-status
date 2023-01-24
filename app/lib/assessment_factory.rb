@@ -47,6 +47,13 @@ class AssessmentFactory
           FailureReasons::NAME_CHANGE_DOCUMENT_ILLEGIBLE
         end
       ),
+      (
+        if english_language_feature_active_and_under_new_regs?(
+             application_form,
+           ) && application_form.english_language_citizenship_exempt
+          FailureReasons::EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED
+        end
+      ),
       FailureReasons::DUPLICATE_APPLICATION,
       FailureReasons::APPLICANT_ALREADY_QTS,
       FailureReasons::APPLICANT_ALREADY_DQT,
@@ -107,6 +114,13 @@ class AssessmentFactory
           FailureReasons::TEACHING_QUALIFICATION_1_YEAR
         end
       ),
+      (
+        if english_language_feature_active_and_under_new_regs?(
+             application_form,
+           ) && application_form.english_language_qualification_exempt
+          FailureReasons::EL_EXEMPTION_BY_QUALIFICATION_DOCUMENTS_UNCONFIRMED
+        end
+      ),
       FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
       FailureReasons::QUALIFICATIONS_DONT_MATCH_SUBJECTS,
       FailureReasons::QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS,
@@ -156,8 +170,7 @@ class AssessmentFactory
   end
 
   def english_language_proficiency_section
-    if application_form.created_under_new_regulations? &&
-         FeatureFlags::FeatureFlag.active?(:application_english_language)
+    if english_language_feature_active_and_under_new_regs?(application_form)
       checks =
         if application_form.english_language_exempt?
           []
@@ -264,5 +277,10 @@ class AssessmentFactory
       checks:,
       failure_reasons:,
     )
+  end
+
+  def english_language_feature_active_and_under_new_regs?(application_form)
+    FeatureFlags::FeatureFlag.active?(:application_english_language) &&
+      application_form.created_under_new_regulations?
   end
 end

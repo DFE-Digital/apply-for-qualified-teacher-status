@@ -13,7 +13,6 @@ module PageObjects
                ".govuk-summary-list__card"
 
       element :checks, ".govuk-list"
-      elements :failure_reasons, ".govuk-checkboxes__item"
 
       element :exemption_heading, "h2.govuk-heading-m"
       element :return_button, ".govuk-button", text: "Return to task list"

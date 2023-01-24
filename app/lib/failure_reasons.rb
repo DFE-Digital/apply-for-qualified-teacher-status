@@ -7,12 +7,17 @@ class FailureReasons
     AUTHORISATION_TO_TEACH = "authorisation_to_teach",
     CONFIRM_AGE_RANGE_SUBJECTS = "confirm_age_range_subjects",
     DUPLICATE_APPLICATION = "duplicate_application",
+    EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED =
+      "english_language_exemption_by_citizenship_not_confirmed",
+    EL_EXEMPTION_BY_QUALIFICATION_DOCUMENTS_UNCONFIRMED =
+      "english_language_exemption_by_qualification_not_confirmed",
+    EL_GRADE_BELOW_B2 = "english_language_not_achieved_b2",
     EL_MOI_NOT_TAUGHT_IN_ENGLISH = "english_language_moi_not_taught_in_english",
     EL_QUALIFICATION_INVALID = "english_language_qualification_invalid",
-    EL_UNVERIFIABLE_REFERENCE_NUMBER = "english_language_unverifiable_reference_number",
-    EL_GRADE_BELOW_B2 = "english_language_not_achieved_b2",
+    "english_language_unverifiable_reference_number",
     EL_SELT_EXPIRED = "english_language_selt_expired",
-    FULL_PROFESSIONAL_STATUS = "full_professional_status",
+    EL_UNVERIFIABLE_REFERENCE_NUMBER =
+      FULL_PROFESSIONAL_STATUS = "full_professional_status",
     NOT_QUALIFIED_TO_TEACH_MAINSTREAM = "not_qualified_to_teach_mainstream",
     QUALIFIED_TO_TEACH_CHILDREN_11_TO_16 =
       "qualified_to_teach_children_11_to_16",

@@ -22,6 +22,10 @@ RSpec.describe "Assessor confirms English language section", type: :system do
       application_id:,
       assessment_id:,
     )
+    then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
+      check_personal_information_page,
+      "english_language_exemption_by_citizenship_not_confirmed",
+    )
     and_i_confirm_english_language_exemption(check_personal_information_page)
     and_i_confirm_the_section_as_complete(check_personal_information_page)
     then_i_see_the_personal_information_section_is_complete
@@ -48,6 +52,10 @@ RSpec.describe "Assessor confirms English language section", type: :system do
       :check_qualifications_page,
       application_id:,
       assessment_id:,
+    )
+    then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
+      check_qualifications_page,
+      "english_language_exemption_by_qualification_not_confirmed",
     )
     and_i_confirm_english_language_exemption(check_qualifications_page)
     and_i_confirm_the_section_as_complete(check_qualifications_page)
@@ -99,10 +107,28 @@ RSpec.describe "Assessor confirms English language section", type: :system do
 
   def and_the_application_states_english_language_exemption_by_citizenship
     application_form.update!(english_language_citizenship_exempt: true)
+    application_form
+      .assessment
+      .sections
+      .find_by(key: :personal_information)
+      .update!(
+        failure_reasons: [
+          "english_language_exemption_by_citizenship_not_confirmed",
+        ],
+      )
   end
 
   def and_the_application_states_english_language_exemption_by_qualification
     application_form.update!(english_language_qualification_exempt: true)
+    application_form
+      .assessment
+      .sections
+      .find_by(key: :qualifications)
+      .update!(
+        failure_reasons: [
+          "english_language_exemption_by_qualification_not_confirmed",
+        ],
+      )
   end
 
   def and_the_application_english_language_proof_method_is_provider
@@ -186,23 +212,25 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   def and_i_can_see_provider_failure_reasons_if_i_do_not_wish_to_confirm
-    check_english_language_proficiency_page.form.no_radio_item.choose
-    expect(
-      check_english_language_proficiency_page.failure_reasons.first.text,
-    ).to eq(
-      I18n.t(
-        "assessor_interface.assessment_sections.show.failure_reasons.english_language_qualification_invalid",
-      ),
+    then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
+      check_english_language_proficiency_page,
+      "english_language_qualification_invalid",
     )
   end
 
   def and_i_can_see_moi_failure_reasons_if_i_do_not_wish_to_confirm
-    check_english_language_proficiency_page.form.no_radio_item.choose
-    expect(
-      check_english_language_proficiency_page.failure_reasons.first.text,
-    ).to eq(
+    then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
+      check_english_language_proficiency_page,
+      "english_language_moi_invalid_format",
+    )
+  end
+
+  def then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(page, key)
+    page.form.no_radio_item.choose
+
+    expect(page.form.failure_reason_checkbox_items.last.text).to eq(
       I18n.t(
-        "assessor_interface.assessment_sections.show.failure_reasons.english_language_moi_invalid_format",
+        "assessor_interface.assessment_sections.show.failure_reasons.#{key}",
       ),
     )
   end
