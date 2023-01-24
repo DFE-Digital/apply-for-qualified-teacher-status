@@ -34,7 +34,11 @@ class Teacher < ApplicationRecord
 
   scope :with_draft_application_forms,
         -> {
-          joins(:application_forms).where(application_forms: { state: "draft" })
+          joins(:application_forms).where(
+            application_forms: {
+              status: "draft",
+            },
+          )
         }
 
   def application_form

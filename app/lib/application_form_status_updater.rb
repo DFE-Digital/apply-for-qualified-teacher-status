@@ -9,7 +9,7 @@ class ApplicationFormStatusUpdater
   end
 
   def call
-    old_state = application_form.state
+    old_status = application_form.status
 
     ActiveRecord::Base.transaction do
       application_form.update!(
@@ -21,10 +21,10 @@ class ApplicationFormStatusUpdater
         received_reference:,
       )
 
-      next if old_state == new_state
+      next if old_status == new_status
 
-      application_form.update!(state: new_state)
-      create_timeline_event(old_state:, new_state:)
+      application_form.update!(status: new_status)
+      create_timeline_event(old_state: old_status, new_state: new_status)
     end
   end
 
@@ -56,8 +56,8 @@ class ApplicationFormStatusUpdater
     received?(requestables: reference_requests)
   end
 
-  def new_state
-    @new_state ||=
+  def new_status
+    @new_status ||=
       if dqt_trn_request&.potential_duplicate?
         "potential_duplicate_in_dqt"
       elsif application_form.declined_at.present?

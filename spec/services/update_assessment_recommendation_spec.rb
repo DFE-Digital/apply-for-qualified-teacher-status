@@ -37,7 +37,7 @@ RSpec.describe UpdateAssessmentRecommendation do
   end
 
   describe "application form status" do
-    subject(:state) { application_form.state }
+    subject(:status) { application_form.status }
 
     it { is_expected.to eq("submitted") }
 
@@ -105,7 +105,7 @@ RSpec.describe UpdateAssessmentRecommendation do
 
     describe "application form status" do
       it "doesn't change the state" do
-        expect { call }.to_not change(application_form, :state)
+        expect { call }.to_not change(application_form, :status)
       end
     end
 

@@ -13,7 +13,7 @@ RSpec.describe CreateDQTTRNRequest do
   end
 
   it "changes the status" do
-    expect { call }.to change(application_form, :state).to(
+    expect { call }.to change(application_form, :status).to(
       "awarded_pending_checks",
     )
   end

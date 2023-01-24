@@ -33,7 +33,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     then_i_see_a_list_of_applications_filtered_by_submitted_at
 
     when_i_clear_the_filters
-    and_i_apply_the_state_filter
+    and_i_apply_the_status_filter
     then_i_see_a_list_of_applications_filtered_by_state
   end
 
@@ -108,10 +108,10 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     expect(applications_page.search_results.first.name.text).to eq("John Smith")
   end
 
-  def and_i_apply_the_state_filter
+  def and_i_apply_the_status_filter
     awarded_state =
-      applications_page.state_filter.states.find do |state|
-        state.label.text == "Awarded (1)"
+      applications_page.status_filter.statuses.find do |status|
+        status.label.text == "Awarded (1)"
       end
     awarded_state.checkbox.click
     applications_page.apply_filters.click

@@ -256,7 +256,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     context "when submitted" do
-      before { application_form.state = "submitted" }
+      before { application_form.status = "submitted" }
 
       it { is_expected.to_not be_valid }
 
@@ -270,7 +270,7 @@ RSpec.describe ApplicationForm, type: :model do
     context "when awarded" do
       before do
         application_form.assign_attributes(
-          state: "awarded",
+          status: "awarded",
           submitted_at: Time.zone.now,
         )
       end
@@ -287,7 +287,7 @@ RSpec.describe ApplicationForm, type: :model do
     context "when declined" do
       before do
         application_form.assign_attributes(
-          state: "declined",
+          status: "declined",
           submitted_at: Time.zone.now,
         )
       end
