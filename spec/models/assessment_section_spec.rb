@@ -65,8 +65,8 @@ RSpec.describe AssessmentSection, type: :model do
     end
   end
 
-  describe "#state" do
-    subject(:state) { assessment_section.state }
+  describe "#status" do
+    subject(:status) { assessment_section.status }
 
     context "with a passed assessment" do
       before { assessment_section.passed = true }
@@ -75,7 +75,7 @@ RSpec.describe AssessmentSection, type: :model do
 
     context "with a failed assessment" do
       before { assessment_section.passed = false }
-      it { is_expected.to eq(:action_required) }
+      it { is_expected.to eq(:completed) }
     end
 
     context "with no assessment yet" do

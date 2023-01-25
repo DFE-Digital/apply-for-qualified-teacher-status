@@ -11,7 +11,7 @@ class UpdateAssessmentSection
   end
 
   def call
-    old_state = assessment_section.state
+    old_state = assessment_section.status
 
     ActiveRecord::Base.transaction do
       selected_keys = selected_failure_reasons.keys
@@ -57,7 +57,7 @@ class UpdateAssessmentSection
   end
 
   def create_timeline_event(old_state:)
-    new_state = assessment_section.state
+    new_state = assessment_section.status
     return if old_state == new_state
 
     TimelineEvent.create!(

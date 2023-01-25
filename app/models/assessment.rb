@@ -51,7 +51,7 @@ class Assessment < ApplicationRecord
             }
 
   def started?
-    sections.any? { |section| section.state != :not_started }
+    sections.any?(&:finished?)
   end
 
   def finished?
@@ -59,11 +59,11 @@ class Assessment < ApplicationRecord
   end
 
   def sections_finished?
-    sections.none? { |section| section.state == :not_started }
+    sections.all?(&:finished?)
   end
 
   def can_award?
-    sections_complete? || further_information_requests_passed?
+    sections_passed? || further_information_requests_passed?
   end
 
   def can_decline?
@@ -71,7 +71,8 @@ class Assessment < ApplicationRecord
   end
 
   def can_request_further_information?
-    action_required? && cannot_decline? && further_information_requests.empty?
+    sections_not_passed? && cannot_decline? &&
+      further_information_requests.empty?
   end
 
   def available_recommendations
@@ -86,8 +87,8 @@ class Assessment < ApplicationRecord
 
   private
 
-  def sections_complete?
-    sections.all? { |section| section.state == :completed }
+  def sections_passed?
+    sections.all?(&:passed)
   end
 
   def further_information_requests_passed?
@@ -95,8 +96,8 @@ class Assessment < ApplicationRecord
       further_information_requests.all?(&:passed)
   end
 
-  def action_required?
-    sections.any? { |section| section.state == :action_required }
+  def sections_not_passed?
+    sections.any? { |section| section.passed == false }
   end
 
   def cannot_decline?

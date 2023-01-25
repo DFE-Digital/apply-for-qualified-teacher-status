@@ -171,7 +171,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         let(:item) { :initial_assessment }
 
         context "with unfinished assessment sections" do
-          it { is_expected.to eq(:cannot_start_yet) }
+          it { is_expected.to eq(:cannot_start) }
         end
 
         context "with finished assessment sections" do
@@ -209,7 +209,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       context "and a requested further information request" do
         before { create(:further_information_request, :requested, assessment:) }
-        it { is_expected.to eq(:cannot_start_yet) }
+        it { is_expected.to eq(:cannot_start) }
       end
 
       context "and a received further information request" do

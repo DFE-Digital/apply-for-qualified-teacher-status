@@ -157,19 +157,19 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
           OpenStruct.new(id: "submitted", label: "Not started (0)"),
           OpenStruct.new(
             id: "initial_assessment",
-            label: "Initial assessment (0)",
+            label: "Assessment in progress (0)",
           ),
           OpenStruct.new(id: "waiting_on", label: "Waiting on (0)"),
           OpenStruct.new(id: "received", label: "Received (0)"),
           OpenStruct.new(
             id: "awarded_pending_checks",
-            label: "Awarded pending checks (0)",
+            label: "Award pending (0)",
           ),
           OpenStruct.new(id: "awarded", label: "Awarded (0)"),
           OpenStruct.new(id: "declined", label: "Declined (0)"),
           OpenStruct.new(
             id: "potential_duplicate_in_dqt",
-            label: "Potential duplicate in DQT (0)",
+            label: "Potential duplication in DQT (0)",
           ),
         ],
       )
@@ -193,19 +193,19 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             OpenStruct.new(id: "submitted", label: "Not started (1)"),
             OpenStruct.new(
               id: "initial_assessment",
-              label: "Initial assessment (2)",
+              label: "Assessment in progress (2)",
             ),
             OpenStruct.new(id: "waiting_on", label: "Waiting on (3)"),
             OpenStruct.new(id: "received", label: "Received (4)"),
             OpenStruct.new(
               id: "awarded_pending_checks",
-              label: "Awarded pending checks (5)",
+              label: "Award pending (5)",
             ),
             OpenStruct.new(id: "awarded", label: "Awarded (6)"),
             OpenStruct.new(id: "declined", label: "Declined (7)"),
             OpenStruct.new(
               id: "potential_duplicate_in_dqt",
-              label: "Potential duplicate in DQT (1)",
+              label: "Potential duplication in DQT (1)",
             ),
           ],
         )

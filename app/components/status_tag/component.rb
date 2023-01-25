@@ -21,24 +21,22 @@ module StatusTag
     end
 
     COLOURS = {
-      action_required: "red",
       awarded: "green",
-      awarded_pending_checks: "green",
-      cannot_start_yet: "grey",
-      completed: {
-        assessor: "green",
-      },
+      awarded_pending_checks: "turquoise",
+      cannot_start: "grey",
       declined: "red",
       draft: "grey",
-      expired: "red",
+      expired: "pink",
       in_progress: "blue",
       initial_assessment: "blue",
+      invalid: "red",
       not_started: "grey",
-      potential_duplicate_in_dqt: "red",
-      received: "yellow",
-      requested: "purple",
+      potential_duplicate_in_dqt: "pink",
+      received: "purple",
+      requested: "yellow",
       submitted: "grey",
-      waiting_on: "purple",
+      valid: "green",
+      waiting_on: "yellow",
     }.freeze
 
     def colour

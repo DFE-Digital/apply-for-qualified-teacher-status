@@ -1,23 +1,24 @@
 en:
   components:
     status_tag:
-      action_required: Action required
       awarded: Awarded
-      awarded_pending_checks: Awarded pending checks
-      cannot_start_yet: Cannot start yet
+      awarded_pending_checks: Award pending
+      cannot_start: Cannot start
       completed: Completed
       declined: Declined
       draft: Draft
-      expired: Expired
+      expired: Overdue
       in_progress: In progress
-      initial_assessment: Initial assessment
+      initial_assessment: Assessment in progress
+      invalid: Invalid
       not_started: Not started
-      potential_duplicate_in_dqt: Potential duplicate in DQT
+      potential_duplicate_in_dqt: Potential duplication in DQT
       received: Received
-      requested: Requested
+      requested: Waiting on
       submitted:
         assessor: Not started
         teacher: Submitted
+      valid: Valid
       waiting_on: Waiting on
 
     timeline_entry:
