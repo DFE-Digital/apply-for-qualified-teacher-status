@@ -113,6 +113,7 @@ class TimelineEvent < ApplicationRecord
             presence: true,
             inclusion: %w[
               FurtherInformationRequest
+              ProfessionalStandingRequest
               QualificationRequest
               ReferenceRequest
             ],
