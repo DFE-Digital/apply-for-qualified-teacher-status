@@ -43,10 +43,10 @@ RSpec.describe AssessorInterface::FurtherInformationRequestForm, type: :model do
         ).to(true)
       end
 
-      it "creates a timeline event" do
-        expect { save }.to change {
-          TimelineEvent.further_information_request_assessed.count
-        }.by(1)
+      it "records a timeline event" do
+        expect { save }.to have_recorded_timeline_event(
+          :further_information_request_assessed,
+        )
       end
     end
   end

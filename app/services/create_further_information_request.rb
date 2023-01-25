@@ -21,6 +21,8 @@ class CreateFurtherInformationRequest
 
         ApplicationFormStatusUpdater.call(application_form:, user:)
 
+        create_timeline_event(request)
+
         request
       end
 
@@ -39,5 +41,14 @@ class CreateFurtherInformationRequest
 
   def teacher
     @teacher ||= application_form.teacher
+  end
+
+  def create_timeline_event(further_information_request)
+    TimelineEvent.create!(
+      application_form:,
+      creator: user,
+      event_type: "requestable_requested",
+      requestable: further_information_request,
+    )
   end
 end

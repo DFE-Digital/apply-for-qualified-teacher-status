@@ -47,4 +47,8 @@ RSpec.describe CreateFurtherInformationRequest do
       )
     end
   end
+
+  it "records a requestable requested timeline event" do
+    expect { call }.to have_recorded_timeline_event(:requestable_requested)
+  end
 end

@@ -23,26 +23,11 @@ RSpec.describe UpdateFurtherInformationRequest do
     end
   end
 
-  describe "record timeline event" do
-    subject(:timeline_event) do
-      TimelineEvent.further_information_request_assessed.find_by(
-        further_information_request:,
-      )
-    end
-
-    it { is_expected.to be_nil }
-
-    context "after calling the service" do
-      before { call }
-
-      it { is_expected.to_not be_nil }
-
-      it "sets the attributes correctly" do
-        expect(timeline_event.creator).to eq(user)
-        expect(timeline_event.further_information_request).to eq(
-          further_information_request,
-        )
-      end
-    end
+  it "records a timeline event" do
+    expect { call }.to have_recorded_timeline_event(
+      :further_information_request_assessed,
+      creator: user,
+      further_information_request:,
+    )
   end
 end

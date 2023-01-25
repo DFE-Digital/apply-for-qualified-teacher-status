@@ -45,8 +45,8 @@ class FurtherInformationRequestExpirer
     TimelineEvent.create!(
       application_form:,
       creator_name: "Expirer",
-      further_information_request:,
-      event_type: "further_information_request_expired",
+      event_type: "requestable_expired",
+      requestable: further_information_request,
     )
   end
 end

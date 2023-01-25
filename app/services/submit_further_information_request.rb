@@ -14,6 +14,8 @@ class SubmitFurtherInformationRequest
     ActiveRecord::Base.transaction do
       further_information_request.received!
 
+      create_timeline_event
+
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
@@ -33,4 +35,13 @@ class SubmitFurtherInformationRequest
   end
 
   delegate :teacher, to: :application_form
+
+  def create_timeline_event
+    TimelineEvent.create!(
+      application_form:,
+      creator: user,
+      event_type: "requestable_received",
+      requestable: further_information_request,
+    )
+  end
 end

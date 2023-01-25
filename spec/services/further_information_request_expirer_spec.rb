@@ -32,10 +32,8 @@ RSpec.describe FurtherInformationRequestExpirer do
         expect(subject.passed).to eq(false)
       end
 
-      it "creates the expiry timeline event" do
-        expect { subject }.to change {
-          TimelineEvent.where(further_information_request:).count
-        }.by(1)
+      it "records a requestable requested timeline event" do
+        expect { subject }.to have_recorded_timeline_event(:requestable_expired)
       end
     end
 
