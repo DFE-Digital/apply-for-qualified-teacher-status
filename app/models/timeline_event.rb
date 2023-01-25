@@ -144,8 +144,6 @@ class TimelineEvent < ApplicationRecord
             absence: true,
             unless: :requestable_event_type?
 
-  private
-
   def requestable_event_type?
     requestable_requested? || requestable_received? || requestable_expired? ||
       requestable_assessed?
