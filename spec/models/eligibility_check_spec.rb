@@ -9,6 +9,7 @@
 #  degree                 :boolean
 #  free_of_sanctions      :boolean
 #  qualification          :boolean
+#  qualified_for_subject  :boolean
 #  teach_children         :boolean
 #  work_experience        :string
 #  created_at             :datetime         not null

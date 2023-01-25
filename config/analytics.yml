@@ -147,6 +147,7 @@
     - completed_at
     - completed_requirements
     - work_experience
+    - qualified_for_subject
   :english_language_providers:
     - id
     - name
