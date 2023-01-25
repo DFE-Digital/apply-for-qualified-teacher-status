@@ -43,18 +43,6 @@
       </div>
     </div>
 
-    <div class="govuk-width-container govuk-!-margin-top-4 govuk-!-margin-bottom-0">
-      <%= govuk_notification_banner(title_text: "Important") do %>
-        <p class="govuk-body">
-          Due to maintenance this service will be unavailable from 10:30am until 11:30am Greenwich Mean Time (GMT) on Wednesday 25 January. We apologise for any inconvenience this may cause.
-        </p>
-
-        <p class="govuk-body">
-          For any other queries contact: <%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %> for support.
-        </p>
-      <% end %>
-    </div>
-
     <div class="govuk-width-container">
       <%= govuk_back_link(href: yield(:back_link_url)) unless yield(:back_link_url).blank? %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
