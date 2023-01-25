@@ -210,4 +210,121 @@ RSpec.describe TimelineEntry::Component, type: :component do
       expect(component.text).to include(creator.name)
     end
   end
+
+  context "further information request requested" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_requested,
+        requestable: create(:further_information_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "Further information has been requested.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "reference request requested" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_requested,
+        requestable: create(:reference_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("A reference has been requested.")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "further information request received" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_received,
+        requestable: create(:further_information_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "Further information requested on " \
+          "#{timeline_event.requestable.created_at.strftime("%e %B %Y at %l:%M %P")} has been received.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "reference request requested" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_received,
+        requestable: create(:reference_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("A reference has been received.")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "further information request expired" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_expired,
+        requestable: create(:further_information_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "Further information requested on " \
+          "#{timeline_event.requestable.created_at.strftime("%e %B %Y at %l:%M %P")} has expired. " \
+          "Application has been declined.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "reference request requested" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_expired,
+        requestable: create(:reference_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("A reference has expired.")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
 end

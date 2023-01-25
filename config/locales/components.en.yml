@@ -32,6 +32,15 @@ en:
         further_information_request_expired: Further information expired
         email_sent: Email sent
         age_range_subjects_verified: Age range and subjects verified
+        requestable_requested:
+          FurtherInformationRequest: Further information requested
+          ReferenceRequest: Reference requested
+        requestable_received:
+          FurtherInformationRequest: Further information received
+          ReferenceRequest: Reference received
+        requestable_expired:
+          FurtherInformationRequest: Further information expired
+          ReferenceRequest: Reference expired
       description:
         assessor_assigned: "%{assignee_name} is assigned as the assessor."
         reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
@@ -40,3 +49,12 @@ en:
         further_information_request_assessed: Further information request has been assessed.
         further_information_request_expired: "Further information requested on %{date_requested} has expired. Application has been declined."
         email_sent: "%{subject}"
+        requestable_requested:
+          FurtherInformationRequest: Further information has been requested.
+          ReferenceRequest: A reference has been requested.
+        requestable_received:
+          FurtherInformationRequest: Further information requested on %{requested_at} has been received.
+          ReferenceRequest: A reference has been received.
+        requestable_expired:
+          FurtherInformationRequest: Further information requested on %{requested_at} has expired. Application has been declined.
+          ReferenceRequest: A reference has expired.

@@ -1,12 +1,12 @@
 <div class="moj-timeline__item">
   <div class="moj-timeline__header">
-    <h2 class="moj-timeline__title"><%= t("components.timeline_entry.title.#{timeline_event.event_type}") %></h2>
+    <h2 class="moj-timeline__title"><%= title %></h2>
     <p class="moj-timeline__byline">by <%= creator %></p>
   </div>
 
   <p class="moj-timeline__date">
   <time datetime="<%= timeline_event.created_at.iso8601 %>">
-    <%= timeline_event.created_at.strftime("%e %B %Y at %l:%M %P") %>
+    <%= timeline_event.created_at.to_fs(:date_and_time) %>
   </time>
   </p>
 
@@ -52,9 +52,7 @@
         <% end %>
       <% end %>
     <% else %>
-      <p class="govuk-body">
-        <%= simple_format t("components.timeline_entry.description.#{timeline_event.event_type}", **description_vars).html_safe %>
-      </p>
+      <p class="govuk-body"><%= simple_format description.html_safe %></p>
     <% end %>
   </div>
 </div>
