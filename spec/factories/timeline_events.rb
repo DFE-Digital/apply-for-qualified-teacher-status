@@ -84,16 +84,6 @@ FactoryBot.define do
       association :note
     end
 
-    trait :further_information_request_assessed do
-      event_type { "further_information_request_assessed" }
-      association :further_information_request
-    end
-
-    trait :further_information_request_expired do
-      event_type { "further_information_request_expired" }
-      association :further_information_request
-    end
-
     trait :email_sent do
       event_type { "email_sent" }
       mailer_class_name { "TeacherMailer" }

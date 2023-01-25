@@ -60,12 +60,8 @@ class TimelineEvent < ApplicationRecord
          state_changed: "state_changed",
          assessment_section_recorded: "assessment_section_recorded",
          note_created: "note_created",
-         further_information_request_assessed:
-           "further_information_request_assessed",
          email_sent: "email_sent",
          age_range_subjects_verified: "age_range_subjects_verified",
-         further_information_request_expired:
-           "further_information_request_expired",
          requestable_requested: "requestable_requested",
          requestable_received: "requestable_received",
          requestable_expired: "requestable_expired",
@@ -98,21 +94,6 @@ class TimelineEvent < ApplicationRecord
   belongs_to :note, optional: true
   validates :note, presence: true, if: :note_created?
   validates :note, absence: true, unless: :note_created?
-
-  belongs_to :further_information_request, optional: true
-  validates :further_information_request,
-            presence: true,
-            if: -> {
-              further_information_request_assessed? ||
-                further_information_request_expired?
-            }
-
-  validates :further_information_request,
-            absence: true,
-            unless: -> {
-              further_information_request_assessed? ||
-                further_information_request_expired?
-            }
 
   validates :mailer_class_name,
             :mailer_action_name,

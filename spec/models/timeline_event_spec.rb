@@ -78,12 +78,8 @@ RSpec.describe TimelineEvent do
         state_changed: "state_changed",
         assessment_section_recorded: "assessment_section_recorded",
         note_created: "note_created",
-        further_information_request_assessed:
-          "further_information_request_assessed",
         email_sent: "email_sent",
         age_range_subjects_verified: "age_range_subjects_verified",
-        further_information_request_expired:
-          "further_information_request_expired",
         requestable_requested: "requestable_requested",
         requestable_received: "requestable_received",
         requestable_expired: "requestable_expired",
@@ -168,44 +164,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_presence_of(:note) }
       it { is_expected.to validate_absence_of(:further_information_request) }
-      it { is_expected.to validate_absence_of(:mailer_class_name) }
-      it { is_expected.to validate_absence_of(:mailer_action_name) }
-      it { is_expected.to validate_absence_of(:message_subject) }
-      it { is_expected.to validate_absence_of(:assessment) }
-      it { is_expected.to validate_absence_of(:requestable_id) }
-      it { is_expected.to validate_absence_of(:requestable_type) }
-    end
-
-    context "with a further information request assessed event type" do
-      before do
-        timeline_event.event_type = :further_information_request_assessed
-      end
-
-      it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
-      it { is_expected.to validate_absence_of(:assessment_section) }
-      it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_presence_of(:further_information_request) }
-      it { is_expected.to validate_absence_of(:mailer_class_name) }
-      it { is_expected.to validate_absence_of(:mailer_action_name) }
-      it { is_expected.to validate_absence_of(:message_subject) }
-      it { is_expected.to validate_absence_of(:assessment) }
-      it { is_expected.to validate_absence_of(:requestable_id) }
-      it { is_expected.to validate_absence_of(:requestable_type) }
-    end
-
-    context "with a further information request expired event type" do
-      before do
-        timeline_event.event_type = :further_information_request_expired
-      end
-
-      it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
-      it { is_expected.to validate_absence_of(:assessment_section) }
-      it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_presence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
