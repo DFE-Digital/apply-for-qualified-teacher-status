@@ -2,37 +2,35 @@
 #
 # Table name: timeline_events
 #
-#  id                             :bigint           not null, primary key
-#  annotation                     :string           default(""), not null
-#  creator_name                   :string           default(""), not null
-#  creator_type                   :string
-#  event_type                     :string           not null
-#  mailer_action_name             :string           default(""), not null
-#  mailer_class_name              :string           default(""), not null
-#  message_subject                :string           default(""), not null
-#  new_state                      :string           default(""), not null
-#  old_state                      :string           default(""), not null
-#  requestable_type               :string
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  application_form_id            :bigint           not null
-#  assessment_id                  :bigint
-#  assessment_section_id          :bigint
-#  assignee_id                    :bigint
-#  creator_id                     :integer
-#  further_information_request_id :bigint
-#  note_id                        :bigint
-#  requestable_id                 :bigint
+#  id                    :bigint           not null, primary key
+#  annotation            :string           default(""), not null
+#  creator_name          :string           default(""), not null
+#  creator_type          :string
+#  event_type            :string           not null
+#  mailer_action_name    :string           default(""), not null
+#  mailer_class_name     :string           default(""), not null
+#  message_subject       :string           default(""), not null
+#  new_state             :string           default(""), not null
+#  old_state             :string           default(""), not null
+#  requestable_type      :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  application_form_id   :bigint           not null
+#  assessment_id         :bigint
+#  assessment_section_id :bigint
+#  assignee_id           :bigint
+#  creator_id            :integer
+#  note_id               :bigint
+#  requestable_id        :bigint
 #
 # Indexes
 #
-#  index_timeline_events_on_application_form_id             (application_form_id)
-#  index_timeline_events_on_assessment_id                   (assessment_id)
-#  index_timeline_events_on_assessment_section_id           (assessment_section_id)
-#  index_timeline_events_on_assignee_id                     (assignee_id)
-#  index_timeline_events_on_further_information_request_id  (further_information_request_id)
-#  index_timeline_events_on_note_id                         (note_id)
-#  index_timeline_events_on_requestable                     (requestable_type,requestable_id)
+#  index_timeline_events_on_application_form_id    (application_form_id)
+#  index_timeline_events_on_assessment_id          (assessment_id)
+#  index_timeline_events_on_assessment_section_id  (assessment_section_id)
+#  index_timeline_events_on_assignee_id            (assignee_id)
+#  index_timeline_events_on_note_id                (note_id)
+#  index_timeline_events_on_requestable            (requestable_type,requestable_id)
 #
 # Foreign Keys
 #
@@ -40,7 +38,6 @@
 #  fk_rails_...  (assessment_id => assessments.id)
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
-#  fk_rails_...  (further_information_request_id => further_information_requests.id)
 #  fk_rails_...  (note_id => notes.id)
 #
 require "rails_helper"
@@ -51,7 +48,6 @@ RSpec.describe TimelineEvent do
   describe "associations" do
     it { is_expected.to belong_to(:assessment_section).optional }
     it { is_expected.to belong_to(:note).optional }
-    it { is_expected.to belong_to(:further_information_request).optional }
     it { is_expected.to belong_to(:assessment).optional }
   end
 
@@ -95,7 +91,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
@@ -112,7 +107,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
@@ -129,7 +123,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
@@ -146,7 +139,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:new_state) }
       it { is_expected.to validate_presence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
@@ -163,7 +155,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_presence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
@@ -180,7 +171,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_presence_of(:mailer_class_name) }
       it { is_expected.to validate_presence_of(:mailer_action_name) }
       it { is_expected.to validate_presence_of(:message_subject) }
@@ -197,7 +187,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
@@ -214,7 +203,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
@@ -236,7 +224,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
@@ -258,7 +245,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
@@ -280,7 +266,6 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
-      it { is_expected.to validate_absence_of(:further_information_request) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
