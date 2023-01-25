@@ -160,6 +160,55 @@ RSpec.describe AssessmentFactory do
             )
           end
         end
+
+        context "with an application form with subject criteria" do
+          let(:application_form) do
+            create(
+              :application_form,
+              region: create(:region, :in_country, country_code: "SG"),
+            )
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.qualifications.first
+
+            expect(section.checks).to eq(
+              %w[
+                qualifications_meet_level_6_or_equivalent
+                teaching_qualifications_completed_in_eligible_country
+                qualified_in_mainstream_education
+                qualified_to_teach_children_11_to_16
+                teaching_qualification_subjects_criteria
+                has_teacher_qualification_certificate
+                has_teacher_qualification_transcript
+                has_university_degree_certificate
+                has_university_degree_transcript
+                has_additional_qualification_certificate
+                has_additional_degree_transcript
+              ],
+            )
+
+            expect(section.failure_reasons).to eq(
+              %w[
+                application_and_qualification_names_do_not_match
+                teaching_qualifications_from_ineligible_country
+                teaching_qualifications_not_at_required_level
+                teaching_hours_not_fulfilled
+                not_qualified_to_teach_mainstream
+                qualifications_dont_match_subjects
+                qualifications_dont_match_other_details
+                qualified_to_teach_children_11_to_16
+                teaching_qualification_subjects_criteria
+                teaching_certificate_illegible
+                teaching_transcript_illegible
+                degree_certificate_illegible
+                degree_transcript_illegible
+                additional_degree_certificate_illegible
+                additional_degree_transcript_illegible
+              ],
+            )
+          end
+        end
       end
 
       describe "age range and subjects section" do
@@ -175,6 +224,32 @@ RSpec.describe AssessmentFactory do
           expect(section.failure_reasons).to eq(
             %w[not_qualified_to_teach_mainstream age_range],
           )
+        end
+
+        context "with an application form with subject criteria" do
+          let(:application_form) do
+            create(
+              :application_form,
+              region: create(:region, :in_country, country_code: "SG"),
+            )
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.age_range_subjects.first
+
+            expect(section.checks).to eq(
+              %w[
+                qualified_in_mainstream_education
+                qualified_to_teach_children_11_to_16
+                teaching_qualification_subjects_criteria
+                age_range_subjects_matches
+              ],
+            )
+
+            expect(section.failure_reasons).to eq(
+              %w[not_qualified_to_teach_mainstream age_range],
+            )
+          end
         end
       end
 

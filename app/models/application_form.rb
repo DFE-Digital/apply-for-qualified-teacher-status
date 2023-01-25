@@ -193,6 +193,12 @@ class ApplicationForm < ApplicationRecord
     english_language_citizenship_exempt || english_language_qualification_exempt
   end
 
+  def secondary_education_teaching_qualification_required?
+    CountryCode.secondary_education_teaching_qualification_required?(
+      country.code,
+    )
+  end
+
   private
 
   def build_documents
