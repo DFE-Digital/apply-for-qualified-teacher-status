@@ -64,5 +64,16 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :with_qualification_request do
+      after(:create) do |assessment, _evaluator|
+        create(
+          :qualification_request,
+          :requested,
+          assessment:,
+          qualification: assessment.application_form.qualifications.first,
+        )
+      end
+    end
   end
 end

@@ -34,6 +34,7 @@ class Assessment < ApplicationRecord
   has_many :sections, class_name: "AssessmentSection", dependent: :destroy
   has_many :further_information_requests, dependent: :destroy
   has_many :reference_requests, dependent: :destroy
+  has_many :qualification_requests, dependent: :destroy
 
   enum :recommendation,
        {
