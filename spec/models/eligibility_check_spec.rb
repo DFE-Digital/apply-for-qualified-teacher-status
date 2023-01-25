@@ -95,6 +95,27 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to include(:teach_children) }
     end
 
+    context "when filtering by subject" do
+      let(:region) do
+        country = create(:country, :with_national_region, code: "IN")
+        country.regions.first
+      end
+
+      before { eligibility_check.region = region }
+
+      context "when teach_children is false" do
+        before { eligibility_check.teach_children = false }
+
+        it { is_expected.to include(:teach_children_secondary) }
+      end
+
+      context "when qualified_for_subject is false" do
+        before { eligibility_check.qualified_for_subject = false }
+
+        it { is_expected.to include(:qualified_for_subject) }
+      end
+    end
+
     context "when qualification is true" do
       before { eligibility_check.qualification = true }
 
@@ -449,6 +470,31 @@ RSpec.describe EligibilityCheck, type: :model do
         end
         it { is_expected.to be true }
       end
+    end
+  end
+
+  describe "#qualified_for_subject_required?" do
+    subject(:qualified_for_subject_required?) do
+      eligibility_check.qualified_for_subject_required?
+    end
+
+    let(:region) do
+      country = create(:country, :with_national_region, code:)
+      country.regions.first
+    end
+
+    before { eligibility_check.region = region }
+
+    context "with a relevant country" do
+      let(:code) { "JM" }
+
+      it { is_expected.to be true }
+    end
+
+    context "with an unaffected country" do
+      let(:code) { "UA" }
+
+      it { is_expected.to be false }
     end
   end
 end
