@@ -34,12 +34,15 @@ en:
         age_range_subjects_verified: Age range and subjects verified
         requestable_requested:
           FurtherInformationRequest: Further information requested
+          ProfessionalStandingRequest: Professional standing requested
           ReferenceRequest: Reference requested
         requestable_received:
           FurtherInformationRequest: Further information received
+          ProfessionalStandingRequest: Professional standing received
           ReferenceRequest: Reference received
         requestable_expired:
           FurtherInformationRequest: Further information expired
+          ProfessionalStandingRequest: Professional standing expired
           ReferenceRequest: Reference expired
       description:
         assessor_assigned: "%{assignee_name} is assigned as the assessor."
@@ -51,10 +54,13 @@ en:
         email_sent: "%{subject}"
         requestable_requested:
           FurtherInformationRequest: Further information has been requested.
+          ProfessionalStandingRequest: The professional standing has been requested.
           ReferenceRequest: A reference has been requested.
         requestable_received:
           FurtherInformationRequest: Further information requested on %{requested_at} has been received.
+          ProfessionalStandingRequest: "The professional standing has been received: %{location_note}"
           ReferenceRequest: A reference has been received.
         requestable_expired:
           FurtherInformationRequest: Further information requested on %{requested_at} has expired. Application has been declined.
+          ProfessionalStandingRequest: The professional standing request has expired.
           ReferenceRequest: A reference has expired.

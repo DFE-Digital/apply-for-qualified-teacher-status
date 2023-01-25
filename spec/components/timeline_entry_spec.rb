@@ -231,6 +231,26 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
+  context "professional standing request requested" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_requested,
+        requestable: create(:professional_standing_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "The professional standing has been requested.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
   context "reference request requested" do
     let(:timeline_event) do
       create(
@@ -263,6 +283,31 @@ RSpec.describe TimelineEntry::Component, type: :component do
         "Further information requested on " \
           "#{timeline_event.requestable.created_at.strftime("%e %B %Y at %l:%M %P")} has been received.",
       )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "professional standing request requested" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_received,
+        requestable:
+          create(
+            :professional_standing_request,
+            location_note: "This is a note.",
+          ),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "The professional standing has been received:",
+      )
+      expect(component.text).to include("This is a note.")
     end
 
     it "attributes to the creator" do
@@ -310,7 +355,27 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
-  context "reference request requested" do
+  context "professional standing request expired" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_expired,
+        requestable: create(:professional_standing_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "The professional standing request has expired.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "reference request expired" do
     let(:timeline_event) do
       create(
         :timeline_event,

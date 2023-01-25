@@ -132,7 +132,11 @@ class TimelineEvent < ApplicationRecord
   validates :requestable_id, presence: true, if: :requestable_event_type?
   validates :requestable_type,
             presence: true,
-            inclusion: %w[FurtherInformationRequest ReferenceRequest],
+            inclusion: %w[
+              FurtherInformationRequest
+              ProfessionalStandingRequest
+              ReferenceRequest
+            ],
             if: :requestable_event_type?
   validates :requestable_id,
             :requestable_type,

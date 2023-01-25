@@ -264,7 +264,11 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:requestable_type) }
       it do
         is_expected.to validate_inclusion_of(:requestable_type).in_array(
-          %w[FurtherInformationRequest ReferenceRequest],
+          %w[
+            FurtherInformationRequest
+            ProfessionalStandingRequest
+            ReferenceRequest
+          ],
         )
       end
     end
@@ -286,7 +290,11 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:requestable_type) }
       it do
         is_expected.to validate_inclusion_of(:requestable_type).in_array(
-          %w[FurtherInformationRequest ReferenceRequest],
+          %w[
+            FurtherInformationRequest
+            ProfessionalStandingRequest
+            ReferenceRequest
+          ],
         )
       end
     end
@@ -308,7 +316,11 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:requestable_type) }
       it do
         is_expected.to validate_inclusion_of(:requestable_type).in_array(
-          %w[FurtherInformationRequest ReferenceRequest],
+          %w[
+            FurtherInformationRequest
+            ProfessionalStandingRequest
+            ReferenceRequest
+          ],
         )
       end
     end

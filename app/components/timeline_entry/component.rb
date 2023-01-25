@@ -136,6 +136,7 @@ module TimelineEntry
       {
         requested_at:
           timeline_event.requestable.created_at.to_fs(:date_and_time),
+        location_note: timeline_event.requestable.try(:location_note),
       }
     end
 
