@@ -167,6 +167,11 @@ module PageHelpers
       PageObjects::EligibilityInterface::TeachChildren.new
   end
 
+  def qualified_for_subject_page
+    @qualified_for_subject_page ||=
+      PageObjects::EligibilityInterface::QualifiedForSubject.new
+  end
+
   def teacher_add_another_work_history_page
     @teacher_add_another_work_history_page ||=
       PageObjects::TeacherInterface::AddAnotherWorkHistory.new

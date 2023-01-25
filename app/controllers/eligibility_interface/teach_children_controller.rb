@@ -4,7 +4,10 @@ module EligibilityInterface
 
     def new
       @teach_children_form =
-        TeachChildrenForm.new(teach_children: eligibility_check.teach_children)
+        TeachChildrenForm.new(
+          eligibility_check:,
+          teach_children: eligibility_check.teach_children,
+        )
     end
 
     def create
@@ -13,13 +16,21 @@ module EligibilityInterface
           teach_children_form_params.merge(eligibility_check:),
         )
       if @teach_children_form.save
-        redirect_to paths[:work_experience]
+        redirect_to next_path
       else
         render :new, status: :unprocessable_entity
       end
     end
 
     private
+
+    def next_path
+      if eligibility_check.qualified_for_subject_required?
+        paths[:qualified_for_subject]
+      else
+        paths[:work_experience]
+      end
+    end
 
     def teach_children_form_params
       params.require(:eligibility_interface_teach_children_form).permit(

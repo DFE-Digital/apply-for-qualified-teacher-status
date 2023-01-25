@@ -73,6 +73,8 @@ Rails.application.routes.draw do
     post "region", to: "region#create"
     get "teach-children", to: "teach_children#new"
     post "teach-children", to: "teach_children#create"
+    get "qualified-for-subject", to: "qualified_for_subject#new"
+    post "qualified-for-subject", to: "qualified_for_subject#create"
     get "work-experience", to: "work_experience#new"
     post "work-experience", to: "work_experience#create"
   end
