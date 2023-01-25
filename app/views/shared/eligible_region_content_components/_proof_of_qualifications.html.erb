@@ -15,4 +15,10 @@
   </p>
 <% end %>
 
-<p class="govuk-body"><%= region.qualifications_information %></p>
+<% if region.qualifications_information.present? %>
+  <%= raw GovukMarkdown.render(region.qualifications_information) %>
+<% end %>
+
+<% if region.country.qualifications_information.present? %>
+  <%= raw GovukMarkdown.render(region.country.qualifications_information) %>
+<% end %>

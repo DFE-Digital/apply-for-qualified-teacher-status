@@ -2,7 +2,8 @@ module PageObjects
   module TeacherInterface
     class QualificationsForm < SitePrism::Page
       element :heading, "h1"
-      elements :body, ".govuk-body-l"
+      element :body, ".govuk-body-l"
+      element :qualifications_information, "#app-qualifications-information"
 
       section :form, "form" do
         element :title, "#teacher-interface-qualification-form-title-field"
