@@ -9,10 +9,14 @@ class FailureReasons
     DUPLICATE_APPLICATION = "duplicate_application",
     FULL_PROFESSIONAL_STATUS = "full_professional_status",
     NOT_QUALIFIED_TO_TEACH_MAINSTREAM = "not_qualified_to_teach_mainstream",
+    QUALIFIED_TO_TEACH_CHILDREN_11_TO_16 =
+      "qualified_to_teach_children_11_to_16",
     TEACHING_HOURS_NOT_FULFILLED = "teaching_hours_not_fulfilled",
     TEACHING_QUALIFICATION = "teaching_qualification",
     TEACHING_QUALIFICATION_1_YEAR = "teaching_qualification_1_year",
     TEACHING_QUALIFICATION_PEDAGOGY = "teaching_qualification_pedagogy",
+    TEACHING_QUALIFICATION_SUBJECTS_CRITERIA =
+      "teaching_qualification_subjects_criteria",
     TEACHING_QUALIFICATIONS_FROM_INELIGIBLE_COUNTRY =
       "teaching_qualifications_from_ineligible_country",
     TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL =
