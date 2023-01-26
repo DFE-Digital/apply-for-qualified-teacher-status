@@ -120,6 +120,9 @@
     <% if @assessment_section_view_object.application_form.english_language_proof_method_medium_of_instruction? %>
       <%= render "english_language_moi_country_details" %>
     <% end %>
+    <% if @assessment_section_view_object.application_form.english_language_proof_method_provider? %>
+      <%= render "english_language_provider_details", provider:  @assessment_section_view_object.application_form.english_language_provider %>
+    <% end %>
 
     <% if @assessment_section_view_object.checks.any? %>
       <h2 class="govuk-heading-s">Check:</h2>

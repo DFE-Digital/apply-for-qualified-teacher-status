@@ -132,7 +132,10 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   def and_the_application_english_language_proof_method_is_provider
-    application_form.update!(english_language_proof_method: "provider")
+    application_form.update!(
+      english_language_proof_method: "provider",
+      english_language_provider: create(:english_language_provider),
+    )
     application_form
       .assessment
       .sections
@@ -179,7 +182,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     )
     expect(
       check_english_language_proficiency_page.exemption_heading.text,
-    ).to eq("English language exemption by qualification")
+    ).to eq("English language exemption by country of study")
     check_english_language_proficiency_page.return_button.click
   end
 
@@ -190,7 +193,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     expect(
       check_english_language_proficiency_page.cards.first.heading.text,
     ).to eq("Verify your English language proficiency")
-    expect(check_english_language_proficiency_page.checks.text).to eq(
+    expect(check_english_language_proficiency_page.lists.last.text).to eq(
       I18n.t(
         "assessor_interface.assessment_sections.show.checks.english_language_valid_provider",
       ),
@@ -204,7 +207,8 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     expect(
       check_english_language_proficiency_page.cards.first.heading.text,
     ).to eq("Verify your English language proficiency")
-    expect(check_english_language_proficiency_page.checks.text).to eq(
+
+    expect(check_english_language_proficiency_page.lists.last.text).to eq(
       I18n.t(
         "assessor_interface.assessment_sections.show.checks.english_language_valid_moi",
       ),

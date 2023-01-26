@@ -12,7 +12,7 @@ module PageObjects
                EnglishLanguageProficiencyCard,
                ".govuk-summary-list__card"
 
-      element :checks, ".govuk-list"
+      elements :lists, ".govuk-list"
 
       element :exemption_heading, "h2.govuk-heading-m"
       element :return_button, ".govuk-button", text: "Return to task list"
