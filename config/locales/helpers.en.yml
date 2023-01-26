@@ -26,7 +26,7 @@ en:
         proof_method: There are 2 ways you can do this.
         proof_method_options:
           medium_of_instruction: This type of official document is sometimes called a ‘Medium of instruction’ (MOI). You can get it by contacting the institution where you studied and it will need to be provided by a senior member of that institution.
-          provider: The test must have been taken within the last 2 years. We cannot accept English language tests from a provider that does not appear on the list.
+          provider: The test must have been taken within the last 2 years. We cannot accept English language proficiency tests from a provider that does not appear on the list.
       teacher_interface_further_information_request_item_text_form:
         response: Use the text box below to respond to the assessor’s question.
       teacher_interface_has_work_history_form:

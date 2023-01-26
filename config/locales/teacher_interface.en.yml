@@ -22,7 +22,7 @@ en:
           description: If your teaching qualification or university degree was taught in any of the following countries, you’re exempt from English language requirements.
           evidence: You’ll need to provide the transcript from the qualification as evidence. You can do this in the ‘Your qualifications’ section of the application form.
       edit_provider:
-        heading: Tell us about your approved English language test provider
+        heading: Tell us about your approved English language proficiency test provider
         description: We need to know which of the approved providers you used for your English language proficiency test.
       edit_provider_reference:
         heading: English language proficiency
@@ -199,8 +199,8 @@ en:
         teacher_interface/english_language_provider_form:
           attributes:
             provider_id:
-              blank: Select your approved English language test provider
-              inclusion: Select your approved English language test provider
+              blank: Select your approved English language proficiency test provider
+              inclusion: Select your approved English language proficiency test provider
         teacher_interface/english_language_provider_reference_form:
           attributes:
             reference:

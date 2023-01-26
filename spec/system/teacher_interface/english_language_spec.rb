@@ -379,7 +379,7 @@ RSpec.describe "Teacher English language", type: :system do
     reference_summary_list_row =
       teacher_check_english_language_page.summary_list.rows.fifth
     expect(reference_summary_list_row.key.text).to eq(
-      "English language proficiency test",
+      "English language proficiency test document",
     )
     expect(reference_summary_list_row.value.text).to eq(
       "upload.pdf (opens in a new tab)",
