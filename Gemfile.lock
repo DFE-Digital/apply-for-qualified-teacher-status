@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/govuk_feature_flags.git
-  revision: 9eb0b32225a7dbcd33204343ef8a2a05bfeffcd0
+  revision: ac67ee4400f5b5316068fd5957a62a07d8749a75
   specs:
     govuk_feature_flags (0.1.0)
       rails (>= 7.0.4)
@@ -201,7 +201,7 @@ GEM
     fugit (1.8.0)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
-    globalid (1.0.1)
+    globalid (1.1.0)
       activesupport (>= 5.0)
     google-apis-bigquery_v2 (0.45.0)
       google-apis-core (>= 0.9.1, < 2.a)
