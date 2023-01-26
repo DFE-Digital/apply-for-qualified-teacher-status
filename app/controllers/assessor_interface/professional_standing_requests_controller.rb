@@ -5,25 +5,22 @@ module AssessorInterface
     before_action :authorize_note
 
     def edit
-      @professional_standing_request_form =
-        ProfessionalStandingRequestForm.new(
-          professional_standing_request:,
+      @form =
+        RequestableLocationForm.new(
+          requestable:,
           user: current_staff,
-          received: professional_standing_request.received?,
-          location_note: professional_standing_request.location_note,
+          received: requestable.received?,
+          location_note: requestable.location_note,
         )
     end
 
     def update
-      @professional_standing_request_form =
-        ProfessionalStandingRequestForm.new(
-          professional_standing_request_form.merge(
-            professional_standing_request:,
-            user: current_staff,
-          ),
+      @form =
+        RequestableLocationForm.new(
+          requestable_location_form.merge(requestable:, user: current_staff),
         )
 
-      if @professional_standing_request_form.save
+      if @form.save
         redirect_to [:assessor_interface, application_form]
       else
         render :edit, status: :unprocessable_entity
@@ -32,10 +29,11 @@ module AssessorInterface
 
     private
 
-    def professional_standing_request_form
-      params.require(
-        :assessor_interface_professional_standing_request_form,
-      ).permit(:received, :location_note)
+    def requestable_location_form
+      params.require(:assessor_interface_requestable_location_form).permit(
+        :received,
+        :location_note,
+      )
     end
 
     def application_form
@@ -47,5 +45,7 @@ module AssessorInterface
 
     delegate :professional_standing_request, to: :assessment
     delegate :assessment, to: :application_form
+
+    alias_method :requestable, :professional_standing_request
   end
 end

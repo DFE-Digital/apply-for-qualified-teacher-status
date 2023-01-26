@@ -17,6 +17,8 @@ module Requestable
     define_method :received! do
       update!(state: "received", received_at: Time.zone.now)
     end
+
+    delegate :application_form, to: :assessment
   end
 
   def expired_at

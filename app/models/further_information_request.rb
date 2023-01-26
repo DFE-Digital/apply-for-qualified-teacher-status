@@ -27,8 +27,6 @@ class FurtherInformationRequest < ApplicationRecord
 
   has_many :reminder_emails
 
-  delegate :application_form, to: :assessment
-
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
 
   def failed

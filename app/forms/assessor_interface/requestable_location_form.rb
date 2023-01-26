@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class AssessorInterface::ProfessionalStandingRequestForm
+class AssessorInterface::RequestableLocationForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attr_accessor :professional_standing_request, :user
-  validates :professional_standing_request, :user, presence: true
+  attr_accessor :requestable, :user
+  validates :requestable, :user, presence: true
 
   attribute :received, :boolean
 
@@ -16,11 +16,11 @@ class AssessorInterface::ProfessionalStandingRequestForm
     return false unless valid?
 
     ActiveRecord::Base.transaction do
-      professional_standing_request.update!(location_note:)
+      requestable.update!(location_note:)
 
-      if received.present? && !professional_standing_request.received?
+      if received.present? && !requestable.received?
         receive_professional_standing
-      elsif received.blank? && professional_standing_request.received?
+      elsif received.blank? && requestable.received?
         request_professional_standing
       end
 
@@ -30,27 +30,24 @@ class AssessorInterface::ProfessionalStandingRequestForm
     true
   end
 
-  delegate :application_form, :assessment, to: :professional_standing_request
+  delegate :application_form, :assessment, to: :requestable
 
   private
 
   def receive_professional_standing
-    professional_standing_request.received!
+    requestable.received!
 
     TimelineEvent.create!(
       event_type: "requestable_received",
       application_form:,
       creator: user,
-      requestable: professional_standing_request,
+      requestable:,
     )
   end
 
   def request_professional_standing
-    professional_standing_request.requested!
+    requestable.requested!
 
-    TimelineEvent
-      .requestable_received
-      .where(requestable: professional_standing_request)
-      .destroy_all
+    TimelineEvent.requestable_received.where(requestable:).destroy_all
   end
 end

@@ -264,7 +264,7 @@ en:
           attributes:
             induction_required:
               inclusion: Select whether the teacher requires induction
-        assessor_interface/professional_standing_request_form:
+        assessor_interface/requestable_location_form:
           attributes:
             location_note:
               blank: Enter where the assessor can find it
