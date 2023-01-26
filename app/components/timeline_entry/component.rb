@@ -87,25 +87,6 @@ module TimelineEntry
       { text: timeline_event.note.text }
     end
 
-    def further_information_request_assessed_vars
-      further_information_request = timeline_event.further_information_request
-      {
-        passed: further_information_request.passed,
-        failure_assessor_note:
-          further_information_request.failure_assessor_note,
-      }
-    end
-
-    def further_information_request_expired_vars
-      {
-        further_information_request: timeline_event.further_information_request,
-        date_requested:
-          timeline_event.further_information_request.created_at.to_fs(
-            :date_and_time,
-          ),
-      }
-    end
-
     def email_sent_vars
       {
         subject:
