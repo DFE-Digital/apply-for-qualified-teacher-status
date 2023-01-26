@@ -1,0 +1,7 @@
+---
+applications:
+  - name: apply-for-qts-unavailable
+    path: web
+    buildpacks:
+      - nginx_buildpack
+    instances: 2
