@@ -200,6 +200,15 @@
     - created_at
     - updated_at
     - part_of_university_degree
+  :qualification_requests:
+    - id
+    - assessment_id
+    - qualification_id
+    - state
+    - received_at
+    - location_note
+    - created_at
+    - updated_at
   :reference_requests:
     - id
     - slug

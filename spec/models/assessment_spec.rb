@@ -38,6 +38,7 @@ RSpec.describe Assessment, type: :model do
   describe "associations" do
     it { is_expected.to have_many(:sections) }
     it { is_expected.to have_many(:further_information_requests) }
+    it { is_expected.to have_many(:qualification_requests) }
   end
 
   describe "validations" do
