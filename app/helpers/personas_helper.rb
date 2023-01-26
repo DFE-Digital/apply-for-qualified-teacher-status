@@ -1,5 +1,5 @@
 module PersonasHelper
-  def region_bucket_for_teacher_persona(persona)
+  def region_bucket_for_persona(persona)
     REGION_BUCKETS[persona.slice(:status_check, :sanction_check)]
   end
 

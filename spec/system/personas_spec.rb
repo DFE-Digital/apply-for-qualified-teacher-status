@@ -26,6 +26,11 @@ RSpec.describe "Personas", type: :system do
 
       when_i_visit_the(:personas_page)
 
+      when_i_sign_in_as_an_eligible_persona
+      then_i_see_the(:eligible_page)
+
+      when_i_visit_the(:personas_page)
+
       when_i_sign_in_as_a_teacher_persona
       then_i_see_the(:teacher_application_page)
 
@@ -55,6 +60,8 @@ RSpec.describe "Personas", type: :system do
   end
 
   def given_personas_exist
+    create(:region, :online_checks, name: "Example Region")
+
     create(:staff, :confirmed, email: "staff@example.com")
 
     teacher = create(:teacher, email: "teacher@example.com")
@@ -67,6 +74,10 @@ RSpec.describe "Personas", type: :system do
     personas_page.staff.buttons.first.click
   end
 
+  def when_i_sign_in_as_an_eligible_persona
+    personas_page.eligibles.buttons.first.click
+  end
+
   def when_i_sign_in_as_a_teacher_persona
     personas_page.teachers.buttons.first.click
   end
@@ -76,11 +87,13 @@ RSpec.describe "Personas", type: :system do
   end
 
   def and_i_see_no_personas
+    expect(personas_page.eligibles).to have_content("No eligible personas.")
     expect(personas_page.staff).to have_content("No staff personas.")
     expect(personas_page.teachers).to have_content("No teacher personas.")
   end
 
   def and_i_see_some_personas
+    expect(personas_page.eligibles).to have_content("Example Region")
     expect(personas_page.staff).to have_content("staff@example.com")
     expect(personas_page.teachers).to have_content("teacher@example.com")
   end

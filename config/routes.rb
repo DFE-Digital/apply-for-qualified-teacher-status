@@ -317,6 +317,7 @@ Rails.application.routes.draw do
 
   resources :personas, only: %i[index] do
     member do
+      post "eligible", to: "personas#eligible_sign_in", as: "eligible_sign_in"
       post "staff", to: "personas#staff_sign_in", as: "staff_sign_in"
       post "teacher", to: "personas#teacher_sign_in", as: "teacher_sign_in"
     end
