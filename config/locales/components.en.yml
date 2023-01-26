@@ -32,6 +32,7 @@ en:
         further_information_request_expired: Further information expired
         email_sent: Email sent
         age_range_subjects_verified: Age range and subjects verified
+        assessment_section_recorded: Assessment section recorded
         requestable_requested:
           FurtherInformationRequest: Further information requested
           QualificationRequest: Qualification requested
