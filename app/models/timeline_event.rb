@@ -14,6 +14,7 @@
 #  message_subject                :string           default(""), not null
 #  new_state                      :string           default(""), not null
 #  old_state                      :string           default(""), not null
+#  requestable_type               :string
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #  application_form_id            :bigint           not null
@@ -23,6 +24,7 @@
 #  creator_id                     :integer
 #  further_information_request_id :bigint
 #  note_id                        :bigint
+#  requestable_id                 :bigint
 #
 # Indexes
 #
@@ -32,6 +34,7 @@
 #  index_timeline_events_on_assignee_id                     (assignee_id)
 #  index_timeline_events_on_further_information_request_id  (further_information_request_id)
 #  index_timeline_events_on_note_id                         (note_id)
+#  index_timeline_events_on_requestable                     (requestable_type,requestable_id)
 #
 # Foreign Keys
 #
@@ -63,6 +66,10 @@ class TimelineEvent < ApplicationRecord
          age_range_subjects_verified: "age_range_subjects_verified",
          further_information_request_expired:
            "further_information_request_expired",
+         requestable_requested: "requestable_requested",
+         requestable_received: "requestable_received",
+         requestable_expired: "requestable_expired",
+         requestable_assessed: "requestable_assessed",
        }
   validates :event_type, inclusion: { in: event_types.values }
 
@@ -121,4 +128,24 @@ class TimelineEvent < ApplicationRecord
   belongs_to :assessment, optional: true
   validates :assessment, presence: true, if: :age_range_subjects_verified?
   validates :assessment, absence: true, unless: :age_range_subjects_verified?
+
+  belongs_to :requestable, polymorphic: true, optional: true
+  validates :requestable_id, presence: true, if: :requestable_event_type?
+  validates :requestable_type,
+            presence: true,
+            inclusion: %w[
+              FurtherInformationRequest
+              QualificationRequest
+              ReferenceRequest
+            ],
+            if: :requestable_event_type?
+  validates :requestable_id,
+            :requestable_type,
+            absence: true,
+            unless: :requestable_event_type?
+
+  def requestable_event_type?
+    requestable_requested? || requestable_received? || requestable_expired? ||
+      requestable_assessed?
+  end
 end

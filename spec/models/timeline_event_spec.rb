@@ -12,6 +12,7 @@
 #  message_subject                :string           default(""), not null
 #  new_state                      :string           default(""), not null
 #  old_state                      :string           default(""), not null
+#  requestable_type               :string
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #  application_form_id            :bigint           not null
@@ -21,6 +22,7 @@
 #  creator_id                     :integer
 #  further_information_request_id :bigint
 #  note_id                        :bigint
+#  requestable_id                 :bigint
 #
 # Indexes
 #
@@ -30,6 +32,7 @@
 #  index_timeline_events_on_assignee_id                     (assignee_id)
 #  index_timeline_events_on_further_information_request_id  (further_information_request_id)
 #  index_timeline_events_on_note_id                         (note_id)
+#  index_timeline_events_on_requestable                     (requestable_type,requestable_id)
 #
 # Foreign Keys
 #
@@ -81,6 +84,10 @@ RSpec.describe TimelineEvent do
         age_range_subjects_verified: "age_range_subjects_verified",
         further_information_request_expired:
           "further_information_request_expired",
+        requestable_requested: "requestable_requested",
+        requestable_received: "requestable_received",
+        requestable_expired: "requestable_expired",
+        requestable_assessed: "requestable_assessed",
       ).backed_by_column_of_type(:string)
     end
 
@@ -97,6 +104,8 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
     end
 
     context "with an reviewer assigned event type" do
@@ -112,6 +121,8 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
     end
 
     context "with a state changed event type" do
@@ -127,6 +138,8 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
     end
 
     context "with an assessment section recorded event type" do
@@ -142,6 +155,8 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
     end
 
     context "with a note created event type" do
@@ -157,6 +172,8 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
     end
 
     context "with a further information request assessed event type" do
@@ -174,6 +191,8 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
     end
 
     context "with a further information request expired event type" do
@@ -191,6 +210,8 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
     end
 
     context "with an email sent event type" do
@@ -206,6 +227,8 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:mailer_action_name) }
       it { is_expected.to validate_presence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
     end
 
     context "with an age range subjects verified event type" do
@@ -221,6 +244,96 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_presence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
+    end
+
+    context "with a requestable requested event type" do
+      before { timeline_event.event_type = :requestable_received }
+
+      it { is_expected.to validate_absence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:old_state) }
+      it { is_expected.to validate_absence_of(:new_state) }
+      it { is_expected.to validate_absence_of(:assessment_section) }
+      it { is_expected.to validate_absence_of(:note) }
+      it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_class_name) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
+      it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_presence_of(:requestable_id) }
+      it { is_expected.to validate_presence_of(:requestable_type) }
+      it do
+        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+          %w[FurtherInformationRequest ReferenceRequest],
+        )
+      end
+    end
+
+    context "with a requestable received event type" do
+      before { timeline_event.event_type = :requestable_received }
+
+      it { is_expected.to validate_absence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:old_state) }
+      it { is_expected.to validate_absence_of(:new_state) }
+      it { is_expected.to validate_absence_of(:assessment_section) }
+      it { is_expected.to validate_absence_of(:note) }
+      it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_class_name) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
+      it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_presence_of(:requestable_id) }
+      it { is_expected.to validate_presence_of(:requestable_type) }
+      it do
+        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+          %w[FurtherInformationRequest QualificationRequest ReferenceRequest],
+        )
+      end
+    end
+
+    context "with a requestable expired event type" do
+      before { timeline_event.event_type = :requestable_expired }
+
+      it { is_expected.to validate_absence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:old_state) }
+      it { is_expected.to validate_absence_of(:new_state) }
+      it { is_expected.to validate_absence_of(:assessment_section) }
+      it { is_expected.to validate_absence_of(:note) }
+      it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_class_name) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
+      it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_presence_of(:requestable_id) }
+      it { is_expected.to validate_presence_of(:requestable_type) }
+      it do
+        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+          %w[FurtherInformationRequest QualificationRequest ReferenceRequest],
+        )
+      end
+    end
+
+    context "with a requestable assessed event type" do
+      before { timeline_event.event_type = :requestable_assessed }
+
+      it { is_expected.to validate_absence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:old_state) }
+      it { is_expected.to validate_absence_of(:new_state) }
+      it { is_expected.to validate_absence_of(:assessment_section) }
+      it { is_expected.to validate_absence_of(:note) }
+      it { is_expected.to validate_absence_of(:further_information_request) }
+      it { is_expected.to validate_absence_of(:mailer_class_name) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
+      it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_presence_of(:requestable_id) }
+      it { is_expected.to validate_presence_of(:requestable_type) }
+      it do
+        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+          %w[FurtherInformationRequest QualificationRequest ReferenceRequest],
+        )
+      end
     end
   end
 end

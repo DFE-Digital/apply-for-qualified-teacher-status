@@ -24,12 +24,11 @@ RSpec.describe AssessorInterface::ReviewerAssignmentForm, type: :model do
       expect { save }.to change(application_form, :reviewer_id).to(reviewer_id)
     end
 
-    it "creates a timeline event" do
-      expect { save }.to change { TimelineEvent.count }.by(1)
-
-      created_event = TimelineEvent.last
-      expect(created_event.creator).to eq(staff)
-      expect(created_event).to be_reviewer_assigned
+    it "records a timeline event" do
+      expect { save }.to have_recorded_timeline_event(
+        :reviewer_assigned,
+        creator: staff,
+      )
     end
   end
 end

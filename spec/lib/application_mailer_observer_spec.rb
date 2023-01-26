@@ -9,19 +9,14 @@ RSpec.describe ApplicationMailerObserver do
 
   subject(:delivered_email) { described_class.delivered_email(message) }
 
-  it "creates a timeline event" do
-    expect { delivered_email }.to change(TimelineEvent, :count).by(1)
-  end
-
-  it "sets the attributes" do
-    timeline_event = delivered_email
-
-    expect(timeline_event.event_type).to eq("email_sent")
-    expect(timeline_event.application_form).to eq(application_form)
-    expect(timeline_event.mailer_class_name).to eq("TeacherMailer")
-    expect(timeline_event.mailer_action_name).to eq("application_received")
-    expect(timeline_event.message_subject).to eq(
-      "We’ve received your application for qualified teacher status (QTS)",
+  it "records a timeline event" do
+    expect { delivered_email }.to have_recorded_timeline_event(
+      :email_sent,
+      application_form:,
+      mailer_class_name: "TeacherMailer",
+      mailer_action_name: "application_received",
+      message_subject:
+        "We’ve received your application for qualified teacher status (QTS)",
     )
   end
 
