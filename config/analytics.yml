@@ -317,11 +317,12 @@
     - new_state
     - assessment_section_id
     - note_id
-    - further_information_request_id
     - mailer_class_name
     - mailer_action_name
     - message_subject
     - assessment_id
+    - requestable_type
+    - requestable_id
   :uploads:
     - id
     - document_id

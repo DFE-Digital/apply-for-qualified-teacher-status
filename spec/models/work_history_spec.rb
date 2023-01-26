@@ -73,4 +73,47 @@ RSpec.describe WorkHistory, type: :model do
       it { is_expected.to eq(false) }
     end
   end
+
+  describe "#complete?" do
+    subject(:complete?) { work_history.complete? }
+
+    it { is_expected.to be false }
+
+    context "with a partially complete qualification" do
+      before { work_history.update!(school_name: "School name") }
+
+      it { is_expected.to be false }
+    end
+
+    context "with a complete qualification" do
+      let(:work_history) { build(:work_history, :completed) }
+
+      it { is_expected.to be true }
+    end
+
+    context "without contact information" do
+      let(:application_form) { build(:application_form) }
+
+      let(:work_history) do
+        build(
+          :work_history,
+          :completed,
+          application_form:,
+          contact_name: "",
+          contact_job: "",
+          contact_email: "",
+        )
+      end
+
+      it { is_expected.to be false }
+
+      context "with a reduced evidence application form" do
+        let(:application_form) do
+          build(:application_form, reduced_evidence_accepted: true)
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+  end
 end

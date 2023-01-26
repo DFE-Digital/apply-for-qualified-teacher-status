@@ -22,7 +22,7 @@ en:
           description: If your teaching qualification or university degree was taught in any of the following countries, you’re exempt from English language requirements.
           evidence: You’ll need to provide the transcript from the qualification as evidence. You can do this in the ‘Your qualifications’ section of the application form.
       edit_provider:
-        heading: Tell us about your approved English language test provider
+        heading: Tell us about your approved English language proficiency test provider
         description: We need to know which of the approved providers you used for your English language proficiency test.
       edit_provider_reference:
         heading: English language proficiency
@@ -143,7 +143,7 @@ en:
         teachers/otp_form:
           attributes:
             otp:
-              blank: Enter your code
+              blank: Enter your confirmation code
               wrong_length: Enter a valid code
         teacher_interface/age_range_form:
           attributes:
@@ -174,7 +174,7 @@ en:
         teacher_interface/add_another_work_history_form:
           attributes:
             add_another:
-              inclusion: Select whether you need to add another work history
+              inclusion: Select whether you need to add another role
         teacher_interface/delete_qualification_form:
           attributes:
             confirm:
@@ -186,7 +186,7 @@ en:
         teacher_interface/delete_work_history_form:
           attributes:
             confirm:
-              inclusion: Select whether you want to delete this work history
+              inclusion: Select whether you want to delete this role
         teacher_interface/english_language_exemption_form:
           attributes:
             exempt:
@@ -199,8 +199,8 @@ en:
         teacher_interface/english_language_provider_form:
           attributes:
             provider_id:
-              blank: Select your approved English language test provider
-              inclusion: Select your approved English language test provider
+              blank: Select your approved English language proficiency test provider
+              inclusion: Select your approved English language proficiency test provider
         teacher_interface/english_language_provider_reference_form:
           attributes:
             reference:
@@ -320,11 +320,11 @@ en:
         teacher_interface/work_history_contact_form:
           attributes:
             contact_name:
-              blank: Enter the full name
+              blank: Enter this person’s full name
             contact_job:
               blank: Enter this person’s job title
             contact_email:
-              blank: Enter the email address
+              blank: Enter this person’s email address
         teacher_interface/work_history_school_form:
           attributes:
             meets_all_requirements:

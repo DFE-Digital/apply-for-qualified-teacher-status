@@ -16,7 +16,8 @@ module ProofOfRecognitionHelper
   def proof_of_recognition_description_for(region:)
     if region.teaching_authority_provides_written_statement?
       "The document must confirm:"
-    elsif !region.status_check_written? && region.sanction_check_written?
+    elsif !region.status_check_written? && region.sanction_check_written? &&
+          !region.application_form_skip_work_history?
       "In the #{region_certificate_name(region)} the #{region_teaching_authority_name(region)} must confirm " \
         "that your authorisation to teach has never been:"
     else

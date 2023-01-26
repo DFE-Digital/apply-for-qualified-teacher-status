@@ -24,8 +24,8 @@ class UpdateFurtherInformationRequest
     unless further_information_request.passed.nil?
       TimelineEvent.create!(
         creator: user,
-        event_type: :further_information_request_assessed,
-        further_information_request:,
+        event_type: "requestable_assessed",
+        requestable: further_information_request,
         application_form:,
       )
     end

@@ -24,7 +24,10 @@ module TeacherInterface
     end
 
     def update
-      reference_request.received! if reference_request.responses_given?
+      SubmitReferenceRequest.call(
+        reference_request:,
+        user: reference_request.work_history.contact_name,
+      )
 
       redirect_to teacher_interface_reference_request_path
     end

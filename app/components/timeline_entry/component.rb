@@ -13,6 +13,28 @@ module TimelineEntry
         timeline_event.creator.email
     end
 
+    def title
+      locale_key =
+        if timeline_event.requestable_event_type?
+          "components.timeline_entry.title.#{timeline_event.event_type}.#{timeline_event.requestable.class.name}"
+        else
+          "components.timeline_entry.title.#{timeline_event.event_type}"
+        end
+
+      I18n.t(locale_key)
+    end
+
+    def description
+      locale_key =
+        if timeline_event.requestable_event_type?
+          "components.timeline_entry.description.#{timeline_event.event_type}.#{timeline_event.requestable.class.name}"
+        else
+          "components.timeline_entry.description.#{timeline_event.event_type}"
+        end
+
+      I18n.t(locale_key, **description_vars)
+    end
+
     def description_vars
       send("#{timeline_event.event_type}_vars")
     end
@@ -65,25 +87,6 @@ module TimelineEntry
       { text: timeline_event.note.text }
     end
 
-    def further_information_request_assessed_vars
-      further_information_request = timeline_event.further_information_request
-      {
-        passed: further_information_request.passed,
-        failure_assessor_note:
-          further_information_request.failure_assessor_note,
-      }
-    end
-
-    def further_information_request_expired_vars
-      {
-        further_information_request: timeline_event.further_information_request,
-        date_requested:
-          timeline_event.further_information_request.created_at.strftime(
-            "%e %B %Y at %l:%M %P",
-          ),
-      }
-    end
-
     def email_sent_vars
       {
         subject:
@@ -104,6 +107,33 @@ module TimelineEntry
         subjects: Subject.find(assessment.subjects).map(&:name).join(", "),
         subjects_note: assessment.subjects_note,
       }
+    end
+
+    def requestable_requested_vars
+      {}
+    end
+
+    def requestable_received_vars
+      {
+        requested_at:
+          timeline_event.requestable.created_at.to_fs(:date_and_time),
+      }
+    end
+
+    alias_method :requestable_expired_vars, :requestable_received_vars
+
+    def requestable_assessed_vars
+      requestable = timeline_event.requestable
+
+      case requestable
+      when FurtherInformationRequest
+        {
+          passed: requestable.passed,
+          failure_assessor_note: requestable.failure_assessor_note,
+        }
+      else
+        {}
+      end
     end
   end
 end

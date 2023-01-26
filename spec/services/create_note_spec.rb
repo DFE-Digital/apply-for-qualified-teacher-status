@@ -25,22 +25,10 @@ RSpec.describe CreateNote do
     end
   end
 
-  describe "record timeline event" do
-    subject(:timeline_event) do
-      TimelineEvent.note_created.find_by(application_form:)
-    end
-
-    it { is_expected.to be_nil }
-
-    context "after calling the service" do
-      before { call }
-
-      it { is_expected.to_not be_nil }
-
-      it "sets the attributes correctly" do
-        expect(timeline_event.creator).to eq(author)
-        expect(timeline_event.note).to eq(Note.first)
-      end
-    end
+  it "records a timeline event" do
+    expect { call }.to have_recorded_timeline_event(
+      :note_created,
+      creator: author,
+    )
   end
 end

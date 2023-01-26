@@ -12,13 +12,13 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     it "records a timeline event" do
-      expect { call }.to change(TimelineEvent.state_changed, :count).by(1)
-
-      timeline_event = TimelineEvent.state_changed.find_by(application_form:)
-
-      expect(timeline_event.creator).to eq(user)
-      expect(timeline_event.old_state).to eq("draft")
-      expect(timeline_event.new_state).to eq(new_status)
+      expect { call }.to have_recorded_timeline_event(
+        :state_changed,
+        creator: user,
+        application_form:,
+        old_state: "draft",
+        new_state: new_status,
+      )
     end
   end
 
@@ -155,8 +155,8 @@ RSpec.describe ApplicationFormStatusUpdater do
         expect { call }.to_not change(application_form, :status).from("draft")
       end
 
-      it "doesn't create a timeline event" do
-        expect { call }.to_not change(TimelineEvent.state_changed, :count)
+      it "doesn't record a timeline event" do
+        expect { call }.to_not have_recorded_timeline_event(:state_changed)
       end
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_25_161536) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_25_191242) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -412,18 +412,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_25_161536) do
     t.string "new_state", default: "", null: false
     t.bigint "assessment_section_id"
     t.bigint "note_id"
-    t.bigint "further_information_request_id"
     t.string "creator_name", default: "", null: false
     t.string "mailer_action_name", default: "", null: false
     t.bigint "assessment_id"
     t.string "message_subject", default: "", null: false
     t.string "mailer_class_name", default: "", null: false
+    t.string "requestable_type"
+    t.bigint "requestable_id"
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
     t.index ["assessment_id"], name: "index_timeline_events_on_assessment_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
-    t.index ["further_information_request_id"], name: "index_timeline_events_on_further_information_request_id"
     t.index ["note_id"], name: "index_timeline_events_on_note_id"
+    t.index ["requestable_type", "requestable_id"], name: "index_timeline_events_on_requestable"
   end
 
   create_table "uploads", force: :cascade do |t|
@@ -478,7 +479,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_25_161536) do
   add_foreign_key "timeline_events", "application_forms"
   add_foreign_key "timeline_events", "assessment_sections"
   add_foreign_key "timeline_events", "assessments"
-  add_foreign_key "timeline_events", "further_information_requests"
   add_foreign_key "timeline_events", "notes"
   add_foreign_key "timeline_events", "staff", column: "assignee_id"
   add_foreign_key "uploads", "documents"

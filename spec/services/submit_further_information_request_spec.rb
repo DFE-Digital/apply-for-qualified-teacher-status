@@ -50,21 +50,19 @@ RSpec.describe SubmitFurtherInformationRequest do
     )
   end
 
-  describe "recording timeline event" do
-    subject(:timeline_event) do
-      TimelineEvent.state_changed.where(application_form:).last
-    end
+  it "records a requestable received timeline event" do
+    expect { call }.to have_recorded_timeline_event(
+      :requestable_received,
+      requestable: further_information_request,
+    )
+  end
 
-    context "after calling the service" do
-      before { call }
-
-      it { is_expected.to_not be_nil }
-
-      it "sets the attributes correctly" do
-        expect(timeline_event.creator).to eq(user)
-        expect(timeline_event.old_state).to eq("submitted")
-        expect(timeline_event.new_state).to eq("received")
-      end
-    end
+  it "records a state changed timeline event" do
+    expect { call }.to have_recorded_timeline_event(
+      :state_changed,
+      creator: user,
+      old_state: "submitted",
+      new_state: "received",
+    )
   end
 end
