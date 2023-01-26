@@ -13,10 +13,12 @@ class ApplicationFormStatusUpdater
 
     ActiveRecord::Base.transaction do
       application_form.update!(
-        waiting_on_professional_standing:,
-        received_professional_standing:,
         waiting_on_further_information:,
         received_further_information:,
+        waiting_on_professional_standing:,
+        received_professional_standing:,
+        waiting_on_qualification:,
+        received_qualification:,
         waiting_on_reference:,
         received_reference:,
       )
@@ -32,6 +34,14 @@ class ApplicationFormStatusUpdater
 
   attr_reader :application_form, :user
 
+  def waiting_on_further_information
+    waiting_on?(requestables: further_information_requests)
+  end
+
+  def received_further_information
+    received?(requestables: further_information_requests)
+  end
+
   def waiting_on_professional_standing
     waiting_on?(requestables: professional_standing_requests)
   end
@@ -40,12 +50,12 @@ class ApplicationFormStatusUpdater
     received?(requestables: professional_standing_requests)
   end
 
-  def waiting_on_further_information
-    waiting_on?(requestables: further_information_requests)
+  def waiting_on_qualification
+    waiting_on?(requestables: qualification_requests)
   end
 
-  def received_further_information
-    received?(requestables: further_information_requests)
+  def received_qualification
+    received?(requestables: qualification_requests)
   end
 
   def waiting_on_reference
@@ -66,10 +76,12 @@ class ApplicationFormStatusUpdater
         "awarded"
       elsif dqt_trn_request.present?
         "awarded_pending_checks"
-      elsif waiting_on_professional_standing ||
-            waiting_on_further_information || waiting_on_reference
+      elsif waiting_on_further_information ||
+            waiting_on_professional_standing || waiting_on_qualification ||
+            waiting_on_reference
         "waiting_on"
-      elsif received_further_information || received_reference
+      elsif received_further_information || received_qualification ||
+            received_reference
         "received"
       elsif assessment&.started?
         "initial_assessment"
@@ -83,15 +95,19 @@ class ApplicationFormStatusUpdater
 
   delegate :assessment, :dqt_trn_request, :teacher, to: :application_form
 
+  def further_information_requests
+    @further_information_requests ||=
+      assessment&.further_information_requests&.to_a || []
+  end
+
   def professional_standing_requests
     @professional_standing_requests ||= [
       assessment&.professional_standing_request,
     ].compact
   end
 
-  def further_information_requests
-    @further_information_requests ||=
-      assessment&.further_information_requests&.to_a || []
+  def qualification_requests
+    @qualification_requests ||= assessment&.qualification_requests&.to_a || []
   end
 
   def reference_requests
