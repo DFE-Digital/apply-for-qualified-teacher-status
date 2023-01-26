@@ -130,10 +130,7 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def work_history_status
-    all_work_histories_complete =
-      work_histories.all? do |work_history|
-        work_history_complete?(work_history)
-      end
+    all_work_histories_complete = work_histories.all?(&:complete?)
 
     if work_history_feature_active?
       return :not_started if work_histories.empty?
@@ -153,30 +150,6 @@ class ApplicationFormSectionStatusUpdater
         :in_progress
       end
     end
-  end
-
-  def work_history_complete?(work_history)
-    values = [
-      work_history.school_name,
-      work_history.city,
-      work_history.country_code,
-      work_history.job,
-      work_history.contact_name,
-      work_history.contact_email,
-      work_history.start_date,
-      work_history.still_employed,
-    ]
-
-    if work_history.still_employed == false
-      values.pop
-      values.append(work_history.end_date)
-    end
-
-    if work_history_feature_active?
-      values += [work_history.hours_per_week, work_history.contact_job]
-    end
-
-    values.all?(&:present?)
   end
 
   def registration_number_status

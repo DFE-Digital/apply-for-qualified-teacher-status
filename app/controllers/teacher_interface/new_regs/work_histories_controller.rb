@@ -33,6 +33,17 @@ module TeacherInterface
                         new_regs
                         work_history
                       ]
+        elsif (
+              work_history =
+                application_form.work_histories.ordered.find(&:incomplete?)
+            )
+          redirect_to [
+                        :school,
+                        :teacher_interface,
+                        :application_form,
+                        :new_regs,
+                        work_history,
+                      ]
         else
           redirect_to %i[
                         add_another
