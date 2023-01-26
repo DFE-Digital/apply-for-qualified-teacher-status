@@ -49,4 +49,32 @@ class WorkHistory < ApplicationRecord
   def country_name
     CountryName.from_code(country_code)
   end
+
+  def complete?
+    values = [
+      school_name,
+      city,
+      country_code,
+      job,
+      contact_name,
+      contact_email,
+      start_date,
+      still_employed,
+    ]
+
+    if still_employed == false
+      values.pop
+      values.append(end_date)
+    end
+
+    if FeatureFlags::FeatureFlag.active?(:application_work_history)
+      values += [hours_per_week, contact_job]
+    end
+
+    values.all?(&:present?)
+  end
+
+  def incomplete?
+    !complete?
+  end
 end
