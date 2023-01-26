@@ -143,7 +143,7 @@ en:
         teachers/otp_form:
           attributes:
             otp:
-              blank: Enter your code
+              blank: Enter your confirmation code
               wrong_length: Enter a valid code
         teacher_interface/age_range_form:
           attributes:
