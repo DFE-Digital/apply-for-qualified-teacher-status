@@ -37,6 +37,53 @@
   <% end %>
 </section>
 
+<section id="app-personas-eligibles" class="app-personas">
+  <h2 class="govuk-heading-l">Eligible checks</h2>
+
+  <% if @eligible_personas.empty? %>
+    <p class="govuk-body">No eligible personas.</p>
+  <% else %>
+    <%= govuk_table do |table|
+      table.head do |head|
+        head.row do |row|
+          row.cell(header: true, text: "Bucket")
+          row.cell(header: true, text: "Country/Region")
+          row.cell(header: true, text: "Status check")
+          row.cell(header: true, text: "Sanction check")
+          row.cell(header: true, text: "Skips work history")
+          row.cell(header: true, text: "Teaching authority provides written statement")
+          row.cell(header: true, text: "Reduced evidence accepted")
+          row.cell(header: true, text: "Actions", numeric: true)
+        end
+      end
+
+      table.body do |body|
+        @eligible_personas.each do |persona|
+          body.row do |row|
+            row.cell do
+              bucket = region_bucket_for_persona(persona)
+              govuk_tag(text: bucket) if bucket
+            end
+
+            row.cell { CountryName.from_region(persona[:region]) }
+
+            row.cell { persona_check_tag(persona[:status_check]) }
+            row.cell { persona_check_tag(persona[:sanction_check]) }
+
+            row.cell { persona_yes_no_tag(persona[:application_form_skip_work_history]) }
+            row.cell { persona_yes_no_tag(persona[:teaching_authority_provides_written_statement]) }
+            row.cell { persona_yes_no_tag(persona[:reduced_evidence_accepted]) }
+
+            row.cell(numeric: true) do
+              govuk_button_to "Sign&nbsp;in".html_safe, eligible_sign_in_persona_path(persona[:region])
+            end
+          end
+        end
+      end
+    end %>
+  <% end %>
+</section>
+
 <section id="app-personas-teachers" class="app-personas">
   <h2 class="govuk-heading-l">Teachers</h2>
 
@@ -61,7 +108,7 @@
         @teacher_personas.each_with_index do |persona, index|
           body.row do |row|
             row.cell do
-              bucket = region_bucket_for_teacher_persona(persona)
+              bucket = region_bucket_for_persona(persona)
               govuk_tag(text: bucket) if bucket
             end
             row.cell { CountryName.from_country(persona[:teacher].application_form.country) }

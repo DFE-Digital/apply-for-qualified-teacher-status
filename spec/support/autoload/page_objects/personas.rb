@@ -9,6 +9,11 @@ module PageObjects
       elements :buttons, ".govuk-button"
     end
 
+    section :eligibles, "#app-personas-eligibles" do
+      element :heading, "h2"
+      elements :buttons, ".govuk-button"
+    end
+
     section :teachers, "#app-personas-teachers" do
       element :heading, "h2"
       elements :buttons, ".govuk-button"
