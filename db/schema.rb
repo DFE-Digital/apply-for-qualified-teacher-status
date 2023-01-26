@@ -190,6 +190,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_25_191242) do
     t.datetime "completed_at"
     t.boolean "completed_requirements"
     t.string "work_experience"
+    t.boolean "qualified_for_subject"
   end
 
   create_table "english_language_providers", force: :cascade do |t|

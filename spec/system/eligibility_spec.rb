@@ -292,6 +292,84 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:start_page)
   end
 
+  it "happy path when filtering by country requiring qualification for subject" do
+    when_i_visit_the(:start_page)
+    then_i_see_the(:start_page)
+
+    when_i_press_start_now
+    then_i_see_the(:country_page)
+
+    when_i_select_a_qualified_for_subject_country
+    then_i_see_the(:qualification_page)
+
+    when_i_have_a_qualification
+    then_i_see_the(:degree_page)
+
+    when_i_have_a_degree
+    then_i_see_the(:teach_children_page)
+
+    when_i_can_teach_children
+    then_i_see_the(:qualified_for_subject_page)
+
+    when_i_am_qualified_to_teach_a_relevant_subject
+    then_i_see_the(:misconduct_page)
+
+    when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligible_page)
+  end
+
+  it "ineligible path when filtering by country, not qualified for UK secondary" do
+    when_i_visit_the(:start_page)
+    then_i_see_the(:start_page)
+
+    when_i_press_start_now
+    then_i_see_the(:country_page)
+
+    when_i_select_a_qualified_for_subject_country
+    then_i_see_the(:qualification_page)
+
+    when_i_have_a_qualification
+    then_i_see_the(:degree_page)
+
+    when_i_have_a_degree
+    then_i_see_the(:teach_children_page)
+
+    when_i_cant_teach_children
+    then_i_see_the(:qualified_for_subject_page)
+
+    when_i_am_qualified_to_teach_a_relevant_subject
+    then_i_see_the(:misconduct_page)
+
+    when_i_dont_have_a_misconduct_record
+    then_i_see_the(:ineligible_page)
+  end
+
+  it "ineligible path when filtering by country, not qualified in relevant subject" do
+    when_i_visit_the(:start_page)
+    then_i_see_the(:start_page)
+
+    when_i_press_start_now
+    then_i_see_the(:country_page)
+
+    when_i_select_a_qualified_for_subject_country
+    then_i_see_the(:qualification_page)
+
+    when_i_have_a_qualification
+    then_i_see_the(:degree_page)
+
+    when_i_have_a_degree
+    then_i_see_the(:teach_children_page)
+
+    when_i_can_teach_children
+    then_i_see_the(:qualified_for_subject_page)
+
+    when_i_am_not_qualified_to_teach_a_relevant_subject
+    then_i_see_the(:misconduct_page)
+
+    when_i_dont_have_a_misconduct_record
+    then_i_see_the(:ineligible_page)
+  end
+
   private
 
   def then_access_is_denied
@@ -319,6 +397,7 @@ RSpec.describe "Eligibility check", type: :system do
     it = create(:country, code: "IT")
     create(:region, country: it, name: "Region")
     create(:region, country: it, name: "Other Region")
+    create(:country, :with_national_region, code: "JM")
   end
 
   def then_i_do_not_see_the_start_page
@@ -369,6 +448,10 @@ RSpec.describe "Eligibility check", type: :system do
     country_page.form.continue_button.click
   end
 
+  def when_i_select_a_qualified_for_subject_country
+    country_page.submit(country: "Jamaica")
+  end
+
   def then_i_see_the_country_error_message
     expect(country_page).to have_error_summary
     expect(country_page.error_summary.body).to have_content(
@@ -411,6 +494,14 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_cant_teach_children
     teach_children_page.submit_no
+  end
+
+  def when_i_am_qualified_to_teach_a_relevant_subject
+    qualified_for_subject_page.submit_yes
+  end
+
+  def when_i_am_not_qualified_to_teach_a_relevant_subject
+    qualified_for_subject_page.submit_no
   end
 
   def when_i_have_more_than_20_months_work_experience
