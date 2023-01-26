@@ -90,5 +90,30 @@ RSpec.describe WorkHistory, type: :model do
 
       it { is_expected.to be true }
     end
+
+    context "without contact information" do
+      let(:application_form) { build(:application_form) }
+
+      let(:work_history) do
+        build(
+          :work_history,
+          :completed,
+          application_form:,
+          contact_name: "",
+          contact_job: "",
+          contact_email: "",
+        )
+      end
+
+      it { is_expected.to be false }
+
+      context "with a reduced evidence application form" do
+        let(:application_form) do
+          build(:application_form, reduced_evidence_accepted: true)
+        end
+
+        it { is_expected.to be true }
+      end
+    end
   end
 end
