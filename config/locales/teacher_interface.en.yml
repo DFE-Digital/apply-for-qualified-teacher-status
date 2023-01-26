@@ -174,7 +174,7 @@ en:
         teacher_interface/add_another_work_history_form:
           attributes:
             add_another:
-              inclusion: Select whether you need to add another work history
+              inclusion: Select whether you need to add another role
         teacher_interface/delete_qualification_form:
           attributes:
             confirm:
@@ -186,7 +186,7 @@ en:
         teacher_interface/delete_work_history_form:
           attributes:
             confirm:
-              inclusion: Select whether you want to delete this work history
+              inclusion: Select whether you want to delete this role
         teacher_interface/english_language_exemption_form:
           attributes:
             exempt:
