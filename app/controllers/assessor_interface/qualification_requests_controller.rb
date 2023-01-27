@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AssessorInterface
-  class ProfessionalStandingRequestsController < BaseController
+  class QualificationRequestsController < BaseController
     before_action :authorize_note
 
     def edit
@@ -36,16 +36,21 @@ module AssessorInterface
       )
     end
 
-    def application_form
-      @application_form ||=
-        ApplicationForm.includes(
-          assessment: :professional_standing_request,
-        ).find(params[:application_form_id])
+    def qualification_request
+      @qualification_request ||=
+        QualificationRequest
+          .includes(assessment: :application_form)
+          .where(
+            assessment_id: params[:assessment_id],
+            assessment: {
+              application_form_id: params[:application_form_id],
+            },
+          )
+          .find(params[:id])
     end
 
-    delegate :professional_standing_request, to: :assessment
-    delegate :assessment, to: :application_form
+    delegate :application_form, :assessment, to: :qualification_request
 
-    alias_method :requestable, :professional_standing_request
+    alias_method :requestable, :qualification_request
   end
 end

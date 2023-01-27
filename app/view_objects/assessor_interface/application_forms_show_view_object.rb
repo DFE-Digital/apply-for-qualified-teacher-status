@@ -36,11 +36,15 @@ class AssessorInterface::ApplicationFormsShowViewObject
     further_information =
       further_information_requests.map { :review_requested_information }
 
+    verification_requests =
+      qualification_requests.map { :qualification_request }
+
     {
       pre_assessment_tasks:,
       submitted_details:,
       recommendation:,
       further_information:,
+      verification_requests:,
     }.compact_blank
   end
 
@@ -81,6 +85,16 @@ class AssessorInterface::ApplicationFormsShowViewObject
           further_information_request,
         )
       end
+    when :verification_requests
+      return nil unless professional_standing_request_received?
+
+      qualification_request = qualification_requests[index]
+
+      url_helpers.edit_assessor_interface_application_form_assessment_qualification_request_path(
+        application_form,
+        assessment,
+        qualification_request,
+      )
     end
   end
 
@@ -104,6 +118,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
       return :not_started if further_information_request.passed.nil?
       return :in_progress if assessment.request_further_information?
       :completed
+    when :verification_requests
+      requestable_status(qualification_requests[index])
     end
   end
 
@@ -134,6 +150,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def further_information_requests
     @further_information_requests ||=
       assessment.further_information_requests.order(:created_at).to_a
+  end
+
+  def qualification_requests
+    @qualification_requests ||=
+      assessment.qualification_requests.order(:created_at).to_a
+  end
+
+  def requestable_status(requestable)
+    return :expired if requestable.expired?
+    return :completed if requestable.received?
+    :waiting_on
   end
 
   def url_helpers

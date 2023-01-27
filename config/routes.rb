@@ -53,6 +53,10 @@ Rails.application.routes.draw do
         resource :professional_standing_request,
                  path: "/professional-standing-request",
                  only: %i[edit update]
+
+        resources :qualification_requests,
+                  path: "/qualification-requests",
+                  only: %i[edit update]
       end
     end
   end

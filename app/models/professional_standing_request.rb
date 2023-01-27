@@ -26,6 +26,4 @@ class ProfessionalStandingRequest < ApplicationRecord
   with_options if: :received? do
     validates :location_note, presence: true
   end
-
-  delegate :application_form, to: :assessment
 end

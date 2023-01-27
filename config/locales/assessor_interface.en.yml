@@ -14,17 +14,19 @@ en:
         assessment_tasks:
           sections:
             pre_assessment_tasks: Pre-assessment tasks
-            submitted_details: Check submitted details
             recommendation: Your recommendation
+            submitted_details: Check submitted details
+            verification_requests: Verification requests
           items:
-            professional_standing_request: Awaiting third-party professional standing
-            personal_information: Check personal information
-            qualifications: Check qualifications
             age_range_subjects: Verify age range and subjects
-            work_history: Check work history
-            professional_standing: Check professional standing
             initial_assessment: Initial assessment recommendation
+            personal_information: Check personal information
+            professional_standing: Check professional standing
+            professional_standing_request: Awaiting third-party professional standing
+            qualification_request: Qualifications – requested
+            qualifications: Check qualifications
             review_requested_information: Review requested information from applicant
+            work_history: Check work history
 
     assessments:
       edit:
@@ -164,6 +166,10 @@ en:
       edit:
         title: Third-party professional standing – response received
 
+    qualification_requests:
+      edit:
+        title: Qualification verification – response received
+
   activemodel:
     errors:
       models:
@@ -268,7 +274,7 @@ en:
           attributes:
             induction_required:
               inclusion: Select whether the teacher requires induction
-        assessor_interface/professional_standing_request_form:
+        assessor_interface/requestable_location_form:
           attributes:
             location_note:
               blank: Enter where the assessor can find it
