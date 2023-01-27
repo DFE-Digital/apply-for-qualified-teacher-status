@@ -30,6 +30,7 @@
 #  qualifications_status                         :string           default("not_started"), not null
 #  received_further_information                  :boolean          default(FALSE), not null
 #  received_professional_standing                :boolean          default(FALSE), not null
+#  received_qualification                        :boolean          default(FALSE), not null
 #  received_reference                            :boolean          default(FALSE), not null
 #  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  reference                                     :string(31)       not null
@@ -42,6 +43,7 @@
 #  teaching_authority_provides_written_statement :boolean          default(FALSE), not null
 #  waiting_on_further_information                :boolean          default(FALSE), not null
 #  waiting_on_professional_standing              :boolean          default(FALSE), not null
+#  waiting_on_qualification                      :boolean          default(FALSE), not null
 #  waiting_on_reference                          :boolean          default(FALSE), not null
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer

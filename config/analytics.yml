@@ -31,6 +31,8 @@
     - received_further_information
     - waiting_on_reference
     - received_reference
+    - waiting_on_qualification
+    - received_qualification
     - personal_information_status
     - identification_document_status
     - qualifications_status

@@ -65,6 +65,42 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes status", "awarded_pending_checks"
     end
 
+    context "with a received information request" do
+      let(:assessment) { create(:assessment, application_form:) }
+
+      before do
+        application_form.update!(submitted_at: Time.zone.now)
+        create(:further_information_request, :received, assessment:)
+      end
+
+      include_examples "changes status", "received"
+
+      it "changes received_further_information" do
+        expect { call }.to change(
+          application_form,
+          :received_further_information,
+        ).from(false).to(true)
+      end
+    end
+
+    context "with a requested further information request" do
+      let(:assessment) { create(:assessment, application_form:) }
+
+      before do
+        application_form.update!(submitted_at: Time.zone.now)
+        create(:further_information_request, :requested, assessment:)
+      end
+
+      include_examples "changes status", "waiting_on"
+
+      it "changes waiting_on_further_information" do
+        expect { call }.to change(
+          application_form,
+          :waiting_on_further_information,
+        ).from(false).to(true)
+      end
+    end
+
     context "with a requested profession standing request" do
       let(:assessment) { create(:assessment, application_form:) }
 
@@ -101,12 +137,12 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
     end
 
-    context "with a received FI request" do
+    context "with a received information request" do
       let(:assessment) { create(:assessment, application_form:) }
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:further_information_request, :received, assessment:)
+        create(:qualification_request, :received, assessment:)
       end
 
       include_examples "changes status", "received"
@@ -114,25 +150,25 @@ RSpec.describe ApplicationFormStatusUpdater do
       it "changes received_further_information" do
         expect { call }.to change(
           application_form,
-          :received_further_information,
+          :received_qualification,
         ).from(false).to(true)
       end
     end
 
-    context "with a requested FI request" do
+    context "with a requested qualification request" do
       let(:assessment) { create(:assessment, application_form:) }
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:further_information_request, :requested, assessment:)
+        create(:qualification_request, :requested, assessment:)
       end
 
       include_examples "changes status", "waiting_on"
 
-      it "changes waiting_on_further_information" do
+      it "changes waiting_on_qualification" do
         expect { call }.to change(
           application_form,
-          :waiting_on_further_information,
+          :waiting_on_qualification,
         ).from(false).to(true)
       end
     end
