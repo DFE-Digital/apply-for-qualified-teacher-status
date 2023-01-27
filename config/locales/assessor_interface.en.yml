@@ -13,9 +13,11 @@ en:
       show:
         assessment_tasks:
           sections:
+            pre_assessment_tasks: Pre-assessment tasks
             submitted_details: Check submitted details
             recommendation: Your recommendation
           items:
+            professional_standing_request: Awaiting third-party professional standing
             personal_information: Check personal information
             qualifications: Check qualifications
             age_range_subjects: Verify age range and subjects
@@ -147,11 +149,16 @@ en:
           true:
             GB-SCT: Provisional registration
             GB-NIR: "No"
+        professional_standing_request: Third-party professional standing
 
     further_information_requests:
       edit:
         title: Review further information from applicant
         check_your_answers: Further information requested
+
+    professional_standing_requests:
+      edit:
+        title: Third-party professional standing – response received
 
   activemodel:
     errors:
@@ -257,3 +264,7 @@ en:
           attributes:
             induction_required:
               inclusion: Select whether the teacher requires induction
+        assessor_interface/professional_standing_request_form:
+          attributes:
+            location_note:
+              blank: Enter where the assessor can find it

@@ -33,18 +33,22 @@ en:
         assessment_section_recorded: Assessment section recorded
         requestable_requested:
           FurtherInformationRequest: Further information requested
+          ProfessionalStandingRequest: Professional standing requested
           QualificationRequest: Qualification requested
           ReferenceRequest: Reference requested
         requestable_received:
           FurtherInformationRequest: Further information received
+          ProfessionalStandingRequest: Professional standing received
           QualificationRequest: Qualification received
           ReferenceRequest: Reference received
         requestable_expired:
           FurtherInformationRequest: Further information expired
+          ProfessionalStandingRequest: Professional standing expired
           QualificationRequest: Qualification expired
           ReferenceRequest: Reference expired
         requestable_assessed:
           FurtherInformationRequest: Further information assessed
+          ProfessionalStandingRequest: Professional standing assessed
           QualificationRequest: Qualification assessed
           ReferenceRequest: Reference assessed
       description:
@@ -55,17 +59,21 @@ en:
         email_sent: "%{subject}"
         requestable_requested:
           FurtherInformationRequest: Further information has been requested.
+          ProfessionalStandingRequest: The professional standing has been requested.
           QualificationRequest: A qualification has been requested.
           ReferenceRequest: A reference has been requested.
         requestable_received:
           FurtherInformationRequest: Further information requested on %{requested_at} has been received.
+          ProfessionalStandingRequest: "The professional standing has been received: %{location_note}"
           QualificationRequest: A qualification has been received.
           ReferenceRequest: A reference has been received.
         requestable_expired:
           FurtherInformationRequest: Further information requested on %{requested_at} has expired. Application has been declined.
+          ProfessionalStandingRequest: The professional standing request has expired.
           QualificationRequest: A qualification request has expired.
           ReferenceRequest: A reference has expired.
         requestable_assessed:
           FurtherInformationRequest: Further information request has been assessed.
+          ProfessionalStandingRequest: The professional standing request has been assessed.
           QualificationRequest: A qualification has been assessed.
           ReferenceRequest: A reference has been assessed.

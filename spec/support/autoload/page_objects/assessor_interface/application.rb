@@ -16,6 +16,10 @@ module PageObjects
 
       section :task_list, TaskList, ".app-task-list"
 
+      def awaiting_professional_standing_task
+        task_list.find_item("Awaiting third-party professional standing")
+      end
+
       def personal_information_task
         task_list.find_item("Check personal information")
       end

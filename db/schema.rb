@@ -244,6 +244,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_25_191242) do
     t.index ["author_id"], name: "index_notes_on_author_id"
   end
 
+  create_table "professional_standing_requests", force: :cascade do |t|
+    t.bigint "assessment_id", null: false
+    t.string "state", null: false
+    t.datetime "received_at"
+    t.text "location_note", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_professional_standing_requests_on_assessment_id"
+  end
+
   create_table "qualification_requests", force: :cascade do |t|
     t.bigint "assessment_id", null: false
     t.bigint "qualification_id", null: false
@@ -468,6 +478,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_25_191242) do
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "staff", column: "author_id"
+  add_foreign_key "professional_standing_requests", "assessments"
   add_foreign_key "qualification_requests", "assessments"
   add_foreign_key "qualification_requests", "qualifications"
   add_foreign_key "qualifications", "application_forms"
