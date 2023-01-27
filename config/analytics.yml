@@ -175,6 +175,7 @@
     - failure_assessor_note
     - working_days_since_received
     - working_days_received_to_recommendation
+    - working_days_assessment_started_to_creation
   :further_information_request_items:
     - id
     - information_type

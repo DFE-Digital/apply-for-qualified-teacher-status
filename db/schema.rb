@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_26_214929) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_27_100824) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -233,6 +233,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_214929) do
     t.string "failure_assessor_note", default: "", null: false
     t.integer "working_days_received_to_recommendation"
     t.integer "working_days_since_received"
+    t.integer "working_days_assessment_started_to_creation"
     t.index ["assessment_id"], name: "index_further_information_requests_on_assessment_id"
   end
 
