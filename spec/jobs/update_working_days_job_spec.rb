@@ -8,9 +8,10 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       travel_to(tuesday_today) { described_class.new.perform }
     end
 
+    let(:friday_previous) { Date.new(2022, 9, 30) }
     let(:tuesday_today) { Date.new(2022, 10, 4) }
     let(:friday_application_form) do
-      create(:application_form, :submitted, submitted_at: Date.new(2022, 9, 30))
+      create(:application_form, :submitted, submitted_at: friday_previous)
     end
     let(:not_recommended_assessment) { create(:assessment) }
 
@@ -132,6 +133,24 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       it "sets the working days" do
         expect { perform }.to change {
           recommended_assessment.reload.working_days_submission_to_started
+        }.to(2)
+      end
+    end
+
+    describe "further information request assessment started to creation" do
+      let(:assessment) { create(:assessment, started_at: friday_previous) }
+      let(:further_information_request) do
+        create(
+          :further_information_request,
+          :received,
+          assessment:,
+          created_at: tuesday_today,
+        )
+      end
+
+      it "sets the working days" do
+        expect { perform }.to change {
+          further_information_request.reload.working_days_assessment_started_to_creation
         }.to(2)
       end
     end

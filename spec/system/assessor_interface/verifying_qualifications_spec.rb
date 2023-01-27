@@ -42,7 +42,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def and_i_see_a_not_started_status
-    expect(assessor_application_page.overview.status.text).to eq("NOT STARTED")
+    expect(assessor_application_page.overview.status.text).to eq("RECEIVED")
   end
 
   def application_form

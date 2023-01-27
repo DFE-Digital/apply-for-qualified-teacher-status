@@ -33,6 +33,7 @@ FactoryBot.define do
     association :application_form, :submitted
 
     trait :started do
+      started_at { Time.zone.now }
       after(:create) do |assessment, _evaluator|
         create(:assessment_section, :passed, assessment:)
       end
