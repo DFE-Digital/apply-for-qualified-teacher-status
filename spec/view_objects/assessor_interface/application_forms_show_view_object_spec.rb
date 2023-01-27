@@ -90,6 +90,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         it { is_expected.to eq([:review_requested_information]) }
       end
     end
+
+    describe "verification requests" do
+      subject(:verification_requests) do
+        assessment_tasks[:verification_requests]
+      end
+
+      it { is_expected.to be_nil }
+
+      context "with a qualification request" do
+        before { create(:qualification_request, assessment:) }
+
+        it { is_expected.to eq(%i[qualification_request]) }
+      end
+    end
   end
 
   describe "#assessment_task_path" do
@@ -160,6 +174,24 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           is_expected.to eq(
             "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
               "/further-information-requests/#{further_information_request.id}/edit",
+          )
+        end
+      end
+    end
+
+    context "with verification_requests section" do
+      let(:section) { :verification_requests }
+      let(:item) { :qualification_request }
+
+      context "and a qualification request" do
+        let!(:qualification_request) do
+          create(:qualification_request, :requested, assessment:)
+        end
+
+        it do
+          is_expected.to eq(
+            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
+              "/qualification-requests/#{qualification_request.id}/edit",
           )
         end
       end
