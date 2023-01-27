@@ -63,6 +63,16 @@ class AssessmentFactory
       "qualifications_meet_level_6_or_equivalent",
       "teaching_qualifications_completed_in_eligible_country",
       "qualified_in_mainstream_education",
+      (
+        if application_form.secondary_education_teaching_qualification_required?
+          "qualified_to_teach_children_11_to_16"
+        end
+      ),
+      (
+        if application_form.secondary_education_teaching_qualification_required?
+          "teaching_qualification_subjects_criteria"
+        end
+      ),
       "has_teacher_qualification_certificate",
       "has_teacher_qualification_transcript",
       "has_university_degree_certificate",
@@ -99,6 +109,16 @@ class AssessmentFactory
       FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
       FailureReasons::QUALIFICATIONS_DONT_MATCH_SUBJECTS,
       FailureReasons::QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS,
+      (
+        if application_form.secondary_education_teaching_qualification_required?
+          FailureReasons::QUALIFIED_TO_TEACH_CHILDREN_11_TO_16
+        end
+      ),
+      (
+        if application_form.secondary_education_teaching_qualification_required?
+          FailureReasons::TEACHING_QUALIFICATION_SUBJECTS_CRITERIA
+        end
+      ),
       FailureReasons::TEACHING_CERTIFICATE_ILLEGIBLE,
       FailureReasons::TEACHING_TRANSCRIPT_ILLEGIBLE,
       FailureReasons::DEGREE_CERTIFICATE_ILLEGIBLE,
@@ -111,7 +131,20 @@ class AssessmentFactory
   end
 
   def age_range_subjects_section
-    checks = %i[qualified_in_mainstream_education age_range_subjects_matches]
+    checks = [
+      "qualified_in_mainstream_education",
+      (
+        if application_form.secondary_education_teaching_qualification_required?
+          "qualified_to_teach_children_11_to_16"
+        end
+      ),
+      (
+        if application_form.secondary_education_teaching_qualification_required?
+          "teaching_qualification_subjects_criteria"
+        end
+      ),
+      "age_range_subjects_matches",
+    ].compact
 
     failure_reasons = [
       FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,

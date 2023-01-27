@@ -94,11 +94,13 @@ en:
           qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 qualification or higher)
           qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
           qualified_to_teach: the applicant is qualified to teach at state or government schools
+          qualified_to_teach_children_11_to_16: the applicant is qualified to teach children aged 11-16
           registration_number: registration number provided and verified (where applicable)
           satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
           teaching_qualification: confirmation of the applicant’s teaching qualification
           teaching_qualification_1_year: the teaching qualification lasted at least 1 academic year
           teaching_qualification_pedagogy: the teaching qualification had at least 75% of the course focused on pedagogy
+          teaching_qualification_subjects_criteria: the teaching qualification specifically qualifies them to teach either Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian or Spanish (OR they have a teaching qualification for children aged 11-16 AND at least 50% of their degree was in one of those subjects)
           teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
           verify_school_details: the school details to verify what the applicant has entered
           work_history_references: that the applicant has provided a reference for each role with an acceptable email address
@@ -125,6 +127,7 @@ en:
           qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
+          qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged 11-16.
           registration_number: We could not verify the registration number using the online checker.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
           school_details_cannot_be_verified: We cannot verify the details of one of the schools that the applicant has entered.
@@ -133,6 +136,7 @@ en:
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
           teaching_qualification_1_year: The teacher training course qualification did not last at least 1 academic year.
           teaching_qualification_pedagogy: The teaching qualification did not have enough focus on pedagogy (at least 75% of modules focus on pedagogy).
+          teaching_qualification_subjects_criteria: The applicant is not qualified to teach one of the subjects that we can currently accept.
           teaching_qualifications_from_ineligible_country: Teaching qualifications were completed in an ineligible country.
           teaching_qualifications_not_at_required_level: Teaching qualifications do not meet the required academic level (level 6).
           teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
