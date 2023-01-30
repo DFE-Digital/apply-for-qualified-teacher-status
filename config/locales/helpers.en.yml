@@ -49,11 +49,10 @@ en:
           award: Award QTS
           request_further_information: Request further information
           decline: Decline QTS
+      assessor_interface_assessment_confirmation_form:
         confirmation_options:
           true: "Yes"
           false: "No"
-      assessor_interface_create_note_form:
-        text: Add a note to this application
       assessor_interface_assessment_section_form:
         age_range_min: From
         age_range_max: To
@@ -64,6 +63,8 @@ en:
         subjects_note: If you've edited the subjects please explain why (optional)
         failure_reason_notes: "Note to the applicant"
         failure_reason_notes_decline: "Note to the applicant (optional)"
+      assessor_interface_create_note_form:
+        text: Add a note to this application
       assessor_interface_filter_form:
         location: Country trained in
         name: Applicant name
@@ -186,7 +187,6 @@ en:
         reference: "Example: 210245"
     legend:
       assessor_interface_assessment_recommendation_form:
-        declaration: Declaration
         recommendation: QTS review completed
       assessor_interface_assessment_section_form:
         selected_failure_reasons: What are the reasons for your recommendation?

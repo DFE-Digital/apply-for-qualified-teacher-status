@@ -34,19 +34,28 @@ en:
         hint:
           can_award: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
-      declare:
-        heading:
-          award: You’re about to award QTS
-          decline: You’re about to decline QTS
-        instruction:
-          award: Read the declaration and if you’re happy to award QTS, select ‘Accept and award QTS’.
-          decline: If you’re happy to proceed, read the declaration and if you want to decline, select ‘Continue’.
-        declaration:
-          award: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
-          decline: I’ve reviewed this QTS application and the applicant does not meet all the requirements. I understand that by continuing, this application for qualified teacher status will be declined.
-        button:
-          award: Accept and award QTS
-          decline: Accept and decline QTS
+
+    assessment_recommendation_awards:
+      edit:
+        heading: You’re about to award QTS
+        instruction: Read the declaration and if you’re happy to award QTS, select ‘Accept and award QTS’.
+        declaration: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
+        button: Accept and award QTS
+      preview:
+        heading: Check the email
+        subheading: This screen shows how the email to the applicant will look.
+        description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
+        cancel: Cancel
+      edit_confirm:
+        legend: Award this QTS application?
+        hint: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
+
+    assessment_recommendation_declines:
+      edit:
+        heading: You’re about to decline QTS
+        instruction: If you’re happy to proceed, read the declaration and if you want to decline, select ‘Continue’.
+        declaration: I’ve reviewed this QTS application and the applicant does not meet all the requirements. I understand that by continuing, this application for qualified teacher status will be declined.
+        button: Accept and decline QTS
         assessment_section:
           personal_information: Personal information
           qualifications: Qualifications
@@ -59,16 +68,9 @@ en:
         subheading: This screen shows how the email to the applicant will look.
         description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
         cancel: Cancel
-      confirm:
-        legend:
-          award: Award this QTS application?
-          decline: Decline this QTS application?
-        hint:
-          award: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
-          decline: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
-        inclusion:
-          award: Select ‘Yes’ to award, or ‘No’ to cancel.
-          decline: Select ‘Yes’ to decline, or ‘No’ to cancel.
+      edit_confirm:
+        legend: Decline this QTS application?
+        hint: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
 
     assessment_sections:
       show:
@@ -210,13 +212,19 @@ en:
           attributes:
             assessor_id:
               blank: Select an assessor to assign
+        assessor_interface/assessment_confirmation_form:
+          attributes:
+            confirmation:
+              inclusion: Select ‘Yes’ to confirm, or ‘No’ to cancel.
+        assessor_interface/assessment_declaration_form:
+          attributes:
+            declaration:
+              blank: You must confirm that you have reviewed this QTS application
         assessor_interface/assessment_recommendation_form:
           attributes:
             recommendation:
               blank: Select your recommendation
               inclusion: Select your recommendation
-            declaration:
-              blank: You must confirm that you have reviewed this QTS application
         assessor_interface/assessment_section_form:
           attributes:
             subject_1:

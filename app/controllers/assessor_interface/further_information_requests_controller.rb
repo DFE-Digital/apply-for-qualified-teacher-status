@@ -17,7 +17,15 @@ module AssessorInterface
 
     def create
       further_information_request =
-        CreateFurtherInformationRequest.call(assessment:, user: current_staff)
+        ActiveRecord::Base.transaction do
+          UpdateAssessmentRecommendation.call(
+            assessment:,
+            user: current_staff,
+            new_recommendation: "request_further_information",
+          )
+
+          CreateFurtherInformationRequest.call(assessment:, user: current_staff)
+        end
 
       redirect_to [
                     :assessor_interface,

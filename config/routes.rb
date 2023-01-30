@@ -31,16 +31,27 @@ Rails.application.routes.draw do
       resources :timeline_events, only: :index
 
       resources :assessments, only: %i[edit update] do
-        member do
-          post "declare", to: "assessments#declare"
-          post "preview", to: "assessments#preview"
-          post "confirm", to: "assessments#confirm"
-        end
-
         resources :assessment_sections,
                   path: "/sections",
                   param: :key,
                   only: %i[show update]
+
+        resource :assessment_recommendation_award,
+                 path: "/recommendation/award",
+                 only: %i[edit update] do
+          get "preview"
+          get "confirm", to: "assessment_recommendation_awards#edit_confirm"
+          post "confirm", to: "assessment_recommendation_awards#update_confirm"
+        end
+
+        resource :assessment_recommendation_decline,
+                 path: "/recommendation/decline",
+                 only: %i[edit update] do
+          get "preview"
+          get "confirm", to: "assessment_recommendation_declines#edit_confirm"
+          post "confirm",
+               to: "assessment_recommendation_declines#update_confirm"
+        end
 
         resources :further_information_requests,
                   path: "/further-information-requests",

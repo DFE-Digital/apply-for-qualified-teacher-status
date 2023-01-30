@@ -1,7 +1,8 @@
 module PageObjects
   module AssessorInterface
     class DeclareAssessmentRecommendation < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/declare"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
+                "/recommendation/{recommendation}/edit"
 
       element :heading, "h1"
 
