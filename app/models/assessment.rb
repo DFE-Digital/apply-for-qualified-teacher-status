@@ -52,6 +52,21 @@ class Assessment < ApplicationRecord
               in: recommendations.values,
             }
 
+  def award!
+    update!(recommendation: "award", recommended_at: Time.zone.now)
+  end
+
+  def decline!
+    update!(recommendation: "decline", recommended_at: Time.zone.now)
+  end
+
+  def request_further_information!
+    update!(
+      recommendation: "request_further_information",
+      recommended_at: Time.zone.now,
+    )
+  end
+
   def started?
     sections.any?(&:finished?)
   end

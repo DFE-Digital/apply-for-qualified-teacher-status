@@ -34,11 +34,7 @@ class FurtherInformationRequestExpirer
   end
 
   def decline_application
-    UpdateAssessmentRecommendation.call(
-      assessment:,
-      user: "Expirer",
-      new_recommendation: "decline",
-    )
+    DeclineQTS.call(application_form:, user: "Expirer")
   end
 
   def create_timeline_event

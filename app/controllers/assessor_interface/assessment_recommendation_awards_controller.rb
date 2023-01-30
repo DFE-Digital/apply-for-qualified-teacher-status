@@ -57,11 +57,10 @@ module AssessorInterface
 
       if @form.valid?
         if @form.confirmation
-          UpdateAssessmentRecommendation.call(
-            assessment:,
-            user: current_staff,
-            new_recommendation: "award",
-          )
+          ActiveRecord::Base.transaction do
+            assessment.award!
+            CreateDQTTRNRequest.call(application_form:, user: current_staff)
+          end
 
           redirect_to [:status, :assessor_interface, application_form]
         else
