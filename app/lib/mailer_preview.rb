@@ -1,12 +1,14 @@
-class TeacherMailerPreview
+# frozen_string_literal: true
+
+class MailerPreview
   class << self
-    def with(teacher:, **params)
-      new(teacher:, params:)
+    def with(mailer_class, **params)
+      new(mailer_class:, params:)
     end
   end
 
-  def initialize(teacher:, params:)
-    @teacher = teacher
+  def initialize(mailer_class:, params:)
+    @mailer_class = mailer_class
     @params = params
   end
 
@@ -21,19 +23,19 @@ class TeacherMailerPreview
 
   private
 
-  attr_reader :teacher, :params
+  attr_reader :mailer_class, :params
 
   def client
     @client ||= Notifications::Client.new(ENV.fetch("GOVUK_NOTIFY_API_KEY"))
   end
 
   def mailer
-    @mailer ||= TeacherMailer.with(teacher:, **params)
+    @mailer ||= mailer_class.with(**params)
   end
 
   def generate_preview(mail)
     client.generate_template_preview(
-      TeacherMailer::GOVUK_NOTIFY_TEMPLATE_ID,
+      ApplicationMailer::GOVUK_NOTIFY_TEMPLATE_ID,
       personalisation: {
         to: mail.to.first,
         subject: mail.subject,
