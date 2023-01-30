@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/govuk_feature_flags.git
-  revision: ac67ee4400f5b5316068fd5957a62a07d8749a75
+  revision: 5211071bd5aa1139e3839cd9b6bc9092b1fad7a6
   specs:
     govuk_feature_flags (0.1.0)
       rails (>= 7.0.4)
@@ -474,7 +474,7 @@ GEM
     tilt (2.0.11)
     timeout (0.3.1)
     trailblazer-option (0.1.2)
-    tzinfo (2.0.5)
+    tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
     unicode-display_width (2.3.0)
