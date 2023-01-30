@@ -210,13 +210,19 @@ en:
           attributes:
             assessor_id:
               blank: Select an assessor to assign
+        assessor_interface/assessment_confirmation_form:
+          attributes:
+            confirmation:
+              inclusion: Select ‘Yes’ to confirm, or ‘No’ to cancel.
+        assessor_interface/assessment_declaration_form:
+          attributes:
+            declaration:
+              blank: You must confirm that you have reviewed this QTS application
         assessor_interface/assessment_recommendation_form:
           attributes:
             recommendation:
               blank: Select your recommendation
               inclusion: Select your recommendation
-            declaration:
-              blank: You must confirm that you have reviewed this QTS application
         assessor_interface/assessment_section_form:
           attributes:
             subject_1:
