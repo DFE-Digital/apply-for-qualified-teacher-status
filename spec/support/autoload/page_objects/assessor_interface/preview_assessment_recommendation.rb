@@ -1,7 +1,8 @@
 module PageObjects
   module AssessorInterface
     class PreviewAssessmentRecommendation < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/preview"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
+                "/recommendation/{recommendation}/preview"
 
       element :heading, "h1"
 
@@ -9,9 +10,7 @@ module PageObjects
         element :content, ".app-email-preview__content"
       end
 
-      section :form, "form" do
-        element :send_button, ".govuk-button"
-      end
+      element :send_button, ".govuk-button"
     end
   end
 end

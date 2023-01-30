@@ -35,6 +35,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       :declare_assessment_recommendation_page,
       application_id:,
       assessment_id:,
+      recommendation: "award",
     )
 
     when_i_check_declaration
@@ -42,6 +43,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       :preview_assessment_recommendation_page,
       application_id:,
       assessment_id:,
+      recommendation: "award",
     )
 
     when_i_send_the_email
@@ -49,6 +51,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       :confirm_assessment_recommendation_page,
       application_id:,
       assessment_id:,
+      recommendation: "award",
     )
 
     when_i_check_confirmation
@@ -71,6 +74,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       :declare_assessment_recommendation_page,
       application_id:,
       assessment_id:,
+      recommendation: "decline",
     )
     and_i_see_failure_reasons
 
@@ -79,6 +83,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       :preview_assessment_recommendation_page,
       application_id:,
       assessment_id:,
+      recommendation: "decline",
     )
 
     when_i_send_the_email
@@ -86,6 +91,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       :confirm_assessment_recommendation_page,
       application_id:,
       assessment_id:,
+      recommendation: "decline",
     )
 
     when_i_check_confirmation
@@ -186,7 +192,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_send_the_email
-    preview_assessment_recommendation_page.form.send_button.click
+    preview_assessment_recommendation_page.send_button.click
   end
 
   def when_i_check_confirmation

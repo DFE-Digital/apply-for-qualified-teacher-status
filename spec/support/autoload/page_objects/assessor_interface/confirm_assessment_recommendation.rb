@@ -1,7 +1,8 @@
 module PageObjects
   module AssessorInterface
     class ConfirmAssessmentRecommendation < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/confirm"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
+                "/recommendation/{recommendation}/confirm"
 
       element :heading, "h1"
 
