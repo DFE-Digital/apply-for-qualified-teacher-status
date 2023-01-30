@@ -304,3 +304,7 @@ en:
           attributes:
             location_note:
               blank: Enter where the assessor can find it
+        assessor_interface/work_history_reference_request_form:
+          attributes:
+            work_history_ids:
+              blank: References account for less than 9 months
