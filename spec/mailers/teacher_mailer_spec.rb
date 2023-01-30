@@ -88,53 +88,6 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
   end
 
-  describe "#application_not_submitted" do
-    subject(:mail) do
-      described_class.with(teacher:, duration:).application_not_submitted
-    end
-
-    let(:duration) { nil }
-
-    describe "#subject" do
-      subject(:subject) { mail.subject }
-
-      context "with two weeks to go" do
-        let(:duration) { "two_weeks" }
-        it { is_expected.to eq("Your QTS application has not been submitted") }
-      end
-
-      context "with one week to go" do
-        let(:duration) { "one_week" }
-        it do
-          is_expected.to eq("Your QTS application will be deleted in 1 week")
-        end
-      end
-
-      context "with two days to go" do
-        let(:duration) { "two_days" }
-        it do
-          is_expected.to eq("Your QTS application will be deleted in 2 days")
-        end
-      end
-    end
-
-    describe "#to" do
-      subject(:to) { mail.to }
-
-      it { is_expected.to eq(["teacher@example.com"]) }
-    end
-
-    describe "#body" do
-      subject(:body) { mail.body.encoded }
-
-      it { is_expected.to include("Dear First Last") }
-      it { is_expected.to include("you have a draft application") }
-      it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
-    end
-
-    it_behaves_like "an observable mailer", "application_not_submitted"
-  end
-
   describe "#application_received" do
     subject(:mail) { described_class.with(teacher:).application_received }
 
