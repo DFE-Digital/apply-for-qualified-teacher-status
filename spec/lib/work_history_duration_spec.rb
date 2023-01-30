@@ -4,12 +4,9 @@ require "rails_helper"
 
 RSpec.describe WorkHistoryDuration do
   let(:application_form) { create(:application_form) }
-
   let(:today) { Date.new(2023, 1, 15) }
 
-  subject(:work_history_duration) { described_class.new(application_form:) }
-
-  describe "#count_months" do
+  shared_examples "month counter" do
     subject(:count_months) do
       travel_to(today) { work_history_duration.count_months }
     end
@@ -103,6 +100,45 @@ RSpec.describe WorkHistoryDuration do
       end
 
       it { is_expected.to eq(10) }
+    end
+  end
+
+  describe "#count_months" do
+    context "passing an application form" do
+      subject(:work_history_duration) { described_class.new(application_form:) }
+
+      it_behaves_like "month counter"
+    end
+
+    context "passing a work history relation" do
+      subject(:work_history_duration) do
+        described_class.new(
+          work_history_relation: application_form.work_histories,
+        )
+      end
+
+      it_behaves_like "month counter"
+    end
+
+    context "passing nothing" do
+      subject(:work_history_duration) { described_class.new }
+
+      it "raises an error" do
+        expect { work_history_duration }.to raise_error(/only/)
+      end
+    end
+
+    context "passing both" do
+      subject(:work_history_duration) do
+        described_class.new(
+          application_form:,
+          work_history_relation: application_form.work_histories,
+        )
+      end
+
+      it "raises an error" do
+        expect { work_history_duration }.to raise_error(/only/)
+      end
     end
   end
 end
