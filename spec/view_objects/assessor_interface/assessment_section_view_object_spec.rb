@@ -218,4 +218,98 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       it { is_expected.to be true }
     end
   end
+
+  describe "show_english_language_moi_details?" do
+    let(:params) do
+      {
+        key:,
+        assessment_id: assessment.id,
+        application_form_id: application_form.id,
+      }
+    end
+
+    subject(:show_english_language_moi_details?) do
+      view_object.show_english_language_moi_details?
+    end
+
+    context "when the application EL proof method is 'medium_of_instruction'" do
+      let(:key) { "english_language_proficiency" }
+      let(:application_form) do
+        create(:application_form, :with_english_language_medium_of_instruction)
+      end
+      let(:assessment_section) do
+        create(:assessment_section, :english_language_proficiency, assessment:)
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when the application EL proof method is not 'medium_of_instruction'" do
+      let(:key) { "english_language_proficiency" }
+      let(:application_form) do
+        create(:application_form, :with_english_language_provider)
+      end
+      let(:assessment_section) do
+        create(:assessment_section, :english_language_proficiency, assessment:)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when the section is not 'english_language_proficiency'" do
+      let(:key) { "personal_information" }
+      let(:assessment_section) do
+        create(:assessment_section, :personal_information, assessment:)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "show_english_language_provider_details?" do
+    let(:params) do
+      {
+        key:,
+        assessment_id: assessment.id,
+        application_form_id: application_form.id,
+      }
+    end
+
+    subject(:show_english_language_provider_details?) do
+      view_object.show_english_language_provider_details?
+    end
+
+    context "when the application EL proof method is 'provider'" do
+      let(:key) { "english_language_proficiency" }
+      let(:application_form) do
+        create(:application_form, :with_english_language_provider)
+      end
+      let(:assessment_section) do
+        create(:assessment_section, :english_language_proficiency, assessment:)
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when the application EL proof method is not 'provider'" do
+      let(:key) { "english_language_proficiency" }
+      let(:application_form) do
+        create(:application_form, :with_english_language_medium_of_instruction)
+      end
+      let(:assessment_section) do
+        create(:assessment_section, :english_language_proficiency, assessment:)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when the section is not 'english_language_proficiency'" do
+      let(:key) { "personal_information" }
+      let(:assessment_section) do
+        create(:assessment_section, :personal_information, assessment:)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
 end

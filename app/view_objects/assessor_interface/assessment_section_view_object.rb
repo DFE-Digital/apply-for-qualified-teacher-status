@@ -80,6 +80,16 @@ module AssessorInterface
         application_form.english_language_exempt?
     end
 
+    def show_english_language_provider_details?
+      assessment_section.english_language_proficiency? &&
+        application_form.english_language_proof_method_provider?
+    end
+
+    def show_english_language_moi_details?
+      assessment_section.english_language_proficiency? &&
+        application_form.english_language_proof_method_medium_of_instruction?
+    end
+
     private
 
     attr_reader :params
