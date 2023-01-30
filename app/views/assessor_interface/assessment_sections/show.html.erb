@@ -117,10 +117,10 @@
 
     <% end %>
 
-    <% if @assessment_section_view_object.application_form.english_language_proof_method_medium_of_instruction? %>
+    <% if @assessment_section_view_object.show_english_language_moi_details? %>
       <%= render "english_language_moi_country_details" %>
     <% end %>
-    <% if @assessment_section_view_object.application_form.english_language_proof_method_provider? %>
+    <% if @assessment_section_view_object.show_english_language_provider_details? %>
       <%= render "english_language_provider_details", provider:  @assessment_section_view_object.application_form.english_language_provider %>
     <% end %>
 
