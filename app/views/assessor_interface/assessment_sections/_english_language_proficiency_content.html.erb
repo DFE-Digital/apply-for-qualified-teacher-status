@@ -1,0 +1,20 @@
+<% if application_form.english_language_citizenship_exempt %>
+  <h2 class="govuk-heading-m">English language exemption by birth/citizenship</h2>
+  <p class="govuk-body">
+    The applicant has indicated that they’re exempt from English language proficiency requirements, because they were born in, or hold citizenship of, a country that appears on the exemption list.
+  </p>
+  <p class="govuk-body">
+    You’ll need to assess this in the ‘Check personal information’ section, which you can access from the task list.
+  </p>
+<% end %>
+<% if application_form.english_language_qualification_exempt %>
+  <h2 class="govuk-heading-m">English language exemption by country of study</h2>
+  <p class="govuk-body">
+    This applicant has indicated that they’re exempt from English language proficiency requirements, because they studied in a country that appears on the exemption list.
+  </p>
+  <p class="govuk-body">
+    You’ll need to assess this in the ‘Check qualifications’ section, which you can access from the task list.
+  </p>
+
+<% end %>
+<%= govuk_link_to "Return to task list", [:assessor_interface, application_form], class: "govuk-button" %>

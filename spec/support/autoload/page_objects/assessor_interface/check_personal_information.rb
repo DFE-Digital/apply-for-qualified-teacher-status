@@ -13,6 +13,12 @@ module PageObjects
 
       sections :cards, PersonalInformationCard, ".govuk-summary-list__card"
 
+      section :exemption_form, "form" do
+        element :english_language_exempt,
+                "#assessor-interface-assessment-section-form-english-language-section-passed-true-field",
+                visible: false
+      end
+
       def personal_information
         cards&.first
       end

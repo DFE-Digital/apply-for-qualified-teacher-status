@@ -1,11 +1,12 @@
-<% content_for :page_title, "#{"Error: " if @assessment_section_form.errors.any?}#{t(".title.#{@assessment_section_view_object.assessment_section.key}")}" %>
+<% section_key = @assessment_section_view_object.assessment_section.key %>
+<% content_for :page_title, "#{"Error: " if @assessment_section_form.errors.any?}#{t(".title.#{section_key}")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@assessment_section_view_object.application_form) %>
 
 <%= render "shared/assessor_header",
-           title: t(".title.#{@assessment_section_view_object.assessment_section.key}"),
+           title: t(".title.#{section_key}"),
            application_form: @assessment_section_view_object.application_form %>
 
-<% case @assessment_section_view_object.assessment_section.key %>
+<% case section_key %>
 <% when "personal_information" %>
   <%= render "shared/application_form/personal_information_summary",
              application_form: @assessment_section_view_object.application_form,
@@ -25,6 +26,10 @@
              changeable: false %>
 
   <%= render "shared/application_form/subjects_summary",
+             application_form: @assessment_section_view_object.application_form,
+             changeable: false %>
+<% when "english_language_proficiency" %>
+  <%= render "shared/application_form/english_language_summary",
              application_form: @assessment_section_view_object.application_form,
              changeable: false %>
 <% when "work_history" %>
@@ -88,77 +93,112 @@
   <% end %>
 <% end %>
 
-<h2 class="govuk-heading-s">Check:</h2>
-<ul class="govuk-list govuk-list--bullet">
-  <% @assessment_section_view_object.checks.each do |check| %>
-    <li><%= t(".checks.#{check}") %></li>
-  <% end %>
-</ul>
+<% if @assessment_section_view_object.render_form? %>
+  <%= form_with model: @assessment_section_form,
+    url: assessor_interface_application_form_assessment_assessment_section_path(
+      @assessment_section_view_object.application_form, @assessment_section_view_object.assessment, section_key
+    ), method: :put do |f| %>
 
-<%= form_with model: @assessment_section_form,
-  url: assessor_interface_application_form_assessment_assessment_section_path(
-    @assessment_section_view_object.application_form, @assessment_section_view_object.assessment, @assessment_section_view_object.assessment_section.key
-  ), method: :put do |f| %>
-  <%= f.govuk_error_summary %>
+    <%= f.govuk_error_summary %>
 
-  <% if @assessment_section_form.is_a?(AssessorInterface::AgeRangeSubjectsForm) %>
-    <h2 class="govuk-heading-m">What age range is the applicant qualified to teach?</h2>
-    <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the age range they entered if you agree, or enter a new range.</p>
-
-    <%= f.govuk_number_field :age_range_min, width: 3 %>
-    <%= f.govuk_number_field :age_range_max, width: 3 %>
-    <%= f.govuk_text_area :age_range_note %>
-
-    <h2 class="govuk-heading-m">Which subjects can the applicant teach in England?</h2>
-    <p class="govuk-hint">You can enter up to three</p>
-    <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the subjects they entered if you agree, or edit them.</p>
-
-    <% (1..3).map { |i| "subject_#{i}" }.each do |field| %>
-      <%= render DfE::Autocomplete::View.new(
-        f,
-        attribute_name: field,
-        form_field: f.govuk_select(
-          field,
-          options_for_select(
-            Subject.all.map { |subject| [subject.name, subject.id] }.unshift([nil, nil]),
-            f.object.send(field),
-          ),
-        )
+    <% if @assessment_section_form.class.include?(AssessorInterface::UpdatesEnglishLanguageStatus) %>
+      <%= f.govuk_check_box(
+        :english_language_section_passed,
+        true,
+        false,
+        mutliple: false,
+        link_errors: true,
+        small: true,
+        label: {
+          text: t("assessor_interface.assessment_sections.show.labels.#{section_key}.english_language_section_passed"),
+          size: "s",
+        }
       ) %>
+
     <% end %>
 
-    <%= f.govuk_text_area :subjects_note %>
-  <% end %>
+    <% if @assessment_section_view_object.application_form.english_language_proof_method_medium_of_instruction? %>
+      <%= render "english_language_moi_country_details" %>
+    <% end %>
+    <% if @assessment_section_view_object.application_form.english_language_proof_method_provider? %>
+      <%= render "english_language_provider_details", provider:  @assessment_section_view_object.application_form.english_language_provider %>
+    <% end %>
 
-  <% if @assessment_section_form.is_a?(AssessorInterface::InductionRequiredForm) %>
-    <%= f.govuk_collection_radio_buttons :induction_required,
-                                         [
-                                           OpenStruct.new(value: :false, label: t(".induction_required.false.#{@assessment_section_view_object.country.code}")),
-                                           OpenStruct.new(value: :true, label: t(".induction_required.true.#{@assessment_section_view_object.country.code}"))
-                                         ],
-                                         :value,
-                                         :label,
-                                         legend: { text: t(".induction_required.legend.#{@assessment_section_view_object.country.code}") } %>
-  <% end %>
+    <% if @assessment_section_view_object.checks.any? %>
+      <h2 class="govuk-heading-s">Check:</h2>
+      <ul class="govuk-list govuk-list--bullet">
+        <% @assessment_section_view_object.checks.each do |check| %>
+          <li><%= t(".checks.#{check}") %></li>
+        <% end %>
+      </ul>
+    <% end %>
 
-  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?" } do %>
-    <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
-    <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
-      <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" }  do %>
-        <% @assessment_section_view_object.assessment_section.failure_reasons.each do |failure_reason| %>
-          <%= f.govuk_check_box "#{failure_reason}_checked".to_sym, true, label: { text: t(".failure_reasons.#{failure_reason}") }, link_errors: true do %>
-            <%= f.govuk_text_area "#{failure_reason}_notes".to_sym,
-              label: { text: t(@assessment_section_view_object.notes_label_key_for(failure_reason: failure_reason)), size: "s" },
-              hint: { text: t(@assessment_section_view_object.notes_hint_key_for(failure_reason: failure_reason)) },
-              placeholder: t(@assessment_section_view_object.notes_placeholder_key_for(failure_reason: failure_reason))
-            %>
+    <% if @assessment_section_form.is_a?(AssessorInterface::AgeRangeSubjectsForm) %>
+      <h2 class="govuk-heading-m">What age range is the applicant qualified to teach?</h2>
+      <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the age range they entered if you agree, or enter a new range.</p>
+
+      <%= f.govuk_number_field :age_range_min, width: 3 %>
+      <%= f.govuk_number_field :age_range_max, width: 3 %>
+      <%= f.govuk_text_area :age_range_note %>
+
+      <h2 class="govuk-heading-m">Which subjects can the applicant teach in England?</h2>
+      <p class="govuk-hint">You can enter up to three</p>
+      <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the subjects they entered if you agree, or edit them.</p>
+
+      <% (1..3).map { |i| "subject_#{i}" }.each do |field| %>
+        <%= render DfE::Autocomplete::View.new(
+          f,
+          attribute_name: field,
+          form_field: f.govuk_select(
+            field,
+            options_for_select(
+              Subject.all.map { |subject| [subject.name, subject.id] }.unshift([nil, nil]),
+              f.object.send(field),
+            ),
+          )
+        ) %>
+      <% end %>
+
+      <%= f.govuk_text_area :subjects_note %>
+    <% end %>
+
+    <% if @assessment_section_form.is_a?(AssessorInterface::InductionRequiredForm) %>
+      <%= f.govuk_collection_radio_buttons :induction_required,
+                                           [
+                                             OpenStruct.new(value: :false, label: t(".induction_required.false.#{@assessment_section_view_object.country.code}")),
+                                             OpenStruct.new(value: :true, label: t(".induction_required.true.#{@assessment_section_view_object.country.code}"))
+                                           ],
+                                           :value,
+                                           :label,
+                                           legend: { text: t(".induction_required.legend.#{@assessment_section_view_object.country.code}") } %>
+    <% end %>
+
+    <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?" } do %>
+      <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
+      <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
+        <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" }  do %>
+          <% @assessment_section_view_object.assessment_section.failure_reasons.each do |failure_reason| %>
+            <%= f.govuk_check_box "#{failure_reason}_checked".to_sym, true, label: { text: t(".failure_reasons.#{failure_reason}") }, link_errors: true do %>
+              <%= f.govuk_text_area "#{failure_reason}_notes".to_sym,
+                label: { text: t(@assessment_section_view_object.notes_label_key_for(failure_reason: failure_reason)), size: "s" },
+                hint: { text: t(@assessment_section_view_object.notes_hint_key_for(failure_reason: failure_reason)) },
+                placeholder: t(@assessment_section_view_object.notes_placeholder_key_for(failure_reason: failure_reason))
+              %>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
     <% end %>
-  <% end %>
 
-  <%= f.govuk_submit prevent_double_click: false do %>
-    <%= govuk_link_to "Cancel", [:assessor_interface, @assessment_section_view_object.application_form] %>
+    <%= f.govuk_submit prevent_double_click: false do %>
+      <%= govuk_link_to "Cancel", [:assessor_interface, @assessment_section_view_object.application_form] %>
+    <% end %>
   <% end %>
+<% end %>
+
+<% if @assessment_section_view_object.render_section_content? %>
+  <%= render(
+    "#{section_key}_content",
+    application_form: @assessment_section_view_object.application_form
+  ) %>
 <% end %>

@@ -12,6 +12,7 @@ class AssessmentFactory
       personal_information_section,
       qualifications_section,
       age_range_subjects_section,
+      english_language_proficiency_section,
       work_history_section,
       professional_standing_section,
     ].compact
@@ -44,6 +45,13 @@ class AssessmentFactory
       (
         if application_form.has_alternative_name
           FailureReasons::NAME_CHANGE_DOCUMENT_ILLEGIBLE
+        end
+      ),
+      (
+        if english_language_feature_active_and_under_new_regs?(
+             application_form,
+           ) && application_form.english_language_citizenship_exempt
+          FailureReasons::EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED
         end
       ),
       FailureReasons::DUPLICATE_APPLICATION,
@@ -106,6 +114,13 @@ class AssessmentFactory
           FailureReasons::TEACHING_QUALIFICATION_1_YEAR
         end
       ),
+      (
+        if english_language_feature_active_and_under_new_regs?(
+             application_form,
+           ) && application_form.english_language_qualification_exempt
+          FailureReasons::EL_EXEMPTION_BY_QUALIFICATION_DOCUMENTS_UNCONFIRMED
+        end
+      ),
       FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
       FailureReasons::QUALIFICATIONS_DONT_MATCH_SUBJECTS,
       FailureReasons::QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS,
@@ -152,6 +167,42 @@ class AssessmentFactory
     ]
 
     AssessmentSection.new(key: "age_range_subjects", checks:, failure_reasons:)
+  end
+
+  def english_language_proficiency_section
+    if english_language_feature_active_and_under_new_regs?(application_form)
+      checks =
+        if application_form.english_language_exempt?
+          []
+        elsif application_form.english_language_proof_method_medium_of_instruction?
+          %i[english_language_valid_moi]
+        else
+          %i[english_language_valid_provider]
+        end
+
+      failure_reasons =
+        if application_form.english_language_exempt?
+          []
+        elsif application_form.english_language_proof_method_medium_of_instruction?
+          [
+            FailureReasons::EL_MOI_NOT_TAUGHT_IN_ENGLISH,
+            FailureReasons::EL_MOI_INVALID_FORMAT,
+          ]
+        else
+          [
+            FailureReasons::EL_QUALIFICATION_INVALID,
+            FailureReasons::EL_UNVERIFIABLE_REFERENCE_NUMBER,
+            FailureReasons::EL_GRADE_BELOW_B2,
+            FailureReasons::EL_SELT_EXPIRED,
+          ]
+        end
+
+      AssessmentSection.new(
+        key: "english_language_proficiency",
+        checks:,
+        failure_reasons:,
+      )
+    end
   end
 
   def work_history_section
@@ -226,5 +277,10 @@ class AssessmentFactory
       checks:,
       failure_reasons:,
     )
+  end
+
+  def english_language_feature_active_and_under_new_regs?(application_form)
+    FeatureFlags::FeatureFlag.active?(:application_english_language) &&
+      application_form.created_under_new_regulations?
   end
 end

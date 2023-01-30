@@ -272,6 +272,14 @@ FactoryBot.define do
       end
     end
 
+    trait :with_english_language_exemption_by_citizenship do
+      english_language_citizenship_exempt { true }
+    end
+
+    trait :with_english_language_exemption_by_qualification do
+      english_language_qualification_exempt { true }
+    end
+
     trait :with_work_history do
       needs_work_history { true }
       has_work_history { true }
