@@ -32,15 +32,6 @@ class Teacher < ApplicationRecord
 
   has_many :application_forms
 
-  scope :with_draft_application_forms,
-        -> {
-          joins(:application_forms).where(
-            application_forms: {
-              status: "draft",
-            },
-          )
-        }
-
   def application_form
     @application_form ||= application_forms.order(created_at: :desc).first
   end
