@@ -18,7 +18,7 @@ module AssessorInterface::UpdatesEnglishLanguageStatus
         super.merge(
           english_language_section_passed:
             (
-              english_language_section(assessment).passed &&
+              english_language_section(assessment)&.passed &&
                 application_form.send(self::EXEMPTION_ATTR)
             ),
         )
@@ -52,7 +52,10 @@ module AssessorInterface::UpdatesEnglishLanguageStatus
     end
 
     def update_english_language_status?
-      english_language_section_passed &&
+      self
+        .class
+        .english_language_section(assessment_section.assessment)
+        .present? && english_language_section_passed &&
         application_form.send(self.class::EXEMPTION_ATTR)
     end
 
