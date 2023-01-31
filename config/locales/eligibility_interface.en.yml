@@ -30,6 +30,10 @@ en:
           attributes:
             teach_children:
               inclusion: Tell us whether you’re qualified to teach children aged between 5 and 16
+        eligibility_interface/qualified_for_subject_form:
+          attributes:
+            qualified_for_subject:
+              inclusion: Tell us whether you’re qualified to teach one of these subjects
         eligibility_interface/work_experience_form:
           attributes:
             work_experience:
