@@ -1,0 +1,31 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".heading")}" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<%= form_with model: @form, url: [:reference_requests, :assessor_interface, @application_form, @assessment, :assessment_recommendation_award] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+
+  <p class="govuk-body-l">In the next step you’ll send reference requests to all the references the applicant provided.</p>
+
+  <p class="govuk-body">These are shown below.</p>
+
+  <%= f.govuk_collection_check_boxes :work_history_ids,
+                                      @application_form.work_histories.ordered,
+                                      :id,
+                                      :school_name,
+                                      small: true %>
+
+  <%= govuk_inset_text do %>
+    <p class="govuk-body">
+      You can deselect 1 or more references if you need to.
+      If the remaining references account for less than 9 months,
+      you’ll need to request further information in
+      <%= govuk_link_to "Check work history", assessor_interface_application_form_assessment_assessment_section_path(@application_form, @assessment, :work_history) %>.
+    </p>
+  <% end %>
+
+  <%= f.govuk_submit do %>
+    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <% end %>
+<% end %>

@@ -41,6 +41,16 @@ en:
         instruction: Read the declaration and if you’re happy to award QTS, select ‘Accept and award QTS’.
         declaration: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
         button: Accept and award QTS
+      edit_reference_requests:
+        heading: Request work history references
+      preview_referee:
+        heading: Check and send the reference request email
+        button: Send email to referee
+        cancel: Cancel
+      preview_teacher:
+        heading: Check and send the email to applicant
+        button: Send email to applicant
+        cancel: Cancel
       preview:
         heading: Check the email
         subheading: This screen shows how the email to the applicant will look.
