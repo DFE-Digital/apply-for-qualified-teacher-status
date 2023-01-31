@@ -6,6 +6,7 @@
 #
 #  id                   :bigint           not null, primary key
 #  b2_level_requirement :text             not null
+#  check_url            :string
 #  name                 :string           not null
 #  reference_hint       :text             not null
 #  reference_name       :string           not null
@@ -18,5 +19,6 @@ FactoryBot.define do
     b2_level_requirement { Faker::Lorem.sentence }
     reference_name { Faker::Lorem.word }
     reference_hint { Faker::Lorem.sentence }
+    check_url { Faker::Internet.url }
   end
 end

@@ -156,6 +156,7 @@
     - b2_level_requirement
     - reference_name
     - reference_hint
+    - check_url
     - created_at
     - updated_at
   :feature_flags_features:

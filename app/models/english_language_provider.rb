@@ -6,6 +6,7 @@
 #
 #  id                   :bigint           not null, primary key
 #  b2_level_requirement :text             not null
+#  check_url            :string
 #  name                 :string           not null
 #  reference_hint       :text             not null
 #  reference_name       :string           not null
@@ -17,4 +18,5 @@ class EnglishLanguageProvider < ApplicationRecord
   validates :b2_level_requirement, presence: true
   validates :reference_name, presence: true
   validates :reference_hint, presence: true
+  validates :check_url, url: true, allow_blank: true
 end
