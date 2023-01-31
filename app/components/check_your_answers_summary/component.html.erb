@@ -1,21 +1,19 @@
-<div class="govuk-summary-list__card" id="<%= id %>">
-  <div class="govuk-summary-list__card-title-wrapper">
-    <h2 class="govuk-summary-list__card-title"><%= title %></h2>
+<div class="govuk-summary-card" id="<%= id %>">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title"><%= title %></h2>
 
     <% if delete_link_to.present? %>
-      <div class="govuk-summary-list__card-actions">
-        <ul class="govuk-summary-list__card-actions-list">
-          <li class="govuk-summary-list__card-actions-list-item">
-            <%= govuk_link_to(delete_link_to) do %>
-              Delete <span class="govuk-visually-hidden"><%= title.downcase %></span>
-            <% end %>
-          </li>
-        </ul>
-      </div>
+      <ul class="govuk-summary-card__actions">
+        <li class="govuk-summary-card__action">
+          <%= govuk_link_to(delete_link_to) do %>
+            Delete <span class="govuk-visually-hidden"><%= title.downcase %></span>
+          <% end %>
+        </li>
+      </ul>
     <% end %>
   </div>
 
-  <div class="govuk-summary-list__card-content">
+  <div class="govuk-summary-card__content">
     <dl class="govuk-summary-list">
       <% rows.each do |row| %>
         <div class="govuk-summary-list__row">

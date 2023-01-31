@@ -9,7 +9,7 @@ module PageObjects
     class CheckProfessionalStanding < AssessmentSection
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/professional_standing"
 
-      sections :cards, ProfessionalStandingCard, ".govuk-summary-list__card"
+      sections :cards, ProfessionalStandingCard, ".govuk-summary-card"
 
       section :induction_required_form, "form" do
         element :no_radio_item,

@@ -9,7 +9,7 @@ module PageObjects
     class CheckQualifications < AssessmentSection
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/qualifications"
 
-      sections :cards, QualificationCard, ".govuk-summary-list__card"
+      sections :cards, QualificationCard, ".govuk-summary-card"
 
       section :exemption_form, "form" do
         element :english_language_exempt,

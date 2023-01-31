@@ -9,7 +9,7 @@ module PageObjects
     class VerifyAgeRangeSubjectsPage < AssessmentSection
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/age_range_subjects"
 
-      sections :cards, AgeRangeSubjectCard, ".govuk-summary-list__card"
+      sections :cards, AgeRangeSubjectCard, ".govuk-summary-card"
 
       section :age_range_form, "form" do
         element :minimum,

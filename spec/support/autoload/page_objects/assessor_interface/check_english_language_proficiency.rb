@@ -8,9 +8,7 @@ module PageObjects
       set_url "/assessor/applications/{application_id}/assessments/ \
         {assessment_id}/sections/english_language_proficiency"
 
-      sections :cards,
-               EnglishLanguageProficiencyCard,
-               ".govuk-summary-list__card"
+      sections :cards, EnglishLanguageProficiencyCard, ".govuk-summary-card"
 
       elements :lists, ".govuk-list"
 
