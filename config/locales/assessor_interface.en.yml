@@ -173,9 +173,9 @@ en:
         professional_standing_request: Third-party professional standing
         labels:
           personal_information:
-            english_language_section_passed: This application has indicated English language exemption by birth/citizenship and their ID confirms this.
+            english_language_section_passed: This applicant has indicated English language exemption by birth/citizenship. I have checked their ID for evidence of this.
           qualifications:
-            english_language_section_passed: This application has indicated English language exemption by qualification and their qualifications confirm this.
+            english_language_section_passed: This applicant has indicated English language exemption by country of study. I have checked their qualification documents for evidence of this.
 
     further_information_requests:
       edit:
