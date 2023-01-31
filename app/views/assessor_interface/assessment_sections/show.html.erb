@@ -101,7 +101,7 @@
 
     <%= f.govuk_error_summary %>
 
-    <% if @assessment_section_form.class.include?(AssessorInterface::UpdatesEnglishLanguageStatus) %>
+    <% if @assessment_section_view_object.show_english_language_exemption_checkbox? %>
       <%= f.govuk_check_box(
         :english_language_section_passed,
         true,
@@ -114,7 +114,6 @@
           size: "s",
         }
       ) %>
-
     <% end %>
 
     <% if @assessment_section_view_object.show_english_language_moi_details? %>
