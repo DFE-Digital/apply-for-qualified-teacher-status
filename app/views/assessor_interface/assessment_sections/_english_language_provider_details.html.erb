@@ -6,7 +6,7 @@
 
     <% if provider.check_url.present? %>
       <p class="govuk-body">Check the applicant's <%= provider.reference_name %> at:</p>
-      <p class="govuk-body"><%= govuk_link_to provider.check_url, provider.check_url %></p>
+      <p class="govuk-body"><%= govuk_link_to provider.check_url, provider.check_url, target: "_blank", rel: "noreferrer noopener" %></p>
     <% end %>
   <% else %>
     <p class="govuk-body">
