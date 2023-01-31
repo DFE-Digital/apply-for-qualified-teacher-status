@@ -76,12 +76,13 @@ class ApplicationFormStatusUpdater
         "awarded"
       elsif dqt_trn_request.present?
         "awarded_pending_checks"
+      elsif received_enough_reference_requests?
+        "received"
       elsif waiting_on_further_information ||
             waiting_on_professional_standing || waiting_on_qualification ||
             waiting_on_reference
         "waiting_on"
-      elsif received_further_information || received_qualification ||
-            received_reference
+      elsif received_further_information || received_qualification
         "received"
       elsif assessment&.started?
         "initial_assessment"
@@ -93,7 +94,11 @@ class ApplicationFormStatusUpdater
       end
   end
 
-  delegate :assessment, :dqt_trn_request, :teacher, to: :application_form
+  delegate :assessment,
+           :dqt_trn_request,
+           :region,
+           :teacher,
+           to: :application_form
 
   def further_information_requests
     @further_information_requests ||=
@@ -120,6 +125,34 @@ class ApplicationFormStatusUpdater
 
   def received?(requestables:)
     requestables.any?(&:received?)
+  end
+
+  def received_enough_reference_requests?
+    return false unless received_reference
+
+    received_requests = reference_requests.filter(&:received?)
+    requested_requests = reference_requests.filter(&:requested?)
+
+    months_count =
+      WorkHistoryDuration.new(
+        work_history_relation:
+          application_form.work_histories.where(
+            id: received_requests.map(&:work_history_id),
+          ),
+      ).count_months
+
+    if months_count < 9
+      false
+    elsif months_count >= 20 &&
+          (region.checks_available? || most_recent_reference_request&.received?)
+      true
+    else
+      requested_requests.empty?
+    end
+  end
+
+  def most_recent_reference_request
+    reference_requests.max_by { |request| request.work_history.start_date }
   end
 
   def create_timeline_event(old_state:, new_state:)

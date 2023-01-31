@@ -30,8 +30,10 @@ RSpec.describe SubmitReferenceRequest do
     )
   end
 
-  it "changes the application form state to received" do
-    expect { call }.to change(application_form, :received?).from(false).to(true)
+  it "changes the application form reference received" do
+    expect { call }.to change(application_form, :received_reference).from(
+      false,
+    ).to(true)
   end
 
   it "changes the reference request received at" do
@@ -46,15 +48,6 @@ RSpec.describe SubmitReferenceRequest do
     expect { call }.to have_recorded_timeline_event(
       :requestable_received,
       requestable: reference_request,
-    )
-  end
-
-  it "records a state changed timeline event" do
-    expect { call }.to have_recorded_timeline_event(
-      :state_changed,
-      creator_name: user,
-      old_state: "submitted",
-      new_state: "received",
     )
   end
 end
