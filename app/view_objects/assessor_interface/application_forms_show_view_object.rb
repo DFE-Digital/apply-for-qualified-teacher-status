@@ -22,7 +22,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
     assessment_section_keys = assessment.sections.map(&:key).map(&:to_sym)
 
-    submitted_details =
+    initial_assessment =
       %i[
         personal_information
         qualifications
@@ -30,9 +30,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
         english_language_proficiency
         work_history
         professional_standing
-      ].select { |key| assessment_section_keys.include?(key) }
-
-    recommendation = %i[initial_assessment]
+      ].select { |key| assessment_section_keys.include?(key) } +
+        %i[assessment_recommendation]
 
     further_information =
       further_information_requests.map { :review_requested_information }
@@ -42,9 +41,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
     {
       pre_assessment_tasks:,
-      submitted_details:,
-      recommendation:,
-      further_information:,
+      initial_assessment:,
+      further_information_requests: further_information,
       verification_requests:,
     }.compact_blank
   end
@@ -56,23 +54,24 @@ class AssessorInterface::ApplicationFormsShowViewObject
         application_form,
         assessment,
       )
-    when :submitted_details
-      url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
-        application_form,
-        assessment,
-        item,
-      )
-    when :recommendation
-      return nil unless professional_standing_request_received?
-      return nil unless assessment.sections_finished?
+    when :initial_assessment
+      if item == :assessment_recommendation
+        return nil unless professional_standing_request_received?
+        return nil unless assessment.sections_finished?
+        return nil unless assessment_editable?
 
-      if item == :initial_assessment && assessment_editable?
         url_helpers.edit_assessor_interface_application_form_assessment_path(
           application_form,
           assessment,
         )
+      else
+        url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
+          application_form,
+          assessment,
+          item,
+        )
       end
-    when :further_information
+    when :further_information_requests
       further_information_request = further_information_requests[index]
 
       if further_information_request.received?
@@ -97,16 +96,18 @@ class AssessorInterface::ApplicationFormsShowViewObject
     case section
     when :pre_assessment_tasks
       professional_standing_request_received? ? :completed : :waiting_on
-    when :submitted_details
+    when :initial_assessment
       return :cannot_start unless professional_standing_request_received?
-      assessment.sections.find { |s| s.key == item.to_s }.status
-    when :recommendation
-      return :cannot_start unless professional_standing_request_received?
-      return :cannot_start unless assessment.sections_finished?
-      return :not_started if assessment.unknown?
-      return :in_progress if assessment_editable?
-      :completed
-    when :further_information
+
+      if item == :assessment_recommendation
+        return :cannot_start unless assessment.sections_finished?
+        return :not_started if assessment.unknown?
+        return :in_progress if assessment_editable?
+        :completed
+      else
+        assessment.sections.find { |s| s.key == item.to_s }.status
+      end
+    when :further_information_requests
       return :cannot_start unless professional_standing_request_received?
       further_information_request = further_information_requests[index]
       return :cannot_start if further_information_request.requested?
