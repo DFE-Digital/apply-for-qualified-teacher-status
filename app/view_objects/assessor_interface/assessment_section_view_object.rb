@@ -90,6 +90,17 @@ module AssessorInterface
         application_form.english_language_proof_method_medium_of_instruction?
     end
 
+    def show_english_language_exemption_checkbox?
+      (
+        application_form.english_language_citizenship_exempt == true &&
+          assessment_section.personal_information?
+      ) ||
+        (
+          application_form.english_language_qualification_exempt == true &&
+            assessment_section.qualifications?
+        )
+    end
+
     private
 
     attr_reader :params

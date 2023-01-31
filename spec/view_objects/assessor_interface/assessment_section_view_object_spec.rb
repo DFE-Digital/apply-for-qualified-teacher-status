@@ -312,4 +312,72 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       it { is_expected.to be false }
     end
   end
+
+  describe "#show_english_language_exemption_checkbox?" do
+    let(:params) do
+      {
+        key:,
+        assessment_id: assessment.id,
+        application_form_id: application_form.id,
+      }
+    end
+
+    subject(:show_english_language_exemption_checkbox?) do
+      view_object.show_english_language_exemption_checkbox?
+    end
+
+    before { create(:assessment_section, :qualifications, assessment:) }
+
+    context "when the section is personal information" do
+      let(:key) { "personal_information" }
+
+      context "with exemption by citizenship" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :with_english_language_exemption_by_citizenship,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with exemption by country of study" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :with_english_language_exemption_by_qualification,
+          )
+        end
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "when the section is qualifications" do
+      let(:key) { "qualifications" }
+
+      context "with exemption by citizenship" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :with_english_language_exemption_by_citizenship,
+          )
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "with exemption by country of study" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :with_english_language_exemption_by_qualification,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+  end
 end
