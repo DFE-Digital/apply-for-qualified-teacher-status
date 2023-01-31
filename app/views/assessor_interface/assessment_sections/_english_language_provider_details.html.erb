@@ -1,13 +1,26 @@
 <%= govuk_details(summary_text: "Information about this approved provider") do %>
-  <p class="govuk-body">
-    For <%= provider.name %>, B2 level requires <%= provider.b2_level_requirement %> in all 4 disciplines (reading, writing, listening and speaking).
-  </p>
-  <% if I18n.exists?("assessor_interface.assessment_sections.show.providers.#{provider.name.parameterize}.check_url", :en) %>
-    <p class="govuk-body">Check the applicant's <%= provider.reference_name %> at:</p>
+  <% if provider %>
     <p class="govuk-body">
-    <%= govuk_link_to(
-      t("assessor_interface.assessment_sections.show.providers.#{provider.name.parameterize}.check_url")
-    ) %>
+      For <%= provider.name %>, B2 level requires <%= provider.b2_level_requirement %> in all 4 disciplines (reading, writing, listening and speaking).
+    </p>
+
+    <% if I18n.exists?("assessor_interface.assessment_sections.show.providers.#{provider.name.parameterize}.check_url", :en) %>
+      <p class="govuk-body">Check the applicant's <%= provider.reference_name %> at:</p>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(
+          t("assessor_interface.assessment_sections.show.providers.#{provider.name.parameterize}.check_url"),
+          t("assessor_interface.assessment_sections.show.providers.#{provider.name.parameterize}.check_url")
+        ) %>
+      </p>
+    <% end %>
+  <% else %>
+    <p class="govuk-body">
+      Applicants from <%= CountryName.from_region(region, with_definite_article: true) %> can provide tests from a wider range of approved providers.
+    </p>
+
+    <p class="govuk-body">
+      <%= govuk_link_to "Approved providers", "https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" %>
     </p>
   <% end %>
 <% end %>

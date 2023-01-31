@@ -7,6 +7,7 @@
     You’ll need to assess this in the ‘Check personal information’ section, which you can access from the task list.
   </p>
 <% end %>
+
 <% if application_form.english_language_qualification_exempt %>
   <h2 class="govuk-heading-m">English language exemption by country of study</h2>
   <p class="govuk-body">
@@ -15,6 +16,6 @@
   <p class="govuk-body">
     You’ll need to assess this in the ‘Check qualifications’ section, which you can access from the task list.
   </p>
-
 <% end %>
-<%= govuk_link_to "Return to task list", [:assessor_interface, application_form], class: "govuk-button" %>
+
+<%= govuk_button_link_to "Return to task list", [:assessor_interface, application_form] %>
