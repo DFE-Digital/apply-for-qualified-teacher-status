@@ -256,7 +256,9 @@ FactoryBot.define do
 
     trait :with_english_language_provider do
       english_language_proof_method { "provider" }
-      association :english_language_provider
+      english_language_provider do
+        EnglishLanguageProvider.all.sample || create(:english_language_provider)
+      end
       english_language_provider_reference { "reference" }
     end
 
