@@ -8,18 +8,23 @@
 
     <%= govuk_summary_list(actions: false) do |summary_list|
       summary_list.row do |row|
-        row.key { "B2 level requirement" }
+        row.key { t("helpers.label.english_language_provider.b2_level_requirement") }
         row.value { english_language_provider.b2_level_requirement }
       end
 
       summary_list.row do |row|
-        row.key { "Reference name" }
+        row.key { t("helpers.label.english_language_provider.reference_name") }
         row.value { english_language_provider.reference_name }
       end
 
       summary_list.row do |row|
-        row.key { "Reference hint" }
+        row.key { t("helpers.label.english_language_provider.reference_hint") }
         row.value { english_language_provider.reference_hint }
+      end
+
+      summary_list.row do |row|
+        row.key { t("helpers.label.english_language_provider.check_url") }
+        row.value { english_language_provider.check_url }
       end
     end %>
   </article>

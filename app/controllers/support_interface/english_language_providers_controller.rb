@@ -31,6 +31,7 @@ class SupportInterface::EnglishLanguageProvidersController < SupportInterface::B
       :b2_level_requirement,
       :reference_name,
       :reference_hint,
+      :check_url,
     )
   end
 end

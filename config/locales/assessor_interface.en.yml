@@ -176,17 +176,6 @@ en:
             english_language_section_passed: This application has indicated English language exemption by birth/citizenship and their ID confirms this.
           qualifications:
             english_language_section_passed: This application has indicated English language exemption by qualification and their qualifications confirm this.
-        providers:
-          ielts-selt-consortium:
-            check_url: https://ielts.ucles.org.uk/ielts-trf/welcome.html
-          languagecert:
-            check_url: https://www.languagecert.org/en/results
-          pearson:
-            check_url: https://srw.pteacademic.com/
-          psi-services-uk-ltd:
-            check_url: https://results.bookmyskillsforenglish.com/
-          trinity-college-london:
-            check_url: https://trinitycollege.com/TRV
 
     further_information_requests:
       edit:

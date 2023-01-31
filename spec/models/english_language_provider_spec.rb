@@ -6,6 +6,7 @@
 #
 #  id                   :bigint           not null, primary key
 #  b2_level_requirement :text             not null
+#  check_url            :string
 #  name                 :string           not null
 #  reference_hint       :text             not null
 #  reference_name       :string           not null
@@ -23,5 +24,6 @@ RSpec.describe EnglishLanguageProvider, type: :model do
     it { is_expected.to validate_presence_of(:b2_level_requirement) }
     it { is_expected.to validate_presence_of(:reference_name) }
     it { is_expected.to validate_presence_of(:reference_hint) }
+    it { is_expected.to validate_url_of(:check_url) }
   end
 end

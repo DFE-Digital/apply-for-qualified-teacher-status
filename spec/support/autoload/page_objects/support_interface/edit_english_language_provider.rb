@@ -13,6 +13,7 @@ module PageObjects
                 "#english-language-provider-reference-name-field"
         element :reference_hint_field,
                 "#english-language-provider-reference-hint-field"
+        element :check_url, "#english-language-provider-check-url-field"
         element :submit_button, ".govuk-button"
       end
     end
