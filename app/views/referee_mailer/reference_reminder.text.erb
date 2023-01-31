@@ -6,7 +6,7 @@ We recently contacted you to ask you to help us confirm that the information [Ap
 
 Please follow the link below and answer the questions by <%= @reference_request.expired_at.strftime("%e %B %Y") %>. If we do not receive your response by this date, it could affect the outcome for the applicant.
 
-<%= teacher_interface_reference_request_url(@reference_request) %>
+<%= teacher_interface_reference_request_url(@reference_request.slug) %>
 
 It should take no longer than 5 minutes.
 
