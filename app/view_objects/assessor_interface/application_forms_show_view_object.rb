@@ -36,8 +36,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
     further_information =
       further_information_requests.map { :review_requested_information }
 
-    verification_requests =
-      qualification_requests.map { :qualification_request }
+    verification_requests = [
+      (:qualification_requests if qualification_requests.present?),
+      (:reference_requests if reference_requests.present?),
+    ].compact
 
     {
       pre_assessment_tasks:,
@@ -82,6 +84,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
         )
       end
     when :verification_requests
+      return nil unless professional_standing_request_received?
+      return nil unless item == :qualification_requests
+
       qualification_request = qualification_requests[index]
 
       url_helpers.edit_assessor_interface_application_form_assessment_qualification_request_path(
@@ -115,7 +120,12 @@ class AssessorInterface::ApplicationFormsShowViewObject
       return :in_progress if assessment.request_further_information?
       :completed
     when :verification_requests
-      requestable_status(qualification_requests[index])
+      case item
+      when :reference_requests
+        application_form.received_reference ? :received : :waiting_on
+      when :qualification_requests
+        application_form.received_qualification ? :received : :waiting_on
+      end
     end
   end
 
@@ -153,10 +163,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
       assessment.qualification_requests.order(:created_at).to_a
   end
 
-  def requestable_status(requestable)
-    return :expired if requestable.expired?
-    return :completed if requestable.received?
-    :waiting_on
+  def reference_requests
+    @reference_requests ||=
+      assessment.reference_requests.order(:created_at).to_a
   end
 
   def url_helpers

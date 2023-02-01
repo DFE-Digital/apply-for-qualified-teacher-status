@@ -109,7 +109,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "with a qualification request" do
         before { create(:qualification_request, assessment:) }
 
-        it { is_expected.to eq(%i[qualification_request]) }
+        it { is_expected.to eq(%i[qualification_requests]) }
+      end
+
+      context "with a reference request" do
+        before { create(:reference_request, assessment:) }
+
+        it { is_expected.to eq(%i[reference_requests]) }
       end
     end
   end
@@ -188,9 +194,10 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     context "with verification_requests section" do
       let(:section) { :verification_requests }
-      let(:item) { :qualification_request }
 
-      context "and a qualification request" do
+      context "with qualification requests item" do
+        let(:item) { :qualification_requests }
+
         let!(:qualification_request) do
           create(:qualification_request, :requested, assessment:)
         end
@@ -201,6 +208,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               "/qualification-requests/#{qualification_request.id}/edit",
           )
         end
+      end
+
+      context "with reference requests item" do
+        let(:item) { :reference_requests }
+        it { is_expected.to be_nil }
       end
     end
   end
