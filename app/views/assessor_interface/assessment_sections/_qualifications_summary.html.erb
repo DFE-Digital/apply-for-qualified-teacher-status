@@ -2,3 +2,9 @@
            application_form:,
            qualifications: application_form.qualifications.ordered,
            changeable: false %>
+
+<%= govuk_accordion do |accordion| %>
+  <% accordion.section(heading_text: "Qualification information shown to applicant") do %>
+    <%= render "shared/eligible_region_content_components/proof_of_qualifications", region: %>
+  <% end %>
+<% end %>
