@@ -157,7 +157,7 @@ en:
           qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged 11-16.
           registration_number: We could not verify the registration number using the online checker.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
-          school_details_cannot_be_verified: We cannot verify the details of one of the schools that the applicant has entered.
+          school_details_cannot_be_verified: We could not verify the details of one of the schools that the applicant has entered.
           teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
@@ -167,7 +167,8 @@ en:
           teaching_qualifications_from_ineligible_country: Teaching qualifications were completed in an ineligible country.
           teaching_qualifications_not_at_required_level: Teaching qualifications do not meet the required academic level (level 6).
           teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
-          work_history_break: We need more information about a break in the applicant’s work history.
+          unrecognised_references: Application contained 1 or more references that cannot be considered.
+          work_history_break: There is an unexplained break in the applicant’s work history.
           written_statement_illegible: The letter from the country or state’s authority is illegible or in a format that we cannot accept.
           written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
         induction_required:
