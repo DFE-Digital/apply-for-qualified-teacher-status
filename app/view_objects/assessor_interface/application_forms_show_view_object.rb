@@ -57,8 +57,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
       )
     when :submitted_details
-      return nil unless professional_standing_request_received?
-
       url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
         application_form,
         assessment,
@@ -75,8 +73,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
         )
       end
     when :further_information
-      return nil unless professional_standing_request_received?
-
       further_information_request = further_information_requests[index]
 
       if further_information_request.received?
@@ -87,8 +83,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
         )
       end
     when :verification_requests
-      return nil unless professional_standing_request_received?
-
       qualification_request = qualification_requests[index]
 
       url_helpers.edit_assessor_interface_application_form_assessment_qualification_request_path(
