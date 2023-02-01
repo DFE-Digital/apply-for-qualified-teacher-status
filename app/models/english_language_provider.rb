@@ -5,6 +5,7 @@
 # Table name: english_language_providers
 #
 #  id                   :bigint           not null, primary key
+#  accepted_tests       :string           default(""), not null
 #  b2_level_requirement :text             not null
 #  check_url            :string
 #  name                 :string           not null
@@ -18,5 +19,6 @@ class EnglishLanguageProvider < ApplicationRecord
   validates :b2_level_requirement, presence: true
   validates :reference_name, presence: true
   validates :reference_hint, presence: true
+  validates :accepted_tests, presence: true
   validates :check_url, url: true, allow_blank: true
 end

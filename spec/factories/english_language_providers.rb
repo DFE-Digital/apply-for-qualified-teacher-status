@@ -5,6 +5,7 @@
 # Table name: english_language_providers
 #
 #  id                   :bigint           not null, primary key
+#  accepted_tests       :string           default(""), not null
 #  b2_level_requirement :text             not null
 #  check_url            :string
 #  name                 :string           not null
@@ -19,6 +20,7 @@ FactoryBot.define do
     b2_level_requirement { Faker::Lorem.sentence }
     reference_name { Faker::Lorem.word }
     reference_hint { Faker::Lorem.sentence }
+    accepted_tests { Faker::Lorem.sentence }
     check_url { Faker::Internet.url }
   end
 end

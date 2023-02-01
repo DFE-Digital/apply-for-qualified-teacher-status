@@ -5,6 +5,7 @@
 # Table name: english_language_providers
 #
 #  id                   :bigint           not null, primary key
+#  accepted_tests       :string           default(""), not null
 #  b2_level_requirement :text             not null
 #  check_url            :string
 #  name                 :string           not null
