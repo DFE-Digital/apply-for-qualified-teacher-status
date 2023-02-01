@@ -1,0 +1,17 @@
+<% if application_form.created_under_new_regulations? %>
+  <%= render "shared/application_form/new_regs_work_history_summary",
+             work_histories: application_form.work_histories.ordered,
+             changeable: false %>
+<% else %>
+  <%= render "shared/application_form/work_history_summary",
+             application_form:,
+             show_has_work_history: true,
+             work_histories: application_form.work_histories.ordered,
+             changeable: false %>
+<% end %>
+
+<% if application_form.created_under_new_regulations? %>
+  <h2 class="govuk-heading-m">
+    This applicant has provided <%= WorkHistoryDuration.new(application_form:).count_months %> months of work experience in total.
+  </h2>
+<% end %>

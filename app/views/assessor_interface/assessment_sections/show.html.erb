@@ -6,92 +6,10 @@
            title: t(".title.#{section_key}"),
            application_form: @assessment_section_view_object.application_form %>
 
-<% case section_key %>
-<% when "personal_information" %>
-  <%= render "shared/application_form/personal_information_summary",
-             application_form: @assessment_section_view_object.application_form,
-             changeable: false %>
-
-  <%= render "shared/application_form/identification_document_summary",
-             application_form: @assessment_section_view_object.application_form,
-             changeable: false %>
-<% when "qualifications" %>
-  <%= render "shared/application_form/qualifications_summary",
-             application_form: @assessment_section_view_object.application_form,
-             qualifications: @assessment_section_view_object.qualifications,
-             changeable: false %>
-<% when "age_range_subjects" %>
-  <%= render "shared/application_form/age_range_summary",
-             application_form: @assessment_section_view_object.application_form,
-             changeable: false %>
-
-  <%= render "shared/application_form/subjects_summary",
-             application_form: @assessment_section_view_object.application_form,
-             changeable: false %>
-<% when "english_language_proficiency" %>
-  <%= render "shared/application_form/english_language_summary",
-             application_form: @assessment_section_view_object.application_form,
-             changeable: false %>
-<% when "work_history" %>
-  <% if FeatureFlags::FeatureFlag.active?(:application_work_history) %>
-    <%= render "shared/application_form/new_regs_work_history_summary",
-               work_histories: @assessment_section_view_object.work_histories,
-               changeable: false %>
-  <% else %>
-    <%= render "shared/application_form/work_history_summary",
-               application_form: @assessment_section_view_object.application_form,
-               show_has_work_history: true,
-               work_histories: @assessment_section_view_object.work_histories,
-               changeable: false %>
-  <% end %>
-<% when "professional_standing" %>
-  <% if @assessment_section_view_object.show_registration_number_summary %>
-    <%= render "shared/application_form/registration_number_summary",
-      application_form: @assessment_section_view_object.application_form,
-      changeable: false %>
-  <% end %>
-
-  <% if @assessment_section_view_object.show_written_statement_summary %>
-    <%= render "shared/application_form/written_statement_summary",
-               application_form: @assessment_section_view_object.application_form,
-               changeable: false %>
-  <% end %>
-
-  <% if (professional_standing_request = @assessment_section_view_object.professional_standing_request).present? %>
-    <%= render(CheckYourAnswersSummary::Component.new(
-      id: "professional-standing-request",
-      model: professional_standing_request,
-      title: t(".professional_standing_request"),
-      fields: {
-        note: {
-          title: "Written statement",
-          value: "<p class=\"govuk-body\">The competent authority has sent the letter of professional standing directly to the TRA. Follow the instructions below to locate it.</p>#{simple_format(professional_standing_request.location_note)}".html_safe,
-        },
-      },
-    )) %>
-  <% end %>
-<% end %>
-
-<% if @assessment_section_view_object.application_form.created_under_new_regulations? && @assessment_section_view_object.work_history? %>
-  <h2 class="govuk-heading-m">
-    This applicant has provided <%= @assessment_section_view_object.work_history_months_count %> months of work experience in total.
-  </h2>
-<% elsif @assessment_section_view_object.professional_standing? %>
-  <%= govuk_accordion do |accordion| %>
-    <% if (online_checker_url = @assessment_section_view_object.online_checker_url).present? %>
-      <% accordion.section(heading_text: "Online checker") do %>
-        <p class="govuk-body">This authority has an online checker for validating the supplied reference number:</p>
-        <p class="govuk-body"><%= govuk_link_to online_checker_url, online_checker_url, target: "_blank", rel: "noreferrer noopener" %></p>
-      <% end %>
-    <% end %>
-
-    <% accordion.section(heading_text: "Competent authority information shown to applicant") do %>
-      <%= render "shared/eligible_region_content_components/professional_recognition",
-                 region: @assessment_section_view_object.region,
-                 teaching_authority_provides_written_statement: @assessment_section_view_object.application_form.teaching_authority_provides_written_statement %>
-    <% end %>
-  <% end %>
-<% end %>
+<%= render "#{section_key}_summary",
+           region: @assessment_section_view_object.region,
+           application_form: @assessment_section_view_object.application_form,
+           assessment: @assessment_section_view_object.assessment %>
 
 <% if @assessment_section_view_object.render_form? %>
   <%= form_with model: @assessment_section_form,

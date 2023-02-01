@@ -47,50 +47,6 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     end
   end
 
-  describe "qualifications" do
-    it "returns an ordered list of qualifications" do
-      expect(subject.qualifications).to match_array(
-        application_form.qualifications.ordered,
-      )
-    end
-  end
-
-  describe "work_histories" do
-    it "returns an ordered list of work histories" do
-      expect(subject.work_histories).to match_array(
-        application_form.work_histories.ordered,
-      )
-    end
-  end
-
-  describe "show_registration_number_summary" do
-    subject { super().show_registration_number_summary }
-
-    context "registration number is needed" do
-      before { application_form.update(needs_registration_number: true) }
-      it { is_expected.to eq(true) }
-    end
-
-    context "registration number is not needed" do
-      before { application_form.update(needs_registration_number: false) }
-      it { is_expected.to eq(false) }
-    end
-  end
-
-  describe "show_written_statement_summary" do
-    subject { super().show_written_statement_summary }
-
-    context "written statement is needed" do
-      before { application_form.update(needs_written_statement: true) }
-      it { is_expected.to eq(true) }
-    end
-
-    context "written statement is not needed" do
-      before { application_form.update(needs_written_statement: false) }
-      it { is_expected.to eq(false) }
-    end
-  end
-
   describe "notes_label_key_for" do
     subject { super().notes_label_key_for(failure_reason:) }
 
@@ -160,62 +116,6 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
           "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes",
         )
       end
-    end
-  end
-
-  describe "#online_checker_url" do
-    subject(:online_checker_url) { view_object.online_checker_url }
-
-    it { is_expected.to eq("") }
-
-    context "with a country value set" do
-      before do
-        region.country.update!(
-          teaching_authority_online_checker_url:
-            "https://www.example.com/checks",
-        )
-      end
-
-      it { is_expected.to eq("https://www.example.com/checks") }
-    end
-
-    context "with a region value set" do
-      before do
-        region.update!(
-          teaching_authority_online_checker_url:
-            "https://www.example.com/checks",
-        )
-      end
-
-      it { is_expected.to eq("https://www.example.com/checks") }
-    end
-
-    context "with a country and a region value set" do
-      before do
-        region.country.update!(
-          teaching_authority_online_checker_url:
-            "https://www.example.com/country-checks",
-        )
-        region.update!(
-          teaching_authority_online_checker_url:
-            "https://www.example.com/region-checks",
-        )
-      end
-
-      it { is_expected.to eq("https://www.example.com/region-checks") }
-    end
-  end
-
-  describe "#professional_standing?" do
-    subject(:professional_standing?) { view_object.professional_standing? }
-    it { is_expected.to be false }
-    context "with a professional standing spoke" do
-      before do
-        params[:key] = "professional_standing"
-        assessment_section.update!(key: "professional_standing")
-      end
-
-      it { is_expected.to be true }
     end
   end
 
