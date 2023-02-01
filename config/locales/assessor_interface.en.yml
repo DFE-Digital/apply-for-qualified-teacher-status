@@ -157,6 +157,7 @@ en:
           teaching_qualifications_from_ineligible_country: Teaching qualifications were completed in an ineligible country.
           teaching_qualifications_not_at_required_level: Teaching qualifications do not meet the required academic level (level 6).
           teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
+          unrecognised_references: Application contained 1 or more references that cannot be considered.
           work_history_break: There is an unexplained break in the applicant’s work history.
           written_statement_illegible: The letter from the country or state’s authority is illegible or in a format that we cannot accept.
           written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
