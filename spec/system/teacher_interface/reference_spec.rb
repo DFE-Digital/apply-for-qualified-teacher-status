@@ -130,7 +130,13 @@ RSpec.describe "Teacher reference", type: :system do
   end
 
   def reference_request
-    @reference_request ||= create(:reference_request, :requested)
+    @reference_request ||=
+      create(
+        :reference_request,
+        :requested,
+        work_history:
+          create(:work_history, :completed, end_date: Date.new(2023, 1, 1)),
+      )
   end
 
   delegate :slug, to: :reference_request

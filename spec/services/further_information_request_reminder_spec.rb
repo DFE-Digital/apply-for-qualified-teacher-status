@@ -134,7 +134,9 @@ RSpec.describe FurtherInformationRequestReminder do
     end
 
     context "with a requested FI request" do
-      let(:application_form) { create(:application_form, :submitted, region:) }
+      let(:application_form) do
+        create(:application_form, :submitted, :old_regs, region:)
+      end
       let(:assessment) { create(:assessment, application_form:) }
       let(:region) { create(:region, :in_country, country_code: "FR") }
       let(:teacher) { application_form.teacher }

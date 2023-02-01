@@ -206,16 +206,6 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:qualification_page)
   end
 
-  it "sends legacy users to the old service" do
-    when_i_visit_the(:start_page)
-    when_i_press_start_now
-    when_i_select_a_legacy_country
-    then_i_see_the(:eligible_page)
-
-    when_i_press_apply
-    then_i_see_the_legacy_service
-  end
-
   it "can skip questions with qualification" do
     when_i_visit_the(:start_page)
     when_i_press_start_now
@@ -522,10 +512,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_press_apply
     eligible_page.apply_button.click
-  end
-
-  def then_i_see_the_legacy_service
-    expect(page).to have_current_path("/MutualRecognition/")
   end
 
   def and_i_see_the_ineligible_country_text

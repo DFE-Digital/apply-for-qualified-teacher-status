@@ -51,6 +51,10 @@ RSpec.describe FurtherInformationRequestExpirer do
       end
 
       context "when the applicant is from a country with a 4 week expiry" do
+        let(:application_form) do
+          create(:application_form, :submitted, :old_regs, region:)
+        end
+
         # Australia, Canada, Gibraltar, New Zealand, US
         %w[AU CA GI NZ US].each do |country_code|
           context "from country_code #{country_code}" do
