@@ -41,10 +41,11 @@
     :label,
     legend: nil,
   ) %>
+
+  <%= govuk_details(
+    summary_text: "What we mean by qualified",
+    text: "Qualified means <strong>EITHER</strong> your teaching qualification specifically shows you can teach one of these subjects, <strong>OR</strong> at least 50% of your university degree was in one of them.".html_safe,
+  ) %>
+
   <%= f.govuk_submit prevent_double_click: false %>
 <% end %>
-
-<%= govuk_details(
-  summary_text: "What we mean by qualified",
-  text: "Qualified means <strong>EITHER</strong> your teaching qualification specifically shows you can teach one of these subjects, <strong>OR</strong> at least 50% of your university degree was in one of them.".html_safe,
-) %>
