@@ -78,7 +78,7 @@ module TimelineEntry
       section = timeline_event.assessment_section
       {
         section_name: section.key.titleize,
-        section_state: timeline_event.new_state,
+        passed: section.passed,
         failure_reasons: section.selected_failure_reasons,
       }
     end

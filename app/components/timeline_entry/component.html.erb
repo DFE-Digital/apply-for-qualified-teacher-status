@@ -23,12 +23,12 @@
     <% elsif timeline_event.assessment_section_recorded? %>
       <p class="govuk-body">
         <%= description_vars[:section_name] %>:
-        <%= render(StatusTag::Component.new(
-          key: timeline_event.id,
-          status: description_vars[:section_state],
-          class_context: "timeline-event",
-          context: :assessor,
-          )) %>
+
+        <% if description_vars[:passed] %>
+          <%= govuk_tag(text: "Passed", colour: "green") %>
+        <% else %>
+          <%= govuk_tag(text: "Not passed", colour: "red") %>
+        <% end %>
       </p>
 
       <%= govuk_inset_text do %>
