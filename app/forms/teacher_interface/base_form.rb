@@ -5,7 +5,7 @@ class TeacherInterface::BaseForm
   include ActiveModel::Attributes
 
   def save(validate:)
-    return false if validate && !valid?
+    return false if validate && invalid?
 
     ActiveRecord::Base.transaction do
       update_model
