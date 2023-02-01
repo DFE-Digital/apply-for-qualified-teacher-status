@@ -184,6 +184,7 @@ module TeacherInterface
           form: @form,
           check_identifier: check_member_identifier,
           if_success_then_redirect: after_school_path(work_history),
+          if_failure_then_render: :edit_school,
         )
       end
 
