@@ -107,6 +107,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     @application_form ||=
       create(
         :application_form,
+        :old_regs,
         :with_personal_information,
         :with_completed_qualification,
         :submitted,

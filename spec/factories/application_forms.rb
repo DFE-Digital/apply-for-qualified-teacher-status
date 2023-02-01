@@ -162,6 +162,10 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
+    trait :old_regs do
+      created_at { Date.new(2023, 1, 31) }
+    end
+
     trait :new_regs do
       created_at { Date.new(2023, 2, 1) }
       needs_work_history { !region.application_form_skip_work_history }
