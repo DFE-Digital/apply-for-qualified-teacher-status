@@ -18,12 +18,22 @@ RSpec.describe TeacherInterface::WrittenStatementConfirmationForm,
   end
 
   describe "#save" do
-    let(:written_statement_confirmation) { "true" }
-
     before { form.save(validate: true) }
 
-    it "updates the application form" do
-      expect(application_form).to be_written_statement_confirmation
+    context "with a written statement confirmation" do
+      let(:written_statement_confirmation) { "true" }
+
+      it "updates the application form" do
+        expect(application_form).to be_written_statement_confirmation
+      end
+    end
+
+    context "without a written statement confirmation" do
+      let(:written_statement_confirmation) { "" }
+
+      it "updates the application form" do
+        expect(application_form).to_not be_written_statement_confirmation
+      end
     end
   end
 end

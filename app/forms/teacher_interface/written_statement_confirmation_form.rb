@@ -3,7 +3,7 @@
 module TeacherInterface
   class WrittenStatementConfirmationForm < BaseForm
     attr_accessor :application_form
-    attribute :written_statement_confirmation
+    attribute :written_statement_confirmation, :boolean
 
     validates :application_form, presence: true
     validates :written_statement_confirmation, presence: true
