@@ -2,19 +2,21 @@
 
 require "rails_helper"
 
-RSpec.describe PreviewTeacherMailer::Component, type: :component do
-  subject(:component) do
-    render_inline(described_class.new(name:, teacher:, param:))
-  end
-
+RSpec.describe PreviewMailer::Component, type: :component do
+  let(:mailer_class) { TeacherMailer }
   let(:name) { :name }
   let(:teacher) { create(:teacher) }
   let(:param) { "param" }
 
+  subject(:component) do
+    render_inline(described_class.new(mailer_class:, name:, teacher:, param:))
+  end
+
   let(:mailer) { double(name: "<p>Preview</p>") }
 
   before do
-    expect(TeacherMailerPreview).to receive(:with).with(
+    expect(MailerPreview).to receive(:with).with(
+      mailer_class,
       teacher:,
       param:,
     ).and_return(mailer)

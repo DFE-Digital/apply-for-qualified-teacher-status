@@ -2,8 +2,7 @@
 
 module AssessorInterface
   class AssessmentRecommendationAwardsController < BaseController
-    before_action :authorize_assessor,
-                  except: %i[preview edit_confirm update_confirm]
+    before_action :authorize_assessor, only: %i[edit update]
     before_action :ensure_can_award
     before_action :load_assessment_and_application_form
 
@@ -22,16 +21,75 @@ module AssessorInterface
         )
 
       if @form.valid?
+        if application_form.created_under_new_regulations?
+          redirect_to [
+                        :reference_requests,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :assessment_recommendation_award,
+                      ]
+        else
+          redirect_to [
+                        :preview,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :assessment_recommendation_award,
+                      ]
+        end
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+
+    def edit_reference_requests
+      authorize :assessor, :edit?
+
+      @form =
+        WorkHistoryReferenceRequestForm.new(
+          application_form:,
+          session:,
+          work_history_ids: application_form.work_histories.pluck(:id),
+        )
+    end
+
+    def update_reference_requests
+      authorize :assessor, :update?
+
+      work_history_ids =
+        params.dig(
+          :assessor_interface_work_history_reference_request_form,
+          :work_history_ids,
+        ).compact_blank
+
+      @form =
+        WorkHistoryReferenceRequestForm.new(
+          application_form:,
+          session:,
+          work_history_ids:,
+        )
+
+      if @form.save
         redirect_to [
-                      :preview,
+                      :preview_referee,
                       :assessor_interface,
                       application_form,
                       assessment,
                       :assessment_recommendation_award,
                     ]
       else
-        render :edit, status: :unprocessable_entity
+        render :edit_reference_requests, status: :unprocessable_entity
       end
+    end
+
+    def preview_referee
+      authorize :assessor, :edit?
+      @reference_requests = assessment.reference_requests
+    end
+
+    def preview_teacher
+      authorize :assessor, :edit?
     end
 
     def preview
@@ -57,11 +115,23 @@ module AssessorInterface
 
       if @form.valid?
         if @form.confirmation
-          UpdateAssessmentRecommendation.call(
-            assessment:,
-            user: current_staff,
-            new_recommendation: "award",
-          )
+          ActiveRecord::Base.transaction do
+            assessment.award!
+
+            if application_form.created_under_new_regulations?
+              CreateReferenceRequests.call(
+                assessment:,
+                user: current_staff,
+                work_histories:
+                  WorkHistory.where(
+                    application_form:,
+                    id: session[:work_history_ids],
+                  ),
+              )
+            else
+              CreateDQTTRNRequest.call(application_form:, user: current_staff)
+            end
+          end
 
           redirect_to [:status, :assessor_interface, application_form]
         else

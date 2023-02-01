@@ -160,8 +160,23 @@ module PageHelpers
       PageObjects::AssessorInterface::PreviewAssessmentRecommendation.new
   end
 
+  def preview_referee_assessment_recommendation_award_page
+    @preview_referee_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::PreviewRefereeAssessmentRecommendationAward.new
+  end
+
+  def preview_teacher_assessment_recommendation_award_page
+    @preview_teacher_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::PreviewTeacherAssessmentRecommendationAward.new
+  end
+
   def qualification_page
     @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
+  end
+
+  def reference_requests_assessment_recommendation_award_page
+    @reference_requests_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationAward.new
   end
 
   def region_page

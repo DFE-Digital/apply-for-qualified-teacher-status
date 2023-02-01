@@ -2,16 +2,16 @@
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
-<p class="govuk-body-l"><%= t(".subheading") %></p>
-<p class="govuk-body-l"><%= t(".description") %></p>
+
+<p class="govuk-body">This screen shows the email that the applicant will see, to tell them you’ve contacted the references they provided.</p>
 
 <%= render(PreviewMailer::Component.new(
   mailer_class: TeacherMailer,
-  name: :application_awarded,
+  name: :references_requested,
   teacher: @application_form.teacher,
 )) %>
 
 <div class="govuk-button-group">
-  <%= govuk_button_link_to "Continue", [:confirm, :assessor_interface, @application_form, @assessment, :assessment_recommendation_award] %>
+  <%= govuk_button_link_to t(".button"), [:confirm, :assessor_interface, @application_form, @assessment, :assessment_recommendation_award] %>
   <%= govuk_link_to t(".cancel"), assessor_interface_application_form_path(@application_form) %>
 </div>

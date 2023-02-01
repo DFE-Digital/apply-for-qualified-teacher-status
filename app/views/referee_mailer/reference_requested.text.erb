@@ -8,7 +8,7 @@ As part of the QTS application process, our assessors need to understand each ap
 
 Please follow the link below and answer the questions by <%= @reference_request.expired_at.strftime("%e %B %Y") %>.
 
-<%= teacher_interface_reference_request_url(@reference_request) %>
+<%= teacher_interface_reference_request_url(@reference_request.slug) %>
 
 It should take no longer than 5 minutes.
 

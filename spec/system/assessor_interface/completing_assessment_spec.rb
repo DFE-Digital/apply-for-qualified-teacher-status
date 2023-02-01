@@ -61,6 +61,58 @@ RSpec.describe "Assessor completing assessment", type: :system do
     then_the_application_form_is_awarded
   end
 
+  it "award under new regulations" do
+    given_the_service_is_open
+    given_i_am_authorized_as_an_assessor_user
+    given_there_is_an_awardable_application_form_under_new_regulations
+
+    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
+
+    when_i_select_award_qts
+    and_i_click_continue
+    then_i_see_the(
+      :declare_assessment_recommendation_page,
+      application_id:,
+      assessment_id:,
+      recommendation: "award",
+    )
+
+    when_i_check_declaration
+    then_i_see_the(
+      :reference_requests_assessment_recommendation_award_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_select_the_work_histories
+    then_i_see_the(
+      :preview_referee_assessment_recommendation_award_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_send_the_referee_email
+    then_i_see_the(
+      :preview_teacher_assessment_recommendation_award_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_send_the_teacher_email
+    then_i_see_the(
+      :confirm_assessment_recommendation_page,
+      application_id:,
+      assessment_id:,
+      recommendation: "award",
+    )
+
+    when_i_check_confirmation
+    then_i_see_the(:assessor_application_status_page, application_id:)
+
+    when_i_click_on_overview_button
+    then_the_application_form_is_waiting_on
+  end
+
   it "decline" do
     given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
@@ -103,7 +155,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   private
 
-  def given_there_is_an_awardable_application_form
+  def given_there_is_an_awardable_application_form(traits = [])
     @application_form ||=
       create(
         :application_form,
@@ -111,11 +163,17 @@ RSpec.describe "Assessor completing assessment", type: :system do
         :with_personal_information,
         :with_completed_qualification,
         :submitted,
+        *traits,
       )
 
     assessment = create(:assessment, application_form:)
 
     create(:assessment_section, :personal_information, :passed, assessment:)
+  end
+
+  def given_there_is_an_awardable_application_form_under_new_regulations
+    given_there_is_an_awardable_application_form(%i[new_regs])
+    create(:work_history, :completed, application_form:)
   end
 
   def given_there_is_a_declinable_application_form
@@ -192,6 +250,21 @@ RSpec.describe "Assessor completing assessment", type: :system do
     declare_assessment_recommendation_page.form.submit_button.click
   end
 
+  def when_i_select_the_work_histories
+    reference_requests_assessment_recommendation_award_page
+      .form
+      .submit_button
+      .click
+  end
+
+  def when_i_send_the_referee_email
+    preview_referee_assessment_recommendation_award_page.send_button.click
+  end
+
+  def when_i_send_the_teacher_email
+    preview_teacher_assessment_recommendation_award_page.send_button.click
+  end
+
   def when_i_send_the_email
     preview_assessment_recommendation_page.send_button.click
   end
@@ -207,6 +280,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def then_the_application_form_is_awarded
     expect(assessor_application_page.overview.status.text).to eq("AWARDED")
+  end
+
+  def then_the_application_form_is_waiting_on
+    expect(assessor_application_page.overview.status.text).to eq("WAITING ON")
   end
 
   def then_the_application_form_is_declined

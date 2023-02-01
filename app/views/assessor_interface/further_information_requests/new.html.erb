@@ -3,7 +3,8 @@
 
 <h1 class="govuk-heading-xl">Further information request email preview</h1>
 
-<%= render(PreviewTeacherMailer::Component.new(
+<%= render(PreviewMailer::Component.new(
+  mailer_class: TeacherMailer,
   name: :further_information_requested,
   teacher: @application_form.teacher,
 )) %>

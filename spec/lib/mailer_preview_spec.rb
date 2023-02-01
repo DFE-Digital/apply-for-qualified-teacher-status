@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe TeacherMailerPreview do
+RSpec.describe MailerPreview do
   let(:further_information_request) { create(:further_information_request) }
   let(:teacher) do
     further_information_request.assessment.application_form.teacher
@@ -26,6 +26,7 @@ RSpec.describe TeacherMailerPreview do
   describe "render preview" do
     subject do
       described_class.with(
+        TeacherMailer,
         teacher:,
         further_information_request:,
       ).further_information_requested
