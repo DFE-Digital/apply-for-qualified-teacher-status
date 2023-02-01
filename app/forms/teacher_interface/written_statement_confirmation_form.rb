@@ -11,7 +11,11 @@ module TeacherInterface
     private
 
     def update_model
-      application_form.update!(written_statement_confirmation:)
+      if written_statement_confirmation
+        application_form.update!(written_statement_confirmation: true)
+      else
+        application_form.update!(written_statement_confirmation: false)
+      end
     end
   end
 end
