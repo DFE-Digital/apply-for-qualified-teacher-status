@@ -369,6 +369,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
         application_form =
           create(
             :application_form,
+            :old_regs,
             :with_completed_qualification,
             :with_work_history,
             :with_registration_number,

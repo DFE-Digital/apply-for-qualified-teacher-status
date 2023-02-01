@@ -25,26 +25,6 @@ module AssessorInterface
     delegate :checks, to: :assessment_section
     delegate :region, :country, to: :application_form
 
-    def qualifications
-      application_form.qualifications.ordered
-    end
-
-    def work_histories
-      application_form.work_histories.ordered
-    end
-
-    def work_history_months_count
-      @months_count = WorkHistoryDuration.new(application_form:).count_months
-    end
-
-    def show_registration_number_summary
-      application_form.needs_registration_number?
-    end
-
-    def show_written_statement_summary
-      application_form.needs_written_statement?
-    end
-
     def notes_label_key_for(failure_reason:)
       build_key(failure_reason, "label")
     end
@@ -55,20 +35,6 @@ module AssessorInterface
 
     def notes_placeholder_key_for(failure_reason:)
       build_key(failure_reason, "placeholder")
-    end
-
-    def online_checker_url
-      @online_checker_url ||=
-        region.teaching_authority_online_checker_url.presence ||
-          region.country.teaching_authority_online_checker_url
-    end
-
-    def work_history?
-      assessment_section.key == "work_history"
-    end
-
-    def professional_standing?
-      assessment_section.key == "professional_standing"
     end
 
     def render_form?
