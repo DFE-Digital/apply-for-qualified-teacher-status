@@ -91,6 +91,7 @@ en:
         b2_level_requirement: B2 level requirement
         reference_name: Reference name
         reference_hint: Reference hint
+        accepted_tests: Accepted tests (we can accept)
         check_url: Check website
       qualification:
         add_another_options:
