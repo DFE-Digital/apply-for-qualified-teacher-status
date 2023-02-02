@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/govuk_feature_flags.git
-  revision: fab6461d7acfccfb770efc21bef5e3f0e37e783b
+  revision: 63164eea1dae2fcd1e78c4440b160643632ed72a
   specs:
     govuk_feature_flags (0.1.0)
       rails (>= 7.0.4)
