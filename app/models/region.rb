@@ -56,4 +56,8 @@ class Region < ApplicationRecord
   validates :status_check, inclusion: { in: status_checks.values }
 
   validates :teaching_authority_online_checker_url, url: { allow_blank: true }
+
+  def checks_available?
+    !sanction_check_none? && !status_check_none?
+  end
 end

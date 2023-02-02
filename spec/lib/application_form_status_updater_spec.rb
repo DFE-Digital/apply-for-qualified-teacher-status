@@ -137,7 +137,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
     end
 
-    context "with a received information request" do
+    context "with a received qualification request" do
       let(:assessment) { create(:assessment, application_form:) }
 
       before do
@@ -176,17 +176,111 @@ RSpec.describe ApplicationFormStatusUpdater do
     context "with a received reference request" do
       let(:assessment) { create(:assessment, application_form:) }
 
-      before do
-        application_form.update!(submitted_at: Time.zone.now)
-        create(:reference_request, :received, assessment:)
+      before { application_form.update!(submitted_at: Time.zone.now) }
+
+      context "with less than 9 months" do
+        before do
+          create(
+            :reference_request,
+            :received,
+            assessment:,
+            work_history:
+              create(
+                :work_history,
+                application_form:,
+                hours_per_week: 30,
+                start_date: Date.new(2020, 1, 1),
+                end_date: Date.new(2020, 2, 1),
+              ),
+          )
+        end
+
+        include_examples "changes status", "submitted"
+
+        it "changes received_reference" do
+          expect { call }.to change(application_form, :received_reference).from(
+            false,
+          ).to(true)
+        end
       end
 
-      include_examples "changes status", "received"
+      context "with less than 20 months" do
+        before do
+          create(:reference_request, :requested, assessment:)
+          create(
+            :reference_request,
+            :received,
+            assessment:,
+            work_history:
+              create(
+                :work_history,
+                application_form:,
+                hours_per_week: 30,
+                start_date: Date.new(2020, 1, 1),
+                end_date: Date.new(2020, 12, 1),
+              ),
+          )
+        end
 
-      it "changes received_reference" do
-        expect { call }.to change(application_form, :received_reference).from(
-          false,
-        ).to(true)
+        include_examples "changes status", "waiting_on"
+
+        it "changes received_reference" do
+          expect { call }.to change(application_form, :received_reference).from(
+            false,
+          ).to(true)
+        end
+      end
+
+      context "with less than 20 months and no others" do
+        before do
+          create(
+            :reference_request,
+            :received,
+            assessment:,
+            work_history:
+              create(
+                :work_history,
+                application_form:,
+                hours_per_week: 30,
+                start_date: Date.new(2020, 1, 1),
+                end_date: Date.new(2020, 12, 1),
+              ),
+          )
+        end
+
+        include_examples "changes status", "received"
+
+        it "changes received_reference" do
+          expect { call }.to change(application_form, :received_reference).from(
+            false,
+          ).to(true)
+        end
+      end
+
+      context "with more than 20 months" do
+        before do
+          create(
+            :reference_request,
+            :received,
+            assessment:,
+            work_history:
+              create(
+                :work_history,
+                application_form:,
+                hours_per_week: 30,
+                start_date: Date.new(2020, 1, 1),
+                end_date: Date.new(2022, 12, 1),
+              ),
+          )
+        end
+
+        include_examples "changes status", "received"
+
+        it "changes received_reference" do
+          expect { call }.to change(application_form, :received_reference).from(
+            false,
+          ).to(true)
+        end
       end
     end
 
