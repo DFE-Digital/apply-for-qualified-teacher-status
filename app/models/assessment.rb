@@ -90,8 +90,7 @@ class Assessment < ApplicationRecord
           all_sections_finished?
         end
 
-      (sections_ready && any_section_failed? && any_section_declines?) ||
-        professional_standing_request&.requested? || false
+      sections_ready && any_section_failed? && any_section_declines?
     elsif request_further_information?
       any_further_information_request_failed?
     else
