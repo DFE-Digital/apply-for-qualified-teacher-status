@@ -263,7 +263,16 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           end
 
           context "and request further information" do
-            before { assessment.request_further_information! }
+            before do
+              assessment.request_further_information!
+              create(
+                :selected_failure_reason,
+                :fi_requestable,
+                assessment_section:,
+              )
+              assessment_section.reload.update!(passed: false)
+            end
+
             it { is_expected.to eq(:in_progress) }
 
             context "and further information requested" do

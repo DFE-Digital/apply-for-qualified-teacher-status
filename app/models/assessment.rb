@@ -109,6 +109,10 @@ class Assessment < ApplicationRecord
     end
   end
 
+  def recommendable?
+    can_award? || can_decline? || can_request_further_information?
+  end
+
   def available_recommendations
     [].tap do |recommendations|
       recommendations << "award" if can_award?

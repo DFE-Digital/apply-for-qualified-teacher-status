@@ -11,14 +11,11 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def assessment_tasks
-    pre_assessment_tasks =
+    pre_assessment_tasks = [
       (
-        if professional_standing_request.present?
-          [:professional_standing_request]
-        else
-          []
-        end
-      )
+        :professional_standing_request if professional_standing_request.present?
+      ),
+    ].compact
 
     assessment_section_keys = assessment.sections.map(&:key).map(&:to_sym)
 
@@ -58,9 +55,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       )
     when :initial_assessment
       if item == :assessment_recommendation
-        return nil unless professional_standing_request_received?
-        return nil unless assessment.send(:all_sections_finished?)
-        return nil unless assessment_editable?
+        return nil unless assessment.recommendable?
 
         url_helpers.edit_assessor_interface_application_form_assessment_path(
           application_form,
@@ -102,14 +97,13 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :pre_assessment_tasks
       professional_standing_request_received? ? :completed : :waiting_on
     when :initial_assessment
-      return :cannot_start unless professional_standing_request_received?
-
       if item == :assessment_recommendation
-        return :cannot_start unless assessment.send(:all_sections_finished?)
-        return :not_started if assessment.unknown?
-        return :in_progress if assessment_editable?
-        :completed
+        return :completed if initial_assessment_recommendation_complete?
+        return :cannot_start unless assessment.recommendable?
+        return :in_progress if request_further_information_unfinished?
+        :not_started
       else
+        return :cannot_start unless professional_standing_request_received?
         assessment.sections.find { |s| s.key == item.to_s }.status
       end
     when :further_information_requests
@@ -145,12 +139,13 @@ class AssessorInterface::ApplicationFormsShowViewObject
       professional_standing_request.received?
   end
 
-  def assessment_editable?
-    assessment.unknown? ||
-      (
-        assessment.request_further_information? &&
-          further_information_requests.empty?
-      )
+  def request_further_information_unfinished?
+    assessment.request_further_information? &&
+      further_information_requests.empty?
+  end
+
+  def initial_assessment_recommendation_complete?
+    !assessment.unknown? && !request_further_information_unfinished?
   end
 
   def further_information_requests
