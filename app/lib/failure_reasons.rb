@@ -29,7 +29,6 @@ class FailureReasons
       "teaching_qualifications_from_ineligible_country",
     TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL =
       "teaching_qualifications_not_at_required_level",
-    UNRECOGNISED_REFERENCES = "unrecognised_references",
   ].freeze
 
   FURTHER_INFORMATIONABLE = [
@@ -58,6 +57,7 @@ class FailureReasons
     SCHOOL_DETAILS_CANNOT_BE_VERIFIED = "school_details_cannot_be_verified",
     TEACHING_CERTIFICATE_ILLEGIBLE = "teaching_certificate_illegible",
     TEACHING_TRANSCRIPT_ILLEGIBLE = "teaching_transcript_illegible",
+    UNRECOGNISED_REFERENCES = "unrecognised_references",
     WORK_HISTORY_BREAK = "work_history_break",
     WRITTEN_STATEMENT_ILLEGIBLE = "written_statement_illegible",
     WRITTEN_STATEMENT_RECENT = "written_statement_recent",
