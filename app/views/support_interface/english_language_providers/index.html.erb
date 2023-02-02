@@ -23,6 +23,11 @@
       end
 
       summary_list.row do |row|
+        row.key { t("helpers.label.english_language_provider.accepted_tests") }
+        row.value { english_language_provider.accepted_tests }
+      end
+
+      summary_list.row do |row|
         row.key { t("helpers.label.english_language_provider.check_url") }
         row.value { english_language_provider.check_url }
       end

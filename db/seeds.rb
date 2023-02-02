@@ -295,6 +295,7 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     b2_level_requirement: "a score of at least 5.5",
     reference_name: "Test Report Form Number",
     reference_hint: "Your Test Report Form Number is 15-18 digits long.",
+    accepted_tests: "‘IELTS for UKVI’ or ‘IELTS Life Skills’",
     check_url: "https://ielts.ucles.org.uk/ielts-trf/welcome.html",
   },
   {
@@ -304,6 +305,7 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your Unique Reference Number contains numbers, letters and dashes " \
         "in this format: PPC/230619/04501/09980013402512496",
+    accepted_tests: "‘LanguageCert International ESOL SELT’",
     check_url: "https://www.languagecert.org/en/results",
   },
   {
@@ -313,6 +315,7 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your Score Report Code is 10 characters long. It may contain both letters " \
         "and numbers, or just numbers.",
+    accepted_tests: "‘PTE Academic UKVI’ or ‘PTE Home’",
     check_url: "https://srw.pteacademic.com/",
   },
   {
@@ -322,6 +325,7 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your PSI Services (UK) Ltd Unique Reference Number contains numbers, " \
         "letters and dashes in this format: PSI/280920/YTLQVG2Z/W2N4UVNN",
+    accepted_tests: "‘Skills for English UKVI’",
     check_url: "https://results.bookmyskillsforenglish.com/",
   },
   {
@@ -331,6 +335,9 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your Trinity College London Certificate Number contains numbers, letters " \
         "and special characters in this format: 1-630439614:1-123456780",
+    accepted_tests:
+      "‘Secure English Language Tests for UKVI’ – Integrated Skills in English (ISE)" \
+        " or Graded Examinations in Spoken English (GESE)",
     check_url: "https://trinitycollege.com/TRV",
   },
 ].freeze
