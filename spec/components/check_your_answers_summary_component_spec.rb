@@ -80,20 +80,20 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   let(:delete_link_to) { nil }
 
   it "renders the card with an id" do
-    expect(
-      component.css(".govuk-summary-list__card").attribute("id").value,
-    ).to eq("app-check-your-answers-summary-id")
+    expect(component.css(".govuk-summary-card").attribute("id").value).to eq(
+      "app-check-your-answers-summary-id",
+    )
   end
 
   it "renders the title" do
-    expect(component.css(".govuk-summary-list__card-title").text).to eq("Title")
+    expect(component.css(".govuk-summary-card__title").text).to eq("Title")
   end
 
   context "with a delete link" do
     let(:delete_link_to) { "/delete" }
 
     it "renders a link" do
-      a = component.at_css(".govuk-summary-list__card-actions a")
+      a = component.at_css(".govuk-summary-card__actions a")
       expect(a.text.strip).to eq("Delete title")
       expect(a.attribute("href").value).to eq("/delete")
     end

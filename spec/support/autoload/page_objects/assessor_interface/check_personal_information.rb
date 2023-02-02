@@ -11,7 +11,7 @@ module PageObjects
     class CheckPersonalInformation < AssessmentSection
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/personal_information"
 
-      sections :cards, PersonalInformationCard, ".govuk-summary-list__card"
+      sections :cards, PersonalInformationCard, ".govuk-summary-card"
 
       section :exemption_form, "form" do
         element :english_language_exempt,

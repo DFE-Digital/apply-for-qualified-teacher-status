@@ -9,7 +9,7 @@ module PageObjects
     class CheckWorkHistory < AssessmentSection
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/work_history"
 
-      sections :cards, WorkHistoryCard, ".govuk-summary-list__card"
+      sections :cards, WorkHistoryCard, ".govuk-summary-card"
 
       def most_recent_role
         cards&.second
