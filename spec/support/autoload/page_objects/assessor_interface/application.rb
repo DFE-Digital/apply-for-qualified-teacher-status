@@ -33,7 +33,7 @@ module PageObjects
       end
 
       def english_language_proficiency_task
-        task_list.find_item("English language proficiency")
+        task_list.find_item("Check English language proficiency")
       end
 
       def work_history_task
