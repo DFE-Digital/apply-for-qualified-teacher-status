@@ -59,7 +59,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :initial_assessment
       if item == :assessment_recommendation
         return nil unless professional_standing_request_received?
-        return nil unless assessment.sections_finished?
+        return nil unless assessment.send(:all_sections_finished?)
         return nil unless assessment_editable?
 
         url_helpers.edit_assessor_interface_application_form_assessment_path(
@@ -105,7 +105,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       return :cannot_start unless professional_standing_request_received?
 
       if item == :assessment_recommendation
-        return :cannot_start unless assessment.sections_finished?
+        return :cannot_start unless assessment.send(:all_sections_finished?)
         return :not_started if assessment.unknown?
         return :in_progress if assessment_editable?
         :completed

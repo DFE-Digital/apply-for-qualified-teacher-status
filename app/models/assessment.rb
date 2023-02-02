@@ -68,28 +68,45 @@ class Assessment < ApplicationRecord
   end
 
   def started?
-    sections.any?(&:finished?)
-  end
-
-  def finished?
-    sections_finished? && (award? || decline?)
-  end
-
-  def sections_finished?
-    sections.all?(&:finished?)
+    any_section_finished?
   end
 
   def can_award?
-    sections_passed? || further_information_requests_passed?
+    if unknown?
+      all_sections_passed?
+    elsif request_further_information?
+      all_further_information_requests_passed?
+    else
+      false
+    end
   end
 
   def can_decline?
-    sections_finished? && !can_award? && !can_request_further_information?
+    if unknown?
+      sections_ready =
+        if application_form.created_under_new_regulations?
+          any_section_finished?
+        else
+          all_sections_finished?
+        end
+
+      (sections_ready && any_section_failed? && any_section_declines?) ||
+        professional_standing_request&.requested? || false
+    elsif request_further_information?
+      any_further_information_request_failed?
+    else
+      false
+    end
   end
 
   def can_request_further_information?
-    sections_not_passed? && cannot_decline? &&
+    if unknown?
+      all_sections_finished? && any_section_failed? && no_section_declines?
+    elsif request_further_information?
       further_information_requests.empty?
+    else
+      false
+    end
   end
 
   def available_recommendations
@@ -104,20 +121,37 @@ class Assessment < ApplicationRecord
 
   private
 
-  def sections_passed?
+  def all_sections_finished?
+    sections.all?(&:finished?)
+  end
+
+  def any_section_finished?
+    sections.any?(&:finished?)
+  end
+
+  def all_sections_passed?
     sections.all?(&:passed)
   end
 
-  def further_information_requests_passed?
+  def any_section_failed?
+    sections.any?(&:failed)
+  end
+
+  def any_section_declines?
+    sections.any?(&:declines_assessment?)
+  end
+
+  def no_section_declines?
+    sections.none?(&:declines_assessment?)
+  end
+
+  def all_further_information_requests_passed?
     further_information_requests.present? &&
       further_information_requests.all?(&:passed)
   end
 
-  def sections_not_passed?
-    sections.any? { |section| section.passed == false }
-  end
-
-  def cannot_decline?
-    sections.none?(&:declines_assessment?)
+  def any_further_information_request_failed?
+    further_information_requests.present? &&
+      further_information_requests.any?(&:failed)
   end
 end
