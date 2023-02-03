@@ -15,15 +15,6 @@ module AssessorInterface
     end
 
     def update
-      unless assessment_section_view_object.render_form?
-        redirect_to assessor_interface_application_form_assessment_assessment_section_path(
-                      assessment_section_view_object.application_form,
-                      assessment_section_view_object.assessment,
-                      assessment_section_view_object.assessment_section.key,
-                    )
-        return
-      end
-
       @assessment_section_form =
         assessment_section_form.new(
           assessment_section_form_params.merge(

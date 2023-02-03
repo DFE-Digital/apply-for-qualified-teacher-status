@@ -38,7 +38,7 @@ module AssessorInterface
     end
 
     def render_form?
-      professional_standing_request_received? && !render_section_content?
+      !render_section_content?
     end
 
     def render_section_content?
@@ -71,17 +71,10 @@ module AssessorInterface
 
     attr_reader :params
 
-    delegate :professional_standing_request, to: :assessment
-
     def build_key(failure_reason, key_section)
       key =
         "helpers.#{key_section}.assessor_interface_assessment_section_form.failure_reason_notes"
       FailureReasons.decline?(failure_reason:) ? "#{key}_decline" : key
-    end
-
-    def professional_standing_request_received?
-      professional_standing_request.nil? ||
-        professional_standing_request.received?
     end
   end
 end

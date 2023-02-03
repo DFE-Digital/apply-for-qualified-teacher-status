@@ -59,58 +59,6 @@ RSpec.describe Assessment, type: :model do
     expect(assessment.unknown?).to be true
   end
 
-  describe "#finished?" do
-    subject(:finished?) { assessment.finished? }
-
-    context "with an unknown recommendation" do
-      before { assessment.unknown! }
-      it { is_expected.to be false }
-    end
-
-    context "with an awarded recommendation" do
-      before { assessment.award! }
-      it { is_expected.to be true }
-    end
-
-    context "with an unknown recommendation" do
-      before { assessment.decline! }
-      it { is_expected.to be true }
-    end
-
-    context "with unfinished section assessments" do
-      before { assessment.sections.create!(key: :personal_information) }
-      it { is_expected.to be false }
-    end
-  end
-
-  describe "#sections_finished?" do
-    subject(:sections_finished?) { assessment.sections_finished? }
-
-    let!(:assessment_section) do
-      assessment.sections.create!(key: :personal_information)
-    end
-
-    context "with an unknown assessment" do
-      it { is_expected.to be false }
-    end
-
-    context "with a passed assessment" do
-      let!(:assessment_section) do
-        create(:assessment_section, :passed, assessment:)
-      end
-
-      it { is_expected.to be true }
-    end
-
-    context "with a failed assessment" do
-      let!(:assessment_section) do
-        create(:assessment_section, :failed, assessment:)
-      end
-
-      it { is_expected.to be true }
-    end
-  end
-
   describe "#can_award?" do
     subject(:can_award?) { assessment.can_award? }
 
@@ -132,14 +80,18 @@ RSpec.describe Assessment, type: :model do
       end
       it { is_expected.to be false }
 
-      context "with a passed further information request" do
-        before { create(:further_information_request, :passed, assessment:) }
-        it { is_expected.to be true }
-      end
+      context "when further information was requested" do
+        before { assessment.request_further_information! }
 
-      context "with a failed further information request" do
-        before { create(:further_information_request, :failed, assessment:) }
-        it { is_expected.to be false }
+        context "with a passed further information request" do
+          before { create(:further_information_request, :passed, assessment:) }
+          it { is_expected.to be true }
+        end
+
+        context "with a failed further information request" do
+          before { create(:further_information_request, :failed, assessment:) }
+          it { is_expected.to be false }
+        end
       end
     end
 
@@ -210,20 +162,34 @@ RSpec.describe Assessment, type: :model do
       it { is_expected.to be true }
     end
 
-    context "with a passed further information request" do
-      before do
-        create(:assessment_section, :personal_information, :failed, assessment:)
-        create(:further_information_request, :passed, assessment:)
-      end
-      it { is_expected.to be false }
-    end
+    context "when further information was requested" do
+      before { assessment.request_further_information! }
 
-    context "with a failed further information request" do
-      before do
-        create(:assessment_section, :personal_information, :failed, assessment:)
-        create(:further_information_request, :failed, assessment:)
+      context "with a passed further information request" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :failed,
+            assessment:,
+          )
+          create(:further_information_request, :passed, assessment:)
+        end
+        it { is_expected.to be false }
       end
-      it { is_expected.to be true }
+
+      context "with a failed further information request" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :failed,
+            assessment:,
+          )
+          create(:further_information_request, :failed, assessment:)
+        end
+        it { is_expected.to be true }
+      end
     end
   end
 

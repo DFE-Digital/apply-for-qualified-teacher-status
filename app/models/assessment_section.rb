@@ -61,4 +61,8 @@ class AssessmentSection < ApplicationRecord
   def declines_assessment?
     selected_failure_reasons.declinable.any?
   end
+
+  def failed
+    passed == false
+  end
 end
