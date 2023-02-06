@@ -3,7 +3,6 @@
 class AssessorInterface::ApplicationFormsIndexViewObject
   include ActionView::Helpers::FormOptionsHelper
   include Pagy::Backend
-  include StatusHelper
 
   def initialize(params:, session:)
     @params = params
@@ -47,7 +46,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     ]
 
     statuses.map do |status|
-      text = status_text(status, context: :assessor)
+      text = I18n.t(status, scope: %i[components status_tag])
       OpenStruct.new(id: status, label: "#{text} (#{counts.fetch(status, 0)})")
     end
   end

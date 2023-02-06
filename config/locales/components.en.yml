@@ -15,9 +15,7 @@ en:
       potential_duplicate_in_dqt: Potential duplication in DQT
       received: Received
       requested: Waiting on
-      submitted:
-        assessor: Not started
-        teacher: Submitted
+      submitted: Not started
       valid: Valid
       waiting_on: Waiting on
 

@@ -56,7 +56,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
       )
     end
     let(:old_state) do
-      I18n.t("components.status_tag.#{timeline_event.old_state}.assessor")
+      I18n.t("components.status_tag.#{timeline_event.old_state}")
     end
     let(:new_state) do
       I18n.t("components.status_tag.#{timeline_event.new_state}")

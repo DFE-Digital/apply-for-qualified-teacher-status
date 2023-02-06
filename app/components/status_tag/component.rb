@@ -1,11 +1,10 @@
 module StatusTag
   class Component < ViewComponent::Base
-    def initialize(key:, status:, class_context: nil, context: :teacher)
+    def initialize(key:, status:, class_context: nil)
       super
       @key = key
       @status = status.to_sym
       @class_context = class_context
-      @context = context
     end
 
     def id
@@ -13,7 +12,7 @@ module StatusTag
     end
 
     def text
-      status_text(@status, context: @context)
+      I18n.t(@status, scope: %i[components status_tag])
     end
 
     def classes
@@ -40,12 +39,7 @@ module StatusTag
     }.freeze
 
     def colour
-      colours = COLOURS[@status]
-      return nil if colours.nil?
-
-      colours.is_a?(String) ? colours : colours[@context]
+      COLOURS[@status]
     end
-
-    delegate :status_text, to: :helpers
   end
 end
