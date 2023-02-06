@@ -139,12 +139,13 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def country_eligibility_status
-    return region_eligibility_status if region
-    country_exists? ? :region : :ineligible
-  end
-
-  def region_eligibility_status
-    region.legacy ? :legacy : :eligible
+    if region
+      :eligible
+    elsif country_exists?
+      :region
+    else
+      :ineligible
+    end
   end
 
   def country_regions
@@ -159,8 +160,7 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def status
-    if country_code.present? &&
-         %i[ineligible legacy].include?(country_eligibility_status)
+    if country_code.present? && country_eligibility_status == :ineligible
       return :eligibility
     end
 

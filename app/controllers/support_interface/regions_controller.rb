@@ -29,16 +29,12 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
     authorize :support, :show?
 
     @region = Region.find(params[:id])
-
-    # Non-legacy previews are more useful to the team.
-    @region.legacy = false
   end
 
   private
 
   def region_params
     params.require(:region).permit(
-      :legacy,
       :application_form_enabled,
       :application_form_skip_work_history,
       :reduced_evidence_accepted,

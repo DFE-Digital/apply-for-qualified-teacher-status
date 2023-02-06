@@ -42,7 +42,7 @@
                 </td>
 
                 <td class="govuk-table__cell">
-                  <% if region.legacy && !country.eligibility_skip_questions %>
+                  <% if country.eligibility_skip_questions %>
                     <%= govuk_tag(text: "Skips questions", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
                   <% end %>
 

@@ -40,14 +40,9 @@ FactoryBot.define do
     association :country
 
     sequence(:name) { |n| "Region #{n}" }
-    legacy { false }
 
     trait :national do
       name { "" }
-    end
-
-    trait :legacy do
-      legacy { true }
     end
 
     trait :application_form_enabled do

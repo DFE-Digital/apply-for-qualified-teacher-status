@@ -197,12 +197,6 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to eq(:eligible) }
     end
 
-    context "when the region exists and is legacy" do
-      before { eligibility_check.region = create(:region, :legacy) }
-
-      it { is_expected.to eq(:legacy) }
-    end
-
     context "when the region exists and country skips questions" do
       let(:country) do
         create(
@@ -221,36 +215,6 @@ RSpec.describe EligibilityCheck, type: :model do
       before { eligibility_check.country_code = "ABC" }
 
       it { is_expected.to be(:ineligible) }
-    end
-  end
-
-  describe "#region_eligibility_status" do
-    subject(:region_eligibility_status) do
-      eligibility_check.region_eligibility_status
-    end
-
-    context "when the region exists and is not legacy" do
-      before { eligibility_check.region = create(:region) }
-
-      it { is_expected.to eq(:eligible) }
-    end
-
-    context "when the region exists and is legacy" do
-      before { eligibility_check.region = create(:region, :legacy) }
-
-      it { is_expected.to eq(:legacy) }
-    end
-
-    context "when the region exists and country skips questions" do
-      before do
-        eligibility_check.region =
-          create(
-            :region,
-            country: create(:country, eligibility_skip_questions: true),
-          )
-      end
-
-      it { is_expected.to eq(:eligible) }
     end
   end
 
@@ -411,14 +375,6 @@ RSpec.describe EligibilityCheck, type: :model do
           degree: true,
           region: create(:region),
         }
-      end
-
-      it { is_expected.to eq(:eligibility) }
-    end
-
-    context "with a legacy region" do
-      let(:attributes) do
-        { country_code: country.code, region: create(:region, :legacy) }
       end
 
       it { is_expected.to eq(:eligibility) }
