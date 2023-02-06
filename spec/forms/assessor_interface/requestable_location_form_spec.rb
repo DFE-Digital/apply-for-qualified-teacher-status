@@ -36,6 +36,7 @@ RSpec.describe AssessorInterface::RequestableLocationForm, type: :model do
 
     context "when not received" do
       let(:received) { "" }
+      let(:location_note) { "" }
 
       it { is_expected.to be true }
 
@@ -47,6 +48,20 @@ RSpec.describe AssessorInterface::RequestableLocationForm, type: :model do
         expect { save }.to_not have_recorded_timeline_event(
           :requestable_received,
         )
+      end
+
+      context "when already received" do
+        let(:requestable) { create(:professional_standing_request, :received) }
+
+        it { is_expected.to be true }
+
+        it "changes the state" do
+          expect { save }.to change(requestable, :state).to("requested")
+        end
+
+        it "changes the note" do
+          expect { save }.to change(requestable, :location_note).to("")
+        end
       end
     end
 

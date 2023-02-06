@@ -16,12 +16,14 @@ class AssessorInterface::RequestableLocationForm
     return false unless valid?
 
     ActiveRecord::Base.transaction do
-      requestable.update!(location_note:)
+      requestable.location_note = location_note
 
       if received.present? && !requestable.received?
         receive_professional_standing
       elsif received.blank? && requestable.received?
         request_professional_standing
+      else
+        requestable.save!
       end
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
