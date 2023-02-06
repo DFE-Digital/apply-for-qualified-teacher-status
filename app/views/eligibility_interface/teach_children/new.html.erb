@@ -5,8 +5,7 @@
 
   if @teach_children_form.eligibility_check.qualified_for_subject_required?
     legend = "Are you qualified to teach children aged 11-16 years?"
-    hint = "In England, 11-16 is the age for secondary education. \
-            You must be qualified to teach children in this age range to apply for QTS."
+    hint = "You must be qualified to teach children aged 11-16 to be eligible for QTS."
   end
 %>
 
@@ -15,6 +14,7 @@
 
 <%= form_with model: @teach_children_form, url: eligibility_interface_teach_children_url, method: :post do |f| %>
   <%= f.govuk_error_summary %>
+
   <%= f.govuk_collection_radio_buttons(
     :teach_children,
     [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
@@ -23,5 +23,6 @@
     legend: { size: 'l', tag: 'h1', text: legend },
     hint: { text: hint }
   ) %>
+
   <%= f.govuk_submit prevent_double_click: false %>
 <% end %>
