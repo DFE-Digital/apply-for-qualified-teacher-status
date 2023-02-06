@@ -3,6 +3,7 @@
 module TeacherInterface
   class QualificationForm < BaseForm
     include ActiveRecord::AttributeAssignment
+    include TeacherInterface::SanitizeDates
 
     attr_accessor :qualification
     attribute :title, :string
@@ -43,6 +44,8 @@ module TeacherInterface
     end
 
     def update_model
+      sanitize_dates!(start_date, complete_date, certificate_date)
+
       qualification.update!(
         title:,
         institution_name:,
