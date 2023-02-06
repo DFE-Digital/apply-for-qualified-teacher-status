@@ -3,6 +3,7 @@
 module TeacherInterface
   class WorkHistorySchoolForm < BaseForm
     include ActiveRecord::AttributeAssignment
+    include TeacherInterface::SanitizeDates
 
     attr_accessor :work_history
     attribute :meets_all_requirements, :boolean
@@ -37,6 +38,8 @@ module TeacherInterface
     end
 
     def update_model
+      sanitize_dates!(start_date, end_date)
+
       work_history.update!(
         school_name:,
         city:,
