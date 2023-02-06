@@ -26,7 +26,8 @@ module AssessorInterface::UpdatesEnglishLanguageStatus
 
       def permittable_parameters
         args, kwargs = super
-        [args, kwargs.merge(english_language_section_passed: [])]
+        args += %i[english_language_section_passed]
+        [args, kwargs]
       end
 
       def english_language_section(assessment)
@@ -52,11 +53,13 @@ module AssessorInterface::UpdatesEnglishLanguageStatus
     end
 
     def update_english_language_status?
-      self
-        .class
-        .english_language_section(assessment_section.assessment)
-        .present? && english_language_section_passed &&
-        application_form.send(self.class::EXEMPTION_ATTR)
+      elp_assessment_section =
+        self.class.english_language_section(assessment_section.assessment)
+
+      return false if elp_assessment_section.nil?
+      return false unless application_form.send(self.class::EXEMPTION_ATTR)
+
+      english_language_section_passed != elp_assessment_section.passed
     end
 
     def application_form
