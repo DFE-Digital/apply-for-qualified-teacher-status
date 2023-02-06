@@ -66,6 +66,7 @@ RSpec.describe "Teacher written statement", type: :system do
     teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
+    teacher_upload_document_page.form.written_in_english_items.first.choose
     teacher_upload_document_page.form.continue_button.click
   end
 
