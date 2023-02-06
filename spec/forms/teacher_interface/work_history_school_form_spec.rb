@@ -115,5 +115,19 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
       expect(work_history.end_date).to be_nil
       expect(work_history.end_date_is_estimate).to be false
     end
+
+    context "without validation, with invalid date values" do
+      let(:start_date) { { 1 => 2222, 2 => 22, 3 => 1 } }
+      let(:end_date) { { 1 => 3333, 2 => 99, 3 => 1 } }
+
+      subject(:save) { form.save(validate: false) }
+
+      it "applies valid date values" do
+        expect(work_history.start_date).to eq(
+          Date.new(Time.zone.now.year, 1, 1),
+        )
+        expect(work_history.end_date).to eq(Date.new(Time.zone.now.year, 1, 1))
+      end
+    end
   end
 end
