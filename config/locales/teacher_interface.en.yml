@@ -37,6 +37,7 @@ en:
           registration_number: Tell us your registration number
           satisfactory_evidence_work_history: Tell us more about your work history
           school_details_cannot_be_verified: Tell us more about this school
+          unrecognised_references: Tell us more about your work history
           work_history_break: Tell us more about your work history
     new_regs:
       work_histories:
