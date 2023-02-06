@@ -7,4 +7,8 @@
   <% accordion.section(heading_text: "Qualification information shown to applicant") do %>
     <%= render "shared/eligible_region_content_components/proof_of_qualifications", region: %>
   <% end %>
+
+  <% if application_form.english_language_qualification_exempt %>
+    <% render "english_language_exempt_accordion_section", accordion: %>
+  <% end %>
 <% end %>
