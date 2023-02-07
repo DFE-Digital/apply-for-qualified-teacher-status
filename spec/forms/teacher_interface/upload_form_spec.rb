@@ -17,6 +17,16 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
   it { is_expected.to validate_presence_of(:document) }
 
+  describe "validations" do
+    it { is_expected.to validate_absence_of(:written_in_english) }
+
+    context "with a translatable document" do
+      let(:document) { create(:document, :translatable) }
+
+      it { is_expected.to allow_values(true, false).for(:written_in_english) }
+    end
+  end
+
   describe "#valid?" do
     subject(:valid?) { upload_form.valid? }
 

@@ -282,6 +282,8 @@ en:
               blank: Enter your first subject
         teacher_interface/upload_form:
           attributes:
+            written_in_english:
+              inclusion: Select whether your document is written in English
             original_attachment:
               blank: Select a file to upload
               invalid_content_type: Files must be in PDF, JPG, PNG, DOCX or DOC format

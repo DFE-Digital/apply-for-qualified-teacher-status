@@ -590,12 +590,14 @@ RSpec.describe "Teacher application", type: :system do
     teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
+    teacher_upload_document_page.form.written_in_english_items.first.choose
   end
 
   def when_i_fill_in_the_upload_transcript_form
     teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
+    teacher_upload_document_page.form.written_in_english_items.first.choose
   end
 
   def when_i_click_age_range
@@ -666,6 +668,7 @@ RSpec.describe "Teacher application", type: :system do
   def when_i_fill_in_the_upload_written_statement_form
     attach_file "teacher-interface-upload-form-original-attachment-field",
                 Rails.root.join(file_fixture("upload.pdf"))
+    teacher_upload_document_page.form.written_in_english_items.first.choose
   end
 
   def then_i_see_the_teacher_application_page
