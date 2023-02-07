@@ -191,7 +191,13 @@ class AssessmentFactory
         else
           [
             FailureReasons::EL_QUALIFICATION_INVALID,
-            FailureReasons::EL_UNVERIFIABLE_REFERENCE_NUMBER,
+            (
+              if application_form.english_language_provider_other
+                FailureReasons::EL_PROFICIENCY_DOCUMENT_ILLEGIBLE
+              else
+                FailureReasons::EL_UNVERIFIABLE_REFERENCE_NUMBER
+              end
+            ),
             FailureReasons::EL_GRADE_BELOW_B2,
             FailureReasons::EL_SELT_EXPIRED,
           ]

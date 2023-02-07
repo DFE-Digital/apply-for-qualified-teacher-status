@@ -44,6 +44,8 @@ class FailureReasons
     EL_MOI_INVALID_FORMAT = "english_language_moi_invalid_format",
     EL_UNVERIFIABLE_REFERENCE_NUMBER =
       "english_language_unverifiable_reference_number",
+    EL_PROFICIENCY_DOCUMENT_ILLEGIBLE =
+      "english_language_proficiency_document_illegible",
     IDENTIFICATION_DOCUMENT_EXPIRED = "identification_document_expired",
     IDENTIFICATION_DOCUMENT_ILLEGIBLE = "identification_document_illegible",
     IDENTIFICATION_DOCUMENT_MISMATCH = "identification_document_mismatch",
@@ -72,6 +74,7 @@ class FailureReasons
     DEGREE_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
     DEGREE_TRANSCRIPT_ILLEGIBLE => :qualification_transcript,
     EL_MOI_INVALID_FORMAT => :medium_of_instruction,
+    EL_PROFICIENCY_DOCUMENT_ILLEGIBLE => :english_language_proficiency,
     IDENTIFICATION_DOCUMENT_EXPIRED => :identification,
     IDENTIFICATION_DOCUMENT_ILLEGIBLE => :identification,
     IDENTIFICATION_DOCUMENT_MISMATCH => :name_change,
