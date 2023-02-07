@@ -84,9 +84,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_093735) do
     t.bigint "english_language_provider_id"
     t.text "english_language_provider_reference", default: "", null: false
     t.datetime "awarded_at"
-    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "written_statement_confirmation", default: false, null: false
+    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "english_language_provider_other", default: false, null: false
     t.datetime "declined_at"
     t.boolean "waiting_on_professional_standing", default: false, null: false
@@ -137,6 +137,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_093735) do
     t.integer "working_days_submission_to_started"
     t.integer "working_days_since_started"
     t.boolean "induction_required"
+    t.text "recommendation_assessor_note", default: "", null: false
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 
@@ -321,8 +322,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_093735) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
-    t.boolean "application_form_skip_work_history", default: false, null: false
     t.text "qualifications_information", default: "", null: false
+    t.boolean "application_form_skip_work_history", default: false, null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true

@@ -7,15 +7,15 @@ module AssessorInterface
     before_action :load_assessment_and_application_form
 
     def edit
-      @form = AssessmentDeclarationForm.new
+      @form = AssessmentDeclarationAwardForm.new
     end
 
     def update
       @form =
-        AssessmentDeclarationForm.new(
+        AssessmentDeclarationAwardForm.new(
           declaration:
             params.dig(
-              :assessor_interface_assessment_declaration_form,
+              :assessor_interface_assessment_declaration_award_form,
               :declaration,
             ),
         )

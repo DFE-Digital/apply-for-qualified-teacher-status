@@ -32,7 +32,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
   context "when declined" do
     let(:application_form) { create(:application_form, :declined) }
-    let(:assessment) { create(:assessment, application_form:) }
+    let!(:assessment) { create(:assessment, application_form:) }
 
     context "and an initial assessment" do
       before do

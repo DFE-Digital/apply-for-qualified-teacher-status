@@ -64,7 +64,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("abc") }
       it do
         is_expected.to include(
-          "You can sign in to view the reason why your application was declined:",
+          "You can sign in to find out why your application was declined:",
         )
       end
     end
@@ -81,7 +81,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
         it do
           is_expected.to include(
-            "You can sign in to explore other routes to teaching in England:",
+            "You can sign in to find out why your application was declined:",
           )
         end
       end
