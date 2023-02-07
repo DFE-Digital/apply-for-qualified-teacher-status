@@ -34,16 +34,6 @@
       ) %>
     <% end %>
 
-    <% if @assessment_section_view_object.show_english_language_moi_details? %>
-      <%= govuk_details(summary_text: "Which countries are exempt?") do %>
-        <p class="govuk-body">
-          The following countries are exempt from additional English language proficiency requirements:
-        </p>
-
-        <%= render "shared/english_language_exempt_countries" %>
-      <% end %>
-    <% end %>
-
     <% if @assessment_section_view_object.show_english_language_provider_details? %>
       <%= render "english_language_provider_details",
                  provider: @assessment_section_view_object.application_form.english_language_provider,

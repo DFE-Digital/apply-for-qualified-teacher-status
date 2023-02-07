@@ -51,11 +51,6 @@ module AssessorInterface
         application_form.english_language_proof_method_provider?
     end
 
-    def show_english_language_moi_details?
-      assessment_section.english_language_proficiency? &&
-        application_form.english_language_proof_method_medium_of_instruction?
-    end
-
     def show_english_language_exemption_checkbox?
       (
         application_form.english_language_citizenship_exempt == true &&
