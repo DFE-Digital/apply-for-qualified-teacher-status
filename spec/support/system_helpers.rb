@@ -43,6 +43,8 @@ module SystemHelpers
     click_button "Continue", visible: false
     choose "Yes", visible: false
     click_button "Continue", visible: false
+    choose "More than 20 months", visible: false
+    click_button "Continue", visible: false
     choose "No", visible: false
     click_button "Continue", visible: false
   end

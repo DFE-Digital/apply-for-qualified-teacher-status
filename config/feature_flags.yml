@@ -9,11 +9,6 @@ feature_flags:
     description: >
       Add new work history question to the application form.
 
-  eligibility_work_experience:
-    author: Thomas Leese
-    description: >
-      Add a question to the eligibility checker asking about work experience.
-
   personas:
     author: Thomas Leese
     description: >
