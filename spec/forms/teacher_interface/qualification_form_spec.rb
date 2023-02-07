@@ -102,7 +102,7 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     context "without validation, with invalid date values" do
       let(:start_date) { { 1 => 2222, 2 => 22, 3 => 1 } }
       let(:complete_date) { { 1 => 3333, 2 => 99, 3 => 1 } }
-      let(:certificate_date) { { 1 => 99, 2 => 99, 3 => 1 } }
+      let(:certificate_date) { { 1 => 99, 2 => "JUNE", 3 => 1 } }
 
       subject(:save) { form.save(validate: false) }
 
