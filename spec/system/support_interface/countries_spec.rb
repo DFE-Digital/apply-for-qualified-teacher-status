@@ -40,7 +40,6 @@ RSpec.describe "Countries support", type: :system do
     when_i_click_on_a_region
     then_i_see_a_region
 
-    when_i_check_application_form_enabled
     when_i_select_sanction_check
     when_i_select_status_check
     when_i_fill_teaching_authority_name
@@ -140,10 +139,6 @@ RSpec.describe "Countries support", type: :system do
 
   def when_i_fill_regions
     fill_in "country-all-regions-field", with: "California"
-  end
-
-  def when_i_check_application_form_enabled
-    check "region-application-form-enabled-1-field", visible: false
   end
 
   def when_i_select_sanction_check

@@ -42,22 +42,12 @@
                 </td>
 
                 <td class="govuk-table__cell">
-                  <% if country.eligibility_skip_questions %>
-                    <%= govuk_tag(text: "Skips questions", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
+                  <% if region.application_form_skip_work_history %>
+                    <%= govuk_tag(text: "Skips work history", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
                   <% end %>
 
-                  <% if region.application_form_enabled %>
-                    <%= govuk_tag(text: "Applications enabled", colour: "green", classes: ["govuk-!-margin-left-2"]) %>
-
-                    <% if region.application_form_skip_work_history %>
-                      <%= govuk_tag(text: "Skips work history", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
-                    <% end %>
-
-                    <% if region.reduced_evidence_accepted %>
-                      <%= govuk_tag(text: "Accepts reduced evidence", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
-                    <% end %>
-                  <% else %>
-                    <%= govuk_tag(text: "Applications disabled", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
+                  <% if region.reduced_evidence_accepted %>
+                    <%= govuk_tag(text: "Accepts reduced evidence", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
                   <% end %>
                 </td>
               </tr>

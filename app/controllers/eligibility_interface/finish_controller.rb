@@ -4,7 +4,6 @@ class EligibilityInterface::FinishController < EligibilityInterface::BaseControl
   before_action :load_eligibility_check
 
   def eligible
-    @mutual_recognition_url = MUTUAL_RECOGNITION_URL
     @region = eligibility_check.region
     session[:eligibility_check_complete] = true
   end
@@ -13,9 +12,6 @@ class EligibilityInterface::FinishController < EligibilityInterface::BaseControl
   end
 
   private
-
-  MUTUAL_RECOGNITION_URL =
-    "https://teacherservices.education.gov.uk/MutualRecognition/".freeze
 
   def ensure_eligibility_check_status
     if eligibility_check.status != :eligibility

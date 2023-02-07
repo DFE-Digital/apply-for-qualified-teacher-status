@@ -44,10 +44,6 @@ FactoryBot.define do
       name { "" }
     end
 
-    trait :application_form_enabled do
-      application_form_enabled { true }
-    end
-
     trait :reduced_evidence_accepted do
       reduced_evidence_accepted { true }
     end

@@ -35,7 +35,6 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
 
   def region_params
     params.require(:region).permit(
-      :application_form_enabled,
       :application_form_skip_work_history,
       :reduced_evidence_accepted,
       :qualifications_information,
