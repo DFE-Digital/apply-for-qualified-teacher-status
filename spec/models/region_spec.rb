@@ -3,7 +3,6 @@
 # Table name: regions
 #
 #  id                                            :bigint           not null, primary key
-#  application_form_enabled                      :boolean          default(FALSE)
 #  application_form_skip_work_history            :boolean          default(FALSE), not null
 #  name                                          :string           default(""), not null
 #  qualifications_information                    :text             default(""), not null
