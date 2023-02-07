@@ -11,5 +11,7 @@
   teacher: @application_form.teacher,
 )) %>
 
-<%= govuk_button_link_to "Continue", [:confirm, :assessor_interface, @application_form, @assessment, :assessment_recommendation_decline] %>
-<%= govuk_link_to t(".cancel"), assessor_interface_application_form_path(@application_form) %>
+<div class="govuk-button-group">
+  <%= govuk_button_link_to "Continue", [:confirm, :assessor_interface, @application_form, @assessment, :assessment_recommendation_decline] %>
+  <%= govuk_link_to t(".cancel"), assessor_interface_application_form_path(@application_form) %>
+</div>
