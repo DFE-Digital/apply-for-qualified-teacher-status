@@ -9,11 +9,6 @@ feature_flags:
     description: >
       Add new work history question to the application form.
 
-  eligibility_english_language:
-    author: Thomas Leese
-    description: >
-      Add English language proficiency content to the eligible page.
-
   eligibility_work_experience:
     author: Thomas Leese
     description: >
