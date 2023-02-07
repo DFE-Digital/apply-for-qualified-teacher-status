@@ -246,7 +246,6 @@
     - updated_at
     - status_check
     - sanction_check
-    - legacy
     - application_form_enabled
     - application_form_skip_work_history
     - reduced_evidence_accepted
