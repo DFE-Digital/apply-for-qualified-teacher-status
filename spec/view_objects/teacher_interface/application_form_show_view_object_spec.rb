@@ -70,6 +70,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         is_expected.to eq(
           {
             about_you: %i[personal_information identification_document],
+            english_language: %i[english_language],
             qualifications: %i[qualifications age_range subjects],
             work_history: %i[work_history],
           },
@@ -92,6 +93,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         is_expected.to eq(
           {
             about_you: %i[personal_information identification_document],
+            english_language: %i[english_language],
             qualifications: %i[qualifications age_range subjects],
             proof_of_recognition: %i[written_statement],
           },
@@ -114,39 +116,9 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         is_expected.to eq(
           {
             about_you: %i[personal_information identification_document],
-            qualifications: %i[qualifications age_range subjects],
-            proof_of_recognition: %i[registration_number],
-          },
-        )
-      end
-    end
-
-    context "with English language active" do
-      before(:all) do
-        FeatureFlags::FeatureFlag.activate(:application_english_language)
-      end
-
-      after(:all) do
-        FeatureFlags::FeatureFlag.deactivate(:application_english_language)
-      end
-
-      before do
-        create(
-          :application_form,
-          :new_regs,
-          teacher: current_teacher,
-          needs_work_history: false,
-          needs_written_statement: false,
-          needs_registration_number: false,
-        )
-      end
-
-      it do
-        is_expected.to eq(
-          {
-            about_you: %i[personal_information identification_document],
             english_language: %i[english_language],
             qualifications: %i[qualifications age_range subjects],
+            proof_of_recognition: %i[registration_number],
           },
         )
       end
@@ -173,6 +145,9 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
             about_you: {
               personal_information: "not_started",
               identification_document: "not_started",
+            },
+            english_language: {
+              english_language: "not_started",
             },
             qualifications: {
               qualifications: "not_started",
@@ -201,6 +176,9 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
             about_you: {
               personal_information: "not_started",
               identification_document: "not_started",
+            },
+            english_language: {
+              english_language: "not_started",
             },
             qualifications: {
               qualifications: "not_started",
@@ -233,6 +211,9 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
               personal_information: "not_started",
               identification_document: "not_started",
             },
+            english_language: {
+              english_language: "not_started",
+            },
             qualifications: {
               qualifications: "not_started",
               age_range: "not_started",
@@ -263,6 +244,9 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
             about_you: {
               personal_information: "not_started",
               identification_document: "not_started",
+            },
+            english_language: {
+              english_language: "not_started",
             },
             qualifications: {
               qualifications: "not_started",

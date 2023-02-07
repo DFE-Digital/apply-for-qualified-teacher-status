@@ -259,8 +259,6 @@ RSpec.describe AssessmentFactory do
         let(:application_form) { create(:application_form, :new_regs) }
 
         it "is included in the task list when the EL feature is enabled" do
-          FeatureFlags::FeatureFlag.activate(:application_english_language)
-
           expect(sections.english_language_proficiency.count).to eq(1)
         end
       end
