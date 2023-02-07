@@ -5,6 +5,13 @@
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">Does your teaching qualification or university degree qualify you to teach one of the following subjects?</h1>
+
+  <%= govuk_inset_text do %>
+    <p class="govuk-body">
+      You must be qualified to teach one of the subjects listed to be eligible for QTS.
+    </p>
+  <% end %>
+
   <p class="govuk-hint">
     You'll need to upload your certificate, along with a transcript that shows all the modules you studied and the scores you achieved.
   </p>
