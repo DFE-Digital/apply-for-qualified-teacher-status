@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Eligible region content", type: :view do
-  let(:region) { nil }
+  let(:region) { create(:region) }
   let(:eligibility_check) { nil }
 
   subject do
@@ -9,7 +9,7 @@ RSpec.describe "Eligible region content", type: :view do
   end
 
   it { is_expected.to match(/You’re eligible/) }
-  it { is_expected.to_not match(/What we’ll ask for/) }
+  it { is_expected.to match(/What we’ll ask for/) }
 
   context "with a fully online region" do
     let(:region) do

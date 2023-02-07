@@ -376,7 +376,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def given_countries_exist
     create(:country, :with_national_region, code: "GB-SCT")
-    create(:country, :with_legacy_region, code: "FR")
     create(
       :country,
       :with_national_region,
@@ -404,10 +403,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_select_an_ineligible_country
     country_page.submit(country: "Spain")
-  end
-
-  def when_i_select_a_legacy_country
-    country_page.submit(country: "France")
   end
 
   def when_i_select_a_skip_questions_country
