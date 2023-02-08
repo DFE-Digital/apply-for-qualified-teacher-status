@@ -373,6 +373,11 @@ module PageHelpers
       PageObjects::TeacherInterface::ReferenceRequested.new
   end
 
+  def teacher_registration_number_page
+    @teacher_registration_number_page =
+      PageObjects::TeacherInterface::RegistrationNumber.new
+  end
+
   def teacher_retry_otp_page
     @teacher_retry_otp_page = PageObjects::TeacherInterface::RetryOtp.new
   end
@@ -444,11 +449,6 @@ module PageHelpers
   def check_your_uploads_page
     @check_your_uploads_page =
       PageObjects::TeacherInterface::CheckYourUploads.new
-  end
-
-  def registration_number_form
-    @registration_number_form =
-      PageObjects::TeacherInterface::RegistrationNumberForm.new
   end
 
   def request_further_information_page

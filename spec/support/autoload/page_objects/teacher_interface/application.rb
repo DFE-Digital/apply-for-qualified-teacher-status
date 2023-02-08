@@ -36,6 +36,10 @@ module PageObjects
         task_list.find_item("Add your work history")
       end
 
+      def registration_number_task_item
+        task_list.find_item("Enter your registration number")
+      end
+
       def upload_written_statement_task_item
         task_list.find_item("Upload your written statement")
       end
