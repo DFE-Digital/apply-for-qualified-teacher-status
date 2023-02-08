@@ -46,30 +46,34 @@ RSpec.describe TeacherInterface::WorkHistoriesController, type: :controller do
     include_examples "redirect unless application form is draft"
   end
 
-  describe "GET has_work_history" do
-    subject(:perform) { get :edit_has_work_history }
-
-    include_examples "redirect unless application form is draft"
-  end
-
-  describe "PATCH has_work_history" do
-    subject(:perform) { patch :update_has_work_history }
-
-    include_examples "redirect unless application form is draft"
-  end
-
-  describe "GET edit" do
+  describe "GET edit_school" do
     let(:work_history) { create(:work_history, application_form:) }
 
-    subject(:perform) { get :edit, params: { id: work_history.id } }
+    subject(:perform) { get :edit_school, params: { id: work_history.id } }
 
     include_examples "redirect unless application form is draft"
   end
 
-  describe "PATCH update" do
+  describe "PATCH update_school" do
     let(:work_history) { create(:work_history, application_form:) }
 
-    subject(:perform) { patch :update, params: { id: work_history.id } }
+    subject(:perform) { patch :update_school, params: { id: work_history.id } }
+
+    include_examples "redirect unless application form is draft"
+  end
+
+  describe "GET edit_contact" do
+    let(:work_history) { create(:work_history, application_form:) }
+
+    subject(:perform) { get :edit_contact, params: { id: work_history.id } }
+
+    include_examples "redirect unless application form is draft"
+  end
+
+  describe "PATCH update_contact" do
+    let(:work_history) { create(:work_history, application_form:) }
+
+    subject(:perform) { patch :update_contact, params: { id: work_history.id } }
 
     include_examples "redirect unless application form is draft"
   end

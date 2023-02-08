@@ -3,7 +3,7 @@
 module PageObjects
   module TeacherInterface
     class DeleteWorkHistory < DeleteForm
-      set_url "/teacher/application/new_regs/work_histories/{work_history_id}/delete"
+      set_url "/teacher/application/work_histories/{work_history_id}/delete"
     end
   end
 end

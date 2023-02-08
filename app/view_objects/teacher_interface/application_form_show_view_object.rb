@@ -97,11 +97,7 @@ class TeacherInterface::ApplicationFormShowViewObject
         )
       end
     when :work_history
-      if FeatureFlags::FeatureFlag.active?(:application_work_history)
-        url_helpers.teacher_interface_application_form_new_regs_work_histories_path
-      else
-        url_helpers.teacher_interface_application_form_work_histories_path
-      end
+      url_helpers.teacher_interface_application_form_work_histories_path
     else
       begin
         url_helpers.send("teacher_interface_application_form_#{key}_path")

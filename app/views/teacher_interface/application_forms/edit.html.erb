@@ -20,17 +20,9 @@
   <section id="app-application-form-work-history">
     <h2 class="govuk-heading-m">Your work history</h2>
 
-    <% if FeatureFlags::FeatureFlag.active?(:application_work_history) %>
-      <%= render "shared/application_form/new_regs_work_history_summary",
-                 work_histories: @application_form.work_histories.ordered,
-                 changeable: true %>
-    <% else %>
-      <%= render "shared/application_form/work_history_summary",
-                 application_form: @application_form,
-                 show_has_work_history: true,
-                 work_histories: @application_form.work_histories.ordered,
-                 changeable: true %>
-    <% end %>
+    <%= render "shared/application_form/work_history_summary",
+               work_histories: @application_form.work_histories.ordered,
+               changeable: true %>
   </section>
 <% end %>
 

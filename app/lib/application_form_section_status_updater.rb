@@ -132,7 +132,7 @@ class ApplicationFormSectionStatusUpdater
   def work_history_status
     all_work_histories_complete = work_histories.all?(&:complete?)
 
-    if work_history_feature_active?
+    if application_form.created_under_new_regulations?
       return :not_started if work_histories.empty?
       return :in_progress unless all_work_histories_complete
 
@@ -175,9 +175,5 @@ class ApplicationFormSectionStatusUpdater
 
   def status_for_document(document)
     document.uploaded? ? :completed : :in_progress
-  end
-
-  def work_history_feature_active?
-    FeatureFlags::FeatureFlag.active?(:application_work_history)
   end
 end

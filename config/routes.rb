@@ -221,44 +221,25 @@ Rails.application.routes.draw do
         post "registration_number", to: "registration_number#update"
       end
 
-      resources :work_histories, except: %i[show] do
+      resources :work_histories, except: %i[show edit update] do
         collection do
           get "check", to: "work_histories#check_collection"
 
-          get "add_another", to: "work_histories#add_another"
+          get "add_another"
           post "add_another", to: "work_histories#submit_add_another"
 
-          get "has_work_history", to: "work_histories#edit_has_work_history"
-          post "has_work_history", to: "work_histories#update_has_work_history"
+          get "requirements_unmet", to: "work_histories#requirements_unmet"
         end
 
         member do
+          get "school", to: "work_histories#edit_school"
+          post "school", to: "work_histories#update_school"
+
+          get "contact", to: "work_histories#edit_contact"
+          post "contact", to: "work_histories#update_contact"
+
           get "check", to: "work_histories#check_member"
           get "delete"
-        end
-      end
-
-      namespace :new_regs do
-        resources :work_histories, except: %i[show edit update] do
-          collection do
-            get "check", to: "work_histories#check_collection"
-
-            get "add_another"
-            post "add_another", to: "work_histories#submit_add_another"
-
-            get "requirements_unmet", to: "work_histories#requirements_unmet"
-          end
-
-          member do
-            get "school", to: "work_histories#edit_school"
-            post "school", to: "work_histories#update_school"
-
-            get "contact", to: "work_histories#edit_contact"
-            post "contact", to: "work_histories#update_contact"
-
-            get "check", to: "work_histories#check_member"
-            get "delete"
-          end
         end
       end
 
