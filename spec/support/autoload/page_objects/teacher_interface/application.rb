@@ -7,8 +7,8 @@ module PageObjects
       element :content_title, "app-task-list_section"
       element :app_task_list, ".app-task-list"
 
-      element :check_answers, ".govuk-button:nth-of-type(1)"
-      element :save_and_sign_out, ".govuk-button:nth-of-type(2)"
+      element :check_answers, ".govuk-button:not(.govuk-button--secondary)"
+      element :save_and_sign_out, ".govuk-button.govuk-button--secondary"
 
       section :task_list, TaskList, ".app-task-list"
 
