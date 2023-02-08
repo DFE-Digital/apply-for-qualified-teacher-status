@@ -12,6 +12,10 @@ module PageObjects
 
       section :task_list, TaskList, ".app-task-list"
 
+      def personal_information_task_item
+        task_list.find_item("Enter your personal information")
+      end
+
       def qualifications_task_item
         task_list.find_item("Add your teaching qualifications")
       end

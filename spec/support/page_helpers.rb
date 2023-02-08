@@ -207,6 +207,11 @@ module PageHelpers
       PageObjects::TeacherInterface::AddAnotherWorkHistory.new
   end
 
+  def teacher_alternative_name_page
+    @teacher_alternative_name_page =
+      PageObjects::TeacherInterface::AlternativeName.new
+  end
+
   def teacher_application_page
     @teacher_application_page = PageObjects::TeacherInterface::Application.new
   end
@@ -223,6 +228,11 @@ module PageHelpers
   def teacher_check_english_language_page
     @teacher_check_english_language_page ||=
       PageObjects::TeacherInterface::CheckEnglishLanguage.new
+  end
+
+  def teacher_check_personal_information_page
+    @teacher_check_personal_information_page =
+      PageObjects::TeacherInterface::CheckPersonalInformation.new
   end
 
   def teacher_check_qualification_page
@@ -333,6 +343,11 @@ module PageHelpers
       PageObjects::TeacherInterface::EnglishLanguageProviderReference.new
   end
 
+  def teacher_name_and_date_of_birth_page
+    @teacher_name_and_date_of_birth_page =
+      PageObjects::TeacherInterface::NameAndDateOfBirth.new
+  end
+
   def teacher_new_application_page
     @teacher_new_application_page =
       PageObjects::TeacherInterface::NewApplication.new
@@ -411,11 +426,6 @@ module PageHelpers
       PageObjects::TeacherInterface::QualificationsForm.new
   end
 
-  def name_and_date_of_birth_page
-    @name_and_date_of_birth_page =
-      PageObjects::TeacherInterface::NameAndDateOfBirth.new
-  end
-
   def check_your_answers_page
     @check_your_answers_page =
       PageObjects::TeacherInterface::CheckYourAnswers.new
@@ -429,11 +439,6 @@ module PageHelpers
   def check_your_uploads_page
     @check_your_uploads_page =
       PageObjects::TeacherInterface::CheckYourUploads.new
-  end
-
-  def alternative_name_page
-    @alternative_name_page =
-      PageObjects::TeacherInterface::AlternativeNameForm.new
   end
 
   def age_range_form
