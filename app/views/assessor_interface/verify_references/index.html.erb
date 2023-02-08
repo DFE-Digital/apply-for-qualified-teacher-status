@@ -1,0 +1,64 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}Work references" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@form.application_form) %>
+
+<%= render "shared/assessor_header", title: "Work references", application_form: @view_object.application_form %>
+
+<%= form_with(
+  model: @form,
+  url: [:assessor_interface, @form.application_form, @form.assessment, :update_verify_references],
+  method: :put
+) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <p>This page shows all the work references requested for this application and the number of months of work experience that each one represents.</p>
+  <p>You can select and review any reference that has the status <span>RECEIVED</span>.</p>
+
+  <ol class="app-task-list">
+    <li>
+      <h2 class="app-task-list__section">
+        Work references
+      </h2>
+      <ul class="app-task-list__items govuk-!-padding-left-0">
+        <% @view_object.reference_requests.each_with_index do |reference_request, idx| %>
+          <li class="app-task-list__item">
+            <span class="app-task-list__task-name">
+              <%= govuk_link_to(
+                @view_object.name_and_duration(reference_request.work_history, most_recent: idx.zero?),
+                [:edit, :assessor_interface, @form.application_form, @form.assessment, reference_request]
+              ) %>
+            </span>
+            <strong class="govuk-tag app-task-list__tag govuk-tag--green" id="reference-status"><%= reference_request.status %></strong>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  </ol>
+  <h2 class="govuk-heading-s">Check:</h2>
+  <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+    <li>the reference from the current or most recent role has been received and is valid (if required)</li>
+    <li>the references that you’ve checked and marked as valid add up to the required number of months for this application to progress</li>
+  </ul>
+
+  <%= f.govuk_radio_buttons_fieldset(
+    :references_verified,
+    legend: {
+      text: "Have enough valid work references been received for this application to progress to either an award or decline?",
+      size: "s"
+    }) do %>
+    <%= f.govuk_radio_button(
+      :references_verified,
+      :true,
+      link_errors: true,
+      label: { text: "Yes, I can progress this application to award or decline" },
+    ) %>
+  <%= f.govuk_radio_button(
+    :references_verified,
+    :false,
+    label: { text: "No, I cannot progress this application yet" },
+  ) %>
+  <% end %>
+
+  <%= f.govuk_submit prevent_double_click: false do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @view_object.application_form] %>
+  <% end %>
+<% end %>

@@ -120,6 +120,26 @@ RSpec.describe WorkHistoryDuration do
       it_behaves_like "month counter"
     end
 
+    context "passing a work history record" do
+      let(:work_history) do
+        create(
+          :work_history,
+          application_form:,
+          start_date: Date.new(2022, 1, 1),
+          end_date: Date.new(2022, 12, 22),
+          hours_per_week: 30,
+        )
+      end
+
+      let(:work_history_duration) do
+        described_class.new(work_history_record: work_history)
+      end
+
+      subject(:count) { work_history_duration.count_months }
+
+      it { is_expected.to eq(12) }
+    end
+
     context "passing nothing" do
       subject(:work_history_duration) { described_class.new }
 

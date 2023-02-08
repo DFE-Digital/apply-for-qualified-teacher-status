@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class WorkHistoryDuration
-  def initialize(application_form: nil, work_history_relation: nil)
+  def initialize(
+    application_form: nil,
+    work_history_relation: nil,
+    work_history_record: nil
+  )
     if !application_form.nil? && work_history_relation.nil?
       @work_history_relation =
         application_form
@@ -10,6 +14,8 @@ class WorkHistoryDuration
           .where.not(hours_per_week: nil)
     elsif !work_history_relation.nil? && application_form.nil?
       @work_history_relation = work_history_relation
+    elsif !work_history_record.nil?
+      @work_histories = [work_history_record]
     else
       raise "Pass only an application_form or a work_history_relation."
     end
