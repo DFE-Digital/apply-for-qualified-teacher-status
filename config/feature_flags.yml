@@ -4,11 +4,6 @@ feature_flags:
     description: >
       Add English language proficiency question to the application form.
 
-  application_work_history:
-    author: Thomas Leese
-    description: >
-      Add new work history question to the application form.
-
   personas:
     author: Thomas Leese
     description: >

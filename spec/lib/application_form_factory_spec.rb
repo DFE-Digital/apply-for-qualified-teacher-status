@@ -25,46 +25,19 @@ RSpec.describe ApplicationFormFactory do
       end
     end
 
-    context "when new regulations are active" do
-      before(:all) do
-        FeatureFlags::FeatureFlag.activate(:application_work_history)
-      end
-      after(:all) do
-        FeatureFlags::FeatureFlag.deactivate(:application_work_history)
-      end
+    context "with a region which skips work history" do
+      let(:region) { create(:region, application_form_skip_work_history: true) }
 
-      context "with a region that doesn't skip work history" do
-        let(:region) { create(:region) }
-
-        it "creates an application form" do
-          expect { call }.to change(ApplicationForm, :count).by(1)
-        end
-
-        it "sets the rules" do
-          application_form = call
-          expect(application_form.needs_work_history).to be true
-          expect(application_form.needs_written_statement).to be false
-          expect(application_form.needs_registration_number).to be false
-          expect(application_form.reduced_evidence_accepted).to be false
-        end
+      it "creates an application form" do
+        expect { call }.to change(ApplicationForm, :count).by(1)
       end
 
-      context "with a region which skips work history" do
-        let(:region) do
-          create(:region, application_form_skip_work_history: true)
-        end
-
-        it "creates an application form" do
-          expect { call }.to change(ApplicationForm, :count).by(1)
-        end
-
-        it "sets the rules" do
-          application_form = call
-          expect(application_form.needs_work_history).to be false
-          expect(application_form.needs_written_statement).to be false
-          expect(application_form.needs_registration_number).to be false
-          expect(application_form.reduced_evidence_accepted).to be false
-        end
+      it "sets the rules" do
+        application_form = call
+        expect(application_form.needs_work_history).to be false
+        expect(application_form.needs_written_statement).to be false
+        expect(application_form.needs_registration_number).to be false
+        expect(application_form.reduced_evidence_accepted).to be false
       end
     end
 
@@ -77,7 +50,7 @@ RSpec.describe ApplicationFormFactory do
 
       it "sets the rules" do
         application_form = call
-        expect(application_form.needs_work_history).to be false
+        expect(application_form.needs_work_history).to be true
         expect(application_form.needs_written_statement).to be true
         expect(
           application_form.teaching_authority_provides_written_statement,
@@ -109,7 +82,7 @@ RSpec.describe ApplicationFormFactory do
 
       it "sets the rules" do
         application_form = call
-        expect(application_form.needs_work_history).to be false
+        expect(application_form.needs_work_history).to be true
         expect(application_form.needs_written_statement).to be false
         expect(application_form.needs_registration_number).to be true
         expect(application_form.reduced_evidence_accepted).to be false

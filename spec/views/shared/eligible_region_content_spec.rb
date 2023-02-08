@@ -84,7 +84,7 @@ RSpec.describe "Eligible region content", type: :view do
   context "with no status check and no sanction check" do
     let(:region) { create(:region, status_check: :none, sanction_check: :none) }
 
-    it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
+    it { is_expected.to_not match(/Proof that you’re recognised as a teacher/) }
   end
 
   describe "English language proficiency" do
@@ -100,9 +100,6 @@ RSpec.describe "Eligible region content", type: :view do
   end
 
   context "with work experience" do
-    before { FeatureFlags::FeatureFlag.activate(:application_work_history) }
-    after { FeatureFlags::FeatureFlag.deactivate(:application_work_history) }
-
     let(:region) { create(:region, reduced_evidence_accepted: false) }
 
     it { is_expected.to match(/You need to show you’ve been employed/) }
