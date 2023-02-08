@@ -78,8 +78,6 @@
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class ApplicationForm < ApplicationRecord
-  include Regulated
-
   belongs_to :teacher
   belongs_to :region
   belongs_to :english_language_provider, optional: true
@@ -199,6 +197,10 @@ class ApplicationForm < ApplicationRecord
     CountryCode.secondary_education_teaching_qualification_required?(
       country.code,
     )
+  end
+
+  def created_under_new_regulations?
+    created_at >= Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
   end
 
   private

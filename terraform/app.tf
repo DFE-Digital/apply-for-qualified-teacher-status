@@ -18,8 +18,6 @@ locals {
     AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
 
     DQT_API_URL = var.dqt_api_url
-
-    NEW_REGS_DATE = var.new_regs_date
   })
   logstash_endpoint = data.azurerm_key_vault_secret.secrets["LOGSTASH-ENDPOINT"].value
 }
