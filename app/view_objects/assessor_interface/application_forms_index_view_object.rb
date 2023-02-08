@@ -22,7 +22,8 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   def assessor_filter_options
-    Staff.assessors.order(:name)
+    Staff.assessors.order(:name) +
+      [OpenStruct.new(id: "null", name: "Not assigned")]
   end
 
   def country_filter_options
