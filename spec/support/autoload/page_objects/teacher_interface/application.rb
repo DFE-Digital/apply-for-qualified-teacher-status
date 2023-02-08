@@ -20,6 +20,14 @@ module PageObjects
         task_list.find_item("Add your teaching qualifications")
       end
 
+      def age_range_task_item
+        task_list.find_item("Enter the age range you can teach")
+      end
+
+      def subjects_task_item
+        task_list.find_item("Enter the subjects you can teach")
+      end
+
       def english_language_task_item
         task_list.find_item("Verify your English language proficiency")
       end

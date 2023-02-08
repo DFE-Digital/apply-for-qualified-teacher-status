@@ -192,6 +192,10 @@ module PageHelpers
       PageObjects::TeacherInterface::AddAnotherWorkHistory.new
   end
 
+  def teacher_age_range_page
+    @teacher_age_range_page = PageObjects::TeacherInterface::AgeRange.new
+  end
+
   def teacher_alternative_name_page
     @teacher_alternative_name_page =
       PageObjects::TeacherInterface::AlternativeName.new
@@ -377,6 +381,10 @@ module PageHelpers
     @teacher_signed_out_page = PageObjects::TeacherInterface::SignedOut.new
   end
 
+  def teacher_subjects_page
+    @teacher_subjects_page = PageObjects::TeacherInterface::Subjects.new
+  end
+
   def timeline_page
     @timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end
@@ -402,10 +410,6 @@ module PageHelpers
   def check_uploaded_files_page
     @check_uploaded_files_page =
       PageObjects::TeacherInterface::CheckUploadedFiles.new
-  end
-
-  def subjects_form_page
-    @subjects_form_page = PageObjects::TeacherInterface::SubjectsForm.new
   end
 
   def work_history_form_page
@@ -440,10 +444,6 @@ module PageHelpers
   def check_your_uploads_page
     @check_your_uploads_page =
       PageObjects::TeacherInterface::CheckYourUploads.new
-  end
-
-  def age_range_form
-    @age_range_page = PageObjects::TeacherInterface::AgeRangeForm.new
   end
 
   def registration_number_form
