@@ -89,24 +89,13 @@ RSpec.describe "Eligible region content", type: :view do
 
   describe "English language proficiency" do
     let(:region) { create(:region, reduced_evidence_accepted: false) }
-    context "when feature is inactive" do
-      it do
-        is_expected.to_not match(
-          /We need to understand your level of English language proficiency/,
-        )
-      end
-    end
 
-    context "when feature is active" do
-      before do
-        FeatureFlags::FeatureFlag.activate(:eligibility_english_language)
-      end
+    it { is_expected.to match(/Proof of English language ability/) }
 
-      it do
-        is_expected.to match(
-          /You’ll need to provide your passport or official identification documents for that country as proof/,
-        )
-      end
+    it do
+      is_expected.to match(
+        /You’ll need to provide your passport or official identification documents for that country as proof/,
+      )
     end
   end
 

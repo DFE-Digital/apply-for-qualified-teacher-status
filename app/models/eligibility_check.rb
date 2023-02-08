@@ -87,9 +87,7 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def ineligible_reasons
-    work_experience_ineligible =
-      FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) &&
-        work_experience_under_9_months?
+    work_experience_ineligible = work_experience_under_9_months?
 
     qualified_for_subject_ineligible =
       qualified_for_subject_required? && qualified_for_subject == false
@@ -118,14 +116,7 @@ class EligibilityCheck < ApplicationRecord
     end
 
     region.present? && qualification && degree && teach_children? &&
-      free_of_sanctions &&
-      (
-        if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
-          !work_experience_under_9_months?
-        else
-          true
-        end
-      )
+      free_of_sanctions && !work_experience_under_9_months?
   end
 
   def teach_children?
@@ -173,13 +164,8 @@ class EligibilityCheck < ApplicationRecord
       return :eligibility
     end
 
-    if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
-      return :misconduct unless work_experience.nil?
-      return :work_experience unless teach_children.nil?
-    else
-      return :misconduct unless teach_children.nil?
-    end
-
+    return :misconduct unless work_experience.nil?
+    return :work_experience unless teach_children.nil?
     return :teach_children unless degree.nil?
     return :degree unless qualification.nil?
     return :qualification if region.present?

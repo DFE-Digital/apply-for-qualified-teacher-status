@@ -363,6 +363,20 @@ RSpec.describe EligibilityCheck, type: :model do
         }
       end
 
+      it { is_expected.to eq(:work_experience) }
+    end
+
+    context "when free of sanctions is present" do
+      let(:attributes) do
+        {
+          work_experience: "under_9_months",
+          teach_children: true,
+          qualification: true,
+          degree: true,
+          region: create(:region),
+        }
+      end
+
       it { is_expected.to eq(:misconduct) }
     end
 

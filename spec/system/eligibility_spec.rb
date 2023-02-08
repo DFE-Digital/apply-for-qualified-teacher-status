@@ -6,40 +6,9 @@ RSpec.describe "Eligibility check", type: :system do
   before do
     given_countries_exist
     given_the_service_is_open
-    given_work_experience_is_inactive
   end
 
   it "happy path" do
-    when_i_visit_the(:start_page)
-    then_i_see_the(:start_page)
-
-    when_i_press_start_now
-    then_i_see_the(:country_page)
-
-    when_i_select_an_eligible_country
-    then_i_see_the(:qualification_page)
-
-    when_i_have_a_qualification
-    then_i_see_the(:degree_page)
-
-    when_i_have_a_degree
-    then_i_see_the(:teach_children_page)
-
-    when_i_can_teach_children
-    then_i_see_the(:misconduct_page)
-
-    when_i_dont_have_a_misconduct_record
-    then_i_see_the(:eligible_page)
-
-    when_i_visit_the(:start_page)
-    then_i_see_the(:start_page)
-    when_i_press_start_now
-    then_i_have_two_eligibility_checks
-  end
-
-  it "happy path with work experience" do
-    given_work_experience_is_active
-
     when_i_visit_the(:start_page)
     then_i_see_the(:start_page)
 
@@ -71,37 +40,6 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   it "ineligible paths" do
-    when_i_visit_the(:start_page)
-
-    when_i_press_start_now
-    when_i_select_an_ineligible_country
-    then_i_see_the(:ineligible_page)
-    and_i_see_the_ineligible_country_text
-
-    when_i_press_back
-    when_i_select_an_eligible_country
-    then_i_see_the(:qualification_page)
-
-    when_i_dont_have_a_qualification
-    then_i_see_the(:degree_page)
-
-    when_i_dont_have_a_degree
-    then_i_see_the(:teach_children_page)
-
-    when_i_cant_teach_children
-    then_i_see_the(:misconduct_page)
-
-    when_i_have_a_misconduct_record
-    then_i_see_the(:ineligible_page)
-    and_i_see_the_ineligible_degree_text
-    and_i_see_the_ineligible_qualification_text_with_eligible_country
-    and_i_see_the_ineligible_teach_children_text
-    and_i_see_the_ineligible_misconduct_text
-  end
-
-  it "ineligible paths with work experience" do
-    given_work_experience_is_active
-
     when_i_visit_the(:start_page)
 
     when_i_press_start_now
@@ -189,10 +127,16 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_have_a_degree
     then_i_see_the(:teach_children_page)
 
-    when_i_visit_the(:misconduct_page)
+    when_i_visit_the(:work_experience_page)
     then_i_see_the(:teach_children_page)
 
     when_i_can_teach_children
+    then_i_see_the(:work_experience_page)
+
+    when_i_visit_the(:misconduct_page)
+    then_i_see_the(:work_experience_page)
+
+    when_i_have_more_than_20_months_work_experience
     then_i_see_the(:misconduct_page)
   end
 
@@ -229,6 +173,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:teach_children_page)
 
     when_i_cant_teach_children
+    then_i_see_the(:work_experience_page)
+
+    when_i_have_under_9_months_work_experience
     then_i_see_the(:misconduct_page)
 
     when_i_have_a_misconduct_record
@@ -237,6 +184,7 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_see_the_ineligible_qualification_text_with_skip_questions_country
     and_i_see_the_ineligible_degree_text
     and_i_see_the_ineligible_teach_children_text
+    and_i_see_the_ineligible_work_experience_text
     and_i_see_the_ineligible_misconduct_text
   end
 
@@ -302,6 +250,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:qualified_for_subject_page)
 
     when_i_am_qualified_to_teach_a_relevant_subject
+    then_i_see_the(:work_experience_page)
+
+    when_i_have_more_than_20_months_work_experience
     then_i_see_the(:misconduct_page)
 
     when_i_dont_have_a_misconduct_record
@@ -328,6 +279,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:qualified_for_subject_page)
 
     when_i_am_qualified_to_teach_a_relevant_subject
+    then_i_see_the(:work_experience_page)
+
+    when_i_have_more_than_20_months_work_experience
     then_i_see_the(:misconduct_page)
 
     when_i_dont_have_a_misconduct_record
@@ -354,6 +308,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:qualified_for_subject_page)
 
     when_i_am_not_qualified_to_teach_a_relevant_subject
+    then_i_see_the(:work_experience_page)
+
+    when_i_have_more_than_20_months_work_experience
     then_i_see_the(:misconduct_page)
 
     when_i_dont_have_a_misconduct_record
@@ -364,14 +321,6 @@ RSpec.describe "Eligibility check", type: :system do
 
   def then_access_is_denied
     expect(page).to have_content("HTTP Basic: Access denied")
-  end
-
-  def given_work_experience_is_inactive
-    FeatureFlags::FeatureFlag.deactivate(:eligibility_work_experience)
-  end
-
-  def given_work_experience_is_active
-    FeatureFlags::FeatureFlag.activate(:eligibility_work_experience)
   end
 
   def given_countries_exist

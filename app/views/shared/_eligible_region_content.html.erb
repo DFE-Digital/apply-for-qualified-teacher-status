@@ -30,10 +30,8 @@
     <%= render "shared/eligible_region_content_components/proof_of_qualifications", region: %>
   <% end %>
 
-  <% if FeatureFlags::FeatureFlag.active?(:eligibility_english_language) %>
-    <% accordion.section(heading_text: "Proof of English language ability") do %>
-      <%= render "shared/eligible_region_content_components/english_language", region: %>
-    <% end %>
+  <% accordion.section(heading_text: "Proof of English language ability") do %>
+    <%= render "shared/eligible_region_content_components/english_language", region: %>
   <% end %>
 
   <% unless FeatureFlags::FeatureFlag.active?(:application_work_history) && region.status_check_none? && region.sanction_check_none? %>
