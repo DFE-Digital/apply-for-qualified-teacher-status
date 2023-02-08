@@ -102,8 +102,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
           assessment,
           qualification_request,
         )
-      end
-
       when :reference_requests
         if application_form.received_reference
           url_helpers.assessor_interface_application_form_assessment_verify_references_path(
@@ -111,6 +109,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
             assessment,
           )
         end
+      end
     end
   end
 
@@ -138,6 +137,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :verification_requests
       case item
       when :reference_requests
+        return :completed if assessment.references_verified
         application_form.received_reference ? :received : :waiting_on
       when :qualification_requests
         application_form.received_qualification ? :received : :waiting_on
