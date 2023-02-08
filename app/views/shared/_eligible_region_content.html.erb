@@ -11,7 +11,7 @@
 <%= govuk_inset_text do %>
   <p class="govuk-body">You may want to spend some time gathering all the documents you need before you start your application.</p>
 
-  <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) && region && region.application_form_enabled %>
+  <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) %>
     <p class="govuk-body">Once you begin, we’ll sign you out if you’re inactive for 60 minutes.</p>
   <% end %>
 

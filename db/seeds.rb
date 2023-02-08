@@ -262,7 +262,7 @@ COUNTRIES = {
 
 DEFAULT_COUNTRY = { eligibility_enabled: true }.freeze
 
-DEFAULT_REGION = { name: "", application_form_enabled: true }.freeze
+DEFAULT_REGION = { name: "" }.freeze
 
 COUNTRIES.each do |code, value|
   regions = value.is_a?(Hash) ? value[:regions] : value
