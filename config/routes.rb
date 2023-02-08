@@ -88,8 +88,6 @@ Rails.application.routes.draw do
     get "eligible", to: "finish#eligible"
     get "ineligible", to: "finish#ineligible"
 
-    get "completed-requirements", to: "completed_requirements#new"
-    post "completed-requirements", to: "completed_requirements#create"
     get "countries", to: "countries#new"
     post "countries", to: "countries#create"
     get "degree", to: "degrees#new"

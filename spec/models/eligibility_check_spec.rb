@@ -170,7 +170,6 @@ RSpec.describe EligibilityCheck, type: :model do
         eligibility_check.teach_children = true
         eligibility_check.qualification = true
         eligibility_check.degree = true
-        eligibility_check.completed_requirements = true
         eligibility_check.country_code = country.code
       end
 
@@ -247,18 +246,6 @@ RSpec.describe EligibilityCheck, type: :model do
 
     it { is_expected.to_not include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
-
-    context "before the completed requirements question" do
-      before do
-        eligibility_check_2.update!(
-          created_at: Date.new(2020, 1, 1),
-          completed_requirements: nil,
-        )
-      end
-
-      it { is_expected.to_not include(eligibility_check_1) }
-      it { is_expected.to include(eligibility_check_2) }
-    end
   end
 
   describe "#ineligible" do
@@ -277,7 +264,6 @@ RSpec.describe EligibilityCheck, type: :model do
     let(:eligibility_check_2) do
       create(
         :eligibility_check,
-        completed_requirements: false,
         degree: true,
         free_of_sanctions: false,
         qualification: true,
@@ -287,18 +273,6 @@ RSpec.describe EligibilityCheck, type: :model do
 
     it { is_expected.to_not include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
-
-    context "before the completed requirements question" do
-      before do
-        eligibility_check_2.update!(
-          created_at: Date.new(2020, 1, 1),
-          completed_requirements: nil,
-        )
-      end
-
-      it { is_expected.to_not include(eligibility_check_1) }
-      it { is_expected.to include(eligibility_check_2) }
-    end
   end
 
   describe "#complete!" do

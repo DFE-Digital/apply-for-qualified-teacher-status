@@ -23,7 +23,6 @@
 FactoryBot.define do
   factory :eligibility_check do
     country_code { nil }
-    completed_requirements { nil }
     degree { nil }
     free_of_sanctions { nil }
     qualification { nil }
@@ -31,7 +30,6 @@ FactoryBot.define do
 
     trait :eligible do
       association :region
-      completed_requirements { true }
       degree { true }
       free_of_sanctions { true }
       qualification { true }
