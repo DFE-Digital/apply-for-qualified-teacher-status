@@ -486,12 +486,6 @@ RSpec.describe "Eligibility check", type: :system do
     expect(ineligible_page.body).to have_content("by the end of 2023.")
   end
 
-  def and_i_see_the_ineligible_completed_requirements_text
-    expect(ineligible_page.reasons).to have_content(
-      "You have not completed all requirements to work as a qualified teacher in Scotland.",
-    )
-  end
-
   def and_i_see_the_ineligible_misconduct_text
     expect(ineligible_page.reasons).to have_content(
       "To teach in England, you must not have any findings of misconduct or restrictions on your employment record.",

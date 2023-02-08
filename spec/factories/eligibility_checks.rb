@@ -2,19 +2,18 @@
 #
 # Table name: eligibility_checks
 #
-#  id                     :bigint           not null, primary key
-#  completed_at           :datetime
-#  completed_requirements :boolean
-#  country_code           :string
-#  degree                 :boolean
-#  free_of_sanctions      :boolean
-#  qualification          :boolean
-#  qualified_for_subject  :boolean
-#  teach_children         :boolean
-#  work_experience        :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  region_id              :bigint
+#  id                    :bigint           not null, primary key
+#  completed_at          :datetime
+#  country_code          :string
+#  degree                :boolean
+#  free_of_sanctions     :boolean
+#  qualification         :boolean
+#  qualified_for_subject :boolean
+#  teach_children        :boolean
+#  work_experience       :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  region_id             :bigint
 #
 # Foreign Keys
 #
@@ -23,7 +22,6 @@
 FactoryBot.define do
   factory :eligibility_check do
     country_code { nil }
-    completed_requirements { nil }
     degree { nil }
     free_of_sanctions { nil }
     qualification { nil }
@@ -31,7 +29,6 @@ FactoryBot.define do
 
     trait :eligible do
       association :region
-      completed_requirements { true }
       degree { true }
       free_of_sanctions { true }
       qualification { true }

@@ -6,10 +6,6 @@ en:
           attributes:
             location:
               blank: Tell us where you’re currently recognised as a teacher
-        eligibility_interface/completed_requirements_form:
-          attributes:
-            completed_requirements:
-              inclusion: Tell us if you have completed all requirements to work as a qualified teacher
         eligibility_interface/degree_form:
           attributes:
             degree:
@@ -43,7 +39,6 @@ en:
     attributes:
       eligibility_check:
         ineligible_reason:
-          completed_requirements: You have not completed all requirements to work as a qualified teacher in %{country_name}.
           degree: You do not have a degree. As teaching in England is a graduate profession, you must have an undergraduate degree.
           misconduct: To teach in England, you must not have any findings of misconduct or restrictions on your employment record.
           qualification: You have not completed a formal teaching qualification in %{country_name}, for example, an undergraduate teaching degree or postgraduate teaching qualification.
