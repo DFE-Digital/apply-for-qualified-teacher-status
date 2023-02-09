@@ -13,14 +13,15 @@ en:
       show:
         assessment_tasks:
           sections:
-            pre_assessment_tasks: Pre-assessment tasks
-            initial_assessment: Initial assessment
             further_information_requests: Further information requests
+            initial_assessment: Initial assessment
+            pre_assessment_tasks: Pre-assessment tasks
             verification_requests: Verification requests
           items:
             age_range_subjects: Verify age range and subjects
+            assessment_recommendation: Assessment recommendation
             english_language_proficiency: Check English language proficiency
-            assessment_recommendation: Initial assessment recommendation
+            initial_assessment_recommendation: Initial assessment recommendation
             personal_information: Check personal information
             professional_standing: Check professional standing
             professional_standing_request: Awaiting third-party professional standing
