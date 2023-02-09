@@ -123,6 +123,12 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     subject(:render_form?) { view_object.render_form? }
 
     it { is_expected.to be true }
+
+    context "with a requested professional standing request" do
+      before { create(:professional_standing_request, :requested, assessment:) }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe "#show_english_language_provider_details?" do
