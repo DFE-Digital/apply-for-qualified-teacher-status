@@ -52,7 +52,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   end
 
   def and_i_apply_the_assessor_filter
-    expect(applications_page.assessor_filter.assessors.count).to eq(3)
+    expect(applications_page.assessor_filter.assessors.count).to eq(4)
     applications_page.assessor_filter.assessors.second.checkbox.click
     applications_page.apply_filters.click
   end

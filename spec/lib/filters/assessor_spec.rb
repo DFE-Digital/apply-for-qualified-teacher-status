@@ -9,7 +9,7 @@ RSpec.describe Filters::Assessor do
   subject { described_class.apply(scope:, params:) }
 
   context "the params include assessor_id" do
-    describe "filtering 'assigned to'" do
+    describe "filtering 'assessor'" do
       let(:params) { { assessor_ids: assessor_one.id } }
       let(:scope) { ApplicationForm.all }
 
@@ -51,6 +51,19 @@ RSpec.describe Filters::Assessor do
       create(:application_form)
       create(:application_form, assessor: create(:staff))
     end
+
+    it "returns a filtered scope" do
+      expect(subject).to match_array(included)
+    end
+  end
+
+  context "the params include an unassigned null value" do
+    let(:params) { { assessor_ids: ["null"] } }
+    let(:scope) { ApplicationForm.all }
+
+    let!(:included) { [create(:application_form)] }
+
+    let!(:filtered) { create(:application_form, assessor: create(:staff)) }
 
     it "returns a filtered scope" do
       expect(subject).to match_array(included)

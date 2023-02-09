@@ -113,16 +113,18 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
   describe "#assessor_filter_options" do
     subject(:assessor_filter_options) { view_object.assessor_filter_options }
 
-    it { is_expected.to be_empty }
+    it do
+      is_expected.to include(OpenStruct.new(id: "null", name: "Not assigned"))
+    end
 
     context "with an assessor user" do
-      let(:staff) { create(:staff, :with_award_decline_permission) }
+      let!(:staff) { create(:staff, :with_award_decline_permission) }
 
       it { is_expected.to include(staff) }
     end
 
     context "with an non-assessor user" do
-      let(:staff) { create(:staff) }
+      let!(:staff) { create(:staff) }
 
       it { is_expected.not_to include(staff) }
     end
