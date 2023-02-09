@@ -315,7 +315,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_093735) do
     t.text "teaching_authority_websites", default: [], null: false, array: true
     t.text "teaching_authority_name", default: "", null: false
     t.text "teaching_authority_other", default: "", null: false
-    t.boolean "application_form_enabled", default: false
     t.text "teaching_authority_certificate", default: "", null: false
     t.string "teaching_authority_online_checker_url", default: "", null: false
     t.string "teaching_authority_status_information", default: "", null: false
