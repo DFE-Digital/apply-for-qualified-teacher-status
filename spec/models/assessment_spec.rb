@@ -302,6 +302,11 @@ RSpec.describe Assessment, type: :model do
         it { is_expected.to be true }
       end
     end
+
+    context "when awarded pending verification" do
+      before { assessment.award_pending_verification! }
+      it { is_expected.to be true }
+    end
   end
 
   describe "#can_request_further_information?" do

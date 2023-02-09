@@ -6,7 +6,8 @@
 <p class="govuk-body-l">You’re about to decline this QTS application from <%= application_form_full_name(@application_form) %> for the following reasons:</p>
 
 <h2 class="govuk-heading-l">Your decline reasons and notes</h2>
-<% unless @assessment.further_information_requests.exists? %>
+
+<% if @assessment.unknown? %>
   <% @assessment.sections.each do |section| %>
     <% if section.selected_failure_reasons.present? %>
       <h3 class="govuk-heading-m"><%= t(".assessment_section.#{section.key}") %></h3>
@@ -20,6 +21,7 @@
             <% else %>
               <p class="govuk-body govuk-!-margin-bottom-2">Your note (the applicant won’t see this):</p>
             <% end %>
+
             <%= govuk_inset_text do %>
               <%= simple_format failure_reason.assessor_feedback %>
             <% end %>
@@ -37,7 +39,9 @@
 
 <%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment, :assessment_recommendation_decline], method: :put do |f| %>
   <%= f.govuk_error_summary %>
+
   <%= f.govuk_text_area :recommendation_assessor_note %>
+
   <%= f.govuk_check_boxes_fieldset :declaration, small: true do %>
     <%= f.govuk_check_box :declaration,
                           true,
@@ -46,7 +50,7 @@
                           link_errors: true,
                           label: { text: t(".declaration") } %>
   <% end %>
-  
+
   <p class="govuk-body"><%= t(".instruction") %></p>
   <p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
 

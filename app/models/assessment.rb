@@ -121,6 +121,8 @@ class Assessment < ApplicationRecord
         professional_standing_request&.requested? || false
     elsif request_further_information?
       any_further_information_request_failed?
+    elsif award_pending_verification?
+      true # TODO: check the state of verification requests
     else
       false
     end
