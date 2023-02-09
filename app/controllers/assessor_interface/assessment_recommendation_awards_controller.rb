@@ -116,9 +116,8 @@ module AssessorInterface
       if @form.valid?
         if @form.confirmation
           ActiveRecord::Base.transaction do
-            assessment.award!
-
             if application_form.created_under_new_regulations?
+              assessment.award_pending_verification!
               CreateReferenceRequests.call(
                 assessment:,
                 user: current_staff,
@@ -129,6 +128,7 @@ module AssessorInterface
                   ),
               )
             else
+              assessment.award!
               CreateDQTTRNRequest.call(application_form:, user: current_staff)
             end
           end
@@ -155,7 +155,7 @@ module AssessorInterface
     delegate :application_form, to: :assessment
 
     def ensure_can_award
-      unless assessment.can_award?
+      unless assessment.can_award? || assessment.can_award_pending_verification?
         redirect_to [:assessor_interface, application_form]
       end
     end

@@ -40,10 +40,11 @@ class Assessment < ApplicationRecord
 
   enum :recommendation,
        {
-         unknown: "unknown",
          award: "award",
+         award_pending_verification: "award_pending_verification",
          decline: "decline",
          request_further_information: "request_further_information",
+         unknown: "unknown",
        },
        default: :unknown
 
@@ -55,6 +56,13 @@ class Assessment < ApplicationRecord
 
   def award!
     update!(recommendation: "award", recommended_at: Time.zone.now)
+  end
+
+  def award_pending_verification!
+    update!(
+      recommendation: "award_pending_verification",
+      recommended_at: Time.zone.now,
+    )
   end
 
   def decline!
@@ -72,7 +80,25 @@ class Assessment < ApplicationRecord
     any_section_finished?
   end
 
+  def completed?
+    award? || decline?
+  end
+
   def can_award?
+    if application_form.created_under_new_regulations?
+      false
+    elsif unknown?
+      all_sections_passed?
+    elsif request_further_information?
+      all_further_information_requests_passed?
+    else
+      false
+    end
+  end
+
+  def can_award_pending_verification?
+    return false unless application_form.created_under_new_regulations?
+
     if unknown?
       all_sections_passed?
     elsif request_further_information?
@@ -111,16 +137,20 @@ class Assessment < ApplicationRecord
   end
 
   def recommendable?
-    can_award? || can_decline? || can_request_further_information?
+    can_award? || can_award_pending_verification? || can_decline? ||
+      can_request_further_information?
   end
 
   def available_recommendations
     [].tap do |recommendations|
       recommendations << "award" if can_award?
+      if can_award_pending_verification?
+        recommendations << "award_pending_verification"
+      end
+      recommendations << "decline" if can_decline?
       if can_request_further_information?
         recommendations << "request_further_information"
       end
-      recommendations << "decline" if can_decline?
     end
   end
 
