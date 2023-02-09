@@ -112,6 +112,23 @@ RSpec.describe Filters::Name do
         expect(subject).to eq([included])
       end
     end
+
+    context "match  that spans both fields" do
+      let(:params) { { name: "the Gangster" } }
+
+      let!(:included) do
+        create(
+          :application_form,
+          :with_personal_information,
+          given_names: "Dave the",
+          family_name: "Gangster",
+        )
+      end
+
+      it "returns a filtered scope" do
+        expect(subject).to eq([included])
+      end
+    end
   end
 
   context "the params don't include :name" do
