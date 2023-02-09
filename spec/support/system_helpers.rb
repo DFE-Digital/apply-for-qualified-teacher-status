@@ -129,7 +129,7 @@ module SystemHelpers
 
   def when_i_fill_in_the_teacher_otp
     message = ActionMailer::Base.deliveries.last
-    otp = message.body.encoded.lines.third.chomp
+    otp = message.body.encoded.lines.fifth.chomp
     teacher_confirm_otp_page.submit(otp:)
   end
 
