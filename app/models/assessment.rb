@@ -8,6 +8,7 @@
 #  age_range_note                            :text             default(""), not null
 #  induction_required                        :boolean
 #  recommendation                            :string           default("unknown"), not null
+#  recommendation_assessor_note              :text             default(""), not null
 #  recommended_at                            :datetime
 #  started_at                                :datetime
 #  subjects                                  :text             default([]), not null, is an Array
@@ -120,6 +121,10 @@ class Assessment < ApplicationRecord
       end
       recommendations << "decline" if can_decline?
     end
+  end
+
+  def selected_failure_reasons_empty?
+    sections.all? { |section| section.selected_failure_reasons.empty? }
   end
 
   private

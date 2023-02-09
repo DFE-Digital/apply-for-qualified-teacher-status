@@ -61,7 +61,7 @@
   </div>
 <% elsif @view_object.application_form.declined? %>
   <h2 class="govuk-heading-l">Your QTS application has been declined</h2>
-
+ 
   <%- if @view_object.show_further_information_request_expired_content? -%>
     <%= govuk_inset_text(text:t(".further_information_request_expired")) %>
   <%- end -%>
@@ -86,7 +86,13 @@
       </ul>
     <% end %>
   <% end %>
-
+  <% if @view_object.assessment.recommendation_assessor_note.present? %>
+    <h3 class="govuk-heading-m">Why your application was declined</h3>
+    <p class="govuk-body">
+     <%= @view_object.assessment.recommendation_assessor_note %>
+    </p>
+  <% end %>
+  
   <h3 class="govuk-heading-m">What you can do next</h3>
 
   <% unless @view_object.declined_cannot_reapply? %>

@@ -8,6 +8,7 @@
 #  age_range_note                            :text             default(""), not null
 #  induction_required                        :boolean
 #  recommendation                            :string           default("unknown"), not null
+#  recommendation_assessor_note              :text             default(""), not null
 #  recommended_at                            :datetime
 #  started_at                                :datetime
 #  subjects                                  :text             default([]), not null, is an Array
@@ -41,6 +42,11 @@ FactoryBot.define do
 
     trait :award do
       recommendation { "award" }
+      recommended_at { Time.zone.now }
+    end
+
+    trait :decline do
+      recommendation { "decline" }
       recommended_at { Time.zone.now }
     end
 

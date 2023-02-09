@@ -8,20 +8,27 @@ module AssessorInterface
     before_action :load_assessment_and_application_form
 
     def edit
-      @form = AssessmentDeclarationForm.new
+      @form = AssessmentDeclarationDeclineForm.new
     end
 
     def update
       @form =
-        AssessmentDeclarationForm.new(
+        AssessmentDeclarationDeclineForm.new(
           declaration:
             params.dig(
-              :assessor_interface_assessment_declaration_form,
+              :assessor_interface_assessment_declaration_decline_form,
               :declaration,
             ),
+          recommendation_assessor_note:
+            params.dig(
+              :assessor_interface_assessment_declaration_decline_form,
+              :recommendation_assessor_note,
+            ),
+          session:,
+          assessment:,
         )
 
-      if @form.valid?
+      if @form.save
         redirect_to [
                       :preview,
                       :assessor_interface,
@@ -59,6 +66,10 @@ module AssessorInterface
         if @form.confirmation
           ActiveRecord::Base.transaction do
             assessment.decline!
+            assessment.update!(
+              recommendation_assessor_note:
+                session[:recommendation_assessor_note],
+            )
             DeclineQTS.call(application_form:, user: current_staff)
           end
 

@@ -10,6 +10,7 @@
 #  age_range_note                            :text             default(""), not null
 #  induction_required                        :boolean
 #  recommendation                            :string           default("unknown"), not null
+#  recommendation_assessor_note              :text             default(""), not null
 #  recommended_at                            :datetime
 #  started_at                                :datetime
 #  subjects                                  :text             default([]), not null, is an Array
@@ -256,6 +257,23 @@ RSpec.describe Assessment, type: :model do
         ).and_return(true)
       end
       it { is_expected.to include("request_further_information") }
+    end
+  end
+
+  describe "#selected_failure_reasons_empty?" do
+    subject(:selected_failure_reasons_empty?) do
+      assessment.selected_failure_reasons_empty?
+    end
+
+    context "with no failure reasons" do
+      it { is_expected.to be true }
+    end
+
+    context "with failure reasons" do
+      before do
+        create(:assessment_section, :declines_with_already_qts, assessment:)
+      end
+      it { is_expected.to be false }
     end
   end
 end

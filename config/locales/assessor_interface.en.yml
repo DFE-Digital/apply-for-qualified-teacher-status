@@ -218,7 +218,13 @@ en:
           attributes:
             confirmation:
               inclusion: Select ‘Yes’ to confirm, or ‘No’ to cancel.
-        assessor_interface/assessment_declaration_form:
+        assessor_interface/assessment_declaration_decline_form:
+          attributes:
+            declaration:
+              blank: You must confirm that you have reviewed this QTS application
+            recommendation_assessor_note:
+              blank: You must input notes since there are no other decline notes
+        assessor_interface/assessment_declaration_award_form:
           attributes:
             declaration:
               blank: You must confirm that you have reviewed this QTS application
