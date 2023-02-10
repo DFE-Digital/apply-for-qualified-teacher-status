@@ -54,8 +54,6 @@ en:
         confirmation_options:
           true: "Yes"
           false: "No"
-      assessor_interface_assessment_declaration_decline_form:
-        recommendation_assessor_note: Assessor's notes
       assessor_interface_assessment_section_form:
         age_range_min: From
         age_range_max: To
