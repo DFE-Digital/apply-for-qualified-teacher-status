@@ -8,11 +8,14 @@
     :work_experience,
     EligibilityCheck.work_experiences.keys,
     :itself,
-    legend: { size: "l", tag: "h1" }
+    legend: { size: "l", tag: "h1" },
+    hint: { text: t("helpers.hint.eligibility_interface_work_experience_form.work_experience").html_safe }
   ) %>
-<% unless @region.reduced_evidence_accepted %>
-  <p class="govuk-body">We’ll ask for email addresses for contacts who can verify your work history (in English). If you’re successful, we’ll contact them before awarding QTS.</p>
-<% end %>
+
+  <% unless @region.reduced_evidence_accepted %>
+    <p class="govuk-body">We’ll ask for email addresses for contacts who can verify your work history (in English). If you’re successful, we’ll contact them before awarding QTS.</p>
+  <% end %>
+
   <%= govuk_details(summary_text: "How to calculate your work experience") do %>
     <p>We need to know how long you’ve spent actively teaching. This can include scheduled school holiday periods, but cannot include any other time you’ve spent away from teaching.</p>
     <p>To work out your experience, add up the time you’ve spent employed as a teacher, including any scheduled school holidays.</p>
