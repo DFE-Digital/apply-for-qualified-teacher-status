@@ -66,10 +66,14 @@ module AssessorInterface
         if @form.confirmation
           ActiveRecord::Base.transaction do
             assessment.decline!
-            assessment.update!(
-              recommendation_assessor_note:
-                session[:recommendation_assessor_note],
-            )
+
+            if (
+                 recommendation_assessor_note =
+                   session[:recommendation_assessor_note]
+               ).present?
+              assessment.update!(recommendation_assessor_note:)
+            end
+
             DeclineQTS.call(application_form:, user: current_staff)
           end
 
