@@ -51,6 +51,10 @@ module PageObjects
       def requested_qualifications_task
         task_list.find_item("Qualifications – requested")
       end
+
+      def assessment_recommendation_task
+        task_list.find_item("Assessment recommendation")
+      end
     end
   end
 end

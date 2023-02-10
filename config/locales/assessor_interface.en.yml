@@ -13,14 +13,15 @@ en:
       show:
         assessment_tasks:
           sections:
-            pre_assessment_tasks: Pre-assessment tasks
-            initial_assessment: Initial assessment
             further_information_requests: Further information requests
+            initial_assessment: Initial assessment
+            pre_assessment_tasks: Pre-assessment tasks
             verification_requests: Verification requests
           items:
             age_range_subjects: Verify age range and subjects
+            assessment_recommendation: Assessment recommendation
             english_language_proficiency: Check English language proficiency
-            assessment_recommendation: Initial assessment recommendation
+            initial_assessment_recommendation: Initial assessment recommendation
             personal_information: Check personal information
             professional_standing: Check professional standing
             professional_standing_request: Awaiting third-party professional standing
@@ -33,7 +34,8 @@ en:
     assessments:
       edit:
         hint:
-          can_award: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
+          can_award: You’ve completed your assessment of this QTS application and reviewed the work references.
+          can_award_pending_verification: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
 
     assessment_recommendation_awards:

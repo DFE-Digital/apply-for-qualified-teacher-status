@@ -28,7 +28,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         work_history
         professional_standing
       ].select { |key| assessment_section_keys.include?(key) } +
-        %i[assessment_recommendation]
+        %i[initial_assessment_recommendation]
 
     further_information =
       further_information_requests.map { :review_requested_information }
@@ -37,6 +37,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
       (:qualification_requests if qualification_requests.present?),
       (:reference_requests if reference_requests.present?),
     ].compact
+
+    if verification_requests.present?
+      verification_requests << :assessment_recommendation
+    end
 
     {
       pre_assessment_tasks:,
@@ -54,7 +58,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
       )
     when :initial_assessment
-      if item == :assessment_recommendation
+      if item == :initial_assessment_recommendation
+        return nil if initial_assessment_recommendation_complete?
         return nil unless assessment.recommendable?
 
         url_helpers.edit_assessor_interface_application_form_assessment_path(
@@ -80,15 +85,24 @@ class AssessorInterface::ApplicationFormsShowViewObject
       end
     when :verification_requests
       return nil unless professional_standing_request_received?
-      return nil unless item == :qualification_requests
 
-      qualification_request = qualification_requests[index]
+      case item
+      when :assessment_recommendation
+        return nil unless assessment.recommendable?
 
-      url_helpers.edit_assessor_interface_application_form_assessment_qualification_request_path(
-        application_form,
-        assessment,
-        qualification_request,
-      )
+        url_helpers.edit_assessor_interface_application_form_assessment_path(
+          application_form,
+          assessment,
+        )
+      when :qualification_requests
+        qualification_request = qualification_requests[index]
+
+        url_helpers.edit_assessor_interface_application_form_assessment_qualification_request_path(
+          application_form,
+          assessment,
+          qualification_request,
+        )
+      end
     end
   end
 
@@ -97,7 +111,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     when :pre_assessment_tasks
       professional_standing_request_received? ? :completed : :waiting_on
     when :initial_assessment
-      if item == :assessment_recommendation
+      if item == :initial_assessment_recommendation
         return :completed if initial_assessment_recommendation_complete?
         return :cannot_start unless assessment.recommendable?
         return :in_progress if request_further_information_unfinished?
@@ -119,6 +133,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
         application_form.received_reference ? :received : :waiting_on
       when :qualification_requests
         application_form.received_qualification ? :received : :waiting_on
+      when :assessment_recommendation
+        return :completed if assessment.completed?
+        return :cannot_start unless assessment.recommendable?
+        :not_started
       end
     end
   end

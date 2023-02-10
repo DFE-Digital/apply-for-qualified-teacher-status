@@ -61,7 +61,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               personal_information
               qualifications
               work_history
-              assessment_recommendation
+              initial_assessment_recommendation
             ],
           )
         end
@@ -78,7 +78,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               personal_information
               qualifications
               professional_standing
-              assessment_recommendation
+              initial_assessment_recommendation
             ],
           )
         end
@@ -109,13 +109,19 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "with a qualification request" do
         before { create(:qualification_request, assessment:) }
 
-        it { is_expected.to eq(%i[qualification_requests]) }
+        it do
+          is_expected.to eq(
+            %i[qualification_requests assessment_recommendation],
+          )
+        end
       end
 
       context "with a reference request" do
         before { create(:reference_request, assessment:) }
 
-        it { is_expected.to eq(%i[reference_requests]) }
+        it do
+          is_expected.to eq(%i[reference_requests assessment_recommendation])
+        end
       end
     end
   end
@@ -158,7 +164,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       context "and assessment recommendation" do
-        let(:item) { :assessment_recommendation }
+        let(:item) { :initial_assessment_recommendation }
 
         it do
           is_expected.to eq(
@@ -232,7 +238,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     let(:index) { 0 }
 
-    context "with submitted details section" do
+    context "with initial assessment section" do
       let(:section) { :initial_assessment }
 
       context "personal information" do
@@ -242,7 +248,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       context "assessment recommendation" do
-        let(:item) { :assessment_recommendation }
+        let(:item) { :initial_assessment_recommendation }
 
         context "with unfinished assessment sections" do
           it { is_expected.to eq(:cannot_start) }
@@ -327,6 +333,32 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           assessment.decline!
           create(:further_information_request, :received, :failed, assessment:)
         end
+        it { is_expected.to eq(:completed) }
+      end
+    end
+
+    context "with verification requests section" do
+      let(:section) { :verification_requests }
+      let(:item) { :assessment_recommendation }
+
+      it { is_expected.to eq(:cannot_start) }
+
+      context "when decline-able" do
+        before do
+          assessment.request_further_information!
+          create(:further_information_request, :received, :failed, assessment:)
+        end
+
+        it { is_expected.to eq(:not_started) }
+      end
+
+      context "with an award recommendation" do
+        before { assessment.award! }
+        it { is_expected.to eq(:completed) }
+      end
+
+      context "with a decline recommendation" do
+        before { assessment.award! }
         it { is_expected.to eq(:completed) }
       end
     end
