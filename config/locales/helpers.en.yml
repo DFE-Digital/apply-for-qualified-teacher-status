@@ -32,7 +32,7 @@ en:
       teacher_interface_has_work_history_form:
         has_work_history: If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet.
       teacher_interface_new_session_form:
-        email: Enter the email address you used to register, and we will send you a code to sign in.
+        email: We need to send you a code so that you can sign into the Apply for QTS in England service. Please enter the email address you used to register.
       teacher_interface_qualification_form:
         institution_country_location: This must be the country in which you’re recognised as a teacher.
       teacher_interface_registration_number_form:
