@@ -55,6 +55,10 @@ module PageObjects
       def assessment_recommendation_task
         task_list.find_item("Assessment recommendation")
       end
+
+      def verify_references_task
+        task_list.find_item("Verify reference requests")
+      end
     end
   end
 end
