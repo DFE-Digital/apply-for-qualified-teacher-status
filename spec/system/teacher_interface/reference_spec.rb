@@ -94,7 +94,7 @@ RSpec.describe "Teacher reference", type: :system do
     expect(summary_list.rows[0].value.text).to eq("Yes")
 
     expect(summary_list.rows[1].key.text).to eq(
-      "Did they work approximately 30 hours per week in this role?",
+      "Did the applicant normally work more than 30 hours per week in this role?",
     )
     expect(summary_list.rows[1].value.text).to eq("Yes")
 

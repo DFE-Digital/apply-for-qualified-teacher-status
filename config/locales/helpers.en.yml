@@ -35,10 +35,12 @@ en:
         email: We need to send you a code so that you can sign into the Apply for QTS in England service. Please enter the email address you used to register.
       teacher_interface_qualification_form:
         institution_country_location: This must be the country in which you’re recognised as a teacher.
+      teacher_interface_reference_request_hours_response_form:
+        hours_response: This means all the hours they spent working per week for this role (not just the hours they spent teaching students).
       teacher_interface_registration_number_form:
         registration_number: Your country has an online register of teachers. If you have a registration number, enter it on this screen. If you do not have one, just select ‘Continue’.
       teacher_interface_work_history_school_form:
-        hours_per_week: In roles where you worked under 30 hours per week we may need to ask for more information when we assess your application.
+        hours_per_week: This means all the hours you spent working per week for this role (not just the hours you spent teaching students). In roles where you worked under 30 hours per week we may need to ask for more information when we assess your application.
         start_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
         end_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
       work_history:
@@ -225,8 +227,8 @@ en:
         dates_response: Did the applicant work at the school for the dates they provided?
       teacher_interface_reference_request_hours_response_form:
         hours_response:
-          one: Did they work approximately 1 hour per week in this role?
-          other: Did they work approximately %{count} hours per week in this role?
+          one: Did the applicant normally work more than 1 hour per week in this role?
+          other: Did the applicant normally work more than %{count} hours per week in this role?
       teacher_interface_reference_request_lessons_response_form:
         lessons_response: Was the applicant solely responsible for planning, preparing and delivering lessons to at least 4 students at a time?
       teacher_interface_reference_request_reports_response_form:
