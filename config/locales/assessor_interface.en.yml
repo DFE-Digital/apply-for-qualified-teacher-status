@@ -38,22 +38,12 @@ en:
           can_verify: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
 
-    assessment_recommendation_awards:
+    assessment_recommendation_award:
       edit:
         heading: You’re about to award QTS
         instruction: Read the declaration and if you’re happy to award QTS, select ‘Accept and award QTS’.
         declaration: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
         button: Accept and award QTS
-      edit_reference_requests:
-        heading: Request work history references
-      preview_referee:
-        heading: Check and send the reference request email
-        button: Send email to referee
-        cancel: Cancel
-      preview_teacher:
-        heading: Check and send the email to applicant
-        button: Send email to applicant
-        cancel: Cancel
       preview:
         heading: Check the email
         subheading: This screen shows how the email to the applicant will look.
@@ -63,7 +53,7 @@ en:
         legend: Award this QTS application?
         hint: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
 
-    assessment_recommendation_declines:
+    assessment_recommendation_decline:
       edit:
         heading: You’re about to decline QTS
         instruction: If you’re happy to proceed, read the declaration and if you want to decline, select ‘Continue’.
@@ -84,6 +74,18 @@ en:
       edit_confirm:
         legend: Decline this QTS application?
         hint: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
+
+    assessment_recommendation_verify:
+      edit_reference_requests:
+        heading: Request work history references
+      preview_referee:
+        heading: Check and send the reference request email
+        button: Send email to referee
+        cancel: Cancel
+      preview_teacher:
+        heading: Check and send the email to applicant
+        button: Send email to applicant
+        cancel: Cancel
 
     assessment_sections:
       show:

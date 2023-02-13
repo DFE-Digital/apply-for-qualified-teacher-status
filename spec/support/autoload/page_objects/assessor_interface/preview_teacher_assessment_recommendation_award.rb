@@ -4,7 +4,7 @@ module PageObjects
   module AssessorInterface
     class PreviewTeacherAssessmentRecommendationAward < SitePrism::Page
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
-                "/recommendation/award/preview-teacher"
+                "/recommendation/verify/preview-teacher"
 
       element :heading, "h1"
 

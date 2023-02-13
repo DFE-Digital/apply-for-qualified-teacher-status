@@ -4,7 +4,7 @@ module PageObjects
   module AssessorInterface
     class ReferenceRequestsAssessmentRecommendationAward < SitePrism::Page
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
-                "/recommendation/award/reference-requests"
+                "/recommendation/verify/reference-requests"
 
       element :heading, "h1"
 

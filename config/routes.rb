@@ -37,29 +37,35 @@ Rails.application.routes.draw do
                   only: %i[show update]
 
         resource :assessment_recommendation_award,
+                 controller: "assessment_recommendation_award",
                  path: "/recommendation/award",
                  only: %i[edit update] do
-          get "reference-requests",
-              to: "assessment_recommendation_awards#edit_reference_requests"
-          post "reference-requests",
-               to: "assessment_recommendation_awards#update_reference_requests"
-          get "preview-referee",
-              to: "assessment_recommendation_awards#preview_referee"
-          get "preview-teacher",
-              to: "assessment_recommendation_awards#preview_teacher"
-
           get "preview"
-          get "confirm", to: "assessment_recommendation_awards#edit_confirm"
-          post "confirm", to: "assessment_recommendation_awards#update_confirm"
+          get "confirm", to: "assessment_recommendation_award#edit_confirm"
+          post "confirm", to: "assessment_recommendation_award#update_confirm"
         end
 
         resource :assessment_recommendation_decline,
+                 controller: "assessment_recommendation_decline",
                  path: "/recommendation/decline",
                  only: %i[edit update] do
           get "preview"
-          get "confirm", to: "assessment_recommendation_declines#edit_confirm"
-          post "confirm",
-               to: "assessment_recommendation_declines#update_confirm"
+          get "confirm", to: "assessment_recommendation_decline#edit_confirm"
+          post "confirm", to: "assessment_recommendation_decline#update_confirm"
+        end
+
+        resource :assessment_recommendation_verify,
+                 controller: "assessment_recommendation_verify",
+                 path: "/recommendation/verify",
+                 only: %i[edit update] do
+          get "reference-requests",
+              to: "assessment_recommendation_verify#edit_reference_requests"
+          post "reference-requests",
+               to: "assessment_recommendation_verify#update_reference_requests"
+          get "preview-referee",
+              to: "assessment_recommendation_verify#preview_referee"
+          get "preview-teacher",
+              to: "assessment_recommendation_verify#preview_teacher"
         end
 
         resources :further_information_requests,
