@@ -1,9 +1,9 @@
 <% if application_form.created_under_new_regulations? %>
-  <%= render "shared/application_form/new_regs_work_history_summary",
+  <%= render "shared/application_form/work_history_summary",
              work_histories: application_form.work_histories.ordered,
              changeable: false %>
 <% else %>
-  <%= render "shared/application_form/work_history_summary",
+  <%= render "shared/application_form/work_history_old_regs_summary",
              application_form:,
              show_has_work_history: true,
              work_histories: application_form.work_histories.ordered,

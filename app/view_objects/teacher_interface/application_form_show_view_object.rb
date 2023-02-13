@@ -35,8 +35,7 @@ class TeacherInterface::ApplicationFormShowViewObject
     hash.merge!(about_you: %i[personal_information identification_document])
     hash.merge!(qualifications: %i[qualifications age_range subjects])
 
-    if application_form.created_under_new_regulations? &&
-         FeatureFlags::FeatureFlag.active?(:application_english_language)
+    if application_form.created_under_new_regulations?
       hash.merge!(english_language: %i[english_language])
     end
 
@@ -97,11 +96,7 @@ class TeacherInterface::ApplicationFormShowViewObject
         )
       end
     when :work_history
-      if FeatureFlags::FeatureFlag.active?(:application_work_history)
-        url_helpers.teacher_interface_application_form_new_regs_work_histories_path
-      else
-        url_helpers.teacher_interface_application_form_work_histories_path
-      end
+      url_helpers.teacher_interface_application_form_work_histories_path
     else
       begin
         url_helpers.send("teacher_interface_application_form_#{key}_path")

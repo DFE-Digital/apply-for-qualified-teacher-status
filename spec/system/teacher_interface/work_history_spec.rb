@@ -3,9 +3,6 @@
 require "rails_helper"
 
 RSpec.describe "Teacher work history", type: :system do
-  before(:all) { given_work_history_is_active }
-  after(:all) { given_work_history_is_inactive }
-
   before do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(teacher)
@@ -77,14 +74,6 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   private
-
-  def given_work_history_is_active
-    FeatureFlags::FeatureFlag.activate(:application_work_history)
-  end
-
-  def given_work_history_is_inactive
-    FeatureFlags::FeatureFlag.deactivate(:application_work_history)
-  end
 
   def given_an_application_form_exists
     application_form

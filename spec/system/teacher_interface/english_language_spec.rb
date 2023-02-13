@@ -3,9 +3,6 @@
 require "rails_helper"
 
 RSpec.describe "Teacher English language", type: :system do
-  before(:all) { given_english_language_is_active }
-  after(:all) { given_english_language_is_inactive }
-
   before do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(teacher)
@@ -154,14 +151,6 @@ RSpec.describe "Teacher English language", type: :system do
   end
 
   private
-
-  def given_english_language_is_active
-    FeatureFlags::FeatureFlag.activate(:application_english_language)
-  end
-
-  def given_english_language_is_inactive
-    FeatureFlags::FeatureFlag.deactivate(:application_english_language)
-  end
 
   def given_an_application_form_exists
     application_form

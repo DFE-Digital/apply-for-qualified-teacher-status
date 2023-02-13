@@ -93,28 +93,7 @@
   <% end %>
 <% end %>
 
-<%# "None" information %>
-
-<% unless FeatureFlags::FeatureFlag.active?(:application_work_history) && !region.application_form_skip_work_history %>
-  <% if region.sanction_check_none? || region.status_check_none? %>
-    <p class="govuk-body">
-      You also need to show evidence of your work history.
-    </p>
-
-    <p class="govuk-body">
-      For each school this should include:
-    </p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>school name</li>
-      <li>school city</li>
-      <li>school country</li>
-      <li>your job role</li>
-      <li>start date</li>
-      <li>end date</li>
-    </ul>
-  <% end %>
-<% end %>
+<%# "Other" information %>
 
 <% if region.teaching_authority_other.present? %>
   <%= raw GovukMarkdown.render(region.teaching_authority_other) %>

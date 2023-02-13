@@ -44,11 +44,6 @@ RSpec.describe "Teacher application check answers", type: :system do
   end
 
   it "work history section" do
-    when_i_click_change_links(:work_history, :add) do
-      and_i_click_continue
-      then_i_see_the(:check_your_answers_page)
-    end
-
     when_i_click_change_links(:work_history, :work_history) do
       if teacher_check_document_page.displayed?(0)
         and_i_dont_need_to_upload_another_file

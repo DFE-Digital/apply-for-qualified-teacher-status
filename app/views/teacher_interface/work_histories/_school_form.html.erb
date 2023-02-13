@@ -1,4 +1,4 @@
-<%= form_with model: form, url: @form.work_history.new_record? ? %i[teacher_interface application_form new_regs work_histories] : [:school, :teacher_interface, :application_form, :new_regs, form.work_history], method: :post do |f| %>
+<%= form_with model: form, url: @form.work_history.new_record? ? %i[teacher_interface application_form work_histories] : [:school, :teacher_interface, :application_form, form.work_history], method: :post do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">
@@ -24,7 +24,7 @@
       } %>
 
       <p class="govuk-body govuk-!-margin-top-3">
-        <%= govuk_link_to "I do not have any roles that meet all of these requirements.", requirements_unmet_teacher_interface_application_form_new_regs_work_histories_path %>
+        <%= govuk_link_to "I do not have any roles that meet all of these requirements.", requirements_unmet_teacher_interface_application_form_work_histories_path %>
       </p>
     <% end %>
   <% end %>

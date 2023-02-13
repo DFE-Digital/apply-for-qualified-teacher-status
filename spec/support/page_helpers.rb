@@ -7,11 +7,6 @@ module PageHelpers
     send(page.to_sym).load(**args)
   end
 
-  def add_another_qualification_page
-    @add_another_qualification_page ||=
-      PageObjects::TeacherInterface::AddAnotherQualification.new
-  end
-
   def assessor_application_page
     @assessor_application_page ||=
       PageObjects::AssessorInterface::Application.new
@@ -101,11 +96,6 @@ module PageHelpers
     @degree_page ||= PageObjects::EligibilityInterface::Degree.new
   end
 
-  def edit_qualification_page
-    @edit_qualification_page ||=
-      PageObjects::TeacherInterface::EditQualification.new
-  end
-
   def eligible_page
     @eligible_page = PageObjects::EligibilityInterface::Eligible.new
   end
@@ -135,16 +125,6 @@ module PageHelpers
 
   def misconduct_page
     @misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
-  end
-
-  def new_qualification_page
-    @new_qualification_page ||=
-      PageObjects::TeacherInterface::NewQualification.new
-  end
-
-  def part_of_university_degree_page
-    @part_of_university_degree_page ||=
-      PageObjects::TeacherInterface::PartOfUniversityDegree.new
   end
 
   def performance_page
@@ -202,9 +182,23 @@ module PageHelpers
       PageObjects::EligibilityInterface::QualifiedForSubject.new
   end
 
+  def teacher_add_another_qualification_page
+    @teacher_add_another_qualification_page ||=
+      PageObjects::TeacherInterface::AddAnotherQualification.new
+  end
+
   def teacher_add_another_work_history_page
     @teacher_add_another_work_history_page ||=
       PageObjects::TeacherInterface::AddAnotherWorkHistory.new
+  end
+
+  def teacher_age_range_page
+    @teacher_age_range_page = PageObjects::TeacherInterface::AgeRange.new
+  end
+
+  def teacher_alternative_name_page
+    @teacher_alternative_name_page =
+      PageObjects::TeacherInterface::AlternativeName.new
   end
 
   def teacher_application_page
@@ -223,6 +217,11 @@ module PageHelpers
   def teacher_check_english_language_page
     @teacher_check_english_language_page ||=
       PageObjects::TeacherInterface::CheckEnglishLanguage.new
+  end
+
+  def teacher_check_personal_information_page
+    @teacher_check_personal_information_page =
+      PageObjects::TeacherInterface::CheckPersonalInformation.new
   end
 
   def teacher_check_qualification_page
@@ -259,13 +258,19 @@ module PageHelpers
       PageObjects::TeacherInterface::DeclinedApplication.new
   end
 
-  def teacher_delete_form_page
-    @teacher_delete_form_page = PageObjects::TeacherInterface::DeleteForm.new
+  def teacher_delete_qualification_page
+    @teacher_delete_qualification_page =
+      PageObjects::TeacherInterface::DeleteQualification.new
   end
 
   def teacher_delete_work_history_page
     @teacher_delete_work_history_page =
       PageObjects::TeacherInterface::DeleteWorkHistory.new
+  end
+
+  def teacher_edit_qualification_page
+    @teacher_edit_qualification_page ||=
+      PageObjects::TeacherInterface::EditQualification.new
   end
 
   def teacher_edit_reference_request_additional_information_page
@@ -333,14 +338,29 @@ module PageHelpers
       PageObjects::TeacherInterface::EnglishLanguageProviderReference.new
   end
 
+  def teacher_name_and_date_of_birth_page
+    @teacher_name_and_date_of_birth_page =
+      PageObjects::TeacherInterface::NameAndDateOfBirth.new
+  end
+
   def teacher_new_application_page
     @teacher_new_application_page =
       PageObjects::TeacherInterface::NewApplication.new
   end
 
+  def teacher_new_qualification_page
+    @teacher_new_qualification_page ||=
+      PageObjects::TeacherInterface::NewQualification.new
+  end
+
   def teacher_new_work_history_page
     @teacher_new_work_history_page ||=
       PageObjects::TeacherInterface::NewWorkHistory.new
+  end
+
+  def teacher_part_of_university_degree_page
+    @teacher_part_of_university_degree_page ||=
+      PageObjects::TeacherInterface::PartOfUniversityDegree.new
   end
 
   def teacher_reference_received_page
@@ -353,12 +373,21 @@ module PageHelpers
       PageObjects::TeacherInterface::ReferenceRequested.new
   end
 
+  def teacher_registration_number_page
+    @teacher_registration_number_page =
+      PageObjects::TeacherInterface::RegistrationNumber.new
+  end
+
   def teacher_retry_otp_page
     @teacher_retry_otp_page = PageObjects::TeacherInterface::RetryOtp.new
   end
 
   def teacher_signed_out_page
     @teacher_signed_out_page = PageObjects::TeacherInterface::SignedOut.new
+  end
+
+  def teacher_subjects_page
+    @teacher_subjects_page = PageObjects::TeacherInterface::Subjects.new
   end
 
   def timeline_page
@@ -388,10 +417,6 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckUploadedFiles.new
   end
 
-  def subjects_form_page
-    @subjects_form_page = PageObjects::TeacherInterface::SubjectsForm.new
-  end
-
   def work_history_form_page
     @work_history_form_page = PageObjects::TeacherInterface::WorkHistoryForm.new
   end
@@ -408,12 +433,7 @@ module PageHelpers
 
   def qualifications_form_page
     @qualifications_form_page =
-      PageObjects::TeacherInterface::QualificationsForm.new
-  end
-
-  def name_and_date_of_birth_page
-    @name_and_date_of_birth_page =
-      PageObjects::TeacherInterface::NameAndDateOfBirth.new
+      PageObjects::TeacherInterface::QualificationForm.new
   end
 
   def check_your_answers_page
@@ -429,20 +449,6 @@ module PageHelpers
   def check_your_uploads_page
     @check_your_uploads_page =
       PageObjects::TeacherInterface::CheckYourUploads.new
-  end
-
-  def alternative_name_page
-    @alternative_name_page =
-      PageObjects::TeacherInterface::AlternativeNameForm.new
-  end
-
-  def age_range_form
-    @age_range_page = PageObjects::TeacherInterface::AgeRangeForm.new
-  end
-
-  def registration_number_form
-    @registration_number_form =
-      PageObjects::TeacherInterface::RegistrationNumberForm.new
   end
 
   def request_further_information_page

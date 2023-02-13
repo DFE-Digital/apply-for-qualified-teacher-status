@@ -259,8 +259,6 @@ RSpec.describe AssessmentFactory do
         let(:application_form) { create(:application_form, :new_regs) }
 
         it "is included in the task list when the EL feature is enabled" do
-          FeatureFlags::FeatureFlag.activate(:application_english_language)
-
           expect(sections.english_language_proficiency.count).to eq(1)
         end
       end
@@ -293,13 +291,6 @@ RSpec.describe AssessmentFactory do
 
         context "with a new regulations application form" do
           let(:application_form) { create(:application_form, :new_regs) }
-
-          before(:all) do
-            FeatureFlags::FeatureFlag.activate(:application_work_history)
-          end
-          after(:all) do
-            FeatureFlags::FeatureFlag.deactivate(:application_work_history)
-          end
 
           it "has the right checks and failure reasons" do
             section = sections.work_history.first

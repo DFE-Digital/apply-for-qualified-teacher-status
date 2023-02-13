@@ -62,8 +62,9 @@ class WorkHistory < ApplicationRecord
       values += [contact_name, contact_email]
     end
 
-    if FeatureFlags::FeatureFlag.active?(:application_work_history)
+    if application_form.created_under_new_regulations?
       values.append(hours_per_week)
+
       unless application_form.reduced_evidence_accepted?
         values.append(contact_job)
       end

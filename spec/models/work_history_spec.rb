@@ -31,7 +31,7 @@
 require "rails_helper"
 
 RSpec.describe WorkHistory, type: :model do
-  subject(:work_history) { build(:work_history) }
+  subject(:work_history) { create(:work_history) }
 
   describe "validations" do
     it { is_expected.to be_valid }
@@ -47,6 +47,8 @@ RSpec.describe WorkHistory, type: :model do
   end
 
   describe "#current_or_most_recent_role?" do
+    let(:work_history) { build(:work_history) }
+
     subject(:current_or_most_recent_role?) do
       work_history.current_or_most_recent_role?
     end
@@ -86,13 +88,13 @@ RSpec.describe WorkHistory, type: :model do
     end
 
     context "with a complete qualification" do
-      let(:work_history) { build(:work_history, :completed) }
+      let(:work_history) { create(:work_history, :completed) }
 
       it { is_expected.to be true }
     end
 
     context "without contact information" do
-      let(:application_form) { build(:application_form) }
+      let(:application_form) { create(:application_form) }
 
       let(:work_history) do
         build(
@@ -109,7 +111,7 @@ RSpec.describe WorkHistory, type: :model do
 
       context "with a reduced evidence application form" do
         let(:application_form) do
-          build(:application_form, reduced_evidence_accepted: true)
+          create(:application_form, reduced_evidence_accepted: true)
         end
 
         it { is_expected.to be true }

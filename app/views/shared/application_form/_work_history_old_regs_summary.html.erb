@@ -1,0 +1,59 @@
+<% if show_has_work_history %>
+  <%= render(CheckYourAnswersSummary::Component.new(
+    id: "add-work-history",
+    model: application_form,
+    title: t("application_form.tasks.items.work_history"),
+    fields: {
+      has_work_history: {
+        title: "Have you worked professionally as a teacher?",
+        href: %i[has_work_history teacher_interface application_form work_histories]
+      },
+    },
+    changeable:
+  )) %>
+<% end %>
+
+<% work_histories.each do |work_history| %>
+  <%= render(CheckYourAnswersSummary::Component.new(
+    id: "work-history-#{work_history.id}",
+    model: work_history,
+    title: work_history.school_name,
+    fields: {
+      school_name: {
+        href: [:edit, :teacher_interface, :application_form, work_history]
+      },
+      city: {
+        title: "City of institution",
+        href: [:edit, :teacher_interface, :application_form, work_history]
+      },
+      country_name: {
+        title: "Country of institution",
+        href: [:edit, :teacher_interface, :application_form, work_history]
+      },
+      job: {
+        title: "Your job role",
+        href: [:edit, :teacher_interface, :application_form, work_history]
+      },
+      contact_name: {
+        title: "Contact name",
+        href: [:edit, :teacher_interface, :application_form, work_history]
+      },
+      contact_email: {
+        title: "Contact email address",
+        href: [:edit, :teacher_interface, :application_form, work_history]
+      },
+      start_date: {
+        title: "Role start date",
+        format: :without_day,
+        href: [:edit, :teacher_interface, :application_form, work_history]
+      },
+      end_date: !work_history.still_employed ? {
+        title: "Role end date",
+        format: :without_day,
+        href: [:edit, :teacher_interface, :application_form, work_history]
+      } : nil,
+    },
+    changeable:,
+    delete_link_to: [:delete, :teacher_interface, :application_form, work_history]
+  )) %>
+<% end %>

@@ -3,7 +3,7 @@
 module PageObjects
   module TeacherInterface
     class AddAnotherWorkHistory < SitePrism::Page
-      set_url "/teacher/application{/new_regs}/work_histories/add_another"
+      set_url "/teacher/application/work_histories/add_another"
 
       element :heading, "h1"
 

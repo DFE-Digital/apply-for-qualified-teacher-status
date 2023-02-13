@@ -39,22 +39,21 @@ en:
           school_details_cannot_be_verified: Tell us more about this school
           unrecognised_references: Tell us more about your work history
           work_history_break: Tell us more about your work history
-    new_regs:
-      work_histories:
-        add_another:
-          title: Add another role
-        check_collection:
-          title: Check your answers
-        check_member:
-          title: Check your answers
-        delete:
-          title: Delete work history
     reference_requests:
       show:
         title: You’ve been asked to act as a reference
       edit:
         title: Check your answers
         reference_requested: Reference requested
+    work_histories:
+      add_another:
+        title: Add another role
+      check_collection:
+        title: Check your answers
+      check_member:
+        title: Check your answers
+      delete:
+        title: Delete work history
 
   application_form:
     tasks:

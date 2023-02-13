@@ -48,9 +48,8 @@ class AssessmentFactory
         end
       ),
       (
-        if english_language_feature_active_and_under_new_regs?(
-             application_form,
-           ) && application_form.english_language_citizenship_exempt
+        if application_form.created_under_new_regulations? &&
+             application_form.english_language_citizenship_exempt
           FailureReasons::EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED
         end
       ),
@@ -115,9 +114,8 @@ class AssessmentFactory
         end
       ),
       (
-        if english_language_feature_active_and_under_new_regs?(
-             application_form,
-           ) && application_form.english_language_qualification_exempt
+        if application_form.created_under_new_regulations? &&
+             application_form.english_language_qualification_exempt
           FailureReasons::EL_EXEMPTION_BY_QUALIFICATION_DOCUMENTS_UNCONFIRMED
         end
       ),
@@ -170,7 +168,7 @@ class AssessmentFactory
   end
 
   def english_language_proficiency_section
-    if english_language_feature_active_and_under_new_regs?(application_form)
+    if application_form.created_under_new_regulations?
       checks =
         if application_form.english_language_exempt?
           []
@@ -214,19 +212,15 @@ class AssessmentFactory
   def work_history_section
     return nil unless application_form.needs_work_history
 
-    under_new_regs =
-      application_form.created_under_new_regulations? &&
-        FeatureFlags::FeatureFlag.active?(:application_work_history)
-
     checks =
-      if under_new_regs
+      if application_form.created_under_new_regulations?
         %i[verify_school_details work_history_references]
       else
         %i[email_contact_current_employer satisfactory_evidence_work_history]
       end
 
     failure_reasons =
-      if under_new_regs
+      if application_form.created_under_new_regulations?
         [
           FailureReasons::WORK_HISTORY_BREAK,
           FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
@@ -284,10 +278,5 @@ class AssessmentFactory
       checks:,
       failure_reasons:,
     )
-  end
-
-  def english_language_feature_active_and_under_new_regs?(application_form)
-    FeatureFlags::FeatureFlag.active?(:application_english_language) &&
-      application_form.created_under_new_regulations?
   end
 end

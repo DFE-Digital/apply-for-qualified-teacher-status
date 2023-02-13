@@ -27,11 +27,7 @@ class ApplicationFormFactory
   delegate :reduced_evidence_accepted, to: :region
 
   def needs_work_history
-    if FeatureFlags::FeatureFlag.active?(:application_work_history)
-      !region.application_form_skip_work_history
-    else
-      region.status_check_none? || region.sanction_check_none?
-    end
+    !region.application_form_skip_work_history
   end
 
   def needs_written_statement
