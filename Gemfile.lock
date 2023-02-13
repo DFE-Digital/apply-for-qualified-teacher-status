@@ -324,7 +324,7 @@ GEM
       rack
       railties (>= 7.0.0)
     public_suffix (5.0.1)
-    puma (6.0.2)
+    puma (6.1.0)
       nio4r (~> 2.0)
     pundit (2.3.0)
       activesupport (>= 3.0.0)
@@ -543,7 +543,7 @@ DEPENDENCIES
   pg
   prettier_print
   propshaft
-  puma (~> 6.0)
+  puma (~> 6.1)
   pundit
   rack-attack
   rails (~> 7.0.4)
