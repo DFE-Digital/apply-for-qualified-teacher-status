@@ -35,7 +35,7 @@ en:
       edit:
         hint:
           can_award: You’ve completed your assessment of this QTS application and reviewed the work references.
-          can_award_pending_verification: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
+          can_verify: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
 
     assessment_recommendation_awards:

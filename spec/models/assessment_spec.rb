@@ -52,7 +52,7 @@ RSpec.describe Assessment, type: :model do
       is_expected.to define_enum_for(:recommendation).with_values(
         unknown: "unknown",
         award: "award",
-        award_pending_verification: "award_pending_verification",
+        verify: "verify",
         decline: "decline",
         request_further_information: "request_further_information",
       ).backed_by_column_of_type(:string)
@@ -138,10 +138,8 @@ RSpec.describe Assessment, type: :model do
     end
   end
 
-  describe "#can_award_pending_verification?" do
-    subject(:can_award_pending_verification?) do
-      assessment.can_award_pending_verification?
-    end
+  describe "#can_verify?" do
+    subject(:can_verify?) { assessment.can_verify? }
 
     context "with an application under new regulations" do
       let(:application_form) { create(:application_form, :new_regs) }
@@ -304,7 +302,7 @@ RSpec.describe Assessment, type: :model do
     end
 
     context "when awarded pending verification" do
-      before { assessment.award_pending_verification! }
+      before { assessment.verify! }
       it { is_expected.to be true }
     end
   end
@@ -361,12 +359,8 @@ RSpec.describe Assessment, type: :model do
     end
 
     context "with an award-able pending verification assessment" do
-      before do
-        allow(assessment).to receive(
-          :can_award_pending_verification?,
-        ).and_return(true)
-      end
-      it { is_expected.to include("award_pending_verification") }
+      before { allow(assessment).to receive(:can_verify?).and_return(true) }
+      it { is_expected.to include("verify") }
     end
 
     context "with a decline-able assessment" do
