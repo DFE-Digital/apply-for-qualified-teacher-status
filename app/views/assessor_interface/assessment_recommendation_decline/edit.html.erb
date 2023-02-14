@@ -36,8 +36,8 @@
   <% end %>
 
   <%= f.govuk_text_area :recommendation_assessor_note,
-                        label: { text: @assessment.unknown? ? "Assessor’s notes (optional)" : "Use this space to tell the applicant why they’ve been declined." },
-                        hint: { text: @assessment.unknown? ? nil : "This is the last communication they’ll receive about this application so make sure your comments are clear." } %>
+                        label: { text: @assessment.unknown? ? "Notes to applicant (optional)" : "Use this space to tell the applicant why they’ve been declined." },
+                        hint: { text: @assessment.unknown? ? "Only use this box if you <strong class=\"govuk-!-font-weight-bold\">HAVE NOT</strong> already added notes to explain the decline reason".html_safe : "This is the last communication they’ll receive about this application so make sure your comments are clear." } %>
 
   <%= f.govuk_check_boxes_fieldset :declaration, small: true do %>
     <%= f.govuk_check_box :declaration,
