@@ -8,6 +8,11 @@ module TeacherInterface
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
 
+    before_action :ensure_proof_method_provider,
+                  only: %i[edit_provider update_provider]
+    before_action :ensure_provider,
+                  only: %i[edit_provider_reference update_provider_reference]
+
     skip_before_action :track_history, only: :show
     define_history_check :check
 
@@ -39,6 +44,12 @@ module TeacherInterface
                       :teacher_interface,
                       :application_form,
                       application_form.english_language_medium_of_instruction_document,
+                    ]
+      elsif application_form.english_language_provider_other
+        redirect_to [
+                      :teacher_interface,
+                      :application_form,
+                      application_form.english_language_proficiency_document,
                     ]
       elsif application_form.english_language_provider.nil?
         redirect_to %i[
@@ -168,8 +179,6 @@ module TeacherInterface
     end
 
     def edit_provider_reference
-      @provider = application_form.english_language_provider
-
       @form =
         EnglishLanguageProviderReferenceForm.new(
           application_form:,
@@ -178,8 +187,6 @@ module TeacherInterface
     end
 
     def update_provider_reference
-      @provider = application_form.english_language_provider
-
       @form =
         EnglishLanguageProviderReferenceForm.new(
           provider_reference_params.merge(application_form:),
@@ -214,10 +221,24 @@ module TeacherInterface
       ).permit(:proof_method)
     end
 
+    def ensure_proof_method_provider
+      unless application_form.english_language_proof_method_provider?
+        redirect_to %i[teacher_interface application_form english_language]
+      end
+    end
+
     def provider_params
       params.require(:teacher_interface_english_language_provider_form).permit(
         :provider_id,
       )
+    end
+
+    def ensure_provider
+      @provider = application_form.english_language_provider
+
+      if @provider.nil?
+        redirect_to %i[teacher_interface application_form english_language]
+      end
     end
 
     def provider_reference_params
