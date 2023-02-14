@@ -82,40 +82,96 @@ RSpec.describe AssessmentFactory do
           expect(sections.qualifications.count).to eq(1)
         end
 
-        it "has the right checks and failure reasons" do
-          section = sections.qualifications.first
+        context "when secondary education teaching qualification is not required" do
+          before do
+            allow(application_form).to receive(
+              :secondary_education_teaching_qualification_required?,
+            ).and_return(false)
+          end
 
-          expect(section.checks).to eq(
-            %w[
-              qualifications_meet_level_6_or_equivalent
-              teaching_qualifications_completed_in_eligible_country
-              qualified_in_mainstream_education
-              has_teacher_qualification_certificate
-              has_teacher_qualification_transcript
-              has_university_degree_certificate
-              has_university_degree_transcript
-              has_additional_qualification_certificate
-              has_additional_degree_transcript
-            ],
-          )
+          it "has the right checks and failure reasons" do
+            section = sections.qualifications.first
 
-          expect(section.failure_reasons).to eq(
-            %w[
-              application_and_qualification_names_do_not_match
-              teaching_qualifications_from_ineligible_country
-              teaching_qualifications_not_at_required_level
-              teaching_hours_not_fulfilled
-              not_qualified_to_teach_mainstream
-              qualifications_dont_match_subjects
-              qualifications_dont_match_other_details
-              teaching_certificate_illegible
-              teaching_transcript_illegible
-              degree_certificate_illegible
-              degree_transcript_illegible
-              additional_degree_certificate_illegible
-              additional_degree_transcript_illegible
-            ],
-          )
+            expect(section.checks).to eq(
+              %w[
+                qualifications_meet_level_6_or_equivalent
+                teaching_qualifications_completed_in_eligible_country
+                qualified_in_mainstream_education
+                has_teacher_qualification_certificate
+                has_teacher_qualification_transcript
+                has_university_degree_certificate
+                has_university_degree_transcript
+                has_additional_qualification_certificate
+                has_additional_degree_transcript
+              ],
+            )
+
+            expect(section.failure_reasons).to eq(
+              %w[
+                application_and_qualification_names_do_not_match
+                teaching_qualifications_from_ineligible_country
+                teaching_qualifications_not_at_required_level
+                teaching_hours_not_fulfilled
+                not_qualified_to_teach_mainstream
+                qualifications_dont_match_subjects
+                qualifications_dont_match_other_details
+                teaching_certificate_illegible
+                teaching_transcript_illegible
+                degree_certificate_illegible
+                degree_transcript_illegible
+                additional_degree_certificate_illegible
+                additional_degree_transcript_illegible
+              ],
+            )
+          end
+        end
+
+        context "when secondary education teaching qualification is required" do
+          before do
+            allow(application_form).to receive(
+              :secondary_education_teaching_qualification_required?,
+            ).and_return(true)
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.qualifications.first
+
+            expect(section.checks).to eq(
+              %w[
+                qualifications_meet_level_6_or_equivalent
+                teaching_qualifications_completed_in_eligible_country
+                qualified_in_mainstream_education
+                qualified_to_teach_children_11_to_16
+                teaching_qualification_subjects_criteria
+                has_teacher_qualification_certificate
+                has_teacher_qualification_transcript
+                has_university_degree_certificate
+                has_university_degree_transcript
+                has_additional_qualification_certificate
+                has_additional_degree_transcript
+              ],
+            )
+
+            expect(section.failure_reasons).to eq(
+              %w[
+                application_and_qualification_names_do_not_match
+                teaching_qualifications_from_ineligible_country
+                teaching_qualifications_not_at_required_level
+                teaching_hours_not_fulfilled
+                not_qualified_to_teach_mainstream
+                qualifications_dont_match_subjects
+                qualifications_dont_match_other_details
+                qualified_to_teach_children_11_to_16
+                teaching_qualification_subjects_criteria
+                teaching_certificate_illegible
+                teaching_transcript_illegible
+                degree_certificate_illegible
+                degree_transcript_illegible
+                additional_degree_certificate_illegible
+                additional_degree_transcript_illegible
+              ],
+            )
+          end
         end
 
         context "with a new regulations application form" do
