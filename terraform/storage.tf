@@ -15,6 +15,14 @@ resource "azurerm_storage_account" "forms" {
       days = var.forms_container_delete_retention_days
     }
   }
+
+  logging {
+    delete                = true
+    read                  = true
+    version               = "2.0"
+    write                 = true
+    retention_policy_days = 7
+  }
 }
 
 
