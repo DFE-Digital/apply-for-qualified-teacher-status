@@ -39,6 +39,10 @@ RSpec.describe ReferenceRequest do
     subject { build(:reference_request, :receivable) }
   end
 
+  it_behaves_like "a reviewable" do
+    subject { build(:reference_request) }
+  end
+
   it { is_expected.to have_secure_token(:slug) }
 
   describe "associations" do
