@@ -9,7 +9,7 @@ module TeacherInterface
         today = Time.zone.now
 
         dates.each do |date|
-          next if date[1].blank? || date[2].blank?
+          next if date.nil? || date[1].blank? || date[2].blank?
 
           date[2] = 1 if date[2].to_i < 1 || date[2].to_i > 12
 
