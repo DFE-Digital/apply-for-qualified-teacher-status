@@ -23,7 +23,7 @@ RSpec.describe Filters::Country do
     end
 
     it "returns a filtered scope" do
-      expect(subject).to eq([included])
+      expect(subject).to contain_exactly(included)
     end
   end
 

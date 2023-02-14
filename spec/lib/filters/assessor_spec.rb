@@ -18,7 +18,7 @@ RSpec.describe Filters::Assessor do
       let!(:filtered) { create(:application_form, assessor: assessor_two) }
 
       it "returns a filtered scope" do
-        expect(subject).to eq([included])
+        expect(subject).to contain_exactly(included)
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe Filters::Assessor do
       let!(:filtered) { create(:application_form, reviewer: assessor_two) }
 
       it "returns a filtered scope" do
-        expect(subject).to eq([included])
+        expect(subject).to contain_exactly(included)
       end
     end
   end

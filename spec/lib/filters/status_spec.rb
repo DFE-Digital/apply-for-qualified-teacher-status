@@ -14,7 +14,7 @@ RSpec.describe Filters::Status do
     let!(:filtered) { create(:application_form, :submitted) }
 
     it "returns a filtered scope" do
-      expect(subject).to eq([included])
+      expect(subject).to contain_exactly(included)
     end
   end
 
@@ -32,7 +32,7 @@ RSpec.describe Filters::Status do
     end
 
     it "returns a filtered scope" do
-      expect(subject).to eq(included)
+      expect(subject).to match_array(included)
     end
   end
 
