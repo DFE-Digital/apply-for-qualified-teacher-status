@@ -41,7 +41,7 @@ class Assessment < ApplicationRecord
   enum :recommendation,
        {
          award: "award",
-         award_pending_verification: "award_pending_verification",
+         verify: "verify",
          decline: "decline",
          request_further_information: "request_further_information",
          unknown: "unknown",
@@ -58,11 +58,8 @@ class Assessment < ApplicationRecord
     update!(recommendation: "award", recommended_at: Time.zone.now)
   end
 
-  def award_pending_verification!
-    update!(
-      recommendation: "award_pending_verification",
-      recommended_at: Time.zone.now,
-    )
+  def verify!
+    update!(recommendation: "verify", recommended_at: Time.zone.now)
   end
 
   def decline!
@@ -96,7 +93,7 @@ class Assessment < ApplicationRecord
     end
   end
 
-  def can_award_pending_verification?
+  def can_verify?
     return false unless application_form.created_under_new_regulations?
 
     if unknown?
@@ -121,7 +118,7 @@ class Assessment < ApplicationRecord
         professional_standing_request&.requested? || false
     elsif request_further_information?
       any_further_information_request_failed?
-    elsif award_pending_verification?
+    elsif verify?
       true # TODO: check the state of verification requests
     else
       false
@@ -139,16 +136,14 @@ class Assessment < ApplicationRecord
   end
 
   def recommendable?
-    can_award? || can_award_pending_verification? || can_decline? ||
+    can_award? || can_verify? || can_decline? ||
       can_request_further_information?
   end
 
   def available_recommendations
     [].tap do |recommendations|
       recommendations << "award" if can_award?
-      if can_award_pending_verification?
-        recommendations << "award_pending_verification"
-      end
+      recommendations << "verify" if can_verify?
       recommendations << "decline" if can_decline?
       if can_request_further_information?
         recommendations << "request_further_information"

@@ -45,8 +45,6 @@ module AssessorInterface
     delegate :application_form, to: :assessment
 
     def update_redirect_path(recommendation)
-      recommendation = "award" if recommendation == "award_pending_verification"
-
       if recommendation == "request_further_information"
         [
           :preview,

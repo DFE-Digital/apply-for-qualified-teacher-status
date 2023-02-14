@@ -49,7 +49,7 @@ en:
       assessor_interface_assessment_recommendation_form:
         recommendation_options:
           award: Award QTS
-          award_pending_verification: Award QTS
+          verify: Award QTS
           decline: Decline QTS
           request_further_information: Request further information
       assessor_interface_assessment_confirmation_form:

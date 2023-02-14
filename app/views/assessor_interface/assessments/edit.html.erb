@@ -5,8 +5,8 @@
   <%= f.govuk_error_summary %>
 
   <%
-    hint = if @assessment.can_award_pending_verification?
-             t(".hint.can_award_pending_verification")
+    hint = if @assessment.can_verify?
+             t(".hint.can_verify")
            elsif @assessment.can_award?
              t(".hint.can_award")
            else

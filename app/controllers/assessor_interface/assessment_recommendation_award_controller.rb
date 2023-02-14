@@ -1,40 +1,32 @@
 # frozen_string_literal: true
 
 module AssessorInterface
-  class AssessmentRecommendationDeclinesController < BaseController
-    before_action :authorize_assessor,
-                  except: %i[preview edit_confirm update_confirm]
-    before_action :ensure_can_decline
+  class AssessmentRecommendationAwardController < BaseController
+    before_action :authorize_assessor, only: %i[edit update]
+    before_action :ensure_can_award
     before_action :load_assessment_and_application_form
 
     def edit
-      @form = AssessmentDeclarationDeclineForm.new
+      @form = AssessmentDeclarationAwardForm.new
     end
 
     def update
       @form =
-        AssessmentDeclarationDeclineForm.new(
+        AssessmentDeclarationAwardForm.new(
           declaration:
             params.dig(
-              :assessor_interface_assessment_declaration_decline_form,
+              :assessor_interface_assessment_declaration_award_form,
               :declaration,
             ),
-          recommendation_assessor_note:
-            params.dig(
-              :assessor_interface_assessment_declaration_decline_form,
-              :recommendation_assessor_note,
-            ),
-          session:,
-          assessment:,
         )
 
-      if @form.save
+      if @form.valid?
         redirect_to [
                       :preview,
                       :assessor_interface,
                       application_form,
                       assessment,
-                      :assessment_recommendation_decline,
+                      :assessment_recommendation_award,
                     ]
       else
         render :edit, status: :unprocessable_entity
@@ -65,16 +57,8 @@ module AssessorInterface
       if @form.valid?
         if @form.confirmation
           ActiveRecord::Base.transaction do
-            assessment.decline!
-
-            if (
-                 recommendation_assessor_note =
-                   session[:recommendation_assessor_note]
-               ).present?
-              assessment.update!(recommendation_assessor_note:)
-            end
-
-            DeclineQTS.call(application_form:, user: current_staff)
+            assessment.award!
+            CreateDQTTRNRequest.call(application_form:, user: current_staff)
           end
 
           redirect_to [:status, :assessor_interface, application_form]
@@ -98,8 +82,8 @@ module AssessorInterface
 
     delegate :application_form, to: :assessment
 
-    def ensure_can_decline
-      unless assessment.can_decline?
+    def ensure_can_award
+      unless assessment.can_award?
         redirect_to [:assessor_interface, application_form]
       end
     end
