@@ -239,6 +239,8 @@
     - additional_information_response
     - created_at
     - updated_at
+    - passed
+    - reviewed_at
   :regions:
     - id
     - country_id
