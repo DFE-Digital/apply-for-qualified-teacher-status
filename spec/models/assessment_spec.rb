@@ -133,9 +133,33 @@ RSpec.describe Assessment, type: :model do
       end
     end
 
-    context "with an application under old regulations" do
+    context "with an application under new regulations" do
       let(:application_form) { create(:application_form, :new_regs) }
+
       it { is_expected.to be false }
+
+      context "with enough passed reference requests" do
+        before do
+          assessment.update!(
+            recommendation: "verify",
+            references_verified: true,
+            induction_required: true,
+          )
+
+          work_history =
+            create(
+              :work_history,
+              application_form:,
+              start_date: Date.new(2020, 1, 1),
+              end_date: Date.new(2021, 12, 31),
+              hours_per_week: 30,
+            )
+
+          create(:reference_request, :passed, assessment:, work_history:)
+        end
+
+        it { is_expected.to be true }
+      end
     end
   end
 

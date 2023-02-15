@@ -84,7 +84,11 @@ class Assessment < ApplicationRecord
 
   def can_award?
     if application_form.created_under_new_regulations?
-      false
+      if verify?
+        !induction_required.nil? && enough_reference_requests_passed?
+      else
+        false
+      end
     elsif unknown?
       all_sections_passed?
     elsif request_further_information?
@@ -190,5 +194,19 @@ class Assessment < ApplicationRecord
   def any_further_information_request_failed?
     further_information_requests.present? &&
       further_information_requests.any?(&:failed)
+  end
+
+  def enough_reference_requests_passed?
+    return false unless references_verified
+
+    months_count =
+      WorkHistoryDuration.new(
+        work_history_relation:
+          application_form.work_histories.where(
+            id: reference_requests.where(passed: true).map(&:work_history_id),
+          ),
+      ).count_months
+
+    months_count >= 9
   end
 end
