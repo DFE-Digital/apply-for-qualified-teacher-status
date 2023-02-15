@@ -9,13 +9,12 @@
 </p>
 
 <%= govuk_inset_text do %>
-  <p class="govuk-body">You may want to spend some time gathering all the documents you need before you start your application.</p>
+  <p class="govuk-body">You’ll need to complete your application within 6 months of starting it. You can start straight away, or you can spend some time gathering the documents you need first.</p>
 
   <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) %>
     <p class="govuk-body">Once you begin, we’ll sign you out if you’re inactive for 60 minutes.</p>
   <% end %>
-
-  <p class="govuk-body">You’ll need to complete your application within 6 months of starting it.</p>
+  
 <% end %>
 
 <h2 class="govuk-heading-m">What we’ll ask for</h2>
