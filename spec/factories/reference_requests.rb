@@ -53,6 +53,12 @@ FactoryBot.define do
       state { "expired" }
     end
 
+    trait :passed do
+      passed { true }
+      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+      received
+    end
+
     trait :receivable do
       dates_response { Faker::Boolean.boolean }
       hours_response { Faker::Boolean.boolean }

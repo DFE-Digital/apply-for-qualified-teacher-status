@@ -30,6 +30,7 @@
 #
 class WorkHistory < ApplicationRecord
   belongs_to :application_form
+  has_one :reference_request, required: false
 
   scope :ordered, -> { order(created_at: :asc) }
 
