@@ -5,6 +5,7 @@ module AssessorInterface
     before_action :authorize_assessor, only: %i[edit update]
     before_action :ensure_can_award
     before_action :load_assessment_and_application_form
+    before_action :load_important_notes, only: %i[edit update]
 
     def edit
       @form = AssessmentDeclarationAwardForm.new
@@ -91,6 +92,13 @@ module AssessorInterface
     def load_assessment_and_application_form
       @assessment = assessment
       @application_form = application_form
+    end
+
+    def load_important_notes
+      @important_notes = [
+        (:invalid_references if assessment.reference_requests.any?(&:failed)),
+        (:induction_required if assessment.induction_required),
+      ].compact
     end
   end
 end
