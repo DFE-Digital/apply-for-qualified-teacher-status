@@ -27,7 +27,12 @@
                 [:edit, :assessor_interface, @form.application_form, @form.assessment, reference_request]
               ) %>
             </span>
-            <strong class="govuk-tag app-task-list__tag govuk-tag--green" id="reference-status"><%= reference_request.status %></strong>
+
+            <%= render StatusTag::Component.new(
+                key: "reference-request-#{reference_request.id}",
+                status: reference_request.status,
+                class_context: "app-task-list",
+            ) %>
           </li>
         <% end %>
       </ul>
