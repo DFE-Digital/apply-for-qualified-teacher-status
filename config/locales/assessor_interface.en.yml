@@ -210,7 +210,7 @@ en:
       edit:
         title: Review work reference
         summary_card_title: Responses
-        dates_response: Did the applicant work at %{school_name} from %{start_date} to %{end_date}
+        dates_response: Did the applicant work at %{school_name} from %{start_date} to %{end_date}?
         hours_response: Did the applicant normally work more than 30 hours per week in this role?
         children_response: Did the applicant work unsupervised with children aged between 5 and 16 years?
         lessons_response: Was the applicant solely responsible for planning, preparing and delivering lessons to at least 4 students at a time?
