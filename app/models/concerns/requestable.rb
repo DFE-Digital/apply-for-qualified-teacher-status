@@ -24,4 +24,8 @@ module Requestable
   def expired_at
     created_at + expires_after
   end
+
+  def after_expired(user:)
+    # implement logic after an expiration of this requestable
+  end
 end

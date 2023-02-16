@@ -9,8 +9,8 @@ RSpec.describe ExpireFurtherInformationRequestJob do
     let(:further_information_request) { build(:further_information_request) }
 
     it "calls the FurtherInformationRequestExpirer" do
-      expect(FurtherInformationRequestExpirer).to receive(:call).with(
-        further_information_request:,
+      expect(ExpireRequestable).to receive(:call).with(
+        requestable: further_information_request,
       )
       subject
     end
