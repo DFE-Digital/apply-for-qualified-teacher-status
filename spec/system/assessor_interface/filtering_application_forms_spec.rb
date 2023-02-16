@@ -29,6 +29,10 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     then_i_see_a_list_of_applications_filtered_by_name
 
     when_i_clear_the_filters
+    and_i_apply_the_email_filter
+    then_i_see_a_list_of_applications_filtered_by_email
+
+    when_i_clear_the_filters
     and_i_apply_the_submitted_at_filter
     then_i_see_a_list_of_applications_filtered_by_submitted_at
 
@@ -96,6 +100,18 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     expect(applications_page.search_results.first.name.text).to eq("Cher Bert")
   end
 
+  def and_i_apply_the_email_filter
+    applications_page.email_filter.email.set("emma.dubois@example.org")
+    applications_page.apply_filters.click
+  end
+
+  def then_i_see_a_list_of_applications_filtered_by_email
+    expect(applications_page.search_results.count).to eq(1)
+    expect(applications_page.search_results.first.name.text).to eq(
+      "Emma Dubois",
+    )
+  end
+
   def and_i_apply_the_submitted_at_filter
     applications_page.submitted_at_filter.start_day.set(1)
     applications_page.submitted_at_filter.start_month.set(1)
@@ -142,6 +158,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         family_name: "Dubois",
         assessor: assessors.second,
         submitted_at: Date.new(2019, 12, 1),
+        teacher: create(:teacher, email: "emma.dubois@example.org"),
       ),
       create(
         :application_form,
