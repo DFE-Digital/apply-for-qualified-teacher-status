@@ -15,23 +15,23 @@ RSpec.describe ExpireFurtherInformationRequestsJob do
     let!(:expired_fi_request) { create(:further_information_request, :expired) }
 
     it "enqueues a job for each 'requested' FI request" do
-      expect(ExpireFurtherInformationRequestJob).to receive(
-        :perform_later,
-      ).with(further_information_request: requested_fi_request)
+      expect(ExpireRequestableJob).to receive(:perform_later).with(
+        further_information_request: requested_fi_request,
+      )
       subject
     end
 
     it "doesn't enqueue a job for 'received' FI requests" do
-      expect(ExpireFurtherInformationRequestJob).not_to receive(
-        :perform_later,
-      ).with(further_information_request: received_fi_request)
+      expect(ExpireRequestableJob).not_to receive(:perform_later).with(
+        further_information_request: received_fi_request,
+      )
       subject
     end
 
     it "doesn't enqueue a job for 'expired' FI requests" do
-      expect(ExpireFurtherInformationRequestJob).not_to receive(
-        :perform_later,
-      ).with(further_information_request: received_fi_request)
+      expect(ExpireRequestableJob).not_to receive(:perform_later).with(
+        further_information_request: received_fi_request,
+      )
       subject
     end
   end
