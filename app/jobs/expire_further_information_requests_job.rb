@@ -5,7 +5,9 @@ class ExpireFurtherInformationRequestsJob < ApplicationJob
     FurtherInformationRequest
       .requested
       .find_each do |further_information_request|
-      ExpireRequestableJob.perform_later(further_information_request:)
+      ExpireRequestableJob.perform_later(
+        requestable: further_information_request,
+      )
     end
   end
 end
