@@ -174,7 +174,9 @@ module TeacherInterface
 
     def load_requested_reference_request
       @reference_request =
-        ReferenceRequest.requested.find_by!(slug: params[:slug])
+        ReferenceRequest.where(state: %i[requested expired]).find_by!(
+          slug: params[:slug],
+        )
     end
 
     def dates_response_form_params
