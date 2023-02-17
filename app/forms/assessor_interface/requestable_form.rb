@@ -11,10 +11,16 @@ class AssessorInterface::RequestableForm
   def save
     return false if invalid?
 
-    requestable.reviewed!(passed)
+    ActiveRecord::Base.transaction do
+      requestable.reviewed!(passed)
+
+      if requestable.is_a?(ReferenceRequest)
+        UpdateAssessmentInductionRequired.call(assessment:)
+      end
+    end
+
     true
   end
 
-  delegate :assessment, to: :requestable
-  delegate :application_form, to: :assessment
+  delegate :application_form, :assessment, to: :requestable
 end

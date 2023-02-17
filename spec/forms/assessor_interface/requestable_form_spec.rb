@@ -8,11 +8,12 @@ RSpec.describe AssessorInterface::RequestableForm, type: :model do
 
   subject(:form) { described_class.new(requestable:, passed:) }
 
-  describe "save" do
+  describe "#save" do
+    subject(:save) { form.save }
+
     context "when passed is nil" do
       it "fails validation" do
-        expect(form.save).to be false
-
+        expect(save).to be false
         expect(form.errors).to have_key(:passed)
       end
     end
@@ -21,15 +22,20 @@ RSpec.describe AssessorInterface::RequestableForm, type: :model do
       let(:passed) { true }
 
       it "updates passed field" do
-        expect { form.save }.to change(requestable, :passed).from(nil).to(true)
+        expect { save }.to change(requestable, :passed).from(nil).to(true)
       end
 
       it "sets reviewed at" do
         freeze_time do
-          expect { form.save }.to change(requestable, :reviewed_at).from(
-            nil,
-          ).to(Time.zone.now)
+          expect { save }.to change(requestable, :reviewed_at).from(nil).to(
+            Time.zone.now,
+          )
         end
+      end
+
+      it "updated induction required" do
+        expect(UpdateAssessmentInductionRequired).to receive(:call)
+        save # rubocop:disable Rails/SaveBang
       end
     end
 
@@ -37,7 +43,7 @@ RSpec.describe AssessorInterface::RequestableForm, type: :model do
       let(:passed) { false }
 
       it "updates passed field" do
-        expect { form.save }.to change(requestable, :passed).from(nil).to(false)
+        expect { save }.to change(requestable, :passed).from(nil).to(false)
       end
 
       it "sets reviewed at" do
@@ -46,6 +52,11 @@ RSpec.describe AssessorInterface::RequestableForm, type: :model do
             nil,
           ).to(Time.zone.now)
         end
+      end
+
+      it "updated induction required" do
+        expect(UpdateAssessmentInductionRequired).to receive(:call)
+        save # rubocop:disable Rails/SaveBang
       end
     end
   end
