@@ -1,12 +1,19 @@
 trim_sessions_job:
   cron: "0 1 * * *"
   class: TrimSessionsJob
+
+update_working_days_since_submission:
+  cron: "30 1 * * *"
+  class: UpdateWorkingDaysJob
+
 expire_further_information_requests:
   cron: "0 2 * * *"
   class: ExpireFurtherInformationRequestsJob
-update_working_days_since_submission:
-  cron: "0 3 * * *"
-  class: UpdateWorkingDaysJob
+
 send_further_information_request_reminders:
-  cron: "0 4 * * *"
+  cron: "30 2 * * *"
   class: SendFurtherInformationRequestRemindersJob
+
+expire_reference_requests:
+  cron: "0 3 * * *"
+  class: ExpireReferenceRequestsJob
