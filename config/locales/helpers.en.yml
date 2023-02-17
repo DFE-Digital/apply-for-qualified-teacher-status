@@ -72,6 +72,7 @@ en:
         location: Country trained in
         name: Applicant name
         reference: Application reference number
+        email: Applicant email
       assessor_interface_further_information_request_form:
         passed_options:
           true: "Yes"

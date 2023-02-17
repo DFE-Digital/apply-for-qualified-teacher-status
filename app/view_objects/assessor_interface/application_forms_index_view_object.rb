@@ -75,6 +75,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ::Filters::Assessor,
           ::Filters::Country,
           ::Filters::Name,
+          ::Filters::Email,
           ::Filters::Reference,
           ::Filters::SubmittedAt,
         ]
