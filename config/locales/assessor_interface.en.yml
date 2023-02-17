@@ -206,6 +206,19 @@ en:
     qualification_requests:
       edit:
         title: Qualification verification – response received
+    reference_requests:
+      edit:
+        title: Review work reference
+        summary_card_title: Responses
+        dates_response: Did the applicant work at %{school_name} from %{start_date} to %{end_date}?
+        hours_response: Did the applicant normally work more than 30 hours per week in this role?
+        children_response: Did the applicant work unsupervised with children aged between 5 and 16 years?
+        lessons_response: Was the applicant solely responsible for planning, preparing and delivering lessons to at least 4 students at a time?
+        reports_response: Was the applicant solely responsible for assessing and reporting on the progress of the students?
+        additional_information_response: Is there anything else you’d like to tell us about this applicant?
+        response_value:
+          "true": "Yes"
+          "false": "No"
 
   activemodel:
     errors:
@@ -331,3 +344,11 @@ en:
           attributes:
             work_history_ids:
               blank: References account for less than 9 months
+        assessor_interface/verify_references_form:
+          attributes:
+            references_verified:
+              inclusion: Select whether enough valid work references been received for this application to progress to either an award or decline
+        assessor_interface/reference_request_form:
+          attributes:
+            passed:
+              inclusion: Select whether this reference should count towards the applicant’s work experience

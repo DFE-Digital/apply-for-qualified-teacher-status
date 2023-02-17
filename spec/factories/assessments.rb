@@ -10,6 +10,7 @@
 #  recommendation                            :string           default("unknown"), not null
 #  recommendation_assessor_note              :text             default(""), not null
 #  recommended_at                            :datetime
+#  references_verified                       :boolean          default(FALSE), not null
 #  started_at                                :datetime
 #  subjects                                  :text             default([]), not null, is an Array
 #  subjects_note                             :text             default(""), not null
@@ -67,11 +68,28 @@ FactoryBot.define do
       end
     end
 
+    trait :with_received_professional_standing_request do
+      after(:create) do |assessment, _evaluator|
+        create(:professional_standing_request, :received, assessment:)
+      end
+    end
+
     trait :with_reference_request do
       after(:create) do |assessment, _evaluator|
         create(
           :reference_request,
           :requested,
+          assessment:,
+          work_history: assessment.application_form.work_histories.first,
+        )
+      end
+    end
+
+    trait :with_received_reference_request do
+      after(:create) do |assessment, _evaluator|
+        create(
+          :reference_request,
+          :received,
           assessment:,
           work_history: assessment.application_form.work_histories.first,
         )

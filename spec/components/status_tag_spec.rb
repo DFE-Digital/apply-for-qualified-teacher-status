@@ -79,5 +79,11 @@ RSpec.describe StatusTag::Component, type: :component do
 
       it { is_expected.to eq("govuk-tag app-task-list__tag") }
     end
+
+    context "with a 'rejected' status" do
+      let(:status) { :rejected }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--red app-task-list__tag") }
+    end
   end
 end

@@ -20,6 +20,7 @@ module StatusTag
     end
 
     COLOURS = {
+      accepted: "green",
       awarded: "green",
       awarded_pending_checks: "turquoise",
       cannot_start: "grey",
@@ -33,6 +34,7 @@ module StatusTag
       potential_duplicate_in_dqt: "pink",
       received: "purple",
       requested: "yellow",
+      rejected: "red",
       submitted: "grey",
       valid: "green",
       waiting_on: "yellow",

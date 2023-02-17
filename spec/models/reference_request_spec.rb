@@ -10,8 +10,10 @@
 #  dates_response                  :boolean
 #  hours_response                  :boolean
 #  lessons_response                :boolean
+#  passed                          :boolean
 #  received_at                     :datetime
 #  reports_response                :boolean
+#  reviewed_at                     :datetime
 #  slug                            :string           not null
 #  state                           :string           not null
 #  created_at                      :datetime         not null
@@ -35,6 +37,10 @@ require "rails_helper"
 RSpec.describe ReferenceRequest do
   it_behaves_like "a requestable" do
     subject { build(:reference_request, :receivable) }
+  end
+
+  it_behaves_like "a reviewable" do
+    subject { build(:reference_request) }
   end
 
   it { is_expected.to have_secure_token(:slug) }

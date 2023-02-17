@@ -485,4 +485,14 @@ module PageHelpers
     @work_experience_page ||=
       PageObjects::EligibilityInterface::WorkExperience.new
   end
+
+  def verify_references_page
+    @verify_references_page ||=
+      PageObjects::AssessorInterface::VerifyReferencesPage.new
+  end
+
+  def reference_request_page
+    @reference_request_page ||=
+      PageObjects::AssessorInterface::ReferenceRequestPage.new
+  end
 end

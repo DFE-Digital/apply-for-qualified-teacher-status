@@ -1,6 +1,7 @@
 en:
   components:
     status_tag:
+      accepted: Accepted
       awarded: Awarded
       awarded_pending_checks: Award pending
       cannot_start: Cannot start
@@ -14,6 +15,7 @@ en:
       not_started: Not started
       potential_duplicate_in_dqt: Potential duplication in DQT
       received: Received
+      rejected: Rejected
       requested: Waiting on
       submitted: Not started
       valid: Valid

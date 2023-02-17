@@ -10,8 +10,10 @@
 #  dates_response                  :boolean
 #  hours_response                  :boolean
 #  lessons_response                :boolean
+#  passed                          :boolean
 #  received_at                     :datetime
 #  reports_response                :boolean
+#  reviewed_at                     :datetime
 #  slug                            :string           not null
 #  state                           :string           not null
 #  created_at                      :datetime         not null
@@ -32,6 +34,7 @@
 #
 class ReferenceRequest < ApplicationRecord
   include Requestable
+  include Reviewable
 
   has_secure_token :slug
 
