@@ -4,7 +4,15 @@
 <%= form_with model: @form, url: %i[add_another teacher_interface application_form work_histories], method: :post do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-l">You’ve told us about <%= pluralize(@months_count, "month") %> of work experience so far</h1>
+  <h1 class="govuk-heading-l">
+    <% if @months_count <= 8 %>
+      You’ve added <%= pluralize(@months_count, "month") %> of work experience. You need to add at least <%= pluralize(9 - @months_count, "more month") %>.
+    <% elsif @months_count <= 20 %>
+      You’ve told us about <%= pluralize(@months_count, "month") %> of work experience
+    <% else %>
+      You’ve added enough work experience
+    <% end %>
+  </h1>
 
   <h2 class="govuk-heading-s">How we calculate your work experience</h2>
 
@@ -16,13 +24,12 @@
     For example, if you tell us about a role where you worked 15 hours per week for 18 months, we’ll convert this to 9 months of 30-hour weeks. We’ll then add this role to your total as 9 months.
   </div>
 
-  <h3 class="govuk-heading-s">Adding more roles</h3>
-
-  <p class="govuk-body">You can add as many roles as you want, but you must show at least 9 months of active teaching experience.</p>
+  <h3 class="govuk-heading-s">Understanding how much work experience to add</h3>
 
   <ul class="govuk-list govuk-list--bullet">
-    <li>If you have more than 9 months but under 20, you may be awarded QTS, but you’ll need to do a 2-year period of statutory induction.</li>
-    <li>If you have more than 20 months, there’s no need to do an induction period.</li>
+    <li><strong class="govuk-!-font-weight-bold">More than 9 months but under 20</strong> – if you’re awarded QTS you’ll need to do a 2-year period of statutory induction.</li>
+    <li><strong class="govuk-!-font-weight-bold">20 months</strong> – if you’re awarded QTS, there’s no need to do an induction period.</li>
+    <li><strong class="govuk-!-font-weight-bold">More than 20 months</strong> – you do not need to add more, but if there are additional roles that you want to tell us about you can add them.</li>
   </ul>
 
   <%= govuk_details(summary_text: "I do not have more than 9 months of teaching experience") do %>
