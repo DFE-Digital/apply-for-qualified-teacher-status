@@ -81,7 +81,7 @@ module DQT
 
     def qts_decision_at
       if application_form.created_under_new_regulations?
-        application_form.awarded_at
+        application_form.assessment.recommended_at
       else
         application_form.submitted_at
       end

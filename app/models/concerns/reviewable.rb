@@ -12,6 +12,11 @@ module Reviewable
       update!(passed:, reviewed_at: Time.zone.now)
     end
 
+    def failed
+      return nil if passed.nil?
+      passed == false
+    end
+
     def status
       return state if passed.nil?
 

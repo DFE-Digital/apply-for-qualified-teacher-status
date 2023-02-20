@@ -44,6 +44,9 @@ en:
         instruction: Read the declaration and if you’re happy to award QTS, select ‘Accept and award QTS’.
         declaration: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
         button: Accept and award QTS
+        important_notes:
+          invalid_references: This application has one or more invalid references.
+          induction_required: This applicant will need to do a statutory induction period.
       preview:
         heading: Check the email
         subheading: This screen shows how the email to the applicant will look.

@@ -13,7 +13,6 @@ RSpec.describe DQT::TRNRequestParams do
         teacher:,
         created_at: Date.new(2020, 1, 1),
         submitted_at: Date.new(2020, 1, 1),
-        awarded_at: Date.new(2020, 1, 7),
         region: create(:region, country: create(:country, code: "AU")),
         date_of_birth: Date.new(1960, 1, 1),
         given_names: "Given",
@@ -25,6 +24,7 @@ RSpec.describe DQT::TRNRequestParams do
       create(
         :assessment,
         :award,
+        recommended_at: Date.new(2020, 1, 7),
         application_form:,
         age_range_min: 7,
         age_range_max: 11,
@@ -89,7 +89,7 @@ RSpec.describe DQT::TRNRequestParams do
         ClimateControl.modify(NEW_REGS_DATE: "2020-01-01") { example.run }
       end
 
-      it "should use the assessed date" do
+      it "should use the assessment recommendation date" do
         expect(call[:qtsDate]).to eq("2020-01-07")
       end
 
