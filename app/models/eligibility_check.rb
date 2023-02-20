@@ -152,11 +152,11 @@ class EligibilityCheck < ApplicationRecord
       return :eligibility
     end
 
-    if skip_additional_questions? && region.present? && qualification
-      return :eligibility
-    end
+    if region.present?
+      return :eligibility if skip_additional_questions? && qualification
 
-    return :eligibility unless free_of_sanctions.nil?
+      return :eligibility unless free_of_sanctions.nil?
+    end
 
     if qualified_for_subject_required? &&
          (teach_children == false || qualified_for_subject == false)
