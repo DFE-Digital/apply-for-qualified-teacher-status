@@ -34,7 +34,6 @@
 #
 class ReferenceRequest < ApplicationRecord
   include Requestable
-  include Reviewable
 
   has_secure_token :slug
 

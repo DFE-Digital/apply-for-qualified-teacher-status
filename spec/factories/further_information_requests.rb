@@ -34,17 +34,21 @@ FactoryBot.define do
       received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
+    trait :expired do
+      state { "expired" }
+    end
+
     trait :passed do
       passed { true }
+      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+      received
     end
 
     trait :failed do
       passed { false }
+      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
       failure_assessor_note { "Notes." }
-    end
-
-    trait :expired do
-      state { "expired" }
+      received
     end
 
     trait :with_items do
