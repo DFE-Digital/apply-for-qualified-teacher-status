@@ -170,6 +170,7 @@ RSpec.describe EligibilityCheck, type: :model do
         eligibility_check.qualification = true
         eligibility_check.degree = true
         eligibility_check.country_code = country.code
+        eligibility_check.region = country.regions.first
       end
 
       it { is_expected.to be true }
