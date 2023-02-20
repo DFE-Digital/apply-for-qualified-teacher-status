@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_14_112253) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_20_130858) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -84,9 +84,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_112253) do
     t.bigint "english_language_provider_id"
     t.text "english_language_provider_reference", default: "", null: false
     t.datetime "awarded_at"
+    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "written_statement_confirmation", default: false, null: false
-    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "english_language_provider_other", default: false, null: false
     t.datetime "declined_at"
     t.boolean "waiting_on_professional_standing", default: false, null: false
@@ -157,8 +157,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_112253) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "eligibility_enabled", default: true, null: false
-    t.text "qualifications_information", default: "", null: false
     t.boolean "eligibility_skip_questions", default: false, null: false
+    t.text "qualifications_information", default: "", null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
@@ -237,6 +237,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_112253) do
     t.integer "working_days_received_to_recommendation"
     t.integer "working_days_since_received"
     t.integer "working_days_assessment_started_to_creation"
+    t.datetime "reviewed_at"
     t.index ["assessment_id"], name: "index_further_information_requests_on_assessment_id"
   end
 
@@ -257,6 +258,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_112253) do
     t.text "location_note", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "reviewed_at", precision: nil
+    t.boolean "passed"
     t.index ["assessment_id"], name: "index_professional_standing_requests_on_assessment_id"
   end
 
@@ -268,6 +271,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_112253) do
     t.text "location_note", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "reviewed_at", precision: nil
+    t.boolean "passed"
     t.index ["assessment_id"], name: "index_qualification_requests_on_assessment_id"
     t.index ["qualification_id"], name: "index_qualification_requests_on_qualification_id"
   end
@@ -324,8 +329,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_112253) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
-    t.text "qualifications_information", default: "", null: false
     t.boolean "application_form_skip_work_history", default: false, null: false
+    t.text "qualifications_information", default: "", null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true

@@ -179,6 +179,7 @@
     - working_days_since_received
     - working_days_received_to_recommendation
     - working_days_assessment_started_to_creation
+    - reviewed_at
   :further_information_request_items:
     - id
     - information_type
@@ -203,6 +204,8 @@
     - location_note
     - created_at
     - updated_at
+    - reviewed_at
+    - passed
   :qualifications:
     - id
     - application_form_id
@@ -224,6 +227,8 @@
     - location_note
     - created_at
     - updated_at
+    - reviewed_at
+    - passed
   :reference_requests:
     - id
     - slug
