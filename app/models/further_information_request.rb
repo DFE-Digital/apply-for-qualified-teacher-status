@@ -44,11 +44,6 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def after_expired(user:)
-    update!(
-      failure_assessor_note: "Further information not supplied by deadline",
-      passed: false,
-    )
-
     DeclineQTS.call(application_form:, user:)
   end
 end
