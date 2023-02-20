@@ -44,7 +44,13 @@ class FurtherInformationRequest < ApplicationRecord
     end
   end
 
+  def after_received(*)
+    TeacherMailer.with(teacher:).further_information_received.deliver_later
+  end
+
   def after_expired(user:)
     DeclineQTS.call(application_form:, user:)
   end
+
+  delegate :teacher, to: :application_form
 end

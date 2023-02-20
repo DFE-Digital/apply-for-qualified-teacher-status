@@ -24,8 +24,8 @@ module TeacherInterface
     end
 
     def update
-      SubmitReferenceRequest.call(
-        reference_request:,
+      ReceiveRequestable.call(
+        requestable: reference_request,
         user: reference_request.work_history.contact_name,
       )
 

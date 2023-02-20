@@ -25,6 +25,10 @@ module Requestable
     created_at + expires_after
   end
 
+  def after_received(user:)
+    # implement logic after this requestable has been received
+  end
+
   def after_expired(user:)
     # implement logic after an expiration of this requestable
   end
