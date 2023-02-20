@@ -323,8 +323,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_112253) do
     t.string "teaching_authority_online_checker_url", default: "", null: false
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
-    t.text "qualifications_information", default: "", null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
+    t.text "qualifications_information", default: "", null: false
     t.boolean "application_form_skip_work_history", default: false, null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
