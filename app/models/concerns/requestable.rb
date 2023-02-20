@@ -32,4 +32,8 @@ module Requestable
   def after_expired(user:)
     # implement logic after an expiration of this requestable
   end
+
+  def after_reviewed(user:)
+    # implement logic after this requestable has been reviewed
+  end
 end

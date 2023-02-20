@@ -4,20 +4,14 @@ class AssessorInterface::RequestableForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attr_accessor :requestable
+  attr_accessor :requestable, :user
   attribute :passed, :boolean
   validates :passed, inclusion: [true, false]
 
   def save
     return false if invalid?
 
-    ActiveRecord::Base.transaction do
-      requestable.reviewed!(passed)
-
-      if requestable.is_a?(ReferenceRequest)
-        UpdateAssessmentInductionRequired.call(assessment:)
-      end
-    end
+    ReviewRequestable.call(requestable:, user:, passed:)
 
     true
   end
