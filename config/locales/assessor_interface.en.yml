@@ -219,6 +219,8 @@ en:
         lessons_response: Was the applicant solely responsible for planning, preparing and delivering lessons to at least 4 students at a time?
         reports_response: Was the applicant solely responsible for assessing and reporting on the progress of the students?
         additional_information_response: Is there anything else you’d like to tell us about this applicant?
+        misconduct_response: Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?
+        satisfied_response: Are you satisfied that the applicant is suitable to work with children?
         response_value:
           "true": "Yes"
           "false": "No"

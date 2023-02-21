@@ -230,43 +230,43 @@ module TeacherInterface
     def dates_response_form_params
       params.require(
         :teacher_interface_reference_request_dates_response_form,
-      ).permit(:dates_response)
+      ).permit(:dates_response, :dates_comment)
     end
 
     def hours_response_form_params
       params.require(
         :teacher_interface_reference_request_hours_response_form,
-      ).permit(:hours_response)
+      ).permit(:hours_response, :hours_comment)
     end
 
     def children_response_form_params
       params.require(
         :teacher_interface_reference_request_children_response_form,
-      ).permit(:children_response)
+      ).permit(:children_response, :children_comment)
     end
 
     def lessons_response_form_params
       params.require(
         :teacher_interface_reference_request_lessons_response_form,
-      ).permit(:lessons_response)
+      ).permit(:lessons_response, :lessons_comment)
     end
 
     def reports_response_form_params
       params.require(
         :teacher_interface_reference_request_reports_response_form,
-      ).permit(:reports_response)
+      ).permit(:reports_response, :reports_comment)
     end
 
     def misconduct_response_form_params
       params.require(
         :teacher_interface_reference_request_misconduct_response_form,
-      ).permit(:misconduct_response)
+      ).permit(:misconduct_response, :misconduct_comment)
     end
 
     def satisfied_response_form_params
       params.require(
         :teacher_interface_reference_request_satisfied_response_form,
-      ).permit(:satisfied_response)
+      ).permit(:satisfied_response, :satisfied_comment)
     end
 
     def additional_information_response_form_params

@@ -74,25 +74,53 @@ FactoryBot.define do
 
     trait :receivable do
       contact_response { Faker::Boolean.boolean }
+      contact_name { contact_response ? "" : Faker::Name.name }
+      contact_job { contact_response ? "" : Faker::Job.title }
+      contact_comment { contact_response ? "" : Faker::Lorem.sentence }
+
       dates_response { Faker::Boolean.boolean }
+      dates_comment { dates_response ? "" : Faker::Lorem.sentence }
+
       hours_response { Faker::Boolean.boolean }
+      hours_comment { hours_response ? "" : Faker::Lorem.sentence }
+
       children_response { Faker::Boolean.boolean }
+      children_comment { children_response ? "" : Faker::Lorem.sentence }
+
       lessons_response { Faker::Boolean.boolean }
+      lessons_comment { lessons_response ? "" : Faker::Lorem.sentence }
+
       reports_response { Faker::Boolean.boolean }
+      reports_comment { reports_response ? "" : Faker::Lorem.sentence }
+
       misconduct_response { Faker::Boolean.boolean }
+      misconduct_comment { misconduct_response ? Faker::Lorem.sentence : "" }
+
       satisfied_response { Faker::Boolean.boolean }
+      satisfied_comment { satisfied_response ? "" : Faker::Lorem.sentence }
+
       additional_information_response { Faker::Lorem.sentence }
     end
 
     trait :responses_invalid do
       contact_response { false }
+      contact_name { Faker::Name.name }
+      contact_job { Faker::Job.title }
+      contact_comment { Faker::Lorem.sentence }
       dates_response { false }
+      dates_comment { Faker::Lorem.sentence }
       hours_response { false }
+      hours_comment { Faker::Lorem.sentence }
       children_response { false }
+      children_comment { Faker::Lorem.sentence }
       lessons_response { false }
+      lessons_comment { Faker::Lorem.sentence }
       reports_response { false }
+      reports_comment { Faker::Lorem.sentence }
       misconduct_response { true }
+      misconduct_comment { Faker::Lorem.sentence }
       satisfied_response { false }
+      satisfied_comment { Faker::Lorem.sentence }
     end
 
     trait :responses_valid do

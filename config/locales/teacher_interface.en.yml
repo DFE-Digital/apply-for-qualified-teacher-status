@@ -255,22 +255,44 @@ en:
           attributes:
             children_response:
               inclusion: Tell us whether the applicant worked unsupervised with children aged somewhere between 5 and 16 years
+            children_comment:
+              blank: Tell us why you answered ‘No’ to this question.
         teacher_interface/reference_request_dates_response_form:
           attributes:
             dates_response:
               inclusion: Tell us whether the applicant worked at the school for the dates they provided
+            dates_comment:
+              blank: Tell us why you answered ‘No’ to this question.
         teacher_interface/reference_request_hours_response_form:
           attributes:
             hours_response:
               inclusion: Tell us whether the applicant worked at the school for approximately the number of hours per week they provided
+            hours_comment:
+              blank: Tell us why you answered ‘No’ to this question.
         teacher_interface/reference_request_lessons_response_form:
           attributes:
             lessons_response:
               inclusion: Tell us whether the applicant was solely responsible for planning, preparing and delivering lessons to at least 4 students at a time
+            lessons_comment:
+              blank: Tell us why you answered ‘No’ to this question.
+        teacher_interface/reference_request_misconduct_response_form:
+          attributes:
+            misconduct_response:
+              inclusion: Tell us whether you know of any professional misconduct by the applicant, or any disciplinary action taken against them
+            misconduct_comment:
+              blank: Tell us why you answered ‘Yes’ to this question.
         teacher_interface/reference_request_reports_response_form:
           attributes:
             reports_response:
               inclusion: Tell us whether the applicant was solely responsible for assessing and reporting on the progress of the students
+            reports_comment:
+              blank: Tell us why you answered ‘No’ to this question.
+        teacher_interface/reference_request_satisfied_response_form:
+          attributes:
+            satisfied_response:
+              inclusion: Tell us whether you are satisfied that the applicant is suitable to work with children
+            satisfied_comment:
+              blank: Tell us why you answered ‘No’ to this question.
         teacher_interface/sanction_confirmation_form:
           attributes:
             confirmed_no_sanctions:

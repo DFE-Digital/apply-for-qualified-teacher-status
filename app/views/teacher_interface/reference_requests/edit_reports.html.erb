@@ -6,10 +6,12 @@
 
   <span class="govuk-caption-l">Question 5 of 7</span>
 
-  <%= f.govuk_collection_radio_buttons :reports_response,
-                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
-                                       :value,
-                                       legend: { tag: "h1", size: "l" } %>
+  <%= f.govuk_radio_buttons_fieldset :reports_response, legend: { tag: "h1", size: "l" } do %>
+    <%= f.govuk_radio_button :reports_response, :true, link_errors: true %>
+    <%= f.govuk_radio_button :reports_response, :false do %>
+      <%= f.govuk_text_area :reports_comment %>
+    <% end %>
+  <% end %>
 
   <%= f.govuk_submit %>
 <% end %>

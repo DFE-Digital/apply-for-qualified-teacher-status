@@ -8,10 +8,12 @@
 
   <span class="govuk-caption-l">Question 2 of 7</span>
 
-  <%= f.govuk_collection_radio_buttons :hours_response,
-                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
-                                       :value,
-                                       legend: { tag: "h1", size: "l", text: title } %>
+  <%= f.govuk_radio_buttons_fieldset :hours_response, legend: { tag: "h1", size: "l", text: title } do %>
+    <%= f.govuk_radio_button :hours_response, :true, link_errors: true %>
+    <%= f.govuk_radio_button :hours_response, :false do %>
+      <%= f.govuk_text_area :hours_comment %>
+    <% end %>
+  <% end %>
 
   <%= f.govuk_submit %>
 <% end %>

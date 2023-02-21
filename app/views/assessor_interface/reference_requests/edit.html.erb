@@ -33,35 +33,35 @@
     title: t("assessor_interface.reference_requests.edit.summary_card_title"),
     fields: {
       dates_response: {
-        title: t("assessor_interface.reference_requests.edit.dates_response",
+        title: t(".dates_response",
                  school_name: work_history.school_name,
                  start_date: work_history.start_date.to_fs(:long_ordinal_uk),
                  end_date: work_history.end_date.blank? ? "present" : work_history.end_date.to_fs(:long_ordinal_uk)),
-        value: t("assessor_interface.reference_requests.edit.response_value.#{@reference_request.dates_response}"),
+        value: @reference_request.dates_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.dates_comment}",
       },
       hours_response: {
         title: t("assessor_interface.reference_requests.edit.hours_response", count: work_history.hours_per_week),
-        value: t("assessor_interface.reference_requests.edit.response_value.#{@reference_request.hours_response}"),
+        value: @reference_request.hours_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.hours_comment}",
       },
       children_response: {
         title: t("assessor_interface.reference_requests.edit.children_response"),
-        value: t("assessor_interface.reference_requests.edit.response_value.#{@reference_request.children_response}"),
+        value: @reference_request.children_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.children_comment}",
       },
       lessons_response: {
         title: t("assessor_interface.reference_requests.edit.lessons_response"),
-        value: t("assessor_interface.reference_requests.edit.response_value.#{@reference_request.lessons_response}"),
+        value: @reference_request.lessons_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.lessons_comment}",
       },
       reports_response: {
         title: t("assessor_interface.reference_requests.edit.reports_response"),
-        value: t("assessor_interface.reference_requests.edit.response_value.#{@reference_request.reports_response}"),
+        value: @reference_request.reports_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.reports_comment}",
       },
       misconduct_response: {
         title: t("assessor_interface.reference_requests.edit.misconduct_response"),
-        value: t("assessor_interface.reference_requests.edit.response_value.#{@reference_request.misconduct_response}"),
+        value: @reference_request.misconduct_response ? "#{t(".response_value.true")} — #{@reference_request.misconduct_comment}" : t(".response_value.false"),
       },
       satisfied_response: {
         title: t("assessor_interface.reference_requests.edit.satisfied_response"),
-        value: t("assessor_interface.reference_requests.edit.response_value.#{@reference_request.satisfied_response}"),
+        value: @reference_request.satisfied_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.satisfied_comment}",
       },
       additional_information_response: {
         title: t("assessor_interface.reference_requests.edit.additional_information_response"),
