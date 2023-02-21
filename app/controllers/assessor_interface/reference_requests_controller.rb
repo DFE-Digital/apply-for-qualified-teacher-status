@@ -12,6 +12,7 @@ module AssessorInterface
       @form =
         RequestableForm.new(
           requestable: reference_request,
+          user: current_staff,
           **reference_request_form_params,
         )
 

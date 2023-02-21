@@ -4,9 +4,10 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::RequestableForm, type: :model do
   let(:requestable) { create(:reference_request, :received) }
+  let(:user) { create(:staff) }
   let(:passed) { nil }
 
-  subject(:form) { described_class.new(requestable:, passed:) }
+  subject(:form) { described_class.new(requestable:, user:, passed:) }
 
   describe "#save" do
     subject(:save) { form.save }

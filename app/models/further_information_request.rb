@@ -6,6 +6,7 @@
 #  failure_assessor_note                       :string           default(""), not null
 #  passed                                      :boolean
 #  received_at                                 :datetime
+#  reviewed_at                                 :datetime
 #  state                                       :string           not null
 #  working_days_assessment_started_to_creation :integer
 #  working_days_received_to_recommendation     :integer
@@ -30,10 +31,6 @@ class FurtherInformationRequest < ApplicationRecord
 
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
 
-  def failed
-    passed == false
-  end
-
   def expires_after
     if !application_form.created_under_new_regulations? &&
          FOUR_WEEK_COUNTRY_CODES.include?(application_form.country.code)
@@ -43,12 +40,13 @@ class FurtherInformationRequest < ApplicationRecord
     end
   end
 
-  def after_expired(user:)
-    update!(
-      failure_assessor_note: "Further information not supplied by deadline",
-      passed: false,
-    )
+  def after_received(*)
+    TeacherMailer.with(teacher:).further_information_received.deliver_later
+  end
 
+  def after_expired(user:)
     DeclineQTS.call(application_form:, user:)
   end
+
+  delegate :teacher, to: :application_form
 end

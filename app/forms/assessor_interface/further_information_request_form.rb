@@ -16,11 +16,11 @@ class AssessorInterface::FurtherInformationRequestForm
   def save
     return false unless valid?
 
-    UpdateFurtherInformationRequest.call(
-      further_information_request:,
+    ReviewRequestable.call(
+      requestable: further_information_request,
       user:,
-      params: {
-        passed:,
+      passed:,
+      attributes: {
         failure_assessor_note:,
       },
     )

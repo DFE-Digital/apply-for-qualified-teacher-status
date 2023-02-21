@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
-class SubmitReferenceRequest
+class ReceiveRequestable
   include ServicePattern
 
-  def initialize(reference_request:, user:)
-    @reference_request = reference_request
+  def initialize(requestable:, user:)
+    @requestable = requestable
     @user = user
   end
 
   def call
-    raise AlreadySubmitted if reference_request.received?
+    raise AlreadySubmitted if requestable.received?
 
     ActiveRecord::Base.transaction do
-      reference_request.received!
+      requestable.received!
       create_timeline_event
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
+
+    requestable.after_received(user:)
   end
 
   class AlreadySubmitted < StandardError
@@ -23,16 +25,16 @@ class SubmitReferenceRequest
 
   private
 
-  attr_reader :reference_request, :user
+  attr_reader :requestable, :user
 
-  delegate :application_form, to: :reference_request
+  delegate :application_form, to: :requestable
 
   def create_timeline_event
     TimelineEvent.create!(
       application_form:,
       creator_name: user,
       event_type: "requestable_received",
-      requestable: reference_request,
+      requestable:,
     )
   end
 end

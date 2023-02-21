@@ -34,7 +34,6 @@
 #
 class ReferenceRequest < ApplicationRecord
   include Requestable
-  include Reviewable
 
   has_secure_token :slug
 
@@ -60,6 +59,10 @@ class ReferenceRequest < ApplicationRecord
 
   def expires_after
     6.weeks
+  end
+
+  def after_reviewed(*)
+    UpdateAssessmentInductionRequired.call(assessment:)
   end
 
   private

@@ -19,16 +19,6 @@ RSpec.describe ExpireRequestable do
     end
 
     shared_examples_for "expiring a further information request" do
-      it "sets the passed to false" do
-        expect(subject.passed).to eq(false)
-      end
-
-      it "sets the failure_assessor_note" do
-        expect(subject.failure_assessor_note).to eq(
-          "Further information not supplied by deadline",
-        )
-      end
-
       it "declines the application" do
         expect(subject.assessment.application_form).to be_declined
       end

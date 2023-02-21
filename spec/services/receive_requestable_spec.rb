@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe SubmitReferenceRequest do
+RSpec.describe ReceiveRequestable do
   let(:application_form) { create(:application_form, :submitted) }
-  let(:reference_request) do
+  let(:requestable) do
     create(
       :reference_request,
       :requested,
@@ -14,20 +14,18 @@ RSpec.describe SubmitReferenceRequest do
   end
   let(:user) { "John Smith" }
 
-  subject(:call) { described_class.call(reference_request:, user:) }
+  subject(:call) { described_class.call(requestable:, user:) }
 
-  context "with an already received reference request" do
-    before { reference_request.received! }
+  context "with an already received requestable" do
+    before { requestable.received! }
 
     it "raises an error" do
-      expect { call }.to raise_error(SubmitReferenceRequest::AlreadySubmitted)
+      expect { call }.to raise_error(ReceiveRequestable::AlreadySubmitted)
     end
   end
 
-  it "changes the reference request state to received" do
-    expect { call }.to change(reference_request, :received?).from(false).to(
-      true,
-    )
+  it "changes the requestable state to received" do
+    expect { call }.to change(requestable, :received?).from(false).to(true)
   end
 
   it "changes the application form reference received" do
@@ -36,9 +34,9 @@ RSpec.describe SubmitReferenceRequest do
     ).to(true)
   end
 
-  it "changes the reference request received at" do
+  it "changes the requestable received at" do
     freeze_time do
-      expect { call }.to change(reference_request, :received_at).from(nil).to(
+      expect { call }.to change(requestable, :received_at).from(nil).to(
         Time.current,
       )
     end
@@ -47,7 +45,7 @@ RSpec.describe SubmitReferenceRequest do
   it "records a requestable received timeline event" do
     expect { call }.to have_recorded_timeline_event(
       :requestable_received,
-      requestable: reference_request,
+      requestable:,
     )
   end
 end
