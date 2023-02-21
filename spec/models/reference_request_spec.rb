@@ -6,14 +6,27 @@
 #
 #  id                              :bigint           not null, primary key
 #  additional_information_response :text             default(""), not null
+#  children_comment                :text             default(""), not null
 #  children_response               :boolean
+#  contact_comment                 :text             default(""), not null
+#  contact_job                     :string           default(""), not null
+#  contact_name                    :string           default(""), not null
+#  contact_response                :boolean
+#  dates_comment                   :text             default(""), not null
 #  dates_response                  :boolean
+#  hours_comment                   :text             default(""), not null
 #  hours_response                  :boolean
+#  lessons_comment                 :text             default(""), not null
 #  lessons_response                :boolean
+#  misconduct_comment              :text             default(""), not null
+#  misconduct_response             :boolean
 #  passed                          :boolean
 #  received_at                     :datetime
+#  reports_comment                 :text             default(""), not null
 #  reports_response                :boolean
 #  reviewed_at                     :datetime
+#  satisfied_comment               :text             default(""), not null
+#  satisfied_response              :boolean
 #  slug                            :string           not null
 #  state                           :string           not null
 #  created_at                      :datetime         not null

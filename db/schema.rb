@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_20_130858) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_21_111216) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -307,6 +307,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_20_130858) do
     t.datetime "updated_at", null: false
     t.boolean "passed"
     t.datetime "reviewed_at", precision: nil
+    t.boolean "contact_response"
+    t.string "contact_name", default: "", null: false
+    t.string "contact_job", default: "", null: false
+    t.text "contact_comment", default: "", null: false
+    t.text "dates_comment", default: "", null: false
+    t.text "hours_comment", default: "", null: false
+    t.text "children_comment", default: "", null: false
+    t.text "lessons_comment", default: "", null: false
+    t.text "reports_comment", default: "", null: false
+    t.boolean "misconduct_response"
+    t.text "misconduct_comment", default: "", null: false
+    t.boolean "satisfied_response"
+    t.text "satisfied_comment", default: "", null: false
     t.index ["assessment_id"], name: "index_reference_requests_on_assessment_id"
     t.index ["slug"], name: "index_reference_requests_on_slug", unique: true
     t.index ["work_history_id"], name: "index_reference_requests_on_work_history_id"

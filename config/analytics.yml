@@ -236,11 +236,24 @@
     - work_history_id
     - state
     - received_at
+    - contact_response
+    - contact_name
+    - contact_job
+    - contact_comment
     - dates_response
+    - dates_comment
     - hours_response
+    - hours_comment
     - children_response
+    - children_comment
     - lessons_response
+    - lessons_comment
     - reports_response
+    - reports_comment
+    - misconduct_response
+    - misconduct_comment
+    - satisfied_response
+    - satisfied_comment
     - additional_information_response
     - created_at
     - updated_at
