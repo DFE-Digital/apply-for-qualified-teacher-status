@@ -1,13 +1,23 @@
 <% content_for :page_title, t(".title") %>
 
-<% if @reference_request.requested? %>
+<% if @reference_request.received? %>
+  <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
+
+  <h3 class="govuk-heading-m">Thank you for submitting your response.</h3>
+
+  <p class="govuk-body">The QTS assessor will now review your response and continue their review of the applicant.</p>
+
+  <p class="govuk-body">You do not need to do anything else. You can now close this page.</p>
+<% else %>
   <h1 class="govuk-heading-xl"><%= t("service.name.teacher") %></h1>
 
   <h2 class="govuk-heading-m"><%= t(".title") %></h2>
 
   <p class="govuk-body"><%= application_form_full_name(@application_form) %> is applying for qualified teacher status (QTS) in England.</p>
 
-  <p class="govuk-body">As part of our assessment, we need to understand their work history and experience. They’ve provided your details to help us verify that they worked at:</p>
+  <p class="govuk-body">Their application for QTS means we’ll assess their qualifications and teaching experience. It is <strong class="govuk-!-font-weight-bold">NOT</strong> an application for a teaching job – we just need to assess whether they can teach in English schools.</p>
+
+  <p class="govuk-body">They’ve provided your details to help us verify that they worked at:</p>
 
   <%= govuk_inset_text do %>
     <p class="govuk-body">
@@ -18,12 +28,4 @@
   <p class="govuk-body">We need to to ask you a few questions about the applicant’s role. It should take no longer than 5 minutes.</p>
 
   <%= govuk_start_button(text: "Start now", href: dates_teacher_interface_reference_request_path) %>
-<% else %>
-  <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
-
-  <h3 class="govuk-heading-m">Thank you for submitting your response.</h3>
-
-  <p class="govuk-body">The QTS assessor will now review your response and continue their review of the applicant.</p>
-
-  <p class="govuk-body">You do not need to do anything else. You can now close this page.</p>
 <% end %>
