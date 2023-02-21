@@ -91,7 +91,7 @@ class ReferenceRequest < ApplicationRecord
       children_response,
       lessons_response,
       reports_response,
-      misconduct_response,
+      misconduct_response.nil? ? nil : !misconduct_response, # true means there is a report of misconduct
       satisfied_response,
     ]
   end

@@ -29,6 +29,12 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_edit_reference_request_reports_page, slug:)
 
     when_i_choose_yes_for_reports
+    then_i_see_the(:teacher_edit_reference_request_misconduct_page, slug:)
+
+    when_i_choose_no_for_misconduct
+    then_i_see_the(:teacher_edit_reference_request_satisfied_page, slug:)
+
+    when_i_choose_yes_for_satisfied
     then_i_see_the(
       :teacher_edit_reference_request_additional_information_page,
       slug:,
@@ -77,6 +83,14 @@ RSpec.describe "Teacher reference", type: :system do
     teacher_edit_reference_request_reports_page.submit_yes
   end
 
+  def when_i_choose_no_for_misconduct
+    teacher_edit_reference_request_misconduct_page.submit_no
+  end
+
+  def when_i_choose_yes_for_satisfied
+    teacher_edit_reference_request_satisfied_page.submit_yes
+  end
+
   def when_i_fill_in_additional_information
     teacher_edit_reference_request_additional_information_page.submit(
       additional_information: "Some information.",
@@ -89,7 +103,7 @@ RSpec.describe "Teacher reference", type: :system do
     expect(summary_list).to be_visible
 
     expect(summary_list.rows[0].key.text).to eq(
-      "Did the applicant work at the school for the dates they provided?",
+      "Did the applicant work at School from 1 January 2020 to 1 January 2023?",
     )
     expect(summary_list.rows[0].value.text).to eq("Yes")
 
@@ -116,9 +130,19 @@ RSpec.describe "Teacher reference", type: :system do
     expect(summary_list.rows[4].value.text).to eq("Yes")
 
     expect(summary_list.rows[5].key.text).to eq(
+      "Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?",
+    )
+    expect(summary_list.rows[5].value.text).to eq("No")
+
+    expect(summary_list.rows[6].key.text).to eq(
+      "Are you satisfied that the applicant is suitable to work with children?",
+    )
+    expect(summary_list.rows[6].value.text).to eq("Yes")
+
+    expect(summary_list.rows[7].key.text).to eq(
       "Is there anything else you’d like to tell us about this applicant?",
     )
-    expect(summary_list.rows[5].value.text).to eq("Some information.")
+    expect(summary_list.rows[7].value.text).to eq("Some information.")
   end
 
   def when_i_submit_the_response

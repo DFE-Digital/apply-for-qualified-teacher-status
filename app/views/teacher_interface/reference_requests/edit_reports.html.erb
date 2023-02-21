@@ -4,7 +4,7 @@
 <%= form_with model: @form, url: reports_teacher_interface_reference_request_path do |f| %>
   <%= f.govuk_error_summary %>
 
-  <span class="govuk-caption-l">Question 5 of 5</span>
+  <span class="govuk-caption-l">Question 5 of 7</span>
 
   <%= f.govuk_collection_radio_buttons :reports_response,
                                        [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],

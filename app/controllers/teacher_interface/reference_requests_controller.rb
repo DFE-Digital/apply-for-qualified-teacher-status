@@ -33,6 +33,8 @@ module TeacherInterface
     end
 
     def edit_dates
+      @work_history = reference_request.work_history
+
       @form =
         ReferenceRequestDatesResponseForm.new(
           reference_request:,
@@ -41,6 +43,8 @@ module TeacherInterface
     end
 
     def update_dates
+      @work_history = reference_request.work_history
+
       @form =
         ReferenceRequestDatesResponseForm.new(
           dates_response_form_params.merge(reference_request:),
@@ -141,8 +145,52 @@ module TeacherInterface
       handle_application_form_section(
         form: @form,
         if_success_then_redirect:
-          additional_information_teacher_interface_reference_request_path,
+          misconduct_teacher_interface_reference_request_path,
         if_failure_then_render: :edit_reports,
+      )
+    end
+
+    def edit_misconduct
+      @form =
+        ReferenceRequestMisconductResponseForm.new(
+          reference_request:,
+          misconduct_response: reference_request.misconduct_response,
+        )
+    end
+
+    def update_misconduct
+      @form =
+        ReferenceRequestMisconductResponseForm.new(
+          misconduct_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect:
+          satisfied_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_misconduct,
+      )
+    end
+
+    def edit_satisfied
+      @form =
+        ReferenceRequestSatisfiedResponseForm.new(
+          reference_request:,
+          satisfied_response: reference_request.satisfied_response,
+        )
+    end
+
+    def update_satisfied
+      @form =
+        ReferenceRequestSatisfiedResponseForm.new(
+          satisfied_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect:
+          additional_information_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_satisfied,
       )
     end
 
@@ -207,6 +255,18 @@ module TeacherInterface
       params.require(
         :teacher_interface_reference_request_reports_response_form,
       ).permit(:reports_response)
+    end
+
+    def misconduct_response_form_params
+      params.require(
+        :teacher_interface_reference_request_misconduct_response_form,
+      ).permit(:misconduct_response)
+    end
+
+    def satisfied_response_form_params
+      params.require(
+        :teacher_interface_reference_request_satisfied_response_form,
+      ).permit(:satisfied_response)
     end
 
     def additional_information_response_form_params

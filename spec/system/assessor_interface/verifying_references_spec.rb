@@ -92,6 +92,16 @@ RSpec.describe "Assessor verifying references", type: :system do
       ),
     )
     expect(reference_request_page.responses.values[5].text).to eq(
+      I18n.t(
+        "assessor_interface.reference_requests.edit.response_value.#{reference_request.misconduct_response}",
+      ),
+    )
+    expect(reference_request_page.responses.values[6].text).to eq(
+      I18n.t(
+        "assessor_interface.reference_requests.edit.response_value.#{reference_request.satisfied_response}",
+      ),
+    )
+    expect(reference_request_page.responses.values[7].text).to eq(
       reference_request.additional_information_response,
     )
   end

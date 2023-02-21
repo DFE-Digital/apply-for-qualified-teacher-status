@@ -91,7 +91,7 @@ FactoryBot.define do
       children_response { false }
       lessons_response { false }
       reports_response { false }
-      misconduct_response { false }
+      misconduct_response { true }
       satisfied_response { false }
     end
 
@@ -102,7 +102,7 @@ FactoryBot.define do
       children_response { true }
       lessons_response { true }
       reports_response { true }
-      misconduct_response { true }
+      misconduct_response { false }
       satisfied_response { true }
     end
   end
