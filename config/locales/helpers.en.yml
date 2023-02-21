@@ -160,6 +160,14 @@ en:
         reports_response_options:
           true: "Yes"
           false: "No"
+      teacher_interface_reference_request_misconduct_response_form:
+        reports_response_options:
+          true: "Yes"
+          false: "No"
+      teacher_interface_reference_request_satisfied_response_form:
+        reports_response_options:
+          true: "Yes"
+          false: "No"
       teacher_interface_registration_number_form:
         registration_number: What is your registration number?
       teacher_interface_subjects_form:
@@ -225,7 +233,7 @@ en:
       teacher_interface_reference_request_children_response_form:
         children_response: Did the applicant work unsupervised with children aged somewhere between 5 and 16 years?
       teacher_interface_reference_request_dates_response_form:
-        dates_response: Did the applicant work at the school for the dates they provided?
+        dates_response: Did the applicant work at %{school_name} from %{start_date} to %{end_date}?
       teacher_interface_reference_request_hours_response_form:
         hours_response:
           one: Did the applicant normally work more than 1 hour per week in this role?
@@ -234,6 +242,10 @@ en:
         lessons_response: Was the applicant solely responsible for planning, preparing and delivering lessons to at least 4 students at a time?
       teacher_interface_reference_request_reports_response_form:
         reports_response: Was the applicant solely responsible for assessing and reporting on the progress of the students?
+      teacher_interface_reference_request_misconduct_response_form:
+        misconduct_response: Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?
+      teacher_interface_reference_request_satisfied_response_form:
+        satisfied_response: Are you satisfied that the applicant is suitable to work with children?
       teacher_interface_work_history_school_form:
         start_date: When did you start this role?
         still_employed: Are you still employed at this school?

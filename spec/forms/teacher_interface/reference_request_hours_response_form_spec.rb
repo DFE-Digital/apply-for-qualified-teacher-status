@@ -20,7 +20,7 @@ RSpec.describe TeacherInterface::ReferenceRequestHoursResponseForm,
 
     let(:hours_response) { "true" }
 
-    it "saves the application form" do
+    it "saves the reference request" do
       expect { save }.to change(reference_request, :hours_response).to(true)
     end
   end
