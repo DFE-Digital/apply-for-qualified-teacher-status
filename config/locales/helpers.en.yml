@@ -253,7 +253,9 @@ en:
       teacher_interface_reference_request_contact_response_form:
         contact_response: Are these details correct?
       teacher_interface_reference_request_dates_response_form:
-        dates_response: Did the applicant work at %{school_name} from %{start_date} to %{end_date}?
+        dates_response:
+          current: Has the applicant worked at %{school_name} since %{start_date}?
+          previous: Did the applicant work at %{school_name} from %{start_date} to %{end_date}?
       teacher_interface_reference_request_hours_response_form:
         hours_response:
           one: Did the applicant normally work more than 1 hour per week in this role?
