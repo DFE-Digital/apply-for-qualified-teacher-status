@@ -32,6 +32,17 @@
     model: @reference_request,
     title: t("assessor_interface.reference_requests.edit.summary_card_title"),
     fields: {
+      contact_name: {
+        title: t("assessor_interface.reference_requests.edit.contact_name"),
+        value: @reference_request.contact_name.presence || work_history.contact_name,
+      },
+      contact_job: {
+        title: t("assessor_interface.reference_requests.edit.contact_job"),
+        value: @reference_request.contact_job.presence || work_history.contact_job,
+      },
+      contact_comment: {
+        title: t("assessor_interface.reference_requests.edit.contact_comment"),
+      },
       dates_response: {
         title: t(".dates_response",
                  school_name: work_history.school_name,

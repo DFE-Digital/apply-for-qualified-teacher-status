@@ -32,6 +32,37 @@ module TeacherInterface
       redirect_to teacher_interface_reference_request_path
     end
 
+    def edit_contact
+      @application_form = reference_request.application_form
+      @work_history = reference_request.work_history
+
+      @form =
+        ReferenceRequestContactResponseForm.new(
+          reference_request:,
+          contact_response: reference_request.contact_response,
+          contact_name: reference_request.contact_name,
+          contact_job: reference_request.contact_job,
+          contact_comment: reference_request.contact_comment,
+        )
+    end
+
+    def update_contact
+      @application_form = reference_request.application_form
+      @work_history = reference_request.work_history
+
+      @form =
+        ReferenceRequestContactResponseForm.new(
+          contact_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect:
+          dates_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_contact,
+      )
+    end
+
     def edit_dates
       @work_history = reference_request.work_history
 
@@ -225,6 +256,12 @@ module TeacherInterface
         ReferenceRequest.where(state: %i[requested expired]).find_by!(
           slug: params[:slug],
         )
+    end
+
+    def contact_response_form_params
+      params.require(
+        :teacher_interface_reference_request_contact_response_form,
+      ).permit(:contact_response, :contact_name, :contact_job, :contact_comment)
     end
 
     def dates_response_form_params

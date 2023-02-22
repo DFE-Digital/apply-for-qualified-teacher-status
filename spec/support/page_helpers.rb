@@ -283,6 +283,11 @@ module PageHelpers
       PageObjects::TeacherInterface::EditReferenceRequestChildren.new
   end
 
+  def teacher_edit_reference_request_contact_page
+    @teacher_edit_reference_request_contact_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestContact.new
+  end
+
   def teacher_edit_reference_request_dates_page
     @teacher_edit_reference_request_dates_page ||=
       PageObjects::TeacherInterface::EditReferenceRequestDates.new

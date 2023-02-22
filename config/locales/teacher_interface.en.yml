@@ -45,6 +45,11 @@ en:
       edit:
         title: Check your answers
         reference_requested: Reference requested
+        response_value:
+          "true": "Yes"
+          "false": "No"
+      edit_contact:
+        title: About you
     work_histories:
       add_another:
         title: Add another role
@@ -257,6 +262,14 @@ en:
               inclusion: Tell us whether the applicant worked unsupervised with children aged somewhere between 5 and 16 years
             children_comment:
               blank: Tell us why you answered ‘No’ to this question.
+        teacher_interface/reference_request_contact_response_form:
+          attributes:
+            contact_response:
+              inclusion: Tell us whether these details are correct
+            contact_name:
+              blank: Tell us your full name
+            contact_job:
+              blank: Tell us your job title
         teacher_interface/reference_request_dates_response_form:
           attributes:
             dates_response:

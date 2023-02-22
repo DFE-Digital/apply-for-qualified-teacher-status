@@ -149,6 +149,13 @@ en:
           true: "Yes"
           false: "No"
         children_comment: Tell us why you answered ‘No’ to this question.
+      teacher_interface_reference_request_contact_response_form:
+        contact_response_options:
+          true: "Yes"
+          false: "No"
+        contact_name: Your full name
+        contact_job: Your job title
+        contact_comment: Any other comments (optional)
       teacher_interface_reference_request_dates_response_form:
         dates_response_options:
           true: "Yes"

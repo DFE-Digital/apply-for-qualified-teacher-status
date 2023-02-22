@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("helpers.legend.teacher_interface_reference_request_reports_response_form.misconduct_response")}" %>
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("helpers.legend.teacher_interface_reference_request_misconduct_response_form.misconduct_response")}" %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_reference_request_path) %>
 
 <%= form_with model: @form, url: misconduct_teacher_interface_reference_request_path do |f| %>
