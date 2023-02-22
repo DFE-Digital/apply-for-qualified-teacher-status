@@ -21,20 +21,27 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
     it { is_expected.to allow_values(true, false).for(:passed) }
 
     it { is_expected.to validate_presence_of(:age_range_min) }
-    it do
-      is_expected.to validate_numericality_of(
-        :age_range_min,
-      ).only_integer.is_greater_than_or_equal_to(0)
-    end
-
     it { is_expected.to validate_presence_of(:age_range_max) }
 
+    context "with a minimum too low" do
+      let(:attributes) { { age_range_min: "1" } }
+      it { is_expected.to be_invalid }
+    end
+
+    context "with a minimum too high" do
+      let(:attributes) { { age_range_min: "20" } }
+      it { is_expected.to be_invalid }
+    end
+
     context "when minimum is set" do
-      let(:attributes) { { age_range_min: "7" } }
-      it do
-        is_expected.to validate_numericality_of(
-          :age_range_max,
-        ).only_integer.is_greater_than_or_equal_to(7)
+      context "with a maximum too low" do
+        let(:attributes) { { age_range_min: "7", age_range_max: "1" } }
+        it { is_expected.to be_invalid }
+      end
+
+      context "with a maximum too high" do
+        let(:attributes) { { age_range_min: "7", age_range_max: "20" } }
+        it { is_expected.to be_invalid }
       end
     end
 

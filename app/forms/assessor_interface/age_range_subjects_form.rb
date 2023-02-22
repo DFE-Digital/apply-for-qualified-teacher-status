@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSectionForm
-  attribute :age_range_min, :string
-  attribute :age_range_max, :string
+  attribute :age_range_min, :integer
+  attribute :age_range_max, :integer
   attribute :age_range_note, :string
 
   validates :age_range_min,
