@@ -153,7 +153,7 @@ RSpec.describe "Teacher reference", type: :system do
     expect(summary_list.rows[8].value.text).to eq("Yes")
 
     expect(summary_list.rows[9].key.text).to eq(
-      "Is there anything else you’d like to tell us about this applicant?",
+      "Do you have any other concerns about this applicant? (optional)",
     )
     expect(summary_list.rows[9].value.text).to eq("Some information.")
   end
