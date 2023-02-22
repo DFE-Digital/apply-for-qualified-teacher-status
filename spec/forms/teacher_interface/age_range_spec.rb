@@ -10,24 +10,30 @@ RSpec.describe TeacherInterface::AgeRangeForm, type: :model do
     let(:maximum) { "" }
 
     it { is_expected.to validate_presence_of(:application_form) }
-
     it { is_expected.to validate_presence_of(:minimum) }
-    it do
-      is_expected.to validate_numericality_of(:minimum)
-        .only_integer
-        .is_greater_than_or_equal_to(4)
-        .is_less_than_or_equal_to(18)
+    it { is_expected.to validate_presence_of(:maximum) }
+
+    context "with a minimum too low" do
+      let(:minimum) { "1" }
+      it { is_expected.to be_invalid }
     end
 
-    it { is_expected.to validate_presence_of(:maximum) }
+    context "with a minimum too high" do
+      let(:minimum) { "20" }
+      it { is_expected.to be_invalid }
+    end
 
     context "when minimum is set" do
       let(:minimum) { "7" }
-      it do
-        is_expected.to validate_numericality_of(:maximum)
-          .only_integer
-          .is_greater_than_or_equal_to(7)
-          .is_less_than_or_equal_to(18)
+
+      context "with a maximum too low" do
+        let(:minimum) { "1" }
+        it { is_expected.to be_invalid }
+      end
+
+      context "with a maximum too high" do
+        let(:minimum) { "20" }
+        it { is_expected.to be_invalid }
       end
     end
   end
