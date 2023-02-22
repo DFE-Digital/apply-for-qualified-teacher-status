@@ -2,8 +2,8 @@ name: Backup Database to Azure Storage
 
 on:
   workflow_dispatch:
-  schedule: # 01:00 UTC
-    - cron: "0 1 * * *"
+  schedule:
+    - cron: "0 4 * * *" # 04:00 UTC
 
 jobs:
   backup:
