@@ -101,23 +101,4 @@ RSpec.describe ReferenceRequest do
       it { is_expected.to be true }
     end
   end
-
-  describe "#responses_valid?" do
-    subject(:responses_valid?) { reference_request.responses_valid? }
-
-    context "when no responses are given" do
-      let(:reference_request) { build(:reference_request) }
-      it { is_expected.to be false }
-    end
-
-    context "when all responses are valid" do
-      let(:reference_request) { build(:reference_request, :responses_valid) }
-      it { is_expected.to be true }
-    end
-
-    context "when all responses are invalid" do
-      let(:reference_request) { build(:reference_request, :responses_invalid) }
-      it { is_expected.to be false }
-    end
-  end
 end

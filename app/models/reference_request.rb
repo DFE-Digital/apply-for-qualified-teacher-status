@@ -66,11 +66,16 @@ class ReferenceRequest < ApplicationRecord
   delegate :application_form, to: :assessment
 
   def responses_given?
-    responses.none?(&:nil?)
-  end
-
-  def responses_valid?
-    responses.all?(&:present?)
+    [
+      contact_response,
+      dates_response,
+      hours_response,
+      children_response,
+      lessons_response,
+      reports_response,
+      misconduct_response,
+      satisfied_response,
+    ].none?(&:nil?)
   end
 
   def expires_after
@@ -79,20 +84,5 @@ class ReferenceRequest < ApplicationRecord
 
   def after_reviewed(*)
     UpdateAssessmentInductionRequired.call(assessment:)
-  end
-
-  private
-
-  def responses
-    [
-      contact_response,
-      dates_response,
-      hours_response,
-      children_response,
-      lessons_response,
-      reports_response,
-      misconduct_response.nil? ? nil : !misconduct_response, # true means there is a report of misconduct
-      satisfied_response,
-    ]
   end
 end
