@@ -44,10 +44,6 @@ en:
         title: You’ve been asked to act as a reference
       edit:
         title: Check your answers
-        reference_requested: Reference requested
-        response_value:
-          "true": "Yes"
-          "false": "No"
       edit_contact:
         title: About you
     work_histories:

@@ -115,47 +115,48 @@ RSpec.describe "Teacher reference", type: :system do
     expect(summary_list.rows[1].key.text).to eq("Your job title")
     expect(summary_list.rows[1].value.text).to eq("Headteacher")
 
-    expect(summary_list.rows[2].key.text).to eq(
-      "Did the applicant work at School from 1 January 2020 to 1 January 2023?",
-    )
+    expect(summary_list.rows[2].key.text).to eq("Are these details correct?")
     expect(summary_list.rows[2].value.text).to eq("Yes")
 
     expect(summary_list.rows[3].key.text).to eq(
-      "Did the applicant normally work more than 30 hours per week in this role?",
+      "Did the applicant work at School from 1 January 2020 to 1 January 2023?",
     )
     expect(summary_list.rows[3].value.text).to eq("Yes")
 
     expect(summary_list.rows[4].key.text).to eq(
-      "Did the applicant work unsupervised with children aged somewhere between 5 and 16 years?",
+      "Did the applicant normally work more than 30 hours per week in this role?",
     )
     expect(summary_list.rows[4].value.text).to eq("Yes")
 
     expect(summary_list.rows[5].key.text).to eq(
-      "Was the applicant solely responsible for planning, preparing and delivering lessons" \
-        " to at least 4 students at a time?",
+      "Did the applicant teach children aged somewhere between 5 and 16 years?",
     )
     expect(summary_list.rows[5].value.text).to eq("Yes")
 
     expect(summary_list.rows[6].key.text).to eq(
-      "Was the applicant solely responsible for assessing and reporting on the progress of" \
-        " the students?",
+      "Did the applicant plan, prepare and deliver lessons to a class of at least 4 students?",
     )
     expect(summary_list.rows[6].value.text).to eq("Yes")
 
     expect(summary_list.rows[7].key.text).to eq(
-      "Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?",
+      "Was the applicant responsible for assessing and reporting on the progress of the students?",
     )
-    expect(summary_list.rows[7].value.text).to eq("No")
+    expect(summary_list.rows[7].value.text).to eq("Yes")
 
     expect(summary_list.rows[8].key.text).to eq(
-      "Are you satisfied that the applicant is suitable to work with children?",
+      "Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?",
     )
-    expect(summary_list.rows[8].value.text).to eq("Yes")
+    expect(summary_list.rows[8].value.text).to eq("No")
 
     expect(summary_list.rows[9].key.text).to eq(
+      "Are you satisfied that the applicant is suitable to work with children?",
+    )
+    expect(summary_list.rows[9].value.text).to eq("Yes")
+
+    expect(summary_list.rows[10].key.text).to eq(
       "Do you have any other concerns about this applicant? (optional)",
     )
-    expect(summary_list.rows[9].value.text).to eq("Some information.")
+    expect(summary_list.rows[10].value.text).to eq("Some information.")
   end
 
   def when_i_submit_the_response

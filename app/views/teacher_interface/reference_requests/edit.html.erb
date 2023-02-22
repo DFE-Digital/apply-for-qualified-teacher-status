@@ -2,66 +2,7 @@
 
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
-<%= render(CheckYourAnswersSummary::Component.new(
-  id: "reference-request-#{@reference_request.id}",
-  model: @reference_request,
-  title: t(".reference_requested"),
-  fields: {
-    contact_name: {
-      title: t("helpers.label.teacher_interface_reference_request_contact_response_form.contact_name"),
-      value: @reference_request.contact_name.presence || @work_history.contact_name,
-      href: contact_teacher_interface_reference_request_path,
-    },
-    contact_job: {
-      title: t("helpers.label.teacher_interface_reference_request_contact_response_form.contact_job"),
-      value: @reference_request.contact_job.presence || @work_history.contact_job,
-      href: contact_teacher_interface_reference_request_path,
-    },
-    dates_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_dates_response_form.dates_response",
-               school_name: @work_history.school_name,
-               start_date: @work_history.start_date.to_fs(:long_ordinal_uk),
-               end_date: @work_history.end_date.blank? ? "present" : @work_history.end_date.to_fs(:long_ordinal_uk)),
-      value: @reference_request.dates_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.dates_comment}",
-      href: dates_teacher_interface_reference_request_path,
-    },
-    hours_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_hours_response_form.hours_response", count: @work_history.hours_per_week),
-      value: @reference_request.hours_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.hours_comment}",
-      href: hours_teacher_interface_reference_request_path,
-    },
-    children_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_children_response_form.children_response"),
-      value: @reference_request.children_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.children_comment}",
-      href: children_teacher_interface_reference_request_path,
-    },
-    lessons_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_lessons_response_form.lessons_response"),
-      value: @reference_request.lessons_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.lessons_comment}",
-      href: lessons_teacher_interface_reference_request_path,
-    },
-    reports_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_reports_response_form.reports_response"),
-      value: @reference_request.reports_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.reports_comment}",
-      href: reports_teacher_interface_reference_request_path,
-    },
-    misconduct_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_misconduct_response_form.misconduct_response"),
-      value: @reference_request.misconduct_response ? "#{t(".response_value.true")} — #{@reference_request.misconduct_comment}" : t(".response_value.false"),
-      href: misconduct_teacher_interface_reference_request_path,
-    },
-    satisfied_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_satisfied_response_form.satisfied_response"),
-      value: @reference_request.satisfied_response ? t(".response_value.true") : "#{t(".response_value.false")} — #{@reference_request.satisfied_comment}",
-      href: satisfied_teacher_interface_reference_request_path,
-    },
-    additional_information_response: {
-      title: t("helpers.label.teacher_interface_reference_request_additional_information_response_form.additional_information_response"),
-      href: additional_information_teacher_interface_reference_request_path,
-    },
-  },
-  changeable: true
-)) %>
+<%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: true %>
 
 <% if @reference_request.responses_given? %>
   <h3 class="govuk-heading-m">Submitting your response</h3>
