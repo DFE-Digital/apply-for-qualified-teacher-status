@@ -64,34 +64,21 @@ RSpec.describe "Assessor verifying references", type: :system do
     expect(reference_request_page.table.cells[2].text).to eq(
       reference_request.work_history.contact_name,
     )
-    expect(reference_request_page.responses.heading.text).to eq("Responses")
+    expect(reference_request_page.responses.heading.text).to eq(
+      "Reference requested",
+    )
 
-    expect(reference_request_page.responses.values[0].text).to eq(
-      I18n.t(
-        "assessor_interface.reference_requests.edit.response_value.#{reference_request.dates_response}",
-      ),
-    )
-    expect(reference_request_page.responses.values[1].text).to eq(
-      I18n.t(
-        "assessor_interface.reference_requests.edit.response_value.#{reference_request.hours_response}",
-      ),
-    )
-    expect(reference_request_page.responses.values[2].text).to eq(
-      I18n.t(
-        "assessor_interface.reference_requests.edit.response_value.#{reference_request.children_response}",
-      ),
-    )
-    expect(reference_request_page.responses.values[3].text).to eq(
-      I18n.t(
-        "assessor_interface.reference_requests.edit.response_value.#{reference_request.lessons_response}",
-      ),
-    )
-    expect(reference_request_page.responses.values[4].text).to eq(
-      I18n.t(
-        "assessor_interface.reference_requests.edit.response_value.#{reference_request.reports_response}",
-      ),
-    )
-    expect(reference_request_page.responses.values[5].text).to eq(
+    expect(reference_request_page.responses.values[0].text).to eq("John Smith")
+    expect(reference_request_page.responses.values[1].text).to eq("Headteacher")
+    expect(reference_request_page.responses.values[2].text).to eq("Yes")
+    expect(reference_request_page.responses.values[3].text).to eq("Yes")
+    expect(reference_request_page.responses.values[4].text).to eq("Yes")
+    expect(reference_request_page.responses.values[5].text).to eq("Yes")
+    expect(reference_request_page.responses.values[6].text).to eq("Yes")
+    expect(reference_request_page.responses.values[7].text).to eq("Yes")
+    expect(reference_request_page.responses.values[8].text).to eq("No")
+    expect(reference_request_page.responses.values[9].text).to eq("Yes")
+    expect(reference_request_page.responses.values[10].text).to eq(
       reference_request.additional_information_response,
     )
   end
@@ -123,15 +110,27 @@ RSpec.describe "Assessor verifying references", type: :system do
       begin
         application_form =
           create(:application_form, :waiting_on, received_reference: true)
-        create(:work_history, :completed, application_form:)
+        create(
+          :work_history,
+          :completed,
+          application_form:,
+          contact_name: "John Smith",
+          contact_job: "Headteacher",
+        )
         assessment =
           create(
             :assessment,
             :with_received_professional_standing_request,
-            :with_received_reference_request,
             application_form:,
           )
         create(:assessment_section, :passed, assessment:)
+        create(
+          :reference_request,
+          :received,
+          :responses_valid,
+          assessment:,
+          work_history: assessment.application_form.work_histories.first,
+        )
         application_form
       end
   end

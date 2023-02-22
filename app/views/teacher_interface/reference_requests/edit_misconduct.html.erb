@@ -1,0 +1,17 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("helpers.legend.teacher_interface_reference_request_misconduct_response_form.misconduct_response")}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_reference_request_path) %>
+
+<%= form_with model: @form, url: misconduct_teacher_interface_reference_request_path do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l">Question 6 of 7</span>
+
+  <%= f.govuk_radio_buttons_fieldset :misconduct_response, legend: { tag: "h1", size: "l" } do %>
+    <%= f.govuk_radio_button :misconduct_response, :true, link_errors: true do %>
+      <%= f.govuk_text_area :misconduct_comment %>
+    <% end %>
+    <%= f.govuk_radio_button :misconduct_response, :false %>
+  <% end %>
+
+  <%= f.govuk_submit %>
+<% end %>

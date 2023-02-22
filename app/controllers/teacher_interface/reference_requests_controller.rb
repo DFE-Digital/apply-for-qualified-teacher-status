@@ -32,7 +32,40 @@ module TeacherInterface
       redirect_to teacher_interface_reference_request_path
     end
 
+    def edit_contact
+      @application_form = reference_request.application_form
+      @work_history = reference_request.work_history
+
+      @form =
+        ReferenceRequestContactResponseForm.new(
+          reference_request:,
+          contact_response: reference_request.contact_response,
+          contact_name: reference_request.contact_name,
+          contact_job: reference_request.contact_job,
+          contact_comment: reference_request.contact_comment,
+        )
+    end
+
+    def update_contact
+      @application_form = reference_request.application_form
+      @work_history = reference_request.work_history
+
+      @form =
+        ReferenceRequestContactResponseForm.new(
+          contact_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect:
+          dates_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_contact,
+      )
+    end
+
     def edit_dates
+      @work_history = reference_request.work_history
+
       @form =
         ReferenceRequestDatesResponseForm.new(
           reference_request:,
@@ -41,6 +74,8 @@ module TeacherInterface
     end
 
     def update_dates
+      @work_history = reference_request.work_history
+
       @form =
         ReferenceRequestDatesResponseForm.new(
           dates_response_form_params.merge(reference_request:),
@@ -141,8 +176,52 @@ module TeacherInterface
       handle_application_form_section(
         form: @form,
         if_success_then_redirect:
-          additional_information_teacher_interface_reference_request_path,
+          misconduct_teacher_interface_reference_request_path,
         if_failure_then_render: :edit_reports,
+      )
+    end
+
+    def edit_misconduct
+      @form =
+        ReferenceRequestMisconductResponseForm.new(
+          reference_request:,
+          misconduct_response: reference_request.misconduct_response,
+        )
+    end
+
+    def update_misconduct
+      @form =
+        ReferenceRequestMisconductResponseForm.new(
+          misconduct_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect:
+          satisfied_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_misconduct,
+      )
+    end
+
+    def edit_satisfied
+      @form =
+        ReferenceRequestSatisfiedResponseForm.new(
+          reference_request:,
+          satisfied_response: reference_request.satisfied_response,
+        )
+    end
+
+    def update_satisfied
+      @form =
+        ReferenceRequestSatisfiedResponseForm.new(
+          satisfied_response_form_params.merge(reference_request:),
+        )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect:
+          additional_information_teacher_interface_reference_request_path,
+        if_failure_then_render: :edit_satisfied,
       )
     end
 
@@ -179,34 +258,52 @@ module TeacherInterface
         )
     end
 
+    def contact_response_form_params
+      params.require(
+        :teacher_interface_reference_request_contact_response_form,
+      ).permit(:contact_response, :contact_name, :contact_job, :contact_comment)
+    end
+
     def dates_response_form_params
       params.require(
         :teacher_interface_reference_request_dates_response_form,
-      ).permit(:dates_response)
+      ).permit(:dates_response, :dates_comment)
     end
 
     def hours_response_form_params
       params.require(
         :teacher_interface_reference_request_hours_response_form,
-      ).permit(:hours_response)
+      ).permit(:hours_response, :hours_comment)
     end
 
     def children_response_form_params
       params.require(
         :teacher_interface_reference_request_children_response_form,
-      ).permit(:children_response)
+      ).permit(:children_response, :children_comment)
     end
 
     def lessons_response_form_params
       params.require(
         :teacher_interface_reference_request_lessons_response_form,
-      ).permit(:lessons_response)
+      ).permit(:lessons_response, :lessons_comment)
     end
 
     def reports_response_form_params
       params.require(
         :teacher_interface_reference_request_reports_response_form,
-      ).permit(:reports_response)
+      ).permit(:reports_response, :reports_comment)
+    end
+
+    def misconduct_response_form_params
+      params.require(
+        :teacher_interface_reference_request_misconduct_response_form,
+      ).permit(:misconduct_response, :misconduct_comment)
+    end
+
+    def satisfied_response_form_params
+      params.require(
+        :teacher_interface_reference_request_satisfied_response_form,
+      ).permit(:satisfied_response, :satisfied_comment)
     end
 
     def additional_information_response_form_params

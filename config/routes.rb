@@ -280,6 +280,9 @@ Rails.application.routes.draw do
               param: :slug,
               only: %i[show edit update] do
       member do
+        get "contact", to: "reference_requests#edit_contact"
+        post "contact", to: "reference_requests#update_contact"
+
         get "dates", to: "reference_requests#edit_dates"
         post "dates", to: "reference_requests#update_dates"
 
@@ -294,6 +297,12 @@ Rails.application.routes.draw do
 
         get "reports", to: "reference_requests#edit_reports"
         post "reports", to: "reference_requests#update_reports"
+
+        get "misconduct", to: "reference_requests#edit_misconduct"
+        post "misconduct", to: "reference_requests#update_misconduct"
+
+        get "satisfied", to: "reference_requests#edit_satisfied"
+        post "satisfied", to: "reference_requests#update_satisfied"
 
         get "additional-information",
             to: "reference_requests#edit_additional_information"

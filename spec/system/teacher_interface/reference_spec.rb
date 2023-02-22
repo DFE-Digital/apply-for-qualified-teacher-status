@@ -14,6 +14,9 @@ RSpec.describe "Teacher reference", type: :system do
     and_i_see_the_work_history_details
 
     when_i_click_start_now
+    then_i_see_the(:teacher_edit_reference_request_contact_page, slug:)
+
+    when_i_choose_yes_for_contact
     then_i_see_the(:teacher_edit_reference_request_dates_page, slug:)
 
     when_i_choose_yes_for_dates
@@ -29,6 +32,12 @@ RSpec.describe "Teacher reference", type: :system do
     then_i_see_the(:teacher_edit_reference_request_reports_page, slug:)
 
     when_i_choose_yes_for_reports
+    then_i_see_the(:teacher_edit_reference_request_misconduct_page, slug:)
+
+    when_i_choose_no_for_misconduct
+    then_i_see_the(:teacher_edit_reference_request_satisfied_page, slug:)
+
+    when_i_choose_yes_for_satisfied
     then_i_see_the(
       :teacher_edit_reference_request_additional_information_page,
       slug:,
@@ -57,6 +66,10 @@ RSpec.describe "Teacher reference", type: :system do
     teacher_reference_requested_page.start_button.click
   end
 
+  def when_i_choose_yes_for_contact
+    teacher_edit_reference_request_contact_page.submit_yes
+  end
+
   def when_i_choose_yes_for_dates
     teacher_edit_reference_request_dates_page.submit_yes
   end
@@ -77,6 +90,14 @@ RSpec.describe "Teacher reference", type: :system do
     teacher_edit_reference_request_reports_page.submit_yes
   end
 
+  def when_i_choose_no_for_misconduct
+    teacher_edit_reference_request_misconduct_page.submit_no
+  end
+
+  def when_i_choose_yes_for_satisfied
+    teacher_edit_reference_request_satisfied_page.submit_yes
+  end
+
   def when_i_fill_in_additional_information
     teacher_edit_reference_request_additional_information_page.submit(
       additional_information: "Some information.",
@@ -88,37 +109,54 @@ RSpec.describe "Teacher reference", type: :system do
 
     expect(summary_list).to be_visible
 
-    expect(summary_list.rows[0].key.text).to eq(
-      "Did the applicant work at the school for the dates they provided?",
-    )
-    expect(summary_list.rows[0].value.text).to eq("Yes")
+    expect(summary_list.rows[0].key.text).to eq("Your full name")
+    expect(summary_list.rows[0].value.text).to eq("John Smith")
 
-    expect(summary_list.rows[1].key.text).to eq(
-      "Did the applicant normally work more than 30 hours per week in this role?",
-    )
-    expect(summary_list.rows[1].value.text).to eq("Yes")
+    expect(summary_list.rows[1].key.text).to eq("Your job title")
+    expect(summary_list.rows[1].value.text).to eq("Headteacher")
 
-    expect(summary_list.rows[2].key.text).to eq(
-      "Did the applicant work unsupervised with children aged somewhere between 5 and 16 years?",
-    )
+    expect(summary_list.rows[2].key.text).to eq("Are these details correct?")
     expect(summary_list.rows[2].value.text).to eq("Yes")
 
     expect(summary_list.rows[3].key.text).to eq(
-      "Was the applicant solely responsible for planning, preparing and delivering lessons" \
-        " to at least 4 students at a time?",
+      "Did the applicant work at School from 1 January 2020 to 1 January 2023?",
     )
     expect(summary_list.rows[3].value.text).to eq("Yes")
 
     expect(summary_list.rows[4].key.text).to eq(
-      "Was the applicant solely responsible for assessing and reporting on the progress of" \
-        " the students?",
+      "Did the applicant normally work more than 30 hours per week in this role?",
     )
     expect(summary_list.rows[4].value.text).to eq("Yes")
 
     expect(summary_list.rows[5].key.text).to eq(
-      "Is there anything else you’d like to tell us about this applicant?",
+      "Did the applicant teach children aged somewhere between 5 and 16 years?",
     )
-    expect(summary_list.rows[5].value.text).to eq("Some information.")
+    expect(summary_list.rows[5].value.text).to eq("Yes")
+
+    expect(summary_list.rows[6].key.text).to eq(
+      "Did the applicant plan, prepare and deliver lessons to a class of at least 4 students?",
+    )
+    expect(summary_list.rows[6].value.text).to eq("Yes")
+
+    expect(summary_list.rows[7].key.text).to eq(
+      "Was the applicant responsible for assessing and reporting on the progress of the students?",
+    )
+    expect(summary_list.rows[7].value.text).to eq("Yes")
+
+    expect(summary_list.rows[8].key.text).to eq(
+      "Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?",
+    )
+    expect(summary_list.rows[8].value.text).to eq("No")
+
+    expect(summary_list.rows[9].key.text).to eq(
+      "Are you satisfied that the applicant is suitable to work with children?",
+    )
+    expect(summary_list.rows[9].value.text).to eq("Yes")
+
+    expect(summary_list.rows[10].key.text).to eq(
+      "Do you have any other concerns about this applicant? (optional)",
+    )
+    expect(summary_list.rows[10].value.text).to eq("Some information.")
   end
 
   def when_i_submit_the_response
@@ -135,7 +173,13 @@ RSpec.describe "Teacher reference", type: :system do
         :reference_request,
         :requested,
         work_history:
-          create(:work_history, :completed, end_date: Date.new(2023, 1, 1)),
+          create(
+            :work_history,
+            :completed,
+            end_date: Date.new(2023, 1, 1),
+            contact_name: "John Smith",
+            contact_job: "Headteacher",
+          ),
       )
   end
 

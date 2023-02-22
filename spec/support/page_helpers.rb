@@ -283,6 +283,11 @@ module PageHelpers
       PageObjects::TeacherInterface::EditReferenceRequestChildren.new
   end
 
+  def teacher_edit_reference_request_contact_page
+    @teacher_edit_reference_request_contact_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestContact.new
+  end
+
   def teacher_edit_reference_request_dates_page
     @teacher_edit_reference_request_dates_page ||=
       PageObjects::TeacherInterface::EditReferenceRequestDates.new
@@ -298,9 +303,19 @@ module PageHelpers
       PageObjects::TeacherInterface::EditReferenceRequestLessons.new
   end
 
+  def teacher_edit_reference_request_misconduct_page
+    @teacher_edit_reference_request_misconduct_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestMisconduct.new
+  end
+
   def teacher_edit_reference_request_reports_page
     @teacher_edit_reference_request_reports_page ||=
       PageObjects::TeacherInterface::EditReferenceRequestReports.new
+  end
+
+  def teacher_edit_reference_request_satisfied_page
+    @teacher_edit_reference_request_satisfied_page ||=
+      PageObjects::TeacherInterface::EditReferenceRequestSatisfied.new
   end
 
   def teacher_edit_work_history_contact_page

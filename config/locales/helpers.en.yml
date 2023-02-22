@@ -35,8 +35,12 @@ en:
         email: We need to send you a code so that you can sign into the Apply for QTS in England service. Please enter the email address you used to register.
       teacher_interface_qualification_form:
         institution_country_location: This must be the country in which you’re recognised as a teacher.
+      teacher_interface_reference_request_additional_information_response_form:
+        additional_information_response: If you have any other concerns about this applicant’s suitability to teach, use this space to briefly describe them. The applicant will NOT see your comments.
+      teacher_interface_reference_request_children_response_form:
+        children_response: They do not need to have taught this full age range. For example, they may have taught children aged 5 to 11, or 14 to 16.
       teacher_interface_reference_request_hours_response_form:
-        hours_response: This means all the hours they spent working per week for this role (not just the hours they spent teaching students).
+        hours_response: This means all the hours they spent working per week, including time spent teaching as well as other non-teaching activities (such as planning lessons, after-school meetings, running extra-curricular clubs and marking work).
       teacher_interface_registration_number_form:
         registration_number: Your country has an online register of teachers. If you have a registration number, enter it on this screen. If you do not have one, just select ‘Continue’.
       teacher_interface_work_history_school_form:
@@ -139,27 +143,49 @@ en:
       teacher_interface_qualification_form:
         institution_country_location: Country of institution
       teacher_interface_reference_request_additional_information_response_form:
-        additional_information_response: Is there anything else you’d like to tell us about this applicant?
+        additional_information_response: Do you have any other concerns about this applicant? (optional)
       teacher_interface_reference_request_children_response_form:
         children_response_options:
           true: "Yes"
           false: "No"
+        children_comment: Tell us why you answered ‘No’ to this question.
+      teacher_interface_reference_request_contact_response_form:
+        contact_response_options:
+          true: "Yes"
+          false: "No"
+        contact_name: Your full name
+        contact_job: Your job title
+        contact_comment: Any other comments (optional)
       teacher_interface_reference_request_dates_response_form:
         dates_response_options:
           true: "Yes"
           false: "No"
+        dates_comment: Tell us why you answered ‘No’ to this question.
       teacher_interface_reference_request_hours_response_form:
         hours_response_options:
           true: "Yes"
           false: "No"
+        hours_comment: Tell us why you answered ‘No’ to this question.
       teacher_interface_reference_request_lessons_response_form:
         lessons_response_options:
           true: "Yes"
           false: "No"
+        lessons_comment: Tell us why you answered ‘No’ to this question.
       teacher_interface_reference_request_reports_response_form:
         reports_response_options:
           true: "Yes"
           false: "No"
+        reports_comment: Tell us why you answered ‘No’ to this question.
+      teacher_interface_reference_request_misconduct_response_form:
+        misconduct_response_options:
+          true: "Yes"
+          false: "No"
+        misconduct_comment: Tell us why you answered ‘Yes’ to this question.
+      teacher_interface_reference_request_satisfied_response_form:
+        satisfied_response_options:
+          true: "Yes"
+          false: "No"
+        satisfied_comment: Tell us why you answered ‘No’ to this question.
       teacher_interface_registration_number_form:
         registration_number: What is your registration number?
       teacher_interface_subjects_form:
@@ -223,17 +249,25 @@ en:
       teacher_interface_has_work_history_form:
         has_work_history: Have you worked professionally as a teacher?
       teacher_interface_reference_request_children_response_form:
-        children_response: Did the applicant work unsupervised with children aged somewhere between 5 and 16 years?
+        children_response: Did the applicant teach children aged somewhere between 5 and 16 years?
+      teacher_interface_reference_request_contact_response_form:
+        contact_response: Are these details correct?
       teacher_interface_reference_request_dates_response_form:
-        dates_response: Did the applicant work at the school for the dates they provided?
+        dates_response:
+          current: Has the applicant worked at %{school_name} since %{start_date}?
+          previous: Did the applicant work at %{school_name} from %{start_date} to %{end_date}?
       teacher_interface_reference_request_hours_response_form:
         hours_response:
           one: Did the applicant normally work more than 1 hour per week in this role?
           other: Did the applicant normally work more than %{count} hours per week in this role?
       teacher_interface_reference_request_lessons_response_form:
-        lessons_response: Was the applicant solely responsible for planning, preparing and delivering lessons to at least 4 students at a time?
+        lessons_response: Did the applicant plan, prepare and deliver lessons to a class of at least 4 students?
       teacher_interface_reference_request_reports_response_form:
-        reports_response: Was the applicant solely responsible for assessing and reporting on the progress of the students?
+        reports_response: Was the applicant responsible for assessing and reporting on the progress of the students?
+      teacher_interface_reference_request_misconduct_response_form:
+        misconduct_response: Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?
+      teacher_interface_reference_request_satisfied_response_form:
+        satisfied_response: Are you satisfied that the applicant is suitable to work with children?
       teacher_interface_work_history_school_form:
         start_date: When did you start this role?
         still_employed: Are you still employed at this school?

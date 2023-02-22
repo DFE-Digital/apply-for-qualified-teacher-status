@@ -2,38 +2,7 @@
 
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
-<%= render(CheckYourAnswersSummary::Component.new(
-  id: "reference-request-#{@reference_request.id}",
-  model: @reference_request,
-  title: t(".reference_requested"),
-  fields: {
-    dates_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_dates_response_form.dates_response"),
-      href: dates_teacher_interface_reference_request_path,
-    },
-    hours_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_hours_response_form.hours_response", count: @work_history.hours_per_week),
-      href: hours_teacher_interface_reference_request_path,
-    },
-    children_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_children_response_form.children_response"),
-      href: children_teacher_interface_reference_request_path,
-    },
-    lessons_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_lessons_response_form.lessons_response"),
-      href: lessons_teacher_interface_reference_request_path,
-    },
-    reports_response: {
-      title: t("helpers.legend.teacher_interface_reference_request_reports_response_form.reports_response"),
-      href: reports_teacher_interface_reference_request_path,
-    },
-    additional_information_response: {
-      title: t("helpers.label.teacher_interface_reference_request_additional_information_response_form.additional_information_response"),
-      href: additional_information_teacher_interface_reference_request_path,
-    },
-  },
-  changeable: true
-)) %>
+<%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: true %>
 
 <% if @reference_request.responses_given? %>
   <h3 class="govuk-heading-m">Submitting your response</h3>
