@@ -119,7 +119,7 @@ RSpec.describe "Teacher reference", type: :system do
     expect(summary_list.rows[2].value.text).to eq("Yes")
 
     expect(summary_list.rows[3].key.text).to eq(
-      "Did the applicant work at School from 1 January 2020 to 1 January 2023?",
+      "Did the applicant work at School from January 2020 to January 2023?",
     )
     expect(summary_list.rows[3].value.text).to eq("Yes")
 

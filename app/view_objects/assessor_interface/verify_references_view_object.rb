@@ -15,7 +15,7 @@ class AssessorInterface::VerifyReferencesViewObject
       assessment
         .reference_requests
         .includes(:work_history)
-        .order("work_histories.start_date")
+        .order("work_histories.start_date": :desc)
         .to_a
   end
 
