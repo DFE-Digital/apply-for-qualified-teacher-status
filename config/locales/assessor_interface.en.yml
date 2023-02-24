@@ -83,11 +83,11 @@ en:
         heading: Request work history references
       preview_referee:
         heading: Check and send the reference request email
-        button: Send email to referee
+        button: Continue
         cancel: Cancel
       preview_teacher:
         heading: Check and send the email to applicant
-        button: Send email to applicant
+        button: Send emails
         cancel: Cancel
 
     assessment_sections:
