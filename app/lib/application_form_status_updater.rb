@@ -120,7 +120,7 @@ class ApplicationFormStatusUpdater
   end
 
   def waiting_on?(requestables:)
-    requestables.any?(&:requested?)
+    requestables.any?(&:requested?) || requestables.any?(&:expired?)
   end
 
   def received?(requestables:)
