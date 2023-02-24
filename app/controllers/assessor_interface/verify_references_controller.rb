@@ -6,7 +6,11 @@ module AssessorInterface
 
     def index
       @view_object = VerifyReferencesViewObject.new(assessment:)
-      @form = VerifyReferencesForm.new(assessment:)
+      @form =
+        VerifyReferencesForm.new(
+          assessment:,
+          references_verified: assessment.references_verified,
+        )
     end
 
     def update
