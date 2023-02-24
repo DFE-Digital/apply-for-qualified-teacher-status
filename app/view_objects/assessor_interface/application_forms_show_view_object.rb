@@ -136,7 +136,19 @@ class AssessorInterface::ApplicationFormsShowViewObject
       case item
       when :reference_requests
         return :completed if assessment.references_verified
-        application_form.received_reference ? :received : :waiting_on
+
+        if application_form.received_reference &&
+             application_form.waiting_on_reference
+          unreviewed_requests =
+            reference_requests.filter(&:received?).reject(&:reviewed?)
+          unreviewed_requests.empty? ? :waiting_on : :received
+        elsif application_form.received_reference
+          :received
+        elsif application_form.waiting_on_reference
+          :waiting_on
+        else
+          :cannot_start
+        end
       when :qualification_requests
         application_form.received_qualification ? :received : :waiting_on
       when :assessment_recommendation

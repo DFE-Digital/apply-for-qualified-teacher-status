@@ -30,6 +30,10 @@ module Requestable
     update!(passed:, reviewed_at: Time.zone.now)
   end
 
+  def reviewed?
+    passed != nil
+  end
+
   def failed
     return nil if passed.nil?
     passed == false
