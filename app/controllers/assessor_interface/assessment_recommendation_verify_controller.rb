@@ -69,7 +69,7 @@ module AssessorInterface
                       :assessment_recommendation_verify,
                     ]
       else
-        render :edit, status: :unprocessable_entity
+        render :edit_reference_requests, status: :unprocessable_entity
       end
     end
 
