@@ -255,7 +255,7 @@ en:
         teacher_interface/reference_request_children_response_form:
           attributes:
             children_response:
-              inclusion: Tell us whether the applicant worked unsupervised with children aged somewhere between 5 and 16 years
+              inclusion: Tell us whether the applicant taught children aged somewhere between 5 and 16 years?
             children_comment:
               blank: Tell us why you answered ‘No’ to this question.
         teacher_interface/reference_request_contact_response_form:
@@ -275,13 +275,13 @@ en:
         teacher_interface/reference_request_hours_response_form:
           attributes:
             hours_response:
-              inclusion: Tell us whether the applicant worked at the school for approximately the number of hours per week they provided
+              inclusion: Tell us whether the applicant normally worked for approximately the number of hours per week in this role
             hours_comment:
               blank: Tell us why you answered ‘No’ to this question.
         teacher_interface/reference_request_lessons_response_form:
           attributes:
             lessons_response:
-              inclusion: Tell us whether the applicant was solely responsible for planning, preparing and delivering lessons to at least 4 students at a time
+              inclusion: Tell us whether the applicant planned, prepared and delivered lessons to a class of at least 4 students
             lessons_comment:
               blank: Tell us why you answered ‘No’ to this question.
         teacher_interface/reference_request_misconduct_response_form:
@@ -293,7 +293,7 @@ en:
         teacher_interface/reference_request_reports_response_form:
           attributes:
             reports_response:
-              inclusion: Tell us whether the applicant was solely responsible for assessing and reporting on the progress of the students
+              inclusion: Tell us whether the applicant was responsible for assessing and reporting on the progress of the students
             reports_comment:
               blank: Tell us why you answered ‘No’ to this question.
         teacher_interface/reference_request_satisfied_response_form:

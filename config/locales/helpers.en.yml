@@ -258,14 +258,14 @@ en:
           previous: Did the applicant work at %{school_name} from %{start_date} to %{end_date}?
       teacher_interface_reference_request_hours_response_form:
         hours_response:
-          one: Did the applicant normally work more than 1 hour per week in this role?
-          other: Did the applicant normally work more than %{count} hours per week in this role?
+          one: Did the applicant normally work 1 hour per week in this role?
+          other: Did the applicant normally work %{count} hours per week in this role?
       teacher_interface_reference_request_lessons_response_form:
         lessons_response: Did the applicant plan, prepare and deliver lessons to a class of at least 4 students?
-      teacher_interface_reference_request_reports_response_form:
-        reports_response: Was the applicant responsible for assessing and reporting on the progress of the students?
       teacher_interface_reference_request_misconduct_response_form:
         misconduct_response: Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?
+      teacher_interface_reference_request_reports_response_form:
+        reports_response: Was the applicant responsible for assessing and reporting on the progress of the students?
       teacher_interface_reference_request_satisfied_response_form:
         satisfied_response: Are you satisfied that the applicant is suitable to work with children?
       teacher_interface_work_history_school_form:
