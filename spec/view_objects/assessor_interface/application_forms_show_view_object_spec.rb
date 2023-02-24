@@ -218,7 +218,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       context "with reference requests item" do
         let(:item) { :reference_requests }
-        it { is_expected.to be_nil }
+
+        it do
+          is_expected.to eq(
+            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
+              "/verify-references",
+          )
+        end
       end
     end
   end

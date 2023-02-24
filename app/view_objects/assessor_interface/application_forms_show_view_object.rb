@@ -103,12 +103,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
           qualification_request,
         )
       when :reference_requests
-        if application_form.received_reference
-          url_helpers.assessor_interface_application_form_assessment_verify_references_path(
-            application_form,
-            assessment,
-          )
-        end
+        url_helpers.assessor_interface_application_form_assessment_verify_references_path(
+          application_form,
+          assessment,
+        )
       end
     end
   end
