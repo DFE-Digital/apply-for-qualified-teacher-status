@@ -70,6 +70,7 @@ module TeacherInterface
         ReferenceRequestDatesResponseForm.new(
           reference_request:,
           dates_response: reference_request.dates_response,
+          dates_comment: reference_request.dates_comment,
         )
     end
 
@@ -96,6 +97,7 @@ module TeacherInterface
         ReferenceRequestHoursResponseForm.new(
           reference_request:,
           hours_response: reference_request.hours_response,
+          hours_comment: reference_request.hours_comment,
         )
     end
 
@@ -120,6 +122,7 @@ module TeacherInterface
         ReferenceRequestChildrenResponseForm.new(
           reference_request:,
           children_response: reference_request.children_response,
+          children_comment: reference_request.children_comment,
         )
     end
 
@@ -142,6 +145,7 @@ module TeacherInterface
         ReferenceRequestLessonsResponseForm.new(
           reference_request:,
           lessons_response: reference_request.lessons_response,
+          lessons_comment: reference_request.lessons_comment,
         )
     end
 
@@ -164,6 +168,7 @@ module TeacherInterface
         ReferenceRequestReportsResponseForm.new(
           reference_request:,
           reports_response: reference_request.reports_response,
+          reports_comment: reference_request.reports_comment,
         )
     end
 
@@ -186,6 +191,7 @@ module TeacherInterface
         ReferenceRequestMisconductResponseForm.new(
           reference_request:,
           misconduct_response: reference_request.misconduct_response,
+          misconduct_comment: reference_request.misconduct_comment,
         )
     end
 
@@ -208,6 +214,7 @@ module TeacherInterface
         ReferenceRequestSatisfiedResponseForm.new(
           reference_request:,
           satisfied_response: reference_request.satisfied_response,
+          satisfied_comment: reference_request.satisfied_comment,
         )
     end
 
