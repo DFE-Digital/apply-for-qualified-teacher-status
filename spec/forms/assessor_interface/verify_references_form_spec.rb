@@ -22,7 +22,7 @@ RSpec.describe AssessorInterface::VerifyReferencesForm, type: :model do
 
       it "updates ApplicationForm#verify_references_status" do
         expect { form.save }.to change(assessment, :references_verified).from(
-          false,
+          nil,
         ).to(true)
       end
     end
