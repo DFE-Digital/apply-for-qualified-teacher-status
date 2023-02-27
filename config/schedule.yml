@@ -8,12 +8,19 @@ update_working_days_since_submission:
 
 expire_further_information_requests:
   cron: "0 2 * * *"
-  class: ExpireFurtherInformationRequestsJob
+  class: ExpireRequestablesJob
+  args: ["FurtherInformationRequest"]
 
-send_further_information_request_reminders:
-  cron: "30 2 * * *"
-  class: SendFurtherInformationRequestRemindersJob
+expire_professional_standing_requests:
+  cron: "10 2 * * *"
+  class: ExpireRequestablesJob
+  args: ["ProfessionalStandingRequest"]
 
 expire_reference_requests:
+  cron: "20 2 * * *"
+  class: ExpireRequestablesJob
+  args: ["ReferenceRequest"]
+
+send_further_information_request_reminders:
   cron: "0 3 * * *"
-  class: ExpireReferenceRequestsJob
+  class: SendFurtherInformationRequestRemindersJob
