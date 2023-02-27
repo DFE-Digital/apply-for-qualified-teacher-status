@@ -11,7 +11,12 @@ class AssessorInterface::RequestableForm
   def save
     return false if invalid?
 
-    ReviewRequestable.call(requestable:, user:, passed:)
+    ReviewRequestable.call(
+      requestable:,
+      user:,
+      passed:,
+      failure_assessor_note: "",
+    )
 
     true
   end

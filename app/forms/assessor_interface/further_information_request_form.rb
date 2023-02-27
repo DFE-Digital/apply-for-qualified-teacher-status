@@ -20,9 +20,7 @@ class AssessorInterface::FurtherInformationRequestForm
       requestable: further_information_request,
       user:,
       passed:,
-      attributes: {
-        failure_assessor_note:,
-      },
+      failure_assessor_note:,
     )
 
     true

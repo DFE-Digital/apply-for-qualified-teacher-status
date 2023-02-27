@@ -3,18 +3,18 @@
 class ReviewRequestable
   include ServicePattern
 
-  def initialize(requestable:, user:, passed:, attributes: {})
+  def initialize(requestable:, user:, passed:, failure_assessor_note:)
     @requestable = requestable
     @user = user
     @passed = passed
-    @attributes = attributes
+    @failure_assessor_note = failure_assessor_note
   end
 
   def call
     raise NotReceived unless requestable.received?
 
     ActiveRecord::Base.transaction do
-      requestable.assign_attributes(attributes)
+      requestable.failure_assessor_note = failure_assessor_note
       requestable.reviewed!(passed)
       requestable.after_reviewed(user:)
 
@@ -29,7 +29,7 @@ class ReviewRequestable
 
   private
 
-  attr_reader :requestable, :user, :passed, :attributes
+  attr_reader :requestable, :user, :passed, :failure_assessor_note
 
   def create_timeline_event
     unless requestable.passed.nil?
