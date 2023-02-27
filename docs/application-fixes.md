@@ -52,7 +52,7 @@ assessment = application_form.assessment
 further_information_request = assessment.further_information_requests.first
 
 # delete the FI requests and reset the assessment state
-TimelineEvent.where(further_information_request:).destroy_all
+TimelineEvent.where(requestable: further_information_request).destroy_all
 further_information_request.destroy!
 assessment.update!(recommendation: "unknown", recommended_at: nil)
 
