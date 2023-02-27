@@ -11,6 +11,8 @@ class ReviewRequestable
   end
 
   def call
+    raise NotReceived unless requestable.received?
+
     ActiveRecord::Base.transaction do
       requestable.assign_attributes(attributes)
       requestable.reviewed!(passed)
@@ -20,6 +22,9 @@ class ReviewRequestable
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
+  end
+
+  class NotReceived < StandardError
   end
 
   private
