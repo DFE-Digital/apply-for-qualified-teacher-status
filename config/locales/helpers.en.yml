@@ -77,15 +77,6 @@ en:
         name: Applicant name
         reference: Application reference number
         email: Applicant email
-      assessor_interface_further_information_request_form:
-        passed_options:
-          true: "Yes"
-          false: "No"
-        failure_assessor_note: Explain why this section is not completed to your satisfaction
-      assessor_interface_requestable_form:
-        passed_options:
-          true: "Yes"
-          false: "No"
       assessor_interface_requestable_location_form:
         received:
           professional_standing_request: The letter of professional standing has been received.
@@ -236,10 +227,6 @@ en:
         submitted_at: Created date
         submitted_at_after: Start date
         submitted_at_before: End date
-      assessor_interface_further_information_request_form:
-        passed: Has the applicant completed this section to your satisfaction?
-      assessor_interface_requestable_form:
-        passed: Are you satisfied that this reference should count towards the applicant’s work experience?
       assessor_interface_work_history_reference_request_form:
         work_history_ids: School
       eligibility_interface_region_form:
