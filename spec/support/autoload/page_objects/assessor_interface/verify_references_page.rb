@@ -14,7 +14,7 @@ module PageObjects
         element :yes_radio_item,
                 "#assessor-interface-verify-references-form-references-verified-true-field",
                 visible: false
-        element :continue_button, ".govuk-button"
+        element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
       end
     end
   end

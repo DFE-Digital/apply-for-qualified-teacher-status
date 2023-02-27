@@ -11,6 +11,8 @@ module AssessorInterface
           assessment:,
           references_verified: assessment.references_verified,
         )
+
+      render layout: "application"
     end
 
     def update
