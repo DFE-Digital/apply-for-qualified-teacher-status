@@ -286,7 +286,8 @@
     - id
     - created_at
     - updated_at
-    - further_information_request_id
+    - requestable_id
+    - requestable_type
   :selected_failure_reasons:
     - id
     - created_at
