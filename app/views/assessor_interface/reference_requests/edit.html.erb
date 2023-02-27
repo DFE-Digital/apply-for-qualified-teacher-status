@@ -1,13 +1,16 @@
-<% work_history = @reference_request.work_history %>
-
-<h1 class="govuk-heading-xl"><%= t("assessor_interface.reference_requests.edit.title") %></h1>
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".title")}" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@form.application_form) %>
 
 <%= form_with(
-  model: @form,
-  url: [:assessor_interface, @form.application_form, @form.assessment, @reference_request],
-  method: :put
-) do |f| %>
+      model: @form,
+      url: [:assessor_interface, @form.application_form, @form.assessment, @reference_request],
+      method: :put
+    ) do |f| %>
   <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+  <% work_history = @reference_request.work_history %>
 
   <table class="govuk-table">
     <caption class="govuk-table__caption govuk-table__caption--m">Reference details</caption>
@@ -27,28 +30,16 @@
     </tbody>
   </table>
 
-  <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
+  <% if @reference_request.received? %>
+    <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
 
-  <%= f.govuk_radio_buttons_fieldset(
-    :passed,
-    legend: {
-      text: "Are you satisfied that this reference should count towards the applicant’s work experience?",
-      size: "s"
-    }) do %>
-    <%= f.govuk_radio_button(
-        :passed,
-        :true,
-        link_errors: true,
-        label: { text: "Yes" },
-      ) %>
-    <%= f.govuk_radio_button(
-      :passed,
-      :false,
-      label: { text: "No" },
-    ) %>
-  <% end %>
+    <%= f.govuk_radio_buttons_fieldset :passed, legend: { size: "s" } do %>
+      <%= f.govuk_radio_button :passed, :true, link_errors: true, label: { text: "Yes" } %>
+      <%= f.govuk_radio_button :passed, :false, label: { text: "No" } %>
+    <% end %>
 
-  <%= f.govuk_submit prevent_double_click: false do %>
-    <%= govuk_link_to "Cancel", [:assessor_interface, @form.application_form] %>
+    <%= f.govuk_submit do %>
+      <%= govuk_link_to "Cancel", [:assessor_interface, @form.application_form] %>
+    <% end %>
   <% end %>
 <% end %>

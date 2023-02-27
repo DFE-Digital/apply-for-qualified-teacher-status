@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::FurtherInformationRequestForm, type: :model do
-  let(:further_information_request) { create(:further_information_request) }
+  let(:further_information_request) do
+    create(:further_information_request, :received)
+  end
   let(:user) { create(:staff, :confirmed) }
   let(:attributes) { {} }
 

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ReviewRequestable do
-  let(:requestable) { create(:further_information_request) }
+  let(:requestable) { create(:further_information_request, :received) }
   let(:user) { create(:staff) }
   let(:passed) { true }
 
@@ -27,5 +27,21 @@ RSpec.describe ReviewRequestable do
       creator: user,
       requestable:,
     )
+  end
+
+  context "with a requested requestabled" do
+    let(:requestable) { create(:reference_request, :requested) }
+
+    it "raises an error" do
+      expect { call }.to raise_error(ReviewRequestable::NotReceived)
+    end
+  end
+
+  context "with an expired requestabled" do
+    let(:requestable) { create(:qualification_request, :expired) }
+
+    it "raises an error" do
+      expect { call }.to raise_error(ReviewRequestable::NotReceived)
+    end
   end
 end
