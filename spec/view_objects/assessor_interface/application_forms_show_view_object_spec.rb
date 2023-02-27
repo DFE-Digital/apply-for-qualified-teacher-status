@@ -219,6 +219,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "with reference requests item" do
         let(:item) { :reference_requests }
 
+        before do
+          create(:reference_request, :requested, assessment:)
+          application_form.update!(waiting_on_reference: true)
+        end
+
         it do
           is_expected.to eq(
             "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
