@@ -5,26 +5,25 @@
   model: reference_request,
   title: "Reference requested",
   fields: {
-    original_contact_name: {
+    original_contact_name: !changeable ? {
       title: t("helpers.label.teacher_interface_reference_request_contact_response_form.contact_name"),
       value: work_history.contact_name,
-    },
-    original_contact_job: {
+    } : nil,
+    original_contact_job: !changeable ? {
       title: t("helpers.label.teacher_interface_reference_request_contact_response_form.contact_job"),
       value: work_history.contact_job,
-    },
-    contact_response: {
+    } : nil,
+    contact_response: !changeable ? {
       title: t("helpers.legend.teacher_interface_reference_request_contact_response_form.contact_response"),
-      href: contact_teacher_interface_reference_request_path(reference_request.slug),
-    },
-    contact_name: reference_request.contact_response ? nil : {
+    } : nil,
+    contact_name: reference_request.contact_response && !changeable ? nil : {
       title: t("helpers.label.teacher_interface_reference_request_contact_response_form.contact_name"),
-      value: reference_request.contact_name.presence,
+      value: reference_request.contact_name.presence || work_history.contact_name,
       href: contact_teacher_interface_reference_request_path(reference_request.slug),
     },
-    contact_job: reference_request.contact_response ? nil : {
+    contact_job: reference_request.contact_response && !changeable ? nil : {
       title: t("helpers.label.teacher_interface_reference_request_contact_response_form.contact_job"),
-      value: reference_request.contact_job.presence,
+      value: reference_request.contact_job.presence || work_history.contact_job,
       href: contact_teacher_interface_reference_request_path(reference_request.slug),
     },
     contact_comment: reference_request.contact_response ? nil : {
