@@ -70,6 +70,18 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       end
     end
 
+    context "and an expired professional standing request" do
+      before { create(:professional_standing_request, :expired, assessment:) }
+
+      it do
+        is_expected.to match(/Your QTS application has been declined/)
+        is_expected.to match(
+          /we did not receive your letter that proves you’re recognised as a teacher/,
+        )
+        is_expected.to match(/from teaching authority within the 90-day period/)
+      end
+    end
+
     context "and with sanctions" do
       before do
         create(:assessment_section, :declines_with_sanctions, assessment:)

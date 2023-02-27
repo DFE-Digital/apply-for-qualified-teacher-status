@@ -22,6 +22,10 @@ class TeacherInterface::ApplicationFormShowViewObject
       assessment&.further_information_requests&.first
   end
 
+  def professional_standing_request
+    @professional_standing_request ||= assessment&.professional_standing_request
+  end
+
   def started_at
     application_form.created_at.strftime("%e %B %Y")
   end
@@ -149,11 +153,17 @@ class TeacherInterface::ApplicationFormShowViewObject
     further_information_request.present? && further_information_request.expired?
   end
 
+  def show_professional_standing_request_expired_content?
+    professional_standing_request.present? &&
+      professional_standing_request.expired?
+  end
+
   private
 
   delegate :needs_work_history,
            :needs_written_statement,
            :needs_registration_number,
+           :region,
            to: :application_form,
            allow_nil: true
 
