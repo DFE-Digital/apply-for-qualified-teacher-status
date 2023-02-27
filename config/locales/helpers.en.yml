@@ -91,6 +91,10 @@ en:
           professional_standing_request: The letter of professional standing has been received.
           qualification_request: The qualification has been received.
         location_note: Where can the assessor find it?
+      assessor_interface_requestable_review_form:
+        passed_options:
+          true: "Yes"
+          false: "No"
       eligibility_interface_country_form:
         location: In which country are you currently recognised as a teacher?
       eligibility_interface_work_experience_form:
