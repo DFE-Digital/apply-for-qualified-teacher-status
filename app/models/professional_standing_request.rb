@@ -32,4 +32,8 @@ class ProfessionalStandingRequest < ApplicationRecord
   def expires_after
     18.weeks # 90 working days
   end
+
+  def after_expired(user:)
+    DeclineQTS.call(application_form:, user:)
+  end
 end

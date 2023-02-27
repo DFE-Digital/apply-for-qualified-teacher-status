@@ -18,7 +18,7 @@ RSpec.describe ExpireRequestable do
       end
     end
 
-    shared_examples_for "expiring a further information request" do
+    shared_examples_for "declining the application" do
       it "declines the application" do
         expect(subject.assessment.application_form).to be_declined
       end
@@ -39,7 +39,7 @@ RSpec.describe ExpireRequestable do
         let(:created_at) { (6.weeks + 1.hour).ago }
 
         it_behaves_like "expiring a requestable"
-        it_behaves_like "expiring a further information request"
+        it_behaves_like "declining the application"
       end
 
       context "when the applicant is from a country with a 4 week expiry" do
@@ -62,7 +62,7 @@ RSpec.describe ExpireRequestable do
               let(:created_at) { (4.weeks + 1.hour).ago }
 
               it_behaves_like "expiring a requestable"
-              it_behaves_like "expiring a further information request"
+              it_behaves_like "declining the application"
             end
           end
         end
@@ -80,6 +80,43 @@ RSpec.describe ExpireRequestable do
     context "with any expired FI request" do
       let(:requestable) do
         create(:further_information_request, :expired, created_at: 1.year.ago)
+      end
+
+      it { is_expected.to be_expired }
+    end
+
+    context "with a requested professional standing request" do
+      let(:requestable) { create(:professional_standing_request, created_at:) }
+
+      context "when less than 18 weeks old" do
+        let(:created_at) { (18.weeks - 1.hour).ago }
+
+        it { is_expected.to be_requested }
+      end
+
+      context "when it is more than 18 weeks old" do
+        let(:created_at) { (18.weeks + 1.hour).ago }
+
+        it_behaves_like "expiring a requestable"
+        it_behaves_like "declining the application"
+      end
+    end
+
+    context "with any received professional standing request" do
+      let(:requestable) do
+        create(
+          :professional_standing_request,
+          :received,
+          created_at: 1.year.ago,
+        )
+      end
+
+      it { is_expected.to be_received }
+    end
+
+    context "with any expired professional standing request" do
+      let(:requestable) do
+        create(:professional_standing_request, :expired, created_at: 1.year.ago)
       end
 
       it { is_expected.to be_expired }
