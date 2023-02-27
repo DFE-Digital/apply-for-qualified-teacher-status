@@ -5,31 +5,28 @@ require "rails_helper"
 RSpec.describe ExpireRequestablesJob, type: :job do
   shared_examples "a job which expires requestables" do |class_name, factory_name|
     describe "#perform" do
-      subject { described_class.new.perform(class_name) }
+      subject(:perform) { described_class.new.perform(class_name) }
 
       let!(:requested_requestable) { create(factory_name, :requested) }
       let!(:received_requestable) { create(factory_name, :received) }
       let!(:expired_requestable) { create(factory_name, :expired) }
 
       it "enqueues a job for each 'requested' #{class_name}s" do
-        expect(ExpireRequestableJob).to receive(:perform_later).with(
-          requestable: requested_requestable,
+        expect { perform }.to have_enqueued_job(ExpireRequestableJob).with(
+          requested_requestable,
         )
-        subject
       end
 
       it "doesn't enqueue a job for 'received' #{class_name}s" do
-        expect(ExpireRequestableJob).not_to receive(:perform_later).with(
-          requestable: received_requestable,
+        expect { perform }.to_not have_enqueued_job(ExpireRequestableJob).with(
+          received_requestable,
         )
-        subject
       end
 
       it "doesn't enqueue a job for 'expired' #{class_name}s" do
-        expect(ExpireRequestableJob).not_to receive(:perform_later).with(
-          requestable: expired_requestable,
+        expect { perform }.to_not have_enqueued_job(ExpireRequestableJob).with(
+          expired_requestable,
         )
-        subject
       end
     end
   end
