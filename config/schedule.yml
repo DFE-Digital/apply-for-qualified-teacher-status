@@ -28,3 +28,7 @@ expire_reference_requests:
 send_further_information_request_reminders:
   cron: "0 3 * * *"
   class: SendFurtherInformationRequestRemindersJob
+
+send_reference_request_reminders:
+  cron: "30 3 * * *"
+  class: SendReferenceRequestRemindersJob
