@@ -40,4 +40,9 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
       it { is_expected.to validate_presence_of(:location_note) }
     end
   end
+
+  describe "#expires_after" do
+    subject(:expires_after) { described_class.new.expires_after }
+    it { is_expected.to eq(18.weeks) }
+  end
 end

@@ -28,4 +28,8 @@ class ProfessionalStandingRequest < ApplicationRecord
   with_options if: :received? do
     validates :location_note, presence: true
   end
+
+  def expires_after
+    18.weeks # 90 working days
+  end
 end
