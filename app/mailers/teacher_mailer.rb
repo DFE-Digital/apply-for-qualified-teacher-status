@@ -23,6 +23,17 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def application_not_submitted
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject:
+        I18n.t(
+          "mailer.teacher.application_not_submitted.subject.#{params[:duration]}",
+        ),
+    )
+  end
+
   def application_received
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
