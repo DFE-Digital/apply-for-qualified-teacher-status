@@ -24,13 +24,14 @@ class TeacherMailer < ApplicationMailer
   end
 
   def application_not_submitted
+    @duration = params[:duration]
+    @destruction_date = (application_form.created_at + 6.months).to_date
+
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
       to: teacher.email,
       subject:
-        I18n.t(
-          "mailer.teacher.application_not_submitted.subject.#{params[:duration]}",
-        ),
+        I18n.t("mailer.teacher.application_not_submitted.subject.#{@duration}"),
     )
   end
 

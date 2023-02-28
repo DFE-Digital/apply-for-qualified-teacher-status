@@ -14,6 +14,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       given_names: "First",
       family_name: "Last",
       assessment:,
+      created_at: Date.new(2020, 1, 1),
     )
   end
 
@@ -100,20 +101,28 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       context "with two weeks to go" do
         let(:duration) { "two_weeks" }
-        it { is_expected.to eq("Your QTS application has not been submitted") }
+        it do
+          is_expected.to eq(
+            "Your draft QTS application will be deleted in 2 weeks",
+          )
+        end
       end
 
       context "with one week to go" do
         let(:duration) { "one_week" }
         it do
-          is_expected.to eq("Your QTS application will be deleted in 1 week")
+          is_expected.to eq(
+            "Your draft QTS application will be deleted in 1 week",
+          )
         end
       end
 
       context "with two days to go" do
         let(:duration) { "two_days" }
         it do
-          is_expected.to eq("Your QTS application will be deleted in 2 days")
+          is_expected.to eq(
+            "Your draft QTS application will be deleted in 2 days",
+          )
         end
       end
     end
@@ -128,8 +137,50 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body.encoded }
 
       it { is_expected.to include("Dear First Last") }
-      it { is_expected.to include("you have a draft application") }
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
+
+      context "with two weeks to go" do
+        let(:duration) { "two_weeks" }
+
+        it do
+          is_expected.to include(
+            "We’ve noticed that you have a draft application for qualified " \
+              "teacher status (QTS) that has not been submitted.",
+          )
+        end
+        it do
+          is_expected.to include(
+            "We need to let you know that if you do not complete and submit " \
+              "your application by 1 July 2020 we’ll delete the application.",
+          )
+        end
+      end
+
+      context "with one week to go" do
+        let(:duration) { "one_week" }
+
+        it do
+          is_expected.to include(
+            "We contacted you a week ago about your draft application for qualified teacher status (QTS).",
+          )
+        end
+        it do
+          is_expected.to include(
+            "If you do not complete and submit your application by 1 July 2020 we’ll delete the application.",
+          )
+        end
+      end
+
+      context "with two days to go" do
+        let(:duration) { "two_days" }
+
+        it do
+          is_expected.to include(
+            "Your draft application for qualified teacher status (QTS) will be " \
+              "deleted in 2 days on 1 July 2020 if you do not complete and submit it before then.",
+          )
+        end
+      end
     end
 
     it_behaves_like "an observable mailer", "application_not_submitted"
