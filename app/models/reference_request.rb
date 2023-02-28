@@ -52,7 +52,7 @@ class ReferenceRequest < ApplicationRecord
   has_secure_token :slug
 
   belongs_to :work_history
-  has_many :reminder_emails, as: :requestable
+  has_many :reminder_emails, as: :remindable
 
   with_options if: :received? do
     validates :contact_response, inclusion: [true, false]

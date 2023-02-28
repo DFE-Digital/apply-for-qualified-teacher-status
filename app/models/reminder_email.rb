@@ -4,16 +4,16 @@
 #
 # Table name: reminder_emails
 #
-#  id               :bigint           not null, primary key
-#  requestable_type :string           default(""), not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  requestable_id   :bigint           not null
+#  id              :bigint           not null, primary key
+#  remindable_type :string           default(""), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  remindable_id   :bigint           not null
 #
 # Indexes
 #
-#  index_reminder_emails_on_requestable_type_and_requestable_id  (requestable_type,requestable_id)
+#  index_reminder_emails_on_remindable_type_and_remindable_id  (remindable_type,remindable_id)
 #
 class ReminderEmail < ApplicationRecord
-  belongs_to :requestable, inverse_of: :reminder_emails, polymorphic: true
+  belongs_to :remindable, inverse_of: :reminder_emails, polymorphic: true
 end

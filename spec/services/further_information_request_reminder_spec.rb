@@ -22,7 +22,7 @@ RSpec.describe FurtherInformationRequestReminder do
     shared_examples_for "an FI request that triggers a reminder" do
       it "logs an email" do
         expect { subject }.to change {
-          ReminderEmail.where(requestable: further_information_request).count
+          ReminderEmail.where(remindable: further_information_request).count
         }.by(1)
       end
 

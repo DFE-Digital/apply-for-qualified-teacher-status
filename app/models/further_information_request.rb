@@ -27,7 +27,7 @@ class FurtherInformationRequest < ApplicationRecord
            inverse_of: :further_information_request,
            dependent: :destroy
 
-  has_many :reminder_emails, as: :requestable
+  has_many :reminder_emails, as: :remindable
 
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
 

@@ -22,7 +22,7 @@ RSpec.describe ReferenceRequestReminder do
     shared_examples_for "a reference request that triggers a reminder" do
       it "logs an email" do
         expect { subject }.to change {
-          ReminderEmail.where(requestable: reference_request).count
+          ReminderEmail.where(remindable: reference_request).count
         }.by(1)
       end
 
