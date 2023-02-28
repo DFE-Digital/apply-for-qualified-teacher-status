@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe ExpireRequestableJob do
   describe "#perform" do
-    subject(:perform) { described_class.new.perform(requestable:) }
+    subject(:perform) { described_class.new.perform(requestable) }
 
     let(:requestable) { build(:further_information_request) }
 

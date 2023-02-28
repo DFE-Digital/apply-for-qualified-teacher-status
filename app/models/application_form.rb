@@ -162,6 +162,14 @@ class ApplicationForm < ApplicationRecord
           )
         }
 
+  scope :destroyable,
+        -> {
+          draft
+            .where("created_at < ?", 6.months.ago)
+            .or(awarded.where("awarded_at < ?", 5.years.ago))
+            .or(declined.where("declined_at < ?", 5.years.ago))
+        }
+
   def assign_reference
     return if reference.present?
 
