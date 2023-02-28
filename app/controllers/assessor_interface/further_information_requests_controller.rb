@@ -37,9 +37,9 @@ module AssessorInterface
     def edit
       authorize :assessor, :show?
 
-      @further_information_request_form =
-        FurtherInformationRequestForm.new(
-          further_information_request: view_object.further_information_request,
+      @form =
+        RequestableReviewForm.new(
+          requestable: view_object.further_information_request,
           user: current_staff,
           passed: view_object.further_information_request.passed,
           failure_assessor_note:
@@ -48,16 +48,15 @@ module AssessorInterface
     end
 
     def update
-      @further_information_request_form =
-        FurtherInformationRequestForm.new(
-          further_information_request_form.merge(
-            further_information_request:
-              view_object.further_information_request,
+      @form =
+        RequestableReviewForm.new(
+          requestable_review_form_params.merge(
+            requestable: view_object.further_information_request,
             user: current_staff,
           ),
         )
 
-      if @further_information_request_form.save
+      if @form.save
         redirect_to [
                       :edit,
                       :assessor_interface,
@@ -114,10 +113,11 @@ module AssessorInterface
       @view_object ||= FurtherInformationRequestViewObject.new(params:)
     end
 
-    def further_information_request_form
-      params.require(
-        :assessor_interface_further_information_request_form,
-      ).permit(:passed, :failure_assessor_note)
+    def requestable_review_form_params
+      params.require(:assessor_interface_requestable_review_form).permit(
+        :passed,
+        :failure_assessor_note,
+      )
     end
   end
 end

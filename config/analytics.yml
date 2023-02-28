@@ -258,6 +258,7 @@
     - created_at
     - updated_at
     - passed
+    - failure_assessor_note
     - reviewed_at
   :regions:
     - id

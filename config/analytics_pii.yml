@@ -37,6 +37,7 @@
     - location_note
   :reference_requests:
     - additional_information_response
+    - failure_assessor_note
   :selected_failure_reasons:
     - assessor_feedback
   :staff:

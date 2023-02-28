@@ -14,6 +14,7 @@
 #  contact_response                :boolean
 #  dates_comment                   :text             default(""), not null
 #  dates_response                  :boolean
+#  failure_assessor_note           :string           default(""), not null
 #  hours_comment                   :text             default(""), not null
 #  hours_response                  :boolean
 #  lessons_comment                 :text             default(""), not null

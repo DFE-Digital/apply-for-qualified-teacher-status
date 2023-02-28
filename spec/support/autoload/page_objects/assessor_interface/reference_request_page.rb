@@ -20,7 +20,7 @@ module PageObjects
 
       section :form, "form" do
         element :yes_radio_item,
-                "#assessor-interface-requestable-form-passed-true-field",
+                "#assessor-interface-requestable-review-form-passed-true-field",
                 visible: false
         element :continue_button, ".govuk-button"
       end

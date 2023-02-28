@@ -201,6 +201,8 @@ en:
       edit:
         title: Review further information from applicant
         check_your_answers: Further information requested
+        passed: Has the applicant completed this section to your satisfaction?
+        failure_assessor_note: Explain why this section is not completed to your satisfaction
 
     professional_standing_requests:
       edit:
@@ -209,9 +211,12 @@ en:
     qualification_requests:
       edit:
         title: Qualification verification – response received
+
     reference_requests:
       edit:
         title: Review work reference
+        passed: Are you satisfied that this reference should count towards the applicant’s work experience?
+        failure_assessor_note: Explain why this reference should not count towards the applicant’s work experience
 
   activemodel:
     errors:
@@ -319,12 +324,6 @@ en:
               blank: Enter a note to the applicant
             written_statement_recent_notes:
               blank: Enter a note to the applicant
-        assessor_interface/further_information_request_form:
-          attributes:
-            passed:
-              inclusion: Select whether the applicant completed this section to your satisfaction
-            failure_assessor_note:
-              blank: Enter why this section is not completed to your satisfaction
         assessor_interface/induction_required_form:
           attributes:
             induction_required:
@@ -333,6 +332,12 @@ en:
           attributes:
             location_note:
               blank: Enter where the assessor can find it
+        assessor_interface/requestable_review_form:
+          attributes:
+            passed:
+              inclusion: Select whether the you are satisfied
+            failure_assessor_note:
+              blank: Enter why you are not satisfied
         assessor_interface/work_history_reference_request_form:
           attributes:
             work_history_ids:

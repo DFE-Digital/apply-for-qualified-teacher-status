@@ -2,12 +2,15 @@
 
 require "rails_helper"
 
-RSpec.describe AssessorInterface::RequestableForm, type: :model do
+RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
   let(:requestable) { create(:reference_request, :received) }
   let(:user) { create(:staff) }
   let(:passed) { nil }
+  let(:failure_assessor_note) { "" }
 
-  subject(:form) { described_class.new(requestable:, user:, passed:) }
+  subject(:form) do
+    described_class.new(requestable:, user:, passed:, failure_assessor_note:)
+  end
 
   describe "#save" do
     subject(:save) { form.save }
@@ -42,9 +45,16 @@ RSpec.describe AssessorInterface::RequestableForm, type: :model do
 
     context "when passed is false" do
       let(:passed) { false }
+      let(:failure_assessor_note) { "Note." }
 
       it "updates passed field" do
         expect { save }.to change(requestable, :passed).from(nil).to(false)
+      end
+
+      it "updates failure_assessor_note field" do
+        expect { save }.to change(requestable, :failure_assessor_note).from(
+          "",
+        ).to("Note.")
       end
 
       it "sets reviewed at" do

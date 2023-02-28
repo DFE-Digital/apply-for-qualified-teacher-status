@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_24_141607) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_27_101444) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -320,6 +320,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_24_141607) do
     t.text "misconduct_comment", default: "", null: false
     t.boolean "satisfied_response"
     t.text "satisfied_comment", default: "", null: false
+    t.string "failure_assessor_note", default: "", null: false
     t.index ["assessment_id"], name: "index_reference_requests_on_assessment_id"
     t.index ["slug"], name: "index_reference_requests_on_slug", unique: true
     t.index ["work_history_id"], name: "index_reference_requests_on_work_history_id"

@@ -5,15 +5,15 @@ module AssessorInterface
     before_action :authorize_note
 
     def edit
-      @form = RequestableForm.new(requestable: reference_request)
+      @form = RequestableReviewForm.new(requestable: reference_request)
     end
 
     def update
       @form =
-        RequestableForm.new(
+        RequestableReviewForm.new(
           requestable: reference_request,
           user: current_staff,
-          **reference_request_form_params,
+          **requestable_review_form_params,
         )
 
       if @form.save
@@ -30,8 +30,11 @@ module AssessorInterface
 
     private
 
-    def reference_request_form_params
-      params.fetch(:assessor_interface_requestable_form, {}).permit(:passed)
+    def requestable_review_form_params
+      params.require(:assessor_interface_requestable_review_form).permit(
+        :passed,
+        :failure_assessor_note,
+      )
     end
 
     def reference_request
