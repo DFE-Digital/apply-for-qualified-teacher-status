@@ -5,7 +5,9 @@
 <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: true %>
 
 <% if @reference_request.responses_given? %>
-  <h3 class="govuk-heading-m">Submitting your response</h3>
+  <h3 class="govuk-heading-m">How we handle your data</h3>
+  <p class="govuk-body">You can read about the data we collect from you, how we use it and how it's stored, in our <%= govuk_link_to "privacy policy", privacy_path %>.</p>
+  <h4 class="govuk-heading-m">Submitting your response</h4>
   <p class="govuk-body">By selecting the ‘Submit your response’ button, you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
   <p class="govuk-body">You will not be able to change your response or delete anything once you submit it.</p>
   <%= govuk_button_to "Submit your response", teacher_interface_reference_request_path, method: :patch %>
