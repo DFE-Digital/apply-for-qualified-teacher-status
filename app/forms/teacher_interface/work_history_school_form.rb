@@ -49,7 +49,7 @@ module TeacherInterface
         start_date:,
         start_date_is_estimate: start_date_is_estimate || false,
         still_employed:,
-        end_date:,
+        end_date: still_employed ? nil : end_date,
         end_date_is_estimate: end_date_is_estimate || false,
       )
     end
