@@ -348,6 +348,68 @@ RSpec.describe ApplicationForm, type: :model do
         end
       end
     end
+
+    describe "#destroyable" do
+      subject(:destroyable) { described_class.destroyable }
+
+      it { is_expected.to be_empty }
+
+      context "draft" do
+        let!(:application_form) { create(:application_form, :draft) }
+
+        it { is_expected.to be_empty }
+
+        context "older than 6 months" do
+          let!(:application_form) do
+            create(:application_form, :draft, created_at: 6.months.ago)
+          end
+
+          it { is_expected.to include(application_form) }
+        end
+      end
+
+      context "submitted" do
+        let!(:application_form) { create(:application_form, :submitted) }
+
+        it { is_expected.to be_empty }
+
+        context "older than 90 days" do
+          let!(:application_form) do
+            create(:application_form, :submitted, created_at: 90.days.ago)
+          end
+
+          it { is_expected.to be_empty }
+        end
+      end
+
+      context "awarded" do
+        let!(:application_form) { create(:application_form, :awarded) }
+
+        it { is_expected.to be_empty }
+
+        context "older than 5 years" do
+          let!(:application_form) do
+            create(:application_form, :awarded, awarded_at: 5.years.ago)
+          end
+
+          it { is_expected.to include(application_form) }
+        end
+      end
+
+      context "declined" do
+        let!(:application_form) { create(:application_form, :declined) }
+
+        it { is_expected.to be_empty }
+
+        context "older than 5 years" do
+          let!(:application_form) do
+            create(:application_form, :declined, declined_at: 5.years.ago)
+          end
+
+          it { is_expected.to include(application_form) }
+        end
+      end
+    end
   end
 
   it "attaches empty documents" do
