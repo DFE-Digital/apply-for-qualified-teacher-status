@@ -146,7 +146,21 @@ class ApplicationForm < ApplicationRecord
 
   STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }
 
-  scope :active, -> { not_draft }
+  scope :active,
+        -> {
+          where(
+            status: %i[
+              submitted
+              initial_assessment
+              waiting_on
+              received
+              awarded_pending_checks
+              potential_duplicate_in_dqt
+            ],
+          ).or(awarded.where("awarded_at >= ?", 90.days.ago)).or(
+            declined.where("declined_at >= ?", 90.days.ago),
+          )
+        }
 
   def assign_reference
     return if reference.present?
