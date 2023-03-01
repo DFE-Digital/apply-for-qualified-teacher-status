@@ -55,7 +55,7 @@ module AssessorInterface
 
     def assessment_section_form_class
       if assessment_section.age_range_subjects?
-        AgeRangeSubjectsForm
+        CheckAgeRangeSubjectsForm
       elsif assessment_section.professional_standing? &&
             application_form.created_under_new_regulations? &&
             !application_form.needs_work_history

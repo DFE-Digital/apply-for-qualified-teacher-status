@@ -1,46 +1,32 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
-RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
-  let(:assessment_section) { create(:assessment_section, :age_range_subjects) }
-  let(:user) { create(:staff, :confirmed) }
-  let(:attributes) { {} }
-
-  subject(:form) do
-    described_class.for_assessment_section(assessment_section).new(
-      assessment_section:,
-      user:,
-      **attributes,
-    )
-  end
-
+RSpec.shared_examples_for "an age range subjects form" do
   describe "validations" do
-    it { is_expected.to validate_presence_of(:assessment_section) }
-    it { is_expected.to validate_presence_of(:user) }
-    it { is_expected.to allow_values(true, false).for(:passed) }
-
     it { is_expected.to validate_presence_of(:age_range_min) }
     it { is_expected.to validate_presence_of(:age_range_max) }
 
     context "with a minimum too low" do
-      let(:attributes) { { age_range_min: "1" } }
+      let(:age_range_subjects_attributes) { { age_range_min: "1" } }
       it { is_expected.to be_invalid }
     end
 
     context "with a minimum too high" do
-      let(:attributes) { { age_range_min: "20" } }
+      let(:age_range_subjects_attributes) { { age_range_min: "20" } }
       it { is_expected.to be_invalid }
     end
 
     context "when minimum is set" do
       context "with a maximum too low" do
-        let(:attributes) { { age_range_min: "7", age_range_max: "1" } }
+        let(:age_range_subjects_attributes) do
+          { age_range_min: "7", age_range_max: "1" }
+        end
         it { is_expected.to be_invalid }
       end
 
       context "with a maximum too high" do
-        let(:attributes) { { age_range_min: "7", age_range_max: "20" } }
+        let(:age_range_subjects_attributes) do
+          { age_range_min: "7", age_range_max: "20" }
+        end
         it { is_expected.to be_invalid }
       end
     end
@@ -56,20 +42,13 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
   describe "#save" do
     subject(:save) { form.save }
 
-    let(:assessment) { assessment_section.assessment }
-
     describe "when invalid attributes" do
       it { is_expected.to be false }
     end
 
     describe "with valid attributes and no note" do
-      let(:attributes) do
-        {
-          passed: true,
-          age_range_min: "7",
-          age_range_max: "11",
-          subject_1: "Subject",
-        }
+      let(:age_range_subjects_attributes) do
+        { age_range_min: "7", age_range_max: "11", subject_1: "Subject" }
       end
 
       it { is_expected.to be true }
@@ -94,9 +73,8 @@ RSpec.describe AssessorInterface::AgeRangeSubjectsForm, type: :model do
     end
 
     describe "with valid attributes and a note" do
-      let(:attributes) do
+      let(:age_range_subjects_attributes) do
         {
-          passed: true,
           age_range_min: "7",
           age_range_max: "11",
           age_range_note: "A note.",
