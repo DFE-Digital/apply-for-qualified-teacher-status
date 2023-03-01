@@ -47,6 +47,9 @@ en:
         important_notes:
           invalid_references: This application has one or more invalid references.
           induction_required: This applicant will need to do a statutory induction period.
+      age_range_subjects:
+        heading: Confirm age range and subjects
+        cancel: Cancel
       preview:
         heading: Check the email
         subheading: This screen shows how the email to the applicant will look.

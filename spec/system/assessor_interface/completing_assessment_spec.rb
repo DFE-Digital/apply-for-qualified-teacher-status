@@ -39,6 +39,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_check_declaration
+    then_i_see_the(:age_range_subjects_assessment_recommendation_award_page)
+    and_i_see_the_age_range_subjects
+    and_i_continue_from_age_range_subjects
+
     then_i_see_the(
       :preview_assessment_recommendation_page,
       application_id:,
@@ -61,7 +65,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     then_the_application_form_is_awarded
   end
 
-  it "award under new regulations" do
+  it "verify" do
     given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_awardable_application_form_under_new_regulations
@@ -150,7 +154,14 @@ RSpec.describe "Assessor completing assessment", type: :system do
         *traits,
       )
 
-    assessment = create(:assessment, application_form:)
+    assessment =
+      create(
+        :assessment,
+        application_form:,
+        age_range_min: 8,
+        age_range_max: 11,
+        subjects: %w[mathematics],
+      )
 
     create(:assessment_section, :personal_information, :passed, assessment:)
   end
@@ -199,21 +210,32 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
   end
 
-  def when_i_visit_the_complete_assessment_page
-    complete_assessment_page.load(application_id: application_form.id)
-  end
-
-  def then_i_see_the_complete_assessment_form
-    expect(complete_assessment_page.award_qts).to be_visible
-    expect(complete_assessment_page.decline_qts).to be_visible
-  end
-
   def when_i_select_award_qts
     complete_assessment_page.award_qts.input.choose
   end
 
   def when_i_select_decline_qts
     complete_assessment_page.decline_qts.input.choose
+  end
+
+  def and_i_see_the_age_range_subjects
+    rows =
+      age_range_subjects_assessment_recommendation_award_page.summary_list.rows
+
+    expect(rows.count).to eq(3)
+
+    expect(rows.first.key.text).to eq("Minimum age")
+    expect(rows.first.value.text).to eq("8")
+
+    expect(rows.second.key.text).to eq("Maximum age")
+    expect(rows.second.value.text).to eq("11")
+
+    expect(rows.third.key.text).to eq("Subject")
+    expect(rows.third.value.text).to eq("Mathematics")
+  end
+
+  def and_i_continue_from_age_range_subjects
+    age_range_subjects_assessment_recommendation_award_page.continue_button.click
   end
 
   def and_i_see_failure_reasons

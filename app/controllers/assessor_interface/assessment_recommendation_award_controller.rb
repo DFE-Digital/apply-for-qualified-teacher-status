@@ -23,7 +23,7 @@ module AssessorInterface
 
       if @form.valid?
         redirect_to [
-                      :preview,
+                      :age_range_subjects,
                       :assessor_interface,
                       application_form,
                       assessment,
@@ -32,6 +32,10 @@ module AssessorInterface
       else
         render :edit, status: :unprocessable_entity
       end
+    end
+
+    def age_range_subjects
+      authorize :assessor, :edit?
     end
 
     def preview
