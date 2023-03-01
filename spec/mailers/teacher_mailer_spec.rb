@@ -112,6 +112,27 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
+
+      it do
+        is_expected.to include(
+          "Your application will be entered into a queue and assigned a QTS assessor, which can take several weeks.",
+        )
+      end
+
+      context "if the teaching authority provides the written statement" do
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: true,
+          )
+        end
+
+        it do
+          is_expected.to include(
+            "When we’ve received the written evidence you’ve requested from your teaching authority, we’ll " \
+              "add your application to the queue to be assigned to a QTS assessor — this can take several weeks.",
+          )
+        end
+      end
     end
 
     it_behaves_like "an observable mailer", "application_received"
