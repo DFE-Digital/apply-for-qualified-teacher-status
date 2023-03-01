@@ -5,6 +5,13 @@ RSpec.shared_examples "a remindable" do
     it { is_expected.to have_many(:reminder_emails) }
   end
 
+  describe "scopes" do
+    describe "#remindable" do
+      subject(:remindable) { described_class.remindable }
+      it { is_expected.to_not be_nil }
+    end
+  end
+
   describe "#should_send_reminder_email?" do
     let(:should_send_reminder_email?) do
       subject.should_send_reminder_email?(0, 0)

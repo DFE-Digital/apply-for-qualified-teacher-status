@@ -19,6 +19,8 @@ class SendReminderEmail
   attr_reader :remindable
 
   def send_reminder?
+    return false unless remindable.expired_at
+
     remindable.should_send_reminder_email?(
       days_until_expired,
       number_of_reminders_sent,

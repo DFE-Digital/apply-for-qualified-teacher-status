@@ -52,6 +52,23 @@ RSpec.describe SendReminderEmail do
       end
     end
 
+    shared_examples "sends an application not submitted email" do
+      include_examples "sends an email"
+
+      it "sends an email" do
+        expect { subject }.to have_enqueued_mail(
+          TeacherMailer,
+          :application_not_submitted,
+        ).with(
+          params: {
+            teacher: remindable.teacher,
+            number_of_reminders_sent: a_kind_of(Integer),
+          },
+          args: [],
+        )
+      end
+    end
+
     shared_examples "first reminder email" do |shared_example|
       context "when no previous reminder has been sent" do
         include_examples shared_example
@@ -98,6 +115,35 @@ RSpec.describe SendReminderEmail do
         before { 2.times { remindable.reminder_emails.create } }
         include_examples shared_example
       end
+    end
+
+    context "with a draft application form" do
+      let(:remindable) do
+        create(:application_form, :draft, created_at: application_created_at)
+      end
+
+      context "with less than two weeks remaining" do
+        let(:application_created_at) { (6.months - 13.days).ago }
+        include_examples "first reminder email",
+                         "sends an application not submitted email"
+      end
+
+      context "with less than one week remaining" do
+        let(:application_created_at) { (6.months - 6.days).ago }
+        include_examples "second reminder email",
+                         "sends an application not submitted email"
+      end
+
+      context "with less than one day remaining" do
+        let(:application_created_at) { (6.months - 1.day).ago }
+        include_examples "third reminder email",
+                         "sends an application not submitted email"
+      end
+    end
+
+    context "with a submitted application form" do
+      let(:remindable) { create(:application_form, :submitted) }
+      include_examples "doesn't send an email"
     end
 
     shared_examples_for "an FI request that is allowed 6 weeks to complete" do
@@ -199,20 +245,6 @@ RSpec.describe SendReminderEmail do
       include_examples "doesn't send an email"
     end
 
-    shared_examples_for "a reference request that is allowed 6 weeks to complete" do
-      context "with less than four weeks remaining" do
-        let(:reference_requested_at) { (6.weeks - 27.days).ago }
-        include_examples "first reminder email",
-                         "sends a reference reminder email"
-      end
-
-      context "with less than two weeks remaining" do
-        let(:reference_requested_at) { (6.weeks - 13.days).ago }
-        include_examples "second reminder email",
-                         "sends a reference reminder email"
-      end
-    end
-
     context "with a requested reference request" do
       let(:application_form) do
         create(:application_form, :submitted, :old_regs, region:)
@@ -229,7 +261,17 @@ RSpec.describe SendReminderEmail do
         )
       end
 
-      it_behaves_like "a reference request that is allowed 6 weeks to complete"
+      context "with less than four weeks remaining" do
+        let(:reference_requested_at) { (6.weeks - 27.days).ago }
+        include_examples "first reminder email",
+                         "sends a reference reminder email"
+      end
+
+      context "with less than two weeks remaining" do
+        let(:reference_requested_at) { (6.weeks - 13.days).ago }
+        include_examples "second reminder email",
+                         "sends a reference reminder email"
+      end
     end
 
     context "with a received reference request" do

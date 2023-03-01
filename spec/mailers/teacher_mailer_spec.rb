@@ -91,16 +91,20 @@ RSpec.describe TeacherMailer, type: :mailer do
 
   describe "#application_not_submitted" do
     subject(:mail) do
-      described_class.with(teacher:, duration:).application_not_submitted
+      described_class.with(
+        teacher:,
+        number_of_reminders_sent:,
+      ).application_not_submitted
     end
 
-    let(:duration) { nil }
+    let(:number_of_reminders_sent) { nil }
 
     describe "#subject" do
       subject(:subject) { mail.subject }
 
       context "with two weeks to go" do
-        let(:duration) { "two_weeks" }
+        let(:number_of_reminders_sent) { 0 }
+
         it do
           is_expected.to eq(
             "Your draft QTS application will be deleted in 2 weeks",
@@ -109,7 +113,8 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
 
       context "with one week to go" do
-        let(:duration) { "one_week" }
+        let(:number_of_reminders_sent) { 1 }
+
         it do
           is_expected.to eq(
             "Your draft QTS application will be deleted in 1 week",
@@ -118,7 +123,8 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
 
       context "with two days to go" do
-        let(:duration) { "two_days" }
+        let(:number_of_reminders_sent) { 2 }
+
         it do
           is_expected.to eq(
             "Your draft QTS application will be deleted in 2 days",
@@ -140,7 +146,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
 
       context "with two weeks to go" do
-        let(:duration) { "two_weeks" }
+        let(:number_of_reminders_sent) { 0 }
 
         it do
           is_expected.to include(
@@ -157,7 +163,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
 
       context "with one week to go" do
-        let(:duration) { "one_week" }
+        let(:number_of_reminders_sent) { 1 }
 
         it do
           is_expected.to include(
@@ -172,7 +178,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
 
       context "with two days to go" do
-        let(:duration) { "two_days" }
+        let(:number_of_reminders_sent) { 2 }
 
         it do
           is_expected.to include(

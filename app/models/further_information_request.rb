@@ -28,6 +28,8 @@ class FurtherInformationRequest < ApplicationRecord
            inverse_of: :further_information_request,
            dependent: :destroy
 
+  scope :remindable, -> { requested }
+
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
 
   def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)

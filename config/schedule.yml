@@ -25,12 +25,17 @@ expire_reference_requests:
   class: ExpireRequestablesJob
   args: ["ReferenceRequest"]
 
-send_further_information_request_reminders:
+send_application_form_reminders:
   cron: "0 3 * * *"
+  class: SendReminderEmailsJob
+  args: ["ApplicationForm"]
+
+send_further_information_request_reminders:
+  cron: "20 3 * * *"
   class: SendReminderEmailsJob
   args: ["FurtherInformationRequest"]
 
 send_reference_request_reminders:
-  cron: "20 3 * * *"
+  cron: "40 3 * * *"
   class: SendReminderEmailsJob
   args: ["ReferenceRequest"]
