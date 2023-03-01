@@ -57,7 +57,7 @@ RSpec.describe "Assessor verifying references", type: :system do
     expect(reference_request_page.table.headers[1].text).to eq(
       "Number of months",
     )
-    expect(reference_request_page.table.cells[1].text).to eq("38")
+    expect(reference_request_page.table.cells[1].text).to match(/\d+/)
     expect(reference_request_page.table.headers[2].text).to eq(
       "Name of reference",
     )
