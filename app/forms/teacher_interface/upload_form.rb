@@ -18,6 +18,8 @@ module TeacherInterface
               unless: -> { document&.translatable? }
     validate :attachments_present
 
+    attr_reader :timeout_error
+
     def update_model
       if original_attachment.present?
         document.uploads.create!(
@@ -32,6 +34,13 @@ module TeacherInterface
           translation: true,
         )
       end
+    end
+
+    def save(validate:)
+      super(validate:)
+    rescue Timeout::Error
+      @timeout_error = true
+      false
     end
 
     delegate :application_form, to: :document
