@@ -20,6 +20,7 @@
 #  index_further_information_requests_on_assessment_id  (assessment_id)
 #
 class FurtherInformationRequest < ApplicationRecord
+  include Remindable
   include Requestable
 
   has_many :items,
@@ -27,9 +28,24 @@ class FurtherInformationRequest < ApplicationRecord
            inverse_of: :further_information_request,
            dependent: :destroy
 
-  has_many :reminder_emails, as: :remindable
-
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
+
+  def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)
+    return true if days_until_expired <= 14 && number_of_reminders_sent.zero?
+
+    return true if days_until_expired <= 7 && number_of_reminders_sent == 1
+
+    return true if days_until_expired <= 2 && number_of_reminders_sent == 2
+
+    false
+  end
+
+  def send_reminder_email(_number_of_reminders_sent)
+    TeacherMailer
+      .with(teacher:, further_information_request: self)
+      .further_information_reminder
+      .deliver_later
+  end
 
   def expires_after
     if !application_form.created_under_new_regulations? &&

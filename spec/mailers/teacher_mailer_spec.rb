@@ -313,12 +313,12 @@ RSpec.describe TeacherMailer, type: :mailer do
       described_class.with(
         teacher:,
         further_information_request:,
-        due_date:,
       ).further_information_reminder
     end
 
-    let(:further_information_request) { create(:further_information_request) }
-    let(:due_date) { 10.days.from_now }
+    let(:further_information_request) do
+      create(:further_information_request, created_at: Date.new(2020, 1, 1))
+    end
 
     describe "#subject" do
       subject(:subject) { mail.subject }
@@ -342,7 +342,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it do
         is_expected.to include(
-          "You must respond to this request by #{due_date.strftime("%e %B %Y")} " \
+          "You must respond to this request by 12 February 2020 " \
             "otherwise your QTS application will be declined.",
         )
       end

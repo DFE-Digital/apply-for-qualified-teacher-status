@@ -47,6 +47,7 @@
 #  fk_rails_...  (work_history_id => work_histories.id)
 #
 class ReferenceRequest < ApplicationRecord
+  include Remindable
   include Requestable
 
   has_secure_token :slug
@@ -78,6 +79,18 @@ class ReferenceRequest < ApplicationRecord
       misconduct_response,
       satisfied_response,
     ].none?(&:nil?)
+  end
+
+  def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)
+    return true if days_until_expired <= 28 && number_of_reminders_sent.zero?
+
+    return true if days_until_expired <= 14 && number_of_reminders_sent == 1
+
+    false
+  end
+
+  def send_reminder_email(_number_of_reminders_sent)
+    RefereeMailer.with(reference_request: self).reference_reminder.deliver_later
   end
 
   def expires_after
