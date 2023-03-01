@@ -8,7 +8,13 @@ Your reference number is:
 
 # What happens next
 
-Your application is in the queue to be assigned to a QTS assessor, which can take several weeks.
+<% if @application_form.teaching_authority_provides_written_statement %>
+When we’ve received the written evidence you’ve requested from your teaching authority, we’ll add your application to the queue to be assigned to a QTS assessor — this can take several weeks.
+<% else %>
+Your application will be entered into a queue and assigned a QTS assessor, which can take several weeks.
+<% end %>
+
+Once assigned, the assessor will aim to review your application within 1 month. If we need more information, we’ll email you again.
 
 We aim to reach a final decision on QTS applications within 80 working days (4 months) of submission.
 
