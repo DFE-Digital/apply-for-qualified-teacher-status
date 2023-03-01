@@ -121,5 +121,20 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         expect(document.uploads.second.translation).to be(true)
       end
     end
+
+    context "when Net::ReadTimeout is raised" do
+      let(:original_attachment) do
+        fixture_file_upload("upload.pdf", "application/pdf")
+      end
+
+      before do
+        allow(upload_form).to receive(:update_model).and_raise(Net::ReadTimeout)
+      end
+
+      it "sets the timeout_error attribute" do
+        expect(upload_form.save(validate: true)).to be false
+        expect(upload_form.timeout_error).to be true
+      end
+    end
   end
 end
