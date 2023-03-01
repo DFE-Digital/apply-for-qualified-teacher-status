@@ -489,4 +489,6 @@ RSpec.describe ApplicationForm, type: :model do
       end
     end
   end
+
+  include_examples "an expirable"
 end

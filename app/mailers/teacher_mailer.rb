@@ -25,7 +25,7 @@ class TeacherMailer < ApplicationMailer
 
   def application_not_submitted
     @duration = params[:duration]
-    @destruction_date = (application_form.created_at + 6.months).to_date
+    @destruction_date = application_form.expired_at.to_date
 
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,

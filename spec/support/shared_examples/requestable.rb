@@ -78,4 +78,6 @@ RSpec.shared_examples "a requestable" do
       expect(subject.status).to eq("rejected")
     end
   end
+
+  include_examples "an expirable"
 end

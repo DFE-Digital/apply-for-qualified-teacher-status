@@ -102,4 +102,9 @@ RSpec.describe ReferenceRequest do
       it { is_expected.to be true }
     end
   end
+
+  describe "#expires_after" do
+    subject(:expires_after) { described_class.new.expires_after }
+    it { is_expected.to eq(6.weeks) }
+  end
 end

@@ -78,6 +78,8 @@
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class ApplicationForm < ApplicationRecord
+  include Expirable
+
   belongs_to :teacher
   belongs_to :region
   belongs_to :english_language_provider, optional: true
@@ -223,6 +225,10 @@ class ApplicationForm < ApplicationRecord
 
   def created_under_new_regulations?
     created_at >= Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
+  end
+
+  def expires_after
+    draft? ? 6.months : nil
   end
 
   private
