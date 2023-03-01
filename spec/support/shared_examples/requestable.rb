@@ -9,6 +9,10 @@ RSpec.shared_examples "a requestable" do
     ).backed_by_column_of_type(:string)
   end
 
+  describe "associations" do
+    it { is_expected.to belong_to(:assessment) }
+  end
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:state) }
 

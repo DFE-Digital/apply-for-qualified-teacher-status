@@ -49,14 +49,15 @@
 require "rails_helper"
 
 RSpec.describe ReferenceRequest do
+  subject(:reference_request) { create(:reference_request) }
+
   it_behaves_like "a requestable" do
-    subject { build(:reference_request, :receivable) }
+    subject { create(:reference_request, :receivable) }
   end
 
   it { is_expected.to have_secure_token(:slug) }
 
   describe "associations" do
-    it { is_expected.to belong_to(:assessment) }
     it { is_expected.to belong_to(:work_history) }
   end
 

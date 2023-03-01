@@ -29,11 +29,7 @@ require "rails_helper"
 
 RSpec.describe QualificationRequest, type: :model do
   it_behaves_like "a requestable" do
-    subject { build(:qualification_request, :receivable) }
-  end
-
-  describe "associations" do
-    it { is_expected.to belong_to(:assessment) }
+    subject { create(:qualification_request, :receivable) }
   end
 
   describe "validations" do
