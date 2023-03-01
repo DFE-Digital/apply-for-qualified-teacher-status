@@ -101,6 +101,11 @@ module PageHelpers
     @degree_page ||= PageObjects::EligibilityInterface::Degree.new
   end
 
+  def edit_age_range_subjects_assessment_recommendation_award_page
+    @edit_age_range_subjects_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::EditAgeRangeSubjectsAssessmentRecommendationAward.new
+  end
+
   def eligible_page
     @eligible_page = PageObjects::EligibilityInterface::Eligible.new
   end

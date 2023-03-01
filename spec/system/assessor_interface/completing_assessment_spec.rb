@@ -41,6 +41,14 @@ RSpec.describe "Assessor completing assessment", type: :system do
     when_i_check_declaration
     then_i_see_the(:age_range_subjects_assessment_recommendation_award_page)
     and_i_see_the_age_range_subjects
+
+    when_i_click_change_age_range_minimum
+    then_i_see_the(
+      :edit_age_range_subjects_assessment_recommendation_award_page,
+    )
+
+    when_i_click_continue
+    then_i_see_the(:age_range_subjects_assessment_recommendation_award_page)
     and_i_continue_from_age_range_subjects
 
     then_i_see_the(
@@ -232,6 +240,16 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     expect(rows.third.key.text).to eq("Subject")
     expect(rows.third.value.text).to eq("Mathematics")
+  end
+
+  def when_i_click_change_age_range_minimum
+    age_range_subjects_assessment_recommendation_award_page
+      .summary_list
+      .rows
+      .first
+      .actions
+      .link
+      .click
   end
 
   def and_i_continue_from_age_range_subjects

@@ -50,6 +50,9 @@ en:
       age_range_subjects:
         heading: Confirm age range and subjects
         cancel: Cancel
+      edit_age_range_subjects:
+        heading: Edit age range and subjects
+        cancel: Cancel
       preview:
         heading: Check the email
         subheading: This screen shows how the email to the applicant will look.
