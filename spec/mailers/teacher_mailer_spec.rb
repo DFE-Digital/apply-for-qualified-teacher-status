@@ -14,6 +14,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       given_names: "First",
       family_name: "Last",
       assessment:,
+      created_at: Date.new(2020, 1, 1),
     )
   end
 
@@ -86,6 +87,109 @@ RSpec.describe TeacherMailer, type: :mailer do
         end
       end
     end
+  end
+
+  describe "#application_not_submitted" do
+    subject(:mail) do
+      described_class.with(
+        teacher:,
+        number_of_reminders_sent:,
+      ).application_not_submitted
+    end
+
+    let(:number_of_reminders_sent) { nil }
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      context "with two weeks to go" do
+        let(:number_of_reminders_sent) { 0 }
+
+        it do
+          is_expected.to eq(
+            "Your draft QTS application will be deleted in 2 weeks",
+          )
+        end
+      end
+
+      context "with one week to go" do
+        let(:number_of_reminders_sent) { 1 }
+
+        it do
+          is_expected.to eq(
+            "Your draft QTS application will be deleted in 1 week",
+          )
+        end
+      end
+
+      context "with two days to go" do
+        let(:number_of_reminders_sent) { 2 }
+
+        it do
+          is_expected.to eq(
+            "Your draft QTS application will be deleted in 2 days",
+          )
+        end
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
+
+      context "with two weeks to go" do
+        let(:number_of_reminders_sent) { 0 }
+
+        it do
+          is_expected.to include(
+            "We’ve noticed that you have a draft application for qualified " \
+              "teacher status (QTS) that has not been submitted.",
+          )
+        end
+        it do
+          is_expected.to include(
+            "We need to let you know that if you do not complete and submit " \
+              "your application by 1 July 2020 we’ll delete the application.",
+          )
+        end
+      end
+
+      context "with one week to go" do
+        let(:number_of_reminders_sent) { 1 }
+
+        it do
+          is_expected.to include(
+            "We contacted you a week ago about your draft application for qualified teacher status (QTS).",
+          )
+        end
+        it do
+          is_expected.to include(
+            "If you do not complete and submit your application by 1 July 2020 we’ll delete the application.",
+          )
+        end
+      end
+
+      context "with two days to go" do
+        let(:number_of_reminders_sent) { 2 }
+
+        it do
+          is_expected.to include(
+            "Your draft application for qualified teacher status (QTS) will be " \
+              "deleted in 2 days on 1 July 2020 if you do not complete and submit it before then.",
+          )
+        end
+      end
+    end
+
+    it_behaves_like "an observable mailer", "application_not_submitted"
   end
 
   describe "#application_received" do
@@ -215,12 +319,12 @@ RSpec.describe TeacherMailer, type: :mailer do
       described_class.with(
         teacher:,
         further_information_request:,
-        due_date:,
       ).further_information_reminder
     end
 
-    let(:further_information_request) { create(:further_information_request) }
-    let(:due_date) { 10.days.from_now }
+    let(:further_information_request) do
+      create(:further_information_request, created_at: Date.new(2020, 1, 1))
+    end
 
     describe "#subject" do
       subject(:subject) { mail.subject }
@@ -244,7 +348,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it do
         is_expected.to include(
-          "You must respond to this request by #{due_date.strftime("%e %B %Y")} " \
+          "You must respond to this request by 12 February 2020 " \
             "otherwise your QTS application will be declined.",
         )
       end

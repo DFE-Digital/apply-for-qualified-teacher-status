@@ -34,4 +34,8 @@ class QualificationRequest < ApplicationRecord
   with_options if: :received? do
     validates :location_note, presence: true
   end
+
+  def expires_after
+    nil
+  end
 end

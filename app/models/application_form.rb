@@ -78,6 +78,8 @@
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class ApplicationForm < ApplicationRecord
+  include Remindable
+
   belongs_to :teacher
   belongs_to :region
   belongs_to :english_language_provider, optional: true
@@ -170,6 +172,8 @@ class ApplicationForm < ApplicationRecord
             .or(declined.where("declined_at < ?", 5.years.ago))
         }
 
+  scope :remindable, -> { draft }
+
   def assign_reference
     return if reference.present?
 
@@ -223,6 +227,27 @@ class ApplicationForm < ApplicationRecord
 
   def created_under_new_regulations?
     created_at >= Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
+  end
+
+  def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)
+    return true if days_until_expired <= 14 && number_of_reminders_sent.zero?
+
+    return true if days_until_expired <= 7 && number_of_reminders_sent == 1
+
+    return true if days_until_expired <= 2 && number_of_reminders_sent == 2
+
+    false
+  end
+
+  def send_reminder_email(number_of_reminders_sent)
+    TeacherMailer
+      .with(teacher:, number_of_reminders_sent:)
+      .application_not_submitted
+      .deliver_later
+  end
+
+  def expires_after
+    draft? ? 6.months : nil
   end
 
   private

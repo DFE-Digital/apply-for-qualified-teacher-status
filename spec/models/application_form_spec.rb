@@ -89,6 +89,8 @@ RSpec.describe ApplicationForm, type: :model do
     )
   end
 
+  it_behaves_like "a remindable"
+
   describe "columns" do
     it do
       is_expected.to define_enum_for(:status).with_values(

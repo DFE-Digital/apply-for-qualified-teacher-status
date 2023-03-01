@@ -24,11 +24,8 @@
 require "rails_helper"
 
 RSpec.describe FurtherInformationRequest do
-  subject(:further_information_request) { build(:further_information_request) }
+  subject(:further_information_request) { create(:further_information_request) }
 
+  it_behaves_like "a remindable"
   it_behaves_like "a requestable"
-
-  describe "associations" do
-    it { is_expected.to belong_to(:assessment) }
-  end
 end

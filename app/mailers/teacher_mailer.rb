@@ -2,8 +2,9 @@
 
 class TeacherMailer < ApplicationMailer
   before_action :set_application_form
+  before_action :set_further_information_request,
+                only: :further_information_reminder
   before_action :set_further_information_requested, only: :application_declined
-  before_action :set_due_date, only: :further_information_reminder
 
   helper :application_form
 
@@ -20,6 +21,19 @@ class TeacherMailer < ApplicationMailer
       GOVUK_NOTIFY_TEMPLATE_ID,
       to: teacher.email,
       subject: I18n.t("mailer.teacher.application_declined.subject"),
+    )
+  end
+
+  def application_not_submitted
+    @number_of_reminders_sent = params[:number_of_reminders_sent]
+
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject:
+        I18n.t(
+          "mailer.teacher.application_not_submitted.subject.#{@number_of_reminders_sent}",
+        ),
     )
   end
 
@@ -76,12 +90,12 @@ class TeacherMailer < ApplicationMailer
     @application_form = application_form
   end
 
+  def set_further_information_request
+    @further_information_request = params[:further_information_request]
+  end
+
   def set_further_information_requested
     @further_information_requested =
       assessment.further_information_requests.any?
-  end
-
-  def set_due_date
-    @due_date = params[:due_date]
   end
 end

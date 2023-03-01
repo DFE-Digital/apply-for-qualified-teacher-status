@@ -10,6 +10,11 @@ en:
         subject: Your QTS application was successful
       application_declined:
         subject: Your QTS application has been declined
+      application_not_submitted:
+        subject:
+          0: Your draft QTS application will be deleted in 2 weeks
+          1: Your draft QTS application will be deleted in 1 week
+          2: Your draft QTS application will be deleted in 2 days
       application_received:
         subject: We’ve received your application for qualified teacher status (QTS)
       further_information_received:

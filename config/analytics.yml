@@ -286,8 +286,8 @@
     - id
     - created_at
     - updated_at
-    - requestable_id
-    - requestable_type
+    - remindable_id
+    - remindable_type
   :selected_failure_reasons:
     - id
     - created_at

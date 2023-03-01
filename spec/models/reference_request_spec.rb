@@ -49,14 +49,17 @@
 require "rails_helper"
 
 RSpec.describe ReferenceRequest do
+  subject(:reference_request) { create(:reference_request) }
+
+  it_behaves_like "a remindable"
+
   it_behaves_like "a requestable" do
-    subject { build(:reference_request, :receivable) }
+    subject { create(:reference_request, :receivable) }
   end
 
   it { is_expected.to have_secure_token(:slug) }
 
   describe "associations" do
-    it { is_expected.to belong_to(:assessment) }
     it { is_expected.to belong_to(:work_history) }
   end
 
@@ -101,5 +104,10 @@ RSpec.describe ReferenceRequest do
       let(:reference_request) { build(:reference_request, :received) }
       it { is_expected.to be true }
     end
+  end
+
+  describe "#expires_after" do
+    subject(:expires_after) { described_class.new.expires_after }
+    it { is_expected.to eq(6.weeks) }
   end
 end

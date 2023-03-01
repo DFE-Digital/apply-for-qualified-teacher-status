@@ -3,6 +3,8 @@
 module Requestable
   extend ActiveSupport::Concern
 
+  include Expirable
+
   included do
     belongs_to :assessment
 
@@ -20,10 +22,6 @@ module Requestable
     end
 
     delegate :application_form, to: :assessment
-  end
-
-  def expired_at
-    created_at + expires_after
   end
 
   def reviewed!(passed)
@@ -47,10 +45,6 @@ module Requestable
 
   def after_received(user:)
     # implement logic after this requestable has been received
-  end
-
-  def after_expired(user:)
-    # implement logic after an expiration of this requestable
   end
 
   def after_reviewed(user:)

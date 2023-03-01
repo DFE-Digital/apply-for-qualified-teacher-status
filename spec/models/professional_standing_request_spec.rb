@@ -26,11 +26,7 @@ require "rails_helper"
 
 RSpec.describe ProfessionalStandingRequest, type: :model do
   it_behaves_like "a requestable" do
-    subject { build(:professional_standing_request, :receivable) }
-  end
-
-  describe "associations" do
-    it { is_expected.to belong_to(:assessment) }
+    subject { create(:professional_standing_request, :receivable) }
   end
 
   describe "validations" do
