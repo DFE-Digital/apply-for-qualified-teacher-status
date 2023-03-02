@@ -108,8 +108,20 @@ class TimelineEvent < ApplicationRecord
             unless: :email_sent?
 
   belongs_to :assessment, optional: true
-  validates :assessment, presence: true, if: :age_range_subjects_verified?
-  validates :assessment, absence: true, unless: :age_range_subjects_verified?
+  validates :assessment,
+            :age_range_min,
+            :age_range_max,
+            :subjects,
+            presence: true,
+            if: :age_range_subjects_verified?
+  validates :assessment,
+            :age_range_min,
+            :age_range_max,
+            :age_range_note,
+            :subjects,
+            :subjects_note,
+            absence: true,
+            unless: :age_range_subjects_verified?
 
   belongs_to :requestable, polymorphic: true, optional: true
   validates :requestable_id, presence: true, if: :requestable_event_type?

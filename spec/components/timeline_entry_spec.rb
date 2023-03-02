@@ -151,6 +151,11 @@ RSpec.describe TimelineEntry::Component, type: :component do
             subjects: %w[ancient_hebrew],
             subjects_note: "Subjects note.",
           ),
+        age_range_min: 7,
+        age_range_max: 11,
+        age_range_note: "Age range note.",
+        subjects: %w[ancient_hebrew],
+        subjects_note: "Subjects note.",
       )
     end
 

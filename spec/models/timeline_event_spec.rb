@@ -99,6 +99,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
     end
@@ -115,6 +118,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
     end
@@ -131,6 +137,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
     end
@@ -147,6 +156,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
     end
@@ -163,6 +175,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
     end
@@ -179,6 +194,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:mailer_action_name) }
       it { is_expected.to validate_presence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
     end
@@ -195,6 +213,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_presence_of(:assessment) }
+      it { is_expected.to validate_presence_of(:age_range_min) }
+      it { is_expected.to validate_presence_of(:age_range_max) }
+      it { is_expected.to validate_presence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
     end
@@ -211,6 +232,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_presence_of(:requestable_id) }
       it { is_expected.to validate_presence_of(:requestable_type) }
       it do
@@ -237,6 +261,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_presence_of(:requestable_id) }
       it { is_expected.to validate_presence_of(:requestable_type) }
       it do
@@ -263,6 +290,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_presence_of(:requestable_id) }
       it { is_expected.to validate_presence_of(:requestable_type) }
       it do
@@ -289,6 +319,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:mailer_action_name) }
       it { is_expected.to validate_absence_of(:message_subject) }
       it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_presence_of(:requestable_id) }
       it { is_expected.to validate_presence_of(:requestable_type) }
       it do
