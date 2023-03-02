@@ -118,6 +118,7 @@ class ApplicationForm < ApplicationRecord
   enum status: {
          draft: "draft",
          submitted: "submitted",
+         preliminary_check: "preliminary_check",
          initial_assessment: "initial_assessment",
          waiting_on: "waiting_on",
          received: "received",

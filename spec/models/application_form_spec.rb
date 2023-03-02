@@ -97,6 +97,7 @@ RSpec.describe ApplicationForm, type: :model do
       is_expected.to define_enum_for(:status).with_values(
         draft: "draft",
         submitted: "submitted",
+        preliminary_check: "preliminary_check",
         initial_assessment: "initial_assessment",
         waiting_on: "waiting_on",
         received: "received",
