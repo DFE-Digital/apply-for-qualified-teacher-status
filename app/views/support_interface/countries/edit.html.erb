@@ -10,6 +10,7 @@
 
   <%= render "shared/teaching_authority_form_fields", f: %>
   <%= render "shared/qualifications_information_form_fields", f: %>
+  <%= render "shared/preliminary_check_form_fields", f: %>
 
   <%= f.govuk_check_box :teaching_authority_checks_sanctions, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Teaching authority checks sanctions" } %>
 

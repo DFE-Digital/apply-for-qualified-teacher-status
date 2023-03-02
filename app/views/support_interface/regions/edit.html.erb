@@ -27,6 +27,7 @@
   <%= f.govuk_check_box :teaching_authority_requires_submission_email, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Teaching authority requires an email when an application is submitted" } %>
 
   <%= render "shared/qualifications_information_form_fields", f: %>
+  <%= render "shared/preliminary_check_form_fields", f: %>
 
   <%= f.govuk_submit "Save", prevent_double_click: false do %>
     <%= f.govuk_submit "Save and preview", prevent_double_click: false, name: "preview", value: "preview" %>
