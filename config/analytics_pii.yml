@@ -51,6 +51,9 @@
     - unconfirmed_email
     - current_sign_in_ip
     - last_sign_in_ip
+  :timeline_events:
+    - age_range_note
+    - subjects_note
   :work_histories:
     - school_name
     - city
