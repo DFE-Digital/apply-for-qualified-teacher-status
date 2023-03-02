@@ -1,23 +1,19 @@
 Dear <%= application_form_full_name(@application_form) %>
 
-# We’ve received your application for qualified teacher status (QTS)
+# We’ve received your <%= region_certificate_name(@application_form.region) %>
+
+Thank you for requesting your <%= region_certificate_name(@application_form.region) %> from <%= region_teaching_authority_name_phrase(@application_form.region) %>. We have now received this document and attached it to your application.
 
 <%= render "shared/teacher_mailer/reference_number" %>
 
 # What happens next
 
-<% if @application_form.teaching_authority_provides_written_statement %>
-When we’ve received the written evidence you’ve requested from your teaching authority, we’ll add your application to the queue to be assigned to a QTS assessor — this can take several weeks.
-<% else %>
 Your application will be entered into a queue and assigned a QTS assessor, which can take several weeks.
-<% end %>
 
 Once assigned, the assessor will aim to review your application within 1 month. If we need more information, we’ll email you again.
 
 We aim to reach a final decision on QTS applications within 80 working days (4 months) of submission.
 
 <%= render "shared/teacher_mailer/any_questions_contact" %>
-
-<%= render "shared/teacher_mailer/help_us_to_improve_this_service" %>
 
 <%= render "shared/teacher_mailer/footer" %>

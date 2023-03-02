@@ -251,7 +251,6 @@ COUNTRIES = {
       teaching_authority_name:
         "Teachers Registration Council of Nigeria (TRCN)",
       teaching_authority_certificate: "Letter of Professional Standing",
-      teaching_authority_emails: %w[LoPs@trcn.gov.ng],
     },
   ],
   "SG" => [{ status_check: "online" }],

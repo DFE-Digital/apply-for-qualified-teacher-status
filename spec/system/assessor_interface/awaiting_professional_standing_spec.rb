@@ -21,6 +21,7 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
     when_i_fill_in_the_form
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_a_not_started_status
+    and_the_teacher_receives_a_professional_standing_received_email
   end
 
   private
@@ -49,6 +50,17 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
 
   def and_i_see_a_not_started_status
     expect(assessor_application_page.overview.status.text).to eq("NOT STARTED")
+  end
+
+  def and_the_teacher_receives_a_professional_standing_received_email
+    message = ActionMailer::Base.deliveries.last
+    expect(message).to_not be_nil
+
+    expect(message.subject).to eq(
+      "Your qualified teacher status application – we’ve received " \
+        "your letter that proves you’re recognised as a teacher",
+    )
+    expect(message.to).to include(application_form.teacher.email)
   end
 
   def application_form

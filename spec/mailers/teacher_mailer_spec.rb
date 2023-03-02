@@ -359,6 +359,44 @@ RSpec.describe TeacherMailer, type: :mailer do
     it_behaves_like "an observable mailer", "further_information_reminder"
   end
 
+  describe "#professional_standing_received" do
+    subject(:mail) do
+      described_class.with(teacher:).professional_standing_received
+    end
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      it do
+        is_expected.to eq(
+          "Your qualified teacher status application – we’ve received your " \
+            "letter that proves you’re recognised as a teacher",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("abc") }
+      it do
+        is_expected.to include(
+          "Thank you for requesting your letter that proves you’re recognised as a teacher from " \
+            "the teaching authority. We have now received this document and attached it to your application.",
+        )
+      end
+    end
+
+    it_behaves_like "an observable mailer", "professional_standing_received"
+  end
+
   describe "#references_requested" do
     subject(:mail) { described_class.with(teacher:).references_requested }
 

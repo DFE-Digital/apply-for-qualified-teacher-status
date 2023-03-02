@@ -33,7 +33,13 @@ class ProfessionalStandingRequest < ApplicationRecord
     18.weeks # 90 working days
   end
 
+  def after_received(*)
+    TeacherMailer.with(teacher:).professional_standing_received.deliver_later
+  end
+
   def after_expired(user:)
     DeclineQTS.call(application_form:, user:)
   end
+
+  delegate :teacher, to: :application_form
 end

@@ -83,5 +83,21 @@ RSpec.shared_examples "a requestable" do
     end
   end
 
+  describe "#after_received" do
+    let(:after_received) { subject.after_received(user: "User") }
+
+    it "doesn't raise an error" do
+      expect { after_received }.to_not raise_error
+    end
+  end
+
+  describe "#after_reviewed" do
+    let(:after_reviewed) { subject.after_reviewed(user: "User") }
+
+    it "doesn't raise an error" do
+      expect { after_reviewed }.to_not raise_error
+    end
+  end
+
   include_examples "an expirable"
 end

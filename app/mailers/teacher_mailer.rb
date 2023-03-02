@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class TeacherMailer < ApplicationMailer
+  include RegionHelper
+
   before_action :set_application_form
   before_action :set_further_information_request,
                 only: :further_information_reminder
   before_action :set_further_information_requested, only: :application_declined
 
-  helper :application_form
+  helper :application_form, :region
 
   def application_awarded
     view_mail(
@@ -69,6 +71,18 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def professional_standing_received
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject:
+        I18n.t(
+          "mailer.teacher.professional_standing_received.subject",
+          certificate: region_certificate_name(region),
+        ),
+    )
+  end
+
   def references_requested
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
@@ -84,7 +98,7 @@ class TeacherMailer < ApplicationMailer
   end
 
   delegate :application_form, to: :teacher
-  delegate :assessment, to: :application_form
+  delegate :assessment, :region, to: :application_form
 
   def set_application_form
     @application_form = application_form
