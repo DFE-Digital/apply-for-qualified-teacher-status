@@ -142,15 +142,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
       create(
         :timeline_event,
         :age_range_subjects_verified,
-        assessment:
-          create(
-            :assessment,
-            age_range_min: 7,
-            age_range_max: 11,
-            age_range_note: "Age range note.",
-            subjects: %w[ancient_hebrew],
-            subjects_note: "Subjects note.",
-          ),
+        assessment: create(:assessment),
         age_range_min: 7,
         age_range_max: 11,
         age_range_note: "Age range note.",
