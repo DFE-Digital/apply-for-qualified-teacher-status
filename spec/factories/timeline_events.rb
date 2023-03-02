@@ -6,7 +6,6 @@
 #  age_range_max         :integer
 #  age_range_min         :integer
 #  age_range_note        :text             default(""), not null
-#  annotation            :string           default(""), not null
 #  creator_name          :string           default(""), not null
 #  creator_type          :string
 #  event_type            :string           not null

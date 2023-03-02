@@ -340,7 +340,6 @@
     - id
     - event_type
     - application_form_id
-    - annotation
     - creator_id
     - creator_type
     - creator_name
