@@ -122,13 +122,16 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
       end
     end
 
-    context "when Net::ReadTimeout is raised" do
+    context "when a Timeout is raised" do
       let(:original_attachment) do
         fixture_file_upload("upload.pdf", "application/pdf")
       end
+      let(:timeout_error) do
+        [Faraday::TimeoutError, Net::ReadTimeout, Net::WriteTimeout].sample
+      end
 
       before do
-        allow(upload_form).to receive(:update_model).and_raise(Net::ReadTimeout)
+        allow(upload_form).to receive(:update_model).and_raise(timeout_error)
       end
 
       it "sets the timeout_error attribute" do
