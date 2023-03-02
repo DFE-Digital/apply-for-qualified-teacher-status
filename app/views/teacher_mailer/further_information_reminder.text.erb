@@ -2,9 +2,7 @@ Dear <%= application_form_full_name(@application_form) %>
 
 # The assessor reviewing your QTS application needs more information
 
-Your reference number is:
-
-<%= @application_form.reference %>
+<%= render "shared/teacher_mailer/reference_number" %>
 
 # What happens next
 
@@ -16,7 +14,6 @@ You can sign in to add the requested information to your application at:
 
 <%= new_teacher_session_url %>
 
-If you have any questions, contact: <%= t("service.email.enquiries") %>
+<%= render "shared/teacher_mailer/any_questions_contact" %>
 
-Kind regards,
-The Teacher Qualifications Team
+<%= render "shared/teacher_mailer/footer" %>
