@@ -19,14 +19,12 @@ class AssessorInterface::RequestableLocationForm
       requestable.location_note = location_note
 
       if received.present? && !requestable.received?
-        receive_professional_standing
+        ReceiveRequestable.call(requestable:, user:)
       elsif received.blank? && requestable.received?
-        request_professional_standing
+        request_requestable
       else
         requestable.save!
       end
-
-      ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
     true
@@ -36,20 +34,9 @@ class AssessorInterface::RequestableLocationForm
 
   private
 
-  def receive_professional_standing
-    requestable.received!
-
-    TimelineEvent.create!(
-      event_type: "requestable_received",
-      application_form:,
-      creator: user,
-      requestable:,
-    )
-  end
-
-  def request_professional_standing
+  def request_requestable
     requestable.requested!
-
     TimelineEvent.requestable_received.where(requestable:).destroy_all
+    ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 end

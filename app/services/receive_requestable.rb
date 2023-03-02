@@ -30,9 +30,13 @@ class ReceiveRequestable
   delegate :application_form, to: :requestable
 
   def create_timeline_event
+    creator = user.is_a?(String) ? nil : user
+    creator_name = user.is_a?(String) ? user : ""
+
     TimelineEvent.create!(
       application_form:,
-      creator_name: user,
+      creator:,
+      creator_name:,
       event_type: "requestable_received",
       requestable:,
     )
