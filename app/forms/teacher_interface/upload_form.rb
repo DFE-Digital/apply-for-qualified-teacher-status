@@ -38,7 +38,7 @@ module TeacherInterface
 
     def save(validate:)
       super(validate:)
-    rescue Timeout::Error
+    rescue Faraday::TimeoutError, Timeout::Error
       @timeout_error = true
       false
     end
