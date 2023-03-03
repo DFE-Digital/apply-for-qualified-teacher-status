@@ -85,6 +85,8 @@ en:
         hint: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
 
     assessment_recommendation_verify:
+      edit_qualification_requests:
+        heading: Verify qualifications
       edit_verify_qualifications:
         heading: Do you want to verify qualifications?
       edit_reference_requests:

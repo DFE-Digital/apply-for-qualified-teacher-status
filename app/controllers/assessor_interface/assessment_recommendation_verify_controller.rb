@@ -52,7 +52,13 @@ module AssessorInterface
         session[:qualification_ids] = []
 
         redirect_to [
-                      :reference_requests,
+                      (
+                        if @form.verify_qualifications
+                          :qualification_requests
+                        else
+                          :reference_requests
+                        end
+                      ),
                       :assessor_interface,
                       application_form,
                       assessment,
@@ -60,6 +66,46 @@ module AssessorInterface
                     ]
       else
         render :edit_verify_qualifications, status: :unprocessable_entity
+      end
+    end
+
+    def edit_qualification_requests
+      authorize :assessor, :edit?
+
+      @form =
+        SelectQualificationsForm.new(
+          application_form:,
+          session:,
+          qualification_ids: application_form.qualifications.pluck(:id),
+        )
+    end
+
+    def update_qualification_requests
+      authorize :assessor, :update?
+
+      qualification_ids =
+        params.dig(
+          :assessor_interface_select_qualifications_form,
+          :qualification_ids,
+        ).compact_blank
+
+      @form =
+        SelectQualificationsForm.new(
+          application_form:,
+          session:,
+          qualification_ids:,
+        )
+
+      if @form.save
+        redirect_to [
+                      :reference_requests,
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :assessment_recommendation_verify,
+                    ]
+      else
+        render :edit_qualification_requests, status: :unprocessable_entity
       end
     end
 
