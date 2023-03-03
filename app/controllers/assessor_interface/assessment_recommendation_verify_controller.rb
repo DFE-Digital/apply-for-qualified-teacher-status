@@ -8,7 +8,7 @@ module AssessorInterface
 
     def edit
       redirect_to [
-                    :reference_requests,
+                    :verify_qualifications,
                     :assessor_interface,
                     application_form,
                     assessment,
@@ -30,6 +30,38 @@ module AssessorInterface
       )
 
       redirect_to [:status, :assessor_interface, application_form]
+    end
+
+    def edit_verify_qualifications
+      authorize :assessor, :edit?
+      @form = VerifyQualificationsForm.new
+    end
+
+    def update_verify_qualifications
+      authorize :assessor, :update?
+
+      @form =
+        VerifyQualificationsForm.new(
+          verify_qualifications:
+            params.dig(
+              :assessor_interface_verify_qualifications_form,
+              :verify_qualifications,
+            ),
+        )
+
+      if @form.valid?
+        session[:qualification_ids] = []
+
+        redirect_to [
+                      :reference_requests,
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :assessment_recommendation_verify,
+                    ]
+      else
+        render :edit_verify_qualifications, status: :unprocessable_entity
+      end
     end
 
     def edit_reference_requests

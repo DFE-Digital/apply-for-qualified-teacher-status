@@ -525,4 +525,9 @@ module PageHelpers
     @work_experience_page ||=
       PageObjects::EligibilityInterface::WorkExperience.new
   end
+
+  def verify_qualifications_assessment_recommendation_verify_page
+    @verify_qualifications_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::VerifyQualificationsAssessmentRecommendationVerify.new
+  end
 end
