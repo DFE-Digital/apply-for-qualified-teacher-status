@@ -40,6 +40,12 @@ Rails.application.routes.draw do
                  controller: "assessment_recommendation_award",
                  path: "/recommendation/award",
                  only: %i[edit update] do
+          get "age-range-subjects",
+              to: "assessment_recommendation_award#age_range_subjects"
+          get "age-range-subjects/edit",
+              to: "assessment_recommendation_award#edit_age_range_subjects"
+          post "age-range-subjects/edit",
+               to: "assessment_recommendation_award#update_age_range_subjects"
           get "preview"
           get "confirm", to: "assessment_recommendation_award#edit_confirm"
           post "confirm", to: "assessment_recommendation_award#update_confirm"

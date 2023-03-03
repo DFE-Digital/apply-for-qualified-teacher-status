@@ -23,7 +23,7 @@ module AssessorInterface
 
       if @form.valid?
         redirect_to [
-                      :preview,
+                      :age_range_subjects,
                       :assessor_interface,
                       application_form,
                       assessment,
@@ -31,6 +31,47 @@ module AssessorInterface
                     ]
       else
         render :edit, status: :unprocessable_entity
+      end
+    end
+
+    def age_range_subjects
+      authorize :assessor, :edit?
+    end
+
+    def edit_age_range_subjects
+      authorize :assessor, :edit?
+
+      @form =
+        ConfirmAgeRangeSubjectsForm.new(
+          assessment:,
+          age_range_min: assessment.age_range_min,
+          age_range_max: assessment.age_range_max,
+          subject_1: assessment.subjects.first,
+          subject_2: assessment.subjects.second,
+          subject_3: assessment.subjects.third,
+        )
+    end
+
+    def update_age_range_subjects
+      authorize :assessor, :update?
+
+      @form =
+        ConfirmAgeRangeSubjectsForm.new(
+          assessment:,
+          user: current_staff,
+          **confirm_age_range_subjects_form_params,
+        )
+
+      if @form.save
+        redirect_to [
+                      :age_range_subjects,
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :assessment_recommendation_award,
+                    ]
+      else
+        render :edit_age_range_subjects, status: :unprocessable_entity
       end
     end
 
@@ -99,6 +140,20 @@ module AssessorInterface
         (:invalid_references if assessment.reference_requests.any?(&:failed)),
         (:induction_required if assessment.induction_required),
       ].compact
+    end
+
+    def confirm_age_range_subjects_form_params
+      params.require(
+        :assessor_interface_confirm_age_range_subjects_form,
+      ).permit(
+        :age_range_min,
+        :age_range_max,
+        :age_range_note,
+        :subject_1,
+        :subject_2,
+        :subject_3,
+        :subjects_note,
+      )
     end
   end
 end

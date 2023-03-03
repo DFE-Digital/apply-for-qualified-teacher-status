@@ -47,6 +47,12 @@ en:
         important_notes:
           invalid_references: This application has one or more invalid references.
           induction_required: This applicant will need to do a statutory induction period.
+      age_range_subjects:
+        heading: Confirm age range and subjects
+        cancel: Cancel
+      edit_age_range_subjects:
+        heading: Edit age range and subjects
+        cancel: Cancel
       preview:
         heading: Check the email
         subheading: This screen shows how the email to the applicant will look.
@@ -221,10 +227,6 @@ en:
   activemodel:
     errors:
       models:
-        assessor_interface/create_note_form:
-          attributes:
-            text:
-              blank: Enter the note
         assessor_interface/assessor_assignment_form:
           attributes:
             assessor_id:
@@ -250,6 +252,10 @@ en:
               inclusion: Select your recommendation
         assessor_interface/assessment_section_form:
           attributes:
+            age_range_min:
+              blank: Enter the minimum age
+            age_range_max:
+              blank: Enter the maximum age
             subject_1:
               blank: Enter the subject
             selected_failure_reasons:
@@ -324,6 +330,18 @@ en:
               blank: Enter a note to the applicant
             written_statement_recent_notes:
               blank: Enter a note to the applicant
+        assessor_interface/confirm_age_range_subjects_form:
+          attributes:
+            age_range_min:
+              blank: Enter the minimum age
+            age_range_max:
+              blank: Enter the maximum age
+            subject_1:
+              blank: Enter the subject
+        assessor_interface/create_note_form:
+          attributes:
+            text:
+              blank: Enter the note
         assessor_interface/induction_required_form:
           attributes:
             induction_required:

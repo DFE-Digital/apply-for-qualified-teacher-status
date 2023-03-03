@@ -7,6 +7,11 @@ module PageHelpers
     send(page.to_sym).load(**args)
   end
 
+  def age_range_subjects_assessment_recommendation_award_page
+    @age_range_subjects_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::AgeRangeSubjectsAssessmentRecommendationAward.new
+  end
+
   def assessor_application_page
     @assessor_application_page ||=
       PageObjects::AssessorInterface::Application.new
@@ -94,6 +99,11 @@ module PageHelpers
 
   def degree_page
     @degree_page ||= PageObjects::EligibilityInterface::Degree.new
+  end
+
+  def edit_age_range_subjects_assessment_recommendation_award_page
+    @edit_age_range_subjects_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::EditAgeRangeSubjectsAssessmentRecommendationAward.new
   end
 
   def eligible_page
