@@ -90,7 +90,14 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_select_yes_verify_qualifications
     then_i_see_the(
-      :reference_requests_assessment_recommendation_award_page,
+      :qualification_requests_assessment_recommendation_verify_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_select_the_qualifications
+    then_i_see_the(
+      :reference_requests_assessment_recommendation_verify_page,
       application_id:,
       assessment_id:,
     )
@@ -292,8 +299,15 @@ RSpec.describe "Assessor completing assessment", type: :system do
       .click
   end
 
+  def when_i_select_the_qualifications
+    qualification_requests_assessment_recommendation_verify_page
+      .form
+      .submit_button
+      .click
+  end
+
   def when_i_select_the_work_histories
-    reference_requests_assessment_recommendation_award_page
+    reference_requests_assessment_recommendation_verify_page
       .form
       .submit_button
       .click
