@@ -17,18 +17,16 @@ module AssessorInterface
     end
 
     def update
-      ActiveRecord::Base.transaction do
-        assessment.verify!
-        CreateReferenceRequests.call(
-          assessment:,
-          user: current_staff,
-          work_histories:
-            WorkHistory.where(
-              application_form:,
-              id: session[:work_history_ids],
-            ),
-        )
-      end
+      VerifyAssessment.call(
+        assessment:,
+        user: current_staff,
+        qualifications:
+          application_form.qualifications.where(
+            id: session[:qualification_ids],
+          ),
+        work_histories:
+          application_form.work_histories.where(id: session[:work_history_ids]),
+      )
 
       redirect_to [:status, :assessor_interface, application_form]
     end
