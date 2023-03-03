@@ -98,7 +98,7 @@ module AssessorInterface
 
       if @form.save
         redirect_to [
-                      :reference_requests,
+                      :email_consent_letters,
                       :assessor_interface,
                       application_form,
                       assessment,
@@ -107,6 +107,13 @@ module AssessorInterface
       else
         render :edit_qualification_requests, status: :unprocessable_entity
       end
+    end
+
+    def email_consent_letters
+      authorize :assessor, :edit?
+
+      @qualifications =
+        application_form.qualifications.where(id: session[:qualification_ids])
     end
 
     def edit_reference_requests

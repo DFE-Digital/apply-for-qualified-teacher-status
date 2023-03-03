@@ -89,6 +89,10 @@ en:
         heading: Verify qualifications
       edit_verify_qualifications:
         heading: Do you want to verify qualifications?
+      email_consent_letters:
+        heading: Email consent letters
+        continue: Continue
+        cancel: Cancel
       edit_reference_requests:
         heading: Request work history references
       preview_referee:
