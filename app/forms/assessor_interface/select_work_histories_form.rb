@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AssessorInterface::WorkHistoryReferenceRequestForm
+class AssessorInterface::SelectWorkHistoriesForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
@@ -23,9 +23,7 @@ class AssessorInterface::WorkHistoryReferenceRequestForm
 
   def save
     return false unless valid?
-
     session[:work_history_ids] = work_history_ids
-
     true
   end
 

@@ -35,7 +35,7 @@ module AssessorInterface
       authorize :assessor, :edit?
 
       @form =
-        WorkHistoryReferenceRequestForm.new(
+        SelectWorkHistoriesForm.new(
           application_form:,
           session:,
           work_history_ids: application_form.work_histories.pluck(:id),
@@ -47,12 +47,12 @@ module AssessorInterface
 
       work_history_ids =
         params.dig(
-          :assessor_interface_work_history_reference_request_form,
+          :assessor_interface_select_work_histories_form,
           :work_history_ids,
         ).compact_blank
 
       @form =
-        WorkHistoryReferenceRequestForm.new(
+        SelectWorkHistoriesForm.new(
           application_form:,
           session:,
           work_history_ids:,
