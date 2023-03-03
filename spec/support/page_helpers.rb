@@ -179,9 +179,14 @@ module PageHelpers
     @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
   end
 
-  def reference_requests_assessment_recommendation_award_page
+  def qualification_requests_assessment_recommendation_verify_page
+    @qualification_requests_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
+  end
+
+  def reference_requests_assessment_recommendation_verify_page
     @reference_requests_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationAward.new
+      PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationVerify.new
   end
 
   def region_page

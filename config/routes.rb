@@ -69,6 +69,11 @@ Rails.application.routes.draw do
           post "verify-qualifications",
                to:
                  "assessment_recommendation_verify#update_verify_qualifications"
+          get "qualification-requests",
+              to: "assessment_recommendation_verify#edit_qualification_requests"
+          post "qualification-requests",
+               to:
+                 "assessment_recommendation_verify#update_qualification_requests"
           get "reference-requests",
               to: "assessment_recommendation_verify#edit_reference_requests"
           post "reference-requests",
