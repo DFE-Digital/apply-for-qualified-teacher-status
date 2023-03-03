@@ -120,6 +120,11 @@ module PageHelpers
     @eligible_page = PageObjects::EligibilityInterface::Eligible.new
   end
 
+  def email_consent_letters_requests_assessment_recommendation_verify_page
+    @email_consent_letters_requests_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::EmailConsentLettersAssessmentRecommendationVerify.new
+  end
+
   def further_information_requested_page
     @further_information_requested_page =
       PageObjects::TeacherInterface::FurtherInformationRequested.new
