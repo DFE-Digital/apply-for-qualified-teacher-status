@@ -230,8 +230,12 @@ en:
         title: Third-party professional standing – response received
 
     qualification_requests:
-      edit:
+      edit_location:
         title: Qualification verification – response received
+      edit_review:
+        reviewed: Have you reviewed the response from Ecctis about this qualification?
+        passed: Does the response confirm this qualification is legitimate?
+        failure_assessor_note: Briefly explain why this qualification should not be accepted
 
     reference_requests:
       edit:

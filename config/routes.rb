@@ -100,7 +100,19 @@ Rails.application.routes.draw do
 
         resources :qualification_requests,
                   path: "/qualification-requests",
-                  only: %i[edit update]
+                  only: %i[] do
+          collection do
+            get "locations", to: "qualification_requests#locations"
+            get "reviews", to: "qualification_requests#reviews"
+          end
+
+          member do
+            get "review", to: "qualification_requests#edit_review"
+            post "review", to: "qualification_requests#update_review"
+            get "location", to: "qualification_requests#edit_location"
+            post "location", to: "qualification_requests#update_location"
+          end
+        end
 
         resources :reference_requests,
                   path: "/reference-requests",

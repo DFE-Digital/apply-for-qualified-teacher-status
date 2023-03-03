@@ -10,6 +10,9 @@ en:
           decline: As this reason triggers a decline, you do not need to add a note, but you can use the space below to add anything you feel might be helpful, if you want to.
       assessor_interface_create_note_form:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
+      assessor_interface_requestable_location_form:
+        location_note:
+          qualification_request: Use this space to add any important information about the response from Ecctis, for example, the reference number.
       eligibility_interface_country_form:
         location: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
       eligibility_interface_region_form:
@@ -101,9 +104,14 @@ en:
       assessor_interface_requestable_location_form:
         received:
           professional_standing_request: The letter of professional standing has been received.
-          qualification_request: The qualification has been received.
-        location_note: Where can the assessor find it?
+          qualification_request: The response from Ecctis has been received.
+        location_note:
+          professional_standing_request: Where to find the response
+          qualification_request: Your notes (optional)
       assessor_interface_requestable_review_form:
+        reviewed_options:
+          true: "Yes"
+          false: "No"
         passed_options:
           true: "Yes"
           false: "No"

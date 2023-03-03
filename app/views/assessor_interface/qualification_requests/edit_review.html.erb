@@ -1,0 +1,32 @@
+<% title = qualification_title(@qualification_request.qualification) %>
+
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<% content_for :back_link_url, reviews_assessor_interface_application_form_assessment_qualification_requests_path(@application_form, @assessment) %>
+
+<%= form_with model: @form, url: [:review, :assessor_interface, @application_form, @assessment, @qualification_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <% if (location_note = @qualification_request.location_note).present? %>
+    <h2 class="govuk-heading-m">How to find the response</h2>
+    <%= govuk_inset_text { simple_format location_note } %>
+  <% end %>
+
+  <% if @qualification_request.received? %>
+    <%= f.govuk_radio_buttons_fieldset :reviewed, legend: { text: t(".reviewed"), size: "s" } do %>
+      <%= f.govuk_radio_button :reviewed, :true, link_errors: true do %>
+        <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: t(".passed"), size: "s" } do %>
+          <%= f.govuk_radio_button :passed, :true, link_errors: true %>
+          <%= f.govuk_radio_button :passed, :false do %>
+            <%= f.govuk_text_area :failure_assessor_note, label: { text: t(".failure_assessor_note") } %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_radio_button :reviewed, :false %>
+    <% end %>
+
+    <%= f.govuk_submit %>
+  <% end %>
+<% end %>

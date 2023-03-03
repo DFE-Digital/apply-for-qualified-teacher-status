@@ -1,0 +1,25 @@
+<% title = qualification_title(@qualification_request.qualification) %>
+
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<% content_for :back_link_url, locations_assessor_interface_application_form_assessment_qualification_requests_path(@application_form, @assessment) %>
+
+<%= form_with model: @form, url: [:location, :assessor_interface, @application_form, @assessment, @qualification_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <p class="govuk-body">Only use this screen when the response from Ecctis is received.</p>
+
+  <p class="govuk-body">This screen is not an assessment of the qualification, it just confirms that Ecctis has responded.</p>
+
+  <%= f.govuk_check_boxes_fieldset :received, multiple: false, legend: nil do %>
+    <%= f.govuk_check_box :received, true, false, multiple: false, link_errors: true,
+                          label: { text: t("helpers.label.assessor_interface_requestable_location_form.received.qualification_request") } %>
+  <% end %>
+
+  <%= f.govuk_text_area :location_note,
+                        label: { text: t("helpers.label.assessor_interface_requestable_location_form.location_note.qualification_request") },
+                        hint: { text: t("helpers.hint.assessor_interface_requestable_location_form.location_note.qualification_request") } %>
+
+  <%= f.govuk_submit %>
+<% end %>

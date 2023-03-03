@@ -8,7 +8,7 @@ Date of birth: <%= @application_form.date_of_birth.to_fs(:long_ordinal_uk) %>
 
 The applicant has provided us with the following details about their teaching qualification:
 
-Title: <%= qualification_title(@qualification) %>
+Title: <%= @qualification.title %>
 Institution studied at: <%= @qualification.institution_name %>
 Date started: <%= @qualification.start_date.to_fs(:long_ordinal_uk) %>
 Date ended: <%= @qualification.complete_date.to_fs(:long_ordinal_uk) %>

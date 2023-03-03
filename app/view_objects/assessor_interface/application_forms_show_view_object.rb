@@ -96,13 +96,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
           assessment,
         )
       when :record_qualification_requests
-        qualification_request = qualification_requests[index]
-
-        url_helpers.edit_assessor_interface_application_form_assessment_qualification_request_path(
+        url_helpers.locations_assessor_interface_application_form_assessment_qualification_requests_path(
           application_form,
           assessment,
-          qualification_request,
         )
+      when :review_qualification_requests
+        if application_form.received_qualification
+          url_helpers.reviews_assessor_interface_application_form_assessment_qualification_requests_path(
+            application_form,
+            assessment,
+          )
+        end
       when :reference_requests
         if application_form.received_reference ||
              application_form.waiting_on_reference
@@ -158,7 +162,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
              application_form.waiting_on_qualification
           :waiting_on
         elsif application_form.received_qualification
-          :received
+          :completed
         elsif application_form.waiting_on_qualification
           :waiting_on
         else
