@@ -35,6 +35,7 @@
     - part_of_university_degree
   :qualification_requests:
     - location_note
+    - failure_assessor_note
   :reference_requests:
     - additional_information_response
     - failure_assessor_note
