@@ -238,7 +238,9 @@ en:
         submitted_at_before: End date
       assessor_interface_preliminary_check_form:
         preliminary_check_complete: Do you want to move this application to a full assessment?
-      assessor_interface_work_history_reference_request_form:
+      assessor_interface_select_qualifications_form:
+        qualification_ids: Qualification
+      assessor_interface_select_work_histories_form:
         work_history_ids: School
       eligibility_interface_region_form:
         region_id: In which state/territory are you currently recognised as a teacher?
