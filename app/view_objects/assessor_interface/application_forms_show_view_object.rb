@@ -34,7 +34,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
       further_information_requests.map { :review_requested_information }
 
     verification_requests = [
-      (:qualification_requests if qualification_requests.present?),
+      (:record_qualification_requests if qualification_requests.present?),
+      (:review_qualification_requests if qualification_requests.present?),
       (:reference_requests if reference_requests.present?),
     ].compact
 
@@ -94,7 +95,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           application_form,
           assessment,
         )
-      when :qualification_requests
+      when :record_qualification_requests
         qualification_request = qualification_requests[index]
 
         url_helpers.edit_assessor_interface_application_form_assessment_qualification_request_path(
@@ -152,8 +153,28 @@ class AssessorInterface::ApplicationFormsShowViewObject
         else
           :cannot_start
         end
-      when :qualification_requests
-        application_form.received_qualification ? :received : :waiting_on
+      when :record_qualification_requests
+        if application_form.received_qualification &&
+             application_form.waiting_on_qualification
+          :waiting_on
+        elsif application_form.received_qualification
+          :received
+        elsif application_form.waiting_on_qualification
+          :waiting_on
+        else
+          :cannot_start
+        end
+      when :review_qualification_requests
+        return :cannot_start unless application_form.received_qualification
+
+        unreviewed_requests =
+          qualification_requests.filter(&:received?).reject(&:reviewed?)
+
+        if application_form.waiting_on_qualification
+          unreviewed_requests.empty? ? :waiting_on : :received
+        else
+          unreviewed_requests.empty? ? :completed : :received
+        end
       when :assessment_recommendation
         return :completed if assessment.completed?
         return :cannot_start unless assessment.recommendable?

@@ -25,7 +25,8 @@ en:
             personal_information: Check personal information
             professional_standing: Check professional standing
             professional_standing_request: Awaiting third-party professional standing
-            qualification_requests: Qualifications – requested
+            record_qualification_requests: Record qualifications responses
+            review_qualification_requests: Review qualifications responses
             qualifications: Check qualifications
             reference_requests: Verify reference requests
             review_requested_information: Review requested information from applicant

@@ -31,7 +31,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def and_i_click_qualification_requested
-    assessor_application_page.requested_qualifications_task.link.click
+    assessor_application_page.record_qualification_requests_task.link.click
   end
 
   def when_i_fill_in_the_form

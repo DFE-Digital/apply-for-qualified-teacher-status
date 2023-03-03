@@ -180,12 +180,12 @@ module PageHelpers
   end
 
   def qualification_requests_assessment_recommendation_verify_page
-    @qualification_requests_assessment_recommendation_award_page ||=
+    @qualification_requests_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
   end
 
   def reference_requests_assessment_recommendation_verify_page
-    @reference_requests_assessment_recommendation_award_page ||=
+    @reference_requests_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationVerify.new
   end
 
