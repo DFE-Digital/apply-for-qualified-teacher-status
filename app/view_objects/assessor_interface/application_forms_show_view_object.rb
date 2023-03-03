@@ -169,7 +169,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
           :cannot_start
         end
       when :qualification_requests
-        application_form.received_qualification ? :received : :waiting_on
+        unreviewed_requests = qualification_requests.reject(&:reviewed?)
+
+        if qualification_requests.all?(&:reviewed?)
+          :completed
+        elsif unreviewed_requests.any?(&:expired?)
+          :overdue
+        elsif unreviewed_requests.any?(&:received?)
+          :received
+        else
+          :waiting_on
+        end
       when :assessment_recommendation
         return :completed if assessment.completed?
         return :cannot_start unless assessment.recommendable?

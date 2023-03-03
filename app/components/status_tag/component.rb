@@ -31,6 +31,7 @@ module StatusTag
       initial_assessment: "blue",
       invalid: "red",
       not_started: "grey",
+      overdue: "pink",
       potential_duplicate_in_dqt: "pink",
       received: "purple",
       requested: "yellow",

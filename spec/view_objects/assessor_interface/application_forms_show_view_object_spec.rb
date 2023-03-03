@@ -220,7 +220,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     context "with verification_requests section" do
       let(:section) { :verification_requests }
 
-      context "with qualification requests item" do
+      context "with record qualification requests item" do
         let(:item) { :qualification_requests }
 
         let!(:qualification_request) do
