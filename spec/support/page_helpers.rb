@@ -27,9 +27,14 @@ module PageHelpers
       PageObjects::AssessorInterface::EditProfessionalStandingRequest.new
   end
 
-  def assessor_edit_qualification_request_page
-    @assessor_edit_qualification_request_page ||=
-      PageObjects::AssessorInterface::EditQualificationRequest.new
+  def assessor_edit_qualification_request_location_page
+    @assessor_edit_qualification_request_location_page ||=
+      PageObjects::AssessorInterface::EditQualificationRequestLocation.new
+  end
+
+  def assessor_qualification_request_locations_page
+    @assessor_qualification_request_locations_page ||=
+      PageObjects::AssessorInterface::QualificationRequestLocations.new
   end
 
   def assessor_edit_reference_request_page

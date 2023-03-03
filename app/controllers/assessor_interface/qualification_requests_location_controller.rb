@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
 module AssessorInterface
-  class QualificationRequestsController < BaseController
+  class QualificationRequestsLocationController < BaseController
     before_action :authorize_note
+
+    def index
+      @application_form = qualification_requests.first.application_form
+      @assessment = @application_form.assessment
+      @qualification_requests = qualification_requests
+
+      render layout: "application"
+    end
 
     def edit
       @form =
@@ -21,7 +29,10 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to [:assessor_interface, application_form]
+        redirect_to [
+                      :assessor_interface,
+                      qualification_request.application_form,
+                    ]
       else
         render :edit, status: :unprocessable_entity
       end
@@ -36,20 +47,23 @@ module AssessorInterface
       )
     end
 
-    def qualification_request
-      @qualification_request ||=
+    def qualification_requests
+      @qualification_requests ||=
         QualificationRequest
-          .includes(assessment: :application_form)
+          .joins(assessment: :application_form)
+          .includes(:qualification)
           .where(
             assessment_id: params[:assessment_id],
             assessment: {
               application_form_id: params[:application_form_id],
             },
           )
-          .find(params[:id])
+          .order("qualifications.start_date": :desc)
     end
 
-    delegate :application_form, :assessment, to: :qualification_request
+    def qualification_request
+      @qualification_request ||= qualification_requests.find(params[:id])
+    end
 
     alias_method :requestable, :qualification_request
   end

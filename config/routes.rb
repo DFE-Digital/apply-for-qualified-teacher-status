@@ -98,9 +98,9 @@ Rails.application.routes.draw do
                  path: "/professional-standing-request",
                  only: %i[edit update]
 
-        resources :qualification_requests,
-                  path: "/qualification-requests",
-                  only: %i[edit update]
+        resources :qualification_requests_location,
+                  path: "/qualification-requests-location",
+                  only: %i[index edit update]
 
         resources :reference_requests,
                   path: "/reference-requests",

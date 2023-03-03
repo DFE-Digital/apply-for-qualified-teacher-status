@@ -11,7 +11,7 @@
   <%= f.govuk_collection_check_boxes :qualification_ids,
                                      @application_form.qualifications.ordered,
                                      :id,
-                                     ->(qualification) { "#{qualification.title} (#{qualification.institution_name})" },
+                                     ->(qualification) { qualification_title(qualification) },
                                      small: true,
                                      legend: nil %>
 

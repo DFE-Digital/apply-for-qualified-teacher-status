@@ -1,0 +1,42 @@
+<% content_for :page_title, t("assessor_interface.application_forms.show.assessment_tasks.items.record_qualification_requests") %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render "shared/assessor_header", title: "Work references", application_form: @application_form %>
+
+    <p class="govuk-body">Use the links below to record which Ecctis responses have been received.</p>
+  </div>
+
+  <div class="govuk-grid-column-full-from-desktop">
+    <ol class="app-task-list">
+      <li>
+        <h2 class="app-task-list__section">
+          Qualifications
+        </h2>
+        <ul class="app-task-list__items govuk-!-padding-left-0">
+          <% @qualification_requests.each_with_index do |qualification_request| %>
+            <li class="app-task-list__item">
+              <span class="app-task-list__task-name">
+                <%= govuk_link_to(
+                  qualification_title(qualification_request.qualification),
+                  edit_assessor_interface_application_form_assessment_qualification_requests_location_path(@application_form, @assessment, qualification_request)
+                ) %>
+              </span>
+
+              <%= render StatusTag::Component.new(
+                key: "qualification-request-#{qualification_request.id}",
+                status: qualification_request.state,
+                class_context: "app-task-list",
+              ) %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_button_link_to "Back to overview", assessor_interface_application_form_path(@application_form) %>
+  </div>
+</div>

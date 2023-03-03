@@ -9,11 +9,20 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     given_there_is_an_application_form_with_qualification_request
   end
 
-  it "review complete" do
+  it "record location" do
     when_i_visit_the(:assessor_application_page, application_id:)
     and_i_see_a_waiting_on_status
-    and_i_click_qualification_requested
-    then_i_see_the(:assessor_edit_qualification_request_page, application_id:)
+    and_i_click_record_qualifications_task
+    then_i_see_the(
+      :assessor_qualification_request_locations_page,
+      application_id:,
+    )
+
+    when_i_select_the_first_qualification_request
+    then_i_see_the(
+      :assessor_edit_qualification_request_location_page,
+      application_id:,
+    )
 
     when_i_fill_in_the_form
     then_i_see_the(:assessor_application_page, application_id:)
@@ -30,15 +39,26 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     expect(assessor_application_page.overview.status.text).to eq("WAITING ON")
   end
 
-  def and_i_click_qualification_requested
+  def and_i_click_record_qualifications_task
     assessor_application_page.record_qualification_requests_task.link.click
   end
 
+  def when_i_select_the_first_qualification_request
+    assessor_qualification_request_locations_page
+      .task_list
+      .qualification_requests
+      .first
+      .click
+  end
+
   def when_i_fill_in_the_form
-    assessor_edit_qualification_request_page.form.received_checkbox.click
-    assessor_edit_qualification_request_page.form.note_textarea.fill_in with:
+    assessor_edit_qualification_request_location_page
+      .form
+      .received_checkbox
+      .click
+    assessor_edit_qualification_request_location_page.form.note_textarea.fill_in with:
       "Note."
-    assessor_edit_qualification_request_page.form.continue_button.click
+    assessor_edit_qualification_request_location_page.form.continue_button.click
   end
 
   def and_i_see_a_not_started_status
