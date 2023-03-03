@@ -364,7 +364,11 @@ en:
               inclusion: Select whether you are satisfied with the request
             failure_assessor_note:
               blank: Enter why you are not satisfied
-        assessor_interface/work_history_reference_request_form:
+        assessor_interface/select_qualifications_form:
+          attributes:
+            qualification_ids:
+              blank: Select which qualifications you’d like to verify
+        assessor_interface/select_work_histories_form:
           attributes:
             work_history_ids:
               blank: References account for less than 9 months
