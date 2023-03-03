@@ -382,6 +382,10 @@ en:
           attributes:
             work_history_ids:
               blank: References account for less than 9 months
+        assessor_interface/verify_qualifications_form:
+          attributes:
+            verify_qualifications:
+              inclusion: Select whether you want to verify qualifications
         assessor_interface/verify_references_form:
           attributes:
             references_verified:
