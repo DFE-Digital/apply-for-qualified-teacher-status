@@ -3,7 +3,9 @@
 # Table name: timeline_events
 #
 #  id                    :bigint           not null, primary key
-#  annotation            :string           default(""), not null
+#  age_range_max         :integer
+#  age_range_min         :integer
+#  age_range_note        :text             default(""), not null
 #  creator_name          :string           default(""), not null
 #  creator_type          :string
 #  event_type            :string           not null
@@ -13,6 +15,8 @@
 #  new_state             :string           default(""), not null
 #  old_state             :string           default(""), not null
 #  requestable_type      :string
+#  subjects              :text             default([]), not null, is an Array
+#  subjects_note         :text             default(""), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  application_form_id   :bigint           not null

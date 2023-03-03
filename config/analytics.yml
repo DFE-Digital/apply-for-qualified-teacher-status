@@ -340,7 +340,6 @@
     - id
     - event_type
     - application_form_id
-    - annotation
     - creator_id
     - creator_type
     - creator_name
@@ -357,6 +356,11 @@
     - assessment_id
     - requestable_type
     - requestable_id
+    - age_range_min
+    - age_range_max
+    - age_range_note
+    - subjects
+    - subjects_note
   :uploads:
     - id
     - document_id

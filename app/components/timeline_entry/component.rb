@@ -96,14 +96,12 @@ module TimelineEntry
     end
 
     def age_range_subjects_verified_vars
-      assessment = timeline_event.assessment
-
       {
-        age_range_min: assessment.age_range_min,
-        age_range_max: assessment.age_range_max,
-        age_range_note: assessment.age_range_note,
-        subjects: Subject.find(assessment.subjects).map(&:name).join(", "),
-        subjects_note: assessment.subjects_note,
+        age_range_min: timeline_event.age_range_min,
+        age_range_max: timeline_event.age_range_max,
+        age_range_note: timeline_event.age_range_note,
+        subjects: Subject.find(timeline_event.subjects).map(&:name).join(", "),
+        subjects_note: timeline_event.subjects_note,
       }
     end
 

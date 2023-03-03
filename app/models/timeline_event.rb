@@ -5,7 +5,9 @@
 # Table name: timeline_events
 #
 #  id                    :bigint           not null, primary key
-#  annotation            :string           default(""), not null
+#  age_range_max         :integer
+#  age_range_min         :integer
+#  age_range_note        :text             default(""), not null
 #  creator_name          :string           default(""), not null
 #  creator_type          :string
 #  event_type            :string           not null
@@ -15,6 +17,8 @@
 #  new_state             :string           default(""), not null
 #  old_state             :string           default(""), not null
 #  requestable_type      :string
+#  subjects              :text             default([]), not null, is an Array
+#  subjects_note         :text             default(""), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  application_form_id   :bigint           not null
@@ -104,8 +108,20 @@ class TimelineEvent < ApplicationRecord
             unless: :email_sent?
 
   belongs_to :assessment, optional: true
-  validates :assessment, presence: true, if: :age_range_subjects_verified?
-  validates :assessment, absence: true, unless: :age_range_subjects_verified?
+  validates :assessment,
+            :age_range_min,
+            :age_range_max,
+            :subjects,
+            presence: true,
+            if: :age_range_subjects_verified?
+  validates :assessment,
+            :age_range_min,
+            :age_range_max,
+            :age_range_note,
+            :subjects,
+            :subjects_note,
+            absence: true,
+            unless: :age_range_subjects_verified?
 
   belongs_to :requestable, polymorphic: true, optional: true
   validates :requestable_id, presence: true, if: :requestable_event_type?

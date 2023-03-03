@@ -86,14 +86,14 @@ class AssessorInterface::AgeRangeSubjectsForm < AssessorInterface::AssessmentSec
       event_type: :age_range_subjects_verified,
       application_form:,
       assessment:,
+      age_range_min: assessment.age_range_min,
+      age_range_max: assessment.age_range_max,
+      age_range_note: assessment.age_range_note,
+      subjects: assessment.subjects,
+      subjects_note: assessment.subjects_note,
     )
   end
 
-  def assessment
-    @assessment ||= assessment_section.assessment
-  end
-
-  def application_form
-    @application_form ||= assessment.application_form
-  end
+  delegate :assessment, to: :assessment_section
+  delegate :application_form, to: :assessment
 end
