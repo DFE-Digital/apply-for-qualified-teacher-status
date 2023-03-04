@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module AssessorInterface
-  class QualificationRequestsLocationController < BaseController
-    before_action :authorize_note
+  class QualificationRequestsReviewController < BaseController
+    before_action :authorize_assessor
 
     def index
       @application_form = qualification_requests.first.application_form
@@ -13,19 +13,29 @@ module AssessorInterface
     end
 
     def edit
+      @application_form = qualification_request.application_form
+      @assessment = qualification_request.assessment
+
       @form =
-        RequestableLocationForm.new(
+        RequestableReviewForm.new(
           requestable:,
           user: current_staff,
-          received: requestable.received?,
-          location_note: requestable.location_note,
+          reviewed: requestable.reviewed?,
+          passed: requestable.passed,
+          failure_assessor_note: requestable.failure_assessor_note,
         )
     end
 
     def update
+      @application_form = qualification_request.application_form
+      @assessment = qualification_request.assessment
+
       @form =
-        RequestableLocationForm.new(
-          requestable_location_form.merge(requestable:, user: current_staff),
+        RequestableReviewForm.new(
+          requestable_review_form_params.merge(
+            requestable:,
+            user: current_staff,
+          ),
         )
 
       if @form.save
@@ -33,7 +43,7 @@ module AssessorInterface
                       :assessor_interface,
                       qualification_request.application_form,
                       qualification_request.assessment,
-                      :qualification_requests_location,
+                      :qualification_requests_review,
                       :index,
                     ]
       else
@@ -43,10 +53,11 @@ module AssessorInterface
 
     private
 
-    def requestable_location_form
-      params.require(:assessor_interface_requestable_location_form).permit(
-        :received,
-        :location_note,
+    def requestable_review_form_params
+      params.require(:assessor_interface_requestable_review_form).permit(
+        :reviewed,
+        :passed,
+        :failure_assessor_note,
       )
     end
 

@@ -32,14 +32,24 @@ module PageHelpers
       PageObjects::AssessorInterface::EditQualificationRequestLocation.new
   end
 
-  def assessor_qualification_request_locations_page
-    @assessor_qualification_request_locations_page ||=
-      PageObjects::AssessorInterface::QualificationRequestLocations.new
+  def assessor_edit_qualification_request_review_page
+    @assessor_edit_qualification_request_review_page ||=
+      PageObjects::AssessorInterface::EditQualificationRequestReview.new
   end
 
   def assessor_edit_reference_request_page
     @assessor_edit_reference_request_page ||=
       PageObjects::AssessorInterface::EditReferenceRequest.new
+  end
+
+  def assessor_qualification_request_locations_page
+    @assessor_qualification_request_locations_page ||=
+      PageObjects::AssessorInterface::QualificationRequestLocations.new
+  end
+
+  def assessor_qualification_request_reviews_page
+    @assessor_qualification_request_reviews_page ||=
+      PageObjects::AssessorInterface::QualificationRequestReviews.new
   end
 
   def assessor_reference_requests_page

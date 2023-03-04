@@ -227,7 +227,12 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           create(:qualification_request, :received, assessment:)
         end
 
-        it { is_expected.to be_nil }
+        it do
+          is_expected.to eq(
+            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
+              "/qualification-requests-review",
+          )
+        end
       end
 
       context "with reference requests item" do

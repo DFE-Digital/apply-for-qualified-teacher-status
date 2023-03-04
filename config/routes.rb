@@ -102,6 +102,10 @@ Rails.application.routes.draw do
                   path: "/qualification-requests-location",
                   only: %i[index edit update]
 
+        resources :qualification_requests_review,
+                  path: "/qualification-requests-review",
+                  only: %i[index edit update]
+
         resources :reference_requests,
                   path: "/reference-requests",
                   only: %i[index edit update] do

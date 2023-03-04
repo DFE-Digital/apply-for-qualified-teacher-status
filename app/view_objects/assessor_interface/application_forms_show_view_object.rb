@@ -100,6 +100,11 @@ class AssessorInterface::ApplicationFormsShowViewObject
           application_form,
           assessment,
         )
+      when :review_qualification_requests
+        url_helpers.assessor_interface_application_form_assessment_qualification_requests_review_index_path(
+          application_form,
+          assessment,
+        )
       when :reference_requests
         if application_form.received_reference ||
              application_form.waiting_on_reference

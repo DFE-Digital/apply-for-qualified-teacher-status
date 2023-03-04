@@ -1,11 +1,13 @@
-<% content_for :page_title, t("assessor_interface.application_forms.show.assessment_tasks.items.record_qualification_requests") %>
+<% content_for :page_title, t("assessor_interface.application_forms.show.assessment_tasks.items.review_qualification_requests") %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render "shared/assessor_header", title: t("assessor_interface.application_forms.show.assessment_tasks.items.record_qualification_requests"), application_form: @application_form %>
+    <%= render "shared/assessor_header", title: t("assessor_interface.application_forms.show.assessment_tasks.items.review_qualification_requests"), application_form: @application_form %>
 
-    <p class="govuk-body">Use the links below to record which Ecctis responses have been received.</p>
+    <p class="govuk-body">This page shows all the qualifications that you’re verifying with Ecctis.</p>
+
+    <p class="govuk-body">You can select and review the Ecctis response to any verification request that has the status RECEIVED.</p>
   </div>
 
   <div class="govuk-grid-column-full-from-desktop">
@@ -20,13 +22,13 @@
               <span class="app-task-list__task-name">
                 <%= govuk_link_to(
                   qualification_title(qualification_request.qualification),
-                  edit_assessor_interface_application_form_assessment_qualification_requests_location_path(@application_form, @assessment, qualification_request)
+                  edit_assessor_interface_application_form_assessment_qualification_requests_review_path(@application_form, @assessment, qualification_request)
                 ) %>
               </span>
 
               <%= render StatusTag::Component.new(
                 key: "qualification-request-#{qualification_request.id}",
-                status: qualification_request.state,
+                status: qualification_request.status,
                 class_context: "app-task-list",
               ) %>
             </li>

@@ -98,6 +98,9 @@ en:
           professional_standing_request: Where to find the response
           qualification_request: Your notes (optional)
       assessor_interface_requestable_review_form:
+        reviewed_options:
+          true: "Yes"
+          false: "No"
         passed_options:
           true: "Yes"
           false: "No"
