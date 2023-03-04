@@ -4,7 +4,7 @@ module PageObjects
   module AssessorInterface
     class QualificationRequestLocations < SitePrism::Page
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
-                "/qualification-requests-location"
+                "/qualification-requests/locations"
 
       section :task_list, ".app-task-list__item" do
         elements :qualification_requests, ".app-task-list__task-name a"

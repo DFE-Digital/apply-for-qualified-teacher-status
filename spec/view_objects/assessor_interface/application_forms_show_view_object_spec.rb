@@ -208,14 +208,12 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "with record qualification requests item" do
         let(:item) { :record_qualification_requests }
 
-        let!(:qualification_request) do
-          create(:qualification_request, :requested, assessment:)
-        end
+        before { create(:qualification_request, :requested, assessment:) }
 
         it do
           is_expected.to eq(
             "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
-              "/qualification-requests-location",
+              "/qualification-requests/locations",
           )
         end
       end
@@ -223,14 +221,15 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "with review qualification requests item" do
         let(:item) { :review_qualification_requests }
 
-        let!(:qualification_request) do
+        before do
           create(:qualification_request, :received, assessment:)
+          application_form.update!(received_qualification: true)
         end
 
         it do
           is_expected.to eq(
             "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
-              "/qualification-requests-review",
+              "/qualification-requests/reviews",
           )
         end
       end

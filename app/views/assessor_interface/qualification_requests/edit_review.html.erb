@@ -1,9 +1,9 @@
 <% title = qualification_title(@qualification_request.qualification) %>
 
 <% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, reviews_assessor_interface_application_form_assessment_qualification_requests_path(@application_form, @assessment) %>
 
-<%= form_with model: @form, url: assessor_interface_application_form_assessment_qualification_requests_review_path(@application_form, @assessment, @qualification_request), method: :put do |f| %>
+<%= form_with model: @form, url: [:review, :assessor_interface, @application_form, @assessment, @qualification_request] do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl"><%= title %></h1>
@@ -27,8 +27,6 @@
       <%= f.govuk_radio_button :reviewed, :false %>
     <% end %>
 
-    <%= f.govuk_submit do %>
-      <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
-    <% end %>
+    <%= f.govuk_submit %>
   <% end %>
 <% end %>

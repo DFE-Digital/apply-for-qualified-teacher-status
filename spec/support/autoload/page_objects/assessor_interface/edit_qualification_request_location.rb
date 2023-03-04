@@ -4,7 +4,7 @@ module PageObjects
   module AssessorInterface
     class EditQualificationRequestLocation < SitePrism::Page
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
-                "/qualification-requests-location/{id}/edit"
+                "/qualification-requests/{id}/location"
 
       section :form, "form" do
         element :received_checkbox, ".govuk-checkboxes__input", visible: false

@@ -98,13 +98,21 @@ Rails.application.routes.draw do
                  path: "/professional-standing-request",
                  only: %i[edit update]
 
-        resources :qualification_requests_location,
-                  path: "/qualification-requests-location",
-                  only: %i[index edit update]
+        resources :qualification_requests,
+                  path: "/qualification-requests",
+                  only: %i[] do
+          collection do
+            get "locations", to: "qualification_requests#locations"
+            get "reviews", to: "qualification_requests#reviews"
+          end
 
-        resources :qualification_requests_review,
-                  path: "/qualification-requests-review",
-                  only: %i[index edit update]
+          member do
+            get "review", to: "qualification_requests#edit_review"
+            post "review", to: "qualification_requests#update_review"
+            get "location", to: "qualification_requests#edit_location"
+            post "location", to: "qualification_requests#update_location"
+          end
+        end
 
         resources :reference_requests,
                   path: "/reference-requests",

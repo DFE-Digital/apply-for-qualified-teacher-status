@@ -4,7 +4,7 @@ module PageObjects
   module AssessorInterface
     class EditQualificationRequestReview < SitePrism::Page
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
-                "/qualification-requests-review/{id}/edit"
+                "/qualification-requests/{id}/review"
 
       section :form, "form" do
         element :reviewed_yes_radio_item,
