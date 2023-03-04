@@ -90,16 +90,13 @@ Rails.application.routes.draw do
                   path: "/qualification-requests",
                   only: %i[edit update]
 
-        get "/verify-references",
-            to: "verify_references#index",
-            as: :verify_references
-        put "/verify-references",
-            to: "verify_references#update",
-            as: :update_verify_references
-
         resources :reference_requests,
-                  path: "/work-references",
-                  only: %i[edit update]
+                  path: "/reference-requests",
+                  only: %i[index edit update] do
+          post "verify-references",
+               to: "reference_requests#update_verify_references",
+               on: :collection
+        end
       end
     end
   end

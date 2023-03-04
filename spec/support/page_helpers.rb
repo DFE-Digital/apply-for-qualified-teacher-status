@@ -32,6 +32,16 @@ module PageHelpers
       PageObjects::AssessorInterface::EditQualificationRequest.new
   end
 
+  def assessor_edit_reference_request_page
+    @assessor_edit_reference_request_page ||=
+      PageObjects::AssessorInterface::EditReferenceRequest.new
+  end
+
+  def assessor_reference_requests_page
+    @assessor_reference_requests_page ||=
+      PageObjects::AssessorInterface::ReferenceRequests.new
+  end
+
   def applications_page
     @applications_page ||= PageObjects::AssessorInterface::Applications.new
   end
@@ -509,15 +519,5 @@ module PageHelpers
   def work_experience_page
     @work_experience_page ||=
       PageObjects::EligibilityInterface::WorkExperience.new
-  end
-
-  def verify_references_page
-    @verify_references_page ||=
-      PageObjects::AssessorInterface::VerifyReferencesPage.new
-  end
-
-  def reference_request_page
-    @reference_request_page ||=
-      PageObjects::AssessorInterface::ReferenceRequestPage.new
   end
 end

@@ -13,14 +13,14 @@ RSpec.describe "Assessor verifying references", type: :system do
     when_i_visit_the(:assessor_application_page, application_id:)
     and_i_see_a_waiting_on_status
     and_i_click_verify_references
-    then_i_see_the(:verify_references_page, application_id:)
+    then_i_see_the(:assessor_reference_requests_page, application_id:)
 
     when_i_click_on_a_reference_request
     then_i_see_the(
-      :reference_request_page,
+      :assessor_edit_reference_request_page,
       application_id:,
       assessment_id:,
-      reference_request_id:,
+      id: reference_request.id,
     )
     and_i_see_the_reference_summary
 
@@ -46,57 +46,81 @@ RSpec.describe "Assessor verifying references", type: :system do
   end
 
   def when_i_click_on_a_reference_request
-    verify_references_page.task_list.reference_requests.first.click
+    assessor_reference_requests_page.task_list.reference_requests.first.click
   end
 
   def and_i_see_the_reference_summary
-    expect(reference_request_page.table.headers[0].text).to eq(
+    expect(assessor_edit_reference_request_page.table.headers[0].text).to eq(
       "Name of institution",
     )
-    expect(reference_request_page.table.cells[0].text).to eq("School")
-    expect(reference_request_page.table.headers[1].text).to eq(
+    expect(assessor_edit_reference_request_page.table.cells[0].text).to eq(
+      "School",
+    )
+    expect(assessor_edit_reference_request_page.table.headers[1].text).to eq(
       "Number of months",
     )
-    expect(reference_request_page.table.cells[1].text).to match(/\d+/)
-    expect(reference_request_page.table.headers[2].text).to eq(
+    expect(assessor_edit_reference_request_page.table.cells[1].text).to match(
+      /\d+/,
+    )
+    expect(assessor_edit_reference_request_page.table.headers[2].text).to eq(
       "Name of reference",
     )
-    expect(reference_request_page.table.cells[2].text).to eq(
+    expect(assessor_edit_reference_request_page.table.cells[2].text).to eq(
       reference_request.work_history.contact_name,
     )
-    expect(reference_request_page.responses.heading.text).to eq(
+    expect(assessor_edit_reference_request_page.responses.heading.text).to eq(
       "Reference requested",
     )
 
-    expect(reference_request_page.responses.values[0].text).to eq("John Smith")
-    expect(reference_request_page.responses.values[1].text).to eq("Headteacher")
-    expect(reference_request_page.responses.values[2].text).to eq("Yes")
-    expect(reference_request_page.responses.values[3].text).to eq("Yes")
-    expect(reference_request_page.responses.values[4].text).to eq("Yes")
-    expect(reference_request_page.responses.values[5].text).to eq("Yes")
-    expect(reference_request_page.responses.values[6].text).to eq("Yes")
-    expect(reference_request_page.responses.values[7].text).to eq("Yes")
-    expect(reference_request_page.responses.values[8].text).to eq("No")
-    expect(reference_request_page.responses.values[9].text).to eq("Yes")
-    expect(reference_request_page.responses.values[10].text).to eq(
-      reference_request.additional_information_response,
+    expect(assessor_edit_reference_request_page.responses.values[0].text).to eq(
+      "John Smith",
     )
+    expect(assessor_edit_reference_request_page.responses.values[1].text).to eq(
+      "Headteacher",
+    )
+    expect(assessor_edit_reference_request_page.responses.values[2].text).to eq(
+      "Yes",
+    )
+    expect(assessor_edit_reference_request_page.responses.values[3].text).to eq(
+      "Yes",
+    )
+    expect(assessor_edit_reference_request_page.responses.values[4].text).to eq(
+      "Yes",
+    )
+    expect(assessor_edit_reference_request_page.responses.values[5].text).to eq(
+      "Yes",
+    )
+    expect(assessor_edit_reference_request_page.responses.values[6].text).to eq(
+      "Yes",
+    )
+    expect(assessor_edit_reference_request_page.responses.values[7].text).to eq(
+      "Yes",
+    )
+    expect(assessor_edit_reference_request_page.responses.values[8].text).to eq(
+      "No",
+    )
+    expect(assessor_edit_reference_request_page.responses.values[9].text).to eq(
+      "Yes",
+    )
+    expect(
+      assessor_edit_reference_request_page.responses.values[10].text,
+    ).to eq(reference_request.additional_information_response)
   end
 
   def when_i_verify_the_reference_request
-    reference_request_page.form.yes_radio_item.choose
-    reference_request_page.form.continue_button.click
+    assessor_edit_reference_request_page.form.yes_radio_item.choose
+    assessor_edit_reference_request_page.form.continue_button.click
   end
 
   def then_i_see_the_reference_request_status_is_accepted
-    expect(verify_references_page.task_list.status_tags.first.text).to eq(
-      "ACCEPTED",
-    )
+    expect(
+      assessor_reference_requests_page.task_list.status_tags.first.text,
+    ).to eq("ACCEPTED")
   end
 
   def when_i_verify_that_all_references_are_accepted
-    verify_references_page.form.yes_radio_item.choose
-    verify_references_page.form.continue_button.click
+    assessor_reference_requests_page.form.yes_radio_item.choose
+    assessor_reference_requests_page.form.continue_button.click
   end
 
   def then_i_see_the_verify_references_task_is_completed
@@ -145,9 +169,5 @@ RSpec.describe "Assessor verifying references", type: :system do
 
   def reference_request
     application_form.assessment.reference_requests.first
-  end
-
-  def reference_request_id
-    reference_request.id
   end
 end
