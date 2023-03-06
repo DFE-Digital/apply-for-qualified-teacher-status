@@ -19,7 +19,7 @@ gem "okcomputer"
 gem "pagy"
 gem "pg"
 gem "propshaft"
-gem "puma", "~> 6.1"
+gem "puma"
 gem "pundit"
 gem "rack-attack"
 gem "rotp"
@@ -62,12 +62,12 @@ group :development do
 end
 
 group :test do
-  gem "capybara", "~> 3.37"
+  gem "capybara"
   gem "climate_control"
-  gem "cuprite", "~> 0.14"
+  gem "cuprite"
   gem "rspec"
-  gem "rspec-rails", "~> 6.0.1"
-  gem "shoulda-matchers", "~> 5.3"
+  gem "rspec-rails"
+  gem "shoulda-matchers"
   gem "site_prism"
   gem "webmock"
 end

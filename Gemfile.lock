@@ -519,10 +519,10 @@ DEPENDENCIES
   azure-storage-blob
   bootsnap
   business
-  capybara (~> 3.37)
+  capybara
   climate_control
   cssbundling-rails
-  cuprite (~> 0.14)
+  cuprite
   debug
   devise
   devise_invitable
@@ -544,19 +544,19 @@ DEPENDENCIES
   pg
   prettier_print
   propshaft
-  puma (~> 6.1)
+  puma
   pundit
   rack-attack
   rails (= 7.0.4.2)
   rladr
   rotp
   rspec
-  rspec-rails (~> 6.0.1)
+  rspec-rails
   rubocop-govuk
   ruby-vips
   sentry-rails
   sentry-ruby
-  shoulda-matchers (~> 5.3)
+  shoulda-matchers
   sidekiq
   sidekiq-cron
   site_prism
