@@ -547,7 +547,7 @@ DEPENDENCIES
   puma (~> 6.1)
   pundit
   rack-attack
-  rails (~> 7.0.4)
+  rails (= 7.0.4.2)
   rladr
   rotp
   rspec
