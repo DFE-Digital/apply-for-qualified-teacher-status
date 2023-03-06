@@ -14,6 +14,7 @@ en:
       invalid: Invalid
       not_started: Not started
       potential_duplicate_in_dqt: Potential duplication in DQT
+      preliminary_check: Preliminary check
       received: Received
       rejected: Rejected
       requested: Waiting on

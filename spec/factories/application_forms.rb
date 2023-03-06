@@ -127,6 +127,11 @@ FactoryBot.define do
       end
     end
 
+    trait :preliminary_check do
+      status { "preliminary_check" }
+      submitted_at { Time.zone.now }
+    end
+
     trait :initial_assessment do
       status { "initial_assessment" }
       submitted_at { Time.zone.now }

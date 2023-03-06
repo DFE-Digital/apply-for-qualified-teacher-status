@@ -155,6 +155,11 @@ module PageHelpers
     @personas_page ||= PageObjects::Personas.new
   end
 
+  def preliminary_check_page
+    @preliminary_check_page ||=
+      PageObjects::AssessorInterface::PreliminaryCheck.new
+  end
+
   def preview_assessment_recommendation_page
     @preview_assessment_recommendation_page ||=
       PageObjects::AssessorInterface::PreviewAssessmentRecommendation.new
