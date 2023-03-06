@@ -372,3 +372,7 @@ en:
           attributes:
             references_verified:
               inclusion: Select whether enough valid work references been received for this application to progress to either an award or decline
+        assessor_interface/preliminary_check_form:
+          attributes:
+            preliminary_check_complete:
+              inclusion: Select whether you want to move this application to a full assessment
