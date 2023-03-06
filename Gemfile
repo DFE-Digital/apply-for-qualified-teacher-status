@@ -26,10 +26,9 @@ gem "rotp"
 gem "ruby-vips"
 gem "sentry-rails"
 gem "sentry-ruby"
-gem "sidekiq"
+gem "sidekiq", "<7"
 gem "sidekiq-cron"
 gem "sitemap_generator"
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Windows
 gem "validate_url"
 
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics"
@@ -45,7 +44,7 @@ gem "factory_bot_rails"
 gem "faker"
 
 group :development, :test do
-  gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "debug"
   gem "dotenv-rails"
 end
 
