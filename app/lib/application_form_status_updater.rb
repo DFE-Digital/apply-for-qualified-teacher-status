@@ -84,6 +84,9 @@ class ApplicationFormStatusUpdater
         "waiting_on"
       elsif received_further_information || received_qualification
         "received"
+      elsif application_form.region.requires_preliminary_check &&
+            application_form.submitted_at.present?
+        "preliminary_check"
       elsif assessment&.started?
         "initial_assessment"
       elsif application_form.submitted_at.present? ||
