@@ -127,7 +127,12 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         fixture_file_upload("upload.pdf", "application/pdf")
       end
       let(:timeout_error) do
-        [Faraday::TimeoutError, Net::ReadTimeout, Net::WriteTimeout].sample
+        [
+          Faraday::ConnectionFailed,
+          Faraday::TimeoutError,
+          Net::ReadTimeout,
+          Net::WriteTimeout,
+        ].sample
       end
 
       before do
