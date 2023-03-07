@@ -15,6 +15,8 @@ module AssessorInterface
         )
 
       if @form.save
+        create_note
+
         redirect_to assessor_interface_application_form_path(application_form)
       else
         render :edit
@@ -34,6 +36,10 @@ module AssessorInterface
         ApplicationForm.includes(assessment: :sections).find(
           params[:application_form_id],
         )
+    end
+
+    def create_note
+      CreatePreliminaryCheckNote.call(application_form:, author: current_staff)
     end
   end
 end
