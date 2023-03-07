@@ -274,14 +274,22 @@ RSpec.describe AssessmentFactory do
           expect(sections.age_range_subjects.count).to eq(1)
         end
 
-        it "has the right checks and failure reasons" do
-          section = sections.age_range_subjects.first
-          expect(section.checks).to eq(
-            %w[qualified_in_mainstream_education age_range_subjects_matches],
-          )
-          expect(section.failure_reasons).to eq(
-            %w[not_qualified_to_teach_mainstream age_range],
-          )
+        context "when secondary education teaching qualification is not required" do
+          before do
+            allow(application_form).to receive(
+              :secondary_education_teaching_qualification_required?,
+            ).and_return(false)
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.age_range_subjects.first
+            expect(section.checks).to eq(
+              %w[qualified_in_mainstream_education age_range_subjects_matches],
+            )
+            expect(section.failure_reasons).to eq(
+              %w[not_qualified_to_teach_mainstream age_range],
+            )
+          end
         end
 
         context "with an application form with subject criteria" do
