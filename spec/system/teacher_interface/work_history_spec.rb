@@ -146,13 +146,15 @@ RSpec.describe "Teacher work history", type: :system do
     expect(summary_list_rows[6].key.text).to eq("Role end date")
     expect(summary_list_rows[6].value.text).to eq("December 2021")
 
-    expect(summary_list_rows[7].key.text).to eq("Contact name")
+    expect(summary_list_rows[7].key.text).to eq("Reference contact’s full name")
     expect(summary_list_rows[7].value.text).to eq("Name")
 
-    expect(summary_list_rows[8].key.text).to eq("Contact job")
+    expect(summary_list_rows[8].key.text).to eq("Reference contact’s job title")
     expect(summary_list_rows[8].value.text).to eq("Job")
 
-    expect(summary_list_rows[9].key.text).to eq("Contact email address")
+    expect(summary_list_rows[9].key.text).to eq(
+      "Reference contact’s email address",
+    )
     expect(summary_list_rows[9].value.text).to eq("contact@example.com")
   end
 
