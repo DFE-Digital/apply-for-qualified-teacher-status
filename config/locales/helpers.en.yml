@@ -47,8 +47,6 @@ en:
         hours_per_week: This means all the hours you spent working per week for this role (not just the hours you spent teaching students). In roles where you worked under 30 hours per week we may need to ask for more information when we assess your application.
         start_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
         end_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
-      work_history:
-        add_another: You can use the next section to tell us about additional work history.
     label:
       assessor_interface_assessment_recommendation_form:
         recommendation_options:
@@ -199,9 +197,6 @@ en:
         subject_1: Subject 1
         subject_2: Subject 2 (optional)
         subject_3: Subject 3 (optional)
-      teacher_interface_work_history_form:
-        contact_name: Contact’s full name
-        contact_email: Contact email address for this organisation
       teacher_interface_work_history_contact_form:
         contact_name: This person’s full name
         contact_job: This person’s job title
@@ -212,10 +207,6 @@ en:
         job: What was the job title or role?
         hours_per_week: Approximately how many hours per week did you work in this role?
         still_employed_options:
-          true: "Yes"
-          false: "No"
-      work_history:
-        add_another_options:
           true: "Yes"
           false: "No"
     placeholder:
