@@ -23,6 +23,7 @@ RSpec.describe ApplicationFormFactory do
         expect(application_form.needs_registration_number).to be false
         expect(application_form.reduced_evidence_accepted).to be false
         expect(application_form.written_statement_optional).to be false
+        expect(application_form.requires_preliminary_check).to be false
       end
     end
 
@@ -40,6 +41,7 @@ RSpec.describe ApplicationFormFactory do
         expect(application_form.needs_registration_number).to be false
         expect(application_form.reduced_evidence_accepted).to be false
         expect(application_form.written_statement_optional).to be false
+        expect(application_form.requires_preliminary_check).to be false
       end
     end
 
@@ -60,6 +62,7 @@ RSpec.describe ApplicationFormFactory do
         expect(application_form.needs_registration_number).to be false
         expect(application_form.reduced_evidence_accepted).to be false
         expect(application_form.written_statement_optional).to be false
+        expect(application_form.requires_preliminary_check).to be false
       end
 
       context "when teaching authority provides the written statement" do
@@ -99,6 +102,7 @@ RSpec.describe ApplicationFormFactory do
         expect(application_form.needs_registration_number).to be true
         expect(application_form.reduced_evidence_accepted).to be false
         expect(application_form.written_statement_optional).to be false
+        expect(application_form.requires_preliminary_check).to be false
       end
     end
 
@@ -112,6 +116,19 @@ RSpec.describe ApplicationFormFactory do
       it "sets the rules" do
         application_form = call
         expect(application_form.reduced_evidence_accepted).to be true
+      end
+    end
+
+    context "when preliminary check is required" do
+      let(:region) { create(:region, requires_preliminary_check: true) }
+
+      it "creates an application form" do
+        expect { call }.to change(ApplicationForm, :count).by(1)
+      end
+
+      it "sets the rules" do
+        application_form = call
+        expect(application_form.requires_preliminary_check).to be true
       end
     end
   end
