@@ -29,21 +29,22 @@
         format: :without_day,
         href: [:school, :teacher_interface, :application_form, work_history]
       },
-      end_date: !work_history.still_employed ? {
+      end_date: {
         title: "Role end date",
+        value: work_history.still_employed ? "Current job" : work_history.end_date,
         format: :without_day,
         href: [:school, :teacher_interface, :application_form, work_history]
-      } : nil,
+      },
       contact_name: !application_form.reduced_evidence_accepted ? {
-        title: "Contact name",
+        title: "Reference contact’s full name",
         href: [:contact, :teacher_interface, :application_form, work_history]
       } : nil,
       contact_job: !application_form.reduced_evidence_accepted ? {
-        title: "Contact job",
+        title: "Reference contact’s job title",
         href: [:contact, :teacher_interface, :application_form, work_history]
       } : nil,
       contact_email: !application_form.reduced_evidence_accepted ? {
-        title: "Contact email address",
+        title: "Reference contact’s email address",
         href: [:contact, :teacher_interface, :application_form, work_history]
       } : nil,
     },
