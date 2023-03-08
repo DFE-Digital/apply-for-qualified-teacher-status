@@ -19,7 +19,7 @@ module AssessorInterface
 
         redirect_to assessor_interface_application_form_path(application_form)
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
 
