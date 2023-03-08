@@ -110,7 +110,7 @@ RSpec.describe SubmitApplicationForm do
   describe "preliminary check note" do
     before do
       create(:staff, support_console_permission: true)
-      region.update!(requires_preliminary_check: true)
+      application_form.update!(requires_preliminary_check: true)
     end
 
     it "creates a note" do

@@ -16,8 +16,6 @@ RSpec.describe CreatePreliminaryCheckNote do
 
   subject(:call) { described_class.call(application_form:, author:) }
 
-  before { application_form.region.update!(requires_preliminary_check: true) }
-
   describe "record note" do
     subject(:note) { Note.find_by(application_form:) }
 

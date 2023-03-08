@@ -48,7 +48,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       context "with a preliminary check" do
         before do
-          application_form.region.update!(requires_preliminary_check: true)
+          application_form.update!(requires_preliminary_check: true)
           create(:professional_standing_request, assessment:)
         end
 
@@ -264,24 +264,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       let(:section) { :pre_assessment_tasks }
       let(:item) { :professional_standing_request }
 
-      before do
-        create(:professional_standing_request, assessment:)
-        application_form.region.update!(
-          teaching_authority_provides_written_statement: false,
-        )
-      end
+      before { create(:professional_standing_request, assessment:) }
 
       it { is_expected.to eq(:waiting_on) }
-
-      context "and region teaching authority provides written statement" do
-        before do
-          application_form.region.update!(
-            teaching_authority_provides_written_statement: true,
-          )
-        end
-
-        it { is_expected.to eq(:cannot_start) }
-      end
 
       context "and professional standing request received" do
         before do
@@ -293,6 +278,15 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         end
 
         it { is_expected.to eq(:completed) }
+      end
+
+      context "when preliminary check is required" do
+        before do
+          create(:professional_standing_request, assessment:)
+          application_form.update!(requires_preliminary_check: true)
+        end
+
+        it { is_expected.to eq(:cannot_start) }
       end
     end
 
@@ -313,6 +307,14 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "when the check has been completed" do
         before do
           application_form.assessment.update!(preliminary_check_complete: true)
+        end
+
+        it { is_expected.to eq(:completed) }
+      end
+
+      context "when the check has been declined" do
+        before do
+          application_form.assessment.update!(preliminary_check_complete: false)
         end
 
         it { is_expected.to eq(:completed) }

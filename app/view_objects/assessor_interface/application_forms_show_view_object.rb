@@ -12,7 +12,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def assessment_tasks
     pre_assessment_tasks = [
-      (:preliminary_check if requires_preliminary_check?),
+      (:preliminary_check if application_form.requires_preliminary_check),
       (
         :professional_standing_request if professional_standing_request.present?
       ),
@@ -59,7 +59,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           application_form,
           assessment,
         )
-      else
+      elsif assessment.preliminary_check_complete != false
         url_helpers.edit_assessor_interface_application_form_assessment_professional_standing_request_path(
           application_form,
           assessment,
@@ -200,14 +200,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
     !assessment.unknown? && !request_further_information_unfinished?
   end
 
-  def requires_preliminary_check?
-    application_form.region.requires_preliminary_check ||
-      application_form.region.country.requires_preliminary_check
-  end
-
   def cannot_start_professional_standing_request?
-    !assessment.preliminary_check_complete &&
-      application_form.region.teaching_authority_provides_written_statement
+    application_form.requires_preliminary_check &&
+      !assessment.preliminary_check_complete
   end
 
   def further_information_requests

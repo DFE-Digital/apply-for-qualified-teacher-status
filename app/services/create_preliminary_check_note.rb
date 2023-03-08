@@ -11,7 +11,7 @@ class CreatePreliminaryCheckNote < CreateNote
   end
 
   def call
-    return unless requires_preliminary_check?
+    return unless application_form.requires_preliminary_check
 
     super
   end
@@ -37,10 +37,5 @@ class CreatePreliminaryCheckNote < CreateNote
 
   def awaiting_professional_standing?
     assessment.professional_standing_request&.requested?
-  end
-
-  def requires_preliminary_check?
-    region.requires_preliminary_check ||
-      region.country.requires_preliminary_check
   end
 end

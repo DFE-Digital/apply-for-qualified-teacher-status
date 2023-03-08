@@ -328,8 +328,11 @@ RSpec.describe ApplicationFormStatusUpdater do
 
     context "when preliminary check is required" do
       before do
-        application_form.update!(submitted_at: Time.zone.now)
-        application_form.region.update!(requires_preliminary_check: true)
+        application_form.update!(
+          assessment: create(:assessment, preliminary_check_complete: nil),
+          submitted_at: Time.zone.now,
+          requires_preliminary_check: true,
+        )
       end
 
       include_examples "changes status", "preliminary_check"

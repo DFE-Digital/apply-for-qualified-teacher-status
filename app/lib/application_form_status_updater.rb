@@ -78,15 +78,14 @@ class ApplicationFormStatusUpdater
         "awarded_pending_checks"
       elsif received_enough_reference_requests?
         "received"
+      elsif preliminary_check?
+        "preliminary_check"
       elsif waiting_on_further_information ||
             waiting_on_professional_standing || waiting_on_qualification ||
             waiting_on_reference
         "waiting_on"
       elsif received_further_information || received_qualification
         "received"
-      elsif application_form.region.requires_preliminary_check &&
-            application_form.submitted_at.present?
-        "preliminary_check"
       elsif assessment&.started?
         "initial_assessment"
       elsif application_form.submitted_at.present? ||
@@ -170,5 +169,11 @@ class ApplicationFormStatusUpdater
       new_state:,
       old_state:,
     )
+  end
+
+  def preliminary_check?
+    application_form.requires_preliminary_check &&
+      !application_form.assessment.preliminary_check_complete &&
+      application_form.submitted_at.present?
   end
 end
