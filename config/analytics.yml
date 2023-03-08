@@ -77,6 +77,7 @@
     - english_language_provider_other
     - english_language_provider_reference
     - reduced_evidence_accepted
+    - requires_preliminary_check
   :assessment_sections:
     - id
     - assessment_id

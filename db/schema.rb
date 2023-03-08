@@ -98,6 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_094507) do
     t.boolean "waiting_on_qualification", default: false, null: false
     t.boolean "received_qualification", default: false, null: false
     t.boolean "written_statement_optional", default: false, null: false
+    t.boolean "requires_preliminary_check", default: false, null: false
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"
     t.index ["family_name"], name: "index_application_forms_on_family_name"
@@ -353,11 +354,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_094507) do
     t.text "qualifications_information", default: "", null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
-<<<<<<< HEAD
     t.boolean "written_statement_optional", default: false, null: false
-=======
     t.boolean "requires_preliminary_check", default: false, null: false
->>>>>>> 7258bfdf (Add preliminary check fields to assessments, regions and countries)
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
