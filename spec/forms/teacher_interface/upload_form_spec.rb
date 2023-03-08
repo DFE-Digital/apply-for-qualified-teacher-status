@@ -122,26 +122,40 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
       end
     end
 
-    context "when a Timeout is raised" do
+    context "when an error is raised" do
       let(:original_attachment) do
         fixture_file_upload("upload.pdf", "application/pdf")
       end
-      let(:timeout_error) do
-        [
-          Faraday::ConnectionFailed,
-          Faraday::TimeoutError,
-          Net::ReadTimeout,
-          Net::WriteTimeout,
-        ].sample
+
+      shared_examples_for "a timeout error" do
+        before do
+          allow(upload_form).to receive(:update_model).and_raise(timeout_error)
+        end
+
+        it "sets the timeout_error attribute" do
+          expect(upload_form.save(validate: true)).to be false
+          expect(upload_form.timeout_error).to be true
+        end
       end
 
-      before do
-        allow(upload_form).to receive(:update_model).and_raise(timeout_error)
+      context "with a Faraday::ConnectionFailed" do
+        let(:timeout_error) { Faraday::ConnectionFailed.new(nil, nil) }
+        it_behaves_like "a timeout error"
       end
 
-      it "sets the timeout_error attribute" do
-        expect(upload_form.save(validate: true)).to be false
-        expect(upload_form.timeout_error).to be true
+      context "with a Faraday::TimeoutError" do
+        let(:timeout_error) { Faraday::TimeoutError.new }
+        it_behaves_like "a timeout error"
+      end
+
+      context "with a Net::ReadTimeout" do
+        let(:timeout_error) { Net::ReadTimeout.new }
+        it_behaves_like "a timeout error"
+      end
+
+      context "with a Net::WriteTimeout" do
+        let(:timeout_error) { Net::WriteTimeout.new }
+        it_behaves_like "a timeout error"
       end
     end
   end
