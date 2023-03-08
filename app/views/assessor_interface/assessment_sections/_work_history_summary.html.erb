@@ -11,7 +11,17 @@
 <% end %>
 
 <% if application_form.created_under_new_regulations? %>
+  <%
+    months_count = WorkHistoryDuration.new(application_form:).count_months
+    years_count = (months_count / 12).floor
+    remaining_months_count = months_count - years_count * 12
+  %>
+
   <h2 class="govuk-heading-m">
-    This applicant has provided <%= WorkHistoryDuration.new(application_form:).count_months %> months of work experience in total.
+    <% if months_count > 24 %>
+      This applicant has provided <%= pluralize(years_count, "year") %> and <%= pluralize(remaining_months_count, "month") %> of work experience in total.
+    <% else %>
+      This applicant has provided <%= pluralize(months_count, "month") %> of work experience in total.
+    <% end %>
   </h2>
 <% end %>
