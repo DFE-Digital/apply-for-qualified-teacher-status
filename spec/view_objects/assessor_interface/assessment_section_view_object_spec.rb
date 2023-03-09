@@ -55,17 +55,27 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
 
       it do
         is_expected.to eq(
-          "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes_decline",
+          "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes.decline",
         )
       end
     end
 
-    context "with a not decline failure reason" do
+    context "with a text failure reason" do
       let(:failure_reason) { "there-once-was-a-cat-with-a-hungry-belly" }
 
       it do
         is_expected.to eq(
-          "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes",
+          "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes.text",
+        )
+      end
+    end
+
+    context "with a document failure reason" do
+      let(:failure_reason) { "additional_degree_certificate_illegible" }
+
+      it do
+        is_expected.to eq(
+          "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes.document",
         )
       end
     end
@@ -79,17 +89,27 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
 
       it do
         is_expected.to eq(
-          "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes_decline",
+          "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes.decline",
         )
       end
     end
 
-    context "with a not decline failure reason" do
+    context "with a text failure reason" do
       let(:failure_reason) { "soon-may-the-kitty-man-come" }
 
       it do
         is_expected.to eq(
-          "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes",
+          "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes.text",
+        )
+      end
+    end
+
+    context "with a document failure reason" do
+      let(:failure_reason) { "additional_degree_certificate_illegible" }
+
+      it do
+        is_expected.to eq(
+          "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes.document",
         )
       end
     end
@@ -103,17 +123,27 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
 
       it do
         is_expected.to eq(
-          "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes_decline",
+          "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes.decline",
         )
       end
     end
 
-    context "with a not decline failure reason" do
+    context "with a text failure reason" do
       let(:failure_reason) { "with-birds-and-mice-and-some-tasty-nums" }
 
       it do
         is_expected.to eq(
-          "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes",
+          "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes.text",
+        )
+      end
+    end
+
+    context "with a document failure reason" do
+      let(:failure_reason) { "additional_degree_certificate_illegible" }
+
+      it do
+        is_expected.to eq(
+          "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes.document",
         )
       end
     end
