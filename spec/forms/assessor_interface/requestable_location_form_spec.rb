@@ -18,16 +18,30 @@ RSpec.describe AssessorInterface::RequestableLocationForm, type: :model do
     it { is_expected.to validate_presence_of(:user) }
     it { is_expected.to allow_values(true, false).for(:received) }
 
-    context "when received" do
-      let(:received) { "true" }
+    context "when a location note is required" do
+      context "when received" do
+        let(:received) { "true" }
+        it { is_expected.to validate_presence_of(:location_note) }
+      end
 
-      it { is_expected.to validate_presence_of(:location_note) }
+      context "when not received" do
+        let(:received) { "" }
+        it { is_expected.to_not validate_presence_of(:location_note) }
+      end
     end
 
-    context "when not received" do
-      let(:received) { "" }
+    context "when a location note is not required" do
+      let(:requestable) { create(:qualification_request) }
 
-      it { is_expected.to_not validate_presence_of(:location_note) }
+      context "when received" do
+        let(:received) { "true" }
+        it { is_expected.to_not validate_presence_of(:location_note) }
+      end
+
+      context "when not received" do
+        let(:received) { "" }
+        it { is_expected.to_not validate_presence_of(:location_note) }
+      end
     end
   end
 

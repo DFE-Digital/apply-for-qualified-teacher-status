@@ -29,6 +29,8 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
     subject { create(:professional_standing_request, :receivable) }
   end
 
+  it_behaves_like "a locatable"
+
   describe "validations" do
     context "when received" do
       subject { build(:professional_standing_request, :received) }

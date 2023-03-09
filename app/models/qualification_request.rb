@@ -27,15 +27,15 @@
 #
 class QualificationRequest < ApplicationRecord
   include Requestable
+  include Locatable
 
-  belongs_to :assessment
   belongs_to :qualification
-
-  with_options if: :received? do
-    validates :location_note, presence: true
-  end
 
   def expires_after
     nil
+  end
+
+  def location_note_required?
+    false
   end
 end

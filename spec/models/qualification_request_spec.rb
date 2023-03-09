@@ -32,11 +32,13 @@ RSpec.describe QualificationRequest, type: :model do
     subject { create(:qualification_request, :receivable) }
   end
 
+  it_behaves_like "a locatable"
+
   describe "validations" do
     context "when received" do
       subject { build(:qualification_request, :received) }
 
-      it { is_expected.to validate_presence_of(:location_note) }
+      it { is_expected.to_not validate_presence_of(:location_note) }
     end
   end
 end

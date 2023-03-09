@@ -10,7 +10,9 @@ class AssessorInterface::RequestableLocationForm
   attribute :received, :boolean
 
   attribute :location_note, :string
-  validates :location_note, presence: true, if: -> { received.present? }
+  validates :location_note,
+            presence: true,
+            if: -> { received.present? && requestable.location_note_required? }
 
   def save
     return false unless valid?

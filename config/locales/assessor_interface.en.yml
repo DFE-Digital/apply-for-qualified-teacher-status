@@ -364,7 +364,3 @@ en:
           attributes:
             references_verified:
               inclusion: Select whether enough valid work references been received for this application to progress to either an award or decline
-        assessor_interface/reference_request_form:
-          attributes:
-            passed:
-              inclusion: Select whether this reference should count towards the applicant’s work experience
