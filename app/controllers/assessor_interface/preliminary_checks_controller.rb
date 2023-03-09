@@ -15,7 +15,12 @@ module AssessorInterface
         )
 
       if @form.save
-        create_note
+        update_application_form_status
+
+        if @form.preliminary_check_complete
+          notify_teacher
+          create_note
+        end
 
         redirect_to assessor_interface_application_form_path(application_form)
       else
@@ -40,6 +45,19 @@ module AssessorInterface
 
     def create_note
       CreatePreliminaryCheckNote.call(application_form:, author: current_staff)
+    end
+
+    def notify_teacher
+      if application_form.teaching_authority_provides_written_statement
+        TeacherMailer
+          .with(teacher: application_form.teacher)
+          .initial_checks_passed
+          .deliver_later
+      end
+    end
+
+    def update_application_form_status
+      ApplicationFormStatusUpdater.call(application_form:, user: current_staff)
     end
   end
 end

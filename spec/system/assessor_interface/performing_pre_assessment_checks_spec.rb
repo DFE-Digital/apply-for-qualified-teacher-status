@@ -17,6 +17,8 @@ RSpec.describe "Assessor performing pre-assessment checks", type: :system do
     and_i_choose_yes_to_progress_the_application
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_a_completed_preliminary_check_task
+    and_a_note_has_been_created
+    and_an_email_has_been_sent_to_the_teacher
   end
 
   private
@@ -61,10 +63,31 @@ RSpec.describe "Assessor performing pre-assessment checks", type: :system do
     ).to have_content("WAITING ON")
   end
 
+  def and_a_note_has_been_created
+    expect(Note.count).to eq(1)
+    expect(Note.first.text).to eq(
+      I18n.t(
+        "assessor_interface.case_notes.preliminary_check.complete_waiting_for_professional_standing",
+      ),
+    )
+  end
+
+  def and_an_email_has_been_sent_to_the_teacher
+    expect(TeacherMailer.deliveries.count).to eq(1)
+    expect(TeacherMailer.deliveries.first.subject).to eq(
+      I18n.t("mailer.teacher.initial_checks_passed.subject"),
+    )
+  end
+
   def application_form
     @application_form ||=
       begin
-        application_form = create(:application_form, :preliminary_check)
+        application_form =
+          create(
+            :application_form,
+            :preliminary_check,
+            teaching_authority_provides_written_statement: true,
+          )
         create(
           :assessment,
           :with_professional_standing_request,
