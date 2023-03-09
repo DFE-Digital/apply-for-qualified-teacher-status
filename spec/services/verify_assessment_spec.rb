@@ -2,14 +2,20 @@
 
 require "rails_helper"
 
-RSpec.describe CreateReferenceRequests do
+RSpec.describe VerifyAssessment do
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
   let(:user) { create(:staff, :confirmed) }
+  let(:qualification) { create(:qualification, :completed, application_form:) }
   let(:work_history) { create(:work_history, :completed, application_form:) }
 
   subject(:call) do
-    described_class.call(assessment:, user:, work_histories: [work_history])
+    described_class.call(
+      assessment:,
+      user:,
+      qualifications: [qualification],
+      work_histories: [work_history],
+    )
   end
 
   describe "creating reference request" do
@@ -26,6 +32,24 @@ RSpec.describe CreateReferenceRequests do
 
       it "sets the attributes correctly" do
         expect(reference_request.requested?).to be true
+      end
+    end
+  end
+
+  describe "creating qualification request" do
+    subject(:qualification_request) do
+      QualificationRequest.find_by(assessment:, qualification:)
+    end
+
+    it { is_expected.to be_nil }
+
+    context "after calling the service" do
+      before { call }
+
+      it { is_expected.to_not be_nil }
+
+      it "sets the attributes correctly" do
+        expect(qualification_request.requested?).to be true
       end
     end
   end
