@@ -26,6 +26,8 @@ module DQT
         recognitionRoute:
           RecognitionRoute.for_country_code(
             application_form.region.country.code,
+            under_new_regulations:
+              application_form.created_under_new_regulations?,
           ),
         qtsDate: qts_decision_at.to_date.iso8601,
         inductionRequired: induction_required,
