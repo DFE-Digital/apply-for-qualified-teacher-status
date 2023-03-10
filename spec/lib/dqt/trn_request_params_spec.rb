@@ -80,6 +80,7 @@ RSpec.describe DQT::TRNRequestParams do
           },
           recognitionRoute: "OverseasTrainedTeachers",
           teacherType: "OverseasQualifiedTeacher",
+          underNewOverseasRegulations: false,
         },
       )
     end
@@ -91,6 +92,10 @@ RSpec.describe DQT::TRNRequestParams do
 
       it "should use the assessment recommendation date" do
         expect(call[:qtsDate]).to eq("2020-01-07")
+      end
+
+      it "sends the new regulations field" do
+        expect(call[:underNewOverseasRegulations]).to be true
       end
 
       describe "induction required" do
