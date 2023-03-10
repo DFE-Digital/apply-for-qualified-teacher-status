@@ -352,8 +352,10 @@ en:
               blank: Enter where the assessor can find it
         assessor_interface/requestable_review_form:
           attributes:
+            reviewed:
+              inclusion: Select whether you have reviewed the request
             passed:
-              inclusion: Select whether the you are satisfied
+              inclusion: Select whether you are satisfied with the request
             failure_assessor_note:
               blank: Enter why you are not satisfied
         assessor_interface/work_history_reference_request_form:
