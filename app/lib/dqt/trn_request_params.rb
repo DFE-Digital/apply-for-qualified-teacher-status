@@ -31,6 +31,8 @@ module DQT
           ),
         qtsDate: qts_decision_at.to_date.iso8601,
         inductionRequired: induction_required,
+        underNewOverseasRegulations:
+          application_form.created_under_new_regulations?,
       }
     end
 
