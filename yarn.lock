@@ -112,10 +112,10 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.17.11.tgz#9be796d93ae27b636da32d960899a4912bca27a1"
   integrity sha512-N9vXqLP3eRL8BqSy8yn4Y98cZI2pZ8fyuHx6lKjiG2WABpT2l01TXdzq5Ma2ZUBzfB7tx5dXVhge8X9u0S70ZQ==
 
-"@ministryofjustice/frontend@^1.6.4":
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-1.6.4.tgz#396ffdc1699253671c8bc93ffa879735b8d4e8da"
-  integrity sha512-+tL1FolgPxo1jYw6zDcvqyVA0zHigW0QAn4NQbfHKwOb/rhny49iVud6PhzK4zguZds+sQQ0yzHpanROsmWLOw==
+"@ministryofjustice/frontend@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-1.6.5.tgz#ac4d900fcb1dd162039aaffc9ad9f82b5cc31687"
+  integrity sha512-dCJKMh8ctTF9ENiTkFcVATXI40wq+JsBIGTx60vAZ9dVRUQnYemAcOcREm3I6w3aUjVyqYcfHJvtEUNeCIw7Qg==
   dependencies:
     govuk-frontend "^3.0.0 || ^4.0.0"
     moment "^2.27.0"
