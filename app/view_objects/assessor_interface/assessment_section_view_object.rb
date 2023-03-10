@@ -70,8 +70,17 @@ module AssessorInterface
 
     def build_key(failure_reason, key_section)
       key =
-        "helpers.#{key_section}.assessor_interface_assessment_section_form.failure_reason_notes"
-      FailureReasons.decline?(failure_reason:) ? "#{key}_decline" : key
+        if FailureReasons.decline?(failure_reason:)
+          "decline"
+        elsif FailureReasons.further_information_request_document_type(
+              failure_reason:,
+            ).present?
+          "document"
+        else
+          "text"
+        end
+
+      "helpers.#{key_section}.assessor_interface_assessment_section_form.failure_reason_notes.#{key}"
     end
 
     def professional_standing_request_received?
