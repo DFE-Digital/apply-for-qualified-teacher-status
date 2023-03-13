@@ -8,7 +8,9 @@ class UpdateAssessmentInductionRequired
   end
 
   def call
-    assessment.update!(induction_required:)
+    if application_form.needs_work_history
+      assessment.update!(induction_required:)
+    end
   end
 
   private

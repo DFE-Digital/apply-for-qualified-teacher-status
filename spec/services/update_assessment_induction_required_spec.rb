@@ -59,4 +59,12 @@ RSpec.describe UpdateAssessmentInductionRequired do
 
     include_examples "induction not required"
   end
+
+  context "if work history is not required" do
+    before { application_form.update!(needs_work_history: false) }
+
+    it "doesn't change induction required" do
+      expect { call }.to_not change(assessment, :induction_required)
+    end
+  end
 end
