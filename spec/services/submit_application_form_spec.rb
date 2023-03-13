@@ -181,5 +181,20 @@ RSpec.describe SubmitApplicationForm do
         ).with(params: { application_form: }, args: [])
       end
     end
+
+    context "when teaching authority provides the written statement" do
+      before do
+        application_form.update!(
+          teaching_authority_provides_written_statement: true,
+        )
+      end
+
+      it "enqueues an initial checks email job" do
+        expect { call }.to have_enqueued_mail(
+          TeacherMailer,
+          :initial_checks_passed,
+        ).with(params: { teacher: application_form.teacher }, args: [])
+      end
+    end
   end
 end
