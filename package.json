@@ -7,7 +7,7 @@
     "esbuild": "^0.17.11",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
     "govuk-frontend": "^4.5.0",
-    "sass": "^1.58.3"
+    "sass": "^1.59.2"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --target=ie11 --outdir=app/assets/builds",
