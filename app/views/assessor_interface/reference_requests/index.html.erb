@@ -1,14 +1,10 @@
 <% content_for :page_title, "#{"Error: " if @form.errors.any?}Work references" %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@form.application_form) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<%= form_with(
-    model: @form,
-    url: [:assessor_interface, @form.application_form, @form.assessment, :update_verify_references],
-    method: :put
-  ) do |f| %>
+<%= form_with model: @form, url: [:verify_references, :assessor_interface, @application_form, @assessment, :reference_requests] do |f| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= render "shared/assessor_header", title: "Work references", application_form: @view_object.application_form %>
+      <%= render "shared/assessor_header", title: "Work references", application_form: @application_form %>
 
       <%= f.govuk_error_summary %>
 
@@ -23,14 +19,14 @@
             Work references
           </h2>
           <ul class="app-task-list__items govuk-!-padding-left-0">
-            <% @view_object.reference_requests.each_with_index do |reference_request, idx| %>
+            <% @reference_requests.each_with_index do |reference_request, idx| %>
               <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <%= govuk_link_to(
-                      @view_object.name_and_duration(reference_request.work_history, most_recent: idx.zero?),
-                      [:edit, :assessor_interface, @form.application_form, @form.assessment, reference_request]
-                    ) %>
-              </span>
+                <span class="app-task-list__task-name">
+                  <%= govuk_link_to(
+                    work_history_name_and_duration(reference_request.work_history, most_recent: idx.zero?),
+                    [:edit, :assessor_interface, @application_form, @assessment, reference_request]
+                  ) %>
+                </span>
 
                 <%= render StatusTag::Component.new(
                   key: "reference-request-#{reference_request.id}",
@@ -71,7 +67,7 @@
       <% end %>
 
       <%= f.govuk_submit prevent_double_click: false do %>
-        <%= govuk_link_to "Cancel", [:assessor_interface, @view_object.application_form] %>
+        <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
       <% end %>
     </div>
   </div>

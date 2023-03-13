@@ -2,10 +2,9 @@
 
 module PageObjects
   module AssessorInterface
-    class ReferenceRequestPage < SitePrism::Page
-      # rubocop:disable Layout/LineLength
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/work-references/{reference_request_id}/edit"
-      # rubocop:enable Layout/LineLength
+    class EditReferenceRequest < SitePrism::Page
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
+                "/reference-requests/{id}/edit"
 
       section :table, ".govuk-table" do
         elements :headers, ".govuk-table__header"

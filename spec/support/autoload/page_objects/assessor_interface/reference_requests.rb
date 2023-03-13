@@ -2,8 +2,9 @@
 
 module PageObjects
   module AssessorInterface
-    class VerifyReferencesPage < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/verify-references"
+    class ReferenceRequests < SitePrism::Page
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
+                "/reference-requests"
 
       section :task_list, ".app-task-list__item" do
         elements :reference_requests, ".app-task-list__task-name a"
