@@ -4,11 +4,18 @@ class EligibilityInterface::FinishController < EligibilityInterface::BaseControl
   before_action :load_eligibility_check
 
   def eligible
+    unless eligibility_check.eligible?
+      redirect_to %i[eligibility_interface ineligible]
+    end
+
     @region = eligibility_check.region
     session[:eligibility_check_complete] = true
   end
 
   def ineligible
+    if eligibility_check.eligible?
+      redirect_to %i[eligibility_interface eligible]
+    end
   end
 
   private
