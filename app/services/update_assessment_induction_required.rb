@@ -15,6 +15,8 @@ class UpdateAssessmentInductionRequired
 
   attr_reader :assessment
 
+  delegate :application_form, to: :assessment
+
   def induction_required
     passed_months_count < 20
   end
@@ -26,11 +28,15 @@ class UpdateAssessmentInductionRequired
 
   def work_history_relation
     @work_history_relation ||=
-      WorkHistory.joins(:reference_request).where(
-        reference_requests: {
-          passed: true,
-          assessment:,
-        },
-      )
+      if application_form.reduced_evidence_accepted
+        WorkHistory.where(application_form:)
+      else
+        WorkHistory.joins(:reference_request).where(
+          reference_requests: {
+            passed: true,
+            assessment:,
+          },
+        )
+      end
   end
 end

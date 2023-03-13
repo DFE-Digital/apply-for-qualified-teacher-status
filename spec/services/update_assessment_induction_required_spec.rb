@@ -36,6 +36,12 @@ RSpec.describe UpdateAssessmentInductionRequired do
     end
 
     include_examples "induction required"
+
+    context "when reduced evidence is accepted" do
+      before { application_form.update!(reduced_evidence_accepted: true) }
+
+      include_examples "induction not required"
+    end
   end
 
   context "with 24 months of approved work history" do
