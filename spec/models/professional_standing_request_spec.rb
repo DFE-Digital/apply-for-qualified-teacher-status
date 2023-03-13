@@ -4,15 +4,16 @@
 #
 # Table name: professional_standing_requests
 #
-#  id            :bigint           not null, primary key
-#  location_note :text             default(""), not null
-#  passed        :boolean
-#  received_at   :datetime
-#  reviewed_at   :datetime
-#  state         :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  assessment_id :bigint           not null
+#  id                    :bigint           not null, primary key
+#  failure_assessor_note :string           default(""), not null
+#  location_note         :text             default(""), not null
+#  passed                :boolean
+#  received_at           :datetime
+#  reviewed_at           :datetime
+#  state                 :string           not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  assessment_id         :bigint           not null
 #
 # Indexes
 #

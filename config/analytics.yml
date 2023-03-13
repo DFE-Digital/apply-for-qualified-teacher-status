@@ -206,6 +206,7 @@
     - updated_at
     - reviewed_at
     - passed
+    - failure_assessor_note
   :qualifications:
     - id
     - application_form_id
@@ -229,6 +230,7 @@
     - updated_at
     - reviewed_at
     - passed
+    - failure_assessor_note
   :reference_requests:
     - id
     - slug
