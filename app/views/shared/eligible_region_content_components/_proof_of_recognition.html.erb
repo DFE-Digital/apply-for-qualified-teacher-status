@@ -15,7 +15,11 @@
     </p>
   <% else %>
     <p class="govuk-body">
-      You’ll need to provide <%= region_certificate_phrase(region) %>, which you can get by contacting:
+      <% if region.written_statement_optional %>
+        If you have one, you can provide <%= region_certificate_phrase(region) %>, which you can get by contacting:
+      <% else %>
+        You’ll need to provide <%= region_certificate_phrase(region) %>, which you can get by contacting:
+      <% end %>
     </p>
   <% end %>
 
