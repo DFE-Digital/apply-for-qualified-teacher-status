@@ -18,7 +18,7 @@
 #
 FactoryBot.define do
   factory :upload do
-    association :document
+    association :document, :completed
 
     attachment do
       Rack::Test::UploadedFile.new(
@@ -36,6 +36,10 @@ FactoryBot.define do
           "application/pdf",
         )
       end
+    end
+
+    after(:create) do |upload, _evaluator|
+      upload.document.update!(completed: true)
     end
   end
 end
