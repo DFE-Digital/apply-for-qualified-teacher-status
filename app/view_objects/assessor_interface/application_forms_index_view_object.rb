@@ -37,6 +37,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     counts = application_forms_without_status_filter.group(:status).count
     statuses = %w[
       submitted
+      preliminary_check
       initial_assessment
       waiting_on
       received
