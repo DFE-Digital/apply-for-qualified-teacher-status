@@ -36,21 +36,22 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
   def region_params
     params.require(:region).permit(
       :application_form_skip_work_history,
-      :reduced_evidence_accepted,
       :qualifications_information,
+      :reduced_evidence_accepted,
       :sanction_check,
       :status_check,
-      :teaching_authority_name,
       :teaching_authority_address,
-      :teaching_authority_emails_string,
-      :teaching_authority_websites_string,
       :teaching_authority_certificate,
-      :teaching_authority_sanction_information,
-      :teaching_authority_status_information,
-      :teaching_authority_other,
+      :teaching_authority_emails_string,
+      :teaching_authority_name,
       :teaching_authority_online_checker_url,
+      :teaching_authority_other,
       :teaching_authority_provides_written_statement,
       :teaching_authority_requires_submission_email,
+      :teaching_authority_sanction_information,
+      :teaching_authority_status_information,
+      :teaching_authority_websites_string,
+      :written_statement_optional,
     )
   end
 end
