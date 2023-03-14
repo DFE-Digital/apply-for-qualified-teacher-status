@@ -84,30 +84,24 @@ class Assessment < ApplicationRecord
 
   def can_award?
     if application_form.created_under_new_regulations?
-      if verify?
-        !induction_required.nil? && enough_reference_requests_passed?
+      return false if induction_required.nil?
+
+      if skip_verification?
+        all_sections_or_further_information_requests_passed?
       else
-        false
+        verify? && enough_reference_requests_passed?
       end
-    elsif unknown?
-      all_sections_passed?
-    elsif request_further_information?
-      all_further_information_requests_passed?
     else
-      false
+      all_sections_or_further_information_requests_passed?
     end
   end
 
   def can_verify?
     return false unless application_form.created_under_new_regulations?
 
-    if unknown?
-      all_sections_passed?
-    elsif request_further_information?
-      all_further_information_requests_passed?
-    else
-      false
-    end
+    return false if skip_verification?
+
+    all_sections_or_further_information_requests_passed?
   end
 
   def can_decline?
@@ -208,5 +202,15 @@ class Assessment < ApplicationRecord
       ).count_months
 
     months_count >= 9
+  end
+
+  def skip_verification?
+    !application_form.needs_work_history ||
+      application_form.reduced_evidence_accepted
+  end
+
+  def all_sections_or_further_information_requests_passed?
+    (unknown? && all_sections_passed?) ||
+      (request_further_information? && all_further_information_requests_passed?)
   end
 end
