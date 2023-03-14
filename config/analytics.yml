@@ -67,6 +67,7 @@
     - needs_registration_number
     - teaching_authority_provides_written_statement
     - written_statement_confirmation
+    - written_statement_optional
     - confirmed_no_sanctions
     - english_language_status
     - english_language_citizenship_exempt
@@ -285,6 +286,7 @@
     - teaching_authority_provides_written_statement
     - teaching_authority_requires_submission_email
     - qualifications_information
+    - written_statement_optional
   :reminder_emails:
     - id
     - created_at

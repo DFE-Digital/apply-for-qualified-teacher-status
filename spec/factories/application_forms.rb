@@ -48,6 +48,7 @@
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
+#  written_statement_optional                    :boolean          default(FALSE), not null
 #  written_statement_status                      :string           default("not_started"), not null
 #  created_at                                    :datetime         not null
 #  updated_at                                    :datetime         not null
