@@ -111,6 +111,10 @@ en:
         passed_options:
           true: "Yes"
           false: "No"
+      assessor_interface_verify_professional_standing_form:
+        verify_professional_standing_options:
+          true: Yes, verify professional standing
+          false: No, skip this step
       assessor_interface_verify_qualifications_form:
         verify_qualifications_options:
           true: Yes, verify qualifications
