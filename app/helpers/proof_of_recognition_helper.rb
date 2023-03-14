@@ -29,7 +29,7 @@ module ProofOfRecognitionHelper
 
   def written_status_reasons
     [
-      "that you've completed a teaching qualification/teacher training",
+      "that you’ve completed a teaching qualification/teacher training",
       "that you’ve successfully completed any period of professional experience comparable to an induction period" \
         " (if required)",
       "the age ranges and subjects you’re qualified to teach",

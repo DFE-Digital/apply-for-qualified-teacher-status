@@ -35,7 +35,7 @@ RSpec.describe ProofOfRecognitionHelper do
       it do
         is_expected.to match_array(
           [
-            "that you've completed a teaching qualification/teacher training",
+            "that you’ve completed a teaching qualification/teacher training",
             "that you’ve successfully completed any period of professional experience comparable to an induction " \
               "period (if required)",
             "the age ranges and subjects you’re qualified to teach",
@@ -81,7 +81,7 @@ RSpec.describe ProofOfRecognitionHelper do
       it do
         is_expected.to match_array(
           [
-            "that you've completed a teaching qualification/teacher training",
+            "that you’ve completed a teaching qualification/teacher training",
             "that you’ve successfully completed any period of professional experience comparable to an induction " \
               "period (if required)",
             "that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted," \
