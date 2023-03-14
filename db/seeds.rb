@@ -40,6 +40,7 @@ COUNTRIES = {
         status_check: "online",
         sanction_check: "written",
         application_form_skip_work_history: true,
+        written_statement_optional: true,
       },
     ],
   },
