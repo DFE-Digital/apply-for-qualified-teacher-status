@@ -21,13 +21,19 @@
 
   <%= render "shared/teaching_authority_contact_information", region: %>
 
-  <p class="govuk-body"><%= proof_of_recognition_description_for(region:) %></p>
-
-  <ul class="govuk-list govuk-list--bullet">
-    <%- proof_of_recognition_requirements_for(region:).each do |requirement|%>
-      <li><%= requirement %></li>
-    <%- end -%>
-  </ul>
+  <% if (requirements = proof_of_recognition_requirements_for(region:)).count == 1 %>
+    <p class="govuk-body">
+      <%= proof_of_recognition_description_for(region:).chomp(":") %>
+      <%= requirements.first %>
+    </p>
+  <% else %>
+    <p class="govuk-body"><%= proof_of_recognition_description_for(region:) %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <% requirements.each do |requirement| %>
+        <li><%= requirement %></li>
+      <% end %>
+    </ul>
+  <% end %>
 
   <% if teaching_authority_provides_written_statement %>
     <p class="govuk-body">
