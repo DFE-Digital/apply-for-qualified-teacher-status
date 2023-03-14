@@ -30,18 +30,19 @@
           <%= govuk_tag(text: "Not passed", colour: "red") %>
         <% end %>
       </p>
-
-      <%= govuk_inset_text do %>
-        <ul class="govuk-list--bullet">
-          <% description_vars[:failure_reasons].each do |failure_reason| %>
-            <li>
-              <p class="govuk-body">
-                <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason.key}") %>
-              </p>
-              <%= simple_format failure_reason.assessor_feedback %>
-            </li>
-          <% end %>
-        </ul>
+      <% if (failure_reason = description_vars[:failure_reasons].first).present? %>
+        <%= govuk_inset_text do %>
+          <ul class="govuk-list--bullet">
+            <%= render "shared/assessor_failure_reason_list_item", failure_reason: %> 
+            <% if description_vars[:failure_reasons].size > 1 %>
+              <%= govuk_details(summary_text: "View additional reasons") do %>
+                <% description_vars[:failure_reasons].drop(1).each do |failure_reason| %>                                
+                    <%= render "shared/assessor_failure_reason_list_item", failure_reason: %>
+                <% end %>
+              <% end %>       
+            <% end %>
+          </ul>
+        <% end %>
       <% end %>
     <% elsif timeline_event.requestable_assessed? && timeline_event.requestable.is_a?(FurtherInformationRequest) %>
       <p class="govuk-body">Further information request has been assessed.</p>
