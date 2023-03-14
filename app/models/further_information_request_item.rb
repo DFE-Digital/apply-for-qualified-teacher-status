@@ -28,7 +28,7 @@ class FurtherInformationRequestItem < ApplicationRecord
   end
 
   def completed?
-    (text? && response.present?) || (document? && document.uploaded?)
+    (text? && response.present?) || (document? && document.completed?)
   end
 
   def is_teaching_qualification?

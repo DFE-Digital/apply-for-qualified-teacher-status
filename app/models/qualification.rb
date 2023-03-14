@@ -61,8 +61,8 @@ class Qualification < ApplicationRecord
       start_date,
       complete_date,
       certificate_date,
-      certificate_document.uploaded?,
-      transcript_document.uploaded?,
+      certificate_document.completed?,
+      transcript_document.completed?,
     ]
 
     if is_teaching_qualification? && part_of_university_degree != false

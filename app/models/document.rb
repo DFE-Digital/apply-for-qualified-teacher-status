@@ -55,10 +55,6 @@ class Document < ApplicationRecord
     TRANSLATABLE_TYPES.include?(document_type)
   end
 
-  def uploaded?
-    !uploads.empty?
-  end
-
   def for_further_information_request?
     documentable.is_a?(FurtherInformationRequestItem)
   end

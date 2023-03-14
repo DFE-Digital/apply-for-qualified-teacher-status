@@ -63,7 +63,7 @@ class ApplicationFormSectionStatusUpdater
       values.append(
         alternative_given_names,
         alternative_family_name,
-        name_change_document&.uploaded?,
+        name_change_document&.completed?,
       )
     else
       values.append(true)
@@ -73,7 +73,7 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def identification_document_status
-    identification_document.uploaded? ? :completed : :not_started
+    identification_document.completed? ? :completed : :not_started
   end
 
   def qualifications_status
@@ -161,7 +161,7 @@ class ApplicationFormSectionStatusUpdater
       if teaching_authority_provides_written_statement
         written_statement_confirmation
       else
-        written_statement_document.uploaded?
+        written_statement_document.completed?
       end
 
     completed ? :completed : :not_started
@@ -174,6 +174,6 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def status_for_document(document)
-    document.uploaded? ? :completed : :in_progress
+    document.completed? ? :completed : :in_progress
   end
 end
