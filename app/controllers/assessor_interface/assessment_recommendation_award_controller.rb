@@ -9,10 +9,6 @@ module AssessorInterface
 
     def edit
       @form = AssessmentDeclarationAwardForm.new
-
-      if assessment.induction_required.nil?
-        UpdateAssessmentInductionRequired.call(assessment:)
-      end
     end
 
     def update

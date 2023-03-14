@@ -125,6 +125,22 @@ RSpec.describe SubmitApplicationForm do
     end
   end
 
+  describe "setting induction required" do
+    it "doesn't set induction required" do
+      expect(UpdateAssessmentInductionRequired).to_not receive(:call)
+      call
+    end
+
+    context "with reduced evidence accepted" do
+      before { application_form.update!(reduced_evidence_accepted: true) }
+
+      it "sets induction required" do
+        expect(UpdateAssessmentInductionRequired).to receive(:call)
+        call
+      end
+    end
+  end
+
   describe "sending application received email" do
     it "queues an email job" do
       expect { call }.to have_enqueued_mail(

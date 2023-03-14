@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SubmitApplicationForm
   include ServicePattern
 
@@ -17,6 +19,10 @@ class SubmitApplicationForm
       assessment = AssessmentFactory.call(application_form:)
 
       create_professional_standing_request(assessment)
+
+      if application_form.reduced_evidence_accepted
+        UpdateAssessmentInductionRequired.call(assessment:)
+      end
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
