@@ -3,6 +3,7 @@
 # Table name: documents
 #
 #  id                :bigint           not null, primary key
+#  completed         :boolean          default(FALSE)
 #  document_type     :string           not null
 #  documentable_type :string
 #  created_at        :datetime         not null
@@ -33,6 +34,25 @@ RSpec.describe Document, type: :model do
         qualification_document: "qualification_document",
         written_statement: "written_statement",
       ).backed_by_column_of_type(:string)
+    end
+  end
+
+  describe "scopes" do
+    let!(:incomplete_document) { create(:document) }
+    let!(:complete_document) { create(:document, :completed) }
+
+    describe "completed" do
+      it "includes only complete documents" do
+        expect(Document.completed).to include(complete_document)
+        expect(Document.completed).to_not include(incomplete_document)
+      end
+    end
+
+    describe "not_completed" do
+      it "includes only incomplete documents" do
+        expect(Document.not_completed).to include(incomplete_document)
+        expect(Document.not_completed).to_not include(complete_document)
+      end
     end
   end
 

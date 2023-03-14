@@ -10,8 +10,10 @@ module TeacherInterface
 
     def update_model
       upload.destroy! if confirm
+
+      document.update!(completed: false) if document.uploads.empty?
     end
 
-    delegate :application_form, to: :upload
+    delegate :application_form, :document, to: :upload
   end
 end
