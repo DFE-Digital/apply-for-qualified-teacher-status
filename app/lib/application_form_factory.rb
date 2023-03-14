@@ -10,13 +10,14 @@ class ApplicationFormFactory
 
   def call
     ApplicationForm.create!(
-      teacher:,
-      region:,
+      needs_registration_number:,
       needs_work_history:,
       needs_written_statement:,
-      teaching_authority_provides_written_statement:,
-      needs_registration_number:,
       reduced_evidence_accepted:,
+      region:,
+      teacher:,
+      teaching_authority_provides_written_statement:,
+      written_statement_optional:,
     )
   end
 
@@ -34,7 +35,9 @@ class ApplicationFormFactory
     region.status_check_written? || region.sanction_check_written?
   end
 
-  delegate :teaching_authority_provides_written_statement, to: :region
+  delegate :teaching_authority_provides_written_statement,
+           :written_statement_optional,
+           to: :region
 
   def needs_registration_number
     region.status_check_online? || region.sanction_check_online?

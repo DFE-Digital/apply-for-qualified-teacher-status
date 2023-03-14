@@ -96,6 +96,7 @@ FactoryBot.define do
       region.status_check_online? || region.sanction_check_online?
     end
     reduced_evidence_accepted { region.reduced_evidence_accepted }
+    written_statement_optional { region.written_statement_optional }
 
     trait :completed do
       personal_information_status { "completed" }
