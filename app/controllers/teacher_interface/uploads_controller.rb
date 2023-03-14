@@ -11,7 +11,13 @@ module TeacherInterface
     before_action :load_upload, only: %i[delete destroy]
 
     def new
-      @upload_form = UploadForm.new(document:)
+      @upload_form =
+        UploadForm.new(
+          document:,
+          do_not_have_document:
+            document.optional? && document.completed? &&
+              document.uploads.empty?,
+        )
     end
 
     def create
@@ -19,15 +25,19 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @upload_form,
-        if_success_then_redirect: ->(_check_path) do
-          history_stack.replace_self(
-            path:
-              edit_teacher_interface_application_form_document_path(document),
-            origin: false,
-            check: false,
-          )
+        if_success_then_redirect: ->(check_path) do
+          if @upload_form.do_not_have_document
+            check_path || DocumentContinueRedirection.call(document:)
+          else
+            history_stack.replace_self(
+              path:
+                edit_teacher_interface_application_form_document_path(document),
+              origin: false,
+              check: false,
+            )
 
-          [:teacher_interface, :application_form, document]
+            [:teacher_interface, :application_form, document]
+          end
         end,
         if_failure_then_render: :new,
       )
@@ -60,6 +70,7 @@ module TeacherInterface
     def upload_form_params
       params.permit(
         teacher_interface_upload_form: %i[
+          do_not_have_document
           original_attachment
           translated_attachment
           written_in_english

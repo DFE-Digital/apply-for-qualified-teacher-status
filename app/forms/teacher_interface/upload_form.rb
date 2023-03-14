@@ -3,6 +3,7 @@
 module TeacherInterface
   class UploadForm < BaseForm
     attr_accessor :document
+    attribute :do_not_have_document, :boolean
     attribute :original_attachment
     attribute :translated_attachment
     attribute :written_in_english, :boolean
@@ -12,32 +13,32 @@ module TeacherInterface
     validates :translated_attachment, file_upload: true
     validates :written_in_english,
               inclusion: [true, false],
-              if: -> { document&.translatable? }
+              if: -> { document&.translatable? && !skippable? }
     validates :written_in_english,
               absence: true,
-              unless: -> { document&.translatable? }
+              unless: -> { document&.translatable? && !skippable? }
     validate :attachments_present
 
     attr_reader :timeout_error
 
     def update_model
-      if original_attachment.present?
-        document.uploads.create!(
-          attachment: original_attachment,
-          translation: false,
-        )
+      unless skippable?
+        if original_attachment.present?
+          document.uploads.create!(
+            attachment: original_attachment,
+            translation: false,
+          )
+        end
+
+        if translated_attachment.present?
+          document.uploads.create!(
+            attachment: translated_attachment,
+            translation: true,
+          )
+        end
       end
 
-      if translated_attachment.present?
-        document.uploads.create!(
-          attachment: translated_attachment,
-          translation: true,
-        )
-      end
-
-      if original_attachment.present? || translated_attachment.present?
-        document.update!(completed: true)
-      end
+      document.update!(completed: skippable? || !document.uploads.empty?)
     end
 
     def save(validate:)
@@ -47,9 +48,17 @@ module TeacherInterface
       false
     end
 
+    private
+
     delegate :application_form, to: :document
 
+    def skippable?
+      document&.optional? && do_not_have_document
+    end
+
     def attachments_present
+      return if skippable?
+
       has_errors =
         original_attachment.blank? ||
           (written_in_english == false && translated_attachment.blank?)
