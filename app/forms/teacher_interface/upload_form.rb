@@ -34,6 +34,10 @@ module TeacherInterface
           translation: true,
         )
       end
+
+      if original_attachment.present? || translated_attachment.present?
+        document.update!(completed: true)
+      end
     end
 
     def save(validate:)

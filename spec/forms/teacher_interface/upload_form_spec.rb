@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TeacherInterface::UploadForm, type: :model do
@@ -105,6 +107,10 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         expect(document.uploads.count).to eq(1)
         expect(document.uploads.first.translation).to be(false)
       end
+
+      it "marks the document as complete" do
+        expect(document.completed?).to be true
+      end
     end
 
     context "with a translated attachment" do
@@ -119,6 +125,10 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
       it "creates two uploads" do
         expect(document.uploads.count).to eq(2)
         expect(document.uploads.second.translation).to be(true)
+      end
+
+      it "marks the document as complete" do
+        expect(document.completed?).to be true
       end
     end
 
