@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: documents
@@ -27,6 +29,9 @@ class Document < ApplicationRecord
   has_many :translated_uploads,
            -> { where(translation: true) },
            class_name: "Upload"
+
+  scope :completed, -> { where(completed: true) }
+  scope :not_completed, -> { where(completed: false) }
 
   UNTRANSLATABLE_TYPES = %w[
     identification
