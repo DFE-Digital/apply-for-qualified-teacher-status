@@ -46,6 +46,3 @@ en:
           teach_children_secondary: You are not qualified to teach children aged 11-16 years.
           qualified_for_subject: You are not qualified to teach one of the subjects for which we currently accept applications.
           work_experience: You do not have sufficient work experience as a teacher.
-
-  eligibility_interface:
-    three_months_before_applying: This must be dated within 3 months of you applying for QTS.

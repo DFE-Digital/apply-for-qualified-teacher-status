@@ -21,10 +21,6 @@
 
   <%= render "shared/teaching_authority_contact_information", region: %>
 
-  <% if region.sanction_check_none? && region.status_check_written? %>
-    <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
-  <% end %>
-
   <p class="govuk-body"><%= proof_of_recognition_description_for(region:) %></p>
 
   <ul class="govuk-list govuk-list--bullet">
@@ -32,10 +28,6 @@
       <li><%= requirement %></li>
     <%- end -%>
   </ul>
-
-  <% unless region.sanction_check_none? && region.status_check_written? %>
-    <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
-  <% end %>
 
   <% if teaching_authority_provides_written_statement %>
     <p class="govuk-body">
