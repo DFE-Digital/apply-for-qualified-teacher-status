@@ -391,8 +391,11 @@ RSpec.describe AssessmentFactory do
           expect(sections.work_history.count).to eq(0)
         end
 
-        context "when application form needs a written statement" do
-          before { application_form.needs_written_statement = true }
+        context "when application form needs a written statement and work history" do
+          before do
+            application_form.needs_written_statement = true
+            application_form.needs_work_history = true
+          end
 
           it "is created" do
             expect(sections.professional_standing.count).to eq(1)
@@ -415,6 +418,49 @@ RSpec.describe AssessmentFactory do
               %w[
                 written_statement_illegible
                 written_statement_recent
+                authorisation_to_teach
+                teaching_qualification
+                confirm_age_range_subjects
+                qualified_to_teach
+                full_professional_status
+              ],
+            )
+          end
+        end
+
+        context "when application form needs a written statement and doesn't need work history" do
+          before do
+            application_form.needs_written_statement = true
+            application_form.needs_work_history = false
+          end
+
+          it "is created" do
+            expect(sections.professional_standing.count).to eq(1)
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.professional_standing.first
+            expect(section.checks).to eq(
+              %w[
+                written_statement_present
+                written_statement_recent
+                written_statement_induction
+                written_statement_completion_date
+                written_statement_registration_number
+                written_statement_school_name
+                written_statement_signature
+                authorisation_to_teach
+                teaching_qualification
+                confirm_age_range_subjects
+                qualified_to_teach
+                full_professional_status
+              ],
+            )
+            expect(section.failure_reasons).to eq(
+              %w[
+                written_statement_illegible
+                written_statement_recent
+                written_statement_information
                 authorisation_to_teach
                 teaching_qualification
                 confirm_age_range_subjects
