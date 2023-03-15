@@ -20,6 +20,7 @@
 #  teaching_authority_sanction_information       :string           default(""), not null
 #  teaching_authority_status_information         :string           default(""), not null
 #  teaching_authority_websites                   :text             default([]), not null, is an Array
+#  written_statement_optional                    :boolean          default(FALSE), not null
 #  created_at                                    :datetime         not null
 #  updated_at                                    :datetime         not null
 #  country_id                                    :bigint           not null

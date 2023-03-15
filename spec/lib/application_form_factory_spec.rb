@@ -22,6 +22,7 @@ RSpec.describe ApplicationFormFactory do
         expect(application_form.needs_written_statement).to be false
         expect(application_form.needs_registration_number).to be false
         expect(application_form.reduced_evidence_accepted).to be false
+        expect(application_form.written_statement_optional).to be false
       end
     end
 
@@ -38,6 +39,7 @@ RSpec.describe ApplicationFormFactory do
         expect(application_form.needs_written_statement).to be false
         expect(application_form.needs_registration_number).to be false
         expect(application_form.reduced_evidence_accepted).to be false
+        expect(application_form.written_statement_optional).to be false
       end
     end
 
@@ -57,6 +59,7 @@ RSpec.describe ApplicationFormFactory do
         ).to be false
         expect(application_form.needs_registration_number).to be false
         expect(application_form.reduced_evidence_accepted).to be false
+        expect(application_form.written_statement_optional).to be false
       end
 
       context "when teaching authority provides the written statement" do
@@ -69,6 +72,15 @@ RSpec.describe ApplicationFormFactory do
           expect(
             application_form.teaching_authority_provides_written_statement,
           ).to be true
+        end
+      end
+
+      context "when the written statement is optional" do
+        before { region.update!(written_statement_optional: true) }
+
+        it "sets the rules" do
+          application_form = call
+          expect(application_form.written_statement_optional).to be true
         end
       end
     end
@@ -86,6 +98,7 @@ RSpec.describe ApplicationFormFactory do
         expect(application_form.needs_written_statement).to be false
         expect(application_form.needs_registration_number).to be true
         expect(application_form.reduced_evidence_accepted).to be false
+        expect(application_form.written_statement_optional).to be false
       end
     end
 
