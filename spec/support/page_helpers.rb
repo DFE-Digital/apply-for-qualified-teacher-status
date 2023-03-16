@@ -536,6 +536,11 @@ module PageHelpers
       PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
   end
 
+  def verify_professional_standing_assessment_recommendation_verify_page
+    @verify_professional_standing_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::VerifyProfessionalStandingAssessmentRecommendationVerify.new
+  end
+
   def work_experience_page
     @work_experience_page ||=
       PageObjects::EligibilityInterface::WorkExperience.new

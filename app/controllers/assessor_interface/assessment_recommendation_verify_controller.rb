@@ -20,7 +20,7 @@ module AssessorInterface
       VerifyAssessment.call(
         assessment:,
         user: current_staff,
-        professional_standing: false,
+        professional_standing: session[:professional_standing],
         qualifications:
           application_form.qualifications.where(
             id: session[:qualification_ids],
@@ -56,6 +56,8 @@ module AssessorInterface
                       (
                         if @form.verify_qualifications
                           :qualification_requests
+                        elsif !application_form.teaching_authority_provides_written_statement
+                          :verify_professional_standing
                         else
                           :reference_requests
                         end
@@ -115,6 +117,49 @@ module AssessorInterface
 
       @qualifications =
         application_form.qualifications.where(id: session[:qualification_ids])
+    end
+
+    def edit_verify_professional_standing
+      if application_form.teaching_authority_provides_written_statement
+        redirect_to [
+                      :reference_requests,
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :assessment_recommendation_verify,
+                    ]
+        return
+      end
+
+      authorize :assessor, :edit?
+      @form = VerifyProfessionalStandingForm.new
+    end
+
+    def update_verify_professional_standing
+      authorize :assessor, :update?
+
+      @form =
+        VerifyProfessionalStandingForm.new(
+          verify_professional_standing:
+            params.dig(
+              :assessor_interface_verify_professional_standing_form,
+              :verify_professional_standing,
+            ),
+        )
+
+      if @form.valid?
+        session[:professional_standing] = @form.verify_professional_standing
+
+        redirect_to [
+                      :reference_requests,
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :assessment_recommendation_verify,
+                    ]
+      else
+        render :edit_verify_professional_standing, status: :unprocessable_entity
+      end
     end
 
     def edit_reference_requests

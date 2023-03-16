@@ -123,7 +123,7 @@ en:
           false: "No"
       assessor_interface_verify_professional_standing_form:
         verify_professional_standing_options:
-          true: Yes, verify professional standing
+          true: Yes, verify letter of professional standing
           false: No, skip this step
       assessor_interface_verify_qualifications_form:
         verify_qualifications_options:
