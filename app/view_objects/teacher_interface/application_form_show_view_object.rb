@@ -158,12 +158,21 @@ class TeacherInterface::ApplicationFormShowViewObject
       professional_standing_request.expired?
   end
 
+  def request_professional_standing_certificate?
+    application_form&.waiting_on? &&
+      (
+        assessment&.preliminary_check_complete ||
+          application_form&.teaching_authority_provides_written_statement
+      )
+  end
+
+  delegate :region, to: :application_form
+
   private
 
   delegate :needs_work_history,
            :needs_written_statement,
            :needs_registration_number,
-           :region,
            to: :application_form,
            allow_nil: true
 
