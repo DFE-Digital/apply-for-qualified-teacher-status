@@ -56,7 +56,7 @@ RSpec.describe ExpireRequestable do
 
       it_behaves_like "expiring a requestable"
 
-      context "when teaching authority provides written statement" do
+      context "when teaching authority provides the written statement" do
         before do
           requestable.application_form.update!(
             teaching_authority_provides_written_statement: true,

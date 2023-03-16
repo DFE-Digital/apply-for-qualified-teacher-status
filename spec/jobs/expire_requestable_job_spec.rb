@@ -86,7 +86,15 @@ RSpec.describe ExpireRequestableJob do
     end
 
     context "with a requested professional standing request" do
-      let(:requestable) { create(:professional_standing_request, created_at:) }
+      before do
+        application_form.update!(
+          teaching_authority_provides_written_statement: true,
+        )
+      end
+
+      let(:requestable) do
+        create(:professional_standing_request, created_at:, assessment:)
+      end
 
       context "when less than 18 weeks old" do
         let(:created_at) { (18.weeks - 1.hour).ago }
