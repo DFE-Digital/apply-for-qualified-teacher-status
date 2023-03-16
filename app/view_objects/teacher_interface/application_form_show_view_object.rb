@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TeacherInterface::ApplicationFormShowViewObject
+  include RegionHelper
+
   def initialize(current_teacher:)
     @current_teacher = current_teacher
   end
