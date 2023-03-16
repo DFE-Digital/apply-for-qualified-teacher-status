@@ -98,7 +98,7 @@ en:
           false: "No"
       assessor_interface_verify_professional_standing_form:
         verify_professional_standing_options:
-          true: Yes, verify professional standing
+          true: Yes, verify letter of professional standing
           false: No, skip this step
       eligibility_interface_country_form:
         location: In which country are you currently recognised as a teacher?
