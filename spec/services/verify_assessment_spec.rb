@@ -6,6 +6,7 @@ RSpec.describe VerifyAssessment do
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
   let(:user) { create(:staff, :confirmed) }
+  let(:professional_standing) { true }
   let(:qualification) { create(:qualification, :completed, application_form:) }
   let(:work_history) { create(:work_history, :completed, application_form:) }
 
@@ -13,9 +14,28 @@ RSpec.describe VerifyAssessment do
     described_class.call(
       assessment:,
       user:,
+      professional_standing:,
       qualifications: [qualification],
       work_histories: [work_history],
     )
+  end
+
+  describe "creating professional standing request" do
+    subject(:professional_standing_request) do
+      ProfessionalStandingRequest.find_by(assessment:)
+    end
+
+    it { is_expected.to be_nil }
+
+    context "after calling the service" do
+      before { call }
+
+      it { is_expected.to_not be_nil }
+
+      it "sets the attributes correctly" do
+        expect(professional_standing_request.requested?).to be true
+      end
+    end
   end
 
   describe "creating reference request" do
