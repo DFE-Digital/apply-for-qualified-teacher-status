@@ -90,6 +90,9 @@ Rails.application.routes.draw do
           post "verify-professional-standing",
                to:
                  "assessment_recommendation_verify#update_verify_professional_standing"
+          get "contact-professional-standing",
+              to:
+                "assessment_recommendation_verify#contact_professional_standing"
         end
 
         resources :further_information_requests,

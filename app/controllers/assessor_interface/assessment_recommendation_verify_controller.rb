@@ -56,10 +56,8 @@ module AssessorInterface
                       (
                         if @form.verify_qualifications
                           :qualification_requests
-                        elsif !application_form.teaching_authority_provides_written_statement
-                          :verify_professional_standing
                         else
-                          :reference_requests
+                          :verify_professional_standing
                         end
                       ),
                       :assessor_interface,
@@ -151,7 +149,13 @@ module AssessorInterface
         session[:professional_standing] = @form.verify_professional_standing
 
         redirect_to [
-                      :reference_requests,
+                      (
+                        if @form.verify_professional_standing
+                          :contact_professional_standing
+                        else
+                          :reference_requests
+                        end
+                      ),
                       :assessor_interface,
                       application_form,
                       assessment,
@@ -160,6 +164,10 @@ module AssessorInterface
       else
         render :edit_verify_professional_standing, status: :unprocessable_entity
       end
+    end
+
+    def contact_professional_standing
+      authorize :assessor, :edit?
     end
 
     def edit_reference_requests
