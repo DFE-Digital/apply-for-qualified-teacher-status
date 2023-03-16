@@ -56,6 +56,13 @@ FactoryBot.define do
       association :documentable, factory: :application_form
     end
 
+    trait :optional_written_statement do
+      written_statement
+      after(:create) do |document, _evaluator|
+        document.application_form.update!(written_statement_optional: true)
+      end
+    end
+
     trait :qualification_certificate do
       document_type { "qualification_certificate" }
       association :documentable, factory: :qualification

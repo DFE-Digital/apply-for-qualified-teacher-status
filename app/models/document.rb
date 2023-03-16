@@ -55,8 +55,8 @@ class Document < ApplicationRecord
     TRANSLATABLE_TYPES.include?(document_type)
   end
 
-  def uploaded?
-    !uploads.empty?
+  def optional?
+    written_statement? && application_form.written_statement_optional
   end
 
   def for_further_information_request?
