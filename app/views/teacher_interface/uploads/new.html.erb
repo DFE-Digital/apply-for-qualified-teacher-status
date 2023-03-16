@@ -84,7 +84,6 @@
     <%= govuk_details(summary_text: "How to get this") do %>
       <p class="govuk-body">If you do not have this yet, you can obtain it by contacting:</p>
       <%= render "shared/teaching_authority_contact_information", region: @application_form.region %>
-      <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
     <% end %>
   <% elsif @document.qualification_certificate? %>
     <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>

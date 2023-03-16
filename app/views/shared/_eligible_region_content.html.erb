@@ -14,7 +14,7 @@
   <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) %>
     <p class="govuk-body">Once you begin, we’ll sign you out if you’re inactive for 60 minutes.</p>
   <% end %>
-  
+
 <% end %>
 
 <h2 class="govuk-heading-m">What we’ll ask for</h2>
@@ -35,7 +35,7 @@
 
   <% unless region.status_check_none? && region.sanction_check_none? %>
     <% accordion.section(heading_text: "Proof that you’re recognised as a teacher") do %>
-      <%= render "shared/eligible_region_content_components/professional_recognition",
+      <%= render "shared/eligible_region_content_components/proof_of_recognition",
                  region:,
                  teaching_authority_provides_written_statement: region.teaching_authority_provides_written_statement %>
     <% end %>
