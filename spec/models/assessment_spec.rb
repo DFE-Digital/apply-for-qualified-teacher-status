@@ -160,6 +160,34 @@ RSpec.describe Assessment, type: :model do
 
         it { is_expected.to be true }
       end
+
+      context "with a passed assessment and reduced evidence" do
+        before do
+          application_form.update!(reduced_evidence_accepted: true)
+          assessment.update!(induction_required: false)
+          create(
+            :assessment_section,
+            :personal_information,
+            :passed,
+            assessment:,
+          )
+        end
+        it { is_expected.to be true }
+      end
+
+      context "with a passed assessment and work history not required" do
+        before do
+          application_form.update!(needs_work_history: false)
+          assessment.update!(induction_required: false)
+          create(
+            :assessment_section,
+            :personal_information,
+            :passed,
+            assessment:,
+          )
+        end
+        it { is_expected.to be true }
+      end
     end
   end
 
@@ -186,6 +214,32 @@ RSpec.describe Assessment, type: :model do
           )
         end
         it { is_expected.to be true }
+      end
+
+      context "with a passed assessment and reduced evidence" do
+        before do
+          application_form.update!(reduced_evidence_accepted: true)
+          create(
+            :assessment_section,
+            :personal_information,
+            :passed,
+            assessment:,
+          )
+        end
+        it { is_expected.to be false }
+      end
+
+      context "with a passed assessment and work history not required" do
+        before do
+          application_form.update!(needs_work_history: false)
+          create(
+            :assessment_section,
+            :personal_information,
+            :passed,
+            assessment:,
+          )
+        end
+        it { is_expected.to be false }
       end
 
       context "with a failed assessment" do
