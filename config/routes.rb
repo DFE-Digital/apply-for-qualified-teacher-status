@@ -64,6 +64,9 @@ Rails.application.routes.draw do
                  controller: "assessment_recommendation_verify",
                  path: "/recommendation/verify",
                  only: %i[edit update] do
+          get "contact-professional-standing",
+              to:
+                "assessment_recommendation_verify#contact_professional_standing"
           get "reference-requests",
               to: "assessment_recommendation_verify#edit_reference_requests"
           post "reference-requests",
