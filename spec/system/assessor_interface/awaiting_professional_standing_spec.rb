@@ -69,6 +69,7 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
         :application_form,
         :waiting_on,
         assessment: create(:assessment, :with_professional_standing_request),
+        teaching_authority_provides_written_statement: true,
       )
   end
 
