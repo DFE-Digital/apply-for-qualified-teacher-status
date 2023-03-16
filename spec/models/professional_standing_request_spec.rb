@@ -41,7 +41,22 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
   end
 
   describe "#expires_after" do
-    subject(:expires_after) { described_class.new.expires_after }
-    it { is_expected.to eq(18.weeks) }
+    let(:professional_standing_request) do
+      create(:professional_standing_request)
+    end
+
+    subject(:expires_after) { professional_standing_request.expires_after }
+
+    it { is_expected.to be_nil }
+
+    context "when teaching authority provides written statement" do
+      before do
+        professional_standing_request.application_form.update!(
+          teaching_authority_provides_written_statement: true,
+        )
+      end
+
+      it { is_expected.to eq(18.weeks) }
+    end
   end
 end

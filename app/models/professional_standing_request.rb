@@ -28,11 +28,15 @@ class ProfessionalStandingRequest < ApplicationRecord
   include Locatable
 
   def expires_after
-    18.weeks # 90 working days
+    if application_form.teaching_authority_provides_written_statement
+      18.weeks # 90 working days
+    end
   end
 
   def after_received(*)
-    TeacherMailer.with(teacher:).professional_standing_received.deliver_later
+    if application_form.teaching_authority_provides_written_statement
+      TeacherMailer.with(teacher:).professional_standing_received.deliver_later
+    end
   end
 
   def after_expired(user:)
