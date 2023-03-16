@@ -76,18 +76,27 @@ class ApplicationFormStatusUpdater
         "awarded"
       elsif dqt_trn_request.present?
         "awarded_pending_checks"
-      elsif received_enough_reference_requests?
+      elsif reviewable_further_information_requests? ||
+            reviewable_professional_standing_requests? ||
+            reviewable_qualification_requests? || reviewable_reference_requests?
         "received"
       elsif waiting_on_further_information ||
             waiting_on_professional_standing || waiting_on_qualification ||
-            waiting_on_reference
+            (waiting_on_reference && references_verified != true)
         "waiting_on"
-      elsif received_further_information || received_qualification
+      elsif received_further_information ||
+            (
+              !teaching_authority_provides_written_statement &&
+                received_professional_standing
+            ) || received_qualification || received_reference
         "received"
       elsif assessment&.started?
         "initial_assessment"
       elsif application_form.submitted_at.present? ||
-            received_professional_standing
+            (
+              teaching_authority_provides_written_statement &&
+                received_professional_standing
+            )
         "submitted"
       else
         "draft"
@@ -98,7 +107,9 @@ class ApplicationFormStatusUpdater
            :dqt_trn_request,
            :region,
            :teacher,
+           :teaching_authority_provides_written_statement,
            to: :application_form
+  delegate :references_verified, to: :assessment
 
   def further_information_requests
     @further_information_requests ||=
@@ -127,11 +138,29 @@ class ApplicationFormStatusUpdater
     requestables.any?(&:received?)
   end
 
-  def received_enough_reference_requests?
-    return false unless received_reference
+  def reviewable?(requestables:)
+    requestables.any? do |requestable|
+      requestable.received? && !requestable.reviewed?
+    end
+  end
+
+  def reviewable_further_information_requests?
+    reviewable?(requestables: further_information_requests)
+  end
+
+  def reviewable_professional_standing_requests?
+    return false if teaching_authority_provides_written_statement
+    reviewable?(requestables: professional_standing_requests)
+  end
+
+  def reviewable_qualification_requests?
+    reviewable?(requestables: qualification_requests)
+  end
+
+  def reviewable_reference_requests?
+    return false unless reviewable?(requestables: reference_requests)
 
     received_requests = reference_requests.filter(&:received?)
-    requested_requests = reference_requests.filter(&:requested?)
 
     months_count =
       WorkHistoryDuration.new(
@@ -147,7 +176,7 @@ class ApplicationFormStatusUpdater
           (region.checks_available? || most_recent_reference_request&.received?)
       true
     else
-      requested_requests.empty?
+      reference_requests.filter(&:requested?).empty?
     end
   end
 

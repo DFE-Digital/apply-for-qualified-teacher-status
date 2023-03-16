@@ -122,18 +122,39 @@ RSpec.describe ApplicationFormStatusUpdater do
     context "with a received profession standing request" do
       let(:assessment) { create(:assessment, application_form:) }
 
-      before do
-        application_form.update!(submitted_at: Time.zone.now)
-        create(:professional_standing_request, :received, assessment:)
+      context "when the teaching authority provides the written statement" do
+        before do
+          application_form.update!(
+            submitted_at: Time.zone.now,
+            teaching_authority_provides_written_statement: true,
+          )
+          create(:professional_standing_request, :received, assessment:)
+        end
+
+        include_examples "changes status", "submitted"
+
+        it "changes received_professional_standing" do
+          expect { call }.to change(
+            application_form,
+            :received_professional_standing,
+          ).from(false).to(true)
+        end
       end
 
-      include_examples "changes status", "submitted"
+      context "when the teaching authority doesn't provide the written statement" do
+        before do
+          application_form.update!(submitted_at: Time.zone.now)
+          create(:professional_standing_request, :received, assessment:)
+        end
 
-      it "changes waiting_on_professional_standing" do
-        expect { call }.to change(
-          application_form,
-          :received_professional_standing,
-        ).from(false).to(true)
+        include_examples "changes status", "received"
+
+        it "changes received_professional_standing" do
+          expect { call }.to change(
+            application_form,
+            :received_professional_standing,
+          ).from(false).to(true)
+        end
       end
     end
 
@@ -195,12 +216,20 @@ RSpec.describe ApplicationFormStatusUpdater do
           )
         end
 
-        include_examples "changes status", "submitted"
-
         it "changes received_reference" do
           expect { call }.to change(application_form, :received_reference).from(
             false,
           ).to(true)
+        end
+
+        context "and it's the only reference request" do
+          include_examples "changes status", "received"
+        end
+
+        context "and there are other reference requests" do
+          before { create(:reference_request, :requested, assessment:) }
+
+          include_examples "changes status", "waiting_on"
         end
       end
 
