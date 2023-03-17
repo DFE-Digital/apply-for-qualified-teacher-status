@@ -22,15 +22,13 @@
                             label: { text: t("helpers.label.assessor_interface_requestable_location_form.received.professional_standing_request"), size: "s" } %>
     <% end %>
 
-    <%= hidden_field_tag :expired, "false" %>
-
     <%= f.govuk_text_area :location_note, label: { text: t("helpers.label.assessor_interface_requestable_location_form.location_note.professional_standing_request"), size: "m" }, hint: nil %>
   <% else %>
     <%= f.govuk_radio_buttons_fieldset :received, legend: { size: "s" } do %>
       <%= f.govuk_radio_button :received, :true, link_errors: true %>
 
       <%= f.govuk_radio_button :received, :false, link_errors: true do %>
-        <%= f.govuk_collection_radio_buttons :expired, %i[true false], :itself, legend: { size: "s" } %>
+        <%= f.govuk_collection_radio_buttons :ready_for_review, %i[true false], :itself, legend: { size: "s" } %>
       <% end %>
     <% end %>
 

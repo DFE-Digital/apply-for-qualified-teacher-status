@@ -11,8 +11,8 @@ module AssessorInterface
         ProfessionalStandingRequestLocationForm.new(
           requestable:,
           user: current_staff,
-          received: requestable.received? ? true : nil,
-          expired: requestable.expired? ? true : nil,
+          received: requestable.received?,
+          ready_for_review: requestable.ready_for_review,
           location_note: requestable.location_note,
         )
     end
@@ -32,6 +32,33 @@ module AssessorInterface
       end
     end
 
+    def edit_review
+      authorize :assessor, :edit?
+
+      @form =
+        RequestableReviewForm.new(
+          requestable:,
+          user: current_staff,
+          passed: requestable.passed,
+          failure_assessor_note: requestable.failure_assessor_note,
+        )
+    end
+
+    def update_review
+      authorize :assessor, :update?
+
+      @form =
+        RequestableReviewForm.new(
+          review_form_params.merge(requestable:, user: current_staff),
+        )
+
+      if @form.save
+        redirect_to [:assessor_interface, application_form]
+      else
+        render :edit_review, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def set_variables
@@ -43,7 +70,15 @@ module AssessorInterface
     def location_form_params
       params.require(
         :assessor_interface_professional_standing_request_location_form,
-      ).permit(:received, :expired, :location_note)
+      ).permit(:received, :ready_for_review, :location_note)
+    end
+
+    def review_form_params
+      params.require(:assessor_interface_requestable_review_form).permit(
+        :reviewed,
+        :passed,
+        :failure_assessor_note,
+      )
     end
 
     def professional_standing_request

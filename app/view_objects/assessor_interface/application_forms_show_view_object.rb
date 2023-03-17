@@ -119,6 +119,15 @@ class AssessorInterface::ApplicationFormsShowViewObject
           application_form,
           assessment,
         )
+      when :review_professional_standing_request
+        if professional_standing_request.received? ||
+             professional_standing_request.expired? ||
+             professional_standing_request.ready_for_review
+          url_helpers.review_assessor_interface_application_form_assessment_professional_standing_request_path(
+            application_form,
+            assessment,
+          )
+        end
       when :qualification_requests
         if application_form.received_qualification ||
              application_form.waiting_on_qualification
