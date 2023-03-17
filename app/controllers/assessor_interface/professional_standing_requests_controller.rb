@@ -8,10 +8,11 @@ module AssessorInterface
       authorize :note, :edit?
 
       @form =
-        RequestableLocationForm.new(
+        ProfessionalStandingRequestLocationForm.new(
           requestable:,
           user: current_staff,
-          received: requestable.received?,
+          received: requestable.received? ? true : nil,
+          expired: requestable.expired? ? true : nil,
           location_note: requestable.location_note,
         )
     end
@@ -20,7 +21,7 @@ module AssessorInterface
       authorize :note, :update?
 
       @form =
-        RequestableLocationForm.new(
+        ProfessionalStandingRequestLocationForm.new(
           location_form_params.merge(requestable:, user: current_staff),
         )
 
@@ -40,10 +41,9 @@ module AssessorInterface
     end
 
     def location_form_params
-      params.require(:assessor_interface_requestable_location_form).permit(
-        :received,
-        :location_note,
-      )
+      params.require(
+        :assessor_interface_professional_standing_request_location_form,
+      ).permit(:received, :expired, :location_note)
     end
 
     def professional_standing_request
