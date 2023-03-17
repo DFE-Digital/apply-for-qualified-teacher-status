@@ -48,10 +48,15 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it { is_expected.to be_nil }
 
-      context "with a professional standing request" do
-        before { create(:professional_standing_request, assessment:) }
+      context "when teaching authority provides written statement and a professional standing request" do
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: true,
+          )
+          create(:professional_standing_request, assessment:)
+        end
 
-        it { is_expected.to eq(%i[professional_standing_request]) }
+        it { is_expected.to eq(%i[await_professional_standing_request]) }
       end
 
       context "with a preliminary check" do
@@ -60,9 +65,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           create(:professional_standing_request, assessment:)
         end
 
-        it do
-          is_expected.to eq(%i[preliminary_check professional_standing_request])
-        end
+        it { is_expected.to eq(%i[preliminary_check]) }
       end
     end
 
@@ -124,6 +127,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it { is_expected.to be_nil }
+
+      context "with a professional standing request" do
+        before { create(:professional_standing_request, assessment:) }
+
+        it do
+          is_expected.to eq(
+            %i[
+              locate_professional_standing_request
+              review_professional_standing_request
+              assessment_recommendation
+            ],
+          )
+        end
+      end
 
       context "with a qualification request" do
         before { create(:qualification_request, assessment:) }
@@ -265,62 +282,73 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     context "with pre-assessment tasks section" do
       let(:section) { :pre_assessment_tasks }
-      let(:item) { :professional_standing_request }
 
-      before { create(:professional_standing_request, assessment:) }
+      context "await professional standing request" do
+        let(:item) { :await_professional_standing_request }
 
-      it { is_expected.to eq(:waiting_on) }
-
-      context "and professional standing request received" do
         before do
-          assessment.professional_standing_request.update!(
-            state: "received",
-            received_at: 1.day.ago,
-            location_note: "wat",
+          application_form.update!(
+            teaching_authority_provides_written_statement: true,
           )
-        end
-
-        it { is_expected.to eq(:completed) }
-      end
-
-      context "when preliminary check is required" do
-        before do
           create(:professional_standing_request, assessment:)
-          application_form.update!(requires_preliminary_check: true)
         end
 
-        it { is_expected.to eq(:cannot_start) }
-      end
-    end
+        it { is_expected.to eq(:waiting_on) }
 
-    context "with preliminary check" do
-      let(:section) { :pre_assessment_tasks }
-      let(:item) { :preliminary_check }
+        context "and professional standing request received" do
+          before do
+            assessment.professional_standing_request.update!(
+              state: "received",
+              received_at: 1.day.ago,
+              location_note: "wat",
+            )
+          end
 
-      before { application_form.update!(requires_preliminary_check: true) }
-
-      context "when the check hasn't been completed" do
-        before do
-          application_form.assessment.update!(preliminary_check_complete: nil)
+          it { is_expected.to eq(:completed) }
         end
 
-        it { is_expected.to eq(:not_started) }
-      end
+        context "when preliminary check is required" do
+          before do
+            create(:professional_standing_request, assessment:)
+            application_form.update!(requires_preliminary_check: true)
+          end
 
-      context "when the check has been completed" do
-        before do
-          application_form.assessment.update!(preliminary_check_complete: true)
+          it { is_expected.to eq(:cannot_start) }
         end
-
-        it { is_expected.to eq(:completed) }
       end
 
-      context "when the check has been declined" do
-        before do
-          application_form.assessment.update!(preliminary_check_complete: false)
+      context "with preliminary check" do
+        let(:item) { :preliminary_check }
+
+        before { application_form.update!(requires_preliminary_check: true) }
+
+        context "when the check hasn't been completed" do
+          before do
+            application_form.assessment.update!(preliminary_check_complete: nil)
+          end
+
+          it { is_expected.to eq(:not_started) }
         end
 
-        it { is_expected.to eq(:completed) }
+        context "when the check has been completed" do
+          before do
+            application_form.assessment.update!(
+              preliminary_check_complete: true,
+            )
+          end
+
+          it { is_expected.to eq(:completed) }
+        end
+
+        context "when the check has been declined" do
+          before do
+            application_form.assessment.update!(
+              preliminary_check_complete: false,
+            )
+          end
+
+          it { is_expected.to eq(:completed) }
+        end
       end
     end
 
