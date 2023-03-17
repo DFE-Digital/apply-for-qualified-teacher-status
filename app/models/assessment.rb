@@ -89,7 +89,8 @@ class Assessment < ApplicationRecord
       if skip_verification?
         all_sections_or_further_information_requests_passed?
       else
-        verify? && enough_reference_requests_passed?
+        verify? && enough_reference_requests_passed? &&
+          all_qualification_requests_passed?
       end
     else
       all_sections_or_further_information_requests_passed?
@@ -202,6 +203,14 @@ class Assessment < ApplicationRecord
       ).count_months
 
     months_count >= 9
+  end
+
+  def all_qualification_requests_passed?
+    if qualification_requests.present?
+      qualification_requests.all?(:passed)
+    else
+      true
+    end
   end
 
   def skip_verification?
