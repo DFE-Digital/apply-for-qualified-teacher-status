@@ -102,15 +102,13 @@ RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
       let(:reviewed) { "false" }
       let(:passed) { "true" }
 
-      it "updates passed field" do
+      it "doesn't set passed" do
         expect { save }.to_not change(requestable, :passed).from(nil)
       end
 
-      it "sets reviewed at" do
+      it "doesn't set reviewed at" do
         freeze_time do
-          expect { save }.to change(requestable, :reviewed_at).from(nil).to(
-            Time.zone.now,
-          )
+          expect { save }.to_not change(requestable, :reviewed_at).from(nil)
         end
       end
     end

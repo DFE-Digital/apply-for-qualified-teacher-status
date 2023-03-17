@@ -21,9 +21,16 @@ class AssessorInterface::RequestableReviewForm
   def save
     return false if invalid?
 
-    self.passed = nil if reviewed == false
-
-    ReviewRequestable.call(requestable:, user:, passed:, failure_assessor_note:)
+    if passed.nil? || reviewed == false
+      requestable.update!(passed: nil, reviewed_at: nil)
+    else
+      ReviewRequestable.call(
+        requestable:,
+        user:,
+        passed:,
+        failure_assessor_note:,
+      )
+    end
 
     true
   end

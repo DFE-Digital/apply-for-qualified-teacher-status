@@ -32,14 +32,12 @@ class ReviewRequestable
   attr_reader :requestable, :user, :passed, :failure_assessor_note
 
   def create_timeline_event
-    unless requestable.passed.nil?
-      TimelineEvent.create!(
-        creator: user,
-        event_type: "requestable_assessed",
-        requestable:,
-        application_form:,
-      )
-    end
+    TimelineEvent.create!(
+      creator: user,
+      event_type: "requestable_assessed",
+      requestable:,
+      application_form:,
+    )
   end
 
   delegate :application_form, to: :requestable
