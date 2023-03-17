@@ -48,15 +48,7 @@ RSpec.describe ReviewRequestable do
     let(:requestable) { create(:reference_request, :requested) }
 
     it "raises an error" do
-      expect { call }.to raise_error(ReviewRequestable::NotReceived)
-    end
-  end
-
-  context "with an expired requestabled" do
-    let(:requestable) { create(:qualification_request, :expired) }
-
-    it "raises an error" do
-      expect { call }.to raise_error(ReviewRequestable::NotReceived)
+      expect { call }.to raise_error(ReviewRequestable::StillRequested)
     end
   end
 end

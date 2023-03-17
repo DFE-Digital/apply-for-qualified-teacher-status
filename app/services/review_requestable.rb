@@ -11,7 +11,7 @@ class ReviewRequestable
   end
 
   def call
-    raise NotReceived unless requestable.received?
+    raise StillRequested if requestable.requested?
 
     ActiveRecord::Base.transaction do
       requestable.failure_assessor_note = failure_assessor_note
@@ -24,7 +24,7 @@ class ReviewRequestable
     end
   end
 
-  class NotReceived < StandardError
+  class StillRequested < StandardError
   end
 
   private
