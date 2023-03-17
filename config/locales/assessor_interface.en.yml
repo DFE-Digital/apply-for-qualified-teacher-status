@@ -230,7 +230,7 @@ en:
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
 
     professional_standing_requests:
-      edit:
+      edit_location:
         title: Third-party professional standing – response received
 
     reference_requests:

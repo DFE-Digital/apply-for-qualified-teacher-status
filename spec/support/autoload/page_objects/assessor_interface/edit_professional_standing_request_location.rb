@@ -2,8 +2,9 @@
 
 module PageObjects
   module AssessorInterface
-    class EditProfessionalStandingRequest < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/professional-standing-request/edit"
+    class EditProfessionalStandingRequestLocation < SitePrism::Page
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
+                "/professional-standing-request/location"
 
       section :form, "form" do
         element :received_checkbox, ".govuk-checkboxes__input", visible: false

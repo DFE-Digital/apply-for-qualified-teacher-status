@@ -105,7 +105,13 @@ Rails.application.routes.draw do
 
         resource :professional_standing_request,
                  path: "/professional-standing-request",
-                 only: %i[edit update]
+                 only: [] do
+          member do
+            get "location", to: "professional_standing_requests#edit_location"
+            post "location",
+                 to: "professional_standing_requests#update_location"
+          end
+        end
 
         resources :qualification_requests,
                   path: "/qualification-requests",

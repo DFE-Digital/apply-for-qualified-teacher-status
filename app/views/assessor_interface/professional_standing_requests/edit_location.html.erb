@@ -1,7 +1,7 @@
 <% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".title")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@form.application_form) %>
 
-<%= form_with model: @form, url: [:assessor_interface, @form.application_form, @form.assessment, :professional_standing_request], method: :put do |f| %>
+<%= form_with model: @form, url: [:location, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl"><%= t(".title") %></h1>

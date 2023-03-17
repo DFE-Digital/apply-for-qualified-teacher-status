@@ -2,9 +2,11 @@
 
 module AssessorInterface
   class ProfessionalStandingRequestsController < BaseController
-    before_action :authorize_note
+    before_action :set_variables
 
-    def edit
+    def edit_location
+      authorize :note, :edit?
+
       @form =
         RequestableLocationForm.new(
           requestable:,
@@ -14,37 +16,49 @@ module AssessorInterface
         )
     end
 
-    def update
+    def update_location
+      authorize :note, :update?
+
       @form =
         RequestableLocationForm.new(
-          requestable_location_form.merge(requestable:, user: current_staff),
+          location_form_params.merge(requestable:, user: current_staff),
         )
 
       if @form.save
         redirect_to [:assessor_interface, application_form]
       else
-        render :edit, status: :unprocessable_entity
+        render :edit_location, status: :unprocessable_entity
       end
     end
 
     private
 
-    def requestable_location_form
+    def set_variables
+      @professional_standing_request = professional_standing_request
+      @application_form = application_form
+      @assessment = assessment
+    end
+
+    def location_form_params
       params.require(:assessor_interface_requestable_location_form).permit(
         :received,
         :location_note,
       )
     end
 
-    def application_form
-      @application_form ||=
-        ApplicationForm.includes(
-          assessment: :professional_standing_request,
-        ).find(params[:application_form_id])
+    def professional_standing_request
+      @professional_standing_request ||=
+        ProfessionalStandingRequest.joins(
+          assessment: :application_form,
+        ).find_by(
+          assessment_id: params[:assessment_id],
+          assessment: {
+            application_form_id: params[:application_form_id],
+          },
+        )
     end
 
-    delegate :professional_standing_request, to: :assessment
-    delegate :assessment, to: :application_form
+    delegate :application_form, :assessment, to: :professional_standing_request
 
     alias_method :requestable, :professional_standing_request
   end
