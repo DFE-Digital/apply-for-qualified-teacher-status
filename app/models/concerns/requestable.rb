@@ -17,6 +17,10 @@ module Requestable
     validates :received_at, presence: true, if: :received?
     validates :reviewed_at, presence: true, unless: -> { passed.nil? }
 
+    define_method :requested! do
+      update!(state: "requested", received_at: nil)
+    end
+
     define_method :received! do
       update!(state: "received", received_at: Time.zone.now)
     end
