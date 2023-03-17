@@ -98,6 +98,8 @@ Rails.application.routes.draw do
             get "location", to: "professional_standing_requests#edit_location"
             post "location",
                  to: "professional_standing_requests#update_location"
+            get "review", to: "professional_standing_requests#edit_review"
+            post "review", to: "professional_standing_requests#update_review"
           end
         end
 

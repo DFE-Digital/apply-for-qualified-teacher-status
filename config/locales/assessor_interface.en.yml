@@ -223,6 +223,9 @@ en:
     professional_standing_requests:
       edit_location:
         title: Third-party professional standing – response received
+      edit_review:
+        passed: Does the response confirm that this document is legitimate?
+        failure_assessor_note: Briefly explain why the document should not be accepted.
 
     qualification_requests:
       edit:

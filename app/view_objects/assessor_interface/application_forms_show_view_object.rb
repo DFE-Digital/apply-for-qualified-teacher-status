@@ -108,6 +108,13 @@ class AssessorInterface::ApplicationFormsShowViewObject
           application_form,
           assessment,
         )
+      when :review_professional_standing_request
+        if application_form.received_professional_standing
+          url_helpers.review_assessor_interface_application_form_assessment_professional_standing_request_path(
+            application_form,
+            assessment,
+          )
+        end
       when :qualification_requests
         qualification_request = qualification_requests[index]
 
