@@ -18,16 +18,18 @@ en:
             pre_assessment_tasks: Pre-assessment tasks
             verification_requests: Verification requests
           items:
+            await_professional_standing_request: Awaiting third-party professional standing
             age_range_subjects: Verify age range and subjects
             assessment_recommendation: Assessment recommendation
             english_language_proficiency: Check English language proficiency
             initial_assessment_recommendation: Initial assessment recommendation
+            locate_professional_standing_request: Record LOPS response
             personal_information: Check personal information
             professional_standing: Check professional standing
-            professional_standing_request: Awaiting third-party professional standing
             qualification_requests: Qualifications – requested
             qualifications: Check qualifications
             reference_requests: Verify reference requests
+            review_professional_standing_request: Review LOPS response
             review_requested_information: Review requested information from applicant
             work_history: Check work history
 

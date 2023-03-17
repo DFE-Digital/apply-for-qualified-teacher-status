@@ -13,7 +13,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def assessment_tasks
     pre_assessment_tasks = [
       (
-        :professional_standing_request if professional_standing_request.present?
+        if teaching_authority_provides_written_statement &&
+             professional_standing_request.present?
+          :await_professional_standing_request
+        end
       ),
     ].compact
 
@@ -33,9 +36,15 @@ class AssessorInterface::ApplicationFormsShowViewObject
     further_information =
       further_information_requests.map { :review_requested_information }
 
+    verify_professional_standing =
+      !teaching_authority_provides_written_statement &&
+        professional_standing_request.present?
+
     verification_requests = [
       (:qualification_requests if qualification_requests.present?),
       (:reference_requests if reference_requests.present?),
+      (:locate_professional_standing_request if verify_professional_standing),
+      (:review_professional_standing_request if verify_professional_standing),
     ].compact
 
     if verification_requests.present?
@@ -84,13 +93,18 @@ class AssessorInterface::ApplicationFormsShowViewObject
         )
       end
     when :verification_requests
-      return nil unless professional_standing_request_received?
+      return nil unless preassessment_professional_standing_request_completed?
 
       case item
       when :assessment_recommendation
         return nil unless assessment.recommendable?
 
         url_helpers.edit_assessor_interface_application_form_assessment_path(
+          application_form,
+          assessment,
+        )
+      when :locate_professional_standing_request
+        url_helpers.edit_assessor_interface_application_form_assessment_professional_standing_request_path(
           application_form,
           assessment,
         )
@@ -117,7 +131,11 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def assessment_task_status(section, item, index)
     case section
     when :pre_assessment_tasks
-      professional_standing_request_received? ? :completed : :waiting_on
+      if preassessment_professional_standing_request_completed?
+        :completed
+      else
+        :waiting_on
+      end
     when :initial_assessment
       if item == :initial_assessment_recommendation
         return :completed if initial_assessment_recommendation_complete?
@@ -125,11 +143,15 @@ class AssessorInterface::ApplicationFormsShowViewObject
         return :in_progress if request_further_information_unfinished?
         :not_started
       else
-        return :cannot_start unless professional_standing_request_received?
+        unless preassessment_professional_standing_request_completed?
+          return :cannot_start
+        end
         assessment.sections.find { |s| s.key == item.to_s }.status
       end
     when :further_information_requests
-      return :cannot_start unless professional_standing_request_received?
+      unless preassessment_professional_standing_request_completed?
+        return :cannot_start
+      end
       further_information_request = further_information_requests[index]
       return :cannot_start if further_information_request.requested?
       return :not_started if further_information_request.passed.nil?
@@ -137,6 +159,26 @@ class AssessorInterface::ApplicationFormsShowViewObject
       :completed
     when :verification_requests
       case item
+      when :assessment_recommendation
+        return :completed if assessment.completed?
+        return :cannot_start unless assessment.recommendable?
+        :not_started
+      when :locate_professional_standing_request
+        if application_form.waiting_on_professional_standing
+          :not_started
+        elsif application_form.received_professional_standing
+          :completed
+        else
+          :cannot_start
+        end
+      when :review_professional_standing_request
+        if professional_standing_request.reviewed?
+          :completed
+        elsif professional_standing_request.received?
+          :not_started
+        else
+          :cannot_start
+        end
       when :reference_requests
         return :completed if assessment.references_verified
 
@@ -154,10 +196,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
         end
       when :qualification_requests
         application_form.received_qualification ? :received : :waiting_on
-      when :assessment_recommendation
-        return :completed if assessment.completed?
-        return :cannot_start unless assessment.recommendable?
-        :not_started
       end
     end
   end
@@ -170,12 +208,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   attr_reader :params
 
-  delegate :assessment, to: :application_form
+  delegate :assessment,
+           :teaching_authority_provides_written_statement,
+           to: :application_form
   delegate :professional_standing_request, to: :assessment
 
-  def professional_standing_request_received?
-    professional_standing_request.nil? ||
+  def preassessment_professional_standing_request_completed?
+    if teaching_authority_provides_written_statement
       professional_standing_request.received?
+    else
+      true
+    end
   end
 
   def request_further_information_unfinished?

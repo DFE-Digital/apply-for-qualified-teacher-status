@@ -40,10 +40,15 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it { is_expected.to be_nil }
 
-      context "with a professional standing request" do
-        before { create(:professional_standing_request, assessment:) }
+      context "when teaching authority provides written statement and a professional standing request" do
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: true,
+          )
+          create(:professional_standing_request, assessment:)
+        end
 
-        it { is_expected.to eq(%i[professional_standing_request]) }
+        it { is_expected.to eq(%i[await_professional_standing_request]) }
       end
     end
 
@@ -105,6 +110,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it { is_expected.to be_nil }
+
+      context "with a professional standing request" do
+        before { create(:professional_standing_request, assessment:) }
+
+        it do
+          is_expected.to eq(
+            %i[
+              locate_professional_standing_request
+              review_professional_standing_request
+              assessment_recommendation
+            ],
+          )
+        end
+      end
 
       context "with a qualification request" do
         before { create(:qualification_request, assessment:) }
