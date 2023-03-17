@@ -22,9 +22,9 @@ module PageHelpers
       PageObjects::AssessorInterface::ApplicationStatus.new
   end
 
-  def assessor_edit_professional_standing_request_page
-    @assessor_edit_professional_standing_request_page ||=
-      PageObjects::AssessorInterface::EditProfessionalStandingRequest.new
+  def assessor_edit_professional_standing_request_location_page
+    @assessor_edit_professional_standing_request_location_page ||=
+      PageObjects::AssessorInterface::EditProfessionalStandingRequestLocation.new
   end
 
   def assessor_edit_qualification_request_page

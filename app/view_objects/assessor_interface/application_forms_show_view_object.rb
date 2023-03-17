@@ -62,7 +62,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def assessment_task_path(section, item, index)
     case section
     when :pre_assessment_tasks
-      url_helpers.edit_assessor_interface_application_form_assessment_professional_standing_request_path(
+      url_helpers.location_assessor_interface_application_form_assessment_professional_standing_request_path(
         application_form,
         assessment,
       )
@@ -104,7 +104,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           assessment,
         )
       when :locate_professional_standing_request
-        url_helpers.edit_assessor_interface_application_form_assessment_professional_standing_request_path(
+        url_helpers.location_assessor_interface_application_form_assessment_professional_standing_request_path(
           application_form,
           assessment,
         )

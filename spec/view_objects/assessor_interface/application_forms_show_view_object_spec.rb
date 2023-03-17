@@ -164,7 +164,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         is_expected.to eq(
           "/assessor/applications/#{application_form.id}" \
-            "/assessments/#{assessment.id}/professional-standing-request/edit",
+            "/assessments/#{assessment.id}/professional-standing-request/location",
         )
       end
     end
