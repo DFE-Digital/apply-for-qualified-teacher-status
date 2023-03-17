@@ -10,6 +10,8 @@ en:
           decline: As this reason triggers a decline, you do not need to add a note, but you can use the space below to add anything you feel might be helpful, if you want to.
       assessor_interface_create_note_form:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
+      assessor_interface_requestable_location_form:
+        location_note: Use this space to add any useful notes, for example, where to locate the response.
       eligibility_interface_country_form:
         location: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
       eligibility_interface_region_form:
