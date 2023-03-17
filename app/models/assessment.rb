@@ -91,7 +91,8 @@ class Assessment < ApplicationRecord
         all_sections_or_further_information_requests_passed?
       else
         verify? && enough_reference_requests_passed? &&
-          all_qualification_requests_passed?
+          all_qualification_requests_passed? &&
+          professional_standing_request_passed?
       end
     else
       all_sections_or_further_information_requests_passed?
@@ -209,6 +210,15 @@ class Assessment < ApplicationRecord
   def all_qualification_requests_passed?
     if qualification_requests.present?
       qualification_requests.all?(:passed)
+    else
+      true
+    end
+  end
+
+  def professional_standing_request_passed?
+    if !application_form.teaching_authority_provides_written_statement &&
+         professional_standing_request.present?
+      professional_standing_request.passed?
     else
       true
     end
