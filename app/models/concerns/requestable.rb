@@ -21,7 +21,7 @@ module Requestable
       update!(state: "received", received_at: Time.zone.now)
     end
 
-    delegate :application_form, to: :assessment
+    has_one :application_form, through: :assessment
   end
 
   def reviewed!(passed)

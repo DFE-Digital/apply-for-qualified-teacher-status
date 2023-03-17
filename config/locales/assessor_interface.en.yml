@@ -137,8 +137,13 @@ en:
           teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
           verify_school_details: the school details to verify what the applicant has entered
           work_history_references: that the applicant has provided a reference for each role with an acceptable email address
+          written_statement_completion_date: induction letter shows the completion date (if applicable)
+          written_statement_induction: induction letter shows the applicant completed induction in the country (if applicable)
           written_statement_present: letter from the country or state’s competent authority provided
           written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
+          written_statement_registration_number: induction letter shows the teacher reference (TR) number (if applicable)
+          written_statement_school_name: induction letter shows the name of the school (if applicable)
+          written_statement_signature: induction letter shows the signature of the administration department or headteacher/principal (if applicable)
         failure_reasons:
           additional_degree_certificate_illegible: An additional degree certificate (or translation) is illegible or in a format that we cannot accept.
           additional_degree_transcript_illegible: An additional degree transcript (or translation) is illegible or in a format that we cannot accept.
@@ -153,11 +158,11 @@ en:
           duplicate_application: There’s already another in-flight application for this applicant.
           english_language_exemption_by_citizenship_not_confirmed: The applicant’s ID does not confirm English language exemption by birth/citizenship.
           english_language_exemption_by_qualification_not_confirmed: The applicant’s qualification documents do not confirm English language exemption by country of study.
-          english_language_moi_not_taught_in_english: The applicant’s MOI does not show that they were taught exclusively in English.
           english_language_moi_invalid_format: The applicant’s Medium of instruction (MOI) document is illegible or in a format that we cannot accept.
+          english_language_moi_not_taught_in_english: The applicant’s MOI does not show that they were taught exclusively in English.
+          english_language_not_achieved_b2: The applicant provided evidence of a SELT but has not achieved B2 level.
           english_language_proficiency_document_illegible: The applicant’s English language proficiency test document is illegible or in a format that we cannot accept.
           english_language_qualification_invalid: The applicant’s English language qualification is not from one of the approved providers.
-          english_language_not_achieved_b2: The applicant provided evidence of a SELT but has not achieved B2 level.
           english_language_selt_expired: The applicant provided evidence of a SELT but the test was not completed within the last 2 years.
           english_language_unverifiable_reference_number: Unable to verify the reference number that the applicant has provided.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
@@ -184,8 +189,9 @@ en:
           teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
           unrecognised_references: Application contained 1 or more references that cannot be considered.
           work_history_break: There is an unexplained break in the applicant’s work history.
-          written_statement_illegible: The letter from the country or state’s authority is illegible or in a format that we cannot accept.
-          written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
+          written_statement_illegible: The letter is illegible or in a format that we cannot accept.
+          written_statement_information: The letter is missing information.
+          written_statement_recent: The letter was not issued within the last 3 months.
         induction_required:
           legend:
             GB-SCT: What level of registration does the applicant have?

@@ -239,10 +239,22 @@ class AssessmentFactory
       return nil
     end
 
+    written_statement_required =
+      application_form.needs_written_statement &&
+        !application_form.written_statement_optional
+    written_statement_induction =
+      application_form.needs_written_statement &&
+        !application_form.needs_work_history
+
     checks = [
-      application_form.needs_registration_number ? :registration_number : nil,
-      (:written_statement_present if application_form.needs_written_statement),
-      (:written_statement_recent if application_form.needs_written_statement),
+      (:registration_number if application_form.needs_registration_number),
+      (:written_statement_present if written_statement_required),
+      (:written_statement_recent if written_statement_required),
+      (:written_statement_induction if written_statement_induction),
+      (:written_statement_completion_date if written_statement_induction),
+      (:written_statement_registration_number if written_statement_induction),
+      (:written_statement_school_name if written_statement_induction),
+      (:written_statement_signature if written_statement_induction),
       :authorisation_to_teach,
       :teaching_qualification,
       :confirm_age_range_subjects,
@@ -261,9 +273,10 @@ class AssessmentFactory
           FailureReasons::WRITTEN_STATEMENT_ILLEGIBLE
         end
       ),
+      (FailureReasons::WRITTEN_STATEMENT_RECENT if written_statement_required),
       (
-        if application_form.needs_written_statement
-          FailureReasons::WRITTEN_STATEMENT_RECENT
+        if written_statement_induction
+          FailureReasons::WRITTEN_STATEMENT_INFORMATION
         end
       ),
       FailureReasons::AUTHORISATION_TO_TEACH,

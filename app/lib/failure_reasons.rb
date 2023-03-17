@@ -62,6 +62,7 @@ class FailureReasons
     UNRECOGNISED_REFERENCES = "unrecognised_references",
     WORK_HISTORY_BREAK = "work_history_break",
     WRITTEN_STATEMENT_ILLEGIBLE = "written_statement_illegible",
+    WRITTEN_STATEMENT_INFORMATION = "written_statement_information",
     WRITTEN_STATEMENT_RECENT = "written_statement_recent",
   ].freeze
 
@@ -85,6 +86,7 @@ class FailureReasons
     TEACHING_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
     TEACHING_TRANSCRIPT_ILLEGIBLE => :qualification_transcript,
     WRITTEN_STATEMENT_ILLEGIBLE => :written_statement,
+    WRITTEN_STATEMENT_INFORMATION => :written_statement,
     WRITTEN_STATEMENT_RECENT => :written_statement,
   }.freeze
 
