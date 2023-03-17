@@ -7,45 +7,17 @@ class AssessorInterface::RequestableReviewForm
   attr_accessor :requestable, :user
   validates :requestable, :user, presence: true
 
-  attribute :reviewed, :boolean
-  validates :reviewed, inclusion: [true, false], if: :validate_reviewed?
-
   attribute :passed, :boolean
-  validates :passed, inclusion: [true, false], if: :validate_passed?
+  validates :passed, inclusion: [true, false]
 
   attribute :failure_assessor_note, :string
-  validates :failure_assessor_note,
-            presence: true,
-            if: :validate_failure_assessor_note?
+  validates :failure_assessor_note, presence: true, if: -> { passed == false }
 
   def save
     return false if invalid?
 
-    if passed.nil? || reviewed == false
-      requestable.update!(passed: nil, reviewed_at: nil)
-    else
-      ReviewRequestable.call(
-        requestable:,
-        user:,
-        passed:,
-        failure_assessor_note:,
-      )
-    end
+    ReviewRequestable.call(requestable:, user:, passed:, failure_assessor_note:)
 
     true
-  end
-
-  private
-
-  def validate_reviewed?
-    requestable.is_a?(Locatable)
-  end
-
-  def validate_passed?
-    validate_reviewed? ? reviewed == true : true
-  end
-
-  def validate_failure_assessor_note?
-    validate_passed? && passed == false
   end
 end
