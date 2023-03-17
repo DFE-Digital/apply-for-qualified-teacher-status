@@ -87,6 +87,17 @@ en:
         name: Applicant name
         reference: Application reference number
         email: Applicant email
+      assessor_interface_qualification_request_form:
+        received_options:
+          true: "Yes"
+          false: "No, and the deadline has passed"
+        passed_options:
+          true: "Yes"
+          false: "No"
+        failure_assessor_note: Briefly explain why you selected ‘No’
+        failed_options:
+          true: "Yes, mark as ‘Rejected’"
+          false: "No, allow more time for a response"
       assessor_interface_requestable_location_form:
         received:
           professional_standing_request: The letter of professional standing has been received.
@@ -236,6 +247,10 @@ en:
         submitted_at: Created date
         submitted_at_after: Start date
         submitted_at_before: End date
+      assessor_interface_qualification_request_form:
+        received: Have you received a response about this qualification?
+        passed: Does the response show that the qualification is legitimate?
+        failed: Do you want to mark this qualification as ‘Rejected’?
       assessor_interface_select_qualifications_form:
         qualification_ids: Qualification
       assessor_interface_select_work_histories_form:
