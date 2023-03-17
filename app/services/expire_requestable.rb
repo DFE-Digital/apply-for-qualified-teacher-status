@@ -3,38 +3,40 @@
 class ExpireRequestable
   include ServicePattern
 
-  def initialize(requestable:)
+  def initialize(requestable:, user:)
     @requestable = requestable
+    @user = user
   end
 
   def call
-    if expire_request?
-      ActiveRecord::Base.transaction do
-        requestable.expired!
-        requestable.after_expired(user: "Expirer")
-        create_timeline_event
-      end
+    raise NotRequested unless requestable.requested?
+
+    ActiveRecord::Base.transaction do
+      requestable.expired!
+      requestable.after_expired(user:)
+      create_timeline_event
     end
 
     requestable
   end
 
+  class NotRequested < StandardError
+  end
+
   private
 
-  attr_reader :requestable
+  attr_reader :requestable, :user, :force
 
   delegate :application_form, to: :requestable
 
-  def expire_request?
-    return false if requestable.expired_at.blank?
-
-    requestable.requested? && Time.zone.now >= requestable.expired_at
-  end
-
   def create_timeline_event
+    creator = user.is_a?(String) ? nil : user
+    creator_name = user.is_a?(String) ? user : ""
+
     TimelineEvent.create!(
       application_form:,
-      creator_name: "Expirer",
+      creator:,
+      creator_name:,
       event_type: "requestable_expired",
       requestable:,
     )
