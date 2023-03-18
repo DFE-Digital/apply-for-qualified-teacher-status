@@ -4,7 +4,7 @@ trim_sessions_job:
 
 destroy_application_forms:
   cron: "15 1 * * *"
-  class: DestroyApplicationFormsJobs
+  class: DestroyApplicationFormsJob
 
 update_working_days_since_submission:
   cron: "30 1 * * *"
