@@ -26,6 +26,8 @@ class ExpireRequestable
   delegate :application_form, to: :requestable
 
   def expire_request?
+    return false if requestable.expired_at.blank?
+
     requestable.requested? && Time.zone.now >= requestable.expired_at
   end
 

@@ -153,5 +153,13 @@ RSpec.describe ExpireRequestable do
 
       it { is_expected.to be_expired }
     end
+
+    context "with a non-expiring request" do
+      let(:requestable) do
+        create(:qualification_request, created_at: 1.year.ago)
+      end
+
+      it { is_expected.to be_requested }
+    end
   end
 end
