@@ -62,6 +62,14 @@ module AssessorInterface
         )
     end
 
+    def teacher_name_and_date_of_birth
+      [
+        application_form.given_names,
+        application_form.family_name,
+        "(#{application_form.date_of_birth.to_fs(:long_ordinal_uk)})",
+      ].join(" ")
+    end
+
     private
 
     attr_reader :params
