@@ -366,6 +366,12 @@ en:
           attributes:
             induction_required:
               inclusion: Select whether the teacher requires induction
+        assessor_interface/professional_standing_request_location_form:
+          attributes:
+            received:
+              inclusion: Select whether you received a response about this letter of professional standing
+            expired:
+              inclusion: Select whether you want to mark this for review
         assessor_interface/qualification_request_form:
           attributes:
             received:
