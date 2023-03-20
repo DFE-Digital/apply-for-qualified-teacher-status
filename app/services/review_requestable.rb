@@ -11,7 +11,7 @@ class ReviewRequestable
   end
 
   def call
-    raise NotReceived unless requestable.received?
+    raise StillRequested if requestable.requested?
 
     ActiveRecord::Base.transaction do
       requestable.failure_assessor_note = failure_assessor_note
@@ -24,7 +24,7 @@ class ReviewRequestable
     end
   end
 
-  class NotReceived < StandardError
+  class StillRequested < StandardError
   end
 
   private
@@ -32,14 +32,12 @@ class ReviewRequestable
   attr_reader :requestable, :user, :passed, :failure_assessor_note
 
   def create_timeline_event
-    unless requestable.passed.nil?
-      TimelineEvent.create!(
-        creator: user,
-        event_type: "requestable_assessed",
-        requestable:,
-        application_form:,
-      )
-    end
+    TimelineEvent.create!(
+      creator: user,
+      event_type: "requestable_assessed",
+      requestable:,
+      application_form:,
+    )
   end
 
   delegate :application_form, to: :requestable

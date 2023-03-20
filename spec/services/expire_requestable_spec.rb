@@ -4,17 +4,25 @@ require "rails_helper"
 
 RSpec.describe ExpireRequestable do
   describe "#call" do
-    let(:region) { create(:region, :in_country, country_code: "FR") }
-    let(:application_form) { create(:application_form, :submitted, region:) }
-    let(:assessment) { create(:assessment, application_form:) }
+    let(:user) { create(:staff) }
 
-    subject { described_class.call(requestable:) }
+    subject(:call) { described_class.call(requestable:, user:) }
 
     shared_examples_for "expiring a requestable" do
       it { is_expected.to be_expired }
 
       it "records a requestable requested timeline event" do
-        expect { subject }.to have_recorded_timeline_event(:requestable_expired)
+        expect { subject }.to have_recorded_timeline_event(
+          :requestable_expired,
+          requestable:,
+          creator: user,
+        )
+      end
+    end
+
+    shared_examples_for "not expiring a requestable" do
+      it "raises an error" do
+        expect { call }.to raise_error(ExpireRequestable::NotRequested)
       end
     end
 
@@ -25,141 +33,59 @@ RSpec.describe ExpireRequestable do
     end
 
     context "with requested FI request" do
-      let(:requestable) do
-        create(:further_information_request, created_at:, assessment:)
-      end
+      let(:requestable) { create(:further_information_request) }
 
-      context "when less than six weeks old" do
-        let(:created_at) { (6.weeks - 1.hour).ago }
-
-        it { is_expected.to be_requested }
-      end
-
-      context "when it is more than six weeks old" do
-        let(:created_at) { (6.weeks + 1.hour).ago }
-
-        it_behaves_like "expiring a requestable"
-        it_behaves_like "declining the application"
-      end
-
-      context "when the applicant is from a country with a 4 week expiry" do
-        let(:application_form) do
-          create(:application_form, :submitted, :old_regs, region:)
-        end
-
-        # Australia, Canada, Gibraltar, New Zealand, US
-        %w[AU CA GI NZ US].each do |country_code|
-          context "from country_code #{country_code}" do
-            let(:region) { create(:region, :in_country, country_code:) }
-
-            context "when it is less than four weeks old" do
-              let(:created_at) { (4.weeks - 1.hour).ago }
-
-              it { is_expected.to be_requested }
-            end
-
-            context "when it is more than four weeks old from #{country_code}" do
-              let(:created_at) { (4.weeks + 1.hour).ago }
-
-              it_behaves_like "expiring a requestable"
-              it_behaves_like "declining the application"
-            end
-          end
-        end
-      end
+      it_behaves_like "expiring a requestable"
+      it_behaves_like "declining the application"
     end
 
     context "with any received FI request" do
-      let(:requestable) do
-        create(:further_information_request, :received, created_at: 1.year.ago)
-      end
+      let(:requestable) { create(:further_information_request, :received) }
 
-      it { is_expected.to be_received }
+      it_behaves_like "not expiring a requestable"
     end
 
     context "with any expired FI request" do
-      let(:requestable) do
-        create(:further_information_request, :expired, created_at: 1.year.ago)
-      end
+      let(:requestable) { create(:further_information_request, :expired) }
 
-      it { is_expected.to be_expired }
+      it_behaves_like "not expiring a requestable"
     end
 
     context "with a requested professional standing request" do
-      let(:requestable) { create(:professional_standing_request, created_at:) }
+      let(:requestable) { create(:professional_standing_request) }
 
-      context "when less than 18 weeks old" do
-        let(:created_at) { (18.weeks - 1.hour).ago }
-
-        it { is_expected.to be_requested }
-      end
-
-      context "when it is more than 18 weeks old" do
-        let(:created_at) { (18.weeks + 1.hour).ago }
-
-        it_behaves_like "expiring a requestable"
-        it_behaves_like "declining the application"
-      end
+      it_behaves_like "expiring a requestable"
+      it_behaves_like "declining the application"
     end
 
     context "with any received professional standing request" do
-      let(:requestable) do
-        create(
-          :professional_standing_request,
-          :received,
-          created_at: 1.year.ago,
-        )
-      end
+      let(:requestable) { create(:professional_standing_request, :received) }
 
-      it { is_expected.to be_received }
+      it_behaves_like "not expiring a requestable"
     end
 
     context "with any expired professional standing request" do
-      let(:requestable) do
-        create(:professional_standing_request, :expired, created_at: 1.year.ago)
-      end
+      let(:requestable) { create(:professional_standing_request, :expired) }
 
-      it { is_expected.to be_expired }
+      it_behaves_like "not expiring a requestable"
     end
 
     context "with a requested reference request" do
-      let(:requestable) { create(:reference_request, created_at:) }
+      let(:requestable) { create(:reference_request) }
 
-      context "when less than six weeks old" do
-        let(:created_at) { (6.weeks - 1.hour).ago }
-
-        it { is_expected.to be_requested }
-      end
-
-      context "when it is more than six weeks old" do
-        let(:created_at) { (6.weeks + 1.hour).ago }
-
-        it_behaves_like "expiring a requestable"
-      end
+      it_behaves_like "expiring a requestable"
     end
 
     context "with any received reference request" do
-      let(:requestable) do
-        create(:reference_request, :received, created_at: 1.year.ago)
-      end
+      let(:requestable) { create(:reference_request, :received) }
 
-      it { is_expected.to be_received }
+      it_behaves_like "not expiring a requestable"
     end
 
     context "with any expired reference request" do
-      let(:requestable) do
-        create(:reference_request, :expired, created_at: 1.year.ago)
-      end
+      let(:requestable) { create(:reference_request, :expired) }
 
-      it { is_expected.to be_expired }
-    end
-
-    context "with a non-expiring request" do
-      let(:requestable) do
-        create(:qualification_request, created_at: 1.year.ago)
-      end
-
-      it { is_expected.to be_requested }
+      it_behaves_like "not expiring a requestable"
     end
   end
 end

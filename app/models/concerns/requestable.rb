@@ -32,6 +32,10 @@ module Requestable
     passed != nil
   end
 
+  def overdue?
+    expired? || (received? && expired_at.present? && received_at > expired_at)
+  end
+
   def failed
     return nil if passed.nil?
     passed == false

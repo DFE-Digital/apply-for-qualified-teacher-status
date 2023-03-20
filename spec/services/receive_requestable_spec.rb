@@ -20,7 +20,7 @@ RSpec.describe ReceiveRequestable do
     before { requestable.received! }
 
     it "raises an error" do
-      expect { call }.to raise_error(ReceiveRequestable::AlreadySubmitted)
+      expect { call }.to raise_error(ReceiveRequestable::AlreadyReceived)
     end
   end
 

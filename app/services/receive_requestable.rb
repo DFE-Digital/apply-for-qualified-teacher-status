@@ -9,7 +9,7 @@ class ReceiveRequestable
   end
 
   def call
-    raise AlreadySubmitted if requestable.received?
+    raise AlreadyReceived if requestable.received?
 
     ActiveRecord::Base.transaction do
       requestable.received!
@@ -20,7 +20,7 @@ class ReceiveRequestable
     requestable.after_received(user:)
   end
 
-  class AlreadySubmitted < StandardError
+  class AlreadyReceived < StandardError
   end
 
   private
