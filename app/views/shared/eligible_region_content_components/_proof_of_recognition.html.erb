@@ -73,14 +73,6 @@
         Do not request this document yet – we’ll carry out some checks on your application first. If your application passes these checks, we’ll then email you and ask you to request the document.
       </p>
     <% end %>
-  <% else %>
-    <p class="govuk-body">
-      <% if region.written_statement_optional %>
-        If you have one, you can provide <%= region_certificate_phrase(region) %>, which you can get by contacting:
-      <% else %>
-        You’ll need to provide <%= region_certificate_phrase(region) %>, which you can get by contacting:
-      <% end %>
-    </p>
   <% end %>
 
   <% if region.status_check_written? %>
