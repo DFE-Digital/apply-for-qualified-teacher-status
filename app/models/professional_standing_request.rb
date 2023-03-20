@@ -25,7 +25,6 @@
 #
 class ProfessionalStandingRequest < ApplicationRecord
   include Requestable
-  include Locatable
 
   def expires_after
     if application_form.teaching_authority_provides_written_statement

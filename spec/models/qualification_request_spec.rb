@@ -33,8 +33,6 @@ RSpec.describe QualificationRequest, type: :model do
     subject { create(:qualification_request, :receivable) }
   end
 
-  it_behaves_like "a locatable"
-
   describe "validations" do
     context "when received" do
       subject { build(:qualification_request, :received) }
