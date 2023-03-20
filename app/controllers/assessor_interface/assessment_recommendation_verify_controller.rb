@@ -20,6 +20,7 @@ module AssessorInterface
       VerifyAssessment.call(
         assessment:,
         user: current_staff,
+        professional_standing: false,
         qualifications:
           application_form.qualifications.where(
             id: session[:qualification_ids],
