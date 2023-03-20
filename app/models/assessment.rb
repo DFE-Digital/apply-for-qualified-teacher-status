@@ -7,6 +7,7 @@
 #  age_range_min                             :integer
 #  age_range_note                            :text             default(""), not null
 #  induction_required                        :boolean
+#  preliminary_check_complete                :boolean
 #  recommendation                            :string           default("unknown"), not null
 #  recommendation_assessor_note              :text             default(""), not null
 #  recommended_at                            :datetime

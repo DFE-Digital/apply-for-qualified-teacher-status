@@ -68,6 +68,7 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
       :eligibility_enabled,
       :eligibility_skip_questions,
       :qualifications_information,
+      :requires_preliminary_check,
       :teaching_authority_name,
       :teaching_authority_address,
       :teaching_authority_emails_string,

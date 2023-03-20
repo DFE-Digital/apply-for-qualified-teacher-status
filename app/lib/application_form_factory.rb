@@ -18,6 +18,7 @@ class ApplicationFormFactory
       teacher:,
       teaching_authority_provides_written_statement:,
       written_statement_optional:,
+      requires_preliminary_check:,
     )
   end
 
@@ -41,5 +42,10 @@ class ApplicationFormFactory
 
   def needs_registration_number
     region.status_check_online? || region.sanction_check_online?
+  end
+
+  def requires_preliminary_check
+    region.requires_preliminary_check ||
+      region.country.requires_preliminary_check
   end
 end

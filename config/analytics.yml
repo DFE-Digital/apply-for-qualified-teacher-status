@@ -77,6 +77,7 @@
     - english_language_provider_other
     - english_language_provider_reference
     - reduced_evidence_accepted
+    - requires_preliminary_check
   :assessment_sections:
     - id
     - assessment_id
@@ -106,6 +107,7 @@
     - working_days_submission_to_started
     - working_days_started_to_recommendation
     - references_verified
+    - preliminary_check_complete
   :countries:
     - id
     - code
@@ -124,6 +126,7 @@
     - teaching_authority_status_information
     - teaching_authority_sanction_information
     - qualifications_information
+    - requires_preliminary_check
   :documents:
     - id
     - document_type
@@ -287,6 +290,7 @@
     - teaching_authority_requires_submission_email
     - qualifications_information
     - written_statement_optional
+    - requires_preliminary_check
   :reminder_emails:
     - id
     - created_at

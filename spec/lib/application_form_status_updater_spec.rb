@@ -354,5 +354,17 @@ RSpec.describe ApplicationFormStatusUpdater do
         expect { call }.to_not have_recorded_timeline_event(:state_changed)
       end
     end
+
+    context "when preliminary check is required" do
+      before do
+        application_form.update!(
+          assessment: create(:assessment, preliminary_check_complete: nil),
+          submitted_at: Time.zone.now,
+          requires_preliminary_check: true,
+        )
+      end
+
+      include_examples "changes status", "preliminary_check"
+    end
   end
 end

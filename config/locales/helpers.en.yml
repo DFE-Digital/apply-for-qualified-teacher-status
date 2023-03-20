@@ -87,6 +87,10 @@ en:
         name: Applicant name
         reference: Application reference number
         email: Applicant email
+      assessor_interface_preliminary_check_form:
+        preliminary_check_complete_options:
+          true: "Yes"
+          false: "No, I’ll decline it in the appropriate section"
       assessor_interface_requestable_location_form:
         received:
           professional_standing_request: The letter of professional standing has been received.
@@ -232,6 +236,8 @@ en:
         submitted_at: Created date
         submitted_at_after: Start date
         submitted_at_before: End date
+      assessor_interface_preliminary_check_form:
+        preliminary_check_complete: Do you want to move this application to a full assessment?
       assessor_interface_work_history_reference_request_form:
         work_history_ids: School
       eligibility_interface_region_form:

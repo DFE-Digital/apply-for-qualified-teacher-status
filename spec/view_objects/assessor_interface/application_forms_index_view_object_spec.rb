@@ -158,6 +158,10 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         [
           OpenStruct.new(id: "submitted", label: "Not started (0)"),
           OpenStruct.new(
+            id: "preliminary_check",
+            label: "Preliminary check (0)",
+          ),
+          OpenStruct.new(
             id: "initial_assessment",
             label: "Assessment in progress (0)",
           ),
@@ -193,6 +197,10 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         is_expected.to eq(
           [
             OpenStruct.new(id: "submitted", label: "Not started (1)"),
+            OpenStruct.new(
+              id: "preliminary_check",
+              label: "Preliminary check (0)",
+            ),
             OpenStruct.new(
               id: "initial_assessment",
               label: "Assessment in progress (2)",

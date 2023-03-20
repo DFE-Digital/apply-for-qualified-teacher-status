@@ -36,6 +36,7 @@
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
+#  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  status                                        :string           default("draft"), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
@@ -125,6 +126,12 @@ FactoryBot.define do
           new_state: "submitted",
         )
       end
+    end
+
+    trait :preliminary_check do
+      requires_preliminary_check { true }
+      status { "preliminary_check" }
+      submitted_at { Time.zone.now }
     end
 
     trait :initial_assessment do

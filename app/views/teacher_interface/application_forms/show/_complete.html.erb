@@ -1,0 +1,39 @@
+<%= govuk_panel(title_text: view_object.further_information_request&.received? ? "Further information successfully submitted" : "Application complete") do %>
+  Your reference number
+  <br />
+  <strong><%= view_object.application_form.reference %></strong>
+<% end %>
+
+<% if view_object.further_information_request&.received? %>
+  <h3 class="govuk-heading-m">You’ve successfully submitted your further information</h3>
+  <p class="govuk-body">We’ve sent you an email to confirm that we’ve received it.</p>
+  <p class="govuk-body">Once the assessor has checked the documents to make sure you’ve provided all of the requested information, they’ll continue reviewing your QTS application.</p>
+  <p class="govuk-body">You can now close this page.</p>
+<% else %>
+  <p class="govuk-body">We’ve received your application for QTS and we’ve sent you a confirmation email.</p>
+  <p class="govuk-body">Keep the email safe, as you may need your reference number for future correspondence about your application.</p>
+
+  <h2 class="govuk-heading-m">What happens next</h2>
+  <p class="govuk-body">Your application will be entered into a queue and assigned a QTS assessor, which can take several weeks.</p>
+  <p class="govuk-body">Once assigned, the assessor will aim to review your application within 1 month. If we need more information, we’ll email you again.</p>
+  <p class="govuk-body">We aim to reach a final decision on your application within 80 working days (4 months) of your submission.</p>
+<% end %>
+
+<h2 class="govuk-heading-s">Help us to improve this service</h2>
+
+<p class="govuk-body">
+  Please <a href="https://docs.google.com/forms/d/e/1FAIpQLSePiIC7xO1Dt6oxvIdL6jcGrlUkRDJDS1kxOcqvK-uspBED9w/viewform" class="govuk-link">give us feedback</a> about your experience of using this service. It should take less than 2 minutes to complete.
+</p>
+
+<p class="govuk-body">
+  We’re always trying to improve this service and boost teacher recruitment from overseas. So we’d like to talk to people about their experience of using this service.
+</p>
+
+<p class="govuk-body">
+  If you'd like to help, please <a href="https://docs.google.com/forms/d/e/1FAIpQLSdH_nfDnt9OUolI25fLs27uitWWn63KibNWsGFOYT-Os14PRg/viewform" class="govuk-link">complete this form</a>.
+</p>
+
+<p class="govuk-body">If you match our search criteria, we'll invite you to take part in research.</p>
+
+<h2 class="govuk-heading-s">If you have any questions, contact:</h2>
+<p class="govuk-body"><%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %></p>

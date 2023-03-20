@@ -1,0 +1,56 @@
+<h2 class="govuk-heading-s govuk-!-margin-bottom-2">
+  <% if view_object.can_submit? %>
+    Application complete
+  <% else %>
+    Application incomplete
+  <% end %>
+</h2>
+
+<p class="govuk-body govuk-!-margin-bottom-7">
+  You have completed <%= view_object.completed_task_sections.count %> of <%= view_object.tasks.count %> sections.
+</p>
+
+<% if view_object.application_form.created_under_new_regulations? %>
+  <%= govuk_inset_text do %>
+    <p class="govuk-body">
+      You started this application on <%= view_object.started_at %>.
+      Applications must be completed within 6 months, so you’ll need to complete it before <%= view_object.expires_at %>.
+    </p>
+  <% end %>
+<% end %>
+
+<ol class="app-task-list">
+  <% view_object.tasks.each_with_index do |(section, items), index| %>
+    <li>
+      <h2 class="app-task-list__section">
+        <span class="app-task-list__section-number"><%= index + 1 %>. </span>
+        <%= I18n.t("application_form.tasks.sections.#{section}") %>
+      </h2>
+
+      <ul class="app-task-list__items">
+        <% items.each do |item| %>
+          <li class="app-task-list__item">
+            <span class="app-task-list__task-name">
+              <%= link_to view_object.text_for_task_item(item),
+                          view_object.path_for_task_item(item),
+                          aria: { describedby: "#{item}-status" } %>
+            </span>
+
+            <%= render(StatusTag::Component.new(
+              key: item,
+              status: view_object.task_statuses.dig(section, item),
+              class_context: "app-task-list"
+            )) %>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ol>
+
+<div class="govuk-button-group">
+  <%- if view_object.can_submit? -%>
+    <%= govuk_button_link_to "Check your answers", edit_teacher_interface_application_form_path %>
+  <%- end -%>
+  <%= govuk_button_link_to "Save and sign out", destroy_teacher_session_path, secondary: true %>
+</div>

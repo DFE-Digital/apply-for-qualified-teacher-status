@@ -23,6 +23,7 @@ en:
             english_language_proficiency: Check English language proficiency
             initial_assessment_recommendation: Initial assessment recommendation
             personal_information: Check personal information
+            preliminary_check: Preliminary check
             professional_standing: Check professional standing
             professional_standing_request: Awaiting third-party professional standing
             qualification_requests: Qualifications – requested
@@ -229,6 +230,14 @@ en:
         title: Review work reference
         passed: Are you satisfied that this reference should count towards the applicant’s work experience?
         failure_assessor_note: Explain why this reference should not count towards the applicant’s work experience
+    case_notes:
+      preliminary_check:
+        complete_waiting_for_professional_standing: |
+          Preliminary checks completed.
+
+           Once we’ve received written evidence of professional standing from the applicant’s teaching authority, we’ll add the application to the queue to be assigned to an assessor.
+        complete: Preliminary checks completed. Application can progress to initial assessment.
+        application_submitted: Application requires a preliminary check before it can progress to full initial assessment.
 
   activemodel:
     errors:
@@ -372,3 +381,7 @@ en:
           attributes:
             references_verified:
               inclusion: Select whether enough valid work references been received for this application to progress to either an award or decline
+        assessor_interface/preliminary_check_form:
+          attributes:
+            preliminary_check_complete:
+              inclusion: Select whether you want to move this application to a full assessment

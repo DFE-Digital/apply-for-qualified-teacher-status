@@ -12,6 +12,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def assessment_tasks
     pre_assessment_tasks = [
+      (:preliminary_check if application_form.requires_preliminary_check),
       (
         :professional_standing_request if professional_standing_request.present?
       ),
@@ -53,10 +54,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def assessment_task_path(section, item, index)
     case section
     when :pre_assessment_tasks
-      url_helpers.edit_assessor_interface_application_form_assessment_professional_standing_request_path(
-        application_form,
-        assessment,
-      )
+      if item == :preliminary_check
+        url_helpers.assessor_interface_application_form_assessment_preliminary_check_path(
+          application_form,
+          assessment,
+        )
+      elsif assessment.preliminary_check_complete != false
+        url_helpers.edit_assessor_interface_application_form_assessment_professional_standing_request_path(
+          application_form,
+          assessment,
+        )
+      end
     when :initial_assessment
       if item == :initial_assessment_recommendation
         return nil if initial_assessment_recommendation_complete?
@@ -117,7 +125,12 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def assessment_task_status(section, item, index)
     case section
     when :pre_assessment_tasks
-      professional_standing_request_received? ? :completed : :waiting_on
+      if item == :professional_standing_request
+        return :cannot_start if cannot_start_professional_standing_request?
+        professional_standing_request_received? ? :completed : :waiting_on
+      else
+        assessment.preliminary_check_complete.nil? ? :not_started : :completed
+      end
     when :initial_assessment
       if item == :initial_assessment_recommendation
         return :completed if initial_assessment_recommendation_complete?
@@ -185,6 +198,11 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def initial_assessment_recommendation_complete?
     !assessment.unknown? && !request_further_information_unfinished?
+  end
+
+  def cannot_start_professional_standing_request?
+    application_form.requires_preliminary_check &&
+      !assessment.preliminary_check_complete
   end
 
   def further_information_requests

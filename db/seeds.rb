@@ -240,12 +240,19 @@ COUNTRIES = {
   "PT" => [{ status_check: "written", sanction_check: "written" }],
   "DK" => [{ status_check: "written" }],
   "FI" => [{ status_check: "written" }],
-  "GH" => [{ status_check: "online", sanction_check: "online" }],
+  "GH" => [
+    {
+      requires_preliminary_check: true,
+      status_check: "online",
+      sanction_check: "online",
+    },
+  ],
   "HK" => [{ status_check: "written", sanction_check: "written" }],
   "IN" => [],
   "JM" => [{ status_check: "written", sanction_check: "written" }],
   "NG" => [
     {
+      requires_preliminary_check: true,
       status_check: "written",
       sanction_check: "written",
       teaching_authority_provides_written_statement: true,

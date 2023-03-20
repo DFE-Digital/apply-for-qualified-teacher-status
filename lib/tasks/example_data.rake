@@ -154,6 +154,11 @@ def create_application_forms(new_regs:)
       created_at = new_regs ? new_regs_date : old_regs_date
       traits.insert(0, :new_regs) if new_regs
 
+      if region.requires_preliminary_check ||
+           region.country.requires_preliminary_check
+        traits << :preliminary_check
+      end
+
       application_form =
         FactoryBot.create(:application_form, *traits, region:, created_at:)
 

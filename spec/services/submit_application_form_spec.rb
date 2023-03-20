@@ -107,6 +107,17 @@ RSpec.describe SubmitApplicationForm do
     end
   end
 
+  describe "preliminary check note" do
+    before do
+      create(:staff, support_console_permission: true)
+      application_form.update!(requires_preliminary_check: true)
+    end
+
+    it "creates a note" do
+      expect { call }.to change { Note.count }.by(1)
+    end
+  end
+
   describe "professional standing request timeline event" do
     it "doesn't record a timeline event" do
       expect { call }.to_not have_recorded_timeline_event(
