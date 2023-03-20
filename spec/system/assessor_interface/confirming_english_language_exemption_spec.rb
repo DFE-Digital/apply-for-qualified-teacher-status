@@ -170,9 +170,9 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     expect(check_english_language_proficiency_page.heading.text).to eq(
       "Check English language proficiency",
     )
-    expect(
-      check_english_language_proficiency_page.exemption_heading.text,
-    ).to eq("English language exemption by birth/citizenship")
+    expect(check_english_language_proficiency_page.h2s.last.text).to eq(
+      "English language exemption by birth/citizenship",
+    )
     check_english_language_proficiency_page.return_button.click
   end
 
@@ -180,9 +180,9 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     expect(check_english_language_proficiency_page.heading.text).to eq(
       "Check English language proficiency",
     )
-    expect(
-      check_english_language_proficiency_page.exemption_heading.text,
-    ).to eq("English language exemption by country of study")
+    expect(check_english_language_proficiency_page.h2s.last.text).to eq(
+      "English language exemption by country of study",
+    )
     check_english_language_proficiency_page.return_button.click
   end
 
