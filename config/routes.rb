@@ -100,7 +100,7 @@ Rails.application.routes.draw do
 
         resources :qualification_requests,
                   path: "/qualification-requests",
-                  only: %i[edit update]
+                  only: %i[index edit update]
 
         get "/preliminary-check",
             to: "preliminary_checks#edit",

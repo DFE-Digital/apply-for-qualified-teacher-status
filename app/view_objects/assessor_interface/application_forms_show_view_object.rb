@@ -106,13 +106,13 @@ class AssessorInterface::ApplicationFormsShowViewObject
           assessment,
         )
       when :qualification_requests
-        qualification_request = qualification_requests[index]
-
-        url_helpers.edit_assessor_interface_application_form_assessment_qualification_request_path(
-          application_form,
-          assessment,
-          qualification_request,
-        )
+        if application_form.received_qualification ||
+             application_form.waiting_on_qualification
+          url_helpers.assessor_interface_application_form_assessment_qualification_requests_path(
+            application_form,
+            assessment,
+          )
+        end
       when :reference_requests
         if application_form.received_reference ||
              application_form.waiting_on_reference

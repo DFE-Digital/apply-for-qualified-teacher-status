@@ -9,15 +9,68 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     given_there_is_an_application_form_with_qualification_request
   end
 
-  it "review complete" do
+  it "received and passed" do
     when_i_visit_the(:assessor_application_page, application_id:)
     and_i_see_a_waiting_on_status
-    and_i_click_qualification_requested
+    and_i_click_record_qualifications_task
+    then_i_see_the(:assessor_qualification_requests_page, application_id:)
+
+    when_i_select_the_first_qualification_request
     then_i_see_the(:assessor_edit_qualification_request_page, application_id:)
 
-    when_i_fill_in_the_form
-    then_i_see_the(:assessor_application_page, application_id:)
-    and_i_see_a_not_started_status
+    when_the_request_is_received_and_passed
+    then_i_see_the(:assessor_qualification_requests_page, application_id:)
+
+    when_i_go_back_to_overview
+    and_i_see_a_received_status
+  end
+
+  it "received and not passed" do
+    when_i_visit_the(:assessor_application_page, application_id:)
+    and_i_see_a_waiting_on_status
+    and_i_click_record_qualifications_task
+    then_i_see_the(:assessor_qualification_requests_page, application_id:)
+
+    when_i_select_the_first_qualification_request
+    then_i_see_the(:assessor_edit_qualification_request_page, application_id:)
+
+    when_the_request_is_received_and_not_passed
+    then_i_see_the(:assessor_qualification_requests_page, application_id:)
+
+    when_i_go_back_to_overview
+    and_i_see_a_received_status
+  end
+
+  it "not received and failed" do
+    when_i_visit_the(:assessor_application_page, application_id:)
+    and_i_see_a_waiting_on_status
+    and_i_click_record_qualifications_task
+    then_i_see_the(:assessor_qualification_requests_page, application_id:)
+
+    when_i_select_the_first_qualification_request
+    then_i_see_the(:assessor_edit_qualification_request_page, application_id:)
+
+    when_the_request_is_not_received_and_failed
+    then_i_see_the(:assessor_qualification_requests_page, application_id:)
+
+    when_i_go_back_to_overview
+    and_i_see_a_waiting_on_status
+  end
+
+  it "not received and not failed" do
+    when_i_visit_the(:assessor_application_page, application_id:)
+    and_i_see_a_waiting_on_status
+    and_i_click_record_qualifications_task
+    then_i_see_the(:assessor_qualification_requests_page, application_id:)
+
+    when_i_select_the_first_qualification_request
+    then_i_see_the(:assessor_edit_qualification_request_page, application_id:)
+
+    when_the_request_is_not_received_and_not_failed
+    then_i_see_the(:assessor_qualification_requests_page, application_id:)
+
+    when_i_go_back_to_overview
+    and_i_see_a_waiting_on_status
   end
 
   private
@@ -30,18 +83,60 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     expect(assessor_application_page.overview.status.text).to eq("WAITING ON")
   end
 
-  def and_i_click_qualification_requested
+  def and_i_click_record_qualifications_task
     assessor_application_page.record_qualification_requests_task.link.click
   end
 
-  def when_i_fill_in_the_form
-    assessor_edit_qualification_request_page.form.received_checkbox.click
-    assessor_edit_qualification_request_page.form.note_textarea.fill_in with:
-      "Note."
-    assessor_edit_qualification_request_page.form.continue_button.click
+  def when_i_click_review_qualifications_task
+    assessor_application_page.review_qualification_requests_task.link.click
   end
 
-  def and_i_see_a_not_started_status
+  def when_i_select_the_first_qualification_request
+    assessor_qualification_requests_page
+      .task_list
+      .qualification_requests
+      .first
+      .click
+  end
+
+  def when_the_request_is_received_and_passed
+    form = assessor_edit_qualification_request_page.form
+
+    form.received_yes_radio_item.choose
+    form.passed_yes_radio_item.choose
+    form.submit_button.click
+  end
+
+  def when_the_request_is_received_and_not_passed
+    form = assessor_edit_qualification_request_page.form
+
+    form.received_yes_radio_item.choose
+    form.passed_no_radio_item.choose
+    form.failure_assessor_note_field.fill_in with: "Note."
+    form.submit_button.click
+  end
+
+  def when_the_request_is_not_received_and_failed
+    form = assessor_edit_qualification_request_page.form
+
+    form.received_no_radio_item.choose
+    form.failed_yes_radio_item.choose
+    form.submit_button.click
+  end
+
+  def when_the_request_is_not_received_and_not_failed
+    form = assessor_edit_qualification_request_page.form
+
+    form.received_no_radio_item.choose
+    form.failed_no_radio_item.choose
+    form.submit_button.click
+  end
+
+  def when_i_go_back_to_overview
+    assessor_qualification_requests_page.continue_button.click
+  end
+
+  def and_i_see_a_received_status
     expect(assessor_application_page.overview.status.text).to eq("RECEIVED")
   end
 
@@ -49,8 +144,10 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     @application_form ||=
       begin
         application_form =
-          create(:application_form, :waiting_on, :with_completed_qualification)
-        create(:assessment, :with_qualification_request, application_form:)
+          create(:application_form, :waiting_on, waiting_on_qualification: true)
+        qualification = create(:qualification, :completed, application_form:)
+        assessment = create(:assessment, application_form:)
+        create(:qualification_request, :requested, assessment:, qualification:)
         application_form
       end
   end

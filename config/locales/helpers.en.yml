@@ -105,8 +105,8 @@ en:
       assessor_interface_requestable_location_form:
         received:
           professional_standing_request: The letter of professional standing has been received.
-          qualification_request: The qualification has been received.
-        location_note: Where can the assessor find it?
+        location_note:
+          professional_standing_request: Where to find the response
       assessor_interface_requestable_review_form:
         passed_options:
           true: "Yes"

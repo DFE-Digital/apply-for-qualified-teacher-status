@@ -229,10 +229,6 @@ en:
       edit:
         title: Third-party professional standing – response received
 
-    qualification_requests:
-      edit:
-        title: Qualification verification – response received
-
     reference_requests:
       edit:
         title: Review work reference

@@ -56,6 +56,10 @@ module PageObjects
         task_list.find_item("Record qualifications responses")
       end
 
+      def review_qualification_requests_task
+        task_list.find_item("Review qualifications responses")
+      end
+
       def assessment_recommendation_task
         task_list.find_item("Assessment recommendation")
       end

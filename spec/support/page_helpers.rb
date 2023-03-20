@@ -37,6 +37,11 @@ module PageHelpers
       PageObjects::AssessorInterface::EditReferenceRequest.new
   end
 
+  def assessor_qualification_requests_page
+    @assessor_qualification_requests_page ||=
+      PageObjects::AssessorInterface::QualificationRequests.new
+  end
+
   def assessor_reference_requests_page
     @assessor_reference_requests_page ||=
       PageObjects::AssessorInterface::ReferenceRequests.new
