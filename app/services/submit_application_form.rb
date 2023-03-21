@@ -33,7 +33,8 @@ class SubmitApplicationForm
       .application_received
       .deliver_later
 
-    if application_form.teaching_authority_provides_written_statement
+    if !application_form.requires_preliminary_check &&
+         application_form.teaching_authority_provides_written_statement
       TeacherMailer
         .with(teacher: application_form.teacher)
         .initial_checks_passed
