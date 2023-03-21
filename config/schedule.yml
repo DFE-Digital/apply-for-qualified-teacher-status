@@ -20,8 +20,13 @@ expire_professional_standing_requests:
   class: ExpireRequestablesJob
   args: ["ProfessionalStandingRequest"]
 
-expire_reference_requests:
+expire_qualification_requests:
   cron: "20 2 * * *"
+  class: ExpireRequestablesJob
+  args: ["QualificationRequest"]
+
+expire_reference_requests:
+  cron: "30 2 * * *"
   class: ExpireRequestablesJob
   args: ["ReferenceRequest"]
 
