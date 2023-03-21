@@ -463,7 +463,7 @@ GEM
     site_prism-all_there (0.3.2)
     sitemap_generator (6.3.0)
       builder (~> 3.0)
-    syntax_tree (6.0.2)
+    syntax_tree (6.1.1)
       prettier_print (>= 1.2.0)
     syntax_tree-haml (4.0.3)
       haml (>= 5.2)
