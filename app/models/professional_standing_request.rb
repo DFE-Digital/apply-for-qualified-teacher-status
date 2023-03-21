@@ -28,7 +28,11 @@ class ProfessionalStandingRequest < ApplicationRecord
   include Locatable
 
   def expires_after
-    18.weeks # 90 working days
+    if application_form.teaching_authority_provides_written_statement
+      18.weeks # 90 working days
+    else
+      6.weeks # 30 working days
+    end
   end
 
   def after_received(*)
@@ -36,7 +40,9 @@ class ProfessionalStandingRequest < ApplicationRecord
   end
 
   def after_expired(user:)
-    DeclineQTS.call(application_form:, user:)
+    if application_form.teaching_authority_provides_written_statement
+      DeclineQTS.call(application_form:, user:)
+    end
   end
 
   delegate :teacher, to: :application_form
