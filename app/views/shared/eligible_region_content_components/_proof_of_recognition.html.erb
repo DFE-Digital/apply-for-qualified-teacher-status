@@ -46,7 +46,13 @@
       </p>
     <% end %>
 
-    <%= render "shared/teaching_authority_contact_information", region: %>
+    <% if region.requires_preliminary_check || region.country.requires_preliminary_check %>
+      <p class="govuk-body govuk-!-font-weight-bold">
+        Do not request this document yet – we’ll carry out some checks on your application first. If your application passes these checks, we’ll then email you and ask you to request the document.
+      </p>
+    <% else %>
+      <%= render "shared/teaching_authority_contact_information", region: %>
+    <% end %>
 
     <% if (requirements = proof_of_recognition_requirements_for(region:)).count == 1 %>
       <p class="govuk-body">
@@ -64,13 +70,11 @@
 
     <% if teaching_authority_provides_written_statement %>
       <p class="govuk-body">
-        If we do not receive the document within 90 days of the date that you submit your application, we’ll need to close your application.
+        This must be dated within 3 months of you applying for QTS.
       </p>
-    <% end %>
 
-    <% if region.requires_preliminary_check || region.country.requires_preliminary_check %>
-      <p class="govuk-body govuk-!-font-weight-bold">
-        Do not request this document yet – we’ll carry out some checks on your application first. If your application passes these checks, we’ll then email you and ask you to request the document.
+      <p class="govuk-body">
+        If we do not receive the document within 90 days of the date that you submit your application, we’ll need to close your application.
       </p>
     <% end %>
   <% end %>
