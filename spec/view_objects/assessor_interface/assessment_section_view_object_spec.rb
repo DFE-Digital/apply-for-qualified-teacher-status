@@ -275,4 +275,21 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       end
     end
   end
+
+  describe "#teacher_name_and_date_of_birth" do
+    let(:application_form) do
+      create(
+        :application_form,
+        given_names: "Janet Jane",
+        family_name: "Jones",
+        date_of_birth: "1980-01-01",
+      )
+    end
+
+    it "returns the teacher's name and date of birth" do
+      expect(view_object.teacher_name_and_date_of_birth).to eq(
+        "Janet Jane Jones (1 January 1980)",
+      )
+    end
+  end
 end

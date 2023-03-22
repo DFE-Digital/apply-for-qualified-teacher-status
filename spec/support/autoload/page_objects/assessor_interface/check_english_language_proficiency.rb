@@ -12,7 +12,7 @@ module PageObjects
 
       elements :lists, ".govuk-list"
 
-      element :exemption_heading, "h2.govuk-heading-m"
+      elements :h2s, "h2.govuk-heading-m"
       element :return_button, ".govuk-button", text: "Return to task list"
 
       def personal_information

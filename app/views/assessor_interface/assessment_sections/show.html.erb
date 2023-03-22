@@ -6,6 +6,10 @@
            title: t(".title.#{section_key}"),
            application_form: @assessment_section_view_object.application_form %>
 
+<% unless section_key == "personal_information" %>
+  <h2 class="govuk-heading-m"><%= @assessment_section_view_object.teacher_name_and_date_of_birth %></h2>
+<% end %>
+
 <%= render "#{section_key}_summary",
            region: @assessment_section_view_object.region,
            application_form: @assessment_section_view_object.application_form,
