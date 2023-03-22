@@ -12,8 +12,7 @@ namespace :preliminary_checks do
         assessor_id: nil,
         region: gh_region,
         status: %w[submitted initial_assessment],
-        submitted_at: Date.new(2023, 2, 7)..Time.zone.today,
-      )
+      ).where("submitted_at >= ?", Date.new(2023, 2, 7))
 
     if report_only
       puts "Found #{unassigned_gh_scope.count} unassigned applications for Ghana from 7 Feb 2023 to today"
@@ -44,8 +43,7 @@ namespace :preliminary_checks do
         region: ng_region,
         status: "waiting_on",
         waiting_on_professional_standing: true,
-        submitted_at: Date.new(2023, 2, 23)..Time.zone.today,
-      )
+      ).where("submitted_at >= ?", Date.new(2023, 2, 23))
 
     if report_only
       puts "Found #{unassigned_ng_scope.count} unassigned applications for Nigeria from 23 Feb 2023 to today"
