@@ -215,7 +215,7 @@ en:
         title: Review further information from applicant
         check_your_answers: Further information requested
         passed: Has the applicant completed this section to your satisfaction?
-        failure_assessor_note: Explain why this section is not completed to your satisfaction
+        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
 
     professional_standing_requests:
       edit:
@@ -229,7 +229,7 @@ en:
       edit:
         title: Review work reference
         passed: Are you satisfied that this reference should count towards the applicant’s work experience?
-        failure_assessor_note: Explain why this reference should not count towards the applicant’s work experience
+        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this reference should not count towards the applicant’s work experience'
     case_notes:
       preliminary_check:
         complete_waiting_for_professional_standing: |
