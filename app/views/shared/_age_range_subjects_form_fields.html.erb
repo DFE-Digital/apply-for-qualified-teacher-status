@@ -3,7 +3,7 @@
 
 <%= f.govuk_number_field :age_range_min, width: 3 %>
 <%= f.govuk_number_field :age_range_max, width: 3 %>
-<%= f.govuk_text_area :age_range_note %>
+<%= f.govuk_text_area :age_range_note, label: { text: t("helpers.label.assessor_interface_assessment_section_form.age_range_note").html_safe } %>
 
 <h2 class="govuk-heading-m">Which subjects can the applicant teach in England?</h2>
 <p class="govuk-hint">You can enter up to three</p>
@@ -23,4 +23,4 @@
   ) %>
 <% end %>
 
-<%= f.govuk_text_area :subjects_note %>
+<%= f.govuk_text_area :subjects_note, label: { text: t("helpers.label.assessor_interface_assessment_section_form.subjects_note").html_safe } %>
