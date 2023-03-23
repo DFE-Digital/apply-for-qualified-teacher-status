@@ -8,6 +8,7 @@ class AssessorInterface::ReviewerAssignmentForm
   attribute :reviewer_id, :string
 
   validates :application_form, :staff, presence: true
+  validate :reviewer_not_assessor
 
   def save
     return false unless valid?
@@ -23,5 +24,11 @@ class AssessorInterface::ReviewerAssignmentForm
 
   def reviewer
     reviewer_id.present? ? Staff.find(reviewer_id) : nil
+  end
+
+  def reviewer_not_assessor
+    if (assessor = application_form&.assessor).present? && reviewer == assessor
+      errors.add(:reviewer_id, :inclusion)
+    end
   end
 end

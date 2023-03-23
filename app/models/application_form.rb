@@ -99,7 +99,6 @@ class ApplicationForm < ApplicationRecord
 
   belongs_to :assessor, class_name: "Staff", optional: true
   belongs_to :reviewer, class_name: "Staff", optional: true
-  validate :assessor_and_reviewer_must_be_different
 
   validates :submitted_at, presence: true, unless: :draft?
   validates :awarded_at, presence: true, if: :awarded?
@@ -248,12 +247,5 @@ class ApplicationForm < ApplicationRecord
     documents.build(document_type: :medium_of_instruction)
     documents.build(document_type: :english_language_proficiency)
     documents.build(document_type: :written_statement)
-  end
-
-  def assessor_and_reviewer_must_be_different
-    if assessor_id.present? && reviewer_id.present? &&
-         assessor_id == reviewer_id
-      errors.add(:reviewer, :same_as_assessor)
-    end
   end
 end

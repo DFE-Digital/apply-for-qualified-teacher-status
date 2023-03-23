@@ -246,6 +246,7 @@ en:
           attributes:
             assessor_id:
               blank: Select an assessor to assign
+              inclusion: Assessor must be different to reviewer
         assessor_interface/assessment_confirmation_form:
           attributes:
             confirmation:
@@ -385,3 +386,8 @@ en:
           attributes:
             preliminary_check_complete:
               inclusion: Select whether you want to move this application to a full assessment
+        assessor_interface/reviewer_assignment_form:
+          attributes:
+            reviewer_id:
+              blank: Select an reviewer to assign
+              inclusion: Reviewer must be different to assessor

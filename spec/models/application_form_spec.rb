@@ -251,17 +251,6 @@ RSpec.describe ApplicationForm, type: :model do
       it { is_expected.to validate_absence_of(:english_language_provider) }
     end
 
-    context "with the same assessor and reviewer" do
-      let(:staff) { create(:staff) }
-
-      before do
-        application_form.assessor = staff
-        application_form.reviewer = staff
-      end
-
-      it { is_expected.to_not be_valid }
-    end
-
     context "when submitted" do
       before { application_form.status = "submitted" }
 
