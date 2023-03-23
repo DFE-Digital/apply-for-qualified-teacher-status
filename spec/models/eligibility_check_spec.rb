@@ -95,12 +95,7 @@ RSpec.describe EligibilityCheck, type: :model do
     end
 
     context "when filtering by subject" do
-      let(:region) do
-        country = create(:country, :with_national_region, code: "IN")
-        country.regions.first
-      end
-
-      before { eligibility_check.region = region }
+      before { eligibility_check.country_code = "IN" }
 
       context "when teach_children is false" do
         before { eligibility_check.teach_children = false }
@@ -308,20 +303,33 @@ RSpec.describe EligibilityCheck, type: :model do
     end
 
     context "when a region is present" do
-      let(:attributes) { { region: create(:region) } }
+      let(:attributes) do
+        { country_code: country.code, region: create(:region) }
+      end
 
       it { is_expected.to eq(:qualification) }
     end
 
     context "when qualification is present" do
-      let(:attributes) { { qualification: true, region: create(:region) } }
+      let(:attributes) do
+        {
+          country_code: country.code,
+          region: create(:region),
+          qualification: true,
+        }
+      end
 
       it { is_expected.to eq(:degree) }
     end
 
     context "when degree is present" do
       let(:attributes) do
-        { qualification: true, degree: true, region: create(:region) }
+        {
+          country_code: country.code,
+          region: create(:region),
+          qualification: true,
+          degree: true,
+        }
       end
 
       it { is_expected.to eq(:teach_children) }
@@ -330,24 +338,26 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when teach children is present" do
       let(:attributes) do
         {
-          teach_children: true,
+          country_code: country.code,
+          region: create(:region),
           qualification: true,
           degree: true,
-          region: create(:region),
+          teach_children: true,
         }
       end
 
       it { is_expected.to eq(:work_experience) }
     end
 
-    context "when free of sanctions is present" do
+    context "when work experience is present" do
       let(:attributes) do
         {
-          work_experience: "under_9_months",
-          teach_children: true,
+          country_code: country.code,
+          region: create(:region),
           qualification: true,
           degree: true,
-          region: create(:region),
+          teach_children: true,
+          work_experience: "under_9_months",
         }
       end
 
@@ -357,11 +367,13 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when free of sanctions is present" do
       let(:attributes) do
         {
-          free_of_sanctions: true,
-          teach_children: true,
+          country_code: country.code,
+          region: create(:region),
           qualification: true,
           degree: true,
-          region: create(:region),
+          teach_children: true,
+          work_experience: "under_9_months",
+          free_of_sanctions: true,
         }
       end
 
@@ -380,12 +392,7 @@ RSpec.describe EligibilityCheck, type: :model do
       eligibility_check.qualified_for_subject_required?
     end
 
-    let(:region) do
-      country = create(:country, :with_national_region, code:)
-      country.regions.first
-    end
-
-    before { eligibility_check.region = region }
+    before { eligibility_check.country_code = code }
 
     context "with a relevant country" do
       let(:code) { "JM" }
