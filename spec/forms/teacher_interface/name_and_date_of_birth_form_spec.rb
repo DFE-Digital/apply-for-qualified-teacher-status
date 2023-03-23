@@ -61,7 +61,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
       end
 
       context "when DOB is an invalid date" do
-        let(:date_of_birth) { { 1 => 1990, 2 => 13, 3 => 31 } }
+        let(:date_of_birth) { { 1 => 1990, 2 => 13, 3 => 40 } }
 
         it do
           is_expected.to eq(
