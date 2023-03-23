@@ -15,6 +15,12 @@ RSpec.describe AssessorInterface::ReviewerAssignmentForm, type: :model do
     it { is_expected.to validate_presence_of(:application_form) }
     it { is_expected.to validate_presence_of(:staff) }
     it { is_expected.to_not validate_presence_of(:reviewer_id) }
+
+    context "if reviewer matches assessor" do
+      before { application_form.update!(assessor_id: reviewer_id) }
+
+      it { is_expected.to be_invalid }
+    end
   end
 
   describe "#save" do
