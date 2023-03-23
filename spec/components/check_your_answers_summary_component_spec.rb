@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe CheckYourAnswersSummary::Component, type: :component do
+  include Rails.application.routes.url_helpers
+
   subject(:component) do
     render_inline(
       described_class.new(
@@ -265,8 +267,11 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       expect(row.at_css(".govuk-summary-list__value a").text).to eq(
         "upload.pdf (opens in a new tab)",
       )
-      expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
-        "upload.pdf",
+      expect(row.at_css(".govuk-summary-list__value a")[:href]).to eq(
+        teacher_interface_application_form_document_upload_path(
+          model.document,
+          model.document.uploads.last,
+        ),
       )
     end
 
@@ -311,8 +316,11 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
         expect(row.at_css(".govuk-summary-list__value a").text).to eq(
           "upload.pdf (opens in a new tab)",
         )
-        expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
-          "upload.pdf",
+        expect(row.at_css(".govuk-summary-list__value a")[:href]).to eq(
+          teacher_interface_application_form_document_upload_path(
+            model.translatable_document,
+            model.translatable_document.uploads.last,
+          ),
         )
       end
 
@@ -338,7 +346,10 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
           "translation_upload.pdf (opens in a new tab)",
         )
         expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
-          "translation_upload.pdf",
+          teacher_interface_application_form_document_upload_path(
+            model.translatable_document,
+            model.translatable_document.uploads.first,
+          ),
         )
       end
 
