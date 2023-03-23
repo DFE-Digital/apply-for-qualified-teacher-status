@@ -2,13 +2,18 @@
 
 module TeacherInterface
   class UploadsController < BaseController
+    include ActiveStorage::Streaming
     include HandleApplicationFormSection
     include HistoryTrackable
 
     before_action :redirect_unless_draft_or_further_information
     before_action :load_application_form
     before_action :load_document
-    before_action :load_upload, only: %i[delete destroy]
+    before_action :load_upload, only: %i[delete destroy show]
+
+    def show
+      send_blob_stream(@upload.attachment, disposition: :inline)
+    end
 
     def new
       @upload_form =
