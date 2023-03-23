@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EligibilityInterface::FinishController < EligibilityInterface::BaseController
   before_action :ensure_eligibility_check_status
   before_action :complete_eligibility_check

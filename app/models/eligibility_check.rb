@@ -118,14 +118,6 @@ class EligibilityCheck < ApplicationRecord
       free_of_sanctions && !work_experience_under_9_months?
   end
 
-  def teach_children?
-    if qualified_for_subject_required?
-      teach_children && qualified_for_subject
-    else
-      teach_children
-    end
-  end
-
   def country_eligibility_status
     if region
       :eligible
@@ -148,36 +140,33 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def status
-    if country_code.present? && country_eligibility_status == :ineligible
-      return :eligibility
+    return :country if country_code.blank?
+
+    return :eligibility if country_eligibility_status == :ineligible
+
+    return :region if region.nil?
+    return :qualification if qualification.nil?
+
+    unless skip_additional_questions?
+      return :degree if degree.nil?
+      return :teach_children if teach_children.nil?
+
+      if qualified_for_subject_required? && qualified_for_subject.nil?
+        return :qualified_for_subject
+      end
+
+      return :work_experience if work_experience.blank?
+      return :misconduct if free_of_sanctions.nil?
     end
 
-    if region.present?
-      return :eligibility if skip_additional_questions? && qualification
-
-      return :eligibility unless free_of_sanctions.nil?
-    end
-
-    if qualified_for_subject_required? &&
-         (teach_children == false || qualified_for_subject == false)
-      return :eligibility
-    end
-
-    return :misconduct unless work_experience.nil?
-    return :work_experience unless teach_children.nil?
-    return :teach_children unless degree.nil?
-    return :degree unless qualification.nil?
-    return :qualification if region.present?
-    return :region if country_code.present?
-
-    :country
+    :eligibility
   end
 
   def qualified_for_subject_required?
-    return false if region.blank?
+    return false if country_code.blank?
 
     CountryCode.secondary_education_teaching_qualification_required?(
-      region.country.code,
+      country_code,
     )
   end
 
@@ -185,5 +174,13 @@ class EligibilityCheck < ApplicationRecord
 
   def country_exists?
     Country.where(eligibility_enabled: true).exists?(code: country_code)
+  end
+
+  def teach_children?
+    if qualified_for_subject_required?
+      teach_children && qualified_for_subject
+    else
+      teach_children
+    end
   end
 end

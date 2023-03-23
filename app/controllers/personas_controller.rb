@@ -20,12 +20,14 @@ class PersonasController < ApplicationController
 
     eligibility_check =
       EligibilityCheck.create!(
-        region:,
+        completed_at: Time.zone.now,
+        country_code: region.country.code,
         degree: true,
         free_of_sanctions: true,
         qualification: true,
+        region:,
         teach_children: true,
-        completed_at: Time.zone.now,
+        work_experience: "over_20_months",
       )
 
     session[:eligibility_check_id] = eligibility_check.id
