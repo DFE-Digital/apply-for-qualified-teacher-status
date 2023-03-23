@@ -16,8 +16,16 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       expect { application_form }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    context "with an application form" do
-      let(:params) { { id: create(:application_form).id } }
+    context "with a draft application form" do
+      let(:params) { { id: create(:application_form, :draft).id } }
+
+      it "raise an error" do
+        expect { application_form }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context "with a submitted application form" do
+      let(:params) { { id: create(:application_form, :submitted).id } }
 
       it { is_expected.to_not be_nil }
     end
@@ -26,7 +34,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
   describe "#assessment_tasks" do
     subject(:assessment_tasks) { view_object.assessment_tasks }
 
-    let(:application_form) { create(:application_form) }
+    let(:application_form) { create(:application_form, :submitted) }
     let(:assessment) { create(:assessment, application_form:) }
     before do
       create(:assessment_section, :personal_information, assessment:)
@@ -142,7 +150,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       view_object.assessment_task_path(section, item, index)
     end
 
-    let(:application_form) { create(:application_form) }
+    let(:application_form) { create(:application_form, :submitted) }
     let!(:assessment) { create(:assessment, application_form:) }
 
     let(:params) { { id: application_form.id } }
@@ -246,7 +254,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
   end
 
   describe "#assessment_task_status" do
-    let(:application_form) { create(:application_form) }
+    let(:application_form) { create(:application_form, :submitted) }
     let(:assessment) { create(:assessment, application_form:) }
     let!(:assessment_section) do
       create(:assessment_section, :personal_information, assessment:)
