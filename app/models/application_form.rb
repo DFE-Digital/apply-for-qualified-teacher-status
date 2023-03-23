@@ -95,7 +95,6 @@ class ApplicationForm < ApplicationRecord
 
   before_save :build_documents, if: :new_record?
 
-  before_validation :assign_reference
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
   belongs_to :assessor, class_name: "Staff", optional: true
@@ -177,19 +176,6 @@ class ApplicationForm < ApplicationRecord
         }
 
   scope :remindable, -> { draft }
-
-  def assign_reference
-    return if reference.present?
-
-    ActiveRecord::Base.connection.execute(
-      "LOCK TABLE application_forms IN EXCLUSIVE MODE",
-    )
-
-    max_reference = ApplicationForm.maximum(:reference)&.to_i
-    max_reference = 2_000_000 if max_reference.nil? || max_reference.zero?
-
-    self.reference = (max_reference + 1).to_s.rjust(7, "0")
-  end
 
   def teaching_qualification
     qualifications.find(&:is_teaching_qualification?)
