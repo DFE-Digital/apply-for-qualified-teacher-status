@@ -13,12 +13,14 @@ module AssessorInterface::AgeRangeSubjectsForm
               numericality: {
                 only_integer: true,
                 greater_than_or_equal_to: 0,
+                allow_nil: true,
               }
     validates :age_range_max,
               presence: true,
               numericality: {
                 only_integer: true,
                 greater_than_or_equal_to: :age_range_min,
+                allow_nil: true,
               }
 
     attribute :subject_1, :string

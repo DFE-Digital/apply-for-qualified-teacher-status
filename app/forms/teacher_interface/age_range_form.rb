@@ -13,6 +13,7 @@ module TeacherInterface
                 only_integer: true,
                 greater_than_or_equal_to: 4,
                 less_than_or_equal_to: 18,
+                allow_nil: true,
               }
     validates :maximum,
               presence: true,
@@ -20,6 +21,7 @@ module TeacherInterface
                 only_integer: true,
                 greater_than_or_equal_to: :minimum,
                 less_than_or_equal_to: 18,
+                allow_nil: true,
               }
 
     def update_model
