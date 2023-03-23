@@ -7,7 +7,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def application_form
     @application_form ||=
-      ApplicationForm.includes(assessment: :sections).find(params[:id])
+      ApplicationForm
+        .includes(assessment: :sections)
+        .not_draft
+        .find(params[:id])
   end
 
   def assessment_tasks
