@@ -22,7 +22,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     then_i_see_the(:assessor_qualification_requests_page, application_id:)
 
     when_i_go_back_to_overview
-    and_i_see_a_received_status
+    and_i_see_an_in_progress_status
   end
 
   it "received and not passed" do
@@ -38,7 +38,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     then_i_see_the(:assessor_qualification_requests_page, application_id:)
 
     when_i_go_back_to_overview
-    and_i_see_a_received_status
+    and_i_see_an_in_progress_status
   end
 
   it "not received and failed" do
@@ -54,7 +54,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     then_i_see_the(:assessor_qualification_requests_page, application_id:)
 
     when_i_go_back_to_overview
-    and_i_see_a_waiting_on_status
+    and_i_see_an_in_progress_status
   end
 
   it "not received and not failed" do
@@ -140,13 +140,19 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     expect(assessor_application_page.overview.status.text).to eq("RECEIVED")
   end
 
+  def and_i_see_an_in_progress_status
+    expect(assessor_application_page.overview.status.text).to eq(
+      "ASSESSMENT IN PROGRESS",
+    )
+  end
+
   def application_form
     @application_form ||=
       begin
         application_form =
           create(:application_form, :waiting_on, waiting_on_qualification: true)
         qualification = create(:qualification, :completed, application_form:)
-        assessment = create(:assessment, application_form:)
+        assessment = create(:assessment, :started, application_form:)
         create(:qualification_request, :requested, assessment:, qualification:)
         application_form
       end

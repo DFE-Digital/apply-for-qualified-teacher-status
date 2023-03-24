@@ -13,14 +13,18 @@ class ApplicationFormStatusUpdater
 
     ActiveRecord::Base.transaction do
       application_form.update!(
-        waiting_on_further_information:,
+        overdue_further_information:,
+        overdue_professional_standing:,
+        overdue_qualification:,
+        overdue_reference:,
         received_further_information:,
-        waiting_on_professional_standing:,
         received_professional_standing:,
-        waiting_on_qualification:,
         received_qualification:,
-        waiting_on_reference:,
         received_reference:,
+        waiting_on_further_information:,
+        waiting_on_professional_standing:,
+        waiting_on_qualification:,
+        waiting_on_reference:,
       )
 
       next if old_status == new_status
@@ -34,36 +38,88 @@ class ApplicationFormStatusUpdater
 
   attr_reader :application_form, :user
 
-  def waiting_on_further_information
-    waiting_on?(requestables: further_information_requests)
+  def overdue_further_information
+    overdue?(requestables: further_information_requests)
+  end
+
+  def overdue_professional_standing
+    return false if teaching_authority_provides_written_statement
+    overdue?(requestables: professional_standing_requests)
+  end
+
+  def overdue_qualification
+    overdue?(requestables: qualification_requests)
+  end
+
+  def overdue_reference
+    return false if references_verified
+    overdue?(requestables: reference_requests)
   end
 
   def received_further_information
     received?(requestables: further_information_requests)
   end
 
-  def waiting_on_professional_standing
-    waiting_on?(requestables: professional_standing_requests)
-  end
-
   def received_professional_standing
-    received?(requestables: professional_standing_requests)
-  end
+    return false if teaching_authority_provides_written_statement
 
-  def waiting_on_qualification
-    waiting_on?(requestables: qualification_requests)
+    professional_standing_requests
+      .reject(&:reviewed?)
+      .any? do |requestable|
+        requestable.received? || requestable.ready_for_review
+      end
   end
 
   def received_qualification
     received?(requestables: qualification_requests)
   end
 
-  def waiting_on_reference
-    waiting_on?(requestables: reference_requests)
+  def received_reference
+    return false unless received?(requestables: reference_requests)
+
+    received_requests = reference_requests.filter(&:received?)
+
+    months_count =
+      WorkHistoryDuration.new(
+        work_history_relation:
+          application_form.work_histories.where(
+            id: received_requests.map(&:work_history_id),
+          ),
+      ).count_months
+
+    most_recent_reference_request =
+      reference_requests.max_by { |request| request.work_history.start_date }
+
+    if months_count < 9
+      false
+    elsif months_count >= 20 &&
+          (region.checks_available? || most_recent_reference_request&.received?)
+      true
+    else
+      reference_requests.filter(&:requested?).empty?
+    end
   end
 
-  def received_reference
-    received?(requestables: reference_requests)
+  def waiting_on_further_information
+    waiting_on?(requestables: further_information_requests)
+  end
+
+  def waiting_on_professional_standing
+    if teaching_authority_provides_written_statement &&
+         requires_preliminary_check && !preliminary_check_complete
+      return false
+    end
+
+    waiting_on?(requestables: professional_standing_requests)
+  end
+
+  def waiting_on_qualification
+    waiting_on?(requestables: qualification_requests)
+  end
+
+  def waiting_on_reference
+    return false if references_verified
+    waiting_on?(requestables: reference_requests)
   end
 
   def new_status
@@ -76,30 +132,24 @@ class ApplicationFormStatusUpdater
         "awarded"
       elsif dqt_trn_request.present?
         "awarded_pending_checks"
-      elsif reviewable_further_information_requests? ||
-            reviewable_professional_standing_requests? ||
-            reviewable_qualification_requests? || reviewable_reference_requests?
+      elsif overdue_further_information || overdue_professional_standing ||
+            overdue_qualification || overdue_reference
+        "overdue"
+      elsif received_further_information || received_professional_standing ||
+            received_qualification || received_reference
         "received"
-      elsif preliminary_check?
-        "preliminary_check"
       elsif waiting_on_further_information ||
             waiting_on_professional_standing || waiting_on_qualification ||
-            (waiting_on_reference && references_verified != true)
+            waiting_on_reference
         "waiting_on"
-      elsif received_further_information ||
-            (
-              !teaching_authority_provides_written_statement &&
-                received_professional_standing
-            ) || received_qualification || received_reference
-        "received"
       elsif assessment&.started?
         "initial_assessment"
-      elsif application_form.submitted_at.present? ||
-            (
-              teaching_authority_provides_written_statement &&
-                received_professional_standing
-            )
-        "submitted"
+      elsif application_form.submitted_at.present?
+        if requires_preliminary_check && !preliminary_check_complete
+          "preliminary_check"
+        else
+          "submitted"
+        end
       else
         "draft"
       end
@@ -108,10 +158,14 @@ class ApplicationFormStatusUpdater
   delegate :assessment,
            :dqt_trn_request,
            :region,
+           :requires_preliminary_check,
            :teacher,
            :teaching_authority_provides_written_statement,
            to: :application_form
-  delegate :references_verified, to: :assessment
+  delegate :preliminary_check_complete,
+           :references_verified,
+           to: :assessment,
+           allow_nil: true
 
   def further_information_requests
     @further_information_requests ||=
@@ -132,62 +186,16 @@ class ApplicationFormStatusUpdater
     @reference_requests ||= assessment&.reference_requests&.to_a || []
   end
 
+  def overdue?(requestables:)
+    requestables.reject(&:reviewed?).any?(&:expired?)
+  end
+
   def waiting_on?(requestables:)
-    requestables.any?(&:requested?) || requestables.any?(&:expired?)
+    requestables.reject(&:reviewed?).any?(&:requested?)
   end
 
   def received?(requestables:)
-    requestables.any?(&:received?)
-  end
-
-  def reviewable?(requestables:)
-    requestables.any? do |requestable|
-      requestable.received? && !requestable.reviewed?
-    end
-  end
-
-  def reviewable_further_information_requests?
-    reviewable?(requestables: further_information_requests)
-  end
-
-  def reviewable_professional_standing_requests?
-    return false if teaching_authority_provides_written_statement
-
-    professional_standing_requests.any? do |requestable|
-      (requestable.received? || requestable.ready_for_review) &&
-        !requestable.reviewed?
-    end
-  end
-
-  def reviewable_qualification_requests?
-    reviewable?(requestables: qualification_requests)
-  end
-
-  def reviewable_reference_requests?
-    return false unless reviewable?(requestables: reference_requests)
-
-    received_requests = reference_requests.filter(&:received?)
-
-    months_count =
-      WorkHistoryDuration.new(
-        work_history_relation:
-          application_form.work_histories.where(
-            id: received_requests.map(&:work_history_id),
-          ),
-      ).count_months
-
-    if months_count < 9
-      false
-    elsif months_count >= 20 &&
-          (region.checks_available? || most_recent_reference_request&.received?)
-      true
-    else
-      reference_requests.filter(&:requested?).empty?
-    end
-  end
-
-  def most_recent_reference_request
-    reference_requests.max_by { |request| request.work_history.start_date }
+    requestables.reject(&:reviewed?).any?(&:received?)
   end
 
   def create_timeline_event(old_state:, new_state:)
@@ -202,11 +210,5 @@ class ApplicationFormStatusUpdater
       new_state:,
       old_state:,
     )
-  end
-
-  def preliminary_check?
-    application_form.requires_preliminary_check &&
-      !application_form.assessment.preliminary_check_complete &&
-      application_form.submitted_at.present?
   end
 end

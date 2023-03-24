@@ -6,7 +6,7 @@ RSpec.describe ReceiveRequestable do
   let(:application_form) { create(:application_form, :submitted) }
   let(:requestable) do
     create(
-      :reference_request,
+      :qualification_request,
       :requested,
       :receivable,
       assessment: create(:assessment, application_form:),
@@ -28,10 +28,16 @@ RSpec.describe ReceiveRequestable do
     expect { call }.to change(requestable, :received?).from(false).to(true)
   end
 
-  it "changes the application form reference received" do
-    expect { call }.to change(application_form, :received_reference).from(
+  it "changes the application form status" do
+    expect { call }.to change { application_form.reload.received? }.from(
       false,
     ).to(true)
+  end
+
+  it "changes the application form qualification received" do
+    expect { call }.to change {
+      application_form.reload.received_qualification
+    }.from(false).to(true)
   end
 
   it "changes the requestable received at" do

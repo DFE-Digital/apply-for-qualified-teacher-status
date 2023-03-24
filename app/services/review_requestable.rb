@@ -15,6 +15,7 @@ class ReviewRequestable
       requestable.failure_assessor_note = failure_assessor_note
       requestable.reviewed!(passed)
       requestable.after_reviewed(user:)
+      application_form.reload
 
       create_timeline_event
 
