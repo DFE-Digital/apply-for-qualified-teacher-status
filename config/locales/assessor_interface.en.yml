@@ -389,10 +389,6 @@ en:
               blank: Enter why you selected ‘No’
             failed:
               inclusion: Select whether you want to mark this qualification as ‘Rejected’
-        assessor_interface/requestable_location_form:
-          attributes:
-            location_note:
-              blank: Enter where the assessor can find it
         assessor_interface/requestable_review_form:
           attributes:
             reviewed:

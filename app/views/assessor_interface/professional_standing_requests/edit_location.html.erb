@@ -19,10 +19,10 @@
   <% if @application_form.teaching_authority_provides_written_statement %>
     <%= f.govuk_check_boxes_fieldset :received, multiple: false, legend: nil do %>
       <%= f.govuk_check_box :received, true, false, multiple: false, link_errors: true,
-                            label: { text: t("helpers.label.assessor_interface_requestable_location_form.received.professional_standing_request"), size: "s" } %>
+                            label: { text: "The letter of professional standing has been received.", size: "s" } %>
     <% end %>
 
-    <%= f.govuk_text_area :location_note, label: { text: t("helpers.label.assessor_interface_requestable_location_form.location_note.professional_standing_request"), size: "m" }, hint: nil %>
+    <%= f.govuk_text_area :location_note, label: { text: "Where to find the response", size: "m" }, hint: nil %>
   <% else %>
     <%= f.govuk_radio_buttons_fieldset :received, legend: { size: "s" } do %>
       <%= f.govuk_radio_button :received, :true, link_errors: true %>

@@ -152,7 +152,11 @@ class ApplicationFormStatusUpdater
 
   def reviewable_professional_standing_requests?
     return false if teaching_authority_provides_written_statement
-    reviewable?(requestables: professional_standing_requests)
+
+    professional_standing_requests.any? do |requestable|
+      (requestable.received? || requestable.ready_for_review) &&
+        !requestable.reviewed?
+    end
   end
 
   def reviewable_qualification_requests?

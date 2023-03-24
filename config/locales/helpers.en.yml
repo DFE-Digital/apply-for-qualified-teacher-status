@@ -112,11 +112,6 @@ en:
         failed_options:
           true: "Yes, mark as ‘Rejected’"
           false: "No, allow more time for a response"
-      assessor_interface_requestable_location_form:
-        received:
-          professional_standing_request: The letter of professional standing has been received.
-        location_note:
-          professional_standing_request: Where to find the response
       assessor_interface_requestable_review_form:
         passed_options:
           true: "Yes"
