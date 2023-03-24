@@ -2,8 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe AssessorInterface::WorkHistoryReferenceRequestForm,
-               type: :model do
+RSpec.describe AssessorInterface::SelectWorkHistoriesForm, type: :model do
   let(:application_form) { create(:application_form, :submitted) }
   let(:work_history_1) { create(:work_history, :completed, application_form:) }
   let(:work_history_2) { create(:work_history, :completed, application_form:) }

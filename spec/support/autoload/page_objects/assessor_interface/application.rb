@@ -52,8 +52,12 @@ module PageObjects
         task_list.find_item("Review requested information from applicant")
       end
 
-      def requested_qualifications_task
-        task_list.find_item("Qualifications – requested")
+      def record_qualification_requests_task
+        task_list.find_item("Record qualifications responses")
+      end
+
+      def review_qualification_requests_task
+        task_list.find_item("Review qualifications responses")
       end
 
       def assessment_recommendation_task

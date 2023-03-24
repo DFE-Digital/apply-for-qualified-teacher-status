@@ -2,14 +2,14 @@
 
 module PageObjects
   module AssessorInterface
-    class ReferenceRequestsAssessmentRecommendationAward < SitePrism::Page
+    class QualificationRequestsAssessmentRecommendationVerify < SitePrism::Page
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
-                "/recommendation/verify/reference-requests"
+                "/recommendation/verify/qualification-requests"
 
       element :heading, "h1"
 
       section :form, "form" do
-        sections :work_history_checkboxes,
+        sections :qualification_checkboxes,
                  GovukCheckboxItem,
                  ".govuk-checkboxes__item"
         element :submit_button, ".govuk-button"

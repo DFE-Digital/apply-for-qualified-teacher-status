@@ -43,12 +43,4 @@ RSpec.describe ReviewRequestable do
       requestable:,
     )
   end
-
-  context "with a requested requestabled" do
-    let(:requestable) { create(:reference_request, :requested) }
-
-    it "raises an error" do
-      expect { call }.to raise_error(ReviewRequestable::StillRequested)
-    end
-  end
 end

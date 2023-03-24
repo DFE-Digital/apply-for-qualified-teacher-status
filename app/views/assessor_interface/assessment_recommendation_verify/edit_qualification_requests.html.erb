@@ -1,0 +1,31 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".heading")}" %>
+<% content_for :back_link_url, verify_qualifications_assessor_interface_application_form_assessment_assessment_recommendation_verify_path(@application_form) %>
+
+<%= form_with model: @form, url: [:qualification_requests, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+
+  <p class="govuk-body">The list of qualifications that the applicant has submitted is shown below:</p>
+
+  <%= f.govuk_collection_check_boxes :qualification_ids,
+                                     @application_form.qualifications.ordered,
+                                     :id,
+                                     ->(qualification) { qualification_title(qualification) },
+                                     small: true,
+                                     legend: nil %>
+
+  <%= govuk_inset_text do %>
+    <p class="govuk-body">
+      You can deselect 1 or more qualifications from the list if you do not want to verify them.
+    </p>
+  <% end %>
+
+  <p class="govuk-body">
+    If you’re happy to proceed, select ‘Continue’.
+  </p>
+
+  <%= f.govuk_submit do %>
+    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <% end %>
+<% end %>

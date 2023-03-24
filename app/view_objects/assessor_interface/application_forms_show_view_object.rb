@@ -106,13 +106,13 @@ class AssessorInterface::ApplicationFormsShowViewObject
           assessment,
         )
       when :qualification_requests
-        qualification_request = qualification_requests[index]
-
-        url_helpers.edit_assessor_interface_application_form_assessment_qualification_request_path(
-          application_form,
-          assessment,
-          qualification_request,
-        )
+        if application_form.received_qualification ||
+             application_form.waiting_on_qualification
+          url_helpers.assessor_interface_application_form_assessment_qualification_requests_path(
+            application_form,
+            assessment,
+          )
+        end
       when :reference_requests
         if application_form.received_reference ||
              application_form.waiting_on_reference
@@ -169,7 +169,17 @@ class AssessorInterface::ApplicationFormsShowViewObject
           :cannot_start
         end
       when :qualification_requests
-        application_form.received_qualification ? :received : :waiting_on
+        unreviewed_requests = qualification_requests.reject(&:reviewed?)
+
+        if qualification_requests.all?(&:reviewed?)
+          :completed
+        elsif unreviewed_requests.any?(&:expired?)
+          :overdue
+        elsif unreviewed_requests.any?(&:received?)
+          :received
+        else
+          :waiting_on
+        end
       when :assessment_recommendation
         return :completed if assessment.completed?
         return :cannot_start unless assessment.recommendable?

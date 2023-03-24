@@ -64,6 +64,18 @@ Rails.application.routes.draw do
                  controller: "assessment_recommendation_verify",
                  path: "/recommendation/verify",
                  only: %i[edit update] do
+          get "verify-qualifications",
+              to: "assessment_recommendation_verify#edit_verify_qualifications"
+          post "verify-qualifications",
+               to:
+                 "assessment_recommendation_verify#update_verify_qualifications"
+          get "qualification-requests",
+              to: "assessment_recommendation_verify#edit_qualification_requests"
+          post "qualification-requests",
+               to:
+                 "assessment_recommendation_verify#update_qualification_requests"
+          get "email-consent-letters",
+              to: "assessment_recommendation_verify#email_consent_letters"
           get "reference-requests",
               to: "assessment_recommendation_verify#edit_reference_requests"
           post "reference-requests",
@@ -88,7 +100,7 @@ Rails.application.routes.draw do
 
         resources :qualification_requests,
                   path: "/qualification-requests",
-                  only: %i[edit update]
+                  only: %i[index edit update]
 
         get "/preliminary-check",
             to: "preliminary_checks#edit",

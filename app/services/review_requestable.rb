@@ -11,8 +11,6 @@ class ReviewRequestable
   end
 
   def call
-    raise StillRequested if requestable.requested?
-
     ActiveRecord::Base.transaction do
       requestable.failure_assessor_note = failure_assessor_note
       requestable.reviewed!(passed)
@@ -22,9 +20,6 @@ class ReviewRequestable
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
-  end
-
-  class StillRequested < StandardError
   end
 
   private

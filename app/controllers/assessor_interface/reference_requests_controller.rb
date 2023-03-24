@@ -47,8 +47,8 @@ module AssessorInterface
       if @form.save
         redirect_to [
                       :assessor_interface,
-                      reference_request.application_form,
-                      reference_request.assessment,
+                      requestable.application_form,
+                      requestable.assessment,
                       :reference_requests,
                     ]
       else

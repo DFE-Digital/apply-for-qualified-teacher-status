@@ -220,17 +220,15 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     context "with verification_requests section" do
       let(:section) { :verification_requests }
 
-      context "with qualification requests item" do
+      context "with record qualification requests item" do
         let(:item) { :qualification_requests }
 
-        let!(:qualification_request) do
-          create(:qualification_request, :requested, assessment:)
-        end
+        before { application_form.update!(waiting_on_qualification: true) }
 
         it do
           is_expected.to eq(
             "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
-              "/qualification-requests/#{qualification_request.id}/edit",
+              "/qualification-requests",
           )
         end
       end
@@ -238,10 +236,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "with reference requests item" do
         let(:item) { :reference_requests }
 
-        before do
-          create(:reference_request, :requested, assessment:)
-          application_form.update!(waiting_on_reference: true)
-        end
+        before { application_form.update!(waiting_on_reference: true) }
 
         it do
           is_expected.to eq(

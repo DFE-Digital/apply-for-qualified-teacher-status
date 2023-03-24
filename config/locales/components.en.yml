@@ -13,6 +13,7 @@ en:
       initial_assessment: Assessment in progress
       invalid: Invalid
       not_started: Not started
+      overdue: Overdue
       potential_duplicate_in_dqt: Potential duplication in DQT
       preliminary_check: Preliminary check
       received: Received

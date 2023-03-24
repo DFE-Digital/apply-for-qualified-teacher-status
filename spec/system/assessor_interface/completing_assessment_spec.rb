@@ -83,7 +83,28 @@ RSpec.describe "Assessor completing assessment", type: :system do
     when_i_select_award_qts
     and_i_click_continue
     then_i_see_the(
-      :reference_requests_assessment_recommendation_award_page,
+      :verify_qualifications_assessment_recommendation_verify_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_select_yes_verify_qualifications
+    then_i_see_the(
+      :qualification_requests_assessment_recommendation_verify_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_select_the_qualifications
+    then_i_see_the(
+      :email_consent_letters_requests_assessment_recommendation_verify_page,
+      application_id:,
+      assessment_id:,
+    )
+
+    when_i_click_continue_from_email_consent_letters
+    then_i_see_the(
+      :reference_requests_assessment_recommendation_verify_page,
       application_id:,
       assessment_id:,
     )
@@ -274,8 +295,30 @@ RSpec.describe "Assessor completing assessment", type: :system do
     declare_assessment_recommendation_page.form.submit_button.click
   end
 
+  def when_i_select_yes_verify_qualifications
+    verify_qualifications_assessment_recommendation_verify_page
+      .form
+      .yes_radio_item
+      .choose
+    verify_qualifications_assessment_recommendation_verify_page
+      .form
+      .submit_button
+      .click
+  end
+
+  def when_i_select_the_qualifications
+    qualification_requests_assessment_recommendation_verify_page
+      .form
+      .submit_button
+      .click
+  end
+
+  def when_i_click_continue_from_email_consent_letters
+    email_consent_letters_requests_assessment_recommendation_verify_page.continue_button.click
+  end
+
   def when_i_select_the_work_histories
-    reference_requests_assessment_recommendation_award_page
+    reference_requests_assessment_recommendation_verify_page
       .form
       .submit_button
       .click

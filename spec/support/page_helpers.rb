@@ -37,6 +37,11 @@ module PageHelpers
       PageObjects::AssessorInterface::EditReferenceRequest.new
   end
 
+  def assessor_qualification_requests_page
+    @assessor_qualification_requests_page ||=
+      PageObjects::AssessorInterface::QualificationRequests.new
+  end
+
   def assessor_reference_requests_page
     @assessor_reference_requests_page ||=
       PageObjects::AssessorInterface::ReferenceRequests.new
@@ -120,6 +125,11 @@ module PageHelpers
     @eligible_page = PageObjects::EligibilityInterface::Eligible.new
   end
 
+  def email_consent_letters_requests_assessment_recommendation_verify_page
+    @email_consent_letters_requests_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::EmailConsentLettersAssessmentRecommendationVerify.new
+  end
+
   def further_information_requested_page
     @further_information_requested_page =
       PageObjects::TeacherInterface::FurtherInformationRequested.new
@@ -179,9 +189,14 @@ module PageHelpers
     @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
   end
 
-  def reference_requests_assessment_recommendation_award_page
-    @reference_requests_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationAward.new
+  def qualification_requests_assessment_recommendation_verify_page
+    @qualification_requests_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
+  end
+
+  def reference_requests_assessment_recommendation_verify_page
+    @reference_requests_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationVerify.new
   end
 
   def region_page
@@ -524,5 +539,10 @@ module PageHelpers
   def work_experience_page
     @work_experience_page ||=
       PageObjects::EligibilityInterface::WorkExperience.new
+  end
+
+  def verify_qualifications_assessment_recommendation_verify_page
+    @verify_qualifications_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::VerifyQualificationsAssessmentRecommendationVerify.new
   end
 end

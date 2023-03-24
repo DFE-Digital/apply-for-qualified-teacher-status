@@ -42,4 +42,9 @@ RSpec.describe QualificationRequest, type: :model do
       it { is_expected.to_not validate_presence_of(:location_note) }
     end
   end
+
+  describe "#expires_after" do
+    subject(:expires_after) { described_class.new.expires_after }
+    it { is_expected.to eq(6.weeks) }
+  end
 end

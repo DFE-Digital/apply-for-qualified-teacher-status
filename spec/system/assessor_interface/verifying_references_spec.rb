@@ -134,13 +134,14 @@ RSpec.describe "Assessor verifying references", type: :system do
       begin
         application_form =
           create(:application_form, :waiting_on, received_reference: true)
-        create(
-          :work_history,
-          :completed,
-          application_form:,
-          contact_name: "John Smith",
-          contact_job: "Headteacher",
-        )
+        work_history =
+          create(
+            :work_history,
+            :completed,
+            application_form:,
+            contact_name: "John Smith",
+            contact_job: "Headteacher",
+          )
         assessment =
           create(
             :assessment,
@@ -153,7 +154,7 @@ RSpec.describe "Assessor verifying references", type: :system do
           :received,
           :responses_valid,
           assessment:,
-          work_history: assessment.application_form.work_histories.first,
+          work_history:,
         )
         application_form
       end

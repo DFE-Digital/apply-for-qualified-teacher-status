@@ -1,21 +1,32 @@
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".title")}" %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@form.application_form) %>
+<% title = qualification_title(@qualification_request.qualification) %>
 
-<%= form_with model: @form, url: [:assessor_interface, @form.application_form, @form.assessment, @form.requestable], method: :put do |f| %>
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<% content_for :back_link_url, assessor_interface_application_form_assessment_qualification_requests_path(@application_form, @assessment) %>
+
+<%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment, @qualification_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+  <h1 class="govuk-heading-xl"><%= title %></h1>
 
-  <p class="govuk-body">Only use this screen when the qualification has been received.</p>
+  <%= f.govuk_radio_buttons_fieldset :received, legend: { size: "s" } do %>
+    <%= f.govuk_radio_button :received, :true, link_errors: true do %>
+      <%= f.govuk_radio_buttons_fieldset :passed, legend: { size: "s" } do %>
+        <%= f.govuk_radio_button :passed, :true, link_errors: true %>
+        <%= f.govuk_radio_button :passed, :false do %>
+          <%= f.govuk_text_area :failure_assessor_note, label: { text: t("helpers.label.assessor_interface_qualification_request_form.failure_assessor_note").html_safe } %>
+        <% end %>
+      <% end %>
+    <% end %>
 
-  <p class="govuk-body">This screen is not an assessment of the qualification, it just confirms that it has been received.</p>
-
-  <%= f.govuk_check_boxes_fieldset :received, multiple: false, legend: nil do %>
-    <%= f.govuk_check_box :received, true, false, multiple: false, link_errors: true,
-                          label: { text: t("helpers.label.assessor_interface_requestable_location_form.received.qualification_request") } %>
+    <%= f.govuk_radio_button :received, :false do %>
+      <%= f.govuk_radio_buttons_fieldset :failed, legend: { size: "s" } do %>
+        <%= f.govuk_radio_button :failed, :true, link_errors: true %>
+        <%= f.govuk_radio_button :failed, :false %>
+      <% end %>
+    <% end %>
   <% end %>
 
-  <%= f.govuk_text_area :location_note %>
-
-  <%= f.govuk_submit %>
+  <%= f.govuk_submit "Save and continue" do %>
+    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <% end %>
 <% end %>

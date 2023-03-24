@@ -26,7 +26,7 @@ en:
             preliminary_check: Preliminary check
             professional_standing: Check professional standing
             professional_standing_request: Awaiting third-party professional standing
-            qualification_requests: Qualifications – requested
+            qualification_requests: Record qualifications responses
             qualifications: Check qualifications
             reference_requests: Verify reference requests
             review_requested_information: Review requested information from applicant
@@ -86,6 +86,14 @@ en:
         hint: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
 
     assessment_recommendation_verify:
+      edit_qualification_requests:
+        heading: Verify qualifications
+      edit_verify_qualifications:
+        heading: Do you want to verify qualifications?
+      email_consent_letters:
+        heading: Email consent letters
+        continue: Continue
+        cancel: Cancel
       edit_reference_requests:
         heading: Request work history references
       preview_referee:
@@ -220,10 +228,6 @@ en:
     professional_standing_requests:
       edit:
         title: Third-party professional standing – response received
-
-    qualification_requests:
-      edit:
-        title: Qualification verification – response received
 
     reference_requests:
       edit:
@@ -362,6 +366,16 @@ en:
           attributes:
             induction_required:
               inclusion: Select whether the teacher requires induction
+        assessor_interface/qualification_request_form:
+          attributes:
+            received:
+              inclusion: Select whether you have received a response about this qualification
+            passed:
+              inclusion: Select whether the response shows that the qualification is legitimate
+            failure_assessor_note:
+              blank: Enter why you selected ‘No’
+            failed:
+              inclusion: Select whether you want to mark this qualification as ‘Rejected’
         assessor_interface/requestable_location_form:
           attributes:
             location_note:
@@ -374,10 +388,18 @@ en:
               inclusion: Select whether you are satisfied with the request
             failure_assessor_note:
               blank: Enter why you are not satisfied
-        assessor_interface/work_history_reference_request_form:
+        assessor_interface/select_qualifications_form:
+          attributes:
+            qualification_ids:
+              blank: Select which qualifications you’d like to verify
+        assessor_interface/select_work_histories_form:
           attributes:
             work_history_ids:
               blank: References account for less than 9 months
+        assessor_interface/verify_qualifications_form:
+          attributes:
+            verify_qualifications:
+              inclusion: Select whether you want to verify qualifications
         assessor_interface/verify_references_form:
           attributes:
             references_verified:

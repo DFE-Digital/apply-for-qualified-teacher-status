@@ -33,7 +33,7 @@ class QualificationRequest < ApplicationRecord
   belongs_to :qualification
 
   def expires_after
-    nil
+    6.weeks
   end
 
   def location_note_required?

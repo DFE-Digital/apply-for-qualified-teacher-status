@@ -91,15 +91,30 @@ en:
         preliminary_check_complete_options:
           true: "Yes"
           false: "No, I’ll decline it in the appropriate section"
+      assessor_interface_qualification_request_form:
+        received_options:
+          true: "Yes"
+          false: "No"
+        passed_options:
+          true: "Yes"
+          false: "No"
+        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why you selected ‘No’'
+        failed_options:
+          true: "Yes, mark as ‘Rejected’"
+          false: "No, allow more time for a response"
       assessor_interface_requestable_location_form:
         received:
           professional_standing_request: The letter of professional standing has been received.
-          qualification_request: The qualification has been received.
-        location_note: Where can the assessor find it?
+        location_note:
+          professional_standing_request: Where to find the response
       assessor_interface_requestable_review_form:
         passed_options:
           true: "Yes"
           false: "No"
+      assessor_interface_verify_qualifications_form:
+        verify_qualifications_options:
+          true: Yes, verify qualifications
+          false: No, skip this step
       eligibility_interface_country_form:
         location: In which country are you currently recognised as a teacher?
       eligibility_interface_work_experience_form:
@@ -238,7 +253,13 @@ en:
         submitted_at_before: End date
       assessor_interface_preliminary_check_form:
         preliminary_check_complete: Do you want to move this application to a full assessment?
-      assessor_interface_work_history_reference_request_form:
+      assessor_interface_qualification_request_form:
+        received: Have you received a response about this qualification?
+        passed: Does the response show that the qualification is legitimate?
+        failed: Do you want to mark this qualification as ‘Rejected’?
+      assessor_interface_select_qualifications_form:
+        qualification_ids: Qualification
+      assessor_interface_select_work_histories_form:
         work_history_ids: School
       eligibility_interface_region_form:
         region_id: In which state/territory are you currently recognised as a teacher?
