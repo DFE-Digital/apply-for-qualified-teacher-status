@@ -444,12 +444,8 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
 
     context "when assessment preliminary checks are complete" do
       before do
-        create(
-          :application_form,
-          :waiting_on,
-          assessment:,
-          teacher: current_teacher,
-        )
+        create(:application_form, assessment:, teacher: current_teacher)
+        create(:professional_standing_request, assessment:)
         assessment.update!(preliminary_check_complete: true)
       end
 
@@ -460,11 +456,11 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
       before do
         create(
           :application_form,
-          :waiting_on,
           assessment:,
           teacher: current_teacher,
           teaching_authority_provides_written_statement: true,
         )
+        create(:professional_standing_request, assessment:)
       end
 
       it { is_expected.to be true }
@@ -472,12 +468,8 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
 
     context "when the application is not waiting on anything" do
       before do
-        create(
-          :application_form,
-          :completed,
-          assessment:,
-          teacher: current_teacher,
-        )
+        create(:application_form, assessment:, teacher: current_teacher)
+        create(:professional_standing_request, :received, assessment:)
       end
 
       it { is_expected.to be false }
