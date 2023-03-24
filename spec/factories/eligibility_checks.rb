@@ -26,17 +26,18 @@ FactoryBot.define do
     free_of_sanctions { nil }
     qualification { nil }
     teach_children { nil }
+    work_experience { nil }
+    qualified_for_subject { nil }
 
     trait :eligible do
       association :region
+      country_code { region.country.code }
       degree { true }
       free_of_sanctions { true }
       qualification { true }
       teach_children { true }
-
-      after(:create) do |eligiblity_check, _evaluator|
-        eligiblity_check.country_code = eligiblity_check.region.country.code
-      end
+      work_experience { "over_20_months" }
+      qualified_for_subject { true }
     end
 
     trait :complete do
