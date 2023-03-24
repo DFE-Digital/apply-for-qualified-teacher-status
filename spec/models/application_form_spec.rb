@@ -102,6 +102,7 @@ RSpec.describe ApplicationForm, type: :model do
         initial_assessment: "initial_assessment",
         waiting_on: "waiting_on",
         received: "received",
+        overdue: "overdue",
         awarded: "awarded",
         awarded_pending_checks: "awarded_pending_checks",
         declined: "declined",

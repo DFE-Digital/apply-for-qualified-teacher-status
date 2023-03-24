@@ -121,6 +121,7 @@ class ApplicationForm < ApplicationRecord
          initial_assessment: "initial_assessment",
          waiting_on: "waiting_on",
          received: "received",
+         overdue: "overdue",
          awarded_pending_checks: "awarded_pending_checks",
          awarded: "awarded",
          declined: "declined",
@@ -153,11 +154,12 @@ class ApplicationForm < ApplicationRecord
         -> {
           where(
             status: %i[
-              submitted
               preliminary_check
+              submitted
               initial_assessment
               waiting_on
               received
+              overdue
               awarded_pending_checks
               potential_duplicate_in_dqt
             ],

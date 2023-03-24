@@ -149,6 +149,11 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
+    trait :overdue do
+      status { "overdue" }
+      submitted_at { Time.zone.now }
+    end
+
     trait :awarded_pending_checks do
       status { "awarded_pending_checks" }
       submitted_at { Time.zone.now }

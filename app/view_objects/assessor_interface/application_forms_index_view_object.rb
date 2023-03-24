@@ -36,11 +36,12 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def status_filter_options
     counts = application_forms_without_status_filter.group(:status).count
     statuses = %w[
-      submitted
       preliminary_check
+      submitted
       initial_assessment
       waiting_on
       received
+      overdue
       awarded_pending_checks
       awarded
       declined
