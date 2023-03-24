@@ -22,9 +22,14 @@ module PageHelpers
       PageObjects::AssessorInterface::ApplicationStatus.new
   end
 
-  def assessor_edit_professional_standing_request_page
-    @assessor_edit_professional_standing_request_page ||=
-      PageObjects::AssessorInterface::EditProfessionalStandingRequest.new
+  def assessor_edit_professional_standing_request_location_page
+    @assessor_edit_professional_standing_request_location_page ||=
+      PageObjects::AssessorInterface::EditProfessionalStandingRequestLocation.new
+  end
+
+  def assessor_edit_professional_standing_request_review_page
+    @assessor_edit_professional_standing_request_review_page ||=
+      PageObjects::AssessorInterface::EditProfessionalStandingRequestReview.new
   end
 
   def assessor_edit_qualification_request_page
@@ -97,6 +102,11 @@ module PageHelpers
   def confirm_assessment_recommendation_page
     @confirm_assessment_recommendation_page ||=
       PageObjects::AssessorInterface::ConfirmAssessmentRecommendation.new
+  end
+
+  def contact_professional_standing_assessment_recommendation_verify_page
+    @contact_professional_standing_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::ContactProfessionalStandingAssessmentRecommendationVerify.new
   end
 
   def declare_assessment_recommendation_page
@@ -534,6 +544,11 @@ module PageHelpers
   def verify_age_range_subjects_page
     @verify_age_range_subjects_page ||=
       PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
+  end
+
+  def verify_professional_standing_assessment_recommendation_verify_page
+    @verify_professional_standing_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::VerifyProfessionalStandingAssessmentRecommendationVerify.new
   end
 
   def work_experience_page

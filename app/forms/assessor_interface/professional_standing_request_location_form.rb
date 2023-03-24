@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AssessorInterface::QualificationRequestForm
+class AssessorInterface::ProfessionalStandingRequestLocationForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
@@ -10,16 +10,10 @@ class AssessorInterface::QualificationRequestForm
   attribute :received, :boolean
   validates :received, inclusion: [true, false]
 
-  attribute :passed, :boolean
-  validates :passed, inclusion: [true, false], if: :received
+  attribute :ready_for_review, :boolean
+  validates :ready_for_review, inclusion: [true, false], unless: :received
 
-  attribute :failure_assessor_note, :string
-  validates :failure_assessor_note,
-            presence: true,
-            if: -> { received && passed == false }
-
-  attribute :failed, :boolean
-  validates :failed, inclusion: [true, false], unless: :received
+  attribute :location_note, :string
 
   def save
     return false if invalid?
@@ -31,33 +25,23 @@ class AssessorInterface::QualificationRequestForm
         revert_receive_requestable
       end
 
-      if review_passed.nil?
+      if requestable.requested? && requestable.reviewed?
         requestable.update!(passed: nil, reviewed_at: nil)
         ApplicationFormStatusUpdater.call(application_form:, user:)
-      else
-        ReviewRequestable.call(
-          requestable:,
-          user:,
-          passed: review_passed,
-          failure_assessor_note:,
-        )
       end
+
+      requestable.update!(
+        location_note: location_note.presence || "",
+        ready_for_review: ready_for_review || false,
+      )
     end
 
     true
   end
 
-  delegate :application_form, :assessment, to: :requestable
-
   private
 
-  def review_passed
-    if received
-      passed
-    else
-      failed ? false : nil
-    end
-  end
+  delegate :application_form, to: :requestable
 
   def revert_receive_requestable
     requestable.requested!

@@ -8,6 +8,7 @@
 #  failure_assessor_note :string           default(""), not null
 #  location_note         :text             default(""), not null
 #  passed                :boolean
+#  ready_for_review      :boolean          default(FALSE), not null
 #  received_at           :datetime
 #  reviewed_at           :datetime
 #  state                 :string           not null

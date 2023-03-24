@@ -10,6 +10,8 @@ en:
           decline: As this reason triggers a decline, you do not need to add a note, but you can use the space below to add anything you feel might be helpful, if you want to.
       assessor_interface_create_note_form:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
+      assessor_interface_professional_standing_request_location_form:
+        location_note: Use this space to add any useful notes, for example, where to locate the response.
       eligibility_interface_country_form:
         location: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
       eligibility_interface_region_form:
@@ -91,6 +93,14 @@ en:
         preliminary_check_complete_options:
           true: "Yes"
           false: "No, I’ll decline it in the appropriate section"
+      assessor_interface_professional_standing_request_location_form:
+        received_options:
+          true: "Yes"
+          false: "No"
+        ready_for_review_options:
+          true: "Yes, move to review"
+          false: "No, allow more time for a response"
+        location_note: Your notes (optional)
       assessor_interface_qualification_request_form:
         received_options:
           true: "Yes"
@@ -102,15 +112,14 @@ en:
         failed_options:
           true: "Yes, mark as ‘Rejected’"
           false: "No, allow more time for a response"
-      assessor_interface_requestable_location_form:
-        received:
-          professional_standing_request: The letter of professional standing has been received.
-        location_note:
-          professional_standing_request: Where to find the response
       assessor_interface_requestable_review_form:
         passed_options:
           true: "Yes"
           false: "No"
+      assessor_interface_verify_professional_standing_form:
+        verify_professional_standing_options:
+          true: Yes, verify letter of professional standing
+          false: No, skip this step
       assessor_interface_verify_qualifications_form:
         verify_qualifications_options:
           true: Yes, verify qualifications
@@ -253,6 +262,9 @@ en:
         submitted_at_before: End date
       assessor_interface_preliminary_check_form:
         preliminary_check_complete: Do you want to move this application to a full assessment?
+      assessor_interface_professional_standing_request_location_form:
+        received: Have you received a response about this letter of professional standing?
+        ready_for_review: Do you want to mark this for review?
       assessor_interface_qualification_request_form:
         received: Have you received a response about this qualification?
         passed: Does the response show that the qualification is legitimate?

@@ -20,15 +20,17 @@ en:
           items:
             age_range_subjects: Verify age range and subjects
             assessment_recommendation: Assessment recommendation
+            await_professional_standing_request: Awaiting third-party professional standing
             english_language_proficiency: Check English language proficiency
             initial_assessment_recommendation: Initial assessment recommendation
+            locate_professional_standing_request: Record LOPS response
             personal_information: Check personal information
             preliminary_check: Preliminary check
             professional_standing: Check professional standing
-            professional_standing_request: Awaiting third-party professional standing
             qualification_requests: Record qualifications responses
             qualifications: Check qualifications
             reference_requests: Verify reference requests
+            review_professional_standing_request: Review LOPS response
             review_requested_information: Review requested information from applicant
             work_history: Check work history
 
@@ -96,6 +98,8 @@ en:
         cancel: Cancel
       edit_reference_requests:
         heading: Request work history references
+      edit_verify_professional_standing:
+        heading: Do you want to verify the letter of professional standing?
       preview_referee:
         heading: Check and send the reference request email
         button: Continue
@@ -226,8 +230,11 @@ en:
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
 
     professional_standing_requests:
-      edit:
+      edit_location:
         title: Third-party professional standing – response received
+      edit_review:
+        passed: Does the response confirm that this document is legitimate?
+        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why the document should not be accepted.'
 
     reference_requests:
       edit:
@@ -366,6 +373,12 @@ en:
           attributes:
             induction_required:
               inclusion: Select whether the teacher requires induction
+        assessor_interface/professional_standing_request_location_form:
+          attributes:
+            received:
+              inclusion: Select whether you received a response about this letter of professional standing
+            expired:
+              inclusion: Select whether you want to mark this for review
         assessor_interface/qualification_request_form:
           attributes:
             received:
@@ -376,10 +389,6 @@ en:
               blank: Enter why you selected ‘No’
             failed:
               inclusion: Select whether you want to mark this qualification as ‘Rejected’
-        assessor_interface/requestable_location_form:
-          attributes:
-            location_note:
-              blank: Enter where the assessor can find it
         assessor_interface/requestable_review_form:
           attributes:
             reviewed:
@@ -396,6 +405,10 @@ en:
           attributes:
             work_history_ids:
               blank: References account for less than 9 months
+        assessor_interface/verify_professional_standing_form:
+          attributes:
+            verify_professional_standing:
+              inclusion: Select whether you want to verify the professional standing
         assessor_interface/verify_qualifications_form:
           attributes:
             verify_qualifications:

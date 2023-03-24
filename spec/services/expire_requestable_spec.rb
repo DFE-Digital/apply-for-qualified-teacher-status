@@ -55,7 +55,16 @@ RSpec.describe ExpireRequestable do
       let(:requestable) { create(:professional_standing_request) }
 
       it_behaves_like "expiring a requestable"
-      it_behaves_like "declining the application"
+
+      context "when teaching authority provides the written statement" do
+        before do
+          requestable.application_form.update!(
+            teaching_authority_provides_written_statement: true,
+          )
+        end
+
+        it_behaves_like "declining the application"
+      end
     end
 
     context "with any received professional standing request" do

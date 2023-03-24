@@ -8,6 +8,7 @@
 #  failure_assessor_note :string           default(""), not null
 #  location_note         :text             default(""), not null
 #  passed                :boolean
+#  ready_for_review      :boolean          default(FALSE), not null
 #  received_at           :datetime
 #  reviewed_at           :datetime
 #  state                 :string           not null
@@ -25,18 +26,25 @@
 #
 class ProfessionalStandingRequest < ApplicationRecord
   include Requestable
-  include Locatable
 
   def expires_after
-    18.weeks # 90 working days
+    if application_form.teaching_authority_provides_written_statement
+      18.weeks # 90 working days
+    else
+      6.weeks # 30 working days
+    end
   end
 
   def after_received(*)
-    TeacherMailer.with(teacher:).professional_standing_received.deliver_later
+    if application_form.teaching_authority_provides_written_statement
+      TeacherMailer.with(teacher:).professional_standing_received.deliver_later
+    end
   end
 
   def after_expired(user:)
-    DeclineQTS.call(application_form:, user:)
+    if application_form.teaching_authority_provides_written_statement
+      DeclineQTS.call(application_form:, user:)
+    end
   end
 
   delegate :teacher, to: :application_form

@@ -84,6 +84,15 @@ Rails.application.routes.draw do
               to: "assessment_recommendation_verify#preview_referee"
           get "preview-teacher",
               to: "assessment_recommendation_verify#preview_teacher"
+          get "verify-professional-standing",
+              to:
+                "assessment_recommendation_verify#edit_verify_professional_standing"
+          post "verify-professional-standing",
+               to:
+                 "assessment_recommendation_verify#update_verify_professional_standing"
+          get "contact-professional-standing",
+              to:
+                "assessment_recommendation_verify#contact_professional_standing"
         end
 
         resources :further_information_requests,
@@ -96,7 +105,15 @@ Rails.application.routes.draw do
 
         resource :professional_standing_request,
                  path: "/professional-standing-request",
-                 only: %i[edit update]
+                 only: [] do
+          member do
+            get "location", to: "professional_standing_requests#edit_location"
+            post "location",
+                 to: "professional_standing_requests#update_location"
+            get "review", to: "professional_standing_requests#edit_review"
+            post "review", to: "professional_standing_requests#update_review"
+          end
+        end
 
         resources :qualification_requests,
                   path: "/qualification-requests",

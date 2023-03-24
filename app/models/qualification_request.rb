@@ -28,15 +28,10 @@
 #
 class QualificationRequest < ApplicationRecord
   include Requestable
-  include Locatable
 
   belongs_to :qualification
 
   def expires_after
     6.weeks
-  end
-
-  def location_note_required?
-    false
   end
 end

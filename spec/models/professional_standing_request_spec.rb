@@ -8,6 +8,7 @@
 #  failure_assessor_note :string           default(""), not null
 #  location_note         :text             default(""), not null
 #  passed                :boolean
+#  ready_for_review      :boolean          default(FALSE), not null
 #  received_at           :datetime
 #  reviewed_at           :datetime
 #  state                 :string           not null
@@ -30,18 +31,32 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
     subject { create(:professional_standing_request, :receivable) }
   end
 
-  it_behaves_like "a locatable"
-
-  describe "validations" do
-    context "when received" do
-      subject { build(:professional_standing_request, :received) }
-
-      it { is_expected.to validate_presence_of(:location_note) }
-    end
-  end
-
   describe "#expires_after" do
-    subject(:expires_after) { described_class.new.expires_after }
-    it { is_expected.to eq(18.weeks) }
+    let(:professional_standing_request) do
+      create(
+        :professional_standing_request,
+        assessment:
+          create(
+            :assessment,
+            application_form:
+              create(
+                :application_form,
+                teaching_authority_provides_written_statement:,
+              ),
+          ),
+      )
+    end
+
+    subject(:expires_after) { professional_standing_request.expires_after }
+
+    context "when the teaching authority provides the written statement" do
+      let(:teaching_authority_provides_written_statement) { true }
+      it { is_expected.to eq(18.weeks) }
+    end
+
+    context "when the applicant provides the written statement" do
+      let(:teaching_authority_provides_written_statement) { false }
+      it { is_expected.to eq(6.weeks) }
+    end
   end
 end
