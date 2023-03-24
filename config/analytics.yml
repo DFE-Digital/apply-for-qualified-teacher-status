@@ -25,14 +25,18 @@
     - id
     - reference
     - status
-    - waiting_on_professional_standing
-    - received_professional_standing
-    - waiting_on_further_information
+    - overdue_further_information
+    - overdue_professional_standing
+    - overdue_qualification
+    - overdue_reference
     - received_further_information
-    - waiting_on_reference
-    - received_reference
-    - waiting_on_qualification
+    - received_professional_standing
     - received_qualification
+    - received_reference
+    - waiting_on_further_information
+    - waiting_on_professional_standing
+    - waiting_on_qualification
+    - waiting_on_reference
     - personal_information_status
     - identification_document_status
     - qualifications_status
