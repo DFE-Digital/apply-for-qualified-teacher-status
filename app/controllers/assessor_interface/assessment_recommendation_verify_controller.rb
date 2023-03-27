@@ -118,6 +118,8 @@ module AssessorInterface
     end
 
     def edit_verify_professional_standing
+      authorize :assessor, :edit?
+
       if application_form.teaching_authority_provides_written_statement
         redirect_to [
                       :reference_requests,
@@ -129,7 +131,6 @@ module AssessorInterface
         return
       end
 
-      authorize :assessor, :edit?
       @form = VerifyProfessionalStandingForm.new
     end
 
