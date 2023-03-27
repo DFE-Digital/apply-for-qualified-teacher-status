@@ -133,11 +133,11 @@ RSpec.describe ApplicationFormStatusUpdater do
 
         include_examples "changes status", "submitted"
 
-        it "changes received_professional_standing" do
-          expect { call }.to change(
+        it "doesn't change received_professional_standing" do
+          expect { call }.to_not change(
             application_form,
             :received_professional_standing,
-          ).from(false).to(true)
+          ).from(false)
         end
       end
 
@@ -201,6 +201,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       context "with less than 9 months" do
         before do
+          create(:reference_request, :requested, assessment:)
           create(
             :reference_request,
             :received,
@@ -216,73 +217,55 @@ RSpec.describe ApplicationFormStatusUpdater do
           )
         end
 
-        it "changes received_reference" do
-          expect { call }.to change(application_form, :received_reference).from(
-            false,
-          ).to(true)
+        include_examples "changes status", "waiting_on"
+
+        it "doesn't change received_reference" do
+          expect { call }.to_not change(
+            application_form,
+            :received_reference,
+          ).from(false)
+        end
+      end
+
+      context "with less than 20 months" do
+        before do
+          create(
+            :reference_request,
+            :received,
+            assessment:,
+            work_history:
+              create(
+                :work_history,
+                application_form:,
+                hours_per_week: 30,
+                start_date: Date.new(2020, 1, 1),
+                end_date: Date.new(2020, 12, 1),
+              ),
+          )
         end
 
         context "and it's the only reference request" do
           include_examples "changes status", "received"
+
+          it "changes received_reference" do
+            expect { call }.to change(
+              application_form,
+              :received_reference,
+            ).from(false).to(true)
+          end
         end
 
         context "and there are other reference requests" do
           before { create(:reference_request, :requested, assessment:) }
 
           include_examples "changes status", "waiting_on"
-        end
-      end
 
-      context "with less than 20 months" do
-        before do
-          create(:reference_request, :requested, assessment:)
-          create(
-            :reference_request,
-            :received,
-            assessment:,
-            work_history:
-              create(
-                :work_history,
-                application_form:,
-                hours_per_week: 30,
-                start_date: Date.new(2020, 1, 1),
-                end_date: Date.new(2020, 12, 1),
-              ),
-          )
-        end
-
-        include_examples "changes status", "waiting_on"
-
-        it "changes received_reference" do
-          expect { call }.to change(application_form, :received_reference).from(
-            false,
-          ).to(true)
-        end
-      end
-
-      context "with less than 20 months and no others" do
-        before do
-          create(
-            :reference_request,
-            :received,
-            assessment:,
-            work_history:
-              create(
-                :work_history,
-                application_form:,
-                hours_per_week: 30,
-                start_date: Date.new(2020, 1, 1),
-                end_date: Date.new(2020, 12, 1),
-              ),
-          )
-        end
-
-        include_examples "changes status", "received"
-
-        it "changes received_reference" do
-          expect { call }.to change(application_form, :received_reference).from(
-            false,
-          ).to(true)
+          it "doesn't change received_reference" do
+            expect { call }.to_not change(
+              application_form,
+              :received_reference,
+            ).from(false)
+          end
         end
       end
 
@@ -365,6 +348,30 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes status", "preliminary_check"
+
+      context "when teaching authority provides written statement" do
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: true,
+          )
+          create(
+            :professional_standing_request,
+            assessment: application_form.assessment,
+          )
+        end
+
+        include_examples "changes status", "preliminary_check"
+
+        context "once preliminary check is complete" do
+          before do
+            application_form.assessment.update!(
+              preliminary_check_complete: true,
+            )
+          end
+
+          include_examples "changes status", "waiting_on"
+        end
+      end
     end
   end
 end

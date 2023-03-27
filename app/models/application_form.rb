@@ -26,6 +26,10 @@
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
+#  overdue_further_information                   :boolean          default(FALSE), not null
+#  overdue_professional_standing                 :boolean          default(FALSE), not null
+#  overdue_qualification                         :boolean          default(FALSE), not null
+#  overdue_reference                             :boolean          default(FALSE), not null
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualifications_status                         :string           default("not_started"), not null
 #  received_further_information                  :boolean          default(FALSE), not null
@@ -121,6 +125,7 @@ class ApplicationForm < ApplicationRecord
          initial_assessment: "initial_assessment",
          waiting_on: "waiting_on",
          received: "received",
+         overdue: "overdue",
          awarded_pending_checks: "awarded_pending_checks",
          awarded: "awarded",
          declined: "declined",
@@ -153,11 +158,12 @@ class ApplicationForm < ApplicationRecord
         -> {
           where(
             status: %i[
-              submitted
               preliminary_check
+              submitted
               initial_assessment
               waiting_on
               received
+              overdue
               awarded_pending_checks
               potential_duplicate_in_dqt
             ],

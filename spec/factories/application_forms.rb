@@ -26,6 +26,10 @@
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
+#  overdue_further_information                   :boolean          default(FALSE), not null
+#  overdue_professional_standing                 :boolean          default(FALSE), not null
+#  overdue_qualification                         :boolean          default(FALSE), not null
+#  overdue_reference                             :boolean          default(FALSE), not null
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualifications_status                         :string           default("not_started"), not null
 #  received_further_information                  :boolean          default(FALSE), not null
@@ -146,6 +150,11 @@ FactoryBot.define do
 
     trait :received do
       status { "received" }
+      submitted_at { Time.zone.now }
+    end
+
+    trait :overdue do
+      status { "overdue" }
       submitted_at { Time.zone.now }
     end
 

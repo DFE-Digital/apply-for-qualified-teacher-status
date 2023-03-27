@@ -128,21 +128,15 @@ class AssessorInterface::ApplicationFormsShowViewObject
           )
         end
       when :qualification_requests
-        if application_form.received_qualification ||
-             application_form.waiting_on_qualification
-          url_helpers.assessor_interface_application_form_assessment_qualification_requests_path(
-            application_form,
-            assessment,
-          )
-        end
+        url_helpers.assessor_interface_application_form_assessment_qualification_requests_path(
+          application_form,
+          assessment,
+        )
       when :reference_requests
-        if application_form.received_reference ||
-             application_form.waiting_on_reference
-          url_helpers.assessor_interface_application_form_assessment_reference_requests_path(
-            application_form,
-            assessment,
-          )
-        end
+        url_helpers.assessor_interface_application_form_assessment_reference_requests_path(
+          application_form,
+          assessment,
+        )
       end
     end
   end
@@ -208,22 +202,21 @@ class AssessorInterface::ApplicationFormsShowViewObject
       when :reference_requests
         return :completed if assessment.references_verified
 
-        if application_form.received_reference &&
-             application_form.waiting_on_reference
-          unreviewed_requests =
-            reference_requests.filter(&:received?).reject(&:reviewed?)
-          unreviewed_requests.empty? ? :waiting_on : :received
-        elsif application_form.received_reference
+        unreviewed_requests = reference_requests.reject(&:reviewed?)
+
+        if unreviewed_requests.empty?
+          :in_progress
+        elsif unreviewed_requests.any?(&:expired?)
+          :overdue
+        elsif unreviewed_requests.any?(&:received?)
           :received
-        elsif application_form.waiting_on_reference
-          :waiting_on
         else
-          :cannot_start
+          :waiting_on
         end
       when :qualification_requests
         unreviewed_requests = qualification_requests.reject(&:reviewed?)
 
-        if qualification_requests.all?(&:reviewed?)
+        if unreviewed_requests.empty?
           :completed
         elsif unreviewed_requests.any?(&:expired?)
           :overdue
