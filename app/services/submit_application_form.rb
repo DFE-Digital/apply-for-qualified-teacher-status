@@ -58,7 +58,7 @@ class SubmitApplicationForm
   delegate :region, to: :application_form
 
   def create_professional_standing_request(assessment)
-    return unless region.teaching_authority_provides_written_statement
+    return unless application_form.teaching_authority_provides_written_statement
 
     requestable = ProfessionalStandingRequest.create!(assessment:)
 

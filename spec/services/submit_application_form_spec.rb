@@ -98,7 +98,9 @@ RSpec.describe SubmitApplicationForm do
 
     context "when teaching authority provides the written statement" do
       before do
-        region.update!(teaching_authority_provides_written_statement: true)
+        application_form.update!(
+          teaching_authority_provides_written_statement: true,
+        )
         call
       end
 
@@ -127,7 +129,9 @@ RSpec.describe SubmitApplicationForm do
 
     context "when teaching authority provides the written statement" do
       before do
-        region.update!(teaching_authority_provides_written_statement: true)
+        application_form.update!(
+          teaching_authority_provides_written_statement: true,
+        )
       end
 
       it "records a timeline event" do
