@@ -8,15 +8,7 @@ class UpdateDQTTRNRequestJob < ApplicationJob
 
     application_form = dqt_trn_request.application_form
 
-    response =
-      if dqt_trn_request.initial?
-        DQT::Client::CreateTRNRequest.call(
-          request_id: dqt_trn_request.request_id,
-          application_form:,
-        )
-      else
-        DQT::Client::ReadTRNRequest.call(request_id: dqt_trn_request.request_id)
-      end
+    response = fetch_response(dqt_trn_request)
 
     dqt_trn_request.pending! if dqt_trn_request.initial?
 
@@ -35,5 +27,31 @@ class UpdateDQTTRNRequestJob < ApplicationJob
     if dqt_trn_request.pending?
       UpdateDQTTRNRequestJob.set(wait: 1.hour).perform_later(dqt_trn_request)
     end
+  end
+
+  private
+
+  def fetch_response(dqt_trn_request)
+    if dqt_trn_request.initial?
+      DQT::Client::CreateTRNRequest.call(
+        request_id: dqt_trn_request.request_id,
+        application_form: dqt_trn_request.application_form,
+      )
+    else
+      DQT::Client::ReadTRNRequest.call(request_id: dqt_trn_request.request_id)
+    end
+  rescue Faraday::Error => e
+    Sentry.configure_scope do |scope|
+      scope.set_context(
+        "response",
+        {
+          status: e.response_status,
+          headers: e.response_headers,
+          body: e.response_body,
+        },
+      )
+    end
+
+    raise
   end
 end
