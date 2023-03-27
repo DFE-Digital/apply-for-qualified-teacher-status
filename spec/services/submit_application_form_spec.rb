@@ -98,7 +98,9 @@ RSpec.describe SubmitApplicationForm do
 
     context "when teaching authority provides the written statement" do
       before do
-        region.update!(teaching_authority_provides_written_statement: true)
+        application_form.update!(
+          teaching_authority_provides_written_statement: true,
+        )
         call
       end
 
@@ -110,7 +112,7 @@ RSpec.describe SubmitApplicationForm do
   describe "preliminary check note" do
     before do
       create(:staff, support_console_permission: true)
-      application_form.update!(requires_preliminary_check: true)
+      region.update!(requires_preliminary_check: true)
     end
 
     it "creates a note" do
@@ -127,7 +129,9 @@ RSpec.describe SubmitApplicationForm do
 
     context "when teaching authority provides the written statement" do
       before do
-        region.update!(teaching_authority_provides_written_statement: true)
+        application_form.update!(
+          teaching_authority_provides_written_statement: true,
+        )
       end
 
       it "records a timeline event" do
@@ -184,8 +188,8 @@ RSpec.describe SubmitApplicationForm do
 
     context "when teaching authority provides the written statement" do
       before do
+        region.update!(requires_preliminary_check: false)
         application_form.update!(
-          requires_preliminary_check: false,
           teaching_authority_provides_written_statement: true,
         )
       end
