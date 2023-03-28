@@ -1,4 +1,8 @@
-class DeviseMailer < Devise::Mailer
+# frozen_string_literal: true
+
+require "devise/passwordless/mailer"
+
+class DeviseMailer < Devise::Passwordless::Mailer
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
       "GOVUK_NOTIFY_TEMPLATE_ID_DEVISE",
