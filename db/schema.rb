@@ -84,9 +84,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.bigint "english_language_provider_id"
     t.text "english_language_provider_reference", default: "", null: false
     t.datetime "awarded_at"
-    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "written_statement_confirmation", default: false, null: false
+    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "english_language_provider_other", default: false, null: false
     t.datetime "declined_at"
     t.boolean "waiting_on_professional_standing", default: false, null: false
@@ -97,8 +97,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.boolean "received_reference", default: false, null: false
     t.boolean "waiting_on_qualification", default: false, null: false
     t.boolean "received_qualification", default: false, null: false
-    t.boolean "written_statement_optional", default: false, null: false
     t.boolean "requires_preliminary_check", default: false, null: false
+    t.boolean "written_statement_optional", default: false, null: false
     t.boolean "overdue_further_information", default: false, null: false
     t.boolean "overdue_professional_standing", default: false, null: false
     t.boolean "overdue_qualification", default: false, null: false
@@ -164,8 +164,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "eligibility_enabled", default: true, null: false
-    t.boolean "eligibility_skip_questions", default: false, null: false
     t.text "qualifications_information", default: "", null: false
+    t.boolean "eligibility_skip_questions", default: false, null: false
     t.boolean "requires_preliminary_check", default: false, null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
@@ -355,12 +355,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
-    t.boolean "application_form_skip_work_history", default: false, null: false
     t.text "qualifications_information", default: "", null: false
+    t.boolean "application_form_skip_work_history", default: false, null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
-    t.boolean "written_statement_optional", default: false, null: false
     t.boolean "requires_preliminary_check", default: false, null: false
+    t.boolean "written_statement_optional", default: false, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end

@@ -13,6 +13,15 @@ def filter_record_not_unique_exception_messages!(event, hint)
   end
 end
 
+def ignore_sidekiq_errors_if_retry(event)
+  job = event&.transaction&.context&.job
+  return false if job.nil?
+  event&.exception.is_a?(Faraday::Error) &&
+    (
+      job.is_a?(ActiveStorage::AnalyzeJob) || job.is_a?(ActiveStorage::PurgeJob)
+    ) && job.retry?
+end
+
 Sentry.init do |config|
   config.breadcrumbs_logger = %i[active_support_logger http_logger]
 
@@ -25,6 +34,7 @@ Sentry.init do |config|
 
   config.before_send =
     lambda do |event, hint|
+      return nil if ignore_sidekiq_errors_if_retry(event)
       filter_record_not_unique_exception_messages!(event, hint)
       filter.filter(event.to_hash)
     end
