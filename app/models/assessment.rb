@@ -209,7 +209,7 @@ class Assessment < ApplicationRecord
 
   def all_qualification_requests_passed?
     if qualification_requests.present?
-      qualification_requests.all?(:passed)
+      qualification_requests.all?(&:passed)
     else
       true
     end
