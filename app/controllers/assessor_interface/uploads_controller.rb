@@ -4,6 +4,8 @@ module AssessorInterface
   class UploadsController < BaseController
     include ActiveStorage::Streaming
 
+    before_action :authorize_assessor
+
     def show
       send_blob_stream(upload.attachment, disposition: :inline)
     end
