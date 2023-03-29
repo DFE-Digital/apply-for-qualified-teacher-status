@@ -135,6 +135,10 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    get "/application/documents/:document_id/uploads/:id",
+        to: "uploads#show",
+        as: :application_form_document_upload
   end
 
   namespace :eligibility_interface, path: "/eligibility" do
@@ -302,7 +306,7 @@ Rails.application.routes.draw do
       resource :written_statement, only: %i[edit update]
 
       resources :documents, only: %i[show edit update] do
-        resources :uploads, only: %i[new create destroy] do
+        resources :uploads, only: %i[show new create destroy] do
           get "delete", on: :member
         end
       end
