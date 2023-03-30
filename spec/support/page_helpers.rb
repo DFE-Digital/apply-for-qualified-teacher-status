@@ -403,6 +403,10 @@ module PageHelpers
       PageObjects::TeacherInterface::EnglishLanguageProviderReference.new
   end
 
+  def teacher_magic_link_page
+    @teacher_magic_link_page = PageObjects::TeacherInterface::MagicLink.new
+  end
+
   def teacher_name_and_date_of_birth_page
     @teacher_name_and_date_of_birth_page =
       PageObjects::TeacherInterface::NameAndDateOfBirth.new

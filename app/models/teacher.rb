@@ -25,8 +25,7 @@
 class Teacher < ApplicationRecord
   include Emailable
 
-  devise :registerable, :timeoutable, :trackable
-  include Devise::Models::OtpAuthenticatable
+  devise :magic_link_authenticatable, :registerable, :timeoutable, :trackable
 
   self.timeout_in = 1.hour
 
@@ -39,6 +38,11 @@ class Teacher < ApplicationRecord
   def send_otp(*)
     otp = Devise::Otp.derive_otp(secret_key)
     send_devise_notification(:otp, otp)
+  end
+
+  def send_magic_link(*)
+    token = Devise::Passwordless::LoginToken.encode(self)
+    send_devise_notification(:magic_link, token, {})
   end
 
   def send_devise_notification(notification, *args)

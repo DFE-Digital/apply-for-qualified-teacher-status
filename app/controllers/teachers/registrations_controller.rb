@@ -11,9 +11,8 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
     self.resource = Teacher.find_or_initialize_by_email(sign_up_params[:email])
 
     if resource.save
-      resource.create_otp
-      resource.send_otp
-      redirect_to new_teacher_otp_path(uuid: resource.reload.uuid)
+      resource.send_magic_link
+      redirect_to teacher_check_email_path(email: resource.email)
     else
       render :new, status: :unprocessable_entity
     end
