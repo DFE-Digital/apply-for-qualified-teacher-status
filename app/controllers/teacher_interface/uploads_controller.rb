@@ -5,6 +5,10 @@ module TeacherInterface
     include ActiveStorage::Streaming
     include HandleApplicationFormSection
     include HistoryTrackable
+    include StreamedResponseAuthenticatable
+
+    skip_before_action :authenticate_teacher!, only: :show
+    before_action -> { authenticate_or_redirect(:teacher) }, only: :show
 
     before_action :redirect_unless_draft_or_further_information
     before_action :load_application_form
