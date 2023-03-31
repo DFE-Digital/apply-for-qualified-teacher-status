@@ -42,5 +42,14 @@ RSpec.describe AssessorInterface::UploadsController, type: :controller do
         expect(response.status).to eq(404)
       end
     end
+
+    context "when the user session times out" do
+      before { sign_out staff }
+
+      it "redirects to the signin page" do
+        perform
+        expect(response).to redirect_to(new_staff_session_path)
+      end
+    end
   end
 end

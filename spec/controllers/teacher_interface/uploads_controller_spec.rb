@@ -82,5 +82,14 @@ RSpec.describe TeacherInterface::UploadsController, type: :controller do
         expect(response.status).to eq(404)
       end
     end
+
+    context "when the user session times out" do
+      before { sign_out teacher }
+
+      it "redirects to the signin page" do
+        perform
+        expect(response).to redirect_to(new_teacher_session_path)
+      end
+    end
   end
 end
