@@ -18,8 +18,9 @@ def ignore_sidekiq_errors_if_retry(event)
   return false if job.nil?
   event&.exception.is_a?(Faraday::Error) &&
     (
-      job.is_a?(ActiveStorage::AnalyzeJob) || job.is_a?(ActiveStorage::PurgeJob)
-    ) && job.retry?
+      job["class"] == "ActiveStorage::AnalyzeJob" ||
+        job["class"] == "ActiveStorage::PurgeJob"
+    ) && job["retry"] == true
 end
 
 Sentry.init do |config|
