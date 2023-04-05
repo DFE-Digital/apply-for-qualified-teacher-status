@@ -1,4 +1,5 @@
 <% content_for :page_title, t(".title") %>
+<% content_for :feedback_url, t("service.form.referee_feedback") %>
 
 <% if @reference_request.received? %>
   <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
