@@ -205,6 +205,27 @@ jobs:
           environment: ${{ matrix.environment }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - uses: DfE-Digital/keyvault-yaml-secret@v1
+        id: keyvault-yaml-secret
+        with:
+          keyvault: s165d01-afqts-dv-kv
+          secret: MONITORING
+          key: SLACK_WEBHOOK
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Notify Slack channel on job failure
+        if: failure()
+        id: notify-slack-on-deploy-failure
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: Deployment of apply-for-qualified-teacher-status to ${{ matrix.environment }} failed
+          SLACK_MESSAGE: |
+            Deployment of docker image ${{ needs.docker.outputs.docker_image }} to ${{ matrix.environment }} environment failed
+          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
+          SLACK_COLOR: failure
+          SLACK_FOOTER: Sent from deploy_nonprod job in deploy workflow
+
   deploy_production:
     name: Deploy to production environment
     needs: [docker, rspec, deploy_nonprod]
