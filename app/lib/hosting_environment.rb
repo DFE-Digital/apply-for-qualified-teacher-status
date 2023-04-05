@@ -13,9 +13,11 @@ module HostingEnvironment
     end
 
     def phase_text
-      return I18n.t("service.phase_banner_text") if production?
-
-      "This is a '#{phase}' version of the service."
+      if production?
+        "This is a new service – <a href=\"#{I18n.t("service.form.feedback")}\">your feedback will help us to improve it</a>."
+      else
+        "This is a '#{phase}' version of the service."
+      end
     end
 
     def host
