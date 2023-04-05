@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HostingEnvironment
   class << self
     def name
@@ -10,12 +12,6 @@ module HostingEnvironment
       return "Pre-production" if preprod?
 
       name.capitalize
-    end
-
-    def phase_text
-      return I18n.t("service.phase_banner_text") if production?
-
-      "This is a '#{phase}' version of the service."
     end
 
     def host
