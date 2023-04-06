@@ -20,10 +20,30 @@ module AssessorInterface
     end
 
     delegate :assessment, to: :assessment_section
-    delegate :application_form, :professional_standing_request, to: :assessment
+    delegate :application_form, to: :assessment
     delegate :registration_number, to: :application_form
     delegate :checks, to: :assessment_section
     delegate :region, :country, to: :application_form
+
+    def qualifications
+      application_form.qualifications.ordered
+    end
+
+    def work_histories
+      application_form.work_histories.ordered
+    end
+
+    def work_history_months_count
+      @months_count = WorkHistoryDuration.new(application_form:).count_months
+    end
+
+    def show_registration_number_summary
+      application_form.needs_registration_number?
+    end
+
+    def show_written_statement_summary
+      application_form.needs_written_statement?
+    end
 
     def notes_label_key_for(failure_reason:)
       build_key(failure_reason, "label")
@@ -37,63 +57,28 @@ module AssessorInterface
       build_key(failure_reason, "placeholder")
     end
 
-    def render_form?
-      professional_standing_request_received? && !render_section_content?
+    def online_checker_url
+      @online_checker_url ||=
+        region.teaching_authority_online_checker_url.presence ||
+          region.country.teaching_authority_online_checker_url
     end
 
-    def render_section_content?
-      assessment_section.english_language_proficiency? &&
-        application_form.english_language_exempt?
+    def work_history?
+      assessment_section.key == "work_history"
     end
 
-    def show_english_language_provider_details?
-      assessment_section.english_language_proficiency? &&
-        application_form.english_language_proof_method_provider?
-    end
-
-    def show_english_language_exemption_checkbox?
-      (
-        application_form.english_language_citizenship_exempt == true &&
-          assessment_section.personal_information?
-      ) ||
-        (
-          application_form.english_language_qualification_exempt == true &&
-            assessment_section.qualifications?
-        )
-    end
-
-    def teacher_name_and_date_of_birth
-      [
-        application_form.given_names,
-        application_form.family_name,
-        "(#{application_form.date_of_birth.to_fs(:long_ordinal_uk)})",
-      ].join(" ")
+    def professional_standing?
+      assessment_section.key == "professional_standing"
     end
 
     private
 
     attr_reader :params
 
-    delegate :professional_standing_request, to: :assessment
-
     def build_key(failure_reason, key_section)
       key =
-        if FailureReasons.decline?(failure_reason:)
-          "decline"
-        elsif FailureReasons.further_information_request_document_type(
-              failure_reason:,
-            ).present?
-          "document"
-        else
-          "text"
-        end
-
-      "helpers.#{key_section}.assessor_interface_assessment_section_form.failure_reason_notes.#{key}"
-    end
-
-    def professional_standing_request_received?
-      professional_standing_request.nil? ||
-        professional_standing_request.received?
+        "helpers.#{key_section}.assessor_interface_assessment_section_form.failure_reason_notes"
+      FailureReasons.decline?(failure_reason:) ? "#{key}_decline" : key
     end
   end
 end

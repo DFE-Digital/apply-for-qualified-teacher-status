@@ -26,21 +26,15 @@
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
-#  overdue_further_information                   :boolean          default(FALSE), not null
-#  overdue_professional_standing                 :boolean          default(FALSE), not null
-#  overdue_qualification                         :boolean          default(FALSE), not null
-#  overdue_reference                             :boolean          default(FALSE), not null
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualifications_status                         :string           default("not_started"), not null
 #  received_further_information                  :boolean          default(FALSE), not null
 #  received_professional_standing                :boolean          default(FALSE), not null
-#  received_qualification                        :boolean          default(FALSE), not null
 #  received_reference                            :boolean          default(FALSE), not null
 #  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
-#  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  status                                        :string           default("draft"), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
@@ -48,12 +42,10 @@
 #  teaching_authority_provides_written_statement :boolean          default(FALSE), not null
 #  waiting_on_further_information                :boolean          default(FALSE), not null
 #  waiting_on_professional_standing              :boolean          default(FALSE), not null
-#  waiting_on_qualification                      :boolean          default(FALSE), not null
 #  waiting_on_reference                          :boolean          default(FALSE), not null
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
-#  written_statement_optional                    :boolean          default(FALSE), not null
 #  written_statement_status                      :string           default("not_started"), not null
 #  created_at                                    :datetime         not null
 #  updated_at                                    :datetime         not null
@@ -101,7 +93,6 @@ FactoryBot.define do
       region.status_check_online? || region.sanction_check_online?
     end
     reduced_evidence_accepted { region.reduced_evidence_accepted }
-    written_statement_optional { region.written_statement_optional }
 
     trait :completed do
       personal_information_status { "completed" }
@@ -132,12 +123,6 @@ FactoryBot.define do
       end
     end
 
-    trait :preliminary_check do
-      requires_preliminary_check { true }
-      status { "preliminary_check" }
-      submitted_at { Time.zone.now }
-    end
-
     trait :initial_assessment do
       status { "initial_assessment" }
       submitted_at { Time.zone.now }
@@ -150,11 +135,6 @@ FactoryBot.define do
 
     trait :received do
       status { "received" }
-      submitted_at { Time.zone.now }
-    end
-
-    trait :overdue do
-      status { "overdue" }
       submitted_at { Time.zone.now }
     end
 
@@ -178,10 +158,6 @@ FactoryBot.define do
     trait :potential_duplicate_in_dqt do
       status { "potential_duplicate_in_dqt" }
       submitted_at { Time.zone.now }
-    end
-
-    trait :old_regs do
-      created_at { Date.new(2023, 1, 31) }
     end
 
     trait :new_regs do
@@ -278,9 +254,7 @@ FactoryBot.define do
 
     trait :with_english_language_provider do
       english_language_proof_method { "provider" }
-      english_language_provider do
-        EnglishLanguageProvider.all.sample || create(:english_language_provider)
-      end
+      association :english_language_provider
       english_language_provider_reference { "reference" }
     end
 
@@ -294,14 +268,6 @@ FactoryBot.define do
           document: application_form.english_language_proficiency_document,
         )
       end
-    end
-
-    trait :with_english_language_exemption_by_citizenship do
-      english_language_citizenship_exempt { true }
-    end
-
-    trait :with_english_language_exemption_by_qualification do
-      english_language_qualification_exempt { true }
     end
 
     trait :with_work_history do

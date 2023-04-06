@@ -226,84 +226,89 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
     describe "work history" do
       subject(:work_history_status) { application_form.work_history_status }
 
-      context "with has no work history" do
+      context "with unknown work history" do
+        let(:application_form) { create(:application_form) }
+        it { is_expected.to eq("not_started") }
+      end
+
+      context "with no work history" do
         let(:application_form) do
           create(:application_form, has_work_history: false)
-        end
-        it { is_expected.to eq("not_started") }
-      end
-
-      context "with has work history but no work history" do
-        let(:application_form) do
-          create(:application_form, has_work_history: true)
-        end
-        it { is_expected.to eq("not_started") }
-      end
-
-      context "with an incomplete work history" do
-        let(:application_form) do
-          create(:application_form).tap do |application_form|
-            create(:work_history, application_form:)
-          end
-        end
-        it { is_expected.to eq("in_progress") }
-      end
-
-      context "with a complete work history" do
-        let(:application_form) do
-          create(:application_form).tap do |application_form|
-            create(:work_history, :completed, application_form:)
-          end
         end
         it { is_expected.to eq("completed") }
       end
 
-      context "under the old regulations" do
-        context "with unknown work history" do
-          let(:application_form) { create(:application_form, :old_regs) }
-          it { is_expected.to eq("not_started") }
+      context "with has work history" do
+        context "without work history" do
+          let(:application_form) do
+            create(:application_form, has_work_history: true)
+          end
+          it { is_expected.to eq("in_progress") }
         end
 
-        context "with no work history" do
+        context "with an incomplete work history" do
           let(:application_form) do
-            create(:application_form, :old_regs, has_work_history: false)
+            create(
+              :application_form,
+              has_work_history: true,
+            ).tap do |application_form|
+              create(:work_history, application_form:)
+            end
+          end
+          it { is_expected.to eq("in_progress") }
+        end
+
+        context "with a complete work history" do
+          let(:application_form) do
+            create(
+              :application_form,
+              has_work_history: true,
+            ).tap do |application_form|
+              create(:work_history, :completed, application_form:)
+            end
           end
           it { is_expected.to eq("completed") }
         end
+      end
 
-        context "with has work history" do
-          context "without work history" do
-            let(:application_form) do
-              create(:application_form, :old_regs, has_work_history: true)
-            end
-            it { is_expected.to eq("in_progress") }
-          end
+      context "when new regulations are active" do
+        before(:all) do
+          FeatureFlags::FeatureFlag.activate(:application_work_history)
+        end
+        after(:all) do
+          FeatureFlags::FeatureFlag.deactivate(:application_work_history)
+        end
 
-          context "with an incomplete work history" do
-            let(:application_form) do
-              create(
-                :application_form,
-                :old_regs,
-                has_work_history: true,
-              ).tap do |application_form|
-                create(:work_history, application_form:)
-              end
-            end
-            it { is_expected.to eq("in_progress") }
+        context "with has no work history" do
+          let(:application_form) do
+            create(:application_form, has_work_history: false)
           end
+          it { is_expected.to eq("not_started") }
+        end
 
-          context "with a complete work history" do
-            let(:application_form) do
-              create(
-                :application_form,
-                :old_regs,
-                has_work_history: true,
-              ).tap do |application_form|
-                create(:work_history, :completed, application_form:)
-              end
-            end
-            it { is_expected.to eq("completed") }
+        context "with has work history but no work history" do
+          let(:application_form) do
+            create(:application_form, has_work_history: true)
           end
+          it { is_expected.to eq("not_started") }
+        end
+
+        context "with an incomplete work history" do
+          let(:application_form) do
+            create(:application_form).tap do |application_form|
+              create(:work_history, application_form:)
+            end
+          end
+          it { is_expected.to eq("in_progress") }
+        end
+
+        context "with a complete work history" do
+          let(:application_form) do
+            create(:application_form).tap do |application_form|
+              create(:work_history, :completed, application_form:)
+            end
+          end
+          it { is_expected.to eq("completed") }
         end
       end
     end

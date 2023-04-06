@@ -3,13 +3,10 @@
 class UpdateWorkingDaysJob < ApplicationJob
   def perform
     update_application_forms_since_submission
-
     update_assessments_since_started
     update_assessments_started_to_recommendation
     update_assessments_submission_to_recommendation
     update_assessments_submission_to_started
-
-    update_further_information_requests_assessment_started_to_creation
     update_further_information_requests_since_received
     update_further_information_requests_received_to_recommendation
   end
@@ -93,22 +90,6 @@ class UpdateWorkingDaysJob < ApplicationJob
             calendar.business_days_between(
               assessment.application_form.submitted_at,
               assessment.started_at,
-            ),
-        )
-      end
-  end
-
-  def update_further_information_requests_assessment_started_to_creation
-    FurtherInformationRequest
-      .joins(:assessment)
-      .includes(:assessment)
-      .where.not(assessment: { started_at: nil })
-      .find_each do |further_information_request|
-        further_information_request.update!(
-          working_days_assessment_started_to_creation:
-            calendar.business_days_between(
-              further_information_request.assessment.started_at,
-              further_information_request.created_at,
             ),
         )
       end

@@ -4,19 +4,23 @@ module PageObjects
   module TeacherInterface
     class ReferenceRequestQuestionForm < SitePrism::Page
       section :form, "form" do
-        sections :radio_items,
-                 PageObjects::GovukRadioItem,
-                 ".govuk-radios__item"
+        section :yes_radio_item,
+                PageObjects::GovukRadioItem,
+                ".govuk-radios__item:nth-of-type(1)"
+        section :no_radio_item,
+                PageObjects::GovukRadioItem,
+                ".govuk-radios__item:nth-of-type(2)"
+
         element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
       end
 
       def submit_yes
-        form.radio_items.first.choose
+        form.yes_radio_item.choose
         form.continue_button.click
       end
 
       def submit_no
-        form.radio_items.second.choose
+        form.no_radio_item.choose
         form.continue_button.click
       end
     end

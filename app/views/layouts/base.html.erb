@@ -36,13 +36,8 @@
           <strong class="govuk-tag govuk-phase-banner__content__tag app-environment-tag--<%= HostingEnvironment.name %>">
             <%= HostingEnvironment.phase %>
           </strong>
-
           <span class="govuk-phase-banner__text">
-            <% if HostingEnvironment.production? %>
-              This is a new service - <%= link_to "your feedback will help us to improve it", yield(:feedback_url).presence || t("service.form.feedback") %>.
-            <% else %>
-              This is a ‘<%= HostingEnvironment.phase %>’ version of the service.
-            <% end %>
+            <%= HostingEnvironment.phase_text.html_safe %>
           </span>
         </p>
       </div>
@@ -72,14 +67,6 @@
               <%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %>
               for support.
             </p>
-            <p>
-              So that we can help you quickly, please include as much detail as possible
-              about the problem you‘re experiencing, for example:
-            </p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>any important details (such as reference numbers etc)</li>
-              <li>screenshots that illustrate your problem</li>
-            </ul>
             <p>We‘ll aim to respond to you within 2 working days.</p>
           </div>
         <% end %>

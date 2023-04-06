@@ -3,7 +3,7 @@
 module TeacherInterface
   class WrittenStatementConfirmationForm < BaseForm
     attr_accessor :application_form
-    attribute :written_statement_confirmation, :boolean
+    attribute :written_statement_confirmation
 
     validates :application_form, presence: true
     validates :written_statement_confirmation, presence: true
@@ -11,11 +11,7 @@ module TeacherInterface
     private
 
     def update_model
-      if written_statement_confirmation
-        application_form.update!(written_statement_confirmation: true)
-      else
-        application_form.update!(written_statement_confirmation: false)
-      end
+      application_form.update!(written_statement_confirmation:)
     end
   end
 end

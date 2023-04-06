@@ -1,7 +1,9 @@
 <% english_language_exempt_countries.in_groups(2, false) do |exempt_countries| %>
-  <ul class="govuk-list govuk-list--bullet govuk-!-display-inline-block govuk-!-margin-4">
-    <% exempt_countries.each do |exempt_country| %>
-      <li><%= exempt_country %></li>
-    <% end %>
-  </ul>
+  <div class="govuk-grid-column-one-half">
+    <ul class="govuk-list govuk-list--bullet">
+      <% exempt_countries.each do |exempt_country| %>
+        <li><%= exempt_country %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>

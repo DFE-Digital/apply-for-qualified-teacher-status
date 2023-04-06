@@ -5,6 +5,10 @@ module EligibilityInterface
     include EnforceEligibilityQuestionOrder
 
     def new
+      unless FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
+        redirect_to paths[:misconduct]
+      end
+
       @work_experience_form =
         WorkExperienceForm.new(
           work_experience: eligibility_check.work_experience,

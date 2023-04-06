@@ -21,10 +21,6 @@ module PageObjects
         element :name, "input"
       end
 
-      section :email_filter, "#app-applications-filters-email" do
-        element :email, "input"
-      end
-
       section :submitted_at_filter, "#app-applications-filters-submitted-at" do
         element :start_day,
                 "#assessor_interface_filter_form_submitted_at_after_3i"

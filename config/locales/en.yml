@@ -16,13 +16,7 @@ en:
       verification: ApplyQTS.Verification@education.gov.uk
 
     url: https://apply-for-qts-in-england.education.gov.uk
-
-    form:
-      feedback: https://forms.office.com/e/P70VPi8Ev1
-      opt_out_research: https://forms.office.com/e/LiNd47gbde
-      referee_feedback: https://forms.office.com/e/kuDa4nsySt
-      referee_research: https://forms.office.com/e/YhQmMgRNZM
-      research: https://forms.office.com/e/dTGEjsTN72
+    phase_banner_text: This is a new service – <a href="https://docs.google.com/forms/d/e/1FAIpQLSePiIC7xO1Dt6oxvIdL6jcGrlUkRDJDS1kxOcqvK-uspBED9w/viewform">your feedback will help us to improve it</a>.
 
   teacher:
     registration:
@@ -33,7 +27,7 @@ en:
       identification: identity
       name_change: name change
       medium_of_instruction: medium of instruction
-      english_language_proficiency: English language proficiency test
+      english_language_proficiency: english proficiency test
       qualification_certificate: certificate
       qualification_transcript: transcript
       qualification_document: qualification

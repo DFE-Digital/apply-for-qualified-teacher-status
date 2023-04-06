@@ -1,10 +1,11 @@
 module StatusTag
   class Component < ViewComponent::Base
-    def initialize(key:, status:, class_context: nil)
+    def initialize(key:, status:, class_context: nil, context: :teacher)
       super
       @key = key
       @status = status.to_sym
       @class_context = class_context
+      @context = context
     end
 
     def id
@@ -12,7 +13,7 @@ module StatusTag
     end
 
     def text
-      I18n.t(@status, scope: %i[components status_tag])
+      status_text(@status, context: @context)
     end
 
     def classes
@@ -20,7 +21,6 @@ module StatusTag
     end
 
     COLOURS = {
-      accepted: "green",
       awarded: "green",
       awarded_pending_checks: "turquoise",
       cannot_start: "grey",
@@ -31,11 +31,8 @@ module StatusTag
       initial_assessment: "blue",
       invalid: "red",
       not_started: "grey",
-      overdue: "pink",
       potential_duplicate_in_dqt: "pink",
-      preliminary_check: "pink",
       received: "purple",
-      rejected: "red",
       requested: "yellow",
       submitted: "grey",
       valid: "green",
@@ -43,7 +40,12 @@ module StatusTag
     }.freeze
 
     def colour
-      COLOURS[@status]
+      colours = COLOURS[@status]
+      return nil if colours.nil?
+
+      colours.is_a?(String) ? colours : colours[@context]
     end
+
+    delegate :status_text, to: :helpers
   end
 end

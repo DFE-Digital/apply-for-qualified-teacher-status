@@ -1,18 +1,15 @@
 <% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("helpers.legend.teacher_interface_reference_request_children_response_form.children_response")}" %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_reference_request_path) %>
-<% content_for :feedback_url, t("service.form.referee_feedback") %>
 
 <%= form_with model: @form, url: children_teacher_interface_reference_request_path do |f| %>
   <%= f.govuk_error_summary %>
 
-  <span class="govuk-caption-l">Question 3 of 7</span>
+  <span class="govuk-caption-l">Question 3 of 5</span>
 
-  <%= f.govuk_radio_buttons_fieldset :children_response, legend: { tag: "h1", size: "l" } do %>
-    <%= f.govuk_radio_button :children_response, :true, link_errors: true %>
-    <%= f.govuk_radio_button :children_response, :false do %>
-      <%= f.govuk_text_area :children_comment %>
-    <% end %>
-  <% end %>
+  <%= f.govuk_collection_radio_buttons :children_response,
+                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
+                                       :value,
+                                       legend: { tag: "h1", size: "l" } %>
 
   <%= f.govuk_submit %>
 <% end %>

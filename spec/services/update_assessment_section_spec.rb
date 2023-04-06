@@ -27,10 +27,10 @@ RSpec.describe UpdateAssessmentSection do
       ).to(:completed)
     end
 
-    it "records a timeline event" do
-      expect { subject }.to have_recorded_timeline_event(
-        :assessment_section_recorded,
-      )
+    it "creates a timeline event" do
+      expect { subject }.to change {
+        TimelineEvent.assessment_section_recorded.count
+      }.by(1)
     end
 
     it "creates the assessment failure reason records" do
@@ -132,10 +132,8 @@ RSpec.describe UpdateAssessmentSection do
 
     it { is_expected.to be false }
 
-    it "doesn't record a timeline event" do
-      expect { subject }.to_not have_recorded_timeline_event(
-        :assessment_section_recorded,
-      )
+    it "doesn't create a timeline event" do
+      expect { subject }.to_not(change { TimelineEvent.count })
     end
 
     it "doesn't change the assessor" do
@@ -157,9 +155,9 @@ RSpec.describe UpdateAssessmentSection do
       described_class.call(assessment_section:, user:, params: other_params)
     end
 
-    it "doesn't record a timeline event" do
-      expect { subject }.to_not have_recorded_timeline_event(
-        :assessment_section_recorded,
+    it "doesn't create a timeline event" do
+      expect { subject }.to_not(
+        change { TimelineEvent.assessment_section_recorded.count },
       )
     end
   end

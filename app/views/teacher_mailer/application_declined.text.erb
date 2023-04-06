@@ -2,7 +2,9 @@ Dear <%= application_form_full_name(@application_form) %>
 
 # Your QTS application has been declined
 
-<%= render "shared/teacher_mailer/reference_number" %>
+Your reference number is:
+
+<%= @application_form.reference %>
 
 Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application.
 
@@ -11,15 +13,16 @@ Unfortunately, we’re unable to award QTS status.
 <%- if @further_information_requested -%>
 # What you can do next
 
-You can sign in to find out why your application was declined:
+You can sign in to explore other routes to teaching in England:
 <%- else -%>
 # Why your QTS application was declined
 
-You can sign in to find out why your application was declined:
+You can sign in to view the reason why your application was declined:
 <%- end -%>
 
 <%= new_teacher_session_url %>
 
 <%= render "shared/teacher_mailer/help_us_to_improve_this_service" %>
 
-<%= render "shared/teacher_mailer/footer" %>
+Kind regards,
+The Teacher Qualifications Team

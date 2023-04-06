@@ -32,12 +32,6 @@ class CountryCode
       Country::CODES_ELIGIBLE_IN_FEBRUARY_2023.include?(code)
     end
 
-    def secondary_education_teaching_qualification_required?(code)
-      Country::CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION.include?(
-        code,
-      )
-    end
-
     LOCATIONS_BY_COUNTRY_CODE =
       Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST
         .map { |row| [CountryCode.from_location(row.last), row.last] }

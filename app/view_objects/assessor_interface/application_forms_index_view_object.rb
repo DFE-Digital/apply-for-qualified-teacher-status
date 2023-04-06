@@ -3,6 +3,7 @@
 class AssessorInterface::ApplicationFormsIndexViewObject
   include ActionView::Helpers::FormOptionsHelper
   include Pagy::Backend
+  include StatusHelper
 
   def initialize(params:, session:)
     @params = params
@@ -22,8 +23,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   def assessor_filter_options
-    Staff.assessors.order(:name) +
-      [OpenStruct.new(id: "null", name: "Not assigned")]
+    Staff.assessors.order(:name)
   end
 
   def country_filter_options
@@ -36,12 +36,10 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def status_filter_options
     counts = application_forms_without_status_filter.group(:status).count
     statuses = %w[
-      preliminary_check
       submitted
       initial_assessment
       waiting_on
       received
-      overdue
       awarded_pending_checks
       awarded
       declined
@@ -49,7 +47,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     ]
 
     statuses.map do |status|
-      text = I18n.t(status, scope: %i[components status_tag])
+      text = status_text(status, context: :assessor)
       OpenStruct.new(id: status, label: "#{text} (#{counts.fetch(status, 0)})")
     end
   end
@@ -77,7 +75,6 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ::Filters::Assessor,
           ::Filters::Country,
           ::Filters::Name,
-          ::Filters::Email,
           ::Filters::Reference,
           ::Filters::SubmittedAt,
         ]

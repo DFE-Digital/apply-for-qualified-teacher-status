@@ -27,7 +27,7 @@ RSpec.describe Filters::SubmittedAt do
       create(:application_form, :submitted, submitted_at: Date.new(2021, 1, 1))
     end
 
-    it { is_expected.to contain_exactly(included) }
+    it { is_expected.to eq([included]) }
   end
 
   context "with submitted_at before param" do
@@ -48,7 +48,7 @@ RSpec.describe Filters::SubmittedAt do
       create(:application_form, :submitted, submitted_at: Date.new(2020, 1, 2))
     end
 
-    it { is_expected.to contain_exactly(included) }
+    it { is_expected.to eq([included]) }
   end
 
   context "with submitted_at after param" do
@@ -69,7 +69,7 @@ RSpec.describe Filters::SubmittedAt do
       create(:application_form, :submitted, submitted_at: Date.new(2020, 1, 1))
     end
 
-    it { is_expected.to contain_exactly(included) }
+    it { is_expected.to eq([included]) }
   end
 
   context "without submitted_at params" do

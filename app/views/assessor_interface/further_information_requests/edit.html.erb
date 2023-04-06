@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".title")}" %>
+<% content_for :page_title, "#{"Error: " if @further_information_request_form.errors.any?}#{t(".title")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
 
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
@@ -10,13 +10,13 @@
 <% end %>
 
 <% if policy(:assessor).update? && @view_object.can_update? %>
-  <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
+  <%= form_with model: @further_information_request_form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
     <%= f.govuk_error_summary %>
 
-    <%= f.govuk_radio_buttons_fieldset :passed, legend: { size: "s", text: t(".passed") } do %>
+    <%= f.govuk_radio_buttons_fieldset :passed, legend: { size: "s" } do %>
       <%= f.govuk_radio_button :passed, :true, link_errors: true %>
       <%= f.govuk_radio_button :passed, :false do %>
-        <%= f.govuk_text_area :failure_assessor_note, label: { text: t(".failure_assessor_note").html_safe } %>
+        <%= f.govuk_text_area :failure_assessor_note %>
       <% end %>
     <% end %>
 

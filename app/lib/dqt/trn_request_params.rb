@@ -26,13 +26,9 @@ module DQT
         recognitionRoute:
           RecognitionRoute.for_country_code(
             application_form.region.country.code,
-            under_new_regulations:
-              application_form.created_under_new_regulations?,
           ),
         qtsDate: qts_decision_at.to_date.iso8601,
         inductionRequired: induction_required,
-        underNewOverseasRegulations:
-          application_form.created_under_new_regulations?,
       }
     end
 
@@ -85,7 +81,7 @@ module DQT
 
     def qts_decision_at
       if application_form.created_under_new_regulations?
-        application_form.assessment.recommended_at
+        application_form.awarded_at
       else
         application_form.submitted_at
       end

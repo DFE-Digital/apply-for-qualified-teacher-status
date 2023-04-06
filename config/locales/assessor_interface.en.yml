@@ -13,69 +13,39 @@ en:
       show:
         assessment_tasks:
           sections:
-            further_information_requests: Further information requests
-            initial_assessment: Initial assessment
-            pre_assessment_tasks: Pre-assessment tasks
-            verification_requests: Verification requests
+            submitted_details: Check submitted details
+            recommendation: Your recommendation
           items:
-            age_range_subjects: Verify age range and subjects
-            assessment_recommendation: Assessment recommendation
-            await_professional_standing_request: Awaiting third-party professional standing
-            english_language_proficiency: Check English language proficiency
-            initial_assessment_recommendation: Initial assessment recommendation
-            locate_professional_standing_request: Record LOPS response
             personal_information: Check personal information
-            preliminary_check: Preliminary check
-            professional_standing: Check professional standing
-            qualification_requests: Record qualifications responses
             qualifications: Check qualifications
-            reference_requests: Verify reference requests
-            review_professional_standing_request: Review LOPS response
-            review_requested_information: Review requested information from applicant
+            age_range_subjects: Verify age range and subjects
             work_history: Check work history
+            professional_standing: Check professional standing
+            initial_assessment: Initial assessment recommendation
+            review_requested_information: Review requested information from applicant
 
     assessments:
       edit:
         hint:
-          can_award: You’ve completed your assessment of this QTS application and reviewed the work references.
-          can_verify: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
+          can_award: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
-
-    assessment_recommendation_award:
-      edit:
-        heading: You’re about to award QTS
-        instruction: Read the declaration and if you’re happy to award QTS, select ‘Accept and award QTS’.
-        declaration: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
-        button: Accept and award QTS
-        important_notes:
-          invalid_references: This application has one or more invalid references.
-          induction_required: This applicant will need to do a statutory induction period.
-      age_range_subjects:
-        heading: Confirm age range and subjects
-        cancel: Cancel
-      edit_age_range_subjects:
-        heading: Edit age range and subjects
-        cancel: Cancel
-      preview:
-        heading: Check the email
-        subheading: This screen shows how the email to the applicant will look.
-        description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
-        cancel: Cancel
-      edit_confirm:
-        legend: Award this QTS application?
-        hint: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
-
-    assessment_recommendation_decline:
-      edit:
-        heading: You’re about to decline QTS
-        instruction: If you’re happy to proceed, read the declaration and if you want to decline, select ‘Continue’.
-        declaration: I’ve reviewed this QTS application and the applicant does not meet all the requirements. I understand that by continuing, this application for qualified teacher status will be declined.
-        button: Accept and decline QTS
+      declare:
+        heading:
+          award: You’re about to award QTS
+          decline: You’re about to decline QTS
+        instruction:
+          award: Read the declaration and if you’re happy to award QTS, select ‘Accept and award QTS’.
+          decline: If you’re happy to proceed, read the declaration and if you want to decline, select ‘Continue’.
+        declaration:
+          award: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
+          decline: I’ve reviewed this QTS application and the applicant does not meet all the requirements. I understand that by continuing, this application for qualified teacher status will be declined.
+        button:
+          award: Accept and award QTS
+          decline: Accept and decline QTS
         assessment_section:
           personal_information: Personal information
           qualifications: Qualifications
           age_range_subjects: Age range and subjects
-          english_language_proficiency: English language proficiency
           work_history: Work history
           professional_standing: Professional standing
       preview:
@@ -83,31 +53,16 @@ en:
         subheading: This screen shows how the email to the applicant will look.
         description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
         cancel: Cancel
-      edit_confirm:
-        legend: Decline this QTS application?
-        hint: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
-
-    assessment_recommendation_verify:
-      edit_qualification_requests:
-        heading: Verify qualifications
-      edit_verify_qualifications:
-        heading: Do you want to verify qualifications?
-      email_consent_letters:
-        heading: Email consent letters
-        continue: Continue
-        cancel: Cancel
-      edit_reference_requests:
-        heading: Request work history references
-      edit_verify_professional_standing:
-        heading: Do you want to verify the letter of professional standing?
-      preview_referee:
-        heading: Check and send the reference request email
-        button: Continue
-        cancel: Cancel
-      preview_teacher:
-        heading: Check and send the email to applicant
-        button: Send emails
-        cancel: Cancel
+      confirm:
+        legend:
+          award: Award this QTS application?
+          decline: Decline this QTS application?
+        hint:
+          award: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
+          decline: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
+        inclusion:
+          award: Select ‘Yes’ to award, or ‘No’ to cancel.
+          decline: Select ‘Yes’ to decline, or ‘No’ to cancel.
 
     assessment_sections:
       show:
@@ -115,7 +70,6 @@ en:
           personal_information: Check personal information
           qualifications: Check qualifications
           age_range_subjects: Verify age range and subjects
-          english_language_proficiency: Check English language proficiency
           work_history: Check work history
           professional_standing: Check professional standing
         checks:
@@ -126,8 +80,6 @@ en:
           confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
           duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
           email_contact_current_employer: the applicant has entered the name and email address of a contact for their current/most recent employer
-          english_language_valid_moi: The applicant’s MOI supports their statement that they were taught in English, in a NON-exempt country.
-          english_language_valid_provider: The applicant has provided a Secure English Language Test (SELT) at level B2 of the Common European Framework of Reference for Languages (CEFR) scale, from the list of approved English language providers and awarded within the last 2 years.
           full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
           has_additional_degree_transcript: additional degree transcript is present (and translation if required)
           has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
@@ -140,23 +92,16 @@ en:
           qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 qualification or higher)
           qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
           qualified_to_teach: the applicant is qualified to teach at state or government schools
-          qualified_to_teach_children_11_to_16: the applicant is qualified to teach children aged 11-16
           registration_number: registration number provided and verified (where applicable)
           satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
           teaching_qualification: confirmation of the applicant’s teaching qualification
           teaching_qualification_1_year: the teaching qualification lasted at least 1 academic year
-          teaching_qualification_pedagogy: teaching qualification had enough focus on pedagogy (75% of 1-year course, 33% of 3-year course, 25% of 4-year course, 20% of 5-year course)
-          teaching_qualification_subjects_criteria: the teaching qualification specifically qualifies them to teach either Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian or Spanish (OR they have a teaching qualification for children aged 11-16 AND at least 50% of their degree was in one of those subjects)
+          teaching_qualification_pedagogy: the teaching qualification had at least 75% of the course focused on pedagogy
           teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
           verify_school_details: the school details to verify what the applicant has entered
           work_history_references: that the applicant has provided a reference for each role with an acceptable email address
-          written_statement_completion_date: induction letter shows the completion date (if applicable)
-          written_statement_induction: induction letter shows the applicant completed induction in the country (if applicable)
           written_statement_present: letter from the country or state’s competent authority provided
           written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
-          written_statement_registration_number: induction letter shows the teacher reference (TR) number (if applicable)
-          written_statement_school_name: induction letter shows the name of the school (if applicable)
-          written_statement_signature: induction letter shows the signature of the administration department or headteacher/principal (if applicable)
         failure_reasons:
           additional_degree_certificate_illegible: An additional degree certificate (or translation) is illegible or in a format that we cannot accept.
           additional_degree_transcript_illegible: An additional degree transcript (or translation) is illegible or in a format that we cannot accept.
@@ -169,15 +114,6 @@ en:
           degree_certificate_illegible: The university degree certificate (or translation) is illegible or in a format that we cannot accept.
           degree_transcript_illegible: The university degree transcript (or translation) is illegible or in a format that we cannot accept.
           duplicate_application: There’s already another in-flight application for this applicant.
-          english_language_exemption_by_citizenship_not_confirmed: The applicant’s ID does not confirm English language exemption by birth/citizenship.
-          english_language_exemption_by_qualification_not_confirmed: The applicant’s qualification documents do not confirm English language exemption by country of study.
-          english_language_moi_invalid_format: The applicant’s Medium of instruction (MOI) document is illegible or in a format that we cannot accept.
-          english_language_moi_not_taught_in_english: The applicant’s MOI does not show that they were taught exclusively in English.
-          english_language_not_achieved_b2: The applicant provided evidence of a SELT but has not achieved B2 level.
-          english_language_proficiency_document_illegible: The applicant’s English language proficiency test document is illegible or in a format that we cannot accept.
-          english_language_qualification_invalid: The applicant’s English language qualification is not from one of the approved providers.
-          english_language_selt_expired: The applicant provided evidence of a SELT but the test was not completed within the last 2 years.
-          english_language_unverifiable_reference_number: Unable to verify the reference number that the applicant has provided.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible or in a format that we cannot accept.
@@ -187,24 +123,20 @@ en:
           qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
-          qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged 11-16.
           registration_number: We could not verify the registration number using the online checker.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
-          school_details_cannot_be_verified: We could not verify the details of one of the schools that the applicant has entered.
+          school_details_cannot_be_verified: We cannot verify the details of one of the schools that the applicant has entered.
           teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
           teaching_qualification_1_year: The teacher training course qualification did not last at least 1 academic year.
-          teaching_qualification_pedagogy: The teaching qualification did not have enough focus on pedagogy.
-          teaching_qualification_subjects_criteria: The applicant is not qualified to teach one of the subjects that we can currently accept.
+          teaching_qualification_pedagogy: The teaching qualification did not have enough focus on pedagogy (at least 75% of modules focus on pedagogy).
           teaching_qualifications_from_ineligible_country: Teaching qualifications were completed in an ineligible country.
           teaching_qualifications_not_at_required_level: Teaching qualifications do not meet the required academic level (level 6).
           teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
-          unrecognised_references: Application contained 1 or more references that cannot be considered.
-          work_history_break: There is an unexplained break in the applicant’s work history.
-          written_statement_illegible: The letter is illegible or in a format that we cannot accept.
-          written_statement_information: The letter is missing information.
-          written_statement_recent: The letter was not issued within the last 3 months.
+          work_history_break: We need more information about a break in the applicant’s work history.
+          written_statement_illegible: The letter from the country or state’s authority is illegible or in a format that we cannot accept.
+          written_statement_recent: The letter from the country or state’s authority was not issued within the last 3 months.
         induction_required:
           legend:
             GB-SCT: What level of registration does the applicant have?
@@ -215,74 +147,32 @@ en:
           true:
             GB-SCT: Provisional registration
             GB-NIR: "No"
-        professional_standing_request: Third-party professional standing
-        labels:
-          personal_information:
-            english_language_section_passed: This applicant has indicated English language exemption by birth/citizenship. I have checked their ID for evidence of this.
-          qualifications:
-            english_language_section_passed: This applicant has indicated English language exemption by country of study. I have checked their qualification documents for evidence of this.
 
     further_information_requests:
       edit:
         title: Review further information from applicant
         check_your_answers: Further information requested
-        passed: Has the applicant completed this section to your satisfaction?
-        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
-
-    professional_standing_requests:
-      edit_location:
-        title: Third-party professional standing – response received
-      edit_review:
-        passed: Does the response confirm that this document is legitimate?
-        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why the document should not be accepted.'
-
-    reference_requests:
-      edit:
-        title: Review work reference
-        passed: Are you satisfied that this reference should count towards the applicant’s work experience?
-        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this reference should not count towards the applicant’s work experience'
-    case_notes:
-      preliminary_check:
-        complete_waiting_for_professional_standing: |
-          Preliminary checks completed.
-
-           Once we’ve received written evidence of professional standing from the applicant’s teaching authority, we’ll add the application to the queue to be assigned to an assessor.
-        complete: Preliminary checks completed. Application can progress to initial assessment.
-        application_submitted: Application requires a preliminary check before it can progress to full initial assessment.
 
   activemodel:
     errors:
       models:
+        assessor_interface/create_note_form:
+          attributes:
+            text:
+              blank: Enter the note
         assessor_interface/assessor_assignment_form:
           attributes:
             assessor_id:
               blank: Select an assessor to assign
-              inclusion: Assessor must be different to reviewer
-        assessor_interface/assessment_confirmation_form:
-          attributes:
-            confirmation:
-              inclusion: Select ‘Yes’ to confirm, or ‘No’ to cancel.
-        assessor_interface/assessment_declaration_decline_form:
-          attributes:
-            declaration:
-              blank: You must confirm that you have reviewed this QTS application
-            recommendation_assessor_note:
-              blank: You must input notes since there are no other decline notes
-        assessor_interface/assessment_declaration_award_form:
-          attributes:
-            declaration:
-              blank: You must confirm that you have reviewed this QTS application
         assessor_interface/assessment_recommendation_form:
           attributes:
             recommendation:
               blank: Select your recommendation
               inclusion: Select your recommendation
+            declaration:
+              blank: You must confirm that you have reviewed this QTS application
         assessor_interface/assessment_section_form:
           attributes:
-            age_range_min:
-              blank: Enter the minimum age
-            age_range_max:
-              blank: Enter the maximum age
             subject_1:
               blank: Enter the subject
             selected_failure_reasons:
@@ -357,72 +247,13 @@ en:
               blank: Enter a note to the applicant
             written_statement_recent_notes:
               blank: Enter a note to the applicant
-        assessor_interface/confirm_age_range_subjects_form:
+        assessor_interface/further_information_request_form:
           attributes:
-            age_range_min:
-              blank: Enter the minimum age
-            age_range_max:
-              blank: Enter the maximum age
-            subject_1:
-              blank: Enter the subject
-        assessor_interface/create_note_form:
-          attributes:
-            text:
-              blank: Enter the note
+            passed:
+              inclusion: Select whether the applicant completed this section to your satisfaction
+            failure_assessor_note:
+              blank: Enter why this section is not completed to your satisfaction
         assessor_interface/induction_required_form:
           attributes:
             induction_required:
               inclusion: Select whether the teacher requires induction
-        assessor_interface/professional_standing_request_location_form:
-          attributes:
-            received:
-              inclusion: Select whether you received a response about this letter of professional standing
-            expired:
-              inclusion: Select whether you want to mark this for review
-        assessor_interface/qualification_request_form:
-          attributes:
-            received:
-              inclusion: Select whether you have received a response about this qualification
-            passed:
-              inclusion: Select whether the response shows that the qualification is legitimate
-            failure_assessor_note:
-              blank: Enter why you selected ‘No’
-            failed:
-              inclusion: Select whether you want to mark this qualification as ‘Rejected’
-        assessor_interface/requestable_review_form:
-          attributes:
-            reviewed:
-              inclusion: Select whether you have reviewed the request
-            passed:
-              inclusion: Select whether you are satisfied with the request
-            failure_assessor_note:
-              blank: Enter why you are not satisfied
-        assessor_interface/select_qualifications_form:
-          attributes:
-            qualification_ids:
-              blank: Select which qualifications you’d like to verify
-        assessor_interface/select_work_histories_form:
-          attributes:
-            work_history_ids:
-              blank: References account for less than 9 months
-        assessor_interface/verify_professional_standing_form:
-          attributes:
-            verify_professional_standing:
-              inclusion: Select whether you want to verify the professional standing
-        assessor_interface/verify_qualifications_form:
-          attributes:
-            verify_qualifications:
-              inclusion: Select whether you want to verify qualifications
-        assessor_interface/verify_references_form:
-          attributes:
-            references_verified:
-              inclusion: Select whether enough valid work references been received for this application to progress to either an award or decline
-        assessor_interface/preliminary_check_form:
-          attributes:
-            preliminary_check_complete:
-              inclusion: Select whether you want to move this application to a full assessment
-        assessor_interface/reviewer_assignment_form:
-          attributes:
-            reviewer_id:
-              blank: Select an reviewer to assign
-              inclusion: Reviewer must be different to assessor

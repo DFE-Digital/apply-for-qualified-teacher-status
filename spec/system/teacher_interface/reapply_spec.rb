@@ -46,7 +46,6 @@ RSpec.describe "Teacher reapply", type: :system do
         :declined,
         teacher:,
         region: create(:region, :national),
-        assessment: create(:assessment),
       )
   end
 end

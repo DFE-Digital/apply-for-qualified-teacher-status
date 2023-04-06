@@ -31,8 +31,6 @@ class SupportInterface::EnglishLanguageProvidersController < SupportInterface::B
       :b2_level_requirement,
       :reference_name,
       :reference_hint,
-      :accepted_tests,
-      :check_url,
     )
   end
 end

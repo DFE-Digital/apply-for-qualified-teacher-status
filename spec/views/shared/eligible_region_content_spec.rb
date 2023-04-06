@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Eligible region content", type: :view do
-  let(:region) { create(:region) }
+  let(:region) { nil }
   let(:eligibility_check) { nil }
 
   subject do
@@ -9,7 +9,7 @@ RSpec.describe "Eligible region content", type: :view do
   end
 
   it { is_expected.to match(/You’re eligible/) }
-  it { is_expected.to match(/What we’ll ask for/) }
+  it { is_expected.to_not match(/What we’ll ask for/) }
 
   context "with a fully online region" do
     let(:region) do
@@ -84,22 +84,36 @@ RSpec.describe "Eligible region content", type: :view do
   context "with no status check and no sanction check" do
     let(:region) { create(:region, status_check: :none, sanction_check: :none) }
 
-    it { is_expected.to_not match(/Proof that you’re recognised as a teacher/) }
+    it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
   end
 
   describe "English language proficiency" do
     let(:region) { create(:region, reduced_evidence_accepted: false) }
+    context "when feature is inactive" do
+      it do
+        is_expected.to_not match(
+          /We need to understand your level of English language proficiency/,
+        )
+      end
+    end
 
-    it { is_expected.to match(/Proof of English language ability/) }
+    context "when feature is active" do
+      before do
+        FeatureFlags::FeatureFlag.activate(:eligibility_english_language)
+      end
 
-    it do
-      is_expected.to match(
-        /You’ll need to provide your passport or official identification documents for that country as proof/,
-      )
+      it do
+        is_expected.to match(
+          /You’ll need to provide your passport or official identification documents for that country as proof/,
+        )
+      end
     end
   end
 
   context "with work experience" do
+    before { FeatureFlags::FeatureFlag.activate(:application_work_history) }
+    after { FeatureFlags::FeatureFlag.deactivate(:application_work_history) }
+
     let(:region) { create(:region, reduced_evidence_accepted: false) }
 
     it { is_expected.to match(/You need to show you’ve been employed/) }

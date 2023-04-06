@@ -1,15 +1,42 @@
 <% content_for :page_title, t(".title") %>
-<% content_for :feedback_url, t("service.form.referee_feedback") %>
 
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
-<%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: true %>
+<%= render(CheckYourAnswersSummary::Component.new(
+  id: "reference-request-#{@reference_request.id}",
+  model: @reference_request,
+  title: t(".reference_requested"),
+  fields: {
+    dates_response: {
+      title: t("helpers.legend.teacher_interface_reference_request_dates_response_form.dates_response"),
+      href: dates_teacher_interface_reference_request_path,
+    },
+    hours_response: {
+      title: t("helpers.legend.teacher_interface_reference_request_hours_response_form.hours_response", count: @work_history.hours_per_week),
+      href: hours_teacher_interface_reference_request_path,
+    },
+    children_response: {
+      title: t("helpers.legend.teacher_interface_reference_request_children_response_form.children_response"),
+      href: children_teacher_interface_reference_request_path,
+    },
+    lessons_response: {
+      title: t("helpers.legend.teacher_interface_reference_request_lessons_response_form.lessons_response"),
+      href: lessons_teacher_interface_reference_request_path,
+    },
+    reports_response: {
+      title: t("helpers.legend.teacher_interface_reference_request_reports_response_form.reports_response"),
+      href: reports_teacher_interface_reference_request_path,
+    },
+    additional_information_response: {
+      title: t("helpers.label.teacher_interface_reference_request_additional_information_response_form.additional_information_response"),
+      href: additional_information_teacher_interface_reference_request_path,
+    },
+  },
+  changeable: true
+)) %>
 
 <% if @reference_request.responses_given? %>
-  <h3 class="govuk-heading-m">How we handle your data</h3>
-  <p class="govuk-body">You can read about the data we collect from you, how we use it and how it's stored, in our <%= govuk_link_to "privacy policy", privacy_path %>.</p>
-  <h4 class="govuk-heading-m">Submitting your response</h4>
+  <h3 class="govuk-heading-m">Submitting your response</h3>
   <p class="govuk-body">By selecting the ‘Submit your response’ button, you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
-  <p class="govuk-body">You will not be able to change your response or delete anything once you submit it.</p>
   <%= govuk_button_to "Submit your response", teacher_interface_reference_request_path, method: :patch %>
 <% end %>

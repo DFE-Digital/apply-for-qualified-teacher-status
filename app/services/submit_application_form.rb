@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class SubmitApplicationForm
   include ServicePattern
 
@@ -11,37 +9,18 @@ class SubmitApplicationForm
   def call
     return if application_form.submitted_at.present?
 
-    ActiveRecord::Base.transaction do
-      application_form.subjects.compact_blank!
-      application_form.working_days_since_submission = 0
-      application_form.requires_preliminary_check =
-        region.requires_preliminary_check
-      application_form.submitted_at = Time.zone.now
+    application_form.subjects.compact_blank!
+    application_form.submitted_at = Time.zone.now
+    application_form.working_days_since_submission = 0
 
-      assessment = AssessmentFactory.call(application_form:)
+    ApplicationFormStatusUpdater.call(application_form:, user:)
 
-      create_professional_standing_request(assessment)
-
-      if application_form.reduced_evidence_accepted
-        UpdateAssessmentInductionRequired.call(assessment:)
-      end
-
-      ApplicationFormStatusUpdater.call(application_form:, user:)
-      CreatePreliminaryCheckNote.call(application_form:)
-    end
+    AssessmentFactory.call(application_form:)
 
     TeacherMailer
       .with(teacher: application_form.teacher)
       .application_received
       .deliver_later
-
-    if !application_form.requires_preliminary_check &&
-         application_form.teaching_authority_provides_written_statement
-      TeacherMailer
-        .with(teacher: application_form.teacher)
-        .initial_checks_passed
-        .deliver_later
-    end
 
     if region.teaching_authority_requires_submission_email
       TeachingAuthorityMailer
@@ -56,17 +35,4 @@ class SubmitApplicationForm
   attr_reader :application_form, :user
 
   delegate :region, to: :application_form
-
-  def create_professional_standing_request(assessment)
-    return unless application_form.teaching_authority_provides_written_statement
-
-    requestable = ProfessionalStandingRequest.create!(assessment:)
-
-    TimelineEvent.create!(
-      event_type: "requestable_requested",
-      application_form:,
-      creator: user,
-      requestable:,
-    )
-  end
 end

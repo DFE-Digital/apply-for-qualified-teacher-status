@@ -2,39 +2,34 @@
 #
 # Table name: timeline_events
 #
-#  id                    :bigint           not null, primary key
-#  age_range_max         :integer
-#  age_range_min         :integer
-#  age_range_note        :text             default(""), not null
-#  creator_name          :string           default(""), not null
-#  creator_type          :string
-#  event_type            :string           not null
-#  mailer_action_name    :string           default(""), not null
-#  mailer_class_name     :string           default(""), not null
-#  message_subject       :string           default(""), not null
-#  new_state             :string           default(""), not null
-#  old_state             :string           default(""), not null
-#  requestable_type      :string
-#  subjects              :text             default([]), not null, is an Array
-#  subjects_note         :text             default(""), not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  application_form_id   :bigint           not null
-#  assessment_id         :bigint
-#  assessment_section_id :bigint
-#  assignee_id           :bigint
-#  creator_id            :integer
-#  note_id               :bigint
-#  requestable_id        :bigint
+#  id                             :bigint           not null, primary key
+#  annotation                     :string           default(""), not null
+#  creator_name                   :string           default(""), not null
+#  creator_type                   :string
+#  event_type                     :string           not null
+#  mailer_action_name             :string           default(""), not null
+#  mailer_class_name              :string           default(""), not null
+#  message_subject                :string           default(""), not null
+#  new_state                      :string           default(""), not null
+#  old_state                      :string           default(""), not null
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  application_form_id            :bigint           not null
+#  assessment_id                  :bigint
+#  assessment_section_id          :bigint
+#  assignee_id                    :bigint
+#  creator_id                     :integer
+#  further_information_request_id :bigint
+#  note_id                        :bigint
 #
 # Indexes
 #
-#  index_timeline_events_on_application_form_id    (application_form_id)
-#  index_timeline_events_on_assessment_id          (assessment_id)
-#  index_timeline_events_on_assessment_section_id  (assessment_section_id)
-#  index_timeline_events_on_assignee_id            (assignee_id)
-#  index_timeline_events_on_note_id                (note_id)
-#  index_timeline_events_on_requestable            (requestable_type,requestable_id)
+#  index_timeline_events_on_application_form_id             (application_form_id)
+#  index_timeline_events_on_assessment_id                   (assessment_id)
+#  index_timeline_events_on_assessment_section_id           (assessment_section_id)
+#  index_timeline_events_on_assignee_id                     (assignee_id)
+#  index_timeline_events_on_further_information_request_id  (further_information_request_id)
+#  index_timeline_events_on_note_id                         (note_id)
 #
 # Foreign Keys
 #
@@ -42,6 +37,7 @@
 #  fk_rails_...  (assessment_id => assessments.id)
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
+#  fk_rails_...  (further_information_request_id => further_information_requests.id)
 #  fk_rails_...  (note_id => notes.id)
 #
 FactoryBot.define do
@@ -83,6 +79,16 @@ FactoryBot.define do
     trait :note_created do
       event_type { "note_created" }
       association :note
+    end
+
+    trait :further_information_request_assessed do
+      event_type { "further_information_request_assessed" }
+      association :further_information_request
+    end
+
+    trait :further_information_request_expired do
+      event_type { "further_information_request_expired" }
+      association :further_information_request
     end
 
     trait :email_sent do

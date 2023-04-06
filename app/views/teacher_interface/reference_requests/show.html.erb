@@ -1,38 +1,13 @@
 <% content_for :page_title, t(".title") %>
-<% content_for :feedback_url, t("service.form.referee_feedback") %>
 
-<% if @reference_request.received? %>
-  <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
-
-  <h2 class="govuk-heading-m">Thank you for submitting your response.</h2>
-
-  <p class="govuk-body">The QTS assessor will now review your response and continue their review of the applicant.</p>
-
-  <h3 class="govuk-heading-s">Help us to improve this service</h3>
-
-  <p class="govuk-body">
-    We're always trying to improve this service and boost teacher recruitment from overseas. So we'd like to talk to people about their experience of using this service.
-  </p>
-
-  <p class="govuk-body">
-    If you'd like to help, please <%= govuk_link_to "complete this short form", t("service.form.referee_research") %>.
-  </p>
-
-  <p class="govuk-body">
-    If you match our search criteria, we'll invite you to take part in research.
-  </p>
-
-  <p class="govuk-body">You do not need to do anything else. You can now close this page.</p>
-<% else %>
+<% if @reference_request.requested? %>
   <h1 class="govuk-heading-xl"><%= t("service.name.teacher") %></h1>
 
   <h2 class="govuk-heading-m"><%= t(".title") %></h2>
 
   <p class="govuk-body"><%= application_form_full_name(@application_form) %> is applying for qualified teacher status (QTS) in England.</p>
 
-  <p class="govuk-body">Their application for QTS means we’ll assess their qualifications and teaching experience. It is <strong class="govuk-!-font-weight-bold">NOT</strong> an application for a teaching job – we just need to assess whether they can teach in English schools.</p>
-
-  <p class="govuk-body">They’ve provided your details to help us verify that they worked at:</p>
+  <p class="govuk-body">As part of our assessment, we need to understand their work history and experience. They’ve provided your details to help us verify that they worked at:</p>
 
   <%= govuk_inset_text do %>
     <p class="govuk-body">
@@ -42,5 +17,13 @@
 
   <p class="govuk-body">We need to to ask you a few questions about the applicant’s role. It should take no longer than 5 minutes.</p>
 
-  <%= govuk_start_button(text: "Start now", href: contact_teacher_interface_reference_request_path) %>
+  <%= govuk_start_button(text: "Start now", href: dates_teacher_interface_reference_request_path) %>
+<% else %>
+  <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
+
+  <h3 class="govuk-heading-m">Thank you for submitting your response.</h3>
+
+  <p class="govuk-body">The QTS assessor will now review your response and continue their review of the applicant.</p>
+
+  <p class="govuk-body">You do not need to do anything else. You can now close this page.</p>
 <% end %>

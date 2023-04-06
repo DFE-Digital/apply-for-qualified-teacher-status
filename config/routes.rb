@@ -31,70 +31,16 @@ Rails.application.routes.draw do
       resources :timeline_events, only: :index
 
       resources :assessments, only: %i[edit update] do
+        member do
+          post "declare", to: "assessments#declare"
+          post "preview", to: "assessments#preview"
+          post "confirm", to: "assessments#confirm"
+        end
+
         resources :assessment_sections,
                   path: "/sections",
                   param: :key,
                   only: %i[show update]
-
-        resource :assessment_recommendation_award,
-                 controller: "assessment_recommendation_award",
-                 path: "/recommendation/award",
-                 only: %i[edit update] do
-          get "age-range-subjects",
-              to: "assessment_recommendation_award#age_range_subjects"
-          get "age-range-subjects/edit",
-              to: "assessment_recommendation_award#edit_age_range_subjects"
-          post "age-range-subjects/edit",
-               to: "assessment_recommendation_award#update_age_range_subjects"
-          get "preview"
-          get "confirm", to: "assessment_recommendation_award#edit_confirm"
-          post "confirm", to: "assessment_recommendation_award#update_confirm"
-        end
-
-        resource :assessment_recommendation_decline,
-                 controller: "assessment_recommendation_decline",
-                 path: "/recommendation/decline",
-                 only: %i[edit update] do
-          get "preview"
-          get "confirm", to: "assessment_recommendation_decline#edit_confirm"
-          post "confirm", to: "assessment_recommendation_decline#update_confirm"
-        end
-
-        resource :assessment_recommendation_verify,
-                 controller: "assessment_recommendation_verify",
-                 path: "/recommendation/verify",
-                 only: %i[edit update] do
-          get "verify-qualifications",
-              to: "assessment_recommendation_verify#edit_verify_qualifications"
-          post "verify-qualifications",
-               to:
-                 "assessment_recommendation_verify#update_verify_qualifications"
-          get "qualification-requests",
-              to: "assessment_recommendation_verify#edit_qualification_requests"
-          post "qualification-requests",
-               to:
-                 "assessment_recommendation_verify#update_qualification_requests"
-          get "email-consent-letters",
-              to: "assessment_recommendation_verify#email_consent_letters"
-          get "reference-requests",
-              to: "assessment_recommendation_verify#edit_reference_requests"
-          post "reference-requests",
-               to: "assessment_recommendation_verify#update_reference_requests"
-          get "preview-referee",
-              to: "assessment_recommendation_verify#preview_referee"
-          get "preview-teacher",
-              to: "assessment_recommendation_verify#preview_teacher"
-          get "verify-professional-standing",
-              to:
-                "assessment_recommendation_verify#edit_verify_professional_standing"
-          post "verify-professional-standing",
-               to:
-                 "assessment_recommendation_verify#update_verify_professional_standing"
-          get "contact-professional-standing",
-              to:
-                "assessment_recommendation_verify#contact_professional_standing"
-        end
-
         resources :further_information_requests,
                   path: "/further-information-requests",
                   only: %i[new create show edit update] do
@@ -102,43 +48,8 @@ Rails.application.routes.draw do
               to: "further_information_requests#preview",
               on: :collection
         end
-
-        resource :professional_standing_request,
-                 path: "/professional-standing-request",
-                 only: [] do
-          member do
-            get "location", to: "professional_standing_requests#edit_location"
-            post "location",
-                 to: "professional_standing_requests#update_location"
-            get "review", to: "professional_standing_requests#edit_review"
-            post "review", to: "professional_standing_requests#update_review"
-          end
-        end
-
-        resources :qualification_requests,
-                  path: "/qualification-requests",
-                  only: %i[index edit update]
-
-        get "/preliminary-check",
-            to: "preliminary_checks#edit",
-            as: :preliminary_check
-        put "/preliminary-check",
-            to: "preliminary_checks#update",
-            as: :update_preliminary_check
-
-        resources :reference_requests,
-                  path: "/reference-requests",
-                  only: %i[index edit update] do
-          post "verify-references",
-               to: "reference_requests#update_verify_references",
-               on: :collection
-        end
       end
     end
-
-    get "/application/documents/:document_id/uploads/:id",
-        to: "uploads#show",
-        as: :application_form_document_upload
   end
 
   namespace :eligibility_interface, path: "/eligibility" do
@@ -148,6 +59,8 @@ Rails.application.routes.draw do
     get "eligible", to: "finish#eligible"
     get "ineligible", to: "finish#ineligible"
 
+    get "completed-requirements", to: "completed_requirements#new"
+    post "completed-requirements", to: "completed_requirements#create"
     get "countries", to: "countries#new"
     post "countries", to: "countries#create"
     get "degree", to: "degrees#new"
@@ -160,8 +73,6 @@ Rails.application.routes.draw do
     post "region", to: "region#create"
     get "teach-children", to: "teach_children#new"
     post "teach-children", to: "teach_children#create"
-    get "qualified-for-subject", to: "qualified_for_subject#new"
-    post "qualified-for-subject", to: "qualified_for_subject#create"
     get "work-experience", to: "work_experience#new"
     post "work-experience", to: "work_experience#create"
   end
@@ -281,32 +192,51 @@ Rails.application.routes.draw do
         post "registration_number", to: "registration_number#update"
       end
 
-      resources :work_histories, except: %i[show edit update] do
+      resources :work_histories, except: %i[show] do
         collection do
           get "check", to: "work_histories#check_collection"
 
-          get "add_another"
+          get "add_another", to: "work_histories#add_another"
           post "add_another", to: "work_histories#submit_add_another"
 
-          get "requirements_unmet", to: "work_histories#requirements_unmet"
+          get "has_work_history", to: "work_histories#edit_has_work_history"
+          post "has_work_history", to: "work_histories#update_has_work_history"
         end
 
         member do
-          get "school", to: "work_histories#edit_school"
-          post "school", to: "work_histories#update_school"
-
-          get "contact", to: "work_histories#edit_contact"
-          post "contact", to: "work_histories#update_contact"
-
           get "check", to: "work_histories#check_member"
           get "delete"
+        end
+      end
+
+      namespace :new_regs do
+        resources :work_histories, except: %i[show edit update] do
+          collection do
+            get "check", to: "work_histories#check_collection"
+
+            get "add_another"
+            post "add_another", to: "work_histories#submit_add_another"
+
+            get "requirements_unmet", to: "work_histories#requirements_unmet"
+          end
+
+          member do
+            get "school", to: "work_histories#edit_school"
+            post "school", to: "work_histories#update_school"
+
+            get "contact", to: "work_histories#edit_contact"
+            post "contact", to: "work_histories#update_contact"
+
+            get "check", to: "work_histories#check_member"
+            get "delete"
+          end
         end
       end
 
       resource :written_statement, only: %i[edit update]
 
       resources :documents, only: %i[show edit update] do
-        resources :uploads, only: %i[show new create destroy] do
+        resources :uploads, only: %i[new create destroy] do
           get "delete", on: :member
         end
       end
@@ -323,9 +253,6 @@ Rails.application.routes.draw do
               param: :slug,
               only: %i[show edit update] do
       member do
-        get "contact", to: "reference_requests#edit_contact"
-        post "contact", to: "reference_requests#update_contact"
-
         get "dates", to: "reference_requests#edit_dates"
         post "dates", to: "reference_requests#update_dates"
 
@@ -340,12 +267,6 @@ Rails.application.routes.draw do
 
         get "reports", to: "reference_requests#edit_reports"
         post "reports", to: "reference_requests#update_reports"
-
-        get "misconduct", to: "reference_requests#edit_misconduct"
-        post "misconduct", to: "reference_requests#update_misconduct"
-
-        get "satisfied", to: "reference_requests#edit_satisfied"
-        post "satisfied", to: "reference_requests#update_satisfied"
 
         get "additional-information",
             to: "reference_requests#edit_additional_information"
@@ -363,13 +284,15 @@ Rails.application.routes.draw do
              }
 
   devise_scope :teacher do
+    get "/teacher/sign_in",
+        to: "teachers/sessions#new",
+        as: "new_teacher_session"
+    post "/teacher/sign_in",
+         to: "teachers/sessions#create",
+         as: "teacher_session"
     get "/teacher/sign_in_or_sign_up",
         to: "teachers/sessions#new_or_create",
         as: "create_or_new_teacher_session"
-    get "/teacher/magic_link",
-        to: "teachers/magic_links#show",
-        as: "teacher_magic_link"
-    post "/teacher/magic_link", to: "teachers/magic_links#create"
 
     get "/teacher/otp/new", to: "teachers/otp#new", as: "new_teacher_otp"
     post "/teacher/otp", to: "teachers/otp#create", as: "teacher_otp"
@@ -380,9 +303,9 @@ Rails.application.routes.draw do
           error: /(expired)|(exhausted)/,
         }
 
-    get "/teacher/check_email",
-        to: "teachers/sessions#check_email",
-        as: "teacher_check_email"
+    get "/teacher/sign_out",
+        to: "teachers/sessions#destroy",
+        as: "destroy_teacher_session"
     get "/teacher/signed_out",
         to: "teachers/sessions#signed_out",
         as: "teacher_signed_out"

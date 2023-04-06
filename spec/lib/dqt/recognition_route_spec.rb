@@ -5,10 +5,8 @@ require "rails_helper"
 RSpec.describe DQT::RecognitionRoute do
   describe "#for_code" do
     subject(:recognition_route) do
-      described_class.for_country_code(country_code, under_new_regulations:)
+      described_class.for_country_code(country_code)
     end
-
-    let(:under_new_regulations) { false }
 
     context "with Scotland" do
       let(:country_code) { "GB-SCT" }
@@ -20,35 +18,20 @@ RSpec.describe DQT::RecognitionRoute do
       it { is_expected.to eq("NorthernIreland") }
     end
 
-    context "under the new regulations" do
-      let(:under_new_regulations) { true }
-
-      (Country::CODES - %w[GB-SCT GB-NIR]).each do |country_code|
-        context "with #{country_code}" do
-          let(:country_code) { country_code }
-          it { is_expected.to eq("OverseasTrainedTeachers") }
-        end
+    Country::CODES_IN_EUROPEAN_ECONOMIC_AREA.each do |country_code|
+      context "with #{country_code}" do
+        let(:country_code) { country_code }
+        it { is_expected.to eq("EuropeanEconomicArea") }
       end
     end
 
-    context "under the old regulations" do
-      let(:under_new_regulations) { false }
-
-      Country::CODES_IN_EUROPEAN_ECONOMIC_AREA.each do |country_code|
-        context "with #{country_code}" do
-          let(:country_code) { country_code }
-          it { is_expected.to eq("EuropeanEconomicArea") }
-        end
-      end
-
-      (
-        Country::CODES - %w[GB-SCT GB-NIR] -
-          Country::CODES_IN_EUROPEAN_ECONOMIC_AREA
-      ).each do |country_code|
-        context "with #{country_code}" do
-          let(:country_code) { country_code }
-          it { is_expected.to eq("OverseasTrainedTeachers") }
-        end
+    (
+      Country::CODES - %w[GB-SCT GB-NIR] -
+        Country::CODES_IN_EUROPEAN_ECONOMIC_AREA
+    ).each do |country_code|
+      context "with #{country_code}" do
+        let(:country_code) { country_code }
+        it { is_expected.to eq("OverseasTrainedTeachers") }
       end
     end
   end

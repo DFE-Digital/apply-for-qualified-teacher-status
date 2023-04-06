@@ -1,24 +1,8 @@
 # frozen_string_literal: true
 
 class WorkHistoryDuration
-  def initialize(
-    application_form: nil,
-    work_history_relation: nil,
-    work_history_record: nil
-  )
-    if !application_form.nil? && work_history_relation.nil?
-      @work_history_relation =
-        application_form
-          .work_histories
-          .where.not(start_date: nil)
-          .where.not(hours_per_week: nil)
-    elsif !work_history_relation.nil? && application_form.nil?
-      @work_history_relation = work_history_relation
-    elsif !work_history_record.nil?
-      @work_histories = [work_history_record]
-    else
-      raise "Pass only an application_form or a work_history_relation."
-    end
+  def initialize(application_form:)
+    @application_form = application_form
   end
 
   def count_months
@@ -33,15 +17,16 @@ class WorkHistoryDuration
   AVERAGE_WEEKS_PER_MONTH = 4.34
   HOURS_PER_FULL_TIME_MONTH = 130.0
 
-  attr_reader :work_history_relation
+  attr_reader :application_form
 
   def work_histories
     @work_histories ||=
-      work_history_relation.order(:start_date).select(
-        :start_date,
-        :end_date,
-        :hours_per_week,
-      )
+      application_form
+        .work_histories
+        .where.not(start_date: nil)
+        .where.not(hours_per_week: nil)
+        .order(:start_date)
+        .select(:start_date, :end_date, :hours_per_week)
   end
 
   def work_history_full_time_months(work_history)

@@ -14,7 +14,6 @@
 
 <% if @view_object.can_submit? %>
   <h3 class="govuk-heading-m">Submitting your further information</h3>
-  <p class="govuk-body">By selecting the ‘Submit your response’ button you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
-  <p class="govuk-body">You will not be able to change your response, add new documents or delete anything once you submit it.</p>
-  <%= govuk_button_to "Submit your response", teacher_interface_application_form_further_information_request_path(@view_object.further_information_request), method: :patch %>
+  <p class="govuk-body">By selecting the ‘Submit application button’ you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
+  <%= govuk_button_to "Submit your application", teacher_interface_application_form_further_information_request_path(@view_object.further_information_request), method: :patch %>
 <% end %>

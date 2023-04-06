@@ -3,7 +3,6 @@
 module TeacherInterface
   class NameAndDateOfBirthForm < BaseForm
     include ActiveRecord::AttributeAssignment
-    include TeacherInterface::SanitizeDates
 
     attr_accessor :application_form
     attribute :given_names, :string
@@ -17,7 +16,6 @@ module TeacherInterface
     validate :date_of_birth_valid
 
     def update_model
-      sanitize_dates!(date_of_birth)
       application_form.update!(given_names:, family_name:, date_of_birth:)
     end
 

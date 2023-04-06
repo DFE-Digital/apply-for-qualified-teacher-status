@@ -12,17 +12,4 @@ module WorkHistoryHelper
         ),
       )
   end
-
-  def work_history_name_and_duration(work_history, most_recent: false)
-    months =
-      WorkHistoryDuration.new(work_history_record: work_history).count_months
-
-    result = "#{work_history.school_name} (#{months} months)"
-    result.concat(" ", most_recent_tag) if most_recent
-    result.html_safe
-  end
-
-  def most_recent_tag
-    tag.span("MOST RECENT", class: "govuk-!-font-weight-bold")
-  end
 end

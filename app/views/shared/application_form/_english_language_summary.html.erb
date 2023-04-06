@@ -30,7 +30,7 @@
       href: %i[provider_reference teacher_interface application_form english_language]
     } : nil,
     english_language_proficiency_document: !application_form.english_language_exempt? && application_form.english_language_proof_method_provider? && application_form.english_language_provider_other ? {
-      title: "English language proficiency test document",
+      title: "English language proficiency test",
       href: [:teacher_interface, :application_form, application_form.english_language_proficiency_document]
     } : nil,
   },

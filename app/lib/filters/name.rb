@@ -5,7 +5,9 @@ module Filters
     def apply
       return scope if name.blank?
 
-      scope.where("CONCAT(given_names, ' ', family_name) ilike ?", "%#{name}%")
+      scope.where("given_names ilike ?", "%#{name}%").or(
+        scope.where("family_name ilike ?", "%#{name}%"),
+      )
     end
 
     private

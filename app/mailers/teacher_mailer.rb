@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 class TeacherMailer < ApplicationMailer
-  include RegionHelper
-
   before_action :set_application_form
-  before_action :set_further_information_request,
-                only: :further_information_reminder
   before_action :set_further_information_requested, only: :application_declined
+  before_action :set_due_date, only: :further_information_reminder
 
-  helper :application_form, :region
+  helper :application_form
 
   def application_awarded
     view_mail(
@@ -27,14 +24,12 @@ class TeacherMailer < ApplicationMailer
   end
 
   def application_not_submitted
-    @number_of_reminders_sent = params[:number_of_reminders_sent]
-
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
       to: teacher.email,
       subject:
         I18n.t(
-          "mailer.teacher.application_not_submitted.subject.#{@number_of_reminders_sent}",
+          "mailer.teacher.application_not_submitted.subject.#{params[:duration]}",
         ),
     )
   end
@@ -71,26 +66,6 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
-  def initial_checks_passed
-    view_mail(
-      GOVUK_NOTIFY_TEMPLATE_ID,
-      to: teacher.email,
-      subject: I18n.t("mailer.teacher.initial_checks_passed.subject"),
-    )
-  end
-
-  def professional_standing_received
-    view_mail(
-      GOVUK_NOTIFY_TEMPLATE_ID,
-      to: teacher.email,
-      subject:
-        I18n.t(
-          "mailer.teacher.professional_standing_received.subject",
-          certificate: region_certificate_name(region),
-        ),
-    )
-  end
-
   def references_requested
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
@@ -106,18 +81,18 @@ class TeacherMailer < ApplicationMailer
   end
 
   delegate :application_form, to: :teacher
-  delegate :assessment, :region, to: :application_form
+  delegate :assessment, to: :application_form
 
   def set_application_form
     @application_form = application_form
   end
 
-  def set_further_information_request
-    @further_information_request = params[:further_information_request]
-  end
-
   def set_further_information_requested
     @further_information_requested =
       assessment.further_information_requests.any?
+  end
+
+  def set_due_date
+    @due_date = params[:due_date]
   end
 end

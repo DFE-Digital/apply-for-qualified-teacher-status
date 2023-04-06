@@ -4,9 +4,12 @@ require "rails_helper"
 
 RSpec.describe WorkHistoryDuration do
   let(:application_form) { create(:application_form) }
+
   let(:today) { Date.new(2023, 1, 15) }
 
-  shared_examples "month counter" do
+  subject(:work_history_duration) { described_class.new(application_form:) }
+
+  describe "#count_months" do
     subject(:count_months) do
       travel_to(today) { work_history_duration.count_months }
     end
@@ -100,65 +103,6 @@ RSpec.describe WorkHistoryDuration do
       end
 
       it { is_expected.to eq(10) }
-    end
-  end
-
-  describe "#count_months" do
-    context "passing an application form" do
-      subject(:work_history_duration) { described_class.new(application_form:) }
-
-      it_behaves_like "month counter"
-    end
-
-    context "passing a work history relation" do
-      subject(:work_history_duration) do
-        described_class.new(
-          work_history_relation: application_form.work_histories,
-        )
-      end
-
-      it_behaves_like "month counter"
-    end
-
-    context "passing a work history record" do
-      let(:work_history) do
-        create(
-          :work_history,
-          application_form:,
-          start_date: Date.new(2022, 1, 1),
-          end_date: Date.new(2022, 12, 22),
-          hours_per_week: 30,
-        )
-      end
-
-      let(:work_history_duration) do
-        described_class.new(work_history_record: work_history)
-      end
-
-      subject(:count) { work_history_duration.count_months }
-
-      it { is_expected.to eq(12) }
-    end
-
-    context "passing nothing" do
-      subject(:work_history_duration) { described_class.new }
-
-      it "raises an error" do
-        expect { work_history_duration }.to raise_error(/only/)
-      end
-    end
-
-    context "passing both" do
-      subject(:work_history_duration) do
-        described_class.new(
-          application_form:,
-          work_history_relation: application_form.work_histories,
-        )
-      end
-
-      it "raises an error" do
-        expect { work_history_duration }.to raise_error(/only/)
-      end
     end
   end
 end

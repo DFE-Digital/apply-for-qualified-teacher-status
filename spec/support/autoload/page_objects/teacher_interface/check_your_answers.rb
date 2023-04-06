@@ -18,7 +18,7 @@ module PageObjects
       section :who_you_can_teach, "#app-application-form-who-you-can-teach" do
         section :qualification_summary_list,
                 GovukSummaryList,
-                ".govuk-summary-card" \
+                ".govuk-summary-list__card" \
                   ":not(#app-check-your-answers-summary-age-range)" \
                   ":not(#app-check-your-answers-summary-subjects)",
                 match: :first
@@ -36,7 +36,7 @@ module PageObjects
                 "#app-check-your-answers-summary-add-work-history"
         section :work_history_summary_list,
                 GovukSummaryList,
-                ".govuk-summary-card:not(#app-check-your-answers-summary-add-work-history)"
+                ".govuk-summary-list__card:not(#app-check-your-answers-summary-add-work-history)"
       end
 
       section :proof_of_recognition,

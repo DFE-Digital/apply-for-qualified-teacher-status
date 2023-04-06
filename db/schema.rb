@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_25_161536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -84,9 +84,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.bigint "english_language_provider_id"
     t.text "english_language_provider_reference", default: "", null: false
     t.datetime "awarded_at"
+    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "written_statement_confirmation", default: false, null: false
-    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "english_language_provider_other", default: false, null: false
     t.datetime "declined_at"
     t.boolean "waiting_on_professional_standing", default: false, null: false
@@ -95,14 +95,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.boolean "received_further_information", default: false, null: false
     t.boolean "waiting_on_reference", default: false, null: false
     t.boolean "received_reference", default: false, null: false
-    t.boolean "waiting_on_qualification", default: false, null: false
-    t.boolean "received_qualification", default: false, null: false
-    t.boolean "requires_preliminary_check", default: false, null: false
-    t.boolean "written_statement_optional", default: false, null: false
-    t.boolean "overdue_further_information", default: false, null: false
-    t.boolean "overdue_professional_standing", default: false, null: false
-    t.boolean "overdue_qualification", default: false, null: false
-    t.boolean "overdue_reference", default: false, null: false
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"
     t.index ["family_name"], name: "index_application_forms_on_family_name"
@@ -143,9 +135,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.integer "working_days_submission_to_started"
     t.integer "working_days_since_started"
     t.boolean "induction_required"
-    t.text "recommendation_assessor_note", default: "", null: false
-    t.boolean "references_verified"
-    t.boolean "preliminary_check_complete"
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 
@@ -164,9 +153,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "eligibility_enabled", default: true, null: false
-    t.text "qualifications_information", default: "", null: false
     t.boolean "eligibility_skip_questions", default: false, null: false
-    t.boolean "requires_preliminary_check", default: false, null: false
+    t.text "qualifications_information", default: "", null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
@@ -176,7 +164,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.bigint "documentable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "completed", default: false
     t.index ["document_type"], name: "index_documents_on_document_type"
     t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable"
   end
@@ -201,8 +188,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.string "country_code"
     t.bigint "region_id"
     t.datetime "completed_at"
+    t.boolean "completed_requirements"
     t.string "work_experience"
-    t.boolean "qualified_for_subject"
   end
 
   create_table "english_language_providers", force: :cascade do |t|
@@ -212,8 +199,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.text "reference_hint", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "check_url"
-    t.string "accepted_tests", default: "", null: false
   end
 
   create_table "feature_flags_features", force: :cascade do |t|
@@ -245,8 +230,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.string "failure_assessor_note", default: "", null: false
     t.integer "working_days_received_to_recommendation"
     t.integer "working_days_since_received"
-    t.integer "working_days_assessment_started_to_creation"
-    t.datetime "reviewed_at"
     t.index ["assessment_id"], name: "index_further_information_requests_on_assessment_id"
   end
 
@@ -260,20 +243,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.index ["author_id"], name: "index_notes_on_author_id"
   end
 
-  create_table "professional_standing_requests", force: :cascade do |t|
-    t.bigint "assessment_id", null: false
-    t.string "state", null: false
-    t.datetime "received_at"
-    t.text "location_note", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "reviewed_at", precision: nil
-    t.boolean "passed"
-    t.string "failure_assessor_note", default: "", null: false
-    t.boolean "ready_for_review", default: false, null: false
-    t.index ["assessment_id"], name: "index_professional_standing_requests_on_assessment_id"
-  end
-
   create_table "qualification_requests", force: :cascade do |t|
     t.bigint "assessment_id", null: false
     t.bigint "qualification_id", null: false
@@ -282,9 +251,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.text "location_note", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "reviewed_at", precision: nil
-    t.boolean "passed"
-    t.string "failure_assessor_note", default: "", null: false
     t.index ["assessment_id"], name: "index_qualification_requests_on_assessment_id"
     t.index ["qualification_id"], name: "index_qualification_requests_on_qualification_id"
   end
@@ -317,22 +283,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.text "additional_information_response", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "passed"
-    t.datetime "reviewed_at", precision: nil
-    t.boolean "contact_response"
-    t.string "contact_name", default: "", null: false
-    t.string "contact_job", default: "", null: false
-    t.text "contact_comment", default: "", null: false
-    t.text "dates_comment", default: "", null: false
-    t.text "hours_comment", default: "", null: false
-    t.text "children_comment", default: "", null: false
-    t.text "lessons_comment", default: "", null: false
-    t.text "reports_comment", default: "", null: false
-    t.boolean "misconduct_response"
-    t.text "misconduct_comment", default: "", null: false
-    t.boolean "satisfied_response"
-    t.text "satisfied_comment", default: "", null: false
-    t.string "failure_assessor_note", default: "", null: false
     t.index ["assessment_id"], name: "index_reference_requests_on_assessment_id"
     t.index ["slug"], name: "index_reference_requests_on_slug", unique: true
     t.index ["work_history_id"], name: "index_reference_requests_on_work_history_id"
@@ -346,31 +296,30 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.string "status_check", default: "none", null: false
     t.string "sanction_check", default: "none", null: false
     t.text "teaching_authority_address", default: "", null: false
+    t.boolean "legacy", default: true, null: false
     t.text "teaching_authority_emails", default: [], null: false, array: true
     t.text "teaching_authority_websites", default: [], null: false, array: true
     t.text "teaching_authority_name", default: "", null: false
     t.text "teaching_authority_other", default: "", null: false
+    t.boolean "application_form_enabled", default: false
     t.text "teaching_authority_certificate", default: "", null: false
     t.string "teaching_authority_online_checker_url", default: "", null: false
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
-    t.text "qualifications_information", default: "", null: false
     t.boolean "application_form_skip_work_history", default: false, null: false
+    t.text "qualifications_information", default: "", null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
-    t.boolean "requires_preliminary_check", default: false, null: false
-    t.boolean "written_statement_optional", default: false, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
 
   create_table "reminder_emails", force: :cascade do |t|
-    t.bigint "remindable_id", null: false
+    t.bigint "further_information_request_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "remindable_type", default: "", null: false
-    t.index ["remindable_type", "remindable_id"], name: "index_reminder_emails_on_remindable_type_and_remindable_id"
+    t.index ["further_information_request_id"], name: "index_reminder_emails_on_further_information_request_id"
   end
 
   create_table "selected_failure_reasons", force: :cascade do |t|
@@ -452,6 +401,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
   create_table "timeline_events", force: :cascade do |t|
     t.string "event_type", null: false
     t.bigint "application_form_id", null: false
+    t.string "annotation", default: "", null: false
     t.integer "creator_id"
     t.string "creator_type"
     t.datetime "created_at", null: false
@@ -461,24 +411,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.string "new_state", default: "", null: false
     t.bigint "assessment_section_id"
     t.bigint "note_id"
+    t.bigint "further_information_request_id"
     t.string "creator_name", default: "", null: false
     t.string "mailer_action_name", default: "", null: false
     t.bigint "assessment_id"
     t.string "message_subject", default: "", null: false
     t.string "mailer_class_name", default: "", null: false
-    t.string "requestable_type"
-    t.bigint "requestable_id"
-    t.integer "age_range_min"
-    t.integer "age_range_max"
-    t.text "age_range_note", default: "", null: false
-    t.text "subjects", default: [], null: false, array: true
-    t.text "subjects_note", default: "", null: false
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
     t.index ["assessment_id"], name: "index_timeline_events_on_assessment_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
+    t.index ["further_information_request_id"], name: "index_timeline_events_on_further_information_request_id"
     t.index ["note_id"], name: "index_timeline_events_on_note_id"
-    t.index ["requestable_type", "requestable_id"], name: "index_timeline_events_on_requestable"
   end
 
   create_table "uploads", force: :cascade do |t|
@@ -522,17 +466,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "staff", column: "author_id"
-  add_foreign_key "professional_standing_requests", "assessments"
   add_foreign_key "qualification_requests", "assessments"
   add_foreign_key "qualification_requests", "qualifications"
   add_foreign_key "qualifications", "application_forms"
   add_foreign_key "reference_requests", "assessments"
   add_foreign_key "reference_requests", "work_histories"
   add_foreign_key "regions", "countries"
+  add_foreign_key "reminder_emails", "further_information_requests"
   add_foreign_key "selected_failure_reasons", "assessment_sections"
   add_foreign_key "timeline_events", "application_forms"
   add_foreign_key "timeline_events", "assessment_sections"
   add_foreign_key "timeline_events", "assessments"
+  add_foreign_key "timeline_events", "further_information_requests"
   add_foreign_key "timeline_events", "notes"
   add_foreign_key "timeline_events", "staff", column: "assignee_id"
   add_foreign_key "uploads", "documents"

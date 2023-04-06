@@ -33,7 +33,6 @@ namespace :example_data do
     TimelineEvent.delete_all
     DQTTRNRequest.delete_all
     ReminderEmail.delete_all
-    ProfessionalStandingRequest.delete_all
     ReferenceRequest.delete_all
     FurtherInformationRequest.delete_all
     SelectedFailureReason.delete_all
@@ -103,18 +102,8 @@ def evidential_traits_for(region, new_regs)
   end
 end
 
-def english_language_trait
-  %i[
-    with_english_language_medium_of_instruction
-    with_english_language_provider
-    with_english_language_exemption_by_citizenship
-    with_english_language_exemption_by_qualification
-  ].sample
-end
-
 def application_form_traits_for(region, new_regs)
   evidential_traits = evidential_traits_for(region, new_regs)
-  additional_traits = evidential_traits + [english_language_trait]
 
   [
     [],
@@ -124,24 +113,21 @@ def application_form_traits_for(region, new_regs)
       with_identification_document
       with_age_range
       with_subjects
-    ] + additional_traits,
+    ] + evidential_traits,
     %i[
       with_personal_information
       with_completed_qualification
       with_identification_document
       with_age_range
       with_subjects
-      submitted
-    ] + additional_traits,
+    ] + evidential_traits << :submitted,
     %i[
       with_personal_information
       with_completed_qualification
       with_identification_document
       with_age_range
       with_subjects
-      submitted
-      waiting_on
-    ] + additional_traits,
+    ] + evidential_traits << :submitted << :waiting_on,
   ]
 end
 
@@ -154,11 +140,6 @@ def create_application_forms(new_regs:)
       created_at = new_regs ? new_regs_date : old_regs_date
       traits.insert(0, :new_regs) if new_regs
 
-      if region.requires_preliminary_check ||
-           region.country.requires_preliminary_check
-        traits << :preliminary_check
-      end
-
       application_form =
         FactoryBot.create(:application_form, *traits, region:, created_at:)
 
@@ -167,21 +148,13 @@ def create_application_forms(new_regs:)
       assessment = AssessmentFactory.call(application_form:)
 
       if application_form.waiting_on?
-        if application_form.needs_written_statement && rand(2).zero?
-          FactoryBot.create(
-            :professional_standing_request,
-            :requested,
-            assessment:,
-          )
-        else
-          FactoryBot.create(
-            :further_information_request,
-            :requested,
-            :with_items,
-            assessment:,
-          )
-        end
-      elsif (work_history = application_form.work_histories.first) &&
+        FactoryBot.create(
+          :further_information_request,
+          :requested,
+          :with_items,
+          assessment:,
+        )
+      elsif (work_history = assessment.application_form.work_histories.first) &&
             rand(2).zero?
         reference_request_trait = ReferenceRequest.states.keys.sample
         FactoryBot.create(

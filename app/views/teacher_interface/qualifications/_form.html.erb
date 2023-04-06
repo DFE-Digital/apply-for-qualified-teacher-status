@@ -22,19 +22,16 @@
 
   <%= f.govuk_date_field :start_date,
                          omit_day: true,
-                         maxlength_enabled: true,
                          legend: { text: I18n.t("application_form.qualifications.form.fields.start_date.#{qualification.locale_key}") },
                          hint: { text: "For example, 3 2020" } %>
 
   <%= f.govuk_date_field :complete_date,
                          omit_day: true,
-                         maxlength_enabled: true,
                          legend: { text: I18n.t("application_form.qualifications.form.fields.complete_date.#{qualification.locale_key}") },
                          hint: { text: "For example, 3 2020" } %>
 
   <%= f.govuk_date_field :certificate_date,
                          omit_day: true,
-                         maxlength_enabled: true,
                          legend: { text: I18n.t("application_form.qualifications.form.fields.certificate_date.#{qualification.locale_key}") },
                          hint: { text: "For example, 3 2020" } %>
 

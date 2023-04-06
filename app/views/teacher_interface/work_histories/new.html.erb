@@ -1,4 +1,6 @@
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("application_form.work_history.school.heading.#{@work_history.locale_key}")}" %>
-<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_work_histories_path) %>
+<% content_for :page_title, "#{"Error: " if @work_history_form.errors.any?}#{t("application_form.tasks.sections.work_history")}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<%= render "school_form", form: @form %>
+<%= render "heading" %>
+
+<%= render "form", work_history_form: @work_history_form, work_history: @work_history_form.work_history %>

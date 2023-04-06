@@ -2,24 +2,26 @@
 #
 # Table name: eligibility_checks
 #
-#  id                    :bigint           not null, primary key
-#  completed_at          :datetime
-#  country_code          :string
-#  degree                :boolean
-#  free_of_sanctions     :boolean
-#  qualification         :boolean
-#  qualified_for_subject :boolean
-#  teach_children        :boolean
-#  work_experience       :string
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  region_id             :bigint
+#  id                     :bigint           not null, primary key
+#  completed_at           :datetime
+#  completed_requirements :boolean
+#  country_code           :string
+#  degree                 :boolean
+#  free_of_sanctions      :boolean
+#  qualification          :boolean
+#  teach_children         :boolean
+#  work_experience        :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  region_id              :bigint
 #
 # Foreign Keys
 #
 #  fk_rails_...  (region_id => regions.id)
 #
 class EligibilityCheck < ApplicationRecord
+  include Regulated
+
   belongs_to :region, optional: true
   has_one :application
 
@@ -86,24 +88,15 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def ineligible_reasons
-    work_experience_ineligible = work_experience_under_9_months?
-
-    qualified_for_subject_ineligible =
-      qualified_for_subject_required? && qualified_for_subject == false
-
-    teach_children_ineligible =
-      !qualified_for_subject_required? && teach_children == false
-
-    teach_children_secondary_ineligible =
-      qualified_for_subject_required? && teach_children == false
+    work_experience_ineligible =
+      FeatureFlags::FeatureFlag.active?(:eligibility_work_experience) &&
+        work_experience_under_9_months?
 
     [
       (:country if region.nil?),
       (:qualification if qualification == false),
       (:degree if degree == false),
-      (:teach_children if teach_children_ineligible),
-      (:teach_children_secondary if teach_children_secondary_ineligible),
-      (:qualified_for_subject if qualified_for_subject_ineligible),
+      (:teach_children if teach_children == false),
       (:misconduct if free_of_sanctions == false),
       (:work_experience if work_experience_ineligible),
     ].compact
@@ -114,18 +107,24 @@ class EligibilityCheck < ApplicationRecord
       return true
     end
 
-    region.present? && qualification && degree && teach_children? &&
-      free_of_sanctions && !work_experience_under_9_months?
+    region.present? && qualification && degree && teach_children &&
+      free_of_sanctions &&
+      (
+        if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
+          !work_experience_under_9_months?
+        else
+          true
+        end
+      )
   end
 
   def country_eligibility_status
-    if region
-      :eligible
-    elsif country_exists?
-      :region
-    else
-      :ineligible
-    end
+    return region_eligibility_status if region
+    country_exists? ? :region : :ineligible
+  end
+
+  def region_eligibility_status
+    region.legacy ? :legacy : :eligible
   end
 
   def country_regions
@@ -140,47 +139,35 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def status
-    return :country if country_code.blank?
-
-    return :eligibility if country_eligibility_status == :ineligible
-
-    return :region if region.nil?
-    return :qualification if qualification.nil?
-
-    unless skip_additional_questions?
-      return :degree if degree.nil?
-      return :teach_children if teach_children.nil?
-
-      if qualified_for_subject_required? && qualified_for_subject.nil?
-        return :qualified_for_subject
-      end
-
-      return :work_experience if work_experience.blank?
-      return :misconduct if free_of_sanctions.nil?
+    if country_code.present? &&
+         %i[ineligible legacy].include?(country_eligibility_status)
+      return :eligibility
     end
 
-    :eligibility
-  end
+    if skip_additional_questions? && region.present? && qualification
+      return :eligibility
+    end
 
-  def qualified_for_subject_required?
-    return false if country_code.blank?
+    return :eligibility unless free_of_sanctions.nil?
 
-    CountryCode.secondary_education_teaching_qualification_required?(
-      country_code,
-    )
+    if FeatureFlags::FeatureFlag.active?(:eligibility_work_experience)
+      return :misconduct unless work_experience.nil?
+      return :work_experience unless teach_children.nil?
+    else
+      return :misconduct unless teach_children.nil?
+    end
+
+    return :teach_children unless degree.nil?
+    return :degree unless qualification.nil?
+    return :qualification if region.present?
+    return :region if country_code.present?
+
+    :country
   end
 
   private
 
   def country_exists?
     Country.where(eligibility_enabled: true).exists?(code: country_code)
-  end
-
-  def teach_children?
-    if qualified_for_subject_required?
-      teach_children && qualified_for_subject
-    else
-      teach_children
-    end
   end
 end

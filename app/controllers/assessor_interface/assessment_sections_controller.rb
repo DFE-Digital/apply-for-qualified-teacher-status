@@ -15,15 +15,6 @@ module AssessorInterface
     end
 
     def update
-      unless assessment_section_view_object.render_form?
-        redirect_to assessor_interface_application_form_assessment_assessment_section_path(
-                      assessment_section_view_object.application_form,
-                      assessment_section_view_object.assessment,
-                      assessment_section_view_object.assessment_section.key,
-                    )
-        return
-      end
-
       @assessment_section_form =
         assessment_section_form.new(
           assessment_section_form_params.merge(
@@ -55,17 +46,11 @@ module AssessorInterface
 
     def assessment_section_form_class
       if assessment_section.age_range_subjects?
-        CheckAgeRangeSubjectsForm
+        AgeRangeSubjectsForm
       elsif assessment_section.professional_standing? &&
             application_form.created_under_new_regulations? &&
             !application_form.needs_work_history
         InductionRequiredForm
-      elsif application_form.english_language_exempt? &&
-            assessment_section.personal_information?
-        PersonalInformationForm
-      elsif application_form.english_language_exempt? &&
-            assessment_section.qualifications?
-        QualificationsForm
       else
         AssessmentSectionForm
       end

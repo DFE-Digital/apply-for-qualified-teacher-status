@@ -21,11 +21,22 @@ RSpec.describe AssignApplicationFormAssessor do
     end
   end
 
-  it "records a timeline event" do
-    expect { call }.to have_recorded_timeline_event(
-      :assessor_assigned,
-      creator: user,
-      assignee: assessor,
-    )
+  describe "record timeline event" do
+    subject(:timeline_event) do
+      TimelineEvent.assessor_assigned.find_by(application_form:)
+    end
+
+    it { is_expected.to be_nil }
+
+    context "after calling the service" do
+      before { call }
+
+      it { is_expected.to_not be_nil }
+
+      it "sets the attributes correctly" do
+        expect(timeline_event.creator).to eq(user)
+        expect(timeline_event.assignee).to eq(assessor)
+      end
+    end
   end
 end

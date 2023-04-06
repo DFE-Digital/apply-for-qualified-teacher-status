@@ -95,8 +95,8 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
     let(:hours_per_week) { "30" }
     let(:start_date) { { 1 => 2020, 2 => 10, 3 => 1 } }
     let(:start_date_is_estimate) { "" }
-    let(:still_employed) { "false" }
-    let(:end_date) { { 1 => 2021, 2 => 10, 3 => 1 } }
+    let(:still_employed) { "true" }
+    let(:end_date) { "" }
     let(:end_date_is_estimate) { "" }
 
     subject(:save) { form.save(validate: true) }
@@ -111,33 +111,9 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
       expect(work_history.hours_per_week).to eq(30)
       expect(work_history.start_date).to eq(Date.new(2020, 10, 1))
       expect(work_history.start_date_is_estimate).to be false
-      expect(work_history.still_employed).to be false
-      expect(work_history.end_date).to eq(Date.new(2021, 10, 1))
+      expect(work_history.still_employed).to be true
+      expect(work_history.end_date).to be_nil
       expect(work_history.end_date_is_estimate).to be false
-    end
-
-    context "without validation, with invalid date values" do
-      let(:start_date) { { 1 => 2222, 2 => 22, 3 => 1 } }
-      let(:end_date) { { 1 => 3333, 2 => 99, 3 => 1 } }
-
-      subject(:save) { form.save(validate: false) }
-
-      it "applies valid date values" do
-        expect(work_history.start_date).to eq(
-          Date.new(Time.zone.now.year, 1, 1),
-        )
-        expect(work_history.end_date).to eq(Date.new(Time.zone.now.year, 1, 1))
-      end
-    end
-
-    context "with an end date and still employed" do
-      let(:still_employed) { "true" }
-      let(:end_date) { { 1 => 2020, 2 => 1, 3 => 1 } }
-
-      it "clears the end date" do
-        expect(work_history.still_employed).to be true
-        expect(work_history.end_date).to be_nil
-      end
     end
   end
 end

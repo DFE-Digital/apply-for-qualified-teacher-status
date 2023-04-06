@@ -3,14 +3,11 @@ require "rails_helper"
 RSpec.describe "Teacher documents", type: :system do
   before do
     given_the_service_is_open
-    given_i_am_authorized_as_a_user(teacher)
-    given_there_is_an_application_form
+    given_the_service_allows_teacher_applications
+    given_an_active_application
   end
 
   it "uploading and deleting files" do
-    when_i_visit_the(:teacher_application_page)
-    then_i_see_the(:teacher_application_page)
-
     when_i_click_written_statement
     then_i_see_document_form
 
@@ -37,8 +34,10 @@ RSpec.describe "Teacher documents", type: :system do
     then_i_see_the_check_your_uploaded_files_page
   end
 
-  def given_there_is_an_application_form
-    application_form
+  def given_an_active_application
+    given_an_eligible_eligibility_check_with_written_country_checks
+    click_link "Apply for QTS"
+    and_i_sign_up
   end
 
   def when_i_click_written_statement
@@ -91,14 +90,5 @@ RSpec.describe "Teacher documents", type: :system do
     expect(check_uploaded_files_page.files).to have_content(
       "File 3\tupload.pdf (opens in a new tab)\tDelete",
     )
-  end
-
-  def teacher
-    @teacher ||= create(:teacher)
-  end
-
-  def application_form
-    @application_form ||=
-      create(:application_form, teacher:, needs_written_statement: true)
   end
 end

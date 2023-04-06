@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class TeacherInterface::ApplicationFormShowViewObject
-  include RegionHelper
-
   def initialize(current_teacher:)
     @current_teacher = current_teacher
   end
@@ -24,10 +22,6 @@ class TeacherInterface::ApplicationFormShowViewObject
       assessment&.further_information_requests&.first
   end
 
-  def professional_standing_request
-    @professional_standing_request ||= assessment&.professional_standing_request
-  end
-
   def started_at
     application_form.created_at.strftime("%e %B %Y")
   end
@@ -41,7 +35,8 @@ class TeacherInterface::ApplicationFormShowViewObject
     hash.merge!(about_you: %i[personal_information identification_document])
     hash.merge!(qualifications: %i[qualifications age_range subjects])
 
-    if application_form.created_under_new_regulations?
+    if application_form.created_under_new_regulations? &&
+         FeatureFlags::FeatureFlag.active?(:application_english_language)
       hash.merge!(english_language: %i[english_language])
     end
 
@@ -102,7 +97,11 @@ class TeacherInterface::ApplicationFormShowViewObject
         )
       end
     when :work_history
-      url_helpers.teacher_interface_application_form_work_histories_path
+      if FeatureFlags::FeatureFlag.active?(:application_work_history)
+        url_helpers.teacher_interface_application_form_new_regs_work_histories_path
+      else
+        url_helpers.teacher_interface_application_form_work_histories_path
+      end
     else
       begin
         url_helpers.send("teacher_interface_application_form_#{key}_path")
@@ -152,22 +151,8 @@ class TeacherInterface::ApplicationFormShowViewObject
   end
 
   def show_further_information_request_expired_content?
-    further_information_request&.expired? || false
+    further_information_request.present? && further_information_request.expired?
   end
-
-  def show_professional_standing_request_expired_content?
-    professional_standing_request&.expired? || false
-  end
-
-  def request_professional_standing_certificate?
-    professional_standing_request&.requested? &&
-      (
-        assessment&.preliminary_check_complete ||
-          application_form&.teaching_authority_provides_written_statement
-      )
-  end
-
-  delegate :region, to: :application_form
 
   private
 

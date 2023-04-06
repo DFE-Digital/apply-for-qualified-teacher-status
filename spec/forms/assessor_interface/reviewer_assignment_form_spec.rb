@@ -15,12 +15,6 @@ RSpec.describe AssessorInterface::ReviewerAssignmentForm, type: :model do
     it { is_expected.to validate_presence_of(:application_form) }
     it { is_expected.to validate_presence_of(:staff) }
     it { is_expected.to_not validate_presence_of(:reviewer_id) }
-
-    context "if reviewer matches assessor" do
-      before { application_form.update!(assessor_id: reviewer_id) }
-
-      it { is_expected.to be_invalid }
-    end
   end
 
   describe "#save" do
@@ -30,11 +24,12 @@ RSpec.describe AssessorInterface::ReviewerAssignmentForm, type: :model do
       expect { save }.to change(application_form, :reviewer_id).to(reviewer_id)
     end
 
-    it "records a timeline event" do
-      expect { save }.to have_recorded_timeline_event(
-        :reviewer_assigned,
-        creator: staff,
-      )
+    it "creates a timeline event" do
+      expect { save }.to change { TimelineEvent.count }.by(1)
+
+      created_event = TimelineEvent.last
+      expect(created_event.creator).to eq(staff)
+      expect(created_event).to be_reviewer_assigned
     end
   end
 end

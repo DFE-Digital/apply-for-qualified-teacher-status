@@ -9,45 +9,52 @@
 </p>
 
 <%= govuk_inset_text do %>
-  <p class="govuk-body">You’ll need to complete your application within 6 months of starting it. You can start straight away, or you can spend some time gathering the documents you need first.</p>
+  <p class="govuk-body">You may want to spend some time gathering all the documents you need before you start your application.</p>
 
-  <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) %>
+  <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) && region && region.application_form_enabled %>
     <p class="govuk-body">Once you begin, we’ll sign you out if you’re inactive for 60 minutes.</p>
   <% end %>
 
+  <% if eligibility_check&.created_under_new_regulations? %>
+    <p class="govuk-body">You’ll need to complete your application within 6 months of starting it.</p>
+  <% end %>
 <% end %>
 
-<h2 class="govuk-heading-m">What we’ll ask for</h2>
-<p class="govuk-body">You’ll need to provide the following evidence when you apply.</p>
+<% if region && !region.legacy %>
+  <h2 class="govuk-heading-m">What we’ll ask for</h2>
+  <p class="govuk-body">You’ll need to provide the following evidence when you apply.</p>
 
-<%= govuk_accordion do |accordion| %>
-  <% accordion.section(heading_text: "Proof of identity") do %>
-    <%= render "shared/eligible_region_content_components/proof_of_identity" %>
-  <% end %>
-
-  <% accordion.section(heading_text: "Proof of qualifications") do %>
-    <%= render "shared/eligible_region_content_components/proof_of_qualifications", region: %>
-  <% end %>
-
-  <% accordion.section(heading_text: "Proof of English language ability") do %>
-    <%= render "shared/eligible_region_content_components/english_language", region: %>
-  <% end %>
-
-  <% unless region.status_check_none? && region.sanction_check_none? %>
-    <% accordion.section(heading_text: "Proof that you’re recognised as a teacher") do %>
-      <%= render "shared/eligible_region_content_components/proof_of_recognition",
-                 region:,
-                 teaching_authority_provides_written_statement: region.teaching_authority_provides_written_statement %>
+  <%= govuk_accordion do |accordion| %>
+    <% accordion.section(heading_text: "Proof of identity") do %>
+      <%= render "shared/eligible_region_content_components/proof_of_identity" %>
     <% end %>
-  <% end %>
 
-  <% unless region.application_form_skip_work_history %>
-    <% accordion.section(heading_text: "Proof of work history") do %>
-      <%= render "shared/eligible_region_content_components/proof_of_work_history", region:, eligibility_check: %>
+    <% accordion.section(heading_text: "Proof of qualifications") do %>
+      <%= render "shared/eligible_region_content_components/proof_of_qualifications", region: %>
     <% end %>
-  <% end %>
 
-  <% accordion.section(heading_text: "Certified translations") do %>
-    <% render "shared/eligible_region_content_components/certified_translation", region: %>
+    <% if FeatureFlags::FeatureFlag.active?(:eligibility_english_language) %>
+      <% accordion.section(heading_text: "Proof of English language ability") do %>
+        <%= render "shared/eligible_region_content_components/english_language", region: %>
+      <% end %>
+    <% end %>
+
+    <% unless FeatureFlags::FeatureFlag.active?(:application_work_history) && region.status_check_none? && region.sanction_check_none? %>
+      <% accordion.section(heading_text: "Proof that you’re recognised as a teacher") do %>
+        <%= render "shared/eligible_region_content_components/professional_recognition",
+                   region:,
+                   teaching_authority_provides_written_statement: region.teaching_authority_provides_written_statement %>
+      <% end %>
+    <% end %>
+
+    <% if FeatureFlags::FeatureFlag.active?(:application_work_history) && !region.application_form_skip_work_history %>
+      <% accordion.section(heading_text: "Proof of work history") do %>
+        <%= render "shared/eligible_region_content_components/proof_of_work_history", region:, eligibility_check: %>
+      <% end %>
+    <% end %>
+
+    <% accordion.section(heading_text: "Certified translations") do %>
+      <% render "shared/eligible_region_content_components/certified_translation", region: %>
+    <% end %>
   <% end %>
 <% end %>

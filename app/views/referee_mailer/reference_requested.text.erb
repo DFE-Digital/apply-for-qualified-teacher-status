@@ -6,18 +6,11 @@ As part of the QTS application process, our assessors need to understand each ap
 
 <%= application_form_full_name(@application_form) %> has given us your name and email address to help us confirm that the information they’ve provided about their work history and experience is accurate.
 
-# About QTS
+Please follow the link below and answer the questions by <%= @reference_request.expired_at.strftime("%e %B %Y") %>.
 
-<%= application_form_full_name(@application_form) %> is NOT applying for a job – their QTS application just allows us to assess their qualifications and teaching experience to understand whether they can teach in England.
-
-# What we need you to do
-
-Please follow the link below and answer the questions by <%= @reference_request.expired_at.to_date.to_fs(:long_ordinal_uk) %>.
-
-<%= teacher_interface_reference_request_url(@reference_request.slug) %>
+<%= teacher_interface_reference_request_url(@reference_request) %>
 
 It should take no longer than 5 minutes.
 
 Kind regards,
-Teaching Regulation Authority (TRA)
-(an executive agency sponsored by the Department for Education, England)
+The Teacher Qualifications Team (part of the Teaching Regulation Agency)

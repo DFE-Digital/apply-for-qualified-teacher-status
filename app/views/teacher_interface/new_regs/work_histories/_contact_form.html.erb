@@ -1,0 +1,27 @@
+<%= form_with model: form, url: [:contact, :teacher_interface, :application_form, :new_regs, form.work_history], method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l">
+    <%= t("application_form.work_history.contact.heading") %>
+  </h1>
+
+  <p class="govuk-body">If your application is successful, we’ll contact this person before awarding QTS.</p>
+
+  <p class="govuk-body">It’s important to choose a reliable contact who can provide a reference in English.</p>
+
+  <%= f.govuk_text_field :contact_name %>
+
+  <%= f.govuk_text_field :contact_job %>
+
+  <%= f.govuk_email_field :contact_email %>
+
+  <%= govuk_details(summary_text: "Choosing someone to verify this role") do %>
+    <p>Make sure you have an up-to-date email address for the person you choose to verify this role. The reference they provide will be important to your application.</p>
+
+    <p>We’ll ask them to confirm that you worked full time at the school for the period you’ve told us about.</p>
+
+    <p>We’ll also check that you worked unsupervised in planning, preparing and delivering lessons to at least 4 students aged 5-16 at a time, as well as assessing and reporting on their progress.</p>
+  <% end %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>

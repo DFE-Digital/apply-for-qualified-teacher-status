@@ -2,33 +2,16 @@
 
 module TeacherInterface
   class UploadsController < BaseController
-    include ActiveStorage::Streaming
     include HandleApplicationFormSection
     include HistoryTrackable
-    include StreamedResponseAuthenticatable
-
-    skip_before_action :authenticate_teacher!, only: :show
-    before_action -> { authenticate_or_redirect(:teacher) }, only: :show
 
     before_action :redirect_unless_draft_or_further_information
     before_action :load_application_form
     before_action :load_document
-    before_action :load_upload, only: %i[delete destroy show]
-
-    def show
-      send_blob_stream(@upload.attachment, disposition: :inline)
-    rescue ActiveStorage::FileNotFoundError
-      render "errors/not_found", status: :not_found
-    end
+    before_action :load_upload, only: %i[delete destroy]
 
     def new
-      @upload_form =
-        UploadForm.new(
-          document:,
-          do_not_have_document:
-            document.optional? && document.completed? &&
-              document.uploads.empty?,
-        )
+      @upload_form = UploadForm.new(document:)
     end
 
     def create
@@ -36,19 +19,15 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @upload_form,
-        if_success_then_redirect: ->(check_path) do
-          if @upload_form.do_not_have_document
-            check_path || DocumentContinueRedirection.call(document:)
-          else
-            history_stack.replace_self(
-              path:
-                edit_teacher_interface_application_form_document_path(document),
-              origin: false,
-              check: false,
-            )
+        if_success_then_redirect: ->(_check_path) do
+          history_stack.replace_self(
+            path:
+              edit_teacher_interface_application_form_document_path(document),
+            origin: false,
+            check: false,
+          )
 
-            [:teacher_interface, :application_form, document]
-          end
+          [:teacher_interface, :application_form, document]
         end,
         if_failure_then_render: :new,
       )
@@ -81,7 +60,6 @@ module TeacherInterface
     def upload_form_params
       params.permit(
         teacher_interface_upload_form: %i[
-          do_not_have_document
           original_attachment
           translated_attachment
           written_in_english

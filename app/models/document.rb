@@ -1,11 +1,8 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: documents
 #
 #  id                :bigint           not null, primary key
-#  completed         :boolean          default(FALSE)
 #  document_type     :string           not null
 #  documentable_type :string
 #  created_at        :datetime         not null
@@ -30,9 +27,6 @@ class Document < ApplicationRecord
            -> { where(translation: true) },
            class_name: "Upload"
 
-  scope :completed, -> { where(completed: true) }
-  scope :not_completed, -> { where(completed: false) }
-
   UNTRANSLATABLE_TYPES = %w[
     identification
     name_change
@@ -55,8 +49,8 @@ class Document < ApplicationRecord
     TRANSLATABLE_TYPES.include?(document_type)
   end
 
-  def optional?
-    written_statement? && application_form.written_statement_optional
+  def uploaded?
+    !uploads.empty?
   end
 
   def for_further_information_request?

@@ -1,7 +1,0 @@
-Hello <%= @resource.email %>
-
-You can sign in using the link below:
-
-<%= teacher_magic_link_url(token: @token) %>
-
-Note that the link will expire in <%= Devise.passwordless_login_within.inspect %>.

@@ -29,8 +29,9 @@ class Teachers::SessionsController < Devise::SessionsController
       self.resource = resource_class.find_by_email(@new_session_form.email)
 
       if resource
-        resource.send_magic_link
-        redirect_to teacher_check_email_path(email: resource.email)
+        resource.create_otp
+        resource.send_otp
+        redirect_to new_teacher_otp_path(uuid: resource.uuid)
       else
         redirect_to :eligibility_interface_countries
       end
@@ -41,15 +42,18 @@ class Teachers::SessionsController < Devise::SessionsController
     end
   end
 
+  def new_session_form_params
+    params.require(:teacher_interface_new_session_form).permit(
+      :email,
+      :sign_in_or_sign_up,
+    )
+  end
+
   def destroy
     teacher = current_teacher
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     yield if block_given?
     redirect_to after_sign_out_path_for(teacher)
-  end
-
-  def check_email
-    @email = params[:email]
   end
 
   def signed_out
@@ -68,15 +72,6 @@ class Teachers::SessionsController < Devise::SessionsController
     teacher_signed_out_path(
       new_regulations:
         resource.application_form&.created_under_new_regulations?,
-    )
-  end
-
-  private
-
-  def new_session_form_params
-    params.require(:teacher_interface_new_session_form).permit(
-      :email,
-      :sign_in_or_sign_up,
     )
   end
 end

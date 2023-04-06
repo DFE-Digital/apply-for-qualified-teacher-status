@@ -17,8 +17,8 @@ module SystemHelpers
   def given_an_eligible_eligibility_check(country_check:)
     country = create(:country, :with_national_region, code: "GB-SCT")
     country.regions.first.update!(
+      application_form_enabled: true,
       qualifications_information: "Qualifications information",
-      requires_preliminary_check: true,
       status_check: country_check,
       sanction_check: country_check,
       teaching_authority_status_information: "Status information",
@@ -42,8 +42,6 @@ module SystemHelpers
     choose "Yes", visible: false
     click_button "Continue", visible: false
     choose "Yes", visible: false
-    click_button "Continue", visible: false
-    choose "More than 20 months", visible: false
     click_button "Continue", visible: false
     choose "No", visible: false
     click_button "Continue", visible: false
@@ -120,11 +118,31 @@ module SystemHelpers
 
   alias_method :when_i_click_continue, :and_i_click_continue
 
+  def and_i_receive_a_teacher_otp_email
+    message = ActionMailer::Base.deliveries.last
+    expect(message).to_not be_nil
+
+    expect(message.subject).to eq("Confirm your email address")
+    expect(message.to).to include("test@example.com")
+  end
+
+  def when_i_fill_in_the_teacher_otp
+    message = ActionMailer::Base.deliveries.last
+    otp = message.body.encoded.lines.third.chomp
+    teacher_confirm_otp_page.submit(otp:)
+  end
+
   def then_i_see_the_sign_in_form
     expect(teacher_sign_in_page).to have_title(
       "Apply for qualified teacher status (QTS) in England",
     )
     expect(teacher_sign_in_page).to have_content("Email address")
+  end
+
+  def and_i_sign_up
+    teacher_sign_up_page.submit(email: "test@example.com")
+    and_i_receive_a_teacher_otp_email
+    when_i_fill_in_the_teacher_otp
   end
 
   def then_i_see_the_forbidden_page

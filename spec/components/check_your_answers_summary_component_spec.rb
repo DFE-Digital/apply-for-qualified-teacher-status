@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe CheckYourAnswersSummary::Component, type: :component do
-  include Rails.application.routes.url_helpers
-
   subject(:component) do
     render_inline(
       described_class.new(
@@ -82,20 +80,20 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   let(:delete_link_to) { nil }
 
   it "renders the card with an id" do
-    expect(component.css(".govuk-summary-card").attribute("id").value).to eq(
-      "app-check-your-answers-summary-id",
-    )
+    expect(
+      component.css(".govuk-summary-list__card").attribute("id").value,
+    ).to eq("app-check-your-answers-summary-id")
   end
 
   it "renders the title" do
-    expect(component.css(".govuk-summary-card__title").text).to eq("Title")
+    expect(component.css(".govuk-summary-list__card-title").text).to eq("Title")
   end
 
   context "with a delete link" do
     let(:delete_link_to) { "/delete" }
 
     it "renders a link" do
-      a = component.at_css(".govuk-summary-card__actions a")
+      a = component.at_css(".govuk-summary-list__card-actions a")
       expect(a.text.strip).to eq("Delete title")
       expect(a.attribute("href").value).to eq("/delete")
     end
@@ -267,11 +265,8 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       expect(row.at_css(".govuk-summary-list__value a").text).to eq(
         "upload.pdf (opens in a new tab)",
       )
-      expect(row.at_css(".govuk-summary-list__value a")[:href]).to eq(
-        teacher_interface_application_form_document_upload_path(
-          model.document,
-          model.document.uploads.last,
-        ),
+      expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
+        "upload.pdf",
       )
     end
 
@@ -316,11 +311,8 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
         expect(row.at_css(".govuk-summary-list__value a").text).to eq(
           "upload.pdf (opens in a new tab)",
         )
-        expect(row.at_css(".govuk-summary-list__value a")[:href]).to eq(
-          teacher_interface_application_form_document_upload_path(
-            model.translatable_document,
-            model.translatable_document.uploads.last,
-          ),
+        expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
+          "upload.pdf",
         )
       end
 
@@ -346,10 +338,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
           "translation_upload.pdf (opens in a new tab)",
         )
         expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
-          teacher_interface_application_form_document_upload_path(
-            model.translatable_document,
-            model.translatable_document.uploads.first,
-          ),
+          "translation_upload.pdf",
         )
       end
 

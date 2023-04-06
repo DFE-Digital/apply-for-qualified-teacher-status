@@ -26,21 +26,15 @@
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
-#  overdue_further_information                   :boolean          default(FALSE), not null
-#  overdue_professional_standing                 :boolean          default(FALSE), not null
-#  overdue_qualification                         :boolean          default(FALSE), not null
-#  overdue_reference                             :boolean          default(FALSE), not null
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualifications_status                         :string           default("not_started"), not null
 #  received_further_information                  :boolean          default(FALSE), not null
 #  received_professional_standing                :boolean          default(FALSE), not null
-#  received_qualification                        :boolean          default(FALSE), not null
 #  received_reference                            :boolean          default(FALSE), not null
 #  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
-#  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  status                                        :string           default("draft"), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
@@ -48,12 +42,10 @@
 #  teaching_authority_provides_written_statement :boolean          default(FALSE), not null
 #  waiting_on_further_information                :boolean          default(FALSE), not null
 #  waiting_on_professional_standing              :boolean          default(FALSE), not null
-#  waiting_on_qualification                      :boolean          default(FALSE), not null
 #  waiting_on_reference                          :boolean          default(FALSE), not null
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
-#  written_statement_optional                    :boolean          default(FALSE), not null
 #  written_statement_status                      :string           default("not_started"), not null
 #  created_at                                    :datetime         not null
 #  updated_at                                    :datetime         not null
@@ -95,18 +87,14 @@ RSpec.describe ApplicationForm, type: :model do
     )
   end
 
-  it_behaves_like "a remindable"
-
   describe "columns" do
     it do
       is_expected.to define_enum_for(:status).with_values(
         draft: "draft",
         submitted: "submitted",
-        preliminary_check: "preliminary_check",
         initial_assessment: "initial_assessment",
         waiting_on: "waiting_on",
         received: "received",
-        overdue: "overdue",
         awarded: "awarded",
         awarded_pending_checks: "awarded_pending_checks",
         declined: "declined",
@@ -256,6 +244,17 @@ RSpec.describe ApplicationForm, type: :model do
       it { is_expected.to validate_absence_of(:english_language_provider) }
     end
 
+    context "with the same assessor and reviewer" do
+      let(:staff) { create(:staff) }
+
+      before do
+        application_form.assessor = staff
+        application_form.reviewer = staff
+      end
+
+      it { is_expected.to_not be_valid }
+    end
+
     context "when submitted" do
       before { application_form.status = "submitted" }
 
@@ -304,7 +303,7 @@ RSpec.describe ApplicationForm, type: :model do
   end
 
   describe "scopes" do
-    describe "#active" do
+    describe ".active" do
       subject { described_class.active }
 
       context "draft" do
@@ -323,98 +322,12 @@ RSpec.describe ApplicationForm, type: :model do
         let!(:application_form) { create(:application_form, :awarded) }
 
         it { is_expected.to eq([application_form]) }
-
-        context "older than 90 days" do
-          let!(:application_form) do
-            create(:application_form, :awarded, awarded_at: 90.days.ago)
-          end
-
-          it { is_expected.to be_empty }
-        end
       end
 
       context "declined" do
         let!(:application_form) { create(:application_form, :declined) }
 
         it { is_expected.to eq([application_form]) }
-
-        context "older than 90 days" do
-          let!(:application_form) do
-            create(:application_form, :declined, declined_at: 90.days.ago)
-          end
-
-          it { is_expected.to be_empty }
-        end
-      end
-
-      context "preliminary_check" do
-        let!(:application_form) do
-          create(:application_form, :preliminary_check)
-        end
-
-        it { is_expected.to eq([application_form]) }
-      end
-    end
-
-    describe "#destroyable" do
-      subject(:destroyable) { described_class.destroyable }
-
-      it { is_expected.to be_empty }
-
-      context "draft" do
-        let!(:application_form) { create(:application_form, :draft) }
-
-        it { is_expected.to be_empty }
-
-        context "older than 6 months" do
-          let!(:application_form) do
-            create(:application_form, :draft, created_at: 6.months.ago)
-          end
-
-          it { is_expected.to include(application_form) }
-        end
-      end
-
-      context "submitted" do
-        let!(:application_form) { create(:application_form, :submitted) }
-
-        it { is_expected.to be_empty }
-
-        context "older than 90 days" do
-          let!(:application_form) do
-            create(:application_form, :submitted, created_at: 90.days.ago)
-          end
-
-          it { is_expected.to be_empty }
-        end
-      end
-
-      context "awarded" do
-        let!(:application_form) { create(:application_form, :awarded) }
-
-        it { is_expected.to be_empty }
-
-        context "older than 5 years" do
-          let!(:application_form) do
-            create(:application_form, :awarded, awarded_at: 5.years.ago)
-          end
-
-          it { is_expected.to include(application_form) }
-        end
-      end
-
-      context "declined" do
-        let!(:application_form) { create(:application_form, :declined) }
-
-        it { is_expected.to be_empty }
-
-        context "older than 5 years" do
-          let!(:application_form) do
-            create(:application_form, :declined, declined_at: 5.years.ago)
-          end
-
-          it { is_expected.to include(application_form) }
-        end
       end
     end
   end
@@ -426,6 +339,33 @@ RSpec.describe ApplicationForm, type: :model do
       application_form.english_language_medium_of_instruction_document,
     ).to_not be_nil
     expect(application_form.written_statement_document).to_not be_nil
+  end
+
+  describe "#reference" do
+    let!(:application_form1) { create(:application_form, reference: nil) }
+    let!(:application_form2) { create(:application_form, reference: nil) }
+    let!(:application_form3) { create(:application_form, reference: "") }
+
+    context "the first application" do
+      subject(:reference) { application_form1.reference }
+
+      it { is_expected.to_not be_nil }
+      it { is_expected.to eq("2000001") }
+    end
+
+    context "the second application" do
+      subject(:reference) { application_form2.reference }
+
+      it { is_expected.to_not be_nil }
+      it { is_expected.to eq("2000002") }
+    end
+
+    context "the third application" do
+      subject(:reference) { application_form3.reference }
+
+      it { is_expected.to_not be_blank }
+      it { is_expected.to eq("2000003") }
+    end
   end
 
   describe "#created_under_new_regulations?" do

@@ -30,7 +30,6 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_online_checker_url
     when_i_fill_teaching_authority_checks_sanctions
     when_i_fill_qualifications_information
-    when_i_check_requires_preliminary_check
     when_i_fill_regions
     and_i_save
     then_i_see_country_contact_preview
@@ -41,6 +40,7 @@ RSpec.describe "Countries support", type: :system do
     when_i_click_on_a_region
     then_i_see_a_region
 
+    when_i_check_application_form_enabled
     when_i_select_sanction_check
     when_i_select_status_check
     when_i_fill_teaching_authority_name
@@ -54,8 +54,6 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_online_checker_url
     when_i_check_teaching_authority_requires_submission_email
     when_i_fill_qualifications_information
-    when_i_check_written_statement_optional
-    when_i_check_requires_preliminary_check
     and_i_save_and_preview
     then_i_see_the_preview
     and_i_see_a_success_banner
@@ -116,7 +114,6 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_content("Certificate")
     expect(page).to have_content("Other")
     expect(page).to have_content("Qualifications information")
-    expect(page).to have_content("Preliminary check")
   end
 
   def then_i_see_region_changes_confirmation
@@ -143,6 +140,10 @@ RSpec.describe "Countries support", type: :system do
 
   def when_i_fill_regions
     fill_in "country-all-regions-field", with: "California"
+  end
+
+  def when_i_check_application_form_enabled
+    check "region-application-form-enabled-1-field", visible: false
   end
 
   def when_i_select_sanction_check
@@ -230,16 +231,6 @@ RSpec.describe "Countries support", type: :system do
   rescue Capybara::ElementNotFound
     fill_in "country-qualifications-information-field",
             with: "Qualifications information"
-  end
-
-  def when_i_check_written_statement_optional
-    check "region-written-statement-optional-1-field", visible: false
-  end
-
-  def when_i_check_requires_preliminary_check
-    check "region-requires-preliminary-check-1-field", visible: false
-  rescue Capybara::ElementNotFound
-    check "country-requires-preliminary-check-1-field", visible: false
   end
 
   def and_i_save

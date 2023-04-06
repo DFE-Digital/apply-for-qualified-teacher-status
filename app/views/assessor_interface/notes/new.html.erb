@@ -1,5 +1,5 @@
 <% content_for :page_title, "#{"Error: " if @create_note_form.errors.any?}Add a note" %>
-<% content_for :back_link_url, params[:next].presence || assessor_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @create_note_form, url: assessor_interface_application_form_notes_path(@application_form) do |f| %>
   <%= hidden_field_tag :next, params[:next] %>

@@ -40,21 +40,6 @@ RSpec.describe "Teacher written statement", type: :system do
     and_i_see_the_provide_written_statement_task_is_completed
   end
 
-  it "teacher doesn't have document" do
-    given_the_written_statement_is_optional
-
-    when_i_visit_the(:teacher_application_page)
-    then_i_see_the(:teacher_application_page)
-    and_i_see_the_upload_written_statement_task
-
-    when_i_click_the_upload_written_statement_task
-    then_i_see_the(:teacher_upload_document_page)
-
-    when_i_dont_have_the_document
-    then_i_see_the(:teacher_application_page)
-    and_i_see_the_upload_written_statement_task_is_completed
-  end
-
   private
 
   def given_an_application_form_exists
@@ -65,10 +50,6 @@ RSpec.describe "Teacher written statement", type: :system do
     application_form.update!(
       teaching_authority_provides_written_statement: true,
     )
-  end
-
-  def given_the_written_statement_is_optional
-    application_form.update!(written_statement_optional: true)
   end
 
   def and_i_see_the_upload_written_statement_task
@@ -85,12 +66,6 @@ RSpec.describe "Teacher written statement", type: :system do
     teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
-    teacher_upload_document_page.form.written_in_english_items.first.choose
-    teacher_upload_document_page.form.continue_button.click
-  end
-
-  def when_i_dont_have_the_document
-    teacher_upload_document_page.form.do_not_have_document.check
     teacher_upload_document_page.form.continue_button.click
   end
 

@@ -7,9 +7,9 @@ module PageHelpers
     send(page.to_sym).load(**args)
   end
 
-  def age_range_subjects_assessment_recommendation_award_page
-    @age_range_subjects_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::AgeRangeSubjectsAssessmentRecommendationAward.new
+  def add_another_qualification_page
+    @add_another_qualification_page ||=
+      PageObjects::TeacherInterface::AddAnotherQualification.new
   end
 
   def assessor_application_page
@@ -20,36 +20,6 @@ module PageHelpers
   def assessor_application_status_page
     @assessor_application_status_page ||=
       PageObjects::AssessorInterface::ApplicationStatus.new
-  end
-
-  def assessor_edit_professional_standing_request_location_page
-    @assessor_edit_professional_standing_request_location_page ||=
-      PageObjects::AssessorInterface::EditProfessionalStandingRequestLocation.new
-  end
-
-  def assessor_edit_professional_standing_request_review_page
-    @assessor_edit_professional_standing_request_review_page ||=
-      PageObjects::AssessorInterface::EditProfessionalStandingRequestReview.new
-  end
-
-  def assessor_edit_qualification_request_page
-    @assessor_edit_qualification_request_page ||=
-      PageObjects::AssessorInterface::EditQualificationRequest.new
-  end
-
-  def assessor_edit_reference_request_page
-    @assessor_edit_reference_request_page ||=
-      PageObjects::AssessorInterface::EditReferenceRequest.new
-  end
-
-  def assessor_qualification_requests_page
-    @assessor_qualification_requests_page ||=
-      PageObjects::AssessorInterface::QualificationRequests.new
-  end
-
-  def assessor_reference_requests_page
-    @assessor_reference_requests_page ||=
-      PageObjects::AssessorInterface::ReferenceRequests.new
   end
 
   def applications_page
@@ -84,11 +54,6 @@ module PageHelpers
       PageObjects::AssessorInterface::CheckQualifications.new
   end
 
-  def check_english_language_proficiency_page
-    @check_english_language_proficiency_page ||=
-      PageObjects::AssessorInterface::CheckEnglishLanguageProficiency.new
-  end
-
   def check_work_history_page
     @check_work_history_page ||=
       PageObjects::AssessorInterface::CheckWorkHistory.new
@@ -102,11 +67,6 @@ module PageHelpers
   def confirm_assessment_recommendation_page
     @confirm_assessment_recommendation_page ||=
       PageObjects::AssessorInterface::ConfirmAssessmentRecommendation.new
-  end
-
-  def contact_professional_standing_assessment_recommendation_verify_page
-    @contact_professional_standing_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::ContactProfessionalStandingAssessmentRecommendationVerify.new
   end
 
   def declare_assessment_recommendation_page
@@ -126,18 +86,13 @@ module PageHelpers
     @degree_page ||= PageObjects::EligibilityInterface::Degree.new
   end
 
-  def edit_age_range_subjects_assessment_recommendation_award_page
-    @edit_age_range_subjects_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::EditAgeRangeSubjectsAssessmentRecommendationAward.new
+  def edit_qualification_page
+    @edit_qualification_page ||=
+      PageObjects::TeacherInterface::EditQualification.new
   end
 
   def eligible_page
     @eligible_page = PageObjects::EligibilityInterface::Eligible.new
-  end
-
-  def email_consent_letters_requests_assessment_recommendation_verify_page
-    @email_consent_letters_requests_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::EmailConsentLettersAssessmentRecommendationVerify.new
   end
 
   def further_information_requested_page
@@ -167,6 +122,16 @@ module PageHelpers
     @misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
   end
 
+  def new_qualification_page
+    @new_qualification_page ||=
+      PageObjects::TeacherInterface::NewQualification.new
+  end
+
+  def part_of_university_degree_page
+    @part_of_university_degree_page ||=
+      PageObjects::TeacherInterface::PartOfUniversityDegree.new
+  end
+
   def performance_page
     @performance_page ||= PageObjects::Performance.new
   end
@@ -175,38 +140,13 @@ module PageHelpers
     @personas_page ||= PageObjects::Personas.new
   end
 
-  def preliminary_check_page
-    @preliminary_check_page ||=
-      PageObjects::AssessorInterface::PreliminaryCheck.new
-  end
-
   def preview_assessment_recommendation_page
     @preview_assessment_recommendation_page ||=
       PageObjects::AssessorInterface::PreviewAssessmentRecommendation.new
   end
 
-  def preview_referee_assessment_recommendation_award_page
-    @preview_referee_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::PreviewRefereeAssessmentRecommendationAward.new
-  end
-
-  def preview_teacher_assessment_recommendation_award_page
-    @preview_teacher_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::PreviewTeacherAssessmentRecommendationAward.new
-  end
-
   def qualification_page
     @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
-  end
-
-  def qualification_requests_assessment_recommendation_verify_page
-    @qualification_requests_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
-  end
-
-  def reference_requests_assessment_recommendation_verify_page
-    @reference_requests_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationVerify.new
   end
 
   def region_page
@@ -227,28 +167,9 @@ module PageHelpers
       PageObjects::EligibilityInterface::TeachChildren.new
   end
 
-  def qualified_for_subject_page
-    @qualified_for_subject_page ||=
-      PageObjects::EligibilityInterface::QualifiedForSubject.new
-  end
-
-  def teacher_add_another_qualification_page
-    @teacher_add_another_qualification_page ||=
-      PageObjects::TeacherInterface::AddAnotherQualification.new
-  end
-
   def teacher_add_another_work_history_page
     @teacher_add_another_work_history_page ||=
       PageObjects::TeacherInterface::AddAnotherWorkHistory.new
-  end
-
-  def teacher_age_range_page
-    @teacher_age_range_page = PageObjects::TeacherInterface::AgeRange.new
-  end
-
-  def teacher_alternative_name_page
-    @teacher_alternative_name_page =
-      PageObjects::TeacherInterface::AlternativeName.new
   end
 
   def teacher_application_page
@@ -267,11 +188,6 @@ module PageHelpers
   def teacher_check_english_language_page
     @teacher_check_english_language_page ||=
       PageObjects::TeacherInterface::CheckEnglishLanguage.new
-  end
-
-  def teacher_check_personal_information_page
-    @teacher_check_personal_information_page =
-      PageObjects::TeacherInterface::CheckPersonalInformation.new
   end
 
   def teacher_check_qualification_page
@@ -308,19 +224,13 @@ module PageHelpers
       PageObjects::TeacherInterface::DeclinedApplication.new
   end
 
-  def teacher_delete_qualification_page
-    @teacher_delete_qualification_page =
-      PageObjects::TeacherInterface::DeleteQualification.new
+  def teacher_delete_form_page
+    @teacher_delete_form_page = PageObjects::TeacherInterface::DeleteForm.new
   end
 
   def teacher_delete_work_history_page
     @teacher_delete_work_history_page =
       PageObjects::TeacherInterface::DeleteWorkHistory.new
-  end
-
-  def teacher_edit_qualification_page
-    @teacher_edit_qualification_page ||=
-      PageObjects::TeacherInterface::EditQualification.new
   end
 
   def teacher_edit_reference_request_additional_information_page
@@ -331,11 +241,6 @@ module PageHelpers
   def teacher_edit_reference_request_children_page
     @teacher_edit_reference_request_children_page ||=
       PageObjects::TeacherInterface::EditReferenceRequestChildren.new
-  end
-
-  def teacher_edit_reference_request_contact_page
-    @teacher_edit_reference_request_contact_page ||=
-      PageObjects::TeacherInterface::EditReferenceRequestContact.new
   end
 
   def teacher_edit_reference_request_dates_page
@@ -353,19 +258,9 @@ module PageHelpers
       PageObjects::TeacherInterface::EditReferenceRequestLessons.new
   end
 
-  def teacher_edit_reference_request_misconduct_page
-    @teacher_edit_reference_request_misconduct_page ||=
-      PageObjects::TeacherInterface::EditReferenceRequestMisconduct.new
-  end
-
   def teacher_edit_reference_request_reports_page
     @teacher_edit_reference_request_reports_page ||=
       PageObjects::TeacherInterface::EditReferenceRequestReports.new
-  end
-
-  def teacher_edit_reference_request_satisfied_page
-    @teacher_edit_reference_request_satisfied_page ||=
-      PageObjects::TeacherInterface::EditReferenceRequestSatisfied.new
   end
 
   def teacher_edit_work_history_contact_page
@@ -403,33 +298,14 @@ module PageHelpers
       PageObjects::TeacherInterface::EnglishLanguageProviderReference.new
   end
 
-  def teacher_magic_link_page
-    @teacher_magic_link_page = PageObjects::TeacherInterface::MagicLink.new
-  end
-
-  def teacher_name_and_date_of_birth_page
-    @teacher_name_and_date_of_birth_page =
-      PageObjects::TeacherInterface::NameAndDateOfBirth.new
-  end
-
   def teacher_new_application_page
     @teacher_new_application_page =
       PageObjects::TeacherInterface::NewApplication.new
   end
 
-  def teacher_new_qualification_page
-    @teacher_new_qualification_page ||=
-      PageObjects::TeacherInterface::NewQualification.new
-  end
-
   def teacher_new_work_history_page
     @teacher_new_work_history_page ||=
       PageObjects::TeacherInterface::NewWorkHistory.new
-  end
-
-  def teacher_part_of_university_degree_page
-    @teacher_part_of_university_degree_page ||=
-      PageObjects::TeacherInterface::PartOfUniversityDegree.new
   end
 
   def teacher_reference_received_page
@@ -442,21 +318,12 @@ module PageHelpers
       PageObjects::TeacherInterface::ReferenceRequested.new
   end
 
-  def teacher_registration_number_page
-    @teacher_registration_number_page =
-      PageObjects::TeacherInterface::RegistrationNumber.new
-  end
-
   def teacher_retry_otp_page
     @teacher_retry_otp_page = PageObjects::TeacherInterface::RetryOtp.new
   end
 
   def teacher_signed_out_page
     @teacher_signed_out_page = PageObjects::TeacherInterface::SignedOut.new
-  end
-
-  def teacher_subjects_page
-    @teacher_subjects_page = PageObjects::TeacherInterface::Subjects.new
   end
 
   def timeline_page
@@ -486,6 +353,10 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckUploadedFiles.new
   end
 
+  def subjects_form_page
+    @subjects_form_page = PageObjects::TeacherInterface::SubjectsForm.new
+  end
+
   def work_history_form_page
     @work_history_form_page = PageObjects::TeacherInterface::WorkHistoryForm.new
   end
@@ -502,7 +373,12 @@ module PageHelpers
 
   def qualifications_form_page
     @qualifications_form_page =
-      PageObjects::TeacherInterface::QualificationForm.new
+      PageObjects::TeacherInterface::QualificationsForm.new
+  end
+
+  def name_and_date_of_birth_page
+    @name_and_date_of_birth_page =
+      PageObjects::TeacherInterface::NameAndDateOfBirth.new
   end
 
   def check_your_answers_page
@@ -518,6 +394,20 @@ module PageHelpers
   def check_your_uploads_page
     @check_your_uploads_page =
       PageObjects::TeacherInterface::CheckYourUploads.new
+  end
+
+  def alternative_name_page
+    @alternative_name_page =
+      PageObjects::TeacherInterface::AlternativeNameForm.new
+  end
+
+  def age_range_form
+    @age_range_page = PageObjects::TeacherInterface::AgeRangeForm.new
+  end
+
+  def registration_number_form
+    @registration_number_form =
+      PageObjects::TeacherInterface::RegistrationNumberForm.new
   end
 
   def request_further_information_page
@@ -550,18 +440,8 @@ module PageHelpers
       PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
   end
 
-  def verify_professional_standing_assessment_recommendation_verify_page
-    @verify_professional_standing_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::VerifyProfessionalStandingAssessmentRecommendationVerify.new
-  end
-
   def work_experience_page
     @work_experience_page ||=
       PageObjects::EligibilityInterface::WorkExperience.new
-  end
-
-  def verify_qualifications_assessment_recommendation_verify_page
-    @verify_qualifications_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::VerifyQualificationsAssessmentRecommendationVerify.new
   end
 end

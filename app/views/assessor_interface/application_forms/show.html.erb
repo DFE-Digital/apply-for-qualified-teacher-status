@@ -30,6 +30,7 @@
               key: "#{item}-#{index}",
               status: @view_object.assessment_task_status(section, item, index),
               class_context: "app-task-list",
+              context: :assessor,
             )) %>
           </li>
         <% end %>

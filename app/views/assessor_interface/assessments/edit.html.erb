@@ -1,24 +1,14 @@
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("helpers.legend.assessor_interface_assessment_recommendation_form.recommendation")}" %>
+<% content_for :page_title, "#{"Error: " if @assessment_recommendation_form.errors.any?}#{t("helpers.legend.assessor_interface_assessment_recommendation_form.recommendation")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment], method: :put do |f| %>
+<%= form_with model: @assessment_recommendation_form, url: [:declare, :assessor_interface, @application_form, @assessment] do |f| %>
   <%= f.govuk_error_summary %>
-
-  <%
-    hint = if @assessment.can_verify?
-             t(".hint.can_verify")
-           elsif @assessment.can_award?
-             t(".hint.can_award")
-           else
-             t(".hint.cant_award")
-           end
-  %>
 
   <%= f.govuk_collection_radio_buttons :recommendation,
                                        @assessment.available_recommendations,
                                        :itself,
                                        legend: { size: "xl", tag: "h1" },
-                                       hint: { text: hint } %>
+                                       hint: { text: t(@assessment.can_award? ? ".hint.can_award" : ".hint.cant_award") } %>
 
   <%= f.govuk_submit prevent_double_click: false do %>
     <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>

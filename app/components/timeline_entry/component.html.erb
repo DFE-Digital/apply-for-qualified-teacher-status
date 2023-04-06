@@ -1,12 +1,12 @@
 <div class="moj-timeline__item">
   <div class="moj-timeline__header">
-    <h2 class="moj-timeline__title"><%= title %></h2>
+    <h2 class="moj-timeline__title"><%= t("components.timeline_entry.title.#{timeline_event.event_type}") %></h2>
     <p class="moj-timeline__byline">by <%= creator %></p>
   </div>
 
   <p class="moj-timeline__date">
   <time datetime="<%= timeline_event.created_at.iso8601 %>">
-    <%= timeline_event.created_at.to_fs(:date_and_time) %>
+    <%= timeline_event.created_at.strftime("%e %B %Y at %l:%M %P") %>
   </time>
   </p>
 
@@ -23,28 +23,27 @@
     <% elsif timeline_event.assessment_section_recorded? %>
       <p class="govuk-body">
         <%= description_vars[:section_name] %>:
-
-        <% if description_vars[:passed] %>
-          <%= govuk_tag(text: "Passed", colour: "green") %>
-        <% else %>
-          <%= govuk_tag(text: "Not passed", colour: "red") %>
-        <% end %>
+        <%= render(StatusTag::Component.new(
+          key: timeline_event.id,
+          status: description_vars[:section_state],
+          class_context: "timeline-event",
+          context: :assessor,
+          )) %>
       </p>
-      <% if (failure_reason = description_vars[:failure_reasons].first).present? %>
-        <%= govuk_inset_text do %>
-          <ul class="govuk-list--bullet">
-            <%= render "shared/assessor_failure_reason_list_item", failure_reason: %> 
-            <% if description_vars[:failure_reasons].size > 1 %>
-              <%= govuk_details(summary_text: "View additional reasons") do %>
-                <% description_vars[:failure_reasons].drop(1).each do |failure_reason| %>                                
-                    <%= render "shared/assessor_failure_reason_list_item", failure_reason: %>
-                <% end %>
-              <% end %>       
-            <% end %>
-          </ul>
-        <% end %>
+
+      <%= govuk_inset_text do %>
+        <ul class="govuk-list--bullet">
+          <% description_vars[:failure_reasons].each do |failure_reason| %>
+            <li>
+              <p class="govuk-body">
+                <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason.key}") %>
+              </p>
+              <%= simple_format failure_reason.assessor_feedback %>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
-    <% elsif timeline_event.requestable_assessed? && timeline_event.requestable.is_a?(FurtherInformationRequest) %>
+    <% elsif timeline_event.further_information_request_assessed? %>
       <p class="govuk-body">Further information request has been assessed.</p>
 
       <% if (failure_assessor_note = description_vars[:failure_assessor_note]).present? %>
@@ -53,7 +52,9 @@
         <% end %>
       <% end %>
     <% else %>
-      <p class="govuk-body"><%= simple_format description.html_safe %></p>
+      <p class="govuk-body">
+        <%= simple_format t("components.timeline_entry.description.#{timeline_event.event_type}", **description_vars).html_safe %>
+      </p>
     <% end %>
   </div>
 </div>

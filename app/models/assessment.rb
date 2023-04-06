@@ -7,11 +7,8 @@
 #  age_range_min                             :integer
 #  age_range_note                            :text             default(""), not null
 #  induction_required                        :boolean
-#  preliminary_check_complete                :boolean
 #  recommendation                            :string           default("unknown"), not null
-#  recommendation_assessor_note              :text             default(""), not null
 #  recommended_at                            :datetime
-#  references_verified                       :boolean
 #  started_at                                :datetime
 #  subjects                                  :text             default([]), not null, is an Array
 #  subjects_note                             :text             default(""), not null
@@ -36,17 +33,15 @@ class Assessment < ApplicationRecord
 
   has_many :sections, class_name: "AssessmentSection", dependent: :destroy
   has_many :further_information_requests, dependent: :destroy
-  has_one :professional_standing_request, dependent: :destroy, required: false
   has_many :reference_requests, dependent: :destroy
   has_many :qualification_requests, dependent: :destroy
 
   enum :recommendation,
        {
+         unknown: "unknown",
          award: "award",
-         verify: "verify",
          decline: "decline",
          request_further_information: "request_further_information",
-         unknown: "unknown",
        },
        default: :unknown
 
@@ -56,181 +51,57 @@ class Assessment < ApplicationRecord
               in: recommendations.values,
             }
 
-  def award!
-    update!(recommendation: "award", recommended_at: Time.zone.now)
-  end
-
-  def verify!
-    update!(recommendation: "verify", recommended_at: Time.zone.now)
-  end
-
-  def decline!
-    update!(recommendation: "decline", recommended_at: Time.zone.now)
-  end
-
-  def request_further_information!
-    update!(
-      recommendation: "request_further_information",
-      recommended_at: Time.zone.now,
-    )
-  end
-
   def started?
-    any_section_finished?
+    sections.any?(&:finished?)
   end
 
-  def completed?
-    award? || decline?
+  def finished?
+    sections_finished? && (award? || decline?)
+  end
+
+  def sections_finished?
+    sections.all?(&:finished?)
   end
 
   def can_award?
-    if application_form.created_under_new_regulations?
-      return false if induction_required.nil?
-
-      if skip_verification?
-        all_sections_or_further_information_requests_passed?
-      else
-        verify? && enough_reference_requests_passed? &&
-          all_qualification_requests_passed? &&
-          professional_standing_request_passed?
-      end
-    else
-      all_sections_or_further_information_requests_passed?
-    end
-  end
-
-  def can_verify?
-    return false unless application_form.created_under_new_regulations?
-
-    return false if skip_verification?
-
-    all_sections_or_further_information_requests_passed?
+    sections_passed? || further_information_requests_passed?
   end
 
   def can_decline?
-    if unknown?
-      sections_ready =
-        if application_form.created_under_new_regulations?
-          any_section_finished?
-        else
-          all_sections_finished?
-        end
-
-      (sections_ready && any_section_failed? && any_section_declines?) ||
-        professional_standing_request&.requested? || false
-    elsif request_further_information?
-      any_further_information_request_failed?
-    elsif verify?
-      true # TODO: check the state of verification requests
-    else
-      false
-    end
+    sections_finished? && !can_award? && !can_request_further_information?
   end
 
   def can_request_further_information?
-    if unknown?
-      all_sections_finished? && any_section_failed? && no_section_declines?
-    elsif request_further_information?
+    sections_not_passed? && cannot_decline? &&
       further_information_requests.empty?
-    else
-      false
-    end
-  end
-
-  def recommendable?
-    can_award? || can_verify? || can_decline? ||
-      can_request_further_information?
   end
 
   def available_recommendations
     [].tap do |recommendations|
       recommendations << "award" if can_award?
-      recommendations << "verify" if can_verify?
-      recommendations << "decline" if can_decline?
       if can_request_further_information?
         recommendations << "request_further_information"
       end
+      recommendations << "decline" if can_decline?
     end
-  end
-
-  def selected_failure_reasons_empty?
-    sections.all? { |section| section.selected_failure_reasons.empty? }
   end
 
   private
 
-  def all_sections_finished?
-    sections.all?(&:finished?)
-  end
-
-  def any_section_finished?
-    sections.any?(&:finished?)
-  end
-
-  def all_sections_passed?
+  def sections_passed?
     sections.all?(&:passed)
   end
 
-  def any_section_failed?
-    sections.any?(&:failed)
-  end
-
-  def any_section_declines?
-    sections.any?(&:declines_assessment?)
-  end
-
-  def no_section_declines?
-    sections.none?(&:declines_assessment?)
-  end
-
-  def all_further_information_requests_passed?
+  def further_information_requests_passed?
     further_information_requests.present? &&
       further_information_requests.all?(&:passed)
   end
 
-  def any_further_information_request_failed?
-    further_information_requests.present? &&
-      further_information_requests.any?(&:failed)
+  def sections_not_passed?
+    sections.any? { |section| section.passed == false }
   end
 
-  def enough_reference_requests_passed?
-    return false unless references_verified
-
-    months_count =
-      WorkHistoryDuration.new(
-        work_history_relation:
-          application_form.work_histories.where(
-            id: reference_requests.where(passed: true).map(&:work_history_id),
-          ),
-      ).count_months
-
-    months_count >= 9
-  end
-
-  def all_qualification_requests_passed?
-    if qualification_requests.present?
-      qualification_requests.all?(&:passed)
-    else
-      true
-    end
-  end
-
-  def professional_standing_request_passed?
-    if !application_form.teaching_authority_provides_written_statement &&
-         professional_standing_request.present?
-      professional_standing_request.passed?
-    else
-      true
-    end
-  end
-
-  def skip_verification?
-    !application_form.needs_work_history ||
-      application_form.reduced_evidence_accepted
-  end
-
-  def all_sections_or_further_information_requests_passed?
-    (unknown? && all_sections_passed?) ||
-      (request_further_information? && all_further_information_requests_passed?)
+  def cannot_decline?
+    sections.none?(&:declines_assessment?)
   end
 end

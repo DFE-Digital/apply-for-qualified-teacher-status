@@ -7,7 +7,6 @@
 #  eligibility_enabled                     :boolean          default(TRUE), not null
 #  eligibility_skip_questions              :boolean          default(FALSE), not null
 #  qualifications_information              :text             default(""), not null
-#  requires_preliminary_check              :boolean          default(FALSE), not null
 #  teaching_authority_address              :text             default(""), not null
 #  teaching_authority_certificate          :text             default(""), not null
 #  teaching_authority_checks_sanctions     :boolean          default(TRUE), not null
@@ -43,9 +42,6 @@ class Country < ApplicationRecord
 
   CODES_ELIGIBLE_IN_FEBRUARY_2023 =
     YAML.load(File.read("lib/countries-eligible-in-february-2023.yaml"))
-
-  CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION =
-    CODES_ELIGIBLE_IN_FEBRUARY_2023 - %w[HK UA]
 
   validates :code, inclusion: { in: CODES }
 

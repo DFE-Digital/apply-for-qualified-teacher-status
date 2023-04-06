@@ -13,6 +13,7 @@ $moj-images-path: "/";
 @import "_email_preview";
 @import "_environments";
 @import "_search_results";
+@import "_summary_list_card";
 @import "_support";
 @import "_task_list";
 
@@ -54,14 +55,4 @@ ul.autocomplete__menu {
 .govuk-footer__navigation {
   margin-left: 0px;
   margin-right: 0px;
-}
-
-.govuk-inset-text .govuk-details__text {
-  padding-left: 0;
-  border-left: none;
-  padding-bottom: 0;
-}
-
-.govuk-inset-text .govuk-details {
-  margin-bottom: 0;
 }

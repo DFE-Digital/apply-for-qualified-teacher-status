@@ -3,6 +3,9 @@
 require "rails_helper"
 
 RSpec.describe "Teacher work history", type: :system do
+  before(:all) { given_work_history_is_active }
+  after(:all) { given_work_history_is_inactive }
+
   before do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(teacher)
@@ -75,6 +78,14 @@ RSpec.describe "Teacher work history", type: :system do
 
   private
 
+  def given_work_history_is_active
+    FeatureFlags::FeatureFlag.activate(:application_work_history)
+  end
+
+  def given_work_history_is_inactive
+    FeatureFlags::FeatureFlag.deactivate(:application_work_history)
+  end
+
   def given_an_application_form_exists
     application_form
   end
@@ -146,15 +157,13 @@ RSpec.describe "Teacher work history", type: :system do
     expect(summary_list_rows[6].key.text).to eq("Role end date")
     expect(summary_list_rows[6].value.text).to eq("December 2021")
 
-    expect(summary_list_rows[7].key.text).to eq("Reference contact’s full name")
+    expect(summary_list_rows[7].key.text).to eq("Contact name")
     expect(summary_list_rows[7].value.text).to eq("Name")
 
-    expect(summary_list_rows[8].key.text).to eq("Reference contact’s job title")
+    expect(summary_list_rows[8].key.text).to eq("Contact job")
     expect(summary_list_rows[8].value.text).to eq("Job")
 
-    expect(summary_list_rows[9].key.text).to eq(
-      "Reference contact’s email address",
-    )
+    expect(summary_list_rows[9].key.text).to eq("Contact email address")
     expect(summary_list_rows[9].value.text).to eq("contact@example.com")
   end
 
@@ -191,7 +200,7 @@ RSpec.describe "Teacher work history", type: :system do
 
   def and_i_see_the_heading_with_the_number_of_months
     expect(teacher_add_another_work_history_page.heading.text).to eq(
-      "You’ve added enough work experience",
+      "You’ve told us about 24 months of work experience so far",
     )
   end
 

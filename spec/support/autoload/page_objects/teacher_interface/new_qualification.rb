@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 module PageObjects
   module TeacherInterface
-    class NewQualification < QualificationForm
+    class NewQualification < QualificationsForm
       set_url "/teacher/application/qualifications/new"
     end
   end

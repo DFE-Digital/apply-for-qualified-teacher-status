@@ -1,52 +1,43 @@
-<p class="govuk-body">There are 4 ways to prove your English language ability.</p>
-
-<h3 class="govuk-heading-s">1. Born in or have citizenship of an exempt country</h3>
-
 <p class="govuk-body">If you were born in or hold citizenship of any of these listed countries, you’re exempt from English language requirements:</p>
-
 <%= render "shared/english_language_exempt_countries" %>
 
 <p class="govuk-body">You’ll need to provide your passport or official identification documents for that country as proof. </p>
-<p class="govuk-body">If you’re not exempt by birth or citizenship, you must be able to provide evidence of your English language ability in one of the following ways:</p>
+<p class="govuk-body">If you were not born in or do not hold citizenship of any of the exempt countries listed, you can provide evidence of your English language ability in one of the following ways:</p>
 
-<h3 class="govuk-heading-s">2. If you studied in an exempt country</h3>
+<ul class="govuk-list govuk-list--number">
+  <li>
+    <h3 class="govuk-heading-s">If your teaching qualification or university degree was taught in an exempt country</h3>
+    <p class="govuk-body">Upload the transcript from your teaching qualification or university degree (which you can request from the institution where you studied).</p>
+  </li>
 
-<p class="govuk-body">
-  Upload the transcript from your teaching qualification or university degree (which you can request from the institution where you studied). Check the exempt countries listed in ‘Born in or have citizenship of an exempt country’.
-</p>
-
-<h3 class="govuk-heading-s">3. If you studied in a country that’s NOT exempt</h3>
-
-<p class="govuk-body">
-  If your teaching qualification or university degree was taught exclusively in the English language you can upload an official document, which is sometimes called a Medium of Instruction (MOI). 
-</p>
-<p class="govuk-body">
-  You can request this from the institution where you studied. It must be signed and stamped by them on official headed paper and it must state that the medium of instruction was English. It must also include your name, degree title and award date.
-</p>
-
-<h3 class="govuk-heading-s">4. Provide an approved English language certificate</h3>
-
-<% if region.reduced_evidence_accepted %>
-  <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 from an approved provider.</p>
-<% else %>
-  <p class="govuk-body">
-    If you cannot provide one of the documents described in 1,2 or 3, you'll need a <a href="https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale" target="_blank">B2 level</a> Secure English Language Test (SELT) from one of these approved providers:
-  </p>
-
-  <ul class="govuk-list govuk-list--bullet">
-   <% EnglishLanguageProvider.order(:created_at).each do |provider| %>
-      <li><strong class="govuk-!-font-weight-bold"><%= provider.name %></strong>: we can accept <%= provider.accepted_tests %></li>
-    <% end %>
-  </ul>
-<% end %>
+  <li>
+    <h3 class="govuk-heading-s">If your teaching qualification or university degree was taught completely in English, but in a country that’s NOT exempt</h3>
+    <p class="govuk-body">Upload a document that shows your teaching qualification or university degree was taught exclusively in the English language – this is an official document that you can request from the institution where you studied.</p>
+  </li>
+<li>
+  <h3 class="govuk-heading-s">If you have an approved English language certificate</h3>
+  
+  <% if region.reduced_evidence_accepted %>
+    <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 from an approved provider.</p>
+  <% else %>
+    <p class="govuk-body">You’ll need a Secure English Language Test (SELT) at level B2 from one of these approved providers:</p>
+    <ul class="govuk-list govuk-list--bullet">
+     <% EnglishLanguageProvider.order(:created_at).each do |provider| %>
+        <li><%= provider.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  
+  </li>
+</ul>
 
 <p class="govuk-body">The test must be awarded within the last 2 years before the date of your application.</p>
-
 <% if region.reduced_evidence_accepted %>
   <p class="govuk-body">Find an <a href="https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" class="govuk-link">approved provider</a> if you need to get an English language certificate.</p>
 <% else %>
   <p class="govuk-body">Find an <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link">approved provider</a> if you need to get an English language certificate.</p>
 <% end %>
+<p class="govuk-body">Learn more about <a href="https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale" class="govuk-link">level B2 English language</a></p>
 
 <%= govuk_details(summary_text: "What if you have more than one nationality?") do %>
   <p class="govuk-body">

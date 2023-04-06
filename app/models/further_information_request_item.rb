@@ -20,8 +20,6 @@
 class FurtherInformationRequestItem < ApplicationRecord
   belongs_to :further_information_request, inverse_of: :items
   has_one :document, as: :documentable, dependent: :destroy
-  has_one :assessment, through: :further_information_request
-  has_one :application_form, through: :assessment
 
   enum :information_type, { text: "text", document: "document" }
 
@@ -30,7 +28,7 @@ class FurtherInformationRequestItem < ApplicationRecord
   end
 
   def completed?
-    (text? && response.present?) || (document? && document.completed?)
+    (text? && response.present?) || (document? && document.uploaded?)
   end
 
   def is_teaching_qualification?

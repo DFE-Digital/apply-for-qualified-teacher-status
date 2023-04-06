@@ -16,8 +16,8 @@ module TeacherInterface
     end
 
     def update
-      ReceiveRequestable.call(
-        requestable: @view_object.further_information_request,
+      SubmitFurtherInformationRequest.call(
+        further_information_request: @view_object.further_information_request,
         user: current_teacher,
       )
 

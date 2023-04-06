@@ -70,7 +70,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         is_expected.to eq(
           {
             about_you: %i[personal_information identification_document],
-            english_language: %i[english_language],
             qualifications: %i[qualifications age_range subjects],
             work_history: %i[work_history],
           },
@@ -93,7 +92,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         is_expected.to eq(
           {
             about_you: %i[personal_information identification_document],
-            english_language: %i[english_language],
             qualifications: %i[qualifications age_range subjects],
             proof_of_recognition: %i[written_statement],
           },
@@ -116,9 +114,39 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         is_expected.to eq(
           {
             about_you: %i[personal_information identification_document],
-            english_language: %i[english_language],
             qualifications: %i[qualifications age_range subjects],
             proof_of_recognition: %i[registration_number],
+          },
+        )
+      end
+    end
+
+    context "with English language active" do
+      before(:all) do
+        FeatureFlags::FeatureFlag.activate(:application_english_language)
+      end
+
+      after(:all) do
+        FeatureFlags::FeatureFlag.deactivate(:application_english_language)
+      end
+
+      before do
+        create(
+          :application_form,
+          :new_regs,
+          teacher: current_teacher,
+          needs_work_history: false,
+          needs_written_statement: false,
+          needs_registration_number: false,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          {
+            about_you: %i[personal_information identification_document],
+            english_language: %i[english_language],
+            qualifications: %i[qualifications age_range subjects],
           },
         )
       end
@@ -145,9 +173,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
             about_you: {
               personal_information: "not_started",
               identification_document: "not_started",
-            },
-            english_language: {
-              english_language: "not_started",
             },
             qualifications: {
               qualifications: "not_started",
@@ -176,9 +201,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
             about_you: {
               personal_information: "not_started",
               identification_document: "not_started",
-            },
-            english_language: {
-              english_language: "not_started",
             },
             qualifications: {
               qualifications: "not_started",
@@ -211,9 +233,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
               personal_information: "not_started",
               identification_document: "not_started",
             },
-            english_language: {
-              english_language: "not_started",
-            },
             qualifications: {
               qualifications: "not_started",
               age_range: "not_started",
@@ -244,9 +263,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
             about_you: {
               personal_information: "not_started",
               identification_document: "not_started",
-            },
-            english_language: {
-              english_language: "not_started",
             },
             qualifications: {
               qualifications: "not_started",
@@ -367,35 +383,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     end
   end
 
-  describe "#show_professional_standing_request_expired_content?" do
-    let(:application_form) do
-      create(:application_form, teacher: current_teacher)
-    end
-    let(:assessment) { create(:assessment, application_form:) }
-
-    subject { view_object.show_professional_standing_request_expired_content? }
-
-    context "when professional_standing_request is present" do
-      context "and it has expired" do
-        let!(:professional_standing_request) do
-          create(:professional_standing_request, :expired, assessment:)
-        end
-        it { is_expected.to eq(true) }
-      end
-
-      context "and it hasn't expired" do
-        let!(:professional_standing_request) do
-          create(:professional_standing_request, assessment:)
-        end
-        it { is_expected.to eq(false) }
-      end
-    end
-
-    context "when professional_standing_request is nil" do
-      it { is_expected.to eq(false) }
-    end
-  end
-
   describe "#declined_cannot_reapply?" do
     subject(:declined_cannot_reapply?) { view_object.declined_cannot_reapply? }
 
@@ -432,47 +419,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
 
         it { is_expected.to be true }
       end
-    end
-  end
-
-  describe "#request_professional_standing_certificate?" do
-    let(:assessment) { create(:assessment) }
-
-    subject(:request_professional_standing_certificate?) do
-      view_object.request_professional_standing_certificate?
-    end
-
-    context "when assessment preliminary checks are complete" do
-      before do
-        create(:application_form, assessment:, teacher: current_teacher)
-        create(:professional_standing_request, assessment:)
-        assessment.update!(preliminary_check_complete: true)
-      end
-
-      it { is_expected.to be true }
-    end
-
-    context "when application form written statement comes from teaching authority" do
-      before do
-        create(
-          :application_form,
-          assessment:,
-          teacher: current_teacher,
-          teaching_authority_provides_written_statement: true,
-        )
-        create(:professional_standing_request, assessment:)
-      end
-
-      it { is_expected.to be true }
-    end
-
-    context "when the application is not waiting on anything" do
-      before do
-        create(:application_form, assessment:, teacher: current_teacher)
-        create(:professional_standing_request, :received, assessment:)
-      end
-
-      it { is_expected.to be false }
     end
   end
 end

@@ -98,25 +98,5 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
       expect(qualification.complete_date).to eq(Date.new(2022, 1, 1))
       expect(qualification.certificate_date).to eq(Date.new(2022, 6, 1))
     end
-
-    context "without validation, with invalid date values" do
-      let(:start_date) { { 1 => 2222, 2 => 22, 3 => 1 } }
-      let(:complete_date) { { 1 => 3333, 2 => 99, 3 => 1 } }
-      let(:certificate_date) { { 1 => 99, 2 => "JUNE", 3 => 1 } }
-
-      subject(:save) { form.save(validate: false) }
-
-      it "applies valid date values" do
-        expect(qualification.start_date).to eq(
-          Date.new(Time.zone.now.year, 1, 1),
-        )
-        expect(qualification.complete_date).to eq(
-          Date.new(Time.zone.now.year, 1, 1),
-        )
-        expect(qualification.certificate_date).to eq(
-          Date.new(Time.zone.now.year, 1, 1),
-        )
-      end
-    end
   end
 end

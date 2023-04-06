@@ -8,9 +8,7 @@ en:
   teacher_interface:
     application_forms:
       show:
-        declined:
-          further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
-          professional_standing_request_expired: Your application has been declined as we did not receive your %{certificate_name} from %{teaching_authority_name} within the 90-day period.
+        further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
     english_language:
       check:
         heading: Check your answers
@@ -24,7 +22,7 @@ en:
           description: If your teaching qualification or university degree was taught in any of the following countries, you’re exempt from English language requirements.
           evidence: You’ll need to provide the transcript from the qualification as evidence. You can do this in the ‘Your qualifications’ section of the application form.
       edit_provider:
-        heading: Tell us about your approved English language proficiency test provider
+        heading: Tell us about your approved English language test provider
         description: We need to know which of the approved providers you used for your English language proficiency test.
       edit_provider_reference:
         heading: English language proficiency
@@ -33,30 +31,28 @@ en:
         failure_reason:
           age_range: Tell us more about the age range you can teach
           applicant_already_dqt: Additional personal information
-          english_language_unverifiable_reference_number: Tell us more about your English language proficiency
           qualifications_dont_match_other_details: Tell us more about your qualifications
           qualifications_dont_match_subjects: Tell us more about the subjects you can teach
           registration_number: Tell us your registration number
           satisfactory_evidence_work_history: Tell us more about your work history
           school_details_cannot_be_verified: Tell us more about this school
-          unrecognised_references: Tell us more about your work history
           work_history_break: Tell us more about your work history
+    new_regs:
+      work_histories:
+        add_another:
+          title: Add another role
+        check_collection:
+          title: Check your answers
+        check_member:
+          title: Check your answers
+        delete:
+          title: Delete work history
     reference_requests:
       show:
         title: You’ve been asked to act as a reference
       edit:
         title: Check your answers
-      edit_contact:
-        title: About you
-    work_histories:
-      add_another:
-        title: Add another role
-      check_collection:
-        title: Check your answers
-      check_member:
-        title: Check your answers
-      delete:
-        title: Delete work history
+        reference_requested: Reference requested
 
   application_form:
     tasks:
@@ -147,7 +143,7 @@ en:
         teachers/otp_form:
           attributes:
             otp:
-              blank: Enter your confirmation code
+              blank: Enter your code
               wrong_length: Enter a valid code
         teacher_interface/age_range_form:
           attributes:
@@ -178,7 +174,7 @@ en:
         teacher_interface/add_another_work_history_form:
           attributes:
             add_another:
-              inclusion: Select whether you need to add another role
+              inclusion: Select whether you need to add another work history
         teacher_interface/delete_qualification_form:
           attributes:
             confirm:
@@ -190,7 +186,7 @@ en:
         teacher_interface/delete_work_history_form:
           attributes:
             confirm:
-              inclusion: Select whether you want to delete this role
+              inclusion: Select whether you want to delete this work history
         teacher_interface/english_language_exemption_form:
           attributes:
             exempt:
@@ -203,8 +199,8 @@ en:
         teacher_interface/english_language_provider_form:
           attributes:
             provider_id:
-              blank: Select your approved English language proficiency test provider
-              inclusion: Select your approved English language proficiency test provider
+              blank: Select your approved English language test provider
+              inclusion: Select your approved English language test provider
         teacher_interface/english_language_provider_reference_form:
           attributes:
             reference:
@@ -257,53 +253,23 @@ en:
         teacher_interface/reference_request_children_response_form:
           attributes:
             children_response:
-              inclusion: Tell us whether the applicant taught children aged somewhere between 5 and 16 years
-            children_comment:
-              blank: Tell us why you answered ‘No’ to this question.
-        teacher_interface/reference_request_contact_response_form:
-          attributes:
-            contact_response:
-              inclusion: Tell us whether these details are correct
-            contact_name:
-              blank: Tell us your full name
-            contact_job:
-              blank: Tell us your job title
+              inclusion: Tell us whether the applicant worked unsupervised with children aged somewhere between 5 and 16 years
         teacher_interface/reference_request_dates_response_form:
           attributes:
             dates_response:
               inclusion: Tell us whether the applicant worked at the school for the dates they provided
-            dates_comment:
-              blank: Tell us why you answered ‘No’ to this question.
         teacher_interface/reference_request_hours_response_form:
           attributes:
             hours_response:
-              inclusion: Tell us whether the applicant normally worked for approximately this number of hours per week in this role
-            hours_comment:
-              blank: Tell us why you answered ‘No’ to this question.
+              inclusion: Tell us whether the applicant worked at the school for approximately the number of hours per week they provided
         teacher_interface/reference_request_lessons_response_form:
           attributes:
             lessons_response:
-              inclusion: Tell us whether the applicant planned, prepared and delivered lessons to a class of at least 4 students
-            lessons_comment:
-              blank: Tell us why you answered ‘No’ to this question.
-        teacher_interface/reference_request_misconduct_response_form:
-          attributes:
-            misconduct_response:
-              inclusion: Tell us whether you know of any professional misconduct by the applicant, or any disciplinary action taken against them
-            misconduct_comment:
-              blank: Tell us why you answered ‘Yes’ to this question.
+              inclusion: Tell us whether the applicant was solely responsible for planning, preparing and delivering lessons to at least 4 students at a time
         teacher_interface/reference_request_reports_response_form:
           attributes:
             reports_response:
-              inclusion: Tell us whether the applicant was responsible for assessing and reporting on the progress of the students
-            reports_comment:
-              blank: Tell us why you answered ‘No’ to this question.
-        teacher_interface/reference_request_satisfied_response_form:
-          attributes:
-            satisfied_response:
-              inclusion: Tell us whether you are satisfied that the applicant is suitable to work with children
-            satisfied_comment:
-              blank: Tell us why you answered ‘No’ to this question.
+              inclusion: Tell us whether the applicant was solely responsible for assessing and reporting on the progress of the students
         teacher_interface/sanction_confirmation_form:
           attributes:
             confirmed_no_sanctions:
@@ -314,8 +280,6 @@ en:
               blank: Enter your first subject
         teacher_interface/upload_form:
           attributes:
-            written_in_english:
-              inclusion: Select whether your document is written in English
             original_attachment:
               blank: Select a file to upload
               invalid_content_type: Files must be in PDF, JPG, PNG, DOCX or DOC format
@@ -356,11 +320,11 @@ en:
         teacher_interface/work_history_contact_form:
           attributes:
             contact_name:
-              blank: Enter this person’s full name
+              blank: Enter the full name
             contact_job:
               blank: Enter this person’s job title
             contact_email:
-              blank: Enter this person’s email address
+              blank: Enter the email address
         teacher_interface/work_history_school_form:
           attributes:
             meets_all_requirements:

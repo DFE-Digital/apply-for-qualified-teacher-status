@@ -32,7 +32,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
   context "when declined" do
     let(:application_form) { create(:application_form, :declined) }
-    let!(:assessment) { create(:assessment, application_form:) }
+    let(:assessment) { create(:assessment, application_form:) }
 
     context "and an initial assessment" do
       before do
@@ -67,18 +67,6 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
       it "does not show the assessor notes to the applicant" do
         expect(subject).not_to match(/A note/)
-      end
-    end
-
-    context "and an expired professional standing request" do
-      before { create(:professional_standing_request, :expired, assessment:) }
-
-      it do
-        is_expected.to match(/Your QTS application has been declined/)
-        is_expected.to match(
-          /we did not receive your letter that proves you’re recognised as a teacher/,
-        )
-        is_expected.to match(/from teaching authority within the 90-day period/)
       end
     end
 

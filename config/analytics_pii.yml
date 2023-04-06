@@ -23,8 +23,6 @@
     - response
   :notes:
     - text
-  :professional_standing_requests:
-    - location_note
   :qualifications:
     - title
     - institution_name
@@ -35,10 +33,8 @@
     - part_of_university_degree
   :qualification_requests:
     - location_note
-    - failure_assessor_note
   :reference_requests:
     - additional_information_response
-    - failure_assessor_note
   :selected_failure_reasons:
     - assessor_feedback
   :staff:
@@ -52,9 +48,6 @@
     - unconfirmed_email
     - current_sign_in_ip
     - last_sign_in_ip
-  :timeline_events:
-    - age_range_note
-    - subjects_note
   :work_histories:
     - school_name
     - city

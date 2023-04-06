@@ -26,21 +26,15 @@
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
-#  overdue_further_information                   :boolean          default(FALSE), not null
-#  overdue_professional_standing                 :boolean          default(FALSE), not null
-#  overdue_qualification                         :boolean          default(FALSE), not null
-#  overdue_reference                             :boolean          default(FALSE), not null
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualifications_status                         :string           default("not_started"), not null
 #  received_further_information                  :boolean          default(FALSE), not null
 #  received_professional_standing                :boolean          default(FALSE), not null
-#  received_qualification                        :boolean          default(FALSE), not null
 #  received_reference                            :boolean          default(FALSE), not null
 #  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
-#  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  status                                        :string           default("draft"), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
@@ -48,12 +42,10 @@
 #  teaching_authority_provides_written_statement :boolean          default(FALSE), not null
 #  waiting_on_further_information                :boolean          default(FALSE), not null
 #  waiting_on_professional_standing              :boolean          default(FALSE), not null
-#  waiting_on_qualification                      :boolean          default(FALSE), not null
 #  waiting_on_reference                          :boolean          default(FALSE), not null
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
-#  written_statement_optional                    :boolean          default(FALSE), not null
 #  written_statement_status                      :string           default("not_started"), not null
 #  created_at                                    :datetime         not null
 #  updated_at                                    :datetime         not null
@@ -84,7 +76,7 @@
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class ApplicationForm < ApplicationRecord
-  include Remindable
+  include Regulated
 
   belongs_to :teacher
   belongs_to :region
@@ -99,10 +91,12 @@ class ApplicationForm < ApplicationRecord
 
   before_save :build_documents, if: :new_record?
 
+  before_validation :assign_reference
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
   belongs_to :assessor, class_name: "Staff", optional: true
   belongs_to :reviewer, class_name: "Staff", optional: true
+  validate :assessor_and_reviewer_must_be_different
 
   validates :submitted_at, presence: true, unless: :draft?
   validates :awarded_at, presence: true, if: :awarded?
@@ -121,11 +115,9 @@ class ApplicationForm < ApplicationRecord
   enum status: {
          draft: "draft",
          submitted: "submitted",
-         preliminary_check: "preliminary_check",
          initial_assessment: "initial_assessment",
          waiting_on: "waiting_on",
          received: "received",
-         overdue: "overdue",
          awarded_pending_checks: "awarded_pending_checks",
          awarded: "awarded",
          declined: "declined",
@@ -154,33 +146,20 @@ class ApplicationForm < ApplicationRecord
 
   STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }
 
-  scope :active,
-        -> {
-          where(
-            status: %i[
-              preliminary_check
-              submitted
-              initial_assessment
-              waiting_on
-              received
-              overdue
-              awarded_pending_checks
-              potential_duplicate_in_dqt
-            ],
-          ).or(awarded.where("awarded_at >= ?", 90.days.ago)).or(
-            declined.where("declined_at >= ?", 90.days.ago),
-          )
-        }
+  scope :active, -> { not_draft }
 
-  scope :destroyable,
-        -> {
-          draft
-            .where("created_at < ?", 6.months.ago)
-            .or(awarded.where("awarded_at < ?", 5.years.ago))
-            .or(declined.where("declined_at < ?", 5.years.ago))
-        }
+  def assign_reference
+    return if reference.present?
 
-  scope :remindable, -> { draft }
+    ActiveRecord::Base.connection.execute(
+      "LOCK TABLE application_forms IN EXCLUSIVE MODE",
+    )
+
+    max_reference = ApplicationForm.maximum(:reference)&.to_i
+    max_reference = 2_000_000 if max_reference.nil? || max_reference.zero?
+
+    self.reference = (max_reference + 1).to_s.rjust(7, "0")
+  end
 
   def teaching_qualification
     qualifications.find(&:is_teaching_qualification?)
@@ -214,37 +193,6 @@ class ApplicationForm < ApplicationRecord
     english_language_citizenship_exempt || english_language_qualification_exempt
   end
 
-  def secondary_education_teaching_qualification_required?
-    CountryCode.secondary_education_teaching_qualification_required?(
-      country.code,
-    )
-  end
-
-  def created_under_new_regulations?
-    created_at >= Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
-  end
-
-  def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)
-    return true if days_until_expired <= 14 && number_of_reminders_sent.zero?
-
-    return true if days_until_expired <= 7 && number_of_reminders_sent == 1
-
-    return true if days_until_expired <= 2 && number_of_reminders_sent == 2
-
-    false
-  end
-
-  def send_reminder_email(number_of_reminders_sent)
-    TeacherMailer
-      .with(teacher:, number_of_reminders_sent:)
-      .application_not_submitted
-      .deliver_later
-  end
-
-  def expires_after
-    draft? ? 6.months : nil
-  end
-
   private
 
   def build_documents
@@ -253,5 +201,12 @@ class ApplicationForm < ApplicationRecord
     documents.build(document_type: :medium_of_instruction)
     documents.build(document_type: :english_language_proficiency)
     documents.build(document_type: :written_statement)
+  end
+
+  def assessor_and_reviewer_must_be_different
+    if assessor_id.present? && reviewer_id.present? &&
+         assessor_id == reviewer_id
+      errors.add(:reviewer, :same_as_assessor)
+    end
   end
 end

@@ -6,10 +6,6 @@ module PageObjects
       element :heading, "h1"
 
       section :form, "form" do
-        element :do_not_have_document,
-                "#teacher-interface-upload-form-do-not-have-document-1-field",
-                visible: false
-
         element :original_attachment,
                 "#teacher-interface-upload-form-original-attachment-field"
         element :translated_attachment,

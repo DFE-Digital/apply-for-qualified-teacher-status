@@ -2,10 +2,10 @@
 
 module PageObjects
   class GovukSummaryListCard < SitePrism::Section
-    element :title, ".govuk-summary-card__title"
+    element :title, ".govuk-summary-list__card-title"
 
-    section :actions, ".govuk-summary-card__actions" do
-      sections :items, ".govuk-summary-card__action" do
+    section :actions, ".govuk-summary-list__card-actions" do
+      sections :items, ".govuk-summary-list__card-actions-list-item" do
         element :link, ".govuk-link"
       end
     end

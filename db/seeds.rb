@@ -12,17 +12,17 @@ COUNTRIES = {
     { name: "French region", status_check: "none", sanction_check: "none" },
     { name: "German region", status_check: "none", sanction_check: "none" },
   ],
-  "CZ" => [{ status_check: "written" }],
-  "EE" => [{ status_check: "written", sanction_check: "written" }],
-  "FR" => [{ status_check: "written", sanction_check: "written" }],
-  "IS" => [{ status_check: "written" }],
-  "LV" => [{ status_check: "written", sanction_check: "written" }],
-  "LI" => [{ status_check: "written" }],
-  "LU" => [{ status_check: "written" }],
-  "MT" => [{ status_check: "written", sanction_check: "written" }],
-  "SI" => [{ status_check: "written" }],
-  "NZ" => [{ status_check: "online", sanction_check: "online" }],
-  "GI" => [{ status_check: "written", sanction_check: "written" }],
+  "CZ" => [],
+  "EE" => [],
+  "FR" => [],
+  "IS" => [],
+  "LV" => [],
+  "LI" => [],
+  "LU" => [],
+  "MT" => [],
+  "SI" => [],
+  "NZ" => [],
+  "GI" => [],
   "GB-SCT" => {
     eligibility_skip_questions: true,
     regions: [
@@ -40,12 +40,11 @@ COUNTRIES = {
         status_check: "online",
         sanction_check: "written",
         application_form_skip_work_history: true,
-        written_statement_optional: true,
       },
     ],
   },
-  "AT" => [{ status_check: "written" }],
-  "CH" => [{ status_check: "written", sanction_check: "written" }],
+  "AT" => [],
+  "CH" => [],
   "GR" => [],
   "US" => [
     { name: "Kentucky", status_check: "written", sanction_check: "written" },
@@ -120,7 +119,7 @@ COUNTRIES = {
     },
     { name: "New Jersey", status_check: "online", sanction_check: "written" },
   ],
-  "HU" => [{ status_check: "written" }],
+  "HU" => [],
   "DE" => [
     {
       name: "North Rhine-Westphalia",
@@ -159,13 +158,13 @@ COUNTRIES = {
     },
     { name: "Thuringia", status_check: "written", sanction_check: "none" },
   ],
-  "HR" => [{ status_check: "written" }],
-  "BG" => [{ status_check: "written", sanction_check: "written" }],
-  "NL" => [{ status_check: "written" }],
-  "IT" => [{ status_check: "written" }],
-  "PL" => [{ status_check: "written", sanction_check: "written" }],
-  "IE" => [{ status_check: "online", sanction_check: "written" }],
-  "ES" => [{ status_check: "written" }],
+  "HR" => [],
+  "BG" => [],
+  "NL" => [],
+  "IT" => [],
+  "PL" => [],
+  "IE" => [],
+  "ES" => [],
   "AU" => [
     {
       name: "New South Wales",
@@ -231,45 +230,43 @@ COUNTRIES = {
     { name: "Yukon", status_check: "written", sanction_check: "written" },
     { name: "Nunavut", status_check: "written", sanction_check: "written" },
   ],
-  "LT" => [{ status_check: "written" }],
-  "CY" => [{ status_check: "written" }],
-  "RO" => [{ status_check: "written", sanction_check: "written" }],
-  "NO" => [{ status_check: "written" }],
-  "SK" => [{ status_check: "written" }],
-  "SE" => [{ status_check: "written", sanction_check: "written" }],
-  "PT" => [{ status_check: "written", sanction_check: "written" }],
-  "DK" => [{ status_check: "written" }],
-  "FI" => [{ status_check: "written" }],
-  "GH" => [
-    {
-      requires_preliminary_check: true,
-      status_check: "online",
-      sanction_check: "online",
-    },
-  ],
-  "HK" => [{ status_check: "written", sanction_check: "written" }],
+  "LT" => [],
+  "CY" => [],
+  "RO" => [],
+  "NO" => [],
+  "SK" => [],
+  "SE" => [],
+  "PT" => [],
+  "DK" => [],
+  "FI" => [],
+  "GH" => [],
+  "HK" => [],
   "IN" => [],
-  "JM" => [{ status_check: "written", sanction_check: "written" }],
+  "JM" => [],
   "NG" => [
     {
-      requires_preliminary_check: true,
       status_check: "written",
       sanction_check: "written",
       teaching_authority_provides_written_statement: true,
       teaching_authority_name:
         "Teachers Registration Council of Nigeria (TRCN)",
       teaching_authority_certificate: "Letter of Professional Standing",
+      teaching_authority_emails: %w[LoPs@trcn.gov.ng],
     },
   ],
-  "SG" => [{ status_check: "online" }],
-  "ZA" => [{ status_check: "written", sanction_check: "written" }],
+  "SG" => [],
+  "ZA" => [],
   "UA" => [{ reduced_evidence_accepted: true }],
-  "ZW" => [{ status_check: "written" }],
+  "ZW" => [],
 }.freeze
 
 DEFAULT_COUNTRY = { eligibility_enabled: true }.freeze
 
-DEFAULT_REGION = { name: "" }.freeze
+DEFAULT_REGION = {
+  name: "",
+  legacy: false,
+  application_form_enabled: true,
+}.freeze
 
 COUNTRIES.each do |code, value|
   regions = value.is_a?(Hash) ? value[:regions] : value
@@ -298,8 +295,6 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     b2_level_requirement: "a score of at least 5.5",
     reference_name: "Test Report Form Number",
     reference_hint: "Your Test Report Form Number is 15-18 digits long.",
-    accepted_tests: "‘IELTS for UKVI’ or ‘IELTS Life Skills’",
-    check_url: "https://ielts.ucles.org.uk/ielts-trf/welcome.html",
   },
   {
     name: "LanguageCert",
@@ -308,8 +303,6 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your Unique Reference Number contains numbers, letters and dashes " \
         "in this format: PPC/230619/04501/09980013402512496",
-    accepted_tests: "‘LanguageCert International ESOL SELT’",
-    check_url: "https://www.languagecert.org/en/results",
   },
   {
     name: "Pearson",
@@ -318,8 +311,6 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your Score Report Code is 10 characters long. It may contain both letters " \
         "and numbers, or just numbers.",
-    accepted_tests: "‘PTE Academic UKVI’ or ‘PTE Home’",
-    check_url: "https://srw.pteacademic.com/",
   },
   {
     name: "PSI Services (UK) Ltd",
@@ -328,8 +319,6 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your PSI Services (UK) Ltd Unique Reference Number contains numbers, " \
         "letters and dashes in this format: PSI/280920/YTLQVG2Z/W2N4UVNN",
-    accepted_tests: "‘Skills for English UKVI’",
-    check_url: "https://results.bookmyskillsforenglish.com/",
   },
   {
     name: "Trinity College London",
@@ -338,10 +327,6 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your Trinity College London Certificate Number contains numbers, letters " \
         "and special characters in this format: 1-630439614:1-123456780",
-    accepted_tests:
-      "‘Secure English Language Tests for UKVI’ – Integrated Skills in English (ISE)" \
-        " or Graded Examinations in Spoken English (GESE)",
-    check_url: "https://trinitycollege.com/TRV",
   },
 ].freeze
 

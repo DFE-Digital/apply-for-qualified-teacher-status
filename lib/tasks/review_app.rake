@@ -7,5 +7,6 @@ namespace :review_app do
 
     FeatureFlags::FeatureFlag.activate(:personas)
     FeatureFlags::FeatureFlag.activate(:teacher_applications)
+    Region.update_all(application_form_enabled: true)
   end
 end

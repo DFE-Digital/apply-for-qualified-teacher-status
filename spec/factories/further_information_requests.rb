@@ -4,18 +4,16 @@
 #
 # Table name: further_information_requests
 #
-#  id                                          :bigint           not null, primary key
-#  failure_assessor_note                       :string           default(""), not null
-#  passed                                      :boolean
-#  received_at                                 :datetime
-#  reviewed_at                                 :datetime
-#  state                                       :string           not null
-#  working_days_assessment_started_to_creation :integer
-#  working_days_received_to_recommendation     :integer
-#  working_days_since_received                 :integer
-#  created_at                                  :datetime         not null
-#  updated_at                                  :datetime         not null
-#  assessment_id                               :bigint           not null
+#  id                                      :bigint           not null, primary key
+#  failure_assessor_note                   :string           default(""), not null
+#  passed                                  :boolean
+#  received_at                             :datetime
+#  state                                   :string           not null
+#  working_days_received_to_recommendation :integer
+#  working_days_since_received             :integer
+#  created_at                              :datetime         not null
+#  updated_at                              :datetime         not null
+#  assessment_id                           :bigint           not null
 #
 # Indexes
 #
@@ -34,21 +32,17 @@ FactoryBot.define do
       received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
-    trait :expired do
-      state { "expired" }
-    end
-
     trait :passed do
       passed { true }
-      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-      received
     end
 
     trait :failed do
       passed { false }
-      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
       failure_assessor_note { "Notes." }
-      received
+    end
+
+    trait :expired do
+      state { "expired" }
     end
 
     trait :with_items do

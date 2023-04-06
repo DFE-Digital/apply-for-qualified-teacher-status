@@ -5,6 +5,9 @@
 <%= form_with model: [:support_interface, @region] do |f| %>
   <%= f.govuk_error_summary %>
 
+  <%= f.govuk_check_box :legacy, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Skip eligibility checker (legacy)" } %>
+
+  <%= f.govuk_check_box :application_form_enabled, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Application form enabled" } %>
   <%= f.govuk_check_box :application_form_skip_work_history, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Skip work history" } %>
   <%= f.govuk_check_box :reduced_evidence_accepted, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Accept reduced evidence" } %>
 
@@ -23,11 +26,9 @@
   <%= render "shared/teaching_authority_form_fields", f: %>
 
   <%= f.govuk_check_box :teaching_authority_provides_written_statement, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Teaching authority will only send written statement directly to TRA" } %>
-  <%= f.govuk_check_box :written_statement_optional, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Applicant can submit without uploading the written statement (if a written statement is requested)" } %>
   <%= f.govuk_check_box :teaching_authority_requires_submission_email, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Teaching authority requires an email when an application is submitted" } %>
 
   <%= render "shared/qualifications_information_form_fields", f: %>
-  <%= render "shared/preliminary_check_form_fields", f: %>
 
   <%= f.govuk_submit "Save", prevent_double_click: false do %>
     <%= f.govuk_submit "Save and preview", prevent_double_click: false, name: "preview", value: "preview" %>

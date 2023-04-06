@@ -15,14 +15,4 @@ Rails.application.config.filter_parameters += %i[
   otp
   ssn
   email
-  given_names
-  family_name
-  date_of_birth
-  alternative_given_names
-  alternative_family_name
-  registration_number
-  trn
-  unconfirmed_email
-  current_sign_in_ip
-  last_sign_in_ip
 ]

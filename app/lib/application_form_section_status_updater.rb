@@ -63,7 +63,7 @@ class ApplicationFormSectionStatusUpdater
       values.append(
         alternative_given_names,
         alternative_family_name,
-        name_change_document&.completed?,
+        name_change_document&.uploaded?,
       )
     else
       values.append(true)
@@ -73,7 +73,7 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def identification_document_status
-    identification_document.completed? ? :completed : :not_started
+    identification_document.uploaded? ? :completed : :not_started
   end
 
   def qualifications_status
@@ -130,9 +130,12 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def work_history_status
-    all_work_histories_complete = work_histories.all?(&:complete?)
+    all_work_histories_complete =
+      work_histories.all? do |work_history|
+        work_history_complete?(work_history)
+      end
 
-    if application_form.created_under_new_regulations?
+    if work_history_feature_active?
       return :not_started if work_histories.empty?
       return :in_progress unless all_work_histories_complete
 
@@ -152,6 +155,30 @@ class ApplicationFormSectionStatusUpdater
     end
   end
 
+  def work_history_complete?(work_history)
+    values = [
+      work_history.school_name,
+      work_history.city,
+      work_history.country_code,
+      work_history.job,
+      work_history.contact_name,
+      work_history.contact_email,
+      work_history.start_date,
+      work_history.still_employed,
+    ]
+
+    if work_history.still_employed == false
+      values.pop
+      values.append(work_history.end_date)
+    end
+
+    if work_history_feature_active?
+      values += [work_history.hours_per_week, work_history.contact_job]
+    end
+
+    values.all?(&:present?)
+  end
+
   def registration_number_status
     registration_number.nil? ? :not_started : :completed
   end
@@ -161,7 +188,7 @@ class ApplicationFormSectionStatusUpdater
       if teaching_authority_provides_written_statement
         written_statement_confirmation
       else
-        written_statement_document.completed?
+        written_statement_document.uploaded?
       end
 
     completed ? :completed : :not_started
@@ -174,6 +201,10 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def status_for_document(document)
-    document.completed? ? :completed : :in_progress
+    document.uploaded? ? :completed : :in_progress
+  end
+
+  def work_history_feature_active?
+    FeatureFlags::FeatureFlag.active?(:application_work_history)
   end
 end

@@ -59,14 +59,22 @@ RSpec.describe SubmitApplicationForm do
     end
   end
 
-  it "records a timeline event" do
-    expect { call }.to have_recorded_timeline_event(
-      :state_changed,
-      creator: user,
-      application_form:,
-      old_state: "draft",
-      new_state: "submitted",
-    )
+  describe "recording timeline event" do
+    subject(:timeline_event) { TimelineEvent.find_by(application_form:) }
+
+    it { is_expected.to be_nil }
+
+    context "after calling the service" do
+      before { call }
+
+      it { is_expected.to_not be_nil }
+
+      it "sets the attributes correctly" do
+        expect(timeline_event.creator).to eq(user)
+        expect(timeline_event.old_state).to eq("draft")
+        expect(timeline_event.new_state).to eq("submitted")
+      end
+    end
   end
 
   describe "creating assessment" do
@@ -78,81 +86,6 @@ RSpec.describe SubmitApplicationForm do
       before { call }
 
       it { is_expected.to_not be_nil }
-    end
-  end
-
-  describe "creating professional standing request" do
-    let(:assessment) { Assessment.find_by(application_form:) }
-
-    subject(:professional_standing_request) do
-      ProfessionalStandingRequest.find_by(assessment:)
-    end
-
-    it { is_expected.to be_nil }
-
-    context "after calling the service" do
-      before { call }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "when teaching authority provides the written statement" do
-      before do
-        application_form.update!(
-          teaching_authority_provides_written_statement: true,
-        )
-        call
-      end
-
-      it { is_expected.to_not be_nil }
-      it { is_expected.to be_requested }
-    end
-  end
-
-  describe "preliminary check note" do
-    before do
-      create(:staff, support_console_permission: true)
-      region.update!(requires_preliminary_check: true)
-    end
-
-    it "creates a note" do
-      expect { call }.to change { Note.count }.by(1)
-    end
-  end
-
-  describe "professional standing request timeline event" do
-    it "doesn't record a timeline event" do
-      expect { call }.to_not have_recorded_timeline_event(
-        :requestable_requested,
-      )
-    end
-
-    context "when teaching authority provides the written statement" do
-      before do
-        application_form.update!(
-          teaching_authority_provides_written_statement: true,
-        )
-      end
-
-      it "records a timeline event" do
-        expect { call }.to have_recorded_timeline_event(:requestable_requested)
-      end
-    end
-  end
-
-  describe "setting induction required" do
-    it "doesn't set induction required" do
-      expect(UpdateAssessmentInductionRequired).to_not receive(:call)
-      call
-    end
-
-    context "with reduced evidence accepted" do
-      before { application_form.update!(reduced_evidence_accepted: true) }
-
-      it "sets induction required" do
-        expect(UpdateAssessmentInductionRequired).to receive(:call)
-        call
-      end
     end
   end
 
@@ -183,22 +116,6 @@ RSpec.describe SubmitApplicationForm do
           TeachingAuthorityMailer,
           :application_submitted,
         ).with(params: { application_form: }, args: [])
-      end
-    end
-
-    context "when teaching authority provides the written statement" do
-      before do
-        region.update!(requires_preliminary_check: false)
-        application_form.update!(
-          teaching_authority_provides_written_statement: true,
-        )
-      end
-
-      it "enqueues an initial checks email job" do
-        expect { call }.to have_enqueued_mail(
-          TeacherMailer,
-          :initial_checks_passed,
-        ).with(params: { teacher: application_form.teacher }, args: [])
       end
     end
   end

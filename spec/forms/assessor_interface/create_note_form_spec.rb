@@ -15,6 +15,7 @@ RSpec.describe AssessorInterface::CreateNoteForm, type: :model do
 
   describe "#save!" do
     let(:note) { Note.last }
+    let(:timeline_event) { TimelineEvent.last }
 
     it "creates a note" do
       expect { subject.save! }.to change { Note.count }.by(1)
@@ -24,11 +25,12 @@ RSpec.describe AssessorInterface::CreateNoteForm, type: :model do
       expect(note.text).to eq(text)
     end
 
-    it "records a timeline event" do
-      expect { subject.save! }.to have_recorded_timeline_event(
-        :note_created,
-        creator: author,
-      )
+    it "creates a timeline event" do
+      expect { subject.save! }.to change { TimelineEvent.count }.by(1)
+
+      expect(timeline_event).to be_note_created
+      expect(timeline_event.creator).to eq(author)
+      expect(timeline_event.note).to eq(Note.last)
     end
   end
 end

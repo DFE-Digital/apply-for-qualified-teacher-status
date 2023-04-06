@@ -7,11 +7,8 @@
 #  age_range_min                             :integer
 #  age_range_note                            :text             default(""), not null
 #  induction_required                        :boolean
-#  preliminary_check_complete                :boolean
 #  recommendation                            :string           default("unknown"), not null
-#  recommendation_assessor_note              :text             default(""), not null
 #  recommended_at                            :datetime
-#  references_verified                       :boolean
 #  started_at                                :datetime
 #  subjects                                  :text             default([]), not null, is an Array
 #  subjects_note                             :text             default(""), not null
@@ -36,7 +33,6 @@ FactoryBot.define do
     association :application_form, :submitted
 
     trait :started do
-      started_at { Time.zone.now }
       after(:create) do |assessment, _evaluator|
         create(:assessment_section, :passed, assessment:)
       end
@@ -44,11 +40,6 @@ FactoryBot.define do
 
     trait :award do
       recommendation { "award" }
-      recommended_at { Time.zone.now }
-    end
-
-    trait :decline do
-      recommendation { "decline" }
       recommended_at { Time.zone.now }
     end
 
@@ -63,34 +54,11 @@ FactoryBot.define do
       end
     end
 
-    trait :with_professional_standing_request do
-      after(:create) do |assessment, _evaluator|
-        create(:professional_standing_request, :requested, assessment:)
-      end
-    end
-
-    trait :with_received_professional_standing_request do
-      after(:create) do |assessment, _evaluator|
-        create(:professional_standing_request, :received, assessment:)
-      end
-    end
-
     trait :with_reference_request do
       after(:create) do |assessment, _evaluator|
         create(
           :reference_request,
           :requested,
-          assessment:,
-          work_history: assessment.application_form.work_histories.first,
-        )
-      end
-    end
-
-    trait :with_received_reference_request do
-      after(:create) do |assessment, _evaluator|
-        create(
-          :reference_request,
-          :received,
           assessment:,
           work_history: assessment.application_form.work_histories.first,
         )

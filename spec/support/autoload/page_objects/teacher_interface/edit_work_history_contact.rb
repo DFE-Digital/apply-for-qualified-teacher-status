@@ -3,7 +3,7 @@
 module PageObjects
   module TeacherInterface
     class EditWorkHistoryContact < SitePrism::Page
-      set_url "/teacher/application/work_histories/{work_history_id}/contact"
+      set_url "/teacher/application/new_regs/work_histories/{work_history_id}/contact"
 
       section :form, "form" do
         element :name_input,

@@ -30,7 +30,6 @@
 #
 class WorkHistory < ApplicationRecord
   belongs_to :application_form
-  has_one :reference_request, required: false
 
   scope :ordered, -> { order(created_at: :asc) }
 
@@ -49,32 +48,5 @@ class WorkHistory < ApplicationRecord
 
   def country_name
     CountryName.from_code(country_code)
-  end
-
-  def complete?
-    values = [school_name, city, country_code, job, start_date, still_employed]
-
-    if still_employed == false
-      values.pop
-      values.append(end_date)
-    end
-
-    unless application_form.reduced_evidence_accepted?
-      values += [contact_name, contact_email]
-    end
-
-    if application_form.created_under_new_regulations?
-      values.append(hours_per_week)
-
-      unless application_form.reduced_evidence_accepted?
-        values.append(contact_job)
-      end
-    end
-
-    values.all?(&:present?)
-  end
-
-  def incomplete?
-    !complete?
   end
 end

@@ -1,0 +1,136 @@
+.govuk-summary-list__card {
+  margin-bottom: 20px;
+  border: 1px solid #b1b4b6;
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-summary-list__card {
+    margin-bottom: 30px;
+  }
+}
+
+.govuk-summary-list__card-title-wrapper {
+  padding: 15px;
+  background-color: #f3f2f1;
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-summary-list__card-title-wrapper {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-pack: justify;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 15px 20px;
+  }
+}
+
+.govuk-summary-list__card-title {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  margin: 0;
+}
+
+@media print {
+  .govuk-summary-list__card-title {
+    font-family: sans-serif;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-summary-list__card-title {
+    font-size: 19px;
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+  }
+}
+
+@media print {
+  .govuk-summary-list__card-title {
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+}
+
+.govuk-summary-list__card-actions-list {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-summary-list__card-actions-list {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    margin: 0;
+  }
+}
+
+.govuk-summary-list__card-actions-list-item {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  display: inline;
+  margin-right: 10px;
+  padding-right: 10px;
+}
+
+@media print {
+  .govuk-summary-list__card-actions-list-item {
+    font-family: sans-serif;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-summary-list__card-actions-list-item {
+    font-size: 19px;
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+  }
+}
+
+@media print {
+  .govuk-summary-list__card-actions-list-item {
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+}
+
+.govuk-summary-list__card-actions-list-item:last-child {
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.govuk-summary-list__card-actions-list-item:not(:last-child) {
+  border-right: 1px solid #b1b4b6;
+}
+
+.govuk-summary-list__card-content {
+  padding: 15px 15px 0;
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-summary-list__card-content {
+    padding: 15px 20px;
+  }
+}
+
+.govuk-summary-list__card-content .govuk-summary-list {
+  margin-bottom: 0;
+}
+
+.govuk-summary-list__card-content .govuk-summary-list__row:last-of-type {
+  margin-bottom: 0;
+  border-bottom: none;
+}

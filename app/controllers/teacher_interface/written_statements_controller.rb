@@ -20,15 +20,19 @@ module TeacherInterface
     def update
       @form =
         WrittenStatementConfirmationForm.new(
-          application_form:,
-          written_statement_confirmation:
-            params.dig(
-              :teacher_interface_written_statement_confirmation_form,
-              :written_statement_confirmation,
-            ),
+          written_statement_confirmation_form_params.merge(application_form:),
         )
 
       handle_application_form_section(form: @form)
+    end
+
+    private
+
+    def written_statement_confirmation_form_params
+      params.fetch(
+        :teacher_interface_written_statement_confirmation_form,
+        {},
+      ).permit(:written_statement_confirmation)
     end
   end
 end

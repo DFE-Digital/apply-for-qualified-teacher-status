@@ -31,20 +31,23 @@ RSpec.describe "Assessor view application form", type: :system do
   end
 
   def and_i_see_the_assessment_tasks
-    expect(assessor_application_page.task_list.sections.count).to eq(1)
+    expect(assessor_application_page.task_list.sections.count).to eq(2)
 
-    section_links =
+    first_section_links =
       assessor_application_page.task_list.sections.first.items.map do |item|
         item.name.text
       end
 
-    expect(section_links).to eq(
-      [
-        "Check personal information",
-        "Check qualifications",
-        "Initial assessment recommendation",
-      ],
+    expect(first_section_links).to eq(
+      ["Check personal information", "Check qualifications"],
     )
+
+    second_section_links =
+      assessor_application_page.task_list.sections.second.items.map do |item|
+        item.name.text
+      end
+
+    expect(second_section_links).to eq(["Initial assessment recommendation"])
   end
 
   def application_form

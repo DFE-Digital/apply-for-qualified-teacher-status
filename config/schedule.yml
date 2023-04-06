@@ -1,46 +1,12 @@
 trim_sessions_job:
   cron: "0 1 * * *"
   class: TrimSessionsJob
-
-destroy_application_forms:
-  cron: "15 1 * * *"
-  class: DestroyApplicationFormsJob
-
-update_working_days_since_submission:
-  cron: "30 1 * * *"
-  class: UpdateWorkingDaysJob
-
 expire_further_information_requests:
   cron: "0 2 * * *"
-  class: ExpireRequestablesJob
-  args: ["FurtherInformationRequest"]
-
-expire_professional_standing_requests:
-  cron: "10 2 * * *"
-  class: ExpireRequestablesJob
-  args: ["ProfessionalStandingRequest"]
-
-expire_qualification_requests:
-  cron: "20 2 * * *"
-  class: ExpireRequestablesJob
-  args: ["QualificationRequest"]
-
-expire_reference_requests:
-  cron: "30 2 * * *"
-  class: ExpireRequestablesJob
-  args: ["ReferenceRequest"]
-
-send_application_form_reminders:
+  class: ExpireFurtherInformationRequestsJob
+update_working_days_since_submission:
   cron: "0 3 * * *"
-  class: SendReminderEmailsJob
-  args: ["ApplicationForm"]
-
+  class: UpdateWorkingDaysJob
 send_further_information_request_reminders:
-  cron: "20 3 * * *"
-  class: SendReminderEmailsJob
-  args: ["FurtherInformationRequest"]
-
-send_reference_request_reminders:
-  cron: "40 3 * * *"
-  class: SendReminderEmailsJob
-  args: ["ReferenceRequest"]
+  cron: "0 4 * * *"
+  class: SendFurtherInformationRequestRemindersJob

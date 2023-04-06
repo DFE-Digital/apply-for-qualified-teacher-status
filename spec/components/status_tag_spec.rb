@@ -4,17 +4,32 @@ require "rails_helper"
 
 RSpec.describe StatusTag::Component, type: :component do
   subject(:component) do
-    render_inline(described_class.new(key:, status:, class_context:))
+    render_inline(described_class.new(key:, status:, class_context:, context:))
   end
 
   let(:key) { "key" }
   let(:status) { :awarded }
   let(:class_context) { "app-task-list" }
+  let(:context) { :teacher }
 
   describe "text" do
     subject(:text) { component.text.strip }
 
     it { is_expected.to eq("Awarded") }
+
+    context "submitted with assessor context" do
+      let(:status) { :submitted }
+      let(:context) { :assessor }
+
+      it { is_expected.to eq("Not started") }
+    end
+
+    context "submitted with teacher context" do
+      let(:status) { :submitted }
+      let(:context) { :teacher }
+
+      it { is_expected.to eq("Submitted") }
+    end
   end
 
   describe "id" do
@@ -78,12 +93,6 @@ RSpec.describe StatusTag::Component, type: :component do
       let(:status) { :unknown }
 
       it { is_expected.to eq("govuk-tag app-task-list__tag") }
-    end
-
-    context "with a 'rejected' status" do
-      let(:status) { :rejected }
-
-      it { is_expected.to eq("govuk-tag govuk-tag--red app-task-list__tag") }
     end
   end
 end

@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby "3.1.2"
 
-gem "rails", "7.0.4.3"
+gem "rails", "~> 7.0.4"
 
 gem "activerecord-session_store"
 gem "azure-storage-blob"
@@ -12,7 +12,6 @@ gem "business"
 gem "cssbundling-rails"
 gem "devise"
 gem "devise_invitable"
-gem "devise-passwordless"
 gem "faraday"
 gem "indefinite_article"
 gem "jsbundling-rails"
@@ -20,16 +19,17 @@ gem "okcomputer"
 gem "pagy"
 gem "pg"
 gem "propshaft"
-gem "puma"
+gem "puma", "~> 6.0"
 gem "pundit"
 gem "rack-attack"
 gem "rotp"
 gem "ruby-vips"
 gem "sentry-rails"
 gem "sentry-ruby"
-gem "sidekiq", "<7"
+gem "sidekiq"
 gem "sidekiq-cron"
 gem "sitemap_generator"
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Windows
 gem "validate_url"
 
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics"
@@ -45,7 +45,7 @@ gem "factory_bot_rails"
 gem "faker"
 
 group :development, :test do
-  gem "debug"
+  gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
 end
 
@@ -62,12 +62,12 @@ group :development do
 end
 
 group :test do
-  gem "capybara"
+  gem "capybara", "~> 3.37"
   gem "climate_control"
-  gem "cuprite"
+  gem "cuprite", "~> 0.14"
   gem "rspec"
-  gem "rspec-rails"
-  gem "shoulda-matchers"
+  gem "rspec-rails", "~> 6.0.1"
+  gem "shoulda-matchers", "~> 5.3"
   gem "site_prism"
   gem "webmock"
 end

@@ -1,26 +1,21 @@
-# frozen_string_literal: true
-
 class EligibilityInterface::FinishController < EligibilityInterface::BaseController
   before_action :ensure_eligibility_check_status
   before_action :complete_eligibility_check
   before_action :load_eligibility_check
 
   def eligible
-    unless eligibility_check.eligible?
-      redirect_to %i[eligibility_interface ineligible]
-    end
-
+    @mutual_recognition_url = MUTUAL_RECOGNITION_URL
     @region = eligibility_check.region
     session[:eligibility_check_complete] = true
   end
 
   def ineligible
-    if eligibility_check.eligible?
-      redirect_to %i[eligibility_interface eligible]
-    end
   end
 
   private
+
+  MUTUAL_RECOGNITION_URL =
+    "https://teacherservices.education.gov.uk/MutualRecognition/".freeze
 
   def ensure_eligibility_check_status
     if eligibility_check.status != :eligibility

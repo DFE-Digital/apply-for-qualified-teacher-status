@@ -113,18 +113,16 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
   describe "#assessor_filter_options" do
     subject(:assessor_filter_options) { view_object.assessor_filter_options }
 
-    it do
-      is_expected.to include(OpenStruct.new(id: "null", name: "Not assigned"))
-    end
+    it { is_expected.to be_empty }
 
     context "with an assessor user" do
-      let!(:staff) { create(:staff, :with_award_decline_permission) }
+      let(:staff) { create(:staff, :with_award_decline_permission) }
 
       it { is_expected.to include(staff) }
     end
 
     context "with an non-assessor user" do
-      let!(:staff) { create(:staff) }
+      let(:staff) { create(:staff) }
 
       it { is_expected.not_to include(staff) }
     end
@@ -156,10 +154,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     it do
       is_expected.to eq(
         [
-          OpenStruct.new(
-            id: "preliminary_check",
-            label: "Preliminary check (0)",
-          ),
           OpenStruct.new(id: "submitted", label: "Not started (0)"),
           OpenStruct.new(
             id: "initial_assessment",
@@ -167,7 +161,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
           ),
           OpenStruct.new(id: "waiting_on", label: "Waiting on (0)"),
           OpenStruct.new(id: "received", label: "Received (0)"),
-          OpenStruct.new(id: "overdue", label: "Overdue (0)"),
           OpenStruct.new(
             id: "awarded_pending_checks",
             label: "Award pending (0)",
@@ -184,42 +177,35 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
     context "with application forms" do
       before do
-        create_list(:application_form, 1, :preliminary_check)
-        create_list(:application_form, 2, :submitted)
-        create_list(:application_form, 3, :initial_assessment)
-        create_list(:application_form, 4, :waiting_on)
-        create_list(:application_form, 5, :received)
-        create_list(:application_form, 6, :overdue)
-        create_list(:application_form, 7, :awarded_pending_checks)
-        create_list(:application_form, 8, :awarded)
-        create_list(:application_form, 9, :declined)
-        create_list(:application_form, 10, :potential_duplicate_in_dqt)
+        create_list(:application_form, 1, :submitted)
+        create_list(:application_form, 2, :initial_assessment)
+        create_list(:application_form, 3, :waiting_on)
+        create_list(:application_form, 4, :received)
+        create_list(:application_form, 5, :awarded_pending_checks)
+        create_list(:application_form, 6, :awarded)
+        create_list(:application_form, 7, :declined)
+        create_list(:application_form, 1, :potential_duplicate_in_dqt)
       end
 
       it do
         is_expected.to eq(
           [
-            OpenStruct.new(
-              id: "preliminary_check",
-              label: "Preliminary check (1)",
-            ),
-            OpenStruct.new(id: "submitted", label: "Not started (2)"),
+            OpenStruct.new(id: "submitted", label: "Not started (1)"),
             OpenStruct.new(
               id: "initial_assessment",
-              label: "Assessment in progress (3)",
+              label: "Assessment in progress (2)",
             ),
-            OpenStruct.new(id: "waiting_on", label: "Waiting on (4)"),
-            OpenStruct.new(id: "received", label: "Received (5)"),
-            OpenStruct.new(id: "overdue", label: "Overdue (6)"),
+            OpenStruct.new(id: "waiting_on", label: "Waiting on (3)"),
+            OpenStruct.new(id: "received", label: "Received (4)"),
             OpenStruct.new(
               id: "awarded_pending_checks",
-              label: "Award pending (7)",
+              label: "Award pending (5)",
             ),
-            OpenStruct.new(id: "awarded", label: "Awarded (8)"),
-            OpenStruct.new(id: "declined", label: "Declined (9)"),
+            OpenStruct.new(id: "awarded", label: "Awarded (6)"),
+            OpenStruct.new(id: "declined", label: "Declined (7)"),
             OpenStruct.new(
               id: "potential_duplicate_in_dqt",
-              label: "Potential duplication in DQT (10)",
+              label: "Potential duplication in DQT (1)",
             ),
           ],
         )

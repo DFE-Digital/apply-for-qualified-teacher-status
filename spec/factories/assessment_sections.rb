@@ -106,12 +106,6 @@ FactoryBot.define do
       failure_reasons { %w[not_qualified_to_teach_mainstream age_range] }
     end
 
-    trait :english_language_proficiency do
-      key { "english_language_proficiency" }
-      checks { %w[] }
-      failure_reasons { %w[] }
-    end
-
     trait :work_history do
       key { "work_history" }
       checks { %w[satisfactory_evidence_work_history] }

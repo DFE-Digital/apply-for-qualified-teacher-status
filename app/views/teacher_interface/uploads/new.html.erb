@@ -1,8 +1,6 @@
 <% content_for :page_title, "#{"Error: " if @upload_form.errors.any?}Upload a document" %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<%= render "upload_timeout_error" if @upload_form.timeout_error %>
-
 <% if @document.uploads.empty? %>
   <% if @document.identification? %>
     <h1 class="govuk-heading-l">Upload a valid identification document</h1>
@@ -32,82 +30,59 @@
     <h1 class="govuk-heading-l">Upload the Medium of instruction (MOI) from your university degree</h1>
     <p class="govuk-body">This document must confirm that the primary language used to teach this degree course was English.</p>
   <% elsif @document.english_language_proficiency? %>
-    <h1 class="govuk-heading-l">Upload your English language proficiency test</h1>
-    <p class="govuk-body">This document must confirm that you have an English language proficiency test from an approved provider at level B2 of the Common European Framework of Reference for Languages (CEFR) scale.</p>
-    <p class="govuk-body">The test must be on the list of approved English language proficiency tests and awarded within the last 2 years before the date of your application.</p>
+    <h1 class="govuk-heading-l">Upload evidence of English Proficiency test</h1>
+    <p class="govuk-body">This document must confirm that you have an English Language Proficiency Test from an approved provider at level B2 of the Common European Framework of Reference for Languages (CEFR) scale.</p>
+    <p class="govuk-body">The test must be on the list of approved English language tests and awarded within the last 2 years before the date of your application.</p>
     <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
   <% elsif @document.written_statement? %>
     <span class="govuk-caption-l">Proof that you’re recognised as a teacher</span>
     <h1 class="govuk-heading-l">Upload your written statement</h1>
 
-    <% if @application_form.region.country.code == "GB-NIR" %>
-      <p class="govuk-body">
-        If you’ve already completed an induction period in Northern Ireland, you can provide evidence by uploading a ‘Letter of Successful Completion of Induction’ from the school where you did your induction period.
-      </p>
+    <p class="govuk-body">
+      You need to provide a written statement from <span lang="<%= @application_form.region.country.code %>"><%= @application_form.region.country.teaching_authority_name.presence || @application_form.region.teaching_authority_name.presence %></span>.
+    </p>
 
-      <p class="govuk-body">
-        It must confirm that you completed your induction in Northern Ireland and show the completion date, as well as your Teacher Reference (TR) number (if you have one). It must also include the name of the school and the signature of the administration department or headteacher/principal.
-      </p>
+    <p class="govuk-body">
+      This is called <%= region_certificate_phrase(@application_form.region) %>.
+    </p>
 
-      <%= govuk_details(summary_text: "How to get this") do %>
-        <p class="govuk-body">You can get a Letter of Successful Completion of Induction by contacting the school where you completed your induction period.</p>
+    <p class="govuk-body govuk-!-font-weight-bold">
+      You must supply the exact type of document named here. We cannot accept any other document as proof that you’re recognised as a teacher.
+    </p>
+
+    <p class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</p>
+
+    <p class="govuk-body">It must confirm:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <%- proof_of_recognition_requirements_for(region: @application_form.region).each do |requirement| %>
+        <li><%= requirement %></li>
+      <%- end -%>
+    </ul>
+    <p class="govuk-body">This written confirmation must be dated within 3 months of you applying for QTS.</p>
+
+    <% if @application_form.region.status_check_written? %>
+      <% if @application_form.region.teaching_authority_status_information.present?%>
+        <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_status_information) %>
       <% end %>
 
-      <p class="govuk-body">
-        If you did not complete an induction period, or you do not have a letter, check the box below and select ‘Continue’.
-      </p>
-
-      <%= govuk_inset_text do %>
-        <p class="govuk-body">
-          Note that if you cannot show evidence that you’ve already completed an induction period in Northern Ireland, if you’re awarded QTS you’ll need to do a period of statutory induction.
-        </p>
+      <% if @application_form.region.country.teaching_authority_status_information.present?%>
+        <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_status_information) %>
       <% end %>
-    <% else %>
-      <p class="govuk-body">
-        You need to provide a written statement from <span lang="<%= @application_form.region.country.code %>"><%= region_teaching_authority_name(@application_form.region) %></span>.
-      </p>
+    <% end %>
 
-      <p class="govuk-body">
-        This is called <%= region_certificate_phrase(@application_form.region) %>.
-      </p>
-
-      <p class="govuk-body govuk-!-font-weight-bold">
-        You must supply the exact type of document named here. We cannot accept any other document as proof that you’re recognised as a teacher.
-      </p>
-
-      <p class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</p>
-
-      <p class="govuk-body">It must confirm:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <%- proof_of_recognition_requirements_for(region: @application_form.region).each do |requirement| %>
-          <li><%= requirement %></li>
-        <%- end -%>
-      </ul>
-      <p class="govuk-body">This written confirmation must be dated within 3 months of you applying for QTS.</p>
-
-      <% if @application_form.region.status_check_written? %>
-        <% if @application_form.region.teaching_authority_status_information.present?%>
-          <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_status_information) %>
-        <% end %>
-
-        <% if @application_form.region.country.teaching_authority_status_information.present?%>
-          <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_status_information) %>
-        <% end %>
+    <% if @application_form.region.sanction_check_written? %>
+      <% if @application_form.region.teaching_authority_sanction_information.present?%>
+        <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_sanction_information) %>
       <% end %>
-
-      <% if @application_form.region.sanction_check_written? %>
-        <% if @application_form.region.teaching_authority_sanction_information.present?%>
-          <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_sanction_information) %>
-        <% end %>
-        <% if @application_form.region.country.teaching_authority_sanction_information.present?%>
-          <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_sanction_information) %>
-        <% end %>
+      <% if @application_form.region.country.teaching_authority_sanction_information.present?%>
+        <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_sanction_information) %>
       <% end %>
+    <% end %>
 
-      <%= govuk_details(summary_text: "How to get this") do %>
-        <p class="govuk-body">If you do not have this yet, you can obtain it by contacting:</p>
-        <%= render "shared/teaching_authority_contact_information", region: @application_form.region %>
-      <% end %>
+    <%= govuk_details(summary_text: "How to get this") do %>
+      <p class="govuk-body">If you do not have this yet, you can obtain it by contacting:</p>
+      <%= render "shared/teaching_authority_contact_information", region: @application_form.region %>
+      <p class="govuk-body"><%= t("eligibility_interface.three_months_before_applying") %></p>
     <% end %>
   <% elsif @document.qualification_certificate? %>
     <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
@@ -147,12 +122,6 @@
 
 <%= form_with model: @upload_form, url: [:teacher_interface, :application_form, @document, :uploads] do |f| %>
   <%= f.govuk_error_summary %>
-
-  <% if @document.optional? %>
-    <%= f.govuk_check_boxes_fieldset :do_not_have_document, multiple: false, legend: nil do %>
-      <%= f.govuk_check_box :do_not_have_document, 1, 0, multiple: false, link_errors: true, label: { text: "I do not have #{region_certificate_phrase(@application_form.region)}.".html_safe }%>
-    <% end %>
-  <% end %>
 
   <%= f.govuk_file_field :original_attachment,
                          label: { text: "Select a file to upload", class: "govuk-heading-m" },

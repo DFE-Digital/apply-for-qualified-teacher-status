@@ -7,7 +7,6 @@
 #  eligibility_enabled                     :boolean          default(TRUE), not null
 #  eligibility_skip_questions              :boolean          default(FALSE), not null
 #  qualifications_information              :text             default(""), not null
-#  requires_preliminary_check              :boolean          default(FALSE), not null
 #  teaching_authority_address              :text             default(""), not null
 #  teaching_authority_certificate          :text             default(""), not null
 #  teaching_authority_checks_sanctions     :boolean          default(TRUE), not null

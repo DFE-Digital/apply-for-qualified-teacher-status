@@ -16,14 +16,6 @@ module PageObjects
 
       section :task_list, TaskList, ".app-task-list"
 
-      def preliminary_check_task
-        task_list.find_item("Preliminary check")
-      end
-
-      def awaiting_professional_standing_task
-        task_list.find_item("Awaiting third-party professional standing")
-      end
-
       def personal_information_task
         task_list.find_item("Check personal information")
       end
@@ -36,10 +28,6 @@ module PageObjects
         task_list.find_item("Verify age range and subjects")
       end
 
-      def english_language_proficiency_task
-        task_list.find_item("Check English language proficiency")
-      end
-
       def work_history_task
         task_list.find_item("Check work history")
       end
@@ -50,30 +38,6 @@ module PageObjects
 
       def review_requested_information_task
         task_list.find_item("Review requested information from applicant")
-      end
-
-      def record_qualification_requests_task
-        task_list.find_item("Record qualifications responses")
-      end
-
-      def review_qualification_requests_task
-        task_list.find_item("Review qualifications responses")
-      end
-
-      def assessment_recommendation_task
-        task_list.find_item("Assessment recommendation")
-      end
-
-      def verify_references_task
-        task_list.find_item("Verify reference requests")
-      end
-
-      def record_professional_standing_request_task
-        task_list.find_item("Record LOPS response")
-      end
-
-      def review_professional_standing_request_task
-        task_list.find_item("Review LOPS response")
       end
     end
   end

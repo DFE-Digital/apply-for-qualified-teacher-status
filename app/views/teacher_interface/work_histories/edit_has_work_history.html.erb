@@ -1,0 +1,13 @@
+<% content_for :page_title, "#{"Error: " if @has_work_history_form.errors.any?}#{t("application_form.tasks.sections.work_history")}" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<%= form_with model: @has_work_history_form, url: [:has_work_history, :teacher_interface, :application_form, :work_histories] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons :has_work_history,
+                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
+                                       :value,
+                                       legend: { size: "l", tag: "h1" } %>
+
+  <%= f.govuk_submit name: "button", value: "save_and_continue", prevent_double_click: false%>
+<% end %>

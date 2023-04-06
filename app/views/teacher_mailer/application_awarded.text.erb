@@ -2,7 +2,9 @@ Dear <%= application_form_full_name(@application_form) %>
 
 # Your QTS application was successful
 
-<%= render "shared/teacher_mailer/reference_number" %>
+Your reference number is:
+
+<%= @application_form.reference %>
 
 We’re pleased to tell you that the assessor has now completed their review of your application and you’ve been awarded qualified teacher status (QTS).
 
@@ -12,4 +14,5 @@ You can sign in to get your Teacher Reference Number (TRN) and get some guidance
 
 <%= new_teacher_session_url %>
 
-<%= render "shared/teacher_mailer/footer" %>
+Kind regards,
+The Teacher Qualifications Team

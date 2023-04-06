@@ -3,11 +3,12 @@
 # Table name: regions
 #
 #  id                                            :bigint           not null, primary key
+#  application_form_enabled                      :boolean          default(FALSE)
 #  application_form_skip_work_history            :boolean          default(FALSE), not null
+#  legacy                                        :boolean          default(TRUE), not null
 #  name                                          :string           default(""), not null
 #  qualifications_information                    :text             default(""), not null
 #  reduced_evidence_accepted                     :boolean          default(FALSE), not null
-#  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  sanction_check                                :string           default("none"), not null
 #  status_check                                  :string           default("none"), not null
 #  teaching_authority_address                    :text             default(""), not null
@@ -21,7 +22,6 @@
 #  teaching_authority_sanction_information       :string           default(""), not null
 #  teaching_authority_status_information         :string           default(""), not null
 #  teaching_authority_websites                   :text             default([]), not null, is an Array
-#  written_statement_optional                    :boolean          default(FALSE), not null
 #  created_at                                    :datetime         not null
 #  updated_at                                    :datetime         not null
 #  country_id                                    :bigint           not null
@@ -40,17 +40,22 @@ FactoryBot.define do
     association :country
 
     sequence(:name) { |n| "Region #{n}" }
+    legacy { false }
 
     trait :national do
       name { "" }
     end
 
-    trait :reduced_evidence_accepted do
-      reduced_evidence_accepted { true }
+    trait :legacy do
+      legacy { true }
     end
 
-    trait :written_statement_optional do
-      written_statement_optional { true }
+    trait :application_form_enabled do
+      application_form_enabled { true }
+    end
+
+    trait :reduced_evidence_accepted do
+      reduced_evidence_accepted { true }
     end
 
     trait :online_checks do

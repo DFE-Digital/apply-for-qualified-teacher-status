@@ -10,10 +10,10 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_up_page)
 
     when_i_sign_up
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
 
-    when_i_sign_in_using_magic_link
+    when_i_fill_in_the_teacher_otp
     then_i_see_the(:teacher_new_application_page)
 
     given_i_clear_my_session
@@ -22,10 +22,10 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_in_or_sign_up_page)
 
     when_i_choose_yes_and_sign_in
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
 
-    when_i_sign_in_using_magic_link
+    when_i_fill_in_the_teacher_otp
     then_i_see_the(:teacher_new_application_page)
 
     given_i_clear_my_session
@@ -34,8 +34,8 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_in_page)
 
     when_i_sign_in
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
 
     given_i_clear_my_session
 
@@ -43,10 +43,10 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_up_page)
 
     when_i_sign_up
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
 
-    when_i_sign_in_using_magic_link
+    when_i_fill_in_the_teacher_otp
     then_i_see_the(:teacher_new_application_page)
 
     when_i_select_a_country
@@ -62,8 +62,8 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_up_page)
 
     when_i_sign_up
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
 
     given_i_clear_my_session
 
@@ -71,8 +71,8 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_in_page)
 
     when_i_sign_in_with_different_case
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
     and_only_one_teacher_exists
   end
 
@@ -81,10 +81,10 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_up_page)
 
     when_i_sign_up
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
 
-    when_i_sign_in_using_magic_link
+    when_i_fill_in_the_teacher_otp
 
     when_i_click_sign_out
     then_i_see_the(:teacher_signed_out_page)
@@ -101,15 +101,30 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_up_page)
 
     when_i_sign_up
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
 
     when_i_visit_the(:teacher_sign_in_or_sign_up_page)
     then_i_see_the(:teacher_sign_in_or_sign_up_page)
 
     when_i_choose_yes_and_sign_in
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
+  end
+
+  it "sign in with same token" do
+    when_i_visit_the(:teacher_sign_up_page)
+    then_i_see_the(:teacher_sign_up_page)
+    and_i_sign_up
+
+    given_i_clear_my_session
+
+    uuid = Teacher.first.uuid
+    when_i_visit_the(:teacher_confirm_otp_page, uuid:)
+    then_i_see_the(:teacher_confirm_otp_page)
+
+    when_i_fill_in_the_teacher_otp
+    then_i_see_the(:teacher_retry_otp_page, error: "expired")
   end
 
   it "signing up with existing email address" do
@@ -117,10 +132,10 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_up_page)
 
     when_i_sign_up
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
 
-    when_i_sign_in_using_magic_link
+    when_i_fill_in_the_teacher_otp
     then_i_see_the(:teacher_new_application_page)
 
     given_i_clear_my_session
@@ -129,10 +144,10 @@ RSpec.describe "Teacher authentication", type: :system do
     then_i_see_the(:teacher_sign_up_page)
 
     when_i_sign_up
-    then_i_see_the(:teacher_check_email_page)
-    and_i_receive_a_teacher_magic_link_email
+    then_i_see_the(:teacher_confirm_otp_page)
+    and_i_receive_a_teacher_otp_email
 
-    when_i_sign_in_using_magic_link
+    when_i_fill_in_the_teacher_otp
     then_i_see_the(:teacher_new_application_page)
   end
 
@@ -152,25 +167,6 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def when_i_sign_in
     teacher_sign_in_page.submit(email: "test@example.com")
-  end
-
-  def and_i_receive_a_teacher_magic_link_email
-    message = ActionMailer::Base.deliveries.last
-    expect(message).to_not be_nil
-
-    expect(message.subject).to eq("Confirm your email address")
-    expect(message.to).to include("test@example.com")
-  end
-
-  def when_i_sign_in_using_magic_link
-    message = ActionMailer::Base.deliveries.last
-    uri = URI.parse(message.body.encoded.lines.fifth.chomp)
-    expect(uri.path).to eq("/teacher/magic_link")
-    expect(uri.query).to include("token")
-    visit "#{uri.path}?#{uri.query}"
-
-    then_i_see_the(:teacher_magic_link_page)
-    teacher_magic_link_page.sign_in
   end
 
   def when_i_sign_in_with_different_case

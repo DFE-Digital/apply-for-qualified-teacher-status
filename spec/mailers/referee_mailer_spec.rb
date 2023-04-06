@@ -53,7 +53,7 @@ RSpec.describe RefereeMailer, type: :mailer do
       end
       it do
         is_expected.to include(
-          "http://localhost:3000/teacher/references/#{reference_request.slug}",
+          "http://localhost:3000/teacher/references/#{reference_request.id}",
         )
       end
     end
@@ -93,7 +93,7 @@ RSpec.describe RefereeMailer, type: :mailer do
       end
       it do
         is_expected.to include(
-          "http://localhost:3000/teacher/references/#{reference_request.slug}",
+          "http://localhost:3000/teacher/references/#{reference_request.id}",
         )
       end
     end

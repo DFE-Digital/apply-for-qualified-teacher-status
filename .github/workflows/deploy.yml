@@ -74,21 +74,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker build
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: false
           tags: ${{ steps.image.outputs.tag }}
           build-args: SHA=${{ github.sha }}
-
-      - name: Run Snyk to check Docker image for vulnerabilities
-        if: github.actor != 'dependabot[bot]'
-        uses: snyk/actions/docker@master
-        env:
-          SNYK_TOKEN: ${{ steps.get-secret.outputs.snyk_token }}
-        with:
-          image: ${{ steps.image.outputs.tag }}
-          args: --file=Dockerfile --severity-threshold=high
 
       - name: Push docker image
         run: docker image push ${{ steps.image.outputs.tag }}
@@ -204,42 +195,6 @@ jobs:
         with:
           environment: ${{ matrix.environment }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Extract keyvault name from tfvars
-        id: extract-keyvault-name
-        if: steps.deploy.outcome != 'success' || steps.smoke-test.outcome != 'success'
-        run: |
-          KEY_VAULT_NAME=$(jq -r '.key_vault_name' $TFVARS)
-
-          if [ -z "$KEY_VAULT_NAME" ]; then
-            echo "::error ::Failed to extract key_vault_name from $TFVARS"
-            exit 1
-          fi
-
-          echo "key_vault_name=$KEY_VAULT_NAME" >> $GITHUB_OUTPUT
-        shell: bash
-        env:
-          TFVARS: workspace_variables/${{ matrix.environment }}.tfvars.json
-        working-directory: terraform
-      - uses: DfE-Digital/keyvault-yaml-secret@v1
-        id: keyvault-yaml-secret
-        if: steps.deploy.outcome != 'success' || steps.smoke-test.outcome != 'success'
-        with:
-          keyvault: ${{ steps.extract-keyvault-name.outputs.key_vault_name }}
-          secret: MONITORING
-          key: SLACK_WEBHOOK
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Notify Slack channel on job failure
-        id: notify-slack-on-deploy-failure
-        if: steps.deploy.outcome != 'success' || steps.smoke-test.outcome != 'success'
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_TITLE: Deployment of apply-for-qualified-teacher-status to ${{ matrix.environment }} failed
-          SLACK_MESSAGE: |
-            Deployment of docker image ${{ needs.docker.outputs.docker_image }} to ${{ matrix.environment }} environment failed
-          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
-          SLACK_COLOR: failure
-          SLACK_FOOTER: Sent from deploy_nonprod job in deploy workflow
 
   deploy_production:
     name: Deploy to production environment

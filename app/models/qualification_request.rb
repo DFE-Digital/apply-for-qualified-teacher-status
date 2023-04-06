@@ -4,17 +4,14 @@
 #
 # Table name: qualification_requests
 #
-#  id                    :bigint           not null, primary key
-#  failure_assessor_note :string           default(""), not null
-#  location_note         :text             default(""), not null
-#  passed                :boolean
-#  received_at           :datetime
-#  reviewed_at           :datetime
-#  state                 :string           not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  assessment_id         :bigint           not null
-#  qualification_id      :bigint           not null
+#  id               :bigint           not null, primary key
+#  location_note    :text             default(""), not null
+#  received_at      :datetime
+#  state            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  assessment_id    :bigint           not null
+#  qualification_id :bigint           not null
 #
 # Indexes
 #
@@ -29,9 +26,12 @@
 class QualificationRequest < ApplicationRecord
   include Requestable
 
+  belongs_to :assessment
   belongs_to :qualification
 
-  def expires_after
-    6.weeks
+  with_options if: :received? do
+    validates :location_note, presence: true
   end
+
+  delegate :application_form, to: :assessment
 end

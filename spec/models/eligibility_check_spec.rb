@@ -2,18 +2,18 @@
 #
 # Table name: eligibility_checks
 #
-#  id                    :bigint           not null, primary key
-#  completed_at          :datetime
-#  country_code          :string
-#  degree                :boolean
-#  free_of_sanctions     :boolean
-#  qualification         :boolean
-#  qualified_for_subject :boolean
-#  teach_children        :boolean
-#  work_experience       :string
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  region_id             :bigint
+#  id                     :bigint           not null, primary key
+#  completed_at           :datetime
+#  completed_requirements :boolean
+#  country_code           :string
+#  degree                 :boolean
+#  free_of_sanctions      :boolean
+#  qualification          :boolean
+#  teach_children         :boolean
+#  work_experience        :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  region_id              :bigint
 #
 # Foreign Keys
 #
@@ -94,22 +94,6 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to include(:teach_children) }
     end
 
-    context "when filtering by subject" do
-      before { eligibility_check.country_code = "IN" }
-
-      context "when teach_children is false" do
-        before { eligibility_check.teach_children = false }
-
-        it { is_expected.to include(:teach_children_secondary) }
-      end
-
-      context "when qualified_for_subject is false" do
-        before { eligibility_check.qualified_for_subject = false }
-
-        it { is_expected.to include(:qualified_for_subject) }
-      end
-    end
-
     context "when qualification is true" do
       before { eligibility_check.qualification = true }
 
@@ -164,8 +148,8 @@ RSpec.describe EligibilityCheck, type: :model do
         eligibility_check.teach_children = true
         eligibility_check.qualification = true
         eligibility_check.degree = true
+        eligibility_check.completed_requirements = true
         eligibility_check.country_code = country.code
-        eligibility_check.region = country.regions.first
       end
 
       it { is_expected.to be true }
@@ -191,6 +175,12 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to eq(:eligible) }
     end
 
+    context "when the region exists and is legacy" do
+      before { eligibility_check.region = create(:region, :legacy) }
+
+      it { is_expected.to eq(:legacy) }
+    end
+
     context "when the region exists and country skips questions" do
       let(:country) do
         create(
@@ -209,6 +199,36 @@ RSpec.describe EligibilityCheck, type: :model do
       before { eligibility_check.country_code = "ABC" }
 
       it { is_expected.to be(:ineligible) }
+    end
+  end
+
+  describe "#region_eligibility_status" do
+    subject(:region_eligibility_status) do
+      eligibility_check.region_eligibility_status
+    end
+
+    context "when the region exists and is not legacy" do
+      before { eligibility_check.region = create(:region) }
+
+      it { is_expected.to eq(:eligible) }
+    end
+
+    context "when the region exists and is legacy" do
+      before { eligibility_check.region = create(:region, :legacy) }
+
+      it { is_expected.to eq(:legacy) }
+    end
+
+    context "when the region exists and country skips questions" do
+      before do
+        eligibility_check.region =
+          create(
+            :region,
+            country: create(:country, eligibility_skip_questions: true),
+          )
+      end
+
+      it { is_expected.to eq(:eligible) }
     end
   end
 
@@ -241,6 +261,18 @@ RSpec.describe EligibilityCheck, type: :model do
 
     it { is_expected.to_not include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
+
+    context "before the completed requirements question" do
+      before do
+        eligibility_check_2.update!(
+          created_at: Date.new(2020, 1, 1),
+          completed_requirements: nil,
+        )
+      end
+
+      it { is_expected.to_not include(eligibility_check_1) }
+      it { is_expected.to include(eligibility_check_2) }
+    end
   end
 
   describe "#ineligible" do
@@ -259,6 +291,7 @@ RSpec.describe EligibilityCheck, type: :model do
     let(:eligibility_check_2) do
       create(
         :eligibility_check,
+        completed_requirements: false,
         degree: true,
         free_of_sanctions: false,
         qualification: true,
@@ -268,6 +301,18 @@ RSpec.describe EligibilityCheck, type: :model do
 
     it { is_expected.to_not include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
+
+    context "before the completed requirements question" do
+      before do
+        eligibility_check_2.update!(
+          created_at: Date.new(2020, 1, 1),
+          completed_requirements: nil,
+        )
+      end
+
+      it { is_expected.to_not include(eligibility_check_1) }
+      it { is_expected.to include(eligibility_check_2) }
+    end
   end
 
   describe "#complete!" do
@@ -303,33 +348,20 @@ RSpec.describe EligibilityCheck, type: :model do
     end
 
     context "when a region is present" do
-      let(:attributes) do
-        { country_code: country.code, region: create(:region) }
-      end
+      let(:attributes) { { region: create(:region) } }
 
       it { is_expected.to eq(:qualification) }
     end
 
     context "when qualification is present" do
-      let(:attributes) do
-        {
-          country_code: country.code,
-          region: create(:region),
-          qualification: true,
-        }
-      end
+      let(:attributes) { { qualification: true, region: create(:region) } }
 
       it { is_expected.to eq(:degree) }
     end
 
     context "when degree is present" do
       let(:attributes) do
-        {
-          country_code: country.code,
-          region: create(:region),
-          qualification: true,
-          degree: true,
-        }
+        { qualification: true, degree: true, region: create(:region) }
       end
 
       it { is_expected.to eq(:teach_children) }
@@ -338,26 +370,10 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when teach children is present" do
       let(:attributes) do
         {
-          country_code: country.code,
-          region: create(:region),
+          teach_children: true,
           qualification: true,
           degree: true,
-          teach_children: true,
-        }
-      end
-
-      it { is_expected.to eq(:work_experience) }
-    end
-
-    context "when work experience is present" do
-      let(:attributes) do
-        {
-          country_code: country.code,
           region: create(:region),
-          qualification: true,
-          degree: true,
-          teach_children: true,
-          work_experience: "under_9_months",
         }
       end
 
@@ -367,14 +383,20 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when free of sanctions is present" do
       let(:attributes) do
         {
-          country_code: country.code,
-          region: create(:region),
+          free_of_sanctions: true,
+          teach_children: true,
           qualification: true,
           degree: true,
-          teach_children: true,
-          work_experience: "under_9_months",
-          free_of_sanctions: true,
+          region: create(:region),
         }
+      end
+
+      it { is_expected.to eq(:eligibility) }
+    end
+
+    context "with a legacy region" do
+      let(:attributes) do
+        { country_code: country.code, region: create(:region, :legacy) }
       end
 
       it { is_expected.to eq(:eligibility) }
@@ -387,23 +409,45 @@ RSpec.describe EligibilityCheck, type: :model do
     end
   end
 
-  describe "#qualified_for_subject_required?" do
-    subject(:qualified_for_subject_required?) do
-      eligibility_check.qualified_for_subject_required?
+  describe "#created_under_new_regulations?" do
+    subject(:created_under_new_regulations?) do
+      eligibility_check.created_under_new_regulations?
     end
 
-    before { eligibility_check.country_code = code }
+    context "with default new regulations date" do
+      context "with an old eligibility check" do
+        let(:eligibility_check) do
+          create(:eligibility_check, created_at: Date.new(2020, 1, 1))
+        end
+        it { is_expected.to be false }
+      end
 
-    context "with a relevant country" do
-      let(:code) { "JM" }
-
-      it { is_expected.to be true }
+      context "with a new eligibility check" do
+        let(:eligibility_check) do
+          create(:eligibility_check, created_at: Date.new(2024, 1, 1))
+        end
+        it { is_expected.to be true }
+      end
     end
 
-    context "with an unaffected country" do
-      let(:code) { "UA" }
+    context "with a custom new regulations date" do
+      around do |example|
+        ClimateControl.modify(NEW_REGS_DATE: "2023-01-01") { example.run }
+      end
 
-      it { is_expected.to be false }
+      context "with an old eligibility check" do
+        let(:eligibility_check) do
+          create(:eligibility_check, created_at: Date.new(2021, 12, 31))
+        end
+        it { is_expected.to be false }
+      end
+
+      context "with a new eligibility check" do
+        let(:eligibility_check) do
+          create(:eligibility_check, created_at: Date.new(2023, 1, 1))
+        end
+        it { is_expected.to be true }
+      end
     end
   end
 end

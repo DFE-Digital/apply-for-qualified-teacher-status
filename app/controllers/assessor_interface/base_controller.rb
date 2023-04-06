@@ -12,9 +12,5 @@ class AssessorInterface::BaseController < ApplicationController
     authorize :assessor
   end
 
-  def authorize_note
-    authorize :note
-  end
-
   alias_method :pundit_user, :current_staff
 end

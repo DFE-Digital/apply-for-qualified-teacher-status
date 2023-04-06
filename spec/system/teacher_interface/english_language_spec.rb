@@ -3,6 +3,9 @@
 require "rails_helper"
 
 RSpec.describe "Teacher English language", type: :system do
+  before(:all) { given_english_language_is_active }
+  after(:all) { given_english_language_is_inactive }
+
   before do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(teacher)
@@ -151,6 +154,14 @@ RSpec.describe "Teacher English language", type: :system do
   end
 
   private
+
+  def given_english_language_is_active
+    FeatureFlags::FeatureFlag.activate(:application_english_language)
+  end
+
+  def given_english_language_is_inactive
+    FeatureFlags::FeatureFlag.deactivate(:application_english_language)
+  end
 
   def given_an_application_form_exists
     application_form
@@ -368,7 +379,7 @@ RSpec.describe "Teacher English language", type: :system do
     reference_summary_list_row =
       teacher_check_english_language_page.summary_list.rows.fifth
     expect(reference_summary_list_row.key.text).to eq(
-      "English language proficiency test document",
+      "English language proficiency test",
     )
     expect(reference_summary_list_row.value.text).to eq(
       "upload.pdf (opens in a new tab)",

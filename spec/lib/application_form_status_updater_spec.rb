@@ -12,13 +12,13 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     it "records a timeline event" do
-      expect { call }.to have_recorded_timeline_event(
-        :state_changed,
-        creator: user,
-        application_form:,
-        old_state: "draft",
-        new_state: new_status,
-      )
+      expect { call }.to change(TimelineEvent.state_changed, :count).by(1)
+
+      timeline_event = TimelineEvent.state_changed.find_by(application_form:)
+
+      expect(timeline_event.creator).to eq(user)
+      expect(timeline_event.old_state).to eq("draft")
+      expect(timeline_event.new_state).to eq(new_status)
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes status", "awarded_pending_checks"
     end
 
-    context "with a received information request" do
+    context "with a received FI request" do
       let(:assessment) { create(:assessment, application_form:) }
 
       before do
@@ -83,7 +83,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
     end
 
-    context "with a requested further information request" do
+    context "with a requested FI request" do
       let(:assessment) { create(:assessment, application_form:) }
 
       before do
@@ -101,198 +101,20 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
     end
 
-    context "with a requested profession standing request" do
+    context "with a received reference request" do
       let(:assessment) { create(:assessment, application_form:) }
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:professional_standing_request, :requested, assessment:)
-      end
-
-      include_examples "changes status", "waiting_on"
-
-      it "changes waiting_on_professional_standing" do
-        expect { call }.to change(
-          application_form,
-          :waiting_on_professional_standing,
-        ).from(false).to(true)
-      end
-    end
-
-    context "with a received profession standing request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
-      context "when the teaching authority provides the written statement" do
-        before do
-          application_form.update!(
-            submitted_at: Time.zone.now,
-            teaching_authority_provides_written_statement: true,
-          )
-          create(:professional_standing_request, :received, assessment:)
-        end
-
-        include_examples "changes status", "submitted"
-
-        it "doesn't change received_professional_standing" do
-          expect { call }.to_not change(
-            application_form,
-            :received_professional_standing,
-          ).from(false)
-        end
-      end
-
-      context "when the teaching authority doesn't provide the written statement" do
-        before do
-          application_form.update!(submitted_at: Time.zone.now)
-          create(:professional_standing_request, :received, assessment:)
-        end
-
-        include_examples "changes status", "received"
-
-        it "changes received_professional_standing" do
-          expect { call }.to change(
-            application_form,
-            :received_professional_standing,
-          ).from(false).to(true)
-        end
-      end
-    end
-
-    context "with a received qualification request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
-      before do
-        application_form.update!(submitted_at: Time.zone.now)
-        create(:qualification_request, :received, assessment:)
+        create(:reference_request, :received, assessment:)
       end
 
       include_examples "changes status", "received"
 
-      it "changes received_further_information" do
-        expect { call }.to change(
-          application_form,
-          :received_qualification,
-        ).from(false).to(true)
-      end
-    end
-
-    context "with a requested qualification request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
-      before do
-        application_form.update!(submitted_at: Time.zone.now)
-        create(:qualification_request, :requested, assessment:)
-      end
-
-      include_examples "changes status", "waiting_on"
-
-      it "changes waiting_on_qualification" do
-        expect { call }.to change(
-          application_form,
-          :waiting_on_qualification,
-        ).from(false).to(true)
-      end
-    end
-
-    context "with a received reference request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
-      before { application_form.update!(submitted_at: Time.zone.now) }
-
-      context "with less than 9 months" do
-        before do
-          create(:reference_request, :requested, assessment:)
-          create(
-            :reference_request,
-            :received,
-            assessment:,
-            work_history:
-              create(
-                :work_history,
-                application_form:,
-                hours_per_week: 30,
-                start_date: Date.new(2020, 1, 1),
-                end_date: Date.new(2020, 2, 1),
-              ),
-          )
-        end
-
-        include_examples "changes status", "waiting_on"
-
-        it "doesn't change received_reference" do
-          expect { call }.to_not change(
-            application_form,
-            :received_reference,
-          ).from(false)
-        end
-      end
-
-      context "with less than 20 months" do
-        before do
-          create(
-            :reference_request,
-            :received,
-            assessment:,
-            work_history:
-              create(
-                :work_history,
-                application_form:,
-                hours_per_week: 30,
-                start_date: Date.new(2020, 1, 1),
-                end_date: Date.new(2020, 12, 1),
-              ),
-          )
-        end
-
-        context "and it's the only reference request" do
-          include_examples "changes status", "received"
-
-          it "changes received_reference" do
-            expect { call }.to change(
-              application_form,
-              :received_reference,
-            ).from(false).to(true)
-          end
-        end
-
-        context "and there are other reference requests" do
-          before { create(:reference_request, :requested, assessment:) }
-
-          include_examples "changes status", "waiting_on"
-
-          it "doesn't change received_reference" do
-            expect { call }.to_not change(
-              application_form,
-              :received_reference,
-            ).from(false)
-          end
-        end
-      end
-
-      context "with more than 20 months" do
-        before do
-          create(
-            :reference_request,
-            :received,
-            assessment:,
-            work_history:
-              create(
-                :work_history,
-                application_form:,
-                hours_per_week: 30,
-                start_date: Date.new(2020, 1, 1),
-                end_date: Date.new(2022, 12, 1),
-              ),
-          )
-        end
-
-        include_examples "changes status", "received"
-
-        it "changes received_reference" do
-          expect { call }.to change(application_form, :received_reference).from(
-            false,
-          ).to(true)
-        end
+      it "changes received_reference" do
+        expect { call }.to change(application_form, :received_reference).from(
+          false,
+        ).to(true)
       end
     end
 
@@ -333,44 +155,8 @@ RSpec.describe ApplicationFormStatusUpdater do
         expect { call }.to_not change(application_form, :status).from("draft")
       end
 
-      it "doesn't record a timeline event" do
-        expect { call }.to_not have_recorded_timeline_event(:state_changed)
-      end
-    end
-
-    context "when preliminary check is required" do
-      before do
-        application_form.update!(
-          assessment: create(:assessment, preliminary_check_complete: nil),
-          submitted_at: Time.zone.now,
-          requires_preliminary_check: true,
-        )
-      end
-
-      include_examples "changes status", "preliminary_check"
-
-      context "when teaching authority provides written statement" do
-        before do
-          application_form.update!(
-            teaching_authority_provides_written_statement: true,
-          )
-          create(
-            :professional_standing_request,
-            assessment: application_form.assessment,
-          )
-        end
-
-        include_examples "changes status", "preliminary_check"
-
-        context "once preliminary check is complete" do
-          before do
-            application_form.assessment.update!(
-              preliminary_check_complete: true,
-            )
-          end
-
-          include_examples "changes status", "waiting_on"
-        end
+      it "doesn't create a timeline event" do
+        expect { call }.to_not change(TimelineEvent.state_changed, :count)
       end
     end
   end

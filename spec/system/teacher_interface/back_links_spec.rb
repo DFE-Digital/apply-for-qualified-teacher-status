@@ -10,36 +10,33 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   it "back links follow user" do
-    # teacher_application_page -> teacher_new_qualification_page
+    # teacher_application_page -> new_qualification_page
     #  <- teacher_application_page
 
     when_i_visit_the(:teacher_application_page)
     then_i_see_the(:teacher_application_page)
 
     when_i_click_qualifications
-    then_i_see_the(:teacher_new_qualification_page)
+    then_i_see_the(:new_qualification_page)
 
     when_i_click_back
     then_i_see_the(:teacher_application_page)
 
     # teacher_application_page -> new_qualification_page -> upload_document_page
-    #  <- teacher_edit_qualification_page <- teacher_application_page
+    #  <- edit_qualification_page <- teacher_application_page
 
     when_i_click_qualifications
     and_i_fill_in_qualification
     then_i_see_the(:teacher_upload_document_page)
 
     when_i_click_back
-    then_i_see_the(
-      :teacher_edit_qualification_page,
-      qualification_id: qualification.id,
-    )
+    then_i_see_the(:edit_qualification_page, qualification_id: qualification.id)
 
     when_i_click_back
     then_i_see_the(:teacher_application_page)
 
-    # teacher_application_page -> teacher_edit_qualification_page -> upload_document_page -> document_form_page
-    #  <- teacher_edit_qualification_page
+    # teacher_application_page -> edit_qualification_page -> upload_document_page -> document_form_page
+    #  <- edit_qualification_page
 
     when_i_click_qualifications
     and_i_click_continue
@@ -49,14 +46,11 @@ RSpec.describe "Teacher back links", type: :system do
     then_i_see_the(:teacher_check_document_page)
 
     when_i_click_back
-    then_i_see_the(
-      :teacher_edit_qualification_page,
-      qualification_id: qualification.id,
-    )
+    then_i_see_the(:edit_qualification_page, qualification_id: qualification.id)
 
-    # teacher_edit_qualification_page -> document_form_page -> upload_document_page -> document_form_page
-    #  -> teacher_part_of_university_degree_page
-    #  <- document_form_page <- document_form_page <- teacher_edit_qualification_page
+    # edit_qualification_page -> document_form_page -> upload_document_page -> document_form_page
+    #  -> part_of_university_degree_page
+    #  <- document_form_page <- document_form_page <- edit_qualification_page
 
     when_i_click_continue
     then_i_see_the(:teacher_check_document_page)
@@ -69,7 +63,7 @@ RSpec.describe "Teacher back links", type: :system do
 
     when_i_dont_upload_another_document
     then_i_see_the(
-      :teacher_part_of_university_degree_page,
+      :part_of_university_degree_page,
       qualification_id: qualification.id,
     )
 
@@ -80,13 +74,10 @@ RSpec.describe "Teacher back links", type: :system do
     then_i_see_the(:teacher_check_document_page)
 
     when_i_click_back
-    then_i_see_the(
-      :teacher_edit_qualification_page,
-      qualification_id: qualification.id,
-    )
+    then_i_see_the(:edit_qualification_page, qualification_id: qualification.id)
 
-    # teacher_edit_qualification_page -> document_form_page -> document_form_page
-    #  -> teacher_part_of_university_degree_page -> teacher_check_qualification_page
+    # edit_qualification_page -> document_form_page -> document_form_page -> part_of_university_degree_page
+    #  -> teacher_check_qualification_page
     #  <- teacher_application_page
 
     when_i_click_continue
@@ -97,7 +88,7 @@ RSpec.describe "Teacher back links", type: :system do
 
     when_i_dont_upload_another_document
     then_i_see_the(
-      :teacher_part_of_university_degree_page,
+      :part_of_university_degree_page,
       qualification_id: qualification.id,
     )
 
@@ -107,28 +98,22 @@ RSpec.describe "Teacher back links", type: :system do
     when_i_click_back
     then_i_see_the(:teacher_application_page)
 
-    # teacher_application_page -> teacher_check_qualifications_page -> teacher_edit_qualification_page
+    # teacher_application_page -> teacher_check_qualifications_page -> edit_qualification_page
     #  <- teacher_check_qualifications_page
 
     when_i_click_qualifications
     then_i_see_the(:teacher_check_qualifications_page)
 
     when_i_click_change_qualification_title
-    then_i_see_the(
-      :teacher_edit_qualification_page,
-      qualification_id: qualification.id,
-    )
+    then_i_see_the(:edit_qualification_page, qualification_id: qualification.id)
 
     when_i_click_back
     then_i_see_the(:teacher_check_qualifications_page)
 
-    # teacher_check_qualifications_page -> teacher_edit_qualification_page -> teacher_check_qualifications_page
+    # teacher_check_qualifications_page -> edit_qualification_page -> teacher_check_qualifications_page
 
     when_i_click_change_qualification_title
-    then_i_see_the(
-      :teacher_edit_qualification_page,
-      qualification_id: qualification.id,
-    )
+    then_i_see_the(:edit_qualification_page, qualification_id: qualification.id)
 
     when_i_click_continue
     then_i_see_the(:teacher_check_qualifications_page)
@@ -195,23 +180,23 @@ RSpec.describe "Teacher back links", type: :system do
     when_i_dont_upload_another_document
     then_i_see_the(:teacher_check_qualifications_page)
 
-    # teacher_check_qualifications_page -> teacher_add_another_qualification_page
+    # teacher_check_qualifications_page -> add_another_qualification_page
     #  <- teacher_check_qualifications_page
 
     teacher_check_qualifications_page.continue_button.click
-    then_i_see_the(:teacher_add_another_qualification_page)
+    then_i_see_the(:add_another_qualification_page)
 
     when_i_click_back
     then_i_see_the(:teacher_check_qualifications_page)
 
-    # teacher_check_qualifications_page -> teacher_add_another_qualification_page -> teacher_new_qualification_page
+    # teacher_check_qualifications_page -> add_another_qualification_page -> new_qualification_page
     #  <- teacher_check_qualifications_page
 
     teacher_check_qualifications_page.continue_button.click
-    then_i_see_the(:teacher_add_another_qualification_page)
+    then_i_see_the(:add_another_qualification_page)
 
     when_i_add_another_qualification
-    then_i_see_the(:teacher_new_qualification_page)
+    then_i_see_the(:new_qualification_page)
 
     when_i_click_back
     then_i_see_the(:teacher_check_qualifications_page)
@@ -232,23 +217,17 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def and_i_fill_in_qualification
-    teacher_new_qualification_page.form.title_field.fill_in with: "Title"
-    teacher_new_qualification_page.form.institution_name_field.fill_in with:
+    new_qualification_page.form.title.fill_in with: "Title"
+    new_qualification_page.form.institution_name.fill_in with:
       "Institution Name"
-    teacher_new_qualification_page.form.institution_country_field.fill_in with:
-      "France"
-    teacher_new_qualification_page.form.start_date_month_field.fill_in with: "1"
-    teacher_new_qualification_page.form.start_date_year_field.fill_in with:
-      "2000"
-    teacher_new_qualification_page.form.complete_date_month_field.fill_in with:
-      "1"
-    teacher_new_qualification_page.form.complete_date_year_field.fill_in with:
-      "2003"
-    teacher_new_qualification_page.form.certificate_date_month_field.fill_in with:
-      "1"
-    teacher_new_qualification_page.form.certificate_date_year_field.fill_in with:
-      "2004"
-    teacher_new_qualification_page.form.continue_button.click
+    new_qualification_page.form.institution_country.fill_in with: "France"
+    new_qualification_page.form.start_date_month.fill_in with: "1"
+    new_qualification_page.form.start_date_year.fill_in with: "2000"
+    new_qualification_page.form.complete_date_month.fill_in with: "1"
+    new_qualification_page.form.complete_date_year.fill_in with: "2003"
+    new_qualification_page.form.certificate_date_month.fill_in with: "1"
+    new_qualification_page.form.certificate_date_year.fill_in with: "2004"
+    new_qualification_page.form.continue_button.click
   end
 
   def when_i_upload_a_document
@@ -270,16 +249,13 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def when_i_choose_part_of_university_degree
-    teacher_part_of_university_degree_page
-      .form
-      .part_of_university_degree_true_field
-      .choose
-    teacher_part_of_university_degree_page.form.continue_button.click
+    part_of_university_degree_page.form.yes_radio_item.choose
+    part_of_university_degree_page.form.continue_button.click
   end
 
   def when_i_click_change_qualification_title
     teacher_check_qualifications_page
-      .summary_list_cards
+      .summary_lists
       .first
       .find_row(key: "Qualification title")
       .actions
@@ -289,7 +265,7 @@ RSpec.describe "Teacher back links", type: :system do
 
   def when_i_click_change_certificate_document_title
     teacher_check_qualifications_page
-      .summary_list_cards
+      .summary_lists
       .first
       .find_row(key: "Certificate document")
       .actions
@@ -298,8 +274,8 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def when_i_add_another_qualification
-    teacher_add_another_qualification_page.form.yes_radio_item.choose
-    teacher_add_another_qualification_page.form.continue_button.click
+    add_another_qualification_page.form.yes_radio_item.choose
+    add_another_qualification_page.form.continue_button.click
   end
 
   def teacher

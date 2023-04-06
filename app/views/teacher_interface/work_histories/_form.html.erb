@@ -1,0 +1,46 @@
+<%= form_with model: work_history_form, url: [:teacher_interface, :application_form, work_history], method: work_history.new_record? ? :post : :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_fieldset legend: { text: I18n.t(work_history.current_or_most_recent_role? ? "application_form.work_history.current_or_most_recent_role" : "application_form.work_history.previous_role") } do %>
+    <%= f.govuk_text_field :school_name, label: { text: "School name" } %>
+    <%= f.govuk_text_field :city, label: { text: "City" } %>
+
+    <%= f.govuk_select :country_location,
+                       options_for_select(locations, work_history_form.country_location),
+                       label: { text: "Country" },
+                       options: { include_blank: true } %>
+
+    <%= f.govuk_text_field :job, label: { text: "Your job role" } %>
+
+    <%= f.govuk_text_field :contact_name %>
+    <%= f.govuk_text_field :contact_email %>
+  <% end %>
+
+  <%= govuk_details(summary_text: "Why do we ask for a contact email address?") do %>
+    <p>
+      We need an official contact email address for your current or most recent employer in case we need to get in touch with them.
+      This must not be a web-based email address such as @gmail.com.
+    </p>
+  <% end %>
+
+  <%= f.govuk_date_field :start_date,
+                         omit_day: true,
+                         legend: { text: "Your start date" },
+                         hint: { text: "For example, 3 2020" } %>
+
+  <%= f.hidden_field "start_date(3i)", value: "1" %>
+
+  <%= f.govuk_radio_buttons_fieldset :still_employed, legend: { text: "Are you still employed at this school?" } do %>
+    <%= f.govuk_radio_button :still_employed, "true", label: { text: "Yes" }, link_errors: true %>
+    <%= f.govuk_radio_button :still_employed, "false", label: { text: "No" } do %>
+      <%= f.govuk_date_field :end_date,
+                             omit_day: true,
+                             legend: { text: "Your end date" },
+                             hint: { text: "For example, 3 2020" } %>
+
+      <%= f.hidden_field "end_date(3i)", value: "1" %>
+    <% end %>
+  <% end %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>
