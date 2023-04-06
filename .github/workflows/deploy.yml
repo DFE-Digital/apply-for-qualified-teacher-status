@@ -207,6 +207,7 @@ jobs:
 
       - uses: DfE-Digital/keyvault-yaml-secret@v1
         id: keyvault-yaml-secret
+        if: failure() && ${{ matrix.environment }} == 'dev'
         with:
           keyvault: s165d01-afqts-dv-kv
           secret: MONITORING
