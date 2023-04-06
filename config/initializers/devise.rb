@@ -380,4 +380,8 @@ class Devise::Strategies::MagicLinkAuthenticatable
   def params_auth_hash
     params
   end
+
+  def authentication_keys
+    %i[token]
+  end
 end
