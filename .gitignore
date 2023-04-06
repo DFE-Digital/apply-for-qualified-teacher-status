@@ -19,3 +19,8 @@ public/assets
 tmp/*
 tmp/pids/*
 storage/*
+
+# Terraform
+*.tfstate
+.terraform
+terraform/*token*

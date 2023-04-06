@@ -49,7 +49,7 @@ jobs:
         if: github.actor != 'dependabot[bot]'
         run: |
           # tag build to the review env for vars and secrets
-          tf_vars_file=terraform/workspace_variables/review.tfvars.json
+          tf_vars_file=terraform/paas/workspace_variables/review.tfvars.json
           echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
           echo ${{ steps.image.outputs.tag }}
 
@@ -264,7 +264,7 @@ jobs:
       - name: Extract keyvault name from tfvars
         id: extract-keyvault-name
         run: |
-          tf_vars_file=terraform/workspace_variables/${{ env.ENVIRONMENT_NAME }}.tfvars.json
+          tf_vars_file=terraform/paas/workspace_variables/${{ env.ENVIRONMENT_NAME }}.tfvars.json
           echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
 
       - uses: azure/login@v1

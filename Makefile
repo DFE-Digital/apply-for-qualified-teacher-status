@@ -12,6 +12,7 @@ dev:
 	$(eval RESOURCE_NAME_PREFIX=s165d01)
 	$(eval ENV_SHORT=dv)
 	$(eval ENV_TAG=dev)
+	$(eval PLATFORM=paas)
 
 .PHONY: test
 test:
@@ -20,6 +21,7 @@ test:
 	$(eval RESOURCE_NAME_PREFIX=s165t01)
 	$(eval ENV_SHORT=ts)
 	$(eval ENV_TAG=test)
+	$(eval PLATFORM=paas)
 
 .PHONY: preprod
 preprod:
@@ -28,6 +30,7 @@ preprod:
 	$(eval RESOURCE_NAME_PREFIX=s165t01)
 	$(eval ENV_SHORT=pp)
 	$(eval ENV_TAG=pre-prod)
+	$(eval PLATFORM=paas)
 
 .PHONY: production
 production:
@@ -39,6 +42,7 @@ production:
 	$(eval ENV_TAG=prod)
 	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01afqtsdbbackuppd)
 	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=apply-for-qts)
+	$(eval PLATFORM=paas)
 
 .PHONY: review
 review:
@@ -52,13 +56,14 @@ review:
 	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
 	$(eval export TF_VAR_app_suffix=$(env))
 	$(eval export TF_VAR_forms_storage_account_name=$(RESOURCE_NAME_PREFIX)afqtsformspr$(pr_id))
+	$(eval PLATFORM=paas)
 
 read-keyvault-config:
-	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/$(PLATFORM)/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval KEY_VAULT_SECRET_NAME=APPLY-QTS-APP-VARIABLES)
 
 read-deployment-config:
-	$(eval SPACE=$(shell jq -r '.paas_space' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval SPACE=$(shell jq -r '.paas_space' terraform/$(PLATFORM)/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval POSTGRES_DATABASE_NAME="apply-for-qts-in-england-$(DEPLOY_ENV)-pg-svc")
 	$(eval API_APP_NAME="apply-for-qts-in-england-$(DEPLOY_ENV)")
 
@@ -120,7 +125,7 @@ rename-postgres-service: read-deployment-config ## make production rename-postgr
 	cf rename-service  ${POSTGRES_DATABASE_NAME} ${POSTGRES_DATABASE_NAME}-$(NEW_NAME_SUFFIX)
 
 remove-postgres-tf-state: terraform-init ## make production remove-postgres-tf-state PASSCODE=XXX
-	cd terraform && terraform state rm cloudfoundry_service_instance.postgres
+	cd terraform/paas && terraform state rm cloudfoundry_service_instance.postgres
 
 restore-postgres: terraform-init read-deployment-config ## make production restore-postgres DB_INSTANCE_GUID="<cf service db-name --guid>" BEFORE_TIME="yyyy-MM-dd hh:mm:ss" DOCKER_IMAGE=ghcr.io/dfe-digital/apply-for-qualified-teacher-status:<COMMIT_SHA> PASSCODE=<auth code from https://login.london.cloud.service.gov.uk/passcode>
 	cf target -s ${SPACE} > /dev/null
@@ -145,16 +150,16 @@ terraform-init:
 	$(eval export TF_VAR_apply_qts_docker_image=$(DOCKER_IMAGE))
 
 	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
-	terraform -chdir=terraform init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
+	terraform -chdir=terraform/$(PLATFORM) init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
 
 terraform-plan: terraform-init
-	terraform -chdir=terraform plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+	terraform -chdir=terraform/$(PLATFORM) plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
 
 terraform-apply: terraform-init
-	terraform -chdir=terraform apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/$(PLATFORM) apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
 terraform-destroy: terraform-init
-	terraform -chdir=terraform destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/$(PLATFORM) destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
 deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources CONFIRM_DEPLOY=1
 	$(if $(CONFIRM_DEPLOY), , $(error can only run with CONFIRM_DEPLOY))
@@ -164,7 +169,7 @@ validate-azure-resources: set-azure-account  tags# make dev validate-azure-resou
 	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}afqtstfstate${ENV_SHORT}" "tfStorageContainerName=afqts-tfstate" "dbBackupStorageAccountName=${AZURE_BACKUP_STORAGE_ACCOUNT_NAME}" "dbBackupStorageContainerName=${AZURE_BACKUP_STORAGE_CONTAINER_NAME}" "keyVaultName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-kv" --what-if
 
 read-tf-config:
-	$(eval space=$(shell jq -r '.paas_space' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval space=$(shell jq -r '.paas_space' terraform/$(PLATFORM)/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 
 enable-maintenance: read-tf-config ## make dev enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
 	cf target -s ${space}
