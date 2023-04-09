@@ -13,14 +13,12 @@ def filter_record_not_unique_exception_messages!(event, hint)
   end
 end
 
-def ignore_sidekiq_errors_if_retry(event)
-  job = event&.transaction&.context&.job
-  return false if job.nil?
-  event&.exception.is_a?(Faraday::Error) &&
-    (
-      job["class"] == "ActiveStorage::AnalyzeJob" ||
-        job["class"] == "ActiveStorage::PurgeJob"
-    ) && job["retry"] == true
+def is_active_storage_faraday_error?(event, hint)
+  exception = hint[:exception]
+  active_job = event.extra[:active_job]
+
+  exception.is_a?(Faraday::Error) &&
+    %w[ActiveStorage::AnalyzeJob ActiveStorage::PurgeJob].include?(active_job)
 end
 
 Sentry.init do |config|
@@ -35,7 +33,8 @@ Sentry.init do |config|
 
   config.before_send =
     lambda do |event, hint|
-      return nil if ignore_sidekiq_errors_if_retry(event)
+      return nil if is_active_storage_faraday_error?(event, hint)
+
       filter_record_not_unique_exception_messages!(event, hint)
       filter.filter(event.to_hash)
     end
