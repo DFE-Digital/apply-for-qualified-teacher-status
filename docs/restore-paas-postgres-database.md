@@ -61,20 +61,18 @@ This will create a new instance of the postgres database with point in time back
 
 _Please note in the below command, the timestamp is in UTC, so if we are in BST, make sure to offset the hour by 1, ie: 5:00 PM BST would be 4:00 GMT during summer._
 
-`make <ENV> restore-postgres PASSCODE=<CF_SSO_PASSCODE> DB_INSTANCE_GUID=<> BEFORE_TIME="<UTC_TIMESTAMP>"`.
+```sh
+make <ENV> restore-postgres PASSCODE=<CF_SSO_PASSCODE> DB_INSTANCE_GUID=<> BEFORE_TIME="<UTC_TIMESTAMP>" DOCKER_IMAGE=<DOCKER_IMAGE>
+```
 
 _Note: DB_INSTANCE_GUID is the output of step 2. BEFORE_TIME should be in format 2022-04-21 09:00:00_
 
-Running the command above will prompt for few terraform variables if you dont pass it as arguments to the command in **TF_VAR_name_of_variable=VALUE** form.
+You can pass the `DOCKER_IMAGE` found from the Github [packages](https://github.com/DFE-Digital/apply-for-qualified-teacher-status/pkgs/container/apply-for-qualified-teacher-status). For example **ghcr.io/dfe-digital/apply-for-qualified-teacher-status:19486740313c9c89566bcfa4d1f60981d27fb2e3**
 
-- var.apply_qts_docker_image
-
-  You can pass the image url found from the Github [packages](https://github.com/DFE-Digital/apply-for-qualified-teacher-status/pkgs/container/apply-for-qualified-teacher-status). For example **ghcr.io/dfe-digital/apply-for-qualified-teacher-status:19486740313c9c89566bcfa4d1f60981d27fb2e3**
-
-  Find the current version of the Github SHA of image by running `cf app APP_NAME` on CF CLI, where APP_NAME is the name of the app you stopped in step one. Make sure you use the same image as the current one deployed.
+Find the current version of the Github SHA of image by running `cf app APP_NAME` on CF CLI, where APP_NAME is the name of the app you stopped in step one. Make sure you use the same image as the current one deployed.
 
 Review the generated deploy plan and check that the database instance will be created using the specified point in time backup.
-Make sure there are no changes to the **apply_qts_docker_image** property of the app as we are deploying the app again with the same version as before the incident.
+Make sure there are no changes to the **DOCKER_IMAGE** property of the app as we are deploying the app again with the same version as before the incident.
 
 Once the plan is reviewed, type **yes** to initiate the deployment process. This process can take between 10 and 60 mins to complete. When this is in progress, you can run cf service <db-instance-name> to check the progress. The database service instance will be created and the dependant app will be started on successful completion.
 

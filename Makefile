@@ -122,7 +122,7 @@ rename-postgres-service: read-deployment-config ## make production rename-postgr
 remove-postgres-tf-state: terraform-init ## make production remove-postgres-tf-state PASSCODE=XXX
 	cd terraform && terraform state rm cloudfoundry_service_instance.postgres
 
-restore-postgres: terraform-init read-deployment-config ## make production restore-postgres DB_INSTANCE_GUID="<cf service db-name --guid>" BEFORE_TIME="yyyy-MM-dd hh:mm:ss" TF_VAR_apply_qts_docker_image=ghcr.io/dfe-digital/apply-for-qualified-teacher-status:<COMMIT_SHA> PASSCODE=<auth code from https://login.london.cloud.service.gov.uk/passcode>
+restore-postgres: terraform-init read-deployment-config ## make production restore-postgres DB_INSTANCE_GUID="<cf service db-name --guid>" BEFORE_TIME="yyyy-MM-dd hh:mm:ss" DOCKER_IMAGE=ghcr.io/dfe-digital/apply-for-qualified-teacher-status:<COMMIT_SHA> PASSCODE=<auth code from https://login.london.cloud.service.gov.uk/passcode>
 	cf target -s ${SPACE} > /dev/null
 	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make production get-postgres-instance-guid`))
 	$(if $(BEFORE_TIME), , $(error can only run with BEFORE_TIME, eg BEFORE_TIME="2021-09-14 16:00:00"))
@@ -140,6 +140,10 @@ restore-data-from-backup: read-deployment-config # make production restore-data-
 
 terraform-init:
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
+
+	$(eval export TF_VAR_apply_qts_docker_image=$(DOCKER_IMAGE))
+
 	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
 	terraform -chdir=terraform init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
 
