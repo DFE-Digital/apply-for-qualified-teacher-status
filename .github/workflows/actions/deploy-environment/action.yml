@@ -67,8 +67,8 @@ runs:
         cd terraform && echo "url=https://$(terraform output -raw apply_for_qts_in_england_fqdn)/" >> $GITHUB_OUTPUT
       env:
         ARM_ACCESS_KEY: ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }}
+        DOCKER_IMAGE: ${{ inputs.docker_image }}
         TF_VAR_azure_sp_credentials_json: ${{ inputs.azure_credentials }}
-        TF_VAR_apply_qts_docker_image: ${{ inputs.docker_image }}
         pr_id: ${{ inputs.pr_id }}
       shell: bash
 
