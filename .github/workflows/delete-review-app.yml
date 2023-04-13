@@ -30,8 +30,8 @@ jobs:
             exit 1
           fi
 
-          echo ::set-output name=key_vault_name::$KEY_VAULT_NAME
-          echo ::set-output name=paas_space::$PAAS_SPACE
+          echo "key_vault_name=$KEY_VAULT_NAME" >> $GITHUB_OUTPUT
+          echo "paas_space=$PAAS_SPACE" >> $GITHUB_OUTPUT
         shell: bash
         env:
           TFVARS: workspace_variables/review.tfvars.json
