@@ -1,68 +1,91 @@
 .DEFAULT_GOAL		:=help
 SHELL				:=/bin/bash
 
+SERVICE_SHORT=afqts
+
 .PHONY: help # default target
 help: ## Show this help
 	@grep -E '^[a-zA-Z\.\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: paas
+paas:
+	$(eval PLATFORM=paas)
+	$(eval REGION=West Europe)
+
+.PHONY: aks
+aks:
+	$(eval PLATFORM=aks)
+	$(eval REGION=UK South)
+	$(eval STORAGE_ACCOUNT_SUFFIX=sa)
+
 .PHONY: dev
-dev:
+dev: paas
 	$(eval DEPLOY_ENV=dev)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
-	$(eval RESOURCE_NAME_PREFIX=s165d01)
-	$(eval ENV_SHORT=dv)
+	$(eval AZURE_RESOURCE_PREFIX=s165d01)
+	$(eval CONFIG_SHORT=dv)
 	$(eval ENV_TAG=dev)
-	$(eval PLATFORM=paas)
 
 .PHONY: test
-test:
+test: paas
 	$(eval DEPLOY_ENV=test)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
-	$(eval RESOURCE_NAME_PREFIX=s165t01)
-	$(eval ENV_SHORT=ts)
+	$(eval AZURE_RESOURCE_PREFIX=s165t01)
+	$(eval CONFIG_SHORT=ts)
 	$(eval ENV_TAG=test)
-	$(eval PLATFORM=paas)
 
 .PHONY: preprod
-preprod:
+preprod: paas
 	$(eval DEPLOY_ENV=preprod)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
-	$(eval RESOURCE_NAME_PREFIX=s165t01)
-	$(eval ENV_SHORT=pp)
+	$(eval AZURE_RESOURCE_PREFIX=s165t01)
+	$(eval CONFIG_SHORT=pp)
 	$(eval ENV_TAG=pre-prod)
-	$(eval PLATFORM=paas)
 
 .PHONY: production
-production:
+production: paas
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval DEPLOY_ENV=production)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-production)
-	$(eval RESOURCE_NAME_PREFIX=s165p01)
-	$(eval ENV_SHORT=pd)
+	$(eval AZURE_RESOURCE_PREFIX=s165p01)
+	$(eval CONFIG_SHORT=pd)
 	$(eval ENV_TAG=prod)
 	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01afqtsdbbackuppd)
 	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=apply-for-qts)
-	$(eval PLATFORM=paas)
 
 .PHONY: review
-review:
+review: paas
 	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
 	$(eval DEPLOY_ENV=review)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
-	$(eval RESOURCE_NAME_PREFIX=s165d01)
-	$(eval ENV_SHORT=rv)
+	$(eval AZURE_RESOURCE_PREFIX=s165d01)
+	$(eval CONFIG_SHORT=rv)
 	$(eval ENV_TAG=rev)
 	$(eval env=-pr-$(pr_id))
 	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
 	$(eval export TF_VAR_app_suffix=$(env))
-	$(eval export TF_VAR_forms_storage_account_name=$(RESOURCE_NAME_PREFIX)afqtsformspr$(pr_id))
-	$(eval PLATFORM=paas)
+	$(eval export TF_VAR_forms_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsformspr$(pr_id))
+
+.PHONY: review_aks
+review_aks: aks
+	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
+	$(eval include global_config/review_aks.sh)
+	$(eval env=-pr-$(pr_id))
+	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
+	$(eval export TF_VAR_app_suffix=$(env))
+	$(eval export TF_VAR_forms_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsformspr$(pr_id))
+
+.PHONY: dev_aks
+dev_aks: aks
+	$(eval include global_config/dev_aks.sh)
 
 read-keyvault-config:
+	$(if $(PLATFORM), , $(error Missing environment variable "PLATFORM"))
 	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/$(PLATFORM)/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval KEY_VAULT_SECRET_NAME=APPLY-QTS-APP-VARIABLES)
 
 read-deployment-config:
+	$(if $(PLATFORM), , $(error Missing environment variable "PLATFORM"))
 	$(eval SPACE=$(shell jq -r '.paas_space' terraform/$(PLATFORM)/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval POSTGRES_DATABASE_NAME="apply-for-qts-in-england-$(DEPLOY_ENV)-pg-svc")
 	$(eval API_APP_NAME="apply-for-qts-in-england-$(DEPLOY_ENV)")
@@ -76,9 +99,6 @@ ci:	## Run in automation environment
 	$(eval AUTO_APPROVE=-auto-approve)
 	$(eval SP_AUTH=true)
 	$(eval CONFIRM_PRODUCTION=true)
-
-tags: ##Tags that will be added to resource group on it's creation in ARM template
-	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Apply for QTS in England", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Apply for QTS in England", "Environment" : "$(ENV_TAG)"}' | jq . ))
 
 .PHONY: install-fetch-config
 install-fetch-config: ## Install the fetch-config script, for viewing/editing secrets in Azure Key Vault
@@ -146,8 +166,14 @@ restore-data-from-backup: read-deployment-config # make production restore-data-
 terraform-init:
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
+	$(if $(PLATFORM), , $(error Missing environment variable "PLATFORM"))
 
 	$(eval export TF_VAR_apply_qts_docker_image=$(DOCKER_IMAGE))
+	$(eval export TF_VAR_docker_image=$(DOCKER_IMAGE))
+
+	$(eval export TF_VAR_config_short=$(CONFIG_SHORT))
+	$(eval export TF_VAR_service_short=$(SERVICE_SHORT))
+	$(eval export TF_VAR_azure_resource_prefix=$(AZURE_RESOURCE_PREFIX))
 
 	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
 	terraform -chdir=terraform/$(PLATFORM) init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
@@ -161,14 +187,31 @@ terraform-apply: terraform-init
 terraform-destroy: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
-deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources CONFIRM_DEPLOY=1
-	$(if $(CONFIRM_DEPLOY), , $(error can only run with CONFIRM_DEPLOY))
-	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}afqtstfstate${ENV_SHORT}" "tfStorageContainerName=afqts-tfstate" "dbBackupStorageAccountName=${AZURE_BACKUP_STORAGE_ACCOUNT_NAME}" "dbBackupStorageContainerName=${AZURE_BACKUP_STORAGE_CONTAINER_NAME}" "keyVaultName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-kv"
+set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template
+	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Apply for QTS in England", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Apply for QTS in England", "Environment" : "$(ENV_TAG)"}' | jq . ))
 
-validate-azure-resources: set-azure-account  tags# make dev validate-azure-resources
-	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}afqtstfstate${ENV_SHORT}" "tfStorageContainerName=afqts-tfstate" "dbBackupStorageAccountName=${AZURE_BACKUP_STORAGE_ACCOUNT_NAME}" "dbBackupStorageContainerName=${AZURE_BACKUP_STORAGE_CONTAINER_NAME}" "keyVaultName=${RESOURCE_NAME_PREFIX}-afqts-${ENV_SHORT}-kv" --what-if
+set-azure-template-tag:
+	$(eval ARM_TEMPLATE_TAG=1.1.0)
+
+set-what-if:
+	$(eval WHAT_IF=--what-if)
+
+check-auto-approve:
+	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
+
+arm-deployment: set-azure-account set-azure-template-tag set-azure-resource-group-tags
+	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
+		-l "${REGION}" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
+		--parameters "resourceGroupName=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" 'tags=${RG_TAGS}' \
+			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}${STORAGE_ACCOUNT_SUFFIX}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
+			"keyVaultName=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-kv" ${WHAT_IF}
+
+deploy-azure-resources: check-auto-approve arm-deployment # make dev deploy-azure-resources AUTO_APPROVE=1
+
+validate-azure-resources: set-what-if arm-deployment # make dev validate-azure-resources
 
 read-tf-config:
+	$(if $(PLATFORM), , $(error Missing environment variable "PLATFORM"))
 	$(eval space=$(shell jq -r '.paas_space' terraform/$(PLATFORM)/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 
 enable-maintenance: read-tf-config ## make dev enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
