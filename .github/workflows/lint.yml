@@ -50,10 +50,10 @@ jobs:
 
       - name: Check formatting
         run: terraform fmt -check
-        working-directory: terraform
+        working-directory: terraform/paas
 
       - name: Validate
         run: |
           terraform init -backend=false
           terraform validate -no-color
-        working-directory: terraform
+        working-directory: terraform/paas

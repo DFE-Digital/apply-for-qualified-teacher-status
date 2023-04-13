@@ -34,7 +34,7 @@ jobs:
           echo "paas_space=$PAAS_SPACE" >> $GITHUB_OUTPUT
         shell: bash
         env:
-          TFVARS: workspace_variables/review.tfvars.json
+          TFVARS: paas/workspace_variables/review.tfvars.json
         working-directory: terraform
 
       - uses: Azure/login@v1
