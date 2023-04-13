@@ -49,11 +49,17 @@ jobs:
           terraform_version: 1.4.5
 
       - name: Check formatting
-        run: terraform fmt -check
-        working-directory: terraform/paas
+        run: terraform fmt -check -recursive
+        working-directory: terraform
 
-      - name: Validate
+      - name: Validate PaaS
         run: |
           terraform init -backend=false
           terraform validate -no-color
         working-directory: terraform/paas
+
+      - name: Validate AKS
+        run: |
+          terraform init -backend=false
+          terraform validate -no-color
+        working-directory: terraform/aks
