@@ -36,7 +36,7 @@ class ProfessionalStandingRequest < ApplicationRecord
   end
 
   def after_received(*)
-    if application_form.teaching_authority_provides_written_statement
+    if should_send_received_email?
       TeacherMailer.with(teacher:).professional_standing_received.deliver_later
     end
   end
@@ -48,4 +48,11 @@ class ProfessionalStandingRequest < ApplicationRecord
   end
 
   delegate :teacher, to: :application_form
+
+  private
+
+  def should_send_received_email?
+    !application_form.declined? &&
+      application_form.teaching_authority_provides_written_statement
+  end
 end

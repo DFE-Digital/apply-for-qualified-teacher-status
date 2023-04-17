@@ -59,4 +59,76 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
       it { is_expected.to eq(6.weeks) }
     end
   end
+
+  describe "#after_received" do
+    subject(:after_received) do
+      professional_standing_request.after_received(user:)
+    end
+
+    let(:user) { create(:staff) }
+
+    let(:professional_standing_request) do
+      create(
+        :professional_standing_request,
+        assessment:
+          create(
+            :assessment,
+            application_form:
+              create(
+                :application_form,
+                declined ? :declined : :submitted,
+                teaching_authority_provides_written_statement:,
+              ),
+          ),
+      )
+    end
+
+    describe "when teaching authority provides the written statement and application form is declined" do
+      let(:teaching_authority_provides_written_statement) { true }
+      let(:declined) { true }
+
+      it "doesn't send an email" do
+        expect { after_received }.to_not have_enqueued_mail(
+          TeacherMailer,
+          :professional_standing_received,
+        )
+      end
+    end
+
+    describe "when teaching authority provides the written statement and application form is not declined" do
+      let(:teaching_authority_provides_written_statement) { true }
+      let(:declined) { false }
+
+      it "sends an email" do
+        expect { after_received }.to have_enqueued_mail(
+          TeacherMailer,
+          :professional_standing_received,
+        )
+      end
+    end
+
+    describe "when teaching authority doesn't provide the written statement and application form is declined" do
+      let(:teaching_authority_provides_written_statement) { false }
+      let(:declined) { true }
+
+      it "doesn't send an email" do
+        expect { after_received }.to_not have_enqueued_mail(
+          TeacherMailer,
+          :professional_standing_received,
+        )
+      end
+    end
+
+    describe "when teaching authority doesn't provide the written statement and application form is not declined" do
+      let(:teaching_authority_provides_written_statement) { false }
+      let(:declined) { false }
+
+      it "doesn't send an email" do
+        expect { after_received }.to_not have_enqueued_mail(
+          TeacherMailer,
+          :professional_standing_received,
+        )
+      end
+    end
+  end
 end
