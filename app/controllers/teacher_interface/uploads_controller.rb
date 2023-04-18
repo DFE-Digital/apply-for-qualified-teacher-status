@@ -6,6 +6,7 @@ module TeacherInterface
     include HandleApplicationFormSection
     include HistoryTrackable
     include StreamedResponseAuthenticatable
+    include RescueActiveStorageErrors
 
     skip_before_action :authenticate_teacher!, only: :show
     before_action -> { authenticate_or_redirect(:teacher) }, only: :show
@@ -17,8 +18,6 @@ module TeacherInterface
 
     def show
       send_blob_stream(@upload.attachment, disposition: :inline)
-    rescue ActiveStorage::FileNotFoundError
-      render "errors/not_found", status: :not_found
     end
 
     def new
