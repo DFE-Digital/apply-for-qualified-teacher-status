@@ -2,11 +2,12 @@
 #
 # Table name: uploads
 #
-#  id          :bigint           not null, primary key
-#  translation :boolean          not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  document_id :bigint           not null
+#  id                  :bigint           not null, primary key
+#  malware_scan_result :string           default("pending"), not null
+#  translation         :boolean          not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  document_id         :bigint           not null
 #
 # Indexes
 #
@@ -21,6 +22,13 @@ class Upload < ApplicationRecord
 
   has_one_attached :attachment, dependent: :purge_later
   validates :attachment, presence: true
+
+  enum malware_scan_result: {
+         clean: "clean",
+         error: "error",
+         pending: "pending",
+         suspect: "suspect",
+       }
 
   def original?
     !translation?

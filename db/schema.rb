@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_18_180201) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -354,8 +354,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.string "teaching_authority_online_checker_url", default: "", null: false
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
-    t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.text "qualifications_information", default: "", null: false
+    t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "application_form_skip_work_history", default: false, null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
@@ -486,6 +486,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_134509) do
     t.boolean "translation", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "malware_scan_result", default: "pending", null: false
     t.index ["document_id"], name: "index_uploads_on_document_id"
   end
 
