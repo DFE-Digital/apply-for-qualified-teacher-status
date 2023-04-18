@@ -43,6 +43,19 @@ RSpec.describe AssessorInterface::UploadsController, type: :controller do
       end
     end
 
+    context "when the upload times out" do
+      before do
+        allow(controller).to receive(:send_blob_stream).and_raise(
+          Faraday::TimeoutError,
+        )
+      end
+
+      it "renders internal server error" do
+        perform
+        expect(response.status).to eq(500)
+      end
+    end
+
     context "when the user session times out" do
       before { sign_out staff }
 

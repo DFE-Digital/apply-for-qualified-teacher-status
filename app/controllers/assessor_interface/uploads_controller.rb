@@ -4,6 +4,7 @@ module AssessorInterface
   class UploadsController < BaseController
     include ActiveStorage::Streaming
     include StreamedResponseAuthenticatable
+    include RescueActiveStorageErrors
 
     skip_before_action :authenticate_staff!, only: :show
     before_action -> { authenticate_or_redirect(:staff) }, only: :show
@@ -12,8 +13,6 @@ module AssessorInterface
 
     def show
       send_blob_stream(upload.attachment, disposition: :inline)
-    rescue ActiveStorage::FileNotFoundError
-      render "errors/not_found", status: :not_found
     end
 
     private
