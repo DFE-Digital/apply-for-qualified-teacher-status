@@ -381,6 +381,7 @@
     - translation
     - created_at
     - updated_at
+    - malware_scan_result
   :work_histories:
     - id
     - application_form_id
