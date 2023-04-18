@@ -143,7 +143,7 @@ class ApplicationFormStatusUpdater
             waiting_on_reference
         "waiting_on"
       elsif assessment&.started?
-        "initial_assessment"
+        "assessment_in_progress"
       elsif application_form.submitted_at.present?
         if requires_preliminary_check && !preliminary_check_complete
           "preliminary_check"

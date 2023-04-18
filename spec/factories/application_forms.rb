@@ -143,6 +143,11 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
+    trait :assessment_in_progress do
+      status { "assessment_in_progress" }
+      submitted_at { Time.zone.now }
+    end
+
     trait :waiting_on do
       status { "waiting_on" }
       submitted_at { Time.zone.now }
