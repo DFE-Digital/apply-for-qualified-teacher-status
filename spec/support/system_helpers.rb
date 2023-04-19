@@ -92,6 +92,12 @@ module SystemHelpers
     sign_out @user
   end
 
+  def given_malware_scanning_is_enabled
+    allow(FetchMalwareScanResultJob).to receive(:set).and_return(
+      class_double(FetchMalwareScanResultJob, perform_later: true),
+    )
+  end
+
   alias_method :then_i_sign_out, :when_i_sign_out
 
   def given_the_test_user_is_disabled
