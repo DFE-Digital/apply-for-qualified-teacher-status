@@ -29,6 +29,10 @@ variable "deploy_azure_backing_services" {
   default = true
 }
 
+variable "docker_image" {
+  type = string
+}
+
 variable "enable_monitoring" {
   type    = bool
   default = true
