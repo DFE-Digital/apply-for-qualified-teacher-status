@@ -45,7 +45,7 @@ RSpec.describe "Teacher submitting", type: :system do
       "Application complete",
     )
     expect(submitted_application_page.panel.body.text).to eq(
-      "Your reference number\n#{application_form.reference}",
+      "Your application reference number\n#{application_form.reference}",
     )
   end
 

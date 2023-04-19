@@ -1,5 +1,5 @@
 <%= govuk_panel(title_text: view_object.further_information_request&.received? ? "Further information successfully submitted" : "Application complete") do %>
-  Your reference number
+  Your application reference number
   <br />
   <strong><%= view_object.application_form.reference %></strong>
 <% end %>
@@ -11,7 +11,7 @@
   <p class="govuk-body">You can now close this page.</p>
 <% else %>
   <p class="govuk-body">We’ve received your application for QTS and we’ve sent you a confirmation email.</p>
-  <p class="govuk-body">Keep the email safe, as you may need your reference number for future correspondence about your application.</p>
+  <p class="govuk-body">Keep the email safe, as you may need your application reference number for future correspondence about your application.</p>
 
   <h2 class="govuk-heading-m">What happens next</h2>
   <p class="govuk-body">Your application will be entered into a queue and assigned a QTS assessor, which can take several weeks.</p>
