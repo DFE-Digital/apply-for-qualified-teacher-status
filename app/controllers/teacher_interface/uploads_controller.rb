@@ -8,8 +8,8 @@ module TeacherInterface
     include StreamedResponseAuthenticatable
     include RescueActiveStorageErrors
 
-    skip_before_action :authenticate_teacher!, only: %i[show new]
-    before_action -> { authenticate_or_redirect(:teacher) }, only: %i[show new]
+    skip_before_action :authenticate_teacher!
+    before_action -> { authenticate_or_redirect(:teacher) }
 
     before_action :redirect_unless_draft_or_further_information
     before_action :load_application_form

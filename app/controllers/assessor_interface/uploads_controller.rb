@@ -6,8 +6,8 @@ module AssessorInterface
     include StreamedResponseAuthenticatable
     include RescueActiveStorageErrors
 
-    skip_before_action :authenticate_staff!, only: :show
-    before_action -> { authenticate_or_redirect(:staff) }, only: :show
+    skip_before_action :authenticate_staff!
+    before_action -> { authenticate_or_redirect(:staff) }
 
     before_action :authorize_assessor
 
