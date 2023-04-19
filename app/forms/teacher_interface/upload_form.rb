@@ -24,16 +24,24 @@ module TeacherInterface
     def update_model
       unless skippable?
         if original_attachment.present?
-          document.uploads.create!(
-            attachment: original_attachment,
-            translation: false,
+          upload =
+            document.uploads.create!(
+              attachment: original_attachment,
+              translation: false,
+            )
+          FetchUploadMalwareScanResultJob.set(wait: 1.minute).perform_later(
+            upload,
           )
         end
 
         if translated_attachment.present?
-          document.uploads.create!(
-            attachment: translated_attachment,
-            translation: true,
+          upload =
+            document.uploads.create!(
+              attachment: translated_attachment,
+              translation: true,
+            )
+          FetchUploadMalwareScanResultJob.set(wait: 1.minute).perform_later(
+            upload,
           )
         end
       end
