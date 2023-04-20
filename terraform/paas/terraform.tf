@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.0"
+  required_version = "~> 1.4"
 
   backend "azurerm" {
     container_name = "afqts-tfstate"

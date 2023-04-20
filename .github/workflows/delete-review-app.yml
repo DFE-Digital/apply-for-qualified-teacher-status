@@ -49,7 +49,7 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.0.10
+          terraform_version: 1.4.5
           terraform_wrapper: false
 
       - name: Set Environment variables
