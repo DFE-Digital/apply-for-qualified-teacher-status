@@ -257,7 +257,7 @@ jobs:
     environment: ${{ needs.deploy_nonprod.outputs.environment_name || 'dev'  }}
     env:
       ENVIRONMENT_NAME: ${{ needs.deploy_nonprod.outputs.environment_name || 'dev'  }}
-    if: ${{ failure() }}
+    if: ${{ failure() && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v3
 
