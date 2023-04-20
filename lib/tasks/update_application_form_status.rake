@@ -4,5 +4,5 @@ task update_application_form_status_initial_assessment: :environment do
   forms = ApplicationForm.where(status: "initial_assessment")
 
   # update the status for each form
-  forms.update_all(state: "assessment_in_progress")
+  forms.update_all(status: "assessment_in_progress")
 end
