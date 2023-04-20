@@ -111,7 +111,7 @@ RSpec.describe UpdateAssessmentSection do
     it "changes the application form state" do
       expect { subject }.to change { application_form.status }.from(
         "submitted",
-      ).to("initial_assessment")
+      ).to("assessment_in_progress")
     end
 
     it "changes the assessment started at" do

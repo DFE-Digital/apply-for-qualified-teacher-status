@@ -319,7 +319,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         create(:assessment, :started, application_form:)
       end
 
-      include_examples "changes status", "initial_assessment"
+      include_examples "changes status", "assessment_in_progress"
     end
 
     context "with a submitted_at date" do

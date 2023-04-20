@@ -122,6 +122,7 @@ class ApplicationForm < ApplicationRecord
          draft: "draft",
          submitted: "submitted",
          preliminary_check: "preliminary_check",
+         assessment_in_progress: "assessment_in_progress",
          initial_assessment: "initial_assessment",
          waiting_on: "waiting_on",
          received: "received",
@@ -166,6 +167,7 @@ class ApplicationForm < ApplicationRecord
               overdue
               awarded_pending_checks
               potential_duplicate_in_dqt
+              assessment_in_progress
             ],
           ).or(awarded.where("awarded_at >= ?", 90.days.ago)).or(
             declined.where("declined_at >= ?", 90.days.ago),

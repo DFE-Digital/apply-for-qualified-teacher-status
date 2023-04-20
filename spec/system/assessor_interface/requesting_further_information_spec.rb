@@ -104,7 +104,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
       create(
         :application_form,
         :with_personal_information,
-        :initial_assessment,
+        :assessment_in_progress,
         :with_assessment,
       ).tap do |application_form|
         application_form.assessment.sections << create(
