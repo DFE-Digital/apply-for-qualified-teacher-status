@@ -49,15 +49,8 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     ]
 
     statuses.map do |status|
-      count =
-        if status == "assessment_in_progress"
-          counts.fetch("assessment_in_progress", 0) +
-            counts.fetch("initial_assessment", 0)
-        else
-          counts.fetch(status, 0)
-        end
       text = I18n.t(status, scope: %i[components status_tag])
-      OpenStruct.new(id: status, label: "#{text} (#{count})")
+      OpenStruct.new(id: status, label: "#{text} (#{counts.fetch(status, 0)})")
     end
   end
 

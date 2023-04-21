@@ -187,14 +187,13 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         create_list(:application_form, 1, :preliminary_check)
         create_list(:application_form, 2, :submitted)
         create_list(:application_form, 3, :assessment_in_progress)
-        create_list(:application_form, 4, :initial_assessment)
-        create_list(:application_form, 5, :waiting_on)
-        create_list(:application_form, 6, :received)
-        create_list(:application_form, 7, :overdue)
-        create_list(:application_form, 8, :awarded_pending_checks)
-        create_list(:application_form, 9, :awarded)
-        create_list(:application_form, 10, :declined)
-        create_list(:application_form, 11, :potential_duplicate_in_dqt)
+        create_list(:application_form, 4, :waiting_on)
+        create_list(:application_form, 5, :received)
+        create_list(:application_form, 6, :overdue)
+        create_list(:application_form, 7, :awarded_pending_checks)
+        create_list(:application_form, 8, :awarded)
+        create_list(:application_form, 9, :declined)
+        create_list(:application_form, 10, :potential_duplicate_in_dqt)
       end
 
       it do
@@ -207,20 +206,20 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             OpenStruct.new(id: "submitted", label: "Not started (2)"),
             OpenStruct.new(
               id: "assessment_in_progress",
-              label: "Assessment in progress (7)",
+              label: "Assessment in progress (3)",
             ),
-            OpenStruct.new(id: "waiting_on", label: "Waiting on (5)"),
-            OpenStruct.new(id: "received", label: "Received (6)"),
-            OpenStruct.new(id: "overdue", label: "Overdue (7)"),
+            OpenStruct.new(id: "waiting_on", label: "Waiting on (4)"),
+            OpenStruct.new(id: "received", label: "Received (5)"),
+            OpenStruct.new(id: "overdue", label: "Overdue (6)"),
             OpenStruct.new(
               id: "awarded_pending_checks",
-              label: "Award pending (8)",
+              label: "Award pending (7)",
             ),
-            OpenStruct.new(id: "awarded", label: "Awarded (9)"),
-            OpenStruct.new(id: "declined", label: "Declined (10)"),
+            OpenStruct.new(id: "awarded", label: "Awarded (8)"),
+            OpenStruct.new(id: "declined", label: "Declined (9)"),
             OpenStruct.new(
               id: "potential_duplicate_in_dqt",
-              label: "Potential duplication in DQT (11)",
+              label: "Potential duplication in DQT (10)",
             ),
           ],
         )

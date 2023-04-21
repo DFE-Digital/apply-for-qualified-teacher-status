@@ -138,11 +138,6 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
-    trait :initial_assessment do
-      status { "initial_assessment" }
-      submitted_at { Time.zone.now }
-    end
-
     trait :assessment_in_progress do
       status { "assessment_in_progress" }
       submitted_at { Time.zone.now }

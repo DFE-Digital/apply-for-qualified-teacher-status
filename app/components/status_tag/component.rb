@@ -29,7 +29,6 @@ module StatusTag
       expired: "pink",
       in_progress: "blue",
       assessment_in_progress: "blue",
-      initial_assessment: "blue",
       invalid: "red",
       not_started: "grey",
       overdue: "pink",

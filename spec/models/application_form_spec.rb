@@ -104,7 +104,6 @@ RSpec.describe ApplicationForm, type: :model do
         submitted: "submitted",
         preliminary_check: "preliminary_check",
         assessment_in_progress: "assessment_in_progress",
-        initial_assessment: "initial_assessment",
         waiting_on: "waiting_on",
         received: "received",
         overdue: "overdue",
