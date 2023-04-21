@@ -11,7 +11,6 @@ en:
       expired: Overdue
       in_progress: In progress
       assessment_in_progress: Assessment in progress
-      initial_assessment: Assessment in progress
       invalid: Invalid
       not_started: Not started
       overdue: Overdue

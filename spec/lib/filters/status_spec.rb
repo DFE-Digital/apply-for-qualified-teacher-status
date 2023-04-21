@@ -53,25 +53,4 @@ RSpec.describe Filters::Status do
       expect(subject).to eq(scope)
     end
   end
-
-  context "with assessment_in_progress status" do
-    let(:params) { { statuses: "assessment_in_progress" } }
-    let(:scope) { ApplicationForm.all }
-
-    let!(:included) do
-      [
-        create(:application_form, :initial_assessment),
-        create(:application_form, :assessment_in_progress),
-      ]
-    end
-
-    let!(:filtered) do
-      create(:application_form, :draft)
-      create(:application_form, :submitted)
-    end
-
-    it "returns a filtered scope including initial_assessment and assessment_in_progress statuses" do
-      expect(subject).to match_array(included)
-    end
-  end
 end
