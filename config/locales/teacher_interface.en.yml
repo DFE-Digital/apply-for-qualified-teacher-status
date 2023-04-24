@@ -155,7 +155,7 @@ en:
               blank: Enter the lowest age you can teach
               not_a_number: Enter the lowest age you can teach
               not_an_integer: Enter the lowest age you can teach
-              greater_than_or_equal_to: Age from must be %{count} or more
+              greater_than_or_equal_to: Age from must be 4 or more
               less_than_or_equal_to: The minimum age cannot be higher than the maximum age
             maximum:
               blank: Enter the highest age you can teach
