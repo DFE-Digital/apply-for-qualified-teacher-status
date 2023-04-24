@@ -12,7 +12,8 @@ module TeacherInterface
               numericality: {
                 only_integer: true,
                 greater_than_or_equal_to: 4,
-                less_than_or_equal_to: 18,
+                less_than_or_equal_to: :maximum,
+                if: -> { maximum.present? },
                 allow_nil: true,
               }
     validates :maximum,
@@ -20,6 +21,7 @@ module TeacherInterface
               numericality: {
                 only_integer: true,
                 greater_than_or_equal_to: :minimum,
+                if: -> { minimum.present? },
                 allow_nil: true,
               }
 
