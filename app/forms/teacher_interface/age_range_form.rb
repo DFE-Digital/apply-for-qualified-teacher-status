@@ -20,7 +20,6 @@ module TeacherInterface
               numericality: {
                 only_integer: true,
                 greater_than_or_equal_to: :minimum,
-                less_than_or_equal_to: 18,
                 allow_nil: true,
               }
 
