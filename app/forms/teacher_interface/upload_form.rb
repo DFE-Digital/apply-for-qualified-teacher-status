@@ -29,9 +29,7 @@ module TeacherInterface
               attachment: original_attachment,
               translation: false,
             )
-          FetchUploadMalwareScanResultJob.set(wait: 1.minute).perform_later(
-            upload,
-          )
+          FetchMalwareScanResultJob.set(wait: 1.minute).perform_later(upload)
         end
 
         if translated_attachment.present?
@@ -40,9 +38,7 @@ module TeacherInterface
               attachment: translated_attachment,
               translation: true,
             )
-          FetchUploadMalwareScanResultJob.set(wait: 1.minute).perform_later(
-            upload,
-          )
+          FetchMalwareScanResultJob.set(wait: 1.minute).perform_later(upload)
         end
       end
 

@@ -24,7 +24,10 @@ class ResendStoredBlobData
     response = blob_service.call(:put, url, attachment_data, headers)
 
     if response.success?
-      FetchMalwareScanResultJob.perform_later(upload_id: upload.id)
+      # Wait for 1 minute to allow the malware scan to complete.
+      FetchMalwareScanResultJob.set(wait: 1.minute).perform_later(
+        upload_id: upload.id,
+      )
     end
   end
 
