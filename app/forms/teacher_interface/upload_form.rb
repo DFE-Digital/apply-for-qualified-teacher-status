@@ -38,6 +38,8 @@ module TeacherInterface
         end
       end
 
+      fetch_and_update_malware_scan_results
+
       document.update!(completed: skippable? || !document.uploads.empty?)
     end
 
@@ -71,6 +73,15 @@ module TeacherInterface
         if written_in_english == false
           errors.add(:translated_attachment, :blank)
         end
+      end
+    end
+
+    def fetch_and_update_malware_scan_results
+      document.uploads.each do |upload|
+        # We need a delay here to ensure that the upload has been scanned before fetching the result.
+        FetchMalwareScanResultJob.set(wait: 1.minute).perform_later(
+          upload_id: upload.id,
+        )
       end
     end
   end
