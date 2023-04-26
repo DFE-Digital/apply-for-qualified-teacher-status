@@ -31,6 +31,19 @@ FactoryBot.define do
 
     teaching_authority_checks_sanctions { true }
 
+    trait :requires_secondary_education_teaching_qualification do
+      sequence :code,
+               Country::CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION.cycle
+    end
+
+    trait :doesnt_require_secondary_education_teaching_qualification do
+      sequence :code,
+               (
+                 Country::CODES -
+                   Country::CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION
+               ).cycle
+    end
+
     trait :with_national_region do
       after(:create) do |country, _evaluator|
         create(:region, :national, country:)

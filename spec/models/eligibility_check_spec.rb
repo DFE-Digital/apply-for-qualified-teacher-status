@@ -288,7 +288,12 @@ RSpec.describe EligibilityCheck, type: :model do
     subject { eligibility_check.status }
 
     let(:eligibility_check) { described_class.new(attributes) }
-    let(:country) { create(:country) }
+    let(:country) do
+      create(
+        :country,
+        :doesnt_require_secondary_education_teaching_qualification,
+      )
+    end
 
     context "when no attributes are present" do
       let(:attributes) { nil }
@@ -304,7 +309,7 @@ RSpec.describe EligibilityCheck, type: :model do
 
     context "when a region is present" do
       let(:attributes) do
-        { country_code: country.code, region: create(:region) }
+        { country_code: country.code, region: create(:region, country:) }
       end
 
       it { is_expected.to eq(:qualification) }
@@ -314,7 +319,7 @@ RSpec.describe EligibilityCheck, type: :model do
       let(:attributes) do
         {
           country_code: country.code,
-          region: create(:region),
+          region: create(:region, country:),
           qualification: true,
         }
       end
@@ -326,7 +331,7 @@ RSpec.describe EligibilityCheck, type: :model do
       let(:attributes) do
         {
           country_code: country.code,
-          region: create(:region),
+          region: create(:region, country:),
           qualification: true,
           degree: true,
         }
@@ -339,7 +344,7 @@ RSpec.describe EligibilityCheck, type: :model do
       let(:attributes) do
         {
           country_code: country.code,
-          region: create(:region),
+          region: create(:region, country:),
           qualification: true,
           degree: true,
           teach_children: true,
@@ -353,7 +358,7 @@ RSpec.describe EligibilityCheck, type: :model do
       let(:attributes) do
         {
           country_code: country.code,
-          region: create(:region),
+          region: create(:region, country:),
           qualification: true,
           degree: true,
           teach_children: true,
@@ -368,7 +373,7 @@ RSpec.describe EligibilityCheck, type: :model do
       let(:attributes) do
         {
           country_code: country.code,
-          region: create(:region),
+          region: create(:region, country:),
           qualification: true,
           degree: true,
           teach_children: true,
