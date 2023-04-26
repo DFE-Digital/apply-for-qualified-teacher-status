@@ -37,7 +37,11 @@ RSpec.describe FurtherInformationRequestItemsFactory do
       build(:selected_failure_reason, key: "identification_document_expired")
     end
     let(:failure_reason_two) do
-      build(:selected_failure_reason, assessor_feedback: "More stuff needed")
+      build(
+        :selected_failure_reason,
+        key: "work_history_break",
+        assessor_feedback: "More stuff needed",
+      )
     end
     let(:failure_reason_three) do
       build(:selected_failure_reason, key: "duplicate_application")
