@@ -24,6 +24,8 @@ class ResendStoredBlobData
         upload_id: upload.id,
       )
     end
+  rescue ActiveStorage::FileNotFoundError
+    upload.update!(malware_scan_result: "error")
   end
 
   private

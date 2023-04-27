@@ -47,5 +47,20 @@ RSpec.describe ResendStoredBlobData do
       )
       resend_stored_blob_data
     end
+
+    context "when the upload attachment is missing" do
+      let(:attachment) { instance_double(ActiveStorage::Blob) }
+      before do
+        allow(upload).to receive(:attachment).and_return(attachment)
+        allow(attachment).to receive(:key).and_raise(
+          ActiveStorage::FileNotFoundError,
+        )
+      end
+
+      it "updates to the malware scan result field to 'error'" do
+        resend_stored_blob_data
+        expect(upload.reload.malware_scan_result).to eq("error")
+      end
+    end
   end
 end
