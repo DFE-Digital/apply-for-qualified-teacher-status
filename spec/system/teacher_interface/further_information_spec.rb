@@ -5,6 +5,7 @@ RSpec.describe "Teacher further information", type: :system do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(teacher)
     given_there_is_an_application_form
+    given_malware_scanning_is_enabled
   end
 
   it "save and sign out" do

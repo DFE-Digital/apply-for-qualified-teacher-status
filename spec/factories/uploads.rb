@@ -2,11 +2,12 @@
 #
 # Table name: uploads
 #
-#  id          :bigint           not null, primary key
-#  translation :boolean          not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  document_id :bigint           not null
+#  id                  :bigint           not null, primary key
+#  malware_scan_result :string           default("pending"), not null
+#  translation         :boolean          not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  document_id         :bigint           not null
 #
 # Indexes
 #
