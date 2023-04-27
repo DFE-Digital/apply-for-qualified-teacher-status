@@ -11,12 +11,14 @@ help: ## Show this help
 paas:
 	$(eval PLATFORM=paas)
 	$(eval REGION=West Europe)
+	$(eval KEY_VAULT_SECRET_NAME=APPLY-QTS-APP-VARIABLES)
 
 .PHONY: aks
 aks:
 	$(eval PLATFORM=aks)
 	$(eval REGION=UK South)
 	$(eval STORAGE_ACCOUNT_SUFFIX=sa)
+	$(eval KEY_VAULT_SECRET_NAME=APPLICATION-SECRETS)
 
 .PHONY: dev
 dev: paas
@@ -80,9 +82,8 @@ dev_aks: aks
 	$(eval include global_config/dev_aks.sh)
 
 read-keyvault-config:
-	$(if $(PLATFORM), , $(error Missing environment variable "PLATFORM"))
-	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/$(PLATFORM)/workspace_variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval KEY_VAULT_SECRET_NAME=APPLY-QTS-APP-VARIABLES)
+	$(if $(KEY_VAULT_SECRET_NAME), , $(error Missing environment variable "KEY_VAULT_SECRET_NAME"))
+	$(eval KEY_VAULT_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-kv)
 
 read-deployment-config:
 	$(if $(PLATFORM), , $(error Missing environment variable "PLATFORM"))
