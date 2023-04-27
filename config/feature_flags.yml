@@ -24,4 +24,10 @@ feature_flags:
       Allow starting an application on this service directly after completing
       an eligibility check.
 
+  fetch_malware_scan_result:
+    author: Steve Laing
+    description: >
+      Fetch malware scan results for uploaded files.
+      This flag should only be active for environments where malware scanning is enabled.
+
 parent_controller: "SupportInterface::BaseController"
