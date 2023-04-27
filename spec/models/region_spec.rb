@@ -38,9 +38,13 @@
 require "rails_helper"
 
 RSpec.describe Region, type: :model do
-  subject(:region) { build(:region) }
+  subject(:region) { build(:region, teaching_authority_name:) }
+
+  let(:teaching_authority_name) { "" }
 
   describe "validations" do
+    it { is_expected.to be_valid }
+
     it { is_expected.to validate_uniqueness_of(:name).scoped_to(:country_id) }
     it do
       is_expected.to define_enum_for(:sanction_check)
@@ -58,6 +62,11 @@ RSpec.describe Region, type: :model do
       is_expected.to validate_url_of(
         :teaching_authority_online_checker_url,
       ).with_message("Enter a valid teaching authority online checker URL")
+    end
+
+    context "with a teaching authority name that starts with the" do
+      let(:teaching_authority_name) { "the authority" }
+      it { is_expected.to_not be_valid }
     end
   end
 
