@@ -7,29 +7,29 @@
     <h2 class="govuk-heading-m"><%= govuk_link_to english_language_provider.name, [:edit, :support_interface, english_language_provider] %></h2>
 
     <%= govuk_summary_list(actions: false) do |summary_list|
-      summary_list.row do |row|
-        row.key { t("helpers.label.english_language_provider.b2_level_requirement") }
-        row.value { english_language_provider.b2_level_requirement }
+      summary_list.with_row do |row|
+        row.with_key { t("helpers.label.english_language_provider.b2_level_requirement") }
+        row.with_value { english_language_provider.b2_level_requirement }
       end
 
-      summary_list.row do |row|
-        row.key { t("helpers.label.english_language_provider.reference_name") }
-        row.value { english_language_provider.reference_name }
+      summary_list.with_row do |row|
+        row.with_key { t("helpers.label.english_language_provider.reference_name") }
+        row.with_value { english_language_provider.reference_name }
       end
 
-      summary_list.row do |row|
-        row.key { t("helpers.label.english_language_provider.reference_hint") }
-        row.value { english_language_provider.reference_hint }
+      summary_list.with_row do |row|
+        row.with_key { t("helpers.label.english_language_provider.reference_hint") }
+        row.with_value { english_language_provider.reference_hint }
       end
 
-      summary_list.row do |row|
-        row.key { t("helpers.label.english_language_provider.accepted_tests") }
-        row.value { english_language_provider.accepted_tests }
+      summary_list.with_row do |row|
+        row.with_key { t("helpers.label.english_language_provider.accepted_tests") }
+        row.with_value { english_language_provider.accepted_tests }
       end
 
-      summary_list.row do |row|
-        row.key { t("helpers.label.english_language_provider.check_url") }
-        row.value { english_language_provider.check_url }
+      summary_list.with_row do |row|
+        row.with_key { t("helpers.label.english_language_provider.check_url") }
+        row.with_value { english_language_provider.check_url }
       end
     end %>
   </article>

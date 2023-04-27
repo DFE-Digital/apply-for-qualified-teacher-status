@@ -10,30 +10,30 @@
   <h2 class="govuk-heading-m"><%= staff.name %></h2>
 
   <%= govuk_summary_list do |summary_list|
-    summary_list.row do |row|
-      row.key { "Email address" }
-      row.value { staff.email }
+    summary_list.with_row do |row|
+      row.with_key { "Email address" }
+      row.with_value { staff.email }
     end
 
-    summary_list.row do |row|
-      row.key { "Created at" }
-      row.value { staff.created_at.to_s }
+    summary_list.with_row do |row|
+      row.with_key { "Created at" }
+      row.with_value { staff.created_at.to_s }
     end
-    
-      summary_list.row do |row|
-      row.key { "Assessor" }
-      row.value do
+
+      summary_list.with_row do |row|
+      row.with_key { "Assessor" }
+      row.with_value do
          if staff.award_decline_permission?
           govuk_tag(text:"Yes", colour: "green")
         else
           govuk_tag(text:"No", colour: "red")
-        end 
+        end
       end
     end
 
-    summary_list.row do |row|
-      row.key { "Support console access" }
-      row.value do
+    summary_list.with_row do |row|
+      row.with_key { "Support console access" }
+      row.with_value do
         if staff.support_console_permission?
           govuk_tag(text:"Yes", colour: "green")
         else
@@ -42,10 +42,10 @@
       end
     end
     if staff.created_by_invite?
-      summary_list.row do |row|
-        row.key { "Invitation status" }
+      summary_list.with_row do |row|
+        row.with_key { "Invitation status" }
 
-        row.value do
+        row.with_value do
           if staff.invitation_accepted?
              govuk_tag(text: "Accepted", colour: "green")
           else
@@ -54,15 +54,15 @@
         end
       end
 
-      summary_list.row do |row|
-        row.key { "Invited at" }
-        row.value { staff.invitation_sent_at.to_s }
+      summary_list.with_row do |row|
+        row.with_key { "Invited at" }
+        row.with_value { staff.invitation_sent_at.to_s }
       end
     end
 
-    summary_list.row do |row|
-      row.key { "Last signed in at" }
-      row.value { staff.last_sign_in_at.to_s }
+    summary_list.with_row do |row|
+      row.with_key { "Last signed in at" }
+      row.with_value { staff.last_sign_in_at.to_s }
     end
   end %>
 <% end %>

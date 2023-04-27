@@ -9,25 +9,25 @@
     <p class="govuk-body">No staff personas.</p>
   <% else %>
     <%= govuk_table do |table|
-      table.head do |head|
-        head.row do |row|
-          row.cell(header: true, text: "Email")
-          row.cell(header: true, text: "Award decline permission")
-          row.cell(header: true, text: "Support console permission")
-          row.cell(header: true, text: "Actions", numeric: true)
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(header: true, text: "Email")
+          row.with_cell(header: true, text: "Award decline permission")
+          row.with_cell(header: true, text: "Support console permission")
+          row.with_cell(header: true, text: "Actions", numeric: true)
         end
       end
 
-      table.body do |body|
+      table.with_body do |body|
         @staff.each do |staff|
-          body.row do |row|
-            row.cell(text: staff.email)
+          body.with_row do |row|
+            row.with_cell(text: staff.email)
 
-            row.cell { persona_yes_no_tag(staff.award_decline_permission?) }
+            row.with_cell { persona_yes_no_tag(staff.award_decline_permission?) }
 
-            row.cell { persona_yes_no_tag(staff.support_console_permission?) }
+            row.with_cell { persona_yes_no_tag(staff.support_console_permission?) }
 
-            row.cell(numeric: true) do
+            row.with_cell(numeric: true) do
               govuk_button_to "Sign&nbsp;in".html_safe, staff_sign_in_persona_path(staff)
             end
           end
@@ -44,37 +44,37 @@
     <p class="govuk-body">No eligible personas.</p>
   <% else %>
     <%= govuk_table do |table|
-      table.head do |head|
-        head.row do |row|
-          row.cell(header: true, text: "Bucket")
-          row.cell(header: true, text: "Country/Region")
-          row.cell(header: true, text: "Status check")
-          row.cell(header: true, text: "Sanction check")
-          row.cell(header: true, text: "Skips work history")
-          row.cell(header: true, text: "Teaching authority provides written statement")
-          row.cell(header: true, text: "Reduced evidence accepted")
-          row.cell(header: true, text: "Actions", numeric: true)
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(header: true, text: "Bucket")
+          row.with_cell(header: true, text: "Country/Region")
+          row.with_cell(header: true, text: "Status check")
+          row.with_cell(header: true, text: "Sanction check")
+          row.with_cell(header: true, text: "Skips work history")
+          row.with_cell(header: true, text: "Teaching authority provides written statement")
+          row.with_cell(header: true, text: "Reduced evidence accepted")
+          row.with_cell(header: true, text: "Actions", numeric: true)
         end
       end
 
-      table.body do |body|
+      table.with_body do |body|
         @eligible_personas.each do |persona|
-          body.row do |row|
-            row.cell do
+          body.with_row do |row|
+            row.with_cell do
               bucket = region_bucket_for_persona(persona)
               govuk_tag(text: bucket) if bucket
             end
 
-            row.cell { CountryName.from_region(persona[:region]) }
+            row.with_cell { CountryName.from_region(persona[:region]) }
 
-            row.cell { persona_check_tag(persona[:status_check]) }
-            row.cell { persona_check_tag(persona[:sanction_check]) }
+            row.with_cell { persona_check_tag(persona[:status_check]) }
+            row.with_cell { persona_check_tag(persona[:sanction_check]) }
 
-            row.cell { persona_yes_no_tag(persona[:application_form_skip_work_history]) }
-            row.cell { persona_yes_no_tag(persona[:teaching_authority_provides_written_statement]) }
-            row.cell { persona_yes_no_tag(persona[:reduced_evidence_accepted]) }
+            row.with_cell { persona_yes_no_tag(persona[:application_form_skip_work_history]) }
+            row.with_cell { persona_yes_no_tag(persona[:teaching_authority_provides_written_statement]) }
+            row.with_cell { persona_yes_no_tag(persona[:reduced_evidence_accepted]) }
 
-            row.cell(numeric: true) do
+            row.with_cell(numeric: true) do
               govuk_button_to "Sign&nbsp;in".html_safe, eligible_sign_in_persona_path(persona[:region])
             end
           end
@@ -91,40 +91,40 @@
     <p class="govuk-body">No teacher personas.</p>
   <% else %>
     <%= govuk_table do |table|
-      table.head do |head|
-        head.row do |row|
-          row.cell(header: true, text: "Bucket")
-          row.cell(header: true, text: "Country")
-          row.cell(header: true, text: "Status check")
-          row.cell(header: true, text: "Sanction check")
-          row.cell(header: true, text: "Status")
-          row.cell(header: true, text: "New regulations")
-          row.cell(header: true, text: "Email address")
-          row.cell(header: true, text: "Actions", numeric: true)
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(header: true, text: "Bucket")
+          row.with_cell(header: true, text: "Country")
+          row.with_cell(header: true, text: "Status check")
+          row.with_cell(header: true, text: "Sanction check")
+          row.with_cell(header: true, text: "Status")
+          row.with_cell(header: true, text: "New regulations")
+          row.with_cell(header: true, text: "Email address")
+          row.with_cell(header: true, text: "Actions", numeric: true)
         end
       end
 
-      table.body do |body|
+      table.with_body do |body|
         @teacher_personas.each_with_index do |persona, index|
-          body.row do |row|
-            row.cell do
+          body.with_row do |row|
+            row.with_cell do
               bucket = region_bucket_for_persona(persona)
               govuk_tag(text: bucket) if bucket
             end
-            row.cell { CountryName.from_country(persona[:teacher].application_form.country) }
+            row.with_cell { CountryName.from_country(persona[:teacher].application_form.country) }
 
-            row.cell { persona_check_tag(persona[:status_check]) }
-            row.cell { persona_check_tag(persona[:sanction_check]) }
-            row.cell do
+            row.with_cell { persona_check_tag(persona[:status_check]) }
+            row.with_cell { persona_check_tag(persona[:sanction_check]) }
+            row.with_cell do
               render(StatusTag::Component.new(
                 key: "teacher-persona-#{index}",
                 status: persona[:status],
               ))
             end
-            row.cell { persona_yes_no_tag(persona[:created_under_new_regulations]) }
-            row.cell { persona[:teacher].email }
+            row.with_cell { persona_yes_no_tag(persona[:created_under_new_regulations]) }
+            row.with_cell { persona[:teacher].email }
 
-            row.cell(numeric: true) do
+            row.with_cell(numeric: true) do
               govuk_button_to "Sign&nbsp;in".html_safe, teacher_sign_in_persona_path(persona[:teacher])
             end
           end
@@ -141,27 +141,27 @@
     <p class="govuk-body">No reference requests.</p>
   <% else %>
     <%= govuk_table do |table|
-      table.head do |head|
-        head.row do |row|
-          row.cell(header: true, text: "Teacher email")
-          row.cell(header: true, text: "State")
-          row.cell(header: true, text: "Actions", numeric: true)
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(header: true, text: "Teacher email")
+          row.with_cell(header: true, text: "State")
+          row.with_cell(header: true, text: "Actions", numeric: true)
         end
       end
 
-      table.body do |body|
+      table.with_body do |body|
         @reference_requests.each do |reference_request|
-          body.row do |row|
-            row.cell(text: reference_request.application_form.teacher.email)
+          body.with_row do |row|
+            row.with_cell(text: reference_request.application_form.teacher.email)
 
-            row.cell(width: "one-third") do
+            row.with_cell(width: "one-third") do
               render(StatusTag::Component.new(
                 key: "reference-request-#{reference_request.id}",
                 status: reference_request.state,
               ))
             end
 
-            row.cell(numeric: true) do
+            row.with_cell(numeric: true) do
               govuk_button_link_to "Sign&nbsp;in".html_safe, teacher_interface_reference_request_path(slug: reference_request.slug)
             end
           end
