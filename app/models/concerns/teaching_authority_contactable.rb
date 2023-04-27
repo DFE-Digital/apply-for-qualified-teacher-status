@@ -1,5 +1,15 @@
+# frozen_string_literal: true
+
 module TeachingAuthorityContactable
   extend ActiveSupport::Concern
+
+  included do
+    validates :teaching_authority_name,
+              format: {
+                without: /\Athe.*\z/i,
+                message: "Teaching authority name shouldn't start with ‘the’.",
+              }
+  end
 
   def teaching_authority_emails_string
     teaching_authority_emails.join("\n")

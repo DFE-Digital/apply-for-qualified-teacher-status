@@ -28,15 +28,24 @@
 require "rails_helper"
 
 RSpec.describe Country, type: :model do
-  subject(:country) { build(:country) }
+  subject(:country) { build(:country, teaching_authority_name:) }
+
+  let(:teaching_authority_name) { "" }
 
   describe "validations" do
+    it { is_expected.to be_valid }
+
     it { is_expected.to validate_inclusion_of(:code).in_array(%w[GB-SCT FR]) }
     it { is_expected.to_not validate_inclusion_of(:code).in_array(%w[ABC]) }
     it do
       is_expected.to validate_url_of(
         :teaching_authority_online_checker_url,
       ).with_message("Enter a valid teaching authority online checker URL")
+    end
+
+    context "with a teaching authority name that starts with the" do
+      let(:teaching_authority_name) { "the authority" }
+      it { is_expected.to_not be_valid }
     end
   end
 
