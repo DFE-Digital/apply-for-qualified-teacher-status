@@ -38,7 +38,9 @@ module TeacherInterface
         end
       end
 
-      fetch_and_update_malware_scan_results
+      if FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
+        fetch_and_update_malware_scan_results
+      end
 
       document.update!(completed: skippable? || !document.uploads.empty?)
     end
