@@ -4,7 +4,7 @@
            changeable: false %>
 
 <%= govuk_accordion do |accordion| %>
-  <% accordion.section(heading_text: "Qualification information shown to applicant") do %>
+  <% accordion.with_section(heading_text: "Qualification information shown to applicant") do %>
     <%= render "shared/eligible_region_content_components/proof_of_qualifications", region: %>
   <% end %>
 

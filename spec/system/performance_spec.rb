@@ -1,16 +1,21 @@
 require "rails_helper"
 
 RSpec.describe "Performance", type: :system do
-  before { travel_to Date.new(2022, 6, 30) }
+  before do
+    travel_to Date.new(2022, 6, 30)
+
+    given_the_service_is_open
+    given_there_are_a_few_eligibility_checks
+  end
 
   after { travel_back }
 
-  it "using the performance dashboard" do
-    given_the_service_is_open
-    given_there_are_a_few_eligibility_checks
+  it "usage stats" do
     when_i_visit_the(:performance_page)
     then_i_see_the_live_stats
+  end
 
+  it "usage stats since launch" do
     when_i_visit_the(:performance_page, since_launch: true)
     then_i_see_the_live_stats_since_launch
   end

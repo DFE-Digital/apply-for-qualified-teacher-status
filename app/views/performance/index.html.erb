@@ -1,4 +1,4 @@
-<% content_for :page_title, 'Performance dashboard' %>
+<% content_for :page_title, "Performance dashboard" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <%= govuk_table(rows: @live_service_data, classes: 'app-performance-table') %>
+  <%= govuk_table(rows: @live_service_data, classes: "app-performance-table") %>
 </div>
 
 <div class="app-!-border-top-1 govuk-!-padding-top-2">
@@ -41,7 +41,7 @@
     How quickly did users check their eligibility <%= @since_text %>
   </p>
 
-  <%= govuk_table(rows: @time_to_complete_data, classes: 'app-performance-table') %>
+  <%= govuk_table(rows: @time_to_complete_data, classes: "app-performance-table") %>
 </div>
 
 <div class="app-!-border-top-1 govuk-!-padding-top-2">
@@ -57,7 +57,7 @@
     </div>
   </div>
 
-  <%= govuk_table(rows: @usage_by_country_data, classes: 'app-performance-table') %>
+  <%= govuk_table(rows: @usage_by_country_data, classes: "app-performance-table") %>
 </div>
 
 <div class="govuk-grid-row">

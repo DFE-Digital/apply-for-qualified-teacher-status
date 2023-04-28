@@ -12,20 +12,20 @@
 
   <div class="govuk-summary-card__content">
     <%= govuk_summary_list do |summary_list|
-      summary_list.row do |row|
-        row.key { "Minimum age" }
-        row.value { @assessment.age_range_min.to_s }
-        row.action(
+      summary_list.with_row do |row|
+        row.with_key { "Minimum age" }
+        row.with_value { @assessment.age_range_min.to_s }
+        row.with_action(
           text: "Change",
           href: age_range_subjects_edit_assessor_interface_application_form_assessment_assessment_recommendation_award_path(@application_form, @assessment),
           visually_hidden_text: "minimum age"
         )
       end
 
-      summary_list.row do |row|
-        row.key { "Maximum age" }
-        row.value { @assessment.age_range_max.to_s }
-        row.action(
+      summary_list.with_row do |row|
+        row.with_key { "Maximum age" }
+        row.with_value { @assessment.age_range_max.to_s }
+        row.with_action(
           text: "Change",
           href: age_range_subjects_edit_assessor_interface_application_form_assessment_assessment_recommendation_award_path(@application_form, @assessment),
           visually_hidden_text: "maximum age"
@@ -33,10 +33,10 @@
       end
 
       @assessment.subjects.each do |subject|
-        summary_list.row do |row|
-          row.key { "Subject" }
-          row.value { t("subjects.#{subject}") }
-          row.action(
+        summary_list.with_row do |row|
+          row.with_key { "Subject" }
+          row.with_value { t("subjects.#{subject}") }
+          row.with_action(
             text: "Change",
             href: age_range_subjects_edit_assessor_interface_application_form_assessment_assessment_recommendation_award_path(@application_form, @assessment),
             visually_hidden_text: "subject"

@@ -7,43 +7,43 @@
   <% case current_namespace %>
   <% when "assessor" %>
     <% if current_staff %>
-      <% header.navigation_item(
+      <% header.with_navigation_item(
          text: "Search",
          href: main_app.assessor_interface_application_forms_path,
          active: current_page?(main_app.assessor_interface_application_forms_path)
        ) %>
-      <% header.navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
-      <% header.navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
+      <% header.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
+      <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
   <% when "support" %>
     <% if current_staff %>
-      <% header.navigation_item(
+      <% header.with_navigation_item(
          text: "Features",
          href: main_app.support_interface_feature_flags_path,
          active: current_page?(main_app.support_interface_feature_flags_path)
        ) %>
-      <% header.navigation_item(
+      <% header.with_navigation_item(
          text: "Countries",
          href: main_app.support_interface_countries_path,
          active: request.path.start_with?("/support/countries") || request.path.start_with?("/support/regions")
        ) %>
-      <% header.navigation_item(
+      <% header.with_navigation_item(
          text: "English language test providers",
          href: main_app.support_interface_english_language_providers_path,
          active: request.path.start_with?("/support/english_language_providers")
       ) %>
-      <% header.navigation_item(
+      <% header.with_navigation_item(
          text: "Staff",
          href: main_app.support_interface_staff_index_path,
          active: request.path.start_with?("/support/staff")
        ) %>
-      <% header.navigation_item(text: "Sidekiq", href: main_app.support_interface_sidekiq_web_path) %>
-      <% header.navigation_item(text: "Assessor case management", href: main_app.assessor_interface_root_path) %>
-      <% header.navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
+      <% header.with_navigation_item(text: "Sidekiq", href: main_app.support_interface_sidekiq_web_path) %>
+      <% header.with_navigation_item(text: "Assessor case management", href: main_app.assessor_interface_root_path) %>
+      <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
   <% when "teacher" %>
     <% if current_teacher %>
-      <% header.navigation_item(text: "Sign out", href: main_app.destroy_teacher_session_path) %>
+      <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_teacher_session_path) %>
     <% end %>
   <% end %>
 <% end %>

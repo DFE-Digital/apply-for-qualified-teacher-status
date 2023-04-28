@@ -73,9 +73,9 @@ class PerformanceStats
           )
         [
           day.strftime("%d %B"),
-          all_checks,
-          answered_all_questions_checks,
-          eligible_checks,
+          { text: all_checks, numeric: true },
+          { text: answered_all_questions_checks, numeric: true },
+          { text: eligible_checks, numeric: true },
           number_to_percentage(conversion * 100, precision: 1),
         ]
       end
@@ -114,7 +114,10 @@ class PerformanceStats
         percentiles = percentiles_by_day[day] || [0, 0, 0]
         [day.strftime("%d %B")] +
           percentiles.map do |value|
-            ActiveSupport::Duration.build(value.to_i).inspect
+            {
+              text: ActiveSupport::Duration.build(value.to_i).inspect,
+              numeric: true,
+            }
           end
       end
   end
@@ -149,9 +152,15 @@ class PerformanceStats
         [
           country_name,
           region_name,
-          count,
-          eligibility_checks_by_region_answered_all_questions[key] || 0,
-          eligibility_checks_by_region_eligible[key] || 0,
+          { text: count, numeric: true },
+          {
+            text: eligibility_checks_by_region_answered_all_questions[key] || 0,
+            numeric: true,
+          },
+          {
+            text: eligibility_checks_by_region_eligible[key] || 0,
+            numeric: true,
+          },
         ]
       end
 
