@@ -18,7 +18,7 @@ aks:
 	$(eval PLATFORM=aks)
 	$(eval REGION=UK South)
 	$(eval STORAGE_ACCOUNT_SUFFIX=sa)
-	$(eval KEY_VAULT_SECRET_NAME=APPLICATION-SECRETS)
+	$(eval KEY_VAULT_SECRET_NAME=APPLICATION)
 
 .PHONY: dev
 dev: paas
