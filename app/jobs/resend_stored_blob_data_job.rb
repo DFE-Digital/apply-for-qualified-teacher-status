@@ -3,6 +3,8 @@
 class ResendStoredBlobDataJob < ApplicationJob
   # Resending the blob data will trigger a malware scan.
   def perform(batch_size: 1000)
+    return unless FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
+
     Upload
       .where(malware_scan_result: "pending")
       .limit(batch_size)
