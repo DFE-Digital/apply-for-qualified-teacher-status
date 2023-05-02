@@ -46,5 +46,5 @@ send_reference_request_reminders:
   args: ["ReferenceRequest"]
 
 resend_upload_data:
-  cron: "*/30 * * * *"
+  cron: "50 * * * *"
   class: ResendStoredBlobDataJob
