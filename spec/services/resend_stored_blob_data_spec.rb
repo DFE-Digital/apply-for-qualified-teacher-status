@@ -62,5 +62,17 @@ RSpec.describe ResendStoredBlobData do
         expect(upload.reload.malware_scan_result).to eq("error")
       end
     end
+
+    context "when the upload attachment key is nil" do
+      let(:attachment) { instance_double(ActiveStorage::Blob, key: nil) }
+      before { allow(upload).to receive(:attachment).and_return(attachment) }
+
+      it "returns without update" do
+        expect { resend_stored_blob_data }.not_to change(
+          upload.reload,
+          :malware_scan_result,
+        )
+      end
+    end
   end
 end
