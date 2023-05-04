@@ -7,6 +7,7 @@ module TeacherInterface
     include HistoryTrackable
     include StreamedResponseAuthenticatable
     include RescueActiveStorageErrors
+    include UploadHelper
 
     skip_before_action :authenticate_teacher!
     before_action -> { authenticate_or_redirect(:teacher) }
@@ -17,7 +18,11 @@ module TeacherInterface
     before_action :load_upload, only: %i[delete destroy show]
 
     def show
-      send_blob_stream(@upload.attachment, disposition: :inline)
+      if downloadable?(@upload)
+        send_blob_stream(@upload.attachment, disposition: :inline)
+      else
+        render "shared/malware_scan"
+      end
     end
 
     def new

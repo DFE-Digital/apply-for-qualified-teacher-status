@@ -12,7 +12,7 @@ RSpec.describe AssessorInterface::UploadsController, type: :controller do
 
   describe "GET show" do
     let(:document) { create(:document, documentable: application_form) }
-    let(:upload) { create(:upload, document:) }
+    let(:upload) { create(:upload, :clean, document:) }
 
     subject(:perform) do
       get :show, params: { document_id: document.id, id: upload.id }
@@ -62,6 +62,18 @@ RSpec.describe AssessorInterface::UploadsController, type: :controller do
       it "redirects to the signin page" do
         perform
         expect(response).to redirect_to(new_staff_session_path)
+      end
+    end
+
+    context "when the upload malware scan is not clean" do
+      render_views true
+      let(:upload) { create(:upload, :suspect, document:) }
+
+      before { FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result) }
+
+      it "responds with information about the malware scan" do
+        perform
+        expect(response.body).to include("There’s a problem with your file")
       end
     end
   end
