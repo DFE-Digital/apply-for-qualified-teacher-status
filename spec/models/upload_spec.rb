@@ -43,6 +43,11 @@ RSpec.describe Upload, type: :model do
     subject(:name) { upload.name }
 
     it { is_expected.to eq("upload.pdf") }
+
+    context "when a malware scan is suspect" do
+      before { upload.malware_scan_result = "suspect" }
+      it { is_expected.to eq("File upload error") }
+    end
   end
 
   describe "#url" do
