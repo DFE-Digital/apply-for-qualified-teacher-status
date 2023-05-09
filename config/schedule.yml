@@ -44,7 +44,3 @@ send_reference_request_reminders:
   cron: "40 3 * * *"
   class: SendReminderEmailsJob
   args: ["ReferenceRequest"]
-
-resend_upload_data:
-  cron: "50 * * * *"
-  class: ResendStoredBlobDataJob
