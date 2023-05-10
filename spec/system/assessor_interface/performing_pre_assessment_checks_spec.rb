@@ -19,6 +19,7 @@ RSpec.describe "Assessor performing pre-assessment checks", type: :system do
     and_i_see_a_completed_preliminary_check_task
     and_a_note_has_been_created
     and_an_email_has_been_sent_to_the_teacher
+    and_the_assessor_is_unassigned
   end
 
   private
@@ -79,6 +80,10 @@ RSpec.describe "Assessor performing pre-assessment checks", type: :system do
     )
   end
 
+  def and_the_assessor_is_unassigned
+    expect(application_form.reload.assessor).to be_nil
+  end
+
   def application_form
     @application_form ||=
       begin
@@ -86,6 +91,7 @@ RSpec.describe "Assessor performing pre-assessment checks", type: :system do
           create(
             :application_form,
             :preliminary_check,
+            assessor: Staff.last,
             teaching_authority_provides_written_statement: true,
           )
         create(
