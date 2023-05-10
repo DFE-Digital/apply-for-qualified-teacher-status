@@ -20,6 +20,7 @@ module AssessorInterface
         if @form.preliminary_check_complete
           notify_teacher
           create_note
+          unassign_assessor!
         end
 
         redirect_to assessor_interface_application_form_path(application_form)
@@ -58,6 +59,14 @@ module AssessorInterface
 
     def update_application_form_status
       ApplicationFormStatusUpdater.call(application_form:, user: current_staff)
+    end
+
+    def unassign_assessor!
+      AssignApplicationFormAssessor.call(
+        application_form:,
+        user: current_staff,
+        assessor: nil,
+      )
     end
   end
 end
