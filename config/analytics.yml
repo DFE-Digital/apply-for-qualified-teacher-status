@@ -337,19 +337,20 @@
     - award_decline_permission
     - support_console_permission
   :teachers:
-    - id
-    - uuid
-    - email
+    - canonical_email
     - created_at
-    - updated_at
-    - sign_in_count
     - current_sign_in_at
-    - last_sign_in_at
     - current_sign_in_ip
+    - email
+    - id
+    - last_sign_in_at
     - last_sign_in_ip
-    - trn
-    - otp_guesses
     - otp_created_at
+    - otp_guesses
+    - sign_in_count
+    - trn
+    - updated_at
+    - uuid
   :timeline_events:
     - id
     - event_type
@@ -383,21 +384,22 @@
     - updated_at
     - malware_scan_result
   :work_histories:
-    - id
     - application_form_id
-    - school_name
+    - canonical_contact_email
     - city
-    - country_code
-    - job
-    - contact_name
     - contact_email
     - contact_job
+    - contact_name
+    - country_code
+    - created_at
+    - end_date
     - end_date_is_estimate
+    - end_date_is_estimate
+    - hours_per_week
+    - id
+    - job
+    - school_name
     - start_date
     - start_date_is_estimate
     - still_employed
-    - end_date
-    - end_date_is_estimate
-    - hours_per_week
-    - created_at
     - updated_at

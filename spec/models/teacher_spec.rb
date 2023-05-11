@@ -3,6 +3,7 @@
 # Table name: teachers
 #
 #  id                 :bigint           not null, primary key
+#  canonical_email    :text             default(""), not null
 #  current_sign_in_at :datetime
 #  current_sign_in_ip :string
 #  email              :string           default(""), not null
