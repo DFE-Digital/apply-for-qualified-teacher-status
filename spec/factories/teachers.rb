@@ -27,5 +27,6 @@ FactoryBot.define do
   factory :teacher do
     sequence(:email) { |n| "teacher#{n}@example.org" }
     uuid { SecureRandom.uuid }
+    canonical_email { EmailAddress.canonical(email) }
   end
 end

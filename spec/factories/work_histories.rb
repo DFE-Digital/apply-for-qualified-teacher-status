@@ -33,6 +33,8 @@ FactoryBot.define do
   factory :work_history do
     association :application_form
 
+    canonical_contact_email { EmailAddress.canonical(contact_email) }
+
     trait :completed do
       school_name { "School" }
       city { "City" }
