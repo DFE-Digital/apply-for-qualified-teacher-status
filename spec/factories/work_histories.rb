@@ -45,7 +45,7 @@ FactoryBot.define do
       still_employed { true }
       contact_name { Faker::Name.name }
       contact_job { "Job" }
-      contact_email { "school@example.com" }
+      sequence(:contact_email) { |n| "school#{n}@example.org" }
     end
   end
 end
