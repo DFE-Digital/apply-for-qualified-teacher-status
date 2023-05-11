@@ -40,7 +40,8 @@
       },
       contact_email: {
         title: "Contact email address",
-        href: [:edit, :teacher_interface, :application_form, work_history]
+        href: [:edit, :teacher_interface, :application_form, work_history],
+        highlight: highlighted_contact_emails.include?(work_history)
       },
       start_date: {
         title: "Role start date",

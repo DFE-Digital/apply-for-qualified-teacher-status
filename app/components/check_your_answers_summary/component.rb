@@ -82,25 +82,32 @@ module CheckYourAnswersSummary
     end
 
     def format_value(value, field)
-      case value
-      when nil
-        ""
-      when Date
-        format_date(value, field)
-      when Upload
-        helpers.upload_link_to(value)
-      when Document
-        format_document(value, field)
-      when Array
-        format_array(value, field)
-      when EnglishLanguageProvider
-        value.name
-      when true
-        "Yes"
-      when false
-        "No"
+      html =
+        case value
+        when nil
+          ""
+        when Date
+          format_date(value, field)
+        when Upload
+          helpers.upload_link_to(value)
+        when Document
+          format_document(value, field)
+        when Array
+          format_array(value, field)
+        when EnglishLanguageProvider
+          value.name
+        when true
+          "Yes"
+        when false
+          "No"
+        else
+          value.to_s
+        end
+
+      if field[:highlight]
+        "<em class=\"app-highlight\">#{html}</em>".html_safe
       else
-        value.to_s
+        html
       end
     end
 
