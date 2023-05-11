@@ -39,6 +39,14 @@ FactoryBot.define do
       end
     end
 
+    trait :clean do
+      malware_scan_result { "clean" }
+    end
+
+    trait :suspect do
+      malware_scan_result { "suspect" }
+    end
+
     after(:create) do |upload, _evaluator|
       upload.document.update!(completed: true)
     end

@@ -31,13 +31,15 @@ FactoryBot.define do
 
     trait :with_upload do
       completed
-      after(:create) { |document, _evaluator| create(:upload, document:) }
+      after(:create) do |document, _evaluator|
+        create(:upload, :clean, document:)
+      end
     end
 
     trait :with_translation do
       completed
       after(:create) do |document, _evaluator|
-        create(:upload, :translation, document:)
+        create(:upload, :translation, :clean, document:)
       end
     end
 

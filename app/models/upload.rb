@@ -36,6 +36,8 @@ class Upload < ApplicationRecord
   end
 
   def name
+    return "File upload error" if scan_result_suspect?
+
     attachment.filename.to_s
   end
 
