@@ -275,6 +275,9 @@ RSpec.describe "Teacher English language", type: :system do
       english_language_provider.name,
     )
     expect(teacher_english_language_provider_reference_page).to have_content(
+      english_language_provider.b2_level_requirement_prefix,
+    )
+    expect(teacher_english_language_provider_reference_page).to have_content(
       english_language_provider.b2_level_requirement,
     )
     expect(teacher_english_language_provider_reference_page).to have_content(

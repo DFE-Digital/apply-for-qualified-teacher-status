@@ -133,7 +133,9 @@ en:
           over_20_months: More than 20 months
       english_language_provider:
         name: Name
-        b2_level_requirement: B2 level requirement
+        b2_level_requirement: B2 level requirement score
+        b2_level_requirement_prefix: B2 level requirement prefix
+        url: Website
         reference_name: Reference name
         reference_hint: Reference hint
         accepted_tests: Accepted tests (we can accept)

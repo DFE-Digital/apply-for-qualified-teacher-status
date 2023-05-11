@@ -1,7 +1,7 @@
 <%= govuk_details(summary_text: "Information about this approved provider") do %>
   <% if provider %>
     <p class="govuk-body">
-      For <%= provider.name %>, B2 level requires <%= provider.b2_level_requirement %> in all 4 disciplines (reading, writing, listening and speaking).
+      For <%= provider.name %>, B2 level requires <%= provider.b2_level_requirement_prefix %> <%= provider.b2_level_requirement %> in all 4 disciplines (reading, writing, listening and speaking).
     </p>
 
     <% if provider.check_url.present? %>
