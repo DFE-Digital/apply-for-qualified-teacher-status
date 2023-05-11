@@ -32,6 +32,8 @@ class Teacher < ApplicationRecord
 
   has_many :application_forms
 
+  before_create { self.canonical_email = EmailAddress.canonical(email) }
+
   def application_form
     @application_form ||= application_forms.order(created_at: :desc).first
   end

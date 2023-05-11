@@ -35,6 +35,17 @@ RSpec.describe TeacherInterface::WorkHistoryContactForm, type: :model do
       expect(work_history.contact_name).to eq("First Last")
       expect(work_history.contact_job).to eq("Job")
       expect(work_history.contact_email).to eq("school@example.com")
+      expect(work_history.canonical_contact_email).to eq("school@example.com")
+    end
+
+    context "with a complex email address" do
+      let(:contact_email) { "first.last+123@gmail.com" }
+
+      it "canonicalises the email address" do
+        expect(work_history.canonical_contact_email).to eq(
+          "firstlast@gmail.com",
+        )
+      end
     end
   end
 end

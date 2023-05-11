@@ -41,6 +41,14 @@ RSpec.describe Teacher, type: :model do
     it { is_expected.to have_many(:application_forms) }
   end
 
+  describe "#canonical_email" do
+    let(:teacher) { create(:teacher, email: "first.last+123@gmail.com") }
+
+    subject(:canonical_email) { teacher.canonical_email }
+
+    it { is_expected.to eq("firstlast@gmail.com") }
+  end
+
   describe "#application_form" do
     subject(:application_form) { teacher.application_form }
 

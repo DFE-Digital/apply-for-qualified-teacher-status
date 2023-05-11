@@ -14,7 +14,12 @@ module TeacherInterface
     validates :contact_email, presence: true, valid_for_notify: true
 
     def update_model
-      work_history.update!(contact_name:, contact_job:, contact_email:)
+      work_history.update!(
+        contact_name:,
+        contact_job:,
+        contact_email:,
+        canonical_contact_email: EmailAddress.canonical(contact_email),
+      )
     end
 
     delegate :application_form, to: :work_history
