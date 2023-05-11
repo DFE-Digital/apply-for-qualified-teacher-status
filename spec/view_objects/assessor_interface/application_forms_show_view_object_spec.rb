@@ -477,4 +477,134 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
     end
   end
+
+  describe "#email_used_as_reference_in_this_application_form?" do
+    subject(:email_used_as_reference_in_this_application_form?) do
+      view_object.email_used_as_reference_in_this_application_form?
+    end
+
+    let(:application_form) do
+      create(
+        :application_form,
+        :submitted,
+        teacher: create(:teacher, email: "same@gmail.com"),
+      )
+    end
+
+    let(:params) { { id: application_form.id } }
+
+    context "the email address is used as a reference" do
+      before do
+        create(
+          :work_history,
+          application_form:,
+          contact_email: "same@gmail.com",
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "the email address isn't used as a reference" do
+      before do
+        create(
+          :work_history,
+          application_form:,
+          contact_email: "different@gmail.com",
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#other_application_forms_where_email_used_as_reference" do
+    subject(:other_application_forms_where_email_used_as_reference) do
+      view_object.other_application_forms_where_email_used_as_reference
+    end
+
+    let(:application_form) do
+      create(
+        :application_form,
+        :submitted,
+        teacher: create(:teacher, email: "same@gmail.com"),
+      )
+    end
+
+    let(:params) { { id: application_form.id } }
+
+    context "the email address is used as a reference" do
+      before do
+        create(
+          :work_history,
+          application_form: create(:application_form, :submitted),
+          contact_email: "same@gmail.com",
+        )
+      end
+
+      it { is_expected.to_not be_empty }
+    end
+
+    context "the email address isn't used as a reference" do
+      before do
+        create(
+          :work_history,
+          application_form: create(:application_form, :submitted),
+          contact_email: "different@gmail.com",
+        )
+      end
+
+      it { is_expected.to be_empty }
+    end
+  end
+
+  describe "#highlight_email?" do
+    subject(:highlight_email?) { view_object.highlight_email? }
+
+    let(:application_form) do
+      create(
+        :application_form,
+        :submitted,
+        teacher: create(:teacher, email: "same@gmail.com"),
+      )
+    end
+
+    let(:params) { { id: application_form.id } }
+
+    context "the email address is used as a reference in the same application" do
+      before do
+        create(
+          :work_history,
+          application_form:,
+          contact_email: "same@gmail.com",
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "the email address is used as a reference in an other application" do
+      before do
+        create(
+          :work_history,
+          application_form: create(:application_form, :submitted),
+          contact_email: "same@gmail.com",
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "the email address isn't used as a reference" do
+      before do
+        create(
+          :work_history,
+          application_form:,
+          contact_email: "different@gmail.com",
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+  end
 end

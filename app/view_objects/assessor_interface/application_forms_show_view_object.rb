@@ -233,14 +233,37 @@ class AssessorInterface::ApplicationFormsShowViewObject
     application_form.status.humanize
   end
 
+  def email_used_as_reference_in_this_application_form?
+    @email_used_as_reference_in_this_application_form ||=
+      work_histories.exists?(canonical_contact_email: canonical_email)
+  end
+
+  def other_application_forms_where_email_used_as_reference
+    @other_application_forms_where_email_used_as_reference ||=
+      WorkHistory
+        .includes(:application_form)
+        .where(canonical_contact_email: canonical_email)
+        .where.not(application_form:)
+        .where.not(application_form: { status: "draft" })
+        .map(&:application_form)
+  end
+
+  def highlight_email?
+    email_used_as_reference_in_this_application_form? ||
+      other_application_forms_where_email_used_as_reference.present?
+  end
+
   private
 
   attr_reader :params
 
   delegate :assessment,
+           :teacher,
            :teaching_authority_provides_written_statement,
+           :work_histories,
            to: :application_form
   delegate :professional_standing_request, to: :assessment
+  delegate :canonical_email, to: :teacher
 
   def preassessment_professional_standing_request_completed?
     if teaching_authority_provides_written_statement
