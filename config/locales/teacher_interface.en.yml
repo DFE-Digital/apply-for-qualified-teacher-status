@@ -11,6 +11,9 @@ en:
         declined:
           further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
           professional_standing_request_expired: Your application has been declined as we did not receive your %{certificate_name} from %{teaching_authority_name} within the 90-day period.
+        draft:
+          check: Check your application
+          save: Save and sign out
     english_language:
       check:
         heading: Check your answers
