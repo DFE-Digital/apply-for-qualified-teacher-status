@@ -37,8 +37,7 @@
       },
       contact_name: !application_form.reduced_evidence_accepted ? {
         title: "Reference contact’s full name",
-        href: [:contact, :teacher_interface, :application_form, work_history],
-        highlight: highlighted_contact_emails.include?(work_history)
+        href: [:contact, :teacher_interface, :application_form, work_history]
       } : nil,
       contact_job: !application_form.reduced_evidence_accepted ? {
         title: "Reference contact’s job title",
@@ -46,7 +45,8 @@
       } : nil,
       contact_email: !application_form.reduced_evidence_accepted ? {
         title: "Reference contact’s email address",
-        href: [:contact, :teacher_interface, :application_form, work_history]
+        href: [:contact, :teacher_interface, :application_form, work_history],
+        highlight: highlighted_contact_emails.include?(work_history)
       } : nil,
     },
     changeable:,
