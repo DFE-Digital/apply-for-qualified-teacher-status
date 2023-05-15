@@ -87,7 +87,7 @@ module AssessorInterface
 
           application_form.work_histories.index_with do |work_history|
             application_forms.select do |application_form|
-              application_form.teacher.canonical_email =
+              application_form.teacher.canonical_email ==
                 work_history.canonical_contact_email
             end
           end
@@ -109,7 +109,7 @@ module AssessorInterface
           application_form.work_histories.index_with do |work_history|
             found_work_histories =
               work_histories.select do |found_work_history|
-                found_work_history.canonical_contact_email =
+                found_work_history.canonical_contact_email ==
                   work_history.canonical_contact_email
               end
 
