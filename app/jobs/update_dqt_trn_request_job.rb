@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UpdateDQTTRNRequestJob < ApplicationJob
-  sidekiq_options retry: 10
+  sidekiq_options retry: 14
 
   def perform(dqt_trn_request)
     return if dqt_trn_request.complete?
