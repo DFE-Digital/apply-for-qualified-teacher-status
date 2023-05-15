@@ -3,6 +3,7 @@
 # Table name: teachers
 #
 #  id                 :bigint           not null, primary key
+#  canonical_email    :text             default(""), not null
 #  current_sign_in_at :datetime
 #  current_sign_in_ip :string
 #  email              :string           default(""), not null
@@ -26,5 +27,6 @@ FactoryBot.define do
   factory :teacher do
     sequence(:email) { |n| "teacher#{n}@example.org" }
     uuid { SecureRandom.uuid }
+    canonical_email { EmailAddress.canonical(email) }
   end
 end

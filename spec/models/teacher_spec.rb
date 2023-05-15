@@ -3,6 +3,7 @@
 # Table name: teachers
 #
 #  id                 :bigint           not null, primary key
+#  canonical_email    :text             default(""), not null
 #  current_sign_in_at :datetime
 #  current_sign_in_ip :string
 #  email              :string           default(""), not null
@@ -38,6 +39,14 @@ RSpec.describe Teacher, type: :model do
 
   describe "associations" do
     it { is_expected.to have_many(:application_forms) }
+  end
+
+  describe "#canonical_email" do
+    let(:teacher) { create(:teacher, email: "first.last+123@gmail.com") }
+
+    subject(:canonical_email) { teacher.canonical_email }
+
+    it { is_expected.to eq("firstlast@gmail.com") }
   end
 
   describe "#application_form" do

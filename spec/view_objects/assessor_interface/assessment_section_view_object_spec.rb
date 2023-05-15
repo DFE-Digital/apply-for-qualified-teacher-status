@@ -13,7 +13,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
 
   let(:params) do
     {
-      key: "personal_information",
+      key: assessment_section.key,
       assessment_id: assessment.id,
       application_form_id: application_form.id,
     }
@@ -290,6 +290,122 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       expect(view_object.teacher_name_and_date_of_birth).to eq(
         "Janet Jane Jones (1 January 1980)",
       )
+    end
+  end
+
+  describe "#work_history_application_forms_contact_email_used_as_teacher" do
+    subject(:work_history_application_forms_contact_email_used_as_teacher) do
+      view_object.work_history_application_forms_contact_email_used_as_teacher
+    end
+
+    let(:assessment_section) do
+      create(:assessment_section, :work_history, assessment:)
+    end
+
+    let!(:work_history) do
+      create(:work_history, application_form:, contact_email: "same@gmail.com")
+    end
+
+    context "without an application form with the same email" do
+      before do
+        create(
+          :application_form,
+          teacher: create(:teacher, email: "different@gmail.com"),
+        )
+      end
+
+      it { is_expected.to eq({ work_history => [] }) }
+    end
+
+    context "with an application form with the same email" do
+      let!(:other_application_form) do
+        create(
+          :application_form,
+          :submitted,
+          teacher: create(:teacher, email: "same@gmail.com"),
+        )
+      end
+
+      it { is_expected.to eq({ work_history => [other_application_form] }) }
+    end
+  end
+
+  describe "#work_history_application_forms_contact_email_used_as_reference" do
+    subject(:work_history_application_forms_contact_email_used_as_reference) do
+      view_object.work_history_application_forms_contact_email_used_as_reference
+    end
+
+    let(:assessment_section) do
+      create(:assessment_section, :work_history, assessment:)
+    end
+
+    let!(:work_history) do
+      create(:work_history, application_form:, contact_email: "same@gmail.com")
+    end
+    let!(:other_application_form) { create(:application_form, :submitted) }
+
+    context "without an application form with the same email" do
+      before do
+        create(
+          :work_history,
+          application_form: other_application_form,
+          contact_email: "different@gmail.com",
+        )
+      end
+
+      it { is_expected.to eq({ work_history => [] }) }
+    end
+
+    context "with an application form with the same email" do
+      before do
+        create(
+          :work_history,
+          application_form: other_application_form,
+          contact_email: "same@gmail.com",
+        )
+      end
+
+      it { is_expected.to eq({ work_history => [other_application_form] }) }
+    end
+  end
+
+  describe "#show_information_appears_in_other_applications?" do
+    subject(:show_work_history_information_appears_in_other_applications?) do
+      view_object.show_work_history_information_appears_in_other_applications?
+    end
+
+    let(:assessment_section) do
+      create(:assessment_section, :work_history, assessment:)
+    end
+
+    let!(:work_history) do
+      create(:work_history, application_form:, contact_email: "same@gmail.com")
+    end
+
+    it { is_expected.to be false }
+
+    context "with an application form with the same email" do
+      before do
+        create(
+          :application_form,
+          :submitted,
+          teacher: create(:teacher, email: "same@gmail.com"),
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "with an application form with the same email" do
+      before do
+        create(
+          :work_history,
+          application_form: create(:application_form, :submitted),
+          contact_email: "same@gmail.com",
+        )
+      end
+
+      it { is_expected.to be true }
     end
   end
 end

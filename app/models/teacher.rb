@@ -3,6 +3,7 @@
 # Table name: teachers
 #
 #  id                 :bigint           not null, primary key
+#  canonical_email    :text             default(""), not null
 #  current_sign_in_at :datetime
 #  current_sign_in_ip :string
 #  email              :string           default(""), not null
@@ -30,6 +31,8 @@ class Teacher < ApplicationRecord
   self.timeout_in = 1.hour
 
   has_many :application_forms
+
+  before_create { self.canonical_email = EmailAddress.canonical(email) }
 
   def application_form
     @application_form ||= application_forms.order(created_at: :desc).first

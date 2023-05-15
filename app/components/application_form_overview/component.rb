@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 module ApplicationFormOverview
   class Component < ViewComponent::Base
-    def initialize(application_form)
+    def initialize(application_form, highlight_email: false)
       super
       @application_form = application_form
+      @highlight_email = highlight_email
     end
 
     def title
@@ -14,6 +17,7 @@ module ApplicationFormOverview
         application_form,
         include_name: true,
         include_reference: true,
+        highlight_email:,
       ) +
         [
           {
@@ -35,7 +39,7 @@ module ApplicationFormOverview
 
     private
 
-    attr_reader :application_form
+    attr_reader :application_form, :highlight_email
 
     delegate :application_form_summary_rows, to: :helpers
   end

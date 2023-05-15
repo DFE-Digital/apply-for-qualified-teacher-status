@@ -48,19 +48,22 @@
     - last_sign_in_ip
     - name
   :teachers:
-    - email
-    - unconfirmed_email
+    - canonical_email
     - current_sign_in_ip
+    - email
     - last_sign_in_ip
+    - unconfirmed_email
   :timeline_events:
     - age_range_note
     - subjects_note
   :work_histories:
-    - school_name
+    - canonical_contact_email
     - city
+    - contact_email
     - country_code
-    - job
     - email
+    - end_date
+    - job
+    - school_name
     - start_date
     - still_employed
-    - end_date

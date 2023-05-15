@@ -486,10 +486,6 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckUploadedFiles.new
   end
 
-  def work_history_form_page
-    @work_history_form_page = PageObjects::TeacherInterface::WorkHistoryForm.new
-  end
-
   def written_statement_page
     @written_statement_page =
       PageObjects::TeacherInterface::WrittenStatement.new

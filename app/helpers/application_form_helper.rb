@@ -14,7 +14,8 @@ module ApplicationFormHelper
     application_form,
     include_name:,
     include_reference:,
-    include_reviewer: true
+    include_reviewer: true,
+    highlight_email: false
   )
     [
       (
@@ -31,7 +32,13 @@ module ApplicationFormHelper
       ],
       [
         I18n.t("application_form.summary.email"),
-        application_form.teacher.email,
+        (
+          if highlight_email
+            "<em class=\"app-highlight\">#{ERB::Util.html_escape(application_form.teacher.email)}</em>".html_safe
+          else
+            application_form.teacher.email
+          end
+        ),
       ],
       (
         if application_form.region.name.present?
