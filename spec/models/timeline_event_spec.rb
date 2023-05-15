@@ -84,6 +84,7 @@ RSpec.describe TimelineEvent do
         requestable_received: "requestable_received",
         requestable_expired: "requestable_expired",
         requestable_assessed: "requestable_assessed",
+        quick_decline: "quick_decline",
       ).backed_by_column_of_type(:string)
     end
 
@@ -334,6 +335,12 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+    end
+
+    context "with a quick decline event type" do
+      before { timeline_event.event_type = :quick_decline }
+
+      it { is_expected.to validate_presence_of(:application_form) }
     end
   end
 end

@@ -67,6 +67,7 @@ class TimelineEvent < ApplicationRecord
          requestable_received: "requestable_received",
          requestable_expired: "requestable_expired",
          requestable_assessed: "requestable_assessed",
+         quick_decline: "quick_decline",
        }
   validates :event_type, inclusion: { in: event_types.values }
 
@@ -122,6 +123,8 @@ class TimelineEvent < ApplicationRecord
             :subjects_note,
             absence: true,
             unless: :age_range_subjects_verified?
+
+  validates :application_form, presence: true, if: :quick_decline?
 
   belongs_to :requestable, polymorphic: true, optional: true
   validates :requestable_id, presence: true, if: :requestable_event_type?
