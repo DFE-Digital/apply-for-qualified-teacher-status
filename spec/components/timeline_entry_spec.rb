@@ -482,4 +482,55 @@ RSpec.describe TimelineEntry::Component, type: :component do
       expect(component.text).to include(creator.name)
     end
   end
+
+  context "quick decline" do
+    let(:assessment_sections) do
+      [
+        create(:assessment_section, :personal_information, :failed),
+        create(:assessment_section, :qualifications, :failed),
+      ]
+    end
+
+    let(:application_form) { create(:application_form, assessment:) }
+
+    let(:assessment) { create(:assessment, sections: assessment_sections) }
+
+    let(:timeline_event) do
+      create(:timeline_event, :quick_decline, application_form:)
+    end
+
+    let(:first_failure_reason) do
+      assessment_sections.first.selected_failure_reasons.first
+    end
+    let(:last_failure_reason) do
+      assessment_sections.last.selected_failure_reasons.first
+    end
+    let(:expected_first_failure_reason_text) do
+      I18n.t(
+        "assessor_interface.assessment_sections.show.failure_reasons.#{first_failure_reason.key}",
+      )
+    end
+
+    let(:expected_last_failure_reason_text) do
+      I18n.t(
+        "assessor_interface.assessment_sections.show.failure_reasons.#{last_failure_reason.key}",
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("Declined in preliminary check")
+
+      expect(component.text).to include("Personal Information")
+      expect(component.text).to include(expected_first_failure_reason_text)
+      expect(component.text).to include(first_failure_reason.assessor_feedback)
+
+      expect(component.text).to include("Qualifications")
+      expect(component.text).to include(expected_last_failure_reason_text)
+      expect(component.text).to include(last_failure_reason.assessor_feedback)
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
 end

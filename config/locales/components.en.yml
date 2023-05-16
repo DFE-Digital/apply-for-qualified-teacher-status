@@ -53,6 +53,7 @@ en:
           ProfessionalStandingRequest: Professional standing assessed
           QualificationRequest: Qualification assessed
           ReferenceRequest: Reference assessed
+        quick_decline: Declined in preliminary check
       description:
         assessor_assigned: "%{assignee_name} is assigned as the assessor."
         reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
@@ -79,3 +80,4 @@ en:
           ProfessionalStandingRequest: The professional standing request has been assessed.
           QualificationRequest: A qualification has been assessed.
           ReferenceRequest: A reference has been assessed.
+        quick_decline: Declined in preliminary check.
