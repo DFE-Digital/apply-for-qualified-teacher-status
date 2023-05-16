@@ -44,6 +44,24 @@
           </ul>
         <% end %>
       <% end %>
+    <% elsif timeline_event.quick_decline? %>
+      <% description_vars.each do |failed_section| %>
+        <h4><%= failed_section[:section_name] %></h4>
+        <% if (failure_reason = failed_section[:failure_reasons].first).present? %>
+          <%= govuk_inset_text do %>
+            <ul class="govuk-list--bullet">
+              <%= render "shared/assessor_failure_reason_list_item", failure_reason: %> 
+              <% if failed_section[:failure_reasons].size > 1 %>
+                <%= govuk_details(summary_text: "View additional reasons") do %>
+                  <% failed_section[:failure_reasons].drop(1).each do |failure_reason| %>                                
+                    <%= render "shared/assessor_failure_reason_list_item", failure_reason: %>
+                  <% end %>
+                <% end %>       
+              <% end %>
+            </ul>
+          <% end %>
+        <% end %>
+      <% end %>
     <% elsif timeline_event.requestable_assessed? && timeline_event.requestable.is_a?(FurtherInformationRequest) %>
       <p class="govuk-body">Further information request has been assessed.</p>
 
