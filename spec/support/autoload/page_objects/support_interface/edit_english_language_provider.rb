@@ -7,8 +7,11 @@ module PageObjects
 
       section :form, "form" do
         element :name_field, "#english-language-provider-name-field"
+        element :b2_level_requirement_prefix_field,
+                "#english-language-provider-b2-level-requirement-prefix-field"
         element :b2_level_requirement_field,
                 "#english-language-provider-b2-level-requirement-field"
+        element :url_field, "#english-language-provider-url-field"
         element :reference_name_field,
                 "#english-language-provider-reference-name-field"
         element :reference_hint_field,

@@ -295,45 +295,54 @@ end
 ENGLISH_LANGUAGE_PROVIDERS = [
   {
     name: "IELTS SELT Consortium",
-    b2_level_requirement: "a score of at least 5.5",
+    b2_level_requirement: "5.5",
+    b2_level_requirement_prefix: "a score of at least",
     reference_name: "Test Report Form Number",
     reference_hint: "Your Test Report Form Number is 15-18 digits long.",
     accepted_tests: "‘IELTS for UKVI’ or ‘IELTS Life Skills’",
+    url: "https://www.ielts.org/for-test-takers/book-a-test",
     check_url: "https://ielts.ucles.org.uk/ielts-trf/welcome.html",
   },
   {
     name: "LanguageCert",
-    b2_level_requirement: "a score of at least 33/50",
+    b2_level_requirement: "33/50",
+    b2_level_requirement_prefix: "a score of at least",
     reference_name: "Unique Reference Number",
     reference_hint:
       "Your Unique Reference Number contains numbers, letters and dashes " \
         "in this format: PPC/230619/04501/09980013402512496",
     accepted_tests: "‘LanguageCert International ESOL SELT’",
+    url: "https://selt.languagecert.org/",
     check_url: "https://www.languagecert.org/en/results",
   },
   {
     name: "Pearson",
-    b2_level_requirement: "a score of at least 59",
+    b2_level_requirement: "59",
+    b2_level_requirement_prefix: "a score of at least",
     reference_name: "Score Report Code",
     reference_hint:
       "Your Score Report Code is 10 characters long. It may contain both letters " \
         "and numbers, or just numbers.",
     accepted_tests: "‘PTE Academic UKVI’ or ‘PTE Home’",
+    url: "https://pearsonpte.com/",
     check_url: "https://srw.pteacademic.com/",
   },
   {
     name: "PSI Services (UK) Ltd",
-    b2_level_requirement: "a pass",
+    b2_level_requirement: "pass",
+    b2_level_requirement_prefix: "a",
     reference_name: "Unique Reference Number",
     reference_hint:
       "Your PSI Services (UK) Ltd Unique Reference Number contains numbers, " \
         "letters and dashes in this format: PSI/280920/YTLQVG2Z/W2N4UVNN",
     accepted_tests: "‘Skills for English UKVI’",
+    url: "https://skillsforenglish.com/",
     check_url: "https://results.bookmyskillsforenglish.com/",
   },
   {
     name: "Trinity College London",
-    b2_level_requirement: "a pass",
+    b2_level_requirement: "pass",
+    b2_level_requirement_prefix: "a",
     reference_name: "Certificate Number",
     reference_hint:
       "Your Trinity College London Certificate Number contains numbers, letters " \
@@ -341,6 +350,7 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     accepted_tests:
       "‘Secure English Language Tests for UKVI’ – Integrated Skills in English (ISE)" \
         " or Graded Examinations in Spoken English (GESE)",
+    url: "https://www.trinitycollege.com/qualifications/SELT/UKVI",
     check_url: "https://trinitycollege.com/TRV",
   },
 ].freeze

@@ -18,7 +18,7 @@
 <h3 class="govuk-heading-s">3. If you studied in a country that’s NOT exempt</h3>
 
 <p class="govuk-body">
-  If your teaching qualification or university degree was taught exclusively in the English language you can upload an official document, which is sometimes called a Medium of Instruction (MOI). 
+  If your teaching qualification or university degree was taught exclusively in the English language you can upload an official document, which is sometimes called a Medium of Instruction (MOI).
 </p>
 <p class="govuk-body">
   You can request this from the institution where you studied. It must be signed and stamped by them on official headed paper and it must state that the medium of instruction was English. It must also include your name, degree title and award date.
@@ -45,7 +45,7 @@
 <% if region.reduced_evidence_accepted %>
   <p class="govuk-body">Find an <a href="https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" class="govuk-link">approved provider</a> if you need to get an English language certificate.</p>
 <% else %>
-  <p class="govuk-body">Find an <a href="https://www.gov.uk/guidance/prove-your-english-language-abilities-with-a-secure-english-language-test-selt" class="govuk-link">approved provider</a> if you need to get an English language certificate.</p>
+  <p class="govuk-body">Find an <%= govuk_link_to "approved provider", english_language_guidance_path%> if you need to get an English language certificate.</p>
 <% end %>
 
 <%= govuk_details(summary_text: "What if you have more than one nationality?") do %>

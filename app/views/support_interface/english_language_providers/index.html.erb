@@ -8,6 +8,11 @@
 
     <%= govuk_summary_list(actions: false) do |summary_list|
       summary_list.with_row do |row|
+        row.with_key { t("helpers.label.english_language_provider.b2_level_requirement_prefix") }
+        row.with_value { english_language_provider.b2_level_requirement_prefix }
+      end
+
+      summary_list.with_row do |row|
         row.with_key { t("helpers.label.english_language_provider.b2_level_requirement") }
         row.with_value { english_language_provider.b2_level_requirement }
       end
@@ -15,6 +20,11 @@
       summary_list.with_row do |row|
         row.with_key { t("helpers.label.english_language_provider.reference_name") }
         row.with_value { english_language_provider.reference_name }
+      end
+
+      summary_list.with_row do |row|
+        row.with_key { t("helpers.label.english_language_provider.url") }
+        row.with_value { english_language_provider.url }
       end
 
       summary_list.with_row do |row|

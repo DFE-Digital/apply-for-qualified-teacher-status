@@ -6,7 +6,7 @@
 
   <span class="govuk-caption-l"><%= t("application_form.tasks.sections.english_language") %></span>
   <h1 class="govuk-heading-l"><%= t(".heading") %> – <%= @provider.name %></h1>
-  <p class="govuk-body">For <%= @provider.name %>, B2 level requires <%= @provider.b2_level_requirement %> in all 4 disciplines (reading, writing, listening and speaking).</p>
+  <p class="govuk-body">For <%= @provider.name %>, B2 level requires <%= @provider.b2_level_requirement_prefix %> <%= @provider.b2_level_requirement %> in all 4 disciplines (reading, writing, listening and speaking).</p>
 
   <%= f.govuk_text_field :reference,
                          label: { text: "Enter your #{@provider.reference_name}", size: "m" },

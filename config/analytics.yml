@@ -164,6 +164,8 @@
     - id
     - name
     - b2_level_requirement
+    - b2_level_requirement_prefix
+    - url
     - reference_name
     - reference_hint
     - accepted_tests

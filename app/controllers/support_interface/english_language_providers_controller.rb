@@ -29,6 +29,8 @@ class SupportInterface::EnglishLanguageProvidersController < SupportInterface::B
     params.require(:english_language_provider).permit(
       :name,
       :b2_level_requirement,
+      :b2_level_requirement_prefix,
+      :url,
       :reference_name,
       :reference_hint,
       :accepted_tests,

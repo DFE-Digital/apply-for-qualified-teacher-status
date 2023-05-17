@@ -405,6 +405,7 @@ Rails.application.routes.draw do
   get "accessibility", to: "static#accessibility"
   get "cookies", to: "static#cookies"
   get "privacy", to: "static#privacy"
+  get "english_language_guidance", to: "static#english_language_guidance"
 
   get "performance", to: "performance#index"
 
