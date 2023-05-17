@@ -53,6 +53,7 @@ class AssessmentFactory
           FailureReasons::EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED
         end
       ),
+      FailureReasons::UPLOADED_FILE_SUSPECT,
       FailureReasons::DUPLICATE_APPLICATION,
       FailureReasons::APPLICANT_ALREADY_QTS,
       FailureReasons::APPLICANT_ALREADY_DQT,
@@ -138,6 +139,7 @@ class AssessmentFactory
       FailureReasons::DEGREE_TRANSCRIPT_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE,
+      FailureReasons::UPLOADED_FILE_SUSPECT,
     ].compact
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
@@ -185,6 +187,7 @@ class AssessmentFactory
           [
             FailureReasons::EL_MOI_NOT_TAUGHT_IN_ENGLISH,
             FailureReasons::EL_MOI_INVALID_FORMAT,
+            FailureReasons::UPLOADED_FILE_SUSPECT,
           ]
         else
           [

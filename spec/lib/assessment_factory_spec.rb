@@ -57,6 +57,7 @@ RSpec.describe AssessmentFactory do
               identification_document_expired
               identification_document_illegible
               identification_document_mismatch
+              uploaded_file_suspect
               duplicate_application
               applicant_already_qts
               applicant_already_dqt
@@ -122,6 +123,7 @@ RSpec.describe AssessmentFactory do
                   degree_transcript_illegible
                   additional_degree_certificate_illegible
                   additional_degree_transcript_illegible
+                  uploaded_file_suspect
                 ],
               )
             end
@@ -170,6 +172,7 @@ RSpec.describe AssessmentFactory do
                   degree_transcript_illegible
                   additional_degree_certificate_illegible
                   additional_degree_transcript_illegible
+                  uploaded_file_suspect
                 ],
               )
             end
@@ -222,6 +225,7 @@ RSpec.describe AssessmentFactory do
                   degree_transcript_illegible
                   additional_degree_certificate_illegible
                   additional_degree_transcript_illegible
+                  uploaded_file_suspect
                 ],
               )
             end
@@ -274,6 +278,7 @@ RSpec.describe AssessmentFactory do
                   degree_transcript_illegible
                   additional_degree_certificate_illegible
                   additional_degree_transcript_illegible
+                  uploaded_file_suspect
                 ],
               )
             end
