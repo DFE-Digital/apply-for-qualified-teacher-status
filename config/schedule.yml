@@ -44,3 +44,7 @@ send_reference_request_reminders:
   cron: "40 3 * * *"
   class: SendReminderEmailsJob
   args: ["ReferenceRequest"]
+
+fetch_malware_scan_results:
+  cron: "*/30 * * * *"
+  class: FetchMalwareScanResultsJob
