@@ -24,7 +24,7 @@ end %>
 
   <%= f.govuk_radio_buttons_fieldset :add_another,
                                      legend: { text: "Do you need to upload another page?" },
-                                     hint: { text: "If your document has several pages, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’." } do %>
+                                     hint: { text: "If your document has several pages or you’re providing an image of the other side of your identity card or driving license, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’." } do %>
     <%= f.govuk_radio_button :add_another, "true", label: { text: "Yes" } %>
     <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
   <% end %>
