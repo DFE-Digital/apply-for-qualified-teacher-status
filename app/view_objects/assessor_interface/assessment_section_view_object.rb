@@ -73,6 +73,8 @@ module AssessorInterface
     def work_history_application_forms_contact_email_used_as_teacher
       @work_history_application_forms_contact_email_used_as_teacher ||=
         begin
+          return {} if work_history_canonical_contact_emails.empty?
+
           application_forms =
             ApplicationForm
               .includes(:teacher)
@@ -97,6 +99,8 @@ module AssessorInterface
     def work_history_application_forms_contact_email_used_as_reference
       @work_history_application_forms_contact_email_used_as_reference ||=
         begin
+          return {} if work_history_canonical_contact_emails.empty?
+
           work_histories =
             WorkHistory
               .includes(:application_form)
@@ -166,7 +170,10 @@ module AssessorInterface
 
     def work_history_canonical_contact_emails
       if assessment_section.work_history?
-        application_form.work_histories.map(&:canonical_contact_email)
+        application_form
+          .work_histories
+          .map(&:canonical_contact_email)
+          .compact_blank
       else
         []
       end
