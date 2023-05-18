@@ -41,3 +41,12 @@ variable "namespace" {
 variable "service_short" {
   type = string
 }
+
+variable "uploads_container_delete_retention_days" {
+  default = 7
+  type    = number
+}
+
+variable "uploads_storage_environment_tag" {
+  type = string
+}
