@@ -75,24 +75,18 @@ module AssessorInterface
         begin
           return {} if work_history_canonical_contact_emails.empty?
 
-          application_forms =
-            ApplicationForm
-              .includes(:teacher)
-              .not_draft
-              .where(
-                teacher: {
-                  canonical_email: work_history_canonical_contact_emails,
-                },
-              )
-              .where.not(id: application_form.id)
-              .to_a
-
-          application_form.work_histories.index_with do |work_history|
-            application_forms.select do |application_form|
-              application_form.teacher.canonical_email ==
-                work_history.canonical_contact_email
+          ApplicationForm
+            .includes(:teacher)
+            .not_draft
+            .where(
+              teacher: {
+                canonical_email: work_history_canonical_contact_emails,
+              },
+            )
+            .where.not(id: application_form.id)
+            .group_by do |application_form|
+              application_form.teacher.canonical_email
             end
-          end
         end
     end
 
@@ -101,43 +95,32 @@ module AssessorInterface
         begin
           return {} if work_history_canonical_contact_emails.empty?
 
-          work_histories =
-            WorkHistory
-              .includes(:application_form)
-              .where(
-                canonical_contact_email: work_history_canonical_contact_emails,
-              )
-              .where.not(application_form:)
-              .where.not(application_form: { status: "draft" })
-
-          application_form.work_histories.index_with do |work_history|
-            found_work_histories =
-              work_histories.select do |found_work_history|
-                found_work_history.canonical_contact_email ==
-                  work_history.canonical_contact_email
-              end
-
-            found_work_histories.map(&:application_form)
-          end
+          WorkHistory
+            .includes(:application_form)
+            .where(
+              canonical_contact_email: work_history_canonical_contact_emails,
+            )
+            .where.not(application_form:)
+            .where.not(application_form: { status: "draft" })
+            .group_by(&:canonical_contact_email)
+            .transform_values do |work_histories|
+              work_histories.map(&:application_form)
+            end
         end
     end
 
     def show_work_history_information_appears_in_other_applications?
-      work_history_application_forms_contact_email_used_as_teacher.values.any?(
-        &:present?
-      ) ||
-        work_history_application_forms_contact_email_used_as_reference.values.any?(
-          &:present?
-        )
+      work_history_application_forms_contact_email_used_as_teacher.present? ||
+        work_history_application_forms_contact_email_used_as_reference.present?
     end
 
     def highlighted_work_history_contact_emails
       application_form.work_histories.select do |work_history|
         work_history_application_forms_contact_email_used_as_teacher[
-          work_history
+          work_history.canonical_contact_email
         ].present? ||
           work_history_application_forms_contact_email_used_as_reference[
-            work_history
+            work_history.canonical_contact_email
           ].present?
       end
     end

@@ -314,7 +314,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
         )
       end
 
-      it { is_expected.to eq({ work_history => [] }) }
+      it { is_expected.to eq({}) }
     end
 
     context "with an application form with the same email" do
@@ -326,7 +326,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
         )
       end
 
-      it { is_expected.to eq({ work_history => [other_application_form] }) }
+      it { is_expected.to eq({ "same@gmail.com" => [other_application_form] }) }
     end
   end
 
@@ -353,7 +353,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
         )
       end
 
-      it { is_expected.to eq({ work_history => [] }) }
+      it { is_expected.to eq({}) }
     end
 
     context "with an application form with the same email" do
@@ -365,7 +365,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
         )
       end
 
-      it { is_expected.to eq({ work_history => [other_application_form] }) }
+      it { is_expected.to eq({ "same@gmail.com" => [other_application_form] }) }
     end
   end
 

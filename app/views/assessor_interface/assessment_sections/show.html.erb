@@ -8,11 +8,11 @@
 
     <p class="govuk-body">Check the applications listed below to review the matching information.</p>
 
-    <% @assessment_section_view_object.work_history_application_forms_contact_email_used_as_teacher.each do |work_history, application_forms| %>
+    <% @assessment_section_view_object.work_history_application_forms_contact_email_used_as_teacher.each do |email_address, application_forms| %>
       <% next unless application_forms.present? %>
 
       <p class="govuk-body govuk-!-margin-bottom-1">
-        <strong class="govuk-!-font-weight-bold"><%= work_history.contact_email %></strong> appears as an <strong class="govuk-!-font-weight-bold">applicant</strong> in these applications:
+        <strong class="govuk-!-font-weight-bold"><%= email_address %></strong> appears as an <strong class="govuk-!-font-weight-bold">applicant</strong> in these applications:
       </p>
 
       <ul class="govuk-list">
@@ -26,11 +26,11 @@
       </ul>
     <% end %>
 
-    <% @assessment_section_view_object.work_history_application_forms_contact_email_used_as_reference.each do |work_history, application_forms| %>
+    <% @assessment_section_view_object.work_history_application_forms_contact_email_used_as_reference.each do |email_address, application_forms| %>
       <% next unless application_forms.present? %>
 
       <p class="govuk-body govuk-!-margin-bottom-1">
-        <strong class="govuk-!-font-weight-bold"><%= work_history.contact_email %></strong> appears as a <strong class="govuk-!-font-weight-bold">reference</strong> in these applications:
+        <strong class="govuk-!-font-weight-bold"><%= email_address %></strong> appears as a <strong class="govuk-!-font-weight-bold">reference</strong> in these applications:
       </p>
 
       <ul class="govuk-list">
