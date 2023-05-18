@@ -26,5 +26,5 @@ module "postgres" {
 
   use_azure               = var.deploy_azure_backing_services
   azure_enable_monitoring = var.enable_monitoring
-  azure_extensions        = ["pg_stat_statements"]
+  azure_extensions        = ["pg_stat_statements", "pgcrypto"]
 }
