@@ -15,4 +15,17 @@ namespace :application_forms do
     puts "There were #{original_count} draft applications and there are now #{new_count}."
     puts "There are #{ApplicationForm.count} applications overall."
   end
+
+  desc "Change the contact email address of work history associated with an application."
+  task :update_work_history_contact_email,
+       %i[reference old_email_address new_email_address] =>
+         :environment do |_task, args|
+    application_form = ApplicationForm.find_by!(reference: args[:reference])
+
+    UpdateWorkHistoryContactEmail.call(
+      application_form:,
+      old_email_address: args[:old_email_address],
+      new_email_address: args[:new_email_address],
+    )
+  end
 end
