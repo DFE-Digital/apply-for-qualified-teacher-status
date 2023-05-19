@@ -154,7 +154,7 @@ class ApplicationForm < ApplicationRecord
 
   STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }
 
-  scope :active,
+  scope :assessable,
         -> {
           where(
             status: %i[
@@ -164,12 +164,17 @@ class ApplicationForm < ApplicationRecord
               waiting_on
               received
               overdue
-              awarded_pending_checks
-              potential_duplicate_in_dqt
             ],
-          ).or(awarded.where("awarded_at >= ?", 90.days.ago)).or(
-            declined.where("declined_at >= ?", 90.days.ago),
           )
+        }
+
+  scope :active,
+        -> {
+          assessable
+            .or(awarded_pending_checks)
+            .or(potential_duplicate_in_dqt)
+            .or(awarded.where("awarded_at >= ?", 90.days.ago))
+            .or(declined.where("declined_at >= ?", 90.days.ago))
         }
 
   scope :destroyable,

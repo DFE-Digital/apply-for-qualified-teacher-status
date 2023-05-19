@@ -17,6 +17,8 @@ module Requestable
     validates :received_at, presence: true, if: :received?
     validates :reviewed_at, presence: true, unless: -> { passed.nil? }
 
+    scope :respondable, -> { not_received.merge(ApplicationForm.assessable) }
+
     define_method :requested! do
       update!(state: "requested", received_at: nil)
     end
