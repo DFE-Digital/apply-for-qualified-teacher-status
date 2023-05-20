@@ -156,7 +156,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/actions/deploy-environment
+      - uses: ./.github/actions/deploy-environment
         id: deploy
         with:
           environment_name: review
@@ -193,13 +193,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/workflows/actions/deploy-environment
+      - uses: ./.github/actions/deploy-environment
         id: deploy
         with:
           environment_name: ${{ matrix.environment }}
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: ./.github/workflows/actions/smoke-test
+      - uses: ./.github/actions/smoke-test
         id: smoke-test
         with:
           environment: ${{ matrix.environment }}
@@ -221,7 +221,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/workflows/actions/deploy-environment
+      - uses: ./.github/actions/deploy-environment
         id: deploy
         with:
           environment_name: production
