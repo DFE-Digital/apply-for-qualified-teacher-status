@@ -14,7 +14,13 @@ module TeacherInterface
 
     def show
       @reference_request =
-        ReferenceRequest.not_expired.find_by!(slug: params[:slug])
+        ReferenceRequest
+          .joins(:application_form)
+          .received
+          .or(ReferenceRequest.respondable)
+          .includes(:work_history, :application_form)
+          .find_by!(slug: params[:slug])
+
       @application_form = reference_request.application_form
       @work_history = reference_request.work_history
     end
@@ -260,9 +266,11 @@ module TeacherInterface
 
     def load_requested_reference_request
       @reference_request =
-        ReferenceRequest.where(state: %i[requested expired]).find_by!(
-          slug: params[:slug],
-        )
+        ReferenceRequest
+          .joins(:application_form)
+          .respondable
+          .includes(:work_history, :application_form)
+          .find_by!(slug: params[:slug])
     end
 
     def contact_response_form_params
