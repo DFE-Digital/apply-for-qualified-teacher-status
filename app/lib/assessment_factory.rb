@@ -287,6 +287,7 @@ class AssessmentFactory
       FailureReasons::CONFIRM_AGE_RANGE_SUBJECTS,
       FailureReasons::QUALIFIED_TO_TEACH,
       FailureReasons::FULL_PROFESSIONAL_STATUS,
+      FailureReasons::UPLOADED_FILE_SUSPECT,
     ].compact
 
     AssessmentSection.new(

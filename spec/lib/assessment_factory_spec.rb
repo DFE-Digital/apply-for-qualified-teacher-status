@@ -428,6 +428,7 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
+                uploaded_file_suspect
               ],
             )
           end
@@ -471,6 +472,7 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
+                uploaded_file_suspect
               ],
             )
           end
@@ -503,6 +505,7 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
+                uploaded_file_suspect
               ],
             )
           end
