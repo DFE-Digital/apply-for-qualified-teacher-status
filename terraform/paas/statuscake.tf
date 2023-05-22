@@ -5,7 +5,7 @@ resource "statuscake_uptime_check" "alert" {
   contact_groups = each.value.contact_group
   confirmation   = each.value.confirmations
   trigger_rate   = 0
-  check_interval = 30
+  check_interval = 300
   regions        = ["london", "dublin"]
 
   http_check {
