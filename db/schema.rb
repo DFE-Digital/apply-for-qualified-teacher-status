@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_15_082603) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_23_084020) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -84,9 +84,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_082603) do
     t.bigint "english_language_provider_id"
     t.text "english_language_provider_reference", default: "", null: false
     t.datetime "awarded_at"
+    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "written_statement_confirmation", default: false, null: false
-    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "english_language_provider_other", default: false, null: false
     t.datetime "declined_at"
     t.boolean "waiting_on_professional_standing", default: false, null: false
@@ -97,8 +97,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_082603) do
     t.boolean "received_reference", default: false, null: false
     t.boolean "waiting_on_qualification", default: false, null: false
     t.boolean "received_qualification", default: false, null: false
-    t.boolean "requires_preliminary_check", default: false, null: false
     t.boolean "written_statement_optional", default: false, null: false
+    t.boolean "requires_preliminary_check", default: false, null: false
     t.boolean "overdue_further_information", default: false, null: false
     t.boolean "overdue_professional_standing", default: false, null: false
     t.boolean "overdue_qualification", default: false, null: false
@@ -164,8 +164,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_082603) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "eligibility_enabled", default: true, null: false
-    t.text "qualifications_information", default: "", null: false
     t.boolean "eligibility_skip_questions", default: false, null: false
+    t.text "qualifications_information", default: "", null: false
     t.boolean "requires_preliminary_check", default: false, null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
@@ -357,12 +357,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_082603) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
-    t.text "qualifications_information", default: "", null: false
     t.boolean "application_form_skip_work_history", default: false, null: false
+    t.text "qualifications_information", default: "", null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
-    t.boolean "requires_preliminary_check", default: false, null: false
     t.boolean "written_statement_optional", default: false, null: false
+    t.boolean "requires_preliminary_check", default: false, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
@@ -449,6 +449,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_082603) do
     t.datetime "otp_created_at", precision: nil
     t.text "canonical_email", default: "", null: false
     t.index "lower((email)::text)", name: "index_teacher_on_lower_email", unique: true
+    t.index ["canonical_email"], name: "index_teachers_on_canonical_email"
     t.index ["uuid"], name: "index_teachers_on_uuid", unique: true
   end
 
@@ -512,6 +513,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_082603) do
     t.string "contact_job", default: "", null: false
     t.text "canonical_contact_email", default: "", null: false
     t.index ["application_form_id"], name: "index_work_histories_on_application_form_id"
+    t.index ["canonical_contact_email"], name: "index_work_histories_on_canonical_contact_email"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
