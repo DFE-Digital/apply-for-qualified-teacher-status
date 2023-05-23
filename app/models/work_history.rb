@@ -25,7 +25,8 @@
 #
 # Indexes
 #
-#  index_work_histories_on_application_form_id  (application_form_id)
+#  index_work_histories_on_application_form_id      (application_form_id)
+#  index_work_histories_on_canonical_contact_email  (canonical_contact_email)
 #
 # Foreign Keys
 #
