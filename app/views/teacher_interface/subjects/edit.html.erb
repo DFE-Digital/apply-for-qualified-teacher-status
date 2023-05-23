@@ -12,5 +12,16 @@
     <%= f.govuk_text_field field %>
   <% end %>
 
+  <%= govuk_details(summary_text: "What the QTS assessor needs to check") do %>
+    <p>
+      The curriculum in England uses a list of subjects that is recognised across English schools.
+    </p>
+
+    <p>
+      When you enter your subjects, the assessor will need to compare them with this list.
+      In some cases, they may need to adjust what you’ve entered to align a subject with the closest recognised subject in this country.
+    </p>
+  <% end %>
+
   <%= render "shared/save_submit_buttons", f: %>
 <% end %>
