@@ -82,6 +82,7 @@
     - english_language_provider_reference
     - reduced_evidence_accepted
     - requires_preliminary_check
+    - dqt_match
   :assessment_sections:
     - id
     - assessment_id
