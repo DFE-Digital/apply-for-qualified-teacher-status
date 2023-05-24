@@ -49,6 +49,10 @@ class SubmitApplicationForm
         .application_submitted
         .deliver_later
     end
+
+    FindApplicantInDQTJob.perform_later(
+      application_form_id: application_form.id,
+    )
   end
 
   private
