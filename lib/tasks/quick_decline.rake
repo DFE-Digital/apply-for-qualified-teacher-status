@@ -21,7 +21,9 @@ namespace :quick_decline do
         next
       end
 
-      CreateQuickDeclineTimelineEvent.call(application_form:)
+      if application_form.assessment.sections.map(&:passed).all?(nil)
+        CreateQuickDeclineTimelineEvent.call(application_form:)
+      end
     end
   end
 end
