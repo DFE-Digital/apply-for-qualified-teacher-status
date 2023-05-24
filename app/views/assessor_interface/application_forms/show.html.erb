@@ -33,6 +33,16 @@
   <% end %>
 <% end %>
 
+<% if @view_object.application_form.dqt_match.present? %>
+  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+    <% notification_banner.with_heading(text: "The application details match a record in DQT") %>
+
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      DQT contains a matching record for the name and date of birth of this applicant. <strong class="govuk-!-font-weight-bold">Teacher Reference Number: <%= @view_object.application_form.dqt_match["trn"] %>.
+    </p>
+  <% end %>
+<% end %>
+
 <%= render "shared/assessor_header", title: "Application", application_form: @view_object.application_form %>
 
 <%= render(ApplicationFormOverview::Component.new(@view_object.application_form, highlight_email: @view_object.highlight_email?)) %>
