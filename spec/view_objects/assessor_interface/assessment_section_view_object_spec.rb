@@ -154,7 +154,31 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
 
     it { is_expected.to be true }
 
-    context "with a requested professional standing request" do
+    context "when a preliminary check is required" do
+      let(:application_form) do
+        create(:application_form, region:, requires_preliminary_check: true)
+      end
+
+      it { is_expected.to be false }
+
+      context "and preliminary check is complete" do
+        let(:assessment) do
+          create(
+            :assessment,
+            application_form:,
+            preliminary_check_complete: true,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context "with a the professional standing section and a requested professional standing request" do
+      let(:assessment_section) do
+        create(:assessment_section, :professional_standing, assessment:)
+      end
+
       before { create(:professional_standing_request, :requested, assessment:) }
 
       it { is_expected.to be false }

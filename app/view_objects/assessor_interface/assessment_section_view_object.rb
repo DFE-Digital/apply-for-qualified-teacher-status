@@ -20,8 +20,13 @@ module AssessorInterface
     end
 
     delegate :assessment, to: :assessment_section
-    delegate :application_form, :professional_standing_request, to: :assessment
-    delegate :registration_number, to: :application_form
+    delegate :application_form,
+             :preliminary_check_complete,
+             :professional_standing_request,
+             to: :assessment
+    delegate :registration_number,
+             :requires_preliminary_check,
+             to: :application_form
     delegate :checks, to: :assessment_section
     delegate :region, :country, to: :application_form
 
@@ -38,7 +43,18 @@ module AssessorInterface
     end
 
     def render_form?
-      professional_standing_request_received? && !render_section_content?
+      if requires_preliminary_check && preliminary_check_complete.nil?
+        return false
+      end
+
+      return false if render_section_content?
+
+      if assessment_section.professional_standing? &&
+           !professional_standing_request_received?
+        return false
+      end
+
+      true
     end
 
     def render_section_content?
