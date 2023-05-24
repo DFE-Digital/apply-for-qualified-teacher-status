@@ -127,7 +127,7 @@ en:
       hint: Tell us about the age range of the children you’re qualified to teach. for example, from 5 to 11.
     subjects:
       heading: What subjects are you qualified to teach?
-      hint: You can enter up to three.
+      hint: Enter up to 3 subjects. The assessor will compare what you enter to the subjects that appear on the curriculum in England.
     work_history:
       current_or_most_recent_role: Your current or most recent role
       previous_role: Previous role
