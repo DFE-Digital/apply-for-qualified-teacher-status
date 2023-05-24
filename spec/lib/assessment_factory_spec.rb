@@ -304,7 +304,11 @@ RSpec.describe AssessmentFactory do
               %w[qualified_in_mainstream_education age_range_subjects_matches],
             )
             expect(section.failure_reasons).to eq(
-              %w[not_qualified_to_teach_mainstream age_range],
+              %w[
+                not_qualified_to_teach_mainstream
+                age_range
+                uploaded_file_suspect
+              ],
             )
           end
         end
@@ -330,7 +334,11 @@ RSpec.describe AssessmentFactory do
             )
 
             expect(section.failure_reasons).to eq(
-              %w[not_qualified_to_teach_mainstream age_range],
+              %w[
+                not_qualified_to_teach_mainstream
+                age_range
+                uploaded_file_suspect
+              ],
             )
           end
         end
