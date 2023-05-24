@@ -10,7 +10,8 @@ class CreateQuickDeclineTimelineEvent
 
   def call
     unless application_form.requires_preliminary_check &&
-             application_form.assessment&.preliminary_check_complete == false
+             application_form.assessment&.preliminary_check_complete == false &&
+             application_form.assessment.sections.map(&:passed).all?(nil)
       return
     end
 

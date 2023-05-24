@@ -32,4 +32,28 @@ RSpec.describe CreateQuickDeclineTimelineEvent do
       expect { call }.not_to change(TimelineEvent, :count)
     end
   end
+
+  context "with an application declined via an assessment section" do
+    let!(:application_form) do
+      application_form =
+        create(
+          :application_form,
+          :submitted,
+          requires_preliminary_check: true,
+          teacher:,
+          assessment: create(:assessment, preliminary_check_complete: false),
+        )
+
+      application_form.assessment.sections << create(
+        :assessment_section,
+        selected_failure_reasons: [create(:selected_failure_reason)],
+        passed: false,
+      )
+      application_form
+    end
+
+    it "does not create a quick decline timeline event" do
+      expect { call }.not_to change(TimelineEvent, :count)
+    end
+  end
 end
