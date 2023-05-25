@@ -152,26 +152,34 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
     environment:
-      name: review
-
+      name: review_aks
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/deploy-environment-to-paas
+
+      - uses: ./.github/actions/deploy-environment-to-aks
         id: deploy
         with:
-          environment_name: review
-          docker_image: ${{ needs.docker.outputs.docker_image }}
-          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          pr_id: ${{ github.event.pull_request.number }}
+          environment: review
+          docker-image: ${{ needs.docker.outputs.docker_image }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Seed the DB
         shell: bash
-        run: cf run-task apply-for-qts-in-england-review-pr-${{ github.event.pull_request.number }} --command "cd /app && bundle exec rails db:seed example_data:generate review_app:configure" --wait
+        run: |
+          az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
+          kubectl exec -n tra-development deployment/apply-for-qts-review-${{ github.event.pull_request.number }}-web -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed example_data:generate review_app:configure"
+
       - name: Post sticky pull request comment
         if: github.event_name == 'pull_request'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            Review app deployed to ${{ steps.deploy.outputs.environment_url }}personas
+            Review app deployed to ${{ steps.deploy.outputs.url }}/personas
 
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment
