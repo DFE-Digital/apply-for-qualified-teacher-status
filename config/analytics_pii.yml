@@ -26,13 +26,11 @@
   :professional_standing_requests:
     - location_note
   :qualifications:
-    - title
     - institution_name
     - institution_country_code
     - start_date
     - complete_date
     - certificate_date
-    - part_of_university_degree
   :qualification_requests:
     - location_note
     - failure_assessor_note
