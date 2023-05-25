@@ -13,6 +13,7 @@ on:
           - test
           - preprod
           - production
+          - development_aks
   push:
     branches:
       - main
@@ -207,6 +208,39 @@ jobs:
           environment_name: ${{ matrix.environment }}
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: ./.github/actions/smoke-test
+        id: smoke-test
+        with:
+          environment: ${{ matrix.environment }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  deploy_nonprod_aks:
+    name: Deploy to ${{ matrix.environment }} AKS environment
+    runs-on: ubuntu-latest
+    needs: [docker, rspec]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    concurrency: deploy_${{ matrix.environment }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [development]
+    environment:
+      name: ${{ matrix.environment }}_aks
+      url: ${{ steps.deploy.outputs.url }}
+    outputs:
+      environment_name: ${{ matrix.environment }}
+      environment_url: ${{ steps.deploy.outputs.url }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/actions/deploy-environment-to-aks
+        id: deploy
+        with:
+          environment: ${{ matrix.environment }}
+          docker-image: ${{ needs.docker.outputs.docker_image }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
       - uses: ./.github/actions/smoke-test
         id: smoke-test
         with:
