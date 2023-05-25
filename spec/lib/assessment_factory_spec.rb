@@ -393,6 +393,7 @@ RSpec.describe AssessmentFactory do
                 work_history_break
                 school_details_cannot_be_verified
                 unrecognised_references
+                work_history_duration
               ],
             )
           end
