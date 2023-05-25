@@ -1,0 +1,62 @@
+name: Deploy environment to AKS
+description: Deploys an application environment to AKS
+
+inputs:
+  environment:
+    description: The name of the environment
+    required: true
+  docker-image:
+    description: The Docker image to deploy
+    required: true
+  azure-credentials:
+    description: JSON object containing a service principal that can read from Azure Key Vault
+    required: true
+  pull-request-number:
+    description: The pull request number which triggered this deploy
+    required: false
+
+outputs:
+  url:
+    description: The base URL for the deployed environment
+    value: ${{ steps.apply-terraform.outputs.url }}
+
+runs:
+  using: composite
+
+  steps:
+    - uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.4.5
+        terraform_wrapper: false
+
+    - name: Set Azure variables
+      shell: pwsh
+      run: |
+        $AZURE_CREDENTIALS_JSON = '${{ inputs.azure-credentials }}'
+
+        $ARM_CLIENT_ID = ( $AZURE_CREDENTIALS_JSON | ConvertFrom-Json ).clientId
+        Write-Output "::add-mask::$ARM_CLIENT_ID"
+        "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $env:GITHUB_ENV
+
+        $ARM_CLIENT_SECRET =  ( $AZURE_CREDENTIALS_JSON | ConvertFrom-Json ).clientSecret
+        Write-Output "::add-mask::$ARM_CLIENT_SECRET"
+        "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $env:GITHUB_ENV
+
+        $ARM_SUBSCRIPTION_ID =  ( $AZURE_CREDENTIALS_JSON | ConvertFrom-Json ).subscriptionId
+        Write-Output "::add-mask::$ARM_SUBSCRIPTION_ID"
+        "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $env:GITHUB_ENV
+
+        $ARM_TENANT_ID =  ( $AZURE_CREDENTIALS_JSON | ConvertFrom-Json ).tenantId
+        Write-Output "::add-mask::$ARM_TENANT_ID"
+        "ARM_TENANT_ID=$ARM_TENANT_ID" >> $env:GITHUB_ENV
+
+    - name: Apply Terraform
+      id: apply-terraform
+      shell: bash
+      run: |
+        make ci ${{ inputs.environment }}_aks terraform-apply
+        cd terraform/aks && echo "url=$(terraform output -raw url)" >> $GITHUB_OUTPUT
+      env:
+        TF_VAR_azure_sp_credentials_json: ${{ inputs.azure-credentials }}
+        DOCKER_IMAGE: ${{ inputs.docker-image }}
+        pr_id: ${{ inputs.pull-request-number }}
