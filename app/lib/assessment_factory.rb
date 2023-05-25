@@ -164,6 +164,7 @@ class AssessmentFactory
     failure_reasons = [
       FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
       FailureReasons::AGE_RANGE,
+      FailureReasons::UPLOADED_FILE_SUSPECT,
     ]
 
     AssessmentSection.new(key: "age_range_subjects", checks:, failure_reasons:)
