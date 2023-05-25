@@ -156,7 +156,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/deploy-environment
+      - uses: ./.github/actions/deploy-environment-to-paas
         id: deploy
         with:
           environment_name: review
@@ -193,7 +193,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/actions/deploy-environment
+      - uses: ./.github/actions/deploy-environment-to-paas
         id: deploy
         with:
           environment_name: ${{ matrix.environment }}
@@ -221,7 +221,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/actions/deploy-environment
+      - uses: ./.github/actions/deploy-environment-to-paas
         id: deploy
         with:
           environment_name: production

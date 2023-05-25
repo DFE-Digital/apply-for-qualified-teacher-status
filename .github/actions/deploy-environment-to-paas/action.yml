@@ -1,5 +1,5 @@
-name: Deploy environment
-description: Deploys the application to an environment
+name: Deploy environment to PaaS
+description: Deploys an application environment to GOV.UK PaaS
 
 inputs:
   environment_name:
@@ -13,10 +13,6 @@ inputs:
     required: true
   pr_id:
     description: "Pull Request number"
-    required: false
-  platform:
-    description: "Cloud platform: paas / aks"
-    default: "paas"
     required: false
 
 outputs:
@@ -47,7 +43,7 @@ runs:
         echo "paas_space=$PAAS_SPACE" >> $GITHUB_OUTPUT
       shell: bash
       env:
-        TFVARS: ${{ inputs.platform }}/workspace_variables/${{ inputs.environment_name }}.tfvars.json
+        TFVARS: paas/workspace_variables/${{ inputs.environment_name }}.tfvars.json
       working-directory: terraform
 
     - uses: Azure/login@v1
@@ -69,7 +65,7 @@ runs:
       id: terraform
       run: |
         make ci ${{ inputs.environment_name }} terraform-apply
-        cd terraform/${{ inputs.platform }} && echo "url=https://$(terraform output -raw apply_for_qts_in_england_fqdn)/" >> $GITHUB_OUTPUT
+        cd terraform/paas && echo "url=https://$(terraform output -raw apply_for_qts_in_england_fqdn)/" >> $GITHUB_OUTPUT
       env:
         ARM_ACCESS_KEY: ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }}
         DOCKER_IMAGE: ${{ inputs.docker_image }}
