@@ -229,6 +229,7 @@ class AssessmentFactory
           FailureReasons::WORK_HISTORY_BREAK,
           FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
           FailureReasons::UNRECOGNISED_REFERENCES,
+          FailureReasons::WORK_HISTORY_DURATION,
         ]
       else
         [FailureReasons::SATISFACTORY_EVIDENCE_WORK_HISTORY]

@@ -29,6 +29,7 @@ class FailureReasons
       "teaching_qualifications_from_ineligible_country",
     TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL =
       "teaching_qualifications_not_at_required_level",
+    WORK_HISTORY_DURATION = "work_history_duration",
   ].freeze
 
   FURTHER_INFORMATIONABLE = [
