@@ -68,6 +68,10 @@ review: paas ## Specify review PaaS environment
 	$(eval export TF_VAR_app_suffix=$(env))
 	$(eval export TF_VAR_forms_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsformspr$(pr_id))
 
+.PHONY: development_aks
+development_aks: aks ## Specify dev AKS environment
+	$(eval include global_config/development_aks.sh)
+
 .PHONY: review_aks
 review_aks: aks ## Specify review AKS environment
 	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
@@ -76,10 +80,6 @@ review_aks: aks ## Specify review AKS environment
 	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
 	$(eval export TF_VAR_app_suffix=$(env))
 	$(eval export TF_VAR_forms_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsformspr$(pr_id))
-
-.PHONY: dev_aks
-dev_aks: aks ## Specify dev AKS environment
-	$(eval include global_config/dev_aks.sh)
 
 .PHONY: read-keyvault-config
 read-keyvault-config:
