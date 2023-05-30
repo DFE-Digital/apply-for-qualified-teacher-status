@@ -14,6 +14,8 @@ on:
           - preprod
           - production
           - development_aks
+          - test_aks
+          - preproduction_aks
   push:
     branches:
       - main
@@ -208,7 +210,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        environment: [development]
+        environment: [development, test, preproduction]
     environment:
       name: ${{ matrix.environment }}_aks
       url: ${{ steps.deploy.outputs.url }}

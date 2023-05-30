@@ -67,6 +67,14 @@ review_aks: aks ## Specify review AKS environment
 	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
+.PHONY: test_aks
+test_aks: aks
+	$(eval include global_config/test_aks.sh)
+
+.PHONY: preproduction_aks
+preproduction_aks: aks
+	$(eval include global_config/preproduction_aks.sh)
+
 .PHONY: read-keyvault-config
 read-keyvault-config:
 	$(if $(KEY_VAULT_SECRET_NAME), , $(error Missing environment variable "KEY_VAULT_SECRET_NAME"))
