@@ -75,6 +75,10 @@ test_aks: aks
 preproduction_aks: aks
 	$(eval include global_config/preproduction_aks.sh)
 
+.PHONY: production_aks
+production_aks: aks
+	$(eval include global_config/production_aks.sh)
+
 .PHONY: read-keyvault-config
 read-keyvault-config:
 	$(if $(KEY_VAULT_SECRET_NAME), , $(error Missing environment variable "KEY_VAULT_SECRET_NAME"))
