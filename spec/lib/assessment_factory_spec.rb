@@ -509,6 +509,7 @@ RSpec.describe AssessmentFactory do
             expect(section.failure_reasons).to eq(
               %w[
                 registration_number
+                registration_number_alternative
                 authorisation_to_teach
                 teaching_qualification
                 confirm_age_range_subjects
