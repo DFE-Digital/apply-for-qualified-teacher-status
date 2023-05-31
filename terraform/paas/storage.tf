@@ -17,13 +17,12 @@ resource "azurerm_storage_account" "forms" {
   }
 }
 
-
 resource "azurerm_storage_encryption_scope" "forms-encryption" {
-  name               = "microsoftmanaged"
-  storage_account_id = azurerm_storage_account.forms.id
-  source             = "Microsoft.Storage"
+  name                               = "microsoftmanaged"
+  storage_account_id                 = azurerm_storage_account.forms.id
+  source                             = "Microsoft.Storage"
+  infrastructure_encryption_required = true
 }
-
 
 resource "azurerm_storage_container" "uploads" {
   name                  = "uploads"
