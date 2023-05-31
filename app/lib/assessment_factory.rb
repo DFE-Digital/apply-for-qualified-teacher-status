@@ -244,6 +244,7 @@ class AssessmentFactory
       return nil
     end
 
+    has_registration_number = application_form.needs_registration_number
     written_statement_required =
       application_form.needs_written_statement &&
         !application_form.written_statement_optional
@@ -252,7 +253,7 @@ class AssessmentFactory
         !application_form.needs_work_history
 
     checks = [
-      (:registration_number if application_form.needs_registration_number),
+      (:registration_number if has_registration_number),
       (:written_statement_present if written_statement_required),
       (:written_statement_recent if written_statement_required),
       (:written_statement_induction if written_statement_induction),
@@ -268,9 +269,10 @@ class AssessmentFactory
     ].compact
 
     failure_reasons = [
+      (FailureReasons::REGISTRATION_NUMBER if has_registration_number),
       (
-        if application_form.needs_registration_number
-          FailureReasons::REGISTRATION_NUMBER
+        if has_registration_number
+          FailureReasons::REGISTRATION_NUMBER_ALTERNATIVE
         end
       ),
       (
