@@ -265,6 +265,8 @@ COUNTRIES = {
   "ZA" => [{ status_check: "written", sanction_check: "written" }],
   "UA" => [{ reduced_evidence_accepted: true }],
   "ZW" => [{ status_check: "written" }],
+  "GG" => [],
+  "JE" => [],
 }.freeze
 
 DEFAULT_COUNTRY = { eligibility_enabled: true }.freeze
