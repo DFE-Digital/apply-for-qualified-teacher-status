@@ -19,18 +19,24 @@ module DQT
             if reverse_name
               application_form.family_name
             else
-              application_form.given_names
+              first_name
             end
           ),
         lastName:
           (
             if reverse_name
-              application_form.given_names
+              first_name
             else
               application_form.family_name
             end
           ),
       }
+    end
+
+    private
+
+    def first_name
+      application_form.given_names.split(" ").first
     end
   end
 end

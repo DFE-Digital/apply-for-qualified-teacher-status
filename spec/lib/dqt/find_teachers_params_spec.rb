@@ -6,8 +6,8 @@ RSpec.describe DQT::FindTeachersParams do
       create(
         :application_form,
         date_of_birth: Date.new(1960, 1, 1),
-        given_names: "Given",
-        family_name: "Family",
+        given_names: "Rowdy Roddy",
+        family_name: "Piper",
       )
     end
     let(:reverse_name) { false }
@@ -16,7 +16,7 @@ RSpec.describe DQT::FindTeachersParams do
 
     it "returns camel case params" do
       expect(call).to eq(
-        { dateOfBirth: "1960-01-01", firstName: "Given", lastName: "Family" },
+        { dateOfBirth: "1960-01-01", firstName: "Rowdy", lastName: "Piper" },
       )
     end
 
@@ -25,7 +25,7 @@ RSpec.describe DQT::FindTeachersParams do
 
       it "returns camel case params with first and last name reversed" do
         expect(call).to eq(
-          { dateOfBirth: "1960-01-01", firstName: "Family", lastName: "Given" },
+          { dateOfBirth: "1960-01-01", firstName: "Piper", lastName: "Rowdy" },
         )
       end
     end

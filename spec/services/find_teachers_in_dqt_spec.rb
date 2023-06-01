@@ -25,12 +25,12 @@ RSpec.describe FindTeachersInDQT do
       expect(call).to eq([])
     end
 
-    context "with results in the API response" do
+    context "with matching results in the API response" do
       let(:results) do
         [
           {
             date_of_birth: application_form.date_of_birth.iso8601.to_s,
-            first_name: application_form.given_names,
+            first_name: application_form.given_names.split(" ").first,
             last_name: application_form.family_name,
             trn: "1234567",
           },
@@ -38,6 +38,32 @@ RSpec.describe FindTeachersInDQT do
       end
       before do
         allow(DQT::Client::FindTeachers).to receive(:call).and_return(results)
+      end
+
+      it "returns the results" do
+        expect(call).to eq(results)
+      end
+    end
+
+    context "with reversed name in API results" do
+      let(:results) do
+        [
+          {
+            date_of_birth: application_form.date_of_birth.iso8601.to_s,
+            first_name: application_form.family_name,
+            last_name: application_form.given_names,
+            trn: "1234567",
+          },
+        ]
+      end
+      before do
+        allow(DQT::Client::FindTeachers).to receive(:call).with(
+          application_form:,
+        ).and_return([])
+        allow(DQT::Client::FindTeachers).to receive(:call).with(
+          application_form:,
+          reverse_name: true,
+        ).and_return(results)
       end
 
       it "returns the results" do
