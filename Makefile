@@ -7,29 +7,36 @@ SERVICE_SHORT=afqts
 help: ## Show this help
 	@grep -E '^[a-zA-Z\.\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+
+.PHONY: full
+fullhelp: ## Full help
+	@echo "not setup"
+
+
+
 .PHONY: paas
-paas:
+paas:  ## Sets the paas environment variables for over all PAAS deployment
 	$(eval PLATFORM=paas)
 	$(eval REGION=West Europe)
 	$(eval KEY_VAULT_SECRET_NAME=APPLY-QTS-APP-VARIABLES)
 
 .PHONY: aks
-aks:
+aks:  ## Sets environment variables for aks deployment
 	$(eval PLATFORM=aks)
 	$(eval REGION=UK South)
 	$(eval STORAGE_ACCOUNT_SUFFIX=sa)
 	$(eval KEY_VAULT_SECRET_NAME=APPLICATION)
 
 .PHONY: dev
-dev: paas
+dev: paas  ## Sets the paas environment variables for dev PAAS deployment
 	$(eval DEPLOY_ENV=dev)
-	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
+	$(eval AZURE_SUBSCRIPTION=s189-teachingqualificationsservice-development)
 	$(eval AZURE_RESOURCE_PREFIX=s165d01)
 	$(eval CONFIG_SHORT=dv)
 	$(eval ENV_TAG=dev)
 
 .PHONY: test
-test: paas
+test: paas  ##  Sets the paas environment variables for test PAAS deployment
 	$(eval DEPLOY_ENV=test)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
 	$(eval AZURE_RESOURCE_PREFIX=s165t01)
@@ -37,7 +44,7 @@ test: paas
 	$(eval ENV_TAG=test)
 
 .PHONY: preprod
-preprod: paas
+preprod: paas   ##  Sets the paas environment variables for preprod PAAS deployment
 	$(eval DEPLOY_ENV=preprod)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
 	$(eval AZURE_RESOURCE_PREFIX=s165t01)
@@ -45,7 +52,7 @@ preprod: paas
 	$(eval ENV_TAG=pre-prod)
 
 .PHONY: production
-production: paas
+production: paas  ##  Sets the paas environment variables for production PAAS deployment
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval DEPLOY_ENV=production)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-production)
@@ -56,7 +63,7 @@ production: paas
 	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=apply-for-qts)
 
 .PHONY: review
-review: paas
+review: paas  ##  Sets the paas environment variables for review PAAS deployment
 	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
 	$(eval DEPLOY_ENV=review)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
@@ -69,7 +76,7 @@ review: paas
 	$(eval export TF_VAR_forms_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsformspr$(pr_id))
 
 .PHONY: review_aks
-review_aks: aks
+review_aks: aks   ##  Sets the aks environment variables for review deployment
 	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
 	$(eval include global_config/review_aks.sh)
 	$(eval env=-pr-$(pr_id))
@@ -78,8 +85,10 @@ review_aks: aks
 	$(eval export TF_VAR_forms_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsformspr$(pr_id))
 
 .PHONY: dev_aks
-dev_aks: aks
+dev_aks: aks  ## runs a script to config aks
 	$(eval include global_config/dev_aks.sh)
+
+
 
 read-keyvault-config:
 	$(if $(KEY_VAULT_SECRET_NAME), , $(error Missing environment variable "KEY_VAULT_SECRET_NAME"))
@@ -91,7 +100,8 @@ read-deployment-config:
 	$(eval POSTGRES_DATABASE_NAME="apply-for-qts-in-england-$(DEPLOY_ENV)-pg-svc")
 	$(eval API_APP_NAME="apply-for-qts-in-england-$(DEPLOY_ENV)")
 
-set-azure-account: ${environment}
+#  set-azure-account: ${environment} # orginal code was removed because it appears not to be used
+set-azure-account: 
 	echo "Logging on to ${AZURE_SUBSCRIPTION}"
 	az account set -s ${AZURE_SUBSCRIPTION}
 
@@ -194,7 +204,7 @@ set-azure-resource-group-tags: ##Tags that will be added to resource group on it
 set-azure-template-tag:
 	$(eval ARM_TEMPLATE_TAG=1.1.0)
 
-set-what-if:
+set-what-if:  ## have azure ARM templates deployed as 'what-if'
 	$(eval WHAT_IF=--what-if)
 
 check-auto-approve:
@@ -228,3 +238,49 @@ disable-maintenance: read-tf-config ## make dev disable-maintenance / make produ
 	echo Waiting 5s for route to be registered... && sleep 5
 	cf unmap-route apply-for-qts-unavailable london.cloudapps.digital --hostname apply-for-qts-in-england-${DEPLOY_ENV}
 	cf delete apply-for-qts-unavailable -r -f
+
+
+## --- the following sections is for setting dns for this service ---
+
+
+validate-domain-resources: set-what-if domain-azure-resources # make publish validate-domain-resources AUTO_APPROVE=1
+
+deploy-domain-resources: check-auto-approve domain-azure-resources # make publish deploy-domain-resources AUTO_APPROVE=1
+
+.PHONY: afqts_domain
+afqts_domain:   ## runs a script to config variables for setting up dns
+	$(eval include global_config/afqts_domain.sh)
+
+domains-infra-init: afqts_domain set-production-subscription set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
+	terraform -chdir=terraform/custom_domains/infrastructure init -reconfigure -upgrade \
+		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
+
+domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
+	terraform -chdir=terraform/custom_domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
+
+domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
+	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
+
+domains-init: set-production-subscription set-azure-account ## terraform init for dns resources
+	$(if $(PR_NUMBER), $(eval DEPLOY_ENV=${PR_NUMBER}))
+	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}_backend.tfvars
+
+domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
+	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
+
+domains-apply: domains-init ## terraform apply for dns resources
+	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
+domains-destroy: domains-init ## terraform destroy for dns resources
+	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
+
+set-production-subscription:
+	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
+
+domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## deploy container to store terraform state for all dns resources -run validate first
+	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
+	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
+		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
+			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
+
+validate-domain-resources: set-what-if domain-azure-resources ## make  validate-domain-resources  - validate resource against Azure
