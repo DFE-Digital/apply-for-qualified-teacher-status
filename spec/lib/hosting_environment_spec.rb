@@ -4,14 +4,11 @@ require "rails_helper"
 
 RSpec.describe HostingEnvironment do
   let(:hosting_environment) { nil }
-  let(:application_name) { "apply-for-qts-in-england-review-pr-292" }
-  let(:vcap_application) { "{\"application_name\":\"#{application_name}\"}" }
 
   around do |example|
-    ClimateControl.modify(
-      HOSTING_ENVIRONMENT: hosting_environment,
-      VCAP_APPLICATION: vcap_application,
-    ) { example.run }
+    ClimateControl.modify(HOSTING_ENVIRONMENT: hosting_environment) do
+      example.run
+    end
   end
 
   describe "#name" do
@@ -58,24 +55,12 @@ RSpec.describe HostingEnvironment do
     end
 
     context "when the environment is review" do
-      let(:hosting_environment) { "review" }
+      let(:hosting_environment) { "review-292" }
 
       it do
         is_expected.to eq(
-          "apply-for-qts-in-england-review-pr-292.london.cloudapps.digital",
+          "apply-for-qts-review-292-web.test.teacherservices.cloud",
         )
-      end
-
-      context "running on a worker" do
-        let(:application_name) do
-          "apply-for-qts-in-england-review-pr-292-worker"
-        end
-
-        it do
-          is_expected.to eq(
-            "apply-for-qts-in-england-review-pr-292.london.cloudapps.digital",
-          )
-        end
       end
     end
   end
