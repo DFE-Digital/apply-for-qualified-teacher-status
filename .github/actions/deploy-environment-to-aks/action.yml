@@ -76,7 +76,7 @@ runs:
       shell: bash
       run: echo "value=$(make -s ${{ inputs.environment }}_aks print-keyvault-name)" >> $GITHUB_OUTPUT
       env:
-        pr_id: ${{ inputs.pull-request-number }}
+        PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
 
     - uses: DfE-Digital/keyvault-yaml-secret@v1
       id: smoke-test-secrets
