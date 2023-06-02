@@ -59,7 +59,7 @@ runs:
       env:
         TF_VAR_azure_sp_credentials_json: ${{ inputs.azure-credentials }}
         DOCKER_IMAGE: ${{ inputs.docker-image }}
-        pr_id: ${{ inputs.pull-request-number }}
+        PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
 
     - uses: Azure/login@v1
       with:

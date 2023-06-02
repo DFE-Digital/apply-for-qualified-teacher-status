@@ -68,7 +68,7 @@ jobs:
         env:
           TF_VAR_azure_sp_credentials_json: ${{ secrets.AZURE_CREDENTIALS }}
           DOCKER_IMAGE: "ghcr.io/dfe-digital/apply-for-qualified-teacher-status:no-tag"
-          pr_id: ${{ github.event.pull_request.number }}
+          PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
 
       - name: Delete Terraform state file
         if: env.TF_STATE_EXISTS == 'true'

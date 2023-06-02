@@ -55,30 +55,17 @@ production: paas ## Specify production PaaS environment
 	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01afqtsdbbackuppd)
 	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=apply-for-qts)
 
-.PHONY: review
-review: paas ## Specify review PaaS environment
-	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
-	$(eval DEPLOY_ENV=review)
-	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
-	$(eval AZURE_RESOURCE_PREFIX=s165d01)
-	$(eval CONFIG_SHORT=rv)
-	$(eval ENV_TAG=rev)
-	$(eval env=-pr-$(pr_id))
-	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
-	$(eval export TF_VAR_app_suffix=$(env))
-	$(eval export TF_VAR_forms_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsformspr$(pr_id))
-
 .PHONY: development_aks
 development_aks: aks ## Specify dev AKS environment
 	$(eval include global_config/development_aks.sh)
 
 .PHONY: review_aks
 review_aks: aks ## Specify review AKS environment
-	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
+	$(if $(PULL_REQUEST_NUMBER), , $(error Missing environment variable "PULL_REQUEST_NUMBER"))
 	$(eval include global_config/review_aks.sh)
-	$(eval backend_config=-backend-config="key=terraform-$(pr_id).tfstate")
-	$(eval export TF_VAR_app_suffix=-$(pr_id))
-	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(pr_id)sa)
+	$(eval backend_config=-backend-config="key=terraform-$(PULL_REQUEST_NUMBER).tfstate")
+	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
+	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
 .PHONY: read-keyvault-config
 read-keyvault-config:
