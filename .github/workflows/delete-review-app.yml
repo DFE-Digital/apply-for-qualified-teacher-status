@@ -11,74 +11,64 @@ jobs:
     concurrency: deploy_review_${{ github.event.pull_request.number }}
     if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     runs-on: ubuntu-latest
-    environment: review
+    environment: review_aks
     steps:
       - uses: actions/checkout@v3
-      - name: Extract configuration from tfvars
-        id: config
-        run: |
-          KEY_VAULT_NAME=$(jq -r '.key_vault_name' $TFVARS)
-          PAAS_SPACE=$(jq -r '.paas_space' $TFVARS)
-
-          if [ -z "$KEY_VAULT_NAME" ]; then
-            echo "::error ::Failed to extract key_vault_name from $TFVARS"
-            exit 1
-          fi
-
-          if [ -z "$PAAS_SPACE" ]; then
-            echo "::error ::Failed to extract paas_space from $TFVARS"
-            exit 1
-          fi
-
-          echo "key_vault_name=$KEY_VAULT_NAME" >> $GITHUB_OUTPUT
-          echo "paas_space=$PAAS_SPACE" >> $GITHUB_OUTPUT
-        shell: bash
-        env:
-          TFVARS: paas/workspace_variables/review.tfvars.json
-        working-directory: terraform
 
       - uses: Azure/login@v1
         with:
-          creds: ${{ secrets.azure_credentials }}
-
-      - uses: Azure/get-keyvault-secrets@v1
-        id: get_secrets
-        with:
-          keyvault: ${{ steps.config.outputs.key_vault_name }}
-          secrets: "TFSTATE-CONTAINER-ACCESS-KEY,PAAS-USER,PAAS-PASSWORD"
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.4.5
           terraform_wrapper: false
 
-      - name: Set Environment variables
+      - name: Set environment variables
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
-          TF_STATE_FILE=review/review-pr-$PR_NUMBER.tfstate
+          TF_STATE_FILE=review/review-$PR_NUMBER.tfstate
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
           pr_state_file=$(az storage blob list -c afqts-tfstate \
-            --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
-            --account-name "s165d01afqtstfstatedv" \
+            --account-name "s189t01afqtstfstatervsa" \
             --prefix $TF_STATE_FILE --query "[].name" -o tsv)
           if [ -n "$pr_state_file" ]; then echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV; fi;
 
-      - name: Terraform
+      - name: Set Azure variables
         if: env.TF_STATE_EXISTS == 'true'
-        id: terraform
+        shell: pwsh
         run: |
-          make ci review terraform-destroy
-        env:
-          ARM_ACCESS_KEY: ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }}
-          DOCKER_IMAGE: "ghcr.io/dfe-digital/apply-for-qualified-teacher-status:no-tag"
-          TF_VAR_azure_sp_credentials_json: ${{ secrets.azure_credentials }}
-          pr_id: ${{ github.event.pull_request.number }}
-        shell: bash
+          $AZURE_CREDENTIALS_JSON = '${{ inputs.azure-credentials }}'
 
-      - name: Delete tf state file
+          $ARM_CLIENT_ID = ( $AZURE_CREDENTIALS_JSON | ConvertFrom-Json ).clientId
+          Write-Output "::add-mask::$ARM_CLIENT_ID"
+          "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $env:GITHUB_ENV
+
+          $ARM_CLIENT_SECRET =  ( $AZURE_CREDENTIALS_JSON | ConvertFrom-Json ).clientSecret
+          Write-Output "::add-mask::$ARM_CLIENT_SECRET"
+          "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $env:GITHUB_ENV
+
+          $ARM_SUBSCRIPTION_ID =  ( $AZURE_CREDENTIALS_JSON | ConvertFrom-Json ).subscriptionId
+          Write-Output "::add-mask::$ARM_SUBSCRIPTION_ID"
+          "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $env:GITHUB_ENV
+
+          $ARM_TENANT_ID =  ( $AZURE_CREDENTIALS_JSON | ConvertFrom-Json ).tenantId
+          Write-Output "::add-mask::$ARM_TENANT_ID"
+          "ARM_TENANT_ID=$ARM_TENANT_ID" >> $env:GITHUB_ENV
+
+      - name: Destroy Terraform
+        if: env.TF_STATE_EXISTS == 'true'
+        id: destroy-terraform
+        shell: bash
+        run: make ci review_aks terraform-destroy
+        env:
+          TF_VAR_azure_sp_credentials_json: ${{ secrets.AZURE_CREDENTIALS }}
+          DOCKER_IMAGE: "ghcr.io/dfe-digital/apply-for-qualified-teacher-status:no-tag"
+          pr_id: ${{ github.event.pull_request.number }}
+
+      - name: Delete Terraform state file
         if: env.TF_STATE_EXISTS == 'true'
         run: |
           az storage blob delete -c afqts-tfstate --name ${{ env.TF_STATE_FILE }} \
-          --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
-          --account-name "s165d01afqtstfstatedv"
+            --account-name "s189t01afqtstfstatervsa"

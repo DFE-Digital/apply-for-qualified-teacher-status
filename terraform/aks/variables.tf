@@ -58,3 +58,8 @@ variable "uploads_container_delete_retention_days" {
 variable "uploads_storage_environment_tag" {
   type = string
 }
+
+variable "uploads_storage_account_name" {
+  type    = string
+  default = null
+}

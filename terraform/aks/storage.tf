@@ -1,9 +1,10 @@
 locals {
-  uploads_storage_product_name = "Apply for QTS in England"
+  uploads_storage_product_name         = "Apply for QTS in England"
+  uploads_default_storage_account_name = "${var.azure_resource_prefix}${var.service_short}uploads${var.config_short}sa"
 }
 
 resource "azurerm_storage_account" "uploads" {
-  name                              = "${var.azure_resource_prefix}${var.service_short}uploads${var.config_short}sa"
+  name                              = var.uploads_storage_account_name != null ? var.uploads_storage_account_name : local.uploads_default_storage_account_name
   resource_group_name               = "${var.azure_resource_prefix}-${var.service_short}-${var.config_short}-rg"
   location                          = "UK South"
   account_replication_type          = var.app_environment != "production" ? "LRS" : "GRS"
