@@ -73,6 +73,19 @@ runs:
         pr_id: ${{ inputs.pr_id }}
       shell: bash
 
+    - uses: DfE-Digital/keyvault-yaml-secret@v1
+      id: smoke-test-secrets
+      with:
+        keyvault: ${{ steps.config.outputs.key_vault_name }}
+        secret: APPLY-QTS-APP-VARIABLES
+        key: SUPPORT_USERNAME,SUPPORT_PASSWORD
+
+    - uses: ./.github/actions/smoke-test
+      with:
+        url: ${{ steps.terraform.outputs.url }}
+        username: ${{ steps.smoke-test-secrets.outputs.SUPPORT_USERNAME }}
+        password: ${{ steps.smoke-test-secrets.outputs.SUPPORT_PASSWORD }}
+
     - uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
         CF_USERNAME: ${{ steps.get_secrets.outputs.PAAS-USER }}

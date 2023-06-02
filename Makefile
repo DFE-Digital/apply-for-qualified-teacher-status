@@ -85,6 +85,10 @@ read-keyvault-config:
 	$(if $(KEY_VAULT_SECRET_NAME), , $(error Missing environment variable "KEY_VAULT_SECRET_NAME"))
 	$(eval KEY_VAULT_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-kv)
 
+.PHONY: print-keyvault-name
+print-keyvault-name: read-keyvault-config  ## Print the name of the key vault
+	echo ${KEY_VAULT_NAME}
+
 .PHONY: read-deployment-config
 read-deployment-config:
 	$(if $(PLATFORM), , $(error Missing environment variable "PLATFORM"))

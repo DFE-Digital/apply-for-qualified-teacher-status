@@ -24,10 +24,7 @@ Capybara.always_include_port = false
 
 describe "Smoke test", type: :system, js: true, smoke_test: true do
   before do
-    page.driver.basic_authorize(
-      ENV["SUPPORT_USERNAME"],
-      ENV["SUPPORT_PASSWORD"],
-    )
+    page.driver.basic_authorize(ENV["SMOKE_USERNAME"], ENV["SMOKE_PASSWORD"])
   end
 
   it "runs" do
@@ -47,7 +44,7 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   private
 
   def when_i_visit_the_service_domain
-    page.visit(ENV["HOSTING_DOMAIN"])
+    page.visit(ENV["SMOKE_URL"])
   end
 
   def and_i_click_the_start_button
