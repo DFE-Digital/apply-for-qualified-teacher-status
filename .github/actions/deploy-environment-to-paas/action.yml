@@ -11,9 +11,6 @@ inputs:
   azure_credentials:
     description: "JSON object containing a service principal that can read from Azure Key Vault"
     required: true
-  pr_id:
-    description: "Pull Request number"
-    required: false
 
 outputs:
   environment_url:
@@ -70,7 +67,6 @@ runs:
         ARM_ACCESS_KEY: ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }}
         DOCKER_IMAGE: ${{ inputs.docker_image }}
         TF_VAR_azure_sp_credentials_json: ${{ inputs.azure_credentials }}
-        pr_id: ${{ inputs.pr_id }}
       shell: bash
 
     - uses: DfE-Digital/keyvault-yaml-secret@v1
