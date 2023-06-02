@@ -12,7 +12,7 @@ inputs:
     description: JSON object containing a service principal that can read from Azure Key Vault
     required: true
   pull-request-number:
-    description: The pull request number which triggered this deploy
+    description: The pull request number which triggered this deploy. If set, this will automatically seed the database.
     required: false
 
 outputs:
@@ -60,3 +60,33 @@ runs:
         TF_VAR_azure_sp_credentials_json: ${{ inputs.azure-credentials }}
         DOCKER_IMAGE: ${{ inputs.docker-image }}
         pr_id: ${{ inputs.pull-request-number }}
+
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ inputs.azure-credentials }}
+
+    - name: Seed database
+      if: ${{ inputs.pull-request-number != '' }}
+      shell: bash
+      run: |
+        az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
+        kubectl exec -n tra-development deployment/apply-for-qts-review-${{ inputs.pull-request-number }}-web -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed example_data:generate review_app:configure"
+
+    - id: key-vault-name
+      shell: bash
+      run: echo "value=$(make -s ${{ inputs.environment }}_aks print-keyvault-name)" >> $GITHUB_OUTPUT
+      env:
+        pr_id: ${{ inputs.pull-request-number }}
+
+    - uses: DfE-Digital/keyvault-yaml-secret@v1
+      id: smoke-test-secrets
+      with:
+        keyvault: ${{ steps.key-vault-name.outputs.value }}
+        secret: APPLICATION
+        key: SUPPORT_USERNAME,SUPPORT_PASSWORD
+
+    - uses: ./.github/actions/smoke-test
+      with:
+        url: ${{ steps.apply-terraform.outputs.url }}
+        username: ${{ steps.smoke-test-secrets.outputs.SUPPORT_USERNAME }}
+        password: ${{ steps.smoke-test-secrets.outputs.SUPPORT_PASSWORD }}
