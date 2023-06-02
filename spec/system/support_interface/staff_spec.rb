@@ -34,7 +34,26 @@ RSpec.describe "Staff support", type: :system do
     then_i_see_the_accepted_staff_user
   end
 
+  it "allows editing permissions" do
+    given_i_am_authorized_as_a_support_user
+    given_a_helpdesk_user_exists
+    when_i_visit_the_staff_page
+    then_i_see_the_staff_index
+    and_i_see_the_helpdesk_user
+
+    when_i_click_on_the_helpdesk_user
+    then_i_see_the_staff_edit_form
+    when_i_choose_support_console_permission
+    and_i_submit_the_edit_form
+
+    then_i_see_the_changed_permission
+  end
+
   private
+
+  def given_a_helpdesk_user_exists
+    create(:staff, :confirmed, name: "Helpdesk")
+  end
 
   def when_i_visit_the_staff_page
     visit support_interface_staff_index_path
@@ -105,5 +124,28 @@ RSpec.describe "Staff support", type: :system do
 
   def and_i_set_password
     click_button "Set my password", visible: false
+  end
+
+  def and_i_see_the_helpdesk_user
+    expect(page).to have_content("Support console access\tNO")
+  end
+
+  def when_i_click_on_the_helpdesk_user
+    find(:xpath, "(//a[text()='Change'])[3]").click
+  end
+
+  def then_i_see_the_staff_edit_form
+    expect(page).to have_content("Edit ‘Helpdesk’")
+  end
+
+  alias_method :when_i_choose_support_console_permission,
+               :and_i_choose_support_console_permission
+
+  def and_i_submit_the_edit_form
+    click_button "Continue"
+  end
+
+  def then_i_see_the_changed_permission
+    expect(page).to_not have_content("Support console access\tNO")
   end
 end
