@@ -76,7 +76,7 @@ development_aks: aks ## Specify dev AKS environment
 review_aks: aks ## Specify review AKS environment
 	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
 	$(eval include global_config/review_aks.sh)
-	$(eval backend_config=-backend-config="key=review/review-$(pr_id).tfstate")
+	$(eval backend_config=-backend-config="key=terraform-$(pr_id).tfstate")
 	$(eval export TF_VAR_app_suffix=-$(pr_id))
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(pr_id)sa)
 
