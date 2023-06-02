@@ -2,11 +2,13 @@ $app-colour-development: govuk-colour("dark-grey", $legacy: "grey-1");
 $app-colour-test: govuk-colour("orange");
 $app-colour-preprod: govuk-colour("bright-purple");
 
-.app-header--dev .govuk-header__container {
+.app-header--dev .govuk-header__container,
+.app-header--development .govuk-header__container {
   border-bottom-color: $app-colour-development;
 }
 
-.app-environment-tag--dev {
+.app-environment-tag--dev,
+.app-environment-tag--development {
   background-color: $app-colour-development;
 }
 
@@ -18,10 +20,12 @@ $app-colour-preprod: govuk-colour("bright-purple");
   background-color: $app-colour-test;
 }
 
-.app-header--preprod .govuk-header__container {
+.app-header--preprod .govuk-header__container,
+.app-header--preproduction .govuk-header__container {
   border-bottom-color: $app-colour-preprod;
 }
 
-.app-environment-tag--preprod {
+.app-environment-tag--preprod,
+.app-environment-tag--preproduction {
   background-color: $app-colour-preprod;
 }

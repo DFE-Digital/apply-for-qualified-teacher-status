@@ -3,22 +3,21 @@
 module HostingEnvironment
   class << self
     def name
-      ENV.fetch("HOSTING_ENVIRONMENT", "dev")
+      ENV.fetch("HOSTING_ENVIRONMENT", "development")
     end
 
     def phase
       return "Beta" if production?
       return "Development" if development?
-      return "Pre-production" if preprod?
+      return "Pre-production" if preproduction?
 
       name.capitalize
     end
 
     def host
       return "apply-for-qts-in-england.education.gov.uk" if production?
-      if review? || pentest?
-        return "#{application_name}.london.cloudapps.digital"
-      end
+
+      return "#{application_name}.london.cloudapps.digital" if review?
 
       "#{name}.apply-for-qts-in-england.education.gov.uk"
     end
@@ -27,20 +26,16 @@ module HostingEnvironment
       name == "production"
     end
 
-    def preprod?
-      name == "preprod"
+    def preproduction?
+      name.start_with?("preprod")
     end
 
     def development?
-      name == "dev"
+      name.start_with?("dev")
     end
 
     def review?
       name == "review"
-    end
-
-    def pentest?
-      name == "pentest"
     end
 
     def application_name

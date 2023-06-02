@@ -24,7 +24,7 @@ RSpec.describe HostingEnvironment do
     end
 
     context "when the environment variable isn't set" do
-      it { is_expected.to eq("dev") }
+      it { is_expected.to eq("development") }
     end
   end
 
@@ -74,27 +74,6 @@ RSpec.describe HostingEnvironment do
         it do
           is_expected.to eq(
             "apply-for-qts-in-england-review-pr-292.london.cloudapps.digital",
-          )
-        end
-      end
-    end
-
-    context "when the environment is pentest" do
-      let(:hosting_environment) { "pentest" }
-      let(:application_name) { "apply-for-qts-in-england-pentest" }
-
-      it do
-        is_expected.to eq(
-          "apply-for-qts-in-england-pentest.london.cloudapps.digital",
-        )
-      end
-
-      context "running on a worker" do
-        let(:application_name) { "apply-for-qts-in-england-pentest-worker" }
-
-        it do
-          is_expected.to eq(
-            "apply-for-qts-in-england-pentest.london.cloudapps.digital",
           )
         end
       end
