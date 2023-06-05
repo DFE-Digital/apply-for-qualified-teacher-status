@@ -67,8 +67,72 @@ RSpec.describe "Teacher application check answers", type: :system do
     end
   end
 
+  it "display application form work history before qualifications banner" do
+    #should display the banner
+    when_i_visit_the(:check_your_answers_page, application_id:) do
+      and_i_have_early_work_history
+      then_i_see_the_banner
+    end
+
+    #should not display the banner
+    when_i_visit_the(:check_your_answers_page, application_id:) do
+      and_i_have_later_work_history
+      then_i_do_not_see_the_banner
+    end
+
+    #should not display the banner
+    when_i_visit_the(:check_your_answers_page, application_id:) do
+      and_i_have_no_work_history
+      then_i_do_not_see_the_banner
+    end
+
+    #should not display the banner
+    when_i_visit_the(:check_your_answers_page, application_id:) do
+      and_i_have_no_qualifications
+      then_i_do_not_see_the_banner
+    end
+  end
+
   def given_there_is_an_application_form
     application_form
+  end
+
+  def and_i_have_early_work_history
+    application_form.work_histories.create!(start_date: Date.new(2022, 1, 1))
+    application_form.qualifications.create!(
+      certificate_date: Date.new(2023, 2, 1),
+    )
+  end
+
+  def and_i_have_later_work_history
+    application_form.work_histories.create!(start_date: Date.new(2023, 1, 1))
+    application_form.qualifications.create!(
+      certificate_date: Date.new(2022, 2, 1),
+    )
+  end
+
+  def and_i_have_no_work_history
+    application_form.work_histories.destroy_all
+    application_form.qualifications.create!(
+      certificate_date: Date.new(2022, 2, 1),
+    )
+  end
+
+  def and_i_have_no_qualifications
+    application_form.work_histories.create!(start_date: Date.new(2022, 1, 1))
+    application_form.qualifications.destroy_all
+  end
+
+  def then_i_see_the_banner
+    expect(page).to have_content(
+      "You’ve added at least one teaching role that started before you were recognised as a qualified teacher.",
+    )
+  end
+
+  def then_i_do_not_see_the_banner
+    expect(page).not_to have_content(
+      "You’ve added at least one teaching role that started before you were recognised as a qualified teacher.",
+    )
   end
 
   def when_i_click_change_links(section, summary_list, &block)
