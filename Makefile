@@ -8,13 +8,13 @@ help: ## Show this help
 	@grep -E '^[a-zA-Z\.\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: paas
-paas:
+paas:  # Set the PaaS platform variables
 	$(eval PLATFORM=paas)
 	$(eval REGION=West Europe)
 	$(eval KEY_VAULT_SECRET_NAME=APPLY-QTS-APP-VARIABLES)
 
 .PHONY: aks
-aks:
+aks:  ## Sets environment variables for aks deployment
 	$(eval PLATFORM=aks)
 	$(eval REGION=UK South)
 	$(eval STORAGE_ACCOUNT_SUFFIX=sa)
@@ -92,7 +92,7 @@ read-deployment-config:
 	$(eval API_APP_NAME="apply-for-qts-in-england-$(DEPLOY_ENV)")
 
 .PHONY: set-azure-account
-set-azure-account: ${environment}
+set-azure-account:
 	echo "Logging on to ${AZURE_SUBSCRIPTION}"
 	az account set -s ${AZURE_SUBSCRIPTION}
 
@@ -253,3 +253,45 @@ disable-maintenance: read-tf-config ## make dev disable-maintenance / make produ
 	echo Waiting 5s for route to be registered... && sleep 5
 	cf unmap-route apply-for-qts-unavailable london.cloudapps.digital --hostname apply-for-qts-in-england-${DEPLOY_ENV}
 	cf delete apply-for-qts-unavailable -r -f
+
+validate-domain-resources: set-what-if domain-azure-resources # make publish validate-domain-resources AUTO_APPROVE=1
+
+deploy-domain-resources: check-auto-approve domain-azure-resources # make publish deploy-domain-resources AUTO_APPROVE=1
+
+.PHONY: afqts_domain
+afqts_domain:   ## runs a script to config variables for setting up dns
+	$(eval include global_config/domain.sh)
+
+domains-infra-init: afqts_domain set-production-subscription set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
+	terraform -chdir=terraform/custom_domains/infrastructure init -reconfigure -upgrade \
+		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
+
+domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
+	terraform -chdir=terraform/custom_domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
+
+domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
+	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
+
+domains-init: set-production-subscription set-azure-account ## terraform init for dns resources
+	$(if $(PR_NUMBER), $(eval DEPLOY_ENV=${PR_NUMBER}))
+	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}_backend.tfvars
+
+domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
+	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
+
+domains-apply: domains-init ## terraform apply for dns resources
+	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
+domains-destroy: domains-init ## terraform destroy for dns resources
+	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
+
+set-production-subscription:
+	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
+
+domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## deploy container to store terraform state for all dns resources -run validate first
+	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
+	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
+		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
+			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
+
+validate-domain-resources: set-what-if domain-azure-resources ## make  validate-domain-resources  - validate resource against Azure
