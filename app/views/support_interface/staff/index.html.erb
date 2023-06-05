@@ -3,7 +3,7 @@
 <h1 class="govuk-heading-l">Staff</h1>
 
 <p class="govuk-body">
-  <%= govuk_button_link_to 'Invite staff user', new_staff_invitation_path %>
+  <%= govuk_button_link_to "Invite staff user", new_staff_invitation_path %>
 </p>
 
 <% @staff.find_each do |staff| %>
@@ -20,27 +20,38 @@
       row.with_value { staff.created_at.to_s }
     end
 
-      summary_list.with_row do |row|
-      row.with_key { "Assessor" }
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.award_decline_permission") }
       row.with_value do
          if staff.award_decline_permission?
-          govuk_tag(text:"Yes", colour: "green")
+          govuk_tag(text: "Yes", colour: "green")
         else
-          govuk_tag(text:"No", colour: "red")
+          govuk_tag(text: "No", colour: "red")
         end
       end
+      row.with_action(
+        text: "Change",
+        href: edit_support_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.award_decline_permission")
+      )
     end
 
     summary_list.with_row do |row|
-      row.with_key { "Support console access" }
+      row.with_key { t("activerecord.attributes.staff.support_console_permission") }
       row.with_value do
         if staff.support_console_permission?
-          govuk_tag(text:"Yes", colour: "green")
+          govuk_tag(text: "Yes", colour: "green")
         else
-          govuk_tag(text:"No", colour: "red")
+          govuk_tag(text: "No", colour: "red")
         end
       end
+      row.with_action(
+        text: "Change",
+        href: edit_support_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.support_console_permission")
+      )
     end
+
     if staff.created_by_invite?
       summary_list.with_row do |row|
         row.with_key { "Invitation status" }

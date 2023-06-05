@@ -66,7 +66,13 @@ module SystemHelpers
   end
 
   def given_i_am_authorized_as_a_support_user
-    user = create(:staff, :confirmed, :with_support_console_permission)
+    user =
+      create(
+        :staff,
+        :confirmed,
+        :with_support_console_permission,
+        name: "Admin",
+      )
     given_i_am_authorized_as_a_user(user)
   end
 

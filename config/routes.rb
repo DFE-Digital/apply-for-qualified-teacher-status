@@ -181,7 +181,7 @@ Rails.application.routes.draw do
       get "preview", on: :member
     end
 
-    resources :staff, only: %i[index]
+    resources :staff, only: %i[index edit update]
 
     devise_scope :staff do
       authenticate :staff do

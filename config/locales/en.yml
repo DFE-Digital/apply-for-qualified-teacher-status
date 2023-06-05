@@ -40,6 +40,10 @@ en:
       written_statement: written statement
 
   activerecord:
+    attributes:
+      staff:
+        support_console_permission: Support console access
+        award_decline_permission: Award/decline (assessor)
     errors:
       models:
         application_form:
