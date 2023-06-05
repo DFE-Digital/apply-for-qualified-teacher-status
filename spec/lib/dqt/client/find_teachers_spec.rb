@@ -9,6 +9,7 @@ RSpec.describe DQT::Client::FindTeachers do
   let(:request_params) do
     {
       dateOfBirth: application_form.date_of_birth.iso8601.to_s,
+      emailAddress: application_form.teacher.email,
       firstName: application_form.given_names.split(" ").first,
       lastName: application_form.family_name,
     }
@@ -35,6 +36,7 @@ RSpec.describe DQT::Client::FindTeachers do
         [
           {
             date_of_birth: application_form.date_of_birth.iso8601.to_s,
+            email_address: application_form.teacher.email,
             first_name: application_form.given_names.split(" ").first,
             last_name: application_form.family_name,
             trn: "1234567",

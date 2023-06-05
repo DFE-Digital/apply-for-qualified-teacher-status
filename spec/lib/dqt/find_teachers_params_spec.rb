@@ -16,7 +16,12 @@ RSpec.describe DQT::FindTeachersParams do
 
     it "returns camel case params" do
       expect(call).to eq(
-        { dateOfBirth: "1960-01-01", firstName: "Rowdy", lastName: "Piper" },
+        {
+          dateOfBirth: "1960-01-01",
+          emailAddress: application_form.teacher.email,
+          firstName: "Rowdy",
+          lastName: "Piper",
+        },
       )
     end
 
@@ -25,7 +30,12 @@ RSpec.describe DQT::FindTeachersParams do
 
       it "returns camel case params with first and last name reversed" do
         expect(call).to eq(
-          { dateOfBirth: "1960-01-01", firstName: "Piper", lastName: "Rowdy" },
+          {
+            dateOfBirth: "1960-01-01",
+            emailAddress: application_form.teacher.email,
+            firstName: "Piper",
+            lastName: "Rowdy",
+          },
         )
       end
     end

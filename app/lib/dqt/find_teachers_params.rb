@@ -14,6 +14,7 @@ module DQT
     def call
       {
         dateOfBirth: application_form.date_of_birth&.to_date&.iso8601,
+        emailAddress: application_form.teacher&.email,
         firstName:
           (
             if reverse_name
