@@ -3,51 +3,49 @@
 module HostingEnvironment
   class << self
     def name
-      ENV.fetch("HOSTING_ENVIRONMENT", "dev")
+      value.split("-").first
     end
 
     def phase
-      return "Beta" if production?
-      return "Development" if development?
-      return "Pre-production" if preprod?
-
-      name.capitalize
+      if production?
+        "Beta"
+      elsif preproduction?
+        "Pre-production"
+      else
+        name.capitalize
+      end
     end
 
     def host
-      return "apply-for-qts-in-england.education.gov.uk" if production?
-      if review? || pentest?
-        return "#{application_name}.london.cloudapps.digital"
+      if production?
+        "apply-for-qts-in-england.education.gov.uk"
+      elsif review?
+        "apply-for-qts-#{value}-web.test.teacherservices.cloud"
+      else
+        "#{name}.apply-for-qts-in-england.education.gov.uk"
       end
-
-      "#{name}.apply-for-qts-in-england.education.gov.uk"
     end
 
     def production?
       name == "production"
     end
 
-    def preprod?
-      name == "preprod"
+    def preproduction?
+      name.start_with?("preprod")
     end
 
     def development?
-      name == "dev"
+      name.start_with?("dev")
     end
 
     def review?
       name == "review"
     end
 
-    def pentest?
-      name == "pentest"
-    end
+    private
 
-    def application_name
-      vcap_json = ENV.fetch("VCAP_APPLICATION", "{}")
-      vcap_config = JSON.parse(vcap_json)
-
-      (vcap_config["application_name"] || name).gsub(/-worker$/, "")
+    def value
+      ENV.fetch("HOSTING_ENVIRONMENT", "development")
     end
   end
 end

@@ -13,7 +13,7 @@ module "application_configuration" {
   config_short          = var.config_short
 
   config_variables = {
-    HOSTING_ENVIRONMENT = var.app_environment
+    HOSTING_ENVIRONMENT = local.environment
 
     RAILS_SERVE_STATIC_FILES = "true"
 
