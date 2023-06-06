@@ -18,8 +18,7 @@ RSpec.describe DQT::FindTeachersParams do
       expect(call).to eq(
         {
           dateOfBirth: "1960-01-01",
-          emailAddress: application_form.teacher.email,
-          firstName: "Rowdy",
+          findBy: "LastNameAndDateOfBirth",
           lastName: "Piper",
         },
       )
@@ -32,8 +31,7 @@ RSpec.describe DQT::FindTeachersParams do
         expect(call).to eq(
           {
             dateOfBirth: "1960-01-01",
-            emailAddress: application_form.teacher.email,
-            firstName: "Piper",
+            findBy: "LastNameAndDateOfBirth",
             lastName: "Rowdy",
           },
         )
