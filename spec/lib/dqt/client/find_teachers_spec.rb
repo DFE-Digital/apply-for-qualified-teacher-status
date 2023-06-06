@@ -8,9 +8,8 @@ RSpec.describe DQT::Client::FindTeachers do
   end
   let(:request_params) do
     {
+      findBy: "LastNameAndDateOfBirth",
       dateOfBirth: application_form.date_of_birth.iso8601.to_s,
-      emailAddress: application_form.teacher.email,
-      firstName: application_form.given_names.split(" ").first,
       lastName: application_form.family_name,
     }
   end
@@ -18,13 +17,22 @@ RSpec.describe DQT::Client::FindTeachers do
   subject(:call) { described_class.call(application_form:) }
 
   context "with a successful response" do
+    let(:result) do
+      {
+        dateOfBirth: application_form.date_of_birth.iso8601.to_s,
+        firstName: application_form.given_names.split(" ").first,
+        lastName: application_form.family_name,
+        trn: "1234567",
+      }
+    end
+
     before do
       stub_request(
         :get,
-        "https://test-teacher-qualifications-api.education.gov.uk/v2/teachers/find?#{request_params.to_query}",
+        "https://test-teacher-qualifications-api.education.gov.uk/v3/teachers?#{request_params.to_query}",
       ).with(headers: { "Authorization" => "Bearer test-api-key" }).to_return(
         status: 200,
-        body: { results: [request_params.merge(trn: "1234567")] }.to_json,
+        body: { results: [result] }.to_json,
         headers: {
           "Content-Type" => "application/json",
         },
@@ -36,7 +44,6 @@ RSpec.describe DQT::Client::FindTeachers do
         [
           {
             date_of_birth: application_form.date_of_birth.iso8601.to_s,
-            email_address: application_form.teacher.email,
             first_name: application_form.given_names.split(" ").first,
             last_name: application_form.family_name,
             trn: "1234567",
@@ -50,7 +57,7 @@ RSpec.describe DQT::Client::FindTeachers do
     before do
       stub_request(
         :get,
-        "https://test-teacher-qualifications-api.education.gov.uk/v2/teachers/find?#{request_params.to_query}",
+        "https://test-teacher-qualifications-api.education.gov.uk/v3/teachers?#{request_params.to_query}",
       ).with(headers: { "Authorization" => "Bearer test-api-key" }).to_return(
         status: 500,
         headers: {

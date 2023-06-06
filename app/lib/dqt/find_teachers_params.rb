@@ -14,30 +14,16 @@ module DQT
     def call
       {
         dateOfBirth: application_form.date_of_birth&.to_date&.iso8601,
-        emailAddress: application_form.teacher&.email,
-        firstName:
-          (
-            if reverse_name
-              application_form.family_name
-            else
-              first_name
-            end
-          ),
+        findBy: "LastNameAndDateOfBirth",
         lastName:
           (
             if reverse_name
-              first_name
+              application_form.given_names.split(" ").first
             else
               application_form.family_name
             end
           ),
       }
-    end
-
-    private
-
-    def first_name
-      application_form.given_names.split(" ").first
     end
   end
 end

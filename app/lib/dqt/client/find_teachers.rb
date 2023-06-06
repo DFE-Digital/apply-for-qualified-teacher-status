@@ -11,7 +11,7 @@ class DQT::Client::FindTeachers
   end
 
   def call
-    path = "/v2/teachers/find"
+    path = "/v3/teachers"
     response =
       connection.get(
         path,
