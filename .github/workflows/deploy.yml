@@ -16,6 +16,7 @@ on:
           - development_aks
           - test_aks
           - preproduction_aks
+          - production_aks
   push:
     branches:
       - main
@@ -189,7 +190,6 @@ jobs:
       url: ${{ steps.deploy.outputs.environment_url }}
     outputs:
       environment_name: ${{ matrix.environment }}
-      environment_url: ${{ steps.deploy.outputs.environment_url }}
 
     steps:
       - uses: actions/checkout@v3
@@ -216,7 +216,6 @@ jobs:
       url: ${{ steps.deploy.outputs.url }}
     outputs:
       environment_name: ${{ matrix.environment }}
-      environment_url: ${{ steps.deploy.outputs.url }}
 
     steps:
       - uses: actions/checkout@v3
@@ -238,9 +237,6 @@ jobs:
       url: ${{ steps.deploy.outputs.environment_url }}
     concurrency: deploy_production
 
-    outputs:
-      environment_url: ${{ steps.deploy.outputs.environment_url }}
-
     steps:
       - uses: actions/checkout@v3
 
@@ -250,6 +246,26 @@ jobs:
           environment_name: production
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  deploy_production_aks:
+    name: Deploy to production AKS environment
+    needs: [docker, rspec, deploy_nonprod_aks]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production_aks
+      url: ${{ steps.deploy.outputs.url }}
+    concurrency: deploy_production_aks
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/actions/deploy-environment-to-aks
+        id: deploy
+        with:
+          environment: production
+          docker-image: ${{ needs.docker.outputs.docker_image }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
   notify_slack_of_failures:
     name: Notify Slack of failures
