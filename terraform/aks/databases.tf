@@ -4,6 +4,7 @@ module "redis" {
   namespace             = var.namespace
   environment           = local.environment
   azure_resource_prefix = var.azure_resource_prefix
+  service_name          = local.service_name
   service_short         = var.service_short
   config_short          = var.config_short
 
@@ -19,6 +20,7 @@ module "postgres" {
   namespace             = var.namespace
   environment           = local.environment
   azure_resource_prefix = var.azure_resource_prefix
+  service_name          = local.service_name
   service_short         = var.service_short
   config_short          = var.config_short
 
