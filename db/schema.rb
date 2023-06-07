@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_23_154213) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_07_120948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -104,6 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_23_154213) do
     t.boolean "overdue_qualification", default: false, null: false
     t.boolean "overdue_reference", default: false, null: false
     t.jsonb "dqt_match", default: {}
+    t.datetime "withdrawn_at"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"
     t.index ["family_name"], name: "index_application_forms_on_family_name"

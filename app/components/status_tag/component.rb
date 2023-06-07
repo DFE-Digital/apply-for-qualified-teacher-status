@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module StatusTag
   class Component < ViewComponent::Base
     def initialize(key:, status:, class_context: nil)
@@ -21,6 +23,7 @@ module StatusTag
 
     COLOURS = {
       accepted: "green",
+      assessment_in_progress: "blue",
       awarded: "green",
       awarded_pending_checks: "turquoise",
       cannot_start: "grey",
@@ -28,7 +31,6 @@ module StatusTag
       draft: "grey",
       expired: "pink",
       in_progress: "blue",
-      assessment_in_progress: "blue",
       invalid: "red",
       not_started: "grey",
       overdue: "pink",
@@ -40,6 +42,7 @@ module StatusTag
       submitted: "grey",
       valid: "green",
       waiting_on: "yellow",
+      withdrawn: "red",
     }.freeze
 
     def colour

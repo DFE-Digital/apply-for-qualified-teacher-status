@@ -85,5 +85,11 @@ RSpec.describe StatusTag::Component, type: :component do
 
       it { is_expected.to eq("govuk-tag govuk-tag--red app-task-list__tag") }
     end
+
+    context "with a 'withdrawn' status" do
+      let(:status) { :withdrawn }
+
+      it { is_expected.to eq("govuk-tag govuk-tag--red app-task-list__tag") }
+    end
   end
 end

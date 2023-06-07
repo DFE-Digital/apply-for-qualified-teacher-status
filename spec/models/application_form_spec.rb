@@ -51,6 +51,7 @@
 #  waiting_on_professional_standing              :boolean          default(FALSE), not null
 #  waiting_on_qualification                      :boolean          default(FALSE), not null
 #  waiting_on_reference                          :boolean          default(FALSE), not null
+#  withdrawn_at                                  :datetime
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
@@ -112,6 +113,7 @@ RSpec.describe ApplicationForm, type: :model do
         awarded_pending_checks: "awarded_pending_checks",
         declined: "declined",
         potential_duplicate_in_dqt: "potential_duplicate_in_dqt",
+        withdrawn: "withdrawn",
       ).backed_by_column_of_type(:string)
     end
 

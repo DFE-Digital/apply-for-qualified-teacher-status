@@ -65,6 +65,7 @@
     - submitted_at
     - awarded_at
     - declined_at
+    - withdrawn_at
     - working_days_since_submission
     - needs_work_history
     - needs_written_statement

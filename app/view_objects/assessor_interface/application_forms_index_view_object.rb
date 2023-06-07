@@ -46,6 +46,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       awarded
       declined
       potential_duplicate_in_dqt
+      withdrawn
     ]
 
     statuses.map do |status|

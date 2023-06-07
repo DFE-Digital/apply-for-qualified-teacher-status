@@ -178,6 +178,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             id: "potential_duplicate_in_dqt",
             label: "Potential duplication in DQT (0)",
           ),
+          OpenStruct.new(id: "withdrawn", label: "Withdrawn (0)"),
         ],
       )
     end
@@ -194,6 +195,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         create_list(:application_form, 8, :awarded)
         create_list(:application_form, 9, :declined)
         create_list(:application_form, 10, :potential_duplicate_in_dqt)
+        create_list(:application_form, 11, :withdrawn)
       end
 
       it do
@@ -221,6 +223,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
               id: "potential_duplicate_in_dqt",
               label: "Potential duplication in DQT (10)",
             ),
+            OpenStruct.new(id: "withdrawn", label: "Withdrawn (11)"),
           ],
         )
       end

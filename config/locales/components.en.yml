@@ -2,6 +2,7 @@ en:
   components:
     status_tag:
       accepted: Accepted
+      assessment_in_progress: Assessment in progress
       awarded: Awarded
       awarded_pending_checks: Award pending
       cannot_start: Cannot start
@@ -10,7 +11,6 @@ en:
       draft: Draft
       expired: Overdue
       in_progress: In progress
-      assessment_in_progress: Assessment in progress
       invalid: Invalid
       not_started: Not started
       overdue: Overdue
@@ -22,6 +22,7 @@ en:
       submitted: Not started
       valid: Valid
       waiting_on: Waiting on
+      withdrawn: Withdrawn
 
     timeline_entry:
       title:

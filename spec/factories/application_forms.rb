@@ -51,6 +51,7 @@
 #  waiting_on_professional_standing              :boolean          default(FALSE), not null
 #  waiting_on_qualification                      :boolean          default(FALSE), not null
 #  waiting_on_reference                          :boolean          default(FALSE), not null
+#  withdrawn_at                                  :datetime
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
@@ -179,6 +180,12 @@ FactoryBot.define do
     trait :potential_duplicate_in_dqt do
       status { "potential_duplicate_in_dqt" }
       submitted_at { Time.zone.now }
+    end
+
+    trait :withdrawn do
+      status { "withdrawn" }
+      submitted_at { Time.zone.now }
+      withdrawn_at { Time.zone.now }
     end
 
     trait :old_regs do
