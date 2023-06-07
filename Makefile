@@ -88,6 +88,14 @@ read-keyvault-config:
 print-keyvault-name: read-keyvault-config  ## Print the name of the key vault
 	echo ${KEY_VAULT_NAME}
 
+.PHONY: set-resource-group-name
+set-resource-group-name:
+	$(eval RESOURCE_GROUP_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-rg)
+
+.PHONY: print-resource-group-name
+print-resource-group-name: set-resource-group-name
+	echo ${RESOURCE_GROUP_NAME}
+
 .PHONY: read-deployment-config
 read-deployment-config:
 	$(if $(PLATFORM), , $(error Missing environment variable "PLATFORM"))
@@ -231,10 +239,10 @@ check-auto-approve:
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 
 .PHONY: arm-deployment
-arm-deployment: set-azure-account set-azure-template-tag set-azure-resource-group-tags
+arm-deployment: set-resource-group-name set-azure-account set-azure-template-tag set-azure-resource-group-tags
 	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
 		-l "${REGION}" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
-		--parameters "resourceGroupName=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" 'tags=${RG_TAGS}' \
+		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}${STORAGE_ACCOUNT_SUFFIX}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
 			"keyVaultName=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-kv" ${WHAT_IF}
 
