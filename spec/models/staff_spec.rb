@@ -23,11 +23,13 @@
 #  last_sign_in_ip            :string
 #  locked_at                  :datetime
 #  name                       :text             default(""), not null
+#  provider                   :string
 #  remember_created_at        :datetime
 #  reset_password_sent_at     :datetime
 #  reset_password_token       :string
 #  sign_in_count              :integer          default(0), not null
 #  support_console_permission :boolean          default(FALSE), not null
+#  uid                        :string
 #  unconfirmed_email          :string
 #  unlock_token               :string
 #  created_at                 :datetime         not null
