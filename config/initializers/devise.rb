@@ -371,6 +371,10 @@ Devise.setup do |config|
   # generated before the user's current sign in time to be expired. In other words,
   # each time you sign in, all existing magic links will be considered invalid.
   config.passwordless_expire_old_tokens_on_sign_in = true
+
+  config.omniauth :azure_activedirectory_v2,
+                  client_id: ENV.fetch("MICROSOFT_OAUTH_CLIENT_ID"),
+                  client_secret: ENV.fetch("MICROSOFT_OAUTH_CLIENT_SECRET")
 end
 
 # As we only use magic link authentication for teachers, we don't need to unnecessarily
