@@ -56,7 +56,9 @@ class Staff < ApplicationRecord
          :timeoutable,
          :validatable,
          :lockable,
-         :invitable
+         :invitable,
+         :omniauthable,
+         omniauth_providers: [:azure_activedirectory_v2]
 
   self.timeout_in = 20.minutes
 
