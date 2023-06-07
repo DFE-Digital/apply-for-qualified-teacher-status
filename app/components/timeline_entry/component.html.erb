@@ -6,7 +6,7 @@
 
   <p class="moj-timeline__date">
   <time datetime="<%= timeline_event.created_at.iso8601 %>">
-    <%= timeline_event.created_at.to_fs(:date_and_time) %>
+    <%= timeline_event.created_at.localtime.to_fs(:date_and_time) %>
   </time>
   </p>
 
@@ -33,13 +33,13 @@
       <% if (failure_reason = description_vars[:failure_reasons].first).present? %>
         <%= govuk_inset_text do %>
           <ul class="govuk-list--bullet">
-            <%= render "shared/assessor_failure_reason_list_item", failure_reason: %> 
+            <%= render "shared/assessor_failure_reason_list_item", failure_reason: %>
             <% if description_vars[:failure_reasons].size > 1 %>
               <%= govuk_details(summary_text: "View additional reasons") do %>
-                <% description_vars[:failure_reasons].drop(1).each do |failure_reason| %>                                
+                <% description_vars[:failure_reasons].drop(1).each do |failure_reason| %>
                     <%= render "shared/assessor_failure_reason_list_item", failure_reason: %>
                 <% end %>
-              <% end %>       
+              <% end %>
             <% end %>
           </ul>
         <% end %>
@@ -50,13 +50,13 @@
         <% if (failure_reason = failed_section[:failure_reasons].first).present? %>
           <%= govuk_inset_text do %>
             <ul class="govuk-list--bullet">
-              <%= render "shared/assessor_failure_reason_list_item", failure_reason: %> 
+              <%= render "shared/assessor_failure_reason_list_item", failure_reason: %>
               <% if failed_section[:failure_reasons].size > 1 %>
                 <%= govuk_details(summary_text: "View additional reasons") do %>
-                  <% failed_section[:failure_reasons].drop(1).each do |failure_reason| %>                                
+                  <% failed_section[:failure_reasons].drop(1).each do |failure_reason| %>
                     <%= render "shared/assessor_failure_reason_list_item", failure_reason: %>
                   <% end %>
-                <% end %>       
+                <% end %>
               <% end %>
             </ul>
           <% end %>
