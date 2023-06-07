@@ -201,6 +201,7 @@ Rails.application.routes.draw do
                passwords: "staff/passwords",
                sessions: "staff/sessions",
                unlocks: "staff/unlocks",
+               omniauth_callbacks: "staff/omniauth_callbacks",
              }
 
   namespace :teacher_interface, path: "/teacher" do
