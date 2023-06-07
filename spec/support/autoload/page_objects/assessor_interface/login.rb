@@ -3,7 +3,7 @@ module PageObjects
     class Login < SitePrism::Page
       set_url "/staff/sign_in"
 
-      section :form, "form" do
+      section :form, "form#new_staff" do
         element :email_field, "#staff-email-field"
         element :password_field, "#staff-password-field"
         element :continue_button, "button"
