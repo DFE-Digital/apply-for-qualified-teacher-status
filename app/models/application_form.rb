@@ -131,6 +131,7 @@ class ApplicationForm < ApplicationRecord
          awarded: "awarded",
          declined: "declined",
          potential_duplicate_in_dqt: "potential_duplicate_in_dqt",
+         withdrawn: "withdrawn",
        }
 
   delegate :country, to: :region, allow_nil: true

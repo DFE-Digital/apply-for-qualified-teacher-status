@@ -112,6 +112,7 @@ RSpec.describe ApplicationForm, type: :model do
         awarded_pending_checks: "awarded_pending_checks",
         declined: "declined",
         potential_duplicate_in_dqt: "potential_duplicate_in_dqt",
+        withdrawn: "withdrawn",
       ).backed_by_column_of_type(:string)
     end
 

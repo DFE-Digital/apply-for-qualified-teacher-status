@@ -181,6 +181,11 @@ FactoryBot.define do
       submitted_at { Time.zone.now }
     end
 
+    trait :withdrawn do
+      status { "withdrawn" }
+      submitted_at { Time.zone.now }
+    end
+
     trait :old_regs do
       created_at { Date.new(2023, 1, 31) }
     end
