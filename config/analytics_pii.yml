@@ -45,6 +45,7 @@
     - current_sign_in_ip
     - last_sign_in_ip
     - name
+    - azure_ad_uid
   :teachers:
     - canonical_email
     - current_sign_in_ip

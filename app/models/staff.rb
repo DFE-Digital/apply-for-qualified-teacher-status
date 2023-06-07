@@ -4,6 +4,7 @@
 #
 #  id                         :bigint           not null, primary key
 #  award_decline_permission   :boolean          default(FALSE)
+#  azure_ad_uid               :string
 #  confirmation_sent_at       :datetime
 #  confirmation_token         :string
 #  confirmed_at               :datetime

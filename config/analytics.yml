@@ -340,6 +340,7 @@
     - name
     - award_decline_permission
     - support_console_permission
+    - azure_ad_uid
   :teachers:
     - canonical_email
     - created_at
