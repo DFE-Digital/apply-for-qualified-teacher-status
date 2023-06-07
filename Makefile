@@ -114,6 +114,13 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 		&& chmod +x bin/fetch_config.rb \
 		|| true
 
+.PHONY: install-konduit
+install-konduit: ## Install the konduit script, for accessing backend services
+	[ ! -f bin/konduit.sh ] \
+		&& curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/master/scripts/konduit.sh -o bin/konduit.sh \
+		&& chmod +x bin/konduit.sh \
+		|| true
+
 .PHONY: edit-keyvault-secret
 edit-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} \
