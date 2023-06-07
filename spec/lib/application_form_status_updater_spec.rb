@@ -34,6 +34,17 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes status", "potential_duplicate_in_dqt"
     end
 
+    context "with a withdrawn_at date" do
+      before do
+        application_form.update!(
+          submitted_at: Time.zone.now,
+          withdrawn_at: Time.zone.now,
+        )
+      end
+
+      include_examples "changes status", "withdrawn"
+    end
+
     context "with a declined_at date" do
       before do
         application_form.update!(

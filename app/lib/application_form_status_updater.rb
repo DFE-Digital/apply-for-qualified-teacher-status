@@ -126,6 +126,8 @@ class ApplicationFormStatusUpdater
     @new_status ||=
       if dqt_trn_request&.potential_duplicate?
         "potential_duplicate_in_dqt"
+      elsif application_form.withdrawn_at.present?
+        "withdrawn"
       elsif application_form.declined_at.present?
         "declined"
       elsif application_form.awarded_at.present?

@@ -51,6 +51,7 @@
 #  waiting_on_professional_standing              :boolean          default(FALSE), not null
 #  waiting_on_qualification                      :boolean          default(FALSE), not null
 #  waiting_on_reference                          :boolean          default(FALSE), not null
+#  withdrawn_at                                  :datetime
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
@@ -108,8 +109,13 @@ class ApplicationForm < ApplicationRecord
   validates :submitted_at, presence: true, unless: :draft?
   validates :awarded_at, presence: true, if: :awarded?
   validates :awarded_at, absence: true, if: :declined?
+  validates :awarded_at, absence: true, if: :withdrawn?
   validates :declined_at, presence: true, if: :declined?
   validates :declined_at, absence: true, if: :awarded?
+  validates :declined_at, absence: true, if: :withdrawn?
+  validates :withdrawn_at, presence: true, if: :withdrawn?
+  validates :withdrawn_at, absence: true, if: :awarded?
+  validates :withdrawn_at, absence: true, if: :declined?
 
   enum :english_language_proof_method,
        { medium_of_instruction: "medium_of_instruction", provider: "provider" },
@@ -177,6 +183,7 @@ class ApplicationForm < ApplicationRecord
             .or(potential_duplicate_in_dqt)
             .or(awarded.where("awarded_at >= ?", 90.days.ago))
             .or(declined.where("declined_at >= ?", 90.days.ago))
+            .or(withdrawn.where("withdrawn_at >= ?", 90.days.ago))
         }
 
   scope :destroyable,
@@ -185,6 +192,7 @@ class ApplicationForm < ApplicationRecord
             .where("created_at < ?", 6.months.ago)
             .or(awarded.where("awarded_at < ?", 5.years.ago))
             .or(declined.where("declined_at < ?", 5.years.ago))
+            .or(withdrawn.where("withdrawn_at < ?", 5.years.ago))
         }
 
   scope :remindable, -> { draft }
