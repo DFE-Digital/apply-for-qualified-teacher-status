@@ -32,8 +32,8 @@ namespace :application_forms do
   desc "Withdraw an application which has not yet been awarded or declined."
   task :withdraw, %i[reference staff_email] => :environment do |_task, args|
     application_form =
-      ApplicationForm.assessable.find_by(reference: args[:reference])
-    user = Staff.find_by(email: args[:staff_email])
+      ApplicationForm.assessable.find_by!(reference: args[:reference])
+    user = Staff.find_by!(email: args[:staff_email])
 
     WithdrawApplicationForm.call(application_form:, user:)
   end
