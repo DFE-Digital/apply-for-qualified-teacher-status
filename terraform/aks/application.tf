@@ -12,10 +12,10 @@ module "application_configuration" {
   service_short         = var.service_short
   config_short          = var.config_short
 
+  is_rails_application = true
+
   config_variables = {
     HOSTING_ENVIRONMENT = local.environment
-
-    RAILS_SERVE_STATIC_FILES = "true"
 
     BIGQUERY_PROJECT_ID = "apply-for-qts-in-england",
     BIGQUERY_DATASET    = "events_${var.app_environment}",
