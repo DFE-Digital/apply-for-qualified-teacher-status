@@ -214,6 +214,10 @@ terraform-init:
 terraform-plan: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
 
+.PHONY: terraform-refresh
+terraform-refresh: terraform-init
+	terraform -chdir=terraform/$(PLATFORM) refresh -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+
 .PHONY: terraform-apply
 terraform-apply: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
