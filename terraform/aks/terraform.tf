@@ -13,5 +13,10 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "2.20.0"
     }
+
+    statuscake = {
+      source  = "StatusCakeDev/statuscake"
+      version = "2.1.0"
+    }
   }
 }
