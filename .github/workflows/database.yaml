@@ -32,7 +32,7 @@ jobs:
         id: resource-group-name
         run: echo "value=$(make -s production_aks print-resource-group-name)" >> $GITHUB_OUTPUT
 
-      - uses: hashicorp/setup-terraform@v1
+      - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.4.5
           terraform_wrapper: false
