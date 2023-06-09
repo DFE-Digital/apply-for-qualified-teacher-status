@@ -88,6 +88,14 @@ read-keyvault-config:
 print-keyvault-name: read-keyvault-config  ## Print the name of the key vault
 	echo ${KEY_VAULT_NAME}
 
+.PHONY: set-resource-group-name
+set-resource-group-name:
+	$(eval RESOURCE_GROUP_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-rg)
+
+.PHONY: print-resource-group-name
+print-resource-group-name: set-resource-group-name
+	echo ${RESOURCE_GROUP_NAME}
+
 .PHONY: read-deployment-config
 read-deployment-config:
 	$(if $(PLATFORM), , $(error Missing environment variable "PLATFORM"))
@@ -112,6 +120,13 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 	[ ! -f bin/fetch_config.rb ] \
 		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
 		&& chmod +x bin/fetch_config.rb \
+		|| true
+
+.PHONY: install-konduit
+install-konduit: ## Install the konduit script, for accessing backend services
+	[ ! -f bin/konduit.sh ] \
+		&& curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/master/scripts/konduit.sh -o bin/konduit.sh \
+		&& chmod +x bin/konduit.sh \
 		|| true
 
 .PHONY: edit-keyvault-secret
@@ -199,6 +214,10 @@ terraform-init:
 terraform-plan: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
 
+.PHONY: terraform-refresh
+terraform-refresh: terraform-init
+	terraform -chdir=terraform/$(PLATFORM) refresh -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+
 .PHONY: terraform-apply
 terraform-apply: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
@@ -224,10 +243,10 @@ check-auto-approve:
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 
 .PHONY: arm-deployment
-arm-deployment: set-azure-account set-azure-template-tag set-azure-resource-group-tags
+arm-deployment: set-resource-group-name set-azure-account set-azure-template-tag set-azure-resource-group-tags
 	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
 		-l "${REGION}" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
-		--parameters "resourceGroupName=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" 'tags=${RG_TAGS}' \
+		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}${STORAGE_ACCOUNT_SUFFIX}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
 			"keyVaultName=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-kv" ${WHAT_IF}
 
