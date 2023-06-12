@@ -56,6 +56,10 @@ class Assessment < ApplicationRecord
               in: recommendations.values,
             }
 
+  def unknown!
+    update!(recommendation: "unknown", recommended_at: nil)
+  end
+
   def award!
     update!(recommendation: "award", recommended_at: Time.zone.now)
   end
