@@ -36,7 +36,8 @@ class Teacher < ApplicationRecord
   before_create { self.canonical_email = EmailAddress.canonical(email) }
 
   def application_form
-    @application_form ||= application_forms.order(created_at: :desc).first
+    @application_form ||=
+      application_forms.not_withdrawn.order(created_at: :desc).first
   end
 
   def send_otp(*)
