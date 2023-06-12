@@ -63,7 +63,7 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def after_expired(user:)
-    DeclineQTS.call(application_form:, user:)
+    DeclineQTS.call(application_form:, user:) unless application_form.withdrawn?
   end
 
   delegate :teacher, to: :application_form
