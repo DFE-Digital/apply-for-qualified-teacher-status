@@ -271,38 +271,16 @@ RSpec.describe ApplicationForm, type: :model do
       end
     end
 
-    context "when awarded" do
+    context "when awarded and declined" do
       before do
         application_form.assign_attributes(
-          status: "awarded",
+          awarded_at: Time.zone.now,
+          declined_at: Time.zone.now,
           submitted_at: Time.zone.now,
         )
       end
 
       it { is_expected.to_not be_valid }
-
-      context "with awarded_at" do
-        before { application_form.awarded_at = Time.zone.now }
-
-        it { is_expected.to be_valid }
-      end
-    end
-
-    context "when declined" do
-      before do
-        application_form.assign_attributes(
-          status: "declined",
-          submitted_at: Time.zone.now,
-        )
-      end
-
-      it { is_expected.to_not be_valid }
-
-      context "with declined_at" do
-        before { application_form.declined_at = Time.zone.now }
-
-        it { is_expected.to be_valid }
-      end
     end
   end
 
