@@ -51,7 +51,13 @@ FactoryBot.define do
     slug { Faker::Internet.unique.slug }
 
     association :assessment
-    association :work_history, :completed
+    work_history do
+      create(
+        :work_history,
+        :completed,
+        application_form: assessment.application_form,
+      )
+    end
 
     trait :requested do
       state { "requested" }
