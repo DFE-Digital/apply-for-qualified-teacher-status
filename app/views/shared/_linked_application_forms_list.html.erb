@@ -1,0 +1,9 @@
+<ul class="govuk-list">
+  <% application_forms.each do |application_form| %>
+    <li>
+      <%= link_to "Check application #{application_form.reference} (opens in a new window)",
+                  assessor_interface_application_form_path(application_form),
+                  target: :_blank, class: "govuk-notification-banner__link" %>
+    </li>
+  <% end %>
+</ul>

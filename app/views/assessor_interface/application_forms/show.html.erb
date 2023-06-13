@@ -1,37 +1,10 @@
 <% content_for :page_title, "Application" %>
 <% content_for :back_link_url, assessor_interface_application_forms_path %>
 
-<% if @view_object.email_used_as_reference_in_this_application_form? %>
-  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
-    <% notification_banner.with_heading(text: "The highlighted information appears elsewhere in this application") %>
-
-    <p class="govuk-body govuk-!-margin-bottom-1">
-      <strong class="govuk-!-font-weight-bold"><%= @view_object.application_form.teacher.email %></strong> is used as a <strong class="govuk-!-font-weight-bold">reference</strong> for this application, but matches the applicant’s own email address.
-    </p>
-  <% end %>
-<% end %>
-
-<% if (other_application_forms_where_email_used_as_reference = @view_object.other_application_forms_where_email_used_as_reference).present? %>
-  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
-    <% notification_banner.with_heading(text: "The highlighted information also appears in other applications") %>
-
-    <p class="govuk-body">Check the applications listed below to review the matching information.</p>
-
-    <p class="govuk-body govuk-!-margin-bottom-1">
-      <strong class="govuk-!-font-weight-bold"><%= @view_object.application_form.teacher.email %></strong> appears as a <strong class="govuk-!-font-weight-bold">reference</strong> in these applications:
-    </p>
-
-    <ul class="govuk-list">
-      <% other_application_forms_where_email_used_as_reference.each do |application_form| %>
-        <li>
-          <%= link_to "Check application #{application_form.reference} (opens in a new window)",
-                      assessor_interface_application_form_path(application_form),
-                      target: :_blank, class: "govuk-notification-banner__link" %>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
-<% end %>
+<%= render "linked_application_forms",
+           teacher: @view_object.application_form.teacher,
+           email_used_as_reference_in_this_application_form: @view_object.email_used_as_reference_in_this_application_form?,
+           other_application_forms_where_email_used_as_reference: @view_object.other_application_forms_where_email_used_as_reference %>
 
 <% if @view_object.application_form.dqt_match.present? %>
   <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>

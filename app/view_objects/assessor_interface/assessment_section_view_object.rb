@@ -125,11 +125,6 @@ module AssessorInterface
         end
     end
 
-    def show_work_history_information_appears_in_other_applications?
-      work_history_application_forms_contact_email_used_as_teacher.present? ||
-        work_history_application_forms_contact_email_used_as_reference.present?
-    end
-
     def highlighted_work_history_contact_emails
       application_form.work_histories.select do |work_history|
         work_history_application_forms_contact_email_used_as_teacher[

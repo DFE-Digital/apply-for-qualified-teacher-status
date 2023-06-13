@@ -1,0 +1,23 @@
+<% if application_forms_contact_email_used_as_teacher.present? || application_forms_contact_email_used_as_reference.present? %>
+  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+    <% notification_banner.with_heading(text: "The highlighted information also appears in other applications") %>
+
+    <p class="govuk-body">Check the applications listed below to review the matching information.</p>
+
+    <% application_forms_contact_email_used_as_teacher.each do |email_address, application_forms| %>
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        <strong class="govuk-!-font-weight-bold"><%= email_address %></strong> appears as an <strong class="govuk-!-font-weight-bold">applicant</strong> in these applications:
+      </p>
+
+      <%= render "shared/linked_application_forms_list", application_forms: %>
+    <% end %>
+
+    <% application_forms_contact_email_used_as_reference.each do |email_address, application_forms| %>
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        <strong class="govuk-!-font-weight-bold"><%= email_address %></strong> appears as a <strong class="govuk-!-font-weight-bold">reference</strong> in these applications:
+      </p>
+
+      <%= render "shared/linked_application_forms_list", application_forms: %>
+    <% end %>
+  <% end %>
+<% end %>
