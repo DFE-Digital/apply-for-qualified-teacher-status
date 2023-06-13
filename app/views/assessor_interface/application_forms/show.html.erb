@@ -38,7 +38,7 @@
     <% notification_banner.with_heading(text: "The application details match a record in DQT") %>
 
     <p class="govuk-body govuk-!-margin-bottom-1">
-      DQT contains a matching record for the name and date of birth of this applicant. <strong class="govuk-!-font-weight-bold">Teacher Reference Number: <%= @view_object.application_form.dqt_match["trn"] %>.
+      DQT contains a matching record for the name and date of birth of this applicant. <strong class="govuk-!-font-weight-bold">Teacher Reference Number: <%= @view_object.application_form.dqt_match["trn"] %></strong>.
     </p>
   <% end %>
 <% end %>
