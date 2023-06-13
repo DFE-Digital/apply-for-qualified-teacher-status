@@ -107,15 +107,12 @@ class ApplicationForm < ApplicationRecord
   belongs_to :reviewer, class_name: "Staff", optional: true
 
   validates :submitted_at, presence: true, unless: :draft?
-  validates :awarded_at, presence: true, if: :awarded?
-  validates :awarded_at, absence: true, if: :declined?
-  validates :awarded_at, absence: true, if: :withdrawn?
-  validates :declined_at, presence: true, if: :declined?
-  validates :declined_at, absence: true, if: :awarded?
-  validates :declined_at, absence: true, if: :withdrawn?
-  validates :withdrawn_at, presence: true, if: :withdrawn?
-  validates :withdrawn_at, absence: true, if: :awarded?
-  validates :withdrawn_at, absence: true, if: :declined?
+  validates :awarded_at, absence: true, if: :declined_at?
+  validates :awarded_at, absence: true, if: :withdrawn_at?
+  validates :declined_at, absence: true, if: :awarded_at?
+  validates :declined_at, absence: true, if: :withdrawn_at?
+  validates :withdrawn_at, absence: true, if: :awarded_at?
+  validates :withdrawn_at, absence: true, if: :declined_at?
 
   enum :english_language_proof_method,
        { medium_of_instruction: "medium_of_instruction", provider: "provider" },
