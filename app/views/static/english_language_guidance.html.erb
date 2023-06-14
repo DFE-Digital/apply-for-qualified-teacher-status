@@ -1,4 +1,4 @@
-<% content_for :page_title, 'English language guidance' %>
+<% content_for :page_title, "English language guidance" %>
 <% content_for :back_link_url, back_link_url %>
 
 <h1 class="govuk-heading-xl">Use an English language test in your qualified teacher status (QTS) application</h1>
@@ -9,20 +9,20 @@
 
 <p class="govuk-body">For QTS, the test must be a ‘Secure English Language test’ (SELT). That means it was taken:</p>
 
-
 <ul class="govuk-list govuk-list--bullet">
-    <li>with an approved provider</li>
-    <li>at an approved test location</li>
-    <li>within the last 2 years</li>
+  <li>with an approved provider</li>
+  <li>at an approved test location</li>
+  <li>within the last 2 years</li>
 </ul>
 
 <p class="govuk-body">Your test must be at level B2 or above of the <a
   href="https://www.coe.int/en/web/common-european-framework-reference-languages/level-descriptions"
   class="govuk-link">Common European Framework of Reference for Languages (CEFR)</a>.
 </p>
+
 <h3 class="govuk-heading-m">Approved providers and tests</h3>
 
-<p class="govuk-body">The Teaching Regulation Authority (TRA) recognises 5 approved SELT providers for QTS.</p>
+<p class="govuk-body">The Teaching Regulation Authority (TRA) recognises <%= EnglishLanguageProvider.count %> approved SELT providers for QTS.</p>
 
 <p class="govuk-body">
   Each provider offers a number of different tests, so it’s important to understand which ones we can accept.
@@ -47,7 +47,7 @@
     <% EnglishLanguageProvider.all.each do |provider| %>
       <% body.with_row do |row| %>
         <% row.with_cell do %>
-          <%= govuk_link_to provider.name, provider.url%>
+          <%= govuk_link_to provider.name, provider.url %>
         <% end %>
         <% row.with_cell(text: provider.accepted_tests) %>
         <% row.with_cell do %>
@@ -61,22 +61,22 @@
   <% end %>
 <% end %>
 
-<%= govuk_warning_text(icon_fallback_text: "Warning") do %><span class="govuk-!-font-weight-regular">If you’re already</span>
-  in the UK <span class="govuk-!-font-weight-regular">when you book your SELT, you cannot use PSI Services (UK) Ltd.
-  If you’re </span> outside the UK, <span class="govuk-!-font-weight-regular">you cannot use Trinity College London.</span>
+<%= govuk_warning_text(icon_fallback_text: "Warning") do %>
+  If you’re already in the UK when you book your SELT, you cannot use PSI Services (UK) Ltd.
+  If you’re outside the UK, you cannot use Trinity College London.
 <% end %>
 
 <h4 class="govuk-heading-m">Deciding which test is right for you</h4>
 
-<p class="govuk-body">We cannot recommend which of the approved providers is right for you. Prices and locations vary between providers, so you’ll need to research costs, as well as the availability of an approved test location near you.
+<p class="govuk-body">We cannot recommend which of the approved providers is right for you. Prices and locations vary between providers, so you’ll need to research costs, as well as the availability of an approved test location near you.</p>
 
-</p><h5 class="govuk-heading-m">About other SELT providers</h5>
+<h5 class="govuk-heading-m">About other SELT providers</h5>
 
-<p class="govuk-body">The TRA does not recognise any other providers or SELTS at the moment. If they do so in future, those providers and tests will also be listed on this page.
+<p class="govuk-body">The TRA does not recognise any other providers or SELTS at the moment. If they do so in future, those providers and tests will also be listed on this page.</p>
 
-</p><p class="govuk-body">If you plan to use your SELT for a Skilled Worker visa, you must use one of the 5 approved providers listed on this page. No future providers or tests will be accepted for this purpose.
+<p class="govuk-body">If you plan to use your SELT for a Skilled Worker visa, you must use one of the 5 approved providers listed on this page. No future providers or tests will be accepted for this purpose.</p>
 
-</p><h6 class="govuk-heading-m">Providing evidence of your SELT</h6>
+<h6 class="govuk-heading-m">Providing evidence of your SELT</h6>
 
 <p class="govuk-body">The QTS application form will ask you to provide the reference number for your SELT. The approved providers use different names for these numbers. These are:</p>
 
