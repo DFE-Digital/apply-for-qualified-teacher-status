@@ -5,7 +5,7 @@ class Staff::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     provider = auth["provider"]
     uid = auth["uid"]
 
-    @staff = Staff.find_by(email:, provider: "azure_activedirectory_v2")
+    @staff = Staff.find_by(email:)
 
     if @staff&.update(provider:, uid:)
       sign_in_and_redirect @staff, event: :authentication
