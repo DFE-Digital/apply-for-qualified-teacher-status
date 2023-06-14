@@ -2,49 +2,10 @@
 <% content_for :page_title, "#{"Error: " if @assessment_section_form.errors.any?}#{t(".title.#{section_key}")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@assessment_section_view_object.application_form) %>
 
-<% if @assessment_section_view_object.show_work_history_information_appears_in_other_applications? %>
-  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
-    <% notification_banner.with_heading(text: "The highlighted information also appears in other applications") %>
 
-    <p class="govuk-body">Check the applications listed below to review the matching information.</p>
-
-    <% @assessment_section_view_object.work_history_application_forms_contact_email_used_as_teacher.each do |email_address, application_forms| %>
-      <% next unless application_forms.present? %>
-
-      <p class="govuk-body govuk-!-margin-bottom-1">
-        <strong class="govuk-!-font-weight-bold"><%= email_address %></strong> appears as an <strong class="govuk-!-font-weight-bold">applicant</strong> in these applications:
-      </p>
-
-      <ul class="govuk-list">
-        <% application_forms.each do |application_form| %>
-          <li>
-            <%= link_to "Check application #{application_form.reference} (opens in a new window)",
-                        assessor_interface_application_form_path(application_form),
-                        target: :_blank, class: "govuk-notification-banner__link" %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-
-    <% @assessment_section_view_object.work_history_application_forms_contact_email_used_as_reference.each do |email_address, application_forms| %>
-      <% next unless application_forms.present? %>
-
-      <p class="govuk-body govuk-!-margin-bottom-1">
-        <strong class="govuk-!-font-weight-bold"><%= email_address %></strong> appears as a <strong class="govuk-!-font-weight-bold">reference</strong> in these applications:
-      </p>
-
-      <ul class="govuk-list">
-        <% application_forms.each do |application_form| %>
-          <li>
-            <%= link_to "Check application #{application_form.reference} (opens in a new window)",
-                        assessor_interface_application_form_path(application_form),
-                        target: :_blank, class: "govuk-notification-banner__link" %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-  <% end %>
-<% end %>
+<%= render "linked_application_forms",
+          application_forms_contact_email_used_as_teacher: @assessment_section_view_object.work_history_application_forms_contact_email_used_as_teacher,
+          application_forms_contact_email_used_as_reference: @assessment_section_view_object.work_history_application_forms_contact_email_used_as_reference %>
 
 <%= render "shared/assessor_header",
            title: t(".title.#{section_key}"),
