@@ -4,7 +4,7 @@ class Staff::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     email = auth["info"]["email"]
     azure_ad_uid = auth["uid"]
 
-    @staff = Staff.find_by(email:, provider: "azure_activedirectory_v2")
+    @staff = Staff.find_by(email:)
 
     if @staff&.update(azure_ad_uid:)
       @staff.confirm unless @staff.confirmed?
