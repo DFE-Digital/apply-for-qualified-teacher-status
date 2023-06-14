@@ -1,6 +1,7 @@
 import dfeAutocomplete from "dfe-autocomplete";
 import { initAll } from "govuk-frontend";
 import openregisterLocationPicker from "govuk-country-and-territory-autocomplete";
+import checkboxSearchFilter from "./checkbox_search_filter";
 
 initAll();
 
@@ -54,3 +55,5 @@ var loadCountryAutoComplete = () => {
 
 loadCountryAutoComplete();
 dfeAutocomplete({});
+
+checkboxSearchFilter("app-applications-filters-assessor", "Search assessors");
