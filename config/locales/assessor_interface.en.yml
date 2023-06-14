@@ -187,7 +187,7 @@ en:
           qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
-          qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged 11-16.
+          qualified_to_teach_children_11_to_16: "The applicant is not qualified to teach children aged 11-16 in one of the following subjects: Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian or Spanish."
           registration_number: We could not find the applicant’s reference number, or the number was in the wrong format. The applicant will need to supply the number again.
           registration_number_alternative: We could not find the applicant’s reference number. The applicant will need to upload written proof of recognition as a teacher instead.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.

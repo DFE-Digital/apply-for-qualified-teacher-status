@@ -46,6 +46,9 @@ class AssessmentSection < ApplicationRecord
 
   validates :preliminary, uniqueness: { scope: %i[assessment key] }
 
+  scope :preliminary, -> { where(preliminary: true) }
+  scope :not_preliminary, -> { where(preliminary: false) }
+
   validates :selected_failure_reasons,
             presence: true,
             if: -> { passed == false }
