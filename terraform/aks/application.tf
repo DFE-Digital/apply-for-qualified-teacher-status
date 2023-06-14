@@ -20,8 +20,11 @@ module "application_configuration" {
     BIGQUERY_PROJECT_ID = "apply-for-qts-in-england",
     BIGQUERY_DATASET    = "events_${var.app_environment}",
     BIGQUERY_TABLE_NAME = "events",
+
+    DQT_API_URL = var.dqt_api_url
   }
 
+  secret_key_vault_short = "app"
   secret_variables = {
     DATABASE_URL = module.postgres.url
     REDIS_URL    = module.redis.url
@@ -29,8 +32,6 @@ module "application_configuration" {
     AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.uploads.name,
     AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.uploads.primary_access_key,
     AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
-
-    DQT_API_URL = var.dqt_api_url
   }
 }
 

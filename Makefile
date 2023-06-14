@@ -81,14 +81,20 @@ preproduction_aks: aks
 production_aks: aks
 	$(eval include global_config/production_aks.sh)
 
-.PHONY: read-keyvault-config
-read-keyvault-config:
+.PHONY: set-key-vault-names
+set-key-vault-names:
 	$(if $(KEY_VAULT_SECRET_NAME), , $(error Missing environment variable "KEY_VAULT_SECRET_NAME"))
 	$(eval KEY_VAULT_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-kv)
+	$(eval KEY_VAULT_APPLICATION_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-app-kv)
+	$(eval KEY_VAULT_INFRASTRUCTURE_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-inf-kv)
 
-.PHONY: print-keyvault-name
-print-keyvault-name: read-keyvault-config  ## Print the name of the key vault
-	echo ${KEY_VAULT_NAME}
+.PHONY: print-application-key-vault-name
+print-application-key-vault-name: set-key-vault-names  ## Print the name of the application key vault
+	echo ${KEY_VAULT_APPLICATION_NAME}
+
+.PHONY: print-infrastructure-key-vault-name
+print-infrastructure-key-vault-name: set-key-vault-names  ## Print the name of the infrastructure key vault
+	echo ${KEY_VAULT_INFRASTRUCTURE_NAME}
 
 .PHONY: set-resource-group-name
 set-resource-group-name:
@@ -132,16 +138,16 @@ install-konduit: ## Install the konduit script, for accessing backend services
 		|| true
 
 .PHONY: edit-keyvault-secret
-edit-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
+edit-keyvault-secret: set-key-vault-names install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} \
 		-e -d azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml -c
 
 .PHONY: print-keyvault-secret
-print-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
+print-keyvault-secret: set-key-vault-names install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml
 
 .PHONY: validate-keyvault-secret
-validate-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
+validate-keyvault-secret: set-key-vault-names install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -d quiet \
 		&& echo Data in ${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} looks valid
 
@@ -245,12 +251,12 @@ check-auto-approve:
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 
 .PHONY: arm-deployment
-arm-deployment: set-resource-group-name set-azure-account set-azure-template-tag set-azure-resource-group-tags
+arm-deployment: set-resource-group-name set-azure-account set-azure-template-tag set-azure-resource-group-tags set-key-vault-names
 	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
 		-l "${REGION}" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}${STORAGE_ACCOUNT_SUFFIX}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
-			keyVaultNames='("${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-app-kv", "${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv")' \
+			keyVaultNames='("${KEY_VAULT_APPLICATION_NAME}", "${KEY_VAULT_INFRASTRUCTURE_NAME}")' \
 			"enableKVPurgeProtection=${KEY_VAULT_PURGE_PROTECTION}" ${WHAT_IF}
 
 .PHONY: deploy-azure-resources

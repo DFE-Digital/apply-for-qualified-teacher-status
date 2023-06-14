@@ -57,19 +57,18 @@ runs:
 
     - id: key-vault-name
       shell: bash
-      run: echo "value=$(make -s ${{ inputs.environment }}_aks print-keyvault-name)" >> $GITHUB_OUTPUT
+      run: echo "value=$(make -s ${{ inputs.environment }}_aks print-application-key-vault-name)" >> $GITHUB_OUTPUT
       env:
         PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
 
-    - uses: DfE-Digital/keyvault-yaml-secret@v1
+    - uses: Azure/get-keyvault-secrets@v1
       id: smoke-test-secrets
       with:
         keyvault: ${{ steps.key-vault-name.outputs.value }}
-        secret: APPLICATION
-        key: SUPPORT_USERNAME,SUPPORT_PASSWORD
+        secrets: "SUPPORT-USERNAME,SUPPORT-PASSWORD"
 
     - uses: ./.github/actions/smoke-test
       with:
         url: ${{ steps.apply-terraform.outputs.url }}
-        username: ${{ steps.smoke-test-secrets.outputs.SUPPORT_USERNAME }}
-        password: ${{ steps.smoke-test-secrets.outputs.SUPPORT_PASSWORD }}
+        username: ${{ steps.smoke-test-secrets.outputs.SUPPORT-USERNAME }}
+        password: ${{ steps.smoke-test-secrets.outputs.SUPPORT-PASSWORD }}
