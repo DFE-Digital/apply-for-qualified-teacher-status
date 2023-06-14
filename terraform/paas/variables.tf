@@ -129,3 +129,14 @@ locals {
     restore_from_point_in_time_before = var.paas_restore_db_from_point_in_time_before
   } : {}
 }
+
+variable "statuscake_ssl_contact_group" {
+  type        = string
+  default     = null
+  description = "ID of the StatusCake contact group. If empty, SSL check is not enabled"
+}
+variable "statuscake_ssl_domain" {
+  type        = string
+  default     = null
+  description = "Domain to be checked for SSL cerificate"
+}
