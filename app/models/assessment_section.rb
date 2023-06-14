@@ -7,14 +7,15 @@
 #  failure_reasons :string           default([]), is an Array
 #  key             :string           not null
 #  passed          :boolean
+#  preliminary     :boolean          default(FALSE), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  assessment_id   :bigint           not null
 #
 # Indexes
 #
-#  index_assessment_sections_on_assessment_id          (assessment_id)
-#  index_assessment_sections_on_assessment_id_and_key  (assessment_id,key) UNIQUE
+#  index_assessment_sections_on_assessment_id                  (assessment_id)
+#  index_assessment_sections_on_assessment_id_preliminary_key  (assessment_id,preliminary,key) UNIQUE
 #
 # Foreign Keys
 #
@@ -37,11 +38,13 @@ class AssessmentSection < ApplicationRecord
   validates :key,
             presence: true,
             uniqueness: {
-              scope: [:assessment],
+              scope: %i[assessment preliminary],
             },
             inclusion: {
               in: keys.values,
             }
+
+  validates :preliminary, uniqueness: { scope: %i[assessment key] }
 
   validates :selected_failure_reasons,
             presence: true,

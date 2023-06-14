@@ -87,6 +87,7 @@
   :assessment_sections:
     - id
     - assessment_id
+    - preliminary
     - key
     - passed
     - checks
