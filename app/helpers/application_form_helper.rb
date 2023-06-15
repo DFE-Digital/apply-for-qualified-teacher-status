@@ -113,7 +113,7 @@ module ApplicationFormHelper
     application_form
   )
     earliest_certificate_date =
-      application_form.teaching_qualification.certificate_date
+      application_form.teaching_qualification&.certificate_date
     earliest_work_history_date =
       application_form.work_histories.pluck(:start_date).compact.min
 
