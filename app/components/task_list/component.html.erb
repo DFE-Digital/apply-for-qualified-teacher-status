@@ -1,0 +1,31 @@
+<ol class="app-task-list">
+  <% sections.each do |section| %>
+    <li>
+      <h2 class="app-task-list__section">
+        <% if sections.count > 1 %>
+          <span class="app-task-list__section-number"><%= section[:number] %>. </span>
+        <% end %>
+
+        <%= section[:title] %>
+      </h2>
+
+      <ul class="app-task-list__items">
+        <% section[:items].each do |item| %>
+          <li class="app-task-list__item">
+            <% status_key = "#{section[:number]}-#{section[:key]}-#{item[:key]}" %>
+
+            <span class="app-task-list__task-name" aria-describedby="<%= status_key %>-status">
+              <% if (link = item[:link]).present? %>
+                <%= govuk_link_to item[:name], link %>
+              <% else %>
+                <%= item[:name] %>
+              <% end %>
+            </span>
+
+            <%= render(StatusTag::Component.new(key: status_key, status: item[:status], class_context: "app-task-list")) %>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ol>
