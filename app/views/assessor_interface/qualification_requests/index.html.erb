@@ -7,30 +7,20 @@
   </div>
 
   <div class="govuk-grid-column-full-from-desktop">
-    <ol class="app-task-list">
-      <li>
-        <h2 class="app-task-list__section">Qualifications</h2>
-
-        <ul class="app-task-list__items govuk-!-padding-left-0">
-          <% @qualification_requests.each_with_index do |qualification_request| %>
-            <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <%= govuk_link_to(
-                  qualification_title(qualification_request.qualification),
-                  [:edit, :assessor_interface, @application_form, @assessment, qualification_request]
-                ) %>
-              </span>
-
-              <%= render StatusTag::Component.new(
-                key: "qualification-request-#{qualification_request.id}",
-                status: qualification_request.status,
-                class_context: "app-task-list",
-              ) %>
-            </li>
-          <% end %>
-        </ul>
-      </li>
-    </ol>
+    <%= render TaskList::Component.new(
+      [
+        {
+          title: "Qualifications",
+          items: @qualification_requests.map do |qualification_request|
+            {
+              name: qualification_title(qualification_request.qualification),
+              link: [:edit, :assessor_interface, @application_form, @assessment, qualification_request],
+              status: qualification_request.status
+            }
+          end
+        }
+      ]
+    ) %>
   </div>
 
   <div class="govuk-grid-column-two-thirds">

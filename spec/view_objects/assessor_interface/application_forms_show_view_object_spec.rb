@@ -31,245 +31,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
   end
 
-  describe "#assessment_tasks" do
-    subject(:assessment_tasks) { view_object.assessment_tasks }
+  describe "#task_list_sections" do
+    subject(:task_list_sections) { view_object.task_list_sections }
 
-    let(:application_form) { create(:application_form, :submitted) }
-    let(:assessment) { create(:assessment, application_form:) }
-    before do
-      create(:assessment_section, :personal_information, assessment:)
-      create(:assessment_section, :qualifications, assessment:)
-    end
-
-    let(:params) { { id: application_form.id } }
-
-    describe "pre-assessment tasks" do
-      subject(:pre_assessment_tasks) { assessment_tasks[:pre_assessment_tasks] }
-
-      it { is_expected.to be_nil }
-
-      context "when teaching authority provides written statement and a professional standing request" do
-        before do
-          application_form.update!(
-            teaching_authority_provides_written_statement: true,
-          )
-          create(:professional_standing_request, assessment:)
-        end
-
-        it { is_expected.to eq(%i[await_professional_standing_request]) }
-      end
-
-      context "with a preliminary check" do
-        before do
-          application_form.update!(requires_preliminary_check: true)
-          create(:professional_standing_request, assessment:)
-        end
-
-        it { is_expected.to eq(%i[preliminary_check]) }
-      end
-    end
-
-    describe "initial assessment" do
-      subject(:initial_assessment) { assessment_tasks[:initial_assessment] }
-
-      it { is_expected.to_not be_nil }
-
-      context "with work history" do
-        before { create(:assessment_section, :work_history, assessment:) }
-
-        it do
-          is_expected.to eq(
-            %i[
-              personal_information
-              qualifications
-              work_history
-              initial_assessment_recommendation
-            ],
-          )
-        end
-      end
-
-      context "with professional standing statement" do
-        before do
-          create(:assessment_section, :professional_standing, assessment:)
-        end
-
-        it do
-          is_expected.to eq(
-            %i[
-              personal_information
-              qualifications
-              professional_standing
-              initial_assessment_recommendation
-            ],
-          )
-        end
-      end
-    end
-
-    describe "further information requests" do
-      subject(:further_information) do
-        assessment_tasks[:further_information_requests]
-      end
-
-      it { is_expected.to be_nil }
-
-      context "with further information" do
-        before { create(:further_information_request, assessment:) }
-
-        it { is_expected.to eq([:review_requested_information]) }
-      end
-    end
-
-    describe "verification requests" do
-      subject(:verification_requests) do
-        assessment_tasks[:verification_requests]
-      end
-
-      it { is_expected.to be_nil }
-
-      context "with a professional standing request" do
-        before { create(:professional_standing_request, assessment:) }
-
-        it do
-          is_expected.to eq(
-            %i[
-              locate_professional_standing_request
-              review_professional_standing_request
-              assessment_recommendation
-            ],
-          )
-        end
-      end
-
-      context "with a qualification request" do
-        before { create(:qualification_request, assessment:) }
-
-        it do
-          is_expected.to eq(
-            %i[qualification_requests assessment_recommendation],
-          )
-        end
-      end
-
-      context "with a reference request" do
-        before { create(:reference_request, assessment:) }
-
-        it do
-          is_expected.to eq(%i[reference_requests assessment_recommendation])
-        end
-      end
-    end
-  end
-
-  describe "#assessment_task_path" do
-    subject(:assessment_task_path) do
-      view_object.assessment_task_path(section, item, index)
-    end
-
-    let(:application_form) { create(:application_form, :submitted) }
-    let!(:assessment) { create(:assessment, application_form:) }
-
-    let(:params) { { id: application_form.id } }
-
-    let(:index) { 0 }
-
-    context "with pre-assessment tasks section" do
-      let(:section) { :pre_assessment_tasks }
-      let(:item) { :professional_standing }
-
-      it do
-        is_expected.to eq(
-          "/assessor/applications/#{application_form.id}" \
-            "/assessments/#{assessment.id}/professional-standing-request/location",
-        )
-      end
-    end
-
-    context "with initial assessment section" do
-      let(:section) { :initial_assessment }
-
-      context "and personal information" do
-        let(:item) { :personal_information }
-
-        let!(:assessment_section) do
-          create(:assessment_section, :personal_information, assessment:)
-        end
-
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/sections/#{assessment_section.id}",
-          )
-        end
-      end
-
-      context "and assessment recommendation" do
-        let(:item) { :initial_assessment_recommendation }
-
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/edit",
-          )
-        end
-      end
-    end
-
-    context "with further_information_requests section" do
-      let(:section) { :further_information_requests }
-      let(:item) { :review_requested_information }
-
-      context "and a requested further information request" do
-        let!(:further_information_request) do
-          create(:further_information_request, :requested, assessment:)
-        end
-        it { is_expected.to be_nil }
-      end
-
-      context "and a received further information request" do
-        let!(:further_information_request) do
-          create(:further_information_request, :received, assessment:)
-        end
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
-              "/further-information-requests/#{further_information_request.id}/edit",
-          )
-        end
-      end
-    end
-
-    context "with verification_requests section" do
-      let(:section) { :verification_requests }
-
-      context "with record qualification requests item" do
-        let(:item) { :qualification_requests }
-
-        before { application_form.update!(waiting_on_qualification: true) }
-
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
-              "/qualification-requests",
-          )
-        end
-      end
-
-      context "with reference requests item" do
-        let(:item) { :reference_requests }
-
-        before { application_form.update!(waiting_on_reference: true) }
-
-        it do
-          is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}" \
-              "/reference-requests",
-          )
-        end
-      end
-    end
-  end
-
-  describe "#assessment_task_status" do
     let(:application_form) { create(:application_form, :submitted) }
     let(:assessment) { create(:assessment, application_form:) }
     let!(:assessment_section) do
@@ -278,206 +42,368 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     let(:params) { { id: application_form.id } }
 
-    subject(:assessment_task_status) do
-      view_object.assessment_task_status(section, item, index)
+    it do
+      is_expected.to_not include_task_list_item(
+        "Pre-assessment tasks",
+        "Preliminary check",
+      )
+    end
+    it do
+      is_expected.to_not include_task_list_item(
+        "Pre-assessment tasks",
+        "Awaiting third-party professional standing",
+      )
     end
 
-    let(:index) { 0 }
+    it do
+      is_expected.to include_task_list_item(
+        "Initial assessment",
+        "Check personal information",
+      )
+    end
+    it do
+      is_expected.to_not include_task_list_item(
+        "Initial assessment",
+        "Check qualifications",
+      )
+    end
+    it do
+      is_expected.to_not include_task_list_item(
+        "Initial assessment",
+        "Check work history",
+      )
+    end
+    it do
+      is_expected.to_not include_task_list_item(
+        "Initial assessment",
+        "Check professional standing",
+      )
+    end
+    it do
+      is_expected.to include_task_list_item(
+        "Initial assessment",
+        "Initial assessment recommendation",
+        status: :cannot_start,
+      )
+    end
 
-    context "with pre-assessment tasks section" do
-      let(:section) { :pre_assessment_tasks }
+    it do
+      is_expected.to_not include_task_list_section(
+        "Further information requests",
+      )
+    end
+    it { is_expected.to_not include_task_list_section("Verification requests") }
 
-      context "await professional standing request" do
-        let(:item) { :await_professional_standing_request }
+    context "when teaching authority provides written statement and a professional standing request" do
+      let!(:professional_standing_request) do
+        create(:professional_standing_request, assessment:)
+      end
+      before do
+        application_form.update!(
+          teaching_authority_provides_written_statement: true,
+        )
+      end
 
+      it do
+        is_expected.to include_task_list_item(
+          "Pre-assessment tasks",
+          "Awaiting third-party professional standing",
+          status: :waiting_on,
+        )
+      end
+
+      context "and professional standing request received" do
         before do
-          application_form.update!(
-            teaching_authority_provides_written_statement: true,
+          professional_standing_request.update!(
+            state: "received",
+            received_at: 1.day.ago,
+            location_note: "wat",
           )
-          create(:professional_standing_request, assessment:)
         end
 
-        it { is_expected.to eq(:waiting_on) }
-
-        context "and professional standing request received" do
-          before do
-            assessment.professional_standing_request.update!(
-              state: "received",
-              received_at: 1.day.ago,
-              location_note: "wat",
-            )
-          end
-
-          it { is_expected.to eq(:completed) }
-        end
-
-        context "when preliminary check is required" do
-          before do
-            create(:professional_standing_request, assessment:)
-            application_form.update!(requires_preliminary_check: true)
-          end
-
-          it { is_expected.to eq(:cannot_start) }
+        it do
+          is_expected.to include_task_list_item(
+            "Pre-assessment tasks",
+            "Awaiting third-party professional standing",
+            status: :completed,
+          )
         end
       end
 
-      context "with preliminary check" do
-        let(:item) { :preliminary_check }
-
+      context "when preliminary check is required" do
         before { application_form.update!(requires_preliminary_check: true) }
 
-        context "when the check hasn't been completed" do
-          before do
-            application_form.assessment.update!(preliminary_check_complete: nil)
-          end
-
-          it { is_expected.to eq(:not_started) }
-        end
-
-        context "when the check has been completed" do
-          before do
-            application_form.assessment.update!(
-              preliminary_check_complete: true,
-            )
-          end
-
-          it { is_expected.to eq(:completed) }
-        end
-
-        context "when the check has been declined" do
-          before do
-            application_form.assessment.update!(
-              preliminary_check_complete: false,
-            )
-          end
-
-          it { is_expected.to eq(:completed) }
+        it do
+          is_expected.to include_task_list_item(
+            "Pre-assessment tasks",
+            "Awaiting third-party professional standing",
+            status: :cannot_start,
+          )
         end
       end
     end
 
-    context "with initial assessment section" do
-      let(:section) { :initial_assessment }
+    context "with a preliminary check" do
+      before { application_form.update!(requires_preliminary_check: true) }
 
-      context "personal information" do
-        let(:item) { :personal_information }
-
-        it { is_expected.to eq(:not_started) }
+      it do
+        is_expected.to include_task_list_item(
+          "Pre-assessment tasks",
+          "Preliminary check",
+          status: :not_started,
+        )
       end
 
-      context "assessment recommendation" do
-        let(:item) { :initial_assessment_recommendation }
-
-        context "with unfinished assessment sections" do
-          it { is_expected.to eq(:cannot_start) }
+      context "when the check has been completed" do
+        before do
+          application_form.assessment.update!(preliminary_check_complete: true)
         end
 
-        context "with finished assessment sections" do
-          before { assessment_section.update!(passed: true) }
-          it { is_expected.to eq(:not_started) }
+        it do
+          is_expected.to include_task_list_item(
+            "Pre-assessment tasks",
+            "Preliminary check",
+            status: :completed,
+          )
+        end
+      end
 
-          context "and award" do
-            before { assessment.award! }
-            it { is_expected.to eq(:completed) }
-          end
+      context "when the check has been declined" do
+        before do
+          application_form.assessment.update!(preliminary_check_complete: false)
+        end
 
-          context "and decline" do
-            before { assessment.decline! }
-            it { is_expected.to eq(:completed) }
-          end
-
-          context "and request further information" do
-            before do
-              assessment.request_further_information!
-              create(
-                :selected_failure_reason,
-                :fi_requestable,
-                assessment_section:,
-              )
-              assessment_section.reload.update!(passed: false)
-            end
-
-            it { is_expected.to eq(:in_progress) }
-
-            context "and further information requested" do
-              before { create(:further_information_request, assessment:) }
-              it { is_expected.to eq(:completed) }
-            end
-          end
+        it do
+          is_expected.to include_task_list_item(
+            "Pre-assessment tasks",
+            "Preliminary check",
+            status: :completed,
+          )
         end
       end
     end
 
-    context "with further_information_requests section" do
-      let(:section) { :further_information_requests }
-      let(:item) { :review_requested_information }
+    context "with work history" do
+      before { create(:assessment_section, :work_history, assessment:) }
 
-      before { assessment.request_further_information! }
-
-      context "and a requested further information request" do
-        before { create(:further_information_request, :requested, assessment:) }
-        it { is_expected.to eq(:cannot_start) }
-      end
-
-      context "and a received further information request" do
-        before { create(:further_information_request, :received, assessment:) }
-        it { is_expected.to eq(:not_started) }
-      end
-
-      context "and a passed further information request" do
-        before do
-          create(:further_information_request, :received, :passed, assessment:)
-        end
-        it { is_expected.to eq(:in_progress) }
-      end
-
-      context "and a failed further information request" do
-        before do
-          create(:further_information_request, :received, :failed, assessment:)
-        end
-        it { is_expected.to eq(:in_progress) }
-      end
-
-      context "and a passed further information request with finished assessment" do
-        before do
-          assessment.award!
-          create(:further_information_request, :received, :passed, assessment:)
-        end
-        it { is_expected.to eq(:completed) }
-      end
-
-      context "and a failed further information request" do
-        before do
-          assessment.decline!
-          create(:further_information_request, :received, :failed, assessment:)
-        end
-        it { is_expected.to eq(:completed) }
+      it do
+        is_expected.to include_task_list_item(
+          "Initial assessment",
+          "Check work history",
+        )
       end
     end
 
-    context "with verification requests section" do
-      let(:section) { :verification_requests }
-      let(:item) { :assessment_recommendation }
+    context "with professional standing statement" do
+      before do
+        create(:assessment_section, :professional_standing, assessment:)
+      end
 
-      it { is_expected.to eq(:cannot_start) }
+      it do
+        is_expected.to include_task_list_item(
+          "Initial assessment",
+          "Check professional standing",
+        )
+      end
+    end
 
-      context "when decline-able" do
+    context "with finished assessment sections" do
+      before { assessment_section.update!(passed: true) }
+
+      it do
+        is_expected.to include_task_list_item(
+          "Initial assessment",
+          "Initial assessment recommendation",
+          status: :not_started,
+        )
+      end
+
+      context "and award" do
+        before { assessment.award! }
+        it do
+          is_expected.to include_task_list_item(
+            "Initial assessment",
+            "Initial assessment recommendation",
+            status: :completed,
+          )
+        end
+      end
+
+      context "and decline" do
+        before { assessment.decline! }
+        it do
+          is_expected.to include_task_list_item(
+            "Initial assessment",
+            "Initial assessment recommendation",
+            status: :completed,
+          )
+        end
+      end
+
+      context "and request further information" do
         before do
           assessment.request_further_information!
-          create(:further_information_request, :received, :failed, assessment:)
+          create(:selected_failure_reason, :fi_requestable, assessment_section:)
+          assessment_section.reload.update!(passed: false)
         end
 
-        it { is_expected.to eq(:not_started) }
+        it do
+          is_expected.to include_task_list_item(
+            "Initial assessment",
+            "Initial assessment recommendation",
+            status: :in_progress,
+          )
+        end
+
+        context "and further information requested" do
+          before { create(:further_information_request, assessment:) }
+          it do
+            is_expected.to include_task_list_item(
+              "Initial assessment",
+              "Initial assessment recommendation",
+              status: :completed,
+            )
+          end
+        end
+      end
+    end
+
+    context "with a requested further information" do
+      before { create(:further_information_request, :requested, assessment:) }
+
+      it do
+        is_expected.to include_task_list_item(
+          "Further information requests",
+          "Review requested information from applicant",
+          status: :cannot_start,
+        )
+      end
+    end
+
+    context "with a received further information" do
+      before { create(:further_information_request, :received, assessment:) }
+
+      it do
+        is_expected.to include_task_list_item(
+          "Further information requests",
+          "Review requested information from applicant",
+          status: :not_started,
+        )
+      end
+    end
+
+    context "with a passed further information request" do
+      before do
+        assessment.request_further_information!
+        create(:further_information_request, :received, :passed, assessment:)
       end
 
-      context "with an award recommendation" do
-        before { assessment.award! }
-        it { is_expected.to eq(:completed) }
+      it do
+        is_expected.to include_task_list_item(
+          "Further information requests",
+          "Review requested information from applicant",
+          status: :in_progress,
+        )
+      end
+    end
+
+    context "with a failed further information request" do
+      before do
+        assessment.request_further_information!
+        create(:further_information_request, :received, :failed, assessment:)
       end
 
-      context "with a decline recommendation" do
-        before { assessment.award! }
-        it { is_expected.to eq(:completed) }
+      it do
+        is_expected.to include_task_list_item(
+          "Further information requests",
+          "Review requested information from applicant",
+          status: :in_progress,
+        )
+      end
+    end
+
+    context "with a passed further information request and a finished assessment" do
+      before do
+        assessment.award!
+        create(:further_information_request, :received, :passed, assessment:)
+      end
+      it do
+        is_expected.to include_task_list_item(
+          "Further information requests",
+          "Review requested information from applicant",
+          status: :completed,
+        )
+      end
+    end
+
+    context "with a failed further information request and a finished assessment" do
+      before do
+        assessment.decline!
+        create(:further_information_request, :received, :failed, assessment:)
+      end
+      it do
+        is_expected.to include_task_list_item(
+          "Further information requests",
+          "Review requested information from applicant",
+          status: :completed,
+        )
+      end
+    end
+
+    context "with a professional standing request" do
+      before { create(:professional_standing_request, assessment:) }
+
+      it do
+        is_expected.to include_task_list_item(
+          "Verification requests",
+          "Record LOPS response",
+        )
+      end
+      it do
+        is_expected.to include_task_list_item(
+          "Verification requests",
+          "Review LOPS response",
+        )
+      end
+      it do
+        is_expected.to include_task_list_item(
+          "Verification requests",
+          "Assessment recommendation",
+        )
+      end
+    end
+
+    context "with a qualification request" do
+      before { create(:qualification_request, assessment:) }
+
+      it do
+        is_expected.to include_task_list_item(
+          "Verification requests",
+          "Record qualifications responses",
+        )
+      end
+      it do
+        is_expected.to include_task_list_item(
+          "Verification requests",
+          "Assessment recommendation",
+        )
+      end
+    end
+
+    context "with a reference request" do
+      before { create(:reference_request, assessment:) }
+
+      it do
+        is_expected.to include_task_list_item(
+          "Verification requests",
+          "Verify reference requests",
+        )
+      end
+      it do
+        is_expected.to include_task_list_item(
+          "Verification requests",
+          "Assessment recommendation",
+        )
       end
     end
   end

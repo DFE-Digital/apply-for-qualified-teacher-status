@@ -16,24 +16,26 @@ module TeacherInterface
           .find(params[:id])
     end
 
-    def task_items
-      further_information_request
-        .items
-        .order(:created_at)
-        .map do |item|
-          {
-            key: item.id,
-            text: item_text(item),
-            href: [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              further_information_request,
-              item,
-            ],
-            status: item.state,
-          }
-        end
+    def task_list_sections
+      items =
+        further_information_request
+          .items
+          .order(:created_at)
+          .map do |item|
+            {
+              name: item_name(item),
+              link: [
+                :edit,
+                :teacher_interface,
+                :application_form,
+                further_information_request,
+                item,
+              ],
+              status: item.state,
+            }
+          end
+
+      [{ title: "Further information requested", items: }]
     end
 
     def can_check_answers?
@@ -48,7 +50,7 @@ module TeacherInterface
         .order(:created_at)
         .each_with_object({}) do |item, memo|
           memo[item.id] = {
-            title: item_text(item),
+            title: item_name(item),
             value: item.text? ? item.response : item.document,
             href: [
               :edit,
@@ -69,7 +71,7 @@ module TeacherInterface
       @application_form ||= current_teacher.application_form
     end
 
-    def item_text(item)
+    def item_name(item)
       case item.information_type
       when "text"
         I18n.t(
