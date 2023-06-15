@@ -19,7 +19,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       initial_assessment_task_list_section,
       further_information_task_list_section,
       verification_task_list_section,
-    ]
+    ].compact
   end
 
   def status
@@ -65,42 +65,14 @@ class AssessorInterface::ApplicationFormsShowViewObject
           "assessor_interface.application_forms.show.assessment_tasks.sections.pre_assessment_tasks",
         ),
       items: [
-        preliminary_check_task_list_item,
+        *assessment_section_task_list_items(preliminary: true),
         await_professional_standing_task_list_item,
       ].compact,
     }
   end
 
-  def preliminary_check_task_list_item
-    return unless application_form.requires_preliminary_check
-
-    {
-      name:
-        I18n.t(
-          "assessor_interface.application_forms.show.assessment_tasks.items.preliminary_check",
-        ),
-      link: [
-        :assessor_interface,
-        application_form,
-        assessment,
-        :preliminary_check,
-      ],
-      status:
-        (
-          if assessment.preliminary_check_complete.nil?
-            :not_started
-          else
-            :completed
-          end
-        ),
-    }
-  end
-
   def await_professional_standing_task_list_item
-    unless teaching_authority_provides_written_statement &&
-             professional_standing_request.present?
-      return
-    end
+    return unless teaching_authority_provides_written_statement
 
     {
       name:
@@ -108,7 +80,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           "assessor_interface.application_forms.show.assessment_tasks.items.await_professional_standing_request",
         ),
       link:
-        if assessment.preliminary_check_complete != false
+        if preliminary_sections_finished?
           [
             :location,
             :assessor_interface,
@@ -118,31 +90,16 @@ class AssessorInterface::ApplicationFormsShowViewObject
           ]
         end,
       status:
-        if cannot_start_professional_standing_request?
-          :cannot_start
-        elsif preassessment_professional_standing_request_completed?
-          :completed
+        if preliminary_sections_finished?
+          professional_standing_request.received? ? :completed : :waiting_on
         else
-          :waiting_on
+          :cannot_start
         end,
     }
   end
 
   def initial_assessment_task_list_section
-    assessment_sections =
-      %i[
-        personal_information
-        qualifications
-        age_range_subjects
-        english_language_proficiency
-        work_history
-        professional_standing
-      ].filter_map { |key| assessment.sections.find { |s| s.key == key.to_s } }
-
-    assessment_section_items =
-      assessment_sections.map do |assessment_section|
-        assessment_section_task_list_item(assessment_section)
-      end
+    return unless pre_assessment_complete?
 
     {
       title:
@@ -150,39 +107,53 @@ class AssessorInterface::ApplicationFormsShowViewObject
           "assessor_interface.application_forms.show.assessment_tasks.sections.initial_assessment",
         ),
       items: [
-        *assessment_section_items,
+        *assessment_section_task_list_items(preliminary: false),
         initial_assessment_recommendation_task_list_item,
       ],
     }
   end
 
-  def assessment_section_task_list_item(assessment_section)
+  ASSESSMENT_SECTION_KEYS = %i[
+    personal_information
+    qualifications
+    age_range_subjects
+    english_language_proficiency
+    work_history
+    professional_standing
+  ].freeze
+
+  def assessment_section_task_list_items(preliminary:)
+    assessment_sections = assessment.sections.where(preliminary:).to_a
+
+    ASSESSMENT_SECTION_KEYS
+      .filter_map { |key| assessment_sections.find { |s| s.key == key.to_s } }
+      .map do |assessment_section|
+        assessment_section_task_list_item(assessment_section, preliminary:)
+      end
+  end
+
+  def assessment_section_task_list_item(assessment_section, preliminary:)
+    name =
+      I18n.t(
+        assessment_section.key,
+        scope: [
+          :assessor_interface,
+          :assessment_sections,
+          :show,
+          :title,
+          preliminary ? :preliminary : :not_preliminary,
+        ],
+      )
+
     {
-      name:
-        I18n.t(
-          assessment_section.key,
-          scope: %i[
-            assessor_interface
-            application_forms
-            show
-            assessment_tasks
-            items
-          ],
-        ),
+      name:,
       link: [
         :assessor_interface,
         application_form,
         assessment,
         assessment_section,
       ],
-      status:
-        (
-          if !preassessment_professional_standing_request_completed?
-            :cannot_start
-          else
-            assessment_section.status
-          end
-        ),
+      status: assessment_section.status,
     }
   end
 
@@ -242,8 +213,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           ]
         end,
       status:
-        if !preassessment_professional_standing_request_completed? ||
-             further_information_request.requested?
+        if further_information_request.requested?
           :cannot_start
         elsif further_information_request.passed.nil?
           :not_started
@@ -256,6 +226,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def verification_task_list_section
+    return unless pre_assessment_complete?
+
     items = [
       qualification_requests_task_list_item,
       reference_requests_task_list_item,
@@ -343,8 +315,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def locate_professional_standing_request_task_list_item
-    unless !teaching_authority_provides_written_statement &&
-             professional_standing_request.present?
+    if teaching_authority_provides_written_statement ||
+         professional_standing_request.blank?
       return
     end
 
@@ -373,8 +345,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def review_professional_standing_request_task_list_item
-    unless !teaching_authority_provides_written_statement &&
-             professional_standing_request.present?
+    if teaching_authority_provides_written_statement ||
+         professional_standing_request.blank?
       return
     end
 
@@ -406,12 +378,16 @@ class AssessorInterface::ApplicationFormsShowViewObject
     }
   end
 
-  def preassessment_professional_standing_request_completed?
+  def pre_assessment_complete?
     if teaching_authority_provides_written_statement
-      professional_standing_request.received?
+      preliminary_sections_finished? && professional_standing_request.received?
     else
-      true
+      preliminary_sections_finished?
     end
+  end
+
+  def preliminary_sections_finished?
+    assessment.sections.preliminary.all?(&:finished?)
   end
 
   def request_further_information_unfinished?
@@ -421,11 +397,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def initial_assessment_recommendation_complete?
     !assessment.unknown? && !request_further_information_unfinished?
-  end
-
-  def cannot_start_professional_standing_request?
-    application_form.requires_preliminary_check &&
-      !assessment.preliminary_check_complete
   end
 
   def requestables_task_item_status(requestables)

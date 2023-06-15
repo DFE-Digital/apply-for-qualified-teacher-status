@@ -18,21 +18,14 @@ en:
             pre_assessment_tasks: Pre-assessment tasks
             verification_requests: Verification requests
           items:
-            age_range_subjects: Verify age range and subjects
             assessment_recommendation: Assessment recommendation
             await_professional_standing_request: Awaiting third-party professional standing
-            english_language_proficiency: Check English language proficiency
             initial_assessment_recommendation: Initial assessment recommendation
             locate_professional_standing_request: Record LOPS response
-            personal_information: Check personal information
-            preliminary_check: Preliminary check
-            professional_standing: Check professional standing
             qualification_requests: Record qualifications responses
-            qualifications: Check qualifications
             reference_requests: Verify reference requests
             review_professional_standing_request: Review LOPS response
             review_requested_information: Review requested information from applicant
-            work_history: Check work history
 
     assessments:
       edit:
@@ -112,12 +105,15 @@ en:
     assessment_sections:
       show:
         title:
-          personal_information: Check personal information
-          qualifications: Check qualifications
-          age_range_subjects: Verify age range and subjects
-          english_language_proficiency: Check English language proficiency
-          work_history: Check work history
-          professional_standing: Check professional standing
+          not_preliminary:
+            age_range_subjects: Verify age range and subjects
+            english_language_proficiency: Check English language proficiency
+            personal_information: Check personal information
+            professional_standing: Check professional standing
+            qualifications: Check qualifications
+            work_history: Check work history
+          preliminary:
+            qualifications: Preliminary check (qualifications)
         checks:
           age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
           applicant_already_dqt: applicant does not already appear in DQT

@@ -1,14 +1,15 @@
+<% preliminary_key = @assessment_section_view_object.assessment_section.preliminary? ? "preliminary" : "not_preliminary" %>
 <% section_key = @assessment_section_view_object.assessment_section.key %>
-<% content_for :page_title, "#{"Error: " if @assessment_section_form.errors.any?}#{t(".title.#{section_key}")}" %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@assessment_section_view_object.application_form) %>
 
+<% content_for :page_title, "#{"Error: " if @assessment_section_form.errors.any?}#{t(".title.#{preliminary_key}.#{section_key}")}" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@assessment_section_view_object.application_form) %>
 
 <%= render "linked_application_forms",
           application_forms_contact_email_used_as_teacher: @assessment_section_view_object.work_history_application_forms_contact_email_used_as_teacher,
           application_forms_contact_email_used_as_reference: @assessment_section_view_object.work_history_application_forms_contact_email_used_as_reference %>
 
 <%= render "shared/assessor_header",
-           title: t(".title.#{section_key}"),
+           title: t(".title.#{preliminary_key}.#{section_key}"),
            application_form: @assessment_section_view_object.application_form %>
 
 <% unless section_key == "personal_information" %>

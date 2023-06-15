@@ -130,8 +130,8 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         end
       end
 
-      context "when preliminary check is required" do
-        before { application_form.update!(requires_preliminary_check: true) }
+      context "when preliminary checks exist" do
+        before { create(:assessment_section, :preliminary, assessment:) }
 
         it do
           is_expected.to include_task_list_item(
@@ -144,39 +144,25 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "with a preliminary check" do
-      before { application_form.update!(requires_preliminary_check: true) }
+      let!(:assessment_section) do
+        create(:assessment_section, :preliminary, assessment:)
+      end
 
       it do
         is_expected.to include_task_list_item(
           "Pre-assessment tasks",
-          "Preliminary check",
+          "Preliminary check (qualifications)",
           status: :not_started,
         )
       end
 
       context "when the check has been completed" do
-        before do
-          application_form.assessment.update!(preliminary_check_complete: true)
-        end
+        before { assessment_section.update!(passed: true) }
 
         it do
           is_expected.to include_task_list_item(
             "Pre-assessment tasks",
-            "Preliminary check",
-            status: :completed,
-          )
-        end
-      end
-
-      context "when the check has been declined" do
-        before do
-          application_form.assessment.update!(preliminary_check_complete: false)
-        end
-
-        it do
-          is_expected.to include_task_list_item(
-            "Pre-assessment tasks",
-            "Preliminary check",
+            "Preliminary check (qualifications)",
             status: :completed,
           )
         end

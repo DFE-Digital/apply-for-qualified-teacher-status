@@ -29,6 +29,7 @@ FactoryBot.define do
 
     trait :preliminary do
       preliminary { true }
+      key { "qualifications" }
     end
 
     trait :passed do

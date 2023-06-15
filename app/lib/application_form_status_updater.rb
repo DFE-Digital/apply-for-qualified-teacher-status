@@ -106,7 +106,7 @@ class ApplicationFormStatusUpdater
 
   def waiting_on_professional_standing
     if teaching_authority_provides_written_statement &&
-         requires_preliminary_check && !preliminary_check_complete
+         requires_preliminary_check && !preliminary_sections_finished?
       return false
     end
 
@@ -147,7 +147,7 @@ class ApplicationFormStatusUpdater
       elsif assessment&.started?
         "assessment_in_progress"
       elsif application_form.submitted_at.present?
-        if requires_preliminary_check && !preliminary_check_complete
+        if requires_preliminary_check && !preliminary_sections_finished?
           "preliminary_check"
         else
           "submitted"
@@ -164,10 +164,11 @@ class ApplicationFormStatusUpdater
            :teacher,
            :teaching_authority_provides_written_statement,
            to: :application_form
-  delegate :preliminary_check_complete,
-           :references_verified,
-           to: :assessment,
-           allow_nil: true
+  delegate :references_verified, to: :assessment, allow_nil: true
+
+  def preliminary_sections_finished?
+    assessment&.sections&.preliminary&.all?(&:finished?)
+  end
 
   def further_information_requests
     @further_information_requests ||=

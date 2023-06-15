@@ -24,10 +24,7 @@ module AssessorInterface
     end
 
     delegate :assessment, to: :assessment_section
-    delegate :application_form,
-             :preliminary_check_complete,
-             :professional_standing_request,
-             to: :assessment
+    delegate :application_form, :professional_standing_request, to: :assessment
     delegate :registration_number,
              :requires_preliminary_check,
              to: :application_form
@@ -47,7 +44,7 @@ module AssessorInterface
     end
 
     def render_form?
-      if requires_preliminary_check && preliminary_check_complete.nil?
+      if requires_preliminary_check && !preliminary_sections_finished?
         return false
       end
 
@@ -175,6 +172,10 @@ module AssessorInterface
       else
         []
       end
+    end
+
+    def preliminary_sections_finished?
+      assessment.sections.preliminary.all?(&:finished?)
     end
   end
 end

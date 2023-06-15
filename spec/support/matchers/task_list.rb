@@ -24,6 +24,7 @@ RSpec::Matchers.define :include_task_list_item do |section_title, name, **attrib
           item.merge(section_title: section[:title])
         end
       end
+
     expect(all_items).to include(
       hash_including(section_title:, name:, **attributes),
     )
