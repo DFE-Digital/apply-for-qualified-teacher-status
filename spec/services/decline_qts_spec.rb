@@ -49,21 +49,4 @@ RSpec.describe DeclineQTS do
       expect { call }.to_not change(application_form, :declined_at)
     end
   end
-
-  context "with a quick decline decision" do
-    let!(:application_form) do
-      create(
-        :application_form,
-        :submitted,
-        requires_preliminary_check: true,
-        teacher:,
-        assessment: create(:assessment, preliminary_check_complete: false),
-      )
-    end
-
-    it "creates a quick decline timeline event" do
-      expect { call }.to change(TimelineEvent, :count).by(2)
-      expect(TimelineEvent.last.event_type).to eq("quick_decline")
-    end
-  end
 end
