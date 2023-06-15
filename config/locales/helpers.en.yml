@@ -21,7 +21,7 @@ en:
       qualification:
         add_another: You can use the next section to tell us about additional degrees if you want to.
       teacher:
-        email: We’ll use this to send you a code to continue with your QTS application. Do not use a work or university email that you might lose access to.
+        email: We’ll use this to send you an email with a link to continue with your QTS application. Do not use a work or university email that you might lose access to.
       teacher_interface_alternative_name_form:
         has_alternative_name: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
         alternative_given_names: Enter your full name apart from your family name
@@ -36,7 +36,7 @@ en:
       teacher_interface_has_work_history_form:
         has_work_history: If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet.
       teacher_interface_new_session_form:
-        email: We need to send you a code so that you can sign into the Apply for QTS in England service. Please enter the email address you used to register.
+        email: We need to send you an email with a link so that you can sign into the Apply for QTS in England service. Please enter the email address you used to register.
       teacher_interface_qualification_form:
         institution_country_location: This must be the country in which you’re recognised as a teacher.
       teacher_interface_reference_request_additional_information_response_form:
