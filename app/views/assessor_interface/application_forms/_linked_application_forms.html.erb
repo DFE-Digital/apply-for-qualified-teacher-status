@@ -18,6 +18,6 @@
       <strong class="govuk-!-font-weight-bold"><%= teacher.email %></strong> appears as a <strong class="govuk-!-font-weight-bold">reference</strong> in these applications:
     </p>
 
-    <%= render "shared/linked_application_forms_list", application_forms: %>
+    <%= render "shared/linked_application_forms_list", application_forms: other_application_forms_where_email_used_as_reference %>
   <% end %>
 <% end %>
