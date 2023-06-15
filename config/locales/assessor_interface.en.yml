@@ -244,14 +244,6 @@ en:
         title: Review work reference
         passed: Are you satisfied that this reference should count towards the applicant’s work experience?
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this reference should not count towards the applicant’s work experience'
-    case_notes:
-      preliminary_check:
-        complete_waiting_for_professional_standing: |
-          Preliminary checks completed.
-
-           Once we’ve received written evidence of professional standing from the applicant’s teaching authority, we’ll add the application to the queue to be assigned to an assessor.
-        complete: Preliminary checks completed. Application can progress to initial assessment.
-        application_submitted: Application requires a preliminary check before it can progress to full initial assessment.
 
   activemodel:
     errors:

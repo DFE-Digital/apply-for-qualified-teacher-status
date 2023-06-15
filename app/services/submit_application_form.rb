@@ -27,7 +27,6 @@ class SubmitApplicationForm
       end
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
-      CreatePreliminaryCheckNote.call(application_form:)
     end
 
     TeacherMailer

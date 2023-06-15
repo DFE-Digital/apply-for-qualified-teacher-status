@@ -19,7 +19,6 @@ module AssessorInterface
 
         if @form.preliminary_check_complete
           notify_teacher
-          create_note
           unassign_assessor!
         end
 
@@ -42,10 +41,6 @@ module AssessorInterface
         ApplicationForm.includes(assessment: :sections).find(
           params[:application_form_id],
         )
-    end
-
-    def create_note
-      CreatePreliminaryCheckNote.call(application_form:, author: current_staff)
     end
 
     def notify_teacher
