@@ -90,7 +90,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
           application_form,
           assessment,
-          item,
+          assessment.sections.find { |s| s.key == item.to_s }.id,
         )
       end
     when :further_information_requests

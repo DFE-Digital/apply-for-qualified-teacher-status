@@ -12,6 +12,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :check_personal_information_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("personal_information"),
     )
     then_i_see_the_personal_information
 
@@ -25,6 +26,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :check_personal_information_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("personal_information"),
     )
     then_i_see_the_personal_information
 
@@ -38,6 +40,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :check_qualifications_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("qualifications"),
     )
     then_i_see_the_qualifications
 
@@ -51,6 +54,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :check_qualifications_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("qualifications"),
     )
     then_i_see_the_qualifications
 
@@ -64,6 +68,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :verify_age_range_subjects_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("age_range_subjects"),
     )
     then_i_see_the_age_range_and_subjects
 
@@ -79,6 +84,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :verify_age_range_subjects_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("age_range_subjects"),
     )
     then_i_see_the_age_range_and_subjects
 
@@ -90,7 +96,12 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   it "allows passing the work history" do
-    when_i_visit_the(:check_work_history_page, application_id:, assessment_id:)
+    when_i_visit_the(
+      :check_work_history_page,
+      application_id:,
+      assessment_id:,
+      section_id: section_id("work_history"),
+    )
     then_i_see_the_work_history
 
     when_i_choose_check_work_history_yes
@@ -99,7 +110,12 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   it "allows failing the work history" do
-    when_i_visit_the(:check_work_history_page, application_id:, assessment_id:)
+    when_i_visit_the(
+      :check_work_history_page,
+      application_id:,
+      assessment_id:,
+      section_id: section_id("work_history"),
+    )
     then_i_see_the_work_history
 
     when_i_choose_check_work_history_no
@@ -112,6 +128,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :check_professional_standing_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("professional_standing"),
     )
     then_i_see_the_professional_standing
 
@@ -125,6 +142,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :check_professional_standing_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("professional_standing"),
     )
     then_i_see_the_professional_standing
 
@@ -140,6 +158,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :check_professional_standing_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("professional_standing"),
     )
     then_i_see_the_professional_standing
 
@@ -415,5 +434,9 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def assessment_id
     application_form.assessment.id
+  end
+
+  def section_id(key)
+    application_form.assessment.sections.find_by(key:).id
   end
 end

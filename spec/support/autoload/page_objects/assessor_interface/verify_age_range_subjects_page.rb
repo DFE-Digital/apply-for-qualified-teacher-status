@@ -7,7 +7,7 @@ module PageObjects
     end
 
     class VerifyAgeRangeSubjectsPage < AssessmentSection
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/age_range_subjects"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/{section_id}"
 
       sections :cards, AgeRangeSubjectCard, ".govuk-summary-card"
 

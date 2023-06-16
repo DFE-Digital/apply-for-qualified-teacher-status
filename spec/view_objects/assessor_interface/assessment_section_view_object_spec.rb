@@ -13,7 +13,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
 
   let(:params) do
     {
-      key: assessment_section.key,
+      id: assessment_section.id,
       assessment_id: assessment.id,
       application_form_id: application_form.id,
     }
@@ -186,20 +186,11 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
   end
 
   describe "#show_english_language_provider_details?" do
-    let(:params) do
-      {
-        key:,
-        assessment_id: assessment.id,
-        application_form_id: application_form.id,
-      }
-    end
-
     subject(:show_english_language_provider_details?) do
       view_object.show_english_language_provider_details?
     end
 
     context "when the application EL proof method is 'provider'" do
-      let(:key) { "english_language_proficiency" }
       let(:application_form) do
         create(:application_form, :with_english_language_provider)
       end
@@ -211,7 +202,6 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     end
 
     context "when the application EL proof method is not 'provider'" do
-      let(:key) { "english_language_proficiency" }
       let(:application_form) do
         create(:application_form, :with_english_language_medium_of_instruction)
       end
@@ -223,7 +213,6 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     end
 
     context "when the section is not 'english_language_proficiency'" do
-      let(:key) { "personal_information" }
       let(:assessment_section) do
         create(:assessment_section, :personal_information, assessment:)
       end
@@ -233,22 +222,12 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
   end
 
   describe "#show_english_language_exemption_checkbox?" do
-    let(:params) do
-      {
-        key:,
-        assessment_id: assessment.id,
-        application_form_id: application_form.id,
-      }
-    end
-
     subject(:show_english_language_exemption_checkbox?) do
       view_object.show_english_language_exemption_checkbox?
     end
 
-    before { create(:assessment_section, :qualifications, assessment:) }
-
     context "when the section is personal information" do
-      let(:key) { "personal_information" }
+      before { create(:assessment_section, :qualifications, assessment:) }
 
       context "with exemption by citizenship" do
         let(:application_form) do
@@ -274,7 +253,9 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     end
 
     context "when the section is qualifications" do
-      let(:key) { "qualifications" }
+      let(:assessment_section) do
+        create(:assessment_section, :qualifications, assessment:)
+      end
 
       context "with exemption by citizenship" do
         let(:application_form) do

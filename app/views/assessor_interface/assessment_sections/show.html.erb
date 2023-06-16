@@ -22,11 +22,7 @@
            highlighted_work_history_contact_emails: @assessment_section_view_object.highlighted_work_history_contact_emails %>
 
 <% if @assessment_section_view_object.render_form? %>
-  <%= form_with model: @assessment_section_form,
-    url: assessor_interface_application_form_assessment_assessment_section_path(
-      @assessment_section_view_object.application_form, @assessment_section_view_object.assessment, section_key
-    ), method: :put do |f| %>
-
+  <%= form_with model: @assessment_section_form, url: [:assessor_interface, @assessment_section_view_object.application_form, @assessment_section_view_object.assessment, @assessment_section_view_object.assessment_section], method: :put do |f| %>
     <%= f.govuk_error_summary %>
 
     <% if @assessment_section_view_object.show_english_language_exemption_checkbox? %>

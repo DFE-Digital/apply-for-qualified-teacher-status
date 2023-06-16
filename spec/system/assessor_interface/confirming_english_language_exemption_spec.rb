@@ -14,6 +14,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
       :check_english_language_proficiency_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("english_language_proficiency"),
     )
     then_i_am_asked_to_confirm_english_language_proficiency_in_the_personal_information_section
 
@@ -21,6 +22,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
       :check_personal_information_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("personal_information"),
     )
     then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
       check_personal_information_page,
@@ -45,6 +47,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
       :check_english_language_proficiency_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("english_language_proficiency"),
     )
     then_i_am_asked_to_confirm_english_language_proficiency_in_the_qualifications_section
 
@@ -52,6 +55,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
       :check_qualifications_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("qualifications"),
     )
     then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
       check_qualifications_page,
@@ -72,6 +76,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
       :check_english_language_proficiency_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("english_language_proficiency"),
     )
     then_i_am_asked_to_confirm_english_language_proficiency_by_provider
     and_i_can_see_provider_failure_reasons_if_i_do_not_wish_to_confirm
@@ -90,6 +95,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
       :check_english_language_proficiency_page,
       application_id:,
       assessment_id:,
+      section_id: section_id("english_language_proficiency"),
     )
     then_i_am_asked_to_confirm_english_language_proficiency_by_moi
     and_i_can_see_moi_failure_reasons_if_i_do_not_wish_to_confirm
@@ -306,5 +312,9 @@ RSpec.describe "Assessor confirms English language section", type: :system do
 
   def assessment_id
     application_form.assessment.id
+  end
+
+  def section_id(key)
+    application_form.assessment.sections.find_by(key:).id
   end
 end

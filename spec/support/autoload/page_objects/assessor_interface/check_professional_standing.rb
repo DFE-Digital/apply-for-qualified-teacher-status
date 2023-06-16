@@ -7,7 +7,7 @@ module PageObjects
     end
 
     class CheckProfessionalStanding < AssessmentSection
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/professional_standing"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/{section_id}"
 
       sections :cards, ProfessionalStandingCard, ".govuk-summary-card"
 

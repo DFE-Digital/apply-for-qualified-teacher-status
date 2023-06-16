@@ -16,11 +16,12 @@ module AssessorInterface
 
     def update
       unless assessment_section_view_object.render_form?
-        redirect_to assessor_interface_application_form_assessment_assessment_section_path(
-                      assessment_section_view_object.application_form,
-                      assessment_section_view_object.assessment,
-                      assessment_section_view_object.assessment_section.key,
-                    )
+        redirect_to [
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      assessment_section,
+                    ]
         return
       end
 
@@ -33,10 +34,7 @@ module AssessorInterface
         )
 
       if @assessment_section_form.save
-        redirect_to [
-                      :assessor_interface,
-                      assessment_section_view_object.application_form,
-                    ]
+        redirect_to [:assessor_interface, application_form]
       else
         render :show, status: :unprocessable_entity
       end
@@ -78,6 +76,7 @@ module AssessorInterface
     end
 
     delegate :assessment_section,
+             :assessment,
              :application_form,
              to: :assessment_section_view_object
   end

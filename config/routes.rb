@@ -31,10 +31,7 @@ Rails.application.routes.draw do
       resources :timeline_events, only: :index
 
       resources :assessments, only: %i[edit update] do
-        resources :assessment_sections,
-                  path: "/sections",
-                  param: :key,
-                  only: %i[show update]
+        resources :assessment_sections, path: "/sections", only: %i[show update]
 
         resource :assessment_recommendation_award,
                  controller: "assessment_recommendation_award",

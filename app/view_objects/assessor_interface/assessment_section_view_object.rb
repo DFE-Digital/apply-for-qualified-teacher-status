@@ -8,15 +8,19 @@ module AssessorInterface
 
     def assessment_section
       @assessment_section ||=
-        AssessmentSection
-          .includes(assessment: { application_form: { region: :country } })
-          .where(
-            assessment_id: params[:assessment_id],
-            assessment: {
-              application_form_id: params[:application_form_id],
+        AssessmentSection.includes(
+          assessment: {
+            application_form: {
+              region: :country,
             },
-          )
-          .find_by!(key: params[:key])
+          },
+        ).find_by!(
+          id: params[:id],
+          assessment_id: params[:assessment_id],
+          assessment: {
+            application_form_id: params[:application_form_id],
+          },
+        )
     end
 
     delegate :assessment, to: :assessment_section

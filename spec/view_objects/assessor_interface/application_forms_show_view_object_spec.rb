@@ -192,9 +192,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "and personal information" do
         let(:item) { :personal_information }
 
+        let!(:assessment_section) do
+          create(:assessment_section, :personal_information, assessment:)
+        end
+
         it do
           is_expected.to eq(
-            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/sections/personal_information",
+            "/assessor/applications/#{application_form.id}/assessments/#{assessment.id}/sections/#{assessment_section.id}",
           )
         end
       end
