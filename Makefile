@@ -12,6 +12,7 @@ paas:  # Set the PaaS platform variables
 	$(eval PLATFORM=paas)
 	$(eval REGION=West Europe)
 	$(eval KEY_VAULT_SECRET_NAME=APPLY-QTS-APP-VARIABLES)
+	$(eval KEY_VAULT_PURGE_PROTECTION=true)
 
 .PHONY: aks
 aks:  ## Sets environment variables for aks deployment
@@ -19,6 +20,7 @@ aks:  ## Sets environment variables for aks deployment
 	$(eval REGION=UK South)
 	$(eval STORAGE_ACCOUNT_SUFFIX=sa)
 	$(eval KEY_VAULT_SECRET_NAME=APPLICATION)
+	$(eval KEY_VAULT_PURGE_PROTECTION=false)
 
 .PHONY: dev
 dev: paas ## Specify development PaaS environment
@@ -232,7 +234,7 @@ set-azure-resource-group-tags: ##Tags that will be added to resource group on it
 
 .PHONY: set-azure-template-tag
 set-azure-template-tag:
-	$(eval ARM_TEMPLATE_TAG=1.1.0)
+	$(eval ARM_TEMPLATE_TAG=1.1.6)
 
 .PHONY: set-what-if
 set-what-if:
@@ -248,7 +250,8 @@ arm-deployment: set-resource-group-name set-azure-account set-azure-template-tag
 		-l "${REGION}" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}${STORAGE_ACCOUNT_SUFFIX}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
-			"keyVaultName=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-kv" ${WHAT_IF}
+			keyVaultNames='("${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-app-kv", "${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv")' \
+			"enableKVPurgeProtection=${KEY_VAULT_PURGE_PROTECTION}" ${WHAT_IF}
 
 .PHONY: deploy-azure-resources
 deploy-azure-resources: check-auto-approve arm-deployment # make dev deploy-azure-resources AUTO_APPROVE=1
