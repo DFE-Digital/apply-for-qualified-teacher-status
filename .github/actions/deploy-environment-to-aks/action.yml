@@ -14,6 +14,10 @@ inputs:
   pull-request-number:
     description: The pull request number which triggered this deploy. If set, this will automatically seed the database.
     required: false
+  smoke-test-credentials-required:
+    description: Whether to run the smoke test with support credentials
+    required: false
+    default: "true"
 
 outputs:
   url:
@@ -56,6 +60,7 @@ runs:
         kubectl exec -n tra-development deployment/apply-for-qts-review-${{ inputs.pull-request-number }}-web -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed example_data:generate review_app:configure"
 
     - id: key-vault-name
+      if: ${{ inputs.smoke-test-credentials-required == 'true' }}
       shell: bash
       run: echo "value=$(make -s ${{ inputs.environment }}_aks print-application-key-vault-name)" >> $GITHUB_OUTPUT
       env:
@@ -63,6 +68,7 @@ runs:
 
     - uses: Azure/get-keyvault-secrets@v1
       id: smoke-test-secrets
+      if: ${{ inputs.smoke-test-credentials-required == 'true' }}
       with:
         keyvault: ${{ steps.key-vault-name.outputs.value }}
         secrets: "SUPPORT-USERNAME,SUPPORT-PASSWORD"
