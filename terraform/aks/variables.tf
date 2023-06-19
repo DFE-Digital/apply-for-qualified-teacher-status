@@ -42,6 +42,11 @@ variable "enable_monitoring" {
   default = true
 }
 
+variable "external_hostname" {
+  type    = string
+  default = null
+}
+
 variable "namespace" {
   type = string
 }

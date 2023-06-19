@@ -1,5 +1,5 @@
 output "url" {
-  value = "https://${module.web_application.hostname}"
+  value = module.web_application.url
 }
 
 output "postgres_azure_backup_storage_account_name" {
