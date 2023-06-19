@@ -46,7 +46,7 @@ jobs:
       - name: Setup terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.5
+          terraform_version: 1.5.0
 
       - name: Check formatting
         run: terraform fmt -check -recursive
