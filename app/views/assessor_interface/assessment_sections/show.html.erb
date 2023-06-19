@@ -23,80 +23,9 @@
            highlighted_work_history_contact_emails: @view_object.highlighted_work_history_contact_emails %>
 
 <% if @view_object.render_form? %>
-  <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.assessment_section], method: :put do |f| %>
-    <%= f.govuk_error_summary %>
-
-    <% if @view_object.show_english_language_exemption_checkbox? %>
-      <%= f.govuk_check_box(
-        :english_language_section_passed,
-        true,
-        false,
-        multiple: false,
-        link_errors: true,
-        small: true,
-        label: {
-          text: t("assessor_interface.assessment_sections.show.labels.#{section_key}.english_language_section_passed"),
-          size: "s",
-        }
-      ) %>
-    <% end %>
-
-    <% if @view_object.show_english_language_provider_details? %>
-      <%= render "english_language_provider_details",
-                 provider: @view_object.application_form.english_language_provider,
-                 region: @view_object.region %>
-    <% end %>
-
-    <% if @view_object.checks.any? %>
-      <h2 class="govuk-heading-s">Check:</h2>
-      <ul class="govuk-list govuk-list--bullet">
-        <% @view_object.checks.each do |check| %>
-          <li><%= t(".checks.#{check}") %></li>
-        <% end %>
-      </ul>
-    <% end %>
-
-    <% if @form.is_a?(AssessorInterface::CheckAgeRangeSubjectsForm) %>
-      <%= render "shared/age_range_subjects_form_fields", f: %>
-    <% end %>
-
-    <% if @form.is_a?(AssessorInterface::InductionRequiredForm) %>
-      <%= f.govuk_collection_radio_buttons :induction_required,
-                                           [
-                                             OpenStruct.new(value: :false, label: t(".induction_required.false.#{@view_object.country.code}")),
-                                             OpenStruct.new(value: :true, label: t(".induction_required.true.#{@view_object.country.code}"))
-                                           ],
-                                           :value,
-                                           :label,
-                                           legend: { text: t(".induction_required.legend.#{@view_object.country.code}") } %>
-    <% end %>
-
-    <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?" } do %>
-      <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
-      <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
-        <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" }  do %>
-          <% @view_object.assessment_section.failure_reasons.each do |failure_reason| %>
-            <%= f.govuk_check_box "#{failure_reason}_checked".to_sym, true, label: { text: t(".failure_reasons.#{failure_reason}") }, link_errors: true do %>
-              <%= f.govuk_text_area "#{failure_reason}_notes".to_sym,
-                label: { text: t(@view_object.notes_label_key_for(failure_reason: failure_reason)), size: "s" },
-                hint: { text: t(@view_object.notes_hint_key_for(failure_reason: failure_reason)) },
-                placeholder: t(@view_object.notes_placeholder_key_for(failure_reason: failure_reason))
-              %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <%= f.govuk_submit prevent_double_click: false do %>
-      <%= govuk_link_to "Cancel", [:assessor_interface, @view_object.application_form] %>
-    <% end %>
-  <% end %>
+  <%= render "form", form: @form, view_object: @view_object %>
 <% end %>
 
 <% if @view_object.render_section_content? %>
-  <%= render(
-    "#{section_key}_content",
-    application_form: @view_object.application_form
-  ) %>
+  <%= render "#{section_key}_content", application_form: @view_object.application_form %>
 <% end %>
