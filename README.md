@@ -76,17 +76,15 @@ brew install libvips
 
 #### PostgreSQL
 
-You’ll need to install PostgreSQL 13.x. This can be installed via `asdf`, otherwise the way to do this is different on each operating system.
+You’ll need to install PostgreSQL. This can be installed via `asdf`, otherwise the way to do this is different on each operating system.
 
 On macOS you can try the following:
 
 ```bash
-brew install postgresql@13
-# Add to utilities to the path
-echo 'export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"' >> ~/.zshrc
+brew install postgresql
 ```
 
-Start `postgres` database service if installed via `asdf`:
+If installed via `asdf`, start `postgres` database service if installed:
 
 ```sh
 pg_ctl start
@@ -102,10 +100,10 @@ psql -d default
 
 #### Redis
 
-You’ll need to install Redis 6.x. The way to do this is different on each operating system, but on macOS you can try the following:
+You’ll need to install Redis. The way to do this is different on each operating system, but on macOS you can try the following:
 
 ```bash
-brew install redis@6
+brew install redis
 brew services start redis
 ```
 
