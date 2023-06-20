@@ -27,6 +27,9 @@ module AssessorInterface
         form.new(form_params.merge(assessment_section:, user: current_staff))
 
       if @form.save
+        notify_teacher
+        unassign_assessor
+
         redirect_to [:assessor_interface, application_form]
       else
         render :show, status: :unprocessable_entity
@@ -38,6 +41,11 @@ module AssessorInterface
     def view_object
       @view_object ||= AssessmentSectionViewObject.new(params:)
     end
+
+    delegate :assessment_section,
+             :assessment,
+             :application_form,
+             to: :view_object
 
     def form
       form_class.for_assessment_section(assessment_section)
@@ -67,9 +75,29 @@ module AssessorInterface
       )
     end
 
-    delegate :assessment_section,
-             :assessment,
-             :application_form,
-             to: :view_object
+    def notify_teacher
+      unless application_form.teaching_authority_provides_written_statement
+        return
+      end
+
+      if assessment_section.preliminary? &&
+           assessment.all_preliminary_sections_passed?
+        TeacherMailer
+          .with(teacher: application_form.teacher)
+          .initial_checks_passed
+          .deliver_later
+      end
+    end
+
+    def unassign_assessor
+      if assessment_section.preliminary? &&
+           assessment.all_preliminary_sections_passed?
+        AssignApplicationFormAssessor.call(
+          application_form:,
+          user: current_staff,
+          assessor: nil,
+        )
+      end
+    end
   end
 end

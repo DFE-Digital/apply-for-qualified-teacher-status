@@ -161,6 +161,10 @@ class Assessment < ApplicationRecord
     sections.all? { |section| section.selected_failure_reasons.empty? }
   end
 
+  def all_preliminary_sections_passed?
+    sections.preliminary.all?(&:passed)
+  end
+
   private
 
   def all_sections_finished?

@@ -28,7 +28,7 @@ module AssessorInterface
     delegate :registration_number,
              :requires_preliminary_check,
              to: :application_form
-    delegate :checks, :failure_reasons, to: :assessment_section
+    delegate :checks, :failure_reasons, :preliminary?, to: :assessment_section
     delegate :region, :country, to: :application_form
 
     def notes_label_key_for(failure_reason:)
@@ -44,6 +44,8 @@ module AssessorInterface
     end
 
     def render_form?
+      return true if preliminary?
+
       if requires_preliminary_check && !preliminary_sections_finished?
         return false
       end
@@ -69,6 +71,8 @@ module AssessorInterface
     end
 
     def show_english_language_exemption_checkbox?
+      return false if preliminary?
+
       (
         application_form.english_language_citizenship_exempt == true &&
           assessment_section.personal_information?

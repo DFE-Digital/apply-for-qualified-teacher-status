@@ -17,7 +17,9 @@
         <ul class="govuk-list">
           <% section.selected_failure_reasons.each do |failure_reason| %>
             <li>
-              <h4 class="govuk-heading-s"><%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason.key}") %></h4>
+              <h4 class="govuk-heading-s">
+                <%= t(failure_reason.key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %>
+              </h4>
 
               <% if FailureReasons.decline?(failure_reason: failure_reason.key) %>
                 <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>

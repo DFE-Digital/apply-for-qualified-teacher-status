@@ -25,7 +25,7 @@
       <% section[:failure_reasons].each do |failure_reason| %>
         <li>
           <h6 class="govuk-body">
-            <%= t("assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason[:key]}") %>
+            <%= t(failure_reason[:key], scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %>
           </h6>
 
           <% if (text = failure_reason[:assessor_feedback]).present? %>
@@ -69,4 +69,3 @@
 <% end %>
 
 <p class="govuk-body">If you want to appeal, you should contact <%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %> and do so within 4 months of this notification.</p>
-

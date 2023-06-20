@@ -22,6 +22,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ApplicationStatus.new
   end
 
+  def assessor_assessment_section_page
+    @assessor_assessment_section_page ||=
+      PageObjects::AssessorInterface::AssessmentSection.new
+  end
+
   def assessor_edit_professional_standing_request_location_page
     @assessor_edit_professional_standing_request_location_page ||=
       PageObjects::AssessorInterface::EditProfessionalStandingRequestLocation.new
@@ -173,11 +178,6 @@ module PageHelpers
 
   def personas_page
     @personas_page ||= PageObjects::Personas.new
-  end
-
-  def preliminary_check_page
-    @preliminary_check_page ||=
-      PageObjects::AssessorInterface::PreliminaryCheck.new
   end
 
   def preview_assessment_recommendation_page

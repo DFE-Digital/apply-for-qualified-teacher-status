@@ -17,7 +17,7 @@ module PageObjects
       section :task_list, TaskList, ".app-task-list"
 
       def preliminary_check_task
-        task_list.find_item("Preliminary check")
+        task_list.find_item("Preliminary check (qualifications)")
       end
 
       def awaiting_professional_standing_task

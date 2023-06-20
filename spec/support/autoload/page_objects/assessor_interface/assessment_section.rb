@@ -1,6 +1,8 @@
 module PageObjects
   module AssessorInterface
     class AssessmentSection < SitePrism::Page
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/{section_id}"
+
       element :heading, "h1"
 
       section :form, "form" do
@@ -15,6 +17,14 @@ module PageObjects
                  ".govuk-checkboxes__item"
         elements :failure_reason_note_textareas,
                  ".govuk-checkboxes__conditional .govuk-textarea"
+        element :continue_button, "button"
+      end
+
+      section :preliminary_form, "form" do
+        sections :radios, ".govuk-radios" do
+          sections :items, PageObjects::GovukRadioItem, ".govuk-radios__item"
+        end
+
         element :continue_button, "button"
       end
     end

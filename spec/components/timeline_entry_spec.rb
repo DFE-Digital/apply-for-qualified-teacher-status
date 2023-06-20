@@ -90,7 +90,13 @@ RSpec.describe TimelineEntry::Component, type: :component do
     let(:failure_reason) { assessment_section.selected_failure_reasons.first }
     let(:expected_failure_reason_text) do
       I18n.t(
-        "assessor_interface.assessment_sections.show.failure_reasons.#{failure_reason.key}",
+        failure_reason.key,
+        scope: %i[
+          assessor_interface
+          assessment_sections
+          failure_reasons
+          as_statement
+        ],
       )
     end
 
@@ -507,13 +513,25 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
     let(:expected_first_failure_reason_text) do
       I18n.t(
-        "assessor_interface.assessment_sections.show.failure_reasons.#{first_failure_reason.key}",
+        first_failure_reason.key,
+        scope: %i[
+          assessor_interface
+          assessment_sections
+          failure_reasons
+          as_statement
+        ],
       )
     end
 
     let(:expected_last_failure_reason_text) do
       I18n.t(
-        "assessor_interface.assessment_sections.show.failure_reasons.#{last_failure_reason.key}",
+        last_failure_reason.key,
+        scope: %i[
+          assessor_interface
+          assessment_sections
+          failure_reasons
+          as_statement
+        ],
       )
     end
 

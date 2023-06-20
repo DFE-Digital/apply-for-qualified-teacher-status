@@ -1,32 +1,34 @@
+<% preliminary ||= false %>
+
 <% qualifications.each do |qualification| %>
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "qualification-#{qualification.id}",
     model: qualification,
     title: qualification.title,
     fields: {
-      title: {
+      title: preliminary ? nil : {
         title: I18n.t("application_form.qualifications.form.fields.title.#{qualification.locale_key}"),
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      institution_name: {
+      institution_name: preliminary ? nil : {
         title: I18n.t("application_form.qualifications.form.fields.institution_name"),
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      institution_country_name: {
+      institution_country_name: preliminary ? nil : {
         title: t("helpers.label.teacher_interface_qualification_form.institution_country_location"),
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      start_date: {
+      start_date: preliminary ? nil : {
         title: I18n.t("application_form.qualifications.form.fields.start_date.#{qualification.locale_key}"),
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      complete_date: {
+      complete_date: preliminary ? nil : {
         title: I18n.t("application_form.qualifications.form.fields.complete_date.#{qualification.locale_key}"),
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      certificate_date: {
+      certificate_date: preliminary ? nil : {
         title: I18n.t("application_form.qualifications.form.fields.certificate_date.#{qualification.locale_key}"),
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, qualification]
@@ -37,7 +39,7 @@
       transcript_document: {
         href: [:teacher_interface, :application_form, qualification.transcript_document],
       },
-      part_of_university_degree: qualification.is_teaching_qualification? ? {
+      part_of_university_degree: !preliminary && qualification.is_teaching_qualification? ? {
         title: "Part of your university degree?",
         href: [:part_of_university_degree, :teacher_interface, :application_form, qualification]
       } : nil,

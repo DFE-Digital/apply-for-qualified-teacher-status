@@ -201,7 +201,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     ).to eq("Verify your English language proficiency")
     expect(check_english_language_proficiency_page.lists.last.text).to eq(
       I18n.t(
-        "assessor_interface.assessment_sections.show.checks.english_language_valid_provider",
+        "assessor_interface.assessment_sections.checks.english_language_valid_provider",
       ),
     )
   end
@@ -216,7 +216,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
 
     expect(check_english_language_proficiency_page.lists.last.text).to eq(
       I18n.t(
-        "assessor_interface.assessment_sections.show.checks.english_language_valid_moi",
+        "assessor_interface.assessment_sections.checks.english_language_valid_moi",
       ),
     )
   end
@@ -240,7 +240,13 @@ RSpec.describe "Assessor confirms English language section", type: :system do
 
     expect(page.form.failure_reason_checkbox_items.last.text).to eq(
       I18n.t(
-        "assessor_interface.assessment_sections.show.failure_reasons.#{key}",
+        key,
+        scope: %i[
+          assessor_interface
+          assessment_sections
+          failure_reasons
+          as_statement
+        ],
       ),
     )
   end
