@@ -1,5 +1,5 @@
 locals {
-  external_url = var.external_hostname != null ? "https://#{var.external_hostname}" : null
+  external_url = var.external_hostname != null ? "https://${var.external_hostname}" : null
 }
 
 module "statuscake" {
