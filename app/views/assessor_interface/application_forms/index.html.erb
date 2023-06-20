@@ -10,12 +10,16 @@
       <%= govuk_link_to t(".filters.clear"), filters_clear_assessor_interface_application_forms_path %>
     <%- end -%>
 
-    <section id="app-applications-filters-assessor">
-      <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { size: "s" }, small: true do %>
-        <%- @view_object.assessor_filter_options.each do |option| -%>
-          <%= f.govuk_check_box :assessor_ids, option.id, label: { text: option.name }, checked: @view_object.filter_form.assessor_ids&.include?(option.id.to_s) %>
-        <%- end -%>
-      <%- end -%>
+    <section id="app-applications-filters-assessor" class="app-checkbox-filter app-checkbox-filter--enhanced">
+      <div class="app-checkbox-filter__container">
+        <div class="app-checkbox-filter__container-inner">
+          <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { size: "s" }, small: true do %>
+            <%- @view_object.assessor_filter_options.each do |option| -%>
+              <%= f.govuk_check_box :assessor_ids, option.id, label: { text: option.name }, checked: @view_object.filter_form.assessor_ids&.include?(option.id.to_s) %>
+            <%- end -%>
+          <%- end -%>
+        </div>
+      </div>
     </section>
 
     <section id="app-applications-filters-country">
