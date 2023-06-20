@@ -266,6 +266,7 @@ jobs:
           environment: production
           docker-image: ${{ needs.docker.outputs.docker_image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          smoke-test-credentials-required: "false"
 
   notify_slack_of_failures:
     name: Notify Slack of failures
