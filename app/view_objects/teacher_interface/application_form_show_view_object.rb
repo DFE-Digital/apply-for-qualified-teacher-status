@@ -122,7 +122,7 @@ class TeacherInterface::ApplicationFormShowViewObject
   def request_professional_standing_certificate?
     professional_standing_request&.requested? &&
       (
-        assessment&.sections&.preliminary&.all?(&:finished) ||
+        assessment&.all_preliminary_sections_passed? ||
           application_form&.teaching_authority_provides_written_statement
       )
   end

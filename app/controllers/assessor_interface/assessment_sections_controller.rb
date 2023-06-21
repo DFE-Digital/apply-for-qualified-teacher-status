@@ -27,8 +27,20 @@ module AssessorInterface
         form.new(form_params.merge(assessment_section:, user: current_staff))
 
       if @form.save
-        notify_teacher
-        unassign_assessor
+        if assessment_section.preliminary?
+          if assessment.all_preliminary_sections_passed?
+            notify_teacher
+            unassign_assessor
+          else
+            redirect_to [
+                          :edit,
+                          :assessor_interface,
+                          view_object.application_form,
+                          view_object.assessment,
+                        ]
+            return
+          end
+        end
 
         redirect_to [:assessor_interface, application_form]
       else
@@ -80,24 +92,18 @@ module AssessorInterface
         return
       end
 
-      if assessment_section.preliminary? &&
-           assessment.all_preliminary_sections_passed?
-        TeacherMailer
-          .with(teacher: application_form.teacher)
-          .initial_checks_passed
-          .deliver_later
-      end
+      TeacherMailer
+        .with(teacher: application_form.teacher)
+        .initial_checks_passed
+        .deliver_later
     end
 
     def unassign_assessor
-      if assessment_section.preliminary? &&
-           assessment.all_preliminary_sections_passed?
-        AssignApplicationFormAssessor.call(
-          application_form:,
-          user: current_staff,
-          assessor: nil,
-        )
-      end
+      AssignApplicationFormAssessor.call(
+        application_form:,
+        user: current_staff,
+        assessor: nil,
+      )
     end
   end
 end

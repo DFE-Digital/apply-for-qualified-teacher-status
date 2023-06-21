@@ -80,7 +80,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           "assessor_interface.application_forms.show.assessment_tasks.items.await_professional_standing_request",
         ),
       link:
-        if preliminary_sections_finished?
+        if assessment.all_preliminary_sections_passed?
           [
             :location,
             :assessor_interface,
@@ -90,7 +90,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           ]
         end,
       status:
-        if preliminary_sections_finished?
+        if assessment.all_preliminary_sections_passed?
           professional_standing_request.received? ? :completed : :waiting_on
         else
           :cannot_start
@@ -153,7 +153,12 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
         assessment_section,
       ],
-      status: assessment_section.status,
+      status:
+        if preliminary && assessment_section.failed && assessment.unknown?
+          :in_progress
+        else
+          assessment_section.status
+        end,
     }
   end
 
@@ -379,15 +384,13 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def pre_assessment_complete?
-    if teaching_authority_provides_written_statement
-      preliminary_sections_finished? && professional_standing_request.received?
-    else
-      preliminary_sections_finished?
-    end
-  end
+    return false unless assessment.all_preliminary_sections_passed?
 
-  def preliminary_sections_finished?
-    assessment.sections.preliminary.all?(&:finished?)
+    if teaching_authority_provides_written_statement
+      professional_standing_request.received?
+    else
+      true
+    end
   end
 
   def request_further_information_unfinished?

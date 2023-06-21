@@ -46,7 +46,8 @@ module AssessorInterface
     def render_form?
       return true if preliminary?
 
-      if requires_preliminary_check && !preliminary_sections_finished?
+      if requires_preliminary_check &&
+           !assessment.all_preliminary_sections_passed?
         return false
       end
 
@@ -176,10 +177,6 @@ module AssessorInterface
       else
         []
       end
-    end
-
-    def preliminary_sections_finished?
-      assessment.sections.preliminary.all?(&:finished?)
     end
   end
 end

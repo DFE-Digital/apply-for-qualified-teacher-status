@@ -1,6 +1,8 @@
 <% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".heading")}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
+<% preliminary_decline = @assessment.unknown? && @assessment.any_preliminary_section_failed? %>
+
 <%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment, :assessment_recommendation_decline], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
@@ -8,14 +10,30 @@
 
   <p class="govuk-body-l">You’re about to decline this QTS application from <%= application_form_full_name(@application_form) %> for the following reasons:</p>
 
-  <h2 class="govuk-heading-l">Your decline reasons and notes</h2>
+  <% if preliminary_decline %>
+    <h2 class="govuk-heading-l">Your decline reasons</h2>
+  <% else %>
+    <h2 class="govuk-heading-l">Your decline reasons and notes</h2>
+  <% end %>
 
   <% if @assessment.unknown? %>
-    <% @assessment.sections.each do |section| %>
-      <% if section.selected_failure_reasons.present? %>
+    <% @assessment.sections.preliminary.each do |section| %>
+      <% if (selected_failure_reasons = section.selected_failure_reasons).present? %>
+        <ul class="govuk-list govuk-list--bullet">
+          <% selected_failure_reasons.each do |failure_reason| %>
+            <li class="govuk-!-font-weight-bold">
+              <%= t(failure_reason.key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+
+    <% @assessment.sections.not_preliminary.each do |section| %>
+      <% if (selected_failure_reasons = section.selected_failure_reasons).present? %>
         <h3 class="govuk-heading-m"><%= t(".assessment_section.#{section.key}") %></h3>
         <ul class="govuk-list">
-          <% section.selected_failure_reasons.each do |failure_reason| %>
+          <% selected_failure_reasons.each do |failure_reason| %>
             <li>
               <h4 class="govuk-heading-s">
                 <%= t(failure_reason.key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %>
@@ -37,9 +55,16 @@
     <% end %>
   <% end %>
 
-  <%= f.govuk_text_area :recommendation_assessor_note,
-                        label: { text: @assessment.unknown? ? "Notes to applicant (optional)" : "Use this space to tell the applicant why they’ve been declined." },
-                        hint: { text: @assessment.unknown? ? "Only use this box if you <strong class=\"govuk-!-font-weight-bold\">HAVE NOT</strong> already added notes to explain the decline reason".html_safe : "This is the last communication they’ll receive about this application so make sure your comments are clear." } %>
+  <% unless preliminary_decline %>
+    <%= f.govuk_text_area :recommendation_assessor_note,
+                          label: { text: @assessment.unknown? ? "Notes to applicant (optional)" : "Use this space to tell the applicant why they’ve been declined." },
+                          hint: { text: @assessment.unknown? ? "Only use this box if you <strong class=\"govuk-!-font-weight-bold\">HAVE NOT</strong> already added notes to explain the decline reason".html_safe : "This is the last communication they’ll receive about this application so make sure your comments are clear." } %>
+  <% end %>
+
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+
+  <p class="govuk-body"><%= t(".instruction") %></p>
+  <p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
 
   <%= f.govuk_check_boxes_fieldset :declaration, small: true do %>
     <%= f.govuk_check_box :declaration,
@@ -49,9 +74,6 @@
                           link_errors: true,
                           label: { text: t(".declaration") } %>
   <% end %>
-
-  <p class="govuk-body"><%= t(".instruction") %></p>
-  <p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
 
   <%= f.govuk_submit t(".button"), prevent_double_click: false do %>
     <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>

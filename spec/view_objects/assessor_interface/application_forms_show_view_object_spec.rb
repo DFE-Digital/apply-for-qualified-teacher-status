@@ -156,7 +156,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         )
       end
 
-      context "when the check has been completed" do
+      context "when the check has passed" do
         before { assessment_section.update!(passed: true) }
 
         it do
@@ -165,6 +165,37 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
             "Preliminary check (qualifications)",
             status: :completed,
           )
+        end
+      end
+
+      context "when the check has not passed" do
+        before do
+          create(
+            :selected_failure_reason,
+            assessment_section:,
+            key: "teaching_qualifications_not_at_required_level",
+          )
+          assessment_section.reload.update!(passed: false)
+        end
+
+        it do
+          is_expected.to include_task_list_item(
+            "Pre-assessment tasks",
+            "Preliminary check (qualifications)",
+            status: :in_progress,
+          )
+        end
+
+        context "and the application has been declined" do
+          before { assessment.decline! }
+
+          it do
+            is_expected.to include_task_list_item(
+              "Pre-assessment tasks",
+              "Preliminary check (qualifications)",
+              status: :completed,
+            )
+          end
         end
       end
     end
