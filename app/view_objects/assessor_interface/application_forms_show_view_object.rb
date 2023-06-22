@@ -13,220 +13,13 @@ class AssessorInterface::ApplicationFormsShowViewObject
         .find(params[:id])
   end
 
-  def assessment_tasks
-    pre_assessment_tasks = [
-      (:preliminary_check if application_form.requires_preliminary_check),
-      (
-        if teaching_authority_provides_written_statement &&
-             professional_standing_request.present?
-          :await_professional_standing_request
-        end
-      ),
-    ].compact
-
-    assessment_section_keys = assessment.sections.map(&:key).map(&:to_sym)
-
-    initial_assessment =
-      %i[
-        personal_information
-        qualifications
-        age_range_subjects
-        english_language_proficiency
-        work_history
-        professional_standing
-      ].select { |key| assessment_section_keys.include?(key) } +
-        %i[initial_assessment_recommendation]
-
-    further_information =
-      further_information_requests.map { :review_requested_information }
-
-    verify_professional_standing =
-      !teaching_authority_provides_written_statement &&
-        professional_standing_request.present?
-
-    verification_requests = [
-      (:qualification_requests if qualification_requests.present?),
-      (:reference_requests if reference_requests.present?),
-      (:locate_professional_standing_request if verify_professional_standing),
-      (:review_professional_standing_request if verify_professional_standing),
-    ].compact
-
-    if verification_requests.present?
-      verification_requests << :assessment_recommendation
-    end
-
-    {
-      pre_assessment_tasks:,
-      initial_assessment:,
-      further_information_requests: further_information,
-      verification_requests:,
-    }.compact_blank
-  end
-
-  def assessment_task_path(section, item, index)
-    case section
-    when :pre_assessment_tasks
-      if item == :preliminary_check
-        url_helpers.assessor_interface_application_form_assessment_preliminary_check_path(
-          application_form,
-          assessment,
-        )
-      elsif assessment.preliminary_check_complete != false
-        url_helpers.location_assessor_interface_application_form_assessment_professional_standing_request_path(
-          application_form,
-          assessment,
-        )
-      end
-    when :initial_assessment
-      if item == :initial_assessment_recommendation
-        return nil if initial_assessment_recommendation_complete?
-        return nil unless assessment.recommendable?
-
-        url_helpers.edit_assessor_interface_application_form_assessment_path(
-          application_form,
-          assessment,
-        )
-      else
-        url_helpers.assessor_interface_application_form_assessment_assessment_section_path(
-          application_form,
-          assessment,
-          item,
-        )
-      end
-    when :further_information_requests
-      further_information_request = further_information_requests[index]
-
-      if further_information_request.received?
-        url_helpers.edit_assessor_interface_application_form_assessment_further_information_request_path(
-          application_form,
-          assessment,
-          further_information_request,
-        )
-      end
-    when :verification_requests
-      return nil unless preassessment_professional_standing_request_completed?
-
-      case item
-      when :assessment_recommendation
-        return nil unless assessment.recommendable?
-
-        url_helpers.edit_assessor_interface_application_form_assessment_path(
-          application_form,
-          assessment,
-        )
-      when :locate_professional_standing_request
-        url_helpers.location_assessor_interface_application_form_assessment_professional_standing_request_path(
-          application_form,
-          assessment,
-        )
-      when :review_professional_standing_request
-        if professional_standing_request.received? ||
-             professional_standing_request.ready_for_review
-          url_helpers.review_assessor_interface_application_form_assessment_professional_standing_request_path(
-            application_form,
-            assessment,
-          )
-        end
-      when :qualification_requests
-        url_helpers.assessor_interface_application_form_assessment_qualification_requests_path(
-          application_form,
-          assessment,
-        )
-      when :reference_requests
-        url_helpers.assessor_interface_application_form_assessment_reference_requests_path(
-          application_form,
-          assessment,
-        )
-      end
-    end
-  end
-
-  def assessment_task_status(section, item, index)
-    case section
-    when :pre_assessment_tasks
-      if item == :await_professional_standing_request
-        return :cannot_start if cannot_start_professional_standing_request?
-        if preassessment_professional_standing_request_completed?
-          :completed
-        else
-          :waiting_on
-        end
-      else
-        assessment.preliminary_check_complete.nil? ? :not_started : :completed
-      end
-    when :initial_assessment
-      if item == :initial_assessment_recommendation
-        return :completed if initial_assessment_recommendation_complete?
-        return :cannot_start unless assessment.recommendable?
-        return :in_progress if request_further_information_unfinished?
-        :not_started
-      else
-        unless preassessment_professional_standing_request_completed?
-          return :cannot_start
-        end
-        assessment.sections.find { |s| s.key == item.to_s }.status
-      end
-    when :further_information_requests
-      unless preassessment_professional_standing_request_completed?
-        return :cannot_start
-      end
-      further_information_request = further_information_requests[index]
-      return :cannot_start if further_information_request.requested?
-      return :not_started if further_information_request.passed.nil?
-      return :in_progress if assessment.request_further_information?
-      :completed
-    when :verification_requests
-      case item
-      when :assessment_recommendation
-        return :completed if assessment.completed?
-        return :cannot_start unless assessment.recommendable?
-        :not_started
-      when :locate_professional_standing_request
-        if professional_standing_request.ready_for_review ||
-             professional_standing_request.received?
-          :completed
-        elsif professional_standing_request.expired?
-          :overdue
-        else
-          :waiting_on
-        end
-      when :review_professional_standing_request
-        if professional_standing_request.reviewed?
-          :completed
-        elsif professional_standing_request.received? ||
-              professional_standing_request.ready_for_review
-          :received
-        else
-          :cannot_start
-        end
-      when :reference_requests
-        return :completed if assessment.references_verified
-
-        unreviewed_requests = reference_requests.reject(&:reviewed?)
-
-        if unreviewed_requests.empty?
-          :in_progress
-        elsif unreviewed_requests.any?(&:expired?)
-          :overdue
-        elsif unreviewed_requests.any?(&:received?)
-          :received
-        else
-          :waiting_on
-        end
-      when :qualification_requests
-        unreviewed_requests = qualification_requests.reject(&:reviewed?)
-
-        if unreviewed_requests.empty?
-          :completed
-        elsif unreviewed_requests.any?(&:expired?)
-          :overdue
-        elsif unreviewed_requests.any?(&:received?)
-          :received
-        else
-          :waiting_on
-        end
-      end
-    end
+  def task_list_sections
+    [
+      pre_assessment_task_list_section,
+      initial_assessment_task_list_section,
+      further_information_task_list_section,
+      verification_task_list_section,
+    ]
   end
 
   def status
@@ -265,6 +58,354 @@ class AssessorInterface::ApplicationFormsShowViewObject
   delegate :professional_standing_request, to: :assessment
   delegate :canonical_email, to: :teacher
 
+  def pre_assessment_task_list_section
+    {
+      title:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.sections.pre_assessment_tasks",
+        ),
+      items: [
+        preliminary_check_task_list_item,
+        await_professional_standing_task_list_item,
+      ].compact,
+    }
+  end
+
+  def preliminary_check_task_list_item
+    return unless application_form.requires_preliminary_check
+
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.preliminary_check",
+        ),
+      link: [
+        :assessor_interface,
+        application_form,
+        assessment,
+        :preliminary_check,
+      ],
+      status:
+        (
+          if assessment.preliminary_check_complete.nil?
+            :not_started
+          else
+            :completed
+          end
+        ),
+    }
+  end
+
+  def await_professional_standing_task_list_item
+    unless teaching_authority_provides_written_statement &&
+             professional_standing_request.present?
+      return
+    end
+
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.await_professional_standing_request",
+        ),
+      link:
+        if assessment.preliminary_check_complete != false
+          [
+            :location,
+            :assessor_interface,
+            application_form,
+            assessment,
+            :professional_standing_request,
+          ]
+        end,
+      status:
+        if cannot_start_professional_standing_request?
+          :cannot_start
+        elsif preassessment_professional_standing_request_completed?
+          :completed
+        else
+          :waiting_on
+        end,
+    }
+  end
+
+  def initial_assessment_task_list_section
+    assessment_sections =
+      %i[
+        personal_information
+        qualifications
+        age_range_subjects
+        english_language_proficiency
+        work_history
+        professional_standing
+      ].filter_map { |key| assessment.sections.find { |s| s.key == key.to_s } }
+
+    assessment_section_items =
+      assessment_sections.map do |assessment_section|
+        assessment_section_task_list_item(assessment_section)
+      end
+
+    {
+      title:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.sections.initial_assessment",
+        ),
+      items: [
+        *assessment_section_items,
+        initial_assessment_recommendation_task_list_item,
+      ],
+    }
+  end
+
+  def assessment_section_task_list_item(assessment_section)
+    {
+      name:
+        I18n.t(
+          assessment_section.key,
+          scope: %i[
+            assessor_interface
+            application_forms
+            show
+            assessment_tasks
+            items
+          ],
+        ),
+      link: [
+        :assessor_interface,
+        application_form,
+        assessment,
+        assessment_section,
+      ],
+      status:
+        (
+          if !preassessment_professional_standing_request_completed?
+            :cannot_start
+          else
+            assessment_section.status
+          end
+        ),
+    }
+  end
+
+  def initial_assessment_recommendation_task_list_item
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.initial_assessment_recommendation",
+        ),
+      link:
+        if !initial_assessment_recommendation_complete? &&
+             assessment.recommendable?
+          [:edit, :assessor_interface, application_form, assessment]
+        end,
+      status:
+        if initial_assessment_recommendation_complete?
+          :completed
+        elsif !assessment.recommendable?
+          :cannot_start
+        elsif request_further_information_unfinished?
+          :in_progress
+        else
+          :not_started
+        end,
+    }
+  end
+
+  def further_information_task_list_section
+    {
+      title:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.sections.further_information_requests",
+        ),
+      items:
+        further_information_requests.map do |further_information_request|
+          further_information_request_task_list_item(
+            further_information_request,
+          )
+        end,
+    }
+  end
+
+  def further_information_request_task_list_item(further_information_request)
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.review_requested_information",
+        ),
+      link:
+        if further_information_request.received?
+          [
+            :edit,
+            :assessor_interface,
+            application_form,
+            assessment,
+            further_information_request,
+          ]
+        end,
+      status:
+        if !preassessment_professional_standing_request_completed? ||
+             further_information_request.requested?
+          :cannot_start
+        elsif further_information_request.passed.nil?
+          :not_started
+        elsif assessment.request_further_information?
+          :in_progress
+        else
+          :completed
+        end,
+    }
+  end
+
+  def verification_task_list_section
+    items = [
+      qualification_requests_task_list_item,
+      reference_requests_task_list_item,
+      locate_professional_standing_request_task_list_item,
+      review_professional_standing_request_task_list_item,
+    ].compact
+
+    items << assessment_recommendation_task_list_item if items.present?
+
+    {
+      title:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.sections.verification_requests",
+        ),
+      items:,
+    }
+  end
+
+  def qualification_requests_task_list_item
+    qualification_requests =
+      assessment.qualification_requests.order(:created_at).to_a
+    return if qualification_requests.empty?
+
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.qualification_requests",
+        ),
+      link: [
+        :assessor_interface,
+        application_form,
+        assessment,
+        :qualification_requests,
+      ],
+      status: requestables_task_item_status(qualification_requests),
+    }
+  end
+
+  def reference_requests_task_list_item
+    reference_requests = assessment.reference_requests.order(:created_at).to_a
+
+    return if reference_requests.empty?
+
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.reference_requests",
+        ),
+      link: [
+        :assessor_interface,
+        application_form,
+        assessment,
+        :reference_requests,
+      ],
+      status:
+        (
+          if assessment.references_verified
+            :completed
+          else
+            requestables_task_item_status(reference_requests)
+          end
+        ),
+    }
+  end
+
+  def assessment_recommendation_task_list_item
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.assessment_recommendation",
+        ),
+      link:
+        if assessment.recommendable?
+          [:edit, :assessor_interface, application_form, assessment]
+        end,
+      status:
+        if assessment.completed?
+          :completed
+        elsif !assessment.recommendable?
+          :cannot_start
+        else
+          :not_started
+        end,
+    }
+  end
+
+  def locate_professional_standing_request_task_list_item
+    unless !teaching_authority_provides_written_statement &&
+             professional_standing_request.present?
+      return
+    end
+
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.locate_professional_standing_request",
+        ),
+      link: [
+        :location,
+        :assessor_interface,
+        application_form,
+        assessment,
+        :professional_standing_request,
+      ],
+      status:
+        if professional_standing_request.ready_for_review ||
+             professional_standing_request.received?
+          :completed
+        elsif professional_standing_request.expired?
+          :overdue
+        else
+          :waiting_on
+        end,
+    }
+  end
+
+  def review_professional_standing_request_task_list_item
+    unless !teaching_authority_provides_written_statement &&
+             professional_standing_request.present?
+      return
+    end
+
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.review_professional_standing_request",
+        ),
+      link:
+        if professional_standing_request.received? ||
+             professional_standing_request.ready_for_review
+          [
+            :review,
+            :assessor_interface,
+            application_form,
+            assessment,
+            :professional_standing_request,
+          ]
+        end,
+      status:
+        if professional_standing_request.reviewed?
+          :completed
+        elsif professional_standing_request.received? ||
+              professional_standing_request.ready_for_review
+          :received
+        else
+          :cannot_start
+        end,
+    }
+  end
+
   def preassessment_professional_standing_request_completed?
     if teaching_authority_provides_written_statement
       professional_standing_request.received?
@@ -287,22 +428,22 @@ class AssessorInterface::ApplicationFormsShowViewObject
       !assessment.preliminary_check_complete
   end
 
+  def requestables_task_item_status(requestables)
+    unreviewed_requests = requestables.reject(&:reviewed?)
+
+    if unreviewed_requests.empty?
+      :completed
+    elsif unreviewed_requests.any?(&:expired?)
+      :overdue
+    elsif unreviewed_requests.any?(&:received?)
+      :received
+    else
+      :waiting_on
+    end
+  end
+
   def further_information_requests
     @further_information_requests ||=
       assessment.further_information_requests.order(:created_at).to_a
-  end
-
-  def qualification_requests
-    @qualification_requests ||=
-      assessment.qualification_requests.order(:created_at).to_a
-  end
-
-  def reference_requests
-    @reference_requests ||=
-      assessment.reference_requests.order(:created_at).to_a
-  end
-
-  def url_helpers
-    Rails.application.routes.url_helpers
   end
 end

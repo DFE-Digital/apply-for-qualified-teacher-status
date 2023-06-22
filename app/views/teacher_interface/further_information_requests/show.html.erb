@@ -3,27 +3,7 @@
 
 <h1 class="govuk-heading-l">Apply for qualified teacher status (QTS)</h1>
 
-<ol class="app-task-list">
-  <li>
-    <h2 class="app-task-list__section">
-      Further information requested
-    </h2>
-
-    <ul class="app-task-list__items">
-      <% @view_object.task_items.each do |item| %>
-        <li class="app-task-list__item">
-          <span class="app-task-list__task-name">
-            <%= link_to item[:text], item[:href], aria: { describedby: "#{item[:key]}-status" } %>
-          </span>
-
-          <%= render(StatusTag::Component.new(
-            **item.slice(:key, :status).merge(class_context: "app-task-list")
-          )) %>
-        </li>
-      <% end %>
-    </ul>
-  </li>
-</ol>
+<%= render TaskList::Component.new(@view_object.task_list_sections) %>
 
 <% if @view_object.can_check_answers? %>
   <p class="govuk-body"> Once you’ve checked your response on the next screen, you’ll be able to submit it. </p>

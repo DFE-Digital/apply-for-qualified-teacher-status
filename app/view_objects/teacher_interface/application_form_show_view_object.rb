@@ -36,80 +36,40 @@ class TeacherInterface::ApplicationFormShowViewObject
     (application_form.created_at + 6.months).strftime("%e %B %Y")
   end
 
-  def tasks
-    hash = {}
-    hash.merge!(about_you: %i[personal_information identification_document])
-    hash.merge!(qualifications: %i[qualifications age_range subjects])
-
-    if application_form.created_under_new_regulations?
-      hash.merge!(english_language: %i[english_language])
-    end
-
-    hash.merge!(work_history: %i[work_history]) if needs_work_history
-
-    if needs_written_statement || needs_registration_number
-      hash.merge!(
-        proof_of_recognition: [
-          needs_registration_number ? :registration_number : nil,
-          needs_written_statement ? :written_statement : nil,
-        ].compact,
-      )
-    end
-
-    hash
+  def task_list_sections
+    @task_list_sections ||= [
+      task_list_section(
+        :about_you,
+        %i[personal_information identification_document],
+      ),
+      task_list_section(:qualifications, %i[qualifications age_range subjects]),
+      if application_form.created_under_new_regulations?
+        task_list_section(:english_language, %i[english_language])
+      end,
+      if needs_work_history
+        task_list_section(:work_history, %i[work_history])
+      end,
+      if needs_written_statement || needs_registration_number
+        task_list_section(
+          :proof_of_recognition,
+          [
+            needs_registration_number ? :registration_number : nil,
+            needs_written_statement ? :written_statement : nil,
+          ].compact,
+        )
+      end,
+    ].compact
   end
 
-  def task_statuses
-    tasks.transform_values do |items|
-      items.index_with { |item| application_form.send("#{item}_status") }
-    end
-  end
-
-  def completed_task_sections
-    task_statuses
-      .filter { |_, statuses| statuses.values.all?("completed") }
-      .map { |section, _| section }
+  def completed_task_list_sections
+    @completed_task_list_sections ||=
+      task_list_sections.filter do |section|
+        section[:items].all? { |item| item[:status] == "completed" }
+      end
   end
 
   def can_submit?
-    completed_task_sections.count == tasks.count
-  end
-
-  def text_for_task_item(key)
-    if key == :written_statement
-      if application_form.teaching_authority_provides_written_statement
-        I18n.t("application_form.tasks.items.written_statement.provide")
-      else
-        I18n.t("application_form.tasks.items.written_statement.upload")
-      end
-    else
-      I18n.t("application_form.tasks.items.#{key}")
-    end
-  end
-
-  def path_for_task_item(key)
-    case key
-    when :identification_document
-      url_helpers.teacher_interface_application_form_document_path(
-        application_form.identification_document,
-      )
-    when :written_statement
-      if application_form.teaching_authority_provides_written_statement
-        url_helpers.edit_teacher_interface_application_form_written_statement_path
-      else
-        url_helpers.teacher_interface_application_form_document_path(
-          application_form.written_statement_document,
-        )
-      end
-    when :work_history
-      url_helpers.teacher_interface_application_form_work_histories_path
-    else
-      begin
-        url_helpers.send("teacher_interface_application_form_#{key}_path")
-      rescue NoMethodError
-        url_helpers.send("#{key}_teacher_interface_application_form_path")
-      end
-    end
+    completed_task_list_sections.count == task_list_sections.count
   end
 
   def notes_from_assessors
@@ -177,7 +137,66 @@ class TeacherInterface::ApplicationFormShowViewObject
            to: :application_form,
            allow_nil: true
 
-  def url_helpers
-    @url_helpers ||= Rails.application.routes.url_helpers
+  def task_list_section(key, item_keys)
+    {
+      title: I18n.t("application_form.tasks.sections.#{key}"),
+      items: task_list_items(item_keys),
+    }
+  end
+
+  def task_list_items(keys)
+    keys.map do |key|
+      {
+        name: name_for_task_item(key),
+        link: link_for_task_item(key),
+        status: status_for_task_item(key),
+      }
+    end
+  end
+
+  def name_for_task_item(key)
+    if key == :written_statement
+      if application_form.teaching_authority_provides_written_statement
+        I18n.t("application_form.tasks.items.written_statement.provide")
+      else
+        I18n.t("application_form.tasks.items.written_statement.upload")
+      end
+    else
+      I18n.t("application_form.tasks.items.#{key}")
+    end
+  end
+
+  def link_for_task_item(key)
+    case key
+    when :identification_document
+      [
+        :teacher_interface,
+        :application_form,
+        application_form.identification_document,
+      ]
+    when :written_statement
+      if application_form.teaching_authority_provides_written_statement
+        %i[edit teacher_interface application_form written_statement]
+      else
+        [
+          :teacher_interface,
+          :application_form,
+          application_form.written_statement_document,
+        ]
+      end
+    when :work_history
+      %i[teacher_interface application_form work_histories]
+    else
+      url_helpers = Rails.application.routes.url_helpers
+      begin
+        url_helpers.send("teacher_interface_application_form_#{key}_path")
+      rescue NoMethodError
+        url_helpers.send("#{key}_teacher_interface_application_form_path")
+      end
+    end
+  end
+
+  def status_for_task_item(key)
+    application_form.send("#{key}_status")
   end
 end

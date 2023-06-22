@@ -26,7 +26,9 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
     }
   end
 
-  describe "#task_items" do
+  describe "#task_list_sections" do
+    subject(:task_list_sections) { view_object.task_list_sections }
+
     let!(:text_item) do
       create(
         :further_information_request_item,
@@ -34,6 +36,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
         further_information_request:,
       )
     end
+
     let!(:document_item) do
       create(
         :further_information_request_item,
@@ -42,36 +45,33 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
       )
     end
 
-    subject(:task_items) { view_object.task_items }
+    it do
+      is_expected.to include_task_list_item(
+        "Further information requested",
+        "Tell us more about the subjects you can teach",
+        link: [
+          :edit,
+          :teacher_interface,
+          :application_form,
+          further_information_request,
+          text_item,
+        ],
+        status: :not_started,
+      )
+    end
 
     it do
-      is_expected.to eq(
-        [
-          {
-            key: text_item.id,
-            text: "Tell us more about the subjects you can teach",
-            href: [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              further_information_request,
-              text_item,
-            ],
-            status: :not_started,
-          },
-          {
-            key: document_item.id,
-            text: "Upload your identity document",
-            href: [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              further_information_request,
-              document_item,
-            ],
-            status: :not_started,
-          },
+      is_expected.to include_task_list_item(
+        "Further information requested",
+        "Upload your identity document",
+        link: [
+          :edit,
+          :teacher_interface,
+          :application_form,
+          further_information_request,
+          document_item,
         ],
+        status: :not_started,
       )
     end
   end

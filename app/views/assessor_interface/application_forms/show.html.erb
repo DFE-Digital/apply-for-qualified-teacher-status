@@ -22,33 +22,4 @@
 
 <h2 class="govuk-heading-l govuk-!-margin-top-9">Assessment</h2>
 
-<ol class="app-task-list">
-  <% @view_object.assessment_tasks.each_with_index do |(section, items), index| %>
-    <li>
-      <h2 class="app-task-list__section">
-        <span class="app-task-list__section-number"><%= index + 1 %>. </span>
-        <%= t(".assessment_tasks.sections.#{section}") %>
-      </h2>
-
-      <ul class="app-task-list__items">
-        <% items.each_with_index do |item, index| %>
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name" aria-describedby="<%= item %>-<%= index %>-status">
-              <% if (href = @view_object.assessment_task_path(section, item, index)) %>
-                <%= link_to t(".assessment_tasks.items.#{item}"), href %>
-              <% else %>
-                <%= t(".assessment_tasks.items.#{item}") %>
-              <% end %>
-            </span>
-
-            <%= render(StatusTag::Component.new(
-              key: "#{item}-#{index}",
-              status: @view_object.assessment_task_status(section, item, index),
-              class_context: "app-task-list",
-            )) %>
-          </li>
-        <% end %>
-      </ul>
-    </li>
-  <% end %>
-</ol>
+<%= render(TaskList::Component.new(@view_object.task_list_sections)) %>

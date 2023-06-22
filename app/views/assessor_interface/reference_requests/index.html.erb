@@ -13,31 +13,20 @@
     </div>
 
     <div class="govuk-grid-column-full-from-desktop">
-      <ol class="app-task-list">
-        <li>
-          <h2 class="app-task-list__section">
-            Work references
-          </h2>
-          <ul class="app-task-list__items govuk-!-padding-left-0">
-            <% @reference_requests.each_with_index do |reference_request, idx| %>
-              <li class="app-task-list__item">
-                <span class="app-task-list__task-name">
-                  <%= govuk_link_to(
-                    work_history_name_and_duration(reference_request.work_history, most_recent: idx.zero?),
-                    [:edit, :assessor_interface, @application_form, @assessment, reference_request]
-                  ) %>
-                </span>
-
-                <%= render StatusTag::Component.new(
-                  key: "reference-request-#{reference_request.id}",
-                  status: reference_request.status,
-                  class_context: "app-task-list",
-                  ) %>
-              </li>
-            <% end %>
-          </ul>
-        </li>
-      </ol>
+      <%= render TaskList::Component.new(
+        [
+          {
+            title: "Work references",
+            items: @reference_requests.each_with_index.map do |reference_request, index|
+              {
+                name: work_history_name_and_duration(reference_request.work_history, most_recent: index.zero?),
+                link: [:edit, :assessor_interface, @application_form, @assessment, reference_request],
+                status: reference_request.status
+              }
+            end
+          }
+        ]
+      ) %>
     </div>
 
     <div class="govuk-grid-column-two-thirds">

@@ -7,7 +7,7 @@
 </h2>
 
 <p class="govuk-body govuk-!-margin-bottom-7">
-  You have completed <%= view_object.completed_task_sections.count %> of <%= view_object.tasks.count %> sections.
+  You have completed <%= view_object.completed_task_list_sections.count %> of <%= view_object.task_list_sections.count %> sections.
 </p>
 
 <% if view_object.application_form.created_under_new_regulations? %>
@@ -19,38 +19,12 @@
   <% end %>
 <% end %>
 
-<ol class="app-task-list">
-  <% view_object.tasks.each_with_index do |(section, items), index| %>
-    <li>
-      <h2 class="app-task-list__section">
-        <span class="app-task-list__section-number"><%= index + 1 %>. </span>
-        <%= I18n.t("application_form.tasks.sections.#{section}") %>
-      </h2>
-
-      <ul class="app-task-list__items">
-        <% items.each do |item| %>
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <%= link_to view_object.text_for_task_item(item),
-                          view_object.path_for_task_item(item),
-                          aria: { describedby: "#{item}-status" } %>
-            </span>
-
-            <%= render(StatusTag::Component.new(
-              key: item,
-              status: view_object.task_statuses.dig(section, item),
-              class_context: "app-task-list"
-            )) %>
-          </li>
-        <% end %>
-      </ul>
-    </li>
-  <% end %>
-</ol>
+<%= render TaskList::Component.new(view_object.task_list_sections) %>
 
 <div class="govuk-button-group">
-  <%- if view_object.can_submit? -%>
+  <% if view_object.can_submit? %>
     <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.check"), edit_teacher_interface_application_form_path %>
-  <%- end -%>
+  <% end %>
+
   <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.save"), destroy_teacher_session_path, secondary: true %>
 </div>

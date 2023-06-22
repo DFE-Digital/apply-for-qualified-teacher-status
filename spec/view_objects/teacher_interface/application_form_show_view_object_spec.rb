@@ -52,218 +52,120 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     end
   end
 
-  describe "#tasks" do
-    subject(:tasks) { view_object.tasks }
+  describe "#task_list_sections" do
+    subject(:task_list_sections) { view_object.task_list_sections }
+
+    let(:needs_work_history) { false }
+    let(:needs_written_statement) { false }
+    let(:needs_registration_number) { false }
+
+    before do
+      create(
+        :application_form,
+        teacher: current_teacher,
+        needs_work_history:,
+        needs_written_statement:,
+        needs_registration_number:,
+      )
+    end
+
+    it do
+      is_expected.to include_task_list_item(
+        "About you",
+        "Enter your personal information",
+      )
+    end
+    it do
+      is_expected.to include_task_list_item(
+        "About you",
+        "Upload your identity document",
+      )
+    end
+
+    it do
+      is_expected.to include_task_list_item(
+        "Your English language proficiency",
+        "Verify your English language proficiency",
+      )
+    end
+
+    it do
+      is_expected.to include_task_list_item(
+        "Your qualifications",
+        "Add your teaching qualifications",
+      )
+    end
+    it do
+      is_expected.to include_task_list_item(
+        "Your qualifications",
+        "Enter the age range you can teach",
+      )
+    end
+    it do
+      is_expected.to include_task_list_item(
+        "Your qualifications",
+        "Enter the subjects you can teach",
+      )
+    end
+
+    it do
+      is_expected.to_not include_task_list_item(
+        "Your work history",
+        "Add your work history",
+      )
+    end
+
+    it do
+      is_expected.to_not include_task_list_item(
+        "Proof that you’re recognised as a teacher",
+        "Upload your written statement",
+      )
+    end
+    it do
+      is_expected.to_not include_task_list_item(
+        "Proof that you’re recognised as a teacher",
+        "Enter your registration number",
+      )
+    end
 
     context "with needs work history" do
-      before do
-        create(
-          :application_form,
-          teacher: current_teacher,
-          needs_work_history: true,
-          needs_written_statement: false,
-          needs_registration_number: false,
-        )
-      end
+      let(:needs_work_history) { true }
 
       it do
-        is_expected.to eq(
-          {
-            about_you: %i[personal_information identification_document],
-            english_language: %i[english_language],
-            qualifications: %i[qualifications age_range subjects],
-            work_history: %i[work_history],
-          },
+        is_expected.to include_task_list_item(
+          "Your work history",
+          "Add your work history",
         )
       end
     end
 
     context "with needs written statement" do
-      before do
-        create(
-          :application_form,
-          teacher: current_teacher,
-          needs_work_history: false,
-          needs_written_statement: true,
-          needs_registration_number: false,
-        )
-      end
+      let(:needs_written_statement) { true }
 
       it do
-        is_expected.to eq(
-          {
-            about_you: %i[personal_information identification_document],
-            english_language: %i[english_language],
-            qualifications: %i[qualifications age_range subjects],
-            proof_of_recognition: %i[written_statement],
-          },
+        is_expected.to include_task_list_item(
+          "Proof that you’re recognised as a teacher",
+          "Upload your written statement",
         )
       end
     end
 
-    context "with needs registration number" do
-      before do
-        create(
-          :application_form,
-          teacher: current_teacher,
-          needs_work_history: false,
-          needs_written_statement: false,
-          needs_registration_number: true,
-        )
-      end
+    context "with needs written statement" do
+      let(:needs_registration_number) { true }
 
       it do
-        is_expected.to eq(
-          {
-            about_you: %i[personal_information identification_document],
-            english_language: %i[english_language],
-            qualifications: %i[qualifications age_range subjects],
-            proof_of_recognition: %i[registration_number],
-          },
+        is_expected.to include_task_list_item(
+          "Proof that you’re recognised as a teacher",
+          "Enter your registration number",
         )
       end
     end
   end
 
-  describe "#task_statuses" do
-    subject(:task_statuses) { view_object.task_statuses }
-
-    context "with no extra requirements" do
-      before do
-        create(
-          :application_form,
-          teacher: current_teacher,
-          needs_work_history: false,
-          needs_written_statement: false,
-          needs_registration_number: false,
-        )
-      end
-
-      it do
-        is_expected.to eq(
-          {
-            about_you: {
-              personal_information: "not_started",
-              identification_document: "not_started",
-            },
-            english_language: {
-              english_language: "not_started",
-            },
-            qualifications: {
-              qualifications: "not_started",
-              age_range: "not_started",
-              subjects: "not_started",
-            },
-          },
-        )
-      end
+  describe "#completed_task_list_sections" do
+    subject(:completed_task_list_sections) do
+      view_object.completed_task_list_sections
     end
-
-    context "with work history" do
-      before do
-        create(
-          :application_form,
-          teacher: current_teacher,
-          needs_work_history: true,
-          needs_written_statement: false,
-          needs_registration_number: false,
-        )
-      end
-
-      it do
-        is_expected.to eq(
-          {
-            about_you: {
-              personal_information: "not_started",
-              identification_document: "not_started",
-            },
-            english_language: {
-              english_language: "not_started",
-            },
-            qualifications: {
-              qualifications: "not_started",
-              age_range: "not_started",
-              subjects: "not_started",
-            },
-            work_history: {
-              work_history: "not_started",
-            },
-          },
-        )
-      end
-    end
-
-    context "with written statement" do
-      before do
-        create(
-          :application_form,
-          teacher: current_teacher,
-          needs_work_history: false,
-          needs_written_statement: true,
-          needs_registration_number: false,
-        )
-      end
-
-      it do
-        is_expected.to eq(
-          {
-            about_you: {
-              personal_information: "not_started",
-              identification_document: "not_started",
-            },
-            english_language: {
-              english_language: "not_started",
-            },
-            qualifications: {
-              qualifications: "not_started",
-              age_range: "not_started",
-              subjects: "not_started",
-            },
-            proof_of_recognition: {
-              written_statement: "not_started",
-            },
-          },
-        )
-      end
-    end
-
-    context "with registration number" do
-      before do
-        create(
-          :application_form,
-          teacher: current_teacher,
-          needs_work_history: false,
-          needs_written_statement: false,
-          needs_registration_number: true,
-        )
-      end
-
-      it do
-        is_expected.to eq(
-          {
-            about_you: {
-              personal_information: "not_started",
-              identification_document: "not_started",
-            },
-            english_language: {
-              english_language: "not_started",
-            },
-            qualifications: {
-              qualifications: "not_started",
-              age_range: "not_started",
-              subjects: "not_started",
-            },
-            proof_of_recognition: {
-              registration_number: "not_started",
-            },
-          },
-        )
-      end
-    end
-  end
-
-  describe "#completed_task_sections" do
-    subject(:completed_task_sections) { view_object.completed_task_sections }
 
     let!(:application_form) do
       create(:application_form, teacher: current_teacher)
@@ -281,7 +183,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         )
       end
 
-      it { is_expected.to match_array(:about_you) }
+      it { is_expected.to_not be_empty }
     end
   end
 

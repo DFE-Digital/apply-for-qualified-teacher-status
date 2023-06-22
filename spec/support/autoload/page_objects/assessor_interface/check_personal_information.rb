@@ -9,7 +9,7 @@ module PageObjects
     end
 
     class CheckPersonalInformation < AssessmentSection
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/personal_information"
+      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/sections/{section_id}"
 
       sections :cards, PersonalInformationCard, ".govuk-summary-card"
 
