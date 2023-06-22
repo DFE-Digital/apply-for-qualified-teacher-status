@@ -32,20 +32,10 @@ jobs:
         id: resource-group-name
         run: echo "value=$(make -s production_aks print-resource-group-name)" >> $GITHUB_OUTPUT
 
-      - uses: hashicorp/setup-terraform@v2
+      - uses: ./.github/actions/set-kubernetes-credentials
         with:
-          terraform_version: 1.5.0
-          terraform_wrapper: false
-
-      - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
-        with:
+          environment: production
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Refresh Terraform
-        run: make ci production_aks terraform-refresh
-        env:
-          TF_VAR_azure_sp_credentials_json: ${{ secrets.AZURE_CREDENTIALS }}
-          DOCKER_IMAGE: "ghcr.io/dfe-digital/apply-for-qualified-teacher-status:no-tag"
 
       - name: Get Azure backup storage details
         id: azure-backup-storage
@@ -53,14 +43,6 @@ jobs:
         run: |
           echo "account-name=$(terraform output -raw postgres_azure_backup_storage_account_name)" >> $GITHUB_OUTPUT
           echo "container-name=$(terraform output -raw postgres_azure_backup_storage_container_name)" >> $GITHUB_OUTPUT
-
-      - uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Set AKS credentials
-        shell: bash
-        run: az aks get-credentials -g s189p01-tsc-pd-rg -n s189p01-tsc-production-aks
 
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
@@ -137,13 +119,10 @@ jobs:
         with:
           name: backup-sanitised
 
-      - uses: Azure/login@v1
+      - uses: ./.github/actions/set-kubernetes-credentials
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Set AKS credentials
-        shell: bash
-        run: az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
+          environment: preproduction
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Install kubectl
         uses: azure/setup-kubectl@v3

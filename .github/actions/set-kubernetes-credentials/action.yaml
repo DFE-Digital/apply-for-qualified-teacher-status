@@ -1,0 +1,46 @@
+name: Set Kubernetes Credentials
+description: Sets the credentials suitable for kubectl
+
+inputs:
+  environment:
+    description: The name of the environment
+    required: true
+  azure-credentials:
+    description: JSON object containing a service principal that can read from Azure Key Vault
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.0
+        terraform_wrapper: false
+
+    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+      with:
+        azure-credentials: ${{ inputs.azure-credentials }}
+
+    - name: Refresh Terraform
+      shell: sh
+      run: make ci ${{ inputs.environment }}_aks terraform-refresh
+      env:
+        TF_VAR_azure_sp_credentials_json: ${{ inputs.azure-credentials }}
+        DOCKER_IMAGE: "ghcr.io/dfe-digital/apply-for-qualified-teacher-status:no-tag"
+
+    - name: Get cluster details
+      id: cluster-details
+      working-directory: terraform/aks
+      shell: bash
+      run: |
+        echo "name=$(terraform output -raw kubernetes_cluster_name)" >> $GITHUB_OUTPUT
+        echo "resource-group=$(terraform output -raw kubernetes_cluster_resource_group_name)" >> $GITHUB_OUTPUT
+
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ inputs.azure-credentials }}
+
+    - name: Set AKS credentials
+      shell: bash
+      run: az aks get-credentials -g ${{ steps.cluster-details.outputs.resource-group }} -n ${{ steps.cluster-details.outputs.name }}
