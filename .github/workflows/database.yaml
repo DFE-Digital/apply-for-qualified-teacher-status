@@ -47,11 +47,11 @@ jobs:
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
 
+      - name: Install konduit
+        run: make install-konduit
+
       - name: Dump database
-        shell: bash
-        run: |
-          make install-konduit
-          bin/konduit.sh apply-for-qts-production-web -- pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f backup.sql.gz
+        run: bin/konduit.sh apply-for-qts-production-web -- pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f backup.sql.gz
 
       - name: Set connection string
         run: |
@@ -127,8 +127,9 @@ jobs:
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
 
+      - name: Install konduit
+        run: make install-konduit
+
       - name: Restore sanitised backup
         shell: bash
-        run: |
-          make install-konduit
-          zcat backup-sanitised.sql.gz | bin/konduit.sh apply-for-qts-preproduction-web -- psql
+        run: zcat backup-sanitised.sql.gz | bin/konduit.sh apply-for-qts-preproduction-web -- psql
