@@ -51,7 +51,7 @@ jobs:
         run: make install-konduit
 
       - name: Dump database
-        run: bin/konduit.sh apply-for-qts-production-web -- pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f backup.sql.gz
+        run: bin/konduit.sh apply-for-qts-production-web -- pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose -f backup.sql.gz
 
       - name: Set connection string
         run: |
@@ -75,7 +75,7 @@ jobs:
 
       - name: Sanitise dump
         run: |
-          psql -d postgres -f backup.sql.gz
+          gzip -d --to-stdout backup.sql.gz | psql -d postgres
           psql -d postgres -f db/scripts/sanitise.sql
           pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f backup-sanitised.sql.gz
         env:
@@ -132,4 +132,4 @@ jobs:
 
       - name: Restore sanitised backup
         shell: bash
-        run: zcat backup-sanitised.sql.gz | bin/konduit.sh apply-for-qts-preproduction-web -- psql
+        run: bin/konduit.sh -i backup-sanitised.sql.gz -c apply-for-qts-preproduction-web -- psql
