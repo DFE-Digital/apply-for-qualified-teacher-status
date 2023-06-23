@@ -88,12 +88,6 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_press_back
     when_i_select_nigeria
     then_i_see_the(:ineligible_page)
-    and_i_see_the_ineligible_february_2023_text
-
-    when_i_press_back
-    when_i_select_laos
-    then_i_see_the(:ineligible_page)
-    and_i_see_the_ineligible_end_of_year_2023_text
   end
 
   it "trying to skip steps" do
@@ -474,16 +468,6 @@ RSpec.describe "Eligibility check", type: :system do
     expect(ineligible_page.body).to have_content(
       "This service is for qualified teachers who trained to teach outside of England",
     )
-  end
-
-  def and_i_see_the_ineligible_february_2023_text
-    expect(ineligible_page.body).to have_content("the regulations are changing")
-    expect(ineligible_page.body).to have_content("from 1 February 2023.")
-  end
-
-  def and_i_see_the_ineligible_end_of_year_2023_text
-    expect(ineligible_page.body).to have_content("the regulations are changing")
-    expect(ineligible_page.body).to have_content("by the end of 2023.")
   end
 
   def and_i_see_the_ineligible_misconduct_text
