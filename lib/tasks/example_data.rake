@@ -33,9 +33,10 @@ namespace :example_data do
     TimelineEvent.delete_all
     DQTTRNRequest.delete_all
     ReminderEmail.delete_all
-    ProfessionalStandingRequest.delete_all
-    ReferenceRequest.delete_all
     FurtherInformationRequest.delete_all
+    ProfessionalStandingRequest.delete_all
+    QualificationRequest.delete_all
+    ReferenceRequest.delete_all
     SelectedFailureReason.delete_all
     AssessmentSection.delete_all
     Assessment.delete_all
@@ -140,6 +141,15 @@ def application_form_traits_for(region, new_regs)
       with_age_range
       with_subjects
       submitted
+      preliminary_check
+    ] + additional_traits,
+    %i[
+      with_personal_information
+      with_completed_qualification
+      with_identification_document
+      with_age_range
+      with_subjects
+      submitted
       waiting_on
     ] + additional_traits,
   ]
@@ -154,11 +164,6 @@ def create_application_forms(new_regs:)
       created_at = new_regs ? new_regs_date : old_regs_date
       traits.insert(0, :new_regs) if new_regs
 
-      if region.requires_preliminary_check ||
-           region.country.requires_preliminary_check
-        traits << :preliminary_check
-      end
-
       application_form =
         FactoryBot.create(:application_form, *traits, region:, created_at:)
 
@@ -166,7 +171,13 @@ def create_application_forms(new_regs:)
 
       assessment = AssessmentFactory.call(application_form:)
 
-      if application_form.waiting_on?
+      if application_form.teaching_authority_provides_written_statement
+        FactoryBot.create(
+          :professional_standing_request,
+          :requested,
+          assessment:,
+        )
+      elsif application_form.waiting_on?
         if application_form.needs_written_statement && rand(2).zero?
           FactoryBot.create(
             :professional_standing_request,
