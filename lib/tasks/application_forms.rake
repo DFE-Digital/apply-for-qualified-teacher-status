@@ -61,17 +61,4 @@ namespace :application_forms do
       puts "#{application_form.reference}: #{application_form.status}"
     end
   end
-
-  desc "Update status of application forms in waiting on to overdue"
-  task update_waiting_on_applications: :environment do
-    user = "Expirer"
-    assessment_ids = ReferenceRequest.expired.select(:assessment_id)
-    ApplicationForm
-      .waiting_on
-      .joins(:assessment)
-      .where(assessment: { id: assessment_ids })
-      .each do |application_form|
-        ApplicationFormStatusUpdater.call(application_form:, user:)
-      end
-  end
 end
