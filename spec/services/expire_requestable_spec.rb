@@ -18,6 +18,14 @@ RSpec.describe ExpireRequestable do
           creator: user,
         )
       end
+
+      it "calls the status updater" do
+        expect(ApplicationFormStatusUpdater).to receive(:call).with(
+          application_form: requestable.application_form,
+          user:,
+        ).at_least(:once)
+        subject
+      end
     end
 
     shared_examples_for "not expiring a requestable" do

@@ -15,6 +15,7 @@ class ExpireRequestable
       requestable.expired!
       requestable.after_expired(user:)
       create_timeline_event
+      ApplicationFormStatusUpdater.call(user:, application_form:)
     end
 
     requestable
