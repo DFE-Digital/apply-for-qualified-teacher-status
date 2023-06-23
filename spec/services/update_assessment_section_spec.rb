@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe UpdateAssessmentSection do
-  let(:user) { build(:staff, id: 1) }
+  let(:user) { create(:staff) }
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
   let(:assessment_section) do
