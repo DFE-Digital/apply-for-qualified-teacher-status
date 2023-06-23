@@ -123,31 +123,28 @@ ci:	## Run in automation environment
 	$(eval SP_AUTH=true)
 	$(eval CONFIRM_PRODUCTION=true)
 
-.PHONY: install-fetch-config
-install-fetch-config: ## Install the fetch-config script, for viewing/editing secrets in Azure Key Vault
-	[ ! -f bin/fetch_config.rb ] \
-		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
-		&& chmod +x bin/fetch_config.rb \
-		|| true
+bin/fetch_config.rb:
+	curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
+		&& chmod +x bin/fetch_config.rb
+
+bin/konduit.sh:
+	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
+		&& chmod +x bin/konduit.sh
 
 .PHONY: install-konduit
-install-konduit: ## Install the konduit script, for accessing backend services
-	[ ! -f bin/konduit.sh ] \
-		&& curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/master/scripts/konduit.sh -o bin/konduit.sh \
-		&& chmod +x bin/konduit.sh \
-		|| true
+install-konduit: bin/konduit.sh ## Install the konduit script, for accessing backend services
 
 .PHONY: edit-keyvault-secret
-edit-keyvault-secret: set-key-vault-names install-fetch-config set-azure-account
+edit-keyvault-secret: bin/fetch_config.rb set-key-vault-names set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} \
 		-e -d azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml -c
 
 .PHONY: print-keyvault-secret
-print-keyvault-secret: set-key-vault-names install-fetch-config set-azure-account
+print-keyvault-secret: bin/fetch_config.rb set-key-vault-names set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml
 
 .PHONY: validate-keyvault-secret
-validate-keyvault-secret: set-key-vault-names install-fetch-config set-azure-account
+validate-keyvault-secret: bin/fetch_config.rb set-key-vault-names set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -d quiet \
 		&& echo Data in ${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} looks valid
 
