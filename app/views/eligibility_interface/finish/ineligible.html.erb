@@ -13,16 +13,7 @@
     <p class="govuk-body">If you are recognised as a teacher in <%= CountryName.from_eligibility_check(@eligibility_check, with_definite_article: true) %> you are not currently eligible to use this service.</p>
 
     <p class="govuk-body">
-      However, the regulations are changing, which means you’ll be eligible to use this service
-      <% if CountryCode.eligible_in_february_2023?(@eligibility_check.country_code) %>
-        from 1 February 2023.
-      <% else %>
-        by the end of 2023.
-      <% end %>
-    </p>
-
-    <p class="govuk-body">
-      <%= govuk_link_to "Learn more about the qualifications and experience you’ll need to apply for QTS", "https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers" %>
+      We will update this page should there be any <%= govuk_link_to "changes to eligibility for QTS", "https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers--2#changes-to-eligibility-for-qts" %>.
     </p>
   <% end %>
 <% else %>
