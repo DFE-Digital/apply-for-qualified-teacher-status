@@ -114,7 +114,6 @@
     - working_days_submission_to_started
     - working_days_started_to_recommendation
     - references_verified
-    - preliminary_check_complete
   :countries:
     - id
     - code
