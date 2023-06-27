@@ -387,6 +387,7 @@
     - created_at
     - updated_at
     - malware_scan_result
+    - migrated_to_aks
   :work_histories:
     - application_form_id
     - canonical_contact_email
