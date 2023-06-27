@@ -5,7 +5,7 @@
     </p>
 
     <% if provider.check_url.present? %>
-      <p class="govuk-body">Check the applicant's <%= provider.reference_name %> at:</p>
+      <p class="govuk-body">Check the applicant’s <%= provider.reference_name %> at:</p>
       <p class="govuk-body"><%= govuk_link_to provider.check_url, provider.check_url, target: "_blank", rel: "noreferrer noopener" %></p>
     <% end %>
   <% else %>
@@ -14,7 +14,7 @@
     </p>
 
     <p class="govuk-body">
-      <%= govuk_link_to "Approved providers", "https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" %>
+      <%= govuk_link_to "Approved providers", "https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl", target: "_blank", rel: "noreferrer noopener" %>
     </p>
   <% end %>
 <% end %>
