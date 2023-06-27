@@ -375,10 +375,28 @@ RSpec.describe ApplicationFormStatusUpdater do
 
         include_examples "changes status", "preliminary_check"
 
-        context "once preliminary check is complete" do
+        context "when the preliminary check has passed" do
           before { preliminary_assessment_section.update!(passed: true) }
 
           include_examples "changes status", "waiting_on"
+        end
+
+        context "when the preliminary check has failed" do
+          before do
+            create(
+              :selected_failure_reason,
+              assessment_section: preliminary_assessment_section,
+            )
+            preliminary_assessment_section.reload.update!(passed: false)
+          end
+
+          include_examples "changes status", "preliminary_check"
+
+          context "and the application form is declined" do
+            before { application_form.update!(declined_at: Time.zone.now) }
+
+            include_examples "changes status", "declined"
+          end
         end
       end
     end
