@@ -132,17 +132,5 @@ module TimelineEntry
         {}
       end
     end
-
-    def quick_decline_vars
-      failed_sections =
-        timeline_event.application_form.assessment.sections.select(&:failed)
-      failed_sections.map do |section|
-        {
-          section_name: section.key.titleize,
-          passed: section.passed,
-          failure_reasons: section.selected_failure_reasons,
-        }
-      end
-    end
   end
 end
