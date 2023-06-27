@@ -348,7 +348,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
       before do
         create(:application_form, assessment:, teacher: current_teacher)
         create(:professional_standing_request, assessment:)
-        assessment.update!(preliminary_check_complete: true)
+        create(:assessment_section, :preliminary, :passed, assessment:)
       end
 
       it { is_expected.to be true }

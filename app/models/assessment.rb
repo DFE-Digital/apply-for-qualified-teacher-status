@@ -113,15 +113,8 @@ class Assessment < ApplicationRecord
 
   def can_decline?
     if unknown?
-      sections_ready =
-        if application_form.created_under_new_regulations?
-          any_section_finished?
-        else
-          all_sections_finished?
-        end
-
-      (sections_ready && any_section_failed? && any_section_declines?) ||
-        professional_standing_request&.requested? || false
+      any_preliminary_section_failed? ||
+        (all_sections_finished? && any_section_failed? && any_section_declines?)
     elsif request_further_information?
       any_further_information_request_failed?
     elsif verify?
@@ -159,6 +152,14 @@ class Assessment < ApplicationRecord
 
   def selected_failure_reasons_empty?
     sections.all? { |section| section.selected_failure_reasons.empty? }
+  end
+
+  def all_preliminary_sections_passed?
+    sections.preliminary.all?(&:passed)
+  end
+
+  def any_preliminary_section_failed?
+    sections.preliminary.any?(&:failed)
   end
 
   private

@@ -29,7 +29,13 @@ class AssessorInterface::FurtherInformationRequestViewObject
         {
           heading:
             I18n.t(
-              "assessor_interface.assessment_sections.show.failure_reasons.#{item.failure_reason_key}",
+              item.failure_reason_key,
+              scope: %i[
+                assessor_interface
+                assessment_sections
+                failure_reasons
+                as_statement
+              ],
             ),
           description: item.failure_reason_assessor_feedback,
           check_your_answers: {

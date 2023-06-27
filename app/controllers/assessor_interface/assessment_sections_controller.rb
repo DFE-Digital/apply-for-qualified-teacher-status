@@ -5,17 +5,15 @@ module AssessorInterface
     before_action :authorize_assessor
 
     def show
-      @assessment_section_form =
-        assessment_section_form.new(
+      @form =
+        form.new(
           user: current_staff,
-          **assessment_section_form_class.initial_attributes(
-            assessment_section,
-          ),
+          **form_class.initial_attributes(assessment_section),
         )
     end
 
     def update
-      unless assessment_section_view_object.render_form?
+      unless view_object.render_form?
         redirect_to [
                       :assessor_interface,
                       application_form,
@@ -25,15 +23,25 @@ module AssessorInterface
         return
       end
 
-      @assessment_section_form =
-        assessment_section_form.new(
-          assessment_section_form_params.merge(
-            assessment_section:,
-            user: current_staff,
-          ),
-        )
+      @form =
+        form.new(form_params.merge(assessment_section:, user: current_staff))
 
-      if @assessment_section_form.save
+      if @form.save
+        if assessment_section.preliminary?
+          if assessment.all_preliminary_sections_passed?
+            notify_teacher
+            unassign_assessor
+          else
+            redirect_to [
+                          :edit,
+                          :assessor_interface,
+                          view_object.application_form,
+                          view_object.assessment,
+                        ]
+            return
+          end
+        end
+
         redirect_to [:assessor_interface, application_form]
       else
         render :show, status: :unprocessable_entity
@@ -42,16 +50,20 @@ module AssessorInterface
 
     private
 
-    def assessment_section_view_object
-      @assessment_section_view_object ||=
-        AssessmentSectionViewObject.new(params:)
+    def view_object
+      @view_object ||= AssessmentSectionViewObject.new(params:)
     end
 
-    def assessment_section_form
-      assessment_section_form_class.for_assessment_section(assessment_section)
+    delegate :assessment_section,
+             :assessment,
+             :application_form,
+             to: :view_object
+
+    def form
+      form_class.for_assessment_section(assessment_section)
     end
 
-    def assessment_section_form_class
+    def form_class
       if assessment_section.age_range_subjects?
         CheckAgeRangeSubjectsForm
       elsif assessment_section.professional_standing? &&
@@ -69,15 +81,29 @@ module AssessorInterface
       end
     end
 
-    def assessment_section_form_params
-      assessment_section_form.permit_parameters(
+    def form_params
+      form.permit_parameters(
         params.require(:assessor_interface_assessment_section_form),
       )
     end
 
-    delegate :assessment_section,
-             :assessment,
-             :application_form,
-             to: :assessment_section_view_object
+    def notify_teacher
+      unless application_form.teaching_authority_provides_written_statement
+        return
+      end
+
+      TeacherMailer
+        .with(teacher: application_form.teacher)
+        .initial_checks_passed
+        .deliver_later
+    end
+
+    def unassign_assessor
+      AssignApplicationFormAssessor.call(
+        application_form:,
+        user: current_staff,
+        assessor: nil,
+      )
+    end
   end
 end

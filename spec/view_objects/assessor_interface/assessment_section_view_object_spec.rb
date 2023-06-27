@@ -159,16 +159,14 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
         create(:application_form, region:, requires_preliminary_check: true)
       end
 
+      let!(:preliminary_assessment_section) do
+        create(:assessment_section, :preliminary, assessment:)
+      end
+
       it { is_expected.to be false }
 
       context "and preliminary check is complete" do
-        let(:assessment) do
-          create(
-            :assessment,
-            application_form:,
-            preliminary_check_complete: true,
-          )
-        end
+        before { preliminary_assessment_section.update!(passed: true) }
 
         it { is_expected.to be true }
       end

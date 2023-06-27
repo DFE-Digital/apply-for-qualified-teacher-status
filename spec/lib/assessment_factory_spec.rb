@@ -344,6 +344,54 @@ RSpec.describe AssessmentFactory do
         end
       end
 
+      describe "preliminary qualifications section" do
+        it "is not created" do
+          expect(sections.preliminary.qualifications.count).to eq(0)
+        end
+
+        context "when application form requires a preliminary check" do
+          before { application_form.requires_preliminary_check = true }
+
+          it "is created" do
+            expect(sections.preliminary.qualifications.count).to eq(1)
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.preliminary.qualifications.first
+            expect(section.checks).to be_empty
+            expect(section.failure_reasons).to eq(
+              %w[teaching_qualifications_not_at_required_level],
+            )
+          end
+
+          context "with an application form with subject criteria" do
+            let(:application_form) do
+              create(
+                :application_form,
+                region: create(:region, :in_country, country_code: "SG"),
+              )
+            end
+
+            it "has the right checks and failure reasons" do
+              section = sections.preliminary.qualifications.first
+
+              expect(section.checks).to eq(
+                %w[
+                  qualifications_meet_level_6_or_equivalent
+                  teaching_qualification_subjects_criteria
+                ],
+              )
+              expect(section.failure_reasons).to eq(
+                %w[
+                  teaching_qualifications_not_at_required_level
+                  teaching_qualification_subjects_criteria
+                ],
+              )
+            end
+          end
+        end
+      end
+
       describe "english language proficiency section" do
         let(:application_form) { create(:application_form, :new_regs) }
 

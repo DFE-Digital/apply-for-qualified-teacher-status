@@ -104,6 +104,9 @@ FactoryBot.define do
     end
     reduced_evidence_accepted { region.reduced_evidence_accepted }
     written_statement_optional { region.written_statement_optional }
+    teaching_authority_provides_written_statement do
+      region.teaching_authority_provides_written_statement
+    end
 
     trait :completed do
       personal_information_status { "completed" }

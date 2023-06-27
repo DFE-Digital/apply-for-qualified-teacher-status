@@ -12,7 +12,7 @@
 
 <% @further_information_request.items.each do |item| %>
   <section class="app-further-information-request-item">
-    <h3 class="govuk-heading-s"><%= I18n.t("assessor_interface.assessment_sections.show.failure_reasons.#{item.failure_reason_key}") %></h3>
+    <h3 class="govuk-heading-s"><%= t(item.failure_reason_key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %></h3>
     <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
 
     <%= govuk_inset_text do %>

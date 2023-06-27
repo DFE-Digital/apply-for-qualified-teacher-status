@@ -87,19 +87,6 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
     end
   end
 
-  describe "#selected_failure_reasons=" do
-    before do
-      form.selected_failure_reasons = [
-        double(key: :reason_a, assessor_feedback: "Notes."),
-      ]
-    end
-
-    it "sets the attributes" do
-      expect(form.reason_a_checked).to be true
-      expect(form.reason_a_notes).to eq("Notes.")
-    end
-  end
-
   describe "#save" do
     subject(:save) { form.save }
 

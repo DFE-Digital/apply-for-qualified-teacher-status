@@ -11,6 +11,7 @@ class AssessmentFactory
     sections = [
       personal_information_section,
       qualifications_section,
+      preliminary_qualifications_section,
       age_range_subjects_section,
       english_language_proficiency_section,
       work_history_section,
@@ -143,6 +144,37 @@ class AssessmentFactory
     ].compact
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
+  end
+
+  def preliminary_qualifications_section
+    return nil unless application_form.requires_preliminary_check
+
+    checks =
+      if application_form.secondary_education_teaching_qualification_required?
+        %w[
+          qualifications_meet_level_6_or_equivalent
+          teaching_qualification_subjects_criteria
+        ]
+      else
+        []
+      end
+
+    failure_reasons =
+      if application_form.secondary_education_teaching_qualification_required?
+        [
+          FailureReasons::TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL,
+          FailureReasons::TEACHING_QUALIFICATION_SUBJECTS_CRITERIA,
+        ]
+      else
+        [FailureReasons::TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL]
+      end
+
+    AssessmentSection.new(
+      preliminary: true,
+      key: "qualifications",
+      checks:,
+      failure_reasons:,
+    )
   end
 
   def age_range_subjects_section

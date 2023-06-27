@@ -18,21 +18,14 @@ en:
             pre_assessment_tasks: Pre-assessment tasks
             verification_requests: Verification requests
           items:
-            age_range_subjects: Verify age range and subjects
             assessment_recommendation: Assessment recommendation
             await_professional_standing_request: Awaiting third-party professional standing
-            english_language_proficiency: Check English language proficiency
             initial_assessment_recommendation: Initial assessment recommendation
             locate_professional_standing_request: Record LOPS response
-            personal_information: Check personal information
-            preliminary_check: Preliminary check
-            professional_standing: Check professional standing
             qualification_requests: Record qualifications responses
-            qualifications: Check qualifications
             reference_requests: Verify reference requests
             review_professional_standing_request: Review LOPS response
             review_requested_information: Review requested information from applicant
-            work_history: Check work history
 
     assessments:
       edit:
@@ -112,52 +105,58 @@ en:
     assessment_sections:
       show:
         title:
-          personal_information: Check personal information
-          qualifications: Check qualifications
-          age_range_subjects: Verify age range and subjects
-          english_language_proficiency: Check English language proficiency
-          work_history: Check work history
-          professional_standing: Check professional standing
-        checks:
-          age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
-          applicant_already_dqt: applicant does not already appear in DQT
-          applicant_already_qts: applicant does not already hold QTS and induction exemption
-          authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present
-          confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
-          duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
-          email_contact_current_employer: the applicant has entered the name and email address of a contact for their current/most recent employer
-          english_language_valid_moi: The applicant’s MOI supports their statement that they were taught in English, in a NON-exempt country.
-          english_language_valid_provider: The applicant has provided a Secure English Language Test (SELT) at level B2 of the Common European Framework of Reference for Languages (CEFR) scale, from the list of approved English language providers and awarded within the last 2 years.
-          full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
-          has_additional_degree_transcript: additional degree transcript is present (and translation if required)
-          has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
-          has_teacher_qualification_certificate: teaching qualification certificate is present (and translation if required)
-          has_teacher_qualification_transcript: teaching qualification transcript is present (and translation if required)
-          has_university_degree_certificate: university degree qualification certificate is present (and translation if required)
-          has_university_degree_transcript: university degree transcript is present (and translation if required)
-          identification_document_present: a valid ID document is present
-          name_change_document_present: evidence of name change is present (if the name entered on the form is different to the name on their ID)
-          qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 qualification or higher)
-          qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
-          qualified_to_teach: the applicant is qualified to teach at state or government schools
-          qualified_to_teach_children_11_to_16: the applicant is qualified to teach children aged 11-16
-          registration_number: registration number provided and verified (where applicable)
-          satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
-          teaching_qualification: confirmation of the applicant’s teaching qualification
-          teaching_qualification_1_year: the teaching qualification lasted at least 1 academic year
-          teaching_qualification_pedagogy: teaching qualification had enough focus on pedagogy (75% of 1-year course, 33% of 3-year course, 25% of 4-year course, 20% of 5-year course)
-          teaching_qualification_subjects_criteria: the teaching qualification specifically qualifies them to teach either Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian or Spanish (OR they have a teaching qualification for children aged 11-16 AND at least 50% of their degree was in one of those subjects)
-          teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
-          verify_school_details: the school details to verify what the applicant has entered
-          work_history_references: that the applicant has provided a reference for each role with an acceptable email address
-          written_statement_completion_date: induction letter shows the completion date (if applicable)
-          written_statement_induction: induction letter shows the applicant completed induction in the country (if applicable)
-          written_statement_present: letter from the country or state’s competent authority provided
-          written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
-          written_statement_registration_number: induction letter shows the teacher reference (TR) number (if applicable)
-          written_statement_school_name: induction letter shows the name of the school (if applicable)
-          written_statement_signature: induction letter shows the signature of the administration department or headteacher/principal (if applicable)
-        failure_reasons:
+          not_preliminary:
+            age_range_subjects: Verify age range and subjects
+            english_language_proficiency: Check English language proficiency
+            personal_information: Check personal information
+            professional_standing: Check professional standing
+            qualifications: Check qualifications
+            work_history: Check work history
+          preliminary:
+            qualifications: Preliminary check (qualifications)
+
+      checks:
+        age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
+        applicant_already_dqt: applicant does not already appear in DQT
+        applicant_already_qts: applicant does not already hold QTS and induction exemption
+        authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present
+        confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
+        duplicate_application: up-front duplication check shows the applicant does not have another in-flight application
+        email_contact_current_employer: the applicant has entered the name and email address of a contact for their current/most recent employer
+        english_language_valid_moi: The applicant’s MOI supports their statement that they were taught in English, in a NON-exempt country.
+        english_language_valid_provider: The applicant has provided a Secure English Language Test (SELT) at level B2 of the Common European Framework of Reference for Languages (CEFR) scale, from the list of approved English language providers and awarded within the last 2 years.
+        full_professional_status: the applicant holds full professional status or has achieved the required level (for example, where we require only provisional registration) and has no outstanding additional conditions
+        has_additional_degree_transcript: additional degree transcript is present (and translation if required)
+        has_additional_qualification_certificate: additional degree qualification certificate is present (and translation if required)
+        has_teacher_qualification_certificate: teaching qualification certificate is present (and translation if required)
+        has_teacher_qualification_transcript: teaching qualification transcript is present (and translation if required)
+        has_university_degree_certificate: university degree qualification certificate is present (and translation if required)
+        has_university_degree_transcript: university degree transcript is present (and translation if required)
+        identification_document_present: a valid ID document is present
+        name_change_document_present: evidence of name change is present (if the name entered on the form is different to the name on their ID)
+        qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 qualification or higher)
+        qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
+        qualified_to_teach: the applicant is qualified to teach at state or government schools
+        qualified_to_teach_children_11_to_16: the applicant is qualified to teach children aged 11-16
+        registration_number: registration number provided and verified (where applicable)
+        satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
+        teaching_qualification: confirmation of the applicant’s teaching qualification
+        teaching_qualification_1_year: the teaching qualification lasted at least 1 academic year
+        teaching_qualification_pedagogy: teaching qualification had enough focus on pedagogy (75% of 1-year course, 33% of 3-year course, 25% of 4-year course, 20% of 5-year course)
+        teaching_qualification_subjects_criteria: the teaching qualification specifically qualifies them to teach either Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian or Spanish (OR they have a teaching qualification for children aged 11-16 AND at least 50% of their degree was in one of those subjects)
+        teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
+        verify_school_details: the school details to verify what the applicant has entered
+        work_history_references: that the applicant has provided a reference for each role with an acceptable email address
+        written_statement_completion_date: induction letter shows the completion date (if applicable)
+        written_statement_induction: induction letter shows the applicant completed induction in the country (if applicable)
+        written_statement_present: letter from the country or state’s competent authority provided
+        written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
+        written_statement_registration_number: induction letter shows the teacher reference (TR) number (if applicable)
+        written_statement_school_name: induction letter shows the name of the school (if applicable)
+        written_statement_signature: induction letter shows the signature of the administration department or headteacher/principal (if applicable)
+
+      failure_reasons:
+        as_statement:
           additional_degree_certificate_illegible: An additional degree certificate (or translation) is illegible or in a format that we cannot accept.
           additional_degree_transcript_illegible: An additional degree transcript (or translation) is illegible or in a format that we cannot accept.
           age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
@@ -197,9 +196,9 @@ en:
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
           teaching_qualification_1_year: The teacher training course qualification did not last at least 1 academic year.
           teaching_qualification_pedagogy: The teaching qualification did not have enough focus on pedagogy.
-          teaching_qualification_subjects_criteria: The applicant is not qualified to teach one of the subjects that we can currently accept.
-          teaching_qualifications_from_ineligible_country: Teaching qualifications were completed in an ineligible country.
-          teaching_qualifications_not_at_required_level: Teaching qualifications do not meet the required academic level (level 6).
+          teaching_qualification_subjects_criteria: The applicant is not qualified to teach one of the subjects that we currently accept (Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, Spanish).
+          teaching_qualifications_from_ineligible_country: The teaching qualifications were completed in an ineligible country.
+          teaching_qualifications_not_at_required_level: The teaching qualifications do not meet the required academic level (level 6).
           teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
           uploaded_file_suspect: We were unable to open one of the files provided. The applicant will need to submit a new file.
           unrecognised_references: Application contained 1 or more references that cannot be considered.
@@ -208,22 +207,28 @@ en:
           written_statement_illegible: The letter is illegible or in a format that we cannot accept.
           written_statement_information: The letter is missing information.
           written_statement_recent: The letter was not issued within the last 3 months.
-        induction_required:
-          legend:
-            GB-SCT: What level of registration does the applicant have?
-            GB-NIR: Has applicant completed Induction?
-          false:
-            GB-SCT: Full registration
-            GB-NIR: "Yes"
-          true:
-            GB-SCT: Provisional registration
-            GB-NIR: "No"
-        professional_standing_request: Third-party professional standing
-        labels:
-          personal_information:
-            english_language_section_passed: This applicant has indicated English language exemption by birth/citizenship. I have checked their ID for evidence of this.
-          qualifications:
-            english_language_section_passed: This applicant has indicated English language exemption by country of study. I have checked their qualification documents for evidence of this.
+        as_question:
+          label:
+            teaching_qualifications_not_at_required_level: Does the teaching qualification meet the required academic level? (level 6 or higher)
+            teaching_qualification_subjects_criteria: Is the applicant qualified to teach in one of the following subjects?
+          hint:
+            teaching_qualification_subjects_criteria: Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, Spanish.
+
+      induction_required:
+        legend:
+          GB-SCT: What level of registration does the applicant have?
+          GB-NIR: Has applicant completed Induction?
+        false:
+          GB-SCT: Full registration
+          GB-NIR: "Yes"
+        true:
+          GB-SCT: Provisional registration
+          GB-NIR: "No"
+
+      english_language_proficiency:
+        passed:
+          personal_information: This applicant has indicated English language exemption by birth/citizenship. I have checked their ID for evidence of this.
+          qualifications: This applicant has indicated English language exemption by country of study. I have checked their qualification documents for evidence of this.
 
     further_information_requests:
       edit:
@@ -244,14 +249,6 @@ en:
         title: Review work reference
         passed: Are you satisfied that this reference should count towards the applicant’s work experience?
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this reference should not count towards the applicant’s work experience'
-    case_notes:
-      preliminary_check:
-        complete_waiting_for_professional_standing: |
-          Preliminary checks completed.
-
-           Once we’ve received written evidence of professional standing from the applicant’s teaching authority, we’ll add the application to the queue to be assigned to an assessor.
-        complete: Preliminary checks completed. Application can progress to initial assessment.
-        application_submitted: Application requires a preliminary check before it can progress to full initial assessment.
 
   activemodel:
     errors:
@@ -330,6 +327,8 @@ en:
               blank: Enter a note to the applicant
             qualifications_dont_match_subjects_notes:
               blank: Enter a note to the applicant
+            qualified_to_teach_children_11_to_16_checked:
+              inclusion: Select whether the applicant qualified to teach children between ages 11-16 in one of the subjects
             qualified_to_teach_notes:
               blank: Enter a note to the applicant
             registration_number_notes:
@@ -350,8 +349,12 @@ en:
               blank: Enter a note to the applicant
             teaching_qualifications_from_ineligible_country_notes:
               blank: Enter a note to the applicant
+            teaching_qualifications_not_at_required_level_checked:
+              inclusion: Select whether the teaching qualification meets the required academic level
             teaching_qualifications_not_at_required_level_notes:
               blank: Enter a note to the applicant
+            teaching_qualification_subjects_criteria_checked:
+              inclusion: Select whether the applicant qualified to teach one of the subjects we currently accept
             teaching_transcript_illegible_notes:
               blank: Enter a note to the applicant
             work_history_break_notes:
@@ -420,10 +423,6 @@ en:
           attributes:
             references_verified:
               inclusion: Select whether enough valid work references been received for this application to progress to either an award or decline
-        assessor_interface/preliminary_check_form:
-          attributes:
-            preliminary_check_complete:
-              inclusion: Select whether you want to move this application to a full assessment
         assessor_interface/reviewer_assignment_form:
           attributes:
             reviewer_id:

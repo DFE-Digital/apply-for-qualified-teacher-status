@@ -352,10 +352,15 @@ RSpec.describe ApplicationFormStatusUpdater do
     context "when preliminary check is required" do
       before do
         application_form.update!(
-          assessment: create(:assessment, preliminary_check_complete: nil),
           submitted_at: Time.zone.now,
           requires_preliminary_check: true,
         )
+      end
+
+      let(:assessment) { create(:assessment, application_form:) }
+
+      let!(:preliminary_assessment_section) do
+        create(:assessment_section, :preliminary, assessment:)
       end
 
       include_examples "changes status", "preliminary_check"
@@ -365,20 +370,13 @@ RSpec.describe ApplicationFormStatusUpdater do
           application_form.update!(
             teaching_authority_provides_written_statement: true,
           )
-          create(
-            :professional_standing_request,
-            assessment: application_form.assessment,
-          )
+          create(:professional_standing_request, assessment:)
         end
 
         include_examples "changes status", "preliminary_check"
 
         context "once preliminary check is complete" do
-          before do
-            application_form.assessment.update!(
-              preliminary_check_complete: true,
-            )
-          end
+          before { preliminary_assessment_section.update!(passed: true) }
 
           include_examples "changes status", "waiting_on"
         end

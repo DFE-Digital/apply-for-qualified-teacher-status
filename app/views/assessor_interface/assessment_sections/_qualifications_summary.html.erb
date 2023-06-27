@@ -1,14 +1,17 @@
 <%= render "shared/application_form/qualifications_summary",
            application_form:,
            qualifications: application_form.qualifications.ordered,
-           changeable: false %>
+           changeable: false,
+           preliminary: assessment_section.preliminary? %>
 
-<%= govuk_accordion do |accordion| %>
-  <% accordion.with_section(heading_text: "Qualification information shown to applicant") do %>
-    <%= render "shared/eligible_region_content_components/proof_of_qualifications", region: %>
-  <% end %>
+<% unless assessment_section.preliminary? %>
+  <%= govuk_accordion do |accordion| %>
+    <% accordion.with_section(heading_text: "Qualification information shown to applicant") do %>
+      <%= render "shared/eligible_region_content_components/proof_of_qualifications", region: %>
+    <% end %>
 
-  <% if application_form.english_language_qualification_exempt %>
-    <% render "english_language_exempt_accordion_section", accordion: %>
+    <% if application_form.english_language_qualification_exempt %>
+      <% render "english_language_exempt_accordion_section", accordion: %>
+    <% end %>
   <% end %>
 <% end %>
