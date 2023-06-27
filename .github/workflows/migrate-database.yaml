@@ -102,6 +102,13 @@ jobs:
       - name: Restore database
         run: bin/konduit.sh -i backup.sql.gz -c apply-for-qts-${{ github.event.inputs.environment }}-web -- psql
 
+      - name: Remove PaaS event triggers
+        shell: bash
+        run: |
+          bin/konduit.sh apply-for-qts-${{ github.event.inputs.environment }}-web -- psql -c 'drop event trigger forbid_ddl_reader'
+          bin/konduit.sh apply-for-qts-${{ github.event.inputs.environment }}-web -- psql -c 'drop event trigger make_readable'
+          bin/konduit.sh apply-for-qts-${{ github.event.inputs.environment }}-web -- psql -c 'drop event trigger reassign_owned'
+
       - uses: geekyeggo/delete-artifact@v2
         with:
           name: backup
