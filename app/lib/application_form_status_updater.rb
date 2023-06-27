@@ -105,11 +105,6 @@ class ApplicationFormStatusUpdater
   end
 
   def waiting_on_professional_standing
-    if teaching_authority_provides_written_statement &&
-         requires_preliminary_check && !all_preliminary_sections_passed?
-      return false
-    end
-
     waiting_on?(requestables: professional_standing_requests)
   end
 
@@ -134,6 +129,8 @@ class ApplicationFormStatusUpdater
         "awarded"
       elsif dqt_trn_request.present?
         "awarded_pending_checks"
+      elsif preliminary_check?
+        "preliminary_check"
       elsif overdue_further_information || overdue_professional_standing ||
             overdue_qualification || overdue_reference
         "overdue"
@@ -147,11 +144,7 @@ class ApplicationFormStatusUpdater
       elsif assessment&.started?
         "assessment_in_progress"
       elsif application_form.submitted_at.present?
-        if requires_preliminary_check && !all_preliminary_sections_passed?
-          "preliminary_check"
-        else
-          "submitted"
-        end
+        "submitted"
       else
         "draft"
       end
@@ -160,14 +153,18 @@ class ApplicationFormStatusUpdater
   delegate :assessment,
            :dqt_trn_request,
            :region,
-           :requires_preliminary_check,
            :teacher,
            :teaching_authority_provides_written_statement,
            to: :application_form
   delegate :references_verified, to: :assessment, allow_nil: true
 
-  def all_preliminary_sections_passed?
-    assessment&.all_preliminary_sections_passed? || false
+  def preliminary_check?
+    application_form.submitted_at.present? &&
+      application_form.requires_preliminary_check &&
+      (
+        assessment&.any_preliminary_section_failed? ||
+          !assessment&.all_preliminary_sections_passed?
+      )
   end
 
   def further_information_requests
