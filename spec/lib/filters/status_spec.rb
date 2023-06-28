@@ -19,16 +19,22 @@ RSpec.describe Filters::Status do
   end
 
   context "wth states param and multiple states" do
-    let(:params) { { statuses: %w[draft submitted] } }
+    let(:params) do
+      { statuses: %w[draft submitted waiting_on_further_information] }
+    end
     let(:scope) { ApplicationForm.all }
 
-    let!(:included) do
-      [create(:application_form, :draft), create(:application_form, :submitted)]
-    end
-
-    let!(:filtered) do
+    before do
       create(:application_form, :awarded)
       create(:application_form, :declined)
+    end
+
+    let!(:included) do
+      [
+        create(:application_form, :draft),
+        create(:application_form, :submitted),
+        create(:application_form, waiting_on_further_information: true),
+      ]
     end
 
     it "returns a filtered scope" do
