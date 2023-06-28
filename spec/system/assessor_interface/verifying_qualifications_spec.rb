@@ -80,7 +80,9 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def and_i_see_a_waiting_on_status
-    expect(assessor_application_page.overview.status.text).to eq("WAITING ON")
+    expect(assessor_application_page.overview.status.text).to eq(
+      "WAITING ON QUALIFICATION",
+    )
   end
 
   def and_i_click_record_qualifications_task

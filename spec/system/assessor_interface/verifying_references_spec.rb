@@ -38,7 +38,9 @@ RSpec.describe "Assessor verifying references", type: :system do
   end
 
   def and_i_see_a_waiting_on_status
-    expect(assessor_application_page.overview.status.text).to eq("WAITING ON")
+    expect(assessor_application_page.overview.status.text).to eq(
+      "WAITING ON REFERENCE",
+    )
   end
 
   def and_i_click_verify_references
@@ -133,7 +135,12 @@ RSpec.describe "Assessor verifying references", type: :system do
     @application_form ||=
       begin
         application_form =
-          create(:application_form, :waiting_on, received_reference: true)
+          create(
+            :application_form,
+            :waiting_on,
+            waiting_on_reference: true,
+            received_reference: true,
+          )
         work_history =
           create(
             :work_history,
