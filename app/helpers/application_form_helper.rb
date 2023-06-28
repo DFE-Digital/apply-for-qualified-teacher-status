@@ -98,7 +98,6 @@ module ApplicationFormHelper
         I18n.t("application_form.summary.status"),
         render(
           StatusTag::Component.new(
-            key: "application-form-#{application_form.id}",
             status: application_form.status,
             class_context: "app-search-result__item",
           ),

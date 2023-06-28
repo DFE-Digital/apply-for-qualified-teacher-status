@@ -2,16 +2,14 @@
 
 module StatusTag
   class Component < ViewComponent::Base
-    def initialize(key:, status:, class_context: nil)
+    def initialize(status:, id: nil, class_context: nil)
       super
-      @key = key
       @status = status.to_sym
+      @id = id
       @class_context = class_context
     end
 
-    def id
-      "#{@key}-status"
-    end
+    attr_reader :id
 
     def text
       I18n.t(@status, scope: %i[components status_tag])

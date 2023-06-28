@@ -4,10 +4,10 @@ require "rails_helper"
 
 RSpec.describe StatusTag::Component, type: :component do
   subject(:component) do
-    render_inline(described_class.new(key:, status:, class_context:))
+    render_inline(described_class.new(id:, status:, class_context:))
   end
 
-  let(:key) { "key" }
+  let(:id) { "id" }
   let(:status) { :awarded }
   let(:class_context) { "app-task-list" }
 
@@ -18,9 +18,9 @@ RSpec.describe StatusTag::Component, type: :component do
   end
 
   describe "id" do
-    subject(:id) { component.at_css("strong")["id"] }
+    subject { component.at_css("strong")["id"] }
 
-    it { is_expected.to eq("key-status") }
+    it { is_expected.to eq("id") }
   end
 
   describe "class" do
