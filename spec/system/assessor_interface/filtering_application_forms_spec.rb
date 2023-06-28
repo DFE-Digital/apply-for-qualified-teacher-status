@@ -128,6 +128,8 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     awarded_state =
       applications_page.status_filter.statuses.find do |status|
         status.label.text == "Awarded (1)"
+      rescue Capybara::ElementNotFound
+        false
       end
     awarded_state.checkbox.click
     applications_page.apply_filters.click
