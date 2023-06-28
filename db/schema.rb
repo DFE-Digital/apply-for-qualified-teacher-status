@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_071158) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_27_152008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -493,6 +493,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_071158) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "malware_scan_result", default: "pending", null: false
+    t.boolean "migrated_to_aks", default: false, null: false
     t.index ["document_id"], name: "index_uploads_on_document_id"
   end
 

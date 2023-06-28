@@ -1,0 +1,103 @@
+name: Migrate storage to AKS
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: GitHub environment to backup and restore
+        type: choice
+        default: preproduction
+        options:
+          - preproduction
+          - production
+
+jobs:
+  azure-storage:
+    name: Get Azure Storage details
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ github.event.inputs.environment }}_aks
+
+    outputs:
+      account-name: ${{ steps.azure-storage.outputs.account-name }}
+      access-key: ${{ steps.encrypted-access-key.outputs.out }}
+      container: ${{ steps.azure-storage.outputs.container }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - uses: ./.github/actions/set-kubernetes-credentials
+        with:
+          environment: ${{ github.event.inputs.environment }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Get Azure Storage details
+        id: azure-storage
+        working-directory: terraform/aks
+        run: |
+          ACCOUNT_NAME=$(terraform output -raw azure_storage_account_name)
+          echo "account-name=$ACCOUNT_NAME" >> $GITHUB_OUTPUT
+
+          ACCESS_KEY=$(terraform output -raw azure_storage_access_key)
+          echo "::add-mask::$ACCESS_KEY"
+          echo "access-key=$ACCESS_KEY" >> $GITHUB_OUTPUT
+
+          CONTAINER=$(terraform output -raw azure_storage_container)
+          echo "container=$CONTAINER" >> $GITHUB_OUTPUT
+
+      - uses: cloudposse/github-action-secret-outputs@main
+        id: encrypted-access-key
+        with:
+          secret: ${{ secrets.ENCRYPTION_KEY }}
+          op: encode
+          in: ${{ steps.azure-storage.outputs.access-key }}
+
+  migrate-stored-blob-data:
+    name: Migrate stored blob data
+    needs: [azure-storage]
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ (github.event.inputs.environment == 'preproduction' && 'preprod') || github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.azure_credentials }}
+
+      - name: Set environment variables Production
+        shell: bash
+        run: |
+          tf_vars_file=terraform/paas/workspace_variables/${{ (github.event.inputs.environment == 'preproduction' && 'preprod') || github.event.inputs.environment }}.tfvars.json
+          echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "PAAS_SPACE=$(jq -r '.paas_space' ${tf_vars_file})" >> $GITHUB_ENV
+
+      - uses: Azure/get-keyvault-secrets@v1
+        id: get_secrets
+        with:
+          keyvault: ${{ env.KEY_VAULT_NAME }}
+          secrets: "PAAS-USER,PAAS-PASSWORD"
+
+      - name: Setup cf cli
+        uses: DFE-Digital/github-actions/setup-cf-cli@master
+        with:
+          CF_USERNAME: ${{ steps.get_secrets.outputs.PAAS-USER }}
+          CF_PASSWORD: ${{ steps.get_secrets.outputs.PAAS-PASSWORD }}
+          CF_SPACE_NAME: ${{ env.PAAS_SPACE }}
+
+      - uses: cloudposse/github-action-secret-outputs@main
+        id: decrypted-access-key
+        with:
+          secret: ${{ secrets.ENCRYPTION_KEY }}
+          op: decode
+          in: ${{ needs.azure-storage.outputs.access-key }}
+
+      - name: Migrate stored blob data
+        run: |
+          cf ssh apply-for-qts-in-england-${{ (github.event.inputs.environment == 'preproduction' && 'preprod') || github.event.inputs.environment || 'preprod' }} \
+            -c "AZURE_STORAGE_ACCOUNT_NAME_AKS=${{ needs.azure-storage.outputs.account-name }} AZURE_STORAGE_ACCESS_KEY_AKS=${{ steps.decrypted-access-key.outputs.out }} AZURE_STORAGE_CONTAINER_AKS=${{ needs.azure-storage.outputs.container }} cd /app && /usr/local/bin/bundle exec rails migrate_stored_blob_data"

@@ -4,6 +4,7 @@
 #
 #  id                  :bigint           not null, primary key
 #  malware_scan_result :string           default("pending"), not null
+#  migrated_to_aks     :boolean          default(FALSE), not null
 #  translation         :boolean          not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null

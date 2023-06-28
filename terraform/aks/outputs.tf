@@ -17,3 +17,16 @@ output "kubernetes_cluster_name" {
 output "kubernetes_cluster_resource_group_name" {
   value = module.cluster_data.configuration_map.resource_group_name
 }
+
+output "azure_storage_account_name" {
+  value = azurerm_storage_account.uploads.name
+}
+
+output "azure_storage_access_key" {
+  value     = azurerm_storage_account.uploads.primary_access_key
+  sensitive = true
+}
+
+output "azure_storage_container" {
+  value = azurerm_storage_container.uploads.name
+}
