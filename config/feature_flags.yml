@@ -1,4 +1,10 @@
 feature_flags:
+  fetch_malware_scan_result:
+    author: Steve Laing
+    description: >
+      Fetch malware scan results for uploaded files.
+      This flag should only be active for environments where malware scanning is enabled.
+
   personas:
     author: Thomas Leese
     description: >
@@ -10,6 +16,10 @@ feature_flags:
     description: >
       Allow users to access the service without HTTP basic auth. Should be
       inactive on production, and active on all other environments.
+
+  sign_in_with_active_directory:
+    author: Richard Pattinson
+    description: Allow users to sign in using accounts in Active Directory.
 
   staff_test_user:
     author: David Feetenby
@@ -23,11 +33,5 @@ feature_flags:
     description: >
       Allow starting an application on this service directly after completing
       an eligibility check.
-
-  fetch_malware_scan_result:
-    author: Steve Laing
-    description: >
-      Fetch malware scan results for uploaded files.
-      This flag should only be active for environments where malware scanning is enabled.
 
 parent_controller: "SupportInterface::BaseController"
