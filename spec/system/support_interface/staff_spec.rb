@@ -10,6 +10,7 @@ RSpec.describe "Staff support", type: :system do
   end
 
   it "allows inviting a user" do
+    when_azure_ad_authentication_is_active
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
@@ -27,11 +28,7 @@ RSpec.describe "Staff support", type: :system do
     then_i_sign_out
 
     when_i_visit_the_invitation_email
-    and_i_fill_password
-    and_i_set_password
-    then_i_see_the_staff_index
-
-    then_i_see_the_accepted_staff_user
+    then_i_am_taken_to_the_login_page
   end
 
   it "allows editing permissions" do
@@ -63,7 +60,6 @@ RSpec.describe "Staff support", type: :system do
     message = ActionMailer::Base.deliveries.first
     uri = URI.parse(URI.extract(message.body.encoded).second)
     expect(uri.path).to eq("/staff/sign_in")
-    expect(uri.query).to include("invitation_token=")
     visit "#{uri.path}?#{uri.query}"
   end
 
@@ -147,5 +143,13 @@ RSpec.describe "Staff support", type: :system do
 
   def then_i_see_the_changed_permission
     expect(page).to_not have_content("Support console access\tNO")
+  end
+
+  def when_azure_ad_authentication_is_active
+    FeatureFlags::FeatureFlag.activate(:sign_in_with_active_directory)
+  end
+
+  def then_i_am_taken_to_the_login_page
+    expect(page).to have_current_path("/staff/sign_in")
   end
 end

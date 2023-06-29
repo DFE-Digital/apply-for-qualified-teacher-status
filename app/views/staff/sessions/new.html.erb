@@ -15,6 +15,6 @@
   <%= f.govuk_submit %>
 <% end %>
 
-<%= govuk_button_to "Sign in with Active Directory", omniauth_authorize_path(:staff, :azure_activedirectory_v2), method: :post %>
+<%= govuk_button_to "Sign in with Active Directory", omniauth_authorize_path(:staff, :azure_activedirectory_v2), method: :post, data: { turbo: "false" } , id: "button-sign-in-with-active-directory"%>
 
 <%= render "staff/shared/links" %>
