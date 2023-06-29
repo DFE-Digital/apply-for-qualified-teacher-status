@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Assessor authentication", type: :system do
   it "allows signing in and signing out" do
+    given_that_sign_in_with_active_directory_is_deactivated
     given_the_service_is_open
     given_staff_exist
 
@@ -18,6 +19,7 @@ RSpec.describe "Assessor authentication", type: :system do
   end
 
   it "allows signing in and signing out via azure AD" do
+    given_that_sign_in_with_active_directory_is_activated
     given_the_service_is_open
     given_staff_exist
 
@@ -48,5 +50,13 @@ RSpec.describe "Assessor authentication", type: :system do
 
   def when_i_click_sign_out
     applications_page.header.sign_out_link.click
+  end
+
+  def given_that_sign_in_with_active_directory_is_activated
+    FeatureFlags::FeatureFlag.activate(:sign_in_with_active_directory)
+  end
+
+  def given_that_sign_in_with_active_directory_is_deactivated
+    FeatureFlags::FeatureFlag.deactivate(:sign_in_with_active_directory)
   end
 end

@@ -9,7 +9,7 @@ RSpec.describe "Staff support", type: :system do
     then_i_see_the_forbidden_page
   end
 
-  it "allows inviting a user" do
+  it "allows inviting a user with azure ad active" do
     when_azure_ad_authentication_is_active
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_staff_page
@@ -27,11 +27,36 @@ RSpec.describe "Staff support", type: :system do
     then_i_see_the_invited_staff_user
     then_i_sign_out
 
-    when_i_visit_the_invitation_email
+    when_i_visit_the_invitation_email_with_azure_ad_enabled
     then_i_am_taken_to_the_login_page
   end
 
-  it "allows editing permissions" do
+  it "allows inviting a user with azure ad deactivated" do
+    when_azure_ad_authentication_is_not_active
+    given_i_am_authorized_as_a_support_user
+    when_i_visit_the_staff_page
+    then_i_see_the_staff_index
+
+    when_i_click_on_invite
+    then_i_see_the_staff_invitation_form
+
+    when_i_fill_email_address
+    and_i_fill_name
+    and_i_choose_support_console_permission
+    and_i_send_invitation
+    then_i_see_an_invitation_email
+    then_i_see_the_invited_staff_user
+    then_i_sign_out
+
+    when_i_visit_the_invitation_email_with_azure_ad_disabled
+    and_i_fill_password
+    and_i_set_password
+    then_i_see_the_staff_index
+    then_i_see_the_accepted_staff_user
+  end
+
+  it "allows editing permissions when azure ad is active" do
+    when_azure_ad_authentication_is_active
     given_i_am_authorized_as_a_support_user
     given_a_helpdesk_user_exists
     when_i_visit_the_staff_page
@@ -56,10 +81,18 @@ RSpec.describe "Staff support", type: :system do
     visit support_interface_staff_index_path
   end
 
-  def when_i_visit_the_invitation_email
+  def when_i_visit_the_invitation_email_with_azure_ad_enabled
     message = ActionMailer::Base.deliveries.first
     uri = URI.parse(URI.extract(message.body.encoded).second)
     expect(uri.path).to eq("/staff/sign_in")
+    visit uri.path.to_s
+  end
+
+  def when_i_visit_the_invitation_email_with_azure_ad_disabled
+    message = ActionMailer::Base.deliveries.first
+    uri = URI.parse(URI.extract(message.body.encoded).second)
+    expect(uri.path).to eq("/staff/invitation/accept")
+    expect(uri.query).to include("invitation_token=")
     visit "#{uri.path}?#{uri.query}"
   end
 
@@ -147,6 +180,10 @@ RSpec.describe "Staff support", type: :system do
 
   def when_azure_ad_authentication_is_active
     FeatureFlags::FeatureFlag.activate(:sign_in_with_active_directory)
+  end
+
+  def when_azure_ad_authentication_is_not_active
+    FeatureFlags::FeatureFlag.deactivate(:sign_in_with_active_directory)
   end
 
   def then_i_am_taken_to_the_login_page
