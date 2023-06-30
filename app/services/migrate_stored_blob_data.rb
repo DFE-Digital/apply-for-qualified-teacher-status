@@ -8,7 +8,7 @@ class MigrateStoredBlobData
     Azure::Storage::Blob::Default::STG_VERSION = "2022-11-02"
   end
 
-  BLOB_CONTAINER_NAME = ENV["AZURE_STORAGE_CONTAINER_AKS"] || "uploads"
+  BLOB_CONTAINER_NAME = ENV.fetch("AZURE_STORAGE_CONTAINER_AKS", "uploads")
 
   def initialize(upload:)
     @upload = upload
@@ -31,8 +31,8 @@ class MigrateStoredBlobData
   def blob_service
     @blob_service ||=
       Azure::Storage::Blob::BlobService.new(
-        storage_account_name: ENV["AZURE_STORAGE_ACCOUNT_NAME_AKS"],
-        storage_access_key: ENV["AZURE_STORAGE_ACCESS_KEY_AKS"],
+        storage_account_name: ENV.fetch("AZURE_STORAGE_ACCOUNT_NAME_AKS"),
+        storage_access_key: ENV.fetch("AZURE_STORAGE_ACCESS_KEY_AKS"),
       )
   end
 
