@@ -42,6 +42,11 @@ variable "enable_monitoring" {
   default = true
 }
 
+variable "enable_sign_in_with_active_directory" {
+  type    = bool
+  default = false
+}
+
 variable "external_hostname" {
   type    = string
   default = null

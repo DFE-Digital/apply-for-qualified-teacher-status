@@ -21,6 +21,8 @@ module "application_configuration" {
     BIGQUERY_DATASET    = "events_${var.app_environment}",
     BIGQUERY_TABLE_NAME = "events",
 
+    MICROSOFT_OAUTH_CLIENT_ID = try(azuread_application.main[0].application_id),
+
     DQT_API_URL = var.dqt_api_url
   }
 
@@ -28,6 +30,8 @@ module "application_configuration" {
   secret_variables = {
     DATABASE_URL = module.postgres.url
     REDIS_URL    = module.redis.url
+
+    MICROSOFT_OAUTH_CLIENT_SECRET = try(azuread_application_password.main[0].value),
 
     AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.uploads.name,
     AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.uploads.primary_access_key,
