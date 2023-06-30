@@ -135,9 +135,7 @@ RSpec.describe RollbackAssessment do
     let(:assessment) { create(:assessment, :verify) }
 
     it "raises an error" do
-      expect { call }.to raise_error(
-        RollbackAssessment::RecommendationNotAwardOrDecline,
-      )
+      expect { call }.to raise_error(RollbackAssessment::InvalidState)
     end
   end
 
@@ -145,9 +143,7 @@ RSpec.describe RollbackAssessment do
     let(:assessment) { create(:assessment, :request_further_information) }
 
     it "raises an error" do
-      expect { call }.to raise_error(
-        RollbackAssessment::RecommendationNotAwardOrDecline,
-      )
+      expect { call }.to raise_error(RollbackAssessment::InvalidState)
     end
   end
 
@@ -155,8 +151,26 @@ RSpec.describe RollbackAssessment do
     let(:assessment) { create(:assessment, :unknown) }
 
     it "raises an error" do
-      expect { call }.to raise_error(
-        RollbackAssessment::RecommendationNotAwardOrDecline,
+      expect { call }.to raise_error(RollbackAssessment::InvalidState)
+    end
+  end
+
+  context "with an unknown assessment but declined application" do
+    let(:application_form) { create(:application_form, :declined) }
+    let(:assessment) { create(:assessment, :unknown, application_form:) }
+
+    it "doesn't change the assessment state" do
+      expect { call }.to_not change(assessment, :unknown?)
+    end
+
+    it "reverts application form status" do
+      expect { call }.to change(application_form, :status).to("submitted")
+    end
+
+    it "records a timeline event" do
+      expect { call }.to have_recorded_timeline_event(
+        :state_changed,
+        creator: user,
       )
     end
   end
