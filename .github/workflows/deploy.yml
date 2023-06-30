@@ -29,73 +29,41 @@ on:
       - synchronize
       - reopened
       - opened
-env:
-  CONTAINER_REGISTRY: ghcr.io
 
 jobs:
   docker:
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
-    name: Docker build and push
-    environment: review
+    name: Build and push Docker image
     runs-on: ubuntu-latest
+    environment: development_aks
+
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
+
     outputs:
-      docker_image: ${{ steps.image.outputs.tag }}
+      image: ${{ steps.build-docker-image.outputs.image }}
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Docker image tag
-        id: image
-        run: |
-          echo "tag=$CONTAINER_REGISTRY/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]'):$GITHUB_SHA" >> $GITHUB_OUTPUT
+      - id: key-vault-name
+        shell: bash
+        run: echo "value=$(make -s development_aks print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
 
-      - name: Set KV environment variables
-        if: github.actor != 'dependabot[bot]'
-        run: |
-          # tag build to the dev env for vars and secrets
-          tf_vars_file=terraform/paas/workspace_variables/dev.tfvars.json
-          echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-          echo ${{ steps.image.outputs.tag }}
-
-      - uses: azure/login@v1
-        if: github.actor != 'dependabot[bot]'
+      - uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - uses: DFE-Digital/keyvault-yaml-secret@v1
-        if: github.actor != 'dependabot[bot]'
-        id: get-secret
+      - uses: Azure/get-keyvault-secrets@v1
+        id: key-vault-secrets
         with:
-          keyvault: ${{ env.KEY_VAULT_NAME }}
-          secret: INFRASTRUCTURE
-          key: SNYK_TOKEN
+          keyvault: ${{ steps.key-vault-name.outputs.value }}
+          secrets: "SNYK-TOKEN"
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+      - uses: DFE-Digital/github-actions/build-docker-image@master
+        id: build-docker-image
         with:
-          registry: ${{ env.CONTAINER_REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Docker build
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: false
-          tags: ${{ steps.image.outputs.tag }}
-          build-args: SHA=${{ github.sha }}
-
-      - name: Run Snyk to check Docker image for vulnerabilities
-        if: github.actor != 'dependabot[bot]'
-        uses: snyk/actions/docker@master
-        env:
-          SNYK_TOKEN: ${{ steps.get-secret.outputs.snyk_token }}
-        with:
-          image: ${{ steps.image.outputs.tag }}
-          args: --file=Dockerfile --severity-threshold=high
-
-      - name: Push docker image
-        run: docker image push ${{ steps.image.outputs.tag }}
+          docker-repository: ghcr.io/dfe-digital/apply-for-qualified-teacher-status
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          snyk-token: ${{ steps.key-vault-secrets.outputs.SNYK-TOKEN }}
 
   rspec:
     name: Rspec
@@ -164,7 +132,7 @@ jobs:
         id: deploy
         with:
           environment: review
-          docker-image: ${{ needs.docker.outputs.docker_image }}
+          docker-image: ${{ needs.docker.outputs.image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pull-request-number: ${{ github.event.pull_request.number }}
 
@@ -198,7 +166,7 @@ jobs:
         id: deploy
         with:
           environment_name: ${{ matrix.environment }}
-          docker_image: ${{ needs.docker.outputs.docker_image }}
+          docker_image: ${{ needs.docker.outputs.image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
   deploy_nonprod_aks:
@@ -224,7 +192,7 @@ jobs:
         id: deploy
         with:
           environment: ${{ matrix.environment }}
-          docker-image: ${{ needs.docker.outputs.docker_image }}
+          docker-image: ${{ needs.docker.outputs.image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
   deploy_production:
@@ -244,7 +212,7 @@ jobs:
         id: deploy
         with:
           environment_name: production
-          docker_image: ${{ needs.docker.outputs.docker_image }}
+          docker_image: ${{ needs.docker.outputs.image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
   deploy_production_aks:
@@ -264,7 +232,7 @@ jobs:
         id: deploy
         with:
           environment: production
-          docker-image: ${{ needs.docker.outputs.docker_image }}
+          docker-image: ${{ needs.docker.outputs.image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           smoke-test-credentials-required: "false"
 
