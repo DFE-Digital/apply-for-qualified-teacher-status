@@ -1,0 +1,39 @@
+name: Example data
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: GitHub environment to regenerate example data
+        type: choice
+        default: test
+        options:
+          - development
+          - test
+
+jobs:
+  regenerate:
+    name: Regenerate
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ github.event.inputs.environment }}_aks
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: ./.github/actions/set-kubernetes-credentials
+        with:
+          environment: ${{ github.event.inputs.environment }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Seed database and regenerate example data
+        run: |
+          kubectl exec \
+            -n tra-${{ github.event.inputs.environment }} \
+            deployment/apply-for-qts-${{ github.event.inputs.environment }}-web \
+            -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed example_data:regenerate"
