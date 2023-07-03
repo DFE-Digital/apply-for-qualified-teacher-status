@@ -9,9 +9,7 @@ class RollbackAssessment
   end
 
   def call
-    unless assessment.award? || assessment.decline?
-      raise RecommendationNotAwardOrDecline
-    end
+    raise InvalidState unless valid_state?
 
     ActiveRecord::Base.transaction do
       update_assessment
@@ -22,6 +20,11 @@ class RollbackAssessment
   private
 
   attr_reader :assessment, :user
+
+  def valid_state?
+    assessment.award? || assessment.decline? ||
+      (assessment.unknown? && application_form.declined?)
+  end
 
   def update_assessment
     if previously_verified?
@@ -53,6 +56,6 @@ class RollbackAssessment
     ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 
-  class RecommendationNotAwardOrDecline < StandardError
+  class InvalidState < StandardError
   end
 end
