@@ -29,7 +29,8 @@ A service that allows international teachers to apply for qualified teacher stat
 - Yarn 1.22.x
 - PostgreSQL 13.x
 - Redis 7.x
-- Terraform 1.0.x
+- Terraform 1.5.x
+- Kubectl 1.27.x
 
 ## How the application works
 
@@ -61,6 +62,7 @@ asdf plugin add nodejs
 asdf plugin add yarn
 asdf plugin add terraform
 asdf plugin add azure-cli
+asdf plugin add kubectl
 
 # To install (or update, following a change to .tool-versions)
 asdf install
@@ -164,10 +166,6 @@ To run the tests:
 ```bash
 bin/test
 ```
-
-### Ops manual
-
-[Ops manual](docs/ops-manual.md).
 
 ## Licence
 

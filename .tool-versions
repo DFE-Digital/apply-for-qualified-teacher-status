@@ -1,4 +1,5 @@
 azure-cli 2.37.0
+kubectl 1.27.3
 nodejs 18.1.0
 postgres 13.5
 ruby 3.2.2
