@@ -100,4 +100,4 @@ jobs:
       - name: Migrate stored blob data
         run: |
           cf ssh apply-for-qts-in-england-${{ (github.event.inputs.environment == 'preproduction' && 'preprod') || github.event.inputs.environment || 'preprod' }} \
-            -c "AZURE_STORAGE_ACCOUNT_NAME_AKS=${{ needs.azure-storage.outputs.account-name }} AZURE_STORAGE_ACCESS_KEY_AKS=${{ steps.decrypted-access-key.outputs.out }} AZURE_STORAGE_CONTAINER_AKS=${{ needs.azure-storage.outputs.container }} cd /app && /usr/local/bin/bundle exec rails migrate_stored_blob_data"
+            -c "cd /app && AZURE_STORAGE_ACCOUNT_NAME_AKS=${{ needs.azure-storage.outputs.account-name }} AZURE_STORAGE_ACCESS_KEY_AKS=${{ steps.decrypted-access-key.outputs.out }} AZURE_STORAGE_CONTAINER_AKS=${{ needs.azure-storage.outputs.container }} /usr/local/bin/bundle exec rails migrate_stored_blob_data"

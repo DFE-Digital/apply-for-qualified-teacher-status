@@ -22,6 +22,13 @@ RSpec.describe MigrateStoredBlobData do
       )
     end
 
+    around do |example|
+      ClimateControl.modify AZURE_STORAGE_ACCOUNT_NAME_AKS: "name",
+                            AZURE_STORAGE_ACCESS_KEY_AKS: "key" do
+        example.run
+      end
+    end
+
     before do
       allow(Azure::Storage::Blob::BlobService).to receive(:new).and_return(
         stubbed_blob_service,
