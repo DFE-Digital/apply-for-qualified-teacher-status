@@ -19,8 +19,12 @@ module HostingEnvironment
     def host
       if production?
         "apply-for-qts-in-england.education.gov.uk"
+      elsif preproduction?
+        "preprod.apply-for-qts-in-england.education.gov.uk"
       elsif review?
         "apply-for-qts-#{value}-web.test.teacherservices.cloud"
+      elsif development?
+        "dev.apply-for-qts-in-england.education.gov.uk"
       else
         "#{name}.apply-for-qts-in-england.education.gov.uk"
       end
@@ -31,11 +35,11 @@ module HostingEnvironment
     end
 
     def preproduction?
-      name.start_with?("preprod")
+      name == "preproduction"
     end
 
     def development?
-      name.start_with?("dev")
+      name == "development"
     end
 
     def review?

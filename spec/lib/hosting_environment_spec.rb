@@ -35,7 +35,7 @@ RSpec.describe HostingEnvironment do
     end
 
     context "when the environment is preprod" do
-      let(:hosting_environment) { "preprod" }
+      let(:hosting_environment) { "preproduction" }
 
       it do
         is_expected.to eq("preprod.apply-for-qts-in-england.education.gov.uk")
@@ -48,8 +48,8 @@ RSpec.describe HostingEnvironment do
       it { is_expected.to eq("test.apply-for-qts-in-england.education.gov.uk") }
     end
 
-    context "when the environment is dev" do
-      let(:hosting_environment) { "dev" }
+    context "when the environment is development" do
+      let(:hosting_environment) { "development" }
 
       it { is_expected.to eq("dev.apply-for-qts-in-england.education.gov.uk") }
     end
