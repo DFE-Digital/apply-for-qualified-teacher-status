@@ -5,7 +5,7 @@ SERVICE_SHORT=afqts
 
 .PHONY: help
 help: ## Show this help
-	@grep -E '^[a-zA-Z\.\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z\._\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: paas
 paas:  # Set the PaaS platform variables
@@ -57,8 +57,10 @@ production: paas ## Specify production PaaS environment
 	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01afqtsdbbackuppd)
 	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=apply-for-qts)
 
+
+
 .PHONY: development_aks
-development_aks: aks ## Specify dev AKS environment
+development_aks: aks ## Specify development aks environment
 	$(eval include global_config/development_aks.sh)
 
 .PHONY: review_aks
@@ -70,15 +72,15 @@ review_aks: aks ## Specify review AKS environment
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
 .PHONY: test_aks
-test_aks: aks
+test_aks: aks  ##  specify test AKS environment
 	$(eval include global_config/test_aks.sh)
 
 .PHONY: preproduction_aks
-preproduction_aks: aks
+preproduction_aks: aks  ##  specify preproduction AKS environment
 	$(eval include global_config/preproduction_aks.sh)
 
 .PHONY: production_aks
-production_aks: aks
+production_aks: aks   ##  specify production AKS environment
 	$(eval include global_config/production_aks.sh)
 
 .PHONY: set-key-vault-names
@@ -301,18 +303,18 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
 
-domains-init: set-production-subscription set-azure-account ## terraform init for dns resources
+domains-init: afqts_domain set-production-subscription set-azure-account ## terraform init for dns resources: make <env>  domains-init
 	$(if $(PR_NUMBER), $(eval DEPLOY_ENV=${PR_NUMBER}))
-	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}_backend.tfvars
+	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DEPLOY_ENV}_backend.tfvars
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
-	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
+	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
 
 domains-apply: domains-init ## terraform apply for dns resources
-	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
 domains-destroy: domains-init ## terraform destroy for dns resources
-	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
+	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
 
 set-production-subscription:
 	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
