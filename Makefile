@@ -22,14 +22,6 @@ aks:  ## Sets environment variables for aks deployment
 	$(eval KEY_VAULT_SECRET_NAME=APPLICATION)
 	$(eval KEY_VAULT_PURGE_PROTECTION=false)
 
-.PHONY: dev
-dev: paas ## Specify development PaaS environment
-	$(eval DEPLOY_ENV=dev)
-	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
-	$(eval AZURE_RESOURCE_PREFIX=s165d01)
-	$(eval CONFIG_SHORT=dv)
-	$(eval ENV_TAG=dev)
-
 .PHONY: test
 test: paas ## Specify test PaaS environment
 	$(eval DEPLOY_ENV=test)
@@ -56,8 +48,6 @@ production: paas ## Specify production PaaS environment
 	$(eval ENV_TAG=prod)
 	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01afqtsdbbackuppd)
 	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=apply-for-qts)
-
-
 
 .PHONY: development_aks
 development_aks: aks ## Specify development aks environment
@@ -259,10 +249,10 @@ arm-deployment: set-resource-group-name set-azure-account set-azure-template-tag
 			"enableKVPurgeProtection=${KEY_VAULT_PURGE_PROTECTION}" ${WHAT_IF}
 
 .PHONY: deploy-azure-resources
-deploy-azure-resources: check-auto-approve arm-deployment # make dev deploy-azure-resources AUTO_APPROVE=1
+deploy-azure-resources: check-auto-approve arm-deployment # make development_aks deploy-azure-resources AUTO_APPROVE=1
 
 .PHONY: validate-azure-resources
-validate-azure-resources: set-what-if arm-deployment # make dev validate-azure-resources
+validate-azure-resources: set-what-if arm-deployment # make development_aks validate-azure-resources
 
 .PHONY: read-tf-config
 read-tf-config:
@@ -270,7 +260,7 @@ read-tf-config:
 	$(eval space=$(shell jq -r '.paas_space' terraform/$(PLATFORM)/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 
 .PHONY: enable-maintenance
-enable-maintenance: read-tf-config ## make dev enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
+enable-maintenance: read-tf-config ## make production enable-maintenance CONFIRM_PRODUCTION=y
 	cf target -s ${space}
 	cd service_unavailable_page && cf push
 	cf map-route apply-for-qts-unavailable london.cloudapps.digital --hostname apply-for-qts-in-england-${DEPLOY_ENV}
@@ -278,7 +268,7 @@ enable-maintenance: read-tf-config ## make dev enable-maintenance / make product
 	cf unmap-route apply-for-qts-in-england-${DEPLOY_ENV} london.cloudapps.digital --hostname apply-for-qts-in-england-${DEPLOY_ENV}
 
 .PHONY: disable-maintenance
-disable-maintenance: read-tf-config ## make dev disable-maintenance / make production disable-maintenance CONFIRM_PRODUCTION=y
+disable-maintenance: read-tf-config ## make production disable-maintenance CONFIRM_PRODUCTION=y
 	cf target -s ${space}
 	cf map-route apply-for-qts-in-england-${DEPLOY_ENV} london.cloudapps.digital --hostname apply-for-qts-in-england-${DEPLOY_ENV}
 	echo Waiting 5s for route to be registered... && sleep 5
