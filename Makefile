@@ -304,7 +304,6 @@ domains-infra-apply: domains-infra-init ## terraform apply for dns core resource
 	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
 
 domains-init: afqts_domain set-production-subscription set-azure-account ## terraform init for dns resources: make <env>  domains-init
-	$(if $(PR_NUMBER), $(eval DEPLOY_ENV=${PR_NUMBER}))
 	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DEPLOY_ENV}_backend.tfvars
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
@@ -315,6 +314,9 @@ domains-apply: domains-init ## terraform apply for dns resources
 
 domains-destroy: domains-init ## terraform destroy for dns resources
 	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+
+domains-development:
+	$(eval DEPLOY_ENV=dev)
 
 set-production-subscription:
 	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
