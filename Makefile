@@ -138,26 +138,26 @@ afqts_domain:   ## runs a script to config variables for setting up dns
 	$(eval include global_config/domain.sh)
 
 domains-infra-init: afqts_domain set-production-subscription set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
-	terraform -chdir=terraform/custom_domains/infrastructure init -reconfigure -upgrade \
+	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade \
 		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
-	terraform -chdir=terraform/custom_domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
+	terraform -chdir=terraform/domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
 
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
-	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
 
 domains-init: afqts_domain set-production-subscription set-azure-account ## terraform init for dns resources: make <env>  domains-init
-	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/$(CONFIG)_backend.tfvars
+	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/$(CONFIG)_backend.tfvars
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
-	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/domains/environment_domains plan -var-file workspace_variables/$(CONFIG).tfvars.json
 
 domains-apply: domains-init ## terraform apply for dns resources
-	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/domains/environment_domains apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 domains-destroy: domains-init ## terraform destroy for dns resources
-	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/domains/environment_domains destroy -var-file workspace_variables/$(CONFIG).tfvars.json
 
 domains-development:
 	$(eval CONFIG=dev)
