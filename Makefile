@@ -80,23 +80,23 @@ terraform-init:
 	$(eval export TF_VAR_azure_resource_prefix=$(AZURE_RESOURCE_PREFIX))
 
 	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
-	terraform -chdir=terraform/aks init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
+	terraform -chdir=terraform/aks init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
 
 .PHONY: terraform-plan
 terraform-plan: terraform-init
-	terraform -chdir=terraform/aks plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+	terraform -chdir=terraform/aks plan -var-file workspace_variables/$(CONFIG).tfvars.json
 
 .PHONY: terraform-refresh
 terraform-refresh: terraform-init
-	terraform -chdir=terraform/aks refresh -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+	terraform -chdir=terraform/aks refresh -var-file workspace_variables/$(CONFIG).tfvars.json
 
 .PHONY: terraform-apply
 terraform-apply: terraform-init
-	terraform -chdir=terraform/aks apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/aks apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 .PHONY: terraform-destroy
 terraform-destroy: terraform-init
-	terraform -chdir=terraform/aks destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/aks destroy -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 .PHONY: set-azure-resource-group-tags
 set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template
@@ -148,28 +148,28 @@ domains-infra-apply: domains-infra-init ## terraform apply for dns core resource
 	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
 
 domains-init: afqts_domain set-production-subscription set-azure-account ## terraform init for dns resources: make <env>  domains-init
-	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DEPLOY_ENV}_backend.tfvars
+	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/$(CONFIG)_backend.tfvars
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
-	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/$(CONFIG).tfvars.json
 
 domains-apply: domains-init ## terraform apply for dns resources
-	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 domains-destroy: domains-init ## terraform destroy for dns resources
-	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/$(CONFIG).tfvars.json
 
 domains-development:
-	$(eval DEPLOY_ENV=dev)
+	$(eval CONFIG=dev)
 
 domains-test:
-	$(eval DEPLOY_ENV=test)
+	$(eval CONFIG=test)
 
 domains-preprod:
-	$(eval DEPLOY_ENV=preprod)
+	$(eval CONFIG=preprod)
 
 domains-production:
-	$(eval DEPLOY_ENV=production)
+	$(eval CONFIG=production)
 
 set-production-subscription:
 	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
