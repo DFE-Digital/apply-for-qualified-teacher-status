@@ -4,12 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Deploy environment ( dev or test or preprod or production )"
+        description: "Deploy environment"
         required: true
-        default: dev
+        default: development_aks
         type: environment
         options:
-          - dev
           - test
           - preprod
           - production
@@ -152,7 +151,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        environment: [dev, test, preprod]
+        environment: [test, preprod]
     environment:
       name: ${{ matrix.environment }}
       url: ${{ steps.deploy.outputs.environment_url }}
