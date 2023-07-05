@@ -238,39 +238,34 @@ jobs:
   notify_slack_of_failures:
     name: Notify Slack of failures
     runs-on: ubuntu-latest
-    needs: [docker, rspec, deploy_nonprod]
-    environment: ${{ needs.deploy_nonprod.outputs.environment_name || 'dev'  }}
-    env:
-      ENVIRONMENT_NAME: ${{ needs.deploy_nonprod.outputs.environment_name || 'dev'  }}
+    environment: development_aks
+
     if: ${{ failure() && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    needs: [docker, rspec, deploy_nonprod]
+
     steps:
       - uses: actions/checkout@v3
 
-      - name: Extract keyvault name from tfvars
-        id: extract-keyvault-name
-        run: |
-          tf_vars_file=terraform/paas/workspace_variables/${{ env.ENVIRONMENT_NAME }}.tfvars.json
-          echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+      - id: key-vault-name
+        shell: bash
+        run: echo "value=$(make -s development_aks print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
 
-      - uses: azure/login@v1
+      - uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - uses: DfE-Digital/keyvault-yaml-secret@v1
-        id: keyvault-yaml-secret
+      - uses: Azure/get-keyvault-secrets@v1
+        id: key-vault-secrets
         with:
-          keyvault: ${{ env.KEY_VAULT_NAME }}
-          secret: MONITORING
-          key: SLACK_WEBHOOK
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          keyvault: ${{ steps.key-vault-name.outputs.value }}
+          secrets: "SLACK-WEBHOOK"
+
       - name: Notify Slack channel on job failure
-        id: notify-slack-on-deploy-failure
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_TITLE: Deployment of apply-for-qualified-teacher-status to ${{ env.ENVIRONMENT_NAME }} failed
+          SLACK_TITLE: Deployment of apply-for-qualified-teacher-status to ${{ needs.deploy_nonprod.outputs.environment_name }} failed
           SLACK_MESSAGE: |
-            Deployment to ${{ env.ENVIRONMENT_NAME }} environment failed
+            Deployment to ${{ needs.deploy_nonprod.outputs.environment_name }} environment failed
           SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
           SLACK_COLOR: failure
           SLACK_FOOTER: Sent from notify_slack_of_failures job in deploy workflow
