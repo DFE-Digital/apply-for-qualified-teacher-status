@@ -308,6 +308,9 @@ domains-destroy: domains-init ## terraform destroy for dns resources
 domains-development:
 	$(eval DEPLOY_ENV=dev)
 
+domains-test:
+	$(eval DEPLOY_ENV=test)
+
 set-production-subscription:
 	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
 
