@@ -131,4 +131,67 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
       end
     end
   end
+
+  describe "#after_expired" do
+    subject(:after_expired) do
+      professional_standing_request.after_expired(user: "User")
+    end
+
+    let(:application_form) do
+      create(
+        :application_form,
+        withdrawn ? :withdrawn : :submitted,
+        teaching_authority_provides_written_statement:,
+      )
+    end
+
+    let(:professional_standing_request) do
+      create(
+        :professional_standing_request,
+        assessment: create(:assessment, application_form:),
+      )
+    end
+
+    after { after_expired }
+
+    context "when teaching authority provides the written statement" do
+      let(:teaching_authority_provides_written_statement) { true }
+
+      context "and the application form is withdrawn" do
+        let(:withdrawn) { true }
+
+        it "doesn't decline" do
+          expect(DeclineQTS).to_not receive(:call)
+        end
+      end
+
+      context "and the application form is not withdrawn" do
+        let(:withdrawn) { false }
+
+        it "declines" do
+          expect(DeclineQTS).to receive(:call)
+        end
+      end
+    end
+
+    context "when teaching authority doesn't provide the written statement" do
+      let(:teaching_authority_provides_written_statement) { false }
+
+      context "and the application form is withdrawn" do
+        let(:withdrawn) { true }
+
+        it "doesn't decline" do
+          expect(DeclineQTS).to_not receive(:call)
+        end
+      end
+
+      context "and the application form is not withdrawn" do
+        let(:withdrawn) { false }
+
+        it "doesn't decline" do
+          expect(DeclineQTS).to_not receive(:call)
+        end
+      end
+    end
+  end
 end

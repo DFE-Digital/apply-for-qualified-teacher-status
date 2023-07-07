@@ -42,7 +42,8 @@ class ProfessionalStandingRequest < ApplicationRecord
   end
 
   def after_expired(user:)
-    if application_form.teaching_authority_provides_written_statement
+    if application_form.teaching_authority_provides_written_statement &&
+         !application_form.withdrawn?
       DeclineQTS.call(application_form:, user:)
     end
   end
