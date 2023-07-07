@@ -8,7 +8,6 @@
 *.svg
 *.txt
 *.woff*
-*.min.*
 .bundle
 .gitattributes
 .gitignore
