@@ -314,33 +314,34 @@
     - assessor_feedback
     - assessment_section_id
   :staff:
-    - id
-    - email
-    - reset_password_sent_at
-    - remember_created_at
-    - sign_in_count
-    - current_sign_in_at
-    - last_sign_in_at
-    - current_sign_in_ip
-    - last_sign_in_ip
-    - confirmed_at
-    - confirmation_sent_at
-    - unconfirmed_email
-    - failed_attempts
-    - locked_at
-    - created_at
-    - updated_at
-    - invitation_created_at
-    - invitation_sent_at
-    - invitation_accepted_at
-    - invitation_limit
-    - invited_by_type
-    - invited_by_id
-    - invitations_count
-    - name
     - award_decline_permission
-    - support_console_permission
     - azure_ad_uid
+    - confirmation_sent_at
+    - confirmed_at
+    - created_at
+    - current_sign_in_at
+    - current_sign_in_ip
+    - email
+    - failed_attempts
+    - id
+    - invitation_accepted_at
+    - invitation_created_at
+    - invitation_limit
+    - invitation_sent_at
+    - invitations_count
+    - invited_by_id
+    - invited_by_type
+    - last_sign_in_at
+    - last_sign_in_ip
+    - locked_at
+    - manage_applications_permission
+    - name
+    - remember_created_at
+    - reset_password_sent_at
+    - sign_in_count
+    - support_console_permission
+    - unconfirmed_email
+    - updated_at
   :teachers:
     - canonical_email
     - created_at
