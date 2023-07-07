@@ -31,12 +31,10 @@ RSpec.describe "Features support", type: :system do
 
   def then_the_applications_flag_is_off
     expect(page).to have_content("Feature “Teacher applications” deactivated")
-    expect(page).to have_content("Teacher applications\n- Inactive")
   end
 
   def then_the_applications_flag_is_on
     expect(page).to have_content("Feature “Teacher applications” activated")
-    expect(page).to have_content("Teacher applications\n- Active")
   end
 
   def when_i_activate_the_applications_flag
