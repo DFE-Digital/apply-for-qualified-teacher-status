@@ -57,14 +57,16 @@ def assessors
     {
       name: "Dave Assessor",
       email: "assessor-dave@example.com",
-      support_console_permission: false,
       award_decline_permission: true,
+      manage_applications_permission: false,
+      support_console_permission: false,
     },
     {
       name: "Beryl Assessor",
       email: "assessor-beryl@example.com",
-      support_console_permission: false,
       award_decline_permission: true,
+      manage_applications_permission: false,
+      support_console_permission: false,
     },
   ]
 end
@@ -74,8 +76,9 @@ def admins
     {
       name: "Sally Admin",
       email: "admin-sally@example.com",
-      support_console_permission: true,
       award_decline_permission: false,
+      manage_applications_permission: true,
+      support_console_permission: true,
     },
   ]
 end
@@ -85,8 +88,9 @@ def helpdesk_users
     {
       name: "Antonio Helpdesk",
       email: "helpdesk-antonio@example.com",
-      support_console_permission: false,
       award_decline_permission: false,
+      manage_applications_permission: false,
+      support_console_permission: false,
     },
   ]
 end
