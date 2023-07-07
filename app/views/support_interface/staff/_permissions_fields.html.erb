@@ -2,6 +2,9 @@
   <%= f.govuk_check_box :award_decline_permission, 1, 0, multiple: false,
                         label: { text: t("activerecord.attributes.staff.award_decline_permission") } %>
 
+  <%= f.govuk_check_box :manage_applications_permission, 1, 0, multiple: false,
+                        label: { text: t("activerecord.attributes.staff.manage_applications_permission") } %>
+
   <%= f.govuk_check_box :support_console_permission, 1, 0, multiple: false, link_errors: true,
                         label: { text: t("activerecord.attributes.staff.support_console_permission") } %>
 <% end %>

@@ -11,7 +11,12 @@ class Staff::InvitationsController < Devise::InvitationsController
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
       :invite,
-      keys: %i[name award_decline_permission support_console_permission],
+      keys: %i[
+        name
+        award_decline_permission
+        manage_applications_permission
+        support_console_permission
+      ],
     )
   end
 
