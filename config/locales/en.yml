@@ -39,6 +39,11 @@ en:
       qualification_document: qualification
       written_statement: written statement
 
+  staff:
+    omniauth_callbacks:
+      azure_activedirectory_v2:
+        failure: "There was a problem signing you in. Please try again."
+
   activerecord:
     attributes:
       staff:

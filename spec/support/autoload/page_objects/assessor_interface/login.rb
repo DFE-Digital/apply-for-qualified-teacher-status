@@ -9,6 +9,8 @@ module PageObjects
         element :continue_button, "button"
       end
 
+      element :azure_sign_in, "#button-sign-in-with-active-directory"
+
       def submit(email:, password:)
         form.email_field.fill_in with: email
         form.password_field.fill_in with: password

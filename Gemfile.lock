@@ -254,6 +254,7 @@ GEM
       thor
       tilt
     hashdiff (1.0.1)
+    hashie (5.0.0)
     html-attributes-utils (1.0.0)
       activesupport (>= 6.1.4.4)
     httpclient (2.8.3)
@@ -292,6 +293,7 @@ GEM
     minitest (5.18.1)
     msgpack (1.6.1)
     multi_json (1.15.0)
+    multi_xml (0.6.0)
     multipart-post (2.3.0)
     net-http-persistent (4.0.1)
       connection_pool (~> 2.2)
@@ -313,7 +315,26 @@ GEM
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
       jwt (>= 1.5, < 3)
+    oauth2 (2.0.9)
+      faraday (>= 0.17.3, < 3.0)
+      jwt (>= 1.0, < 3.0)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 4)
+      snaky_hash (~> 2.0)
+      version_gem (~> 1.1)
     okcomputer (1.18.4)
+    omniauth (2.1.1)
+      hashie (>= 3.4.6)
+      rack (>= 2.2.3)
+      rack-protection
+    omniauth-azure-activedirectory-v2 (2.0.1)
+      omniauth-oauth2 (~> 1.8)
+    omniauth-oauth2 (1.8.0)
+      oauth2 (>= 1.4, < 3)
+      omniauth (~> 2.0)
+    omniauth-rails_csrf_protection (1.0.1)
+      actionpack (>= 4.2)
+      omniauth (~> 2.0)
     orm_adapter (0.5.0)
     os (1.1.4)
     pagy (6.0.4)
@@ -338,6 +359,8 @@ GEM
     rack (2.2.7)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
+    rack-protection (3.0.6)
+      rack
     rack-test (2.1.0)
       rack (>= 1.3)
     rails (7.0.6)
@@ -476,6 +499,9 @@ GEM
     site_prism-all_there (2.0.1)
     sitemap_generator (6.3.0)
       builder (~> 3.0)
+    snaky_hash (2.0.1)
+      hashie
+      version_gem (~> 1.1, >= 1.1.1)
     syntax_tree (6.1.1)
       prettier_print (>= 1.2.0)
     syntax_tree-haml (4.0.3)
@@ -501,6 +527,7 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
+    version_gem (1.1.3)
     view_component (3.0.0)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
@@ -528,6 +555,7 @@ PLATFORMS
   arm64-darwin-21
   arm64-darwin-22
   x86_64-darwin-21
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -559,6 +587,8 @@ DEPENDENCIES
   jsbundling-rails
   mail-notify
   okcomputer
+  omniauth-azure-activedirectory-v2 (~> 2.0)
+  omniauth-rails_csrf_protection (~> 1.0)
   pagy
   pg
   prettier_print

@@ -4,6 +4,7 @@
 #
 #  id                         :bigint           not null, primary key
 #  award_decline_permission   :boolean          default(FALSE)
+#  azure_ad_uid               :string
 #  confirmation_sent_at       :datetime
 #  confirmation_token         :string
 #  confirmed_at               :datetime
@@ -55,7 +56,9 @@ class Staff < ApplicationRecord
          :timeoutable,
          :validatable,
          :lockable,
-         :invitable
+         :invitable,
+         :omniauthable,
+         omniauth_providers: [:azure_activedirectory_v2]
 
   self.timeout_in = 20.minutes
 
