@@ -1,4 +1,8 @@
 feature_flags:
+  aks_migration_banner:
+    author: Thomas Leese
+    description: Show the AKS migration banner explaining the outage.
+
   fetch_malware_scan_result:
     author: Steve Laing
     description: >
