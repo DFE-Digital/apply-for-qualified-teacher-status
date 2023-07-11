@@ -12,9 +12,9 @@
       <ul class="app-task-list__items">
         <% section[:items].each do |item| %>
           <li class="app-task-list__item">
-            <% status_key = "#{section[:number]}-#{section[:key]}-#{item[:key]}" %>
+            <% status_id = "#{section[:number]}-#{section[:key]}-#{item[:key]}-status" %>
 
-            <span class="app-task-list__task-name" aria-describedby="<%= status_key %>-status">
+            <span class="app-task-list__task-name" aria-describedby="<%= status_id %>">
               <% if (link = item[:link]).present? %>
                 <%= govuk_link_to item[:name], link %>
               <% else %>
@@ -22,7 +22,7 @@
               <% end %>
             </span>
 
-            <%= render(StatusTag::Component.new(key: status_key, status: item[:status], class_context: "app-task-list")) %>
+            <%= render(StatusTag::Component.new(id: status_id, status: item[:status], class_context: "app-task-list")) %>
           </li>
         <% end %>
       </ul>

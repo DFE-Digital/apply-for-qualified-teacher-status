@@ -34,28 +34,38 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   def status_filter_options
-    counts = application_forms_without_status_filter.group(:status).count
-    statuses = %w[
-      preliminary_check
-      submitted
-      assessment_in_progress
-      waiting_on
-      received
-      overdue
-      awarded_pending_checks
-      awarded
-      declined
-      potential_duplicate_in_dqt
-      withdrawn
-    ]
-
-    statuses.map do |status|
-      text = I18n.t(status, scope: %i[components status_tag])
-      OpenStruct.new(id: status, label: "#{text} (#{counts.fetch(status, 0)})")
+    STATUS_FILTER_OPTIONS.each_with_object({}) do |(status, substatuses), memo|
+      memo[status_filter_entry(status)] = substatuses.map do |sub_status|
+        status_filter_entry(status, sub_status)
+      end
     end
   end
 
   private
+
+  STATUS_FILTER_OPTIONS = {
+    preliminary_check: [],
+    submitted: [],
+    assessment_in_progress: [],
+    waiting_on: %i[
+      further_information
+      professional_standing
+      qualification
+      reference
+    ],
+    received: %i[
+      further_information
+      professional_standing
+      qualification
+      reference
+    ],
+    overdue: [],
+    awarded_pending_checks: [],
+    awarded: [],
+    declined: [],
+    potential_duplicate_in_dqt: [],
+    withdrawn: [],
+  }.freeze
 
   def filter_params
     (session[:filter_params] || {}).with_indifferent_access
@@ -86,6 +96,55 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ApplicationForm.includes(region: :country).active,
         ) { |scope, filter| filter.apply(scope:, params: filter_params) }
       end
+  end
+
+  def status_filter_counts
+    @status_filter_counts ||=
+      begin
+        all_options =
+          STATUS_FILTER_OPTIONS.each_with_object(
+            {},
+          ) do |(status, substatuses), memo|
+            memo[status.to_s] = nil
+
+            substatuses.each do |substatus|
+              memo["#{status}_#{substatus}"] = status.to_s
+            end
+          end
+
+        table = ApplicationForm.arel_table
+
+        counts =
+          all_options.filter_map do |status, parent_status|
+            if parent_status.present?
+              Arel.star.count.filter(
+                table[:status].eq(parent_status).and(table[status].eq(true)),
+              )
+            else
+              Arel.star.count.filter(table[:status].eq(status))
+            end
+          end
+
+        results = application_forms_without_status_filter.pick(*counts)
+
+        Hash[all_options.keys.zip(results)]
+      end
+  end
+
+  def status_filter_entry(*status_path)
+    name = status_path.join("_")
+
+    readable_name =
+      I18n.t(
+        status_path.last,
+        scope: %i[components status_tag],
+        default: status_path.last.to_s.humanize,
+      )
+
+    OpenStruct.new(
+      id: name,
+      label: "#{readable_name} (#{status_filter_counts.fetch(name, 0)})",
+    )
   end
 
   attr_reader :params, :session

@@ -14,14 +14,26 @@ en:
       invalid: Invalid
       not_started: Not started
       overdue: Overdue
+      overdue_further_information: Overdue further information
+      overdue_professional_standing: Overdue professional standing
+      overdue_qualification: Overdue qualification
+      overdue_reference: Overdue reference
       potential_duplicate_in_dqt: Potential duplication in DQT
       preliminary_check: Preliminary check
       received: Received
+      received_further_information: Received further information
+      received_professional_standing: Received professional standing
+      received_qualification: Received qualification
+      received_reference: Received reference
       rejected: Rejected
       requested: Waiting on
       submitted: Not started
       valid: Valid
       waiting_on: Waiting on
+      waiting_on_further_information: Waiting on further information
+      waiting_on_professional_standing: Waiting on professional standing
+      waiting_on_qualification: Waiting on qualification
+      waiting_on_reference: Waiting on reference
       withdrawn: Withdrawn
 
     timeline_entry:

@@ -46,7 +46,6 @@ module TimelineEntry
         old_state:
           render(
             StatusTag::Component.new(
-              key: timeline_event.id,
               status: timeline_event.old_state,
               class_context: "timeline-event",
             ),
@@ -54,7 +53,6 @@ module TimelineEntry
         new_state:
           render(
             StatusTag::Component.new(
-              key: timeline_event.id,
               status: timeline_event.new_state,
               class_context: "timeline-event",
             ),

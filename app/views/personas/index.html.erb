@@ -116,10 +116,7 @@
             row.with_cell { persona_check_tag(persona[:status_check]) }
             row.with_cell { persona_check_tag(persona[:sanction_check]) }
             row.with_cell do
-              render(StatusTag::Component.new(
-                key: "teacher-persona-#{index}",
-                status: persona[:status],
-              ))
+              render(StatusTag::Component.new(status: persona[:status]))
             end
             row.with_cell { persona_yes_no_tag(persona[:created_under_new_regulations]) }
             row.with_cell { persona[:teacher].email }
@@ -155,10 +152,7 @@
             row.with_cell(text: reference_request.application_form.teacher.email)
 
             row.with_cell(width: "one-third") do
-              render(StatusTag::Component.new(
-                key: "reference-request-#{reference_request.id}",
-                status: reference_request.state,
-              ))
+              render(StatusTag::Component.new(status: reference_request.state))
             end
 
             row.with_cell(numeric: true) do

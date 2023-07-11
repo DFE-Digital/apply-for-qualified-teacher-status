@@ -177,6 +177,7 @@ def create_application_forms(new_regs:)
           :requested,
           assessment:,
         )
+        application_form.update!(waiting_on_professional_standing: true)
       elsif application_form.waiting_on?
         if application_form.needs_written_statement && rand(2).zero?
           FactoryBot.create(
@@ -184,6 +185,7 @@ def create_application_forms(new_regs:)
             :requested,
             assessment:,
           )
+          application_form.update!(waiting_on_professional_standing: true)
         else
           FactoryBot.create(
             :further_information_request,
@@ -191,6 +193,7 @@ def create_application_forms(new_regs:)
             :with_items,
             assessment:,
           )
+          application_form.update!(waiting_on_further_information: true)
         end
       elsif (work_history = application_form.work_histories.first) &&
             rand(2).zero?
@@ -201,6 +204,7 @@ def create_application_forms(new_regs:)
           assessment:,
           work_history:,
         )
+        application_form.update!(waiting_on_reference: true)
       end
     end
   end

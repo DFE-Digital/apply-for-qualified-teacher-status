@@ -379,7 +379,9 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def then_the_application_form_is_waiting_on
-    expect(assessor_application_page.overview.status.text).to eq("WAITING ON")
+    expect(assessor_application_page.overview.status.text).to include(
+      "WAITING ON",
+    )
   end
 
   def then_the_application_form_is_declined

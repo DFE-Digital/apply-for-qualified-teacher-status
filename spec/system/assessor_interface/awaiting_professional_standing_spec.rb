@@ -31,7 +31,9 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
   end
 
   def and_i_see_a_waiting_on_status
-    expect(assessor_application_page.overview.status.text).to eq("WAITING ON")
+    expect(assessor_application_page.overview.status.text).to eq(
+      "WAITING ON PROFESSIONAL STANDING",
+    )
   end
 
   def and_i_click_awaiting_professional_standing
@@ -66,6 +68,7 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
       create(
         :application_form,
         :waiting_on,
+        waiting_on_professional_standing: true,
         assessment: create(:assessment, :with_professional_standing_request),
         teaching_authority_provides_written_statement: true,
       )
