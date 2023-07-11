@@ -47,8 +47,9 @@ en:
   activerecord:
     attributes:
       staff:
-        support_console_permission: Support console access
         award_decline_permission: Award/decline (assessor)
+        manage_applications_permission: Manage applications
+        support_console_permission: Support console access
     errors:
       models:
         application_form:
