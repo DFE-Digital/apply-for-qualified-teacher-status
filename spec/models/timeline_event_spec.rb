@@ -79,17 +79,18 @@ RSpec.describe TimelineEvent do
 
     it do
       is_expected.to define_enum_for(:event_type).with_values(
+        age_range_subjects_verified: "age_range_subjects_verified",
+        assessment_section_recorded: "assessment_section_recorded",
         assessor_assigned: "assessor_assigned",
+        email_sent: "email_sent",
+        information_changed: "information_changed",
+        note_created: "note_created",
+        requestable_assessed: "requestable_assessed",
+        requestable_expired: "requestable_expired",
+        requestable_received: "requestable_received",
+        requestable_requested: "requestable_requested",
         reviewer_assigned: "reviewer_assigned",
         state_changed: "state_changed",
-        assessment_section_recorded: "assessment_section_recorded",
-        note_created: "note_created",
-        email_sent: "email_sent",
-        age_range_subjects_verified: "age_range_subjects_verified",
-        requestable_requested: "requestable_requested",
-        requestable_received: "requestable_received",
-        requestable_expired: "requestable_expired",
-        requestable_assessed: "requestable_assessed",
       ).backed_by_column_of_type(:string)
     end
 
@@ -110,6 +111,10 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with an reviewer assigned event type" do
@@ -129,6 +134,10 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with a state changed event type" do
@@ -148,6 +157,10 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with an assessment section recorded event type" do
@@ -167,6 +180,10 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with a note created event type" do
@@ -186,6 +203,10 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with an email sent event type" do
@@ -205,6 +226,10 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with an age range subjects verified event type" do
@@ -224,6 +249,10 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_presence_of(:subjects) }
       it { is_expected.to validate_absence_of(:requestable_id) }
       it { is_expected.to validate_absence_of(:requestable_type) }
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with a requestable requested event type" do
@@ -253,6 +282,10 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with a requestable received event type" do
@@ -282,6 +315,10 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with a requestable expired event type" do
@@ -311,6 +348,10 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
 
     context "with a requestable assessed event type" do
@@ -340,6 +381,10 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
     end
   end
 end

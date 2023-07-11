@@ -62,17 +62,18 @@ class TimelineEvent < ApplicationRecord
             unless: -> { creator_id.present? && creator_type.present? }
 
   enum event_type: {
+         age_range_subjects_verified: "age_range_subjects_verified",
+         assessment_section_recorded: "assessment_section_recorded",
          assessor_assigned: "assessor_assigned",
+         email_sent: "email_sent",
+         information_changed: "information_changed",
+         note_created: "note_created",
+         requestable_assessed: "requestable_assessed",
+         requestable_expired: "requestable_expired",
+         requestable_received: "requestable_received",
+         requestable_requested: "requestable_requested",
          reviewer_assigned: "reviewer_assigned",
          state_changed: "state_changed",
-         assessment_section_recorded: "assessment_section_recorded",
-         note_created: "note_created",
-         email_sent: "email_sent",
-         age_range_subjects_verified: "age_range_subjects_verified",
-         requestable_requested: "requestable_requested",
-         requestable_received: "requestable_received",
-         requestable_expired: "requestable_expired",
-         requestable_assessed: "requestable_assessed",
        }
   validates :event_type, inclusion: { in: event_types.values }
 
@@ -144,6 +145,20 @@ class TimelineEvent < ApplicationRecord
             :requestable_type,
             absence: true,
             unless: :requestable_event_type?
+
+  belongs_to :work_history, optional: true
+  validates :work_history_id,
+            :column_name,
+            :old_value,
+            :new_value,
+            presence: true,
+            if: :information_changed?
+  validates :work_history_id,
+            :column_name,
+            :old_value,
+            :new_value,
+            absence: true,
+            unless: :information_changed?
 
   def requestable_event_type?
     requestable_requested? || requestable_received? || requestable_expired? ||
