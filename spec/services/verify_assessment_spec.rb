@@ -20,6 +20,14 @@ RSpec.describe VerifyAssessment do
     )
   end
 
+  describe "when already verified" do
+    let(:assessment) { create(:assessment, :verify, application_form:) }
+
+    it "raises an error" do
+      expect { call }.to raise_error(VerifyAssessment::AlreadyVerified)
+    end
+  end
+
   describe "creating professional standing request" do
     subject(:professional_standing_request) do
       ProfessionalStandingRequest.find_by(assessment:)
