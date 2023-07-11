@@ -52,6 +52,12 @@
           <%= simple_format failure_assessor_note %>
         <% end %>
       <% end %>
+    <% elsif timeline_event.information_changed? %>
+      <p class="govuk-body">
+        <%= t(description_vars[:column_name], scope: %i[components timeline_entry columns]) %>
+        has changed from <strong class="govuk-!-font-weight-bold"><%= description_vars[:old_value] %></strong>
+        to <strong class="govuk-!-font-weight-bold"><%= description_vars[:new_value] %></strong>.
+      </p>
     <% else %>
       <p class="govuk-body"><%= simple_format description.html_safe %></p>
     <% end %>

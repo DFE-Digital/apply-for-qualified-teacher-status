@@ -97,5 +97,13 @@ FactoryBot.define do
       mailer_action_name { "application_received" }
       message_subject { "Application received" }
     end
+
+    trait :information_changed do
+      event_type { "information_changed" }
+      association :work_history
+      column_name { "contact_email" }
+      old_value { Faker::Internet.email }
+      new_value { Faker::Internet.email }
+    end
   end
 end
