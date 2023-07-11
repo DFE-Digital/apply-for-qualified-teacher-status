@@ -358,30 +358,34 @@
     - updated_at
     - uuid
   :timeline_events:
-    - id
-    - event_type
-    - application_form_id
-    - creator_id
-    - creator_type
-    - creator_name
-    - created_at
-    - updated_at
-    - assignee_id
-    - old_state
-    - new_state
-    - assessment_section_id
-    - note_id
-    - mailer_class_name
-    - mailer_action_name
-    - message_subject
-    - assessment_id
-    - requestable_type
-    - requestable_id
-    - age_range_min
     - age_range_max
+    - age_range_min
     - age_range_note
+    - application_form_id
+    - assessment_id
+    - assessment_section_id
+    - assignee_id
+    - column_name
+    - created_at
+    - creator_id
+    - creator_name
+    - creator_type
+    - event_type
+    - id
+    - mailer_action_name
+    - mailer_class_name
+    - message_subject
+    - new_state
+    - new_value
+    - note_id
+    - old_state
+    - old_value
+    - requestable_id
+    - requestable_type
     - subjects
     - subjects_note
+    - updated_at
+    - work_history_id
   :uploads:
     - id
     - document_id

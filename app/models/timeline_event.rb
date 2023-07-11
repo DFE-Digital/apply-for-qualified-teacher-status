@@ -8,6 +8,7 @@
 #  age_range_max         :integer
 #  age_range_min         :integer
 #  age_range_note        :text             default(""), not null
+#  column_name           :string           default(""), not null
 #  creator_name          :string           default(""), not null
 #  creator_type          :string
 #  event_type            :string           not null
@@ -15,7 +16,9 @@
 #  mailer_class_name     :string           default(""), not null
 #  message_subject       :string           default(""), not null
 #  new_state             :string           default(""), not null
+#  new_value             :text             default(""), not null
 #  old_state             :string           default(""), not null
+#  old_value             :text             default(""), not null
 #  requestable_type      :string
 #  subjects              :text             default([]), not null, is an Array
 #  subjects_note         :text             default(""), not null
@@ -28,6 +31,7 @@
 #  creator_id            :integer
 #  note_id               :bigint
 #  requestable_id        :bigint
+#  work_history_id       :bigint
 #
 # Indexes
 #
@@ -37,6 +41,7 @@
 #  index_timeline_events_on_assignee_id            (assignee_id)
 #  index_timeline_events_on_note_id                (note_id)
 #  index_timeline_events_on_requestable            (requestable_type,requestable_id)
+#  index_timeline_events_on_work_history_id        (work_history_id)
 #
 # Foreign Keys
 #
@@ -45,6 +50,7 @@
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
 #  fk_rails_...  (note_id => notes.id)
+#  fk_rails_...  (work_history_id => work_histories.id)
 #
 class TimelineEvent < ApplicationRecord
   belongs_to :application_form
