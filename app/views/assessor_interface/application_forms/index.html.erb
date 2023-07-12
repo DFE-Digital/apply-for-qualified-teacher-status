@@ -7,8 +7,11 @@
 
   <%= form_with model: @view_object.filter_form, url: filters_apply_assessor_interface_application_forms_path, method: :post, class: "app-application-forms__filter-form" do |f| %>
     <%= f.govuk_submit t(".filters.apply") do %>
-      <%= govuk_link_to t(".filters.clear"), filters_clear_assessor_interface_application_forms_path %>
-    <%- end -%>
+      <a href="<%= filters_clear_assessor_interface_application_forms_path %>" class="govuk-link">
+        <%= t(".filters.clear") %>
+        <span class="govuk-visually-hidden"><%= t(".filters.of_filter") %></span>
+      </a>
+    <% end %>
 
     <section id="app-applications-filters-assessor" class="app-checkbox-filter app-checkbox-filter--enhanced">
       <div class="app-checkbox-filter__container">
