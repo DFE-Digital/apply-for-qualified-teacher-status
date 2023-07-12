@@ -79,22 +79,15 @@ class AssessorInterface::ApplicationFormsShowViewObject
         I18n.t(
           "assessor_interface.application_forms.show.assessment_tasks.items.await_professional_standing_request",
         ),
-      link:
-        if assessment.all_preliminary_sections_passed?
-          [
-            :location,
-            :assessor_interface,
-            application_form,
-            assessment,
-            :professional_standing_request,
-          ]
-        end,
+      link: [
+        :location,
+        :assessor_interface,
+        application_form,
+        assessment,
+        :professional_standing_request,
+      ],
       status:
-        if assessment.all_preliminary_sections_passed?
-          professional_standing_request.received? ? :completed : :waiting_on
-        else
-          :cannot_start
-        end,
+        professional_standing_request.received? ? :completed : :waiting_on,
     }
   end
 
