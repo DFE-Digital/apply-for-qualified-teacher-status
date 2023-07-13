@@ -1,55 +1,60 @@
+<% as_teacher = current_namespace == "teacher" %>
+
 <% work_histories.each do |work_history| %>
   <% application_form = work_history.application_form %>
+  <% as_assessor_and_can_edit_work_history = current_namespace == "assessor" && AssessorInterface::WorkHistoryPolicy.new(current_staff, work_history).edit? %>
+
+  <% school_change_link_to = as_teacher ? [:school, :teacher_interface, :application_form, work_history] : nil %>
+  <% contact_change_link_to = as_teacher ? [:contact, :teacher_interface, :application_form, work_history] : (as_assessor_and_can_edit_work_history ? [:edit, :assessor_interface, application_form, work_history] : nil) %>
+  <% delete_link_to = as_teacher ? [:delete, :teacher_interface, :application_form, work_history] : nil %>
+
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "work-history-#{work_history.id}",
     model: work_history,
     title: work_history.school_name,
     fields: {
-      school_name: {
-        href: [:school, :teacher_interface, :application_form, work_history]
-      },
+      school_name: { href: school_change_link_to },
       city: {
         title: "City of institution",
-        href: [:school, :teacher_interface, :application_form, work_history]
+        href: school_change_link_to,
       },
       country_name: {
         title: "Country of institution",
-        href: [:school, :teacher_interface, :application_form, work_history]
+        href: school_change_link_to,
       },
       job: {
         title: "Your job role",
-        href: [:school, :teacher_interface, :application_form, work_history]
+        href: school_change_link_to,
       },
       hours_per_week: {
         title: "Hours per week",
-        href: [:school, :teacher_interface, :application_form, work_history]
+        href: school_change_link_to,
       },
       start_date: {
         title: "Role start date",
         format: :without_day,
-        href: [:school, :teacher_interface, :application_form, work_history]
+        href: school_change_link_to,
       },
       end_date: {
         title: "Role end date",
         value: work_history.still_employed ? "Current job" : work_history.end_date,
         format: :without_day,
-        href: [:school, :teacher_interface, :application_form, work_history]
+        href: school_change_link_to,
       },
       contact_name: !application_form.reduced_evidence_accepted ? {
         title: "Reference contact’s full name",
-        href: [:contact, :teacher_interface, :application_form, work_history]
+        href: contact_change_link_to,
       } : nil,
       contact_job: !application_form.reduced_evidence_accepted ? {
         title: "Reference contact’s job title",
-        href: [:contact, :teacher_interface, :application_form, work_history]
+        href: contact_change_link_to,
       } : nil,
       contact_email: !application_form.reduced_evidence_accepted ? {
         title: "Reference contact’s email address",
-        href: [:contact, :teacher_interface, :application_form, work_history],
+        href: contact_change_link_to,
         highlight: highlighted_contact_emails.include?(work_history)
       } : nil,
     },
-    changeable:,
-    delete_link_to: [:delete, :teacher_interface, :application_form, work_history]
+    delete_link_to:,
   )) %>
 <% end %>
