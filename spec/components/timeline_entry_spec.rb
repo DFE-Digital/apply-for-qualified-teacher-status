@@ -488,4 +488,20 @@ RSpec.describe TimelineEntry::Component, type: :component do
       expect(component.text).to include(creator.name)
     end
   end
+
+  context "information changed" do
+    let(:timeline_event) { create(:timeline_event, :information_changed) }
+    let(:old_value) { timeline_event.old_value }
+    let(:new_value) { timeline_event.new_value }
+
+    it "describes the event" do
+      expect(component.text.squish).to include(
+        "Reference contact email has changed from #{old_value} to #{new_value}.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
 end

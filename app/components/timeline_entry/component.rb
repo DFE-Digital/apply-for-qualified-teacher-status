@@ -151,5 +151,13 @@ module TimelineEntry
         {}
       end
     end
+
+    def information_changed_vars
+      {
+        column_name: timeline_event.column_name,
+        old_value: timeline_event.old_value,
+        new_value: timeline_event.new_value,
+      }
+    end
   end
 end

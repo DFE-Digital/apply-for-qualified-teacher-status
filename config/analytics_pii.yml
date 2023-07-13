@@ -54,6 +54,8 @@
     - unconfirmed_email
   :timeline_events:
     - age_range_note
+    - new_value
+    - old_value
     - subjects_note
   :work_histories:
     - canonical_contact_email

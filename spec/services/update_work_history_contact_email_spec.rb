@@ -4,12 +4,14 @@ require "rails_helper"
 
 RSpec.describe UpdateWorkHistoryContactEmail do
   let(:application_form) { create(:application_form, :submitted) }
+  let(:user) { create(:staff, :confirmed) }
   let(:old_email_address) { "old@example.com" }
   let(:new_email_address) { "new@example.com" }
 
   subject(:call) do
     described_class.call(
       application_form:,
+      user:,
       old_email_address:,
       new_email_address:,
     )
@@ -42,6 +44,18 @@ RSpec.describe UpdateWorkHistoryContactEmail do
       expect { call }.to_not have_enqueued_mail(
         RefereeMailer,
         :reference_requested,
+      )
+    end
+
+    it "records a timeline event" do
+      expect { call }.to have_recorded_timeline_event(
+        :information_changed,
+        creator: user,
+        application_form:,
+        work_history:,
+        column_name: "contact_email",
+        old_value: old_email_address,
+        new_value: new_email_address,
       )
     end
   end
@@ -84,6 +98,18 @@ RSpec.describe UpdateWorkHistoryContactEmail do
       expect { call }.to_not have_enqueued_mail(
         RefereeMailer,
         :reference_requested,
+      )
+    end
+
+    it "records a timeline event" do
+      expect { call }.to have_recorded_timeline_event(
+        :information_changed,
+        creator: user,
+        application_form:,
+        work_history:,
+        column_name: "contact_email",
+        old_value: old_email_address,
+        new_value: new_email_address,
       )
     end
   end
