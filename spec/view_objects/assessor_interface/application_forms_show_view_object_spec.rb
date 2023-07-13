@@ -129,18 +129,6 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           )
         end
       end
-
-      context "when preliminary checks exist" do
-        before { create(:assessment_section, :preliminary, assessment:) }
-
-        it do
-          is_expected.to include_task_list_item(
-            "Pre-assessment tasks",
-            "Awaiting third-party professional standing",
-            status: :cannot_start,
-          )
-        end
-      end
     end
 
     context "with a preliminary check" do
