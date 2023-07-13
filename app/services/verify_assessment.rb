@@ -18,6 +18,8 @@ class VerifyAssessment
   end
 
   def call
+    raise AlreadyVerified if assessment.verify?
+
     reference_requests =
       ActiveRecord::Base.transaction do
         assessment.verify!
@@ -34,6 +36,9 @@ class VerifyAssessment
     send_reference_request_emails(reference_requests)
 
     reference_requests
+  end
+
+  class AlreadyVerified < StandardError
   end
 
   private
