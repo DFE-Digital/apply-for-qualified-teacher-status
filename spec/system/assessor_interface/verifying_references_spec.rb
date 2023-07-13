@@ -52,28 +52,28 @@ RSpec.describe "Assessor verifying references", type: :system do
   end
 
   def and_i_see_the_reference_summary
-    expect(assessor_edit_reference_request_page.table.headers[0].text).to eq(
-      "Name of institution",
-    )
-    expect(assessor_edit_reference_request_page.table.cells[0].text).to eq(
-      "School",
-    )
-    expect(assessor_edit_reference_request_page.table.headers[1].text).to eq(
-      "Number of months",
-    )
-    expect(assessor_edit_reference_request_page.table.cells[1].text).to match(
-      /\d+/,
-    )
-    expect(assessor_edit_reference_request_page.table.headers[2].text).to eq(
-      "Name of reference",
-    )
-    expect(assessor_edit_reference_request_page.table.cells[2].text).to eq(
-      reference_request.work_history.contact_name,
-    )
+    expect(
+      assessor_edit_reference_request_page.summary_list.rows.first.key.text,
+    ).to eq("Name of institution")
+    expect(
+      assessor_edit_reference_request_page.summary_list.rows.first.value.text,
+    ).to eq("School")
+    expect(
+      assessor_edit_reference_request_page.summary_list.rows.second.key.text,
+    ).to eq("Number of months")
+    expect(
+      assessor_edit_reference_request_page.summary_list.rows.second.value.text,
+    ).to match(/\d+/)
+    expect(
+      assessor_edit_reference_request_page.summary_list.rows.third.key.text,
+    ).to eq("Name of reference")
+    expect(
+      assessor_edit_reference_request_page.summary_list.rows.third.value.text,
+    ).to eq(reference_request.work_history.contact_name)
+
     expect(assessor_edit_reference_request_page.responses.heading.text).to eq(
       "Reference requested",
     )
-
     expect(assessor_edit_reference_request_page.responses.values[0].text).to eq(
       "John Smith",
     )
