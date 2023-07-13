@@ -10,9 +10,7 @@
   <p class="govuk-body"><%= t(".#{@exemption_field}.description") %></p>
   <p class="govuk-body"><%= t(".#{@exemption_field}.evidence") %></p>
 
-  <div class="govuk-grid-row">
-    <%= render "shared/english_language_exempt_countries" %>
-  </div>
+  <%= render "shared/english_language_exempt_countries" %>
 
   <%= f.govuk_collection_radio_buttons :exempt,
                                        [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
