@@ -72,10 +72,31 @@ module TimelineEntry
 
     def assessment_section_recorded_vars
       section = timeline_event.assessment_section
+      selected_failure_reasons = section.selected_failure_reasons
+
+      visible_failure_reasons =
+        (
+          if selected_failure_reasons.count <= 2
+            selected_failure_reasons
+          else
+            selected_failure_reasons.take(1)
+          end
+        )
+
+      hidden_failure_reasons =
+        (
+          if selected_failure_reasons.count <= 2
+            []
+          else
+            selected_failure_reasons.drop(1)
+          end
+        )
+
       {
         section_name: section.key.titleize,
         passed: section.passed,
-        failure_reasons: section.selected_failure_reasons,
+        visible_failure_reasons:,
+        hidden_failure_reasons:,
       }
     end
 

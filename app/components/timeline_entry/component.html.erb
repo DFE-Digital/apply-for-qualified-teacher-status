@@ -30,15 +30,15 @@
           <%= govuk_tag(text: "Not passed", colour: "red") %>
         <% end %>
       </p>
-      <% if (failure_reason = description_vars[:failure_reasons].first).present? %>
+
+      <% if (visible_failure_reasons = description_vars[:visible_failure_reasons]).present? %>
         <%= govuk_inset_text do %>
           <ul class="govuk-list--bullet">
-            <%= render "shared/assessor_failure_reason_list_item", failure_reason: %>
-            <% if description_vars[:failure_reasons].size > 1 %>
+            <%= render "timeline_entry/failure_reasons", failure_reasons: visible_failure_reasons %>
+
+            <% if (hidden_failure_reasons = description_vars[:hidden_failure_reasons]).present? %>
               <%= govuk_details(summary_text: "View additional reasons") do %>
-                <% description_vars[:failure_reasons].drop(1).each do |failure_reason| %>
-                    <%= render "shared/assessor_failure_reason_list_item", failure_reason: %>
-                <% end %>
+                <%= render "timeline_entry/failure_reasons", failure_reasons: hidden_failure_reasons %>
               <% end %>
             <% end %>
           </ul>
