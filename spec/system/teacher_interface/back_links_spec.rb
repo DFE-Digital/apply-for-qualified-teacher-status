@@ -280,7 +280,7 @@ RSpec.describe "Teacher back links", type: :system do
 
   def when_i_click_change_qualification_title
     teacher_check_qualifications_page
-      .summary_list_cards
+      .summary_cards
       .first
       .find_row(key: "Qualification title")
       .actions
@@ -290,7 +290,7 @@ RSpec.describe "Teacher back links", type: :system do
 
   def when_i_click_change_certificate_document_title
     teacher_check_qualifications_page
-      .summary_list_cards
+      .summary_cards
       .first
       .find_row(key: "Certificate document")
       .actions
