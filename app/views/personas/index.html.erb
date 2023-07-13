@@ -36,9 +36,9 @@
           body.with_row do |row|
             row.with_cell(text: staff.email)
 
-            row.with_cell { persona_yes_no_tag(staff.award_decline_permission) }
-            row.with_cell { persona_yes_no_tag(staff.manage_applications_permission) }
-            row.with_cell { persona_yes_no_tag(staff.support_console_permission) }
+            row.with_cell { govuk_boolean_tag(staff.award_decline_permission) }
+            row.with_cell { govuk_boolean_tag(staff.manage_applications_permission) }
+            row.with_cell { govuk_boolean_tag(staff.support_console_permission) }
 
             row.with_cell(numeric: true) do
               govuk_button_to "Sign&nbsp;in".html_safe, staff_sign_in_persona_path(staff)
@@ -83,9 +83,9 @@
             row.with_cell { persona_check_tag(persona[:status_check]) }
             row.with_cell { persona_check_tag(persona[:sanction_check]) }
 
-            row.with_cell { persona_yes_no_tag(persona[:application_form_skip_work_history]) }
-            row.with_cell { persona_yes_no_tag(persona[:teaching_authority_provides_written_statement]) }
-            row.with_cell { persona_yes_no_tag(persona[:reduced_evidence_accepted]) }
+            row.with_cell { govuk_boolean_tag(persona[:application_form_skip_work_history]) }
+            row.with_cell { govuk_boolean_tag(persona[:teaching_authority_provides_written_statement]) }
+            row.with_cell { govuk_boolean_tag(persona[:reduced_evidence_accepted]) }
 
             row.with_cell(numeric: true) do
               govuk_button_to "Sign&nbsp;in".html_safe, eligible_sign_in_persona_path(persona[:region])
@@ -131,7 +131,7 @@
             row.with_cell do
               render(StatusTag::Component.new(status: persona[:status]))
             end
-            row.with_cell { persona_yes_no_tag(persona[:created_under_new_regulations]) }
+            row.with_cell { govuk_boolean_tag(persona[:created_under_new_regulations]) }
             row.with_cell { persona[:teacher].email }
 
             row.with_cell(numeric: true) do
