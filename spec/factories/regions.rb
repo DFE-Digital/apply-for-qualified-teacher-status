@@ -49,6 +49,10 @@ FactoryBot.define do
       reduced_evidence_accepted { true }
     end
 
+    trait :requires_preliminary_check do
+      requires_preliminary_check { true }
+    end
+
     trait :written_statement_optional do
       written_statement_optional { true }
     end

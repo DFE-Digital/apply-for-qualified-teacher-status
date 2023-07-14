@@ -16,6 +16,14 @@ namespace :application_forms do
     puts "There are #{ApplicationForm.count} applications overall."
   end
 
+  desc "Backfill preliminary checks on applications after enabling them."
+  task :backfill_preliminary_checks,
+       %i[staff_email] => :environment do |_task, args|
+    user = Staff.find_by!(email: args[:staff_email])
+    count = BackfillPreliminaryChecks.call(user:)
+    puts "Updated #{count} applications."
+  end
+
   desc "Change the contact email address of work history associated with an application."
   task :update_work_history_contact_email,
        %i[reference staff_email old_email_address new_email_address] =>

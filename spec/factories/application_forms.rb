@@ -108,6 +108,10 @@ FactoryBot.define do
       region.teaching_authority_provides_written_statement
     end
 
+    trait :requires_preliminary_check do
+      requires_preliminary_check { true }
+    end
+
     trait :completed do
       personal_information_status { "completed" }
       identification_document_status { "completed" }
