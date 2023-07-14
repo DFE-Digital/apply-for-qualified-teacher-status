@@ -28,7 +28,6 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_status_information
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_online_checker_url
-    when_i_fill_teaching_authority_checks_sanctions
     when_i_fill_qualifications_information
     when_i_check_requires_preliminary_check
     when_i_fill_regions
@@ -197,10 +196,6 @@ RSpec.describe "Countries support", type: :system do
   rescue Capybara::ElementNotFound
     fill_in "country-teaching-authority-online-checker-url-field",
             with: "https://www.example.com/checks"
-  end
-
-  def when_i_fill_teaching_authority_checks_sanctions
-    check "country-teaching-authority-checks-sanctions-1-field", visible: false
   end
 
   def when_i_fill_teaching_authority_sanction_information

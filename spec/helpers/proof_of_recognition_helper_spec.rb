@@ -13,18 +13,12 @@ RSpec.describe ProofOfRecognitionHelper do
       application_form_skip_work_history?: application_form_skip_work_history,
       teaching_authority_name: "teaching authority",
       teaching_authority_certificate: "letter",
-      country:
-        double(
-          teaching_authority_checks_sanctions?:
-            teaching_authority_checks_sanctions,
-        ),
     )
   end
   let(:status) { false }
   let(:sanction) { false }
   let(:teaching_authority_provides_written_statement) { false }
   let(:application_form_skip_work_history) { false }
-  let(:teaching_authority_checks_sanctions) { true }
 
   describe "proof_of_recognition_requirements_for" do
     subject { proof_of_recognition_requirements_for(region:) }
@@ -93,9 +87,8 @@ RSpec.describe ProofOfRecognitionHelper do
       end
     end
 
-    context "with a country where authority doesn't check sanctions and the region skips work history" do
+    context "with a country where the region skips work history" do
       let(:sanction) { true }
-      let(:teaching_authority_checks_sanctions) { false }
       let(:application_form_skip_work_history) { true }
 
       it do

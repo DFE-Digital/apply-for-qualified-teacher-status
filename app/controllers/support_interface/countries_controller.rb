@@ -77,7 +77,6 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
       :teaching_authority_other,
       :teaching_authority_sanction_information,
       :teaching_authority_status_information,
-      :teaching_authority_checks_sanctions,
       :teaching_authority_online_checker_url,
     )
   end

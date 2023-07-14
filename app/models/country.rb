@@ -10,7 +10,6 @@
 #  requires_preliminary_check              :boolean          default(FALSE), not null
 #  teaching_authority_address              :text             default(""), not null
 #  teaching_authority_certificate          :text             default(""), not null
-#  teaching_authority_checks_sanctions     :boolean          default(TRUE), not null
 #  teaching_authority_emails               :text             default([]), not null, is an Array
 #  teaching_authority_name                 :text             default(""), not null
 #  teaching_authority_online_checker_url   :string           default(""), not null
