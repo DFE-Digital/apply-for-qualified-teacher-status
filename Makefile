@@ -306,6 +306,8 @@ domains-test:
 domains-preprod:
 	$(eval DEPLOY_ENV=preprod)
 
+domains-production:
+	$(eval DEPLOY_ENV=production)
 
 set-production-subscription:
 	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
