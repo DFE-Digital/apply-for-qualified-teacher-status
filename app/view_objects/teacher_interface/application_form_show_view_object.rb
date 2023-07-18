@@ -120,11 +120,12 @@ class TeacherInterface::ApplicationFormShowViewObject
   end
 
   def request_professional_standing_certificate?
-    professional_standing_request&.requested? &&
+    teaching_authority_provides_written_statement &&
+      professional_standing_request&.requested? &&
       (
-        assessment&.all_preliminary_sections_passed? ||
-          application_form&.teaching_authority_provides_written_statement
-      )
+        !requires_preliminary_check ||
+          assessment&.all_preliminary_sections_passed?
+      ) || false
   end
 
   delegate :region, to: :application_form
@@ -134,6 +135,8 @@ class TeacherInterface::ApplicationFormShowViewObject
   delegate :needs_work_history,
            :needs_written_statement,
            :needs_registration_number,
+           :teaching_authority_provides_written_statement,
+           :requires_preliminary_check,
            to: :application_form,
            allow_nil: true
 
