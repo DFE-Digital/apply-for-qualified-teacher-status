@@ -122,25 +122,21 @@ class PersonasController < ApplicationController
       end
 
   def load_teacher_personas
-    all_teachers =
-      Teacher.includes(
-        application_forms: {
-          region: :country,
+    all_application_forms =
+      ApplicationForm.includes(
+        :teacher,
+        region: :country,
+        documents: :uploads,
+        qualifications: {
           documents: :uploads,
-          qualifications: {
-            documents: :uploads,
-          },
-          work_histories: [],
         },
+        work_histories: [],
       ).order(:id)
 
     @teacher_personas =
       TEACHER_PERSONAS.filter_map do |persona|
-        found_teacher =
-          all_teachers.find do |teacher|
-            application_form = teacher.application_form
-            next false if application_form.blank?
-
+        found_application_form =
+          all_application_forms.find do |application_form|
             region = application_form.region
 
             region.status_check == persona[:status_check] &&
@@ -150,7 +146,9 @@ class PersonasController < ApplicationController
                 persona[:created_under_new_regulations]
           end
 
-        persona.merge(teacher: found_teacher) if found_teacher
+        if (application_form = found_application_form)
+          persona.merge(application_form:, teacher: application_form.teacher)
+        end
       end
   end
 end
