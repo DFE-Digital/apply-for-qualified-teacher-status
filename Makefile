@@ -4,6 +4,7 @@ SHELL				:=/bin/bash
 SERVICE_SHORT=afqts
 KEY_VAULT_PURGE_PROTECTION=false
 ARM_TEMPLATE_TAG=1.1.6
+TERRAFILE_VERSION=0.8
 
 .PHONY: help
 help: ## Show this help
@@ -75,6 +76,10 @@ ci:	## Run in automation environment
 bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh
+
+bin/terrafile:
+	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
+		| tar xz -C ./bin terrafile
 
 .PHONY: install-konduit
 install-konduit: bin/konduit.sh ## Install the konduit script, for accessing backend services
