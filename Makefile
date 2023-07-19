@@ -48,6 +48,10 @@ print-infrastructure-key-vault-name: set-key-vault-names  ## Print the name of t
 set-resource-group-name:
 	$(eval RESOURCE_GROUP_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-rg)
 
+.PHONY: set-storage-account-name
+set-storage-account-name:
+	$(eval STORAGE_ACCOUNT_NAME=$(AZURE_RESOURCE_PREFIX)$(SERVICE_SHORT)tfstate$(CONFIG_SHORT)sa)
+
 .PHONY: print-resource-group-name
 print-resource-group-name: set-resource-group-name
 	echo ${RESOURCE_GROUP_NAME}
@@ -115,11 +119,11 @@ check-auto-approve:
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 
 .PHONY: arm-deployment
-arm-deployment: set-resource-group-name set-azure-account set-azure-template-tag set-azure-resource-group-tags set-key-vault-names
+arm-deployment: set-resource-group-name set-storage-account-name set-azure-account set-azure-template-tag set-azure-resource-group-tags set-key-vault-names
 	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
 		-l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
-			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}sa" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
+			"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
 			keyVaultNames='("${KEY_VAULT_APPLICATION_NAME}", "${KEY_VAULT_INFRASTRUCTURE_NAME}")' \
 			"enableKVPurgeProtection=false" ${WHAT_IF}
 
