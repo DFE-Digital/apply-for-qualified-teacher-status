@@ -7,7 +7,9 @@ terraform {
       version = "3.53.0"
     }
   }
+
   backend "azurerm" {
+    container_name = "afqtsdomains-tf"
   }
 }
 
