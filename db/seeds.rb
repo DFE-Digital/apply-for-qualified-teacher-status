@@ -301,7 +301,10 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     b2_level_requirement_prefix: "a score of at least",
     reference_name: "Test Report Form Number",
     reference_hint: "Your Test Report Form Number is 15-18 digits long.",
-    accepted_tests: "‘IELTS for UKVI’ or ‘IELTS Life Skills’",
+    accepted_tests:
+      "‘International English Language Testing System (IELTS) for " \
+        "UK Visa and Immigration (UKVI)’ or ‘International English Language Testing " \
+        "System (IELTS) Life Skills'",
     url: "https://www.ielts.org/for-test-takers/book-a-test",
     check_url: "https://ielts.ucles.org.uk/ielts-trf/welcome.html",
   },
@@ -313,7 +316,9 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your Unique Reference Number contains numbers, letters and dashes " \
         "in this format: PPC/230619/04501/09980013402512496",
-    accepted_tests: "‘LanguageCert International ESOL SELT’",
+    accepted_tests:
+      "‘LanguageCert International English for speakers of " \
+        "other languages (ESOL) SELT’",
     url: "https://selt.languagecert.org/",
     check_url: "https://www.languagecert.org/en/results",
   },
@@ -325,7 +330,9 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your Score Report Code is 10 characters long. It may contain both letters " \
         "and numbers, or just numbers.",
-    accepted_tests: "‘PTE Academic UKVI’ or ‘PTE Home’",
+    accepted_tests:
+      "‘Pearson Test of English (PTE) Academic UK Visa and " \
+        "Immigration (UKVI)’ or ‘Pearson Test of English (PTE) Home’",
     url: "https://pearsonpte.com/",
     check_url: "https://srw.pteacademic.com/",
   },
@@ -337,7 +344,7 @@ ENGLISH_LANGUAGE_PROVIDERS = [
     reference_hint:
       "Your PSI Services (UK) Ltd Unique Reference Number contains numbers, " \
         "letters and dashes in this format: PSI/280920/YTLQVG2Z/W2N4UVNN",
-    accepted_tests: "‘Skills for English UKVI’",
+    accepted_tests: "'Skills for English UK Visa and Immigration (UKVI)’",
     url: "https://skillsforenglish.com/",
     check_url: "https://results.bookmyskillsforenglish.com/",
   },
@@ -350,8 +357,8 @@ ENGLISH_LANGUAGE_PROVIDERS = [
       "Your Trinity College London Certificate Number contains numbers, letters " \
         "and special characters in this format: 1-630439614:1-123456780",
     accepted_tests:
-      "‘Secure English Language Tests for UKVI’ – Integrated Skills in English (ISE)" \
-        " or Graded Examinations in Spoken English (GESE)",
+      "’Secure English Language Test (SELT) for UK Visa and Immigration (UKVI)’ - " \
+        "Integrated Skills in English (ISE) or Graded Examinations in Spoken English (GESE)",
     url: "https://www.trinitycollege.com/qualifications/SELT/UKVI",
     check_url: "https://trinitycollege.com/TRV",
   },
