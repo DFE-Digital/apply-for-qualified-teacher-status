@@ -15,7 +15,7 @@ development_aks: ## Specify development AKS environment
 review_aks: ## Specify review AKS environment
 	$(if $(PULL_REQUEST_NUMBER), , $(error Missing environment variable "PULL_REQUEST_NUMBER"))
 	$(eval include global_config/review_aks.sh)
-	$(eval backend_config=-backend-config="key=terraform-$(PULL_REQUEST_NUMBER).tfstate")
+	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PULL_REQUEST_NUMBER).tfstate)
 	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
@@ -75,7 +75,7 @@ bin/konduit.sh:
 install-konduit: bin/konduit.sh ## Install the konduit script, for accessing backend services
 
 .PHONY: terraform-init
-terraform-init:
+terraform-init: set-resource-group-name set-storage-account-name
 	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
 
 	$(eval export TF_VAR_docker_image=$(DOCKER_IMAGE))
@@ -84,7 +84,11 @@ terraform-init:
 	$(eval export TF_VAR_azure_resource_prefix=$(AZURE_RESOURCE_PREFIX))
 
 	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
-	terraform -chdir=terraform/application init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
+
+	terraform -chdir=terraform/application init -upgrade -reconfigure \
+		-backend-config=resource_group_name=$(RESOURCE_GROUP_NAME) \
+		-backend-config=storage_account_name=$(STORAGE_ACCOUNT_NAME) \
+		-backend-config=key=$(or $(TERRAFORM_BACKEND_KEY),terraform.tfstate)
 
 .PHONY: terraform-plan
 terraform-plan: terraform-init
@@ -151,7 +155,7 @@ domains-infra-apply: domains-infra-init ## terraform apply for dns core resource
 	terraform -chdir=terraform/domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
 
 domains-init: afqts_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
-	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/$(CONFIG)_backend.tfvars
+	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=afqtsdomains_$(CONFIG).tfstate
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
 	terraform -chdir=terraform/domains/environment_domains plan -var-file workspace_variables/$(CONFIG).tfvars.json
