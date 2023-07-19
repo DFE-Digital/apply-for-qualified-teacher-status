@@ -124,7 +124,7 @@
               bucket = region_bucket_for_persona(persona)
               govuk_tag(text: bucket) if bucket
             end
-            row.with_cell { CountryName.from_country(persona[:teacher].application_form.country) }
+            row.with_cell { CountryName.from_country(persona[:application_form].country) }
 
             row.with_cell { persona_check_tag(persona[:status_check]) }
             row.with_cell { persona_check_tag(persona[:sanction_check]) }
