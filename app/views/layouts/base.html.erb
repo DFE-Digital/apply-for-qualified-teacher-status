@@ -48,19 +48,6 @@
       </div>
     </div>
 
-    <% if FeatureFlags::FeatureFlag.active?(:aks_migration_banner) %>
-      <div class="govuk-width-container govuk-!-margin-top-4">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-two-thirds">
-            <%= govuk_notification_banner(title_text: "Important") do %>
-              <p>The Apply for QTS in England service will be unavailable from 7pm to 10pm Greenwich Mean Time (GMT) on Wednesday 19 July 2023, due to scheduled maintenance.</p>
-              <p>You may lose any new changes made if you’re using the service when it becomes unavailable.</p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
     <div class="govuk-width-container">
       <%= govuk_back_link(href: yield(:back_link_url)) unless yield(:back_link_url).blank? %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
