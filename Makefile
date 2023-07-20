@@ -22,14 +22,6 @@ aks:  ## Sets environment variables for aks deployment
 	$(eval KEY_VAULT_SECRET_NAME=APPLICATION)
 	$(eval KEY_VAULT_PURGE_PROTECTION=false)
 
-.PHONY: preprod
-preprod: paas ## Specify pre-production PaaS environment
-	$(eval DEPLOY_ENV=preprod)
-	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
-	$(eval AZURE_RESOURCE_PREFIX=s165t01)
-	$(eval CONFIG_SHORT=pp)
-	$(eval ENV_TAG=pre-prod)
-
 .PHONY: production
 production: paas ## Specify production PaaS environment
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
