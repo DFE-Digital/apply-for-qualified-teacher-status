@@ -344,37 +344,36 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
       view_object.request_professional_standing_certificate?
     end
 
-    context "when assessment preliminary checks are complete" do
-      before do
-        create(:application_form, assessment:, teacher: current_teacher)
-        create(:professional_standing_request, assessment:)
-        create(:assessment_section, :preliminary, :passed, assessment:)
-      end
+    it { is_expected.to be false }
 
-      it { is_expected.to be true }
-    end
-
-    context "when application form written statement comes from teaching authority" do
-      before do
+    context "when the teaching authority provides the written statement" do
+      let(:application_form) do
         create(
           :application_form,
           assessment:,
           teacher: current_teacher,
           teaching_authority_provides_written_statement: true,
         )
-        create(:professional_standing_request, assessment:)
       end
 
-      it { is_expected.to be true }
-    end
-
-    context "when the application is not waiting on anything" do
-      before do
-        create(:application_form, assessment:, teacher: current_teacher)
-        create(:professional_standing_request, :received, assessment:)
-      end
+      before { create(:professional_standing_request, assessment:) }
 
       it { is_expected.to be false }
+
+      context "when there are preliminary checks and they are complete" do
+        before do
+          application_form.update!(requires_preliminary_check: true)
+          create(:assessment_section, :preliminary, :passed, assessment:)
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "when there are no preliminary checks" do
+        before { application_form.update!(requires_preliminary_check: false) }
+
+        it { is_expected.to be true }
+      end
     end
   end
 end
