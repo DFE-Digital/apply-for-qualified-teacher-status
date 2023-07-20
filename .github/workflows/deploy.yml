@@ -217,6 +217,6 @@ jobs:
           SLACK_TITLE: Deployment of apply-for-qualified-teacher-status to ${{ needs.deploy_nonprod_aks.outputs.environment_name }} failed
           SLACK_MESSAGE: |
             Deployment to ${{ needs.deploy_nonprod_aks.outputs.environment_name }} environment failed
-          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ steps.key-vault-secrets.outputs.SLACK-WEBHOOK }}
           SLACK_COLOR: failure
           SLACK_FOOTER: Sent from notify_slack_of_failures job in deploy workflow

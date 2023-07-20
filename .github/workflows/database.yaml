@@ -91,6 +91,18 @@ jobs:
           path: backup-sanitised.sql.gz
           retention-days: 3
 
+      - id: key-vault-name
+        if: failure()
+        shell: bash
+        run: echo "value=$(make -s production_aks print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
+
+      - uses: Azure/get-keyvault-secrets@v1
+        if: failure()
+        id: key-vault-secrets
+        with:
+          keyvault: ${{ steps.key-vault-name.outputs.value }}
+          secrets: "SLACK-WEBHOOK"
+
       - name: Notify Slack channel on job failure
         if: failure()
         uses: rtCamp/action-slack-notify@v2
@@ -98,7 +110,7 @@ jobs:
           SLACK_USERNAME: CI Deployment
           SLACK_TITLE: Database backup failure
           SLACK_MESSAGE: Production database backup job failed
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ steps.key-vault-secrets.outputs.SLACK-WEBHOOK }}
           SLACK_COLOR: failure
           SLACK_FOOTER: Sent from backup-production job in database-backups workflow
 
