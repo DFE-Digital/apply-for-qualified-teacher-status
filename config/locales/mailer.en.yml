@@ -14,7 +14,6 @@ en:
         subject:
           0: Your draft QTS application will be deleted in 2 weeks
           1: Your draft QTS application will be deleted in 1 week
-          2: Your draft QTS application will be deleted in 2 days
       application_received:
         subject: We’ve received your application for qualified teacher status (QTS)
       further_information_received:

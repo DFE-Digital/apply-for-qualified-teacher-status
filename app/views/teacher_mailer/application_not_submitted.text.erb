@@ -9,8 +9,6 @@ We need to let you know that if you do not complete and submit your application 
 We contacted you a week ago about your draft application for qualified teacher status (QTS).
 
 If you do not complete and submit your application by <%= @application_form.expired_at.to_date.to_fs(:long_ordinal_uk) %> we’ll delete the application.
-<% when 2 %>
-Your draft application for qualified teacher status (QTS) will be deleted in 2 days on <%= @application_form.expired_at.to_date.to_fs(:long_ordinal_uk) %> if you do not complete and submit it before then.
 <% end %>
 
 # What happens if your application is deleted?

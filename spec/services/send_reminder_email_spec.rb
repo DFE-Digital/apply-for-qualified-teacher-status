@@ -133,12 +133,6 @@ RSpec.describe SendReminderEmail do
         include_examples "second reminder email",
                          "sends an application not submitted email"
       end
-
-      context "with less than one day remaining" do
-        let(:application_created_at) { (6.months - 1.day).ago }
-        include_examples "third reminder email",
-                         "sends an application not submitted email"
-      end
     end
 
     context "with a submitted application form" do
