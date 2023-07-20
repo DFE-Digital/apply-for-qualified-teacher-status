@@ -237,13 +237,8 @@ class ApplicationForm < ApplicationRecord
   end
 
   def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)
-    return true if days_until_expired <= 14 && number_of_reminders_sent.zero?
-
-    return true if days_until_expired <= 7 && number_of_reminders_sent == 1
-
-    return true if days_until_expired <= 2 && number_of_reminders_sent == 2
-
-    false
+    (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
+      (days_until_expired <= 7 && number_of_reminders_sent == 1)
   end
 
   def send_reminder_email(number_of_reminders_sent)

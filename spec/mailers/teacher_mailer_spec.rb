@@ -121,16 +121,6 @@ RSpec.describe TeacherMailer, type: :mailer do
           )
         end
       end
-
-      context "with two days to go" do
-        let(:number_of_reminders_sent) { 2 }
-
-        it do
-          is_expected.to eq(
-            "Your draft QTS application will be deleted in 2 days",
-          )
-        end
-      end
     end
 
     describe "#to" do
@@ -173,17 +163,6 @@ RSpec.describe TeacherMailer, type: :mailer do
         it do
           is_expected.to include(
             "If you do not complete and submit your application by 1 July 2020 we’ll delete the application.",
-          )
-        end
-      end
-
-      context "with two days to go" do
-        let(:number_of_reminders_sent) { 2 }
-
-        it do
-          is_expected.to include(
-            "Your draft application for qualified teacher status (QTS) will be " \
-              "deleted in 2 days on 1 July 2020 if you do not complete and submit it before then.",
           )
         end
       end
