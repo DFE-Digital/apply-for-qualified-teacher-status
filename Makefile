@@ -137,7 +137,7 @@ deploy-domain-resources: check-auto-approve domain-azure-resources # make publis
 afqts_domain:   ## runs a script to config variables for setting up dns
 	$(eval include global_config/domain.sh)
 
-domains-infra-init: afqts_domain set-production-subscription set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
+domains-infra-init: afqts_domain set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade \
 		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
 
@@ -147,7 +147,7 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
 
-domains-init: afqts_domain set-production-subscription set-azure-account ## terraform init for dns resources: make <env>  domains-init
+domains-init: afqts_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/$(CONFIG)_backend.tfvars
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
@@ -170,9 +170,6 @@ domains-preprod:
 
 domains-production:
 	$(eval CONFIG=production)
-
-set-production-subscription:
-	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
 
 domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## deploy container to store terraform state for all dns resources -run validate first
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
