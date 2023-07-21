@@ -34,11 +34,9 @@ A service that allows international teachers to apply for qualified teacher stat
 
 ## How the application works
 
-Apply for qualified teacher status is a monolithic Rails app built with the
-GOVUK Design System and hosted on GOVUK PaaS.
+Apply for Qualified Teacher Status is a monolithic Rails app built with the GOV.UK Design System and hosted on Azure AKS.
 
-We keep track of architecture decisions in [Architecture Decision Records
-(ADRs)](/adr/).
+We keep track of architecture decisions in [Architecture Decision Records (ADRs)](/adr/).
 
 We use `rladr` to generate the boilerplate for new records:
 

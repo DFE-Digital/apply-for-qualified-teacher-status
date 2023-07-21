@@ -52,13 +52,7 @@ jobs:
         run: terraform fmt -check -recursive
         working-directory: terraform
 
-      - name: Validate PaaS
-        run: |
-          terraform init -backend=false
-          terraform validate -no-color
-        working-directory: terraform/paas
-
-      - name: Validate AKS
+      - name: Validate
         run: |
           terraform init -backend=false
           terraform validate -no-color
