@@ -142,8 +142,7 @@ afqts_domain:   ## runs a script to config variables for setting up dns
 	$(eval include global_config/domain.sh)
 
 domains-infra-init: afqts_domain set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
-	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade \
-		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
+	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 	terraform -chdir=terraform/domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
