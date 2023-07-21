@@ -151,7 +151,7 @@ en:
         written_statement_completion_date: induction letter shows the completion date (if applicable)
         written_statement_induction: induction letter shows the applicant completed induction in the country (if applicable)
         written_statement_present: letter from the country or state’s competent authority provided
-        written_statement_recent: letter from the country or state’s competent authority was issued within the last 3 months
+        written_statement_recent: letter from the country or state’s competent authority was issued within the last 6 months
         written_statement_registration_number: induction letter shows the teacher reference (TR) number (if applicable)
         written_statement_school_name: induction letter shows the name of the school (if applicable)
         written_statement_signature: induction letter shows the signature of the administration department or headteacher/principal (if applicable)
@@ -207,7 +207,7 @@ en:
           work_history_duration: The applicant’s work experience does not meet the minimum duration requirements.
           written_statement_illegible: The letter is illegible or in a format that we cannot accept.
           written_statement_information: The letter is missing information.
-          written_statement_recent: The letter was not issued within the last 3 months.
+          written_statement_recent: The letter was not issued within the last 6 months.
         as_question:
           label:
             teaching_qualifications_not_at_required_level: Does the teaching qualification meet the required academic level? (level 6 or higher)

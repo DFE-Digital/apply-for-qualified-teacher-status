@@ -51,7 +51,7 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
 
     context "when the teaching authority provides the written statement" do
       let(:teaching_authority_provides_written_statement) { true }
-      it { is_expected.to eq(18.weeks) }
+      it { is_expected.to eq(36.weeks) }
     end
 
     context "when the applicant provides the written statement" do

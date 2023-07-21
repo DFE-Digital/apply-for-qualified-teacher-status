@@ -96,14 +96,14 @@ RSpec.describe ExpireRequestableJob do
         create(:professional_standing_request, created_at:, assessment:)
       end
 
-      context "when less than 18 weeks old" do
-        let(:created_at) { (18.weeks - 1.hour).ago }
+      context "when less than 36 weeks old" do
+        let(:created_at) { (36.weeks - 1.hour).ago }
 
         it_behaves_like "not expired requestable"
       end
 
-      context "when it is more than 18 weeks old" do
-        let(:created_at) { (18.weeks + 1.hour).ago }
+      context "when it is more than 36 weeks old" do
+        let(:created_at) { (36.weeks + 1.hour).ago }
 
         it_behaves_like "expired requestable"
       end

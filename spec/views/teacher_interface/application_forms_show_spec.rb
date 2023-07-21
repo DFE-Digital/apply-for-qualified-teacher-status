@@ -78,7 +78,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
         is_expected.to match(
           /we did not receive your letter that proves you’re recognised as a teacher/,
         )
-        is_expected.to match(/from teaching authority within the 90-day period/)
+        is_expected.to match(/from teaching authority within 180 days/)
       end
     end
 
