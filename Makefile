@@ -31,6 +31,10 @@ preproduction_aks: ## Specify preproduction AKS environment
 production_aks:  ## Specify production AKS environment
 	$(eval include global_config/production_aks.sh)
 
+.PHONY: domains
+domains:  ## Specify domains configuration
+	$(eval include global_config/domains.sh)
+
 .PHONY: set-key-vault-names
 set-key-vault-names:
 	$(eval KEY_VAULT_APPLICATION_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-app-kv)
@@ -138,11 +142,7 @@ validate-domain-resources: set-what-if domain-azure-resources # make publish val
 
 deploy-domain-resources: check-auto-approve domain-azure-resources # make publish deploy-domain-resources AUTO_APPROVE=1
 
-.PHONY: afqts_domain
-afqts_domain:   ## runs a script to config variables for setting up dns
-	$(eval include global_config/domain.sh)
-
-domains-infra-init: afqts_domain set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
+domains-infra-init: domains set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
@@ -151,7 +151,7 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
-domains-init: afqts_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
+domains-init: domains set-azure-account ## terraform init for dns resources: make <env>  domains-init
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=afqtsdomains_$(CONFIG).tfstate
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
