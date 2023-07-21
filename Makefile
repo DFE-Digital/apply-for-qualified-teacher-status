@@ -80,23 +80,23 @@ terraform-init:
 	$(eval export TF_VAR_azure_resource_prefix=$(AZURE_RESOURCE_PREFIX))
 
 	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
-	terraform -chdir=terraform/aks init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
+	terraform -chdir=terraform/application init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
 
 .PHONY: terraform-plan
 terraform-plan: terraform-init
-	terraform -chdir=terraform/aks plan -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application plan -var-file workspace_variables/$(CONFIG).tfvars.json
 
 .PHONY: terraform-refresh
 terraform-refresh: terraform-init
-	terraform -chdir=terraform/aks refresh -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application refresh -var-file workspace_variables/$(CONFIG).tfvars.json
 
 .PHONY: terraform-apply
 terraform-apply: terraform-init
-	terraform -chdir=terraform/aks apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 .PHONY: terraform-destroy
 terraform-destroy: terraform-init
-	terraform -chdir=terraform/aks destroy -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application destroy -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 .PHONY: set-azure-resource-group-tags
 set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template

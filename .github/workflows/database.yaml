@@ -39,7 +39,7 @@ jobs:
 
       - name: Get Azure backup storage details
         id: azure-backup-storage
-        working-directory: terraform/aks
+        working-directory: terraform/application
         run: |
           echo "account-name=$(terraform output -raw postgres_azure_backup_storage_account_name)" >> $GITHUB_OUTPUT
           echo "container-name=$(terraform output -raw postgres_azure_backup_storage_container_name)" >> $GITHUB_OUTPUT

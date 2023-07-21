@@ -56,4 +56,4 @@ jobs:
         run: |
           terraform init -backend=false
           terraform validate -no-color
-        working-directory: terraform/aks
+        working-directory: terraform/application
