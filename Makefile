@@ -92,19 +92,19 @@ terraform-init: set-resource-group-name set-storage-account-name
 
 .PHONY: terraform-plan
 terraform-plan: terraform-init
-	terraform -chdir=terraform/application plan -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application plan -var-file config/$(CONFIG).tfvars.json
 
 .PHONY: terraform-refresh
 terraform-refresh: terraform-init
-	terraform -chdir=terraform/application refresh -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application refresh -var-file config/$(CONFIG).tfvars.json
 
 .PHONY: terraform-apply
 terraform-apply: terraform-init
-	terraform -chdir=terraform/application apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application apply -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 .PHONY: terraform-destroy
 terraform-destroy: terraform-init
-	terraform -chdir=terraform/application destroy -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application destroy -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 .PHONY: set-azure-resource-group-tags
 set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template
@@ -149,22 +149,22 @@ domains-infra-init: afqts_domain set-azure-account ## make domains-infra-init - 
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
-	terraform -chdir=terraform/domains/infrastructure plan -var-file workspace_variables/zones.tfvars.json
+	terraform -chdir=terraform/domains/infrastructure plan -var-file config/zones.tfvars.json
 
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
-	terraform -chdir=terraform/domains/infrastructure apply -var-file workspace_variables/zones.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
 domains-init: afqts_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=afqtsdomains_$(CONFIG).tfstate
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
-	terraform -chdir=terraform/domains/environment_domains plan -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/domains/environment_domains plan -var-file config/$(CONFIG).tfvars.json
 
 domains-apply: domains-init ## terraform apply for dns resources
-	terraform -chdir=terraform/domains/environment_domains apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/domains/environment_domains apply -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 domains-destroy: domains-init ## terraform destroy for dns resources
-	terraform -chdir=terraform/domains/environment_domains destroy -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/domains/environment_domains destroy -var-file config/$(CONFIG).tfvars.json
 
 domains-development:
 	$(eval CONFIG=dev)
