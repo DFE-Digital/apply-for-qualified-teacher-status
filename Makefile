@@ -149,10 +149,10 @@ domains-infra-init: afqts_domain set-azure-account ## make domains-infra-init - 
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
-	terraform -chdir=terraform/domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
+	terraform -chdir=terraform/domains/infrastructure plan -var-file workspace_variables/zones.tfvars.json
 
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
-	terraform -chdir=terraform/domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/domains/infrastructure apply -var-file workspace_variables/zones.tfvars.json ${AUTO_APPROVE}
 
 domains-init: afqts_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=afqtsdomains_$(CONFIG).tfstate
