@@ -24,7 +24,7 @@ runs:
 
     - name: Refresh Terraform
       shell: sh
-      run: make ci ${{ inputs.environment }}_aks terraform-refresh
+      run: make ci ${{ inputs.environment }} terraform-refresh
       env:
         TF_VAR_azure_sp_credentials_json: ${{ inputs.azure-credentials }}
         DOCKER_IMAGE: "ghcr.io/dfe-digital/apply-for-qualified-teacher-status:no-tag"

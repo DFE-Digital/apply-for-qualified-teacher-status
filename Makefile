@@ -2,34 +2,35 @@
 SHELL				:=/bin/bash
 
 SERVICE_SHORT=afqts
+KEY_VAULT_PURGE_PROTECTION=false
 
 .PHONY: help
 help: ## Show this help
 	@grep -E '^[a-zA-Z\._\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: development_aks
-development_aks: ## Specify development AKS environment
-	$(eval include global_config/development_aks.sh)
+.PHONY: development
+development: ## Specify development configuration
+	$(eval include global_config/development.sh)
 
-.PHONY: review_aks
-review_aks: ## Specify review AKS environment
+.PHONY: review
+review: ## Specify review configuration
 	$(if $(PULL_REQUEST_NUMBER), , $(error Missing environment variable "PULL_REQUEST_NUMBER"))
-	$(eval include global_config/review_aks.sh)
+	$(eval include global_config/review.sh)
 	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PULL_REQUEST_NUMBER).tfstate)
 	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
-.PHONY: test_aks
-test_aks:  ## Specify test AKS environment
-	$(eval include global_config/test_aks.sh)
+.PHONY: test
+test:  ## Specify test configuration
+	$(eval include global_config/test.sh)
 
-.PHONY: preproduction_aks
-preproduction_aks: ## Specify preproduction AKS environment
-	$(eval include global_config/preproduction_aks.sh)
+.PHONY: preproduction
+preproduction: ## Specify preproduction configuration
+	$(eval include global_config/preproduction.sh)
 
-.PHONY: production_aks
-production_aks:  ## Specify production AKS environment
-	$(eval include global_config/production_aks.sh)
+.PHONY: production
+production:  ## Specify production configuration
+	$(eval include global_config/production.sh)
 
 .PHONY: domains
 domains:  ## Specify domains configuration
@@ -130,13 +131,13 @@ arm-deployment: set-resource-group-name set-storage-account-name set-azure-accou
 		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
 			keyVaultNames='("${KEY_VAULT_APPLICATION_NAME}", "${KEY_VAULT_INFRASTRUCTURE_NAME}")' \
-			"enableKVPurgeProtection=false" ${WHAT_IF}
+			"enableKVPurgeProtection=${KEY_VAULT_PURGE_PROTECTION}" ${WHAT_IF}
 
 .PHONY: deploy-azure-resources
-deploy-azure-resources: check-auto-approve arm-deployment # make development_aks deploy-azure-resources AUTO_APPROVE=1
+deploy-azure-resources: check-auto-approve arm-deployment # make development deploy-azure-resources AUTO_APPROVE=1
 
 .PHONY: validate-azure-resources
-validate-azure-resources: set-what-if arm-deployment # make development_aks validate-azure-resources
+validate-azure-resources: set-what-if arm-deployment # make development validate-azure-resources
 
 validate-domain-resources: set-what-if domain-azure-resources # make publish validate-domain-resources AUTO_APPROVE=1
 

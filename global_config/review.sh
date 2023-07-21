@@ -1,5 +1,5 @@
-CONFIG=test_aks
-CONFIG_SHORT=ts
+CONFIG=review
+CONFIG_SHORT=rv
 AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test
 AZURE_RESOURCE_PREFIX=s189t01
 ENV_TAG=Test

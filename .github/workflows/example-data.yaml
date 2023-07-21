@@ -16,8 +16,7 @@ jobs:
     name: Regenerate
     runs-on: ubuntu-latest
 
-    environment:
-      name: ${{ github.event.inputs.environment }}_aks
+    environment: ${{ github.event.inputs.environment }}_aks
 
     steps:
       - uses: actions/checkout@v3
