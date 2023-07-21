@@ -153,7 +153,7 @@ domains-infra-apply: domains-infra-init ## terraform apply for dns core resource
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
 domains-init: domains set-azure-account ## terraform init for dns resources: make <env>  domains-init
-	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(TERRAFORM_BACKEND_KEY),afqtsdomains_$(CONFIG).tfstate)
+	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY),afqtsdomains_$(CONFIG).tfstate)
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
 	terraform -chdir=terraform/domains/environment_domains plan -var-file config/$(CONFIG).tfvars.json
@@ -164,24 +164,10 @@ domains-apply: domains-init ## terraform apply for dns resources
 domains-destroy: domains-init ## terraform destroy for dns resources
 	terraform -chdir=terraform/domains/environment_domains destroy -var-file config/$(CONFIG).tfvars.json
 
-domains-development:
-	$(eval CONFIG=development)
-	$(eval TERRAFORM_BACKEND_KEY=afqtsdomains_dev.tfstate)
-
-domains-test:
-	$(eval CONFIG=test)
-
-domains-preproduction:
-	$(eval CONFIG=preproduction)
-	$(eval TERRAFORM_BACKEND_KEY=afqtsdomains_preprod.tfstate)
-
-domains-production:
-	$(eval CONFIG=production)
-
 domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## deploy container to store terraform state for all dns resources -run validate first
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
-		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
-			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
+		--name "afqtsdomains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${AZURE_RESOURCE_PREFIX}-afqtsdomains-rg" 'tags=${RG_TAGS}' \
+			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}afqtsdomainstf" "tfStorageContainerName=afqtsdomains-tf"  "keyVaultName=${AZURE_RESOURCE_PREFIX}-afqtsdomains-kv" ${WHAT_IF}
 
 validate-domain-resources: set-what-if domain-azure-resources ## make  validate-domain-resources  - validate resource against Azure
