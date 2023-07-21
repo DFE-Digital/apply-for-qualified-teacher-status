@@ -22,13 +22,7 @@
 
     summary_list.with_row do |row|
       row.with_key { t("activerecord.attributes.staff.award_decline_permission") }
-      row.with_value do
-        if staff.award_decline_permission?
-          govuk_tag(text: "Yes", colour: "green")
-        else
-          govuk_tag(text: "No", colour: "red")
-        end
-      end
+      row.with_value { govuk_boolean_tag(staff.award_decline_permission) }
       row.with_action(
         text: "Change",
         href: edit_support_interface_staff_path(staff),
@@ -38,13 +32,7 @@
 
     summary_list.with_row do |row|
       row.with_key { t("activerecord.attributes.staff.manage_applications_permission") }
-      row.with_value do
-        if staff.award_decline_permission?
-          govuk_tag(text: "Yes", colour: "green")
-        else
-          govuk_tag(text: "No", colour: "red")
-        end
-      end
+      row.with_value { govuk_boolean_tag(staff.manage_applications_permission) }
       row.with_action(
         text: "Change",
         href: edit_support_interface_staff_path(staff),
@@ -54,13 +42,7 @@
 
     summary_list.with_row do |row|
       row.with_key { t("activerecord.attributes.staff.support_console_permission") }
-      row.with_value do
-        if staff.support_console_permission?
-          govuk_tag(text: "Yes", colour: "green")
-        else
-          govuk_tag(text: "No", colour: "red")
-        end
-      end
+      row.with_value { govuk_boolean_tag(staff.support_console_permission) }
       row.with_action(
         text: "Change",
         href: edit_support_interface_staff_path(staff),

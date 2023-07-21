@@ -202,12 +202,12 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   def and_i_see_three_work_histories
-    expect(teacher_check_work_histories_page.summary_list_cards.count).to eq(3)
+    expect(teacher_check_work_histories_page.summary_cards.count).to eq(3)
   end
 
   def when_i_click_delete_work_history
     teacher_check_work_histories_page
-      .summary_list_cards
+      .summary_cards
       .first
       .actions
       .items
@@ -222,7 +222,7 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   def and_i_see_two_work_histories
-    expect(teacher_check_work_histories_page.summary_list_cards.count).to eq(2)
+    expect(teacher_check_work_histories_page.summary_cards.count).to eq(2)
   end
 
   def teacher

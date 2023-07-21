@@ -55,8 +55,15 @@ RSpec.describe UpdateWorkHistoryContact do
   describe "when references already sent out" do
     before { create(:reference_request, work_history:) }
 
-    it "sends an email" do
+    it "sends an email to the referee" do
       expect { call }.to have_enqueued_mail(RefereeMailer, :reference_requested)
+    end
+
+    it "sends an email to the teacher" do
+      expect { call }.to have_enqueued_mail(
+        TeacherMailer,
+        :references_requested,
+      )
     end
   end
 end

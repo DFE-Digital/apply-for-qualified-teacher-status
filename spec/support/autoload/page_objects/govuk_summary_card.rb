@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PageObjects
-  class GovukSummaryListCard < SitePrism::Section
+  class GovukSummaryCard < SitePrism::Section
     element :title, ".govuk-summary-card__title"
 
     section :actions, ".govuk-summary-card__actions" do

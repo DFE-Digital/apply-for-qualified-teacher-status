@@ -24,21 +24,6 @@ namespace :application_forms do
     puts "Updated #{count} applications."
   end
 
-  desc "Change the contact email address of work history associated with an application."
-  task :update_work_history_contact_email,
-       %i[reference staff_email old_email_address new_email_address] =>
-         :environment do |_task, args|
-    application_form = ApplicationForm.find_by!(reference: args[:reference])
-    user = Staff.find_by!(email: args[:staff_email])
-
-    UpdateWorkHistoryContactEmail.call(
-      application_form:,
-      user:,
-      old_email_address: args[:old_email_address],
-      new_email_address: args[:new_email_address],
-    )
-  end
-
   desc "Withdraw an application which has not yet been awarded or declined."
   task :withdraw, %i[reference staff_email] => :environment do |_task, args|
     application_form =

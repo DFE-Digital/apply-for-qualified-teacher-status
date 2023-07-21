@@ -47,6 +47,11 @@ module PageHelpers
       PageObjects::AssessorInterface::EditReferenceRequest.new
   end
 
+  def assessor_edit_work_history_page
+    @assessor_edit_work_history_page ||=
+      PageObjects::AssessorInterface::EditWorkHistory.new
+  end
+
   def assessor_qualification_requests_page
     @assessor_qualification_requests_page ||=
       PageObjects::AssessorInterface::QualificationRequests.new

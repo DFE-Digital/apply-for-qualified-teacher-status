@@ -30,6 +30,8 @@ Rails.application.routes.draw do
       resources :notes, only: %i[new create]
       resources :timeline_events, only: :index
 
+      resources :work_histories, path: "/work-histories", only: %i[edit update]
+
       resources :assessments, only: %i[edit update] do
         resources :assessment_sections, path: "/sections", only: %i[show update]
 

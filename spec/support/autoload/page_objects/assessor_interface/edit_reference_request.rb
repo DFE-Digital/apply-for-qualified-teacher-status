@@ -6,10 +6,7 @@ module PageObjects
       set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
                 "/reference-requests/{id}/edit"
 
-      section :table, ".govuk-table" do
-        elements :headers, ".govuk-table__header"
-        elements :cells, ".govuk-table__cell"
-      end
+      section :summary_list, GovukSummaryList, "#reference-details-summary-list"
 
       section :responses, ".govuk-summary-card" do
         element :heading, ".govuk-summary-card__title"
