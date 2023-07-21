@@ -152,7 +152,7 @@ domains-infra-apply: domains-infra-init ## terraform apply for dns core resource
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
 domains-init: domains set-azure-account ## terraform init for dns resources: make <env>  domains-init
-	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=afqtsdomains_$(CONFIG).tfstate
+	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(TERRAFORM_BACKEND_KEY),afqtsdomains_$(CONFIG).tfstate)
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
 	terraform -chdir=terraform/domains/environment_domains plan -var-file config/$(CONFIG).tfvars.json
@@ -164,13 +164,15 @@ domains-destroy: domains-init ## terraform destroy for dns resources
 	terraform -chdir=terraform/domains/environment_domains destroy -var-file config/$(CONFIG).tfvars.json
 
 domains-development:
-	$(eval CONFIG=dev)
+	$(eval CONFIG=development)
+	$(eval TERRAFORM_BACKEND_KEY=afqtsdomains_dev.tfstate)
 
 domains-test:
 	$(eval CONFIG=test)
 
-domains-preprod:
-	$(eval CONFIG=preprod)
+domains-preproduction:
+	$(eval CONFIG=preproduction)
+	$(eval TERRAFORM_BACKEND_KEY=afqtsdomains_preprod.tfstate)
 
 domains-production:
 	$(eval CONFIG=production)
