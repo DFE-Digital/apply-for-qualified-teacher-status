@@ -29,7 +29,7 @@ class ProfessionalStandingRequest < ApplicationRecord
 
   def expires_after
     if application_form.teaching_authority_provides_written_statement
-      18.weeks # 90 working days
+      36.weeks # 180 working days
     else
       6.weeks # 30 working days
     end
