@@ -37,11 +37,18 @@ class BackfillPreliminaryChecks
     @applications_forms ||=
       ApplicationForm
         .includes(assessment: :sections)
-        .submitted
         .where(
           region: regions,
           assessor: nil,
           requires_preliminary_check: false,
+        )
+        .merge(
+          ApplicationForm.submitted.or(
+            ApplicationForm.waiting_on.where(
+              teaching_authority_provides_written_statement: true,
+              waiting_on_professional_standing: true,
+            ),
+          ),
         )
   end
 end

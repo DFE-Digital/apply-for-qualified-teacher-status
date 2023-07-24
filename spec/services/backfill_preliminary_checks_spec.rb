@@ -17,6 +17,16 @@ RSpec.describe BackfillPreliminaryChecks do
     let!(:submitted_application_form) do
       create(:application_form, :submitted, :with_assessment, region:)
     end
+    let!(:waiting_on_application_form) do
+      create(
+        :application_form,
+        :waiting_on,
+        :with_assessment,
+        region:,
+        waiting_on_professional_standing: true,
+        teaching_authority_provides_written_statement: true,
+      )
+    end
     let!(:preliminary_check_application_form) do
       create(:application_form, :preliminary_check, :with_assessment, region:)
     end
@@ -30,6 +40,12 @@ RSpec.describe BackfillPreliminaryChecks do
       it "doesn't backfill the submitted application form" do
         expect { call }.to_not(
           change { submitted_application_form.reload.status },
+        )
+      end
+
+      it "doesn't backfill the waiting on application form" do
+        expect { call }.to_not(
+          change { waiting_on_application_form.reload.status },
         )
       end
 
@@ -58,6 +74,20 @@ RSpec.describe BackfillPreliminaryChecks do
         expect(submitted_application_form.requires_preliminary_check).to be true
         expect(
           submitted_application_form.assessment.sections.preliminary,
+        ).to_not be_empty
+      end
+
+      it "backfills the waiting on application form" do
+        call
+
+        waiting_on_application_form.reload
+
+        expect(waiting_on_application_form.status).to eq("preliminary_check")
+        expect(
+          waiting_on_application_form.requires_preliminary_check,
+        ).to be true
+        expect(
+          waiting_on_application_form.assessment.sections.preliminary,
         ).to_not be_empty
       end
 
