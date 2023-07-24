@@ -58,13 +58,12 @@ print-resource-group-name: set-resource-group-name
 
 .PHONY: set-azure-account
 set-azure-account:
-	echo "Logging on to ${AZURE_SUBSCRIPTION}"
-	az account set -s ${AZURE_SUBSCRIPTION}
+	[ "${SKIP_AZURE_LOGIN}" != "true" ] && az account set -s ${AZURE_SUBSCRIPTION} || true
 
 .PHONY: ci
 ci:	## Run in automation environment
 	$(eval AUTO_APPROVE=-auto-approve)
-	$(eval SP_AUTH=true)
+	$(eval SKIP_AZURE_LOGIN=true)
 	$(eval CONFIRM_PRODUCTION=true)
 
 bin/konduit.sh:
@@ -75,15 +74,13 @@ bin/konduit.sh:
 install-konduit: bin/konduit.sh ## Install the konduit script, for accessing backend services
 
 .PHONY: terraform-init
-terraform-init: set-resource-group-name set-storage-account-name
+terraform-init: set-resource-group-name set-storage-account-name set-azure-account
 	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
 
 	$(eval export TF_VAR_docker_image=$(DOCKER_IMAGE))
 	$(eval export TF_VAR_config_short=$(CONFIG_SHORT))
 	$(eval export TF_VAR_service_short=$(SERVICE_SHORT))
 	$(eval export TF_VAR_azure_resource_prefix=$(AZURE_RESOURCE_PREFIX))
-
-	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
 
 	terraform -chdir=terraform/application init -upgrade -reconfigure \
 		-backend-config=resource_group_name=$(RESOURCE_GROUP_NAME) \
