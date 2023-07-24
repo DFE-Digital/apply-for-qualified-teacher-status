@@ -100,15 +100,15 @@ terraform-init: set-resource-group-name set-storage-account-name set-azure-accou
 
 .PHONY: terraform-plan
 terraform-plan: terraform-init
-	terraform -chdir=terraform/application plan -var-file config/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application plan -var-file config/$(CONFIG)/variables.tfvars.json
 
 .PHONY: terraform-refresh
 terraform-refresh: terraform-init
-	terraform -chdir=terraform/application refresh -var-file config/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application refresh -var-file config/$(CONFIG)/variables.tfvars.json
 
 .PHONY: terraform-apply
 terraform-apply: terraform-init
-	terraform -chdir=terraform/application apply -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application apply -var-file config/$(CONFIG)/variables.tfvars.json ${AUTO_APPROVE}
 
 .PHONY: terraform-destroy
 terraform-destroy: terraform-init
