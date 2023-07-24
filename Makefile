@@ -84,8 +84,13 @@ bin/terrafile:
 .PHONY: install-konduit
 install-konduit: bin/konduit.sh ## Install the konduit script, for accessing backend services
 
+.PHONY: terrafile
+terrafile: bin/terrafile
+	./bin/terrafile -p terraform/application/vendor/modules \
+		-f terraform/application/config/$(CONFIG)/Terrafile
+
 .PHONY: terraform-init
-terraform-init: set-resource-group-name set-storage-account-name set-azure-account
+terraform-init: set-resource-group-name set-storage-account-name set-azure-account terrafile
 	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
 
 	$(eval export TF_VAR_docker_image=$(DOCKER_IMAGE))
@@ -112,7 +117,7 @@ terraform-apply: terraform-init
 
 .PHONY: terraform-destroy
 terraform-destroy: terraform-init
-	terraform -chdir=terraform/application destroy -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application destroy -var-file config/$(CONFIG)/variables.tfvars.json ${AUTO_APPROVE}
 
 .PHONY: set-azure-resource-group-tags
 set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template

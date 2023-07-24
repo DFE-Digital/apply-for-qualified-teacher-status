@@ -28,3 +28,4 @@ bin/terrafile
 *.tfstate
 .terraform
 terraform/*token*
+terraform/*/vendor
