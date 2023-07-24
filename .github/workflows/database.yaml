@@ -10,7 +10,7 @@ jobs:
     name: Backup production
     runs-on: ubuntu-latest
 
-    environment: production_aks
+    environment: production
 
     services:
       postgres:
@@ -118,8 +118,7 @@ jobs:
     needs: [backup-production]
     runs-on: ubuntu-latest
 
-    environment:
-      name: preproduction_aks
+    environment: preproduction
 
     steps:
       - name: Checkout code

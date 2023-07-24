@@ -11,7 +11,7 @@ jobs:
     concurrency: deploy_review_${{ github.event.pull_request.number }}
     if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     runs-on: ubuntu-latest
-    environment: review_aks
+    environment: review
     steps:
       - uses: actions/checkout@v3
 

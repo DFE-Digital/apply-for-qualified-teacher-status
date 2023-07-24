@@ -1,5 +1,5 @@
-name: Deploy environment to AKS
-description: Deploys an application environment to AKS
+name: Deploy environment
+description: Deploys an application environment
 
 inputs:
   environment:
