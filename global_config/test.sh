@@ -1,5 +1,0 @@
-CONFIG=test
-CONFIG_SHORT=ts
-AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test
-AZURE_RESOURCE_PREFIX=s189t01
-ENV_TAG=Test
