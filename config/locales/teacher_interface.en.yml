@@ -205,6 +205,10 @@ en:
           attributes:
             confirm:
               inclusion: Select whether you want to delete this role
+        teacher_interface/document_available_form:
+          attributes:
+            available:
+              inclusion: Select whether you have this document available
         teacher_interface/english_language_exemption_form:
           attributes:
             exempt:

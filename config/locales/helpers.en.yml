@@ -173,6 +173,10 @@ en:
         confirm_options:
           true: "Yes"
           false: "No"
+      teacher_interface_document_available_form:
+        available_options:
+          true: "Yes"
+          false: "No"
       teacher_interface_english_language_exemption_form:
         exempt_options:
           true: "Yes"
