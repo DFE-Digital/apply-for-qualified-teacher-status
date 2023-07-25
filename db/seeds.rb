@@ -28,7 +28,7 @@ COUNTRIES = {
     regions: [
       {
         status_check: "online",
-        sanction_check: "written",
+        sanction_check: "online",
         application_form_skip_work_history: true,
       },
     ],
