@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe AssessorInterface::InductionRequiredForm, type: :model do
+RSpec.describe AssessorInterface::ScotlandFullRegistrationForm, type: :model do
   let(:assessment_section) do
     create(:assessment_section, :professional_standing)
   end
@@ -23,13 +23,17 @@ RSpec.describe AssessorInterface::InductionRequiredForm, type: :model do
     it { is_expected.to allow_values(true, false).for(:passed) }
 
     it do
-      is_expected.to allow_values(nil, true, false).for(:induction_required)
+      is_expected.to allow_values(nil, true, false).for(
+        :scotland_full_registration,
+      )
     end
 
     context "when passed" do
       let(:attributes) { { passed: "true" } }
 
-      it { is_expected.to_not allow_values(nil).for(:induction_required) }
+      it do
+        is_expected.to_not allow_values(nil).for(:scotland_full_registration)
+      end
     end
   end
 
@@ -43,12 +47,20 @@ RSpec.describe AssessorInterface::InductionRequiredForm, type: :model do
     end
 
     describe "with valid attributes" do
-      let(:attributes) { { passed: true, induction_required: true } }
+      let(:attributes) do
+        {
+          passed: true,
+          induction_required: true,
+          scotland_full_registration: true,
+        }
+      end
 
       it { is_expected.to be true }
 
       it "sets the attributes" do
-        expect { save }.to change(assessment, :induction_required).to(true)
+        expect { save }.to change(assessment, :scotland_full_registration).to(
+          true,
+        )
       end
     end
   end

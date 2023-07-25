@@ -405,6 +405,10 @@ en:
           attributes:
             work_history_ids:
               blank: References account for less than 9 months
+        assessor_interface/scotland_full_registration_form:
+          attributes:
+            scotland_full_registration:
+              inclusion: Select whether the teacher has or is eligible for full registration
         assessor_interface/verify_professional_standing_form:
           attributes:
             verify_professional_standing:
