@@ -216,15 +216,8 @@ en:
             teaching_qualification_subjects_criteria: Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, Spanish.
 
       induction_required:
-        legend:
-          GB-SCT: What level of registration does the applicant have?
-          GB-NIR: Has applicant completed Induction?
-        false:
-          GB-SCT: Full registration
-          GB-NIR: "Yes"
-        true:
-          GB-SCT: Provisional registration
-          GB-NIR: "No"
+        GB-SCT: Has the applicant completed an induction period?
+        GB-NIR: Has applicant completed Induction?
 
       english_language_proficiency:
         passed:

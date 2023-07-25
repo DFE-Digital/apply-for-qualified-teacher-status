@@ -78,6 +78,9 @@ en:
           text: Note to the applicant
           document: Note to the applicant
           decline: Note to the applicant (optional)
+        induction_required_options:
+          true: "No"
+          false: "Yes"
       assessor_interface_confirm_age_range_subjects_form:
         age_range_min: From
         age_range_max: To
