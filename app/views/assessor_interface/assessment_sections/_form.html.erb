@@ -33,6 +33,10 @@
     <%= render "shared/age_range_subjects_form_fields", f: %>
   <% end %>
 
+  <% if form.is_a?(AssessorInterface::ScotlandFullRegistrationForm) %>
+    <%= f.govuk_collection_radio_buttons :scotland_full_registration, %i[true false], :itself %>
+  <% end %>
+
   <% if form.is_a?(AssessorInterface::InductionRequiredForm) %>
     <%= f.govuk_collection_radio_buttons :induction_required,
                                          %i[false true],

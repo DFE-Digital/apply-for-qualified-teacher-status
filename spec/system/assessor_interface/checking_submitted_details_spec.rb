@@ -163,6 +163,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_professional_standing
 
     when_i_choose_full_registration
+    and_i_choose_induction_not_required
     and_i_choose_check_professional_standing_yes
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_professional_standing_completed
@@ -355,6 +356,13 @@ RSpec.describe "Assessor check submitted details", type: :system do
                :when_i_choose_check_professional_standing_yes
 
   def when_i_choose_full_registration
+    check_professional_standing_page
+      .scotland_full_registration_form
+      .yes_radio_item
+      .choose
+  end
+
+  def and_i_choose_induction_not_required
     check_professional_standing_page
       .induction_required_form
       .no_radio_item
