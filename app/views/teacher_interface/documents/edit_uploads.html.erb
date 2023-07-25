@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{"Error: " if @add_another_upload_form.errors.any?}Check your uploaded files" %>
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}Check your uploaded files" %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
 <h1 class="govuk-heading-l">Check your uploaded files – <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>
@@ -19,7 +19,7 @@
   end
 end %>
 
-<%= form_with model: @add_another_upload_form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
+<%= form_with model: @form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_radio_buttons_fieldset :add_another,

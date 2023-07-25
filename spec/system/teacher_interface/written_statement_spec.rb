@@ -49,7 +49,7 @@ RSpec.describe "Teacher written statement", type: :system do
     and_i_see_the_upload_written_statement_task
 
     when_i_click_the_upload_written_statement_task
-    then_i_see_the(:teacher_upload_document_page)
+    then_i_see_the(:teacher_document_available_page)
 
     when_i_dont_have_the_document
     then_i_see_the(:teacher_application_page)
@@ -91,8 +91,8 @@ RSpec.describe "Teacher written statement", type: :system do
   end
 
   def when_i_dont_have_the_document
-    teacher_upload_document_page.form.do_not_have_document.check
-    teacher_upload_document_page.form.continue_button.click
+    teacher_document_available_page.form.no_radio_item.choose
+    teacher_document_available_page.form.continue_button.click
   end
 
   def when_i_dont_need_to_upload_another_file
@@ -145,7 +145,8 @@ RSpec.describe "Teacher written statement", type: :system do
       create(
         :application_form,
         teacher:,
-        region: create(:region, :written_checks),
+        region:
+          create(:region, :written_checks, :in_country, country_code: "GB-NIR"),
       )
   end
 end

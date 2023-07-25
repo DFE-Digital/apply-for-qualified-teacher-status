@@ -106,10 +106,16 @@ class ApplicationFormSectionStatusUpdater
 
     case english_language_proof_method
     when "medium_of_instruction"
-      status_for_document(english_language_medium_of_instruction_document)
+      status_for_document(
+        english_language_medium_of_instruction_document,
+        not_started: :in_progress,
+      )
     when "provider"
       if english_language_provider_other
-        status_for_document(english_language_proficiency_document)
+        status_for_document(
+          english_language_proficiency_document,
+          not_started: :in_progress,
+        )
       else
         status_for_values(
           english_language_proof_method,
@@ -157,14 +163,11 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def written_statement_status
-    completed =
-      if teaching_authority_provides_written_statement
-        written_statement_confirmation
-      else
-        written_statement_document.completed?
-      end
-
-    completed ? :completed : :not_started
+    if teaching_authority_provides_written_statement
+      written_statement_confirmation ? :completed : :not_started
+    else
+      status_for_document(written_statement_document)
+    end
   end
 
   def status_for_values(*values)
@@ -173,7 +176,13 @@ class ApplicationFormSectionStatusUpdater
     :in_progress
   end
 
-  def status_for_document(document)
-    document.completed? ? :completed : :in_progress
+  def status_for_document(document, not_started: :not_started)
+    if document.completed?
+      :completed
+    elsif !document.available.nil?
+      :in_progress
+    else
+      not_started
+    end
   end
 end

@@ -12,7 +12,7 @@ module TeacherInterface
     skip_before_action :track_history, only: :show
 
     def show
-      if document.uploads.empty?
+      if document.uploads.empty? && !document.optional?
         redirect_to new_teacher_interface_application_form_document_upload_path(
                       document,
                     )
@@ -24,23 +24,49 @@ module TeacherInterface
     end
 
     def edit
-      @add_another_upload_form = AddAnotherUploadForm.new
+      if show_available_form?
+        @form =
+          DocumentAvailableForm.new(document:, available: document.available)
+        render :edit_available
+      else
+        @form = AddAnotherUploadForm.new
+        render :edit_uploads
+      end
     end
 
     def update
-      @add_another_upload_form =
-        TeacherInterface::AddAnotherUploadForm.new(
-          add_another:
-            params.dig(
-              :teacher_interface_add_another_upload_form,
-              :add_another,
-            ),
-        )
+      @form =
+        if show_available_form?
+          DocumentAvailableForm.new(
+            document:,
+            available:
+              params.dig(
+                :teacher_interface_document_available_form,
+                :available,
+              ),
+          )
+        else
+          TeacherInterface::AddAnotherUploadForm.new(
+            add_another:
+              params.dig(
+                :teacher_interface_add_another_upload_form,
+                :add_another,
+              ),
+          )
+        end
 
       handle_application_form_section(
-        form: @add_another_upload_form,
+        form: @form,
         if_success_then_redirect: ->(check_path) do
-          if @add_another_upload_form.add_another
+          if show_available_form? && @form.available
+            if document.uploads.empty?
+              new_teacher_interface_application_form_document_upload_path(
+                document,
+              )
+            else
+              edit_teacher_interface_application_form_document_path(document)
+            end
+          elsif !show_available_form? && @form.add_another
             new_teacher_interface_application_form_document_upload_path(
               document,
             )
@@ -48,7 +74,15 @@ module TeacherInterface
             check_path || DocumentContinueRedirection.call(document:)
           end
         end,
+        if_failure_then_render:
+          show_available_form? ? :edit_available : :edit_uploads,
       )
+    end
+
+    private
+
+    def show_available_form?
+      document.optional? && document.uploads.empty?
     end
   end
 end

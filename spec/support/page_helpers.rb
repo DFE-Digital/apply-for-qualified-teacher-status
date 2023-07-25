@@ -323,6 +323,11 @@ module PageHelpers
       PageObjects::TeacherInterface::DeleteWorkHistory.new
   end
 
+  def teacher_document_available_page
+    @teacher_document_available_page =
+      PageObjects::TeacherInterface::DocumentAvailable.new
+  end
+
   def teacher_edit_qualification_page
     @teacher_edit_qualification_page ||=
       PageObjects::TeacherInterface::EditQualification.new

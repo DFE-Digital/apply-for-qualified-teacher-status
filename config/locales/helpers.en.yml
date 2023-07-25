@@ -298,6 +298,8 @@ en:
         add_another: Add another role?
       teacher_interface_alternative_name_form:
         has_alternative_name: Does your name appear differently on your ID documents or qualifications?
+      teacher_interface_document_available_form:
+        available: Have you completed your induction period in Northern Ireland?
       teacher_interface_english_language_proof_method_form:
         proof_method: You need to provide proof of your English language proficiency
       teacher_interface_english_language_provider_form:
