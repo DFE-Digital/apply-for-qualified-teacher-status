@@ -134,12 +134,13 @@
     - qualifications_information
     - requires_preliminary_check
   :documents:
-    - id
-    - document_type
-    - documentable_type
-    - documentable_id
+    - available
     - completed
     - created_at
+    - document_type
+    - documentable_id
+    - documentable_type
+    - id
     - updated_at
   :dqt_trn_requests:
     - id
