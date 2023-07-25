@@ -6,7 +6,6 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
   subject(:upload_form) do
     described_class.new(
       document:,
-      do_not_have_document:,
       original_attachment:,
       translated_attachment:,
       written_in_english:,
@@ -14,7 +13,6 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
   end
 
   let(:document) { create(:document, :identification) }
-  let(:do_not_have_document) { nil }
   let(:original_attachment) { nil }
   let(:translated_attachment) { nil }
   let(:written_in_english) { nil }
@@ -36,19 +34,6 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
     context "with nil attachments" do
       it { is_expected.to be false }
-
-      context "when document not available" do
-        let(:do_not_have_document) { true }
-
-        it { is_expected.to be false }
-      end
-
-      context "when optional and document not available" do
-        let(:document) { create(:document, :optional_written_statement) }
-        let(:do_not_have_document) { true }
-
-        it { is_expected.to be true }
-      end
     end
 
     context "with an original attachment" do
@@ -141,15 +126,6 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
         expect(document.uploads.count).to eq(2)
         expect(document.uploads.second.translation).to be(true)
       end
-
-      it "marks the document as complete" do
-        expect(document.completed?).to be true
-      end
-    end
-
-    context "with an optional document" do
-      let(:document) { create(:document, :optional_written_statement) }
-      let(:do_not_have_document) { true }
 
       it "marks the document as complete" do
         expect(document.completed?).to be true

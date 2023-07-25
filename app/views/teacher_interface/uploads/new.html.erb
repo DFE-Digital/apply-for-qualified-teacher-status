@@ -151,12 +151,6 @@
 <%= form_with model: @upload_form, url: [:teacher_interface, :application_form, @document, :uploads] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <% if @document.optional? %>
-    <%= f.govuk_check_boxes_fieldset :do_not_have_document, multiple: false, legend: nil do %>
-      <%= f.govuk_check_box :do_not_have_document, 1, 0, multiple: false, link_errors: true, label: { text: "I do not have #{region_certificate_phrase(@application_form.region)}.".html_safe }%>
-    <% end %>
-  <% end %>
-
   <%= f.govuk_file_field :original_attachment,
                          label: { text: "Select a file to upload", class: "govuk-heading-m" },
                          hint: { text: "You can upload your files in PDF, JPG, PNG, DOCX or DOC format. Each file must be no larger than 50MB." } %>
