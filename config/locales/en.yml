@@ -41,8 +41,7 @@ en:
 
   staff:
     omniauth_callbacks:
-      azure_activedirectory_v2:
-        failure: "There was a problem signing you in. Please try again."
+      failure: There was a problem signing you in. Please try again.
 
   activerecord:
     attributes:
