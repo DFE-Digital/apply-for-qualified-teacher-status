@@ -13,6 +13,7 @@
 #  recommendation_assessor_note              :text             default(""), not null
 #  recommended_at                            :datetime
 #  references_verified                       :boolean
+#  scotland_full_registration                :boolean
 #  started_at                                :datetime
 #  subjects                                  :text             default([]), not null, is an Array
 #  subjects_note                             :text             default(""), not null

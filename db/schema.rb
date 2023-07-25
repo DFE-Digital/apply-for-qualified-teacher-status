@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_19_161900) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_25_100654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -148,6 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_161900) do
     t.boolean "induction_required"
     t.text "recommendation_assessor_note", default: "", null: false
     t.boolean "references_verified"
+    t.boolean "scotland_full_registration"
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 
