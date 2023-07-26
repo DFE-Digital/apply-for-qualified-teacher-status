@@ -66,11 +66,10 @@
   <p class="govuk-body"><%= t(".instruction") %></p>
   <p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
 
-  <%= f.govuk_check_boxes_fieldset :declaration, small: true do %>
+  <%= f.govuk_check_boxes_fieldset :declaration, multiple: false, small: true do %>
     <%= f.govuk_check_box :declaration,
                           true,
                           false,
-                          multiple: false,
                           link_errors: true,
                           label: { text: t(".declaration") } %>
   <% end %>
