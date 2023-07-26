@@ -15,7 +15,7 @@ development_aks: ## Specify development AKS environment
 review_aks: ## Specify review AKS environment
 	$(if $(PULL_REQUEST_NUMBER), , $(error Missing environment variable "PULL_REQUEST_NUMBER"))
 	$(eval include global_config/review_aks.sh)
-	$(eval backend_config=-backend-config="key=terraform-$(PULL_REQUEST_NUMBER).tfstate")
+	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PULL_REQUEST_NUMBER).tfstate)
 	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
@@ -48,19 +48,22 @@ print-infrastructure-key-vault-name: set-key-vault-names  ## Print the name of t
 set-resource-group-name:
 	$(eval RESOURCE_GROUP_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-rg)
 
+.PHONY: set-storage-account-name
+set-storage-account-name:
+	$(eval STORAGE_ACCOUNT_NAME=$(AZURE_RESOURCE_PREFIX)$(SERVICE_SHORT)tfstate$(CONFIG_SHORT)sa)
+
 .PHONY: print-resource-group-name
 print-resource-group-name: set-resource-group-name
 	echo ${RESOURCE_GROUP_NAME}
 
 .PHONY: set-azure-account
 set-azure-account:
-	echo "Logging on to ${AZURE_SUBSCRIPTION}"
-	az account set -s ${AZURE_SUBSCRIPTION}
+	[ "${SKIP_AZURE_LOGIN}" != "true" ] && az account set -s ${AZURE_SUBSCRIPTION} || true
 
 .PHONY: ci
 ci:	## Run in automation environment
 	$(eval AUTO_APPROVE=-auto-approve)
-	$(eval SP_AUTH=true)
+	$(eval SKIP_AZURE_LOGIN=true)
 	$(eval CONFIRM_PRODUCTION=true)
 
 bin/konduit.sh:
@@ -71,7 +74,7 @@ bin/konduit.sh:
 install-konduit: bin/konduit.sh ## Install the konduit script, for accessing backend services
 
 .PHONY: terraform-init
-terraform-init:
+terraform-init: set-resource-group-name set-storage-account-name set-azure-account
 	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
 
 	$(eval export TF_VAR_docker_image=$(DOCKER_IMAGE))
@@ -79,24 +82,26 @@ terraform-init:
 	$(eval export TF_VAR_service_short=$(SERVICE_SHORT))
 	$(eval export TF_VAR_azure_resource_prefix=$(AZURE_RESOURCE_PREFIX))
 
-	[[ "${SP_AUTH}" != "true" ]] && az account show && az account set -s $(AZURE_SUBSCRIPTION) || true
-	terraform -chdir=terraform/application init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
+	terraform -chdir=terraform/application init -upgrade -reconfigure \
+		-backend-config=resource_group_name=$(RESOURCE_GROUP_NAME) \
+		-backend-config=storage_account_name=$(STORAGE_ACCOUNT_NAME) \
+		-backend-config=key=$(or $(TERRAFORM_BACKEND_KEY),terraform.tfstate)
 
 .PHONY: terraform-plan
 terraform-plan: terraform-init
-	terraform -chdir=terraform/application plan -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application plan -var-file config/$(CONFIG).tfvars.json
 
 .PHONY: terraform-refresh
 terraform-refresh: terraform-init
-	terraform -chdir=terraform/application refresh -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application refresh -var-file config/$(CONFIG).tfvars.json
 
 .PHONY: terraform-apply
 terraform-apply: terraform-init
-	terraform -chdir=terraform/application apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application apply -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 .PHONY: terraform-destroy
 terraform-destroy: terraform-init
-	terraform -chdir=terraform/application destroy -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application destroy -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 .PHONY: set-azure-resource-group-tags
 set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template
@@ -115,11 +120,11 @@ check-auto-approve:
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 
 .PHONY: arm-deployment
-arm-deployment: set-resource-group-name set-azure-account set-azure-template-tag set-azure-resource-group-tags set-key-vault-names
+arm-deployment: set-resource-group-name set-storage-account-name set-azure-account set-azure-template-tag set-azure-resource-group-tags set-key-vault-names
 	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
 		-l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
-			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}sa" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
+			"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
 			keyVaultNames='("${KEY_VAULT_APPLICATION_NAME}", "${KEY_VAULT_INFRASTRUCTURE_NAME}")' \
 			"enableKVPurgeProtection=false" ${WHAT_IF}
 
@@ -138,26 +143,25 @@ afqts_domain:   ## runs a script to config variables for setting up dns
 	$(eval include global_config/domain.sh)
 
 domains-infra-init: afqts_domain set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
-	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade \
-		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
+	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
-	terraform -chdir=terraform/domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
+	terraform -chdir=terraform/domains/infrastructure plan -var-file config/zones.tfvars.json
 
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
-	terraform -chdir=terraform/domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
 domains-init: afqts_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
-	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/$(CONFIG)_backend.tfvars
+	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=afqtsdomains_$(CONFIG).tfstate
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
-	terraform -chdir=terraform/domains/environment_domains plan -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/domains/environment_domains plan -var-file config/$(CONFIG).tfvars.json
 
 domains-apply: domains-init ## terraform apply for dns resources
-	terraform -chdir=terraform/domains/environment_domains apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/domains/environment_domains apply -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 domains-destroy: domains-init ## terraform destroy for dns resources
-	terraform -chdir=terraform/domains/environment_domains destroy -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/domains/environment_domains destroy -var-file config/$(CONFIG).tfvars.json
 
 domains-development:
 	$(eval CONFIG=dev)

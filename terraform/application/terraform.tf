@@ -1,8 +1,6 @@
 terraform {
   required_version = "1.5.0"
 
-  backend "azurerm" {}
-
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -16,5 +14,9 @@ terraform {
       source  = "StatusCakeDev/statuscake"
       version = "= 2.1.0"
     }
+  }
+
+  backend "azurerm" {
+    container_name = "afqts-tfstate"
   }
 }
