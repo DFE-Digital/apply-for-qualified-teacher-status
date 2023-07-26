@@ -2,7 +2,7 @@
 
 module AssessorInterface
   class AssessmentsController < BaseController
-    before_action :authorize_assessor
+    before_action { authorize [:assessor_interface, assessment] }
     before_action :load_assessment_and_application_form
 
     def edit
@@ -25,6 +25,14 @@ module AssessorInterface
       else
         render :edit, status: :unprocessable_entity
       end
+    end
+
+    def rollback
+    end
+
+    def destroy
+      RollbackAssessment.call(assessment:, user: current_staff)
+      redirect_to [:assessor_interface, application_form]
     end
 
     private

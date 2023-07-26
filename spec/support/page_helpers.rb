@@ -62,6 +62,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ReferenceRequests.new
   end
 
+  def assessor_reverse_decision_page
+    @assessor_reverse_decision_page ||=
+      PageObjects::AssessorInterface::ReverseDecision.new
+  end
+
   def applications_page
     @applications_page ||= PageObjects::AssessorInterface::Applications.new
   end

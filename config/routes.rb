@@ -32,7 +32,9 @@ Rails.application.routes.draw do
 
       resources :work_histories, path: "/work-histories", only: %i[edit update]
 
-      resources :assessments, only: %i[edit update] do
+      resources :assessments, only: %i[edit update destroy] do
+        get "rollback", on: :member
+
         resources :assessment_sections, path: "/sections", only: %i[show update]
 
         resource :assessment_recommendation_award,
