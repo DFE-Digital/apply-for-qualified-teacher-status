@@ -2,34 +2,40 @@
 SHELL				:=/bin/bash
 
 SERVICE_SHORT=afqts
+KEY_VAULT_PURGE_PROTECTION=false
+ARM_TEMPLATE_TAG=1.1.6
 
 .PHONY: help
 help: ## Show this help
 	@grep -E '^[a-zA-Z\._\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: development_aks
-development_aks: ## Specify development AKS environment
-	$(eval include global_config/development_aks.sh)
+.PHONY: development
+development: ## Specify development configuration
+	$(eval include global_config/development.sh)
 
-.PHONY: review_aks
-review_aks: ## Specify review AKS environment
+.PHONY: review
+review: ## Specify review configuration
 	$(if $(PULL_REQUEST_NUMBER), , $(error Missing environment variable "PULL_REQUEST_NUMBER"))
-	$(eval include global_config/review_aks.sh)
+	$(eval include global_config/review.sh)
 	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PULL_REQUEST_NUMBER).tfstate)
 	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
-.PHONY: test_aks
-test_aks:  ## Specify test AKS environment
-	$(eval include global_config/test_aks.sh)
+.PHONY: test
+test:  ## Specify test configuration
+	$(eval include global_config/test.sh)
 
-.PHONY: preproduction_aks
-preproduction_aks: ## Specify preproduction AKS environment
-	$(eval include global_config/preproduction_aks.sh)
+.PHONY: preproduction
+preproduction: ## Specify preproduction configuration
+	$(eval include global_config/preproduction.sh)
 
-.PHONY: production_aks
-production_aks:  ## Specify production AKS environment
-	$(eval include global_config/production_aks.sh)
+.PHONY: production
+production:  ## Specify production configuration
+	$(eval include global_config/production.sh)
+
+.PHONY: domains
+domains:  ## Specify domains configuration
+	$(eval include global_config/domains.sh)
 
 .PHONY: set-key-vault-names
 set-key-vault-names:
@@ -107,10 +113,6 @@ terraform-destroy: terraform-init
 set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template
 	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Apply for QTS in England", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Apply for QTS in England", "Environment" : "$(ENV_TAG)"}' | jq . ))
 
-.PHONY: set-azure-template-tag
-set-azure-template-tag:
-	$(eval ARM_TEMPLATE_TAG=1.1.6)
-
 .PHONY: set-what-if
 set-what-if:
 	$(eval WHAT_IF=--what-if)
@@ -120,29 +122,33 @@ check-auto-approve:
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 
 .PHONY: arm-deployment
-arm-deployment: set-resource-group-name set-storage-account-name set-azure-account set-azure-template-tag set-azure-resource-group-tags set-key-vault-names
+arm-deployment: set-resource-group-name set-storage-account-name set-azure-account set-azure-resource-group-tags set-key-vault-names
 	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
 		-l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
 			keyVaultNames='("${KEY_VAULT_APPLICATION_NAME}", "${KEY_VAULT_INFRASTRUCTURE_NAME}")' \
-			"enableKVPurgeProtection=false" ${WHAT_IF}
+			"enableKVPurgeProtection=${KEY_VAULT_PURGE_PROTECTION}" ${WHAT_IF}
 
 .PHONY: deploy-azure-resources
-deploy-azure-resources: check-auto-approve arm-deployment # make development_aks deploy-azure-resources AUTO_APPROVE=1
+deploy-azure-resources: check-auto-approve arm-deployment # make development deploy-azure-resources AUTO_APPROVE=1
 
 .PHONY: validate-azure-resources
-validate-azure-resources: set-what-if arm-deployment # make development_aks validate-azure-resources
+validate-azure-resources: set-what-if arm-deployment # make development validate-azure-resources
 
-validate-domain-resources: set-what-if domain-azure-resources # make publish validate-domain-resources AUTO_APPROVE=1
+.PHONY: domains-arm-deployment
+domains-arm-deployment: set-azure-account set-azure-resource-group-tags
+	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
+		--name "afqtsdomains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${AZURE_RESOURCE_PREFIX}-afqtsdomains-rg" 'tags=${RG_TAGS}' \
+			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}afqtsdomainstf" "tfStorageContainerName=afqtsdomains-tf"  "keyVaultName=${AZURE_RESOURCE_PREFIX}-afqtsdomains-kv" ${WHAT_IF}
 
-deploy-domain-resources: check-auto-approve domain-azure-resources # make publish deploy-domain-resources AUTO_APPROVE=1
+.PHONY: validate-azure-domains-resources
+validate-azure-domains-resources: domains set-what-if domains-arm-deployment # make deploy-azure-domains-resources AUTO_APPROVE=1
 
-.PHONY: afqts_domain
-afqts_domain:   ## runs a script to config variables for setting up dns
-	$(eval include global_config/domain.sh)
+.PHONY: deploy-azure-domains-resources
+deploy-azure-domains-resources: domains check-auto-approve domains-arm-deployment # make validate-azure-domains-resources
 
-domains-infra-init: afqts_domain set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
+domains-infra-init: domains set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
@@ -151,8 +157,8 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
-domains-init: afqts_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
-	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=afqtsdomains_$(CONFIG).tfstate
+domains-init: domains set-azure-account ## terraform init for dns resources: make <env>  domains-init
+	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY),afqtsdomains_$(CONFIG).tfstate)
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
 	terraform -chdir=terraform/domains/environment_domains plan -var-file config/$(CONFIG).tfvars.json
@@ -162,23 +168,3 @@ domains-apply: domains-init ## terraform apply for dns resources
 
 domains-destroy: domains-init ## terraform destroy for dns resources
 	terraform -chdir=terraform/domains/environment_domains destroy -var-file config/$(CONFIG).tfvars.json
-
-domains-development:
-	$(eval CONFIG=dev)
-
-domains-test:
-	$(eval CONFIG=test)
-
-domains-preprod:
-	$(eval CONFIG=preprod)
-
-domains-production:
-	$(eval CONFIG=production)
-
-domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## deploy container to store terraform state for all dns resources -run validate first
-	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
-	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
-		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
-			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
-
-validate-domain-resources: set-what-if domain-azure-resources ## make  validate-domain-resources  - validate resource against Azure

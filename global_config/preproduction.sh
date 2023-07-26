@@ -1,5 +1,6 @@
-CONFIG=preproduction_aks
+CONFIG=preproduction
 CONFIG_SHORT=pp
 AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test
 AZURE_RESOURCE_PREFIX=s189t01
 ENV_TAG=Test
+DOMAINS_TERRAFORM_BACKEND_KEY=afqtsdomains_preprod.tfstate

@@ -10,8 +10,7 @@ jobs:
     name: Backup production
     runs-on: ubuntu-latest
 
-    environment:
-      name: production_aks
+    environment: production_aks
 
     services:
       postgres:
@@ -30,7 +29,7 @@ jobs:
 
       - name: Get resource group name
         id: resource-group-name
-        run: echo "value=$(make -s production_aks print-resource-group-name)" >> $GITHUB_OUTPUT
+        run: echo "value=$(make -s production print-resource-group-name)" >> $GITHUB_OUTPUT
 
       - uses: ./.github/actions/set-kubernetes-credentials
         with:
@@ -94,7 +93,7 @@ jobs:
       - id: key-vault-name
         if: failure()
         shell: bash
-        run: echo "value=$(make -s production_aks print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
+        run: echo "value=$(make -s production print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
 
       - uses: Azure/get-keyvault-secrets@v1
         if: failure()

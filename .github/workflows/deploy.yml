@@ -42,7 +42,7 @@ jobs:
 
       - id: key-vault-name
         shell: bash
-        run: echo "value=$(make -s development_aks print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
+        run: echo "value=$(make -s development print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
 
       - uses: Azure/login@v1
         with:
@@ -119,8 +119,7 @@ jobs:
     needs: [docker, rspec]
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
-    environment:
-      name: review_aks
+    environment: review_aks
     steps:
       - uses: actions/checkout@v3
 
@@ -199,7 +198,7 @@ jobs:
 
       - id: key-vault-name
         shell: bash
-        run: echo "value=$(make -s development_aks print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
+        run: echo "value=$(make -s development print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
 
       - uses: Azure/login@v1
         with:

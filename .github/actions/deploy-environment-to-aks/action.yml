@@ -41,7 +41,7 @@ runs:
       id: apply-terraform
       shell: bash
       run: |
-        make ci ${{ inputs.environment }}_aks terraform-apply
+        make ci ${{ inputs.environment }} terraform-apply
         cd terraform/application && echo "url=$(terraform output -raw url)" >> $GITHUB_OUTPUT
       env:
         TF_VAR_azure_sp_credentials_json: ${{ inputs.azure-credentials }}
@@ -62,7 +62,7 @@ runs:
     - id: key-vault-name
       if: ${{ inputs.smoke-test-credentials-required == 'true' }}
       shell: bash
-      run: echo "value=$(make -s ${{ inputs.environment }}_aks print-application-key-vault-name)" >> $GITHUB_OUTPUT
+      run: echo "value=$(make -s ${{ inputs.environment }} print-application-key-vault-name)" >> $GITHUB_OUTPUT
       env:
         PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
 
