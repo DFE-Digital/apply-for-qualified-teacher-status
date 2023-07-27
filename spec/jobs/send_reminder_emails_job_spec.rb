@@ -7,8 +7,12 @@ RSpec.describe SendReminderEmailsJob do
     describe "#perform" do
       subject(:perform) { described_class.new.perform(class_name) }
 
-      let!(:remindable) { create(factory_name, remindable_trait) }
-      let!(:not_remindable) { create(factory_name, not_remindable_trait) }
+      let!(:remindable) do
+        create(factory_name, remindable_trait, created_at: 6.months.ago)
+      end
+      let!(:not_remindable) do
+        create(factory_name, not_remindable_trait, created_at: 6.months.ago)
+      end
 
       it "enqueues a job for each 'remindable' #{class_name}s" do
         expect { perform }.to have_enqueued_job(SendReminderEmailJob).with(

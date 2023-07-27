@@ -192,7 +192,7 @@ class ApplicationForm < ApplicationRecord
             .or(withdrawn.where("withdrawn_at < ?", 5.years.ago))
         }
 
-  scope :remindable, -> { draft }
+  scope :remindable, -> { draft.where("created_at < ?", 5.months.ago) }
 
   def teaching_qualification
     qualifications.find(&:is_teaching_qualification?)

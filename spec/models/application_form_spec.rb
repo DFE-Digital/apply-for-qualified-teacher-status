@@ -398,6 +398,27 @@ RSpec.describe ApplicationForm, type: :model do
         end
       end
     end
+
+    describe "#remindable" do
+      subject(:remindable) { described_class.remindable }
+
+      context "with a draft application form older than 5 months old" do
+        let(:application_form) do
+          create(:application_form, created_at: (5.months + 1.week).ago)
+        end
+        it { is_expected.to eq([application_form]) }
+      end
+
+      context "with a draft application form newer than 5 months old" do
+        before { create(:application_form, created_at: 4.months.ago) }
+        it { is_expected.to be_empty }
+      end
+
+      context "with a submitted application form" do
+        before { create(:application_form, :submitted) }
+        it { is_expected.to be_empty }
+      end
+    end
   end
 
   it "attaches empty documents" do
