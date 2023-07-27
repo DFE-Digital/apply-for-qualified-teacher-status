@@ -102,7 +102,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
     it "describes the event" do
       expect(component.text).to include("Personal Information:")
-      expect(component.text).to include("Not passed")
+      expect(component.text).to include("Rejected")
       expect(component.text).to include(expected_failure_reason_text)
       expect(component.text).to include(failure_reason.assessor_feedback)
     end

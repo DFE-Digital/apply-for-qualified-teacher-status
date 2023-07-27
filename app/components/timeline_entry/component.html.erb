@@ -23,12 +23,7 @@
     <% elsif timeline_event.assessment_section_recorded? %>
       <p class="govuk-body">
         <%= description_vars[:section_name] %>:
-
-        <% if description_vars[:passed] %>
-          <%= govuk_tag(text: "Passed", colour: "green") %>
-        <% else %>
-          <%= govuk_tag(text: "Not passed", colour: "red") %>
-        <% end %>
+        <%= render StatusTag::Component.new(status: description_vars[:passed] ? "accepted" : "rejected") %>
       </p>
 
       <% if (visible_failure_reasons = description_vars[:visible_failure_reasons]).present? %>
