@@ -45,14 +45,38 @@ class AssessorInterface::FurtherInformationRequestViewObject
               I18n.t(
                 "assessor_interface.further_information_requests.edit.check_your_answers",
               ),
-            fields: {
-              item.id => {
-                title: item_text(item),
-                value: item.text? ? item.response : item.document,
-              },
-            },
+            fields: review_items_fields(item),
           },
-        }
+          work_history_summary_list_rows:
+            if item.work_history_contact?
+              [
+                {
+                  key: {
+                    text: "Contact name",
+                  },
+                  value: {
+                    text: item.work_history.contact_name,
+                  },
+                },
+                {
+                  key: {
+                    text: "Contact job",
+                  },
+                  value: {
+                    text: item.work_history.contact_job,
+                  },
+                },
+                {
+                  key: {
+                    text: "Contact email",
+                  },
+                  value: {
+                    text: item.work_history.contact_email,
+                  },
+                },
+              ]
+            end,
+        }.compact
       end
   end
 
@@ -73,6 +97,34 @@ class AssessorInterface::FurtherInformationRequestViewObject
       )
     when "document"
       "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
+    when "work_history_contact"
+      "Please provide new contact information for your work history contact"
+    end
+  end
+
+  def review_items_fields(item)
+    if item.work_history_contact?
+      {
+        contact_name: {
+          title: "Contact name",
+          value: item.contact_name,
+        },
+        contact_job: {
+          title: "Contact job",
+          value: item.contact_job,
+        },
+        contact_email: {
+          title: "Contact email",
+          value: item.contact_email,
+        },
+      }
+    else
+      {
+        item.id => {
+          title: item_text(item),
+          value: item.text? ? item.response : item.document,
+        },
+      }
     end
   end
 end

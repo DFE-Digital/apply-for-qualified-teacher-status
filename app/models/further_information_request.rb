@@ -66,5 +66,19 @@ class FurtherInformationRequest < ApplicationRecord
     DeclineQTS.call(application_form:, user:) unless application_form.withdrawn?
   end
 
+  def after_reviewed(user:)
+    items
+      .select(&:work_history_contact?)
+      .each do |item|
+        UpdateWorkHistoryContact.call(
+          user:,
+          work_history: item.work_history,
+          name: item.contact_name,
+          job: item.contact_job,
+          email: item.contact_email,
+        )
+      end
+  end
+
   delegate :teacher, to: :application_form
 end

@@ -7,8 +7,21 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
     create(
       :assessment_section,
       key: "personal_information",
-      failure_reasons: [:reason_a, :reason_b, decline_failure_reason],
+      failure_reasons: [
+        further_information_failure_reason,
+        work_history_failure_reason,
+        decline_failure_reason,
+      ],
     )
+  end
+  let(:further_information_failure_reason) do
+    (
+      FailureReasons::FURTHER_INFORMATIONABLE -
+        FailureReasons::WORK_HISTORY_FAILURE_REASONS
+    ).sample.to_sym
+  end
+  let(:work_history_failure_reason) do
+    FailureReasons::WORK_HISTORY_FAILURE_REASONS.sample.to_sym
   end
   let(:decline_failure_reason) { FailureReasons::DECLINABLE.sample.to_sym }
   let(:user) { create(:staff, :confirmed) }
@@ -36,15 +49,23 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
     context "when reasons are checked" do
       let(:attributes) do
         {
-          :passed => false,
-          :reason_a_checked => true,
-          :reason_b_checked => true,
-          "#{decline_failure_reason}_checked".to_sym => true,
+          passed: false,
+          "#{further_information_failure_reason}_checked": true,
+          "#{work_history_failure_reason}_checked": true,
+          "#{decline_failure_reason}_checked": true,
         }
       end
 
-      it { is_expected.to validate_presence_of(:reason_a_notes) }
-      it { is_expected.to validate_presence_of(:reason_b_notes) }
+      it do
+        is_expected.to validate_presence_of(
+          :"#{further_information_failure_reason}_notes",
+        )
+      end
+      it do
+        is_expected.to validate_presence_of(
+          :"#{work_history_failure_reason}_notes",
+        )
+      end
       it do
         is_expected.not_to validate_presence_of(
           "#{decline_failure_reason}_notes".to_sym,
@@ -56,10 +77,11 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       let(:attributes) do
         {
           :passed => false,
-          :reason_a_checked => true,
-          :reason_a_notes => "Notes.",
-          :reason_b_checked => true,
-          :reason_b_notes => "Notes.",
+          :"#{further_information_failure_reason}_checked" => true,
+          :"#{further_information_failure_reason}_notes" => "Notes.",
+          :"#{work_history_failure_reason}_checked" => true,
+          :"#{work_history_failure_reason}_notes" => "Notes.",
+          :"#{work_history_failure_reason}_work_history_checked" => [1],
           "#{decline_failure_reason}_checked".to_sym => true,
           "#{decline_failure_reason}_notes".to_sym => "Notes",
         }
@@ -80,10 +102,18 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
 
     context "when failed" do
       let(:attributes) do
-        { passed: false, reason_a_checked: true, reason_a_notes: "Notes." }
+        {
+          passed: false,
+          "#{further_information_failure_reason}_checked": true,
+          "#{further_information_failure_reason}_notes": "Notes.",
+        }
       end
 
-      it { is_expected.to eq({ "reason_a" => "Notes." }) }
+      it do
+        is_expected.to eq(
+          { further_information_failure_reason.to_s => { notes: "Notes." } },
+        )
+      end
     end
   end
 
@@ -96,7 +126,11 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
 
     describe "with valid attributes and passed" do
       let(:attributes) do
-        { passed: true, reason_a_checked: true, reason_a_notes: "Notes." }
+        {
+          passed: true,
+          "#{further_information_failure_reason}_checked": true,
+          "#{further_information_failure_reason}_notes": "Notes.",
+        }
       end
 
       it { is_expected.to be true }
@@ -120,9 +154,9 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       let(:attributes) do
         {
           :passed => false,
-          :reason_a_checked => true,
-          :reason_a_notes => "Notes.",
-          :reason_b_checked => false,
+          :"#{further_information_failure_reason}_checked" => true,
+          :"#{further_information_failure_reason}_notes" => "Notes.",
+          :"#{work_history_failure_reason}_checked" => false,
           "#{decline_failure_reason}_checked" => false,
         }
       end
@@ -136,7 +170,9 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
           params: {
             passed: false,
             selected_failure_reasons: {
-              "reason_a" => "Notes.",
+              further_information_failure_reason.to_s => {
+                notes: "Notes.",
+              },
             },
           },
         )

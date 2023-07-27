@@ -76,13 +76,13 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     rows =
       review_further_information_request_page.summary_lists.flat_map(&:rows)
 
-    expect(rows.count).to eq(2)
+    expect(rows.count).to eq(8)
 
     expect(rows.first.key.text).to eq(
       "Tell us more about the subjects you can teach",
     )
 
-    expect(rows.second.key.text).to eq("Upload your identity document")
+    expect(rows.last.key.text).to eq("Upload your identity document")
   end
 
   def when_i_mark_the_section_as_complete

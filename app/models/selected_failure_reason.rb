@@ -24,6 +24,7 @@ class SelectedFailureReason < ApplicationRecord
 
   validates :key, presence: true
   validates :key, inclusion: { in: FailureReasons::ALL }
+  has_and_belongs_to_many :work_histories
 
   scope :declinable, -> { where(key: FailureReasons::DECLINABLE) }
 end

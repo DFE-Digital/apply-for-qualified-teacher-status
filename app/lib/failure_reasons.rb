@@ -68,6 +68,8 @@ class FailureReasons
     WRITTEN_STATEMENT_RECENT = "written_statement_recent",
   ].freeze
 
+  WORK_HISTORY_FAILURE_REASONS = [SCHOOL_DETAILS_CANNOT_BE_VERIFIED].freeze
+
   ALL = (DECLINABLE + FURTHER_INFORMATIONABLE).freeze
 
   DOCUMENT_FAILURE_REASONS = {
@@ -98,5 +100,9 @@ class FailureReasons
 
   def self.further_information_request_document_type(failure_reason:)
     DOCUMENT_FAILURE_REASONS[failure_reason.to_s]
+  end
+
+  def self.chooses_work_history?(failure_reason:)
+    WORK_HISTORY_FAILURE_REASONS.include?(failure_reason.to_s)
   end
 end

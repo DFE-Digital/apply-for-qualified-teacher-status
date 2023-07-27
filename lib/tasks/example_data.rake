@@ -31,6 +31,7 @@ namespace :example_data do
     TimelineEvent.delete_all
     DQTTRNRequest.delete_all
     ReminderEmail.delete_all
+    FurtherInformationRequestItem.delete_all
     FurtherInformationRequest.delete_all
     ProfessionalStandingRequest.delete_all
     QualificationRequest.delete_all

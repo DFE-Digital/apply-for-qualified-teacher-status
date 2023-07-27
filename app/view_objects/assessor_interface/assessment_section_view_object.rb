@@ -142,6 +142,8 @@ module AssessorInterface
       end
     end
 
+    delegate :work_histories, to: :application_form
+
     private
 
     attr_reader :params
@@ -159,7 +161,6 @@ module AssessorInterface
         else
           "text"
         end
-
       "helpers.#{key_section}.assessor_interface_assessment_section_form.failure_reason_notes.#{key}"
     end
 

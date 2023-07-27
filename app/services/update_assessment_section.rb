@@ -22,10 +22,15 @@ class UpdateAssessmentSection
         .destroy_all
 
       selected_failure_reasons.each do |key, assessor_feedback|
-        assessment_section
-          .selected_failure_reasons
-          .find_or_initialize_by(key:)
-          .update(assessor_feedback:)
+        failure_reason =
+          assessment_section.selected_failure_reasons.find_or_initialize_by(
+            key:,
+          )
+        failure_reason.update!(assessor_feedback: assessor_feedback[:notes])
+        next unless assessor_feedback[:work_histories]
+        failure_reason.update!(
+          work_histories: assessor_feedback[:work_histories],
+        )
       end
 
       next false unless assessment_section.update(params)

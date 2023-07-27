@@ -5,6 +5,9 @@
 # Table name: further_information_request_items
 #
 #  id                               :bigint           not null, primary key
+#  contact_email                    :string
+#  contact_job                      :string
+#  contact_name                     :string
 #  failure_reason_assessor_feedback :text
 #  failure_reason_key               :string           default(""), not null
 #  information_type                 :string
@@ -12,15 +15,28 @@
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  further_information_request_id   :bigint
+#  work_history_id                  :bigint
 #
 # Indexes
 #
-#  index_fi_request_items_on_fi_request_id  (further_information_request_id)
+#  index_fi_request_items_on_fi_request_id                     (further_information_request_id)
+#  index_further_information_request_items_on_work_history_id  (work_history_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (work_history_id => work_histories.id)
 #
 FactoryBot.define do
   factory :further_information_request_item do
     association :further_information_request
-    failure_reason_assessor_feedback { Faker::Lorem.paragraph }
+    failure_reason_assessor_feedback do
+      {
+        notes: Faker::Lorem.paragraph,
+        contact_name: nil,
+        contact_job: nil,
+        contact_email: nil,
+      }
+    end
 
     trait :with_text_response do
       information_type { "text" }
@@ -34,6 +50,12 @@ FactoryBot.define do
       after(:create) do |item|
         create(:document, :identification, documentable: item)
       end
+    end
+
+    trait :with_work_history_contact_response do
+      information_type { "work_history_contact" }
+      failure_reason_key { "school_details_cannot_be_verified" }
+      association :work_history, :completed
     end
 
     trait :completed do
