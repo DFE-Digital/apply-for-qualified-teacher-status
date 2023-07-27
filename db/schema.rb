@@ -84,9 +84,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.bigint "english_language_provider_id"
     t.text "english_language_provider_reference", default: "", null: false
     t.datetime "awarded_at"
-    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
     t.boolean "written_statement_confirmation", default: false, null: false
+    t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "english_language_provider_other", default: false, null: false
     t.datetime "declined_at"
     t.boolean "waiting_on_professional_standing", default: false, null: false
@@ -97,8 +97,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.boolean "received_reference", default: false, null: false
     t.boolean "waiting_on_qualification", default: false, null: false
     t.boolean "received_qualification", default: false, null: false
-    t.boolean "written_statement_optional", default: false, null: false
     t.boolean "requires_preliminary_check", default: false, null: false
+    t.boolean "written_statement_optional", default: false, null: false
     t.boolean "overdue_further_information", default: false, null: false
     t.boolean "overdue_professional_standing", default: false, null: false
     t.boolean "overdue_qualification", default: false, null: false
@@ -137,7 +137,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.integer "age_range_min"
     t.integer "age_range_max"
     t.text "subjects", default: [], null: false, array: true
-    t.datetime "recommended_at", precision: nil
+    t.datetime "recommended_at"
     t.text "age_range_note", default: "", null: false
     t.text "subjects_note", default: "", null: false
     t.datetime "started_at"
@@ -166,8 +166,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "eligibility_enabled", default: true, null: false
-    t.boolean "eligibility_skip_questions", default: false, null: false
     t.text "qualifications_information", default: "", null: false
+    t.boolean "eligibility_skip_questions", default: false, null: false
     t.boolean "requires_preliminary_check", default: false, null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
@@ -237,7 +237,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "failure_reason_key", default: "", null: false
+    t.bigint "work_history_id"
+    t.string "contact_name"
+    t.string "contact_job"
+    t.string "contact_email"
     t.index ["further_information_request_id"], name: "index_fi_request_items_on_fi_request_id"
+    t.index ["work_history_id"], name: "index_further_information_request_items_on_work_history_id"
   end
 
   create_table "further_information_requests", force: :cascade do |t|
@@ -272,7 +277,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.text "location_note", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "reviewed_at", precision: nil
+    t.datetime "reviewed_at"
     t.boolean "passed"
     t.string "failure_assessor_note", default: "", null: false
     t.boolean "ready_for_review", default: false, null: false
@@ -287,7 +292,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.text "location_note", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "reviewed_at", precision: nil
+    t.datetime "reviewed_at"
     t.boolean "passed"
     t.string "failure_assessor_note", default: "", null: false
     t.index ["assessment_id"], name: "index_qualification_requests_on_assessment_id"
@@ -323,7 +328,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "passed"
-    t.datetime "reviewed_at", precision: nil
+    t.datetime "reviewed_at"
     t.boolean "contact_response"
     t.string "contact_name", default: "", null: false
     t.string "contact_job", default: "", null: false
@@ -360,12 +365,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.string "teaching_authority_status_information", default: "", null: false
     t.string "teaching_authority_sanction_information", default: "", null: false
     t.boolean "teaching_authority_provides_written_statement", default: false, null: false
-    t.boolean "application_form_skip_work_history", default: false, null: false
     t.text "qualifications_information", default: "", null: false
+    t.boolean "application_form_skip_work_history", default: false, null: false
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "teaching_authority_requires_submission_email", default: false, null: false
-    t.boolean "written_statement_optional", default: false, null: false
     t.boolean "requires_preliminary_check", default: false, null: false
+    t.boolean "written_statement_optional", default: false, null: false
     t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
@@ -385,6 +390,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assessment_section_id"], name: "index_as_failure_reason_assessment_section_id"
+  end
+
+  create_table "selected_failure_reasons_work_histories", id: false, force: :cascade do |t|
+    t.bigint "work_history_id", null: false
+    t.bigint "selected_failure_reason_id", null: false
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -417,9 +427,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "invitation_token"
-    t.datetime "invitation_created_at", precision: nil
-    t.datetime "invitation_sent_at", precision: nil
-    t.datetime "invitation_accepted_at", precision: nil
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
     t.integer "invitation_limit"
     t.string "invited_by_type"
     t.bigint "invited_by_id"
@@ -443,15 +453,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at", precision: nil
-    t.datetime "last_sign_in_at", precision: nil
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "trn"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.string "secret_key"
     t.integer "otp_guesses", default: 0, null: false
-    t.datetime "otp_created_at", precision: nil
+    t.datetime "otp_created_at"
     t.text "canonical_email", default: "", null: false
     t.index "lower((email)::text)", name: "index_teacher_on_lower_email", unique: true
     t.index ["canonical_email"], name: "index_teachers_on_canonical_email"
@@ -537,6 +547,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
   add_foreign_key "assessments", "application_forms"
   add_foreign_key "dqt_trn_requests", "application_forms"
   add_foreign_key "eligibility_checks", "regions"
+  add_foreign_key "further_information_request_items", "work_histories"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "staff", column: "author_id"
   add_foreign_key "professional_standing_requests", "assessments"

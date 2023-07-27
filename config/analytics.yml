@@ -203,6 +203,10 @@
     - failure_reason_key
     - failure_reason_assessor_feedback
     - response
+    - contact_name
+    - contact_job
+    - contact_email
+    - work_history_id
   :notes:
     - id
     - application_form_id
@@ -314,6 +318,11 @@
     - key
     - assessor_feedback
     - assessment_section_id
+  :selected_failure_reasons_work_histories:
+    - work_history_id
+    - selected_failure_reason_id
+    - work_history_id
+    - selected_failure_reason_id
   :staff:
     - award_decline_permission
     - azure_ad_uid

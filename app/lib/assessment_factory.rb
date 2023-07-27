@@ -231,6 +231,7 @@ class AssessmentFactory
           FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
           FailureReasons::UNRECOGNISED_REFERENCES,
           FailureReasons::WORK_HISTORY_DURATION,
+          FailureReasons::SATISFACTORY_EVIDENCE_WORK_HISTORY,
         ]
       else
         [FailureReasons::SATISFACTORY_EVIDENCE_WORK_HISTORY]

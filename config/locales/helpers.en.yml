@@ -271,6 +271,7 @@ en:
       assessor_interface_assessment_section_form:
         selected_failure_reasons: What are the reasons for your recommendation?
         scotland_full_registration: Does the applicant have or are they eligible for full registration?
+        choose_schools: Choose the schools that need reference details to be amended
       assessor_interface_filter_form:
         assessor_ids: Assessor name
         states: Status of application

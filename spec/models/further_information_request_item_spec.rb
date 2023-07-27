@@ -3,6 +3,9 @@
 # Table name: further_information_request_items
 #
 #  id                               :bigint           not null, primary key
+#  contact_email                    :string
+#  contact_job                      :string
+#  contact_name                     :string
 #  failure_reason_assessor_feedback :text
 #  failure_reason_key               :string           default(""), not null
 #  information_type                 :string
@@ -10,10 +13,16 @@
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  further_information_request_id   :bigint
+#  work_history_id                  :bigint
 #
 # Indexes
 #
-#  index_fi_request_items_on_fi_request_id  (further_information_request_id)
+#  index_fi_request_items_on_fi_request_id                     (further_information_request_id)
+#  index_further_information_request_items_on_work_history_id  (work_history_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (work_history_id => work_histories.id)
 #
 
 require "rails_helper"
@@ -28,6 +37,7 @@ RSpec.describe FurtherInformationRequestItem do
     is_expected.to define_enum_for(:information_type).with_values(
       text: "text",
       document: "document",
+      work_history_contact: "work_history_contact"
     ).backed_by_column_of_type(:string)
   end
 

@@ -24,7 +24,7 @@ module TeacherInterface
     end
 
     def edit_text
-      @further_information_request_item_text_form =
+      @form =
         FurtherInformationRequestItemTextForm.new(
           response: further_information_request_item.response,
         )
@@ -33,8 +33,12 @@ module TeacherInterface
     def edit_document
     end
 
+    def edit_work_history_contact
+      @form = FurtherInformationRequestItemWorkHistoryContactForm.new
+    end
+
     def update_text
-      @further_information_request_item_text_form =
+      @form =
         FurtherInformationRequestItemTextForm.new(
           further_information_request_item_text_form_params.merge(
             further_information_request_item:,
@@ -42,13 +46,31 @@ module TeacherInterface
         )
 
       handle_application_form_section(
-        form: @further_information_request_item_text_form,
+        form: @form,
         if_success_then_redirect: [
           :teacher_interface,
           :application_form,
           further_information_request,
         ],
       )
+    end
+
+    def update_work_history_contact
+      @form =
+        FurtherInformationRequestItemWorkHistoryContactForm.new(
+          further_information_request_item_work_history_contact_form_params.merge(
+            further_information_request_item:
+            ),
+          )
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect: [
+          :teacher_interface,
+          :application_form,
+          further_information_request,
+        ],
+        )
     end
 
     def update_document
@@ -84,6 +106,12 @@ module TeacherInterface
       params.require(
         :teacher_interface_further_information_request_item_text_form,
       ).permit(:response)
+    end
+
+    def further_information_request_item_work_history_contact_form_params
+      params.require(
+        :teacher_interface_further_information_request_item_work_history_contact_form,
+        ).permit(:contact_name, :contact_job, :contact_email)
     end
 
     def document_path

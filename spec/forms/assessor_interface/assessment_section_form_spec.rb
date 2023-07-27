@@ -83,7 +83,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
         { passed: false, reason_a_checked: true, reason_a_notes: "Notes." }
       end
 
-      it { is_expected.to eq({ "reason_a" => "Notes." }) }
+      it { is_expected.to eq({ "reason_a" => {notes: "Notes." }}) }
     end
   end
 
@@ -133,12 +133,12 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
         expect(UpdateAssessmentSection).to receive(:call).with(
           assessment_section:,
           user:,
-          params: {
-            passed: false,
-            selected_failure_reasons: {
-              "reason_a" => "Notes.",
-            },
-          },
+          params:
+               {passed: false,
+                selected_failure_reasons: {"reason_a"=>{notes: "Notes."}
+                }
+
+        }
         )
 
         save # rubocop:disable Rails/SaveBang

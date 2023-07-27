@@ -191,6 +191,7 @@ en:
           registration_number: We could not find the applicant’s reference number, or the number was in the wrong format. The applicant will need to supply the number again.
           registration_number_alternative: We could not find the applicant’s reference number. The applicant will need to upload written proof of recognition as a teacher instead.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
+          cannot_verify_details_of_a_school: We cannot verify details of a school that the applicant has entered
           school_details_cannot_be_verified: We could not verify the details of one of the schools that the applicant has entered.
           teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
@@ -328,6 +329,8 @@ en:
             registration_number_notes:
               blank: Enter a note to the applicant
             satisfactory_evidence_work_history_notes:
+              blank: Enter a note to the applicant
+            satisfactory_evidence_work_history:
               blank: Enter a note to the applicant
             school_details_cannot_be_verified_notes:
               blank: Enter a note to the applicant

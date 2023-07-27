@@ -61,6 +61,10 @@ RSpec.describe "Assessor requesting further information", type: :system do
     application_form
   end
 
+  def given_there_is_an_application_form_with_work_history_contact_failure_reasons
+    application_form_for_work_history_contact
+  end
+
   def when_i_select_request_further_information
     complete_assessment_page.request_further_information.input.choose
   end
@@ -119,6 +123,30 @@ RSpec.describe "Assessor requesting further information", type: :system do
             ),
           ],
         )
+      end
+  end
+
+  def application_form_for_work_history_contact
+    @application_form_for_work_history_contact ||=
+      create(
+        :application_form,
+        :with_personal_information,
+        :assessment_in_progress,
+        :with_assessment,
+        ).tap do |application_form|
+        application_form.assessment.sections << create(
+          :assessment_section,
+          :qualifications,
+          :failed,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reasons,
+              key: "school_details_cannot_be_verified",
+              assessor_feedback: {note: "A note.", contact_name: "james", contact_job: "teacher", 
+contact_email: "email@sample.com"},
+              ),
+          ],
+          )
       end
   end
 

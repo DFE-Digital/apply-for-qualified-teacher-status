@@ -27,6 +27,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
       .order(:created_at)
       .map do |item|
         {
+          further_information_request_item: item,
           heading:
             I18n.t(
               item.failure_reason_key,
@@ -45,12 +46,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
               I18n.t(
                 "assessor_interface.further_information_requests.edit.check_your_answers",
               ),
-            fields: {
-              item.id => {
-                title: item_text(item),
-                value: item.text? ? item.response : item.document,
-              },
-            },
+            fields: review_items_fields(item)
           },
         }
       end
@@ -73,6 +69,36 @@ class AssessorInterface::FurtherInformationRequestViewObject
       )
     when "document"
       "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
+    when "work_history_contact"
+      ""
+    end
+  end
+
+  def review_items_fields(item)
+    if item.work_history_contact?
+      {
+        contact_name: {
+        title: "Contact name",
+        value: item.contact_name
+        },
+        contact_job: {
+          title: "Contact job",
+          value: item.contact_job
+        },
+        contact_email:
+        {
+          title: "Contact email",
+          value: item.contact_email
+        }
+      }
+
+    else
+      {
+        item.id => {
+          title: item_text(item),
+          value: item.text? ? item.response : item.document,
+        },
+      }
     end
   end
 end

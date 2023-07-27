@@ -60,6 +60,11 @@ FactoryBot.define do
         )
         create(
           :further_information_request_item,
+          :with_work_history_contact_response,
+          further_information_request:,
+        )
+        create(
+          :further_information_request_item,
           :with_document_response,
           further_information_request:,
         )

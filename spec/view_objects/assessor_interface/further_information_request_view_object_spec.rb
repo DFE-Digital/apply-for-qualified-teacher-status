@@ -44,6 +44,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
       is_expected.to eq(
         [
           {
+            further_information_request_item: text_item,
             heading:
               "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
             description: text_item.failure_reason_assessor_feedback,
@@ -60,6 +61,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
             },
           },
           {
+            further_information_request_item: document_item,
             heading:
               "The ID document is illegible or in a format that we cannot accept.",
             description: document_item.failure_reason_assessor_feedback,

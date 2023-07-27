@@ -66,5 +66,17 @@ class FurtherInformationRequest < ApplicationRecord
     DeclineQTS.call(application_form:, user:) unless application_form.withdrawn?
   end
 
+  def after_reviewed(user:)
+    # implement logic after this requestable has been reviewed
+    items.each do |item|
+      next unless item.work_history_contact?
+      UpdateWorkHistoryContact.call(user:, 
+                                    work_history: item.work_history, 
+                                    name: item.contact_name, 
+                                    job: item.contact_job,
+                                    email: item.contact_email)
+    end
+  end
+
   delegate :teacher, to: :application_form
 end

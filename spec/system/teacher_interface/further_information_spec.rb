@@ -47,6 +47,12 @@ RSpec.describe "Teacher further information", type: :system do
     then_i_see_the(:further_information_requested_page)
     and_i_see_a_completed_document_task_list_item
 
+    when_i_click_the_work_history_contact_task_list_item
+    then_i_see_the(:further_information_required_page)
+    when_i_fill_in_the_work_history_contact_response
+    and_i_click_continue
+    and_i_see_the_completed_work_history_contact_list_item
+
     when_i_click_the_check_your_answers_button
     then_i_see_the(:check_further_information_request_answers_page)
     and_i_see_the_check_your_answers_items
@@ -90,8 +96,16 @@ RSpec.describe "Teacher further information", type: :system do
     expect(document_task_list_item.status_tag.text).to eq("COMPLETED")
   end
 
+  def and_i_see_the_completed_work_history_contact_list_item
+    expect(work_history_task_list_item.status_tag).to_eq("COMPLETED")
+  end
+
   def when_i_click_the_text_task_list_item
     text_task_list_item.link.click
+  end
+
+  def when_i_click_the_work_history_contact_task_list_item
+    work_history_task_list_item.link.click
   end
 
   def when_i_click_the_document_task_list_item
@@ -101,6 +115,12 @@ RSpec.describe "Teacher further information", type: :system do
   def when_i_fill_in_the_response
     further_information_required_page.form.response_textarea.fill_in with:
       "Response"
+  end
+
+  def when_i_fill_in_the_work_history_contact_response
+    further_information_required_page.form.contact_name.fill_in with: "James"
+    further_information_required_page.form.contact_job.fill_in with: "Carpenter"
+    further_information_required_page.form.contact_email.fill_in with: "jamescarpenter@sample.com"
   end
 
   def when_i_upload_a_file
@@ -199,6 +219,12 @@ RSpec.describe "Teacher further information", type: :system do
 
   def text_check_answers_item
     check_further_information_request_answers_page.summary_list.rows.first
+  end
+
+  def work_history_task_list_item
+    further_information_requested_page.task_list.find_item(
+      "Placeholder",
+      )
   end
 
   def document_task_list_item

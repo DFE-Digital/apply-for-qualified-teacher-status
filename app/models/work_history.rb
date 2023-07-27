@@ -35,6 +35,9 @@
 class WorkHistory < ApplicationRecord
   belongs_to :application_form
   has_one :reference_request, required: false
+  has_and_belongs_to_many :selected_failure_reasons
+  has_one :further_information_request_item, required: false
+
 
   scope :ordered, -> { order(created_at: :asc) }
 

@@ -7,6 +7,24 @@
   <h2 class="govuk-heading-m"><%= item.fetch(:heading) %></h2>
   <%= govuk_inset_text(text: item.fetch(:description)) %>
   <%= render(CheckYourAnswersSummary::Component.new(**item.fetch(:check_your_answers))) %>
+  <% if item[:further_information_request_item].work_history_contact? %>
+    <%= govuk_details(summary_text: "Review previous referee details?") do %>
+      <%= govuk_summary_list do |summary_list| %>
+        <%= summary_list.with_row do |row| %>
+          <% row.with_key { "Contact name" } %>
+          <% row.with_value { item[:further_information_request_item].work_history.contact_name } %>
+        <% end %>
+        <%= summary_list.with_row do |row| %>
+          <% row.with_key { "Contact job" } %>
+          <% row.with_value { item[:further_information_request_item].work_history.contact_job } %>
+        <% end %>
+        <%= summary_list.with_row do |row| %>
+          <% row.with_key { "Contact email" } %>
+          <% row.with_value { item[:further_information_request_item].work_history.contact_email } %>
+        <% end %>
+      <%end %>
+    <% end %>
+  <% end %>
 <% end %>
 
 <% if policy(:assessor).update? && @view_object.can_update? %>

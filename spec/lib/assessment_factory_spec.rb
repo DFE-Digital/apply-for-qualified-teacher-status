@@ -418,6 +418,7 @@ RSpec.describe AssessmentFactory do
               %w[
                 email_contact_current_employer
                 satisfactory_evidence_work_history
+                work_history_references
               ],
             )
             expect(section.failure_reasons).to eq(
@@ -442,6 +443,7 @@ RSpec.describe AssessmentFactory do
                 school_details_cannot_be_verified
                 unrecognised_references
                 work_history_duration
+                satisfactory_evidence_work_history
               ],
             )
           end
