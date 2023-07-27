@@ -14,13 +14,13 @@ class Staff::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  def failure
-    redirect_to new_staff_session_url, alert: t(".failure")
-  end
-
   protected
 
   def after_sign_in_path_for(resource)
     stored_location_for(resource) || assessor_interface_root_path
+  end
+
+  def after_omniauth_failure_path_for(_scope)
+    new_staff_session_url
   end
 end
