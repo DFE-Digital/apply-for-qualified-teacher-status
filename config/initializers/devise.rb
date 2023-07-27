@@ -374,7 +374,8 @@ Devise.setup do |config|
 
   config.omniauth :azure_activedirectory_v2,
                   client_id: ENV["MICROSOFT_OAUTH_CLIENT_ID"],
-                  client_secret: ENV["MICROSOFT_OAUTH_CLIENT_SECRET"]
+                  client_secret: ENV["MICROSOFT_OAUTH_CLIENT_SECRET"],
+                  tenant_id: ENV["MICROSOFT_OAUTH_TENANT_ID"]
 end
 
 # As we only use magic link authentication for teachers, we don't need to unnecessarily
