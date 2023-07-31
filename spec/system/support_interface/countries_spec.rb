@@ -141,6 +141,7 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_fill_regions
+    choose "country-has-regions-yes-field", visible: :all
     fill_in "country-all-regions-field", with: "California"
   end
 
