@@ -19,7 +19,13 @@ tmp/*
 tmp/pids/*
 storage/*
 
+# Temporary binaries
+bin/fetch_config.rb
+bin/konduit.sh
+bin/terrafile
+
 # Terraform
 *.tfstate
 .terraform
 terraform/*token*
+terraform/*/vendor

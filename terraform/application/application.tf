@@ -4,7 +4,7 @@ locals {
 }
 
 module "application_configuration" {
-  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/application_configuration?ref=testing"
+  source = "./vendor/modules/dfe-terraform-modules//aks/application_configuration"
 
   namespace             = var.namespace
   environment           = local.environment
@@ -36,7 +36,7 @@ module "application_configuration" {
 }
 
 module "web_application" {
-  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/application?ref=testing"
+  source = "./vendor/modules/dfe-terraform-modules//aks/application"
 
   name   = "web"
   is_web = true
@@ -54,7 +54,7 @@ module "web_application" {
 }
 
 module "worker_application" {
-  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/application?ref=testing"
+  source = "./vendor/modules/dfe-terraform-modules//aks/application"
 
   name   = "worker"
   is_web = false

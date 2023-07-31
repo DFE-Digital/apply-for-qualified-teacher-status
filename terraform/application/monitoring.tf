@@ -5,7 +5,7 @@ locals {
 module "statuscake" {
   count = var.enable_monitoring ? 1 : 0
 
-  source = "git::https://github.com/DFE-Digital/terraform-modules.git//monitoring/statuscake?ref=testing"
+  source = "./vendor/modules/dfe-terraform-modules//monitoring/statuscake"
 
   uptime_urls = compact([module.web_application.probe_url, local.external_url])
   ssl_urls    = compact([local.external_url])

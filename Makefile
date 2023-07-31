@@ -4,6 +4,7 @@ SHELL				:=/bin/bash
 SERVICE_SHORT=afqts
 KEY_VAULT_PURGE_PROTECTION=false
 ARM_TEMPLATE_TAG=1.1.6
+TERRAFILE_VERSION=0.8
 
 .PHONY: help
 help: ## Show this help
@@ -76,11 +77,20 @@ bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh
 
+bin/terrafile:
+	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
+		| tar xz -C ./bin terrafile
+
 .PHONY: install-konduit
 install-konduit: bin/konduit.sh ## Install the konduit script, for accessing backend services
 
+.PHONY: terrafile
+terrafile: bin/terrafile
+	./bin/terrafile -p terraform/application/vendor/modules \
+		-f terraform/application/config/$(CONFIG)/Terrafile
+
 .PHONY: terraform-init
-terraform-init: set-resource-group-name set-storage-account-name set-azure-account
+terraform-init: set-resource-group-name set-storage-account-name set-azure-account terrafile
 	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
 
 	$(eval export TF_VAR_docker_image=$(DOCKER_IMAGE))
@@ -95,19 +105,19 @@ terraform-init: set-resource-group-name set-storage-account-name set-azure-accou
 
 .PHONY: terraform-plan
 terraform-plan: terraform-init
-	terraform -chdir=terraform/application plan -var-file config/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application plan -var-file config/$(CONFIG)/variables.tfvars.json
 
 .PHONY: terraform-refresh
 terraform-refresh: terraform-init
-	terraform -chdir=terraform/application refresh -var-file config/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/application refresh -var-file config/$(CONFIG)/variables.tfvars.json
 
 .PHONY: terraform-apply
 terraform-apply: terraform-init
-	terraform -chdir=terraform/application apply -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application apply -var-file config/$(CONFIG)/variables.tfvars.json ${AUTO_APPROVE}
 
 .PHONY: terraform-destroy
 terraform-destroy: terraform-init
-	terraform -chdir=terraform/application destroy -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/application destroy -var-file config/$(CONFIG)/variables.tfvars.json ${AUTO_APPROVE}
 
 .PHONY: set-azure-resource-group-tags
 set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template
