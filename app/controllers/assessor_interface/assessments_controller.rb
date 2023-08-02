@@ -33,6 +33,9 @@ module AssessorInterface
     def destroy
       RollbackAssessment.call(assessment:, user: current_staff)
       redirect_to [:assessor_interface, application_form]
+    rescue RollbackAssessment::InvalidState => e
+      flash[:warning] = e.message
+      render :rollback, status: :unprocessable_entity
     end
 
     private
