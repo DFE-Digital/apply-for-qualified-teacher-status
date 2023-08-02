@@ -1,0 +1,8 @@
+<%= f.govuk_collection_radio_buttons :eligibility_enabled,
+[
+OpenStruct.new(value: :false, label: "Yes"),
+OpenStruct.new(value: :true, label: "No")
+],
+:value,
+:label,
+legend: { text: "Do we accept applications from this country?" } %>

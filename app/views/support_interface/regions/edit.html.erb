@@ -5,18 +5,24 @@
 <%= form_with model: [:support_interface, @region] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= render "shared/application_form", f: %>
-  <%= render "shared/preliminary_check_form_fields", f: %>
-  <%= render "shared/eligibility_checker", f: %>
-  <%= render "shared/status_sanctions_checks", f: %>
-  <%= render "shared/teaching_authority_form_fields", f: %>
+  <%= render "shared/support_interface/forms/application_form", f: %>
+  <%= f.govuk_check_box :application_form_skip_work_history, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Skip work history" } %>
+  <%= render "shared/support_interface/forms/preliminary_check_form_fields", f: %>
+  <%= render "shared/support_interface/forms/eligibility_checker", f: %>
+  <%= render "shared/support_interface/forms/status_sanctions_checks", f: %>
+  <%= render "shared/support_interface/forms/teaching_authority_form_fields", f: %>
 
-  <p class="govuk-hint">Automatically notify the teaching authority (via email) every time a QTS application is submitted?</p>
-  <%= f.govuk_radio_button :eligibility_enabled, 'yes', label: { text: 'Yes' }, link_errors: true %>
-  <%= f.govuk_radio_button :eligibility_enabled, 'no', label: { text: 'No' } %>
+  <%= f.govuk_collection_radio_buttons :teaching_authority_requires_submission_email,
+  [
+  OpenStruct.new(value: :false, label: "Yes"),
+  OpenStruct.new(value: :true, label: "No")
+  ],
+  :value,
+  :label,
+  legend: { text: "Automatically notify the teaching authority (via email) every time a QTS application is submitted?" } %>
 
-  <%= render "shared/changes_to_eligible_page", f: %>
-  <%= render "shared/qualifications_information_form_fields", f: %>
+  <%= render "shared/support_interface/forms/changes_to_eligible_page", f: %>
+  <%= render "shared/support_interface/forms/qualifications_information_form_fields", f: %>
 
   <%= f.govuk_check_box :reduced_evidence_accepted, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Accept reduced evidence" } %>
   <%= f.govuk_check_box :written_statement_optional, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Applicant can submit without uploading the written statement (if a written statement is requested)" } %>
