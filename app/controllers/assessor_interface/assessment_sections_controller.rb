@@ -69,7 +69,11 @@ module AssessorInterface
       elsif assessment_section.professional_standing? &&
             application_form.created_under_new_regulations? &&
             !application_form.needs_work_history
-        InductionRequiredForm
+        if CountryCode.scotland?(application_form.country.code)
+          ScotlandFullRegistrationForm
+        else
+          InductionRequiredForm
+        end
       elsif application_form.english_language_exempt? &&
             assessment_section.personal_information?
         PersonalInformationForm

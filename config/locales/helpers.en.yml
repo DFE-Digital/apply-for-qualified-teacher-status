@@ -67,17 +67,23 @@ en:
           true: "Yes"
           false: "No"
       assessor_interface_assessment_section_form:
-        age_range_min: From
         age_range_max: To
+        age_range_min: From
         age_range_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> If you''ve entered a new range please explain why (optional)'
-        subject_1: Subject 1
-        subject_2: Subject 2 (optional)
-        subject_3: Subject 3 (optional)
-        subjects_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> If you''ve edited the subjects please explain why (optional)'
         failure_reason_notes:
           text: Note to the applicant
           document: Note to the applicant
           decline: Note to the applicant (optional)
+        induction_required_options:
+          true: "No"
+          false: "Yes"
+        scotland_full_registration_options:
+          true: "Yes"
+          false: "No"
+        subject_1: Subject 1
+        subject_2: Subject 2 (optional)
+        subject_3: Subject 3 (optional)
+        subjects_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> If you''ve edited the subjects please explain why (optional)'
       assessor_interface_confirm_age_range_subjects_form:
         age_range_min: From
         age_range_max: To
@@ -260,6 +266,7 @@ en:
         recommendation: QTS review completed
       assessor_interface_assessment_section_form:
         selected_failure_reasons: What are the reasons for your recommendation?
+        scotland_full_registration: Does the applicant have or are they eligible for full registration?
       assessor_interface_filter_form:
         assessor_ids: Assessor name
         states: Status of application

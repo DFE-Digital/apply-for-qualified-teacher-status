@@ -95,25 +95,26 @@
     - created_at
     - updated_at
   :assessments:
-    - id
-    - application_form_id
-    - recommendation
-    - created_at
-    - updated_at
-    - started_at
-    - age_range_min
     - age_range_max
+    - age_range_min
     - age_range_note
+    - application_form_id
+    - created_at
+    - id
+    - induction_required
+    - recommendation
+    - recommendation_assessor_note
+    - recommended_at
+    - references_verified
+    - scotland_full_registration
+    - started_at
     - subjects
     - subjects_note
-    - recommended_at
-    - recommendation_assessor_note
-    - induction_required
+    - updated_at
     - working_days_since_started
+    - working_days_started_to_recommendation
     - working_days_submission_to_recommendation
     - working_days_submission_to_started
-    - working_days_started_to_recommendation
-    - references_verified
   :countries:
     - id
     - code
