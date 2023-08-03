@@ -43,22 +43,24 @@
     <span class="govuk-caption-l">Proof that you’re recognised as a teacher</span>
     <h1 class="govuk-heading-l">Upload your written statement</h1>
 
-    <% if @application_form.region.country.code == "GB-NIR" %>
+    <% if CountryCode.northern_ireland?(@application_form.region.country.code) %>
       <p class="govuk-body">
-        If you’ve already completed an induction period in Northern Ireland, you can provide evidence by uploading a ‘Letter of Successful Completion of Induction’ from the school where you did your induction period.
+        Provide your ‘Letter of Successful Completion of Induction’ to confirm that you've completed an induction period in Northern Ireland.
       </p>
 
-      <p class="govuk-body">
-        It must confirm that you completed your induction in Northern Ireland and show the completion date, as well as your Teacher Reference (TR) number (if you have one). It must also include the name of the school and the signature of the administration department or headteacher/principal.
-      </p>
+      <p class="govuk-body">The letter must include:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>confirmation that you completed the induction in Northern Ireland</li>
+        <li>the date you completed your induction</li>
+        <li>your Teacher Reference (TR) number (if you have one)</li>
+        <li>the name of the school where you completed the induction</li>
+        <li>a signature from the school’s administrative department or headteacher/principal</li>
+      </ul>
 
       <%= govuk_details(summary_text: "How to get this") do %>
         <p class="govuk-body">You can get a Letter of Successful Completion of Induction by contacting the school where you completed your induction period.</p>
       <% end %>
-
-      <p class="govuk-body">
-        If you did not complete an induction period, or you do not have a letter, check the box below and select ‘Continue’.
-      </p>
 
       <%= govuk_inset_text do %>
         <p class="govuk-body">
@@ -150,12 +152,6 @@
 
 <%= form_with model: @upload_form, url: [:teacher_interface, :application_form, @document, :uploads] do |f| %>
   <%= f.govuk_error_summary %>
-
-  <% if @document.optional? %>
-    <%= f.govuk_check_boxes_fieldset :do_not_have_document, multiple: false, legend: nil do %>
-      <%= f.govuk_check_box :do_not_have_document, 1, 0, multiple: false, link_errors: true, label: { text: "I do not have #{region_certificate_phrase(@application_form.region)}.".html_safe }%>
-    <% end %>
-  <% end %>
 
   <%= f.govuk_file_field :original_attachment,
                          label: { text: "Select a file to upload", class: "govuk-heading-m" },

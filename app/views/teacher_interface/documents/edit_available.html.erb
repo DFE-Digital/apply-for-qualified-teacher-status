@@ -1,0 +1,25 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}Upload a document" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<%= form_with model: @form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons :available,
+                                       %i[true false],
+                                       :itself,
+                                       legend: { tag: "h1", size: "l" } %>
+
+  <%= govuk_details(summary_text: "What is an induction period?") do %>
+    <p class="govuk-body">
+      This is the first stage of a teacher’s professional development, where newly qualified teachers (NQTs) are supported to develop their teaching skills and knowledge.
+    </p>
+  <% end %>
+
+  <%= govuk_inset_text do %>
+    <p class="govuk-body">
+      Note that if you cannot show evidence that you’ve already completed an induction period in Northern Ireland, if you’re awarded QTS you’ll need to do a period of statutory induction.
+    </p>
+  <% end %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>

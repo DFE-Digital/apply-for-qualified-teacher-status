@@ -126,18 +126,25 @@ module CheckYourAnswersSummary
           end
         )
 
-      uploads =
-        scope.order(:created_at).select { |upload| upload.attachment.present? }
-
-      html = format_array(uploads, field)
-
-      malware_scan_active =
-        FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
-
-      if malware_scan_active && scope.scan_result_suspect.exists?
-        "#{html}<br /><br /><em>One or more upload has been deleted by the virus scanner.</em>"
+      if document.optional? && !document.available
+        "<em>The applicant has indicated that they haven't done an induction period " \
+          "and don't have this document.</em>".html_safe
       else
-        html
+        uploads =
+          scope
+            .order(:created_at)
+            .select { |upload| upload.attachment.present? }
+
+        html = format_array(uploads, field)
+
+        malware_scan_active =
+          FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
+
+        if malware_scan_active && scope.scan_result_suspect.exists?
+          "#{html}<br /><br /><em>One or more upload has been deleted by the virus scanner.</em>"
+        else
+          html
+        end
       end
     end
 
