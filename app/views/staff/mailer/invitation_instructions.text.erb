@@ -1,8 +1,9 @@
 <%= t("devise.mailer.invitation_instructions.hello", email: @resource.email) %>
 
 <%= t("devise.mailer.invitation_instructions.someone_invited_you", url: root_url) %>
+
 <% if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory) %>
-  <%= new_staff_session_url %>
+  <%= omniauth_authorize_url(:staff, :azure_activedirectory_v2) %>
 <% else %>
   <%= accept_invitation_url(@resource, invitation_token: @token) %>
 <% end %>
