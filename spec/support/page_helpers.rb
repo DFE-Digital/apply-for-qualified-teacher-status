@@ -223,6 +223,10 @@ module PageHelpers
       PageObjects::AssessorInterface::ReviewFurtherInformationRequest.new
   end
 
+  def staff_signed_out_page
+    @staff_signed_out_page ||= PageObjects::Staff::SignedOut.new
+  end
+
   def start_page
     @start_page ||= PageObjects::EligibilityInterface::Start.new
   end

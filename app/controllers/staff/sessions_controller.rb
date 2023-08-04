@@ -3,20 +3,8 @@ class Staff::SessionsController < Devise::SessionsController
 
   layout "two_thirds"
 
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
-
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
-
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def signed_out
+  end
 
   protected
 
@@ -25,7 +13,7 @@ class Staff::SessionsController < Devise::SessionsController
   end
 
   def after_sign_out_path_for(_resource)
-    new_staff_session_path
+    staff_signed_out_path
   end
 
   def set_flash_message(*)

@@ -203,6 +203,12 @@ Rails.application.routes.draw do
                omniauth_callbacks: "staff/omniauth_callbacks",
              }
 
+  devise_scope :staff do
+    get "/staff/signed_out",
+        to: "staff/sessions#signed_out",
+        as: "staff_signed_out"
+  end
+
   namespace :teacher_interface, path: "/teacher" do
     root to: redirect("/teacher/application")
 

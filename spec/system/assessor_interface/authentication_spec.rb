@@ -14,7 +14,7 @@ RSpec.describe "Assessor authentication", type: :system do
     then_i_see_the(:applications_page)
 
     when_i_click_sign_out
-    then_i_see_the(:login_page)
+    then_i_see_the(:staff_signed_out_page)
   end
 
   private
