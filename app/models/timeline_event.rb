@@ -147,8 +147,7 @@ class TimelineEvent < ApplicationRecord
             unless: :requestable_event_type?
 
   belongs_to :work_history, optional: true
-  validates :work_history_id,
-            :column_name,
+  validates :column_name,
             :old_value,
             :new_value,
             presence: true,

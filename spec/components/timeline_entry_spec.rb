@@ -496,7 +496,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
     it "describes the event" do
       expect(component.text.squish).to include(
-        "Reference contact email has changed from #{old_value} to #{new_value}.",
+        "Reference email address has changed from #{old_value} to #{new_value}.",
       )
     end
 
