@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Assessor reverse decision", type: :system do
+RSpec.describe "Assessor withdraw application", type: :system do
   before do
     given_the_service_is_open
     given_there_is_an_application_form
@@ -19,21 +19,17 @@ RSpec.describe "Assessor reverse decision", type: :system do
     then_i_see_the_forbidden_page
   end
 
-  it "allows reversing a decision" do
+  it "allows withdrawing an application" do
     given_i_am_authorized_as_a_user(manager)
 
     when_i_visit_the(:assessor_application_page, application_id:)
     then_i_see_the(:assessor_application_page)
-    and_i_see_the_reverse_decision_link
+    and_i_see_the_withdraw_link
 
-    when_i_click_on_reverse_decision
-    then_i_see_the(
-      :assessor_reverse_decision_page,
-      application_form_id:,
-      assessment_id:,
-    )
+    when_i_click_on_withdraw
+    then_i_see_the(:assessor_withdraw_application_page, application_form_id:)
 
-    when_i_confirm_the_reversal
+    when_i_confirm_the_withdrawal
     then_i_see_the(:assessor_application_page, application_id:)
   end
 
@@ -42,16 +38,16 @@ RSpec.describe "Assessor reverse decision", type: :system do
     assessment
   end
 
-  def and_i_see_the_reverse_decision_link
+  def and_i_see_the_withdraw_link
     expect(assessor_application_page.management_tasks).to be_visible
   end
 
-  def when_i_click_on_reverse_decision
+  def when_i_click_on_withdraw
     assessor_application_page.management_tasks.links.first.click
   end
 
-  def when_i_confirm_the_reversal
-    assessor_reverse_decision_page.form.submit_button.click
+  def when_i_confirm_the_withdrawal
+    assessor_withdraw_application_page.form.submit_button.click
   end
 
   def application_form
@@ -73,6 +69,6 @@ RSpec.describe "Assessor reverse decision", type: :system do
   end
 
   def manager
-    create(:staff, :confirmed, :with_reverse_decision_permission)
+    create(:staff, :confirmed, :with_withdraw_permission)
   end
 end

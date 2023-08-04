@@ -32,6 +32,16 @@ module AssessorInterface
       @view_object = show_view_object
     end
 
+    def withdraw
+      authorize [:assessor_interface, application_form]
+    end
+
+    def destroy
+      authorize [:assessor_interface, application_form]
+      WithdrawApplicationForm.call(application_form:, user: current_staff)
+      redirect_to [:assessor_interface, application_form]
+    end
+
     private
 
     def extract_filter_params(params)

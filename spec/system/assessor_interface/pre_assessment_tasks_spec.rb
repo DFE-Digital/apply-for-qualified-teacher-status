@@ -63,7 +63,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     )
     expect(
       assessor_application_page.awaiting_professional_standing_task,
-    ).to have_content("CANNOT START")
+    ).to have_content("WAITING ON")
   end
 
   def when_i_click_on_the_preliminary_check_task
@@ -96,12 +96,12 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     failure_reason_items =
       declare_assessment_recommendation_page.failure_reason_lists.first.items
 
-    expect(failure_reason_items.first.heading.text).to eq(
+    expect(failure_reason_items.first.text).to eq(
       "The teaching qualifications do not meet the required academic level (level 6).",
     )
 
-    expect(failure_reason_items.second.heading.text).to eq(
-      "The applicant is not qualified to teach one of the subjects we can currently accept.",
+    expect(failure_reason_items.second.text).to start_with(
+      "The applicant is not qualified to teach one of the subjects that we currently accept",
     )
   end
 
