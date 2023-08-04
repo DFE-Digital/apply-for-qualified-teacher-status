@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class Staff::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_before_action :authenticate
+
   def azure_activedirectory_v2
     auth = request.env["omniauth.auth"]
     email = auth["info"]["email"]
