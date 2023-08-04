@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class AssessorInterface::ApplicationFormsShowViewObject
-  def initialize(params:)
+  def initialize(params:, current_staff:)
     @params = params
+    @current_staff = current_staff
   end
 
   def application_form
@@ -46,9 +47,32 @@ class AssessorInterface::ApplicationFormsShowViewObject
       other_application_forms_where_email_used_as_reference.present?
   end
 
+  def management_tasks
+    [
+      if AssessorInterface::AssessmentPolicy.new(
+           current_staff,
+           assessment,
+         ).rollback?
+        {
+          title: "Reverse decision",
+          path: [:rollback, :assessor_interface, application_form, assessment],
+        }
+      end,
+      if AssessorInterface::ApplicationFormPolicy.new(
+           current_staff,
+           application_form,
+         ).withdraw?
+        {
+          title: "Withdraw",
+          path: [:withdraw, :assessor_interface, application_form],
+        }
+      end,
+    ].compact
+  end
+
   private
 
-  attr_reader :params
+  attr_reader :params, :current_staff
 
   delegate :assessment,
            :teacher,

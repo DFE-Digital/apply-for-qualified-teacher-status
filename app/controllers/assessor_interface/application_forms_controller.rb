@@ -48,7 +48,8 @@ module AssessorInterface
     end
 
     def show_view_object
-      @show_view_object = ApplicationFormsShowViewObject.new(params:)
+      @show_view_object =
+        ApplicationFormsShowViewObject.new(params:, current_staff:)
     end
 
     def application_form

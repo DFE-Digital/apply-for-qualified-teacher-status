@@ -4,10 +4,14 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
   subject(:view_object) do
-    described_class.new(params: ActionController::Parameters.new(params))
+    described_class.new(
+      params: ActionController::Parameters.new(params),
+      current_staff:,
+    )
   end
 
   let(:params) { {} }
+  let(:current_staff) { create(:staff, :confirmed) }
 
   describe "#application_form" do
     subject(:application_form) { view_object.application_form }
@@ -540,6 +544,48 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it { is_expected.to be false }
+    end
+  end
+
+  describe "#management_tasks" do
+    subject(:management_tasks) { view_object.management_tasks }
+
+    let(:application_form) do
+      create(:application_form, :submitted, :with_assessment)
+    end
+
+    let(:params) { { id: application_form.id } }
+
+    it { is_expected.to be_empty }
+
+    context "with the correct permissions" do
+      let(:current_staff) do
+        create(
+          :staff,
+          :with_reverse_decision_permission,
+          :with_withdraw_permission,
+        )
+      end
+
+      it do
+        is_expected.to eq(
+          [
+            {
+              title: "Reverse decision",
+              path: [
+                :rollback,
+                :assessor_interface,
+                application_form,
+                application_form.assessment,
+              ],
+            },
+            {
+              title: "Withdraw",
+              path: [:withdraw, :assessor_interface, application_form],
+            },
+          ],
+        )
+      end
     end
   end
 end
