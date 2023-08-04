@@ -30,7 +30,7 @@ jobs:
   docker:
     name: Build and push Docker image
     runs-on: ubuntu-latest
-    environment: development_aks
+    environment: development
 
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
 
