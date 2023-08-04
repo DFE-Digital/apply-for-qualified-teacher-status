@@ -11,32 +11,48 @@ help: ## Show this help
 	@grep -E '^[a-zA-Z\._\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: development
-development: ## Specify development configuration
-	$(eval include global_config/development.sh)
+development: set-test-azure-subscription ## Specify development configuration
+	$(eval CONFIG=development)
+	$(eval CONFIG_SHORT=dv)
+	$(eval DOMAINS_TERRAFORM_BACKEND_KEY=afqtsdomains_dev.tfstate)
 
 .PHONY: review
-review: ## Specify review configuration
+review: set-test-azure-subscription ## Specify review configuration
 	$(if $(PULL_REQUEST_NUMBER), , $(error Missing environment variable "PULL_REQUEST_NUMBER"))
-	$(eval include global_config/review.sh)
+	$(eval CONFIG=review)
+	$(eval CONFIG_SHORT=rv)
 	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PULL_REQUEST_NUMBER).tfstate)
 	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
 .PHONY: test
-test:  ## Specify test configuration
-	$(eval include global_config/test.sh)
+test: set-test-azure-subscription  ## Specify test configuration
+	$(eval CONFIG=test)
+	$(eval CONFIG_SHORT=ts)
 
 .PHONY: preproduction
-preproduction: ## Specify preproduction configuration
-	$(eval include global_config/preproduction.sh)
+preproduction: set-test-azure-subscription ## Specify preproduction configuration
+	$(eval CONFIG=preproduction)
+	$(eval CONFIG_SHORT=pp)
+	$(eval DOMAINS_TERRAFORM_BACKEND_KEY=afqtsdomains_preprod.tfstate)
 
 .PHONY: production
-production:  ## Specify production configuration
-	$(eval include global_config/production.sh)
+production: set-production-azure-subscription ## Specify production configuration
+	$(eval CONFIG=production)
+	$(eval CONFIG_SHORT=pd)
+	$(eval KEY_VAULT_PURGE_PROTECTION=true)
 
-.PHONY: domains
-domains:  ## Specify domains configuration
-	$(eval include global_config/domains.sh)
+.PHONY: set-test-azure-subscription
+set-test-azure-subscription:
+	$(eval AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test)
+	$(eval AZURE_RESOURCE_PREFIX=s189t01)
+	$(eval AZURE_ENV_TAG=Test)
+
+.PHONY: set-production-azure-subscription
+set-production-azure-subscription:
+	$(eval AZURE_SUBSCRIPTION=s189-teacher-services-cloud-production)
+	$(eval AZURE_RESOURCE_PREFIX=s189p01)
+	$(eval AZURE_ENV_TAG=Prod)
 
 .PHONY: set-key-vault-names
 set-key-vault-names:
@@ -121,7 +137,7 @@ terraform-destroy: terraform-init
 
 .PHONY: set-azure-resource-group-tags
 set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template
-	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Apply for QTS in England", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Apply for QTS in England", "Environment" : "$(ENV_TAG)"}' | jq . ))
+	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Apply for QTS in England", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Apply for QTS in England", "Environment" : "$(AZURE_ENV_TAG)"}' | jq . ))
 
 .PHONY: set-what-if
 set-what-if:
@@ -153,12 +169,12 @@ domains-arm-deployment: set-azure-account set-azure-resource-group-tags
 			"tfStorageAccountName=${AZURE_RESOURCE_PREFIX}afqtsdomainstf" "tfStorageContainerName=afqtsdomains-tf"  "keyVaultName=${AZURE_RESOURCE_PREFIX}-afqtsdomains-kv" ${WHAT_IF}
 
 .PHONY: validate-azure-domains-resources
-validate-azure-domains-resources: domains set-what-if domains-arm-deployment # make deploy-azure-domains-resources AUTO_APPROVE=1
+validate-azure-domains-resources: set-production-azure-subscription set-what-if domains-arm-deployment # make deploy-azure-domains-resources AUTO_APPROVE=1
 
 .PHONY: deploy-azure-domains-resources
-deploy-azure-domains-resources: domains check-auto-approve domains-arm-deployment # make validate-azure-domains-resources
+deploy-azure-domains-resources: set-production-azure-subscription check-auto-approve domains-arm-deployment # make validate-azure-domains-resources
 
-domains-infra-init: domains set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
+domains-infra-init: set-production-azure-subscription set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
@@ -167,7 +183,7 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
-domains-init: domains set-azure-account ## terraform init for dns resources: make <env>  domains-init
+domains-init: set-production-azure-subscription set-azure-account ## terraform init for dns resources: make <env>  domains-init
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY),afqtsdomains_$(CONFIG).tfstate)
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing

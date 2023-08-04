@@ -6,13 +6,13 @@ on:
       environment:
         description: "Deploy environment"
         required: true
-        default: development_aks
+        default: development
         type: environment
         options:
-          - development_aks
-          - test_aks
-          - preproduction_aks
-          - production_aks
+          - development
+          - test
+          - preproduction
+          - production
   push:
     branches:
       - main
@@ -119,11 +119,11 @@ jobs:
     needs: [docker, rspec]
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
-    environment: review_aks
+    environment: review
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/actions/deploy-environment-to-aks
+      - uses: ./.github/actions/deploy-environment
         id: deploy
         with:
           environment: review
@@ -138,8 +138,8 @@ jobs:
           message: |
             Review app deployed to ${{ steps.deploy.outputs.url }}/personas
 
-  deploy_nonprod_aks:
-    name: Deploy to ${{ matrix.environment }} AKS environment
+  deploy_non_production:
+    name: Deploy to ${{ matrix.environment }} environment
     runs-on: ubuntu-latest
     needs: [docker, rspec]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -149,7 +149,7 @@ jobs:
       matrix:
         environment: [development, test, preproduction]
     environment:
-      name: ${{ matrix.environment }}_aks
+      name: ${{ matrix.environment }}
       url: ${{ steps.deploy.outputs.url }}
     outputs:
       environment_name: ${{ matrix.environment }}
@@ -157,27 +157,27 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/actions/deploy-environment-to-aks
+      - uses: ./.github/actions/deploy-environment
         id: deploy
         with:
           environment: ${{ matrix.environment }}
           docker-image: ${{ needs.docker.outputs.image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
-  deploy_production_aks:
-    name: Deploy to production AKS environment
-    needs: [docker, rspec, deploy_nonprod_aks]
+  deploy_production:
+    name: Deploy to production environment
+    needs: [docker, rspec, deploy_non_production]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
-      name: production_aks
+      name: production
       url: ${{ steps.deploy.outputs.url }}
-    concurrency: deploy_production_aks
+    concurrency: deploy_production
 
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/actions/deploy-environment-to-aks
+      - uses: ./.github/actions/deploy-environment
         id: deploy
         with:
           environment: production
@@ -188,10 +188,10 @@ jobs:
   notify_slack_of_failures:
     name: Notify Slack of failures
     runs-on: ubuntu-latest
-    environment: development_aks
+    environment: development
 
     if: ${{ failure() && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-    needs: [docker, rspec, deploy_nonprod_aks]
+    needs: [docker, rspec, deploy_non_production]
 
     steps:
       - uses: actions/checkout@v3
@@ -213,9 +213,9 @@ jobs:
       - name: Notify Slack channel on job failure
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_TITLE: Deployment of apply-for-qualified-teacher-status to ${{ needs.deploy_nonprod_aks.outputs.environment_name }} failed
+          SLACK_TITLE: Deployment of apply-for-qualified-teacher-status to ${{ needs.deploy_non_production.outputs.environment_name }} failed
           SLACK_MESSAGE: |
-            Deployment to ${{ needs.deploy_nonprod_aks.outputs.environment_name }} environment failed
+            Deployment to ${{ needs.deploy_non_production.outputs.environment_name }} environment failed
           SLACK_WEBHOOK: ${{ steps.key-vault-secrets.outputs.SLACK-WEBHOOK }}
           SLACK_COLOR: failure
           SLACK_FOOTER: Sent from notify_slack_of_failures job in deploy workflow
