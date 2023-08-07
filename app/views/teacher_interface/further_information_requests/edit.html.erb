@@ -1,9 +1,7 @@
-<% content_for :page_title, "Check your answers before submitting your application" %>
+<% content_for :page_title, "Check your answers before submitting" %>
 <% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_further_information_request_path(@view_object.further_information_request)) %>
 
-<h1 class="govuk-heading-xl">
-  Check your answers before submitting your application
-</h1>
+<h1 class="govuk-heading-xl">Check your answers before submitting</h1>
 
 <%= render(CheckYourAnswersSummary::Component.new(
   id: "check-your-answers",
