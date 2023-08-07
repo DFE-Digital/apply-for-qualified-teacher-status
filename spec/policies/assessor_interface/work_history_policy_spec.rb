@@ -40,34 +40,12 @@ RSpec.describe AssessorInterface::WorkHistoryPolicy do
 
   describe "#update?" do
     subject(:update?) { policy.update? }
-
-    context "without permission" do
-      let(:user) { create(:staff, :confirmed) }
-      it { is_expected.to be false }
-    end
-
-    context "with permission" do
-      let(:user) do
-        create(:staff, :confirmed, :with_change_work_history_permission)
-      end
-      it { is_expected.to be true }
-    end
+    it_behaves_like "a policy method requiring change the work history permission"
   end
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
-
-    context "without permission" do
-      let(:user) { create(:staff, :confirmed) }
-      it { is_expected.to be false }
-    end
-
-    context "with permission" do
-      let(:user) do
-        create(:staff, :confirmed, :with_change_work_history_permission)
-      end
-      it { is_expected.to be true }
-    end
+    it_behaves_like "a policy method requiring change the work history permission"
   end
 
   describe "#destroy?" do
