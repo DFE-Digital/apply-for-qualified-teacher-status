@@ -94,4 +94,8 @@ en:
           QualificationRequest: A qualification has been assessed.
           ReferenceRequest: A reference has been assessed.
       columns:
-        contact_email: Reference contact email
+        contact_email: Reference email address
+        contact_job: Reference job
+        contact_name: Reference name
+        family_name: Family name
+        given_names: Given names
