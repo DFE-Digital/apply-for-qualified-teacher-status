@@ -18,6 +18,7 @@ runs:
   steps:
     - name: Prepare application environment
       uses: ./.github/actions/prepare-app-env
+      with: { skip-node: "true" }
 
     - name: Run smoke tests
       shell: bash
