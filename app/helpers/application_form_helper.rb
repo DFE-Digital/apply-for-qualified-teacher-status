@@ -12,6 +12,7 @@ module ApplicationFormHelper
 
   def application_form_summary_rows(
     application_form,
+    current_staff:,
     include_name:,
     include_reviewer: true,
     highlight_email: false,
@@ -27,6 +28,17 @@ module ApplicationFormHelper
             value: {
               text: application_form_full_name(application_form),
             },
+            actions: [
+              if AssessorInterface::ApplicationFormPolicy.new(
+                   current_staff,
+                   application_form,
+                 ).edit?
+                {
+                  visually_hidden_text: I18n.t("application_form.summary.name"),
+                  href: [:edit, :assessor_interface, application_form],
+                }
+              end,
+            ].compact,
           }
         end
       ),

@@ -33,13 +33,27 @@ RSpec.describe ApplicationFormHelper do
 
   describe "#application_form_summary_rows" do
     subject(:summary_rows) do
-      application_form_summary_rows(application_form, include_name: true)
+      application_form_summary_rows(
+        application_form,
+        current_staff:,
+        include_name: true,
+      )
     end
+
+    let(:current_staff) { create(:staff) }
 
     it do
       is_expected.to eq(
         [
-          { key: { text: "Name" }, value: { text: "Given Family" } },
+          {
+            key: {
+              text: "Name",
+            },
+            value: {
+              text: "Given Family",
+            },
+            actions: [],
+          },
           {
             key: {
               text: "Country trained in",
@@ -115,10 +129,36 @@ RSpec.describe ApplicationFormHelper do
       )
     end
 
+    context "user has change name permission" do
+      let(:current_staff) { create(:staff, :with_change_name_permission) }
+
+      it "has an action to change the name" do
+        name_row = summary_rows.find { |row| row[:key][:text] == "Name" }
+
+        expect(name_row).to eq(
+          {
+            key: {
+              text: "Name",
+            },
+            value: {
+              text: "Given Family",
+            },
+            actions: [
+              {
+                visually_hidden_text: "Name",
+                href: [:edit, :assessor_interface, application_form],
+              },
+            ],
+          },
+        )
+      end
+    end
+
     context "include_reviewer false" do
       subject(:summary_rows_without_reviewer) do
         application_form_summary_rows(
           application_form,
+          current_staff:,
           include_name: true,
           include_reviewer: false,
         )
