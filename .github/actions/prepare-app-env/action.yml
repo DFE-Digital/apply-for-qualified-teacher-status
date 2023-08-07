@@ -9,10 +9,6 @@ inputs:
     description: Allows skipping Node.js setup for jobs where it isn't required
     required: false
     default: "false"
-  node-version:
-    description: The version of Node.js to install
-    required: false
-    default: "18.x"
 
 runs:
   using: composite
@@ -30,9 +26,9 @@ runs:
 
     - name: Set up Node
       if: ${{ inputs.skip-node == 'false' }}
-      uses: actions/setup-node@v2.5.0
+      uses: actions/setup-node@v3
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version-file: .tool-versions
 
     - name: Install yarn
       if: ${{ inputs.skip-node == 'false' }}
