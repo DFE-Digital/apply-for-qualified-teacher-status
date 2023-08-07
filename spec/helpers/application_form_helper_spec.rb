@@ -33,25 +33,13 @@ RSpec.describe ApplicationFormHelper do
 
   describe "#application_form_summary_rows" do
     subject(:summary_rows) do
-      application_form_summary_rows(
-        application_form,
-        include_name: true,
-        include_reference: true,
-      )
+      application_form_summary_rows(application_form, include_name: true)
     end
 
     it do
       is_expected.to eq(
         [
-          {
-            key: {
-              text: "Name",
-            },
-            value: {
-              text: "Given Family",
-            },
-            actions: [],
-          },
+          { key: { text: "Name" }, value: { text: "Given Family" } },
           {
             key: {
               text: "Country trained in",
@@ -59,16 +47,6 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text: "United States",
             },
-            actions: [],
-          },
-          {
-            key: {
-              text: "Email",
-            },
-            value: {
-              text: application_form.teacher.email,
-            },
-            actions: [],
           },
           {
             key: {
@@ -77,17 +55,16 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text: "Region",
             },
-            actions: [],
           },
           {
             key: {
-              text: "Created on",
+              text: "Email",
             },
             value: {
-              text: " 1 January 2020",
+              text: application_form.teacher.email,
             },
-            actions: [],
           },
+          { key: { text: "Created on" }, value: { text: " 1 January 2020" } },
           {
             key: {
               text: "Working days since submission",
@@ -95,7 +72,6 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text: "0 days",
             },
-            actions: [],
           },
           {
             key: {
@@ -106,10 +82,8 @@ RSpec.describe ApplicationFormHelper do
             },
             actions: [
               {
-                href:
-                  assessor_interface_application_form_assign_assessor_path(
-                    application_form,
-                  ),
+                visually_hidden_text: "Assigned to",
+                href: [:assessor_interface, application_form, :assign_assessor],
               },
             ],
           },
@@ -122,31 +96,20 @@ RSpec.describe ApplicationFormHelper do
             },
             actions: [
               {
-                href:
-                  assessor_interface_application_form_assign_reviewer_path(
-                    application_form,
-                  ),
+                visually_hidden_text: "Reviewer",
+                href: [:assessor_interface, application_form, :assign_reviewer],
               },
             ],
           },
-          {
-            key: {
-              text: "Reference",
-            },
-            value: {
-              text: "0000001",
-            },
-            actions: [],
-          },
+          { key: { text: "Reference" }, value: { text: "0000001" } },
           {
             key: {
               text: "Status",
             },
             value: {
               text:
-                "<strong class=\"govuk-tag govuk-tag--grey app-search-result__item__tag\">Not started</strong>\n",
+                "<strong class=\"govuk-tag govuk-tag--grey\">Not started</strong>\n",
             },
-            actions: [],
           },
         ],
       )
@@ -157,7 +120,6 @@ RSpec.describe ApplicationFormHelper do
         application_form_summary_rows(
           application_form,
           include_name: true,
-          include_reference: true,
           include_reviewer: false,
         )
       end

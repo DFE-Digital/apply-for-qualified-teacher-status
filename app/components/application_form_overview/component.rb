@@ -16,7 +16,6 @@ module ApplicationFormOverview
       application_form_summary_rows(
         application_form,
         include_name: true,
-        include_reference: true,
         highlight_email:,
       ) +
         [
