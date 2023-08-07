@@ -27,6 +27,11 @@ module PageHelpers
       PageObjects::AssessorInterface::AssessmentSection.new
   end
 
+  def assessor_edit_application_page
+    @assessor_edit_application_page ||=
+      PageObjects::AssessorInterface::EditApplication.new
+  end
+
   def assessor_edit_professional_standing_request_location_page
     @assessor_edit_professional_standing_request_location_page ||=
       PageObjects::AssessorInterface::EditProfessionalStandingRequestLocation.new

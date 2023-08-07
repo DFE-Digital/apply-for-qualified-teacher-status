@@ -32,6 +32,27 @@ module AssessorInterface
       @view_object = show_view_object
     end
 
+    def edit
+      authorize [:assessor_interface, application_form]
+
+      @form = ApplicationFormNameForm.new
+    end
+
+    def update
+      authorize [:assessor_interface, application_form]
+
+      @form =
+        ApplicationFormNameForm.new(
+          form_params.merge(application_form:, user: current_staff),
+        )
+
+      if @form.save
+        redirect_to [:assessor_interface, application_form]
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+
     def withdraw
       authorize [:assessor_interface, application_form]
     end
@@ -64,6 +85,13 @@ module AssessorInterface
 
     def application_form
       @application_form ||= show_view_object.application_form
+    end
+
+    def form_params
+      params.require(:assessor_interface_application_form_name_form).permit(
+        :given_names,
+        :family_name,
+      )
     end
   end
 end

@@ -1,0 +1,34 @@
+<% title = "Change details for ‘#{application_form_full_name(@application_form)}’" %>
+
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<%= form_with model: @form, url: [:assessor_interface, @application_form], method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h2 class="govuk-heading-m">Current name</h2>
+
+  <%= govuk_summary_list(actions: false) do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Given names" }
+      row.with_value { @application_form.given_names }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Family name" }
+      row.with_value { @application_form.family_name }
+    end
+  end %>
+
+  <h2 class="govuk-heading-m">Change name</h2>
+  <p class="govuk-body">Use this form to change one or more of the names.</p>
+
+  <%= f.govuk_text_field :given_names %>
+  <%= f.govuk_text_field :family_name %>
+
+  <%= f.govuk_submit do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+  <% end %>
+<% end %>
