@@ -2,13 +2,12 @@
 
 class SupportInterface::BaseController < ApplicationController
   include SupportCurrentNamespace
+  include StaffAuthenticatable
 
-  before_action :authenticate_staff!, :authorize_support
+  before_action :authorize_support
   after_action :verify_authorized
 
   def authorize_support
     authorize :support
   end
-
-  alias_method :pundit_user, :current_staff
 end

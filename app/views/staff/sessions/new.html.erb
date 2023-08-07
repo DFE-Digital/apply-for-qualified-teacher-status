@@ -1,24 +1,18 @@
 <h1 class="govuk-heading-l">Log in</h1>
 
-<% unless FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory) %>
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <%= f.govuk_error_summary %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= f.govuk_error_summary %>
 
-    <%= f.govuk_email_field :email, autocomplete: "email", label: { text: "Email" } %>
-    <%= f.govuk_password_field :password, autocomplete: "current-password", label: { text: "Password" } %>
+  <%= f.govuk_email_field :email, autocomplete: "email", label: { text: "Email" } %>
+  <%= f.govuk_password_field :password, autocomplete: "current-password", label: { text: "Password" } %>
 
-    <% if devise_mapping.rememberable? %>
-      <%= f.govuk_check_boxes_fieldset :remember_me, multiple: false, legend: nil do %>
-        <%= f.govuk_check_box :remember_me, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Remember me?" } %>
-      <% end %>
+  <% if devise_mapping.rememberable? %>
+    <%= f.govuk_check_boxes_fieldset :remember_me, multiple: false, legend: nil do %>
+      <%= f.govuk_check_box :remember_me, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Remember me?" } %>
     <% end %>
-
-    <%= f.govuk_submit %>
   <% end %>
-<% end %>
 
-<% if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory) %>
-  <%= govuk_button_to "Sign in with Active Directory", omniauth_authorize_path(:staff, :azure_activedirectory_v2), method: :post, id: "button-sign-in-with-active-directory"%>
+  <%= f.govuk_submit %>
 <% end %>
 
 <%= render "staff/shared/links" %>
