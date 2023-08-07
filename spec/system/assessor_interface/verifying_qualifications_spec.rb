@@ -80,7 +80,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def and_i_see_a_waiting_on_status
-    expect(assessor_application_page.overview.status.text).to eq(
+    expect(assessor_application_page.status_summary.value).to have_text(
       "WAITING ON QUALIFICATION",
     )
   end
@@ -139,11 +139,13 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def and_i_see_a_received_status
-    expect(assessor_application_page.overview.status.text).to eq("RECEIVED")
+    expect(assessor_application_page.status_summary.value).to have_text(
+      "RECEIVED",
+    )
   end
 
   def and_i_see_an_in_progress_status
-    expect(assessor_application_page.overview.status.text).to eq(
+    expect(assessor_application_page.status_summary.value).to have_text(
       "ASSESSMENT IN PROGRESS",
     )
   end

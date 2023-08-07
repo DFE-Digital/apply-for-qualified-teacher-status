@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PageObjects
   class GovukSummaryList < SitePrism::Section
     sections :rows, ".govuk-summary-list__row" do
