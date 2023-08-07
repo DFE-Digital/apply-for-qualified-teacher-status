@@ -15,7 +15,7 @@ runs:
   steps:
     - name: Install libvips
       if: ${{ inputs.skip-ruby == 'false' }}
-      run: sudo apt-get install -y libvips
+      run: sudo apt update && sudo apt install -y libvips
       shell: bash
 
     - name: Set up Ruby
