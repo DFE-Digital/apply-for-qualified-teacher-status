@@ -1,10 +1,6 @@
 name: Prepare application environment
 description: Performs setup steps common to jobs that need to run the application
 inputs:
-  skip-ruby:
-    description: Allows skipping Ruby setup for jobs where it isn't required
-    required: false
-    default: "false"
   skip-node:
     description: Allows skipping Node.js setup for jobs where it isn't required
     required: false
@@ -14,12 +10,10 @@ runs:
   using: composite
   steps:
     - name: Install libvips
-      if: ${{ inputs.skip-ruby == 'false' }}
       run: sudo apt update && sudo apt install -y libvips
       shell: bash
 
     - name: Set up Ruby
-      if: ${{ inputs.skip-ruby == 'false' }}
       uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
