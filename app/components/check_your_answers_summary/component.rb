@@ -135,16 +135,15 @@ module CheckYourAnswersSummary
             .order(:created_at)
             .select { |upload| upload.attachment.present? }
 
-        html = format_array(uploads, field)
-
         malware_scan_active =
           FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
 
-        if malware_scan_active && scope.scan_result_suspect.exists?
-          "#{html}<br /><br /><em>One or more upload has been deleted by the virus scanner.</em>"
-        else
-          html
-        end
+        [
+          format_array(uploads, field),
+          if malware_scan_active && scope.scan_result_suspect.exists?
+            "<em>One or more upload has been deleted by the virus scanner.</em>"
+          end,
+        ].compact_blank.join("<br /><br />").html_safe
       end
     end
 
