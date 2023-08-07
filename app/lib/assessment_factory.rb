@@ -54,7 +54,6 @@ class AssessmentFactory
           FailureReasons::EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED
         end
       ),
-      FailureReasons::UPLOADED_FILE_SUSPECT,
       FailureReasons::DUPLICATE_APPLICATION,
       FailureReasons::APPLICANT_ALREADY_QTS,
       FailureReasons::APPLICANT_ALREADY_DQT,
@@ -140,7 +139,6 @@ class AssessmentFactory
       FailureReasons::DEGREE_TRANSCRIPT_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE,
-      FailureReasons::UPLOADED_FILE_SUSPECT,
     ].compact
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
@@ -165,7 +163,6 @@ class AssessmentFactory
     failure_reasons = [
       FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
       FailureReasons::AGE_RANGE,
-      FailureReasons::UPLOADED_FILE_SUSPECT,
     ]
 
     AssessmentSection.new(key: "age_range_subjects", checks:, failure_reasons:)
@@ -189,7 +186,6 @@ class AssessmentFactory
           [
             FailureReasons::EL_MOI_NOT_TAUGHT_IN_ENGLISH,
             FailureReasons::EL_MOI_INVALID_FORMAT,
-            FailureReasons::UPLOADED_FILE_SUSPECT,
           ]
         else
           [
@@ -292,7 +288,6 @@ class AssessmentFactory
       FailureReasons::CONFIRM_AGE_RANGE_SUBJECTS,
       FailureReasons::QUALIFIED_TO_TEACH,
       FailureReasons::FULL_PROFESSIONAL_STATUS,
-      FailureReasons::UPLOADED_FILE_SUSPECT,
     ].compact
 
     AssessmentSection.new(

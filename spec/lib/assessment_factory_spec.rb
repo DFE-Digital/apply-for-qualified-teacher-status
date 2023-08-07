@@ -57,7 +57,6 @@ RSpec.describe AssessmentFactory do
               identification_document_expired
               identification_document_illegible
               identification_document_mismatch
-              uploaded_file_suspect
               duplicate_application
               applicant_already_qts
               applicant_already_dqt
@@ -123,7 +122,6 @@ RSpec.describe AssessmentFactory do
                   degree_transcript_illegible
                   additional_degree_certificate_illegible
                   additional_degree_transcript_illegible
-                  uploaded_file_suspect
                 ],
               )
             end
@@ -172,7 +170,6 @@ RSpec.describe AssessmentFactory do
                   degree_transcript_illegible
                   additional_degree_certificate_illegible
                   additional_degree_transcript_illegible
-                  uploaded_file_suspect
                 ],
               )
             end
@@ -225,7 +222,6 @@ RSpec.describe AssessmentFactory do
                   degree_transcript_illegible
                   additional_degree_certificate_illegible
                   additional_degree_transcript_illegible
-                  uploaded_file_suspect
                 ],
               )
             end
@@ -278,7 +274,6 @@ RSpec.describe AssessmentFactory do
                   degree_transcript_illegible
                   additional_degree_certificate_illegible
                   additional_degree_transcript_illegible
-                  uploaded_file_suspect
                 ],
               )
             end
@@ -304,11 +299,7 @@ RSpec.describe AssessmentFactory do
               %w[qualified_in_mainstream_education age_range_subjects_matches],
             )
             expect(section.failure_reasons).to eq(
-              %w[
-                not_qualified_to_teach_mainstream
-                age_range
-                uploaded_file_suspect
-              ],
+              %w[not_qualified_to_teach_mainstream age_range],
             )
           end
         end
@@ -334,11 +325,7 @@ RSpec.describe AssessmentFactory do
             )
 
             expect(section.failure_reasons).to eq(
-              %w[
-                not_qualified_to_teach_mainstream
-                age_range
-                uploaded_file_suspect
-              ],
+              %w[not_qualified_to_teach_mainstream age_range],
             )
           end
         end
@@ -485,7 +472,6 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
-                uploaded_file_suspect
               ],
             )
           end
@@ -529,7 +515,6 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
-                uploaded_file_suspect
               ],
             )
           end
@@ -563,7 +548,6 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
-                uploaded_file_suspect
               ],
             )
           end
