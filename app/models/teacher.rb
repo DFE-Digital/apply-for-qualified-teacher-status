@@ -37,11 +37,6 @@ class Teacher < ApplicationRecord
       application_forms.not_withdrawn.order(created_at: :desc).first
   end
 
-  def send_otp(*)
-    otp = Devise::Otp.derive_otp(secret_key)
-    send_devise_notification(:otp, otp)
-  end
-
   def send_magic_link(*)
     token = Devise::Passwordless::LoginToken.encode(self)
     send_devise_notification(:magic_link, token, {})

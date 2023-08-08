@@ -18,8 +18,6 @@ en:
       unauthenticated: "You need to sign in or sign up before continuing."
       unconfirmed: "You have to confirm your email address before continuing."
       magic_link_invalid: "Invalid or expired login link."
-      teacher:
-        otp_invalid: "Invalid code"
     mailer:
       confirmation_instructions:
         subject: "Your QTS application link"
@@ -32,8 +30,6 @@ en:
       password_change:
         subject: "Password Changed"
       magic_link:
-        subject: "Confirm your email address"
-      otp:
         subject: "Confirm your email address"
     omniauth_callbacks:
       failure: 'Could not authenticate you from %{kind} because "%{reason}".'

@@ -379,15 +379,6 @@ Rails.application.routes.draw do
         as: "teacher_magic_link"
     post "/teacher/magic_link", to: "teachers/magic_links#create"
 
-    get "/teacher/otp/new", to: "teachers/otp#new", as: "new_teacher_otp"
-    post "/teacher/otp", to: "teachers/otp#create", as: "teacher_otp"
-    get "/teacher/otp/retry/:error",
-        to: "teachers/otp#retry",
-        as: "retry_teacher_otp",
-        constraints: {
-          error: /(expired)|(exhausted)/,
-        }
-
     get "/teacher/check_email",
         to: "teachers/sessions#check_email",
         as: "teacher_check_email"
