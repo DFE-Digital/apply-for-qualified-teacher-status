@@ -27,6 +27,7 @@ RSpec.describe Filters::Status do
     before do
       create(:application_form, :awarded)
       create(:application_form, :declined)
+      create(:application_form, :declined, waiting_on_further_information: true)
     end
 
     let!(:included) do
