@@ -1,36 +1,25 @@
-<div class="govuk-summary-card" id="<%= id %>">
-  <div class="govuk-summary-card__title-wrapper">
-    <h2 class="govuk-summary-card__title"><%= title %></h2>
+<%= govuk_summary_card(title:, html_attributes: { id: }) do |card|
+  if delete_link_to.present?
+    card.with_action do
+      govuk_link_to(
+        "Delete <span class=\"govuk-visually-hidden\">#{title.downcase}</span>".html_safe,
+        delete_link_to
+      )
+    end
+  end
 
-    <% if delete_link_to.present? %>
-      <ul class="govuk-summary-card__actions">
-        <li class="govuk-summary-card__action">
-          <%= govuk_link_to(delete_link_to) do %>
-            Delete <span class="govuk-visually-hidden"><%= title.downcase %></span>
-          <% end %>
-        </li>
-      </ul>
-    <% end %>
-  </div>
-
-  <div class="govuk-summary-card__content">
-    <dl class="govuk-summary-list">
-      <% rows.each do |row| %>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key"><%= row.fetch(:title) %></dt>
-          <dd class="govuk-summary-list__value"><%= row.fetch(:value) %></dd>
-
-          <% if changeable %>
-            <dd class="govuk-summary-list__actions">
-              <% if (href = row[:href]).present? %>
-                <%= govuk_link_to(href) do %>
-                  Change <span class="govuk-visually-hidden"><%= row.fetch(:title).downcase %></span>
-                <% end %>
-              <% end %>
-            </dd>
-          <% end %>
-        </div>
-      <% end %>
-    </dl>
-  </div>
-</div>
+  card.with_summary_list do |summary_list|
+    rows.each do |row_data|
+      summary_list.with_row do |row|
+        row.with_key { row_data.fetch(:title) }
+        row.with_value { row_data.fetch(:value) }
+        if changeable && (href = row_data[:href]).present?
+          row.with_action(
+            href:,
+            visually_hidden_text: row_data.fetch(:title).downcase
+          )
+        end
+      end
+    end
+  end
+end %>
