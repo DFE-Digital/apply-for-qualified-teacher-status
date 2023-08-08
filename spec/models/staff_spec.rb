@@ -28,6 +28,7 @@
 #  remember_created_at            :datetime
 #  reset_password_sent_at         :datetime
 #  reset_password_token           :string
+#  reverse_decision_permission    :boolean          default(FALSE), not null
 #  sign_in_count                  :integer          default(0), not null
 #  support_console_permission     :boolean          default(FALSE), not null
 #  unconfirmed_email              :string

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_08_103630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -429,6 +429,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.boolean "support_console_permission", default: false, null: false
     t.string "azure_ad_uid"
     t.boolean "manage_applications_permission", default: false, null: false
+    t.boolean "reverse_decision_permission", default: false, null: false
     t.index "lower((email)::text)", name: "index_staff_on_lower_email", unique: true
     t.index ["confirmation_token"], name: "index_staff_on_confirmation_token", unique: true
     t.index ["invitation_token"], name: "index_staff_on_invitation_token", unique: true
@@ -449,10 +450,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_111002) do
     t.string "last_sign_in_ip"
     t.string "trn"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
-    t.string "secret_key"
-    t.integer "otp_guesses", default: 0, null: false
-    t.datetime "otp_created_at", precision: nil
     t.text "canonical_email", default: "", null: false
+    t.datetime "otp_created_at"
+    t.integer "otp_guesses", default: 0, null: false
+    t.string "secret_key"
     t.index "lower((email)::text)", name: "index_teacher_on_lower_email", unique: true
     t.index ["canonical_email"], name: "index_teachers_on_canonical_email"
     t.index ["uuid"], name: "index_teachers_on_uuid", unique: true

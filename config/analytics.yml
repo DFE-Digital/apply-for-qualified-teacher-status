@@ -339,6 +339,7 @@
     - name
     - remember_created_at
     - reset_password_sent_at
+    - reverse_decision_permission
     - sign_in_count
     - support_console_permission
     - unconfirmed_email
