@@ -25,6 +25,7 @@ class SupportInterface::StaffController < SupportInterface::BaseController
     params.require(:staff).permit(
       :award_decline_permission,
       :manage_applications_permission,
+      :reverse_decision_permission,
       :support_console_permission,
     )
   end
