@@ -15,6 +15,7 @@ class Staff::InvitationsController < Devise::InvitationsController
         name
         award_decline_permission
         manage_applications_permission
+        reverse_decision_permission
         support_console_permission
       ],
     )

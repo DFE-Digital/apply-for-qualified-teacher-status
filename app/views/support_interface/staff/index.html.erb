@@ -24,7 +24,6 @@
       row.with_key { t("activerecord.attributes.staff.award_decline_permission") }
       row.with_value { govuk_boolean_tag(staff.award_decline_permission) }
       row.with_action(
-        text: "Change",
         href: edit_support_interface_staff_path(staff),
         visually_hidden_text: t("activerecord.attributes.staff.award_decline_permission")
       )
@@ -34,9 +33,17 @@
       row.with_key { t("activerecord.attributes.staff.manage_applications_permission") }
       row.with_value { govuk_boolean_tag(staff.manage_applications_permission) }
       row.with_action(
-        text: "Change",
         href: edit_support_interface_staff_path(staff),
         visually_hidden_text: t("activerecord.attributes.staff.manage_applications_permission")
+      )
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.reverse_decision_permission") }
+      row.with_value { govuk_boolean_tag(staff.reverse_decision_permission) }
+      row.with_action(
+        href: edit_support_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.reverse_decision_permission")
       )
     end
 
@@ -44,7 +51,6 @@
       row.with_key { t("activerecord.attributes.staff.support_console_permission") }
       row.with_value { govuk_boolean_tag(staff.support_console_permission) }
       row.with_action(
-        text: "Change",
         href: edit_support_interface_staff_path(staff),
         visually_hidden_text: t("activerecord.attributes.staff.support_console_permission")
       )

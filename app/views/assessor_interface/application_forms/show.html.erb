@@ -1,8 +1,11 @@
 <% content_for :page_title, "Application" %>
 <% content_for :back_link_url, assessor_interface_application_forms_path %>
 
+<% application_form = @view_object.application_form %>
+<% assessment = @view_object.assessment %>
+
 <%= render "linked_application_forms",
-           teacher: @view_object.application_form.teacher,
+           teacher: application_form.teacher,
            email_used_as_reference_in_this_application_form: @view_object.email_used_as_reference_in_this_application_form?,
            other_application_forms_where_email_used_as_reference: @view_object.other_application_forms_where_email_used_as_reference %>
 
@@ -16,10 +19,16 @@
   <% end %>
 <% end %>
 
-<%= render "shared/assessor_header", title: "Application", application_form: @view_object.application_form %>
+<%= render "shared/assessor_header", title: "Application", application_form: %>
 
-<%= render(ApplicationFormOverview::Component.new(@view_object.application_form, highlight_email: @view_object.highlight_email?)) %>
+<%= render(ApplicationFormOverview::Component.new(application_form, highlight_email: @view_object.highlight_email?)) %>
 
 <h2 class="govuk-heading-l govuk-!-margin-top-9">Assessment</h2>
 
 <%= render(TaskList::Component.new(@view_object.task_list_sections)) %>
+
+<% if AssessorInterface::AssessmentPolicy.new(current_staff, assessment).destroy? %>
+  <%= govuk_warning_text do %>
+    <%= govuk_link_to "Reverse decision", [:rollback, :assessor_interface, application_form, assessment] %>
+  <% end %>
+<% end %>

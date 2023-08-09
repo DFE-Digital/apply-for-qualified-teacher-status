@@ -9,11 +9,11 @@ class RollbackAssessment
   end
 
   def call
-    raise InvalidState unless valid_state?
-
     ActiveRecord::Base.transaction do
+      validate_state
       update_assessment
       update_application_form
+      delete_draft_application_forms
     end
   end
 
@@ -21,7 +21,22 @@ class RollbackAssessment
 
   attr_reader :assessment, :user
 
-  def valid_state?
+  def validate_state
+    if has_submitted_another_application_form?
+      raise InvalidState, "The teacher has submitted a subsequent application."
+    end
+
+    unless valid_assessment_state?
+      raise InvalidState, "The assessment is not in a state to be rolled back."
+    end
+  end
+
+  def has_submitted_another_application_form?
+    teacher.application_form != application_form &&
+      !teacher.application_form.draft?
+  end
+
+  def valid_assessment_state?
     assessment.award? || assessment.decline? ||
       (assessment.unknown? && application_form.declined?)
   end
@@ -45,6 +60,7 @@ class RollbackAssessment
   end
 
   delegate :application_form, to: :assessment
+  delegate :teacher, to: :application_form
 
   def update_application_form
     if application_form.awarded?
@@ -54,6 +70,15 @@ class RollbackAssessment
     end
 
     ApplicationFormStatusUpdater.call(application_form:, user:)
+  end
+
+  def delete_draft_application_forms
+    ApplicationForm
+      .draft
+      .where(teacher:)
+      .find_each do |application_form|
+        DestroyApplicationForm.call(application_form:)
+      end
   end
 
   class InvalidState < StandardError

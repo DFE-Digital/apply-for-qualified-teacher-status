@@ -1,0 +1,15 @@
+<% content_for :page_title, "Reverse decision" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-l">Are you sure you want to reverse this decision?</h1>
+
+<p class="govuk-body">
+  This will require the application to be reassessed.
+  The applicant will not be informed of the reversal and any draft applications will be deleted.
+</p>
+
+<%= form_with url: [:assessor_interface, @application_form, @assessment], method: :delete do |f| %>
+  <%= f.govuk_submit "Reverse", prevent_double_click: false do %>
+    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <% end %>
+<% end %>

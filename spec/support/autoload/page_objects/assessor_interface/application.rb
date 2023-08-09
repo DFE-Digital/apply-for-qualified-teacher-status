@@ -16,6 +16,9 @@ module PageObjects
 
       section :task_list, TaskList, ".app-task-list"
 
+      element :reverse_decision_link,
+              ".app-task-list + .govuk-warning-text .govuk-link"
+
       def preliminary_check_task
         task_list.find_item("Preliminary check (qualifications)")
       end

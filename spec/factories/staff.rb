@@ -28,6 +28,7 @@
 #  remember_created_at            :datetime
 #  reset_password_sent_at         :datetime
 #  reset_password_token           :string
+#  reverse_decision_permission    :boolean          default(FALSE), not null
 #  sign_in_count                  :integer          default(0), not null
 #  support_console_permission     :boolean          default(FALSE), not null
 #  unconfirmed_email              :string
@@ -56,12 +57,16 @@ FactoryBot.define do
       confirmed_at { Time.zone.now }
     end
 
+    trait :with_award_decline_permission do
+      award_decline_permission { true }
+    end
+
     trait :with_manage_applications_permission do
       manage_applications_permission { true }
     end
 
-    trait :with_award_decline_permission do
-      award_decline_permission { true }
+    trait :with_reverse_decision_permission do
+      reverse_decision_permission { true }
     end
 
     trait :with_support_console_permission do

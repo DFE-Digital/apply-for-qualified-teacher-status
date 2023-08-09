@@ -48,6 +48,7 @@ en:
       staff:
         award_decline_permission: Award/decline (assessor)
         manage_applications_permission: Manage applications
+        reverse_decision_permission: Reverse decisions
         support_console_permission: Support console access
     errors:
       models:
