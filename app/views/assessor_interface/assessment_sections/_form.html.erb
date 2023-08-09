@@ -62,9 +62,10 @@
     <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?" } do %>
       <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
       <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
-        <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" }  do %>
+        <div id="assessor-interface-assessment-section-form-selected-failure-reasons-field-error"></div>
+        <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" } do %>
           <% view_object.failure_reasons.each do |failure_reason| %>
-            <%= f.govuk_check_box "#{failure_reason}_checked".to_sym, true, label: { text: t(failure_reason, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) }, link_errors: true do %>
+            <%= f.govuk_check_box "#{failure_reason}_checked".to_sym, true, label: { text: t(failure_reason, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) } do %>
               <%= f.govuk_text_area "#{failure_reason}_notes".to_sym,
                                     label: { text: t(view_object.notes_label_key_for(failure_reason:)), size: "s" },
                                     hint: { text: t(view_object.notes_hint_key_for(failure_reason:)) },
