@@ -13,9 +13,4 @@ class DeviseMailer < Devise::Passwordless::Mailer
     initialize_from_record(record)
     view_mail(GOVUK_NOTIFY_TEMPLATE_ID, headers_for(action, opts))
   end
-
-  def otp(record, otp, opts = {})
-    @otp = otp
-    devise_mail(record, :otp, opts)
-  end
 end

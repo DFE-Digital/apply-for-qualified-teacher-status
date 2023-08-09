@@ -320,13 +320,6 @@ Devise.setup do |config|
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
-  config.warden do |manager|
-    manager.strategies.add(
-      :otp_authenticatable,
-      Devise::Strategies::OtpAuthenticatable,
-    )
-    manager.default_strategies(scope: :teacher).unshift(:otp_authenticatable)
-  end
 
   #
   # ==> Mountable engine configurations

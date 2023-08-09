@@ -12,7 +12,6 @@ Rails.application.config.filter_parameters += %i[
   crypt
   salt
   certificate
-  otp
   ssn
   email
   given_names

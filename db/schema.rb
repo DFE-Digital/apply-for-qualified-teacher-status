@@ -451,9 +451,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_103630) do
     t.string "trn"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.text "canonical_email", default: "", null: false
-    t.datetime "otp_created_at"
-    t.integer "otp_guesses", default: 0, null: false
-    t.string "secret_key"
     t.index "lower((email)::text)", name: "index_teacher_on_lower_email", unique: true
     t.index ["canonical_email"], name: "index_teachers_on_canonical_email"
     t.index ["uuid"], name: "index_teachers_on_uuid", unique: true

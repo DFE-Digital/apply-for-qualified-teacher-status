@@ -1,10 +1,4 @@
 en:
-  teachers:
-    otp:
-      retry:
-        expired: Your security code has expired. Try again.
-        exhausted: You've had too many incorrect sign in attempts. Try again.
-
   teacher_interface:
     application_forms:
       show:
@@ -159,11 +153,6 @@ en:
   activemodel:
     errors:
       models:
-        teachers/otp_form:
-          attributes:
-            otp:
-              blank: Enter your confirmation code
-              wrong_length: Enter a valid code
         teacher_interface/age_range_form:
           attributes:
             minimum:

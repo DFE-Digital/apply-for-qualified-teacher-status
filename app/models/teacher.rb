@@ -9,9 +9,6 @@
 #  email              :string           default(""), not null
 #  last_sign_in_at    :datetime
 #  last_sign_in_ip    :string
-#  otp_created_at     :datetime
-#  otp_guesses        :integer          default(0), not null
-#  secret_key         :string
 #  sign_in_count      :integer          default(0), not null
 #  trn                :string
 #  uuid               :uuid             not null
@@ -38,11 +35,6 @@ class Teacher < ApplicationRecord
   def application_form
     @application_form ||=
       application_forms.not_withdrawn.order(created_at: :desc).first
-  end
-
-  def send_otp(*)
-    otp = Devise::Otp.derive_otp(secret_key)
-    send_devise_notification(:otp, otp)
   end
 
   def send_magic_link(*)

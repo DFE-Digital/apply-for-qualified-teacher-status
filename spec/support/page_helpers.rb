@@ -313,10 +313,6 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckWorkHistories.new
   end
 
-  def teacher_confirm_otp_page
-    @teacher_confirm_otp_page = PageObjects::TeacherInterface::ConfirmOtp.new
-  end
-
   def teacher_declined_application_page
     @teacher_declined_application_page ||=
       PageObjects::TeacherInterface::DeclinedApplication.new
@@ -464,10 +460,6 @@ module PageHelpers
   def teacher_registration_number_page
     @teacher_registration_number_page =
       PageObjects::TeacherInterface::RegistrationNumber.new
-  end
-
-  def teacher_retry_otp_page
-    @teacher_retry_otp_page = PageObjects::TeacherInterface::RetryOtp.new
   end
 
   def teacher_signed_out_page

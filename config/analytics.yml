@@ -353,8 +353,6 @@
     - id
     - last_sign_in_at
     - last_sign_in_ip
-    - otp_created_at
-    - otp_guesses
     - sign_in_count
     - trn
     - updated_at
