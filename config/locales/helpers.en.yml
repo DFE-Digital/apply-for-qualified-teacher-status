@@ -10,6 +10,8 @@ en:
           decline: As this reason triggers a decline, you do not need to add a note, but you can use the space below to add anything you feel might be helpful, if you want to.
       assessor_interface_create_note_form:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
+      assessor_interface_filter_form:
+        reference: "Example: 210245"
       assessor_interface_professional_standing_request_location_form:
         location_note: Use this space to add any useful notes, for example, where to locate the response.
       assessor_interface_work_history_contact_form:
@@ -263,8 +265,6 @@ en:
           text: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
           document: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
           decline: "Example: We declined this QTS application as you already have another application in progress."
-      assessor_interface_filter_form:
-        reference: "Example: 210245"
     legend:
       assessor_interface_assessment_recommendation_form:
         recommendation: QTS review completed
