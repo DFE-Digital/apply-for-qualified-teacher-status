@@ -61,7 +61,6 @@ class FailureReasons
     SCHOOL_DETAILS_CANNOT_BE_VERIFIED = "school_details_cannot_be_verified",
     TEACHING_CERTIFICATE_ILLEGIBLE = "teaching_certificate_illegible",
     TEACHING_TRANSCRIPT_ILLEGIBLE = "teaching_transcript_illegible",
-    UPLOADED_FILE_SUSPECT = "uploaded_file_suspect",
     UNRECOGNISED_REFERENCES = "unrecognised_references",
     WORK_HISTORY_BREAK = "work_history_break",
     WRITTEN_STATEMENT_ILLEGIBLE = "written_statement_illegible",
