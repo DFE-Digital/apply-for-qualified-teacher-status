@@ -10,14 +10,10 @@
   <%= render "shared/support_interface/forms/status_sanctions_checks", f: %>
   <%= render "shared/support_interface/forms/teaching_authority_form_fields", f: %>
 
-  <%= f.govuk_collection_radio_buttons :teaching_authority_requires_submission_email,
-  [
-  OpenStruct.new(value: :false, label: "Yes"),
-  OpenStruct.new(value: :true, label: "No")
-  ],
-  :value,
-  :label,
-  legend: { text: "Automatically notify the teaching authority (via email) every time a QTS application is submitted?" } %>
+  <%= f.govuk_radio_buttons_fieldset(:teaching_authority_requires_submission_email, legend: { size: 'm', text: 'Automatically notify the teaching authority (via email) every time a QTS application is submitted?' }) do %>
+    <%= f.govuk_radio_button :teaching_authority_requires_submission_email, 'yes', label: { text: 'Yes' }, link_errors: true %>
+    <%= f.govuk_radio_button :teaching_authority_requires_submission_email, 'no', label: { text: 'No' }%>
+  <% end %>
 
   <%= render "shared/support_interface/forms/changes_to_eligible_page", f: %>
   <%= render "shared/support_interface/forms/qualifications_information_form_fields", f: %>
