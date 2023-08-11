@@ -4,19 +4,15 @@
 
 <%= form_with model: @country, url: confirm_edit_support_interface_country_path(@country), method: "POST" do |f| %>
   <%= f.govuk_error_summary %>
+  
+  <%= render "shared/support_interface/forms/regions", f: %>
+  <%= render "shared/support_interface/forms/application_form", f: %>
+  <%= render "shared/support_interface/forms/preliminary_check_form_fields", f: %>
+  <%= render "shared/support_interface/forms/eligibility_checker", f: %>
+  <%= render "shared/support_interface/forms/teaching_authority_form_fields", f: %>
+  <%= render "shared/support_interface/forms/changes_to_eligible_page", f: %>
 
-  <%= f.govuk_check_box :eligibility_enabled, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Eligible" }%>
-  <%= f.govuk_check_box :eligibility_skip_questions, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Skip additional eligibility questions (keep qualification question)" }%>
-
-  <%= render "shared/teaching_authority_form_fields", f: %>
-  <%= render "shared/qualifications_information_form_fields", f: %>
-  <%= render "shared/preliminary_check_form_fields", f: %>
-
-  <%= f.govuk_text_area :all_regions,
-                        value: @all_regions,
-                        label: { text: "Regions" },
-                        hint: { text: "Include a region on each line." },
-                        rows: 20 %>
+  <%= f.govuk_text_area :qualifications_information, label: { text: '‘Proof of qualifications’' }, hint: { text: "‘(Example: ‘We cannot accept the National Certificate in Education (NCE) or the Teachers Certificate Grade II from Nigeria, as these do not meet the required level.’)’)" }, rows: 5 %>
 
   <%= f.govuk_submit "Save", prevent_double_click: false %>
 <% end %>

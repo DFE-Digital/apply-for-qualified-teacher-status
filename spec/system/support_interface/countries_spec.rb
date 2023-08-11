@@ -51,7 +51,7 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_status_information
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_online_checker_url
-    when_i_check_teaching_authority_requires_submission_email
+    when_i_select_yes_teaching_authority_requires_submission_email
     when_i_fill_qualifications_information
     when_i_check_written_statement_optional
     when_i_check_requires_preliminary_check
@@ -141,6 +141,7 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_fill_regions
+    choose "country-has-regions-yes-field", visible: :all
     fill_in "country-all-regions-field", with: "California"
   end
 
@@ -214,9 +215,9 @@ RSpec.describe "Countries support", type: :system do
             with: "Status information"
   end
 
-  def when_i_check_teaching_authority_requires_submission_email
-    check "region-teaching-authority-requires-submission-email-1-field",
-          visible: false
+  def when_i_select_yes_teaching_authority_requires_submission_email
+    choose "region-teaching-authority-requires-submission-email-yes-field",
+           visible: :all
   end
 
   def when_i_fill_qualifications_information

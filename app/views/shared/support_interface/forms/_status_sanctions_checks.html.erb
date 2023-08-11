@@ -1,0 +1,13 @@
+<h1 class="govuk-heading-s">Teacher status and sanctions checks</h1>
+
+<%= f.govuk_collection_select :status_check, [
+OpenStruct.new(id: 'online', name: 'Online'),
+OpenStruct.new(id: 'written', name: 'Written'),
+OpenStruct.new(id: 'none', name: 'None')
+], :id, :name, label: { text: "How will teacher status be checked?" } %>
+
+<%= f.govuk_collection_select :sanction_check, [
+OpenStruct.new(id: 'online', name: 'Online'),
+OpenStruct.new(id: 'written', name: 'Written'),
+OpenStruct.new(id: 'none', name: 'None')
+], :id, :name, label: { text: "How will sanctions be checked?" } %>

@@ -1,0 +1,10 @@
+<%= f.govuk_radio_buttons_fieldset(:has_regions, legend: { size: 'm', text: 'Regions' }, hint: { text: 'Does this country have regions within it that have a different teaching authority or service journey?' }) do %>
+    <%= f.govuk_radio_button :has_regions, 'no', label: { text: 'No' }, link_errors: true %>
+    <%= f.govuk_radio_button :has_regions, 'yes', label: { text: 'Yes' } do %>
+      <%= f.govuk_text_area :all_regions,
+                        value: @all_regions,
+                        label: nil,
+                        hint: { text: "Add regions below, one region per line. (This will allow you to customise the service for each region.) " },
+                        rows: 20 %>
+    <% end %>
+<% end %>
