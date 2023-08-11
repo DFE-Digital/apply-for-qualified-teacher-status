@@ -28,10 +28,6 @@ class CountryCode
       Country::CODES_IN_EUROPEAN_ECONOMIC_AREA.include?(code)
     end
 
-    def eligible_in_february_2023?(code)
-      Country::CODES_ELIGIBLE_IN_FEBRUARY_2023.include?(code)
-    end
-
     def secondary_education_teaching_qualification_required?(code)
       Country::CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION.include?(
         code,

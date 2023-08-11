@@ -85,14 +85,6 @@ RSpec.describe CountryCode do
     include_examples "true with codes", Country::CODES_IN_EUROPEAN_ECONOMIC_AREA
   end
 
-  describe "#eligible_in_february_2023?" do
-    subject(:eligible_in_february_2023?) do
-      described_class.eligible_in_february_2023?(code)
-    end
-
-    include_examples "true with codes", Country::CODES_ELIGIBLE_IN_FEBRUARY_2023
-  end
-
   describe "#secondary_education_teaching_qualification_required?" do
     subject(:secondary_education_teaching_qualification_required?) do
       described_class.secondary_education_teaching_qualification_required?(code)
