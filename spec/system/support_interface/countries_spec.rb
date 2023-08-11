@@ -216,8 +216,9 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_select_yes_teaching_authority_requires_submission_email
-    choose "region-teaching-authority-requires-submission-email-yes-field", visible: :all
-  end   
+    choose "region-teaching-authority-requires-submission-email-yes-field",
+           visible: :all
+  end
 
   def when_i_fill_qualifications_information
     fill_in "region-qualifications-information-field",
