@@ -59,6 +59,7 @@ def staff_members
       manage_applications_permission: false,
       reverse_decision_permission: false,
       support_console_permission: false,
+      withdraw_permission: false,
     },
     {
       name: "Beryl Assessor",
@@ -67,6 +68,7 @@ def staff_members
       manage_applications_permission: false,
       reverse_decision_permission: false,
       support_console_permission: false,
+      withdraw_permission: false,
     },
     {
       name: "Sally Manager",
@@ -75,6 +77,7 @@ def staff_members
       manage_applications_permission: true,
       reverse_decision_permission: true,
       support_console_permission: true,
+      withdraw_permission: true,
     },
     {
       name: "Antonio Helpdesk",
@@ -83,6 +86,7 @@ def staff_members
       manage_applications_permission: false,
       reverse_decision_permission: false,
       support_console_permission: false,
+      withdraw_permission: false,
     },
   ]
 end
