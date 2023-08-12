@@ -33,6 +33,7 @@
 #  support_console_permission     :boolean          default(FALSE), not null
 #  unconfirmed_email              :string
 #  unlock_token                   :string
+#  withdraw_permission            :boolean          default(FALSE), not null
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #  invited_by_id                  :bigint
