@@ -1,9 +1,10 @@
-<h2 class="govuk-heading-m">What age range is the applicant qualified to teach?</h2>
-<p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the age range they entered if you agree, or enter a new range.</p>
+<%= f.govuk_fieldset legend: { text: 'What age range is the applicant qualified to teach?' } do %>
+  <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the age range they entered if you agree, or enter a new range.</p>
 
-<%= f.govuk_number_field :age_range_min, width: 3 %>
-<%= f.govuk_number_field :age_range_max, width: 3 %>
-<%= f.govuk_text_area :age_range_note, label: { text: t("helpers.label.assessor_interface_assessment_section_form.age_range_note").html_safe } %>
+  <%= f.govuk_number_field :age_range_min, width: 3 %>
+  <%= f.govuk_number_field :age_range_max, width: 3 %>
+  <%= f.govuk_text_area :age_range_note, label: { text: t("helpers.label.assessor_interface_assessment_section_form.age_range_note").html_safe } %>
+<% end %>
 
 <h2 class="govuk-heading-m">Which subjects can the applicant teach in England?</h2>
 <p class="govuk-hint">You can enter up to three</p>
