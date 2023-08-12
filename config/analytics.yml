@@ -344,6 +344,7 @@
     - support_console_permission
     - unconfirmed_email
     - updated_at
+    - withdraw_permission
   :teachers:
     - canonical_email
     - created_at

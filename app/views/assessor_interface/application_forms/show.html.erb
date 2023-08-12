@@ -27,8 +27,13 @@
 
 <%= render(TaskList::Component.new(@view_object.task_list_sections)) %>
 
-<% if AssessorInterface::AssessmentPolicy.new(current_staff, assessment).destroy? %>
+<% if (management_tasks = @view_object.management_tasks).present? %>
   <%= govuk_warning_text do %>
-    <%= govuk_link_to "Reverse decision", [:rollback, :assessor_interface, application_form, assessment] %>
+    <h2 class="govuk-heading-s">Management tasks</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <% management_tasks.each do |task| %>
+        <li><%= govuk_link_to task[:title], task[:path] %></li>
+      <% end %>
+    </ul>
   <% end %>
 <% end %>

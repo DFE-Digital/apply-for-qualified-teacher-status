@@ -168,7 +168,7 @@ RSpec.describe "Staff support", type: :system do
   end
 
   def when_i_click_on_the_helpdesk_user
-    find(:xpath, "(//a[text()='Change'])[5]").click
+    find(:xpath, "(//a[text()='Change'])[6]").click
   end
 
   def then_i_see_the_staff_edit_form

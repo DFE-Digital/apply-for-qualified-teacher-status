@@ -27,6 +27,7 @@ class SupportInterface::StaffController < SupportInterface::BaseController
       :manage_applications_permission,
       :reverse_decision_permission,
       :support_console_permission,
+      :withdraw_permission,
     )
   end
 end

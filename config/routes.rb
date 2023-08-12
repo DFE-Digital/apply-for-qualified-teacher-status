@@ -14,13 +14,18 @@ Rails.application.routes.draw do
   namespace :assessor_interface, path: "/assessor" do
     root to: redirect("/assessor/applications")
 
-    resources :application_forms, path: "/applications", only: %i[index show] do
+    resources :application_forms,
+              path: "/applications",
+              only: %i[index show destroy] do
       collection do
         post "filters/apply", to: "application_forms#apply_filters"
         get "filters/clear", to: "application_forms#clear_filters"
       end
 
-      get "status", to: "application_forms#status", on: :member
+      member do
+        get "status"
+        get "withdraw"
+      end
 
       get "assign-assessor", to: "assessor_assignments#new"
       post "assign-assessor", to: "assessor_assignments#create"

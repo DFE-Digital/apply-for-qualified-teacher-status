@@ -24,15 +24,6 @@ namespace :application_forms do
     puts "Updated #{count} applications."
   end
 
-  desc "Withdraw an application which has not yet been awarded or declined."
-  task :withdraw, %i[reference staff_email] => :environment do |_task, args|
-    application_form =
-      ApplicationForm.assessable.find_by!(reference: args[:reference])
-    user = Staff.find_by!(email: args[:staff_email])
-
-    WithdrawApplicationForm.call(application_form:, user:)
-  end
-
   desc "Turn on preliminary checks for draft or submitted applications."
   task :enable_preliminary_checks,
        %i[country_code staff_email] => :environment do |_task, args|

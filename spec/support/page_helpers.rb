@@ -67,6 +67,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ReverseDecision.new
   end
 
+  def assessor_withdraw_application_page
+    @assessor_withdraw_application_page ||=
+      PageObjects::AssessorInterface::WithdrawApplication.new
+  end
+
   def applications_page
     @applications_page ||= PageObjects::AssessorInterface::Applications.new
   end

@@ -17,6 +17,7 @@ class Staff::InvitationsController < Devise::InvitationsController
         manage_applications_permission
         reverse_decision_permission
         support_console_permission
+        withdraw_permission
       ],
     )
   end
