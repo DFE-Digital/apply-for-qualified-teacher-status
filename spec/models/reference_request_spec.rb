@@ -63,6 +63,35 @@ RSpec.describe ReferenceRequest do
     it { is_expected.to belong_to(:work_history) }
   end
 
+  describe "scopes" do
+    describe "#remindable" do
+      subject(:remindable) { described_class.remindable }
+
+      let(:expected) do
+        create(
+          :reference_request,
+          assessment:
+            create(
+              :assessment,
+              application_form: create(:application_form, :submitted),
+            ),
+        )
+      end
+      before do
+        create(
+          :reference_request,
+          assessment:
+            create(
+              :assessment,
+              application_form: create(:application_form, :awarded),
+            ),
+        )
+      end
+
+      it { is_expected.to eq([expected]) }
+    end
+  end
+
   describe "validations" do
     context "when received" do
       subject { build(:reference_request, :received) }

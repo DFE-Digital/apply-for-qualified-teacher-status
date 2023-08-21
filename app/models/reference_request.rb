@@ -54,7 +54,12 @@ class ReferenceRequest < ApplicationRecord
 
   belongs_to :work_history
 
-  scope :remindable, -> { requested }
+  scope :remindable,
+        -> {
+          requested.joins(assessment: :application_form).merge(
+            ApplicationForm.assessable,
+          )
+        }
 
   with_options if: :received? do
     validates :contact_response, inclusion: [true, false]
@@ -83,11 +88,8 @@ class ReferenceRequest < ApplicationRecord
   end
 
   def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)
-    return true if days_until_expired <= 28 && number_of_reminders_sent.zero?
-
-    return true if days_until_expired <= 14 && number_of_reminders_sent == 1
-
-    false
+    (days_until_expired <= 28 && number_of_reminders_sent.zero?) ||
+      (days_until_expired <= 14 && number_of_reminders_sent == 1)
   end
 
   def send_reminder_email(_number_of_reminders_sent)

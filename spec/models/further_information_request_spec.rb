@@ -28,4 +28,33 @@ RSpec.describe FurtherInformationRequest do
 
   it_behaves_like "a remindable"
   it_behaves_like "a requestable"
+
+  describe "scopes" do
+    describe "#remindable" do
+      subject(:remindable) { described_class.remindable }
+
+      let(:expected) do
+        create(
+          :further_information_request,
+          assessment:
+            create(
+              :assessment,
+              application_form: create(:application_form, :submitted),
+            ),
+        )
+      end
+      before do
+        create(
+          :further_information_request,
+          assessment:
+            create(
+              :assessment,
+              application_form: create(:application_form, :awarded),
+            ),
+        )
+      end
+
+      it { is_expected.to eq([expected]) }
+    end
+  end
 end
