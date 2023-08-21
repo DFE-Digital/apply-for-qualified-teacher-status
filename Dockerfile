@@ -20,7 +20,7 @@ RUN apk upgrade openssl libssl3 libcrypto3
 # postgresql-dev: postgres driver and libraries
 # git: dependencies for bundle
 # vips-dev: dependencies for ruby-vips (image processing library)
-RUN apk add --no-cache build-base yarn postgresql13-dev git vips-dev
+RUN apk add --no-cache build-base yarn postgresql14-dev git vips-dev
 
 # Install gems defined in Gemfile
 COPY .ruby-version Gemfile Gemfile.lock ./
