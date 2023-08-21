@@ -62,8 +62,8 @@ FactoryBot.define do
       award_decline_permission { true }
     end
 
-    trait :with_manage_applications_permission do
-      manage_applications_permission { true }
+    trait :with_change_work_history_permission do
+      change_work_history_permission { true }
     end
 
     trait :with_reverse_decision_permission do

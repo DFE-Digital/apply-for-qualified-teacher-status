@@ -25,7 +25,7 @@
         head.with_row do |row|
           row.with_cell(header: true, text: "Email")
           row.with_cell(header: true, text: "Award/decline")
-          row.with_cell(header: true, text: "Manage applications")
+          row.with_cell(header: true, text: "Change work history")
           row.with_cell(header: true, text: "Reverse decisions")
           row.with_cell(header: true, text: "Support console")
           row.with_cell(header: true, text: "Withdraw")
@@ -39,7 +39,7 @@
             row.with_cell(text: staff.email)
 
             row.with_cell { govuk_boolean_tag(staff.award_decline_permission) }
-            row.with_cell { govuk_boolean_tag(staff.manage_applications_permission) }
+            row.with_cell { govuk_boolean_tag(staff.change_work_history_permission) }
             row.with_cell { govuk_boolean_tag(staff.reverse_decision_permission) }
             row.with_cell { govuk_boolean_tag(staff.support_console_permission) }
             row.with_cell { govuk_boolean_tag(staff.withdraw_permission) }
