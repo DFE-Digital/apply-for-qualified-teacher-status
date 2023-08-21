@@ -324,6 +324,7 @@
   :staff:
     - award_decline_permission
     - azure_ad_uid
+    - change_name_permission
     - change_work_history_permission
     - confirmation_sent_at
     - confirmed_at
