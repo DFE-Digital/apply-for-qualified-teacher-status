@@ -27,7 +27,7 @@ A service that allows international teachers to apply for qualified teacher stat
 - Ruby 3.x
 - Node.js 16.x
 - Yarn 1.22.x
-- PostgreSQL 13.x
+- PostgreSQL 14.x
 - Redis 7.x
 - Terraform 1.5.x
 - Kubectl 1.27.x
