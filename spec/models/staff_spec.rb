@@ -5,6 +5,7 @@
 #  id                             :bigint           not null, primary key
 #  award_decline_permission       :boolean          default(FALSE)
 #  azure_ad_uid                   :string
+#  change_work_history_permission :boolean          default(FALSE), not null
 #  confirmation_sent_at           :datetime
 #  confirmation_token             :string
 #  confirmed_at                   :datetime
@@ -23,7 +24,6 @@
 #  last_sign_in_at                :datetime
 #  last_sign_in_ip                :string
 #  locked_at                      :datetime
-#  manage_applications_permission :boolean          default(FALSE), not null
 #  name                           :text             default(""), not null
 #  remember_created_at            :datetime
 #  reset_password_sent_at         :datetime

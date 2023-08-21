@@ -317,6 +317,7 @@
   :staff:
     - award_decline_permission
     - azure_ad_uid
+    - change_work_history_permission
     - confirmation_sent_at
     - confirmed_at
     - created_at
@@ -335,7 +336,6 @@
     - last_sign_in_at
     - last_sign_in_ip
     - locked_at
-    - manage_applications_permission
     - name
     - remember_created_at
     - reset_password_sent_at
