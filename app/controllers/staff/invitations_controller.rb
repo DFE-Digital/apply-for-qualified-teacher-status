@@ -14,6 +14,7 @@ class Staff::InvitationsController < Devise::InvitationsController
       keys: %i[
         name
         award_decline_permission
+        change_name_permission
         change_work_history_permission
         reverse_decision_permission
         support_console_permission

@@ -47,6 +47,7 @@ en:
     attributes:
       staff:
         award_decline_permission: Award/decline (assessor)
+        change_name_permission: Change applicant’s name
         change_work_history_permission: Change work history references
         reverse_decision_permission: Reverse decisions
         support_console_permission: Support console access
