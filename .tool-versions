@@ -1,7 +1,7 @@
 azure-cli 2.37.0
 kubectl 1.27.3
 nodejs 18.1.0
-postgres 13.5
+postgres 14.9
 ruby 3.2.2
 terraform 1.5.0
 yarn 1.22.19
