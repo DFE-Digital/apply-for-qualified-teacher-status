@@ -2,19 +2,17 @@
 
 <h3 class="govuk-heading-m">Why your application was declined</h3>
 
-<%- if view_object.show_further_information_request_expired_content? -%>
+<% if view_object.show_further_information_request_expired_content? %>
   <%= govuk_inset_text(text: t(".further_information_request_expired")) %>
-<%- end -%>
+<% end %>
 
-<%- if view_object.show_professional_standing_request_expired_content? -%>
-  <%= govuk_inset_text(
-        text: t(
-          ".professional_standing_request_expired",
-          certificate_name: region_certificate_name(view_object.region),
-          teaching_authority_name: region_teaching_authority_name(view_object.region)
-        )
-      ) %>
-<%- end -%>
+<% if view_object.show_professional_standing_request_expired_content? %>
+  <%= govuk_inset_text(text: t(
+    ".professional_standing_request_expired",
+    certificate_name: region_certificate_name(view_object.region),
+    teaching_authority_name: region_teaching_authority_name(view_object.region)
+  )) %>
+<% end %>
 
 <% if (sections = view_object.notes_from_assessors).present? %>
   <h4 class="govuk-heading-s">Notes from the assessor:</h4>
@@ -48,9 +46,7 @@
 
   <p class="govuk-body">If you reapply for QTS, you will not be able to review the details of your previous application.</p>
 
-  <p class="govuk-body">
-    <%= govuk_button_link_to "Apply again", new_teacher_interface_application_form_path %>
-  </p>
+  <p class="govuk-body"><%= govuk_button_link_to "Apply again", new_teacher_interface_application_form_path %></p>
 
   <p class="govuk-body">You may want to explore other routes to teaching in England. QTS is not a requirement to teach in independent (private) schools, academies, free schools and in the further education (FE) sector in England.</p>
 
@@ -62,8 +58,8 @@
     <li><%= govuk_link_to "Academies and Free Schools", "https://www.gov.uk/types-of-school" %></li>
   </ul>
 
-  <p class="govuk-body">For further information on other routes to gaining QTS visit <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" class="govuk-link">Get into teaching</a>.</p>
-  <p class="govuk-body">You can also learn more about <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/train-to-teach-in-england-as-an-international-student" class="govuk-link">training to teach in England</a>.</p>
+  <p class="govuk-body">For further information on other routes to gaining QTS visit <%= govuk_link_to "Get Into Teaching", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" %>.</p>
+  <p class="govuk-body">You can also learn more about <%= govuk_link_to "training to teach in England", "https://getintoteaching.education.gov.uk/non-uk-teachers/train-to-teach-in-england-as-an-international-student" %>.</p>
 
   <p class="govuk-body">You have the right of appeal to the Head of Teacher Qualifications and/or the County Court against this decision.</p>
 <% end %>
