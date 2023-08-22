@@ -115,43 +115,24 @@ end
 
 def application_form_traits_for(region, new_regs)
   evidential_traits = evidential_traits_for(region, new_regs)
-  additional_traits = evidential_traits + [english_language_trait]
+
+  traits =
+    %i[
+      with_personal_information
+      with_completed_qualification
+      with_identification_document
+      with_age_range
+      with_subjects
+    ] + evidential_traits + [english_language_trait]
 
   [
     [],
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-    ] + additional_traits,
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-      submitted
-    ] + additional_traits,
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-      submitted
-      preliminary_check
-    ] + additional_traits,
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-      submitted
-      waiting_on
-    ] + additional_traits,
+    traits,
+    traits + %i[submitted],
+    traits + %i[preliminary_check],
+    traits + %i[waiting_on],
+    traits + %i[awarded],
+    traits + %i[declined],
   ]
 end
 
