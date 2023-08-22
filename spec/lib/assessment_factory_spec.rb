@@ -177,7 +177,7 @@ RSpec.describe AssessmentFactory do
         end
 
         context "under the new regulations" do
-          let(:application_form) { create(:application_form, :new_regs) }
+          let(:application_form) { create(:application_form) }
 
           context "when secondary education teaching qualification is not required" do
             before do
@@ -380,7 +380,7 @@ RSpec.describe AssessmentFactory do
       end
 
       describe "english language proficiency section" do
-        let(:application_form) { create(:application_form, :new_regs) }
+        let(:application_form) { create(:application_form) }
 
         it "is included in the task list when the EL feature is enabled" do
           expect(sections.english_language_proficiency.count).to eq(1)
@@ -414,7 +414,7 @@ RSpec.describe AssessmentFactory do
         end
 
         context "with a new regulations application form" do
-          let(:application_form) { create(:application_form, :new_regs) }
+          let(:application_form) { create(:application_form) }
 
           it "has the right checks and failure reasons" do
             section = sections.work_history.first

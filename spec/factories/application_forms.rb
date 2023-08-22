@@ -92,10 +92,7 @@ FactoryBot.define do
     association :teacher
     association :region
 
-    needs_work_history do
-      (region.status_check_none? || region.sanction_check_none?) &&
-        !region.application_form_skip_work_history
-    end
+    needs_work_history { !region.application_form_skip_work_history }
     needs_written_statement do
       region.status_check_written? || region.sanction_check_written?
     end
@@ -197,11 +194,10 @@ FactoryBot.define do
 
     trait :old_regs do
       created_at { Date.new(2023, 1, 31) }
-    end
-
-    trait :new_regs do
-      created_at { Date.new(2023, 2, 1) }
-      needs_work_history { !region.application_form_skip_work_history }
+      needs_work_history do
+        (region.status_check_none? || region.sanction_check_none?) &&
+          !region.application_form_skip_work_history
+      end
     end
 
     trait :with_assessment do

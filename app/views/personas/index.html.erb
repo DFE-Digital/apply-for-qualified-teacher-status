@@ -115,7 +115,6 @@
           row.with_cell(header: true, text: "Status check")
           row.with_cell(header: true, text: "Sanction check")
           row.with_cell(header: true, text: "Status")
-          row.with_cell(header: true, text: "New regulations")
           row.with_cell(header: true, text: "Email address")
           row.with_cell(header: true, text: "Actions", numeric: true)
         end
@@ -135,7 +134,6 @@
             row.with_cell do
               render(StatusTag::Component.new(status: persona[:status]))
             end
-            row.with_cell { govuk_boolean_tag(persona[:created_under_new_regulations]) }
             row.with_cell { persona[:teacher].email }
 
             row.with_cell(numeric: true) do

@@ -203,7 +203,7 @@ RSpec.describe SendReminderEmail do
       context "when the applicant is from a country with a 4 week expiry" do
         context "when created under the new regulations" do
           let(:application_form) do
-            create(:application_form, :submitted, :new_regs, region:)
+            create(:application_form, :submitted, region:)
           end
 
           # Australia, Canada, Gibraltar, New Zealand, US

@@ -161,11 +161,12 @@ RSpec.describe EligibilityCheck, type: :model do
 
       before do
         eligibility_check.free_of_sanctions = true
+        eligibility_check.work_experience = "over_20_months"
         eligibility_check.teach_children = true
-        eligibility_check.qualification = true
         eligibility_check.degree = true
-        eligibility_check.country_code = country.code
+        eligibility_check.qualification = true
         eligibility_check.region = country.regions.first
+        eligibility_check.country_code = country.code
       end
 
       it { is_expected.to be true }

@@ -135,7 +135,7 @@ RSpec.describe Assessment, type: :model do
     end
 
     context "with an application under new regulations" do
-      let(:application_form) { create(:application_form, :new_regs) }
+      let(:application_form) { create(:application_form) }
 
       it { is_expected.to be false }
 
@@ -196,7 +196,7 @@ RSpec.describe Assessment, type: :model do
     subject(:can_verify?) { assessment.can_verify? }
 
     context "with an application under new regulations" do
-      let(:application_form) { create(:application_form, :new_regs) }
+      let(:application_form) { create(:application_form) }
 
       context "with an unknown assessment" do
         before do

@@ -47,9 +47,5 @@ FactoryBot.define do
     trait :ineligible do
       degree { false }
     end
-
-    trait :new_regs do
-      created_at { Date.new(2023, 2, 1) }
-    end
   end
 end
