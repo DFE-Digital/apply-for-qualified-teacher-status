@@ -142,56 +142,56 @@ FactoryBot.define do
     end
 
     trait :preliminary_check do
+      submitted
       requires_preliminary_check { true }
       status { "preliminary_check" }
-      submitted_at { Time.zone.now }
     end
 
     trait :assessment_in_progress do
+      submitted
       status { "assessment_in_progress" }
-      submitted_at { Time.zone.now }
     end
 
     trait :waiting_on do
+      submitted
       status { "waiting_on" }
-      submitted_at { Time.zone.now }
     end
 
     trait :received do
+      submitted
       status { "received" }
-      submitted_at { Time.zone.now }
     end
 
     trait :overdue do
+      submitted
       status { "overdue" }
-      submitted_at { Time.zone.now }
     end
 
     trait :awarded_pending_checks do
+      submitted
       status { "awarded_pending_checks" }
-      submitted_at { Time.zone.now }
     end
 
     trait :awarded do
+      submitted
       status { "awarded" }
-      submitted_at { Time.zone.now }
       awarded_at { Time.zone.now }
     end
 
     trait :declined do
+      submitted
       status { "declined" }
-      submitted_at { Time.zone.now }
       declined_at { Time.zone.now }
     end
 
     trait :potential_duplicate_in_dqt do
+      submitted
       status { "potential_duplicate_in_dqt" }
-      submitted_at { Time.zone.now }
     end
 
     trait :withdrawn do
+      submitted
       status { "withdrawn" }
-      submitted_at { Time.zone.now }
       withdrawn_at { Time.zone.now }
     end
 
