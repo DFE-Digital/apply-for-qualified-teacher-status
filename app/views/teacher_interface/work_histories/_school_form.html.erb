@@ -1,29 +1,29 @@
-<%= form_with model: form, url: @form.work_history.new_record? ? %i[teacher_interface application_form work_histories] : [:school, :teacher_interface, :application_form, form.work_history], method: :post do |f| %>
+<%= form_with model: form, url: form.work_history.new_record? ? %i[teacher_interface application_form work_histories] : [:school, :teacher_interface, :application_form, form.work_history], method: :post do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">
     <%= t("application_form.work_history.school.heading.#{form.work_history.locale_key}") %>
   </h1>
 
-  <p class="govuk-body">Tell us about the teaching roles you’ve held <b>since completing</b> your teaching qualification.</p>
-  <p class="govuk-inset-text">We cannot accept roles that took place before you became recognised as a teacher.</p>
-  <p class="govuk-body">
-    If you started a role before you were recognised as a teacher, but you continued in the same role once you became recognised,
-    only the part of that role that took place after you were recognised will count towards your QTS application.
-  </p>
+  <p class="govuk-body">You must only add teaching employment roles gained <span class="govuk-!-font-weight-bold">after</span> becoming a teacher. The teaching roles you provide can be from working in any country.</p>
+  <p class="govuk-inset-text">We cannot accept any teaching experience gained before you were qualified.</p>
 
   <% if form.work_history.new_record? %>
     <%= f.govuk_check_boxes_fieldset :meets_all_requirements, legend: nil, multiple: false do %>
-      <p class="govuk-body">Every role you add must meet <strong class="govuk-!-font-weight-bold">ALL</strong> of the following requirements.</p>
+      <p class="govuk-body">Each role you add must meet <strong class="govuk-!-font-weight-bold">all</strong> of the following requirements.</p>
+
+      <p class="govuk-body">You were:</p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>You were qualified to teach while working this role.</li>
-        <li>You worked unsupervised with children aged between 5 and 16 years.</li>
-        <li>You were solely responsible for planning, preparing and delivering lessons to at least 4 students at a time.</li>
-        <li>You were solely responsible for assessing and reporting on the progress of those students.</li>
+        <li>teaching in this role after qualifying</li>
+        <li>unsupervised when working with children aged between 5 and 16 years</li>
+        <li>solely responsible for planning, preparing and delivering lessons to at least 4 students at a time</li>
+        <li>solely responsible for assessing and reporting on the progress of those student</li>
       </ul>
 
-      <p class="govuk-body">We cannot consider any teaching roles that do not meet ALL of these requirements.</p>
+      <% unless form.work_history.application_form.reduced_evidence_accepted %>
+        <p class="govuk-body">We’ll contact the references you’ve provided to verify your work history before awarding QTS.</p>
+      <% end %>
 
       <%= f.govuk_check_box :meets_all_requirements, 1, 0, multiple: false, link_errors: true, label: {
         text: "The role I’m about to add meets ALL of these requirements.", size: "s"
