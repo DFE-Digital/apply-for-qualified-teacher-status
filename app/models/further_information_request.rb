@@ -28,18 +28,19 @@ class FurtherInformationRequest < ApplicationRecord
            inverse_of: :further_information_request,
            dependent: :destroy
 
-  scope :remindable, -> { requested }
+  scope :remindable,
+        -> {
+          requested.joins(assessment: :application_form).merge(
+            ApplicationForm.assessable,
+          )
+        }
 
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
 
   def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)
-    return true if days_until_expired <= 14 && number_of_reminders_sent.zero?
-
-    return true if days_until_expired <= 7 && number_of_reminders_sent == 1
-
-    return true if days_until_expired <= 2 && number_of_reminders_sent == 2
-
-    false
+    (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
+      (days_until_expired <= 7 && number_of_reminders_sent == 1) ||
+      (days_until_expired <= 2 && number_of_reminders_sent == 2)
   end
 
   def send_reminder_email(_number_of_reminders_sent)
