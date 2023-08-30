@@ -1,0 +1,8 @@
+<%= f.govuk_collection_radio_buttons :requires_preliminary_check,
+                                     [
+                                       OpenStruct.new(value: :true, label: "Yes"),
+                                       OpenStruct.new(value: :false, label: "No")
+                                     ],
+                                     :value,
+                                     :label,
+                                     legend: { text: "Will applications be subject to a preliminary check?", size: "s" } %>

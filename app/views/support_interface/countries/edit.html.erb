@@ -12,8 +12,19 @@
     <% end %>
   <% end %>
 
-  <%= render "shared/support_interface/forms/application_form", f: %>
-  <%= render "shared/support_interface/forms/preliminary_check_form_fields", f: %>
+  <%= f.govuk_fieldset legend: { text: "Application form" } do %>
+    <%= f.govuk_collection_radio_buttons :eligibility_enabled,
+                                         [
+                                           OpenStruct.new(value: :true, label: "Yes"),
+                                           OpenStruct.new(value: :false, label: "No")
+                                         ],
+                                         :value,
+                                         :label,
+                                         legend: { text: "Do we accept applications from this country?", size: "s" } %>
+
+    <%= render "shared/support_interface/forms/requires_preliminary_check", f: %>
+  <% end %>
+
   <%= render "shared/support_interface/forms/eligibility_checker", f: %>
   <%= render "shared/support_interface/forms/teaching_authority_form_fields", f: %>
   <%= render "shared/support_interface/forms/changes_to_eligible_page", f: %>

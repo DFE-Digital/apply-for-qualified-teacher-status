@@ -239,10 +239,10 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_check_requires_preliminary_check
-    check "region-requires-preliminary-check-1-field", visible: false
+    choose "region-requires-preliminary-check-true-field", visible: false
   rescue Capybara::ElementNotFound
-    check "support-interface-country-form-requires-preliminary-check-1-field",
-          visible: false
+    choose "support-interface-country-form-requires-preliminary-check-true-field",
+           visible: false
   end
 
   def and_i_click_save
