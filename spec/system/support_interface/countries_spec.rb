@@ -31,11 +31,10 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_qualifications_information
     when_i_check_requires_preliminary_check
     when_i_fill_regions
-    and_i_save
+    and_i_click_save
     then_i_see_country_contact_preview
     then_i_see_region_changes_confirmation
-    and_i_confirm
-    and_i_see_a_success_banner
+    and_i_click_confirm
 
     when_i_click_on_a_region
     then_i_see_a_region
@@ -55,9 +54,9 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_qualifications_information
     when_i_check_written_statement_optional
     when_i_check_requires_preliminary_check
-    and_i_save_and_preview
+    and_i_click_preview
     then_i_see_the_preview
-    and_i_see_a_success_banner
+    and_i_click_save
 
     when_i_visit_the_countries_page
     then_i_see_the_countries_page
@@ -238,19 +237,15 @@ RSpec.describe "Countries support", type: :system do
     check "country-requires-preliminary-check-1-field", visible: false
   end
 
-  def and_i_save
+  def and_i_click_save
     click_button "Save", visible: false
   end
 
-  def and_i_save_and_preview
-    click_button "Save and preview", visible: false
+  def and_i_click_preview
+    click_button "Preview", visible: false
   end
 
-  def and_i_confirm
+  def and_i_click_confirm
     click_button "Confirm", visible: false
-  end
-
-  def and_i_see_a_success_banner
-    expect(page).to have_content "Successfully updated"
   end
 end

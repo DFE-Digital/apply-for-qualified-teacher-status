@@ -10,4 +10,24 @@
 
 <hr class="govuk-!-margin-top-6 govuk-!-margin-bottom-6" />
 
-<p class="govuk-body"><%= govuk_link_to "Back to edit #{CountryName.from_region(@region)}", edit_support_interface_region_path(@region) %></p>
+<%= form_with model: [:support_interface, @region] do |f| %>
+  <%= f.hidden_field :application_form_skip_work_history, value: @region.application_form_skip_work_history %>
+  <%= f.hidden_field :qualifications_information, value: @region.qualifications_information %>
+  <%= f.hidden_field :reduced_evidence_accepted, value: @region.reduced_evidence_accepted %>
+  <%= f.hidden_field :requires_preliminary_check, value: @region.requires_preliminary_check %>
+  <%= f.hidden_field :sanction_check, value: @region.sanction_check %>
+  <%= f.hidden_field :status_check, value: @region.status_check %>
+  <%= f.hidden_field :teaching_authority_address, value: @region.teaching_authority_address %>
+  <%= f.hidden_field :teaching_authority_certificate, value: @region.teaching_authority_certificate %>
+  <%= f.hidden_field :teaching_authority_emails_string, value: @region.teaching_authority_emails_string %>
+  <%= f.hidden_field :teaching_authority_name, value: @region.teaching_authority_name %>
+  <%= f.hidden_field :teaching_authority_online_checker_url, value: @region.teaching_authority_online_checker_url %>
+  <%= f.hidden_field :teaching_authority_other, value: @region.teaching_authority_other %>
+  <%= f.hidden_field :teaching_authority_provides_written_statement, value: @region.teaching_authority_provides_written_statement %>
+  <%= f.hidden_field :teaching_authority_requires_submission_email, value: @region.teaching_authority_requires_submission_email %>
+  <%= f.hidden_field :teaching_authority_sanction_information, value: @region.teaching_authority_sanction_information%>
+  <%= f.hidden_field :teaching_authority_status_information, value: @region.teaching_authority_status_information%>
+  <%= f.hidden_field :teaching_authority_websites_string, value: @region.teaching_authority_websites_string %>
+  <%= f.hidden_field :written_statement_optional, value: @region.written_statement_optional %>
+  <%= f.govuk_submit "Save", name: "preview", value: "false" %>
+<% end %>

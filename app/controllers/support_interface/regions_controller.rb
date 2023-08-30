@@ -7,22 +7,20 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
   end
 
   def update
-    if @region.update(region_params)
-      flash[
-        :success
-      ] = "Successfully updated #{CountryName.from_region(@region)}"
-
-      if params[:preview] == "preview"
-        redirect_to preview_support_interface_region_path(@region)
-      else
-        redirect_to support_interface_countries_path
-      end
-    else
+    @region.assign_attributes(region_params)
+    if @region.invalid?
       render :edit, status: :unprocessable_entity
+    elsif ActiveModel::Type::Boolean.new.cast(params[:preview])
+      session[:region] = region_params
+      redirect_to [:preview, :support_interface, @region]
+    else
+      @region.save!
+      redirect_to %i[support_interface countries]
     end
   end
 
   def preview
+    @region.assign_attributes(session[:region])
   end
 
   private

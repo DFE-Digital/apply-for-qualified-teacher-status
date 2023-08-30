@@ -23,8 +23,7 @@
   <%= f.govuk_check_box :teaching_authority_provides_written_statement, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Will the teaching authority only send the letter of professional standing (LOPS) directly to the TRA?" } %>
   <br>
 
-  <%= f.govuk_submit "Save", prevent_double_click: false do %>
-    <%= f.govuk_submit "Save and preview", prevent_double_click: false, name: "preview", value: "preview" %>
-    <%= govuk_button_link_to "Ignore changes and preview", preview_support_interface_region_path(@region), secondary: true %>
+  <%= f.govuk_submit "Preview", name: "preview", value: "true" do %>
+    <%= f.govuk_submit "Save", name: "preview", value: "false", secondary: true %>
   <% end %>
 <% end %>
