@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 class SupportInterface::CountriesController < SupportInterface::BaseController
-  skip_before_action :authorize_support, only: :confirm_edit
-  before_action :load_country_and_edit_actions, only: %w[confirm_edit update]
+  before_action :load_country, except: :index
+  before_action :load_edit_actions, only: %w[confirm_edit update]
 
   def index
+    authorize [:support_interface, Country]
     @countries = Country.includes(:regions).order(:code)
   end
 
   def edit
-    @country = Country.includes(:regions).find(params[:id])
     @all_regions = @country.regions.map(&:name).join("\n")
   end
 
   def confirm_edit
-    authorize :support, :edit?
     @country.assign_attributes(country_params)
   end
 
@@ -43,8 +42,12 @@ class SupportInterface::CountriesController < SupportInterface::BaseController
 
   private
 
-  def load_country_and_edit_actions
+  def load_country
     @country = Country.includes(:regions).find(params[:id])
+    authorize [:support_interface, @country]
+  end
+
+  def load_edit_actions
     @all_regions = (params.dig(:country, :all_regions) || "").chomp
     @diff_actions = calculate_diff_actions
   end

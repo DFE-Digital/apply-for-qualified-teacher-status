@@ -3,14 +3,12 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::AssessmentPolicy do
+  it_behaves_like "a policy"
+
   let(:user) { nil }
   let(:record) { nil }
 
   subject(:policy) { described_class.new(user, record) }
-
-  it "must have a user" do
-    expect { policy }.to raise_error(Pundit::NotAuthorizedError)
-  end
 
   describe "#index?" do
     subject(:index?) { policy.index? }

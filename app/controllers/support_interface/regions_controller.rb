@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
 class SupportInterface::RegionsController < SupportInterface::BaseController
-  skip_before_action :authorize_support, only: :preview
+  before_action :load_region
 
   def edit
-    @region = Region.find(params[:id])
   end
 
   def update
-    @region = Region.find(params[:id])
-
     if @region.update(region_params)
       flash[
         :success
@@ -26,12 +23,14 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
   end
 
   def preview
-    authorize :support, :show?
-
-    @region = Region.find(params[:id])
   end
 
   private
+
+  def load_region
+    @region = Region.find(params[:id])
+    authorize [:support_interface, @region]
+  end
 
   def region_params
     params.require(:region).permit(

@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 class SupportInterface::EnglishLanguageProvidersController < SupportInterface::BaseController
+  before_action :load_english_language_provider, except: :index
+
   def index
+    authorize [:support_interface, EnglishLanguageProvider]
     @english_language_providers = EnglishLanguageProvider.order(:created_at)
   end
 
   def edit
-    @english_language_provider = EnglishLanguageProvider.find(params[:id])
   end
 
   def update
-    @english_language_provider = EnglishLanguageProvider.find(params[:id])
-
     if @english_language_provider.update(english_language_provider_params)
       flash[
         :success
@@ -24,6 +24,11 @@ class SupportInterface::EnglishLanguageProvidersController < SupportInterface::B
   end
 
   private
+
+  def load_english_language_provider
+    @english_language_provider = EnglishLanguageProvider.find(params[:id])
+    authorize [:support_interface, @english_language_provider]
+  end
 
   def english_language_provider_params
     params.require(:english_language_provider).permit(

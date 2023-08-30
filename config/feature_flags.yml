@@ -34,4 +34,4 @@ feature_flags:
       Allow starting an application on this service directly after completing
       an eligibility check.
 
-parent_controller: "SupportInterface::BaseController"
+parent_controller: SupportInterface::FeatureFlagsController
