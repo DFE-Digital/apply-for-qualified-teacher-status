@@ -32,9 +32,7 @@
   </p>
 <% end %>
 
-
-
-<% if @diff_actions.present? %>
+<% if (diff_actions = @form.diff_actions).present? %>
   <h3 class="govuk-heading-s">Regions</h3>
 
   <div class="govuk-warning-text">
@@ -46,7 +44,7 @@
   </div>
 
   <ul class="govuk-list">
-    <% @diff_actions.each do |action| %>
+    <% diff_actions.each do |action| %>
       <li>
         <% if action[:action] == :create %>
           <%= govuk_tag(text: "Create", colour: "green") %>
@@ -64,20 +62,21 @@
   </ul>
 <% end %>
 
-<%= form_with model: [:support_interface, @country] do |f| %>
-  <%= f.hidden_field :all_regions, value: @all_regions %>
-  <%= f.hidden_field :eligibility_enabled, value: @country.eligibility_enabled %>
-  <%= f.hidden_field :eligibility_skip_questions, value: @country.eligibility_skip_questions %>
-  <%= f.hidden_field :qualifications_information, value: @country.qualifications_information %>
-  <%= f.hidden_field :requires_preliminary_check, value: @country.requires_preliminary_check %>
-  <%= f.hidden_field :teaching_authority_name, value: @country.teaching_authority_name %>
-  <%= f.hidden_field :teaching_authority_address, value: @country.teaching_authority_address %>
-  <%= f.hidden_field :teaching_authority_emails_string, value: @country.teaching_authority_emails_string %>
-  <%= f.hidden_field :teaching_authority_websites_string, value: @country.teaching_authority_websites_string %>
-  <%= f.hidden_field :teaching_authority_certificate, value: @country.teaching_authority_certificate %>
-  <%= f.hidden_field :teaching_authority_sanction_information, value: @country.teaching_authority_sanction_information%>
-  <%= f.hidden_field :teaching_authority_status_information, value: @country.teaching_authority_status_information%>
-  <%= f.hidden_field :teaching_authority_other, value: @country.teaching_authority_other %>
-  <%= f.hidden_field :teaching_authority_online_checker_url, value: @country.teaching_authority_online_checker_url %>
+<%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>
+  <%= f.hidden_field :eligibility_enabled, value: @form.eligibility_enabled %>
+  <%= f.hidden_field :eligibility_skip_questions, value: @form.eligibility_skip_questions %>
+  <%= f.hidden_field :has_regions, value: @form.has_regions %>
+  <%= f.hidden_field :qualifications_information, value: @form.qualifications_information %>
+  <%= f.hidden_field :region_names, value: @form.region_names %>
+  <%= f.hidden_field :requires_preliminary_check, value: @form.requires_preliminary_check %>
+  <%= f.hidden_field :teaching_authority_address, value: @form.teaching_authority_address %>
+  <%= f.hidden_field :teaching_authority_certificate, value: @form.teaching_authority_certificate %>
+  <%= f.hidden_field :teaching_authority_emails_string, value: @form.teaching_authority_emails_string %>
+  <%= f.hidden_field :teaching_authority_name, value: @form.teaching_authority_name %>
+  <%= f.hidden_field :teaching_authority_online_checker_url, value: @form.teaching_authority_online_checker_url %>
+  <%= f.hidden_field :teaching_authority_other, value: @form.teaching_authority_other %>
+  <%= f.hidden_field :teaching_authority_sanction_information, value: @form.teaching_authority_sanction_information%>
+  <%= f.hidden_field :teaching_authority_status_information, value: @form.teaching_authority_status_information%>
+  <%= f.hidden_field :teaching_authority_websites_string, value: @form.teaching_authority_websites_string %>
   <%= f.govuk_submit "Confirm save", prevent_double_click: false %>
 <% end %>

@@ -140,8 +140,10 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_fill_regions
-    choose "country-has-regions-yes-field", visible: :all
-    fill_in "country-all-regions-field", with: "California"
+    choose "support-interface-country-form-has-regions-true-field",
+           visible: :all
+    fill_in "support-interface-country-form-region-names-field",
+            with: "California"
   end
 
   def when_i_select_sanction_check
@@ -155,46 +157,51 @@ RSpec.describe "Countries support", type: :system do
   def when_i_fill_teaching_authority_name
     fill_in "region-teaching-authority-name-field", with: "Name"
   rescue Capybara::ElementNotFound
-    fill_in "country-teaching-authority-name-field", with: "Name"
+    fill_in "support-interface-country-form-teaching-authority-name-field",
+            with: "Name"
   end
 
   def when_i_fill_teaching_authority_address
     fill_in "region-teaching-authority-address-field", with: "Address"
   rescue Capybara::ElementNotFound
-    fill_in "country-teaching-authority-address-field", with: "Address"
+    fill_in "support-interface-country-form-teaching-authority-address-field",
+            with: "Address"
   end
 
   def when_i_fill_teaching_authority_emails
     fill_in "region-teaching-authority-emails-string-field",
             with: "Email address"
   rescue Capybara::ElementNotFound
-    fill_in "country-teaching-authority-emails-string-field",
+    fill_in "support-interface-country-form-teaching-authority-emails-string-field",
             with: "Email address"
   end
 
   def when_i_fill_teaching_authority_websites
     fill_in "region-teaching-authority-websites-string-field", with: "Website"
   rescue Capybara::ElementNotFound
-    fill_in "country-teaching-authority-websites-string-field", with: "Website"
+    fill_in "support-interface-country-form-teaching-authority-websites-string-field",
+            with: "Website"
   end
 
   def when_i_fill_teaching_authority_other
     fill_in "region-teaching-authority-other-field", with: "Other"
   rescue Capybara::ElementNotFound
-    fill_in "country-teaching-authority-other-field", with: "Other"
+    fill_in "support-interface-country-form-teaching-authority-other-field",
+            with: "Other"
   end
 
   def when_i_fill_teaching_authority_certificate
     fill_in "region-teaching-authority-certificate-field", with: "Certificate"
   rescue Capybara::ElementNotFound
-    fill_in "country-teaching-authority-certificate-field", with: "Certificate"
+    fill_in "support-interface-country-form-teaching-authority-certificate-field",
+            with: "Certificate"
   end
 
   def when_i_fill_teaching_authority_online_checker_url
     fill_in "region-teaching-authority-online-checker-url-field",
             with: "https://www.example.com/checks"
   rescue Capybara::ElementNotFound
-    fill_in "country-teaching-authority-online-checker-url-field",
+    fill_in "support-interface-country-form-teaching-authority-online-checker-url-field",
             with: "https://www.example.com/checks"
   end
 
@@ -202,7 +209,7 @@ RSpec.describe "Countries support", type: :system do
     fill_in "region-teaching-authority-sanction-information-field",
             with: "Sanction information"
   rescue Capybara::ElementNotFound
-    fill_in "country-teaching-authority-sanction-information-field",
+    fill_in "support-interface-country-form-teaching-authority-sanction-information-field",
             with: "Sanction information"
   end
 
@@ -210,7 +217,7 @@ RSpec.describe "Countries support", type: :system do
     fill_in "region-teaching-authority-status-information-field",
             with: "Status information"
   rescue Capybara::ElementNotFound
-    fill_in "country-teaching-authority-status-information-field",
+    fill_in "support-interface-country-form-teaching-authority-status-information-field",
             with: "Status information"
   end
 
@@ -223,7 +230,7 @@ RSpec.describe "Countries support", type: :system do
     fill_in "region-qualifications-information-field",
             with: "Qualifications information"
   rescue Capybara::ElementNotFound
-    fill_in "country-qualifications-information-field",
+    fill_in "support-interface-country-form-qualifications-information-field",
             with: "Qualifications information"
   end
 
@@ -234,7 +241,8 @@ RSpec.describe "Countries support", type: :system do
   def when_i_check_requires_preliminary_check
     check "region-requires-preliminary-check-1-field", visible: false
   rescue Capybara::ElementNotFound
-    check "country-requires-preliminary-check-1-field", visible: false
+    check "support-interface-country-form-requires-preliminary-check-1-field",
+          visible: false
   end
 
   def and_i_click_save

@@ -1,86 +1,86 @@
 # frozen_string_literal: true
 
-class SupportInterface::CountriesController < SupportInterface::BaseController
-  before_action :load_country, except: :index
-  before_action :load_edit_actions, only: %w[confirm_edit update]
-
-  def index
-    authorize [:support_interface, Country]
-    @countries = Country.includes(:regions).order(:code)
-  end
-
-  def edit
-    @all_regions = @country.regions.map(&:name).join("\n")
-  end
-
-  def confirm_edit
-    @country.assign_attributes(country_params)
-  end
-
-  def update
-    if @country.update(country_params)
-      @diff_actions.each do |action|
-        case action[:action]
-        when :create
-          @country.regions.create!(name: action[:name])
-        when :delete
-          region = @country.regions.find_by!(name: action[:name])
-          region.eligibility_checks.delete_all
-          region.destroy!
-        end
-      end
-
-      flash[
-        :success
-      ] = "Successfully updated #{CountryName.from_country(@country)}"
-
-      redirect_to support_interface_countries_path
-    else
-      render :edit, status: :unprocessable_entity
+module SupportInterface
+  class CountriesController < BaseController
+    def index
+      authorize [:support_interface, Country]
+      @countries = Country.includes(:regions).order(:code)
     end
-  end
 
-  private
+    def edit
+      @form =
+        CountryForm.new(
+          country:,
+          eligibility_enabled: country.eligibility_enabled,
+          eligibility_skip_questions: country.eligibility_skip_questions,
+          has_regions: country.regions.count > 1,
+          qualifications_information: country.qualifications_information,
+          region_names: country.regions.pluck(:name).join("\n"),
+          requires_preliminary_check: country.requires_preliminary_check,
+          teaching_authority_address: country.teaching_authority_address,
+          teaching_authority_certificate:
+            country.teaching_authority_certificate,
+          teaching_authority_emails_string:
+            country.teaching_authority_emails_string,
+          teaching_authority_name: country.teaching_authority_name,
+          teaching_authority_online_checker_url:
+            country.teaching_authority_online_checker_url,
+          teaching_authority_other: country.teaching_authority_other,
+          teaching_authority_sanction_information:
+            country.teaching_authority_sanction_information,
+          teaching_authority_status_information:
+            country.teaching_authority_status_information,
+          teaching_authority_websites_string:
+            country.teaching_authority_websites_string,
+        )
+    end
 
-  def load_country
-    @country = Country.includes(:regions).find(params[:id])
-    authorize [:support_interface, @country]
-  end
+    def confirm_edit
+      @form = CountryForm.new(country_params.merge(country:))
+      unless @form.assign_country_attributes
+        render :edit, status: :unprocessable_entity
+      end
+    end
 
-  def load_edit_actions
-    @all_regions = (params.dig(:country, :all_regions) || "").chomp
-    @diff_actions = calculate_diff_actions
-  end
+    def update
+      @form = CountryForm.new(country_params.merge(country:))
 
-  def calculate_diff_actions
-    current_region_names = @country.regions.map(&:name)
-    new_region_names = @all_regions.split("\n").map(&:chomp)
-    new_region_names = [""] if new_region_names.empty?
+      if @form.save
+        redirect_to %i[support_interface countries]
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
 
-    regions_to_delete = current_region_names - new_region_names
-    regions_to_create = new_region_names - current_region_names
+    private
 
-    delete_actions = regions_to_delete.map { |name| { action: :delete, name: } }
-    create_actions = regions_to_create.map { |name| { action: :create, name: } }
+    def country
+      @country ||=
+        begin
+          country = Country.includes(:regions).find(params[:id])
+          authorize [:support_interface, country]
+          country
+        end
+    end
 
-    (delete_actions + create_actions).sort_by { |action| action[:name] }
-  end
-
-  def country_params
-    params.require(:country).permit(
-      :eligibility_enabled,
-      :eligibility_skip_questions,
-      :qualifications_information,
-      :requires_preliminary_check,
-      :teaching_authority_name,
-      :teaching_authority_address,
-      :teaching_authority_emails_string,
-      :teaching_authority_websites_string,
-      :teaching_authority_certificate,
-      :teaching_authority_other,
-      :teaching_authority_sanction_information,
-      :teaching_authority_status_information,
-      :teaching_authority_online_checker_url,
-    )
+    def country_params
+      params.require(:support_interface_country_form).permit(
+        :has_regions,
+        :region_names,
+        :eligibility_enabled,
+        :eligibility_skip_questions,
+        :qualifications_information,
+        :requires_preliminary_check,
+        :teaching_authority_name,
+        :teaching_authority_address,
+        :teaching_authority_emails_string,
+        :teaching_authority_websites_string,
+        :teaching_authority_certificate,
+        :teaching_authority_other,
+        :teaching_authority_sanction_information,
+        :teaching_authority_status_information,
+        :teaching_authority_online_checker_url,
+      )
+    end
   end
 end
