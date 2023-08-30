@@ -18,8 +18,7 @@ namespace :example_data do
       FactoryBot.create(:staff, :confirmed, **staff)
     end
 
-    create_application_forms(new_regs: false)
-    create_application_forms(new_regs: true)
+    create_application_forms
   end
 
   desc "Reset database suitable for generating example data."
@@ -91,12 +90,11 @@ def staff_members
   ]
 end
 
-def evidential_traits_for(region, new_regs)
+def evidential_traits_for(region)
   checks = [region.status_check, region.sanction_check]
 
   [].tap do |traits|
-    if (checks.include?("none") || new_regs) &&
-         !region.application_form_skip_work_history
+    unless region.application_form_skip_work_history
       traits << :with_work_history
     end
     traits << :with_written_statement if checks.include?("written")
@@ -113,59 +111,33 @@ def english_language_trait
   ].sample
 end
 
-def application_form_traits_for(region, new_regs)
-  evidential_traits = evidential_traits_for(region, new_regs)
-  additional_traits = evidential_traits + [english_language_trait]
+def application_form_traits_for(region)
+  evidential_traits = evidential_traits_for(region)
+
+  traits =
+    %i[
+      with_personal_information
+      with_completed_qualification
+      with_identification_document
+      with_age_range
+      with_subjects
+    ] + evidential_traits + [english_language_trait]
 
   [
     [],
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-    ] + additional_traits,
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-      submitted
-    ] + additional_traits,
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-      submitted
-      preliminary_check
-    ] + additional_traits,
-    %i[
-      with_personal_information
-      with_completed_qualification
-      with_identification_document
-      with_age_range
-      with_subjects
-      submitted
-      waiting_on
-    ] + additional_traits,
+    traits,
+    traits + %i[submitted],
+    traits + %i[preliminary_check],
+    traits + %i[waiting_on],
+    traits + %i[awarded],
+    traits + %i[declined],
   ]
 end
 
-def create_application_forms(new_regs:)
-  new_regs_date = Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
-  old_regs_date = new_regs_date - 1.day
-
+def create_application_forms
   Region.all.each do |region|
-    application_form_traits_for(region, new_regs).each do |traits|
-      created_at = new_regs ? new_regs_date : old_regs_date
-      traits.insert(0, :new_regs) if new_regs
-
-      application_form =
-        FactoryBot.create(:application_form, *traits, region:, created_at:)
+    application_form_traits_for(region).each do |traits|
+      application_form = FactoryBot.create(:application_form, *traits, region:)
 
       next if application_form.draft?
 

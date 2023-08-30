@@ -57,7 +57,7 @@ runs:
       shell: bash
       run: |
         az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
-        kubectl exec -n tra-development deployment/apply-for-qts-review-${{ inputs.pull-request-number }}-web -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed example_data:generate review_app:configure"
+        kubectl exec -n tra-development deployment/apply-for-qts-review-${{ inputs.pull-request-number }}-web -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed review_app:configure example_data:generate"
 
     - id: key-vault-name
       if: ${{ inputs.smoke-test-credentials-required == 'true' }}
