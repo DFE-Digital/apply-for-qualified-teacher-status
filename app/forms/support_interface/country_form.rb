@@ -29,10 +29,9 @@ class SupportInterface::CountryForm
   validates :region_names, presence: true, if: :has_regions
   validates :requires_preliminary_check, inclusion: { in: [true, false] }
 
-  def save
-    return false unless assign_country_attributes
-
+  def save!
     ActiveRecord::Base.transaction do
+      assign_country_attributes
       country.save!
 
       diff_actions.each do |action|
@@ -51,8 +50,6 @@ class SupportInterface::CountryForm
   end
 
   def assign_country_attributes
-    return false if invalid?
-
     country.assign_attributes(
       eligibility_enabled:,
       eligibility_skip_questions:,
@@ -68,8 +65,6 @@ class SupportInterface::CountryForm
       teaching_authority_status_information:,
       teaching_authority_websites_string:,
     )
-
-    true
   end
 
   def diff_actions

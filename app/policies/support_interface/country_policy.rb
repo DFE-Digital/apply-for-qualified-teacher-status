@@ -5,11 +5,11 @@ class SupportInterface::CountryPolicy < ApplicationPolicy
     user.support_console_permission?
   end
 
-  def confirm_edit?
+  def update?
     user.support_console_permission?
   end
 
-  def update?
+  def preview?
     user.support_console_permission?
   end
 end

@@ -35,21 +35,22 @@ module SupportInterface
         )
     end
 
-    def confirm_edit
+    def update
       @form = CountryForm.new(country_params.merge(country:))
-      unless @form.assign_country_attributes
+      if @form.invalid?
         render :edit, status: :unprocessable_entity
+      elsif ActiveModel::Type::Boolean.new.cast(params[:preview])
+        session[:country] = country_params
+        redirect_to [:preview, :support_interface, country]
+      else
+        @form.save!
+        redirect_to %i[support_interface countries]
       end
     end
 
-    def update
-      @form = CountryForm.new(country_params.merge(country:))
-
-      if @form.save
-        redirect_to %i[support_interface countries]
-      else
-        render :edit, status: :unprocessable_entity
-      end
+    def preview
+      @form = CountryForm.new(session[:country].merge(country:))
+      @form.assign_country_attributes
     end
 
     private

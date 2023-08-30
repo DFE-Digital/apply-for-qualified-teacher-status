@@ -15,13 +15,13 @@ RSpec.describe SupportInterface::CountryPolicy do
     it_behaves_like "a policy method requiring the support console permission"
   end
 
-  describe "#confirm_edit?" do
-    subject(:confirm_edit?) { described_class.new(user, nil).confirm_edit? }
+  describe "#update?" do
+    subject(:update?) { described_class.new(user, nil).update? }
     it_behaves_like "a policy method requiring the support console permission"
   end
 
-  describe "#update?" do
-    subject(:update?) { described_class.new(user, nil).update? }
+  describe "#preview?" do
+    subject(:preview?) { described_class.new(user, nil).preview? }
     it_behaves_like "a policy method requiring the support console permission"
   end
 end

@@ -2,7 +2,7 @@
 
 <h1 class="govuk-heading-l"><%= CountryName.from_country(@country) %></h1>
 
-<%= form_with model: @form, url: [:confirm_edit, :support_interface, @country], method: "POST" do |f| %>
+<%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_radio_buttons_fieldset :has_regions, legend: { size: "m", text: "Regions" }, hint: { text: "Does this country have regions within it that have a different teaching authority or service journey?" } do %>
@@ -31,5 +31,7 @@
 
   <%= f.govuk_text_area :qualifications_information, label: { text: 'Proof of qualifications' }, hint: { text: "Example: ‘We cannot accept the National Certificate in Education (NCE) or the Teachers Certificate Grade II from Nigeria, as these do not meet the required level.’" }, rows: 5 %>
 
-  <%= f.govuk_submit "Save", prevent_double_click: false %>
+  <%= f.govuk_submit "Preview", name: "preview", value: "true" do %>
+    <%= f.govuk_submit "Save", name: "preview", value: "false", secondary: true %>
+  <% end %>
 <% end %>

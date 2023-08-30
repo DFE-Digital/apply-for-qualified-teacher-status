@@ -4,34 +4,6 @@
 
 <h2 class="govuk-heading-m">Review and confirm the following changes:</h2>
 
-<% if @country.changes.keys.select { |k| k.starts_with?("teaching_authority_") }.any? %>
-  <h3 class="govuk-heading-s">Teaching authority</h3>
-
-  <%= render "shared/teaching_authority_contactable", contactable: @country %>
-
-  <% if @country.teaching_authority_other.present? %>
-    <%= raw GovukMarkdown.render(@country.teaching_authority_other) %>
-  <% end %>
-
-  <p class="govuk-body"><%= @country.teaching_authority_certificate %></p>
-
-  <p class="govuk-body"><%= @country.teaching_authority_online_checker_url %></p>
-<% end %>
-
-<% if @country.qualifications_information_changed? %>
-  <h3 class="govuk-heading-s">Qualifications information</h3>
-
-  <%= raw GovukMarkdown.render(@country.qualifications_information) %>
-<% end %>
-
-<% if @country.requires_preliminary_check_changed? %>
-  <h3 class="govuk-heading-s">Preliminary check</h3>
-
-  <p class="govuk-body">
-    <%= @country.requires_preliminary_check ? "Required" : "Not required" %>
-  </p>
-<% end %>
-
 <% if (diff_actions = @form.diff_actions).present? %>
   <h3 class="govuk-heading-s">Regions</h3>
 
@@ -62,6 +34,35 @@
   </ul>
 <% end %>
 
+<% if @country.eligibility_enabled_changed? %>
+  <h3 class="govuk-heading-s">Do we accept applications from this country?</h3>
+  <p class="govuk-body"><%= govuk_boolean_tag(@country.eligibility_enabled) %></p>
+<% end %>
+
+<% if @country.requires_preliminary_check_changed? %>
+  <h3 class="govuk-heading-s">Preliminary check</h3>
+  <p class="govuk-body"><%= govuk_boolean_tag(@country.requires_preliminary_check) %></p>
+<% end %>
+
+<% if @country.changes.keys.select { |k| k.starts_with?("teaching_authority_") }.any? %>
+  <h3 class="govuk-heading-s">Teaching authority</h3>
+
+  <%= render "shared/teaching_authority_contactable", contactable: @country %>
+
+  <% if @country.teaching_authority_other.present? %>
+    <%= raw GovukMarkdown.render(@country.teaching_authority_other) %>
+  <% end %>
+
+  <p class="govuk-body"><%= @country.teaching_authority_certificate %></p>
+
+  <p class="govuk-body"><%= @country.teaching_authority_online_checker_url %></p>
+<% end %>
+
+<% if @country.qualifications_information_changed? %>
+  <h3 class="govuk-heading-s">Qualifications information</h3>
+  <%= raw GovukMarkdown.render(@country.qualifications_information) %>
+<% end %>
+
 <%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>
   <%= f.hidden_field :eligibility_enabled, value: @form.eligibility_enabled %>
   <%= f.hidden_field :eligibility_skip_questions, value: @form.eligibility_skip_questions %>
@@ -78,5 +79,5 @@
   <%= f.hidden_field :teaching_authority_sanction_information, value: @form.teaching_authority_sanction_information%>
   <%= f.hidden_field :teaching_authority_status_information, value: @form.teaching_authority_status_information%>
   <%= f.hidden_field :teaching_authority_websites_string, value: @form.teaching_authority_websites_string %>
-  <%= f.govuk_submit "Confirm save", prevent_double_click: false %>
+  <%= f.govuk_submit "Save", name: "preview", value: "false" %>
 <% end %>

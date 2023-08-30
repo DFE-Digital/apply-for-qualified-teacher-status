@@ -31,10 +31,10 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_qualifications_information
     when_i_check_requires_preliminary_check
     when_i_fill_regions
-    and_i_click_save
+    and_i_click_preview
     then_i_see_country_contact_preview
     then_i_see_region_changes_confirmation
-    and_i_click_confirm
+    and_i_click_save
 
     when_i_click_on_a_region
     then_i_see_a_region
@@ -251,9 +251,5 @@ RSpec.describe "Countries support", type: :system do
 
   def and_i_click_preview
     click_button "Preview", visible: false
-  end
-
-  def and_i_click_confirm
-    click_button "Confirm", visible: false
   end
 end
