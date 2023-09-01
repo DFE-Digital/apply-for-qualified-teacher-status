@@ -124,7 +124,9 @@ class AssessorInterface::AssessmentSectionForm
       selected_failure_reasons_hash.each do |key, notes|
         attributes["#{key}_checked"] = true
         attributes["#{key}_notes"] = notes[:assessor_feedback]
-        attributes["#{key}_work_history_checked"] = notes[:work_history_ids]
+        if FailureReasons.chooses_work_history?(failure_reason: key)
+          attributes["#{key}_work_history_checked"] = notes[:work_history_ids]
+        end
       end
 
       if assessment_section.preliminary? && assessment_section.passed?
