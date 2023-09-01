@@ -13,7 +13,7 @@ RSpec.describe UpdateAssessmentSection do
     { selected_failure_reason_key => selected_failure_reason_assessor_feedback }
   end
   let(:selected_failure_reason_key) { "identification_document_expired" }
-  let(:selected_failure_reason_assessor_feedback) { "Epic fail" }
+  let(:selected_failure_reason_assessor_feedback) { { notes: "Epic fail" } }
   let(:params) { { passed: false, selected_failure_reasons: } }
 
   subject { described_class.call(assessment_section:, user:, params:) }
@@ -67,7 +67,7 @@ RSpec.describe UpdateAssessmentSection do
             SelectedFailureReason.find_by(
               key: selected_failure_reason_key,
             ).assessor_feedback
-          }.to(selected_failure_reason_assessor_feedback)
+          }.to(selected_failure_reason_assessor_feedback[:notes])
         end
       end
 

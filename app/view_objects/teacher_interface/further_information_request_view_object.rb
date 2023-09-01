@@ -51,7 +51,7 @@ module TeacherInterface
         .each_with_object({}) do |item, memo|
           memo[item.id] = {
             title: item_name(item),
-            value: item.text? ? item.response : item.document,
+            value: item_value(item),
             href: [
               :edit,
               :teacher_interface,
@@ -67,6 +67,17 @@ module TeacherInterface
 
     attr_reader :current_teacher, :params
 
+    def item_value(item)
+      if item.text?
+        item.response
+      elsif item.document?
+        item.document
+      elsif item.work_history_contact?
+        "Contact name: #{item.contact_name}<br/>
+         Contact job: #{item.contact_job}<br/> 
+         Contact email: #{item.contact_email}".html_safe
+      end
+    end
     def application_form
       @application_form ||= current_teacher.application_form
     end
@@ -77,6 +88,8 @@ module TeacherInterface
         I18n.t(
           "teacher_interface.further_information_request.show.failure_reason.#{item.failure_reason_key}",
         )
+      when "work_history_contact"
+        "Add your work history contact’s details"
       when "document"
         "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
       end

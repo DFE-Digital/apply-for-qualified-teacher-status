@@ -11,6 +11,10 @@ module PageObjects
 
       sections :cards, WorkHistoryCard, ".govuk-summary-card"
 
+      sections :school_checkbox_items,
+               PageObjects::GovukCheckboxItem,
+               ".govuk-checkboxes__conditional .govuk-checkboxes__item"
+
       def most_recent_role
         cards&.second
       end

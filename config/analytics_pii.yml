@@ -21,6 +21,9 @@
   :further_information_request_items:
     - failure_reason_assessor_feedback
     - response
+    - contact_name
+    - contact_job
+    - contact_email
   :notes:
     - text
   :professional_standing_requests:

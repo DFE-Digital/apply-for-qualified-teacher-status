@@ -331,6 +331,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       .first
       .checkbox
       .click
+    check_work_history_page.school_checkbox_items.first.click
     check_work_history_page
       .form
       .failure_reason_note_textareas
@@ -425,6 +426,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
           :assessment_section,
           :work_history,
           assessment: application_form.assessment,
+          failure_reasons: %w[school_details_cannot_be_verified],
         )
         create(
           :assessment_section,

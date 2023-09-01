@@ -7,6 +7,11 @@
   <h2 class="govuk-heading-m"><%= item.fetch(:heading) %></h2>
   <%= govuk_inset_text(text: item.fetch(:description)) %>
   <%= render(CheckYourAnswersSummary::Component.new(**item.fetch(:check_your_answers))) %>
+  <% if (item[:work_history_summary_list_rows]).present? %>
+    <%= govuk_details(summary_text: "Review previous referee details?") do %>
+      <%= govuk_summary_list(rows: item[:work_history_summary_list_rows]) %>
+    <% end %>
+  <% end %>
 <% end %>
 
 <% if policy(:assessor).update? && @view_object.can_update? %>

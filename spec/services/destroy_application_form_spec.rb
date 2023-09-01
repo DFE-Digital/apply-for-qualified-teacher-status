@@ -46,7 +46,7 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", SelectedFailureReason
   include_examples "deletes model", Document, 16, 8
   include_examples "deletes model", FurtherInformationRequest
-  include_examples "deletes model", FurtherInformationRequestItem, 4, 2
+  include_examples "deletes model", FurtherInformationRequestItem, 6, 3
   include_examples "deletes model", Note
   include_examples "deletes model", ProfessionalStandingRequest
   include_examples "deletes model", Qualification
@@ -55,6 +55,6 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", Teacher
   include_examples "deletes model", TimelineEvent
   include_examples "deletes model", Upload
-  include_examples "deletes model", WorkHistory
+  include_examples "deletes model", WorkHistory, 4, 2
   include_examples "deletes model", DQTTRNRequest
 end
