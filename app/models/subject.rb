@@ -3,24 +3,24 @@
 class Subject
   include ActiveModel::Model
 
-  attr_accessor :id, :name
+  attr_accessor :value, :name
 
   class << self
     def all
-      @all = find(ALL_IDS)
+      @all = find(ALL_VALUES)
     end
 
-    def find(ids)
-      (ALL_IDS & ids).map { |id| create(id:) }
+    def find(values)
+      (ALL_VALUES & values).map { |value| create(value:) }
     end
 
     private
 
-    def create(id:)
-      Subject.new(id:, name: I18n.t("subjects.#{id}"))
+    def create(value:)
+      Subject.new(value:, name: I18n.t("subjects.#{value}"))
     end
 
-    ALL_IDS = %w[
+    ALL_VALUES = %w[
       ancient_hebrew
       applied_biology
       applied_chemistry

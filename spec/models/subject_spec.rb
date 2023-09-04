@@ -14,8 +14,8 @@ RSpec.describe Subject do
 
     it "contains the right elements" do
       expect(find.count).to eq(2)
-      expect(find.first.id).to eq("ancient_hebrew")
-      expect(find.second.id).to eq("economics")
+      expect(find.first.value).to eq("ancient_hebrew")
+      expect(find.second.value).to eq("economics")
     end
   end
 end
