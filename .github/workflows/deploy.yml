@@ -38,7 +38,7 @@ jobs:
       image: ${{ steps.build-docker-image.outputs.image }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - id: key-vault-name
         shell: bash
@@ -96,7 +96,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
@@ -121,7 +121,7 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
     environment: review
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/deploy-environment
         id: deploy
@@ -155,7 +155,7 @@ jobs:
       environment_name: ${{ matrix.environment }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/deploy-environment
         id: deploy
@@ -175,7 +175,7 @@ jobs:
     concurrency: deploy_production
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/deploy-environment
         id: deploy
@@ -194,7 +194,7 @@ jobs:
     needs: [docker, rspec, deploy_non_production]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - id: key-vault-name
         shell: bash
