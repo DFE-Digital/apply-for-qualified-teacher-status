@@ -54,6 +54,6 @@ var loadCountryAutoComplete = () => {
 };
 
 loadCountryAutoComplete();
-dfeAutocomplete({});
+dfeAutocomplete({ rawAttribute: true });
 
 checkboxSearchFilter("app-applications-filters-assessor", "Search assessors");

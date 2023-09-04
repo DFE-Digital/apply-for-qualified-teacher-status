@@ -34,6 +34,7 @@ RSpec.shared_examples_for "an age range subjects form" do
     it { is_expected.to_not validate_presence_of(:age_range_note) }
 
     it { is_expected.to validate_presence_of(:subject_1) }
+    it { is_expected.to validate_presence_of(:subject_1_raw) }
     it { is_expected.to_not validate_presence_of(:subject_2) }
     it { is_expected.to_not validate_presence_of(:subject_3) }
     it { is_expected.to_not validate_presence_of(:subjects_note) }
@@ -48,7 +49,12 @@ RSpec.shared_examples_for "an age range subjects form" do
 
     describe "with valid attributes and no note" do
       let(:age_range_subjects_attributes) do
-        { age_range_min: "7", age_range_max: "11", subject_1: "Subject" }
+        {
+          age_range_min: "7",
+          age_range_max: "11",
+          subject_1: "Subject",
+          subject_1_raw: "Subject",
+        }
       end
 
       it { is_expected.to be true }
@@ -79,6 +85,7 @@ RSpec.shared_examples_for "an age range subjects form" do
           age_range_max: "11",
           age_range_note: "A note.",
           subject_1: "Subject",
+          subject_1_raw: "Subject",
           subjects_note: "Another note.",
         }
       end
