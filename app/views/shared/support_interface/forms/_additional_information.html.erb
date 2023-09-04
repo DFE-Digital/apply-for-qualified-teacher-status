@@ -1,0 +1,15 @@
+<h2 class="govuk-heading-m">Additional information</h2>
+
+<%= f.govuk_fieldset legend: { text: "Proof of qualifications", size: "s" } do %>
+  <p class="govuk-hint">Example: ‘We cannot accept the National Certificate in Education (NCE) or the Teachers Certificate Grade II from Nigeria, as these do not meet the required level.’</p>
+
+  <%= f.govuk_text_area :qualifications_information, label: { text: "Qualifications" }, rows: 5 %>
+<% end %>
+
+<%= f.govuk_fieldset legend: { text: "Proof that you’re recognised as a teacher", size: "s" } do %>
+  <p class="govuk-hint">Example: ‘TRCN will charge you a fee of ₦60,000 for providing the Letter of Professional standing. They’ll also need your QTS application reference number, as well as copies of your teaching documents.’</p>
+
+  <%= f.govuk_text_area :sanction_information, label: { text: "Sanction" }, rows: 5 %>
+  <%= f.govuk_text_area :status_information, label: { text: "Status" }, rows: 5 %>
+  <%= f.govuk_text_area :other_information, label: { text: "Other" }, rows: 5 %>
+<% end %>
