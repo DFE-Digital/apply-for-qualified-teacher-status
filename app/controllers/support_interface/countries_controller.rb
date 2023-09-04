@@ -19,16 +19,6 @@ module SupportInterface
           region_names: country.regions.pluck(:name).join("\n"),
           sanction_information: country.sanction_information,
           status_information: country.status_information,
-          teaching_authority_address: country.teaching_authority_address,
-          teaching_authority_certificate:
-            country.teaching_authority_certificate,
-          teaching_authority_emails_string:
-            country.teaching_authority_emails_string,
-          teaching_authority_name: country.teaching_authority_name,
-          teaching_authority_online_checker_url:
-            country.teaching_authority_online_checker_url,
-          teaching_authority_websites_string:
-            country.teaching_authority_websites_string,
         )
     end
 
@@ -71,12 +61,6 @@ module SupportInterface
         :region_names,
         :sanction_information,
         :status_information,
-        :teaching_authority_address,
-        :teaching_authority_certificate,
-        :teaching_authority_emails_string,
-        :teaching_authority_name,
-        :teaching_authority_online_checker_url,
-        :teaching_authority_websites_string,
       )
     end
   end

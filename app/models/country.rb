@@ -18,8 +18,6 @@
 #  index_countries_on_code  (code) UNIQUE
 #
 class Country < ApplicationRecord
-  include TeachingAuthorityContactable
-
   has_many :regions
 
   LOCATION_AUTOCOMPLETE_CANONICAL_LIST =
@@ -40,8 +38,4 @@ class Country < ApplicationRecord
     CODES_ELIGIBLE_IN_FEBRUARY_2023 - %w[HK UA]
 
   validates :code, inclusion: { in: CODES }
-
-  validates :teaching_authority_online_checker_url, url: { allow_blank: true }
-
-  alias_method :country, :itself
 end

@@ -14,27 +14,10 @@ RSpec.describe RegionHelper do
       )
     end
 
-    context "with a region certificate" do
-      before { region.teaching_authority_certificate = "region certificate" }
+    context "with custom value" do
+      before { region.teaching_authority_certificate = "certificate" }
 
-      it { is_expected.to eq("a <span lang=\"FR\">region certificate</span>") }
-    end
-
-    context "with a country certificate" do
-      before do
-        region.country.teaching_authority_certificate = "country certificate"
-      end
-
-      it { is_expected.to eq("a <span lang=\"FR\">country certificate</span>") }
-    end
-
-    context "with a region and country certificate" do
-      before do
-        region.teaching_authority_certificate = "region certificate"
-        region.country.teaching_authority_certificate = "country certificate"
-      end
-
-      it { is_expected.to eq("a <span lang=\"FR\">region certificate</span>") }
+      it { is_expected.to eq("a <span lang=\"FR\">certificate</span>") }
     end
   end
 end

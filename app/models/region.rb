@@ -36,8 +36,6 @@
 #  fk_rails_...  (country_id => countries.id)
 #
 class Region < ApplicationRecord
-  include TeachingAuthorityContactable
-
   belongs_to :country
   has_many :eligibility_checks
 
@@ -55,9 +53,37 @@ class Region < ApplicationRecord
   validates :sanction_check, inclusion: { in: sanction_checks.values }
   validates :status_check, inclusion: { in: status_checks.values }
 
+  validates :teaching_authority_name,
+            format: {
+              without: /\Athe.*\z/i,
+              message: "Teaching authority name shouldn't start with ‘the’.",
+            }
   validates :teaching_authority_online_checker_url, url: { allow_blank: true }
 
   def checks_available?
     !sanction_check_none? && !status_check_none?
+  end
+
+  def teaching_authority_emails_string
+    teaching_authority_emails.join("\n")
+  end
+
+  def teaching_authority_emails_string=(string)
+    self.teaching_authority_emails =
+      string.split("\n").map(&:chomp).compact_blank
+  end
+
+  def teaching_authority_websites_string
+    teaching_authority_websites.join("\n")
+  end
+
+  def teaching_authority_websites_string=(string)
+    self.teaching_authority_websites =
+      string.split("\n").map(&:chomp).compact_blank
+  end
+
+  def teaching_authority_present?
+    teaching_authority_name.present? || teaching_authority_address.present? ||
+      teaching_authority_emails.present? || teaching_authority_websites.present?
   end
 end

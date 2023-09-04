@@ -10,7 +10,7 @@ class TeachingAuthorityMailer < ApplicationMailer
   def application_submitted
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
-      to: region.teaching_authority_emails + country.teaching_authority_emails,
+      to: region.teaching_authority_emails,
       subject:
         I18n.t(
           "mailer.teaching_authority.application_submitted.subject",
@@ -25,7 +25,7 @@ class TeachingAuthorityMailer < ApplicationMailer
     params[:application_form]
   end
 
-  delegate :region, :country, to: :application_form
+  delegate :region, to: :application_form
 
   def set_application_form
     @application_form = application_form
