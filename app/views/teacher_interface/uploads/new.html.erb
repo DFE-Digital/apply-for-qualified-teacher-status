@@ -91,21 +91,22 @@
       <p class="govuk-body">This written confirmation must be dated within 6 months of you applying for QTS.</p>
 
       <% if @application_form.region.status_check_written? %>
-        <% if @application_form.region.teaching_authority_status_information.present?%>
-          <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_status_information) %>
+        <% if @application_form.region.status_information.present? %>
+          <%= raw GovukMarkdown.render(@application_form.region.status_information) %>
         <% end %>
 
-        <% if @application_form.region.country.teaching_authority_status_information.present?%>
-          <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_status_information) %>
+        <% if @application_form.region.country.status_information.present? %>
+          <%= raw GovukMarkdown.render(@application_form.region.country.status_information) %>
         <% end %>
       <% end %>
 
       <% if @application_form.region.sanction_check_written? %>
-        <% if @application_form.region.teaching_authority_sanction_information.present?%>
-          <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_sanction_information) %>
+        <% if @application_form.region.sanction_information.present? %>
+          <%= raw GovukMarkdown.render(@application_form.region.sanction_information) %>
         <% end %>
-        <% if @application_form.region.country.teaching_authority_sanction_information.present?%>
-          <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_sanction_information) %>
+
+        <% if @application_form.region.country.sanction_information.present? %>
+          <%= raw GovukMarkdown.render(@application_form.region.country.sanction_information) %>
         <% end %>
       <% end %>
 

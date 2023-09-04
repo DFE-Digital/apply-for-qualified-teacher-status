@@ -7,7 +7,6 @@ module TeacherInterface
 
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
-    before_action :load_teaching_authority_other
 
     def edit
       @registration_number_form =
@@ -32,11 +31,6 @@ module TeacherInterface
       params.require(:teacher_interface_registration_number_form).permit(
         :registration_number,
       )
-    end
-
-    def load_teaching_authority_other
-      @teaching_authority_other =
-        application_form.region.teaching_authority_other
     end
   end
 end

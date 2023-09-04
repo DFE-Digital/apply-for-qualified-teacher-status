@@ -7,13 +7,7 @@
 <% if (diff_actions = @form.diff_actions).present? %>
   <h3 class="govuk-heading-s">Regions</h3>
 
-  <div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
-      <span class="govuk-warning-text__assistive">Warning</span>
-      This action is irreversible and could affect historic eligibility checks.
-    </strong>
-  </div>
+  <%= govuk_warning_text(text: "This action is irreversible and could affect historic eligibility checks.") %>
 
   <ul class="govuk-list">
     <% diff_actions.each do |action| %>
@@ -49,13 +43,24 @@
 
   <%= render "shared/teaching_authority_contactable", contactable: @country %>
 
-  <% if @country.teaching_authority_other.present? %>
-    <%= raw GovukMarkdown.render(@country.teaching_authority_other) %>
-  <% end %>
-
   <p class="govuk-body"><%= @country.teaching_authority_certificate %></p>
 
   <p class="govuk-body"><%= @country.teaching_authority_online_checker_url %></p>
+<% end %>
+
+<% if @country.sanction_information_changed? %>
+  <h3 class="govuk-heading-s">Sanction information</h3>
+  <%= raw GovukMarkdown.render(@country.sanction_information) %>
+<% end %>
+
+<% if @country.status_information_changed? %>
+  <h3 class="govuk-heading-s">Status information</h3>
+  <%= raw GovukMarkdown.render(@country.status_information) %>
+<% end %>
+
+<% if @country.other_information_changed? %>
+  <h3 class="govuk-heading-s">Other information</h3>
+  <%= raw GovukMarkdown.render(@country.other_information) %>
 <% end %>
 
 <% if @country.qualifications_information_changed? %>
@@ -67,17 +72,17 @@
   <%= f.hidden_field :eligibility_enabled, value: @form.eligibility_enabled %>
   <%= f.hidden_field :eligibility_skip_questions, value: @form.eligibility_skip_questions %>
   <%= f.hidden_field :has_regions, value: @form.has_regions %>
+  <%= f.hidden_field :other_information, value: @form.other_information %>
   <%= f.hidden_field :qualifications_information, value: @form.qualifications_information %>
   <%= f.hidden_field :region_names, value: @form.region_names %>
   <%= f.hidden_field :requires_preliminary_check, value: @form.requires_preliminary_check %>
+  <%= f.hidden_field :sanction_information, value: @form.sanction_information %>
+  <%= f.hidden_field :status_information, value: @form.status_information %>
   <%= f.hidden_field :teaching_authority_address, value: @form.teaching_authority_address %>
   <%= f.hidden_field :teaching_authority_certificate, value: @form.teaching_authority_certificate %>
   <%= f.hidden_field :teaching_authority_emails_string, value: @form.teaching_authority_emails_string %>
   <%= f.hidden_field :teaching_authority_name, value: @form.teaching_authority_name %>
   <%= f.hidden_field :teaching_authority_online_checker_url, value: @form.teaching_authority_online_checker_url %>
-  <%= f.hidden_field :teaching_authority_other, value: @form.teaching_authority_other %>
-  <%= f.hidden_field :teaching_authority_sanction_information, value: @form.teaching_authority_sanction_information%>
-  <%= f.hidden_field :teaching_authority_status_information, value: @form.teaching_authority_status_information%>
   <%= f.hidden_field :teaching_authority_websites_string, value: @form.teaching_authority_websites_string %>
   <%= f.govuk_submit "Save", name: "preview", value: "false" %>
 <% end %>

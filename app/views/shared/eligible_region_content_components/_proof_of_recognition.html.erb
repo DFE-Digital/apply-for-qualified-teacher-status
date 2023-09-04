@@ -80,22 +80,22 @@
   <% end %>
 
   <% if region.status_check_written? %>
-    <% if region.teaching_authority_status_information.present? %>
-      <%= raw GovukMarkdown.render(region.teaching_authority_status_information) %>
+    <% if region.status_information.present? %>
+      <%= raw GovukMarkdown.render(region.status_information) %>
     <% end %>
 
-    <% if region.country.teaching_authority_status_information.present? %>
-      <%= raw GovukMarkdown.render(region.country.teaching_authority_status_information) %>
+    <% if region.country.status_information.present? %>
+      <%= raw GovukMarkdown.render(region.country.status_information) %>
     <% end %>
   <% end %>
 
   <% if region.sanction_check_written? %>
-    <% if region.teaching_authority_sanction_information.present?%>
-      <%= raw GovukMarkdown.render(region.teaching_authority_sanction_information) %>
+    <% if region.sanction_information.present? %>
+      <%= raw GovukMarkdown.render(region.sanction_information) %>
     <% end %>
 
-    <% if region.country.teaching_authority_sanction_information.present?%>
-      <%= raw GovukMarkdown.render(region.country.teaching_authority_sanction_information) %>
+    <% if region.country.sanction_information.present? %>
+      <%= raw GovukMarkdown.render(region.country.sanction_information) %>
     <% end %>
   <% end %>
 
@@ -109,32 +109,32 @@
   <% end %>
 
   <% if region.status_check_online? %>
-    <% if region.teaching_authority_status_information.present?%>
-      <%= raw GovukMarkdown.render(region.teaching_authority_status_information) %>
+    <% if region.status_information.present? %>
+      <%= raw GovukMarkdown.render(region.status_information) %>
     <% end %>
 
-    <% if region.country.teaching_authority_status_information.present?%>
-      <%= raw GovukMarkdown.render(region.country.teaching_authority_status_information) %>
+    <% if region.country.status_information.present? %>
+      <%= raw GovukMarkdown.render(region.country.status_information) %>
     <% end %>
   <% end %>
 
   <% if region.sanction_check_online? %>
-    <% if region.teaching_authority_sanction_information.present?%>
-      <%= raw GovukMarkdown.render(region.teaching_authority_sanction_information) %>
+    <% if region.sanction_information.present? %>
+      <%= raw GovukMarkdown.render(region.sanction_information) %>
     <% end %>
 
-    <% if region.country.teaching_authority_sanction_information.present?%>
-      <%= raw GovukMarkdown.render(region.country.teaching_authority_sanction_information) %>
+    <% if region.country.sanction_information.present? %>
+      <%= raw GovukMarkdown.render(region.country.sanction_information) %>
     <% end %>
   <% end %>
 
 <%# "Other" information %>
 
-  <% if region.teaching_authority_other.present? %>
-    <%= raw GovukMarkdown.render(region.teaching_authority_other) %>
+  <% if region.other_information.present? %>
+    <%= raw GovukMarkdown.render(region.other_information) %>
   <% end %>
 
-  <% if region.country.teaching_authority_other.present?%>
-    <%= raw GovukMarkdown.render(region.country.teaching_authority_other) %>
+  <% if region.country.other_information.present? %>
+    <%= raw GovukMarkdown.render(region.country.other_information) %>
   <% end %>
 <% end %>

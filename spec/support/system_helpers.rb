@@ -21,9 +21,9 @@ module SystemHelpers
       requires_preliminary_check: true,
       status_check: country_check,
       sanction_check: country_check,
-      teaching_authority_status_information: "Status information",
-      teaching_authority_sanction_information: "Sanction information",
-      teaching_authority_other: "Other teaching authority information.",
+      status_information: "Status information",
+      sanction_information: "Sanction information",
+      other_information: "Other teaching authority information.",
     )
 
     visit "/eligibility/start"
