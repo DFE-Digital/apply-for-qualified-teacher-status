@@ -5,21 +5,21 @@
 #  id                                            :bigint           not null, primary key
 #  application_form_skip_work_history            :boolean          default(FALSE), not null
 #  name                                          :string           default(""), not null
+#  other_information                             :text             default(""), not null
 #  qualifications_information                    :text             default(""), not null
 #  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  sanction_check                                :string           default("none"), not null
+#  sanction_information                          :string           default(""), not null
 #  status_check                                  :string           default("none"), not null
+#  status_information                            :string           default(""), not null
 #  teaching_authority_address                    :text             default(""), not null
 #  teaching_authority_certificate                :text             default(""), not null
 #  teaching_authority_emails                     :text             default([]), not null, is an Array
 #  teaching_authority_name                       :text             default(""), not null
 #  teaching_authority_online_checker_url         :string           default(""), not null
-#  teaching_authority_other                      :text             default(""), not null
 #  teaching_authority_provides_written_statement :boolean          default(FALSE), not null
 #  teaching_authority_requires_submission_email  :boolean          default(FALSE), not null
-#  teaching_authority_sanction_information       :string           default(""), not null
-#  teaching_authority_status_information         :string           default(""), not null
 #  teaching_authority_websites                   :text             default([]), not null, is an Array
 #  written_statement_optional                    :boolean          default(FALSE), not null
 #  created_at                                    :datetime         not null
