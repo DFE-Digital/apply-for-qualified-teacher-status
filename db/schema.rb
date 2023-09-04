@@ -162,12 +162,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_121903) do
     t.boolean "eligibility_enabled", default: true, null: false
     t.boolean "eligibility_skip_questions", default: false, null: false
     t.text "qualifications_information", default: "", null: false
-    t.text "teaching_authority_websites", default: [], null: false, array: true
-    t.string "teaching_authority_online_checker_url", default: "", null: false
-    t.text "teaching_authority_name", default: "", null: false
-    t.text "teaching_authority_emails", default: [], null: false, array: true
-    t.text "teaching_authority_certificate", default: "", null: false
-    t.text "teaching_authority_address", default: "", null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
