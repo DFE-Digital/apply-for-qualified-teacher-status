@@ -63,7 +63,9 @@ RSpec.describe BackfillPreliminaryChecks do
     end
 
     context "with a preliminary checked region" do
-      let(:region) { create(:region, :requires_preliminary_check) }
+      let(:region) do
+        create(:region, country: create(:country, :requires_preliminary_check))
+      end
 
       it "backfills the submitted application form" do
         call

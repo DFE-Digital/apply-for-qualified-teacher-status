@@ -77,9 +77,6 @@ RSpec.describe Region, type: :model do
 
       let!(:normal_region) { create(:region) }
       let!(:preliminary_region) do
-        create(:region, requires_preliminary_check: true)
-      end
-      let!(:preliminary_country_region) do
         create(
           :region,
           country: create(:country, requires_preliminary_check: true),
@@ -88,7 +85,6 @@ RSpec.describe Region, type: :model do
 
       it { is_expected.to_not include(normal_region) }
       it { is_expected.to include(preliminary_region) }
-      it { is_expected.to include(preliminary_country_region) }
     end
   end
 

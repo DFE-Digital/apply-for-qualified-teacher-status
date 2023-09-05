@@ -35,7 +35,6 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
       :application_form_skip_work_history,
       :qualifications_information,
       :reduced_evidence_accepted,
-      :requires_preliminary_check,
       :sanction_check,
       :status_check,
       :teaching_authority_address,

@@ -15,7 +15,7 @@ class SubmitApplicationForm
       application_form.subjects.compact_blank!
       application_form.working_days_since_submission = 0
       application_form.requires_preliminary_check =
-        region.requires_preliminary_check
+        region.country.requires_preliminary_check
       application_form.submitted_at = Time.zone.now
 
       assessment = AssessmentFactory.call(application_form:)

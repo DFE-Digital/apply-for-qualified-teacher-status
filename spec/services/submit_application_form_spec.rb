@@ -177,7 +177,7 @@ RSpec.describe SubmitApplicationForm do
 
     context "when teaching authority provides the written statement" do
       before do
-        region.update!(requires_preliminary_check: false)
+        region.country.update!(requires_preliminary_check: false)
         application_form.update!(
           teaching_authority_provides_written_statement: true,
         )

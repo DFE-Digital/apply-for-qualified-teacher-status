@@ -53,7 +53,6 @@ RSpec.describe "Countries support", type: :system do
     when_i_select_yes_teaching_authority_requires_submission_email
     when_i_fill_qualifications_information
     when_i_check_written_statement_optional
-    when_i_check_requires_preliminary_check
     and_i_click_preview
     then_i_see_the_preview
     and_i_click_save
@@ -239,8 +238,6 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_check_requires_preliminary_check
-    choose "region-requires-preliminary-check-true-field", visible: false
-  rescue Capybara::ElementNotFound
     choose "support-interface-country-form-requires-preliminary-check-true-field",
            visible: false
   end

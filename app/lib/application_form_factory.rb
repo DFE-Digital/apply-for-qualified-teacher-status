@@ -58,7 +58,6 @@ class ApplicationFormFactory
   end
 
   def requires_preliminary_check
-    region.requires_preliminary_check ||
-      region.country.requires_preliminary_check
+    region.country.requires_preliminary_check
   end
 end

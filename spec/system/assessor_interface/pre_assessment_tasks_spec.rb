@@ -127,26 +127,25 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
 
   def application_form
     @application_form ||=
-      begin
-        application_form =
+      create(
+        :application_form,
+        :preliminary_check,
+        :with_personal_information,
+        assessor: Staff.last,
+        teaching_authority_provides_written_statement: true,
+        region:
           create(
-            :application_form,
-            :preliminary_check,
-            :with_personal_information,
-            assessor: Staff.last,
-            teaching_authority_provides_written_statement: true,
-          )
+            :region,
+            :teaching_authority_provides_written_statement,
+            country: create(:country, :requires_preliminary_check),
+          ),
+      ).tap do |application_form|
         create(
           :assessment,
           :with_preliminary_qualifications_section,
           :with_professional_standing_request,
           application_form:,
         )
-        application_form.region.update!(
-          requires_preliminary_check: true,
-          teaching_authority_provides_written_statement: true,
-        )
-        application_form
       end
   end
 

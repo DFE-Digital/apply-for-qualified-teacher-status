@@ -52,5 +52,9 @@ FactoryBot.define do
       teaching_authority_emails { [Faker::Internet.email] }
       teaching_authority_websites { [Faker::Internet.url] }
     end
+
+    trait :requires_preliminary_check do
+      requires_preliminary_check { true }
+    end
   end
 end

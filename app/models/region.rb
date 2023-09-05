@@ -58,9 +58,7 @@ class Region < ApplicationRecord
 
   scope :requires_preliminary_check,
         -> {
-          joins(:country).where(requires_preliminary_check: true).or(
-            where(country: { requires_preliminary_check: true }),
-          )
+          joins(:country).where(country: { requires_preliminary_check: true })
         }
 
   def checks_available?

@@ -125,7 +125,9 @@ RSpec.describe ApplicationFormFactory do
     end
 
     context "when preliminary check is required" do
-      let(:region) { create(:region, requires_preliminary_check: true) }
+      let(:region) do
+        create(:region, country: create(:country, :requires_preliminary_check))
+      end
 
       it "sets requires preliminary check" do
         expect(application_form.requires_preliminary_check).to be true
