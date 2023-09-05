@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_04_131351) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_05_121903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -156,19 +156,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_131351) do
     t.string "code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "teaching_authority_address", default: "", null: false
-    t.text "teaching_authority_emails", default: [], null: false, array: true
-    t.text "teaching_authority_websites", default: [], null: false, array: true
-    t.text "teaching_authority_certificate", default: "", null: false
     t.text "other_information", default: "", null: false
-    t.text "teaching_authority_name", default: "", null: false
-    t.string "teaching_authority_online_checker_url", default: "", null: false
     t.string "status_information", default: "", null: false
     t.string "sanction_information", default: "", null: false
     t.boolean "eligibility_enabled", default: true, null: false
     t.boolean "eligibility_skip_questions", default: false, null: false
     t.text "qualifications_information", default: "", null: false
-    t.boolean "requires_preliminary_check", default: false, null: false
+    t.text "teaching_authority_websites", default: [], null: false, array: true
+    t.string "teaching_authority_online_checker_url", default: "", null: false
+    t.text "teaching_authority_name", default: "", null: false
+    t.text "teaching_authority_emails", default: [], null: false, array: true
+    t.text "teaching_authority_certificate", default: "", null: false
+    t.text "teaching_authority_address", default: "", null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
