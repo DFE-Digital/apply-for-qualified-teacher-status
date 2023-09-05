@@ -30,7 +30,7 @@ class BackfillPreliminaryChecks
   attr_reader :user
 
   def regions
-    @regions ||= Region.requires_preliminary_check
+    @regions ||= Region.where(requires_preliminary_check: true)
   end
 
   def applications_forms

@@ -15,7 +15,13 @@ RSpec.describe BackfillPreliminaryChecks do
 
   context "with application forms" do
     let!(:submitted_application_form) do
-      create(:application_form, :submitted, :with_assessment, region:)
+      create(
+        :application_form,
+        :submitted,
+        :with_assessment,
+        region:,
+        requires_preliminary_check: false,
+      )
     end
     let!(:waiting_on_application_form) do
       create(
@@ -25,6 +31,7 @@ RSpec.describe BackfillPreliminaryChecks do
         region:,
         waiting_on_professional_standing: true,
         teaching_authority_provides_written_statement: true,
+        requires_preliminary_check: false,
       )
     end
     let!(:preliminary_check_application_form) do

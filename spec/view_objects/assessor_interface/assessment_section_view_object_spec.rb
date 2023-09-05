@@ -156,7 +156,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
 
     context "when a preliminary check is required" do
       let(:application_form) do
-        create(:application_form, region:, requires_preliminary_check: true)
+        create(:application_form, :requires_preliminary_check, region:)
       end
 
       let!(:preliminary_assessment_section) do
