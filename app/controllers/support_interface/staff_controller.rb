@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 class SupportInterface::StaffController < SupportInterface::BaseController
+  before_action :load_staff, except: :index
+
   def index
+    authorize [:support_interface, Staff]
     @staff = Staff.order(:name)
   end
 
   def edit
-    @staff = Staff.find(params[:id])
   end
 
   def update
-    @staff = Staff.find(params[:id])
-
     if @staff.update(staff_params)
       redirect_to %i[support_interface staff index]
     else
@@ -20,6 +20,11 @@ class SupportInterface::StaffController < SupportInterface::BaseController
   end
 
   private
+
+  def load_staff
+    @staff = Staff.find(params[:id])
+    authorize [:support_interface, @staff]
+  end
 
   def staff_params
     params.require(:staff).permit(

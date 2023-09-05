@@ -1,37 +1,34 @@
 # frozen_string_literal: true
 
 class SupportInterface::RegionsController < SupportInterface::BaseController
-  skip_before_action :authorize_support, only: :preview
+  before_action :load_region
 
   def edit
-    @region = Region.find(params[:id])
   end
 
   def update
-    @region = Region.find(params[:id])
-
-    if @region.update(region_params)
-      flash[
-        :success
-      ] = "Successfully updated #{CountryName.from_region(@region)}"
-
-      if params[:preview] == "preview"
-        redirect_to preview_support_interface_region_path(@region)
-      else
-        redirect_to support_interface_countries_path
-      end
-    else
+    @region.assign_attributes(region_params)
+    if @region.invalid?
       render :edit, status: :unprocessable_entity
+    elsif ActiveModel::Type::Boolean.new.cast(params[:preview])
+      session[:region] = region_params
+      redirect_to [:preview, :support_interface, @region]
+    else
+      @region.save!
+      redirect_to %i[support_interface countries]
     end
   end
 
   def preview
-    authorize :support, :show?
-
-    @region = Region.find(params[:id])
+    @region.assign_attributes(session[:region])
   end
 
   private
+
+  def load_region
+    @region = Region.find(params[:id])
+    authorize [:support_interface, @region]
+  end
 
   def region_params
     params.require(:region).permit(

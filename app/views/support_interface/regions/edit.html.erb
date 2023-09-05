@@ -6,7 +6,8 @@
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_check_box :application_form_skip_work_history, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Skip work history" } %>
-  <%= render "shared/support_interface/forms/preliminary_check_form_fields", f: %>
+
+  <%= render "shared/support_interface/forms/requires_preliminary_check", f: %>
   <%= render "shared/support_interface/forms/status_sanctions_checks", f: %>
   <%= render "shared/support_interface/forms/teaching_authority_form_fields", f: %>
 
@@ -23,8 +24,7 @@
   <%= f.govuk_check_box :teaching_authority_provides_written_statement, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Will the teaching authority only send the letter of professional standing (LOPS) directly to the TRA?" } %>
   <br>
 
-  <%= f.govuk_submit "Save", prevent_double_click: false do %>
-    <%= f.govuk_submit "Save and preview", prevent_double_click: false, name: "preview", value: "preview" %>
-    <%= govuk_button_link_to "Ignore changes and preview", preview_support_interface_region_path(@region), secondary: true %>
+  <%= f.govuk_submit "Preview", name: "preview", value: "true" do %>
+    <%= f.govuk_submit "Save", name: "preview", value: "false", secondary: true %>
   <% end %>
 <% end %>

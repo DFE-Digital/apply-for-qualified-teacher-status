@@ -178,7 +178,7 @@ Rails.application.routes.draw do
     mount FeatureFlags::Engine, at: "features"
 
     resources :countries, only: %i[index edit update] do
-      post "confirm_edit", on: :member
+      get "preview", on: :member
     end
 
     resources :english_language_providers, only: %i[index edit update]
