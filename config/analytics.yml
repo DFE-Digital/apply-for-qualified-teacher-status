@@ -304,7 +304,6 @@
     - teaching_authority_requires_submission_email
     - qualifications_information
     - written_statement_optional
-    - requires_preliminary_check
   :reminder_emails:
     - id
     - created_at
