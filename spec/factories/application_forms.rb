@@ -3,6 +3,7 @@
 # Table name: application_forms
 #
 #  id                                            :bigint           not null, primary key
+#  action_required_by                            :string           default("none"), not null
 #  age_range_max                                 :integer
 #  age_range_min                                 :integer
 #  age_range_status                              :string           default("not_started"), not null
@@ -67,6 +68,7 @@
 #
 # Indexes
 #
+#  index_application_forms_on_action_required_by            (action_required_by)
 #  index_application_forms_on_assessor_id                   (assessor_id)
 #  index_application_forms_on_english_language_provider_id  (english_language_provider_id)
 #  index_application_forms_on_family_name                   (family_name)
