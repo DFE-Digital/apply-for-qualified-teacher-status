@@ -167,7 +167,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   def then_i_see_the_application
-    expect(assessor_application_page.overview.name.text).to eq(
+    expect(assessor_application_page.name_summary.value).to have_text(
       "#{application_form.given_names} #{application_form.family_name}",
     )
   end

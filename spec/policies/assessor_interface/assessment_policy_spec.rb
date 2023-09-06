@@ -40,61 +40,21 @@ RSpec.describe AssessorInterface::AssessmentPolicy do
 
   describe "#update?" do
     subject(:update?) { policy.update? }
-
-    context "without permission" do
-      let(:user) { create(:staff, :confirmed) }
-      it { is_expected.to be false }
-    end
-
-    context "with permission" do
-      let(:user) { create(:staff, :confirmed, :with_award_decline_permission) }
-      it { is_expected.to be true }
-    end
+    it_behaves_like "a policy method requiring the award decline permission"
   end
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
-
-    context "without permission" do
-      let(:user) { create(:staff, :confirmed) }
-      it { is_expected.to be false }
-    end
-
-    context "with permission" do
-      let(:user) { create(:staff, :confirmed, :with_award_decline_permission) }
-      it { is_expected.to be true }
-    end
+    it_behaves_like "a policy method requiring the award decline permission"
   end
 
   describe "#destroy?" do
     subject(:destroy?) { policy.destroy? }
-
-    context "without permission" do
-      let(:user) { create(:staff, :confirmed) }
-      it { is_expected.to be false }
-    end
-
-    context "with permission" do
-      let(:user) do
-        create(:staff, :confirmed, :with_reverse_decision_permission)
-      end
-      it { is_expected.to be true }
-    end
+    it_behaves_like "a policy method requiring the reverse decision permission"
   end
 
   describe "#rollback?" do
     subject(:rollback?) { policy.rollback? }
-
-    context "without permission" do
-      let(:user) { create(:staff, :confirmed) }
-      it { is_expected.to be false }
-    end
-
-    context "with permission" do
-      let(:user) do
-        create(:staff, :confirmed, :with_reverse_decision_permission)
-      end
-      it { is_expected.to be true }
-    end
+    it_behaves_like "a policy method requiring the reverse decision permission"
   end
 end

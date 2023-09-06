@@ -30,6 +30,15 @@
     end
 
     summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.change_name_permission") }
+      row.with_value { govuk_boolean_tag(staff.change_name_permission) }
+      row.with_action(
+        href: edit_support_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.change_name_permission")
+      )
+    end
+
+    summary_list.with_row do |row|
       row.with_key { t("activerecord.attributes.staff.change_work_history_permission") }
       row.with_value { govuk_boolean_tag(staff.change_work_history_permission) }
       row.with_action(

@@ -7,17 +7,27 @@ module PageObjects
 
       element :add_note_button, ".app-inline-action .govuk-button"
 
-      section :overview, "#app-application-overview" do
-        element :name, "div:nth-of-type(1) > dd:nth-of-type(1)"
-        element :assessor_name, "div:nth-of-type(7) > dd:nth-of-type(1)"
-        element :reviewer_name, "div:nth-of-type(8) > dd:nth-of-type(1)"
-        element :status, "div:nth-of-type(10) > dd:nth-of-type(1)"
-      end
-
+      section :summary_list, GovukSummaryList, ".govuk-summary-list"
       section :task_list, TaskList, ".app-task-list"
 
       section :management_tasks, ".app-task-list + .govuk-warning-text" do
         elements :links, ".govuk-link"
+      end
+
+      def name_summary
+        summary_list.find_row(key: "Name")
+      end
+
+      def assessor_summary
+        summary_list.find_row(key: "Assigned to")
+      end
+
+      def reviewer_summary
+        summary_list.find_row(key: "Reviewer")
+      end
+
+      def status_summary
+        summary_list.find_row(key: "Status")
       end
 
       def preliminary_check_task

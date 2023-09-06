@@ -47,40 +47,16 @@ RSpec.describe AssessorInterface::ApplicationFormPolicy do
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method requiring the change name permission"
   end
 
   describe "#destroy?" do
     subject(:destroy?) { policy.destroy? }
-
-    let(:record) { create(:assessment, :award) }
-
-    context "without permission" do
-      let(:user) { create(:staff, :confirmed) }
-      it { is_expected.to be false }
-    end
-
-    context "with permission" do
-      let(:user) { create(:staff, :confirmed, :with_withdraw_permission) }
-      it { is_expected.to be true }
-    end
+    it_behaves_like "a policy method requiring the withdraw permission"
   end
 
   describe "#withdraw?" do
     subject(:rollback?) { policy.withdraw? }
-
-    let(:record) { create(:assessment, :award) }
-
-    context "without permission" do
-      let(:user) { create(:staff, :confirmed) }
-      it { is_expected.to be false }
-    end
-
-    context "with permission" do
-      let(:user) { create(:staff, :confirmed, :with_withdraw_permission) }
-      it { is_expected.to be true }
-    end
+    it_behaves_like "a policy method requiring the withdraw permission"
   end
 end

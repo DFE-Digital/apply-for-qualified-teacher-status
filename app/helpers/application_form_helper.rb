@@ -12,98 +12,142 @@ module ApplicationFormHelper
 
   def application_form_summary_rows(
     application_form,
+    current_staff:,
     include_name:,
-    include_reference:,
     include_reviewer: true,
-    highlight_email: false
+    highlight_email: false,
+    class_context: nil
   )
     [
       (
         if include_name
-          [
-            I18n.t("application_form.summary.name"),
-            application_form_full_name(application_form),
-          ]
+          {
+            key: {
+              text: I18n.t("application_form.summary.name"),
+            },
+            value: {
+              text: application_form_full_name(application_form),
+            },
+            actions: [
+              if AssessorInterface::ApplicationFormPolicy.new(
+                   current_staff,
+                   application_form,
+                 ).edit?
+                {
+                  visually_hidden_text: I18n.t("application_form.summary.name"),
+                  href: [:edit, :assessor_interface, application_form],
+                }
+              end,
+            ].compact,
+          }
         end
       ),
-      [
-        I18n.t("application_form.summary.country"),
-        CountryName.from_country(application_form.region.country),
-      ],
-      [
-        I18n.t("application_form.summary.email"),
-        (
-          if highlight_email
-            "<em class=\"app-highlight\">#{ERB::Util.html_escape(application_form.teacher.email)}</em>".html_safe
-          else
-            application_form.teacher.email
-          end
-        ),
-      ],
+      {
+        key: {
+          text: I18n.t("application_form.summary.country"),
+        },
+        value: {
+          text: CountryName.from_country(application_form.region.country),
+        },
+      },
       (
         if application_form.region.name.present?
-          [
-            I18n.t("application_form.summary.region"),
-            application_form.region.name,
-          ]
+          {
+            key: {
+              text: I18n.t("application_form.summary.region"),
+            },
+            value: {
+              text: application_form.region.name,
+            },
+          }
         end
       ),
-      [
-        I18n.t("application_form.summary.submitted_at"),
-        application_form.submitted_at.strftime("%e %B %Y"),
-      ],
-      [
-        I18n.t("application_form.summary.days_since_submission"),
-        pluralize(application_form.working_days_since_submission, "day"),
-      ],
-      [
-        I18n.t("application_form.summary.assessor"),
-        application_form.assessor&.name ||
-          I18n.t("application_form.summary.unassigned"),
-        [
+      {
+        key: {
+          text: I18n.t("application_form.summary.email"),
+        },
+        value: {
+          text:
+            (
+              if highlight_email
+                "<em class=\"app-highlight\">#{ERB::Util.html_escape(application_form.teacher.email)}</em>".html_safe
+              else
+                application_form.teacher.email
+              end
+            ),
+        },
+      },
+      {
+        key: {
+          text: I18n.t("application_form.summary.submitted_at"),
+        },
+        value: {
+          text: application_form.submitted_at.strftime("%e %B %Y"),
+        },
+      },
+      {
+        key: {
+          text: I18n.t("application_form.summary.days_since_submission"),
+        },
+        value: {
+          text:
+            pluralize(application_form.working_days_since_submission, "day"),
+        },
+      },
+      {
+        key: {
+          text: I18n.t("application_form.summary.assessor"),
+        },
+        value: {
+          text:
+            application_form.assessor&.name ||
+              I18n.t("application_form.summary.unassigned"),
+        },
+        actions: [
           {
-            href:
-              assessor_interface_application_form_assign_assessor_path(
-                application_form,
-              ),
+            visually_hidden_text: I18n.t("application_form.summary.assessor"),
+            href: [:assessor_interface, application_form, :assign_assessor],
           },
         ],
-      ],
+      },
       (
         if include_reviewer
-          [
-            I18n.t("application_form.summary.reviewer"),
-            application_form.reviewer&.name ||
-              I18n.t("application_form.summary.unassigned"),
-            [
+          {
+            key: {
+              text: I18n.t("application_form.summary.reviewer"),
+            },
+            value: {
+              text:
+                application_form.reviewer&.name ||
+                  I18n.t("application_form.summary.unassigned"),
+            },
+            actions: [
               {
-                href:
-                  assessor_interface_application_form_assign_reviewer_path(
-                    application_form,
-                  ),
+                visually_hidden_text:
+                  I18n.t("application_form.summary.reviewer"),
+                href: [:assessor_interface, application_form, :assign_reviewer],
               },
             ],
-          ]
+          }
         end
       ),
-      (
-        if include_reference
-          [
-            I18n.t("application_form.summary.reference"),
-            application_form.reference,
-          ]
-        end
-      ),
-      [
-        I18n.t("application_form.summary.status"),
-        application_form_status_tags(
-          application_form,
-          class_context: "app-search-result__item",
-        ),
-      ],
-    ].compact.map do |key, value, actions|
-      { key: { text: key }, value: { text: value }, actions: actions || [] }
-    end
+      {
+        key: {
+          text: I18n.t("application_form.summary.reference"),
+        },
+        value: {
+          text: application_form.reference,
+        },
+      },
+      {
+        key: {
+          text: I18n.t("application_form.summary.status"),
+        },
+        value: {
+          text: application_form_status_tags(application_form, class_context:),
+        },
+      },
+    ].compact
   end
 
   def application_form_display_work_history_before_teaching_qualification_banner?(

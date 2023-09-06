@@ -6,9 +6,8 @@ RSpec.describe NotePolicy do
   it_behaves_like "a policy"
 
   let(:user) { create(:staff, :confirmed) }
-  let(:record) { nil }
 
-  subject(:policy) { described_class.new(user, record) }
+  subject(:policy) { described_class.new(user, nil) }
 
   describe "#index?" do
     subject(:index?) { policy.index? }

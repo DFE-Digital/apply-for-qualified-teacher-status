@@ -441,6 +441,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_124846) do
     t.boolean "change_work_history_permission", default: false, null: false
     t.boolean "reverse_decision_permission", default: false, null: false
     t.boolean "withdraw_permission", default: false, null: false
+    t.boolean "change_name_permission", default: false, null: false
     t.index "lower((email)::text)", name: "index_staff_on_lower_email", unique: true
     t.index ["confirmation_token"], name: "index_staff_on_confirmation_token", unique: true
     t.index ["invitation_token"], name: "index_staff_on_invitation_token", unique: true

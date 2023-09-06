@@ -35,10 +35,12 @@ RSpec.describe ApplicationFormHelper do
     subject(:summary_rows) do
       application_form_summary_rows(
         application_form,
+        current_staff:,
         include_name: true,
-        include_reference: true,
       )
     end
+
+    let(:current_staff) { create(:staff) }
 
     it do
       is_expected.to eq(
@@ -59,16 +61,6 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text: "United States",
             },
-            actions: [],
-          },
-          {
-            key: {
-              text: "Email",
-            },
-            value: {
-              text: application_form.teacher.email,
-            },
-            actions: [],
           },
           {
             key: {
@@ -77,17 +69,16 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text: "Region",
             },
-            actions: [],
           },
           {
             key: {
-              text: "Created on",
+              text: "Email",
             },
             value: {
-              text: " 1 January 2020",
+              text: application_form.teacher.email,
             },
-            actions: [],
           },
+          { key: { text: "Created on" }, value: { text: " 1 January 2020" } },
           {
             key: {
               text: "Working days since submission",
@@ -95,7 +86,6 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text: "0 days",
             },
-            actions: [],
           },
           {
             key: {
@@ -106,10 +96,8 @@ RSpec.describe ApplicationFormHelper do
             },
             actions: [
               {
-                href:
-                  assessor_interface_application_form_assign_assessor_path(
-                    application_form,
-                  ),
+                visually_hidden_text: "Assigned to",
+                href: [:assessor_interface, application_form, :assign_assessor],
               },
             ],
           },
@@ -122,42 +110,56 @@ RSpec.describe ApplicationFormHelper do
             },
             actions: [
               {
-                href:
-                  assessor_interface_application_form_assign_reviewer_path(
-                    application_form,
-                  ),
+                visually_hidden_text: "Reviewer",
+                href: [:assessor_interface, application_form, :assign_reviewer],
               },
             ],
           },
-          {
-            key: {
-              text: "Reference",
-            },
-            value: {
-              text: "0000001",
-            },
-            actions: [],
-          },
+          { key: { text: "Reference" }, value: { text: "0000001" } },
           {
             key: {
               text: "Status",
             },
             value: {
               text:
-                "<strong class=\"govuk-tag govuk-tag--grey app-search-result__item__tag\">Not started</strong>\n",
+                "<strong class=\"govuk-tag govuk-tag--grey\">Not started</strong>\n",
             },
-            actions: [],
           },
         ],
       )
+    end
+
+    context "user has change name permission" do
+      let(:current_staff) { create(:staff, :with_change_name_permission) }
+
+      it "has an action to change the name" do
+        name_row = summary_rows.find { |row| row[:key][:text] == "Name" }
+
+        expect(name_row).to eq(
+          {
+            key: {
+              text: "Name",
+            },
+            value: {
+              text: "Given Family",
+            },
+            actions: [
+              {
+                visually_hidden_text: "Name",
+                href: [:edit, :assessor_interface, application_form],
+              },
+            ],
+          },
+        )
+      end
     end
 
     context "include_reviewer false" do
       subject(:summary_rows_without_reviewer) do
         application_form_summary_rows(
           application_form,
+          current_staff:,
           include_name: true,
-          include_reference: true,
           include_reviewer: false,
         )
       end

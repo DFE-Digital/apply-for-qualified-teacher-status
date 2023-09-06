@@ -2,6 +2,9 @@ en:
   helpers:
     caption: {}
     hint:
+      assessor_interface_application_form_name_form:
+        given_names: Type the updated given names in the text box below
+        family_name: Type the updated family name in the text box below
       assessor_interface_assessment_section_form:
         selected_failure_reasons: Select all options that are relevant to you.
         failure_reason_notes:
@@ -58,6 +61,9 @@ en:
         start_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
         end_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
     label:
+      assessor_interface_application_form_name_form:
+        given_names: Change given names
+        family_name: Change family name
       assessor_interface_assessment_recommendation_form:
         recommendation_options:
           award: Award QTS

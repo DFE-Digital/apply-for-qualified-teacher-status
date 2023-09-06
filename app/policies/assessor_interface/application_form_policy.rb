@@ -9,6 +9,10 @@ class AssessorInterface::ApplicationFormPolicy < ApplicationPolicy
     true
   end
 
+  def update?
+    user.change_name_permission
+  end
+
   def destroy?
     user.withdraw_permission
   end

@@ -2,9 +2,10 @@
 
 module ApplicationFormOverview
   class Component < ViewComponent::Base
-    def initialize(application_form, highlight_email: false)
+    def initialize(application_form, current_staff:, highlight_email: false)
       super
       @application_form = application_form
+      @current_staff = current_staff
       @highlight_email = highlight_email
     end
 
@@ -15,8 +16,8 @@ module ApplicationFormOverview
     def summary_rows
       application_form_summary_rows(
         application_form,
+        current_staff:,
         include_name: true,
-        include_reference: true,
         highlight_email:,
       ) +
         [
@@ -28,9 +29,7 @@ module ApplicationFormOverview
               text:
                 govuk_link_to(
                   I18n.t("application_form.overview.view_timeline"),
-                  assessor_interface_application_form_timeline_events_path(
-                    application_form,
-                  ),
+                  [:assessor_interface, application_form, :timeline_events],
                 ),
             },
           },
@@ -39,7 +38,7 @@ module ApplicationFormOverview
 
     private
 
-    attr_reader :application_form, :highlight_email
+    attr_reader :application_form, :current_staff, :highlight_email
 
     delegate :application_form_summary_rows, to: :helpers
   end

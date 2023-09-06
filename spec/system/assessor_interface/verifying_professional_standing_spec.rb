@@ -39,7 +39,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   end
 
   def and_i_see_a_waiting_on_status
-    expect(assessor_application_page.overview.status.text).to eq(
+    expect(assessor_application_page.status_summary.value).to have_text(
       "WAITING ON PROFESSIONAL STANDING",
     )
   end
@@ -74,7 +74,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   end
 
   def and_i_see_a_received_status
-    expect(assessor_application_page.overview.status.text).to eq(
+    expect(assessor_application_page.status_summary.value).to have_text(
       "RECEIVED PROFESSIONAL STANDING",
     )
   end

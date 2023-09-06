@@ -51,7 +51,7 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def and_the_assessor_is_assigned_to_the_application_form
-    expect(assessor_application_page.overview.assessor_name.text).to eq(
+    expect(assessor_application_page.assessor_summary.value).to have_text(
       assessor.name,
     )
   end
@@ -66,7 +66,7 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def and_the_assessor_is_assigned_as_reviewer_to_the_application_form
-    expect(assessor_application_page.overview.reviewer_name.text).to eq(
+    expect(assessor_application_page.reviewer_summary.value).to have_text(
       assessor.name,
     )
   end

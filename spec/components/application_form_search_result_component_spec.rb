@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe ApplicationFormSearchResult::Component, type: :component do
-  subject(:component) { render_inline(described_class.new(application_form:)) }
+  subject(:component) do
+    render_inline(described_class.new(application_form, current_staff:))
+  end
 
   let(:application_form) do
     create(
@@ -14,6 +16,7 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
       family_name: "Family",
     )
   end
+  let(:current_staff) { create(:staff) }
 
   describe "heading text" do
     subject(:text) { component.at_css("h2").text.strip }

@@ -49,7 +49,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
   end
 
   def and_i_see_a_waiting_on_status
-    expect(assessor_application_page.overview.status.text).to eq(
+    expect(assessor_application_page.status_summary.value).to have_text(
       "PRELIMINARY CHECK",
     )
   end
