@@ -97,6 +97,36 @@ RSpec.describe Filters::Name do
       end
     end
 
+    context "with trailing whitespace" do
+      let(:params) { { name: "Jane Smith    " } }
+      let(:scope) { ApplicationForm.all }
+      let!(:included) do
+        create(:application_form, given_names: "Jane", family_name: "Smith")
+      end
+      let!(:excluded) do
+        create(:application_form, given_names: "Tom", family_name: "Bombadil")
+      end
+
+      it "returns a filtered scope" do
+        expect(subject).to contain_exactly(included)
+      end
+    end
+
+    context "with leading whitespace" do
+      let(:params) { { name: "    Jane Smith" } }
+      let(:scope) { ApplicationForm.all }
+      let!(:included) do
+        create(:application_form, given_names: "Jane", family_name: "Smith")
+      end
+      let!(:excluded) do
+        create(:application_form, given_names: "Tom", family_name: "Bombadil")
+      end
+
+      it "returns a filtered scope" do
+        expect(subject).to contain_exactly(included)
+      end
+    end
+
     context "match with different case" do
       let(:params) { { name: "daVe" } }
 

@@ -31,6 +31,40 @@ RSpec.describe Filters::Email do
 
       it { is_expected.to contain_exactly(included) }
     end
+
+    context "with trailing whitespace" do
+      let(:params) { { email: "Jane.Smith@example.com    " } }
+      let(:scope) { ApplicationForm.all }
+      let!(:included) { create(:application_form, teacher:) }
+
+      before do
+        create(
+          :application_form,
+          teacher: create(:teacher, email: "jane.jones@example.com"),
+        )
+      end
+
+      it "returns a filtered scope" do
+        expect(subject).to contain_exactly(included)
+      end
+    end
+
+    context "with leading whitespace" do
+      let(:params) { { email: "    Jane.Smith@example.com" } }
+      let(:scope) { ApplicationForm.all }
+      let!(:included) { create(:application_form, teacher:) }
+
+      before do
+        create(
+          :application_form,
+          teacher: create(:teacher, email: "jane.jones@example.com"),
+        )
+      end
+
+      it "returns a filtered scope" do
+        expect(subject).to contain_exactly(included)
+      end
+    end
   end
 
   context "the params don't include email" do

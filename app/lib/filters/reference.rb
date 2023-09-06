@@ -4,7 +4,7 @@ module Filters
   class Reference < Base
     def apply
       if reference.present?
-        scope.where("reference ILIKE ?", "%#{reference}%")
+        scope.where("reference ILIKE ?", "%#{reference.strip}%")
       else
         scope
       end

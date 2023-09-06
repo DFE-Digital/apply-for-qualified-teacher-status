@@ -4,7 +4,7 @@ module Filters
   class Email < Base
     def apply
       if email.present?
-        scope.joins(:teacher).where("teachers.email = ?", email.downcase)
+        scope.joins(:teacher).where("teachers.email = ?", email.strip.downcase)
       else
         scope
       end
