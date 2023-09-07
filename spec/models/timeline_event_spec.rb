@@ -79,6 +79,7 @@ RSpec.describe TimelineEvent do
 
     it do
       is_expected.to define_enum_for(:event_type).with_values(
+        action_required_by_changed: "action_required_by_changed",
         age_range_subjects_verified: "age_range_subjects_verified",
         assessment_section_recorded: "assessment_section_recorded",
         assessor_assigned: "assessor_assigned",
@@ -385,6 +386,29 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:column_name) }
       it { is_expected.to validate_absence_of(:old_value) }
       it { is_expected.to validate_absence_of(:new_value) }
+    end
+
+    context "with an action required by changed event type" do
+      before { timeline_event.event_type = :action_required_by_changed }
+
+      it { is_expected.to validate_absence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:old_state) }
+      it { is_expected.to validate_absence_of(:new_state) }
+      it { is_expected.to validate_absence_of(:assessment_section) }
+      it { is_expected.to validate_absence_of(:note) }
+      it { is_expected.to validate_absence_of(:mailer_class_name) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
+      it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
+      it { is_expected.to validate_absence_of(:requestable_id) }
+      it { is_expected.to validate_absence_of(:requestable_type) }
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_presence_of(:old_value) }
+      it { is_expected.to validate_presence_of(:new_value) }
     end
   end
 end
