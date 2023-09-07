@@ -105,5 +105,11 @@ FactoryBot.define do
       old_value { Faker::Internet.email }
       new_value { Faker::Internet.email }
     end
+
+    trait :action_required_by_changed do
+      event_type { "action_required_by_changed" }
+      old_value { %w[admin assessor external none].sample }
+      new_value { %w[admin assessor external none].sample }
+    end
   end
 end
