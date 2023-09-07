@@ -26,8 +26,11 @@ class AssessorInterface::CheckAgeRangeSubjectsForm < AssessorInterface::Assessme
         age_range_max
         age_range_note
         subject_1
+        subject_1_raw
         subject_2
+        subject_2_raw
         subject_3
+        subject_3_raw
         subjects_note
       ]
       [args, kwargs]

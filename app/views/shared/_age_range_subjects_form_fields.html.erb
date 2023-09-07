@@ -17,10 +17,10 @@
     form_field: f.govuk_select(
       field,
       options_for_select(
-        Subject.all.map { |subject| [subject.name, subject.id] }.unshift([nil, nil]),
+        dfe_autocomplete_options(Subject.all),
         f.object.send(field),
-        ),
-      )
+      ),
+    )
   ) %>
 <% end %>
 

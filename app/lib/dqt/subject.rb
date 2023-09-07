@@ -2,13 +2,13 @@
 
 class DQT::Subject
   class << self
-    def for_id(id)
+    def for(value)
       # these three subjects are not coded by HESA so we've agreed these encodings with the DQT team
-      return "999001" if id == "citizenship"
-      return "999002" if id == "physical_education"
-      return "999003" if id == "design_and_technology"
+      return "999001" if value == "citizenship"
+      return "999002" if value == "physical_education"
+      return "999003" if value == "design_and_technology"
 
-      MAPPING.invert.fetch(id)
+      MAPPING.invert.fetch(value)
     end
 
     # https://www.hesa.ac.uk/collection/c22053/xml/c22053/c22053codelists.xsd

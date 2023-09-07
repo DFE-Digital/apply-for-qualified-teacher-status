@@ -24,11 +24,15 @@ module AssessorInterface::AgeRangeSubjectsForm
               }
 
     attribute :subject_1, :string
+    attribute :subject_1_raw, :string
     attribute :subject_2, :string
+    attribute :subject_2_raw, :string
     attribute :subject_3, :string
+    attribute :subject_3_raw, :string
     attribute :subjects_note, :string
 
     validates :subject_1, presence: true
+    validates :subject_1_raw, presence: true
   end
 
   def save
@@ -52,7 +56,11 @@ module AssessorInterface::AgeRangeSubjectsForm
   end
 
   def update_subjects
-    subjects = [subject_1, subject_2, subject_3].compact_blank
+    subjects = [
+      subject_1_raw.present? ? subject_1 : "",
+      subject_2_raw.present? ? subject_2 : "",
+      subject_3_raw.present? ? subject_3 : "",
+    ].compact_blank
     note = subjects_note.presence || ""
     assessment.update!(subjects:, subjects_note: note)
   end
