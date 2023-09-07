@@ -8,22 +8,20 @@ RSpec.describe ProofOfRecognitionHelper do
       status_check_online?: status,
       sanction_check_written?: sanction,
       sanction_check_online?: sanction,
-      teaching_authority_provides_written_statement?:
-        teaching_authority_provides_written_statement,
-      application_form_skip_work_history?: application_form_skip_work_history,
+      application_form_skip_work_history:,
       teaching_authority_name: "teaching authority",
       teaching_authority_certificate: "letter",
     )
   end
+
   let(:status) { false }
   let(:sanction) { false }
-  let(:teaching_authority_provides_written_statement) { false }
   let(:application_form_skip_work_history) { false }
 
   describe "proof_of_recognition_requirements_for" do
     subject { proof_of_recognition_requirements_for(region:) }
 
-    context "written status" do
+    context "with only a written status" do
       let(:status) { true }
 
       it do
@@ -39,7 +37,7 @@ RSpec.describe ProofOfRecognitionHelper do
       end
     end
 
-    context "written sanction only without statement provided" do
+    context "with only a written sanction" do
       let(:sanction) { true }
 
       it do
@@ -55,23 +53,10 @@ RSpec.describe ProofOfRecognitionHelper do
       end
     end
 
-    context "written sanction only with statement provided" do
-      let(:sanction) { true }
-      let(:teaching_authority_provides_written_statement) { true }
-      it do
-        is_expected.to match_array(
-          [
-            "that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted," \
-              " and that you have no sanctions against you",
-          ],
-        )
-      end
-    end
-
-    context "both" do
+    context "with a written sanction and a written status" do
       let(:sanction) { true }
       let(:status) { true }
-      let(:teaching_authority_provides_written_statement) { true }
+
       it do
         is_expected.to match_array(
           [
@@ -99,10 +84,10 @@ RSpec.describe ProofOfRecognitionHelper do
     end
   end
 
-  describe "proof_of_recognition_description_for" do
+  describe "#proof_of_recognition_description_for" do
     subject { proof_of_recognition_description_for(region:) }
 
-    context "written status only without statement provided" do
+    context "with only a written status" do
       let(:status) { true }
 
       it do
@@ -110,20 +95,9 @@ RSpec.describe ProofOfRecognitionHelper do
       end
     end
 
-    context "written status only with statement provided" do
-      let(:status) { true }
-      let(:teaching_authority_provides_written_statement) { true }
-      it { is_expected.to eq("The document must confirm:") }
-    end
-
-    context "written sanction only with statement provided" do
+    context "with only a written sanction" do
       let(:sanction) { true }
-      let(:teaching_authority_provides_written_statement) { true }
-      it { is_expected.to eq("The document must confirm:") }
-    end
 
-    context "written sanction only with statement provided without statement provided" do
-      let(:sanction) { true }
       it do
         is_expected.to eq(
           "In the letter the teaching authority must confirm that your authorisation to teach has never been:",
@@ -131,32 +105,13 @@ RSpec.describe ProofOfRecognitionHelper do
       end
     end
 
-    context "both with written statement provided" do
+    context "with a written sanction and a written status" do
       let(:sanction) { true }
       let(:status) { true }
-      let(:teaching_authority_provides_written_statement) { true }
-      it { is_expected.to eq("The document must confirm:") }
-    end
 
-    context "both without written statement provided" do
-      let(:sanction) { true }
-      let(:status) { true }
       it do
         is_expected.to eq("In the letter the teaching authority must confirm:")
       end
-    end
-
-    context "both with written statement provided" do
-      let(:sanction) { true }
-      let(:status) { true }
-      let(:teaching_authority_provides_written_statement) { true }
-      it { is_expected.to eq("The document must confirm:") }
-    end
-
-    context "a country which provides the written statement" do
-      let(:teaching_authority_provides_written_statement) { true }
-
-      it { is_expected.to eq("The document must confirm:") }
     end
   end
 end
