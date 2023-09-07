@@ -125,12 +125,6 @@
     - qualifications_information
     - sanction_information
     - status_information
-    - teaching_authority_address
-    - teaching_authority_certificate
-    - teaching_authority_emails
-    - teaching_authority_name
-    - teaching_authority_online_checker_url
-    - teaching_authority_websites
     - updated_at
   :documents:
     - available

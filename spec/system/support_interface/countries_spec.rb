@@ -19,19 +19,13 @@ RSpec.describe "Countries support", type: :system do
     when_i_click_on_a_country
     then_i_see_a_country
 
-    when_i_fill_teaching_authority_name
-    when_i_fill_teaching_authority_address
-    when_i_fill_teaching_authority_emails
-    when_i_fill_teaching_authority_websites
     when_i_fill_other_information
     when_i_fill_sanction_information
     when_i_fill_status_information
-    when_i_fill_teaching_authority_certificate
-    when_i_fill_teaching_authority_online_checker_url
     when_i_fill_qualifications_information
     when_i_fill_regions
     and_i_click_preview
-    then_i_see_country_contact_preview
+    then_i_see_country_changes_preview
     then_i_see_region_changes_confirmation
     and_i_click_save
 
@@ -40,15 +34,15 @@ RSpec.describe "Countries support", type: :system do
 
     when_i_select_sanction_check
     when_i_select_status_check
-    when_i_fill_teaching_authority_name
-    when_i_fill_teaching_authority_address
-    when_i_fill_teaching_authority_emails
-    when_i_fill_teaching_authority_websites
     when_i_fill_other_information
     when_i_fill_sanction_information
     when_i_fill_status_information
+    when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_certificate
+    when_i_fill_teaching_authority_emails
+    when_i_fill_teaching_authority_name
     when_i_fill_teaching_authority_online_checker_url
+    when_i_fill_teaching_authority_websites
     when_i_select_yes_teaching_authority_requires_submission_email
     when_i_fill_qualifications_information
     when_i_check_written_statement_optional
@@ -105,12 +99,7 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_title("United States")
   end
 
-  def then_i_see_country_contact_preview
-    expect(page).to have_content("Name")
-    expect(page).to have_content("Address")
-    expect(page).to have_content("Email address")
-    expect(page).to have_content("Website")
-    expect(page).to have_content("Certificate")
+  def then_i_see_country_changes_preview
     expect(page).to have_content("Other")
     expect(page).to have_content("Qualifications information")
   end
@@ -154,31 +143,19 @@ RSpec.describe "Countries support", type: :system do
 
   def when_i_fill_teaching_authority_name
     fill_in "region-teaching-authority-name-field", with: "Name"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-authority-name-field",
-            with: "Name"
   end
 
   def when_i_fill_teaching_authority_address
     fill_in "region-teaching-authority-address-field", with: "Address"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-authority-address-field",
-            with: "Address"
   end
 
   def when_i_fill_teaching_authority_emails
     fill_in "region-teaching-authority-emails-string-field",
             with: "Email address"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-authority-emails-string-field",
-            with: "Email address"
   end
 
   def when_i_fill_teaching_authority_websites
     fill_in "region-teaching-authority-websites-string-field", with: "Website"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-authority-websites-string-field",
-            with: "Website"
   end
 
   def when_i_fill_other_information
@@ -190,16 +167,10 @@ RSpec.describe "Countries support", type: :system do
 
   def when_i_fill_teaching_authority_certificate
     fill_in "region-teaching-authority-certificate-field", with: "Certificate"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-authority-certificate-field",
-            with: "Certificate"
   end
 
   def when_i_fill_teaching_authority_online_checker_url
     fill_in "region-teaching-authority-online-checker-url-field",
-            with: "https://www.example.com/checks"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-authority-online-checker-url-field",
             with: "https://www.example.com/checks"
   end
 
@@ -218,7 +189,7 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_select_yes_teaching_authority_requires_submission_email
-    choose "region-teaching-authority-requires-submission-email-yes-field",
+    choose "region-teaching-authority-requires-submission-email-true-field",
            visible: :all
   end
 

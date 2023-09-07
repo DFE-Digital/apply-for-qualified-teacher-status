@@ -2,22 +2,16 @@
 #
 # Table name: countries
 #
-#  id                                    :bigint           not null, primary key
-#  code                                  :string           not null
-#  eligibility_enabled                   :boolean          default(TRUE), not null
-#  eligibility_skip_questions            :boolean          default(FALSE), not null
-#  other_information                     :text             default(""), not null
-#  qualifications_information            :text             default(""), not null
-#  sanction_information                  :string           default(""), not null
-#  status_information                    :string           default(""), not null
-#  teaching_authority_address            :text             default(""), not null
-#  teaching_authority_certificate        :text             default(""), not null
-#  teaching_authority_emails             :text             default([]), not null, is an Array
-#  teaching_authority_name               :text             default(""), not null
-#  teaching_authority_online_checker_url :string           default(""), not null
-#  teaching_authority_websites           :text             default([]), not null, is an Array
-#  created_at                            :datetime         not null
-#  updated_at                            :datetime         not null
+#  id                         :bigint           not null, primary key
+#  code                       :string           not null
+#  eligibility_enabled        :boolean          default(TRUE), not null
+#  eligibility_skip_questions :boolean          default(FALSE), not null
+#  other_information          :text             default(""), not null
+#  qualifications_information :text             default(""), not null
+#  sanction_information       :string           default(""), not null
+#  status_information         :string           default(""), not null
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
 #
 # Indexes
 #
@@ -44,12 +38,6 @@ FactoryBot.define do
       after(:create) do |country, _evaluator|
         create(:region, :national, country:)
       end
-    end
-
-    trait :with_teaching_authority do
-      teaching_authority_address { Faker::Address.street_address }
-      teaching_authority_emails { [Faker::Internet.email] }
-      teaching_authority_websites { [Faker::Internet.url] }
     end
   end
 end

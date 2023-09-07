@@ -16,17 +16,49 @@
                                        :label,
                                        legend: { text: "Will applications be subject to a preliminary check?", size: "s" } %>
 
-  <%= render "shared/support_interface/forms/status_sanctions_checks", f: %>
-  <%= render "shared/support_interface/forms/teaching_authority_form_fields", f: %>
+  <%= f.govuk_fieldset legend: { text: "Teacher status and sanctions checks" } do %>
+    <%= f.govuk_collection_select :status_check, [
+      OpenStruct.new(id: 'online', name: 'Online'),
+      OpenStruct.new(id: 'written', name: 'Written'),
+      OpenStruct.new(id: 'none', name: 'None')
+    ], :id, :name, label: { text: "How will teacher status be checked?", size: "s" } %>
 
-  <%= f.govuk_radio_buttons_fieldset :teaching_authority_requires_submission_email, legend: { size: 'm', text: 'Automatically notify the teaching authority (via email) every time a QTS application is submitted?' } do %>
-    <%= f.govuk_radio_button :teaching_authority_requires_submission_email, 'yes', label: { text: 'Yes' }, link_errors: true %>
-    <%= f.govuk_radio_button :teaching_authority_requires_submission_email, 'no', label: { text: 'No' }%>
+    <%= f.govuk_collection_select :sanction_check, [
+      OpenStruct.new(id: 'online', name: 'Online'),
+      OpenStruct.new(id: 'written', name: 'Written'),
+      OpenStruct.new(id: 'none', name: 'None')
+    ], :id, :name, label: { text: "How will sanctions be checked?", size: "s" } %>
+  <% end %>
+
+  <%= f.govuk_fieldset legend: { text: "Teaching authority details" } do %>
+    <%= f.govuk_text_field :teaching_authority_name, label: { text: "Name" } %>
+    <%= f.govuk_text_area :teaching_authority_address, label: { text: "Address" } %>
+    <%= f.govuk_text_area :teaching_authority_emails_string, label: { text: "Email" }, hint: { text: "One email per line (if more than one)" } %>
+    <%= f.govuk_text_area :teaching_authority_websites_string, label: { text: "Websites" }, hint: { text: "One website per line (if more than one)" } %>
+    <%= f.govuk_text_field :teaching_authority_certificate, label: { text: "Name given to describe the Letter of Professional standing" } %>
+    <%= f.govuk_text_field :teaching_authority_online_checker_url, label: { text: "Online checker website" } %>
+
+    <%= f.govuk_collection_radio_buttons :teaching_authority_requires_submission_email,
+                                         [
+                                           OpenStruct.new(value: :true, label: "Yes"),
+                                           OpenStruct.new(value: :false, label: "No")
+                                         ],
+                                         :value,
+                                         :label,
+                                         legend: { text: "Automatically notify the teaching authority (via email) every time a QTS application is submitted?", size: "s" } %>
+
+    <%= f.govuk_collection_radio_buttons :teaching_authority_provides_written_statement,
+                                         [
+                                           OpenStruct.new(value: :true, label: "Yes"),
+                                           OpenStruct.new(value: :false, label: "No")
+                                         ],
+                                         :value,
+                                         :label,
+                                         legend: { text: "Will the teaching authority only send the letter of professional standing (LOPS) directly to the TRA?", size: "s" } %>
   <% end %>
 
   <%= f.govuk_check_box :reduced_evidence_accepted, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Accept reduced evidence" } %>
   <%= f.govuk_check_box :written_statement_optional, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Applicant can submit without uploading the written statement (if a written statement is requested)" } %>
-  <%= f.govuk_check_box :teaching_authority_provides_written_statement, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Will the teaching authority only send the letter of professional standing (LOPS) directly to the TRA?" } %>
 
   <%= render "shared/support_interface/forms/additional_information", f: %>
 

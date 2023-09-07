@@ -72,12 +72,6 @@ FactoryBot.define do
       status_check { :none }
     end
 
-    trait :with_teaching_authority do
-      teaching_authority_address { Faker::Address.street_address }
-      teaching_authority_emails { [Faker::Internet.email] }
-      teaching_authority_websites { [Faker::Internet.url] }
-    end
-
     trait :in_country do
       transient { country_code { "" } }
       country { Country.find_or_create_by(code: country_code) }
