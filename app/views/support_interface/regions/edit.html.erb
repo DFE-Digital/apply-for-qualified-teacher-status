@@ -7,11 +7,19 @@
 
   <%= f.govuk_check_box :application_form_skip_work_history, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Skip work history" } %>
 
-  <%= render "shared/support_interface/forms/requires_preliminary_check", f: %>
+  <%= f.govuk_collection_radio_buttons :requires_preliminary_check,
+                                       [
+                                         OpenStruct.new(value: :true, label: "Yes"),
+                                         OpenStruct.new(value: :false, label: "No")
+                                       ],
+                                       :value,
+                                       :label,
+                                       legend: { text: "Will applications be subject to a preliminary check?", size: "s" } %>
+
   <%= render "shared/support_interface/forms/status_sanctions_checks", f: %>
   <%= render "shared/support_interface/forms/teaching_authority_form_fields", f: %>
 
-  <%= f.govuk_radio_buttons_fieldset(:teaching_authority_requires_submission_email, legend: { size: 'm', text: 'Automatically notify the teaching authority (via email) every time a QTS application is submitted?' }) do %>
+  <%= f.govuk_radio_buttons_fieldset :teaching_authority_requires_submission_email, legend: { size: 'm', text: 'Automatically notify the teaching authority (via email) every time a QTS application is submitted?' } do %>
     <%= f.govuk_radio_button :teaching_authority_requires_submission_email, 'yes', label: { text: 'Yes' }, link_errors: true %>
     <%= f.govuk_radio_button :teaching_authority_requires_submission_email, 'no', label: { text: 'No' }%>
   <% end %>

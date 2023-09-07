@@ -5,25 +5,21 @@
 <%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_radio_buttons_fieldset :has_regions, legend: { size: "m", text: "Regions" }, hint: { text: "Does this country have regions within it that have a different teaching authority or service journey?" } do %>
+  <%= f.govuk_radio_buttons_fieldset :has_regions, legend: { text: "Regions" }, hint: { text: "Does this country have regions within it that have a different teaching authority or service journey?" } do %>
     <%= f.govuk_radio_button :has_regions, :false, label: { text: "No" }, link_errors: true %>
     <%= f.govuk_radio_button :has_regions, :true, label: { text: "Yes" } do %>
       <%= f.govuk_text_area :region_names, label: nil, hint: { text: "Add regions below, one region per line. (This will allow you to customise the service for each region.) " }, rows: 10 %>
     <% end %>
   <% end %>
 
-  <%= f.govuk_fieldset legend: { text: "Application form" } do %>
-    <%= f.govuk_collection_radio_buttons :eligibility_enabled,
-                                         [
-                                           OpenStruct.new(value: :true, label: "Yes"),
-                                           OpenStruct.new(value: :false, label: "No")
-                                         ],
-                                         :value,
-                                         :label,
-                                         legend: { text: "Do we accept applications from this country?", size: "s" } %>
-
-    <%= render "shared/support_interface/forms/requires_preliminary_check", f: %>
-  <% end %>
+  <%= f.govuk_collection_radio_buttons :eligibility_enabled,
+                                       [
+                                         OpenStruct.new(value: :true, label: "Yes"),
+                                         OpenStruct.new(value: :false, label: "No")
+                                       ],
+                                       :value,
+                                       :label,
+                                       legend: { text: "Do we accept applications from this country?" } %>
 
   <%= f.govuk_collection_radio_buttons :eligibility_skip_questions,
                                        [

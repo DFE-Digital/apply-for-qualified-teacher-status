@@ -8,7 +8,6 @@
 #  eligibility_skip_questions            :boolean          default(FALSE), not null
 #  other_information                     :text             default(""), not null
 #  qualifications_information            :text             default(""), not null
-#  requires_preliminary_check            :boolean          default(FALSE), not null
 #  sanction_information                  :string           default(""), not null
 #  status_information                    :string           default(""), not null
 #  teaching_authority_address            :text             default(""), not null

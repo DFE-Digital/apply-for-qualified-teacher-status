@@ -13,7 +13,6 @@ class SupportInterface::CountryForm
   attribute :other_information, :string
   attribute :qualifications_information, :string
   attribute :region_names, :string
-  attribute :requires_preliminary_check, :boolean
   attribute :sanction_information, :string
   attribute :status_information, :string
   attribute :teaching_authority_address, :string
@@ -27,7 +26,6 @@ class SupportInterface::CountryForm
   validates :eligibility_skip_questions, inclusion: { in: [true, false] }
   validates :has_regions, inclusion: { in: [true, false] }
   validates :region_names, presence: true, if: :has_regions
-  validates :requires_preliminary_check, inclusion: { in: [true, false] }
 
   def save!
     ActiveRecord::Base.transaction do
@@ -55,7 +53,6 @@ class SupportInterface::CountryForm
       eligibility_skip_questions:,
       other_information:,
       qualifications_information:,
-      requires_preliminary_check:,
       sanction_information:,
       status_information:,
       teaching_authority_address:,

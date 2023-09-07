@@ -104,6 +104,7 @@ FactoryBot.define do
     teaching_authority_provides_written_statement do
       region.teaching_authority_provides_written_statement
     end
+    requires_preliminary_check { region.requires_preliminary_check }
 
     trait :requires_preliminary_check do
       requires_preliminary_check { true }

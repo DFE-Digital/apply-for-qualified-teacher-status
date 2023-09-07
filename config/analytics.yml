@@ -123,7 +123,6 @@
     - id
     - other_information
     - qualifications_information
-    - requires_preliminary_check
     - sanction_information
     - status_information
     - teaching_authority_address

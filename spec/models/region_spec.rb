@@ -70,29 +70,6 @@ RSpec.describe Region, type: :model do
     end
   end
 
-  describe "scopes" do
-    describe "#requires_preliminary_check" do
-      subject(:requires_preliminary_check) do
-        described_class.requires_preliminary_check
-      end
-
-      let!(:normal_region) { create(:region) }
-      let!(:preliminary_region) do
-        create(:region, requires_preliminary_check: true)
-      end
-      let!(:preliminary_country_region) do
-        create(
-          :region,
-          country: create(:country, requires_preliminary_check: true),
-        )
-      end
-
-      it { is_expected.to_not include(normal_region) }
-      it { is_expected.to include(preliminary_region) }
-      it { is_expected.to include(preliminary_country_region) }
-    end
-  end
-
   describe "#teaching_authority_emails_string" do
     subject(:teaching_authority_emails_string) do
       region.teaching_authority_emails_string

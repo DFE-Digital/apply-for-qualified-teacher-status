@@ -57,13 +57,6 @@ class Region < ApplicationRecord
 
   validates :teaching_authority_online_checker_url, url: { allow_blank: true }
 
-  scope :requires_preliminary_check,
-        -> {
-          joins(:country).where(requires_preliminary_check: true).or(
-            where(country: { requires_preliminary_check: true }),
-          )
-        }
-
   def checks_available?
     !sanction_check_none? && !status_check_none?
   end
