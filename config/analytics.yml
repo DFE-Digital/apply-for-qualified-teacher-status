@@ -116,23 +116,23 @@
     - working_days_submission_to_recommendation
     - working_days_submission_to_started
   :countries:
-    - id
     - code
     - created_at
-    - updated_at
     - eligibility_enabled
     - eligibility_skip_questions
-    - teaching_authority_address
-    - teaching_authority_emails
-    - teaching_authority_websites
-    - teaching_authority_certificate
-    - teaching_authority_other
-    - teaching_authority_name
-    - teaching_authority_online_checker_url
-    - teaching_authority_status_information
-    - teaching_authority_sanction_information
+    - id
+    - other_information
     - qualifications_information
     - requires_preliminary_check
+    - sanction_information
+    - status_information
+    - teaching_authority_address
+    - teaching_authority_certificate
+    - teaching_authority_emails
+    - teaching_authority_name
+    - teaching_authority_online_checker_url
+    - teaching_authority_websites
+    - updated_at
   :documents:
     - available
     - completed
@@ -282,29 +282,29 @@
     - failure_assessor_note
     - reviewed_at
   :regions:
-    - id
-    - country_id
-    - name
-    - created_at
-    - updated_at
-    - status_check
-    - sanction_check
     - application_form_skip_work_history
+    - country_id
+    - created_at
+    - id
+    - name
+    - other_information
+    - qualifications_information
     - reduced_evidence_accepted
+    - requires_preliminary_check
+    - sanction_check
+    - sanction_information
+    - status_check
+    - status_information
     - teaching_authority_address
-    - teaching_authority_emails
-    - teaching_authority_websites
-    - teaching_authority_name
-    - teaching_authority_other
     - teaching_authority_certificate
+    - teaching_authority_emails
+    - teaching_authority_name
     - teaching_authority_online_checker_url
-    - teaching_authority_status_information
-    - teaching_authority_sanction_information
     - teaching_authority_provides_written_statement
     - teaching_authority_requires_submission_email
-    - qualifications_information
+    - teaching_authority_websites
+    - updated_at
     - written_statement_optional
-    - requires_preliminary_check
   :reminder_emails:
     - id
     - created_at

@@ -25,11 +25,18 @@
     <%= render "shared/support_interface/forms/requires_preliminary_check", f: %>
   <% end %>
 
-  <%= render "shared/support_interface/forms/eligibility_checker", f: %>
-  <%= render "shared/support_interface/forms/teaching_authority_form_fields", f: %>
-  <%= render "shared/support_interface/forms/changes_to_eligible_page", f: %>
+  <%= f.govuk_collection_radio_buttons :eligibility_skip_questions,
+                                       [
+                                         OpenStruct.new(value: :false, label: "Standard – Asks 5 standard questions that most countries would need to be asked."),
+                                         OpenStruct.new(value: :true, label: "Reduced – Only asks if the applicant’s teaching qualification was completed in their country of recognition.")
+                                       ],
+                                       :value,
+                                       :label,
+                                       legend: { text: "Eligibility checker" },
+                                       hint: { text: 'Which route will applicants take through the eligibility checker?' } %>
 
-  <%= f.govuk_text_area :qualifications_information, label: { text: 'Proof of qualifications' }, hint: { text: "Example: ‘We cannot accept the National Certificate in Education (NCE) or the Teachers Certificate Grade II from Nigeria, as these do not meet the required level.’" }, rows: 5 %>
+  <%= render "shared/support_interface/forms/teaching_authority_form_fields", f: %>
+  <%= render "shared/support_interface/forms/additional_information", f: %>
 
   <%= f.govuk_submit "Preview", name: "preview", value: "true" do %>
     <%= f.govuk_submit "Save", name: "preview", value: "false", secondary: true %>

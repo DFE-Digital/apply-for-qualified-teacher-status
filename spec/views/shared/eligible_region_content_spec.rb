@@ -32,8 +32,8 @@ RSpec.describe "Eligible region content", type: :view do
           ),
         status_check: :written,
         sanction_check: :written,
-        teaching_authority_status_information: "Status information",
-        teaching_authority_sanction_information: "Sanction information",
+        status_information: "Status information",
+        sanction_information: "Sanction information",
         teaching_authority_address: "address",
         qualifications_information: "qualifications info",
       )

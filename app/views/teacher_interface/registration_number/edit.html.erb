@@ -7,22 +7,22 @@
   <%= f.govuk_text_field :registration_number, label: { size: "l", tag: "h1" } %>
 
   <% if @application_form.region.status_check_online? %>
-    <% if @application_form.region.teaching_authority_status_information.present?%>
-      <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_status_information) %>
+    <% if @application_form.region.status_information.present? %>
+      <%= raw GovukMarkdown.render(@application_form.region.status_information) %>
     <% end %>
 
-    <% if @application_form.region.country.teaching_authority_status_information.present?%>
-      <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_status_information) %>
+    <% if @application_form.region.country.status_information.present? %>
+      <%= raw GovukMarkdown.render(@application_form.region.country.status_information) %>
     <% end %>
   <% end %>
 
   <% if @application_form.region.sanction_check_online? %>
-    <% if @application_form.region.teaching_authority_sanction_information.present?%>
-      <%= raw GovukMarkdown.render(@application_form.region.teaching_authority_sanction_information) %>
+    <% if @application_form.region.sanction_information.present? %>
+      <%= raw GovukMarkdown.render(@application_form.region.sanction_information) %>
     <% end %>
 
-    <% if @application_form.region.country.teaching_authority_sanction_information.present?%>
-      <%= raw GovukMarkdown.render(@application_form.region.country.teaching_authority_sanction_information) %>
+    <% if @application_form.region.country.sanction_information.present? %>
+      <%= raw GovukMarkdown.render(@application_form.region.country.sanction_information) %>
     <% end %>
   <% end %>
 
@@ -32,5 +32,6 @@
       contact you for more information as part of your application.
     </p>
   <% end %>
+
   <%= render "shared/save_submit_buttons", f: %>
 <% end %>

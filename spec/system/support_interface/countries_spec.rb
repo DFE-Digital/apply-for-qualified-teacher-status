@@ -23,9 +23,9 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
-    when_i_fill_teaching_authority_other
-    when_i_fill_teaching_authority_sanction_information
-    when_i_fill_teaching_authority_status_information
+    when_i_fill_other_information
+    when_i_fill_sanction_information
+    when_i_fill_status_information
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_online_checker_url
     when_i_fill_qualifications_information
@@ -45,9 +45,9 @@ RSpec.describe "Countries support", type: :system do
     when_i_fill_teaching_authority_address
     when_i_fill_teaching_authority_emails
     when_i_fill_teaching_authority_websites
-    when_i_fill_teaching_authority_other
-    when_i_fill_teaching_authority_sanction_information
-    when_i_fill_teaching_authority_status_information
+    when_i_fill_other_information
+    when_i_fill_sanction_information
+    when_i_fill_status_information
     when_i_fill_teaching_authority_certificate
     when_i_fill_teaching_authority_online_checker_url
     when_i_select_yes_teaching_authority_requires_submission_email
@@ -183,10 +183,10 @@ RSpec.describe "Countries support", type: :system do
             with: "Website"
   end
 
-  def when_i_fill_teaching_authority_other
-    fill_in "region-teaching-authority-other-field", with: "Other"
+  def when_i_fill_other_information
+    fill_in "region-other-information-field", with: "Other"
   rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-authority-other-field",
+    fill_in "support-interface-country-form-other-information-field",
             with: "Other"
   end
 
@@ -205,19 +205,17 @@ RSpec.describe "Countries support", type: :system do
             with: "https://www.example.com/checks"
   end
 
-  def when_i_fill_teaching_authority_sanction_information
-    fill_in "region-teaching-authority-sanction-information-field",
-            with: "Sanction information"
+  def when_i_fill_sanction_information
+    fill_in "region-sanction-information-field", with: "Sanction information"
   rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-authority-sanction-information-field",
+    fill_in "support-interface-country-form-sanction-information-field",
             with: "Sanction information"
   end
 
-  def when_i_fill_teaching_authority_status_information
-    fill_in "region-teaching-authority-status-information-field",
-            with: "Status information"
+  def when_i_fill_status_information
+    fill_in "region-status-information-field", with: "Status information"
   rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-authority-status-information-field",
+    fill_in "support-interface-country-form-status-information-field",
             with: "Status information"
   end
 

@@ -10,17 +10,17 @@ class SupportInterface::CountryForm
   attribute :eligibility_enabled, :boolean
   attribute :eligibility_skip_questions, :boolean
   attribute :has_regions, :boolean
+  attribute :other_information, :string
   attribute :qualifications_information, :string
   attribute :region_names, :string
   attribute :requires_preliminary_check, :boolean
+  attribute :sanction_information, :string
+  attribute :status_information, :string
   attribute :teaching_authority_address, :string
   attribute :teaching_authority_certificate, :string
   attribute :teaching_authority_emails_string, :string
   attribute :teaching_authority_name, :string
   attribute :teaching_authority_online_checker_url, :string
-  attribute :teaching_authority_other, :string
-  attribute :teaching_authority_sanction_information, :string
-  attribute :teaching_authority_status_information, :string
   attribute :teaching_authority_websites_string, :string
 
   validates :eligibility_enabled, inclusion: { in: [true, false] }
@@ -53,16 +53,16 @@ class SupportInterface::CountryForm
     country.assign_attributes(
       eligibility_enabled:,
       eligibility_skip_questions:,
+      other_information:,
       qualifications_information:,
       requires_preliminary_check:,
+      sanction_information:,
+      status_information:,
       teaching_authority_address:,
       teaching_authority_certificate:,
       teaching_authority_emails_string:,
       teaching_authority_name:,
       teaching_authority_online_checker_url:,
-      teaching_authority_other:,
-      teaching_authority_sanction_information:,
-      teaching_authority_status_information:,
       teaching_authority_websites_string:,
     )
   end

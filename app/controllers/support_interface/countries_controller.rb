@@ -14,9 +14,12 @@ module SupportInterface
           eligibility_enabled: country.eligibility_enabled,
           eligibility_skip_questions: country.eligibility_skip_questions,
           has_regions: country.regions.count > 1,
+          other_information: country.other_information,
           qualifications_information: country.qualifications_information,
           region_names: country.regions.pluck(:name).join("\n"),
           requires_preliminary_check: country.requires_preliminary_check,
+          sanction_information: country.sanction_information,
+          status_information: country.status_information,
           teaching_authority_address: country.teaching_authority_address,
           teaching_authority_certificate:
             country.teaching_authority_certificate,
@@ -25,11 +28,6 @@ module SupportInterface
           teaching_authority_name: country.teaching_authority_name,
           teaching_authority_online_checker_url:
             country.teaching_authority_online_checker_url,
-          teaching_authority_other: country.teaching_authority_other,
-          teaching_authority_sanction_information:
-            country.teaching_authority_sanction_information,
-          teaching_authority_status_information:
-            country.teaching_authority_status_information,
           teaching_authority_websites_string:
             country.teaching_authority_websites_string,
         )
@@ -66,21 +64,21 @@ module SupportInterface
 
     def country_params
       params.require(:support_interface_country_form).permit(
-        :has_regions,
-        :region_names,
         :eligibility_enabled,
         :eligibility_skip_questions,
+        :has_regions,
+        :other_information,
         :qualifications_information,
+        :region_names,
         :requires_preliminary_check,
-        :teaching_authority_name,
+        :sanction_information,
+        :status_information,
         :teaching_authority_address,
-        :teaching_authority_emails_string,
-        :teaching_authority_websites_string,
         :teaching_authority_certificate,
-        :teaching_authority_other,
-        :teaching_authority_sanction_information,
-        :teaching_authority_status_information,
+        :teaching_authority_emails_string,
+        :teaching_authority_name,
         :teaching_authority_online_checker_url,
+        :teaching_authority_websites_string,
       )
     end
   end
