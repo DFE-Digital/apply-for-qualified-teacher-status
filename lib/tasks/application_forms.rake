@@ -23,4 +23,15 @@ namespace :application_forms do
     count = BackfillPreliminaryChecks.call(user:)
     puts "Updated #{count} applications."
   end
+
+  desc "Update the statuses of all application forms."
+  task :update_statuses, %i[staff_email] => :environment do |_task, args|
+    user = Staff.find_by!(email: args[:staff_email])
+    ApplicationForm
+      .order(:id)
+      .find_each do |application_form|
+        ApplicationFormStatusUpdater.call(application_form:, user:)
+        puts "#{application_form.reference}: #{application_form.action_required_by} - #{application_form.status}"
+      end
+  end
 end
