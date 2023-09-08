@@ -30,7 +30,9 @@
     <%= f.govuk_radio_button :has_regions, :false, label: { text: "No" } %>
   <% end %>
 
-  <%= render "shared/support_interface/country_region_information_fields", f: %>
+  <% if @country.regions.count > 1 %>
+    <%= render "shared/support_interface/country_region_information_fields", f: %>
+  <% end %>
 
   <%= f.govuk_submit "Preview", name: "preview", value: "true" do %>
     <%= f.govuk_submit "Save", name: "preview", value: "false", secondary: true %>

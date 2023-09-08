@@ -61,7 +61,9 @@ RSpec.describe "Countries support", type: :system do
   def given_countries_exist
     create(:region, :national, country: create(:country, code: "IE"))
     create(:region, :national, country: create(:country, code: "PL"))
-    create(:region, name: "Hawaii", country: create(:country, code: "US"))
+    united_states = create(:country, code: "US")
+    create(:region, name: "Hawaii", country: united_states)
+    create(:region, name: "New York", country: united_states)
     create(:region, :national, country: create(:country, code: "ES"))
     create(
       :region,
