@@ -202,7 +202,7 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_check_written_statement_optional
-    check "region-written-statement-optional-1-field", visible: false
+    choose "region-written-statement-optional-true-field", visible: false
   end
 
   def when_i_check_requires_preliminary_check

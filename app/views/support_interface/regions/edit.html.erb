@@ -1,11 +1,18 @@
 <% content_for :page_title, CountryName.from_region(@region) %>
 
-<h1 class="govuk-heading-l"><%= CountryName.from_region(@region) %></h1>
-
 <%= form_with model: [:support_interface, @region] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_check_box :application_form_skip_work_history, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Skip work history" } %>
+  <h1 class="govuk-heading-l"><%= CountryName.from_region(@region) %></h1>
+
+  <%= f.govuk_collection_radio_buttons :application_form_skip_work_history,
+                                       [
+                                         OpenStruct.new(value: :true, label: "Yes"),
+                                         OpenStruct.new(value: :false, label: "No")
+                                       ],
+                                       :value,
+                                       :label,
+                                       legend: { text: "Skip work history?" } %>
 
   <%= f.govuk_collection_radio_buttons :requires_preliminary_check,
                                        [
@@ -14,7 +21,7 @@
                                        ],
                                        :value,
                                        :label,
-                                       legend: { text: "Will applications be subject to a preliminary check?", size: "s" } %>
+                                       legend: { text: "Will applications be subject to a preliminary check?" } %>
 
   <%= f.govuk_fieldset legend: { text: "Teacher status and sanctions checks" } do %>
     <%= f.govuk_collection_select :status_check, [
@@ -57,10 +64,26 @@
                                          legend: { text: "Will the teaching authority only send the letter of professional standing (LOPS) directly to the TRA?", size: "s" } %>
   <% end %>
 
-  <%= f.govuk_check_box :reduced_evidence_accepted, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Accept reduced evidence" } %>
-  <%= f.govuk_check_box :written_statement_optional, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Applicant can submit without uploading the written statement (if a written statement is requested)" } %>
+  <%= f.govuk_collection_radio_buttons :reduced_evidence_accepted,
+                                       [
+                                         OpenStruct.new(value: :true, label: "Yes"),
+                                         OpenStruct.new(value: :false, label: "No")
+                                       ],
+                                       :value,
+                                       :label,
+                                       legend: { text: "Accept reduced evidence?" } %>
 
-  <%= render "shared/support_interface/forms/additional_information", f: %>
+  <%= f.govuk_collection_radio_buttons :written_statement_optional,
+                                       [
+                                         OpenStruct.new(value: :true, label: "Yes"),
+                                         OpenStruct.new(value: :false, label: "No")
+                                       ],
+                                       :value,
+                                       :label,
+                                       legend: { text: "Applicant can submit without uploading the written statement?" },
+                                       hint: { text: "Only applies if a written statement is requested." } %>
+
+  <%= render "shared/support_interface/country_region_information_fields", f: %>
 
   <%= f.govuk_submit "Preview", name: "preview", value: "true" do %>
     <%= f.govuk_submit "Save", name: "preview", value: "false", secondary: true %>

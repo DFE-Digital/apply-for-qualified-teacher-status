@@ -1,16 +1,9 @@
 <% content_for :page_title, CountryName.from_country(@country) %>
 
-<h1 class="govuk-heading-l"><%= CountryName.from_country(@country) %></h1>
-
 <%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_radio_buttons_fieldset :has_regions, legend: { text: "Regions" }, hint: { text: "Does this country have regions within it that have a different teaching authority or service journey?" } do %>
-    <%= f.govuk_radio_button :has_regions, :false, label: { text: "No" }, link_errors: true %>
-    <%= f.govuk_radio_button :has_regions, :true, label: { text: "Yes" } do %>
-      <%= f.govuk_text_area :region_names, label: nil, hint: { text: "Add regions below, one region per line. (This will allow you to customise the service for each region.) " }, rows: 10 %>
-    <% end %>
-  <% end %>
+  <h1 class="govuk-heading-l"><%= CountryName.from_country(@country) %></h1>
 
   <%= f.govuk_collection_radio_buttons :eligibility_enabled,
                                        [
@@ -28,10 +21,16 @@
                                        ],
                                        :value,
                                        :label,
-                                       legend: { text: "Eligibility checker" },
-                                       hint: { text: 'Which route will applicants take through the eligibility checker?' } %>
+                                       legend: { text: "Which route will applicants take through the eligibility checker?" } %>
 
-  <%= render "shared/support_interface/forms/additional_information", f: %>
+  <%= f.govuk_radio_buttons_fieldset :has_regions, legend: { text: "Does this country have regions within it that have a different teaching authority or service journey?" } do %>
+    <%= f.govuk_radio_button :has_regions, :true, label: { text: "Yes" }, link_errors: true do %>
+      <%= f.govuk_text_area :region_names, label: { text: "Add regions below, one region per line." }, hint: { text: "This will allow you to customise the service for each region." }, rows: 10 %>
+    <% end %>
+    <%= f.govuk_radio_button :has_regions, :false, label: { text: "No" } %>
+  <% end %>
+
+  <%= render "shared/support_interface/country_region_information_fields", f: %>
 
   <%= f.govuk_submit "Preview", name: "preview", value: "true" do %>
     <%= f.govuk_submit "Save", name: "preview", value: "false", secondary: true %>
