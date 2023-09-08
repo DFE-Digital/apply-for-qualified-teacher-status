@@ -33,6 +33,12 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     )
   end
 
+  def action_required_by_filter_options
+    ACTION_REQUIRED_BY_OPTIONS.map do |name|
+      action_required_by_filter_entry(name)
+    end
+  end
+
   def status_filter_options
     STATUS_FILTER_OPTIONS.each_with_object({}) do |(status, substatuses), memo|
       memo[status_filter_entry(status)] = substatuses.map do |sub_status|
@@ -42,6 +48,8 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   private
+
+  ACTION_REQUIRED_BY_OPTIONS = %w[admin assessor external].freeze
 
   STATUS_FILTER_OPTIONS = {
     preliminary_check: [],
@@ -71,18 +79,8 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     (session[:filter_params] || {}).with_indifferent_access
   end
 
-  def application_forms_with_pagy
-    @application_forms_with_pagy ||=
-      pagy(
-        ::Filters::Status.apply(
-          scope: application_forms_without_status_filter,
-          params: filter_params,
-        ).order(submitted_at: :asc),
-      )
-  end
-
-  def application_forms_without_status_filter
-    @application_forms_without_status_filter ||=
+  def application_forms_without_action_required_by_filter
+    @application_forms_without_action_required_by_filter ||=
       begin
         filters = [
           ::Filters::Assessor,
@@ -96,6 +94,39 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ApplicationForm.includes(region: :country).active,
         ) { |scope, filter| filter.apply(scope:, params: filter_params) }
       end
+  end
+
+  def application_forms_without_status_filter
+    @application_forms_without_status_filter ||=
+      ::Filters::ActionRequiredBy.apply(
+        scope: application_forms_without_action_required_by_filter,
+        params: filter_params,
+      )
+  end
+
+  def application_forms_with_pagy
+    @application_forms_with_pagy ||=
+      pagy(
+        ::Filters::Status.apply(
+          scope: application_forms_without_status_filter,
+          params: filter_params,
+        ).order(submitted_at: :asc),
+      )
+  end
+
+  def action_required_by_filter_counts
+    @action_required_by_filter_counts ||=
+      application_forms_without_action_required_by_filter.group(
+        :action_required_by,
+      ).count
+  end
+
+  def action_required_by_filter_entry(name)
+    OpenStruct.new(
+      id: name,
+      label:
+        "#{name.humanize} (#{action_required_by_filter_counts.fetch(name, 0)})",
+    )
   end
 
   def status_filter_counts

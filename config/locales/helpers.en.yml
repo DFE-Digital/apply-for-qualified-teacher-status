@@ -101,10 +101,10 @@ en:
       assessor_interface_create_note_form:
         text: Add a note to this application
       assessor_interface_filter_form:
+        email: Applicant email
         location: Country trained in
         name: Applicant name
         reference: Application reference number
-        email: Applicant email
       assessor_interface_professional_standing_request_location_form:
         received_options:
           true: "Yes"
@@ -277,6 +277,7 @@ en:
         scotland_full_registration: Does the applicant have or are they eligible for full registration?
         school_details_cannot_be_verified_work_history_checked: Choose the schools that need reference details to be amended
       assessor_interface_filter_form:
+        action_required_by: Action required by
         assessor_ids: Assessor name
         states: Status of application
         submitted_at: Created date

@@ -38,7 +38,7 @@ en:
 
     timeline_entry:
       title:
-        action_required_by_changed: Workflow changed
+        action_required_by_changed: Action required by changed
         assessor_assigned: Assessor assigned
         reviewer_assigned: Reviewer assigned
         state_changed: Status changed

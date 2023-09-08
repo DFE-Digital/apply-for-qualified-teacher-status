@@ -17,10 +17,10 @@
       <div class="app-checkbox-filter__container">
         <div class="app-checkbox-filter__container-inner">
           <%= f.govuk_check_boxes_fieldset :assessor_ids, legend: { size: "s" }, small: true do %>
-            <%- @view_object.assessor_filter_options.each do |option| -%>
+            <% @view_object.assessor_filter_options.each do |option| %>
               <%= f.govuk_check_box :assessor_ids, option.id, label: { text: option.name }, checked: @view_object.filter_form.assessor_ids&.include?(option.id.to_s) %>
-            <%- end -%>
-          <%- end -%>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </section>
@@ -48,6 +48,14 @@
       <% end %>
     </section>
 
+    <section id="app-applications-filters-action-required-by">
+      <%= f.govuk_check_boxes_fieldset :action_required_by, legend: { size: "s" }, small: true do %>
+        <% @view_object.action_required_by_filter_options.each do |option| %>
+          <%= f.govuk_check_box :action_required_by, option.id, label: { text: option.label }, checked: @view_object.filter_form.action_required_by&.include?(option.id) %>
+        <% end %>
+      <% end %>
+    </section>
+
     <section id="app-applications-filters-status">
       <%= f.govuk_check_boxes_fieldset :statuses, legend: { size: "s" }, small: true do %>
         <% @view_object.status_filter_options.each do |option, suboptions| %>
@@ -67,7 +75,7 @@
         <% end %>
       <% end %>
     </section>
-  <%- end -%>
+  <% end %>
 </div>
 
 <div class="govuk-grid-column-two-thirds">

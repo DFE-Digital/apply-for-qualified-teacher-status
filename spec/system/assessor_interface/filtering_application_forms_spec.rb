@@ -37,6 +37,10 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     then_i_see_a_list_of_applications_filtered_by_submitted_at
 
     when_i_clear_the_filters
+    and_i_apply_the_action_required_by_filter
+    then_i_see_a_list_of_applications_filtered_by_action_required_by
+
+    when_i_clear_the_filters
     and_i_apply_the_status_filter
     then_i_see_a_list_of_applications_filtered_by_state
   end
@@ -124,6 +128,24 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     expect(applications_page.search_results.first.name.text).to eq("John Smith")
   end
 
+  def and_i_apply_the_action_required_by_filter
+    admin_action_item =
+      applications_page.action_required_by_filter.items.find do |item|
+        item.label.text == "Admin (1)"
+      rescue Capybara::ElementNotFound
+        false
+      end
+    admin_action_item.checkbox.click
+    applications_page.apply_filters.click
+  end
+
+  def then_i_see_a_list_of_applications_filtered_by_action_required_by
+    expect(applications_page.search_results.count).to eq(1)
+    expect(applications_page.search_results.first.name.text).to eq(
+      "Emma Dubois",
+    )
+  end
+
   def and_i_apply_the_status_filter
     awarded_state =
       applications_page.status_filter.statuses.find do |status|
@@ -155,6 +177,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
       create(
         :application_form,
         :submitted,
+        :action_required_by_admin,
         region: create(:region, country: create(:country, code: "FR")),
         given_names: "Emma",
         family_name: "Dubois",
@@ -165,6 +188,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
       create(
         :application_form,
         :submitted,
+        :action_required_by_assessor,
         region: create(:region, country: create(:country, code: "ES")),
         given_names: "Arnold",
         family_name: "Drummond",
