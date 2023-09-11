@@ -61,7 +61,9 @@ RSpec.describe "Countries support", type: :system do
   def given_countries_exist
     create(:region, :national, country: create(:country, code: "IE"))
     create(:region, :national, country: create(:country, code: "PL"))
-    create(:region, name: "Hawaii", country: create(:country, code: "US"))
+    united_states = create(:country, code: "US")
+    create(:region, name: "Hawaii", country: united_states)
+    create(:region, name: "New York", country: united_states)
     create(:region, :national, country: create(:country, code: "ES"))
     create(
       :region,
@@ -202,7 +204,7 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_check_written_statement_optional
-    check "region-written-statement-optional-1-field", visible: false
+    choose "region-written-statement-optional-true-field", visible: false
   end
 
   def when_i_check_requires_preliminary_check
