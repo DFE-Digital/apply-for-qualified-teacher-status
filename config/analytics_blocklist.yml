@@ -12,3 +12,5 @@
     - confirmation_token
     - unlock_token
     - invitation_token
+  :teachers:
+    - access_your_teaching_qualifications_url

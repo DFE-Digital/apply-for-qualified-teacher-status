@@ -2,18 +2,19 @@
 #
 # Table name: teachers
 #
-#  id                 :bigint           not null, primary key
-#  canonical_email    :text             default(""), not null
-#  current_sign_in_at :datetime
-#  current_sign_in_ip :string
-#  email              :string           default(""), not null
-#  last_sign_in_at    :datetime
-#  last_sign_in_ip    :string
-#  sign_in_count      :integer          default(0), not null
-#  trn                :string
-#  uuid               :uuid             not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id                                      :bigint           not null, primary key
+#  access_your_teaching_qualifications_url :string
+#  canonical_email                         :text             default(""), not null
+#  current_sign_in_at                      :datetime
+#  current_sign_in_ip                      :string
+#  email                                   :string           default(""), not null
+#  last_sign_in_at                         :datetime
+#  last_sign_in_ip                         :string
+#  sign_in_count                           :integer          default(0), not null
+#  trn                                     :string
+#  uuid                                    :uuid             not null
+#  created_at                              :datetime         not null
+#  updated_at                              :datetime         not null
 #
 # Indexes
 #
