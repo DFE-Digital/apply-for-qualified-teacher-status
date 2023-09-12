@@ -44,7 +44,11 @@ class SupportInterface::CountryForm
   end
 
   def assign_country_attributes
-    country.assign_attributes(eligibility_enabled:, eligibility_skip_questions:, subject_limited:)
+    country.assign_attributes(
+      eligibility_enabled:,
+      eligibility_skip_questions:,
+      subject_limited:,
+    )
 
     if has_regions
       country.assign_attributes(
@@ -95,9 +99,6 @@ class SupportInterface::CountryForm
   end
 
   def eligibility_route=(value)
-    subject_limited_will_change!
-    eligibility_skip_questions_will_change!
-
     case value
     when "standard"
       self.subject_limited = false

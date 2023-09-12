@@ -84,22 +84,4 @@ RSpec.describe CountryCode do
 
     include_examples "true with codes", Country::CODES_IN_EUROPEAN_ECONOMIC_AREA
   end
-
-  describe "#secondary_education_teaching_qualification_required?" do
-    subject(:secondary_education_teaching_qualification_required?) do
-      described_class.secondary_education_teaching_qualification_required?(code.code)
-    end
-
-    context "when subject_limited is true" do
-      let(:country) { create(:country, code: "AU", subject_limited: true) }
-
-      it { is_expected.to be true }
-    end
-
-    context "when subject_limited is false" do
-      let(:country) { create(:country, code: "AU", subject_limited: false) }
-
-      it { is_expected.to be false }
-    end
-  end
 end

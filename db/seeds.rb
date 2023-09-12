@@ -372,9 +372,4 @@ end
 
 subject_limited_countries = %w[GH IN JM NG SG ZA ZW]
 
-subject_limited_countries.each do |country_code|
-  country = Country.find_by(code: country_code)
-  next unless country
-
-  country.update!(subject_limited: true)
-end
+Country.where(code: subject_limited_countries).update_all(subject_limited: true)

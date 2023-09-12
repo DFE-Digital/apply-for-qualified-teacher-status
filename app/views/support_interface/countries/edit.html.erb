@@ -33,11 +33,6 @@
 
   <% if @country.regions.count > 1 %>
     <%= render "shared/support_interface/country_region_information_fields", f: %>
-  <% else %>
-    <%= f.hidden_field :qualifications_information, value: '' %>
-    <%= f.hidden_field :sanction_information, value: '' %>
-    <%= f.hidden_field :status_information, value: '' %>
-    <%= f.hidden_field :other_information, value: '' %>
   <% end %>
 
   <%= f.govuk_submit "Preview", name: "preview", value: "true" do %>

@@ -6,7 +6,7 @@ RSpec.describe PreliminaryAssessmentSectionsFactory do
   let(:application_form) { create(:application_form) }
 
   describe "#call" do
-    before { create(:country, code: "SG", subject_limited: true) }
+    before { create(:country, :subject_limited, code: "SG") }
     subject(:assessment_sections) { described_class.call(application_form:) }
 
     it { is_expected.to be_empty }

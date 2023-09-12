@@ -53,6 +53,19 @@
   <%= raw GovukMarkdown.render(@country.qualifications_information) %>
 <% end %>
 
+<% if @country.eligibility_skip_questions_changed? || @country.subject_limited_changed? %>
+  <h3 class="govuk-heading-s">Which route will applicants take through the eligibility checker?</h3>
+  <p class="govuk-body">
+    <% if @country.subject_limited %>
+      <%= govuk_tag(text: "Expanded", colour: "yellow") %>
+    <% elsif @country.eligibility_skip_questions %>
+      <%= govuk_tag(text: "Reduced", colour: "yellow") %>
+    <% else %>
+      <%= govuk_tag(text: "Standard", colour: "grey") %>
+    <% end %>
+  </p>
+<% end %>
+
 <%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>
   <%= f.hidden_field :eligibility_enabled, value: @form.eligibility_enabled %>
   <%= f.hidden_field :eligibility_skip_questions, value: @form.eligibility_skip_questions %>

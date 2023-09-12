@@ -16,15 +16,14 @@
               <%= govuk_tag(text: "Ineligible", colour: "red", classes: ["govuk-!-margin-left-2"]) %>
             <% end %>
 
-            <% if country.eligibility_skip_questions %>
+            <% if country.subject_limited %>
+              <%= govuk_tag(text: "Expanded eligibility", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
+            <% elsif country.eligibility_skip_questions %>
               <%= govuk_tag(text: "Reduced eligibility", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
             <% else %>
               <%= govuk_tag(text: "Standard eligibility", colour: "grey", classes: ["govuk-!-margin-left-2"]) %>
             <% end %>
 
-                <% if country.subject_limited  %>
-                <%= govuk_tag(text: "Subject limited", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
-              <% end %>
           </h2>
         <% end %>
       <% end %>

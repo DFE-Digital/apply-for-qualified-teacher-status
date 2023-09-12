@@ -10,7 +10,7 @@
 #  qualifications_information :text             default(""), not null
 #  sanction_information       :string           default(""), not null
 #  status_information         :string           default(""), not null
-#  subject_limited            :boolean          default(FALSE)
+#  subject_limited            :boolean          default(FALSE), not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #
@@ -33,31 +33,4 @@ class Country < ApplicationRecord
     YAML.load(File.read("lib/countries-in-european-economic-area.yaml"))
 
   validates :code, inclusion: { in: CODES }
-
-  attribute :subject_limited, :boolean
-
-  def eligibility_route
-    if subject_limited
-      "expanded"
-    elsif eligibility_skip_questions
-      "reduced"
-    else
-      "standard"
-    end
-  end
-
-  def eligibility_route=(value)
-    subject_limited_will_change!
-    eligibility_skip_questions_will_change!
-    if value == "standard"
-      self.subject_limited = false 
-      self.eligibility_skip_questions = false
-    elsif value == "reduced"
-      self.subject_limited = false 
-      self.eligibility_skip_questions = true
-    elsif value == "expanded"
-      self.subject_limited = true 
-      self.eligibility_skip_questions = false
-    end
-  end
 end

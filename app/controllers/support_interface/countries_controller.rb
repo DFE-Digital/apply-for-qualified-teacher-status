@@ -15,6 +15,7 @@ module SupportInterface
       @form =
         CountryForm.new(
           country:,
+          subject_limited: country.subject_limited,
           eligibility_enabled: country.eligibility_enabled,
           eligibility_skip_questions: country.eligibility_skip_questions,
           has_regions: country.regions.count > 1,
@@ -58,7 +59,6 @@ module SupportInterface
     def country_params
       params.require(:support_interface_country_form).permit(
         :eligibility_enabled,
-        :eligibility_skip_questions,
         :has_regions,
         :other_information,
         :qualifications_information,

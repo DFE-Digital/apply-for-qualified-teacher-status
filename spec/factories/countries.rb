@@ -10,7 +10,7 @@
 #  qualifications_information :text             default(""), not null
 #  sanction_information       :string           default(""), not null
 #  status_information         :string           default(""), not null
-#  subject_limited            :boolean          default(FALSE)
+#  subject_limited            :boolean          default(FALSE), not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #
@@ -22,11 +22,7 @@ FactoryBot.define do
   factory :country do
     sequence :code, Country::CODES.cycle
 
-    trait :requires_secondary_education_teaching_qualification do
-      subject_limited { true }
-    end
-
-    trait :doesnt_require_secondary_education_teaching_qualification do
+    trait :subject_limited do
       subject_limited { true }
     end
 
