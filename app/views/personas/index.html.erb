@@ -136,7 +136,7 @@
             row.with_cell { persona_check_tag(persona[:status_check]) }
             row.with_cell { persona_check_tag(persona[:sanction_check]) }
             row.with_cell do
-              render(StatusTag::Component.new(status: persona[:status]))
+              render(StatusTag::Component.new(persona[:status]))
             end
             row.with_cell { persona[:teacher].email }
 

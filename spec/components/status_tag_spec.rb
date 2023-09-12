@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe StatusTag::Component, type: :component do
   subject(:component) do
-    render_inline(described_class.new(id:, status:, class_context:))
+    render_inline(described_class.new(status, id:, class_context:))
   end
 
   let(:id) { "id" }

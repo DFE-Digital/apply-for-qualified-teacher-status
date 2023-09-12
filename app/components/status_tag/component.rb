@@ -2,21 +2,24 @@
 
 module StatusTag
   class Component < ViewComponent::Base
-    def initialize(status:, id: nil, class_context: nil)
+    def initialize(statuses, id: nil, class_context: nil)
       super
-      @status = status.to_sym
+      @statuses = statuses
       @id = id
       @class_context = class_context
     end
 
-    attr_reader :id
+    attr_reader :statuses, :id, :class_context
 
-    def text
-      I18n.t(@status, scope: %i[components status_tag])
-    end
-
-    def classes
-      @class_context ? ["#{@class_context}__tag"] : []
+    def tags
+      Array(statuses).map do |status|
+        {
+          text: I18n.t(status, scope: %i[components status_tag]),
+          colour: COLOURS[status.to_sym],
+          classes: class_context ? ["#{class_context}__tag"] : [],
+          html_attributes: id ? { id: } : {},
+        }
+      end
     end
 
     COLOURS = {
@@ -64,9 +67,5 @@ module StatusTag
       waiting_on_reference: "yellow",
       withdrawn: "red",
     }.freeze
-
-    def colour
-      COLOURS[@status]
-    end
   end
 end

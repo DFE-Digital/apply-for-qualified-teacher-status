@@ -1,1 +1,3 @@
-<%= govuk_tag(text:, colour:, html_attributes: { id: }, classes:) %>
+<% tags.each do |tag| %>
+<%= govuk_tag(**tag) %>
+<% end %>

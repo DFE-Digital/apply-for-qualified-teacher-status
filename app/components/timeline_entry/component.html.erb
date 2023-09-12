@@ -23,7 +23,7 @@
     <% elsif timeline_event.assessment_section_recorded? %>
       <p class="govuk-body">
         <%= description_vars[:section_name] %>:
-        <%= render StatusTag::Component.new(status: description_vars[:passed] ? "accepted" : "rejected") %>
+        <%= render StatusTag::Component.new(description_vars[:passed] ? "accepted" : "rejected") %>
       </p>
 
       <% if (visible_failure_reasons = description_vars[:visible_failure_reasons]).present? %>
