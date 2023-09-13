@@ -5,15 +5,6 @@
 
   <h1 class="govuk-heading-l"><%= CountryName.from_region(@region) %></h1>
 
-  <%= f.govuk_collection_radio_buttons :application_form_skip_work_history,
-                                       [
-                                         OpenStruct.new(value: :true, label: "Yes"),
-                                         OpenStruct.new(value: :false, label: "No")
-                                       ],
-                                       :value,
-                                       :label,
-                                       legend: { text: "Skip work history?" } %>
-
   <%= f.govuk_collection_radio_buttons :requires_preliminary_check,
                                        [
                                          OpenStruct.new(value: :true, label: "Yes"),
@@ -23,18 +14,57 @@
                                        :label,
                                        legend: { text: "Will applications be subject to a preliminary check?" } %>
 
-  <%= f.govuk_fieldset legend: { text: "Teacher status and sanctions checks" } do %>
-    <%= f.govuk_collection_select :status_check, [
-      OpenStruct.new(id: 'online', name: 'Online'),
-      OpenStruct.new(id: 'written', name: 'Written'),
-      OpenStruct.new(id: 'none', name: 'None')
-    ], :id, :name, label: { text: "How will teacher status be checked?", size: "s" } %>
+  <%= f.govuk_fieldset legend: { text: "Application form changes" } do %>
+    <%= f.govuk_collection_radio_buttons :application_form_skip_work_history,
+                                         [
+                                           OpenStruct.new(value: :true, label: "Yes"),
+                                           OpenStruct.new(value: :false, label: "No")
+                                         ],
+                                         :value,
+                                         :label,
+                                         legend: { text: "Remove work history?", size: "s" } %>
 
-    <%= f.govuk_collection_select :sanction_check, [
-      OpenStruct.new(id: 'online', name: 'Online'),
-      OpenStruct.new(id: 'written', name: 'Written'),
-      OpenStruct.new(id: 'none', name: 'None')
-    ], :id, :name, label: { text: "How will sanctions be checked?", size: "s" } %>
+    <%= f.govuk_collection_radio_buttons :reduced_evidence_accepted,
+                                         [
+                                           OpenStruct.new(value: :true, label: "Yes"),
+                                           OpenStruct.new(value: :false, label: "No")
+                                         ],
+                                         :value,
+                                         :label,
+                                         legend: { text: "Remove work history contact details and allow applicant to choose any SELT provider to prove their English proficiency?", size: "s" },
+                                         hint: { text: "Allows QTS to be awarded without any work references being provided." } %>
+
+    <%= f.govuk_collection_radio_buttons :written_statement_optional,
+                                         [
+                                           OpenStruct.new(value: :true, label: "Yes"),
+                                           OpenStruct.new(value: :false, label: "No")
+                                         ],
+                                         :value,
+                                         :label,
+                                         legend: { text: "Applicant can submit without uploading the written statement?", size: "s" },
+                                         hint: { text: "Only applies if a written statement is requested." } %>
+  <% end %>
+
+  <%= f.govuk_fieldset legend: { text: "Teacher status and sanctions checks" } do %>
+    <%= f.govuk_collection_select :status_check,
+                                  [
+                                    OpenStruct.new(id: "online", name: "Online"),
+                                    OpenStruct.new(id: "written", name: "Written"),
+                                    OpenStruct.new(id: "none", name: "None")
+                                  ],
+                                  :id,
+                                  :name,
+                                  label: { text: "How will teacher status be checked?", size: "s" } %>
+
+    <%= f.govuk_collection_select :sanction_check,
+                                  [
+                                    OpenStruct.new(id: "online", name: "Online"),
+                                    OpenStruct.new(id: "written", name: "Written"),
+                                    OpenStruct.new(id: "none", name: "None")
+                                  ],
+                                  :id,
+                                  :name,
+                                  label: { text: "How will sanctions be checked?", size: "s" } %>
   <% end %>
 
   <%= f.govuk_fieldset legend: { text: "Teaching authority details" } do %>
@@ -63,25 +93,6 @@
                                          :label,
                                          legend: { text: "Will the teaching authority only send the letter of professional standing (LOPS) directly to the TRA?", size: "s" } %>
   <% end %>
-
-  <%= f.govuk_collection_radio_buttons :reduced_evidence_accepted,
-                                       [
-                                         OpenStruct.new(value: :true, label: "Yes"),
-                                         OpenStruct.new(value: :false, label: "No")
-                                       ],
-                                       :value,
-                                       :label,
-                                       legend: { text: "Accept reduced evidence?" } %>
-
-  <%= f.govuk_collection_radio_buttons :written_statement_optional,
-                                       [
-                                         OpenStruct.new(value: :true, label: "Yes"),
-                                         OpenStruct.new(value: :false, label: "No")
-                                       ],
-                                       :value,
-                                       :label,
-                                       legend: { text: "Applicant can submit without uploading the written statement?" },
-                                       hint: { text: "Only applies if a written statement is requested." } %>
 
   <%= render "shared/support_interface/country_region_information_fields", f: %>
 
