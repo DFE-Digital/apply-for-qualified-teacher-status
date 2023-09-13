@@ -46,8 +46,6 @@ en:
         has_work_history: If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet.
       teacher_interface_new_session_form:
         email: We need to send you an email with a link so that you can sign into the Apply for QTS in England service. Please enter the email address you used to register.
-      teacher_interface_qualification_form:
-        institution_country_location: This must be the country in which you’re recognised as a teacher.
       teacher_interface_reference_request_additional_information_response_form:
         additional_information_response: If you have any other concerns about this applicant’s suitability to teach, use this space to briefly describe them. The applicant will NOT see your comments.
       teacher_interface_reference_request_children_response_form:
