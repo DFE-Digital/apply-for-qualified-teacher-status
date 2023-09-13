@@ -79,10 +79,6 @@ class Assessment < ApplicationRecord
     )
   end
 
-  def started?
-    any_section_finished?
-  end
-
   def completed?
     award? || decline?
   end
@@ -162,14 +158,14 @@ class Assessment < ApplicationRecord
     sections.preliminary.any?(&:failed)
   end
 
+  def any_not_preliminary_section_finished?
+    sections.not_preliminary.any?(&:finished?)
+  end
+
   private
 
   def all_sections_finished?
     sections.all?(&:finished?)
-  end
-
-  def any_section_finished?
-    sections.any?(&:finished?)
   end
 
   def all_sections_passed?

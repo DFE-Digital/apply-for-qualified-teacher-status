@@ -141,7 +141,7 @@ class ApplicationFormStatusUpdater
             waiting_on_professional_standing || waiting_on_qualification ||
             waiting_on_reference
         "waiting_on"
-      elsif assessment&.started?
+      elsif assessment&.any_not_preliminary_section_finished?
         "assessment_in_progress"
       elsif application_form.submitted_at.present?
         "submitted"
