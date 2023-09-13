@@ -35,6 +35,17 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_see_check_personal_information_completed
   end
 
+  it "allows viewing personal information once submitted" do
+    given_there_are_selected_failure_reasons("personal_information")
+    when_i_visit_the(
+      :check_personal_information_page,
+      application_id:,
+      assessment_id:,
+      section_id: section_id("personal_information"),
+    )
+    then_i_see_the_personal_information
+  end
+
   it "allows passing the qualifications" do
     when_i_visit_the(
       :check_qualifications_page,
@@ -61,6 +72,17 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_choose_check_qualifications_no
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_qualifications_completed
+  end
+
+  it "allows viewing qualifications once submitted" do
+    given_there_are_selected_failure_reasons("qualifications")
+    when_i_visit_the(
+      :check_qualifications_page,
+      application_id:,
+      assessment_id:,
+      section_id: section_id("qualifications"),
+    )
+    then_i_see_the_qualifications
   end
 
   it "allows passing the age range and subjects" do
@@ -95,6 +117,17 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_see_verify_age_range_subjects_completed
   end
 
+  it "allows viewing age_range_and_subjects once submitted" do
+    given_there_are_selected_failure_reasons("age_range_subjects")
+    when_i_visit_the(
+      :verify_age_range_subjects_page,
+      application_id:,
+      assessment_id:,
+      section_id: section_id("age_range_subjects"),
+    )
+    then_i_see_the_age_range_and_subjects
+  end
+
   it "allows passing the work history" do
     when_i_visit_the(
       :check_work_history_page,
@@ -121,6 +154,17 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_choose_check_work_history_no
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_work_history_completed
+  end
+
+  it "allows viewing work history once submitted" do
+    given_there_are_selected_failure_reasons("work_history")
+    when_i_visit_the(
+      :check_work_history_page,
+      application_id:,
+      assessment_id:,
+      section_id: section_id("work_history"),
+    )
+    then_i_see_the_work_history
   end
 
   it "allows passing the professional standing" do
@@ -167,6 +211,17 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_choose_check_professional_standing_yes
     then_i_see_the(:assessor_application_page, application_id:)
     and_i_see_check_professional_standing_completed
+  end
+
+  it "allows viewing professional standing once submitted" do
+    given_there_are_selected_failure_reasons("professional_standing")
+    when_i_visit_the(
+      :check_professional_standing_page,
+      application_id:,
+      assessment_id:,
+      section_id: section_id("professional_standing"),
+    )
+    then_i_see_the_professional_standing
   end
 
   private
@@ -410,27 +465,34 @@ RSpec.describe "Assessor check submitted details", type: :system do
         create(
           :assessment_section,
           :personal_information,
+          failure_reasons: %w[identification_document_expired],
           assessment: application_form.assessment,
         )
         create(
           :assessment_section,
           :qualifications,
+          failure_reasons: %w[identification_document_expired],
           assessment: application_form.assessment,
         )
         create(
           :assessment_section,
           :age_range_subjects,
+          failure_reasons: %w[identification_document_expired],
           assessment: application_form.assessment,
         )
         create(
           :assessment_section,
           :work_history,
           assessment: application_form.assessment,
-          failure_reasons: %w[school_details_cannot_be_verified],
+          failure_reasons: %w[
+            school_details_cannot_be_verified
+            identification_document_expired
+          ],
         )
         create(
           :assessment_section,
           :professional_standing,
+          failure_reasons: %w[identification_document_expired],
           assessment: application_form.assessment,
         )
 
@@ -448,5 +510,13 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def section_id(key)
     application_form.assessment.sections.find_by(key:).id
+  end
+
+  def given_there_are_selected_failure_reasons(key)
+    create(
+      :selected_failure_reason,
+      assessment_section_id: section_id(key),
+      key: "identification_document_expired",
+    )
   end
 end
