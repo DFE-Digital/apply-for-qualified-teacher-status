@@ -121,15 +121,7 @@ RSpec.describe UpdateAssessmentSection do
     context "with an existing assessment started at" do
       before { assessment.update!(started_at: Date.new(2021, 1, 1)) }
 
-      it "doesn't change the started" do
-        expect { subject }.to_not change(assessment, :started_at)
-      end
-    end
-
-    context "with a preliminary assessment section" do
-      before { assessment_section.update!(preliminary: true) }
-
-      it "doesn't change the started" do
+      it "doesn't change the assessor" do
         expect { subject }.to_not change(assessment, :started_at)
       end
     end

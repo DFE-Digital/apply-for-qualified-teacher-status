@@ -76,7 +76,7 @@ class UpdateAssessmentSection
   end
 
   def update_assessment_started_at
-    return if assessment.started_at || assessment_section.preliminary
+    return if assessment.started_at
     assessment.update!(started_at: Time.zone.now)
   end
 
