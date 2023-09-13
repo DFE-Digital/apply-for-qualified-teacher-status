@@ -3,10 +3,17 @@
 class AwardQTS
   include ServicePattern
 
-  def initialize(application_form:, user:, trn:)
+  def initialize(
+    application_form:,
+    user:,
+    trn:,
+    access_your_teaching_qualifications_url:
+  )
     @application_form = application_form
     @user = user
     @trn = trn
+    @access_your_teaching_qualifications_url =
+      access_your_teaching_qualifications_url
   end
 
   def call
@@ -20,7 +27,7 @@ class AwardQTS
     raise MissingTRN if trn.blank?
 
     ActiveRecord::Base.transaction do
-      teacher.update!(trn:)
+      teacher.update!(trn:, access_your_teaching_qualifications_url:)
       application_form.update!(awarded_at: Time.zone.now)
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
@@ -36,7 +43,10 @@ class AwardQTS
 
   private
 
-  attr_reader :application_form, :user, :trn
+  attr_reader :application_form,
+              :user,
+              :trn,
+              :access_your_teaching_qualifications_url
 
   delegate :teacher, to: :application_form
 end

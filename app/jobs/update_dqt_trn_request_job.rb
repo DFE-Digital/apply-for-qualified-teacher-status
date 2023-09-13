@@ -20,7 +20,13 @@ class UpdateDQTTRNRequestJob < ApplicationJob
     ApplicationFormStatusUpdater.call(application_form:, user: "DQT")
 
     unless potential_duplicate
-      AwardQTS.call(application_form:, user: "DQT", trn: response[:trn])
+      AwardQTS.call(
+        application_form:,
+        user: "DQT",
+        trn: response[:trn],
+        access_your_teaching_qualifications_url:
+          response[:access_your_teaching_qualifications_link],
+      )
       dqt_trn_request.complete!
     end
 
