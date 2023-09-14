@@ -40,4 +40,26 @@ RSpec.describe Filters::Reference do
 
     it { is_expected.to eq(scope) }
   end
+
+  context "with trailing whitespace" do
+    let(:params) { { reference: "ABCDEF    " } }
+    let(:scope) { ApplicationForm.all }
+    let!(:included) { create(:application_form, reference: "ABCDEF") }
+    let!(:excluded) { create(:application_form, reference: "QRHGF") }
+
+    it "returns a filtered scope" do
+      expect(subject).to contain_exactly(included)
+    end
+  end
+
+  context "with leading whitespace" do
+    let(:params) { { reference: "    ABCDEF" } }
+    let(:scope) { ApplicationForm.all }
+    let!(:included) { create(:application_form, reference: "ABCDEF") }
+    let!(:excluded) { create(:application_form, reference: "QRHGF") }
+
+    it "returns a filtered scope" do
+      expect(subject).to contain_exactly(included)
+    end
+  end
 end
