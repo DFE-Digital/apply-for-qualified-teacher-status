@@ -6,8 +6,16 @@ RSpec.describe AwardQTS do
   let(:teacher) { create(:teacher) }
   let(:user) { create(:staff, :confirmed) }
   let(:trn) { "abcdef" }
+  let(:access_your_teaching_qualifications_url) { "https://aytq.com" }
 
-  subject(:call) { described_class.call(application_form:, user:, trn:) }
+  subject(:call) do
+    described_class.call(
+      application_form:,
+      user:,
+      trn:,
+      access_your_teaching_qualifications_url:,
+    )
+  end
 
   context "with a submitted application form" do
     let(:application_form) { create(:application_form, :submitted, teacher:) }
@@ -24,6 +32,13 @@ RSpec.describe AwardQTS do
 
     it "sets the TRN" do
       expect { call }.to change(teacher, :trn).to("abcdef")
+    end
+
+    it "sets the access your teaching qualifications URL" do
+      expect { call }.to change(
+        teacher,
+        :access_your_teaching_qualifications_url,
+      ).to("https://aytq.com")
     end
 
     it "sends an email" do
@@ -63,6 +78,13 @@ RSpec.describe AwardQTS do
       expect { call }.to change(teacher, :trn).to("abcdef")
     end
 
+    it "sets the access your teaching qualifications URL" do
+      expect { call }.to change(
+        teacher,
+        :access_your_teaching_qualifications_url,
+      ).to("https://aytq.com")
+    end
+
     it "sends an email" do
       expect { call }.to have_enqueued_mail(
         TeacherMailer,
@@ -94,8 +116,15 @@ RSpec.describe AwardQTS do
   context "with an awarded application form" do
     let(:application_form) { create(:application_form, :awarded, teacher:) }
 
-    it "doesn't set the TRN" do
+    it "doesn't change the TRN" do
       expect { call }.to_not change(teacher, :trn)
+    end
+
+    it "doesn't change the access your teaching qualifications URL" do
+      expect { call }.to_not change(
+        teacher,
+        :access_your_teaching_qualifications_url,
+      )
     end
 
     it "doesn't send an email" do

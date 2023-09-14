@@ -20,7 +20,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
       context "with a successful response" do
         before do
           expect(DQT::Client::CreateTRNRequest).to receive(:call).and_return(
-            { potential_duplicate: false, trn: "abcdef" },
+            {
+              potential_duplicate: false,
+              trn: "abcdef",
+              access_your_teaching_qualifications_link: "https://aytq.com",
+            },
           )
         end
 
@@ -40,6 +44,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
             application_form:,
             user: "DQT",
             trn: "abcdef",
+            access_your_teaching_qualifications_url: "https://aytq.com",
           )
           perform
         end
@@ -128,7 +133,11 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
       context "with a successful response" do
         before do
           expect(DQT::Client::ReadTRNRequest).to receive(:call).and_return(
-            { potential_duplicate: false, trn: "abcdef" },
+            {
+              potential_duplicate: false,
+              trn: "abcdef",
+              access_your_teaching_qualifications_link: "https://aytq.com",
+            },
           )
         end
 
@@ -148,6 +157,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
             application_form:,
             user: "DQT",
             trn: "abcdef",
+            access_your_teaching_qualifications_url: "https://aytq.com",
           )
           perform
         end
