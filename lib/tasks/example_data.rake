@@ -147,11 +147,11 @@ def application_form_traits_for(region)
     [],
     traits,
     traits + %i[submitted],
-    traits + %i[preliminary_check],
+    (traits + %i[preliminary_check] if region.requires_preliminary_check),
     traits + %i[waiting_on],
     traits + %i[awarded],
     traits + %i[declined],
-  ]
+  ].compact
 end
 
 def create_application_forms
@@ -163,21 +163,57 @@ def create_application_forms
 
       assessment = AssessmentFactory.call(application_form:)
 
-      if application_form.teaching_authority_provides_written_statement
-        FactoryBot.create(
-          :professional_standing_request,
-          :requested,
-          assessment:,
-        )
-        application_form.update!(waiting_on_professional_standing: true)
-      elsif application_form.waiting_on?
-        if application_form.needs_written_statement && rand(2).zero?
+      if application_form.waiting_on?
+        if application_form.teaching_authority_provides_written_statement
           FactoryBot.create(
             :professional_standing_request,
             :requested,
             assessment:,
           )
-          application_form.update!(waiting_on_professional_standing: true)
+          application_form.update!(
+            statuses: %w[waiting_on_lops],
+            stage: "pre_assessment",
+            waiting_on_professional_standing: true,
+          )
+        elsif application_form.needs_written_statement && rand(4).zero?
+          FactoryBot.create(
+            :professional_standing_request,
+            :requested,
+            assessment:,
+          )
+          application_form.update!(
+            statuses: %w[waiting_on_lops],
+            stage: "verification",
+            waiting_on_professional_standing: true,
+          )
+        elsif (work_history = application_form.work_histories.first) &&
+              rand(3).zero?
+          reference_request_trait = ReferenceRequest.states.keys.sample
+          FactoryBot.create(
+            :reference_request,
+            reference_request_trait,
+            assessment:,
+            work_history:,
+          )
+          application_form.update!(
+            statuses: %w[waiting_on_reference],
+            stage: "verification",
+            waiting_on_reference: true,
+          )
+        elsif (qualification = application_form.qualifications.first) &&
+              rand(2).zero?
+          qualification_trait = ReferenceRequest.states.keys.sample
+          FactoryBot.create(
+            :qualification_request,
+            qualification_trait,
+            assessment:,
+            qualification:,
+          )
+          application_form.update!(
+            statuses: %w[waiting_on_qualification],
+            stage: "verification",
+            waiting_on_qualification: true,
+          )
         else
           FactoryBot.create(
             :further_information_request,
@@ -185,7 +221,11 @@ def create_application_forms
             :with_items,
             assessment:,
           )
-          application_form.update!(waiting_on_further_information: true)
+          application_form.update!(
+            statuses: %w[waiting_on_further_information],
+            stage: "assessment",
+            waiting_on_further_information: true,
+          )
         end
       elsif (work_history = application_form.work_histories.first) &&
             rand(2).zero?
@@ -195,7 +235,11 @@ def create_application_forms
           assessment:,
           work_history:,
         )
-        application_form.update!(waiting_on_reference: true)
+        application_form.update!(
+          statuses: %w[waiting_on_reference],
+          stage: "verification",
+          waiting_on_reference: true,
+        )
       end
     end
   end
