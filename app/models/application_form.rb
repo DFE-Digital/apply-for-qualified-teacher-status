@@ -43,6 +43,7 @@
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
 #  requires_preliminary_check                    :boolean          default(FALSE), not null
+#  stage                                         :string           default("draft"), not null
 #  status                                        :string           default("draft"), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
@@ -76,6 +77,7 @@
 #  index_application_forms_on_reference                     (reference) UNIQUE
 #  index_application_forms_on_region_id                     (region_id)
 #  index_application_forms_on_reviewer_id                   (reviewer_id)
+#  index_application_forms_on_stage                         (stage)
 #  index_application_forms_on_status                        (status)
 #  index_application_forms_on_teacher_id                    (teacher_id)
 #
@@ -131,6 +133,17 @@ class ApplicationForm < ApplicationRecord
          none: "none",
        },
        _prefix: true
+
+  enum stage: {
+         draft: "draft",
+         pre_assessment: "pre_assessment",
+         not_started: "not_started",
+         assessment: "assessment",
+         verification: "verification",
+         review: "review",
+         completed: "completed",
+       },
+       _suffix: true
 
   enum status: {
          draft: "draft",
