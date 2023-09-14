@@ -43,6 +43,15 @@ class ApplicationFormStatusUpdater
           new_value: action_required_by,
         )
       end
+
+      if (old_stage = application_form.stage) != stage
+        application_form.update!(stage:)
+        create_timeline_event(
+          event_type: "stage_changed",
+          old_value: old_stage,
+          new_value: stage,
+        )
+      end
     end
   end
 
@@ -179,6 +188,40 @@ class ApplicationFormStatusUpdater
         "external"
       else
         "none"
+      end
+  end
+
+  def stage
+    @stage ||=
+      if application_form.withdrawn_at.present? ||
+           application_form.declined_at.present? ||
+           application_form.awarded_at.present?
+        "completed"
+      elsif dqt_trn_request.present?
+        "review"
+      elsif preliminary_check? ||
+            (
+              teaching_authority_provides_written_statement &&
+                waiting_on_professional_standing
+            )
+        "pre_assessment"
+      elsif overdue_professional_standing || overdue_qualification ||
+            overdue_reference ||
+            (
+              !teaching_authority_provides_written_statement &&
+                received_professional_standing
+            ) || received_qualification || received_reference ||
+            waiting_on_professional_standing || waiting_on_qualification ||
+            waiting_on_reference
+        "verification"
+      elsif overdue_further_information || received_further_information ||
+            waiting_on_further_information ||
+            assessment&.any_not_preliminary_section_finished?
+        "assessment"
+      elsif application_form.submitted_at.present?
+        "not_started"
+      else
+        "draft"
       end
   end
 
