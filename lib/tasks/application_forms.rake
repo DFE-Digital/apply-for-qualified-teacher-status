@@ -23,28 +23,4 @@ namespace :application_forms do
     count = BackfillPreliminaryChecks.call(user:)
     puts "Updated #{count} applications."
   end
-
-  desc "Turn on preliminary checks for draft or submitted applications."
-  task :enable_preliminary_checks,
-       %i[country_code staff_email] => :environment do |_task, args|
-    application_forms =
-      ApplicationForm.joins(region: :country).where(
-        requires_preliminary_check: false,
-        status: %w[draft submitted],
-        countries: {
-          code: args[:country_code],
-        },
-      )
-
-    puts "This will change #{application_forms.count} applications. Are you sure you want to continue?"
-    $stdin.gets.chomp
-
-    user = Staff.find_by!(email: args[:staff_email])
-
-    application_forms.find_each do |application_form|
-      application_form.update!(requires_preliminary_check: true)
-      ApplicationFormStatusUpdater.call(application_form:, user:)
-      puts "#{application_form.reference}: #{application_form.status}"
-    end
-  end
 end
