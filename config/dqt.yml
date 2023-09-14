@@ -1,5 +1,5 @@
 development:
-  url: <%= ENV.fetch("DQT_API_URL", "https://qualified-teachers-api-dev.london.cloudapps.digital") %>
+  url: <%= ENV.fetch("DQT_API_URL", "https://dev.teacher-qualifications-api.education.gov.uk") %>
   api_key: <%= ENV["DQT_API_KEY"] %>
 
 production:
