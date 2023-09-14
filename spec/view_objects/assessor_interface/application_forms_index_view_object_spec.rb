@@ -183,7 +183,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         create_list(:application_form, 3, :submitted, :assessment_stage)
         create_list(:application_form, 4, :submitted, :verification_stage)
         create_list(:application_form, 5, :submitted, :review_stage)
-        create_list(:application_form, 6, :submitted, :completed_stage)
+        create_list(:application_form, 6, :awarded, :completed_stage)
       end
 
       it do

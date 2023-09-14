@@ -43,12 +43,14 @@ class BackfillPreliminaryChecks
           requires_preliminary_check: false,
         )
         .merge(
-          ApplicationForm.submitted.or(
-            ApplicationForm.waiting_on.where(
-              teaching_authority_provides_written_statement: true,
-              waiting_on_professional_standing: true,
+          ApplicationForm
+            .where.not(submitted_at: nil)
+            .or(
+              ApplicationForm.pre_assessment_stage.where(
+                "'waiting_on_lops' = ANY (statuses)",
+                teaching_authority_provides_written_statement: true,
+              ),
             ),
-          ),
         )
   end
 end

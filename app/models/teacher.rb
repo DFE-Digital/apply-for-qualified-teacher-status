@@ -35,7 +35,7 @@ class Teacher < ApplicationRecord
 
   def application_form
     @application_form ||=
-      application_forms.not_withdrawn.order(created_at: :desc).first
+      application_forms.where(withdrawn_at: nil).order(created_at: :desc).first
   end
 
   def send_magic_link(*)

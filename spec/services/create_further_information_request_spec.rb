@@ -27,16 +27,10 @@ RSpec.describe CreateFurtherInformationRequest do
     end
   end
 
-  describe "updating application form state" do
-    subject(:status) { application_form.status }
-
-    it { is_expected.to eq("submitted") }
-
-    context "after calling the service" do
-      before { call }
-
-      it { is_expected.to eq("waiting_on") }
-    end
+  it "changes the application form statuses" do
+    expect { call }.to change(application_form, :statuses).to(
+      %w[waiting_on_further_information],
+    )
   end
 
   describe "sending application received email" do

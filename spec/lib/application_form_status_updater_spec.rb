@@ -361,10 +361,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "when status is unchanged" do
-      it "doesn't change the status from draft" do
-        expect { call }.to_not change(application_form, :status).from("draft")
-      end
-
       include_examples "doesn't change action required by"
 
       it "doesn't change the stage from draft" do

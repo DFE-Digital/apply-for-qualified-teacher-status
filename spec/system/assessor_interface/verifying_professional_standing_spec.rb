@@ -141,7 +141,8 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   def application_form
     @application_form ||=
       begin
-        application_form = create(:application_form, :submitted)
+        application_form =
+          create(:application_form, :waiting_on, statuses: %w[waiting_on_lops])
         create(
           :assessment,
           :with_professional_standing_request,

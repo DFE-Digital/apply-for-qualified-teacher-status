@@ -130,21 +130,6 @@ RSpec.describe ApplicationForm, type: :model do
         )
         .with_suffix
         .backed_by_column_of_type(:string)
-
-      is_expected.to define_enum_for(:status).with_values(
-        draft: "draft",
-        submitted: "submitted",
-        preliminary_check: "preliminary_check",
-        assessment_in_progress: "assessment_in_progress",
-        waiting_on: "waiting_on",
-        received: "received",
-        overdue: "overdue",
-        awarded: "awarded",
-        awarded_pending_checks: "awarded_pending_checks",
-        declined: "declined",
-        potential_duplicate_in_dqt: "potential_duplicate_in_dqt",
-        withdrawn: "withdrawn",
-      ).backed_by_column_of_type(:string)
     end
 
     it do

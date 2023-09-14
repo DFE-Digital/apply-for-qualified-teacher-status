@@ -2,16 +2,16 @@
 
 <h1 class="govuk-heading-xl">Apply for qualified teacher status (QTS)</h1>
 
-<% if @view_object.application_form.draft? %>
-  <%= render "teacher_interface/application_forms/show/draft", view_object: @view_object %>
-<% elsif @view_object.application_form.declined? %>
+<% if @view_object.application_form.declined_at.present? %>
   <%= render "teacher_interface/application_forms/show/declined", view_object: @view_object %>
-<% elsif @view_object.application_form.awarded? %>
+<% elsif @view_object.application_form.awarded_at.present? %>
   <%= render "teacher_interface/application_forms/show/awarded", view_object: @view_object %>
 <% elsif @view_object.request_further_information? %>
   <%= render "teacher_interface/application_forms/show/further_information_requested", view_object: @view_object %>
 <% elsif @view_object.request_professional_standing_certificate? %>
   <%= render "teacher_interface/application_forms/show/request_professional_standing_certificate", view_object: @view_object %>
-<% else %>
+<% elsif @view_object.application_form.submitted? %>
   <%= render "teacher_interface/application_forms/show/complete", view_object: @view_object %>
+<% else %>
+  <%= render "teacher_interface/application_forms/show/draft", view_object: @view_object %>
 <% end %>

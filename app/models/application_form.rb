@@ -147,21 +147,6 @@ class ApplicationForm < ApplicationRecord
        },
        _suffix: true
 
-  enum status: {
-         draft: "draft",
-         submitted: "submitted",
-         preliminary_check: "preliminary_check",
-         assessment_in_progress: "assessment_in_progress",
-         waiting_on: "waiting_on",
-         received: "received",
-         overdue: "overdue",
-         awarded_pending_checks: "awarded_pending_checks",
-         awarded: "awarded",
-         declined: "declined",
-         potential_duplicate_in_dqt: "potential_duplicate_in_dqt",
-         withdrawn: "withdrawn",
-       }
-
   delegate :country, to: :region, allow_nil: true
 
   STATUS_COLUMNS = %i[
@@ -184,47 +169,37 @@ class ApplicationForm < ApplicationRecord
 
   STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }
 
-  scope :assessable,
-        -> do
-          where(
-            status: %i[
-              preliminary_check
-              submitted
-              assessment_in_progress
-              waiting_on
-              received
-              overdue
-            ],
-          )
-        end
+  scope :assessable, -> { where.not(stage: %i[draft completed]) }
 
   scope :active,
         -> do
           where(hidden_from_assessment: false).merge(
             assessable
-              .or(awarded_pending_checks)
-              .or(potential_duplicate_in_dqt)
-              .or(awarded.where("awarded_at >= ?", 90.days.ago))
-              .or(declined.where("declined_at >= ?", 90.days.ago))
-              .or(withdrawn.where("withdrawn_at >= ?", 90.days.ago)),
+              .or(where("awarded_at >= ?", 90.days.ago))
+              .or(where("declined_at >= ?", 90.days.ago))
+              .or(where("withdrawn_at >= ?", 90.days.ago)),
           )
         end
 
   scope :destroyable,
         -> do
-          draft
+          where(submitted_at: nil)
             .where("created_at < ?", 6.months.ago)
-            .or(awarded.where("awarded_at < ?", 5.years.ago))
-            .or(declined.where("declined_at < ?", 5.years.ago))
-            .or(withdrawn.where("withdrawn_at < ?", 5.years.ago))
+            .or(where("awarded_at < ?", 5.years.ago))
+            .or(where("declined_at < ?", 5.years.ago))
+            .or(where("withdrawn_at < ?", 5.years.ago))
         end
 
   scope :remindable,
         -> do
           verification_stage.or(
-            draft_stage.where("created_at < ?", 5.months.ago),
+            where(submitted_at: nil).where("created_at < ?", 5.months.ago),
           )
         end
+
+  def submitted?
+    submitted_at.present?
+  end
 
   def to_param
     reference
@@ -310,7 +285,7 @@ class ApplicationForm < ApplicationRecord
   end
 
   def expires_after
-    draft? ? 6.months : nil
+    submitted? ? nil : 6.months
   end
 
   def requested_at

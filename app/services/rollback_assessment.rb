@@ -33,12 +33,12 @@ class RollbackAssessment
 
   def has_submitted_another_application_form?
     teacher.application_form != application_form &&
-      !teacher.application_form.draft?
+      teacher.application_form.submitted?
   end
 
   def valid_assessment_state?
     assessment.award? || assessment.decline? ||
-      (assessment.unknown? && application_form.declined?)
+      (assessment.unknown? && application_form.declined_at.present?)
   end
 
   def update_assessment
@@ -63,9 +63,11 @@ class RollbackAssessment
   delegate :teacher, to: :application_form
 
   def update_application_form
-    if application_form.awarded?
+    if application_form.awarded_at.present?
       application_form.update!(awarded_at: nil)
-    elsif application_form.declined?
+    end
+
+    if application_form.declined_at.present?
       application_form.update!(declined_at: nil)
     end
 
@@ -74,8 +76,7 @@ class RollbackAssessment
 
   def delete_draft_application_forms
     ApplicationForm
-      .draft
-      .where(teacher:)
+      .where(submitted_at: nil, teacher:)
       .find_each do |application_form|
         DestroyApplicationForm.call(application_form:)
       end

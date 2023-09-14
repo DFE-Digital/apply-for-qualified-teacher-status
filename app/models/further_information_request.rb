@@ -67,7 +67,9 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def after_expired(user:)
-    DeclineQTS.call(application_form:, user:) unless application_form.withdrawn?
+    if application_form.withdrawn_at.nil?
+      DeclineQTS.call(application_form:, user:)
+    end
   end
 
   def after_reviewed(user:)

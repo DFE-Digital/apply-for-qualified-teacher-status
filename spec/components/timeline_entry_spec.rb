@@ -8,12 +8,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
   context "with a creator name" do
     let(:timeline_event) do
-      create(
-        :timeline_event,
-        :status_changed,
-        creator_name: "DQT",
-        creator: nil,
-      )
+      create(:timeline_event, :stage_changed, creator_name: "DQT", creator: nil)
     end
 
     it "describes the event" do

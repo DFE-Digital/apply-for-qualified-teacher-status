@@ -36,7 +36,7 @@ RSpec.describe ExpireRequestable do
 
     shared_examples_for "declining the application" do
       it "declines the application" do
-        expect(subject.application_form).to be_declined
+        expect(subject.application_form.declined_at).to_not be_nil
       end
     end
 

@@ -159,11 +159,11 @@ def create_application_forms
     application_form_traits_for(region).each do |traits|
       application_form = FactoryBot.create(:application_form, *traits, region:)
 
-      next if application_form.draft?
+      next unless application_form.submitted?
 
       assessment = AssessmentFactory.call(application_form:)
 
-      if application_form.declined?
+      if application_form.declined_at.present?
         FactoryBot.create(
           :selected_failure_reason,
           :fi_requestable,
@@ -174,7 +174,7 @@ def create_application_forms
           :declinable,
           assessment_section: assessment.sections.second,
         )
-      elsif application_form.waiting_on?
+      elsif application_form.action_required_by_external?
         if application_form.teaching_authority_provides_written_statement
           FactoryBot.create(
             :professional_standing_request,
@@ -184,7 +184,6 @@ def create_application_forms
           application_form.update!(
             statuses: %w[waiting_on_lops],
             stage: "pre_assessment",
-            waiting_on_professional_standing: true,
           )
         elsif application_form.needs_written_statement && rand(4).zero?
           FactoryBot.create(
@@ -195,7 +194,6 @@ def create_application_forms
           application_form.update!(
             statuses: %w[waiting_on_lops],
             stage: "verification",
-            waiting_on_professional_standing: true,
           )
         elsif (work_history = application_form.work_histories.first) &&
               rand(3).zero?
@@ -208,7 +206,6 @@ def create_application_forms
           application_form.update!(
             statuses: %w[waiting_on_reference],
             stage: "verification",
-            waiting_on_reference: true,
           )
         elsif (qualification = application_form.qualifications.first) &&
               rand(2).zero?
@@ -221,7 +218,6 @@ def create_application_forms
           application_form.update!(
             statuses: %w[waiting_on_qualification],
             stage: "verification",
-            waiting_on_qualification: true,
           )
         else
           FactoryBot.create(
@@ -233,7 +229,6 @@ def create_application_forms
           application_form.update!(
             statuses: %w[waiting_on_further_information],
             stage: "assessment",
-            waiting_on_further_information: true,
           )
         end
       end

@@ -17,12 +17,9 @@ class AwardQTS
   end
 
   def call
-    return if application_form.awarded?
+    return if application_form.awarded_at.present?
 
-    unless application_form.awarded_pending_checks? ||
-             application_form.potential_duplicate_in_dqt?
-      raise InvalidState
-    end
+    raise InvalidState if application_form.dqt_trn_request.nil?
 
     raise MissingTRN if trn.blank?
 

@@ -99,7 +99,7 @@ module AssessorInterface
 
           ApplicationForm
             .includes(:teacher)
-            .not_draft
+            .where.not(submitted_at: nil)
             .where(
               teacher: {
                 canonical_email: work_history_canonical_contact_emails,
@@ -123,7 +123,7 @@ module AssessorInterface
               canonical_contact_email: work_history_canonical_contact_emails,
             )
             .where.not(application_form:)
-            .where.not(application_form: { status: "draft" })
+            .where.not(application_form: { submitted_at: nil })
             .group_by(&:canonical_contact_email)
             .transform_values do |work_histories|
               work_histories.map(&:application_form)
