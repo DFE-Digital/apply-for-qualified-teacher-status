@@ -10,23 +10,6 @@ class ApplicationFormStatusUpdater
 
   def call
     ActiveRecord::Base.transaction do
-      application_form.update!(
-        overdue_further_information:,
-        overdue_professional_standing: overdue_lops,
-        overdue_qualification:,
-        overdue_reference:,
-        received_further_information:,
-        received_professional_standing: received_lops,
-        received_qualification:,
-        received_reference:,
-        waiting_on_further_information:,
-        waiting_on_professional_standing: waiting_on_lops,
-        waiting_on_qualification:,
-        waiting_on_reference:,
-      )
-
-      application_form.status = status if application_form.status != status
-
       if (old_action_required_by = application_form.action_required_by) !=
            action_required_by
         application_form.action_required_by = action_required_by
@@ -57,38 +40,6 @@ class ApplicationFormStatusUpdater
   private
 
   attr_reader :application_form, :user
-
-  def status
-    @status ||=
-      if dqt_trn_request&.potential_duplicate?
-        "potential_duplicate_in_dqt"
-      elsif application_form.withdrawn_at.present?
-        "withdrawn"
-      elsif application_form.declined_at.present?
-        "declined"
-      elsif application_form.awarded_at.present?
-        "awarded"
-      elsif dqt_trn_request.present?
-        "awarded_pending_checks"
-      elsif preliminary_check?
-        "preliminary_check"
-      elsif overdue_further_information || overdue_lops ||
-            overdue_qualification || overdue_reference
-        "overdue"
-      elsif received_further_information || received_lops ||
-            received_qualification || received_reference
-        "received"
-      elsif waiting_on_further_information || waiting_on_lops ||
-            waiting_on_qualification || waiting_on_reference
-        "waiting_on"
-      elsif assessment&.any_not_preliminary_section_finished?
-        "assessment_in_progress"
-      elsif application_form.submitted_at.present?
-        "submitted"
-      else
-        "draft"
-      end
-  end
 
   def action_required_by
     @action_required_by ||=
