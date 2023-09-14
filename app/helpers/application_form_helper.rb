@@ -144,7 +144,13 @@ module ApplicationFormHelper
           text: I18n.t("application_form.summary.status"),
         },
         value: {
-          text: application_form_status_tag(application_form, class_context:),
+          text:
+            render(
+              StatusTag::Component.new(
+                application_form.statuses,
+                class_context:,
+              ),
+            ),
         },
       },
     ].compact
@@ -160,20 +166,5 @@ module ApplicationFormHelper
 
     earliest_certificate_date.present? && earliest_work_history_date.present? &&
       earliest_work_history_date < earliest_certificate_date
-  end
-
-  private
-
-  def application_form_status_tag(application_form, class_context:)
-    statuses =
-      if %w[overdue received waiting_on].include?(application_form.status)
-        %w[further_information professional_standing qualification reference]
-          .map { |requestable| "#{application_form.status}_#{requestable}" }
-          .filter { |status| application_form.send(status) }
-      else
-        application_form.status
-      end
-
-    render(StatusTag::Component.new(statuses, class_context:))
   end
 end

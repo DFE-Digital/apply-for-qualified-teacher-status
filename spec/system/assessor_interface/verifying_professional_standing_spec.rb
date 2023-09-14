@@ -40,7 +40,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
 
   def and_i_see_a_waiting_on_status
     expect(assessor_application_page.status_summary.value).to have_text(
-      "WAITING ON PROFESSIONAL STANDING",
+      "WAITING ON LOPS",
     )
   end
 
@@ -75,7 +75,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
 
   def and_i_see_a_received_status
     expect(assessor_application_page.status_summary.value).to have_text(
-      "RECEIVED PROFESSIONAL STANDING",
+      "RECEIVED LOPS",
     )
   end
 
@@ -87,6 +87,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
             :application_form,
             :waiting_on,
             waiting_on_professional_standing: true,
+            statuses: %w[waiting_on_lops],
           )
         create(
           :assessment,
