@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_14_084340) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_14_104107) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -107,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_14_084340) do
     t.datetime "withdrawn_at"
     t.string "action_required_by", default: "none", null: false
     t.string "stage", default: "draft", null: false
+    t.string "statuses", default: ["draft"], null: false, array: true
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"

@@ -1,4 +1,4 @@
-class AddStatusesToApplicationForms < ActiveRecord::Migration[7.0]
+class AddSectionStatusesToApplicationForms < ActiveRecord::Migration[7.0]
   def change
     change_table :application_forms, bulk: true do |t|
       t.string :personal_information_status, default: "not_started", null: false
