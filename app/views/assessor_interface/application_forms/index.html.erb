@@ -56,22 +56,10 @@
       <% end %>
     </section>
 
-    <section id="app-applications-filters-status">
-      <%= f.govuk_check_boxes_fieldset :statuses, legend: { size: "s" }, small: true do %>
-        <% @view_object.status_filter_options.each do |option, suboptions| %>
-          <% if suboptions.present? %>
-            <div class="govuk-checkboxes__item govuk-!-padding-left-0 govuk-!-margin-top-1 govuk-!-margin-bottom-1">
-              <span class="govuk-label"><%= option.label %></span>
-            </div>
-
-            <div class="govuk-!-margin-left-4">
-              <% suboptions.each do |option| %>
-                <%= f.govuk_check_box :statuses, option.id, label: { text: option.label }, checked: @view_object.filter_form.statuses&.include?(option.id) %>
-              <% end %>
-            </div>
-          <% else %>
-            <%= f.govuk_check_box :statuses, option.id, label: { text: option.label }, checked: @view_object.filter_form.statuses&.include?(option.id) %>
-          <% end %>
+    <section id="app-applications-filters-stage">
+      <%= f.govuk_check_boxes_fieldset :stage, legend: { size: "s" }, small: true do %>
+        <% @view_object.stage_filter_options.each do |option| %>
+          <%= f.govuk_check_box :stage, option.id, label: { text: option.label }, checked: @view_object.filter_form.stage&.include?(option.id) %>
         <% end %>
       <% end %>
     </section>
