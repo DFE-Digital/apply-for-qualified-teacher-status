@@ -111,5 +111,11 @@ FactoryBot.define do
       old_value { %w[admin assessor external none].sample }
       new_value { %w[admin assessor external none].sample }
     end
+
+    trait :stage_changed do
+      event_type { "stage_changed" }
+      old_value { ApplicationForm.stages.values.sample }
+      new_value { ApplicationForm.stages.values.sample }
+    end
   end
 end

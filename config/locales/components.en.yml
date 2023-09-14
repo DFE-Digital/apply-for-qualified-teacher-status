@@ -2,6 +2,7 @@ en:
   components:
     status_tag:
       accepted: Accepted
+      assessment: Assessment
       assessment_in_progress: Assessment in progress
       awarded: Awarded
       awarded_pending_checks: Award pending
@@ -19,6 +20,7 @@ en:
       overdue_qualification: Overdue qualification
       overdue_reference: Overdue reference
       potential_duplicate_in_dqt: Potential duplication in DQT
+      pre_assessment: Pre-assessment
       preliminary_check: Preliminary check
       received: Received
       received_further_information: Received further information
@@ -27,8 +29,10 @@ en:
       received_reference: Received reference
       rejected: Rejected
       requested: Waiting on
+      review: Review
       submitted: Not started
       valid: Valid
+      verification: Verification
       waiting_on: Waiting on
       waiting_on_further_information: Waiting on further information
       waiting_on_professional_standing: Waiting on professional standing
@@ -39,14 +43,14 @@ en:
     timeline_entry:
       title:
         action_required_by_changed: Action required by changed
-        assessor_assigned: Assessor assigned
-        reviewer_assigned: Reviewer assigned
-        state_changed: Status changed
-        assessment_section_completed: Section completed
-        note_created: Note created
-        email_sent: Email sent
         age_range_subjects_verified: Age range and subjects verified
+        assessment_section_completed: Section completed
         assessment_section_recorded: Assessment section recorded
+        assessor_assigned: Assessor assigned
+        email_sent: Email sent
+        information_changed: Information changed after submission
+        note_created: Note created
+        reviewer_assigned: Reviewer assigned
         requestable_requested:
           FurtherInformationRequest: Further information requested
           ProfessionalStandingRequest: Professional standing requested
@@ -67,14 +71,14 @@ en:
           ProfessionalStandingRequest: Professional standing assessed
           QualificationRequest: Qualification assessed
           ReferenceRequest: Reference assessed
-        information_changed: Information changed after submission
+        stage_changed: Stage changed
+        state_changed: Status changed
       description:
         action_required_by_changed: Application requires %{action} action.
         assessor_assigned: "%{assignee_name} is assigned as the assessor."
-        reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
-        state_changed: Status changed from %{old_state} to %{new_state}.
-        note_created: "%{text}"
         email_sent: "%{subject}"
+        note_created: "%{text}"
+        reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
         requestable_requested:
           FurtherInformationRequest: Further information has been requested.
           ProfessionalStandingRequest: The professional standing has been requested.
@@ -95,6 +99,8 @@ en:
           ProfessionalStandingRequest: The professional standing request has been assessed.
           QualificationRequest: A qualification has been assessed.
           ReferenceRequest: A reference has been assessed.
+        stage_changed: Stage changed from %{old_stage} to %{new_stage}.
+        state_changed: Status changed from %{old_state} to %{new_state}.
       columns:
         contact_email: Reference email address
         contact_job: Reference job

@@ -21,6 +21,7 @@ module StatusTag
 
     COLOURS = {
       accepted: "green",
+      assessment: "blue",
       assessment_in_progress: "blue",
       awarded: "green",
       awarded_pending_checks: "turquoise",
@@ -37,6 +38,7 @@ module StatusTag
       overdue_qualification: "pink",
       overdue_reference: "pink",
       potential_duplicate_in_dqt: "pink",
+      pre_assessment: "pink",
       preliminary_check: "pink",
       received: "purple",
       received_further_information: "purple",
@@ -45,8 +47,10 @@ module StatusTag
       received_reference: "purple",
       rejected: "red",
       requested: "yellow",
+      review: "purple",
       submitted: "grey",
       valid: "green",
+      verification: "yellow",
       waiting_on: "yellow",
       waiting_on_further_information: "yellow",
       waiting_on_professional_standing: "yellow",
