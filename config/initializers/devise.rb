@@ -365,6 +365,9 @@ Devise.setup do |config|
   # each time you sign in, all existing magic links will be considered invalid.
   # config.passwordless_expire_old_tokens_on_sign_in = true
 
+  # Which algorithm to use for tokenizing magic links. See README for descriptions
+  config.passwordless_tokenizer = "MessageEncryptorTokenizer"
+
   config.omniauth :azure_activedirectory_v2,
                   client_id: ENV["MICROSOFT_OAUTH_CLIENT_ID"],
                   client_secret: ENV["MICROSOFT_OAUTH_CLIENT_SECRET"],

@@ -369,6 +369,7 @@ Rails.application.routes.draw do
   devise_for :teachers,
              path: "/teacher",
              controllers: {
+               magic_links: "teachers/magic_links",
                registrations: "teachers/registrations",
                sessions: "teachers/sessions",
              }
@@ -377,9 +378,6 @@ Rails.application.routes.draw do
     get "/teacher/sign_in_or_sign_up",
         to: "teachers/sessions#new_or_create",
         as: "create_or_new_teacher_session"
-    get "/teacher/magic_link",
-        to: "teachers/magic_links#show",
-        as: "teacher_magic_link"
     post "/teacher/magic_link", to: "teachers/magic_links#create"
 
     get "/teacher/check_email",
