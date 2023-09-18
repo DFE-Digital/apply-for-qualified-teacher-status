@@ -113,7 +113,7 @@ GEM
       faraday_middleware (~> 1.0, >= 1.0.0.rc1)
       net-http-persistent (~> 4.0)
       nokogiri (~> 1, >= 1.10.8)
-    bcrypt (3.1.18)
+    bcrypt (3.1.19)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -151,8 +151,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-passwordless (0.7.1)
+    devise-passwordless (1.0.0)
       devise
+      globalid
     devise_invitable (2.0.8)
       actionmailer (>= 5.0)
       devise (>= 4.6)
