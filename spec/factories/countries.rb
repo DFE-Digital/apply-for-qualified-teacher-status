@@ -23,16 +23,11 @@ FactoryBot.define do
     sequence :code, Country::CODES.cycle
 
     trait :requires_secondary_education_teaching_qualification do
-      sequence :code,
-               Country::CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION.cycle
+      subject_limited { true }
     end
 
     trait :doesnt_require_secondary_education_teaching_qualification do
-      sequence :code,
-               (
-                 Country::CODES -
-                   Country::CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION
-               ).cycle
+      subject_limited { true }
     end
 
     trait :with_national_region do
