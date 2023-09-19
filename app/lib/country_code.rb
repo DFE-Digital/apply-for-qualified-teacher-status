@@ -29,9 +29,8 @@ class CountryCode
     end
 
     def secondary_education_teaching_qualification_required?(code)
-      Country::CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION.include?(
-        code,
-      )
+      country = Country.find_by(code:)
+      country&.subject_limited || false
     end
 
     LOCATIONS_BY_COUNTRY_CODE =

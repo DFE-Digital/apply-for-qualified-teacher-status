@@ -65,6 +65,7 @@ module SupportInterface
         :region_names,
         :sanction_information,
         :status_information,
+        :eligibility_route,
       )
     end
   end
