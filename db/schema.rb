@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_12_144508) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_19_161156) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -162,6 +162,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_144508) do
     t.boolean "eligibility_enabled", default: true, null: false
     t.boolean "eligibility_skip_questions", default: false, null: false
     t.text "qualifications_information", default: "", null: false
+    t.boolean "subject_limited", default: false
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
