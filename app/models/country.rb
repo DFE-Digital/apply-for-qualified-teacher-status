@@ -32,11 +32,5 @@ class Country < ApplicationRecord
   CODES_IN_EUROPEAN_ECONOMIC_AREA =
     YAML.load(File.read("lib/countries-in-european-economic-area.yaml"))
 
-  CODES_ELIGIBLE_IN_FEBRUARY_2023 =
-    YAML.load(File.read("lib/countries-eligible-in-february-2023.yaml"))
-
-  CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION =
-    CODES_ELIGIBLE_IN_FEBRUARY_2023 - %w[HK UA]
-
   validates :code, inclusion: { in: CODES }
 end

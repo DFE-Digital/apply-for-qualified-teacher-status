@@ -3,10 +3,12 @@
 class SupportInterface::CountryForm
   include ActiveModel::Model
   include ActiveModel::Attributes
+  include ActiveModel::Dirty
 
   attr_accessor :country
   validates :country, presence: true
 
+  attribute :subject_limited, :boolean
   attribute :eligibility_enabled, :boolean
   attribute :eligibility_skip_questions, :boolean
   attribute :has_regions, :boolean
@@ -42,7 +44,7 @@ class SupportInterface::CountryForm
   end
 
   def assign_country_attributes
-    country.assign_attributes(eligibility_enabled:, eligibility_skip_questions:)
+    country.assign_attributes(eligibility_enabled:, eligibility_skip_questions:, subject_limited:)
 
     if has_regions
       country.assign_attributes(
@@ -80,5 +82,32 @@ class SupportInterface::CountryForm
 
         (delete_actions + create_actions).sort_by { |action| action[:name] }
       end
+  end
+
+  def eligibility_route
+    if subject_limited
+      "expanded"
+    elsif eligibility_skip_questions
+      "reduced"
+    else
+      "standard"
+    end
+  end
+
+  def eligibility_route=(value)
+    subject_limited_will_change!
+    eligibility_skip_questions_will_change!
+
+    case value
+    when "standard"
+      self.subject_limited = false
+      self.eligibility_skip_questions = false
+    when "reduced"
+      self.subject_limited = false
+      self.eligibility_skip_questions = true
+    when "expanded"
+      self.subject_limited = true
+      self.eligibility_skip_questions = false
+    end
   end
 end
