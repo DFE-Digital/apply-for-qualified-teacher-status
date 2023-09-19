@@ -62,7 +62,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_20_105534) do
     t.text "subjects", default: [], null: false, array: true
     t.bigint "assessor_id"
     t.bigint "reviewer_id"
-    t.string "status", default: "draft", null: false
     t.datetime "submitted_at"
     t.boolean "needs_work_history", null: false
     t.boolean "needs_written_statement", null: false
@@ -89,20 +88,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_20_105534) do
     t.boolean "reduced_evidence_accepted", default: false, null: false
     t.boolean "english_language_provider_other", default: false, null: false
     t.datetime "declined_at"
-    t.boolean "waiting_on_professional_standing", default: false, null: false
-    t.boolean "received_professional_standing", default: false, null: false
-    t.boolean "waiting_on_further_information", default: false, null: false
-    t.boolean "received_further_information", default: false, null: false
-    t.boolean "waiting_on_reference", default: false, null: false
-    t.boolean "received_reference", default: false, null: false
-    t.boolean "waiting_on_qualification", default: false, null: false
-    t.boolean "received_qualification", default: false, null: false
     t.boolean "requires_preliminary_check", default: false, null: false
     t.boolean "written_statement_optional", default: false, null: false
-    t.boolean "overdue_further_information", default: false, null: false
-    t.boolean "overdue_professional_standing", default: false, null: false
-    t.boolean "overdue_qualification", default: false, null: false
-    t.boolean "overdue_reference", default: false, null: false
     t.jsonb "dqt_match", default: {}
     t.datetime "withdrawn_at"
     t.string "action_required_by", default: "none", null: false
@@ -118,7 +105,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_20_105534) do
     t.index ["region_id"], name: "index_application_forms_on_region_id"
     t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
     t.index ["stage"], name: "index_application_forms_on_stage"
-    t.index ["status"], name: "index_application_forms_on_status"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
   end
 
