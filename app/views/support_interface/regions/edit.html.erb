@@ -15,24 +15,21 @@
                                        legend: { text: "Will applications be subject to a preliminary check?" } %>
 
   <%= f.govuk_fieldset legend: { text: "Application form changes" } do %>
-    <%= f.govuk_collection_radio_buttons :application_form_skip_work_history,
-                                         [
-                                           OpenStruct.new(value: :true, label: "Yes"),
-                                           OpenStruct.new(value: :false, label: "No")
-                                         ],
-                                         :value,
-                                         :label,
-                                         legend: { text: "Remove work history?", size: "s" } %>
 
-    <%= f.govuk_collection_radio_buttons :reduced_evidence_accepted,
-                                         [
-                                           OpenStruct.new(value: :true, label: "Yes"),
-                                           OpenStruct.new(value: :false, label: "No")
-                                         ],
-                                         :value,
-                                         :label,
-                                         legend: { text: "Remove work history contact details and allow applicant to choose any SELT provider to prove their English proficiency?", size: "s" },
-                                         hint: { text: "Allows QTS to be awarded without any work references being provided." } %>
+    <%= f.govuk_radio_buttons_fieldset(:all_sections_necessary, legend: { size: 's', text: 'Do applicants need to complete all sections of the application form?' }) do %>
+      <%= f.govuk_radio_button :all_sections_necessary, :true, label: { text: 'Yes' }, link_errors: true %>
+      <%= f.govuk_radio_button :all_sections_necessary, :false, label: { text: 'No' } do %>
+        <%= f.govuk_collection_select :work_history_section_to_omit,
+                                      [
+                                        OpenStruct.new(id: "whole_section", name: "Work history (whole section)"),
+                                        OpenStruct.new(id: "contact_details", name: "Work history contact details (QTS can be awarded without work references and applicants can choose any SELT provider)."),
+                                      ],
+                                      :id,
+                                      :name,
+                                      label: { text: "Which sections will be removed?", size: "s" } %>
+
+      <% end %>
+    <% end %>
 
     <%= f.govuk_collection_radio_buttons :written_statement_optional,
                                          [
