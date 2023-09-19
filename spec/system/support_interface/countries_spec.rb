@@ -59,18 +59,18 @@ RSpec.describe "Countries support", type: :system do
   private
 
   def given_countries_exist
-    create(:region, :national, country: create(:country, code: "IE"))
-    create(:region, :national, country: create(:country, code: "PL"))
-    united_states = create(:country, code: "US")
+    create(:region, :national, country: create(:country, code: "IE", subject_limited: false))
+    create(:region, :national, country: create(:country, code: "PL", subject_limited: false))
+    united_states = create(:country, code: "US", subject_limited: false)
     create(:region, name: "Hawaii", country: united_states)
     create(:region, name: "New York", country: united_states)
-    create(:region, :national, country: create(:country, code: "ES"))
+    create(:region, :national, country: create(:country, code: "ES", subject_limited: false))
     create(
       :region,
       name: "British Columbia",
-      country: create(:country, code: "CA"),
+      country: create(:country, code: "CA", subject_limited: false),
     )
-    create(:region, :national, country: create(:country, code: "CY"))
+    create(:region, :national, country: create(:country, code: "CY", subject_limited: false))
   end
 
   def when_i_visit_the_countries_page
