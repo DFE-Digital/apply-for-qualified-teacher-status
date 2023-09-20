@@ -484,8 +484,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_101325) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "assignee_id"
-    t.string "old_state", default: "", null: false
-    t.string "new_state", default: "", null: false
     t.bigint "assessment_section_id"
     t.bigint "note_id"
     t.string "creator_name", default: "", null: false
