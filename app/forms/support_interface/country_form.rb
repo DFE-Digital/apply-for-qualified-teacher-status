@@ -42,14 +42,23 @@ class SupportInterface::CountryForm
   end
 
   def assign_country_attributes
-    country.assign_attributes(
-      eligibility_enabled:,
-      eligibility_skip_questions:,
-      other_information:,
-      qualifications_information:,
-      sanction_information:,
-      status_information:,
-    )
+    country.assign_attributes(eligibility_enabled:, eligibility_skip_questions:)
+
+    if has_regions
+      country.assign_attributes(
+        other_information:,
+        qualifications_information:,
+        sanction_information:,
+        status_information:,
+      )
+    else
+      country.assign_attributes(
+        other_information: "",
+        qualifications_information: "",
+        sanction_information: "",
+        status_information: "",
+      )
+    end
   end
 
   def diff_actions
