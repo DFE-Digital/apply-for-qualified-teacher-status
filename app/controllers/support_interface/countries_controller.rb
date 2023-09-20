@@ -5,6 +5,7 @@ module SupportInterface
     def index
       authorize [:support_interface, Country]
       @countries = Country.includes(:regions).order(:code)
+      render layout: "full_from_desktop"
     end
 
     def edit
