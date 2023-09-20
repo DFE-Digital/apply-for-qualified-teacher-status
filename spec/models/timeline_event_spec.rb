@@ -100,8 +100,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :assessor_assigned }
 
       it { is_expected.to_not validate_presence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -123,8 +121,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :reviewer_assigned }
 
       it { is_expected.to_not validate_presence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -146,8 +142,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :status_changed }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_presence_of(:old_state) }
-      it { is_expected.to validate_presence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -161,16 +155,14 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:requestable_type) }
       it { is_expected.to validate_absence_of(:work_history_id) }
       it { is_expected.to validate_absence_of(:column_name) }
-      it { is_expected.to validate_absence_of(:old_value) }
-      it { is_expected.to validate_absence_of(:new_value) }
+      it { is_expected.to validate_presence_of(:old_value) }
+      it { is_expected.to validate_presence_of(:new_value) }
     end
 
     context "with an assessment section recorded event type" do
       before { timeline_event.event_type = :assessment_section_recorded }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_presence_of(:old_state) }
-      it { is_expected.to validate_presence_of(:new_state) }
       it { is_expected.to validate_presence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -184,16 +176,14 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:requestable_type) }
       it { is_expected.to validate_absence_of(:work_history_id) }
       it { is_expected.to validate_absence_of(:column_name) }
-      it { is_expected.to validate_absence_of(:old_value) }
-      it { is_expected.to validate_absence_of(:new_value) }
+      it { is_expected.to validate_presence_of(:old_value) }
+      it { is_expected.to validate_presence_of(:new_value) }
     end
 
     context "with a note created event type" do
       before { timeline_event.event_type = :note_created }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_presence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -215,8 +205,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :email_sent }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_presence_of(:mailer_class_name) }
@@ -238,8 +226,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :age_range_subjects_verified }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -261,8 +247,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :requestable_received }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -294,8 +278,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :requestable_received }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -327,8 +309,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :requestable_expired }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -360,8 +340,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :requestable_assessed }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -393,8 +371,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :action_required_by_changed }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -416,8 +392,6 @@ RSpec.describe TimelineEvent do
       before { timeline_event.event_type = :stage_changed }
 
       it { is_expected.to validate_absence_of(:assignee) }
-      it { is_expected.to validate_absence_of(:old_state) }
-      it { is_expected.to validate_absence_of(:new_state) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }

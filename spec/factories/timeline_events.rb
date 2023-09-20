@@ -68,8 +68,8 @@ FactoryBot.define do
 
     trait :status_changed do
       event_type { "status_changed" }
-      old_state { ApplicationForm.statuses.keys.sample }
-      new_state { ApplicationForm.statuses.keys.sample }
+      old_value { ApplicationForm.statuses.keys.sample }
+      new_value { ApplicationForm.statuses.keys.sample }
     end
 
     trait :assessment_section_recorded do
@@ -82,8 +82,8 @@ FactoryBot.define do
           assessment: build(:assessment, application_form:),
         )
       end
-      old_state { %i[not_started invalid completed].sample }
-      new_state { %i[not_started invalid completed].sample }
+      old_value { %i[not_started invalid completed].sample }
+      new_value { %i[not_started invalid completed].sample }
     end
 
     trait :note_created do

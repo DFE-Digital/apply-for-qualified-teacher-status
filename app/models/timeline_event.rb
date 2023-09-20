@@ -90,15 +90,6 @@ class TimelineEvent < ApplicationRecord
             absence: true,
             unless: -> { assessor_assigned? || reviewer_assigned? }
 
-  validates :old_state,
-            :new_state,
-            presence: true,
-            if: -> { status_changed? || assessment_section_recorded? }
-  validates :old_state,
-            :new_state,
-            absence: true,
-            unless: -> { status_changed? || assessment_section_recorded? }
-
   validates :assessment_section,
             presence: true,
             if: :assessment_section_recorded?
@@ -154,15 +145,15 @@ class TimelineEvent < ApplicationRecord
             :new_value,
             presence: true,
             if: -> do
-              action_required_by_changed? || information_changed? ||
-                stage_changed?
+              action_required_by_changed? || assessment_section_recorded? ||
+                information_changed? || stage_changed? || status_changed?
             end
   validates :old_value,
             :new_value,
             absence: true,
             unless: -> do
-              action_required_by_changed? || information_changed? ||
-                stage_changed?
+              action_required_by_changed? || assessment_section_recorded? ||
+                information_changed? || stage_changed? || status_changed?
             end
 
   validates :column_name, presence: true, if: :information_changed?

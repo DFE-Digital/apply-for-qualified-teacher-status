@@ -190,8 +190,8 @@ FactoryBot.define do
           :status_changed,
           application_form:,
           creator: application_form.teacher,
-          old_state: "draft",
-          new_state: "submitted",
+          old_value: "draft",
+          new_value: "submitted",
         )
       end
     end

@@ -56,20 +56,20 @@ RSpec.describe TimelineEntry::Component, type: :component do
       create(
         :timeline_event,
         :status_changed,
-        old_state: "submitted",
-        new_state: "awarded",
+        old_value: "submitted",
+        new_value: "awarded",
       )
     end
-    let(:old_state) do
-      I18n.t("components.status_tag.#{timeline_event.old_state}")
+    let(:old_status_tag) do
+      I18n.t("components.status_tag.#{timeline_event.old_value}")
     end
-    let(:new_state) do
-      I18n.t("components.status_tag.#{timeline_event.new_state}")
+    let(:new_status_tag) do
+      I18n.t("components.status_tag.#{timeline_event.new_value}")
     end
 
     it "describes the event" do
       expect(component.text.squish).to include(
-        "Status changed from #{old_state} to #{new_state}",
+        "Status changed from #{old_status_tag} to #{new_status_tag}",
       )
     end
 
@@ -87,7 +87,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
       create(
         :timeline_event,
         :assessment_section_recorded,
-        new_state: "completed",
+        new_value: "completed",
         assessment_section:,
       )
     end
