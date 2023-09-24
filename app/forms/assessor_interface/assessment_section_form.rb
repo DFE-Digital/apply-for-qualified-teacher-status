@@ -17,12 +17,12 @@ class AssessorInterface::AssessmentSectionForm
             if: -> { passed == false }
   validates :work_history,
             presence: true,
-            if: -> {
+            if: -> do
               passed == false &&
                 FailureReasons.chooses_work_history?(
                   failure_reason: selected_failure_reasons,
                 )
-            }
+            end
 
   def selected_failure_reasons
     return {} if passed

@@ -12,13 +12,13 @@ class AssessorInterface::SelectQualificationsForm
   validates :qualification_ids,
             presence: true,
             inclusion: {
-              in: ->(form) {
+              in: ->(form) do
                 form
                   .application_form
                   &.qualifications
                   &.pluck(:id)
                   &.map(&:to_s) || []
-              },
+              end,
             }
 
   def save

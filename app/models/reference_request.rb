@@ -55,11 +55,11 @@ class ReferenceRequest < ApplicationRecord
   belongs_to :work_history
 
   scope :remindable,
-        -> {
+        -> do
           requested.joins(assessment: :application_form).merge(
             ApplicationForm.assessable,
           )
-        }
+        end
 
   with_options if: :received? do
     validates :contact_response, inclusion: [true, false]
