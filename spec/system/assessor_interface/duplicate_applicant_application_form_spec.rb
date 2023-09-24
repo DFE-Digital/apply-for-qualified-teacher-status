@@ -31,11 +31,9 @@ RSpec.describe "Assessor views duplicate applicant's application form",
 
   def and_i_see_the_warning_of_an_existing_record_in_dqt
     expect(assessor_application_page).to have_content(
-      "The application details match a record in DQT",
+      "Application details match DQT record(s)",
     )
-    expect(assessor_application_page).to have_content(
-      "Teacher Reference Number: 7654322",
-    )
+    expect(assessor_application_page).to have_content("John Smith, TRN 7654322")
   end
 
   def and_the_applicant_matches_a_record_in_dqt
@@ -69,9 +67,9 @@ RSpec.describe "Assessor views duplicate applicant's application form",
 
   def dqt_match
     {
-      "firstName" => application_form.given_names,
-      "lastName" => application_form.family_name,
-      "dateOfBirth" => application_form.date_of_birth.iso8601.to_s,
+      "first_name" => "John",
+      "last_name" => "Smith",
+      "date_of_birth" => application_form.date_of_birth.iso8601.to_s,
       "trn" => "7654322",
     }
   end

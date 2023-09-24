@@ -5,6 +5,7 @@ class DQT::Client::FindTeachers
   include DQT::Client::Connection
 
   attr_reader :application_form, :reverse_name
+
   def initialize(application_form:, reverse_name: false)
     @application_form = application_form
     @reverse_name = reverse_name
