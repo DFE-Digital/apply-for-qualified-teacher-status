@@ -53,7 +53,6 @@ class Teachers::SessionsController < Devise::SessionsController
   end
 
   def signed_out
-    @duration = params[:new_regulations] == "true" ? "6 months" : "60 days"
   end
 
   protected
@@ -62,13 +61,8 @@ class Teachers::SessionsController < Devise::SessionsController
     stored_location_for(resource) || teacher_interface_root_path
   end
 
-  def after_sign_out_path_for(resource)
-    return teacher_signed_out_path unless resource.is_a?(Teacher)
-
-    teacher_signed_out_path(
-      new_regulations:
-        resource.application_form&.created_under_new_regulations?,
-    )
+  def after_sign_out_path_for(_resource)
+    teacher_signed_out_path
   end
 
   private
