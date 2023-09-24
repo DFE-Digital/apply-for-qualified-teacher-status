@@ -33,31 +33,31 @@ class EligibilityCheck < ApplicationRecord
 
   scope :complete, -> { where.not(completed_at: nil) }
   scope :eligible,
-        -> {
+        -> do
           where.not(region: nil).where(
             degree: true,
             free_of_sanctions: true,
             qualification: true,
             teach_children: true,
           )
-        }
+        end
   scope :ineligible,
-        -> {
+        -> do
           where(degree: false)
             .or(where(free_of_sanctions: false))
             .or(where(qualification: false))
             .or(where(region: nil))
             .or(where(teach_children: false))
-        }
+        end
   scope :answered_all_questions,
-        -> {
+        -> do
           where.not(
             degree: nil,
             free_of_sanctions: nil,
             qualification: nil,
             teach_children: nil,
           )
-        }
+        end
 
   delegate :country, to: :region, allow_nil: true
 

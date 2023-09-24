@@ -11,13 +11,13 @@ class AssessorInterface::SelectWorkHistoriesForm
   attribute :work_history_ids
   validates :work_history_ids,
             inclusion: {
-              in: ->(form) {
+              in: ->(form) do
                 form
                   .application_form
                   &.work_histories
                   &.pluck(:id)
                   &.map(&:to_s) || []
-              },
+              end,
             }
   validate :work_history_enough_months
 

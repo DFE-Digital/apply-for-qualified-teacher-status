@@ -29,11 +29,11 @@ class FurtherInformationRequest < ApplicationRecord
            dependent: :destroy
 
   scope :remindable,
-        -> {
+        -> do
           requested.joins(assessment: :application_form).merge(
             ApplicationForm.assessable,
           )
-        }
+        end
 
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
 

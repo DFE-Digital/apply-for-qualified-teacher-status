@@ -160,7 +160,7 @@ class ApplicationForm < ApplicationRecord
   STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }
 
   scope :assessable,
-        -> {
+        -> do
           where(
             status: %i[
               preliminary_check
@@ -171,26 +171,26 @@ class ApplicationForm < ApplicationRecord
               overdue
             ],
           )
-        }
+        end
 
   scope :active,
-        -> {
+        -> do
           assessable
             .or(awarded_pending_checks)
             .or(potential_duplicate_in_dqt)
             .or(awarded.where("awarded_at >= ?", 90.days.ago))
             .or(declined.where("declined_at >= ?", 90.days.ago))
             .or(withdrawn.where("withdrawn_at >= ?", 90.days.ago))
-        }
+        end
 
   scope :destroyable,
-        -> {
+        -> do
           draft
             .where("created_at < ?", 6.months.ago)
             .or(awarded.where("awarded_at < ?", 5.years.ago))
             .or(declined.where("declined_at < ?", 5.years.ago))
             .or(withdrawn.where("withdrawn_at < ?", 5.years.ago))
-        }
+        end
 
   scope :remindable, -> { draft.where("created_at < ?", 5.months.ago) }
 

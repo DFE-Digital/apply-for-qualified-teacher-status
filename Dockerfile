@@ -12,8 +12,8 @@ RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
 
-# Upgrade ssl and crypto libraries to latest version
-RUN apk upgrade --no-cache openssl libssl3 libcrypto3
+# Upgrade ssl, crypto and curl libraries to latest version
+RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl
 
 # build-base: dependencies for bundle
 # yarn: node package manager
@@ -77,8 +77,8 @@ RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
 
-# Upgrade ssl and crypto libraries to latest version
-RUN apk upgrade --no-cache openssl libssl3 libcrypto3
+# Upgrade ssl, crypto and curl libraries to latest version
+RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl
 
 # libpq: required to run postgres
 # vips-dev: dependencies for ruby-vips (image processing library)
