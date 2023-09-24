@@ -63,7 +63,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
     it "records a timeline event" do
       expect { call }.to have_recorded_timeline_event(
-        :state_changed,
+        :status_changed,
         creator: user,
         application_form:,
         old_state: "draft",
@@ -433,7 +433,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       it "doesn't record a timeline event" do
-        expect { call }.to_not have_recorded_timeline_event(:state_changed)
+        expect { call }.to_not have_recorded_timeline_event(:status_changed)
       end
       it "doesn't change the stage from draft" do
         expect { call }.to_not change(application_form, :stage).from("draft")

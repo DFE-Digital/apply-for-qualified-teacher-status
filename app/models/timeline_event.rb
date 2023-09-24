@@ -76,7 +76,7 @@ class TimelineEvent < ApplicationRecord
          requestable_requested: "requestable_requested",
          reviewer_assigned: "reviewer_assigned",
          stage_changed: "stage_changed",
-         state_changed: "state_changed",
+         status_changed: "status_changed",
        }
 
   validates :creator, presence: true, unless: -> { creator_name.present? }
@@ -93,11 +93,11 @@ class TimelineEvent < ApplicationRecord
   validates :old_state,
             :new_state,
             presence: true,
-            if: -> { state_changed? || assessment_section_recorded? }
+            if: -> { status_changed? || assessment_section_recorded? }
   validates :old_state,
             :new_state,
             absence: true,
-            unless: -> { state_changed? || assessment_section_recorded? }
+            unless: -> { status_changed? || assessment_section_recorded? }
 
   validates :assessment_section,
             presence: true,
@@ -164,6 +164,7 @@ class TimelineEvent < ApplicationRecord
               action_required_by_changed? || information_changed? ||
                 stage_changed?
             end
+
   validates :column_name, presence: true, if: :information_changed?
   validates :work_history_id,
             :column_name,

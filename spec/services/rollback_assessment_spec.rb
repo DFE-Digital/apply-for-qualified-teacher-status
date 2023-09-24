@@ -24,7 +24,7 @@ RSpec.describe RollbackAssessment do
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :state_changed,
+          :status_changed,
           creator: user,
         )
       end
@@ -45,7 +45,7 @@ RSpec.describe RollbackAssessment do
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :state_changed,
+          :status_changed,
           creator: user,
         )
       end
@@ -62,7 +62,7 @@ RSpec.describe RollbackAssessment do
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :state_changed,
+          :status_changed,
           creator: user,
         )
       end
@@ -86,7 +86,7 @@ RSpec.describe RollbackAssessment do
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :state_changed,
+          :status_changed,
           creator: user,
         )
       end
@@ -107,7 +107,7 @@ RSpec.describe RollbackAssessment do
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :state_changed,
+          :status_changed,
           creator: user,
         )
       end
@@ -124,7 +124,7 @@ RSpec.describe RollbackAssessment do
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :state_changed,
+          :status_changed,
           creator: user,
         )
       end
@@ -169,7 +169,7 @@ RSpec.describe RollbackAssessment do
 
     it "records a timeline event" do
       expect { call }.to have_recorded_timeline_event(
-        :state_changed,
+        :status_changed,
         creator: user,
       )
     end

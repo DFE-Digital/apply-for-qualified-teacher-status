@@ -66,8 +66,8 @@ FactoryBot.define do
       association :assignee, factory: :staff
     end
 
-    trait :state_changed do
-      event_type { "state_changed" }
+    trait :status_changed do
+      event_type { "status_changed" }
       old_state { ApplicationForm.statuses.keys.sample }
       new_state { ApplicationForm.statuses.keys.sample }
     end

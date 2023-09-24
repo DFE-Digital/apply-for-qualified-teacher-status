@@ -92,7 +92,7 @@ RSpec.describe TimelineEvent do
         requestable_requested: "requestable_requested",
         reviewer_assigned: "reviewer_assigned",
         stage_changed: "stage_changed",
-        state_changed: "state_changed",
+        status_changed: "status_changed",
       ).backed_by_column_of_type(:string)
     end
 
@@ -142,8 +142,8 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_value) }
     end
 
-    context "with a state changed event type" do
-      before { timeline_event.event_type = :state_changed }
+    context "with a status changed event type" do
+      before { timeline_event.event_type = :status_changed }
 
       it { is_expected.to validate_absence_of(:assignee) }
       it { is_expected.to validate_presence_of(:old_state) }

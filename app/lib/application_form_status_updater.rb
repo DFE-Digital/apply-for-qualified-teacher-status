@@ -28,7 +28,7 @@ class ApplicationFormStatusUpdater
       if (old_status = application_form.status) != status
         application_form.update!(status:)
         create_timeline_event(
-          event_type: "state_changed",
+          event_type: "status_changed",
           old_state: old_status,
           new_state: status,
         )
