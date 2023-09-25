@@ -4,7 +4,11 @@ module SupportInterface
   class CountriesController < BaseController
     def index
       authorize [:support_interface, Country]
-      @countries = Country.includes(:regions).order(:code)
+      @countries =
+        Country
+          .includes(:regions)
+          .sort_by { |country| CountryName.from_country(country) }
+      render layout: "full_from_desktop"
     end
 
     def edit
