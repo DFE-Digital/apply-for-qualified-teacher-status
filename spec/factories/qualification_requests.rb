@@ -12,7 +12,7 @@
 #  received_at           :datetime
 #  requested_at          :datetime
 #  reviewed_at           :datetime
-#  state                 :string           not null
+#  state                 :string           default("requested"), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  assessment_id         :bigint           not null
