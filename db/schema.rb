@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_092809) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_101325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -257,6 +257,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_092809) do
     t.integer "working_days_assessment_started_to_creation"
     t.datetime "reviewed_at"
     t.datetime "requested_at"
+    t.datetime "expired_at"
     t.index ["assessment_id"], name: "index_further_information_requests_on_assessment_id"
   end
 
@@ -282,6 +283,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_092809) do
     t.string "failure_assessor_note", default: "", null: false
     t.boolean "ready_for_review", default: false, null: false
     t.datetime "requested_at"
+    t.datetime "expired_at"
     t.index ["assessment_id"], name: "index_professional_standing_requests_on_assessment_id"
   end
 
@@ -297,6 +299,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_092809) do
     t.boolean "passed"
     t.string "failure_assessor_note", default: "", null: false
     t.datetime "requested_at"
+    t.datetime "expired_at"
     t.index ["assessment_id"], name: "index_qualification_requests_on_assessment_id"
     t.index ["qualification_id"], name: "index_qualification_requests_on_qualification_id"
   end
@@ -346,6 +349,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_092809) do
     t.text "satisfied_comment", default: "", null: false
     t.string "failure_assessor_note", default: "", null: false
     t.datetime "requested_at"
+    t.datetime "expired_at"
     t.index ["assessment_id"], name: "index_reference_requests_on_assessment_id"
     t.index ["slug"], name: "index_reference_requests_on_slug", unique: true
     t.index ["work_history_id"], name: "index_reference_requests_on_work_history_id"

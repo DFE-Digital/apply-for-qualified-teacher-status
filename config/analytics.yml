@@ -181,6 +181,7 @@
   :further_information_requests:
     - assessment_id
     - created_at
+    - expired_at
     - failure_assessor_note
     - id
     - passed
@@ -215,6 +216,7 @@
   :professional_standing_requests:
     - assessment_id
     - created_at
+    - expired_at
     - failure_assessor_note
     - id
     - location_note
@@ -240,6 +242,7 @@
   :qualification_requests:
     - assessment_id
     - created_at
+    - expired_at
     - failure_assessor_note
     - id
     - location_note
@@ -262,6 +265,7 @@
     - created_at
     - dates_comment
     - dates_response
+    - expired_at
     - failure_assessor_note
     - hours_comment
     - hours_response

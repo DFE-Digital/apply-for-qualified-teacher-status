@@ -5,6 +5,7 @@
 # Table name: further_information_requests
 #
 #  id                                          :bigint           not null, primary key
+#  expired_at                                  :datetime
 #  failure_assessor_note                       :string           default(""), not null
 #  passed                                      :boolean
 #  received_at                                 :datetime

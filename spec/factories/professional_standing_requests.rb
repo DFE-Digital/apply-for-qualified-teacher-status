@@ -5,6 +5,7 @@
 # Table name: professional_standing_requests
 #
 #  id                    :bigint           not null, primary key
+#  expired_at            :datetime
 #  failure_assessor_note :string           default(""), not null
 #  location_note         :text             default(""), not null
 #  passed                :boolean
