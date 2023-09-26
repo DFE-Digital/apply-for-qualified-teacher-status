@@ -17,11 +17,13 @@ class CreateFurtherInformationRequest
               FurtherInformationRequestItemsFactory.call(
                 assessment_sections: assessment.sections,
               ),
+            requested_at: Time.zone.now,
           )
 
         ApplicationFormStatusUpdater.call(application_form:, user:)
 
         create_timeline_event(request)
+        request.after_requested(user:)
 
         request
       end

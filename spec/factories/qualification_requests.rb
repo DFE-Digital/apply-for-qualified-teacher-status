@@ -32,8 +32,11 @@ FactoryBot.define do
     association :assessment
     association :qualification, :completed
 
+    requested
+
     trait :requested do
       state { "requested" }
+      requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
     trait :received do

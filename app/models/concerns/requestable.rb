@@ -14,13 +14,14 @@ module Requestable
 
     validates :state, presence: true, inclusion: { in: states.values }
 
+    validates :requested_at, presence: true, if: :requested?
     validates :received_at, presence: true, if: :received?
     validates :reviewed_at, presence: true, unless: -> { passed.nil? }
 
     scope :respondable, -> { not_received.merge(ApplicationForm.assessable) }
 
     define_method :requested! do
-      update!(state: "requested", received_at: nil)
+      update!(state: "requested", requested_at: Time.zone.now)
     end
 
     define_method :received! do
@@ -51,6 +52,10 @@ module Requestable
     return state if passed.nil?
 
     passed ? "accepted" : "rejected"
+  end
+
+  def after_requested(user:)
+    # implement logic after this requestable has been requested
   end
 
   def after_received(user:)

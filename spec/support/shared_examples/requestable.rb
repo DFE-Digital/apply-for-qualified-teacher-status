@@ -19,6 +19,12 @@ RSpec.shared_examples "a requestable" do
     it { is_expected.to_not validate_presence_of(:received_at) }
 
     context "when received" do
+      before { subject.state = "requested" }
+
+      it { is_expected.to validate_presence_of(:requested_at) }
+    end
+
+    context "when received" do
       before { subject.state = "received" }
 
       it { is_expected.to validate_presence_of(:received_at) }
@@ -28,6 +34,16 @@ RSpec.shared_examples "a requestable" do
       before { subject.passed = [true, false].sample }
 
       it { is_expected.to validate_presence_of(:reviewed_at) }
+    end
+  end
+
+  describe "#requested!" do
+    let(:call) { subject.requested! }
+
+    it "sets the requested at date" do
+      freeze_time do
+        expect { call }.to change(subject, :requested_at).to(Time.zone.now)
+      end
     end
   end
 
