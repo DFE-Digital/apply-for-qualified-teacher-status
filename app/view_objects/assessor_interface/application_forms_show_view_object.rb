@@ -14,6 +14,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
         .find(params[:id])
   end
 
+  def duplicate_matches
+    dqt_match.fetch("teachers", dqt_match.present? ? [dqt_match] : [])
+  end
+
   def task_list_sections
     [
       pre_assessment_task_list_section,
@@ -75,6 +79,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
   attr_reader :params, :current_staff
 
   delegate :assessment,
+           :dqt_match,
            :teacher,
            :teaching_authority_provides_written_statement,
            :work_histories,

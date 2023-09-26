@@ -2,20 +2,23 @@
 <% content_for :back_link_url, assessor_interface_application_forms_path %>
 
 <% application_form = @view_object.application_form %>
-<% assessment = @view_object.assessment %>
 
 <%= render "linked_application_forms",
            teacher: application_form.teacher,
            email_used_as_reference_in_this_application_form: @view_object.email_used_as_reference_in_this_application_form?,
            other_application_forms_where_email_used_as_reference: @view_object.other_application_forms_where_email_used_as_reference %>
 
-<% if @view_object.application_form.dqt_match.present? %>
+<% if (duplicate_matches = @view_object.duplicate_matches).present? %>
   <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
-    <% notification_banner.with_heading(text: "The application details match a record in DQT") %>
+    <% notification_banner.with_heading(text: "Application details match DQT record(s)") %>
 
-    <p class="govuk-body govuk-!-margin-bottom-1">
-      DQT contains a matching record for the name and date of birth of this applicant. <strong class="govuk-!-font-weight-bold">Teacher Reference Number: <%= @view_object.application_form.dqt_match["trn"] %></strong>.
-    </p>
+    <p class="govuk-body">The surname and date of birth used in this application matches the following records found in the Database of Qualified Teachers (DQT):</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <% duplicate_matches.each do |match| %>
+        <li><%= match["first_name"] %> <%= match["last_name"] %>, TRN <%= match["trn"] %></li>
+      <% end %>
+    </ul>
   <% end %>
 <% end %>
 

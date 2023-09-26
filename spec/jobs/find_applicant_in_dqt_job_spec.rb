@@ -28,32 +28,30 @@ RSpec.describe FindApplicantInDQTJob do
 
       perform
 
-      expect(application_form.reload.dqt_match).to eq({})
+      expect(application_form.reload.dqt_match).to eq({ "teachers" => [] })
     end
 
     it "updates the application form with the TRN" do
-      result = {
-        date_of_birth: application_form.date_of_birth.iso8601.to_s,
-        first_name: "Jane",
-        last_name: "Smith",
-        trn: "1234567",
-      }
+      results = [
+        {
+          "date_of_birth" => application_form.date_of_birth.iso8601.to_s,
+          "first_name" => "Jane",
+          "last_name" => "Smith",
+          "trn" => "1234567",
+        },
+        {
+          "date_of_birth" => "1980-01-01",
+          "first_name" => "Janet",
+          "last_name" => "Jones",
+          "trn" => "7654321",
+        },
+      ]
 
-      allow(FindTeachersInDQT).to receive(:call).and_return(
-        [
-          result,
-          {
-            date_of_birth: "1980-01-01",
-            first_name: "Janet",
-            last_name: "Jones",
-            trn: "7654321",
-          },
-        ],
-      )
+      allow(FindTeachersInDQT).to receive(:call).and_return(results)
 
       perform
 
-      expect(application_form.reload.dqt_match).to eq(result.as_json)
+      expect(application_form.reload.dqt_match).to eq({ "teachers" => results })
     end
   end
 end
