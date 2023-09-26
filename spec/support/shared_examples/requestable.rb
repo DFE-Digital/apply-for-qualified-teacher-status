@@ -17,6 +17,7 @@ RSpec.shared_examples "a requestable" do
     it { is_expected.to validate_presence_of(:state) }
 
     it { is_expected.to_not validate_presence_of(:received_at) }
+    it { is_expected.to_not validate_presence_of(:expired_at) }
 
     context "when received" do
       before { subject.state = "requested" }
@@ -28,6 +29,12 @@ RSpec.shared_examples "a requestable" do
       before { subject.state = "received" }
 
       it { is_expected.to validate_presence_of(:received_at) }
+    end
+
+    context "when expired" do
+      before { subject.state = "expired" }
+
+      it { is_expected.to validate_presence_of(:expired_at) }
     end
 
     context "when reviewed" do
@@ -57,6 +64,22 @@ RSpec.shared_examples "a requestable" do
     it "sets the received at date" do
       freeze_time do
         expect { call }.to change(subject, :received_at).from(nil).to(
+          Time.zone.now,
+        )
+      end
+    end
+  end
+
+  describe "#expired!" do
+    let(:call) { subject.expired! }
+
+    it "changes the state" do
+      expect { call }.to change(subject, :expired?).from(false).to(true)
+    end
+
+    it "sets the received at date" do
+      freeze_time do
+        expect { call }.to change(subject, :expired_at).from(nil).to(
           Time.zone.now,
         )
       end

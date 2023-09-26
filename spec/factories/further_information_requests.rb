@@ -41,6 +41,7 @@ FactoryBot.define do
 
     trait :expired do
       state { "expired" }
+      expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
     trait :passed do

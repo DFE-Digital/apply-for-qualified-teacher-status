@@ -43,6 +43,11 @@ FactoryBot.define do
       receivable
     end
 
+    trait :expired do
+      state { "expired" }
+      expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+    end
+
     trait :receivable do
       location_note { Faker::Lorem.sentence }
     end

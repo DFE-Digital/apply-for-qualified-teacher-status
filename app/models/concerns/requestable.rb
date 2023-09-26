@@ -16,6 +16,7 @@ module Requestable
 
     validates :requested_at, presence: true, if: :requested?
     validates :received_at, presence: true, if: :received?
+    validates :expired_at, presence: true, if: :expired?
     validates :reviewed_at, presence: true, unless: -> { passed.nil? }
 
     scope :respondable, -> { not_received.merge(ApplicationForm.assessable) }
@@ -26,6 +27,10 @@ module Requestable
 
     define_method :received! do
       update!(state: "received", received_at: Time.zone.now)
+    end
+
+    define_method :expired! do
+      update!(state: "expired", expired_at: Time.zone.now)
     end
 
     has_one :application_form, through: :assessment
