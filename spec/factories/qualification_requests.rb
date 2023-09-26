@@ -9,6 +9,7 @@
 #  location_note         :text             default(""), not null
 #  passed                :boolean
 #  received_at           :datetime
+#  requested_at          :datetime
 #  reviewed_at           :datetime
 #  state                 :string           not null
 #  created_at            :datetime         not null

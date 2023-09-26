@@ -6,6 +6,7 @@
 #  failure_assessor_note                       :string           default(""), not null
 #  passed                                      :boolean
 #  received_at                                 :datetime
+#  requested_at                                :datetime
 #  reviewed_at                                 :datetime
 #  state                                       :string           not null
 #  working_days_assessment_started_to_creation :integer

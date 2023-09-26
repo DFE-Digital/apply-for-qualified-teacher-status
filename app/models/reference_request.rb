@@ -25,6 +25,7 @@
 #  received_at                     :datetime
 #  reports_comment                 :text             default(""), not null
 #  reports_response                :boolean
+#  requested_at                    :datetime
 #  reviewed_at                     :datetime
 #  satisfied_comment               :text             default(""), not null
 #  satisfied_response              :boolean
