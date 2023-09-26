@@ -57,35 +57,24 @@ class VerifyAssessment
     return if application_form.teaching_authority_provides_written_statement
 
     ProfessionalStandingRequest
-      .create!(assessment:, requested_at: Time.zone.now)
-      .tap { |requestable| create_timeline_event(requestable) }
+      .create!(assessment:)
+      .tap { |requestable| RequestRequestable.call(requestable:, user:) }
   end
 
   def create_qualification_requests
     qualifications.map do |qualification|
       QualificationRequest
-        .create!(assessment:, qualification:, requested_at: Time.zone.now)
-        .tap { |requestable| create_timeline_event(requestable) }
+        .create!(assessment:, qualification:)
+        .tap { |requestable| RequestRequestable.call(requestable:, user:) }
     end
   end
 
   def create_reference_requests
     work_histories.map do |work_history|
       ReferenceRequest
-        .create!(assessment:, work_history:, requested_at: Time.zone.now)
-        .tap { |requestable| create_timeline_event(requestable) }
+        .create!(assessment:, work_history:)
+        .tap { |requestable| RequestRequestable.call(requestable:, user:) }
     end
-  end
-
-  def create_timeline_event(requestable)
-    TimelineEvent.create!(
-      application_form:,
-      creator: user,
-      event_type: "requestable_requested",
-      requestable:,
-    )
-
-    requestable.after_requested(user:)
   end
 
   def send_reference_request_emails(reference_requests)

@@ -11,21 +11,20 @@ class CreateFurtherInformationRequest
   def call
     further_information_request =
       ActiveRecord::Base.transaction do
-        request =
-          assessment.further_information_requests.create!(
+        requestable =
+          FurtherInformationRequest.create!(
+            assessment:,
             items:
               FurtherInformationRequestItemsFactory.call(
                 assessment_sections: assessment.sections,
               ),
-            requested_at: Time.zone.now,
           )
+
+        RequestRequestable.call(requestable:, user:)
 
         ApplicationFormStatusUpdater.call(application_form:, user:)
 
-        create_timeline_event(request)
-        request.after_requested(user:)
-
-        request
+        requestable
       end
 
     TeacherMailer.with(teacher:).further_information_requested.deliver_later
@@ -43,14 +42,5 @@ class CreateFurtherInformationRequest
 
   def teacher
     @teacher ||= application_form.teacher
-  end
-
-  def create_timeline_event(further_information_request)
-    TimelineEvent.create!(
-      application_form:,
-      creator: user,
-      event_type: "requestable_requested",
-      requestable: further_information_request,
-    )
   end
 end

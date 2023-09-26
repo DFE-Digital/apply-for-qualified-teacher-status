@@ -18,6 +18,8 @@ class SubmitApplicationForm
         region.requires_preliminary_check
       application_form.submitted_at = Time.zone.now
 
+      ApplicationFormStatusUpdater.call(application_form:, user:)
+
       assessment = AssessmentFactory.call(application_form:)
 
       create_professional_standing_request(assessment)
@@ -25,8 +27,6 @@ class SubmitApplicationForm
       if application_form.reduced_evidence_accepted
         UpdateAssessmentInductionRequired.call(assessment:)
       end
-
-      ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
     TeacherMailer
@@ -68,19 +68,8 @@ class SubmitApplicationForm
   def create_professional_standing_request(assessment)
     return unless application_form.teaching_authority_provides_written_statement
 
-    requestable =
-      ProfessionalStandingRequest.create!(
-        assessment:,
-        requested_at: Time.zone.now,
-      )
+    requestable = ProfessionalStandingRequest.create!(assessment:)
 
-    TimelineEvent.create!(
-      event_type: "requestable_requested",
-      application_form:,
-      creator: user,
-      requestable:,
-    )
-
-    requestable.after_requested(user:)
+    RequestRequestable.call(requestable:, user:)
   end
 end
