@@ -4,7 +4,7 @@ We still need you to confirm some information about <%= application_form_full_na
 
 We recently contacted you to ask you to help us confirm that the information <%= application_form_full_name(@application_form) %> has provided about their work history and experience is accurate.
 
-Please follow the link below and answer the questions by <%= @reference_request.expired_at.to_date.to_fs(:long_ordinal_uk) %>. If we do not receive your response by this date, it could affect the outcome for the applicant.
+Please follow the link below and answer the questions by <%= @reference_request.expires_at.to_date.to_fs(:long_ordinal_uk) %>. If we do not receive your response by this date, it could affect the outcome for the applicant.
 
 <%= teacher_interface_reference_request_url(@reference_request.slug) %>
 

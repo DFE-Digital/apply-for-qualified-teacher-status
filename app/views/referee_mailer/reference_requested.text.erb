@@ -12,7 +12,7 @@ As part of the QTS application process, our assessors need to understand each ap
 
 # What we need you to do
 
-Please follow the link below and answer the questions by <%= @reference_request.expired_at.to_date.to_fs(:long_ordinal_uk) %>.
+Please follow the link below and answer the questions by <%= @reference_request.expires_at.to_date.to_fs(:long_ordinal_uk) %>.
 
 <%= teacher_interface_reference_request_url(@reference_request.slug) %>
 

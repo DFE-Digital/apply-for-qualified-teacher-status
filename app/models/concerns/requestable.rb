@@ -40,7 +40,7 @@ module Requestable
   end
 
   def overdue?
-    expired? || (received? && expired_at.present? && received_at > expired_at)
+    expired? || (received? && expires_at.present? && received_at > expires_at)
   end
 
   def failed

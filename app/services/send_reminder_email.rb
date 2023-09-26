@@ -19,7 +19,7 @@ class SendReminderEmail
   attr_reader :remindable
 
   def send_reminder?
-    return false unless remindable.expired_at
+    return false unless remindable.expires_at
 
     remindable.should_send_reminder_email?(
       days_until_expired,
@@ -33,7 +33,7 @@ class SendReminderEmail
 
   def days_until_expired
     today = Time.zone.today
-    (remindable.expired_at.to_date - today).to_i
+    (remindable.expires_at.to_date - today).to_i
   end
 
   def send_email

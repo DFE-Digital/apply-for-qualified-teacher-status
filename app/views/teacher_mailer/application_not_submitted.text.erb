@@ -4,11 +4,11 @@ Dear <%= application_form_full_name(@application_form) %>
 <% when 0 %>
 We’ve noticed that you have a draft application for qualified teacher status (QTS) that has not been submitted.
 
-We need to let you know that if you do not complete and submit your application by <%= @application_form.expired_at.to_date.to_fs(:long_ordinal_uk) %> we’ll delete the application.
+We need to let you know that if you do not complete and submit your application by <%= @application_form.expires_at.to_date.to_fs(:long_ordinal_uk) %> we’ll delete the application.
 <% when 1 %>
 We contacted you a week ago about your draft application for qualified teacher status (QTS).
 
-If you do not complete and submit your application by <%= @application_form.expired_at.to_date.to_fs(:long_ordinal_uk) %> we’ll delete the application.
+If you do not complete and submit your application by <%= @application_form.expires_at.to_date.to_fs(:long_ordinal_uk) %> we’ll delete the application.
 <% end %>
 
 # What happens if your application is deleted?
@@ -19,7 +19,7 @@ Applications are deleted permanently, so if you still wanted to apply for QTS af
 
 # Your next steps
 
-If you still want to apply for QTS you must do so before <%= @application_form.expired_at.to_date.to_fs(:long_ordinal_uk) %>. You can sign in to complete and submit your application using the link below:
+If you still want to apply for QTS you must do so before <%= @application_form.expires_at.to_date.to_fs(:long_ordinal_uk) %>. You can sign in to complete and submit your application using the link below:
 
 <%= new_teacher_session_url %>
 
