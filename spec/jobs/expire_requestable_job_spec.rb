@@ -36,12 +36,12 @@ RSpec.describe ExpireRequestableJob do
       end
 
       context "when less than six weeks old" do
-        let(:requested_at) { (6.weeks - 1.hour).ago }
+        let(:requested_at) { (6.weeks - 2.hours).ago }
         it_behaves_like "not expired requestable"
       end
 
       context "when it is more than six weeks old" do
-        let(:requested_at) { (6.weeks + 1.hour).ago }
+        let(:requested_at) { (6.weeks + 2.hours).ago }
         it_behaves_like "expired requestable"
       end
 

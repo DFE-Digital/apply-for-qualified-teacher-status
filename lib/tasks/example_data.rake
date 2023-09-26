@@ -189,10 +189,9 @@ def create_application_forms
         end
       elsif (work_history = application_form.work_histories.first) &&
             rand(2).zero?
-        reference_request_trait = ReferenceRequest.states.keys.sample
         FactoryBot.create(
           :reference_request,
-          reference_request_trait,
+          %i[requested received expired].sample,
           assessment:,
           work_history:,
         )

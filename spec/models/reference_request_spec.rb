@@ -72,6 +72,7 @@ RSpec.describe ReferenceRequest do
       let(:expected) do
         create(
           :reference_request,
+          :requested,
           assessment:
             create(
               :assessment,

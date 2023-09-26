@@ -8,32 +8,32 @@ module Requestable
   included do
     belongs_to :assessment
 
-    enum :state,
-         { requested: "requested", received: "received", expired: "expired" },
-         default: "requested"
-
-    validates :state, presence: true, inclusion: { in: states.values }
-
-    validates :requested_at, presence: true, if: :requested?
-    validates :received_at, presence: true, if: :received?
-    validates :expired_at, presence: true, if: :expired?
     validates :reviewed_at, presence: true, unless: -> { passed.nil? }
 
-    scope :respondable, -> { not_received.merge(ApplicationForm.assessable) }
-
-    define_method :requested! do
-      update!(state: "requested", requested_at: Time.zone.now)
-    end
-
-    define_method :received! do
-      update!(state: "received", received_at: Time.zone.now)
-    end
-
-    define_method :expired! do
-      update!(state: "expired", expired_at: Time.zone.now)
-    end
+    scope :requested, -> { where.not(requested_at: nil) }
+    scope :received, -> { where.not(received_at: nil) }
+    scope :respondable,
+          -> do
+            requested.where(received_at: nil).merge(ApplicationForm.assessable)
+          end
 
     has_one :application_form, through: :assessment
+  end
+
+  def requested!
+    update!(requested_at: Time.zone.now)
+  end
+
+  def requested?
+    requested_at != nil
+  end
+
+  def received!
+    update!(received_at: Time.zone.now)
+  end
+
+  def received?
+    received_at != nil
   end
 
   def reviewed!(passed)
@@ -44,19 +44,25 @@ module Requestable
     passed != nil
   end
 
-  def overdue?
-    expired? || (received? && expires_at.present? && received_at > expires_at)
-  end
-
   def failed
     return nil if passed.nil?
     passed == false
   end
 
   def status
-    return state if passed.nil?
-
-    passed ? "accepted" : "rejected"
+    if reviewed_at.present?
+      passed ? "accepted" : "rejected"
+    elsif received_at.present? && expired_at.present?
+      "received_and_overdue"
+    elsif expired_at.present?
+      "overdue"
+    elsif received_at.present?
+      "received"
+    elsif requested_at.present?
+      "waiting_on"
+    else
+      "not_started"
+    end
   end
 
   def after_requested(user:)

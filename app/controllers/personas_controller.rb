@@ -8,11 +8,6 @@ class PersonasController < ApplicationController
 
   def index
     @staff = Staff.all
-
-    @reference_requests =
-      ReferenceRequest.states.values.filter_map do |state|
-        ReferenceRequest.find_by(state:)
-      end
   end
 
   def eligible_sign_in

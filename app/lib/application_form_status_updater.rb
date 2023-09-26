@@ -302,11 +302,15 @@ class ApplicationFormStatusUpdater
   end
 
   def waiting_on?(requestables:)
-    requestables.reject(&:reviewed?).any?(&:requested?)
+    requestables
+      .reject(&:reviewed?)
+      .reject(&:expired?)
+      .reject(&:received?)
+      .any?(&:requested?)
   end
 
   def received?(requestables:)
-    requestables.reject(&:reviewed?).any?(&:received?)
+    requestables.reject(&:reviewed?).reject(&:expired?).any?(&:received?)
   end
 
   def create_timeline_event(event_type:, **kwargs)

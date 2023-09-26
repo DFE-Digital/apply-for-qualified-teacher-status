@@ -504,7 +504,7 @@ RSpec.describe ApplicationFormStatusUpdater do
           application_form.update!(
             teaching_authority_provides_written_statement: true,
           )
-          create(:professional_standing_request, assessment:)
+          create(:professional_standing_request, :requested, assessment:)
         end
 
         include_examples "changes action required by", "admin"

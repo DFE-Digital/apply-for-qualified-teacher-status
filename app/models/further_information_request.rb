@@ -32,9 +32,11 @@ class FurtherInformationRequest < ApplicationRecord
 
   scope :remindable,
         -> do
-          requested.joins(assessment: :application_form).merge(
-            ApplicationForm.assessable,
-          )
+          where
+            .not(requested_at: nil)
+            .where(expired_at: nil)
+            .joins(assessment: :application_form)
+            .merge(ApplicationForm.assessable)
         end
 
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze

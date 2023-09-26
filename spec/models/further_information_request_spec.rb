@@ -38,6 +38,7 @@ RSpec.describe FurtherInformationRequest do
       let(:expected) do
         create(
           :further_information_request,
+          :requested,
           assessment:
             create(
               :assessment,

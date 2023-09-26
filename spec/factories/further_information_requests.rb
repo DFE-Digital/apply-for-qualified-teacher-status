@@ -27,34 +27,32 @@ FactoryBot.define do
   factory :further_information_request do
     association :assessment
 
-    requested
-
     trait :requested do
-      state { "requested" }
       requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
     trait :received do
-      state { "received" }
       received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
     trait :expired do
-      state { "expired" }
       expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
-    trait :passed do
-      passed { true }
-      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+    trait :reviewed do
       received
+      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+    end
+
+    trait :passed do
+      reviewed
+      passed { true }
     end
 
     trait :failed do
+      reviewed
       passed { false }
-      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
       failure_assessor_note { "Notes." }
-      received
     end
 
     trait :with_items do

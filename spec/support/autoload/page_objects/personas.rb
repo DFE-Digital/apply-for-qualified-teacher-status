@@ -18,10 +18,5 @@ module PageObjects
       element :heading, "h2"
       elements :buttons, ".govuk-button"
     end
-
-    section :references, "#app-personas-references" do
-      element :heading, "h2"
-      elements :buttons, ".govuk-button"
-    end
   end
 end

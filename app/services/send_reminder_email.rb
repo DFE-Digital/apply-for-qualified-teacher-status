@@ -19,7 +19,6 @@ class SendReminderEmail
   attr_reader :remindable
 
   def send_reminder?
-    return false if remindable.try(:expired_at).present?
     return false unless remindable.expires_at
 
     remindable.should_send_reminder_email?(

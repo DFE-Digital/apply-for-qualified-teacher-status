@@ -41,7 +41,7 @@ RSpec.describe ExpireRequestable do
     end
 
     context "with requested FI request" do
-      let(:requestable) { create(:further_information_request) }
+      let(:requestable) { create(:further_information_request, :requested) }
 
       it_behaves_like "expiring a requestable"
       it_behaves_like "declining the application"
@@ -60,7 +60,7 @@ RSpec.describe ExpireRequestable do
     end
 
     context "with a requested professional standing request" do
-      let(:requestable) { create(:professional_standing_request) }
+      let(:requestable) { create(:professional_standing_request, :requested) }
 
       it_behaves_like "expiring a requestable"
 
@@ -88,7 +88,7 @@ RSpec.describe ExpireRequestable do
     end
 
     context "with a requested reference request" do
-      let(:requestable) { create(:reference_request) }
+      let(:requestable) { create(:reference_request, :requested) }
 
       it_behaves_like "expiring a requestable"
     end

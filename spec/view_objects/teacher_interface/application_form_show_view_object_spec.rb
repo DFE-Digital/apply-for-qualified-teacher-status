@@ -356,7 +356,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
         )
       end
 
-      before { create(:professional_standing_request, assessment:) }
+      before { create(:professional_standing_request, :requested, assessment:) }
 
       it { is_expected.to be false }
 
