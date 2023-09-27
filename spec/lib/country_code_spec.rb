@@ -84,13 +84,4 @@ RSpec.describe CountryCode do
 
     include_examples "true with codes", Country::CODES_IN_EUROPEAN_ECONOMIC_AREA
   end
-
-  describe "#secondary_education_teaching_qualification_required?" do
-    subject(:secondary_education_teaching_qualification_required?) do
-      described_class.secondary_education_teaching_qualification_required?(code)
-    end
-
-    include_examples "true with codes",
-                     Country::CODES_REQUIRING_SECONDARY_EDUCATION_TEACHING_QUALIFICATION
-  end
 end

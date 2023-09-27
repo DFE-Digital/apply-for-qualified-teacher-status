@@ -329,7 +329,7 @@ RSpec.describe "Eligibility check", type: :system do
     it = create(:country, code: "IT")
     create(:region, country: it, name: "Region")
     create(:region, country: it, name: "Other Region")
-    create(:country, :with_national_region, code: "JM")
+    create(:country, :with_national_region, :subject_limited, code: "JM")
   end
 
   def then_i_do_not_see_the_start_page

@@ -282,6 +282,7 @@ RSpec.describe AssessmentFactory do
       end
 
       describe "age range and subjects section" do
+        before { create(:country, :subject_limited, code: "SG") }
         it "is created" do
           expect(sections.age_range_subjects.count).to eq(1)
         end
@@ -332,6 +333,7 @@ RSpec.describe AssessmentFactory do
       end
 
       describe "preliminary qualifications section" do
+        before { create(:country, :subject_limited, code: "SG") }
         it "is not created" do
           expect(sections.preliminary.qualifications.count).to eq(0)
         end

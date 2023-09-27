@@ -369,3 +369,7 @@ ENGLISH_LANGUAGE_PROVIDERS.each do |english_language_provider|
     name: english_language_provider[:name],
   ).update!(english_language_provider.except(:name))
 end
+
+subject_limited_countries = %w[GH IN JM NG SG ZA ZW]
+
+Country.where(code: subject_limited_countries).update_all(subject_limited: true)

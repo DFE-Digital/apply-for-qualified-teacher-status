@@ -10,6 +10,7 @@
 #  qualifications_information :text             default(""), not null
 #  sanction_information       :string           default(""), not null
 #  status_information         :string           default(""), not null
+#  subject_limited            :boolean          default(FALSE), not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #

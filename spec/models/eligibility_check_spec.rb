@@ -96,6 +96,7 @@ RSpec.describe EligibilityCheck, type: :model do
 
     context "when filtering by subject" do
       before { eligibility_check.country_code = "IN" }
+      before { create(:country, :subject_limited, code: "IN") }
 
       context "when teach_children is false" do
         before { eligibility_check.teach_children = false }
@@ -289,12 +290,7 @@ RSpec.describe EligibilityCheck, type: :model do
     subject { eligibility_check.status }
 
     let(:eligibility_check) { described_class.new(attributes) }
-    let(:country) do
-      create(
-        :country,
-        :doesnt_require_secondary_education_teaching_qualification,
-      )
-    end
+    let(:country) { create(:country) }
 
     context "when no attributes are present" do
       let(:attributes) { nil }
@@ -401,6 +397,7 @@ RSpec.describe EligibilityCheck, type: :model do
     before { eligibility_check.country_code = code }
 
     context "with a relevant country" do
+      before { create(:country, :subject_limited, code: "JM") }
       let(:code) { "JM" }
 
       it { is_expected.to be true }

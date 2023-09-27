@@ -227,9 +227,7 @@ class ApplicationForm < ApplicationRecord
   end
 
   def secondary_education_teaching_qualification_required?
-    CountryCode.secondary_education_teaching_qualification_required?(
-      country.code,
-    )
+    country.subject_limited
   end
 
   def created_under_new_regulations?

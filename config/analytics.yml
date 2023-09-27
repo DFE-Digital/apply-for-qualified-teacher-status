@@ -126,6 +126,7 @@
     - sanction_information
     - status_information
     - updated_at
+    - subject_limited
   :documents:
     - available
     - completed

@@ -14,10 +14,11 @@
                                        :label,
                                        legend: { text: "Do we accept applications from this country?" } %>
 
-  <%= f.govuk_collection_radio_buttons :eligibility_skip_questions,
+  <%= f.govuk_collection_radio_buttons :eligibility_route,
                                        [
-                                         OpenStruct.new(value: :false, label: "Standard – Asks 5 standard questions that most countries would need to be asked."),
-                                         OpenStruct.new(value: :true, label: "Reduced – Only asks if the applicant’s teaching qualification was completed in their country of recognition.")
+                                        OpenStruct.new(value: :standard, label: "Standard – Asks 5 standard questions that most countries would need to be asked."),
+                                        OpenStruct.new(value: :reduced, label: "Reduced – Only asks if the applicant’s teaching qualification was completed in their country of recognition."),
+                                        OpenStruct.new(value: :expanded, label: "Expanded – Asks 5 standard questions but the subjects are restricted and age range taught changes to 11-16 years.")
                                        ],
                                        :value,
                                        :label,

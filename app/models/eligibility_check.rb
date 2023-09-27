@@ -165,9 +165,7 @@ class EligibilityCheck < ApplicationRecord
   def qualified_for_subject_required?
     return false if country_code.blank?
 
-    CountryCode.secondary_education_teaching_qualification_required?(
-      country_code,
-    )
+    Country.exists?(code: country_code, subject_limited: true)
   end
 
   private
