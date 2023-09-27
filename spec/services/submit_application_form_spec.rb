@@ -61,7 +61,7 @@ RSpec.describe SubmitApplicationForm do
 
   it "records a timeline event" do
     expect { call }.to have_recorded_timeline_event(
-      :state_changed,
+      :status_changed,
       creator: user,
       application_form:,
       old_state: "draft",

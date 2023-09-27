@@ -72,7 +72,7 @@ en:
           QualificationRequest: Qualification assessed
           ReferenceRequest: Reference assessed
         stage_changed: Stage changed
-        state_changed: Status changed
+        status_changed: Status changed
       description:
         action_required_by_changed: Application requires %{action} action.
         assessor_assigned: "%{assignee_name} is assigned as the assessor."
@@ -100,7 +100,7 @@ en:
           QualificationRequest: A qualification has been assessed.
           ReferenceRequest: A reference has been assessed.
         stage_changed: Stage changed from %{old_stage} to %{new_stage}.
-        state_changed: Status changed from %{old_state} to %{new_state}.
+        status_changed: Status changed from %{old_status} to %{new_status}.
       columns:
         contact_email: Reference email address
         contact_job: Reference job

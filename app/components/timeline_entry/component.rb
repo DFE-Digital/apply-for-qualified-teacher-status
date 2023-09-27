@@ -41,16 +41,16 @@ module TimelineEntry
 
     private
 
-    def state_changed_vars
+    def status_changed_vars
       {
-        old_state:
+        old_status:
           render(
             StatusTag::Component.new(
               status: timeline_event.old_state,
               class_context: "timeline-event",
             ),
           ).strip,
-        new_state:
+        new_status:
           render(
             StatusTag::Component.new(
               status: timeline_event.new_state,

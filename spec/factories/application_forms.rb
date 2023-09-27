@@ -185,7 +185,7 @@ FactoryBot.define do
       after(:create) do |application_form, _evaluator|
         create(
           :timeline_event,
-          :state_changed,
+          :status_changed,
           application_form:,
           creator: application_form.teacher,
           old_state: "draft",
