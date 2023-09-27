@@ -43,6 +43,7 @@
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
 #  requires_preliminary_check                    :boolean          default(FALSE), not null
+#  stage                                         :string           default("draft"), not null
 #  status                                        :string           default("draft"), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
@@ -76,6 +77,7 @@
 #  index_application_forms_on_reference                     (reference) UNIQUE
 #  index_application_forms_on_region_id                     (region_id)
 #  index_application_forms_on_reviewer_id                   (reviewer_id)
+#  index_application_forms_on_stage                         (stage)
 #  index_application_forms_on_status                        (status)
 #  index_application_forms_on_teacher_id                    (teacher_id)
 #
@@ -140,8 +142,42 @@ FactoryBot.define do
       action_required_by { "none" }
     end
 
-    trait :submitted do
+    trait :draft_stage do
+      stage { "draft" }
+      action_required_by_none
+    end
+
+    trait :pre_assessment_stage do
+      stage { "pre_assessment" }
+      action_required_by_admin
+    end
+
+    trait :not_started_stage do
+      stage { "not_started" }
       action_required_by_assessor
+    end
+
+    trait :assessment_stage do
+      stage { "assessment" }
+      action_required_by_assessor
+    end
+
+    trait :verification_stage do
+      stage { "verification" }
+    end
+
+    trait :review_stage do
+      stage { "review" }
+      action_required_by_assessor
+    end
+
+    trait :completed_stage do
+      stage { "completed" }
+      action_required_by_none
+    end
+
+    trait :submitted do
+      not_started_stage
       status { "submitted" }
       submitted_at { Time.zone.now }
       working_days_since_submission { 0 }
@@ -160,59 +196,65 @@ FactoryBot.define do
 
     trait :preliminary_check do
       submitted
-      action_required_by_admin
+      pre_assessment_stage
       requires_preliminary_check { true }
       status { "preliminary_check" }
     end
 
     trait :assessment_in_progress do
       submitted
+      assessment_stage
       status { "assessment_in_progress" }
     end
 
     trait :waiting_on do
       submitted
       action_required_by_external
+      verification_stage
       status { "waiting_on" }
     end
 
     trait :received do
       submitted
+      verification_stage
       status { "received" }
     end
 
     trait :overdue do
       submitted
+      verification_stage
       status { "overdue" }
     end
 
     trait :awarded_pending_checks do
       submitted
+      review_stage
       status { "awarded_pending_checks" }
     end
 
     trait :potential_duplicate_in_dqt do
       submitted
+      review_stage
       status { "potential_duplicate_in_dqt" }
     end
 
     trait :awarded do
       submitted
-      action_required_by_none
+      completed_stage
       status { "awarded" }
       awarded_at { Time.zone.now }
     end
 
     trait :declined do
       submitted
-      action_required_by_none
+      completed_stage
       status { "declined" }
       declined_at { Time.zone.now }
     end
 
     trait :withdrawn do
       submitted
-      action_required_by_none
+      completed_stage
       status { "withdrawn" }
       withdrawn_at { Time.zone.now }
     end

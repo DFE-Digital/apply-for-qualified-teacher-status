@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_12_144508) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_14_084340) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -106,6 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_144508) do
     t.jsonb "dqt_match", default: {}
     t.datetime "withdrawn_at"
     t.string "action_required_by", default: "none", null: false
+    t.string "stage", default: "draft", null: false
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"
@@ -114,6 +115,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_144508) do
     t.index ["reference"], name: "index_application_forms_on_reference", unique: true
     t.index ["region_id"], name: "index_application_forms_on_region_id"
     t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
+    t.index ["stage"], name: "index_application_forms_on_stage"
     t.index ["status"], name: "index_application_forms_on_status"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
   end

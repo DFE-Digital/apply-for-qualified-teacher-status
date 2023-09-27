@@ -68,6 +68,7 @@
     - registration_number_status
     - requires_preliminary_check
     - reviewer_id
+    - stage
     - status
     - subjects
     - subjects_status

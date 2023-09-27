@@ -40,6 +40,22 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
   end
 
+  shared_examples "changes stage" do |new_stage|
+    it "changes status to #{new_stage}" do
+      expect { call }.to change(application_form, :stage).to(new_stage)
+    end
+
+    it "records a timeline event" do
+      expect { call }.to have_recorded_timeline_event(
+        :stage_changed,
+        creator: user,
+        application_form:,
+        old_value: "draft",
+        new_value: new_stage,
+      )
+    end
+  end
+
   shared_examples "changes status" do |new_status|
     it "changes status to #{new_status}" do
       expect { call }.to change(application_form, :status).to(new_status)
@@ -66,6 +82,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "assessor"
+      include_examples "changes stage", "review"
       include_examples "changes status", "potential_duplicate_in_dqt"
     end
 
@@ -78,6 +95,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "doesn't change action required by"
+      include_examples "changes stage", "completed"
       include_examples "changes status", "withdrawn"
     end
 
@@ -90,6 +108,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "doesn't change action required by"
+      include_examples "changes stage", "completed"
       include_examples "changes status", "declined"
     end
 
@@ -102,6 +121,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "doesn't change action required by"
+      include_examples "changes stage", "completed"
       include_examples "changes status", "awarded"
     end
 
@@ -112,6 +132,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "assessor"
+      include_examples "changes stage", "review"
       include_examples "changes status", "awarded_pending_checks"
     end
 
@@ -124,6 +145,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "assessor"
+      include_examples "changes stage", "assessment"
       include_examples "changes status", "received"
 
       it "changes received_further_information" do
@@ -143,6 +165,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "external"
+      include_examples "changes stage", "assessment"
       include_examples "changes status", "waiting_on"
 
       it "changes waiting_on_further_information" do
@@ -162,6 +185,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "external"
+      include_examples "changes stage", "verification"
       include_examples "changes status", "waiting_on"
 
       it "changes waiting_on_professional_standing" do
@@ -185,6 +209,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         end
 
         include_examples "changes action required by", "assessor"
+        include_examples "changes stage", "not_started"
         include_examples "changes status", "submitted"
 
         it "doesn't change received_professional_standing" do
@@ -202,6 +227,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         end
 
         include_examples "changes action required by", "assessor"
+        include_examples "changes stage", "verification"
         include_examples "changes status", "received"
 
         it "changes received_professional_standing" do
@@ -222,6 +248,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "assessor"
+      include_examples "changes stage", "verification"
       include_examples "changes status", "received"
 
       it "changes received_further_information" do
@@ -241,6 +268,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "external"
+      include_examples "changes stage", "verification"
       include_examples "changes status", "waiting_on"
 
       it "changes waiting_on_qualification" do
@@ -275,6 +303,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         end
 
         include_examples "changes action required by", "external"
+        include_examples "changes stage", "verification"
         include_examples "changes status", "waiting_on"
 
         it "doesn't change received_reference" do
@@ -304,6 +333,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
         context "and it's the only reference request" do
           include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "verification"
           include_examples "changes status", "received"
 
           it "changes received_reference" do
@@ -318,6 +348,7 @@ RSpec.describe ApplicationFormStatusUpdater do
           before { create(:reference_request, :requested, assessment:) }
 
           include_examples "changes action required by", "external"
+          include_examples "changes stage", "verification"
           include_examples "changes status", "waiting_on"
 
           it "doesn't change received_reference" do
@@ -347,6 +378,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         end
 
         include_examples "changes action required by", "assessor"
+        include_examples "changes stage", "verification"
         include_examples "changes status", "received"
 
         it "changes received_reference" do
@@ -366,6 +398,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "external"
+      include_examples "changes stage", "verification"
       include_examples "changes status", "waiting_on"
 
       it "changes waiting_on_reference" do
@@ -382,6 +415,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "assessor"
+      include_examples "changes stage", "assessment"
       include_examples "changes status", "assessment_in_progress"
     end
 
@@ -389,6 +423,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       before { application_form.update!(submitted_at: Time.zone.now) }
 
       include_examples "changes action required by", "assessor"
+      include_examples "changes stage", "not_started"
       include_examples "changes status", "submitted"
     end
 
@@ -399,6 +434,13 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       it "doesn't record a timeline event" do
         expect { call }.to_not have_recorded_timeline_event(:state_changed)
+      end
+      it "doesn't change the stage from draft" do
+        expect { call }.to_not change(application_form, :stage).from("draft")
+      end
+
+      it "doesn't record a timeline event" do
+        expect { call }.to_not have_recorded_timeline_event(:stage_changed)
       end
 
       include_examples "doesn't change action required by"
@@ -419,6 +461,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
 
       include_examples "changes action required by", "admin"
+      include_examples "changes stage", "pre_assessment"
       include_examples "changes status", "preliminary_check"
 
       context "when teaching authority provides written statement" do
@@ -430,12 +473,14 @@ RSpec.describe ApplicationFormStatusUpdater do
         end
 
         include_examples "changes action required by", "admin"
+        include_examples "changes stage", "pre_assessment"
         include_examples "changes status", "preliminary_check"
 
         context "when the preliminary check has passed" do
           before { preliminary_assessment_section.update!(passed: true) }
 
           include_examples "changes action required by", "external"
+          include_examples "changes stage", "pre_assessment"
           include_examples "changes status", "waiting_on"
         end
 
@@ -449,12 +494,14 @@ RSpec.describe ApplicationFormStatusUpdater do
           end
 
           include_examples "changes action required by", "admin"
+          include_examples "changes stage", "pre_assessment"
           include_examples "changes status", "preliminary_check"
 
           context "and the application form is declined" do
             before { application_form.update!(declined_at: Time.zone.now) }
 
             include_examples "doesn't change action required by"
+            include_examples "changes stage", "completed"
             include_examples "changes status", "declined"
           end
         end

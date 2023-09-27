@@ -170,5 +170,24 @@ module TimelineEntry
           end,
       }
     end
+
+    def stage_changed_vars
+      {
+        old_stage:
+          render(
+            StatusTag::Component.new(
+              status: timeline_event.old_value,
+              class_context: "timeline-event",
+            ),
+          ).strip,
+        new_stage:
+          render(
+            StatusTag::Component.new(
+              status: timeline_event.new_value,
+              class_context: "timeline-event",
+            ),
+          ).strip,
+      }
+    end
   end
 end
