@@ -3,10 +3,12 @@
 require "rails_helper"
 
 RSpec.describe AssessmentFactory do
+  let(:country) { create(:country) }
   let(:application_form) do
     create(
       :application_form,
       :old_regs,
+      region: create(:region, country:),
       needs_work_history: false,
       needs_written_statement: false,
       needs_registration_number: false,
@@ -83,56 +85,44 @@ RSpec.describe AssessmentFactory do
         end
 
         context "under the old regulations" do
-          context "when secondary education teaching qualification is not required" do
-            before do
-              allow(application_form).to receive(
-                :secondary_education_teaching_qualification_required?,
-              ).and_return(false)
-            end
+          it "has the right checks and failure reasons" do
+            section = sections.qualifications.first
 
-            it "has the right checks and failure reasons" do
-              section = sections.qualifications.first
+            expect(section.checks).to eq(
+              %w[
+                qualifications_meet_level_6_or_equivalent
+                teaching_qualifications_completed_in_eligible_country
+                qualified_in_mainstream_education
+                has_teacher_qualification_certificate
+                has_teacher_qualification_transcript
+                has_university_degree_certificate
+                has_university_degree_transcript
+                has_additional_qualification_certificate
+                has_additional_degree_transcript
+              ],
+            )
 
-              expect(section.checks).to eq(
-                %w[
-                  qualifications_meet_level_6_or_equivalent
-                  teaching_qualifications_completed_in_eligible_country
-                  qualified_in_mainstream_education
-                  has_teacher_qualification_certificate
-                  has_teacher_qualification_transcript
-                  has_university_degree_certificate
-                  has_university_degree_transcript
-                  has_additional_qualification_certificate
-                  has_additional_degree_transcript
-                ],
-              )
-
-              expect(section.failure_reasons).to eq(
-                %w[
-                  application_and_qualification_names_do_not_match
-                  teaching_qualifications_from_ineligible_country
-                  teaching_qualifications_not_at_required_level
-                  teaching_hours_not_fulfilled
-                  not_qualified_to_teach_mainstream
-                  qualifications_dont_match_subjects
-                  qualifications_dont_match_other_details
-                  teaching_certificate_illegible
-                  teaching_transcript_illegible
-                  degree_certificate_illegible
-                  degree_transcript_illegible
-                  additional_degree_certificate_illegible
-                  additional_degree_transcript_illegible
-                ],
-              )
-            end
+            expect(section.failure_reasons).to eq(
+              %w[
+                application_and_qualification_names_do_not_match
+                teaching_qualifications_from_ineligible_country
+                teaching_qualifications_not_at_required_level
+                teaching_hours_not_fulfilled
+                not_qualified_to_teach_mainstream
+                qualifications_dont_match_subjects
+                qualifications_dont_match_other_details
+                teaching_certificate_illegible
+                teaching_transcript_illegible
+                degree_certificate_illegible
+                degree_transcript_illegible
+                additional_degree_certificate_illegible
+                additional_degree_transcript_illegible
+              ],
+            )
           end
 
           context "when secondary education teaching qualification is required" do
-            before do
-              allow(application_form).to receive(
-                :secondary_education_teaching_qualification_required?,
-              ).and_return(true)
-            end
+            let(:country) { create(:country, :subject_limited) }
 
             it "has the right checks and failure reasons" do
               section = sections.qualifications.first
@@ -177,62 +167,52 @@ RSpec.describe AssessmentFactory do
         end
 
         context "under the new regulations" do
-          let(:application_form) { create(:application_form) }
+          let(:application_form) do
+            create(:application_form, region: create(:region, country:))
+          end
 
-          context "when secondary education teaching qualification is not required" do
-            before do
-              allow(application_form).to receive(
-                :secondary_education_teaching_qualification_required?,
-              ).and_return(false)
-            end
+          it "has the right checks and failure reasons" do
+            section = sections.qualifications.first
 
-            it "has the right checks and failure reasons" do
-              section = sections.qualifications.first
+            expect(section.checks).to eq(
+              %w[
+                qualifications_meet_level_6_or_equivalent
+                teaching_qualifications_completed_in_eligible_country
+                qualified_in_mainstream_education
+                has_teacher_qualification_certificate
+                has_teacher_qualification_transcript
+                has_university_degree_certificate
+                has_university_degree_transcript
+                has_additional_qualification_certificate
+                has_additional_degree_transcript
+                teaching_qualification_pedagogy
+                teaching_qualification_1_year
+              ],
+            )
 
-              expect(section.checks).to eq(
-                %w[
-                  qualifications_meet_level_6_or_equivalent
-                  teaching_qualifications_completed_in_eligible_country
-                  qualified_in_mainstream_education
-                  has_teacher_qualification_certificate
-                  has_teacher_qualification_transcript
-                  has_university_degree_certificate
-                  has_university_degree_transcript
-                  has_additional_qualification_certificate
-                  has_additional_degree_transcript
-                  teaching_qualification_pedagogy
-                  teaching_qualification_1_year
-                ],
-              )
-
-              expect(section.failure_reasons).to eq(
-                %w[
-                  application_and_qualification_names_do_not_match
-                  teaching_qualifications_from_ineligible_country
-                  teaching_qualifications_not_at_required_level
-                  teaching_hours_not_fulfilled
-                  teaching_qualification_pedagogy
-                  teaching_qualification_1_year
-                  not_qualified_to_teach_mainstream
-                  qualifications_dont_match_subjects
-                  qualifications_dont_match_other_details
-                  teaching_certificate_illegible
-                  teaching_transcript_illegible
-                  degree_certificate_illegible
-                  degree_transcript_illegible
-                  additional_degree_certificate_illegible
-                  additional_degree_transcript_illegible
-                ],
-              )
-            end
+            expect(section.failure_reasons).to eq(
+              %w[
+                application_and_qualification_names_do_not_match
+                teaching_qualifications_from_ineligible_country
+                teaching_qualifications_not_at_required_level
+                teaching_hours_not_fulfilled
+                teaching_qualification_pedagogy
+                teaching_qualification_1_year
+                not_qualified_to_teach_mainstream
+                qualifications_dont_match_subjects
+                qualifications_dont_match_other_details
+                teaching_certificate_illegible
+                teaching_transcript_illegible
+                degree_certificate_illegible
+                degree_transcript_illegible
+                additional_degree_certificate_illegible
+                additional_degree_transcript_illegible
+              ],
+            )
           end
 
           context "when secondary education teaching qualification is required" do
-            before do
-              allow(application_form).to receive(
-                :secondary_education_teaching_qualification_required?,
-              ).and_return(true)
-            end
+            let(:country) { create(:country, :subject_limited) }
 
             it "has the right checks and failure reasons" do
               section = sections.qualifications.first
@@ -282,18 +262,11 @@ RSpec.describe AssessmentFactory do
       end
 
       describe "age range and subjects section" do
-        before { create(:country, :subject_limited, code: "SG") }
         it "is created" do
           expect(sections.age_range_subjects.count).to eq(1)
         end
 
         context "when secondary education teaching qualification is not required" do
-          before do
-            allow(application_form).to receive(
-              :secondary_education_teaching_qualification_required?,
-            ).and_return(false)
-          end
-
           it "has the right checks and failure reasons" do
             section = sections.age_range_subjects.first
             expect(section.checks).to eq(
@@ -306,12 +279,7 @@ RSpec.describe AssessmentFactory do
         end
 
         context "with an application form with subject criteria" do
-          let(:application_form) do
-            create(
-              :application_form,
-              region: create(:region, :in_country, country_code: "SG"),
-            )
-          end
+          let(:country) { create(:country, :subject_limited) }
 
           it "has the right checks and failure reasons" do
             section = sections.age_range_subjects.first
@@ -333,7 +301,6 @@ RSpec.describe AssessmentFactory do
       end
 
       describe "preliminary qualifications section" do
-        before { create(:country, :subject_limited, code: "SG") }
         it "is not created" do
           expect(sections.preliminary.qualifications.count).to eq(0)
         end
@@ -354,12 +321,7 @@ RSpec.describe AssessmentFactory do
           end
 
           context "with an application form with subject criteria" do
-            let(:application_form) do
-              create(
-                :application_form,
-                region: create(:region, :in_country, country_code: "SG"),
-              )
-            end
+            let(:country) { create(:country, :subject_limited) }
 
             it "has the right checks and failure reasons" do
               section = sections.preliminary.qualifications.first
