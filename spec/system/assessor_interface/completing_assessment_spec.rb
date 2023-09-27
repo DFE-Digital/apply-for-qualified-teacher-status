@@ -123,13 +123,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_select_yes_verify_professional_standing
     then_i_see_the(
-      :assessor_contact_professional_standing_assessment_recommendation_verify_page,
-      application_form_id:,
-      assessment_id:,
-    )
-
-    when_i_click_continue_from_contact_professional_standing
-    then_i_see_the(
       :assessor_reference_requests_assessment_recommendation_verify_page,
       application_form_id:,
       assessment_id:,
@@ -358,10 +351,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
       .form
       .submit_button
       .click
-  end
-
-  def when_i_click_continue_from_contact_professional_standing
-    assessor_contact_professional_standing_assessment_recommendation_verify_page.continue_button.click
   end
 
   def when_i_select_the_work_histories
