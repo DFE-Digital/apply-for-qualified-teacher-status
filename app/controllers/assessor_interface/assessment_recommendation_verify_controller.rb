@@ -154,13 +154,7 @@ module AssessorInterface
         session[:professional_standing] = @form.verify_professional_standing
 
         redirect_to [
-                      (
-                        if @form.verify_professional_standing
-                          :contact_professional_standing
-                        else
-                          :reference_requests
-                        end
-                      ),
+                      :reference_requests,
                       :assessor_interface,
                       application_form,
                       assessment,
@@ -169,10 +163,6 @@ module AssessorInterface
       else
         render :edit_verify_professional_standing, status: :unprocessable_entity
       end
-    end
-
-    def contact_professional_standing
-      authorize %i[assessor_interface assessment_recommendation], :edit?
     end
 
     def edit_reference_requests

@@ -134,11 +134,6 @@ module PageHelpers
       PageObjects::AssessorInterface::ConfirmAssessmentRecommendation.new
   end
 
-  def contact_professional_standing_assessment_recommendation_verify_page
-    @contact_professional_standing_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::ContactProfessionalStandingAssessmentRecommendationVerify.new
-  end
-
   def declare_assessment_recommendation_page
     @declare_assessment_recommendation_page ||=
       PageObjects::AssessorInterface::DeclareAssessmentRecommendation.new
