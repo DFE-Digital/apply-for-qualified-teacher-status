@@ -50,15 +50,14 @@ class VerifyAssessment
               :work_histories
 
   delegate :application_form, to: :assessment
-  delegate :teacher, to: :application_form
+  delegate :teacher,
+           :teaching_authority_provides_written_statement,
+           to: :application_form
 
   def create_professional_standing_request
-    return unless professional_standing
-    return if application_form.teaching_authority_provides_written_statement
-
-    ProfessionalStandingRequest
-      .create!(assessment:)
-      .tap { |requestable| RequestRequestable.call(requestable:, user:) }
+    if professional_standing && !teaching_authority_provides_written_statement
+      ProfessionalStandingRequest.create!(assessment:)
+    end
   end
 
   def create_qualification_requests
