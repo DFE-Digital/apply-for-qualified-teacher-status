@@ -358,16 +358,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before { create(:professional_standing_request, assessment:) }
 
       it do
-        is_expected.to include_task_list_item(
-          "Verification",
-          "Record LOPS response",
-        )
-      end
-      it do
-        is_expected.to include_task_list_item(
-          "Verification",
-          "Review LOPS response",
-        )
+        is_expected.to include_task_list_item("Verification", "Verify LoPS")
       end
       it do
         is_expected.to include_task_list_item(

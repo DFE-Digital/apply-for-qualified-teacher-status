@@ -22,10 +22,9 @@ en:
             assessment_decision: Assessment decision
             await_professional_standing_request: Awaiting third-party professional standing
             initial_assessment_recommendation: Initial assessment recommendation
-            locate_professional_standing_request: Record LOPS response
+            professional_standing_request: Verify LoPS
             qualification_requests: Record qualifications responses
             reference_requests: Verify reference requests
-            review_professional_standing_request: Review LOPS response
             review_requested_information: Review requested information from applicant
             review_verifications: Review verifications
             verification_decision: Verification decision
