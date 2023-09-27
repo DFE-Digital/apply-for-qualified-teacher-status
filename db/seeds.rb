@@ -240,31 +240,51 @@ COUNTRIES = {
   "PT" => [{ status_check: "written", sanction_check: "written" }],
   "DK" => [{ status_check: "written" }],
   "FI" => [{ status_check: "written" }],
-  "GH" => [
-    {
-      requires_preliminary_check: true,
-      status_check: "online",
-      sanction_check: "online",
-    },
-  ],
+  "GH" => {
+    subject_limited: true,
+    regions: [
+      {
+        requires_preliminary_check: true,
+        status_check: "online",
+        sanction_check: "online",
+      },
+    ],
+  },
   "HK" => [{ status_check: "written", sanction_check: "written" }],
-  "IN" => [],
-  "JM" => [{ status_check: "written", sanction_check: "written" }],
-  "NG" => [
-    {
-      requires_preliminary_check: true,
-      status_check: "written",
-      sanction_check: "written",
-      teaching_authority_provides_written_statement: true,
-      teaching_authority_name:
-        "Teachers Registration Council of Nigeria (TRCN)",
-      teaching_authority_certificate: "Letter of Professional Standing",
-    },
-  ],
-  "SG" => [{ status_check: "online" }],
-  "ZA" => [{ status_check: "written", sanction_check: "written" }],
+  "IN" => {
+    subject_limited: true,
+  },
+  "JM" => {
+    subject_limited: true,
+    regions: [{ status_check: "written", sanction_check: "written" }],
+  },
+  "NG" => {
+    subject_limited: true,
+    regions: [
+      {
+        requires_preliminary_check: true,
+        status_check: "written",
+        sanction_check: "written",
+        teaching_authority_provides_written_statement: true,
+        teaching_authority_name:
+          "Teachers Registration Council of Nigeria (TRCN)",
+        teaching_authority_certificate: "Letter of Professional Standing",
+      },
+    ],
+  },
+  "SG" => {
+    subject_limited: true,
+    regions: [{ status_check: "online" }],
+  },
+  "ZA" => {
+    subject_limited: true,
+    regions: [{ status_check: "written", sanction_check: "written" }],
+  },
   "UA" => [{ reduced_evidence_accepted: true }],
-  "ZW" => [{ status_check: "written" }],
+  "ZW" => {
+    subject_limited: true,
+    regions: [{ status_check: "written" }],
+  },
   "GG" => [],
   "JE" => [],
 }.freeze
@@ -274,7 +294,7 @@ DEFAULT_COUNTRY = { eligibility_enabled: true }.freeze
 DEFAULT_REGION = { name: "" }.freeze
 
 COUNTRIES.each do |code, value|
-  regions = value.is_a?(Hash) ? value[:regions] : value
+  regions = value.is_a?(Hash) ? value.fetch(:regions, []) : value
   country_hash = value.is_a?(Hash) ? value.except(:regions) : {}
 
   country =
@@ -369,7 +389,3 @@ ENGLISH_LANGUAGE_PROVIDERS.each do |english_language_provider|
     name: english_language_provider[:name],
   ).update!(english_language_provider.except(:name))
 end
-
-subject_limited_countries = %w[GH IN JM NG SG ZA ZW]
-
-Country.where(code: subject_limited_countries).update_all(subject_limited: true)
