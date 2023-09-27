@@ -96,7 +96,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         "Further information requests",
       )
     end
-    it { is_expected.to_not include_task_list_section("Verification requests") }
+    it { is_expected.to_not include_task_list_section("Verification") }
 
     context "when teaching authority provides written statement and a professional standing request" do
       let!(:professional_standing_request) do
@@ -362,16 +362,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before { create(:professional_standing_request, assessment:) }
 
       it do
-        is_expected.to include_task_list_item(
-          "Verification",
-          "Record LOPS response",
-        )
-      end
-      it do
-        is_expected.to include_task_list_item(
-          "Verification",
-          "Review LOPS response",
-        )
+        is_expected.to include_task_list_item("Verification", "Verify LoPS")
       end
       it do
         is_expected.to include_task_list_item(

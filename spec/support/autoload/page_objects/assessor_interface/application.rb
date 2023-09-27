@@ -82,12 +82,8 @@ module PageObjects
         task_list.find_item("Verify reference requests")
       end
 
-      def record_professional_standing_request_task
-        task_list.find_item("Record LOPS response")
-      end
-
-      def review_professional_standing_request_task
-        task_list.find_item("Review LOPS response")
+      def professional_standing_request_task
+        task_list.find_item("Verify LoPS")
       end
     end
   end

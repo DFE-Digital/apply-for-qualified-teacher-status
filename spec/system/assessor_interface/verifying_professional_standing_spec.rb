@@ -12,7 +12,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   it "record location and review" do
     when_i_visit_the(:assessor_application_page, application_id:)
     and_i_see_a_waiting_on_status
-    and_i_click_record_professional_standing_task
+    and_i_click_professional_standing_task
     then_i_see_the(
       :assessor_edit_professional_standing_request_location_page,
       application_id:,
@@ -44,18 +44,16 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     )
   end
 
-  def and_i_click_record_professional_standing_task
-    assessor_application_page
-      .record_professional_standing_request_task
-      .link
-      .click
+  def and_i_click_professional_standing_task
+    assessor_application_page.professional_standing_request_task.link.click
   end
 
   def when_i_click_review_professional_standing_task
-    assessor_application_page
-      .review_professional_standing_request_task
-      .link
-      .click
+    when_i_visit_the(
+      :assessor_edit_professional_standing_request_review_page,
+      application_id:,
+      assessment_id: application_form.assessment.id,
+    )
   end
 
   def when_i_fill_in_the_location_form
