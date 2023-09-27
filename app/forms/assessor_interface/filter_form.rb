@@ -4,12 +4,13 @@ class AssessorInterface::FilterForm
   include ActiveModel::Model
   include ActiveRecord::AttributeAssignment
 
-  attr_accessor :assessor_ids,
+  attr_accessor :action_required_by,
+                :assessor_ids,
+                :email,
                 :location,
                 :name,
                 :reference,
-                :email,
                 :statuses,
-                :submitted_at_before,
-                :submitted_at_after
+                :submitted_at_after,
+                :submitted_at_before
 end

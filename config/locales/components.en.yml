@@ -38,6 +38,7 @@ en:
 
     timeline_entry:
       title:
+        action_required_by_changed: Action required by changed
         assessor_assigned: Assessor assigned
         reviewer_assigned: Reviewer assigned
         state_changed: Status changed
@@ -68,9 +69,10 @@ en:
           ReferenceRequest: Reference assessed
         information_changed: Information changed after submission
       description:
+        action_required_by_changed: Application requires %{action} action.
         assessor_assigned: "%{assignee_name} is assigned as the assessor."
         reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
-        state_changed: Status changed from %{old_state} to %{new_state}
+        state_changed: Status changed from %{old_state} to %{new_state}.
         note_created: "%{text}"
         email_sent: "%{subject}"
         requestable_requested:

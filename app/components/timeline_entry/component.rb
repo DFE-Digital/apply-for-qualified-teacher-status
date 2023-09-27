@@ -159,5 +159,16 @@ module TimelineEntry
         new_value: timeline_event.new_value,
       }
     end
+
+    def action_required_by_changed_vars
+      {
+        action:
+          if timeline_event.new_value == "none"
+            "no"
+          else
+            timeline_event.new_value
+          end,
+      }
+    end
   end
 end

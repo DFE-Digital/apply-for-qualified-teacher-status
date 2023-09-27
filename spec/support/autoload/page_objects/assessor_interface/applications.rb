@@ -40,6 +40,11 @@ module PageObjects
                 "#assessor_interface_filter_form_submitted_at_before_1i"
       end
 
+      section :action_required_by_filter,
+              "#app-applications-filters-action-required-by" do
+        sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
+      end
+
       section :status_filter, "#app-applications-filters-status" do
         sections :statuses, GovukCheckboxItem, ".govuk-checkboxes__item"
       end

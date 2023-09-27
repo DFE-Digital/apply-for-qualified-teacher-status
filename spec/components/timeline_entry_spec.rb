@@ -504,4 +504,18 @@ RSpec.describe TimelineEntry::Component, type: :component do
       expect(component.text).to include(creator.name)
     end
   end
+
+  context "action required by changed" do
+    let(:timeline_event) do
+      create(:timeline_event, :action_required_by_changed, new_value: "none")
+    end
+
+    it "describes the event" do
+      expect(component.text.squish).to include("Application requires no action")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
 end

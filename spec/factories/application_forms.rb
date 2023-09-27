@@ -3,6 +3,7 @@
 # Table name: application_forms
 #
 #  id                                            :bigint           not null, primary key
+#  action_required_by                            :string           default("none"), not null
 #  age_range_max                                 :integer
 #  age_range_min                                 :integer
 #  age_range_status                              :string           default("not_started"), not null
@@ -67,6 +68,7 @@
 #
 # Indexes
 #
+#  index_application_forms_on_action_required_by            (action_required_by)
 #  index_application_forms_on_assessor_id                   (assessor_id)
 #  index_application_forms_on_english_language_provider_id  (english_language_provider_id)
 #  index_application_forms_on_family_name                   (family_name)
@@ -122,7 +124,24 @@ FactoryBot.define do
       written_statement_status { "completed" }
     end
 
+    trait :action_required_by_admin do
+      action_required_by { "admin" }
+    end
+
+    trait :action_required_by_assessor do
+      action_required_by { "assessor" }
+    end
+
+    trait :action_required_by_external do
+      action_required_by { "external" }
+    end
+
+    trait :action_required_by_none do
+      action_required_by { "none" }
+    end
+
     trait :submitted do
+      action_required_by_assessor
       status { "submitted" }
       submitted_at { Time.zone.now }
       working_days_since_submission { 0 }
@@ -141,6 +160,7 @@ FactoryBot.define do
 
     trait :preliminary_check do
       submitted
+      action_required_by_admin
       requires_preliminary_check { true }
       status { "preliminary_check" }
     end
@@ -152,6 +172,7 @@ FactoryBot.define do
 
     trait :waiting_on do
       submitted
+      action_required_by_external
       status { "waiting_on" }
     end
 
@@ -170,25 +191,28 @@ FactoryBot.define do
       status { "awarded_pending_checks" }
     end
 
+    trait :potential_duplicate_in_dqt do
+      submitted
+      status { "potential_duplicate_in_dqt" }
+    end
+
     trait :awarded do
       submitted
+      action_required_by_none
       status { "awarded" }
       awarded_at { Time.zone.now }
     end
 
     trait :declined do
       submitted
+      action_required_by_none
       status { "declined" }
       declined_at { Time.zone.now }
     end
 
-    trait :potential_duplicate_in_dqt do
-      submitted
-      status { "potential_duplicate_in_dqt" }
-    end
-
     trait :withdrawn do
       submitted
+      action_required_by_none
       status { "withdrawn" }
       withdrawn_at { Time.zone.now }
     end

@@ -9,8 +9,6 @@ class ApplicationFormStatusUpdater
   end
 
   def call
-    old_status = application_form.status
-
     ActiveRecord::Base.transaction do
       application_form.update!(
         overdue_further_information:,
@@ -27,10 +25,24 @@ class ApplicationFormStatusUpdater
         waiting_on_reference:,
       )
 
-      next if old_status == new_status
+      if (old_status = application_form.status) != status
+        application_form.update!(status:)
+        create_timeline_event(
+          event_type: "state_changed",
+          old_state: old_status,
+          new_state: status,
+        )
+      end
 
-      application_form.update!(status: new_status)
-      create_timeline_event(old_state: old_status, new_state: new_status)
+      if (old_action_required_by = application_form.action_required_by) !=
+           action_required_by
+        application_form.update!(action_required_by:)
+        create_timeline_event(
+          event_type: "action_required_by_changed",
+          old_value: old_action_required_by,
+          new_value: action_required_by,
+        )
+      end
     end
   end
 
@@ -117,8 +129,8 @@ class ApplicationFormStatusUpdater
     waiting_on?(requestables: reference_requests)
   end
 
-  def new_status
-    @new_status ||=
+  def status
+    @status ||=
       if dqt_trn_request&.potential_duplicate?
         "potential_duplicate_in_dqt"
       elsif application_form.withdrawn_at.present?
@@ -147,6 +159,26 @@ class ApplicationFormStatusUpdater
         "submitted"
       else
         "draft"
+      end
+  end
+
+  def action_required_by
+    @action_required_by ||=
+      if status == "preliminary_check"
+        "admin"
+      elsif %w[
+            potential_duplicate_in_dqt
+            awarded_pending_checks
+            overdue
+            received
+            assessment_in_progress
+            submitted
+          ].include?(status)
+        "assessor"
+      elsif status == "waiting_on"
+        "external"
+      else
+        "none"
       end
   end
 
@@ -198,17 +230,16 @@ class ApplicationFormStatusUpdater
     requestables.reject(&:reviewed?).any?(&:received?)
   end
 
-  def create_timeline_event(old_state:, new_state:)
+  def create_timeline_event(event_type:, **kwargs)
     creator = user.is_a?(String) ? nil : user
     creator_name = user.is_a?(String) ? user : ""
 
     TimelineEvent.create!(
       application_form:,
-      event_type: "state_changed",
+      event_type:,
       creator:,
       creator_name:,
-      new_state:,
-      old_state:,
+      **kwargs,
     )
   end
 end

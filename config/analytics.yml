@@ -22,68 +22,69 @@
     - blob_id
     - created_at
   :application_forms:
-    - id
-    - reference
-    - status
-    - overdue_further_information
-    - overdue_professional_standing
-    - overdue_qualification
-    - overdue_reference
-    - received_further_information
-    - received_professional_standing
-    - received_qualification
-    - received_reference
-    - waiting_on_further_information
-    - waiting_on_professional_standing
-    - waiting_on_qualification
-    - waiting_on_reference
-    - personal_information_status
-    - identification_document_status
-    - qualifications_status
-    - age_range_status
-    - subjects_status
-    - work_history_status
-    - registration_number_status
-    - written_statement_status
-    - teacher_id
-    - created_at
-    - updated_at
-    - given_names
-    - family_name
-    - date_of_birth
-    - age_range_min
+    - action_required_by
     - age_range_max
-    - has_alternative_name
-    - alternative_given_names
+    - age_range_min
+    - age_range_status
     - alternative_family_name
-    - region_id
-    - registration_number
-    - has_work_history
-    - subjects
+    - alternative_given_names
     - assessor_id
-    - reviewer_id
-    - submitted_at
     - awarded_at
-    - declined_at
-    - withdrawn_at
-    - working_days_since_submission
-    - needs_work_history
-    - needs_written_statement
-    - needs_registration_number
-    - teaching_authority_provides_written_statement
-    - written_statement_confirmation
-    - written_statement_optional
     - confirmed_no_sanctions
-    - english_language_status
+    - created_at
+    - date_of_birth
+    - declined_at
+    - dqt_match
     - english_language_citizenship_exempt
-    - english_language_qualification_exempt
     - english_language_proof_method
     - english_language_provider_id
     - english_language_provider_other
     - english_language_provider_reference
+    - english_language_qualification_exempt
+    - english_language_status
+    - family_name
+    - given_names
+    - has_alternative_name
+    - has_work_history
+    - id
+    - identification_document_status
+    - needs_registration_number
+    - needs_work_history
+    - needs_written_statement
+    - overdue_further_information
+    - overdue_professional_standing
+    - overdue_qualification
+    - overdue_reference
+    - personal_information_status
+    - qualifications_status
+    - received_further_information
+    - received_professional_standing
+    - received_qualification
+    - received_reference
     - reduced_evidence_accepted
+    - reference
+    - region_id
+    - registration_number
+    - registration_number_status
     - requires_preliminary_check
-    - dqt_match
+    - reviewer_id
+    - status
+    - subjects
+    - subjects_status
+    - submitted_at
+    - teacher_id
+    - teaching_authority_provides_written_statement
+    - updated_at
+    - waiting_on_further_information
+    - waiting_on_professional_standing
+    - waiting_on_qualification
+    - waiting_on_reference
+    - withdrawn_at
+    - work_history_status
+    - working_days_since_submission
+    - written_statement_confirmation
+    - written_statement_optional
+    - written_statement_status
   :assessment_sections:
     - id
     - assessment_id

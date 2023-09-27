@@ -54,14 +54,16 @@
 #
 class TimelineEvent < ApplicationRecord
   belongs_to :application_form
+  belongs_to :assessment, optional: true
+  belongs_to :assessment_section, optional: true
+  belongs_to :assignee, class_name: "Staff", optional: true
   belongs_to :creator, polymorphic: true, optional: true
-
-  validates :creator, presence: true, unless: -> { creator_name.present? }
-  validates :creator_name,
-            presence: true,
-            unless: -> { creator_id.present? && creator_type.present? }
+  belongs_to :note, optional: true
+  belongs_to :requestable, polymorphic: true, optional: true
+  belongs_to :work_history, optional: true
 
   enum event_type: {
+         action_required_by_changed: "action_required_by_changed",
          age_range_subjects_verified: "age_range_subjects_verified",
          assessment_section_recorded: "assessment_section_recorded",
          assessor_assigned: "assessor_assigned",
@@ -75,9 +77,14 @@ class TimelineEvent < ApplicationRecord
          reviewer_assigned: "reviewer_assigned",
          state_changed: "state_changed",
        }
+
+  validates :creator, presence: true, unless: -> { creator_name.present? }
+  validates :creator_name,
+            presence: true,
+            unless: -> { creator_id.present? && creator_type.present? }
+
   validates :event_type, inclusion: { in: event_types.values }
 
-  belongs_to :assignee, class_name: "Staff", optional: true
   validates :assignee,
             absence: true,
             unless: -> { assessor_assigned? || reviewer_assigned? }
@@ -91,7 +98,6 @@ class TimelineEvent < ApplicationRecord
             absence: true,
             unless: -> { state_changed? || assessment_section_recorded? }
 
-  belongs_to :assessment_section, optional: true
   validates :assessment_section,
             presence: true,
             if: :assessment_section_recorded?
@@ -99,7 +105,6 @@ class TimelineEvent < ApplicationRecord
             absence: true,
             unless: :assessment_section_recorded?
 
-  belongs_to :note, optional: true
   validates :note, presence: true, if: :note_created?
   validates :note, absence: true, unless: :note_created?
 
@@ -114,7 +119,6 @@ class TimelineEvent < ApplicationRecord
             absence: true,
             unless: :email_sent?
 
-  belongs_to :assessment, optional: true
   validates :assessment,
             :age_range_min,
             :age_range_max,
@@ -130,7 +134,6 @@ class TimelineEvent < ApplicationRecord
             absence: true,
             unless: :age_range_subjects_verified?
 
-  belongs_to :requestable, polymorphic: true, optional: true
   validates :requestable_id, presence: true, if: :requestable_event_type?
   validates :requestable_type,
             presence: true,
@@ -146,16 +149,17 @@ class TimelineEvent < ApplicationRecord
             absence: true,
             unless: :requestable_event_type?
 
-  belongs_to :work_history, optional: true
-  validates :column_name,
-            :old_value,
+  validates :old_value,
             :new_value,
             presence: true,
-            if: :information_changed?
+            if: -> { action_required_by_changed? || information_changed? }
+  validates :old_value,
+            :new_value,
+            absence: true,
+            unless: -> { action_required_by_changed? || information_changed? }
+  validates :column_name, presence: true, if: :information_changed?
   validates :work_history_id,
             :column_name,
-            :old_value,
-            :new_value,
             absence: true,
             unless: :information_changed?
 
