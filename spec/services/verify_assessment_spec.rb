@@ -20,7 +20,7 @@ RSpec.describe VerifyAssessment do
     )
   end
 
-  describe "when already verified" do
+  context "when already verified" do
     let(:assessment) { create(:assessment, :verify, application_form:) }
 
     it "raises an error" do
@@ -28,20 +28,39 @@ RSpec.describe VerifyAssessment do
     end
   end
 
-  describe "creating professional standing request" do
-    subject(:professional_standing_request) do
-      ProfessionalStandingRequest.find_by(assessment:)
+  describe "professional standing request" do
+    context "when professional standing is true" do
+      let(:professional_standing) { true }
+
+      it "creates a professional standing request" do
+        expect { call }.to change(ProfessionalStandingRequest, :count).by(1)
+      end
+
+      it "doesn't request the professional standing" do
+        call
+        expect(assessment.professional_standing_request).to_not be_requested
+      end
     end
 
-    it { is_expected.to be_nil }
+    context "when professional standing is false" do
+      let(:professional_standing) { false }
 
-    context "after calling the service" do
-      before { call }
+      it "doesn't create a professional standing request" do
+        expect { call }.to_not change(ProfessionalStandingRequest, :count)
+      end
+    end
 
-      it { is_expected.to_not be_nil }
+    context "when the teaching authority provides the professional standing" do
+      let(:application_form) do
+        create(
+          :application_form,
+          :submitted,
+          :teaching_authority_provides_written_statement,
+        )
+      end
 
-      it "sets the attributes correctly" do
-        expect(professional_standing_request.requested?).to be true
+      it "doesn't create a professional standing request" do
+        expect { call }.to_not change(ProfessionalStandingRequest, :count)
       end
     end
   end
