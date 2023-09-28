@@ -70,6 +70,7 @@
     - reviewer_id
     - stage
     - status
+    - statuses
     - subjects
     - subjects_status
     - submitted_at

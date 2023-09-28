@@ -12,15 +12,15 @@ class ApplicationFormStatusUpdater
     ActiveRecord::Base.transaction do
       application_form.update!(
         overdue_further_information:,
-        overdue_professional_standing:,
+        overdue_professional_standing: overdue_lops,
         overdue_qualification:,
         overdue_reference:,
         received_further_information:,
-        received_professional_standing:,
+        received_professional_standing: received_lops,
         received_qualification:,
         received_reference:,
         waiting_on_further_information:,
-        waiting_on_professional_standing:,
+        waiting_on_professional_standing: waiting_on_lops,
         waiting_on_qualification:,
         waiting_on_reference:,
       )
@@ -52,6 +52,10 @@ class ApplicationFormStatusUpdater
           new_value: stage,
         )
       end
+
+      if statuses != application_form.statuses
+        application_form.update!(statuses:)
+      end
     end
   end
 
@@ -63,7 +67,7 @@ class ApplicationFormStatusUpdater
     overdue?(requestables: further_information_requests)
   end
 
-  def overdue_professional_standing
+  def overdue_lops
     return false if teaching_authority_provides_written_statement
     overdue?(requestables: professional_standing_requests)
   end
@@ -81,7 +85,7 @@ class ApplicationFormStatusUpdater
     received?(requestables: further_information_requests)
   end
 
-  def received_professional_standing
+  def received_lops
     return false if teaching_authority_provides_written_statement
 
     professional_standing_requests
@@ -125,7 +129,7 @@ class ApplicationFormStatusUpdater
     waiting_on?(requestables: further_information_requests)
   end
 
-  def waiting_on_professional_standing
+  def waiting_on_lops
     waiting_on?(requestables: professional_standing_requests)
   end
 
@@ -152,15 +156,14 @@ class ApplicationFormStatusUpdater
         "awarded_pending_checks"
       elsif preliminary_check?
         "preliminary_check"
-      elsif overdue_further_information || overdue_professional_standing ||
+      elsif overdue_further_information || overdue_lops ||
             overdue_qualification || overdue_reference
         "overdue"
-      elsif received_further_information || received_professional_standing ||
+      elsif received_further_information || received_lops ||
             received_qualification || received_reference
         "received"
-      elsif waiting_on_further_information ||
-            waiting_on_professional_standing || waiting_on_qualification ||
-            waiting_on_reference
+      elsif waiting_on_further_information || waiting_on_lops ||
+            waiting_on_qualification || waiting_on_reference
         "waiting_on"
       elsif assessment&.any_not_preliminary_section_finished?
         "assessment_in_progress"
@@ -173,19 +176,22 @@ class ApplicationFormStatusUpdater
 
   def action_required_by
     @action_required_by ||=
-      if status == "preliminary_check"
+      if application_form.withdrawn_at.present? ||
+           application_form.declined_at.present? ||
+           application_form.awarded_at.present?
+        "none"
+      elsif preliminary_check?
         "admin"
-      elsif %w[
-            potential_duplicate_in_dqt
-            awarded_pending_checks
-            overdue
-            received
-            assessment_in_progress
-            submitted
-          ].include?(status)
+      elsif dqt_trn_request.present? || overdue_further_information ||
+            overdue_lops || overdue_qualification || overdue_reference ||
+            received_further_information || received_lops ||
+            received_qualification || received_reference
         "assessor"
-      elsif status == "waiting_on"
+      elsif waiting_on_further_information || waiting_on_lops ||
+            waiting_on_qualification || waiting_on_reference
         "external"
+      elsif application_form.submitted_at.present?
+        "assessor"
       else
         "none"
       end
@@ -200,19 +206,11 @@ class ApplicationFormStatusUpdater
       elsif dqt_trn_request.present?
         "review"
       elsif preliminary_check? ||
-            (
-              teaching_authority_provides_written_statement &&
-                waiting_on_professional_standing
-            )
+            (teaching_authority_provides_written_statement && waiting_on_lops)
         "pre_assessment"
-      elsif overdue_professional_standing || overdue_qualification ||
-            overdue_reference ||
-            (
-              !teaching_authority_provides_written_statement &&
-                received_professional_standing
-            ) || received_qualification || received_reference ||
-            waiting_on_professional_standing || waiting_on_qualification ||
-            waiting_on_reference
+      elsif overdue_lops || overdue_qualification || overdue_reference ||
+            received_lops || received_qualification || received_reference ||
+            waiting_on_lops || waiting_on_qualification || waiting_on_reference
         "verification"
       elsif overdue_further_information || received_further_information ||
             waiting_on_further_information ||
@@ -225,6 +223,35 @@ class ApplicationFormStatusUpdater
       end
   end
 
+  def statuses
+    @statuses ||=
+      if application_form.withdrawn_at.present?
+        %w[withdrawn]
+      elsif application_form.declined_at.present?
+        %w[declined]
+      elsif application_form.awarded_at.present?
+        %w[awarded]
+      elsif dqt_trn_request.present?
+        if dqt_trn_request.potential_duplicate?
+          %w[potential_duplicate_in_dqt]
+        else
+          %w[awarded_pending_checks]
+        end
+      elsif assessment.present?
+        if preliminary_check?
+          %w[preliminary_check] + requestable_statuses
+        elsif requestable_statuses.present?
+          requestable_statuses
+        elsif assessment.any_not_preliminary_section_finished?
+          %w[assessment_in_progress]
+        else
+          %w[assessment_not_started]
+        end
+      else
+        %w[draft]
+      end
+  end
+
   delegate :assessment,
            :dqt_trn_request,
            :region,
@@ -234,12 +261,21 @@ class ApplicationFormStatusUpdater
   delegate :references_verified, to: :assessment, allow_nil: true
 
   def preliminary_check?
-    application_form.submitted_at.present? &&
-      application_form.requires_preliminary_check &&
+    return false if assessment.nil?
+
+    application_form.requires_preliminary_check &&
       (
-        assessment&.any_preliminary_section_failed? ||
-          !assessment&.all_preliminary_sections_passed?
+        assessment.any_preliminary_section_failed? ||
+          !assessment.all_preliminary_sections_passed?
       )
+  end
+
+  def requestable_statuses
+    @requestable_statuses ||=
+      %w[overdue received waiting_on]
+        .product(%w[further_information lops qualification reference])
+        .map { |status, requestable| "#{status}_#{requestable}" }
+        .filter { |column| send(column) }
   end
 
   def further_information_requests
