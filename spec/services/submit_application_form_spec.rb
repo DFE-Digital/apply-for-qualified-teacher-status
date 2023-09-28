@@ -64,8 +64,8 @@ RSpec.describe SubmitApplicationForm do
       :status_changed,
       creator: user,
       application_form:,
-      old_state: "draft",
-      new_state: "submitted",
+      old_value: "draft",
+      new_value: "submitted",
     )
   end
 

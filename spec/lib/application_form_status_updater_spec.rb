@@ -72,8 +72,8 @@ RSpec.describe ApplicationFormStatusUpdater do
         :status_changed,
         creator: user,
         application_form:,
-        old_state: "draft",
-        new_state: new_status,
+        old_value: "draft",
+        new_value: new_status,
       )
     end
   end
