@@ -2,8 +2,8 @@
 
 class ExpireRequestableJob < ApplicationJob
   def perform(requestable)
-    if requestable.requested? && requestable.expired_at.present? &&
-         Time.zone.now > requestable.expired_at
+    if requestable.requested? && requestable.expires_at.present? &&
+         Time.zone.now > requestable.expires_at
       ExpireRequestable.call(requestable:, user: "Expirer")
     end
   end

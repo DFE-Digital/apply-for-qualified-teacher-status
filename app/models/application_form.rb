@@ -276,6 +276,10 @@ class ApplicationForm < ApplicationRecord
     draft? ? 6.months : nil
   end
 
+  def requested_at
+    created_at
+  end
+
   private
 
   def build_documents

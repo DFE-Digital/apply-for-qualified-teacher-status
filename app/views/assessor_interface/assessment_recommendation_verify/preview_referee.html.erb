@@ -15,7 +15,7 @@
   reference_request: OpenStruct.new(
     slug: "reference-request",
     work_history: @application_form.work_histories.first,
-    expired_at: Time.zone.now + 6.weeks,
+    expires_at: Time.zone.now + 6.weeks,
     assessment: @assessment,
     application_form: @application_form
   ),

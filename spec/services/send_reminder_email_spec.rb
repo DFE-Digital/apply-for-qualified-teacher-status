@@ -191,7 +191,7 @@ RSpec.describe SendReminderEmail do
       let(:remindable) do
         create(
           :further_information_request,
-          created_at: further_information_requested_at,
+          requested_at: further_information_requested_at,
           assessment:,
         )
       end
@@ -230,12 +230,24 @@ RSpec.describe SendReminderEmail do
     end
 
     context "with a received FI request" do
-      let(:remindable) { create(:further_information_request, :received) }
+      let(:remindable) do
+        create(
+          :further_information_request,
+          :received,
+          requested_at: Time.zone.now,
+        )
+      end
       include_examples "doesn't send an email"
     end
 
     context "with an expired FI request" do
-      let(:remindable) { create(:further_information_request, :expired) }
+      let(:remindable) do
+        create(
+          :further_information_request,
+          :expired,
+          requested_at: Time.zone.now,
+        )
+      end
       include_examples "doesn't send an email"
     end
 
@@ -250,7 +262,7 @@ RSpec.describe SendReminderEmail do
       let(:remindable) do
         create(
           :reference_request,
-          created_at: reference_requested_at,
+          requested_at: reference_requested_at,
           assessment:,
         )
       end
@@ -269,12 +281,16 @@ RSpec.describe SendReminderEmail do
     end
 
     context "with a received reference request" do
-      let(:remindable) { create(:reference_request, :received) }
+      let(:remindable) do
+        create(:reference_request, :received, requested_at: Time.zone.now)
+      end
       include_examples "doesn't send an email"
     end
 
     context "with an expired reference request" do
-      let(:remindable) { create(:reference_request, :expired) }
+      let(:remindable) do
+        create(:reference_request, :expired, requested_at: Time.zone.now)
+      end
       include_examples "doesn't send an email"
     end
   end

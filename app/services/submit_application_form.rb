@@ -68,7 +68,11 @@ class SubmitApplicationForm
   def create_professional_standing_request(assessment)
     return unless application_form.teaching_authority_provides_written_statement
 
-    requestable = ProfessionalStandingRequest.create!(assessment:)
+    requestable =
+      ProfessionalStandingRequest.create!(
+        assessment:,
+        requested_at: Time.zone.now,
+      )
 
     TimelineEvent.create!(
       event_type: "requestable_requested",
@@ -76,5 +80,7 @@ class SubmitApplicationForm
       creator: user,
       requestable:,
     )
+
+    requestable.after_requested(user:)
   end
 end

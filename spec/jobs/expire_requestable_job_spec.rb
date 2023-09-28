@@ -32,16 +32,16 @@ RSpec.describe ExpireRequestableJob do
 
     context "with requested FI request" do
       let(:requestable) do
-        create(:further_information_request, created_at:, assessment:)
+        create(:further_information_request, requested_at:, assessment:)
       end
 
       context "when less than six weeks old" do
-        let(:created_at) { (6.weeks - 1.hour).ago }
+        let(:requested_at) { (6.weeks - 1.hour).ago }
         it_behaves_like "not expired requestable"
       end
 
       context "when it is more than six weeks old" do
-        let(:created_at) { (6.weeks + 1.hour).ago }
+        let(:requested_at) { (6.weeks + 1.hour).ago }
         it_behaves_like "expired requestable"
       end
 
@@ -56,12 +56,12 @@ RSpec.describe ExpireRequestableJob do
             let(:region) { create(:region, :in_country, country_code:) }
 
             context "when it is less than four weeks old" do
-              let(:created_at) { (4.weeks - 1.hour).ago }
+              let(:requested_at) { (4.weeks - 1.hour).ago }
               it_behaves_like "not expired requestable"
             end
 
             context "when it is more than four weeks old from #{country_code}" do
-              let(:created_at) { (4.weeks + 1.hour).ago }
+              let(:requested_at) { (4.weeks + 1.hour).ago }
               it_behaves_like "expired requestable"
             end
           end
@@ -71,7 +71,11 @@ RSpec.describe ExpireRequestableJob do
 
     context "with any received FI request" do
       let(:requestable) do
-        create(:further_information_request, :received, created_at: 1.year.ago)
+        create(
+          :further_information_request,
+          :received,
+          requested_at: 1.year.ago,
+        )
       end
 
       it_behaves_like "not expired requestable"
@@ -79,7 +83,7 @@ RSpec.describe ExpireRequestableJob do
 
     context "with any expired FI request" do
       let(:requestable) do
-        create(:further_information_request, :expired, created_at: 1.year.ago)
+        create(:further_information_request, :expired, requested_at: 1.year.ago)
       end
 
       it_behaves_like "not expired requestable"
@@ -93,17 +97,17 @@ RSpec.describe ExpireRequestableJob do
       end
 
       let(:requestable) do
-        create(:professional_standing_request, created_at:, assessment:)
+        create(:professional_standing_request, requested_at:, assessment:)
       end
 
       context "when less than 36 weeks old" do
-        let(:created_at) { (36.weeks - 1.hour).ago }
+        let(:requested_at) { (36.weeks - 1.hour).ago }
 
         it_behaves_like "not expired requestable"
       end
 
       context "when it is more than 36 weeks old" do
-        let(:created_at) { (36.weeks + 1.hour).ago }
+        let(:requested_at) { (36.weeks + 1.hour).ago }
 
         it_behaves_like "expired requestable"
       end
@@ -114,7 +118,7 @@ RSpec.describe ExpireRequestableJob do
         create(
           :professional_standing_request,
           :received,
-          created_at: 1.year.ago,
+          requested_at: 1.year.ago,
         )
       end
 
@@ -123,23 +127,27 @@ RSpec.describe ExpireRequestableJob do
 
     context "with any expired professional standing request" do
       let(:requestable) do
-        create(:professional_standing_request, :expired, created_at: 1.year.ago)
+        create(
+          :professional_standing_request,
+          :expired,
+          requested_at: 1.year.ago,
+        )
       end
 
       it_behaves_like "not expired requestable"
     end
 
     context "with a requested reference request" do
-      let(:requestable) { create(:reference_request, created_at:) }
+      let(:requestable) { create(:reference_request, requested_at:) }
 
       context "when less than six weeks old" do
-        let(:created_at) { (6.weeks - 1.hour).ago }
+        let(:requested_at) { (6.weeks - 1.hour).ago }
 
         it_behaves_like "not expired requestable"
       end
 
       context "when it is more than six weeks old" do
-        let(:created_at) { (6.weeks + 1.hour).ago }
+        let(:requested_at) { (6.weeks + 1.hour).ago }
 
         it_behaves_like "expired requestable"
       end
@@ -147,7 +155,7 @@ RSpec.describe ExpireRequestableJob do
 
     context "with any received reference request" do
       let(:requestable) do
-        create(:reference_request, :received, created_at: 1.year.ago)
+        create(:reference_request, :received, requested_at: 1.year.ago)
       end
 
       it_behaves_like "not expired requestable"
@@ -155,7 +163,7 @@ RSpec.describe ExpireRequestableJob do
 
     context "with any expired reference request" do
       let(:requestable) do
-        create(:reference_request, :expired, created_at: 1.year.ago)
+        create(:reference_request, :expired, requested_at: 1.year.ago)
       end
 
       it_behaves_like "not expired requestable"

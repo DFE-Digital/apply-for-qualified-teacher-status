@@ -302,7 +302,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     let(:further_information_request) do
-      create(:further_information_request, created_at: Date.new(2020, 1, 1))
+      create(:further_information_request, requested_at: Date.new(2020, 1, 1))
     end
 
     describe "#subject" do

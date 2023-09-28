@@ -3,8 +3,10 @@
 module Expirable
   extend ActiveSupport::Concern
 
-  def expired_at
-    expires_after ? created_at + expires_after : nil
+  def expires_at
+    return nil if requested_at.nil? || expires_after.nil?
+
+    requested_at + expires_after
   end
 
   def after_expired(user:)

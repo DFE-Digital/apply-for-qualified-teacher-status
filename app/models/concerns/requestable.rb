@@ -14,17 +14,23 @@ module Requestable
 
     validates :state, presence: true, inclusion: { in: states.values }
 
+    validates :requested_at, presence: true, if: :requested?
     validates :received_at, presence: true, if: :received?
+    validates :expired_at, presence: true, if: :expired?
     validates :reviewed_at, presence: true, unless: -> { passed.nil? }
 
     scope :respondable, -> { not_received.merge(ApplicationForm.assessable) }
 
     define_method :requested! do
-      update!(state: "requested", received_at: nil)
+      update!(state: "requested", requested_at: Time.zone.now)
     end
 
     define_method :received! do
       update!(state: "received", received_at: Time.zone.now)
+    end
+
+    define_method :expired! do
+      update!(state: "expired", expired_at: Time.zone.now)
     end
 
     has_one :application_form, through: :assessment
@@ -39,7 +45,7 @@ module Requestable
   end
 
   def overdue?
-    expired? || (received? && expired_at.present? && received_at > expired_at)
+    expired? || (received? && expires_at.present? && received_at > expires_at)
   end
 
   def failed
@@ -51,6 +57,10 @@ module Requestable
     return state if passed.nil?
 
     passed ? "accepted" : "rejected"
+  end
+
+  def after_requested(user:)
+    # implement logic after this requestable has been requested
   end
 
   def after_received(user:)

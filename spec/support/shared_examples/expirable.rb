@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "an expirable" do
-  describe "#expired_at" do
-    let(:expired_at) { subject.expired_at }
+  describe "#expires_at" do
+    let(:expires_at) { subject.expires_at }
 
     it "doesn't raise an error" do
-      expect { expired_at }.to_not raise_error
+      expect { expires_at }.to_not raise_error
     end
   end
 

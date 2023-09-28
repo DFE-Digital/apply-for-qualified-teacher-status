@@ -179,18 +179,20 @@
     - created_at
     - updated_at
   :further_information_requests:
-    - id
-    - received_at
-    - state
-    - created_at
-    - updated_at
     - assessment_id
-    - passed
+    - created_at
+    - expired_at
     - failure_assessor_note
-    - working_days_since_received
-    - working_days_received_to_recommendation
-    - working_days_assessment_started_to_creation
+    - id
+    - passed
+    - received_at
+    - requested_at
     - reviewed_at
+    - state
+    - updated_at
+    - working_days_assessment_started_to_creation
+    - working_days_received_to_recommendation
+    - working_days_since_received
   :further_information_request_items:
     - id
     - information_type
@@ -212,17 +214,19 @@
     - created_at
     - updated_at
   :professional_standing_requests:
-    - id
     - assessment_id
-    - state
-    - received_at
-    - location_note
     - created_at
-    - updated_at
-    - reviewed_at
-    - passed
+    - expired_at
     - failure_assessor_note
+    - id
+    - location_note
+    - passed
     - ready_for_review
+    - received_at
+    - requested_at
+    - reviewed_at
+    - state
+    - updated_at
   :qualifications:
     - id
     - application_form_id
@@ -236,48 +240,52 @@
     - updated_at
     - part_of_university_degree
   :qualification_requests:
-    - id
     - assessment_id
-    - qualification_id
-    - state
-    - received_at
+    - created_at
+    - expired_at
+    - failure_assessor_note
+    - id
     - location_note
-    - created_at
-    - updated_at
-    - reviewed_at
     - passed
-    - failure_assessor_note
-  :reference_requests:
-    - id
-    - slug
-    - assessment_id
-    - work_history_id
-    - state
+    - qualification_id
     - received_at
-    - contact_response
-    - contact_name
-    - contact_job
-    - contact_comment
-    - dates_response
-    - dates_comment
-    - hours_response
-    - hours_comment
-    - children_response
-    - children_comment
-    - lessons_response
-    - lessons_comment
-    - reports_response
-    - reports_comment
-    - misconduct_response
-    - misconduct_comment
-    - satisfied_response
-    - satisfied_comment
-    - additional_information_response
-    - created_at
-    - updated_at
-    - passed
-    - failure_assessor_note
+    - requested_at
     - reviewed_at
+    - state
+    - updated_at
+  :reference_requests:
+    - additional_information_response
+    - assessment_id
+    - children_comment
+    - children_response
+    - contact_comment
+    - contact_job
+    - contact_name
+    - contact_response
+    - created_at
+    - dates_comment
+    - dates_response
+    - expired_at
+    - failure_assessor_note
+    - hours_comment
+    - hours_response
+    - id
+    - lessons_comment
+    - lessons_response
+    - misconduct_comment
+    - misconduct_response
+    - passed
+    - received_at
+    - reports_comment
+    - reports_response
+    - requested_at
+    - reviewed_at
+    - satisfied_comment
+    - satisfied_response
+    - slug
+    - state
+    - updated_at
+    - work_history_id
   :regions:
     - application_form_skip_work_history
     - country_id
