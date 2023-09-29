@@ -46,16 +46,14 @@ module TimelineEntry
         old_status:
           render(
             StatusTag::Component.new(
-              status:
-                timeline_event.old_state.presence || timeline_event.old_value,
+              status: timeline_event.old_value,
               class_context: "timeline-event",
             ),
           ).strip,
         new_status:
           render(
             StatusTag::Component.new(
-              status:
-                timeline_event.new_state.presence || timeline_event.new_value,
+              status: timeline_event.new_value,
               class_context: "timeline-event",
             ),
           ).strip,

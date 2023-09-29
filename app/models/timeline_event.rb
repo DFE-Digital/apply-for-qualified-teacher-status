@@ -15,9 +15,7 @@
 #  mailer_action_name    :string           default(""), not null
 #  mailer_class_name     :string           default(""), not null
 #  message_subject       :string           default(""), not null
-#  new_state             :string           default(""), not null
 #  new_value             :text             default(""), not null
-#  old_state             :string           default(""), not null
 #  old_value             :text             default(""), not null
 #  requestable_type      :string
 #  subjects              :text             default([]), not null, is an Array
