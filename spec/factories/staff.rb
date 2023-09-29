@@ -80,6 +80,10 @@ FactoryBot.define do
       support_console_permission { true }
     end
 
+    trait :with_verification_permission do
+      verify_permission { true }
+    end
+
     trait :with_withdraw_permission do
       withdraw_permission { true }
     end
