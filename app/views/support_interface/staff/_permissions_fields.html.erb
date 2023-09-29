@@ -14,6 +14,9 @@
   <%= f.govuk_check_box :support_console_permission, 1, 0, multiple: false, link_errors: true,
                         label: { text: t("activerecord.attributes.staff.support_console_permission") } %>
 
+  <%= f.govuk_check_box :verify_permission, 1, 0, multiple: false, link_errors: true,
+                        label: { text: t("activerecord.attributes.staff.verify_permission") } %>
+
   <%= f.govuk_check_box :withdraw_permission, 1, 0, multiple: false, link_errors: true,
                         label: { text: t("activerecord.attributes.staff.withdraw_permission") } %>
 <% end %>

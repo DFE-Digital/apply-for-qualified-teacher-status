@@ -51,6 +51,7 @@ en:
         change_work_history_permission: Change work history references
         reverse_decision_permission: Reverse decisions
         support_console_permission: Support console access
+        verify_permission: Verify applicants
         withdraw_permission: Withdraw
     errors:
       models:
