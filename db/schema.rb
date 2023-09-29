@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_101325) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_29_084821) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -449,6 +449,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_101325) do
     t.boolean "reverse_decision_permission", default: false, null: false
     t.boolean "withdraw_permission", default: false, null: false
     t.boolean "change_name_permission", default: false, null: false
+    t.boolean "verify_permission", default: false, null: false
     t.index "lower((email)::text)", name: "index_staff_on_lower_email", unique: true
     t.index ["confirmation_token"], name: "index_staff_on_confirmation_token", unique: true
     t.index ["invitation_token"], name: "index_staff_on_invitation_token", unique: true
