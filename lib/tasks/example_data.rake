@@ -60,6 +60,7 @@ def staff_members
       change_work_history_permission: false,
       reverse_decision_permission: false,
       support_console_permission: false,
+      verify_permission: false,
       withdraw_permission: false,
     },
     {
@@ -70,6 +71,7 @@ def staff_members
       change_work_history_permission: false,
       reverse_decision_permission: false,
       support_console_permission: false,
+      verify_permission: false,
       withdraw_permission: false,
     },
     {
@@ -80,6 +82,7 @@ def staff_members
       change_work_history_permission: true,
       reverse_decision_permission: true,
       support_console_permission: true,
+      verify_permission: false,
       withdraw_permission: true,
     },
     {
@@ -90,6 +93,18 @@ def staff_members
       change_work_history_permission: false,
       reverse_decision_permission: false,
       support_console_permission: false,
+      verify_permission: false,
+      withdraw_permission: false,
+    },
+    {
+      name: "Victarion Verifier",
+      email: "victarion-verifier@example.com",
+      award_decline_permission: false,
+      change_name_permission: false,
+      change_work_history_permission: false,
+      reverse_decision_permission: false,
+      support_console_permission: false,
+      verify_permission: true,
       withdraw_permission: false,
     },
   ]

@@ -33,6 +33,7 @@ class SupportInterface::StaffController < SupportInterface::BaseController
       :change_work_history_permission,
       :reverse_decision_permission,
       :support_console_permission,
+      :verify_permission,
       :withdraw_permission,
     )
   end

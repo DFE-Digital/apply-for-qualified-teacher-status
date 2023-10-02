@@ -18,6 +18,7 @@ class Staff::InvitationsController < Devise::InvitationsController
         change_work_history_permission
         reverse_decision_permission
         support_console_permission
+        verify_permission
         withdraw_permission
       ],
     )

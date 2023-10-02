@@ -357,6 +357,7 @@
     - support_console_permission
     - unconfirmed_email
     - updated_at
+    - verify_permission
     - withdraw_permission
   :teachers:
     - canonical_email

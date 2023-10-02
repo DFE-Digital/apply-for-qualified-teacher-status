@@ -34,6 +34,7 @@
 #  support_console_permission     :boolean          default(FALSE), not null
 #  unconfirmed_email              :string
 #  unlock_token                   :string
+#  verify_permission              :boolean          default(FALSE), not null
 #  withdraw_permission            :boolean          default(FALSE), not null
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
@@ -77,6 +78,10 @@ FactoryBot.define do
 
     trait :with_support_console_permission do
       support_console_permission { true }
+    end
+
+    trait :with_verification_permission do
+      verify_permission { true }
     end
 
     trait :with_withdraw_permission do
