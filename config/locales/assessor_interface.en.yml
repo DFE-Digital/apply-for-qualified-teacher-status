@@ -15,9 +15,9 @@ en:
         assessment_tasks:
           sections:
             further_information_requests: Further information requests
-            initial_assessment: Initial assessment
+            initial_assessment: Assessment
             pre_assessment_tasks: Pre-assessment tasks
-            verification_requests: Verification requests
+            verification_requests: Verification
           items:
             assessment_recommendation: Assessment recommendation
             await_professional_standing_request: Awaiting third-party professional standing
