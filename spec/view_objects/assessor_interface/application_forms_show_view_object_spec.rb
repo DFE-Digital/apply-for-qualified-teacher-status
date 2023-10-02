@@ -61,31 +61,31 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     it do
       is_expected.to include_task_list_item(
-        "Initial assessment",
+        "Assessment",
         "Check personal information",
       )
     end
     it do
       is_expected.to_not include_task_list_item(
-        "Initial assessment",
+        "Assessment",
         "Check qualifications",
       )
     end
     it do
       is_expected.to_not include_task_list_item(
-        "Initial assessment",
+        "Assessment",
         "Check work history",
       )
     end
     it do
       is_expected.to_not include_task_list_item(
-        "Initial assessment",
+        "Assessment",
         "Check professional standing",
       )
     end
     it do
       is_expected.to include_task_list_item(
-        "Initial assessment",
+        "Assessment",
         "Initial assessment recommendation",
         status: :cannot_start,
       )
@@ -197,7 +197,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Initial assessment",
+          "Assessment",
           "Check work history",
         )
       end
@@ -210,7 +210,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Initial assessment",
+          "Assessment",
           "Check professional standing",
         )
       end
@@ -221,7 +221,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Initial assessment",
+          "Assessment",
           "Initial assessment recommendation",
           status: :not_started,
         )
@@ -231,7 +231,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         before { assessment.award! }
         it do
           is_expected.to include_task_list_item(
-            "Initial assessment",
+            "Assessment",
             "Initial assessment recommendation",
             status: :completed,
           )
@@ -242,7 +242,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         before { assessment.decline! }
         it do
           is_expected.to include_task_list_item(
-            "Initial assessment",
+            "Assessment",
             "Initial assessment recommendation",
             status: :completed,
           )
@@ -258,7 +258,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
         it do
           is_expected.to include_task_list_item(
-            "Initial assessment",
+            "Assessment",
             "Initial assessment recommendation",
             status: :in_progress,
           )
@@ -268,7 +268,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           before { create(:further_information_request, assessment:) }
           it do
             is_expected.to include_task_list_item(
-              "Initial assessment",
+              "Assessment",
               "Initial assessment recommendation",
               status: :completed,
             )
@@ -282,7 +282,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Further information requests",
+          "Assessment",
           "Review requested information from applicant",
           status: :cannot_start,
         )
@@ -294,7 +294,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Further information requests",
+          "Assessment",
           "Review requested information from applicant",
           status: :not_started,
         )
@@ -309,7 +309,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Further information requests",
+          "Assessment",
           "Review requested information from applicant",
           status: :in_progress,
         )
@@ -324,7 +324,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Further information requests",
+          "Assessment",
           "Review requested information from applicant",
           status: :in_progress,
         )
@@ -338,7 +338,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
       it do
         is_expected.to include_task_list_item(
-          "Further information requests",
+          "Assessment",
           "Review requested information from applicant",
           status: :completed,
         )
@@ -352,7 +352,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
       it do
         is_expected.to include_task_list_item(
-          "Further information requests",
+          "Assessment",
           "Review requested information from applicant",
           status: :completed,
         )
@@ -364,19 +364,19 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Verification requests",
+          "Verification",
           "Record LOPS response",
         )
       end
       it do
         is_expected.to include_task_list_item(
-          "Verification requests",
+          "Verification",
           "Review LOPS response",
         )
       end
       it do
         is_expected.to include_task_list_item(
-          "Verification requests",
+          "Verification",
           "Assessment recommendation",
         )
       end
@@ -387,13 +387,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Verification requests",
+          "Verification",
           "Record qualifications responses",
         )
       end
       it do
         is_expected.to include_task_list_item(
-          "Verification requests",
+          "Verification",
           "Assessment recommendation",
         )
       end
@@ -404,13 +404,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       it do
         is_expected.to include_task_list_item(
-          "Verification requests",
+          "Verification",
           "Verify reference requests",
         )
       end
       it do
         is_expected.to include_task_list_item(
-          "Verification requests",
+          "Verification",
           "Assessment recommendation",
         )
       end
