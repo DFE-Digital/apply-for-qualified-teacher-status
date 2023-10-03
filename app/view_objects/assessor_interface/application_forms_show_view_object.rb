@@ -210,9 +210,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def further_information_task_list_items
-    I18n.t(
-      "assessor_interface.application_forms.show.assessment_tasks.sections.further_information_requests",
-    )
     further_information_requests.map do |further_information_request|
       further_information_request_task_list_item(further_information_request)
     end
