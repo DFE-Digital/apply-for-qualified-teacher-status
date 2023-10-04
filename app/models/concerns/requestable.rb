@@ -89,4 +89,8 @@ module Requestable
   def after_reviewed(user:)
     # implement logic after this requestable has been reviewed
   end
+
+  def after_verified(user:)
+    # implement logic after this requestable has been verified
+  end
 end
