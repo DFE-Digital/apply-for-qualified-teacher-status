@@ -30,7 +30,7 @@ class ReviewRequestable
   def create_timeline_event
     TimelineEvent.create!(
       creator: user,
-      event_type: "requestable_assessed",
+      event_type: "requestable_reviewed",
       requestable:,
       application_form:,
     )

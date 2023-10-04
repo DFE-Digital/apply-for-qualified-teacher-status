@@ -73,11 +73,16 @@ en:
           ProfessionalStandingRequest: Professional standing expired
           QualificationRequest: Qualification expired
           ReferenceRequest: Reference expired
-        requestable_assessed:
+        requestable_reviewed:
           FurtherInformationRequest: Further information assessed
-          ProfessionalStandingRequest: Professional standing assessed
-          QualificationRequest: Qualification assessed
-          ReferenceRequest: Reference assessed
+          ProfessionalStandingRequest: Professional standing reviewed
+          QualificationRequest: Qualification reviewed
+          ReferenceRequest: Reference reviewed
+        requestable_verified:
+          FurtherInformationRequest: Further information verified
+          ProfessionalStandingRequest: Professional standing verified
+          QualificationRequest: Qualification verified
+          ReferenceRequest: Reference verified
         stage_changed: Stage changed
         status_changed: Status changed
       description:
@@ -101,11 +106,16 @@ en:
           ProfessionalStandingRequest: The professional standing request has expired.
           QualificationRequest: A qualification request has expired.
           ReferenceRequest: A reference has expired.
-        requestable_assessed:
+        requestable_reviewed:
           FurtherInformationRequest: Further information request has been assessed.
-          ProfessionalStandingRequest: The professional standing request has been assessed.
-          QualificationRequest: A qualification has been assessed.
-          ReferenceRequest: A reference has been assessed.
+          ProfessionalStandingRequest: The professional standing request has been reviewed.
+          QualificationRequest: A qualification has been reviewed.
+          ReferenceRequest: A reference has been reviewed.
+        requestable_verified:
+          FurtherInformationRequest: Further information request has been verified.
+          ProfessionalStandingRequest: The professional standing request has been verified.
+          QualificationRequest: A qualification has been verified.
+          ReferenceRequest: A reference has been verified.
         stage_changed: Stage changed from %{old_stage} to %{new_stage}.
         status_changed: Status changed from %{old_status} to %{new_status}.
       columns:

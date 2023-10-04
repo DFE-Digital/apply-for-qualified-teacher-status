@@ -67,7 +67,7 @@ class UpdateAssessmentSection
 
     TimelineEvent.create!(
       creator: user,
-      event_type: :assessment_section_recorded,
+      event_type: "assessment_section_recorded",
       assessment_section:,
       application_form:,
       old_value: old_status,

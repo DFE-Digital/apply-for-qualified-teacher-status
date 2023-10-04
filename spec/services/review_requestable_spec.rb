@@ -38,7 +38,7 @@ RSpec.describe ReviewRequestable do
 
   it "records a timeline event" do
     expect { call }.to have_recorded_timeline_event(
-      :requestable_assessed,
+      :requestable_reviewed,
       creator: user,
       requestable:,
     )

@@ -39,7 +39,7 @@
           </ul>
         <% end %>
       <% end %>
-    <% elsif timeline_event.requestable_assessed? && timeline_event.requestable.is_a?(FurtherInformationRequest) %>
+    <% elsif timeline_event.requestable_reviewed? && timeline_event.requestable.is_a?(FurtherInformationRequest) %>
       <p class="govuk-body">Further information request has been assessed.</p>
 
       <% if (failure_assessor_note = description_vars[:failure_assessor_note]).present? %>
