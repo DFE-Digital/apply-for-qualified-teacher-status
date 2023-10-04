@@ -122,7 +122,7 @@ RSpec.describe ApplicationFormHelper do
             },
             value: {
               text:
-                "<strong class=\"govuk-tag govuk-tag--grey\">Not started</strong>\n",
+                "<strong class=\"govuk-tag govuk-tag--grey\">Assessment not started</strong>\n",
             },
           },
         ],

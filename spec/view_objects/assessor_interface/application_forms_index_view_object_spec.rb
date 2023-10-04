@@ -71,9 +71,19 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         it { is_expected.to be_empty }
       end
 
-      context "with a status filter" do
+      context "with an action required by filter" do
         before do
-          expect_any_instance_of(Filters::Status).to receive(:apply).and_return(
+          expect_any_instance_of(Filters::ActionRequiredBy).to receive(
+            :apply,
+          ).and_return(ApplicationForm.none)
+        end
+
+        it { is_expected.to be_empty }
+      end
+
+      context "with a stage filter" do
+        before do
+          expect_any_instance_of(Filters::Stage).to receive(:apply).and_return(
             ApplicationForm.none,
           )
         end
@@ -150,150 +160,42 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
   end
 
-  describe "#status_filter_options" do
-    subject(:status_filter_options) { view_object.status_filter_options }
+  describe "#stage_filter_options" do
+    subject(:stage_filter_options) { view_object.stage_filter_options }
 
     it do
       is_expected.to eq(
-        {
-          OpenStruct.new(
-            id: "preliminary_check",
-            label: "Preliminary check (0)",
-          ) => [],
-          OpenStruct.new(id: "submitted", label: "Not started (0)") => [],
-          OpenStruct.new(
-            id: "assessment_in_progress",
-            label: "Assessment in progress (0)",
-          ) => [],
-          OpenStruct.new(id: "waiting_on", label: "Waiting on (0)") => [
-            OpenStruct.new(
-              id: "waiting_on_further_information",
-              label: "Further information (0)",
-            ),
-            OpenStruct.new(
-              id: "waiting_on_professional_standing",
-              label: "Professional standing (0)",
-            ),
-            OpenStruct.new(
-              id: "waiting_on_qualification",
-              label: "Qualification (0)",
-            ),
-            OpenStruct.new(id: "waiting_on_reference", label: "Reference (0)"),
-          ],
-          OpenStruct.new(id: "received", label: "Received (0)") => [
-            OpenStruct.new(
-              id: "received_further_information",
-              label: "Further information (0)",
-            ),
-            OpenStruct.new(
-              id: "received_professional_standing",
-              label: "Professional standing (0)",
-            ),
-            OpenStruct.new(
-              id: "received_qualification",
-              label: "Qualification (0)",
-            ),
-            OpenStruct.new(id: "received_reference", label: "Reference (0)"),
-          ],
-          OpenStruct.new(id: "overdue", label: "Overdue (0)") => [],
-          OpenStruct.new(
-            id: "awarded_pending_checks",
-            label: "Award pending (0)",
-          ) => [],
-          OpenStruct.new(id: "awarded", label: "Awarded (0)") => [],
-          OpenStruct.new(id: "declined", label: "Declined (0)") => [],
-          OpenStruct.new(
-            id: "potential_duplicate_in_dqt",
-            label: "Potential duplication in DQT (0)",
-          ) => [],
-          OpenStruct.new(id: "withdrawn", label: "Withdrawn (0)") => [],
-        },
+        [
+          OpenStruct.new(id: "pre_assessment", label: "Pre-assessment (0)"),
+          OpenStruct.new(id: "not_started", label: "Not started (0)"),
+          OpenStruct.new(id: "assessment", label: "Assessment (0)"),
+          OpenStruct.new(id: "verification", label: "Verification (0)"),
+          OpenStruct.new(id: "review", label: "Review (0)"),
+          OpenStruct.new(id: "completed", label: "Completed (0)"),
+        ],
       )
     end
 
     context "with application forms" do
       before do
-        create_list(:application_form, 1, :preliminary_check)
-        create_list(:application_form, 2, :submitted)
-        create_list(:application_form, 3, :assessment_in_progress)
-        create_list(
-          :application_form,
-          4,
-          :waiting_on,
-          waiting_on_further_information: true,
-        )
-        create_list(
-          :application_form,
-          5,
-          :received,
-          received_professional_standing: true,
-        )
-        create_list(:application_form, 6, :overdue, overdue_qualification: true)
-        create_list(:application_form, 7, :awarded_pending_checks)
-        create_list(:application_form, 8, :awarded)
-        create_list(:application_form, 9, :declined)
-        create_list(:application_form, 10, :potential_duplicate_in_dqt)
-        create_list(:application_form, 11, :withdrawn)
+        create_list(:application_form, 1, :submitted, :pre_assessment_stage)
+        create_list(:application_form, 2, :submitted, :not_started_stage)
+        create_list(:application_form, 3, :submitted, :assessment_stage)
+        create_list(:application_form, 4, :submitted, :verification_stage)
+        create_list(:application_form, 5, :submitted, :review_stage)
+        create_list(:application_form, 6, :submitted, :completed_stage)
       end
 
       it do
         is_expected.to eq(
-          {
-            OpenStruct.new(
-              id: "preliminary_check",
-              label: "Preliminary check (1)",
-            ) => [],
-            OpenStruct.new(id: "submitted", label: "Not started (2)") => [],
-            OpenStruct.new(
-              id: "assessment_in_progress",
-              label: "Assessment in progress (3)",
-            ) => [],
-            OpenStruct.new(id: "waiting_on", label: "Waiting on (4)") => [
-              OpenStruct.new(
-                id: "waiting_on_further_information",
-                label: "Further information (4)",
-              ),
-              OpenStruct.new(
-                id: "waiting_on_professional_standing",
-                label: "Professional standing (0)",
-              ),
-              OpenStruct.new(
-                id: "waiting_on_qualification",
-                label: "Qualification (0)",
-              ),
-              OpenStruct.new(
-                id: "waiting_on_reference",
-                label: "Reference (0)",
-              ),
-            ],
-            OpenStruct.new(id: "received", label: "Received (5)") => [
-              OpenStruct.new(
-                id: "received_further_information",
-                label: "Further information (0)",
-              ),
-              OpenStruct.new(
-                id: "received_professional_standing",
-                label: "Professional standing (5)",
-              ),
-              OpenStruct.new(
-                id: "received_qualification",
-                label: "Qualification (0)",
-              ),
-              OpenStruct.new(id: "received_reference", label: "Reference (0)"),
-            ],
-            OpenStruct.new(id: "overdue", label: "Overdue (6)") => [],
-            OpenStruct.new(
-              id: "awarded_pending_checks",
-              label: "Award pending (7)",
-            ) => [],
-            OpenStruct.new(id: "awarded", label: "Awarded (8)") => [],
-            OpenStruct.new(id: "declined", label: "Declined (9)") => [],
-            OpenStruct.new(
-              id: "potential_duplicate_in_dqt",
-              label: "Potential duplication in DQT (10)",
-            ) => [],
-            OpenStruct.new(id: "withdrawn", label: "Withdrawn (11)") => [],
-          },
+          [
+            OpenStruct.new(id: "pre_assessment", label: "Pre-assessment (1)"),
+            OpenStruct.new(id: "not_started", label: "Not started (2)"),
+            OpenStruct.new(id: "assessment", label: "Assessment (3)"),
+            OpenStruct.new(id: "verification", label: "Verification (4)"),
+            OpenStruct.new(id: "review", label: "Review (5)"),
+            OpenStruct.new(id: "completed", label: "Completed (6)"),
+          ],
         )
       end
     end

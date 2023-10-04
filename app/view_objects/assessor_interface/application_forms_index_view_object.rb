@@ -39,48 +39,29 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     end
   end
 
-  def status_filter_options
-    STATUS_FILTER_OPTIONS.each_with_object({}) do |(status, substatuses), memo|
-      memo[status_filter_entry(status)] = substatuses.map do |sub_status|
-        status_filter_entry(status, sub_status)
-      end
-    end
+  def stage_filter_options
+    STAGE_FILTER_OPTIONS.map { |name| stage_filter_entry(name) }
   end
 
   private
 
   ACTION_REQUIRED_BY_OPTIONS = %w[admin assessor external].freeze
 
-  STATUS_FILTER_OPTIONS = {
-    preliminary_check: [],
-    submitted: [],
-    assessment_in_progress: [],
-    waiting_on: %i[
-      further_information
-      professional_standing
-      qualification
-      reference
-    ],
-    received: %i[
-      further_information
-      professional_standing
-      qualification
-      reference
-    ],
-    overdue: [],
-    awarded_pending_checks: [],
-    awarded: [],
-    declined: [],
-    potential_duplicate_in_dqt: [],
-    withdrawn: [],
-  }.freeze
+  STAGE_FILTER_OPTIONS = %w[
+    pre_assessment
+    not_started
+    assessment
+    verification
+    review
+    completed
+  ].freeze
 
   def filter_params
     (session[:filter_params] || {}).with_indifferent_access
   end
 
-  def application_forms_without_action_required_by_filter
-    @application_forms_without_action_required_by_filter ||=
+  def application_forms_without_counted_filters
+    @application_forms_without_counted_filters ||=
       begin
         filters = [
           ::Filters::Assessor,
@@ -96,19 +77,15 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       end
   end
 
-  def application_forms_without_status_filter
-    @application_forms_without_status_filter ||=
-      ::Filters::ActionRequiredBy.apply(
-        scope: application_forms_without_action_required_by_filter,
-        params: filter_params,
-      )
-  end
-
   def application_forms_with_pagy
     @application_forms_with_pagy ||=
       pagy(
-        ::Filters::Status.apply(
-          scope: application_forms_without_status_filter,
+        ::Filters::Stage.apply(
+          scope:
+            ::Filters::ActionRequiredBy.apply(
+              scope: application_forms_without_counted_filters,
+              params: filter_params,
+            ),
           params: filter_params,
         ).order(submitted_at: :asc),
       )
@@ -116,9 +93,13 @@ class AssessorInterface::ApplicationFormsIndexViewObject
 
   def action_required_by_filter_counts
     @action_required_by_filter_counts ||=
-      application_forms_without_action_required_by_filter.group(
-        :action_required_by,
-      ).count
+      ::Filters::Stage
+        .apply(
+          scope: application_forms_without_counted_filters,
+          params: filter_params,
+        )
+        .group(:action_required_by)
+        .count
   end
 
   def action_required_by_filter_entry(name)
@@ -129,52 +110,28 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     )
   end
 
-  def status_filter_counts
-    @status_filter_counts ||=
-      begin
-        all_options =
-          STATUS_FILTER_OPTIONS.each_with_object(
-            {},
-          ) do |(status, substatuses), memo|
-            memo[status.to_s] = nil
-
-            substatuses.each do |substatus|
-              memo["#{status}_#{substatus}"] = status.to_s
-            end
-          end
-
-        table = ApplicationForm.arel_table
-
-        counts =
-          all_options.filter_map do |status, parent_status|
-            if parent_status.present?
-              Arel.star.count.filter(
-                table[:status].eq(parent_status).and(table[status].eq(true)),
-              )
-            else
-              Arel.star.count.filter(table[:status].eq(status))
-            end
-          end
-
-        results = application_forms_without_status_filter.pick(*counts)
-
-        Hash[all_options.keys.zip(results)]
-      end
+  def stage_filter_counts
+    @stage_filter_counts ||=
+      ::Filters::ActionRequiredBy
+        .apply(
+          scope: application_forms_without_counted_filters,
+          params: filter_params,
+        )
+        .group(:stage)
+        .count
   end
 
-  def status_filter_entry(*status_path)
-    name = status_path.join("_")
-
+  def stage_filter_entry(name)
     readable_name =
       I18n.t(
-        status_path.last,
+        name,
         scope: %i[components status_tag],
-        default: status_path.last.to_s.humanize,
+        default: name.to_s.humanize,
       )
 
     OpenStruct.new(
       id: name,
-      label: "#{readable_name} (#{status_filter_counts.fetch(name, 0)})",
+      label: "#{readable_name} (#{stage_filter_counts.fetch(name, 0)})",
     )
   end
 

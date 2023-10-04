@@ -45,8 +45,8 @@ module PageObjects
         sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
       end
 
-      section :status_filter, "#app-applications-filters-status" do
-        sections :statuses, GovukCheckboxItem, ".govuk-checkboxes__item"
+      section :stage_filter, "#app-applications-filters-stage" do
+        sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
       end
 
       sections :search_results, ".app-search-results__item" do

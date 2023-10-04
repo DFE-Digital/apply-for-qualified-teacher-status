@@ -41,8 +41,8 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     then_i_see_a_list_of_applications_filtered_by_action_required_by
 
     when_i_clear_the_filters
-    and_i_apply_the_status_filter
-    then_i_see_a_list_of_applications_filtered_by_state
+    and_i_apply_the_stage_filter
+    then_i_see_a_list_of_applications_filtered_by_stage
   end
 
   private
@@ -146,18 +146,18 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     )
   end
 
-  def and_i_apply_the_status_filter
-    awarded_state =
-      applications_page.status_filter.statuses.find do |status|
-        status.label.text == "Awarded (1)"
+  def and_i_apply_the_stage_filter
+    completed_item =
+      applications_page.stage_filter.items.find do |item|
+        item.label.text == "Completed (1)"
       rescue Capybara::ElementNotFound
         false
       end
-    awarded_state.checkbox.click
+    completed_item.checkbox.click
     applications_page.apply_filters.click
   end
 
-  def then_i_see_a_list_of_applications_filtered_by_state
+  def then_i_see_a_list_of_applications_filtered_by_stage
     expect(applications_page.search_results.count).to eq(1)
     expect(applications_page.search_results.first.name.text).to eq("John Smith")
   end

@@ -220,7 +220,12 @@ COUNTRIES = {
       sanction_check: "written",
     },
     { name: "Quebec", status_check: "written", sanction_check: "written" },
-    { name: "Alberta", status_check: "written", sanction_check: "written" },
+    {
+      name: "Alberta",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_provides_written_statement: true,
+    },
     {
       name: "British Columbia",
       status_check: "online",
@@ -250,13 +255,26 @@ COUNTRIES = {
       },
     ],
   },
-  "HK" => [{ status_check: "written", sanction_check: "written" }],
+  "HK" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_provides_written_statement: true,
+    },
+  ],
   "IN" => {
     subject_limited: true,
+    regions: [{ requires_preliminary_check: true }],
   },
   "JM" => {
     subject_limited: true,
-    regions: [{ status_check: "written", sanction_check: "written" }],
+    regions: [
+      {
+        status_check: "written",
+        sanction_check: "written",
+        requires_preliminary_check: true,
+      },
+    ],
   },
   "NG" => {
     subject_limited: true,
@@ -278,7 +296,13 @@ COUNTRIES = {
   },
   "ZA" => {
     subject_limited: true,
-    regions: [{ status_check: "written", sanction_check: "written" }],
+    regions: [
+      {
+        status_check: "written",
+        sanction_check: "written",
+        requires_preliminary_check: true,
+      },
+    ],
   },
   "UA" => [{ reduced_evidence_accepted: true }],
   "ZW" => {

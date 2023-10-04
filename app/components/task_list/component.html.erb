@@ -22,7 +22,7 @@
               <% end %>
             </span>
 
-            <%= render(StatusTag::Component.new(id: status_id, status: item[:status], class_context: "app-task-list")) %>
+            <%= render(StatusTag::Component.new(item[:status], id: status_id, class_context: "app-task-list")) %>
           </li>
         <% end %>
       </ul>
