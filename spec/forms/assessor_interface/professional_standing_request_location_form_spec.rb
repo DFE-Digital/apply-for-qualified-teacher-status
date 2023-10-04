@@ -43,8 +43,8 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestLocationForm,
 
       it { is_expected.to be true }
 
-      it "changes the state" do
-        expect { save }.to change(requestable, :state).to("received")
+      it "sets the received at date" do
+        expect { save }.to change(requestable, :received_at).from(nil)
       end
 
       it "sets the location note" do

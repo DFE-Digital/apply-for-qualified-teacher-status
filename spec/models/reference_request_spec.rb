@@ -31,7 +31,7 @@
 #  satisfied_comment               :text             default(""), not null
 #  satisfied_response              :boolean
 #  slug                            :string           not null
-#  state                           :string           not null
+#  state                           :string           default("requested"), not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #  assessment_id                   :bigint           not null
@@ -72,6 +72,7 @@ RSpec.describe ReferenceRequest do
       let(:expected) do
         create(
           :reference_request,
+          :requested,
           assessment:
             create(
               :assessment,

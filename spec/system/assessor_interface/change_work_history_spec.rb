@@ -124,7 +124,7 @@ RSpec.describe "Assessor change work history", type: :system do
 
   def reference_request
     @reference_request ||=
-      create(:reference_request, assessment:, work_history:)
+      create(:reference_request, :requested, assessment:, work_history:)
   end
 
   def assessor

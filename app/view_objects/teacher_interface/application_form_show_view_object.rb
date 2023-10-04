@@ -119,6 +119,12 @@ class TeacherInterface::ApplicationFormShowViewObject
     professional_standing_request&.expired? || false
   end
 
+  def request_further_information?
+    further_information_request.present? &&
+      further_information_request.requested? &&
+      !further_information_request.received?
+  end
+
   def request_professional_standing_certificate?
     teaching_authority_provides_written_statement &&
       professional_standing_request&.requested? &&

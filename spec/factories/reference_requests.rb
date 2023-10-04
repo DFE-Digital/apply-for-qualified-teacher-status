@@ -31,7 +31,7 @@
 #  satisfied_comment               :text             default(""), not null
 #  satisfied_response              :boolean
 #  slug                            :string           not null
-#  state                           :string           not null
+#  state                           :string           default("requested"), not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #  assessment_id                   :bigint           not null
@@ -61,35 +61,33 @@ FactoryBot.define do
       )
     end
 
-    requested
-
     trait :requested do
-      state { "requested" }
       requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
     trait :received do
-      state { "received" }
       received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
       receivable
     end
 
     trait :expired do
-      state { "expired" }
       expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
-    trait :passed do
-      passed { true }
-      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+    trait :reviewed do
       received
+      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+    end
+
+    trait :passed do
+      reviewed
+      passed { true }
     end
 
     trait :failed do
+      reviewed
       passed { false }
       failure_assessor_note { "Notes." }
-      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-      received
     end
 
     trait :receivable do

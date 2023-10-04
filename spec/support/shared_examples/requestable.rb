@@ -1,41 +1,14 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "a requestable" do
-  it do
-    is_expected.to define_enum_for(:state).with_values(
-      requested: "requested",
-      received: "received",
-      expired: "expired",
-    ).backed_by_column_of_type(:string)
-  end
-
   describe "associations" do
     it { is_expected.to belong_to(:assessment) }
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:state) }
-
+    it { is_expected.to_not validate_presence_of(:requested_at) }
     it { is_expected.to_not validate_presence_of(:received_at) }
     it { is_expected.to_not validate_presence_of(:expired_at) }
-
-    context "when received" do
-      before { subject.state = "requested" }
-
-      it { is_expected.to validate_presence_of(:requested_at) }
-    end
-
-    context "when received" do
-      before { subject.state = "received" }
-
-      it { is_expected.to validate_presence_of(:received_at) }
-    end
-
-    context "when expired" do
-      before { subject.state = "expired" }
-
-      it { is_expected.to validate_presence_of(:expired_at) }
-    end
 
     context "when reviewed" do
       before { subject.passed = [true, false].sample }
@@ -49,17 +22,15 @@ RSpec.shared_examples "a requestable" do
 
     it "sets the requested at date" do
       freeze_time do
-        expect { call }.to change(subject, :requested_at).to(Time.zone.now)
+        expect { call }.to change(subject, :requested_at).from(nil).to(
+          Time.zone.now,
+        )
       end
     end
   end
 
   describe "#received!" do
     let(:call) { subject.received! }
-
-    it "changes the state" do
-      expect { call }.to change(subject, :received?).from(false).to(true)
-    end
 
     it "sets the received at date" do
       freeze_time do
@@ -72,10 +43,6 @@ RSpec.shared_examples "a requestable" do
 
   describe "#expired!" do
     let(:call) { subject.expired! }
-
-    it "changes the state" do
-      expect { call }.to change(subject, :expired?).from(false).to(true)
-    end
 
     it "sets the received at date" do
       freeze_time do
@@ -105,20 +72,35 @@ RSpec.shared_examples "a requestable" do
   end
 
   describe "#status" do
-    it "is the same as state when passed is nil and state is defined" do
-      subject.passed = nil
-      subject.state = "received"
-      expect(subject.status).to eq("received")
-    end
-
     it "is accepted when passed is true" do
       subject.passed = true
+      subject.reviewed_at = Time.zone.now
       expect(subject.status).to eq("accepted")
     end
 
     it "is rejected when passed is false" do
       subject.passed = false
+      subject.reviewed_at = Time.zone.now
       expect(subject.status).to eq("rejected")
+    end
+
+    it "is received when received at is set" do
+      subject.received_at = Time.zone.now
+      expect(subject.status).to eq("received")
+    end
+
+    it "is overdue when expired at is set" do
+      subject.expired_at = Time.zone.now
+      expect(subject.status).to eq("overdue")
+    end
+
+    it "is waiting on when requested at is set" do
+      subject.requested_at = Time.zone.now
+      expect(subject.status).to eq("waiting_on")
+    end
+
+    it "is not started by default" do
+      expect(subject.status).to eq("not_started")
     end
   end
 

@@ -119,7 +119,6 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "and professional standing request received" do
         before do
           professional_standing_request.update!(
-            state: "received",
             received_at: 1.day.ago,
             location_note: "wat",
           )

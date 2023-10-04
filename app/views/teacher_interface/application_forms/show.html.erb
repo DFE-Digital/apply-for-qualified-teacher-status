@@ -8,7 +8,7 @@
   <%= render "teacher_interface/application_forms/show/declined", view_object: @view_object %>
 <% elsif @view_object.application_form.awarded? %>
   <%= render "teacher_interface/application_forms/show/awarded", view_object: @view_object %>
-<% elsif @view_object.further_information_request&.requested? %>
+<% elsif @view_object.request_further_information? %>
   <%= render "teacher_interface/application_forms/show/further_information_requested", view_object: @view_object %>
 <% elsif @view_object.request_professional_standing_certificate? %>
   <%= render "teacher_interface/application_forms/show/request_professional_standing_certificate", view_object: @view_object %>

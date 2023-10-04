@@ -11,8 +11,7 @@ module TeacherInterface
       @further_information_request ||=
         FurtherInformationRequest
           .joins(:assessment)
-          .requested
-          .where(assessments: { application_form: })
+          .where(received_at: nil, assessments: { application_form: })
           .find(params[:id])
     end
 
@@ -74,7 +73,7 @@ module TeacherInterface
         item.document
       elsif item.work_history_contact?
         "Contact name: #{item.contact_name}<br/>
-         Contact job: #{item.contact_job}<br/> 
+         Contact job: #{item.contact_job}<br/>
          Contact email: #{item.contact_email}".html_safe
       end
     end

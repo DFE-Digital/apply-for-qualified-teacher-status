@@ -9,7 +9,7 @@
 #  received_at                                 :datetime
 #  requested_at                                :datetime
 #  reviewed_at                                 :datetime
-#  state                                       :string           not null
+#  state                                       :string           default("requested"), not null
 #  working_days_assessment_started_to_creation :integer
 #  working_days_received_to_recommendation     :integer
 #  working_days_since_received                 :integer
@@ -32,9 +32,11 @@ class FurtherInformationRequest < ApplicationRecord
 
   scope :remindable,
         -> do
-          requested.joins(assessment: :application_form).merge(
-            ApplicationForm.assessable,
-          )
+          where
+            .not(requested_at: nil)
+            .where(expired_at: nil)
+            .joins(assessment: :application_form)
+            .merge(ApplicationForm.assessable)
         end
 
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze

@@ -11,7 +11,7 @@
 #  received_at                                 :datetime
 #  requested_at                                :datetime
 #  reviewed_at                                 :datetime
-#  state                                       :string           not null
+#  state                                       :string           default("requested"), not null
 #  working_days_assessment_started_to_creation :integer
 #  working_days_received_to_recommendation     :integer
 #  working_days_since_received                 :integer
@@ -38,6 +38,7 @@ RSpec.describe FurtherInformationRequest do
       let(:expected) do
         create(
           :further_information_request,
+          :requested,
           assessment:
             create(
               :assessment,
