@@ -10,13 +10,13 @@ class AssessorInterface::RequestableReviewForm
   attribute :passed, :boolean
   validates :passed, inclusion: [true, false]
 
-  attribute :failure_assessor_note, :string
-  validates :failure_assessor_note, presence: true, if: -> { passed == false }
+  attribute :note, :string
+  validates :note, presence: true, if: -> { passed == false }
 
   def save
     return false if invalid?
 
-    ReviewRequestable.call(requestable:, user:, passed:, failure_assessor_note:)
+    ReviewRequestable.call(requestable:, user:, passed:, note:)
 
     true
   end

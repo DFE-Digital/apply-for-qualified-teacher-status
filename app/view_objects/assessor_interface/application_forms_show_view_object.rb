@@ -234,7 +234,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       status:
         if further_information_request.requested?
           :cannot_start
-        elsif further_information_request.passed.nil?
+        elsif further_information_request.review_passed.nil?
           :not_started
         elsif assessment.request_further_information?
           :in_progress

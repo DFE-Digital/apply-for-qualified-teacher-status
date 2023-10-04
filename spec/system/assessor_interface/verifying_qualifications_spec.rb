@@ -114,7 +114,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
     form.received_yes_radio_item.choose
     form.passed_no_radio_item.choose
-    form.failure_assessor_note_field.fill_in with: "Note."
+    form.note_field.fill_in with: "Note."
     form.submit_button.click
   end
 

@@ -85,7 +85,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
 
     context "when not passed and not recommended" do
       before do
-        further_information_request.reviewed!(true)
+        further_information_request.update!(review_passed: true)
         assessment.request_further_information!
       end
       it { is_expected.to be true }
@@ -93,7 +93,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
 
     context "when passed and not recommended" do
       before do
-        further_information_request.reviewed!(true)
+        further_information_request.update!(review_passed: true)
         assessment.request_further_information!
       end
       it { is_expected.to be true }
@@ -101,7 +101,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
 
     context "when not passed and recommended" do
       before do
-        further_information_request.update!(passed: nil)
+        further_information_request.update!(review_passed: nil)
         assessment.award!
       end
       it { is_expected.to be true }
@@ -109,7 +109,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
 
     context "when passed and recommended" do
       before do
-        further_information_request.reviewed!(true)
+        further_information_request.update!(review_passed: true)
         assessment.award!
       end
       it { is_expected.to be false }

@@ -45,13 +45,13 @@ FactoryBot.define do
 
     trait :passed do
       reviewed
-      passed { true }
+      review_passed { true }
     end
 
     trait :failed do
       reviewed
-      passed { false }
-      failure_assessor_note { "Notes." }
+      review_passed { false }
+      review_note { "Notes." }
     end
 
     trait :with_items do

@@ -8,18 +8,11 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
 
   let(:received) { "" }
   let(:passed) { "" }
-  let(:failure_assessor_note) { "" }
+  let(:note) { "" }
   let(:failed) { "" }
 
   subject(:form) do
-    described_class.new(
-      requestable:,
-      user:,
-      received:,
-      passed:,
-      failure_assessor_note:,
-      failed:,
-    )
+    described_class.new(requestable:, user:, received:, passed:, note:, failed:)
   end
 
   describe "validations" do
@@ -37,7 +30,7 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
       context "and not passed" do
         let(:passed) { "false" }
 
-        it { is_expected.to validate_presence_of(:failure_assessor_note) }
+        it { is_expected.to validate_presence_of(:note) }
       end
     end
 
@@ -61,8 +54,8 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
         expect { save }.to change(requestable, :received_at).from(nil)
       end
 
-      it "sets passed" do
-        expect { save }.to change(requestable, :passed).to(true)
+      it "sets review passed" do
+        expect { save }.to change(requestable, :review_passed).to(true)
       end
 
       it "records a received timeline event" do
@@ -85,7 +78,7 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
     context "when received and not passed" do
       let(:received) { "true" }
       let(:passed) { "false" }
-      let(:failure_assessor_note) { "Note." }
+      let(:note) { "Note." }
 
       it { is_expected.to be true }
 
@@ -93,14 +86,12 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
         expect { save }.to change(requestable, :received_at).from(nil)
       end
 
-      it "sets passed" do
-        expect { save }.to change(requestable, :passed).to(false)
+      it "sets review passed" do
+        expect { save }.to change(requestable, :review_passed).to(false)
       end
 
-      it "sets passed" do
-        expect { save }.to change(requestable, :failure_assessor_note).to(
-          "Note.",
-        )
+      it "sets review note" do
+        expect { save }.to change(requestable, :review_note).to("Note.")
       end
 
       it "records a received timeline event" do
@@ -126,8 +117,8 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
 
       it { is_expected.to be true }
 
-      it "sets passed" do
-        expect { save }.to change(requestable, :passed).to(false)
+      it "sets review passed" do
+        expect { save }.to change(requestable, :review_passed).to(false)
       end
 
       it "records an assessed timeline event" do
@@ -145,8 +136,8 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
 
       it { is_expected.to be true }
 
-      it "doesn't set passed" do
-        expect { save }.to_not change(requestable, :passed)
+      it "doesn't set review passed" do
+        expect { save }.to_not change(requestable, :review_passed)
       end
 
       it "doesn't record a reviewed timeline event" do

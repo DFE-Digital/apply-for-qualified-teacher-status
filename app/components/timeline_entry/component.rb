@@ -140,13 +140,16 @@ module TimelineEntry
 
     def requestable_reviewed_vars
       {
-        passed: timeline_event.requestable.passed,
-        failure_assessor_note: timeline_event.requestable.failure_assessor_note,
+        passed: timeline_event.requestable.review_passed,
+        note: timeline_event.requestable.review_note,
       }
     end
 
     def requestable_verified_vars
-      {}
+      {
+        passed: timeline_event.requestable.verify_passed,
+        note: timeline_event.requestable.verify_note,
+      }
     end
 
     def information_changed_vars

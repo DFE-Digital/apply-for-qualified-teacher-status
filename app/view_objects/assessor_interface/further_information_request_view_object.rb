@@ -81,7 +81,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
   end
 
   def can_update?
-    further_information_request.passed.nil? ||
+    further_information_request.review_passed.nil? ||
       assessment.request_further_information?
   end
 

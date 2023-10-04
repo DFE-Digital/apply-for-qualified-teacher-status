@@ -6,11 +6,9 @@ RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
   let(:requestable) { create(:reference_request, :received) }
   let(:user) { create(:staff) }
   let(:passed) { nil }
-  let(:failure_assessor_note) { "" }
+  let(:note) { "" }
 
-  subject(:form) do
-    described_class.new(requestable:, user:, passed:, failure_assessor_note:)
-  end
+  subject(:form) { described_class.new(requestable:, user:, passed:, note:) }
 
   describe "validations" do
     it { is_expected.to allow_values(true, false).for(:passed) }
@@ -18,7 +16,7 @@ RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
     context "when not passed" do
       let(:passed) { "false" }
 
-      it { is_expected.to validate_presence_of(:failure_assessor_note) }
+      it { is_expected.to validate_presence_of(:note) }
     end
   end
 
@@ -28,8 +26,10 @@ RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
     context "when passed is true" do
       let(:passed) { true }
 
-      it "updates passed field" do
-        expect { save }.to change(requestable, :passed).from(nil).to(true)
+      it "updates review passed field" do
+        expect { save }.to change(requestable, :review_passed).from(nil).to(
+          true,
+        )
       end
 
       it "sets reviewed at" do
@@ -48,16 +48,18 @@ RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
 
     context "when passed is false" do
       let(:passed) { false }
-      let(:failure_assessor_note) { "Note." }
+      let(:note) { "Note." }
 
-      it "updates passed field" do
-        expect { save }.to change(requestable, :passed).from(nil).to(false)
+      it "updates review passed field" do
+        expect { save }.to change(requestable, :review_passed).from(nil).to(
+          false,
+        )
       end
 
-      it "updates failure_assessor_note field" do
-        expect { save }.to change(requestable, :failure_assessor_note).from(
-          "",
-        ).to("Note.")
+      it "updates review note field" do
+        expect { save }.to change(requestable, :review_note).from("").to(
+          "Note.",
+        )
       end
 
       it "sets reviewed at" do

@@ -26,7 +26,7 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
       end
 
       if requestable.requested? && requestable.reviewed?
-        requestable.update!(passed: nil, reviewed_at: nil)
+        requestable.update!(review_passed: nil, reviewed_at: nil)
         ApplicationFormStatusUpdater.call(application_form:, user:)
       end
 

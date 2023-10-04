@@ -6,14 +6,12 @@ RSpec.describe ReviewRequestable do
   let(:requestable) { create(:further_information_request, :received) }
   let(:user) { create(:staff) }
   let(:passed) { true }
-  let(:failure_assessor_note) { "Note" }
+  let(:note) { "Note" }
 
-  subject(:call) do
-    described_class.call(requestable:, user:, passed:, failure_assessor_note:)
-  end
+  subject(:call) { described_class.call(requestable:, user:, passed:, note:) }
 
-  describe "requestable passed" do
-    subject { requestable.passed }
+  describe "requestable review decision" do
+    subject { requestable.review_passed }
 
     it { is_expected.to be_nil }
 
@@ -24,8 +22,8 @@ RSpec.describe ReviewRequestable do
     end
   end
 
-  describe "requestable failure_assessor_note" do
-    subject { requestable.failure_assessor_note }
+  describe "requestable review note" do
+    subject { requestable.review_note }
 
     it { is_expected.to be_blank }
 

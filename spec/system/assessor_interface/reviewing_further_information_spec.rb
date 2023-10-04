@@ -43,7 +43,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   it "further information request passed and assessment finished" do
-    further_information_request.reviewed!(true)
+    further_information_request.update!(review_passed: true)
     further_information_request.assessment.award!
 
     when_i_visit_the(:assessor_application_page, application_id:)

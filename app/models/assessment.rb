@@ -90,9 +90,9 @@ class Assessment < ApplicationRecord
       if skip_verification?
         all_sections_or_further_information_requests_passed?
       else
-        verify? && enough_reference_requests_passed? &&
-          all_qualification_requests_passed? &&
-          professional_standing_request_passed?
+        verify? && enough_reference_requests_review_passed? &&
+          all_qualification_requests_review_passed? &&
+          professional_standing_request_review_passed?
       end
     else
       all_sections_or_further_information_requests_passed?
@@ -186,40 +186,43 @@ class Assessment < ApplicationRecord
 
   def all_further_information_requests_passed?
     further_information_requests.present? &&
-      further_information_requests.all?(&:passed)
+      further_information_requests.all?(&:review_passed?)
   end
 
   def any_further_information_request_failed?
     further_information_requests.present? &&
-      further_information_requests.any?(&:failed)
+      further_information_requests.any?(&:review_failed?)
   end
 
-  def enough_reference_requests_passed?
+  def enough_reference_requests_review_passed?
     return false unless references_verified
 
     months_count =
       WorkHistoryDuration.new(
         work_history_relation:
           application_form.work_histories.where(
-            id: reference_requests.where(passed: true).map(&:work_history_id),
+            id:
+              reference_requests.where(review_passed: true).map(
+                &:work_history_id
+              ),
           ),
       ).count_months
 
     months_count >= 9
   end
 
-  def all_qualification_requests_passed?
+  def all_qualification_requests_review_passed?
     if qualification_requests.present?
-      qualification_requests.all?(&:passed)
+      qualification_requests.all?(&:review_passed?)
     else
       true
     end
   end
 
-  def professional_standing_request_passed?
+  def professional_standing_request_review_passed?
     if !application_form.teaching_authority_provides_written_statement &&
          professional_standing_request.present?
-      professional_standing_request.passed?
+      professional_standing_request.review_passed?
     else
       true
     end

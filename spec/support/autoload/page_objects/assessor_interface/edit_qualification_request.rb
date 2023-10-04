@@ -21,8 +21,8 @@ module PageObjects
                 "#assessor-interface-qualification-request-form-passed-false-field",
                 visible: false
 
-        element :failure_assessor_note_field,
-                "#assessor-interface-qualification-request-form-failure-assessor-note-field"
+        element :note_field,
+                "#assessor-interface-qualification-request-form-note-field"
 
         element :failed_yes_radio_item,
                 "#assessor-interface-qualification-request-form-failed-true-field",

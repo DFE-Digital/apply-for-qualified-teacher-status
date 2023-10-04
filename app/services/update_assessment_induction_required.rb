@@ -35,7 +35,7 @@ class UpdateAssessmentInductionRequired
       else
         WorkHistory.joins(:reference_request).where(
           reference_requests: {
-            passed: true,
+            review_passed: true,
             assessment:,
           },
         )
