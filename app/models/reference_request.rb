@@ -15,22 +15,25 @@
 #  dates_comment                   :text             default(""), not null
 #  dates_response                  :boolean
 #  expired_at                      :datetime
-#  failure_assessor_note           :string           default(""), not null
 #  hours_comment                   :text             default(""), not null
 #  hours_response                  :boolean
 #  lessons_comment                 :text             default(""), not null
 #  lessons_response                :boolean
 #  misconduct_comment              :text             default(""), not null
 #  misconduct_response             :boolean
-#  passed                          :boolean
 #  received_at                     :datetime
 #  reports_comment                 :text             default(""), not null
 #  reports_response                :boolean
 #  requested_at                    :datetime
+#  review_note                     :string           default(""), not null
+#  review_passed                   :boolean
 #  reviewed_at                     :datetime
 #  satisfied_comment               :text             default(""), not null
 #  satisfied_response              :boolean
 #  slug                            :string           not null
+#  verified_at                     :datetime
+#  verify_note                     :text             default(""), not null
+#  verify_passed                   :boolean
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #  assessment_id                   :bigint           not null

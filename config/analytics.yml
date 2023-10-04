@@ -182,11 +182,11 @@
     - assessment_id
     - created_at
     - expired_at
-    - failure_assessor_note
     - id
-    - passed
     - received_at
     - requested_at
+    - review_note
+    - review_passed
     - reviewed_at
     - updated_at
     - working_days_assessment_started_to_creation
@@ -216,15 +216,18 @@
     - assessment_id
     - created_at
     - expired_at
-    - failure_assessor_note
     - id
     - location_note
-    - passed
     - ready_for_review
     - received_at
     - requested_at
+    - review_note
+    - review_passed
     - reviewed_at
     - updated_at
+    - verified_at
+    - verify_note
+    - verify_passed
   :qualifications:
     - id
     - application_form_id
@@ -241,15 +244,18 @@
     - assessment_id
     - created_at
     - expired_at
-    - failure_assessor_note
     - id
     - location_note
-    - passed
     - qualification_id
     - received_at
     - requested_at
+    - review_note
+    - review_passed
     - reviewed_at
     - updated_at
+    - verified_at
+    - verify_note
+    - verify_passed
   :reference_requests:
     - additional_information_response
     - assessment_id
@@ -263,7 +269,6 @@
     - dates_comment
     - dates_response
     - expired_at
-    - failure_assessor_note
     - hours_comment
     - hours_response
     - id
@@ -271,16 +276,20 @@
     - lessons_response
     - misconduct_comment
     - misconduct_response
-    - passed
     - received_at
     - reports_comment
     - reports_response
     - requested_at
+    - review_note
+    - review_passed
     - reviewed_at
     - satisfied_comment
     - satisfied_response
     - slug
     - updated_at
+    - verified_at
+    - verify_note
+    - verify_passed
     - work_history_id
   :regions:
     - application_form_skip_work_history

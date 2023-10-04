@@ -17,7 +17,7 @@
     - has_work_history
     - subjects
   :further_information_requests:
-    - failure_assessor_note
+    - review_note
   :further_information_request_items:
     - failure_reason_assessor_feedback
     - response
@@ -28,6 +28,8 @@
     - text
   :professional_standing_requests:
     - location_note
+    - review_note
+    - verify_note
   :qualifications:
     - institution_name
     - institution_country_code
@@ -36,10 +38,12 @@
     - certificate_date
   :qualification_requests:
     - location_note
-    - failure_assessor_note
+    - review_note
+    - verify_note
   :reference_requests:
     - additional_information_response
-    - failure_assessor_note
+    - review_note
+    - verify_note
   :selected_failure_reasons:
     - assessor_feedback
   :staff:
