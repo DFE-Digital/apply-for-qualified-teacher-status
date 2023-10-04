@@ -21,8 +21,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def task_list_sections
     [
       pre_assessment_task_list_section,
-      initial_assessment_task_list_section,
-      further_information_task_list_section,
+      assessment_task_list_section,
       verification_task_list_section,
     ].compact
   end
@@ -120,18 +119,20 @@ class AssessorInterface::ApplicationFormsShowViewObject
     }
   end
 
-  def initial_assessment_task_list_section
+  def assessment_task_list_section
     return unless pre_assessment_complete?
 
     {
       title:
         I18n.t(
-          "assessor_interface.application_forms.show.assessment_tasks.sections.initial_assessment",
+          "assessor_interface.application_forms.show.assessment_tasks.sections.assessment",
         ),
-      items: [
-        *assessment_section_task_list_items(preliminary: false),
-        initial_assessment_recommendation_task_list_item,
-      ],
+      items:
+        (
+          assessment_section_task_list_items(preliminary: false) +
+            [initial_assessment_recommendation_task_list_item] +
+            further_information_task_list_items
+        ),
     }
   end
 
@@ -208,19 +209,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
     }
   end
 
-  def further_information_task_list_section
-    {
-      title:
-        I18n.t(
-          "assessor_interface.application_forms.show.assessment_tasks.sections.further_information_requests",
-        ),
-      items:
-        further_information_requests.map do |further_information_request|
-          further_information_request_task_list_item(
-            further_information_request,
-          )
-        end,
-    }
+  def further_information_task_list_items
+    further_information_requests.map do |further_information_request|
+      further_information_request_task_list_item(further_information_request)
+    end
   end
 
   def further_information_request_task_list_item(further_information_request)
@@ -267,7 +259,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     {
       title:
         I18n.t(
-          "assessor_interface.application_forms.show.assessment_tasks.sections.verification_requests",
+          "assessor_interface.application_forms.show.assessment_tasks.sections.verification",
         ),
       items:,
     }
