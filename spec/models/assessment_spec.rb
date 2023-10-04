@@ -52,11 +52,12 @@ RSpec.describe Assessment, type: :model do
 
     it do
       is_expected.to define_enum_for(:recommendation).with_values(
-        unknown: "unknown",
         award: "award",
-        verify: "verify",
         decline: "decline",
         request_further_information: "request_further_information",
+        review: "review",
+        unknown: "unknown",
+        verify: "verify",
       ).backed_by_column_of_type(:string)
     end
   end
@@ -189,107 +190,6 @@ RSpec.describe Assessment, type: :model do
         end
         it { is_expected.to be true }
       end
-    end
-  end
-
-  describe "#can_verify?" do
-    subject(:can_verify?) { assessment.can_verify? }
-
-    context "with an application under new regulations" do
-      let(:application_form) { create(:application_form) }
-
-      context "with an unknown assessment" do
-        before do
-          create(:assessment_section, :personal_information, assessment:)
-        end
-        it { is_expected.to be false }
-      end
-
-      context "with a passed assessment" do
-        before do
-          create(
-            :assessment_section,
-            :personal_information,
-            :passed,
-            assessment:,
-          )
-        end
-        it { is_expected.to be true }
-      end
-
-      context "with a passed assessment and reduced evidence" do
-        before do
-          application_form.update!(reduced_evidence_accepted: true)
-          create(
-            :assessment_section,
-            :personal_information,
-            :passed,
-            assessment:,
-          )
-        end
-        it { is_expected.to be false }
-      end
-
-      context "with a passed assessment and work history not required" do
-        before do
-          application_form.update!(needs_work_history: false)
-          create(
-            :assessment_section,
-            :personal_information,
-            :passed,
-            assessment:,
-          )
-        end
-        it { is_expected.to be false }
-      end
-
-      context "with a failed assessment" do
-        before do
-          create(
-            :assessment_section,
-            :personal_information,
-            :failed,
-            assessment:,
-          )
-        end
-        it { is_expected.to be false }
-
-        context "when further information was requested" do
-          before { assessment.request_further_information! }
-
-          context "with a passed further information request" do
-            before do
-              create(:further_information_request, :passed, assessment:)
-            end
-            it { is_expected.to be true }
-          end
-
-          context "with a failed further information request" do
-            before do
-              create(:further_information_request, :failed, assessment:)
-            end
-            it { is_expected.to be false }
-          end
-        end
-      end
-
-      context "with a mixture of assessments" do
-        before do
-          create(
-            :assessment_section,
-            :personal_information,
-            :passed,
-            assessment:,
-          )
-          create(:assessment_section, :qualifications, :failed, assessment:)
-        end
-        it { is_expected.to be false }
-      end
-    end
-
-    context "with an application under old regulations" do
-      let(:application_form) { create(:application_form, :old_regs) }
-      it { is_expected.to be false }
     end
   end
 
@@ -426,6 +326,127 @@ RSpec.describe Assessment, type: :model do
 
     context "with an existing further information request" do
       before { create(:further_information_request, assessment:) }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#can_review?" do
+    subject(:can_review?) { assessment.can_review? }
+
+    context "with an application under new regulations" do
+      let(:application_form) { create(:application_form) }
+
+      context "with an unknown assessment" do
+        before do
+          create(:assessment_section, :personal_information, assessment:)
+        end
+        it { is_expected.to be false }
+      end
+    end
+
+    context "with an application under old regulations" do
+      let(:application_form) { create(:application_form, :old_regs) }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#can_verify?" do
+    subject(:can_verify?) { assessment.can_verify? }
+
+    context "with an application under new regulations" do
+      let(:application_form) { create(:application_form) }
+
+      context "with an unknown assessment" do
+        before do
+          create(:assessment_section, :personal_information, assessment:)
+        end
+        it { is_expected.to be false }
+      end
+
+      context "with a passed assessment" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :passed,
+            assessment:,
+          )
+        end
+        it { is_expected.to be true }
+      end
+
+      context "with a passed assessment and reduced evidence" do
+        before do
+          application_form.update!(reduced_evidence_accepted: true)
+          create(
+            :assessment_section,
+            :personal_information,
+            :passed,
+            assessment:,
+          )
+        end
+        it { is_expected.to be false }
+      end
+
+      context "with a passed assessment and work history not required" do
+        before do
+          application_form.update!(needs_work_history: false)
+          create(
+            :assessment_section,
+            :personal_information,
+            :passed,
+            assessment:,
+          )
+        end
+        it { is_expected.to be false }
+      end
+
+      context "with a failed assessment" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :failed,
+            assessment:,
+          )
+        end
+        it { is_expected.to be false }
+
+        context "when further information was requested" do
+          before { assessment.request_further_information! }
+
+          context "with a passed further information request" do
+            before do
+              create(:further_information_request, :passed, assessment:)
+            end
+            it { is_expected.to be true }
+          end
+
+          context "with a failed further information request" do
+            before do
+              create(:further_information_request, :failed, assessment:)
+            end
+            it { is_expected.to be false }
+          end
+        end
+      end
+
+      context "with a mixture of assessments" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :passed,
+            assessment:,
+          )
+          create(:assessment_section, :qualifications, :failed, assessment:)
+        end
+        it { is_expected.to be false }
+      end
+    end
+
+    context "with an application under old regulations" do
+      let(:application_form) { create(:application_form, :old_regs) }
       it { is_expected.to be false }
     end
   end

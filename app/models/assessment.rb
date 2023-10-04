@@ -43,12 +43,12 @@ class Assessment < ApplicationRecord
   enum :recommendation,
        {
          award: "award",
-         verify: "verify",
          decline: "decline",
          request_further_information: "request_further_information",
+         review: "review",
          unknown: "unknown",
-       },
-       default: :unknown
+         verify: "verify",
+       }
 
   validates :recommendation,
             presence: true,
@@ -56,16 +56,8 @@ class Assessment < ApplicationRecord
               in: recommendations.values,
             }
 
-  def unknown!
-    update!(recommendation: "unknown", recommended_at: nil)
-  end
-
   def award!
     update!(recommendation: "award", recommended_at: Time.zone.now)
-  end
-
-  def verify!
-    update!(recommendation: "verify", recommended_at: Time.zone.now)
   end
 
   def decline!
@@ -77,6 +69,18 @@ class Assessment < ApplicationRecord
       recommendation: "request_further_information",
       recommended_at: Time.zone.now,
     )
+  end
+
+  def review!
+    update!(recommendation: "review", recommended_at: Time.zone.now)
+  end
+
+  def unknown!
+    update!(recommendation: "unknown", recommended_at: nil)
+  end
+
+  def verify!
+    update!(recommendation: "verify", recommended_at: Time.zone.now)
   end
 
   def completed?
@@ -97,14 +101,6 @@ class Assessment < ApplicationRecord
     else
       all_sections_or_further_information_requests_passed?
     end
-  end
-
-  def can_verify?
-    return false unless application_form.created_under_new_regulations?
-
-    return false if skip_verification?
-
-    all_sections_or_further_information_requests_passed?
   end
 
   def can_decline?
@@ -130,19 +126,36 @@ class Assessment < ApplicationRecord
     end
   end
 
+  def can_review?
+    return false unless application_form.created_under_new_regulations?
+
+    return false if skip_verification?
+
+    false
+  end
+
+  def can_verify?
+    return false unless application_form.created_under_new_regulations?
+
+    return false if skip_verification?
+
+    all_sections_or_further_information_requests_passed?
+  end
+
   def recommendable?
-    can_award? || can_verify? || can_decline? ||
-      can_request_further_information?
+    can_award? || can_decline? || can_request_further_information? ||
+      can_review? || can_verify?
   end
 
   def available_recommendations
     [].tap do |recommendations|
       recommendations << "award" if can_award?
-      recommendations << "verify" if can_verify?
       recommendations << "decline" if can_decline?
       if can_request_further_information?
         recommendations << "request_further_information"
       end
+      recommendations << "review" if can_review?
+      recommendations << "verify" if can_verify?
     end
   end
 
