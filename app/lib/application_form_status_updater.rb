@@ -180,14 +180,13 @@ class ApplicationFormStatusUpdater
            application_form.declined_at.present? ||
            application_form.awarded_at.present?
         "none"
-      elsif preliminary_check?
-        "admin"
       elsif dqt_trn_request.present? || assessment_in_review? ||
-            overdue_further_information || overdue_lops ||
-            overdue_qualification || overdue_reference ||
-            received_further_information || received_lops ||
+            overdue_further_information || overdue_qualification ||
+            overdue_reference || received_further_information ||
             received_qualification || received_reference
         "assessor"
+      elsif preliminary_check? || overdue_lops || received_lops
+        "admin"
       elsif waiting_on_further_information || waiting_on_lops ||
             waiting_on_qualification || waiting_on_reference
         "external"
