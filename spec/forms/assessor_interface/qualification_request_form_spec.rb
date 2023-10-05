@@ -126,10 +126,6 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
 
       it { is_expected.to be true }
 
-      it "doesn't change the state" do
-        expect { save }.to_not change(requestable, :state)
-      end
-
       it "sets passed" do
         expect { save }.to change(requestable, :passed).to(false)
       end
@@ -148,10 +144,6 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
       let(:failed) { "false" }
 
       it { is_expected.to be true }
-
-      it "doesn't change the state" do
-        expect { save }.to_not change(requestable, :state)
-      end
 
       it "doesn't set passed" do
         expect { save }.to_not change(requestable, :passed)

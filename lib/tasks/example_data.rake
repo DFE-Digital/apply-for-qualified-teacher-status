@@ -188,10 +188,9 @@ def create_application_forms
           )
         elsif (work_history = application_form.work_histories.first) &&
               rand(3).zero?
-          reference_request_trait = ReferenceRequest.states.keys.sample
           FactoryBot.create(
             :reference_request,
-            reference_request_trait,
+            %i[requested received expired].sample,
             assessment:,
             work_history:,
           )
@@ -202,10 +201,9 @@ def create_application_forms
           )
         elsif (qualification = application_form.qualifications.first) &&
               rand(2).zero?
-          qualification_trait = ReferenceRequest.states.keys.sample
           FactoryBot.create(
             :qualification_request,
-            qualification_trait,
+            %i[requested received expired].sample,
             assessment:,
             qualification:,
           )
@@ -227,19 +225,6 @@ def create_application_forms
             waiting_on_further_information: true,
           )
         end
-      elsif (work_history = application_form.work_histories.first) &&
-            rand(2).zero?
-        FactoryBot.create(
-          :reference_request,
-          %i[requested received expired].sample,
-          assessment:,
-          work_history:,
-        )
-        application_form.update!(
-          statuses: %w[waiting_on_reference],
-          stage: "verification",
-          waiting_on_reference: true,
-        )
       end
     end
   end

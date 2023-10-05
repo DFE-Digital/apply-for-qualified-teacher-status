@@ -246,7 +246,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_084821) do
 
   create_table "further_information_requests", force: :cascade do |t|
     t.bigint "assessment_id", null: false
-    t.string "state", default: "requested", null: false
     t.datetime "received_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -273,7 +272,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_084821) do
 
   create_table "professional_standing_requests", force: :cascade do |t|
     t.bigint "assessment_id", null: false
-    t.string "state", default: "requested", null: false
     t.datetime "received_at"
     t.text "location_note", default: "", null: false
     t.datetime "created_at", null: false
@@ -290,7 +288,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_084821) do
   create_table "qualification_requests", force: :cascade do |t|
     t.bigint "assessment_id", null: false
     t.bigint "qualification_id", null: false
-    t.string "state", default: "requested", null: false
     t.datetime "received_at"
     t.text "location_note", default: "", null: false
     t.datetime "created_at", null: false
@@ -322,7 +319,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_084821) do
     t.string "slug", null: false
     t.bigint "assessment_id", null: false
     t.bigint "work_history_id", null: false
-    t.string "state", default: "requested", null: false
     t.datetime "received_at"
     t.boolean "dates_response"
     t.boolean "hours_response"

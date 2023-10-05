@@ -66,10 +66,6 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestLocationForm,
 
       it { is_expected.to be true }
 
-      it "doesn't change the state" do
-        expect { save }.to_not change(requestable, :state)
-      end
-
       it "sets ready for review" do
         expect { save }.to change(requestable, :ready_for_review).to(true)
       end
@@ -80,10 +76,6 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestLocationForm,
       let(:ready_for_review) { "false" }
 
       it { is_expected.to be true }
-
-      it "doesn't change the state" do
-        expect { save }.to_not change(requestable, :state)
-      end
 
       it "doesn't set ready for review" do
         expect { save }.to_not change(requestable, :ready_for_review)
