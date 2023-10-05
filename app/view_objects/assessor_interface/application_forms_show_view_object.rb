@@ -399,13 +399,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
         :review_verifications,
       ],
       status:
-        if assessment.recommendable?
+        if assessment.completed? || assessment.recommendable?
           :completed
-        elsif (
-              !teaching_authority_provides_written_statement &&
-                professional_standing_request&.reviewed?
-            ) || qualification_requests.any?(&:reviewed?) ||
-              reference_requests.any?(&:reviewed?)
+        elsif !teaching_authority_provides_written_statement &&
+              professional_standing_request&.reviewed?
           :in_progress
         else
           :not_started
