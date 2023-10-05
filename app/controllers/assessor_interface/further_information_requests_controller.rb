@@ -41,9 +41,8 @@ module AssessorInterface
         RequestableReviewForm.new(
           requestable: view_object.further_information_request,
           user: current_staff,
-          passed: view_object.further_information_request.passed,
-          failure_assessor_note:
-            view_object.further_information_request.failure_assessor_note,
+          passed: view_object.further_information_request.review_passed,
+          note: view_object.further_information_request.review_note,
         )
     end
 
@@ -116,7 +115,7 @@ module AssessorInterface
     def requestable_review_form_params
       params.require(:assessor_interface_requestable_review_form).permit(
         :passed,
-        :failure_assessor_note,
+        :note,
       )
     end
   end

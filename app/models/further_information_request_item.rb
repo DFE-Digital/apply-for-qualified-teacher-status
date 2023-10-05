@@ -57,4 +57,16 @@ class FurtherInformationRequestItem < ApplicationRecord
       failure_reason_key,
     )
   end
+
+  def update_work_history_contact(user:)
+    return unless work_history_contact?
+
+    UpdateWorkHistoryContact.call(
+      user:,
+      work_history:,
+      name: contact_name,
+      job: contact_job,
+      email: contact_email,
+    )
+  end
 end

@@ -39,7 +39,7 @@ module AssessorInterface
           user: current_staff,
           received:,
           passed:,
-          failure_assessor_note: requestable.failure_assessor_note,
+          note: requestable.review_note,
           failed:,
         )
     end
@@ -74,7 +74,7 @@ module AssessorInterface
       params.require(:assessor_interface_qualification_request_form).permit(
         :received,
         :passed,
-        :failure_assessor_note,
+        :note,
         :failed,
       )
     end

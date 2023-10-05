@@ -412,10 +412,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
   context "further information request reviewed" do
     let(:further_information_request) do
-      create(
-        :further_information_request,
-        failure_assessor_note: "For this reason.",
-      )
+      create(:further_information_request, review_note: "For this reason.")
     end
 
     let(:timeline_event) do

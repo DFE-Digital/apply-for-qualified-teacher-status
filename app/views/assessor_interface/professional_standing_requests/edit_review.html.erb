@@ -17,7 +17,7 @@
     <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: t(".passed"), size: "s" } do %>
       <%= f.govuk_radio_button :passed, :true, link_errors: true %>
       <%= f.govuk_radio_button :passed, :false do %>
-        <%= f.govuk_text_area :failure_assessor_note, label: { text: t(".failure_assessor_note").html_safe } %>
+        <%= f.govuk_text_area :note, label: { text: t(".failure_assessor_note").html_safe } %>
       <% end %>
     <% end %>
 

@@ -13,10 +13,8 @@ class AssessorInterface::QualificationRequestForm
   attribute :passed, :boolean
   validates :passed, inclusion: [true, false], if: :received
 
-  attribute :failure_assessor_note, :string
-  validates :failure_assessor_note,
-            presence: true,
-            if: -> { received && passed == false }
+  attribute :note, :string
+  validates :note, presence: true, if: -> { received && passed == false }
 
   attribute :failed, :boolean
   validates :failed, inclusion: [true, false], unless: :received
@@ -32,14 +30,14 @@ class AssessorInterface::QualificationRequestForm
       end
 
       if review_passed.nil?
-        requestable.update!(passed: nil, reviewed_at: nil)
+        requestable.update!(review_passed: nil, reviewed_at: nil)
         ApplicationFormStatusUpdater.call(application_form:, user:)
       else
         ReviewRequestable.call(
           requestable:,
           user:,
           passed: review_passed,
-          failure_assessor_note:,
+          note:,
         )
       end
     end

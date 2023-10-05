@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AssessorInterface::RequestableReviewForm
+class AssessorInterface::RequestableVerifyForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
@@ -16,7 +16,7 @@ class AssessorInterface::RequestableReviewForm
   def save
     return false if invalid?
 
-    ReviewRequestable.call(requestable:, user:, passed:, note:)
+    VerifyRequestable.call(requestable:, user:, passed:, note:)
 
     true
   end

@@ -128,6 +128,10 @@ en:
         passed_options:
           true: "Yes"
           false: "No"
+      assessor_interface_requestable_verify_form:
+        passed_options:
+          true: "Yes"
+          false: "No"
       assessor_interface_verify_professional_standing_form:
         verify_professional_standing_options:
           true: Yes, verify letter of professional standing

@@ -39,8 +39,8 @@ module AssessorInterface
         RequestableReviewForm.new(
           requestable:,
           user: current_staff,
-          passed: requestable.passed,
-          failure_assessor_note: requestable.failure_assessor_note,
+          passed: requestable.review_passed,
+          note: requestable.review_note,
         )
     end
 
@@ -77,7 +77,7 @@ module AssessorInterface
       params.require(:assessor_interface_requestable_review_form).permit(
         :reviewed,
         :passed,
-        :failure_assessor_note,
+        :note,
       )
     end
 

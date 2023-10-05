@@ -73,7 +73,7 @@ module AssessorInterface
     def requestable_review_form_params
       params.require(:assessor_interface_requestable_review_form).permit(
         :passed,
-        :failure_assessor_note,
+        :note,
       )
     end
 

@@ -6,10 +6,10 @@
 #
 #  id                                          :bigint           not null, primary key
 #  expired_at                                  :datetime
-#  failure_assessor_note                       :string           default(""), not null
-#  passed                                      :boolean
 #  received_at                                 :datetime
 #  requested_at                                :datetime
+#  review_note                                 :string           default(""), not null
+#  review_passed                               :boolean
 #  reviewed_at                                 :datetime
 #  working_days_assessment_started_to_creation :integer
 #  working_days_received_to_recommendation     :integer
@@ -45,13 +45,13 @@ FactoryBot.define do
 
     trait :passed do
       reviewed
-      passed { true }
+      review_passed { true }
     end
 
     trait :failed do
       reviewed
-      passed { false }
-      failure_assessor_note { "Notes." }
+      review_passed { false }
+      review_note { "Notes." }
     end
 
     trait :with_items do

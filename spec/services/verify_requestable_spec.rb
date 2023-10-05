@@ -2,16 +2,16 @@
 
 require "rails_helper"
 
-RSpec.describe ReviewRequestable do
-  let(:requestable) { create(:further_information_request, :received) }
+RSpec.describe VerifyRequestable do
+  let(:requestable) { create(:professional_standing_request, :received) }
   let(:user) { create(:staff) }
   let(:passed) { true }
   let(:note) { "Note" }
 
   subject(:call) { described_class.call(requestable:, user:, passed:, note:) }
 
-  describe "requestable review decision" do
-    subject { requestable.review_passed }
+  describe "requestable verify decision" do
+    subject { requestable.verify_passed }
 
     it { is_expected.to be_nil }
 
@@ -22,8 +22,8 @@ RSpec.describe ReviewRequestable do
     end
   end
 
-  describe "requestable review note" do
-    subject { requestable.review_note }
+  describe "requestable verify note" do
+    subject { requestable.verify_note }
 
     it { is_expected.to be_blank }
 
@@ -36,7 +36,7 @@ RSpec.describe ReviewRequestable do
 
   it "records a timeline event" do
     expect { call }.to have_recorded_timeline_event(
-      :requestable_reviewed,
+      :requestable_verified,
       creator: user,
       requestable:,
     )

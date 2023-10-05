@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
+RSpec.describe AssessorInterface::RequestableVerifyForm, type: :model do
   let(:requestable) { create(:reference_request, :received) }
   let(:user) { create(:staff) }
   let(:passed) { nil }
@@ -27,14 +27,14 @@ RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
       let(:passed) { true }
 
       it "updates review passed field" do
-        expect { save }.to change(requestable, :review_passed).from(nil).to(
+        expect { save }.to change(requestable, :verify_passed).from(nil).to(
           true,
         )
       end
 
       it "sets reviewed at" do
         freeze_time do
-          expect { save }.to change(requestable, :reviewed_at).from(nil).to(
+          expect { save }.to change(requestable, :verified_at).from(nil).to(
             Time.zone.now,
           )
         end
@@ -51,20 +51,20 @@ RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
       let(:note) { "Note." }
 
       it "updates review passed field" do
-        expect { save }.to change(requestable, :review_passed).from(nil).to(
+        expect { save }.to change(requestable, :verify_passed).from(nil).to(
           false,
         )
       end
 
       it "updates review note field" do
-        expect { save }.to change(requestable, :review_note).from("").to(
+        expect { save }.to change(requestable, :verify_note).from("").to(
           "Note.",
         )
       end
 
       it "sets reviewed at" do
         freeze_time do
-          expect { save }.to change(requestable, :reviewed_at).from(nil).to(
+          expect { save }.to change(requestable, :verified_at).from(nil).to(
             Time.zone.now,
           )
         end

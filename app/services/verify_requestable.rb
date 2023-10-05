@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ReviewRequestable
+class VerifyRequestable
   include ServicePattern
 
   def initialize(requestable:, user:, passed:, note:)
@@ -13,12 +13,12 @@ class ReviewRequestable
   def call
     ActiveRecord::Base.transaction do
       requestable.update!(
-        review_passed: passed,
-        review_note: note,
-        reviewed_at: Time.zone.now,
+        verify_passed: passed,
+        verify_note: note,
+        verified_at: Time.zone.now,
       )
 
-      requestable.after_reviewed(user:)
+      requestable.after_verified(user:)
       application_form.reload
 
       create_timeline_event
@@ -34,7 +34,7 @@ class ReviewRequestable
   def create_timeline_event
     TimelineEvent.create!(
       creator: user,
-      event_type: "requestable_reviewed",
+      event_type: "requestable_verified",
       requestable:,
       application_form:,
     )
