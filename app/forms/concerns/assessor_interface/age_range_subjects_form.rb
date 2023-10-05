@@ -68,7 +68,7 @@ module AssessorInterface::AgeRangeSubjectsForm
   def create_timeline_event
     TimelineEvent.create!(
       creator: user,
-      event_type: :age_range_subjects_verified,
+      event_type: "age_range_subjects_verified",
       application_form:,
       assessment:,
       age_range_min: assessment.age_range_min,

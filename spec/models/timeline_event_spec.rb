@@ -84,10 +84,11 @@ RSpec.describe TimelineEvent do
         email_sent: "email_sent",
         information_changed: "information_changed",
         note_created: "note_created",
-        requestable_assessed: "requestable_assessed",
+        requestable_reviewed: "requestable_reviewed",
         requestable_expired: "requestable_expired",
         requestable_received: "requestable_received",
         requestable_requested: "requestable_requested",
+        requestable_verified: "requestable_verified",
         reviewer_assigned: "reviewer_assigned",
         stage_changed: "stage_changed",
         status_changed: "status_changed",
@@ -334,8 +335,39 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:new_value) }
     end
 
-    context "with a requestable assessed event type" do
-      before { timeline_event.event_type = :requestable_assessed }
+    context "with a requestable reviewed event type" do
+      before { timeline_event.event_type = :requestable_reviewed }
+
+      it { is_expected.to validate_absence_of(:assignee) }
+      it { is_expected.to validate_absence_of(:assessment_section) }
+      it { is_expected.to validate_absence_of(:note) }
+      it { is_expected.to validate_absence_of(:mailer_class_name) }
+      it { is_expected.to validate_absence_of(:mailer_action_name) }
+      it { is_expected.to validate_absence_of(:message_subject) }
+      it { is_expected.to validate_absence_of(:assessment) }
+      it { is_expected.to validate_absence_of(:age_range_min) }
+      it { is_expected.to validate_absence_of(:age_range_max) }
+      it { is_expected.to validate_absence_of(:subjects) }
+      it { is_expected.to validate_presence_of(:requestable_id) }
+      it { is_expected.to validate_presence_of(:requestable_type) }
+      it do
+        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+          %w[
+            FurtherInformationRequest
+            ProfessionalStandingRequest
+            QualificationRequest
+            ReferenceRequest
+          ],
+        )
+      end
+      it { is_expected.to validate_absence_of(:work_history_id) }
+      it { is_expected.to validate_absence_of(:column_name) }
+      it { is_expected.to validate_absence_of(:old_value) }
+      it { is_expected.to validate_absence_of(:new_value) }
+    end
+
+    context "with a requestable verified event type" do
+      before { timeline_event.event_type = :requestable_reviewed }
 
       it { is_expected.to validate_absence_of(:assignee) }
       it { is_expected.to validate_absence_of(:assessment_section) }

@@ -138,18 +138,15 @@ module TimelineEntry
 
     alias_method :requestable_expired_vars, :requestable_received_vars
 
-    def requestable_assessed_vars
-      requestable = timeline_event.requestable
+    def requestable_reviewed_vars
+      {
+        passed: timeline_event.requestable.passed,
+        failure_assessor_note: timeline_event.requestable.failure_assessor_note,
+      }
+    end
 
-      case requestable
-      when FurtherInformationRequest
-        {
-          passed: requestable.passed,
-          failure_assessor_note: requestable.failure_assessor_note,
-        }
-      else
-        {}
-      end
+    def requestable_verified_vars
+      {}
     end
 
     def information_changed_vars

@@ -410,7 +410,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
-  context "further information request assessed" do
+  context "further information request reviewed" do
     let(:further_information_request) do
       create(
         :further_information_request,
@@ -421,7 +421,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     let(:timeline_event) do
       create(
         :timeline_event,
-        :requestable_assessed,
+        :requestable_reviewed,
         requestable: further_information_request,
       )
     end
@@ -438,18 +438,18 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
-  context "professional standing request assessed" do
+  context "professional standing request reviewed" do
     let(:timeline_event) do
       create(
         :timeline_event,
-        :requestable_assessed,
+        :requestable_reviewed,
         requestable: create(:professional_standing_request),
       )
     end
 
     it "describes the event" do
       expect(component.text).to include(
-        "The professional standing request has been assessed.",
+        "The professional standing request has been reviewed.",
       )
     end
 
@@ -458,17 +458,17 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
-  context "qualification request assessed" do
+  context "qualification request reviewed" do
     let(:timeline_event) do
       create(
         :timeline_event,
-        :requestable_assessed,
+        :requestable_reviewed,
         requestable: create(:qualification_request),
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include("A qualification has been assessed.")
+      expect(component.text).to include("A qualification has been reviewed.")
     end
 
     it "attributes to the creator" do
@@ -476,17 +476,73 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
-  context "reference request assessed" do
+  context "reference request reviewed" do
     let(:timeline_event) do
       create(
         :timeline_event,
-        :requestable_assessed,
+        :requestable_reviewed,
         requestable: create(:reference_request),
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include("A reference has been assessed.")
+      expect(component.text).to include("A reference has been reviewed.")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "professional standing request verified" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_verified,
+        requestable: create(:professional_standing_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "The professional standing request has been verified.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "qualification request verified" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_verified,
+        requestable: create(:qualification_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("A qualification has been verified.")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "reference request verified" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_verified,
+        requestable: create(:reference_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("A reference has been verified.")
     end
 
     it "attributes to the creator" do

@@ -68,10 +68,11 @@ class TimelineEvent < ApplicationRecord
          email_sent: "email_sent",
          information_changed: "information_changed",
          note_created: "note_created",
-         requestable_assessed: "requestable_assessed",
          requestable_expired: "requestable_expired",
          requestable_received: "requestable_received",
          requestable_requested: "requestable_requested",
+         requestable_reviewed: "requestable_reviewed",
+         requestable_verified: "requestable_verified",
          reviewer_assigned: "reviewer_assigned",
          stage_changed: "stage_changed",
          status_changed: "status_changed",
@@ -161,7 +162,7 @@ class TimelineEvent < ApplicationRecord
             unless: :information_changed?
 
   def requestable_event_type?
-    requestable_requested? || requestable_received? || requestable_expired? ||
-      requestable_assessed?
+    requestable_expired? || requestable_received? || requestable_requested? ||
+      requestable_reviewed? || requestable_verified?
   end
 end

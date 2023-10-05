@@ -73,9 +73,9 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
         )
       end
 
-      it "records an assessed timeline event" do
+      it "records an reviewed timeline event" do
         expect { save }.to have_recorded_timeline_event(
-          :requestable_assessed,
+          :requestable_reviewed,
           creator: user,
           requestable:,
         )
@@ -111,9 +111,9 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
         )
       end
 
-      it "records an assessed timeline event" do
+      it "records an reviewed timeline event" do
         expect { save }.to have_recorded_timeline_event(
-          :requestable_assessed,
+          :requestable_reviewed,
           creator: user,
           requestable:,
         )
@@ -136,7 +136,7 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
 
       it "records an assessed timeline event" do
         expect { save }.to have_recorded_timeline_event(
-          :requestable_assessed,
+          :requestable_reviewed,
           creator: user,
           requestable:,
         )
@@ -157,9 +157,9 @@ RSpec.describe AssessorInterface::QualificationRequestForm, type: :model do
         expect { save }.to_not change(requestable, :passed)
       end
 
-      it "doesn't record an assessed timeline event" do
+      it "doesn't record a reviewed timeline event" do
         expect { save }.to_not have_recorded_timeline_event(
-          :requestable_assessed,
+          :requestable_reviewed,
         )
       end
     end

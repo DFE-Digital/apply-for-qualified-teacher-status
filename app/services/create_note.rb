@@ -15,7 +15,7 @@ class CreateNote
 
       TimelineEvent.create!(
         application_form:,
-        event_type: :note_created,
+        event_type: "note_created",
         creator: author,
         note:,
       )
