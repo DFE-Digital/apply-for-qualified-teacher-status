@@ -1,11 +1,21 @@
 # frozen_string_literal: true
 
 class AssessorInterface::ProfessionalStandingRequestPolicy < ApplicationPolicy
-  def update_location?
+  def show?
     true
   end
 
-  alias_method :edit_location?, :update_location?
+  def update_request?
+    user.verify_permission
+  end
+
+  alias_method :edit_request?, :update_request?
+
+  def update_verify?
+    user.verify_permission
+  end
+
+  alias_method :edit_verify?, :update_verify?
 
   def update_review?
     user.award_decline_permission

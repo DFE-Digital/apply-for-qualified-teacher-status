@@ -21,7 +21,7 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestPolicy do
     subject(:show?) { policy.show? }
 
     let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it { is_expected.to be true }
   end
 
   describe "#create?" do
@@ -52,18 +52,24 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestPolicy do
     it { is_expected.to be false }
   end
 
-  describe "#update_location?" do
-    subject(:update_location?) { policy.update_location? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be true }
+  describe "#update_request?" do
+    subject(:update_request?) { policy.update_request? }
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
-  describe "#edit_review?" do
-    subject(:edit_location?) { policy.edit_location? }
+  describe "#edit_request?" do
+    subject(:edit_request?) { policy.edit_request? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
 
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be true }
+  describe "#update_verify?" do
+    subject(:update_review?) { policy.update_verify? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#edit_verify?" do
+    subject(:edit_review?) { policy.edit_verify? }
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#update_review?" do

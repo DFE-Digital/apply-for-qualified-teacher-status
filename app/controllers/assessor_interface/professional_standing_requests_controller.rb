@@ -5,7 +5,7 @@ module AssessorInterface
     before_action :set_variables
 
     def edit_location
-      authorize [:assessor_interface, professional_standing_request]
+      authorize [:assessor_interface, professional_standing_request], :show?
 
       @form =
         ProfessionalStandingRequestLocationForm.new(
@@ -18,7 +18,7 @@ module AssessorInterface
     end
 
     def update_location
-      authorize [:assessor_interface, professional_standing_request]
+      authorize [:assessor_interface, professional_standing_request], :show?
 
       @form =
         ProfessionalStandingRequestLocationForm.new(
