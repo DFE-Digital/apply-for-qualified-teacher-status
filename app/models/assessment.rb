@@ -96,7 +96,7 @@ class Assessment < ApplicationRecord
       elsif verify?
         enough_reference_requests_review_passed? &&
           all_qualification_requests_review_passed? &&
-          professional_standing_request_review_passed?
+          professional_standing_request_verify_passed?
       elsif review?
         professional_standing_request_review_passed?
       else
@@ -134,10 +134,10 @@ class Assessment < ApplicationRecord
 
   def can_review?
     return false unless application_form.created_under_new_regulations?
-
+    return false unless verify?
     return false if skip_verification?
 
-    false
+    professional_standing_request_verify_failed?
   end
 
   def can_verify?
@@ -238,22 +238,41 @@ class Assessment < ApplicationRecord
     end
   end
 
-  def professional_standing_request_review_failed?
-    if application_form.teaching_authority_provides_written_statement
-      return true
+  def professional_standing_request_review_passed?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.review_passed?
+    else
+      true
     end
-    return true if professional_standing_request.nil?
-
-    professional_standing_request.review_failed?
   end
 
-  def professional_standing_request_review_passed?
-    if application_form.teaching_authority_provides_written_statement
-      return true
+  def professional_standing_request_review_failed?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.review_failed?
+    else
+      false
     end
-    return true if professional_standing_request.nil?
+  end
 
-    professional_standing_request.review_passed?
+  def professional_standing_request_verify_passed?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.verify_passed?
+    else
+      true
+    end
+  end
+
+  def professional_standing_request_verify_failed?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.verify_failed?
+    else
+      false
+    end
+  end
+
+  def professional_standing_request_part_of_verification?
+    !application_form.teaching_authority_provides_written_statement &&
+      professional_standing_request.present?
   end
 
   def skip_verification?
