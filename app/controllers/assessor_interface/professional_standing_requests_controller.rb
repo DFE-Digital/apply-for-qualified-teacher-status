@@ -32,7 +32,7 @@ module AssessorInterface
       if @form.save
         redirect_to [:assessor_interface, application_form]
       else
-        render :edit_location, status: :unprocessable_entity
+        render :edit_locate, status: :unprocessable_entity
       end
     end
 
@@ -93,29 +93,32 @@ module AssessorInterface
     end
 
     def edit_verify
-      authorize [:assessor_interface, professional_standing_request],
-                :edit_review?
+      authorize [:assessor_interface, professional_standing_request]
 
       @form =
-        RequestableReviewForm.new(
+        RequestableVerifyForm.new(
           requestable:,
           user: current_staff,
-          passed: requestable.review_passed,
-          note: requestable.review_note,
+          passed: requestable.verify_passed,
+          note: requestable.verify_note,
         )
     end
 
     def update_verify
-      authorize [:assessor_interface, professional_standing_request],
-                :update_review?
+      authorize [:assessor_interface, professional_standing_request]
 
       @form =
-        RequestableReviewForm.new(
-          review_form_params.merge(requestable:, user: current_staff),
+        RequestableVerifyForm.new(
+          verify_form_params.merge(requestable:, user: current_staff),
         )
 
       if @form.save
-        redirect_to [:assessor_interface, application_form]
+        redirect_to [
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :professional_standing_request,
+                    ]
       else
         render :edit_verify, status: :unprocessable_entity
       end
@@ -143,6 +146,13 @@ module AssessorInterface
 
     def review_form_params
       params.require(:assessor_interface_requestable_review_form).permit(
+        :passed,
+        :note,
+      )
+    end
+
+    def verify_form_params
+      params.require(:assessor_interface_requestable_verify_form).permit(
         :passed,
         :note,
       )
