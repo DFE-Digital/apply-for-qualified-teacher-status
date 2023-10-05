@@ -87,12 +87,7 @@ class ApplicationFormStatusUpdater
 
   def received_lops
     return false if teaching_authority_provides_written_statement
-
-    professional_standing_requests
-      .reject(&:verified?)
-      .any? do |requestable|
-        requestable.received? || requestable.ready_for_review
-      end
+    received?(requestables: professional_standing_requests)
   end
 
   def received_qualification
