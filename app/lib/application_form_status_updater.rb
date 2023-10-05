@@ -180,14 +180,14 @@ class ApplicationFormStatusUpdater
            application_form.declined_at.present? ||
            application_form.awarded_at.present?
         "none"
-      elsif preliminary_check?
-        "admin"
       elsif dqt_trn_request.present? || assessment_in_review? ||
-            overdue_further_information || overdue_lops ||
-            overdue_qualification || overdue_reference ||
-            received_further_information || received_lops ||
+            overdue_further_information || overdue_qualification ||
+            overdue_reference || received_further_information ||
             received_qualification || received_reference
         "assessor"
+      elsif preliminary_check? || need_to_request_lops? || overdue_lops ||
+            received_lops
+        "admin"
       elsif waiting_on_further_information || waiting_on_lops ||
             waiting_on_qualification || waiting_on_reference
         "external"
@@ -209,10 +209,10 @@ class ApplicationFormStatusUpdater
       elsif preliminary_check? ||
             (teaching_authority_provides_written_statement && waiting_on_lops)
         "pre_assessment"
-      elsif assessment_in_verify? || overdue_lops || overdue_qualification ||
-            overdue_reference || received_lops || received_qualification ||
-            received_reference || waiting_on_lops || waiting_on_qualification ||
-            waiting_on_reference
+      elsif assessment_in_verify? || need_to_request_lops? || overdue_lops ||
+            overdue_qualification || overdue_reference || received_lops ||
+            received_qualification || received_reference || waiting_on_lops ||
+            waiting_on_qualification || waiting_on_reference
         "verification"
       elsif overdue_further_information || received_further_information ||
             waiting_on_further_information ||
@@ -247,7 +247,11 @@ class ApplicationFormStatusUpdater
         elsif requestable_statuses.present?
           requestable_statuses
         elsif assessment_in_verify?
-          %w[verification_in_progress]
+          if need_to_request_lops?
+            %w[verification_not_started]
+          else
+            %w[verification_in_progress]
+          end
         elsif assessment.any_not_preliminary_section_finished?
           %w[assessment_in_progress]
         else
@@ -282,6 +286,14 @@ class ApplicationFormStatusUpdater
 
   def assessment_in_verify?
     assessment&.verify? || false
+  end
+
+  def need_to_request_lops?
+    return false if teaching_authority_provides_written_statement
+
+    professional_standing_requests.any? do |requestable|
+      !requestable.requested?
+    end
   end
 
   def requestable_statuses
