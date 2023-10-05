@@ -16,9 +16,10 @@ en:
           sections:
             assessment: Assessment
             pre_assessment_tasks: Pre-assessment tasks
+            review: Review
             verification: Verification
           items:
-            assessment_recommendation: Assessment recommendation
+            assessment_decision: Assessment decision
             await_professional_standing_request: Awaiting third-party professional standing
             initial_assessment_recommendation: Initial assessment recommendation
             locate_professional_standing_request: Record LOPS response
@@ -26,6 +27,8 @@ en:
             reference_requests: Verify reference requests
             review_professional_standing_request: Review LOPS response
             review_requested_information: Review requested information from applicant
+            review_verifications: Review verifications
+            verification_decision: Verification decision
 
     assessments:
       edit:
