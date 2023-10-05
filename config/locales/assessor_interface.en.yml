@@ -236,11 +236,6 @@ en:
         passed: Has the applicant completed this section to your satisfaction?
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
 
-    professional_standing_requests:
-      edit_verify:
-        passed: Does the response confirm that this document is legitimate?
-        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why the document should not be accepted.'
-
     reference_requests:
       edit:
         title: Review work reference
