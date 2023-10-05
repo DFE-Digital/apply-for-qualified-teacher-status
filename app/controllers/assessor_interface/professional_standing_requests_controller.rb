@@ -33,11 +33,10 @@ module AssessorInterface
     end
 
     def edit_verify
-      authorize [:assessor_interface, professional_standing_request],
-                :edit_review?
+      authorize [:assessor_interface, professional_standing_request]
 
       @form =
-        RequestableReviewForm.new(
+        RequestableVerifyForm.new(
           requestable:,
           user: current_staff,
           passed: requestable.review_passed,
@@ -46,12 +45,11 @@ module AssessorInterface
     end
 
     def update_verify
-      authorize [:assessor_interface, professional_standing_request],
-                :update_review?
+      authorize [:assessor_interface, professional_standing_request]
 
       @form =
-        RequestableReviewForm.new(
-          review_form_params.merge(requestable:, user: current_staff),
+        RequestableVerifyForm.new(
+          verify_form_params.merge(requestable:, user: current_staff),
         )
 
       if @form.save
@@ -107,9 +105,15 @@ module AssessorInterface
       ).permit(:received, :ready_for_review, :location_note)
     end
 
+    def verify_form_params
+      params.require(:assessor_interface_requestable_verify_form).permit(
+        :passed,
+        :note,
+      )
+    end
+
     def review_form_params
       params.require(:assessor_interface_requestable_review_form).permit(
-        :reviewed,
         :passed,
         :note,
       )
