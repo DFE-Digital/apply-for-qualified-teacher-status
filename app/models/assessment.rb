@@ -96,7 +96,7 @@ class Assessment < ApplicationRecord
       elsif verify?
         enough_reference_requests_review_passed? &&
           all_qualification_requests_review_passed? &&
-          professional_standing_request_review_passed?
+          professional_standing_request_verify_passed?
       elsif review?
         professional_standing_request_review_passed?
       else
@@ -113,10 +113,12 @@ class Assessment < ApplicationRecord
         (all_sections_finished? && any_section_failed? && any_section_declines?)
     elsif request_further_information?
       any_further_information_request_failed?
-    elsif verify?
-      true # TODO: check the state of verification requests
     elsif review?
       professional_standing_request_review_failed?
+    elsif verify?
+      enough_reference_requests_reviewed? &&
+        all_qualification_requests_reviewed? &&
+        professional_standing_request_verified? && !can_review? && !can_award?
     else
       false
     end
@@ -134,15 +136,16 @@ class Assessment < ApplicationRecord
 
   def can_review?
     return false unless application_form.created_under_new_regulations?
-
+    return false unless verify?
     return false if skip_verification?
 
-    false
+    enough_reference_requests_reviewed? &&
+      all_qualification_requests_reviewed? &&
+      professional_standing_request_verify_failed?
   end
 
   def can_verify?
     return false unless application_form.created_under_new_regulations?
-
     return false if skip_verification?
 
     all_sections_or_further_information_requests_passed?
@@ -214,6 +217,7 @@ class Assessment < ApplicationRecord
   end
 
   def enough_reference_requests_review_passed?
+    return true if reference_requests.empty?
     return false unless references_verified
 
     months_count =
@@ -230,6 +234,10 @@ class Assessment < ApplicationRecord
     months_count >= 9
   end
 
+  def enough_reference_requests_reviewed?
+    references_verified || reference_requests.empty?
+  end
+
   def all_qualification_requests_review_passed?
     if qualification_requests.present?
       qualification_requests.all?(&:review_passed?)
@@ -238,22 +246,57 @@ class Assessment < ApplicationRecord
     end
   end
 
-  def professional_standing_request_review_failed?
-    if application_form.teaching_authority_provides_written_statement
-      return true
+  def all_qualification_requests_reviewed?
+    if qualification_requests.present?
+      qualification_requests.all?(&:reviewed?)
+    else
+      true
     end
-    return true if professional_standing_request.nil?
-
-    professional_standing_request.review_failed?
   end
 
   def professional_standing_request_review_passed?
-    if application_form.teaching_authority_provides_written_statement
-      return true
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.review_passed?
+    else
+      true
     end
-    return true if professional_standing_request.nil?
+  end
 
-    professional_standing_request.review_passed?
+  def professional_standing_request_verified?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.verified?
+    else
+      true
+    end
+  end
+
+  def professional_standing_request_review_failed?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.review_failed?
+    else
+      false
+    end
+  end
+
+  def professional_standing_request_verify_passed?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.verify_passed?
+    else
+      true
+    end
+  end
+
+  def professional_standing_request_verify_failed?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.verify_failed?
+    else
+      false
+    end
+  end
+
+  def professional_standing_request_part_of_verification?
+    !application_form.teaching_authority_provides_written_statement &&
+      professional_standing_request.present?
   end
 
   def skip_verification?
