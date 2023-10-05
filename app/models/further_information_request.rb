@@ -71,18 +71,18 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def after_reviewed(user:)
-    items
-      .select(&:work_history_contact?)
-      .each do |item|
-        UpdateWorkHistoryContact.call(
-          user:,
-          work_history: item.work_history,
-          name: item.contact_name,
-          job: item.contact_job,
-          email: item.contact_email,
-        )
-      end
+    update_work_history_contact_items(user:) if review_passed?
+  end
+
+  def after_verified(user:)
+    update_work_history_contact_items(user:) if verify_passed?
   end
 
   delegate :teacher, to: :application_form
+
+  private
+
+  def update_work_history_contact_items(user:)
+    items.each { |item| item.update_work_history_contact(user:) }
+  end
 end

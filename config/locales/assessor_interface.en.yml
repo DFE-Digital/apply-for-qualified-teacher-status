@@ -389,11 +389,15 @@ en:
               inclusion: Select whether you want to mark this qualification as ‘Rejected’
         assessor_interface/requestable_review_form:
           attributes:
-            reviewed:
-              inclusion: Select whether you have reviewed the request
             passed:
               inclusion: Select whether you are satisfied with the request
-            failure_assessor_note:
+            note:
+              blank: Enter why you are not satisfied
+        assessor_interface/requestable_verify_form:
+          attributes:
+            passed:
+              inclusion: Select whether you are satisfied with the request
+            note:
               blank: Enter why you are not satisfied
         assessor_interface/select_qualifications_form:
           attributes:

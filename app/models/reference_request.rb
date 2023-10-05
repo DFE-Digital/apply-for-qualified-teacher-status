@@ -106,6 +106,10 @@ class ReferenceRequest < ApplicationRecord
     6.weeks
   end
 
+  def after_verified(*)
+    UpdateAssessmentInductionRequired.call(assessment:)
+  end
+
   def after_reviewed(*)
     UpdateAssessmentInductionRequired.call(assessment:)
   end
