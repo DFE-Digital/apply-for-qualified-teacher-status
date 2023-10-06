@@ -57,6 +57,11 @@ FactoryBot.define do
       recommended_at { Time.zone.now }
     end
 
+    trait :verify do
+      recommendation { "verify" }
+      recommended_at { Time.zone.now }
+    end
+
     trait :with_preliminary_qualifications_section do
       after(:create) do |assessment, _evaulator|
         create(:assessment_section, :preliminary, :qualifications, assessment:)

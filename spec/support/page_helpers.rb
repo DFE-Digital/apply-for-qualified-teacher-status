@@ -22,6 +22,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ApplicationStatus.new
   end
 
+  def assessor_assessment_recommendation_review_page
+    @assessor_assessment_recommendation_review_page ||=
+      PageObjects::AssessorInterface::AssessmentRecommendationReview.new
+  end
+
   def assessor_assessment_section_page
     @assessor_assessment_section_page ||=
       PageObjects::AssessorInterface::AssessmentSection.new
