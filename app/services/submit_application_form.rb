@@ -12,21 +12,22 @@ class SubmitApplicationForm
     return if application_form.submitted_at.present?
 
     ActiveRecord::Base.transaction do
-      application_form.subjects.compact_blank!
-      application_form.working_days_since_submission = 0
-      application_form.requires_preliminary_check =
-        region.requires_preliminary_check
-      application_form.submitted_at = Time.zone.now
-
-      ApplicationFormStatusUpdater.call(application_form:, user:)
+      application_form.update!(
+        subjects: application_form.subjects.compact_blank,
+        working_days_since_submission: 0,
+        requires_preliminary_check: region.requires_preliminary_check,
+        submitted_at: Time.zone.now,
+      )
 
       assessment = AssessmentFactory.call(application_form:)
-
-      create_professional_standing_request(assessment)
 
       if application_form.reduced_evidence_accepted
         UpdateAssessmentInductionRequired.call(assessment:)
       end
+
+      create_professional_standing_request(assessment)
+
+      ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
     TeacherMailer
