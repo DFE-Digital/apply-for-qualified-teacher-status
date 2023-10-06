@@ -121,7 +121,7 @@ class ApplicationFormStatusUpdater
           (region.checks_available? || most_recent_reference_request&.received?)
       true
     else
-      reference_requests.filter(&:requested?).empty?
+      reference_requests.all? { |r| r.received? || r.expired? }
     end
   end
 
