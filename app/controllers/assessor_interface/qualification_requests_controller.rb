@@ -21,8 +21,17 @@ module AssessorInterface
           false
         end
 
-      passed = (requestable.review_passed? if requestable.received?)
-      failed = (requestable.review_failed? if requestable.expired?)
+      passed = (requestable.review_passed if requestable.received?)
+
+      failed =
+        if requestable.expired?
+          case requestable.review_passed
+          when true
+            false
+          when false
+            true
+          end
+        end
 
       @form =
         QualificationRequestForm.new(
