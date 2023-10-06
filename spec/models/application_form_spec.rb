@@ -287,18 +287,6 @@ RSpec.describe ApplicationForm, type: :model do
       it { is_expected.to validate_absence_of(:english_language_provider) }
     end
 
-    context "when submitted" do
-      before { application_form.status = "submitted" }
-
-      it { is_expected.to_not be_valid }
-
-      context "with submitted_at" do
-        before { application_form.submitted_at = Time.zone.now }
-
-        it { is_expected.to be_valid }
-      end
-    end
-
     context "when awarded and declined" do
       before do
         application_form.assign_attributes(

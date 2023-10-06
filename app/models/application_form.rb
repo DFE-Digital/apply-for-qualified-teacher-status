@@ -111,7 +111,6 @@ class ApplicationForm < ApplicationRecord
   belongs_to :assessor, class_name: "Staff", optional: true
   belongs_to :reviewer, class_name: "Staff", optional: true
 
-  validates :submitted_at, presence: true, unless: :draft?
   validates :awarded_at, absence: true, if: :declined_at?
   validates :awarded_at, absence: true, if: :withdrawn_at?
   validates :declined_at, absence: true, if: :awarded_at?
