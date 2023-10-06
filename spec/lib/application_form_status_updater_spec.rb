@@ -430,6 +430,17 @@ RSpec.describe ApplicationFormStatusUpdater do
       end
     end
 
+    context "when a reviewed assessment" do
+      before do
+        application_form.update!(submitted_at: Time.zone.now)
+        create(:assessment, :review, application_form:)
+      end
+
+      include_examples "changes action required by", "assessor"
+      include_examples "changes stage", "review"
+      include_examples "changes statuses", %w[review]
+    end
+
     context "with a started assessment" do
       before do
         application_form.update!(submitted_at: Time.zone.now)
