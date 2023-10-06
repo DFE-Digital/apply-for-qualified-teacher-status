@@ -137,7 +137,11 @@ module AssessorInterface
 
     def load_important_notes
       @important_notes = [
-        (:invalid_references if assessment.reference_requests.any?(&:failed)),
+        (
+          if assessment.reference_requests.any?(&:review_failed?)
+            :invalid_references
+          end
+        ),
         (:induction_required if assessment.induction_required),
       ].compact
     end
