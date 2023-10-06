@@ -21,11 +21,11 @@ module AssessorInterface
           false
         end
 
-      passed = (requestable.passed if requestable.received?)
+      passed = (requestable.review_passed if requestable.received?)
 
       failed =
         if requestable.expired?
-          case requestable.passed
+          case requestable.review_passed
           when true
             false
           when false
