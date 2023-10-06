@@ -1,0 +1,18 @@
+<% content_for :page_title, "Review verifications" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-xl">Review verifications</h1>
+
+<%= govuk_table do |table|
+  if @professional_standing_request.present?
+    table.with_caption(text: "LoPS")
+    table.with_body do |body|
+      body.with_row do |row|
+        row.with_cell { govuk_link_to region_certificate_name(@application_form.region), [:verify, :assessor_interface, @application_form, @assessment, :professional_standing_request] }
+        row.with_cell { render(StatusTag::Component.new(@professional_standing_request.review_status)) }
+      end
+    end
+  end
+end %>
+
+<%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>

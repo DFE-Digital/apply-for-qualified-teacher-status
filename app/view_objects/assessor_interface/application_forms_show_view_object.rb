@@ -429,7 +429,12 @@ class AssessorInterface::ApplicationFormsShowViewObject
         I18n.t(
           "assessor_interface.application_forms.show.assessment_tasks.items.review_verifications",
         ),
-      link: [:edit, :assessor_interface, application_form, assessment],
+      link: [
+        :assessor_interface,
+        application_form,
+        assessment,
+        :review_verifications,
+      ],
       status:
         if assessment.recommendable?
           :completed

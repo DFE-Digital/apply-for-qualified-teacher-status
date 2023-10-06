@@ -78,6 +78,16 @@ module Requestable
     end
   end
 
+  def review_status
+    if review_passed?
+      "accepted"
+    elsif review_failed?
+      "rejected"
+    else
+      "not_started"
+    end
+  end
+
   def after_requested(user:)
     # implement logic after this requestable has been requested
   end
