@@ -275,8 +275,6 @@ en:
           document: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
           decline: "Example: We declined this QTS application as you already have another application in progress."
     legend:
-      assessor_interface_assessment_recommendation_form:
-        recommendation: QTS review completed
       assessor_interface_assessment_section_form:
         selected_failure_reasons: What are the reasons for your recommendation?
         scotland_full_registration: Does the applicant have or are they eligible for full registration?
