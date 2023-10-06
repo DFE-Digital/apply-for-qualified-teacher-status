@@ -2,11 +2,12 @@
 
 module AssessorInterface
   class AssessmentRecommendationVerifyController < BaseController
-    before_action :authorize_assessor, only: %i[edit update]
     before_action :ensure_can_verify
     before_action :load_assessment_and_application_form
 
     def edit
+      authorize %i[assessor_interface assessment_recommendation]
+
       redirect_to [
                     :verify_qualifications,
                     :assessor_interface,
@@ -17,6 +18,8 @@ module AssessorInterface
     end
 
     def update
+      authorize %i[assessor_interface assessment_recommendation]
+
       VerifyAssessment.call(
         assessment:,
         user: current_staff,
@@ -33,12 +36,13 @@ module AssessorInterface
     end
 
     def edit_verify_qualifications
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
+
       @form = VerifyQualificationsForm.new
     end
 
     def update_verify_qualifications
-      authorize :assessor, :update?
+      authorize %i[assessor_interface assessment_recommendation], :update?
 
       @form =
         VerifyQualificationsForm.new(
@@ -71,7 +75,7 @@ module AssessorInterface
     end
 
     def edit_qualification_requests
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
 
       @form =
         SelectQualificationsForm.new(
@@ -82,7 +86,7 @@ module AssessorInterface
     end
 
     def update_qualification_requests
-      authorize :assessor, :update?
+      authorize %i[assessor_interface assessment_recommendation], :update?
 
       qualification_ids =
         params.dig(
@@ -111,14 +115,14 @@ module AssessorInterface
     end
 
     def email_consent_letters
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
 
       @qualifications =
         application_form.qualifications.where(id: session[:qualification_ids])
     end
 
     def edit_verify_professional_standing
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
 
       if application_form.teaching_authority_provides_written_statement
         redirect_to [
@@ -135,7 +139,7 @@ module AssessorInterface
     end
 
     def update_verify_professional_standing
-      authorize :assessor, :update?
+      authorize %i[assessor_interface assessment_recommendation], :update?
 
       @form =
         VerifyProfessionalStandingForm.new(
@@ -168,11 +172,11 @@ module AssessorInterface
     end
 
     def contact_professional_standing
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
     end
 
     def edit_reference_requests
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
 
       @form =
         SelectWorkHistoriesForm.new(
@@ -183,7 +187,7 @@ module AssessorInterface
     end
 
     def update_reference_requests
-      authorize :assessor, :update?
+      authorize %i[assessor_interface assessment_recommendation], :update?
 
       work_history_ids =
         params.dig(
@@ -212,12 +216,12 @@ module AssessorInterface
     end
 
     def preview_referee
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
       @reference_requests = assessment.reference_requests
     end
 
     def preview_teacher
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
     end
 
     private
