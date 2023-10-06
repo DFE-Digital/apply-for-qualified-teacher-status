@@ -21,6 +21,20 @@ RSpec.describe SubmitApplicationForm do
     end
   end
 
+  describe "application form preliminary check status" do
+    subject(:submitted?) { application_form.preliminary_check? }
+
+    it { is_expected.to be false }
+
+    context "when calling the service" do
+      let(:region) { create(:region, :requires_preliminary_check) }
+
+      before { call }
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe "compacting blank subjects" do
     subject(:subjects) { application_form.subjects }
 
