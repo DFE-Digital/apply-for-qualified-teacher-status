@@ -376,7 +376,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         is_expected.to include_task_list_item(
           "Verification",
-          "Assessment recommendation",
+          "Verification decision",
         )
       end
     end
@@ -393,7 +393,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         is_expected.to include_task_list_item(
           "Verification",
-          "Assessment recommendation",
+          "Verification decision",
         )
       end
     end
@@ -410,8 +410,49 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         is_expected.to include_task_list_item(
           "Verification",
-          "Assessment recommendation",
+          "Verification decision",
         )
+      end
+    end
+
+    context "with a failed verified professional standing request" do
+      before do
+        create(
+          :professional_standing_request,
+          assessment:,
+          verify_passed: false,
+        )
+      end
+
+      it do
+        is_expected.to include_task_list_item("Review", "Review verifications")
+      end
+      it do
+        is_expected.to include_task_list_item("Review", "Assessment decision")
+      end
+    end
+
+    context "with a failed verified qualification request" do
+      before do
+        create(:qualification_request, assessment:, verify_passed: false)
+      end
+
+      it do
+        is_expected.to include_task_list_item("Review", "Review verifications")
+      end
+      it do
+        is_expected.to include_task_list_item("Review", "Assessment decision")
+      end
+    end
+
+    context "with a failed verified reference request" do
+      before { create(:reference_request, assessment:, verify_passed: false) }
+
+      it do
+        is_expected.to include_task_list_item("Review", "Review verifications")
+      end
+      it do
+        is_expected.to include_task_list_item("Review", "Assessment decision")
       end
     end
   end

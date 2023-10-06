@@ -23,6 +23,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       pre_assessment_task_list_section,
       assessment_task_list_section,
       verification_task_list_section,
+      review_task_list_section,
     ].compact
   end
 
@@ -83,7 +84,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
            :teaching_authority_provides_written_statement,
            :work_histories,
            to: :application_form
-  delegate :professional_standing_request, to: :assessment
+  delegate :professional_standing_request,
+           :qualification_requests,
+           :reference_requests,
+           to: :assessment
   delegate :canonical_email, to: :teacher
 
   def pre_assessment_task_list_section
@@ -254,7 +258,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       review_professional_standing_request_task_list_item,
     ].compact
 
-    items << assessment_recommendation_task_list_item if items.present?
+    items << verification_decision_task_list_item if items.present?
 
     {
       title:
@@ -309,27 +313,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
             requestables_task_item_status(reference_requests)
           end
         ),
-    }
-  end
-
-  def assessment_recommendation_task_list_item
-    {
-      name:
-        I18n.t(
-          "assessor_interface.application_forms.show.assessment_tasks.items.assessment_recommendation",
-        ),
-      link:
-        if assessment.recommendable?
-          [:edit, :assessor_interface, application_form, assessment]
-        end,
-      status:
-        if assessment.completed?
-          :completed
-        elsif !assessment.recommendable?
-          :cannot_start
-        else
-          :not_started
-        end,
     }
   end
 
@@ -393,6 +376,92 @@ class AssessorInterface::ApplicationFormsShowViewObject
           :received
         else
           :cannot_start
+        end,
+    }
+  end
+
+  def verification_decision_task_list_item
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.verification_decision",
+        ),
+      link:
+        if assessment.verify? && assessment.recommendable?
+          [:edit, :assessor_interface, application_form, assessment]
+        end,
+      status:
+        if assessment.review? || assessment.completed?
+          :completed
+        elsif !assessment.recommendable?
+          :cannot_start
+        else
+          :not_started
+        end,
+    }
+  end
+
+  def review_task_list_section
+    return unless pre_assessment_complete?
+    return if assessment.verify?
+
+    if (
+         !teaching_authority_provides_written_statement &&
+           professional_standing_request&.verify_failed?
+       ) || qualification_requests.any?(&:verify_failed?) ||
+         reference_requests.any?(&:verify_failed?)
+      {
+        title:
+          I18n.t(
+            "assessor_interface.application_forms.show.assessment_tasks.sections.review",
+          ),
+        items: [
+          review_verifications_task_list_item,
+          review_decision_task_list_item,
+        ],
+      }
+    end
+  end
+
+  def review_verifications_task_list_item
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.review_verifications",
+        ),
+      link: [:edit, :assessor_interface, application_form, assessment],
+      status:
+        if assessment.recommendable?
+          :completed
+        elsif (
+              !teaching_authority_provides_written_statement &&
+                professional_standing_request&.reviewed?
+            ) || qualification_requests.any?(&:reviewed?) ||
+              reference_requests.any?(&:reviewed?)
+          :in_progress
+        else
+          :not_started
+        end,
+    }
+  end
+
+  def review_decision_task_list_item
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.assessment_decision",
+        ),
+      link:
+        if assessment.recommendable?
+          [:edit, :assessor_interface, application_form, assessment]
+        end,
+      status:
+        if assessment.completed?
+          :completed
+        elsif !assessment.recommendable?
+          :cannot_start
+        else
+          :not_started
         end,
     }
   end
