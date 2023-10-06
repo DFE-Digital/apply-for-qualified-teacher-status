@@ -42,11 +42,6 @@ module PageHelpers
       PageObjects::AssessorInterface::EditProfessionalStandingRequestLocation.new
   end
 
-  def assessor_edit_professional_standing_request_review_page
-    @assessor_edit_professional_standing_request_review_page ||=
-      PageObjects::AssessorInterface::EditProfessionalStandingRequestReview.new
-  end
-
   def assessor_edit_qualification_request_page
     @assessor_edit_qualification_request_page ||=
       PageObjects::AssessorInterface::EditQualificationRequest.new
@@ -75,6 +70,11 @@ module PageHelpers
   def assessor_reverse_decision_page
     @assessor_reverse_decision_page ||=
       PageObjects::AssessorInterface::ReverseDecision.new
+  end
+
+  def assessor_verify_professional_standing_request_page
+    @assessor_verify_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::VerifyProfessionalStandingRequest.new
   end
 
   def assessor_withdraw_application_page

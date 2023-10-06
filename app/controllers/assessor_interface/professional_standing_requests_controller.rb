@@ -32,8 +32,9 @@ module AssessorInterface
       end
     end
 
-    def edit_review
-      authorize [:assessor_interface, professional_standing_request]
+    def edit_verify
+      authorize [:assessor_interface, professional_standing_request],
+                :edit_review?
 
       @form =
         RequestableReviewForm.new(
@@ -44,8 +45,9 @@ module AssessorInterface
         )
     end
 
-    def update_review
-      authorize [:assessor_interface, professional_standing_request]
+    def update_verify
+      authorize [:assessor_interface, professional_standing_request],
+                :update_review?
 
       @form =
         RequestableReviewForm.new(
@@ -55,7 +57,7 @@ module AssessorInterface
       if @form.save
         redirect_to [:assessor_interface, application_form]
       else
-        render :edit_review, status: :unprocessable_entity
+        render :edit_verify, status: :unprocessable_entity
       end
     end
 

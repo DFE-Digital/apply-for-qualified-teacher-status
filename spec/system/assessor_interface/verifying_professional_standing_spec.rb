@@ -24,8 +24,8 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
 
     when_i_click_review_professional_standing_task
     then_i_see_the(
-      :assessor_edit_professional_standing_request_review_page,
-      application_id:,
+      :assessor_verify_professional_standing_request_page,
+      application_form_id:,
     )
 
     when_i_fill_in_the_review_form
@@ -67,7 +67,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   end
 
   def when_i_fill_in_the_review_form
-    form = assessor_edit_professional_standing_request_review_page.form
+    form = assessor_verify_professional_standing_request_page.form
 
     form.yes_radio_item.choose
     form.submit_button.click
@@ -101,4 +101,6 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   def application_id
     application_form.id
   end
+
+  alias_method :application_form_id, :application_id
 end

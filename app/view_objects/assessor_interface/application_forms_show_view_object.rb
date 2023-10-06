@@ -361,7 +361,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         if professional_standing_request.received? ||
              professional_standing_request.ready_for_review
           [
-            :review,
+            :verify,
             :assessor_interface,
             application_form,
             assessment,
