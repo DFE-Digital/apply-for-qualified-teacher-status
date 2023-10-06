@@ -1,7 +1,9 @@
 <% content_for :page_title, "Application" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
 
-<% if @view_object.application_form.waiting_on? %>
+<% if @view_object.assessment.review? %>
+  <%= govuk_panel(title_text: "Application sent for review") %>
+<% elsif @view_object.application_form.waiting_on? %>
   <%= govuk_panel(title_text: "Reference requests sent successfully") %>
 <% else %>
   <%= govuk_panel(title_text: "QTS application #{@view_object.application_form.reference} has been #{@view_object.status.downcase}") %>
@@ -11,7 +13,9 @@
   <p class="govuk-body">The status of this application has been changed to ’<%= @view_object.status %>‘.</p>
 <% end %>
 
-<% if @view_object.application_form.declined? %>
+<% if @view_object.assessment.review? %>
+  <p class="govuk-body">An assessor will now review the application and make a decision on awarding or declining QTS.</p>
+<% elsif @view_object.application_form.declined? %>
   <p class="govuk-body">The application will be deleted after 90 days unless the applicant chooses to appeal.</p>
 <% elsif @view_object.application_form.awarded_pending_checks? %>
   <p class="govuk-body">This status will appear while the award is reconciled with the information in the Database of Qualified Teachers (DQT).</p>
