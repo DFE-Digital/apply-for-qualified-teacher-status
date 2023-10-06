@@ -8,7 +8,7 @@
     table.with_caption(text: "LoPS")
     table.with_body do |body|
       body.with_row do |row|
-        row.with_cell { govuk_link_to region_certificate_name(@application_form.region), [:verify, :assessor_interface, @application_form, @assessment, :professional_standing_request] }
+        row.with_cell { govuk_link_to region_certificate_name(@application_form.region), [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request] }
         row.with_cell { render(StatusTag::Component.new(@professional_standing_request.review_status)) }
       end
     end

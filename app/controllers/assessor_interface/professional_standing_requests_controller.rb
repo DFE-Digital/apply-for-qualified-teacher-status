@@ -61,6 +61,38 @@ module AssessorInterface
       end
     end
 
+    def edit_review
+      authorize [:assessor_interface, professional_standing_request]
+
+      @form =
+        RequestableReviewForm.new(
+          requestable:,
+          user: current_staff,
+          passed: requestable.review_passed,
+          note: requestable.review_note,
+        )
+    end
+
+    def update_review
+      authorize [:assessor_interface, professional_standing_request]
+
+      @form =
+        RequestableReviewForm.new(
+          review_form_params.merge(requestable:, user: current_staff),
+        )
+
+      if @form.save
+        redirect_to [
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :review_verifications,
+                    ]
+      else
+        render :edit_review, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def set_variables
