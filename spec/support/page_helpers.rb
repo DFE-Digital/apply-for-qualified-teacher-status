@@ -72,6 +72,16 @@ module PageHelpers
       PageObjects::AssessorInterface::ReverseDecision.new
   end
 
+  def assessor_review_professional_standing_request_page
+    @assessor_review_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::ReviewProfessionalStandingRequest.new
+  end
+
+  def assessor_review_verifications_page
+    @assessor_review_verifications_page ||=
+      PageObjects::AssessorInterface::ReviewVerifications.new
+  end
+
   def assessor_verify_professional_standing_request_page
     @assessor_verify_professional_standing_request_page ||=
       PageObjects::AssessorInterface::VerifyProfessionalStandingRequest.new
