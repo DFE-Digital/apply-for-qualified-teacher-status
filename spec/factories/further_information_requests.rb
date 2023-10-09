@@ -31,10 +31,12 @@ FactoryBot.define do
     end
 
     trait :received do
+      requested
       received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
     trait :expired do
+      requested
       expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
