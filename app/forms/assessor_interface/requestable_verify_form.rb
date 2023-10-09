@@ -16,6 +16,7 @@ class AssessorInterface::RequestableVerifyForm
   def save
     return false if invalid?
 
+    ReceiveRequestable.call(requestable:, user:) unless requestable.received?
     VerifyRequestable.call(requestable:, user:, passed:, note:)
 
     true
