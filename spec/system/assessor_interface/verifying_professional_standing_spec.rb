@@ -14,8 +14,8 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     and_i_see_a_waiting_on_status
     and_i_click_record_professional_standing_task
     then_i_see_the(
-      :assessor_edit_professional_standing_request_location_page,
-      application_id:,
+      :assessor_locate_professional_standing_request_page,
+      application_form_id:,
     )
 
     when_i_fill_in_the_location_form
@@ -45,10 +45,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   end
 
   def and_i_click_record_professional_standing_task
-    assessor_application_page
-      .record_professional_standing_request_task
-      .link
-      .click
+    assessor_application_page.record_professional_standing_request_task.click
   end
 
   def when_i_click_review_professional_standing_task
@@ -59,7 +56,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   end
 
   def when_i_fill_in_the_location_form
-    form = assessor_edit_professional_standing_request_location_page.form
+    form = assessor_locate_professional_standing_request_page.form
 
     form.received_yes_radio_item.choose
     form.note_textarea.fill_in with: "Note."

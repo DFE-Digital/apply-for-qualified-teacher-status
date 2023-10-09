@@ -4,8 +4,8 @@ module AssessorInterface
   class ProfessionalStandingRequestsController < BaseController
     before_action :set_variables
 
-    def edit_location
-      authorize [:assessor_interface, professional_standing_request], :show?
+    def edit_locate
+      authorize [:assessor_interface, professional_standing_request]
 
       @form =
         ProfessionalStandingRequestLocationForm.new(
@@ -17,8 +17,8 @@ module AssessorInterface
         )
     end
 
-    def update_location
-      authorize [:assessor_interface, professional_standing_request], :show?
+    def update_locate
+      authorize [:assessor_interface, professional_standing_request]
 
       @form =
         ProfessionalStandingRequestLocationForm.new(

@@ -5,6 +5,12 @@ class AssessorInterface::ProfessionalStandingRequestPolicy < ApplicationPolicy
     true
   end
 
+  def update_locate?
+    true
+  end
+
+  alias_method :edit_locate?, :update_locate?
+
   def update_request?
     user.verify_permission
   end

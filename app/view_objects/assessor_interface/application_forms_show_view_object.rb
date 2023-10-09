@@ -112,7 +112,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           "assessor_interface.application_forms.show.assessment_tasks.items.await_professional_standing_request",
         ),
       link: [
-        :location,
+        :locate,
         :assessor_interface,
         application_form,
         assessment,
@@ -328,7 +328,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           "assessor_interface.application_forms.show.assessment_tasks.items.locate_professional_standing_request",
         ),
       link: [
-        :location,
+        :locate,
         :assessor_interface,
         application_form,
         assessment,
