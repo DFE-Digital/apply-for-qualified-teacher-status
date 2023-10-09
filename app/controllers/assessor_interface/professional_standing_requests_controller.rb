@@ -4,6 +4,10 @@ module AssessorInterface
   class ProfessionalStandingRequestsController < BaseController
     before_action :set_variables
 
+    def show
+      authorize [:assessor_interface, professional_standing_request]
+    end
+
     def edit_locate
       authorize [:assessor_interface, professional_standing_request]
 
@@ -28,36 +32,42 @@ module AssessorInterface
       if @form.save
         redirect_to [:assessor_interface, application_form]
       else
-        render :edit_location, status: :unprocessable_entity
+        render :edit_locate, status: :unprocessable_entity
       end
     end
 
-    def edit_verify
-      authorize [:assessor_interface, professional_standing_request],
-                :edit_review?
+    def edit_request
+      authorize [:assessor_interface, professional_standing_request]
 
       @form =
-        RequestableReviewForm.new(
+        RequestableRequestForm.new(
           requestable:,
           user: current_staff,
-          passed: requestable.review_passed,
-          note: requestable.review_note,
+          passed: professional_standing_request.requested?,
         )
     end
 
-    def update_verify
-      authorize [:assessor_interface, professional_standing_request],
-                :update_review?
+    def update_request
+      authorize [:assessor_interface, professional_standing_request]
 
       @form =
-        RequestableReviewForm.new(
-          review_form_params.merge(requestable:, user: current_staff),
+        RequestableRequestForm.new(
+          requestable:,
+          user: current_staff,
+          passed:
+            params.dig(:assessor_interface_requestable_request_form, :passed) ||
+              false,
         )
 
       if @form.save
-        redirect_to [:assessor_interface, application_form]
+        redirect_to [
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :professional_standing_request,
+                    ]
       else
-        render :edit_verify, status: :unprocessable_entity
+        render :edit_request, status: :unprocessable_entity
       end
     end
 
@@ -93,6 +103,35 @@ module AssessorInterface
       end
     end
 
+    def edit_verify
+      authorize [:assessor_interface, professional_standing_request],
+                :edit_review?
+
+      @form =
+        RequestableReviewForm.new(
+          requestable:,
+          user: current_staff,
+          passed: requestable.review_passed,
+          note: requestable.review_note,
+        )
+    end
+
+    def update_verify
+      authorize [:assessor_interface, professional_standing_request],
+                :update_review?
+
+      @form =
+        RequestableReviewForm.new(
+          review_form_params.merge(requestable:, user: current_staff),
+        )
+
+      if @form.save
+        redirect_to [:assessor_interface, application_form]
+      else
+        render :edit_verify, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def set_variables
@@ -109,7 +148,6 @@ module AssessorInterface
 
     def review_form_params
       params.require(:assessor_interface_requestable_review_form).permit(
-        :reviewed,
         :passed,
         :note,
       )

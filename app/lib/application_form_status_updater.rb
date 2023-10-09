@@ -89,7 +89,7 @@ class ApplicationFormStatusUpdater
     return false if teaching_authority_provides_written_statement
 
     professional_standing_requests
-      .reject(&:reviewed?)
+      .reject(&:verified?)
       .any? do |requestable|
         requestable.received? || requestable.ready_for_review
       end
@@ -312,11 +312,12 @@ class ApplicationFormStatusUpdater
   end
 
   def overdue?(requestables:)
-    requestables.reject(&:reviewed?).any?(&:expired?)
+    requestables.reject(&:verified?).reject(&:reviewed?).any?(&:expired?)
   end
 
   def waiting_on?(requestables:)
     requestables
+      .reject(&:verified?)
       .reject(&:reviewed?)
       .reject(&:expired?)
       .reject(&:received?)
@@ -324,7 +325,11 @@ class ApplicationFormStatusUpdater
   end
 
   def received?(requestables:)
-    requestables.reject(&:reviewed?).reject(&:expired?).any?(&:received?)
+    requestables
+      .reject(&:verified?)
+      .reject(&:reviewed?)
+      .reject(&:expired?)
+      .any?(&:received?)
   end
 
   def create_timeline_event(event_type:, **kwargs)

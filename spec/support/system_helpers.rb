@@ -87,6 +87,17 @@ module SystemHelpers
     given_i_am_authorized_as_a_user(user)
   end
 
+  def given_i_am_authorized_as_an_admin_user
+    user =
+      create(
+        :staff,
+        :with_verify_permission,
+        :confirmed,
+        name: "Authorized User",
+      )
+    given_i_am_authorized_as_a_user(user)
+  end
+
   def given_malware_scanning_is_enabled(scan_result: "No threats found")
     FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result)
     tags_url = "https://example.com/uploads/abc987xyz123?comp=tags"
