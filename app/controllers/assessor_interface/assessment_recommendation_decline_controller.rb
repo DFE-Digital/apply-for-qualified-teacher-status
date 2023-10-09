@@ -2,16 +2,18 @@
 
 module AssessorInterface
   class AssessmentRecommendationDeclineController < BaseController
-    before_action :authorize_assessor,
-                  except: %i[preview edit_confirm update_confirm]
     before_action :ensure_can_decline
     before_action :load_assessment_and_application_form
 
     def edit
+      authorize %i[assessor_interface assessment_recommendation]
+
       @form = AssessmentDeclarationDeclineForm.new
     end
 
     def update
+      authorize %i[assessor_interface assessment_recommendation]
+
       @form =
         AssessmentDeclarationDeclineForm.new(
           declaration:
@@ -42,16 +44,16 @@ module AssessorInterface
     end
 
     def preview
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
     end
 
     def edit_confirm
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
       @form = AssessmentConfirmationForm.new
     end
 
     def update_confirm
-      authorize :assessor, :update?
+      authorize %i[assessor_interface assessment_recommendation], :update?
 
       @form =
         AssessmentConfirmationForm.new(

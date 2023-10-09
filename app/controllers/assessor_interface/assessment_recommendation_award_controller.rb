@@ -2,16 +2,19 @@
 
 module AssessorInterface
   class AssessmentRecommendationAwardController < BaseController
-    before_action :authorize_assessor, only: %i[edit update]
     before_action :ensure_can_award
     before_action :load_assessment_and_application_form
     before_action :load_important_notes, only: %i[edit update]
 
     def edit
+      authorize %i[assessor_interface assessment_recommendation]
+
       @form = AssessmentDeclarationAwardForm.new
     end
 
     def update
+      authorize %i[assessor_interface assessment_recommendation]
+
       @form =
         AssessmentDeclarationAwardForm.new(
           declaration:
@@ -35,11 +38,11 @@ module AssessorInterface
     end
 
     def age_range_subjects
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
     end
 
     def edit_age_range_subjects
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
 
       @form =
         ConfirmAgeRangeSubjectsForm.new(
@@ -53,7 +56,7 @@ module AssessorInterface
     end
 
     def update_age_range_subjects
-      authorize :assessor, :update?
+      authorize %i[assessor_interface assessment_recommendation], :update?
 
       @form =
         ConfirmAgeRangeSubjectsForm.new(
@@ -76,16 +79,16 @@ module AssessorInterface
     end
 
     def preview
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
     end
 
     def edit_confirm
-      authorize :assessor, :edit?
+      authorize %i[assessor_interface assessment_recommendation], :edit?
       @form = AssessmentConfirmationForm.new
     end
 
     def update_confirm
-      authorize :assessor, :update?
+      authorize %i[assessor_interface assessment_recommendation], :update?
 
       @form =
         AssessmentConfirmationForm.new(

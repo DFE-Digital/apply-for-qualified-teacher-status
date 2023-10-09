@@ -2,14 +2,17 @@
 
 module AssessorInterface
   class AssessmentsController < BaseController
-    before_action { authorize [:assessor_interface, assessment] }
     before_action :load_assessment_and_application_form
 
     def edit
+      authorize %i[assessor_interface assessment_recommendation]
+
       @form = AssessmentRecommendationForm.new(assessment:)
     end
 
     def update
+      authorize %i[assessor_interface assessment_recommendation]
+
       @form =
         AssessmentRecommendationForm.new(
           assessment:,
@@ -28,9 +31,11 @@ module AssessorInterface
     end
 
     def rollback
+      authorize [:assessor_interface, assessment]
     end
 
     def destroy
+      authorize [:assessor_interface, assessment]
       RollbackAssessment.call(assessment:, user: current_staff)
       redirect_to [:assessor_interface, application_form]
     rescue RollbackAssessment::InvalidState => e
