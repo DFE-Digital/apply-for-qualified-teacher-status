@@ -3,16 +3,27 @@
 
 <h1 class="govuk-heading-xl">Review verifications</h1>
 
-<%= govuk_table do |table|
-  if @professional_standing_request.present?
-    table.with_caption(text: "LoPS")
-    table.with_body do |body|
-      body.with_row do |row|
-        row.with_cell { govuk_link_to region_certificate_name(@application_form.region), [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request] }
-        row.with_cell { render(StatusTag::Component.new(@professional_standing_request.review_status)) }
-      end
-    end
-  end
-end %>
+<p class="govuk-body govuk-!-padding-bottom-2">
+  The following verification tasks have been flagged for review:
+</p>
 
-<%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>
+<%= render(TaskList::Component.new(
+  if @professional_standing_request.present?
+    [
+      {
+        title: "LoPS",
+        items: [
+          {
+            name: region_teaching_authority_name(@application_form.region, context: :assessor).upcase_first,
+            link: [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request],
+            status: @professional_standing_request.review_status,
+          }
+        ],
+      }
+    ]
+  end
+)) %>
+
+<div class="govuk-!-padding-top-3">
+  <%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>
+</div>

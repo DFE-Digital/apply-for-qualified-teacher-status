@@ -283,7 +283,7 @@ RSpec.describe Assessment, type: :model do
 
     context "when awarded pending verification" do
       before { assessment.verify! }
-      it { is_expected.to be true }
+      it { is_expected.to be false }
     end
   end
 

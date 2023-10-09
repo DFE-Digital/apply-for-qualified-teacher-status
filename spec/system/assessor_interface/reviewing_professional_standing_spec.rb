@@ -14,6 +14,18 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
     then_i_see_the(:assessor_application_page, application_form_id:)
 
     when_i_click_on_verification_decision
+    then_i_see_the(:assessor_complete_assessment_page, application_form_id:)
+
+    when_i_select_send_for_review
+    then_i_see_the(
+      :assessor_assessment_recommendation_review_page,
+      application_form_id:,
+    )
+
+    when_i_click_continue_from_review
+    then_i_see_the(:assessor_application_status_page, application_form_id:)
+
+    when_i_click_on_overview_button
     then_i_see_the(:assessor_application_page, application_form_id:)
 
     when_i_click_on_review_verifications
@@ -58,12 +70,19 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
 
   def when_i_click_on_verification_decision
     assessor_application_page.verification_decision_task.click
+  end
 
-    # TODO: review functionality is not built yet, this page can never be reached
-    application_form.assessment.review!
+  def when_i_select_send_for_review
+    assessor_complete_assessment_page.send_for_review.choose
+    assessor_complete_assessment_page.continue_button.click
+  end
 
-    # TODO: reload the page
-    when_i_visit_the(:assessor_application_page, application_form_id:)
+  def when_i_click_continue_from_review
+    assessor_assessment_recommendation_review_page.continue_button.click
+  end
+
+  def when_i_click_on_overview_button
+    assessor_application_status_page.button_group.overview_button.click
   end
 
   def when_i_click_on_review_verifications
@@ -75,7 +94,9 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   end
 
   def when_i_click_on_lops
-    assessor_review_verifications_page.rows.first.link.click
+    assessor_application_page.task_list.click_item(
+      "Relevant competent authority",
+    )
   end
 
   def when_i_fill_in_the_review_lops_form
@@ -90,15 +111,19 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   end
 
   def and_i_see_the_lops_not_started
-    expect(assessor_review_verifications_page.rows.first.tag.text).to eq(
-      "NOT STARTED",
-    )
+    item =
+      assessor_review_verifications_page.task_list.find_item(
+        "Relevant competent authority",
+      )
+    expect(item.status_tag.text).to eq("NOT STARTED")
   end
 
   def and_i_see_the_lops_accepted
-    expect(assessor_review_verifications_page.rows.first.tag.text).to eq(
-      "ACCEPTED",
-    )
+    item =
+      assessor_review_verifications_page.task_list.find_item(
+        "Relevant competent authority",
+      )
+    expect(item.status_tag.text).to eq("ACCEPTED")
   end
 
   def application_form

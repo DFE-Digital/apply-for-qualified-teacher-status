@@ -11,6 +11,12 @@ module PageObjects
         new_states.find { |radio_item| radio_item.label.text == "Award QTS" }
       end
 
+      def award_qts_pending_verifications
+        new_states.find do |radio_item|
+          radio_item.label.text == "Award QTS pending verifications"
+        end
+      end
+
       def request_further_information
         new_states.find do |radio_item|
           radio_item.label.text == "Request further information"
@@ -19,6 +25,12 @@ module PageObjects
 
       def decline_qts
         new_states.find { |radio_item| radio_item.label.text == "Decline QTS" }
+      end
+
+      def send_for_review
+        new_states.find do |radio_item|
+          radio_item.label.text == "Send application for review"
+        end
       end
     end
   end

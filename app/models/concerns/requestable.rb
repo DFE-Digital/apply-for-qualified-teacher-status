@@ -60,7 +60,7 @@ module Requestable
 
   def status
     if verify_passed? || review_passed?
-      "accepted"
+      "completed"
     elsif review_failed?
       "rejected"
     elsif verify_failed?

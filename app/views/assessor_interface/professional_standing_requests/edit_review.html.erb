@@ -6,7 +6,9 @@
 
   <h1 class="govuk-heading-xl">Review LoPS</h1>
 
-  <h2 class="govuk-heading-m"><%= region_teaching_authority_name(@application_form.region).upcase_first %></h2>
+  <h2 class="govuk-heading-m">
+    <%= region_teaching_authority_name(@application_form.region, context: :assessor).upcase_first %>
+  </h2>
 
   <%= govuk_inset_text do %>
     <h3 class="govuk-heading-s">Internal note</h3>

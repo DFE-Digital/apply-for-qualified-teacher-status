@@ -92,7 +92,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       assessment_id:,
     )
 
-    when_i_select_award_qts
+    when_i_select_award_qts_pending_verifications
     and_i_click_continue
     then_i_see_the(
       :assessor_verify_qualifications_assessment_recommendation_verify_page,
@@ -263,6 +263,13 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def when_i_select_award_qts
     assessor_complete_assessment_page.award_qts.input.choose
+  end
+
+  def when_i_select_award_qts_pending_verifications
+    assessor_complete_assessment_page
+      .award_qts_pending_verifications
+      .input
+      .choose
   end
 
   def when_i_select_decline_qts

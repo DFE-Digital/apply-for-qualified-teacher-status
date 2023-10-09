@@ -9,10 +9,6 @@
   <%= govuk_panel(title_text: "QTS application #{@view_object.application_form.reference} has been #{@view_object.status.downcase}") %>
 <% end %>
 
-<% unless @view_object.application_form.waiting_on? %>
-  <p class="govuk-body">The status of this application has been changed to ’<%= @view_object.status %>‘.</p>
-<% end %>
-
 <% if @view_object.assessment.review? %>
   <p class="govuk-body">An assessor will now review the application and make a decision on awarding or declining QTS.</p>
 <% elsif @view_object.application_form.declined? %>
