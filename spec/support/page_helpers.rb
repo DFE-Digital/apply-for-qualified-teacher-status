@@ -62,6 +62,16 @@ module PageHelpers
       PageObjects::AssessorInterface::EditWorkHistory.new
   end
 
+  def assessor_professional_standing_request_page
+    @assessor_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::ProfessionalStandingRequest.new
+  end
+
+  def assessor_professional_standing_request_edit_page
+    @assessor_professional_standing_request_edit_page ||=
+      PageObjects::AssessorInterface::ProfessionalStandingRequestEdit.new
+  end
+
   def assessor_qualification_requests_page
     @assessor_qualification_requests_page ||=
       PageObjects::AssessorInterface::QualificationRequests.new

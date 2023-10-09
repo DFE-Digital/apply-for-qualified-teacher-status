@@ -1,0 +1,39 @@
+<% title = "Request LoPS verification" %>
+
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<h1 class="govuk-heading-xl"><%= title %></h1>
+
+<p class="govuk-body">
+To verify the applications LoPS you need to:
+<ul class="govuk-list govuk-list--bullet">
+  <li> go to the Zendesk and apply email macro 'PR Request LoPS verification'</li>
+  <li> add the applicant's details to the email</li>
+  <li> attach the LoPS to the email</li>
+  <li> find the relevant authority's and document their LoPS document</li>
+  <li> send the email to the relevant teaching authority</li>
+</ul>
+</p>
+
+<p class="govuk-body">
+  Do you want to mark this task as completed and come back after you have sent the email from Zendesk?
+</p>
+
+<%= form_with model: @form, url: [
+  :request,
+  :assessor_interface,
+  @form.application_form,
+  @form.assessment,
+  :professional_standing_request,
+] do |f| %>
+  <%= f.govuk_radio_button :passed, :true, label: { text: "Yes, mark as completed" }, link_errors: true %>
+  <%= f.govuk_radio_button :passed, :false, label: { text: "No, come back later" } %>
+  <%= f.govuk_submit do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @form.application_form, @form.assessment, :professional_standing_request] %>
+  <% end%>
+
+
+<% end %>
+
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+

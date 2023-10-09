@@ -1,0 +1,48 @@
+<% title = "Verify LoPS" %>
+
+<h1 class="govuk-heading-xl"><%= title %></h1>
+
+<p class="govuk-body">
+  You need to request verification for this applications LoPS. Follow the steps below
+</p>
+
+<%= render(TaskList::Component.new(
+  [
+    { title: "",
+     items:[{
+       name:"Request LoPS verification",
+       link:if @professional_standing_request.requested?
+              nil
+            else
+              [
+                :request,
+                :assessor_interface,
+                @application_form,
+                @assessment,
+                :professional_standing_request,
+              ]
+            end,
+       status: @professional_standing_request.requested? ? "completed" : "not_started"
+     },
+     {
+       name: "Record LoPS verification",
+       link:[
+         :review,
+         :assessor_interface,
+         @application_form,
+         @assessment,
+         :professional_standing_request,
+       ],
+       status: "waiting_on"
+     }],
+   }
+])) %>
+
+<%= govuk_button_link_to "Back to overview", [
+  :assessor_interface,
+  @application_form
+] %>
+
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+

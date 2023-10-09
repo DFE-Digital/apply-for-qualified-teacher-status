@@ -44,6 +44,32 @@ module AssessorInterface
         )
     end
 
+    def show
+      authorize :assessor, :edit?
+    end
+
+    def edit_request
+      authorize [:assessor_interface, professional_standing_request]
+      @form = RequestRequestableForm.new(requestable:, user: current_staff)
+    end
+
+    def update_request
+      authorize [:assessor_interface, professional_standing_request]
+      @form =
+        RequestRequestableForm.new(
+          request_lops_params.merge(user: current_staff, requestable:),
+        )
+
+      if @form.save
+        redirect_to [
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :professional_standing_request,
+                    ]
+      end
+    end
+
     def update_review
       authorize [:assessor_interface, professional_standing_request]
 
@@ -78,6 +104,12 @@ module AssessorInterface
         :reviewed,
         :passed,
         :note,
+      )
+    end
+
+    def request_lops_params
+      params.require(:assessor_interface_verify_requestable_form).permit(
+        :passed,
       )
     end
 

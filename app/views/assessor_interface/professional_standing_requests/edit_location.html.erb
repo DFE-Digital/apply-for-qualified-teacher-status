@@ -1,41 +1,8 @@
-<% title = region_certificate_name(@application_form.region) %>
+<% title = "Verify LoPS" %>
+
+<%= render(TaskList::Component.new(AssessorInterface::VerifyLopsShowViewObject.new(assessment:, current_staff:).verify_lops_task_list_section)) %>
 
 <% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<%= form_with model: @form, url: [:location, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
-  <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-xl"><%= title %></h1>
-
-  <p class="govuk-body">
-    Only use this screen when the response from <%= region_teaching_authority_name_phrase(@application_form.region) %> is received.
-  </p>
-
-  <p class="govuk-body">
-    This screen is not an assessment of the letter of professional standing, it just confirms that a response has been received.
-  </p>
-
-  <% if @application_form.teaching_authority_provides_written_statement %>
-    <%= f.govuk_check_boxes_fieldset :received, multiple: false, legend: nil do %>
-      <%= f.govuk_check_box :received, true, false, multiple: false, link_errors: true,
-                            label: { text: "The letter of professional standing has been received.", size: "s" } %>
-    <% end %>
-
-    <%= f.govuk_text_area :location_note, label: { text: "Where to find the response", size: "m" }, hint: nil %>
-  <% else %>
-    <%= f.govuk_radio_buttons_fieldset :received, legend: { size: "s" } do %>
-      <%= f.govuk_radio_button :received, :true, link_errors: true %>
-
-      <%= f.govuk_radio_button :received, :false, link_errors: true do %>
-        <%= f.govuk_collection_radio_buttons :ready_for_review, %i[true false], :itself, legend: { size: "s" } %>
-      <% end %>
-    <% end %>
-
-    <%= f.govuk_text_area :location_note, label: { size: "s" } %>
-  <% end %>
-
-  <%= f.govuk_submit "Save and continue" do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
-  <% end %>
-<% end %>

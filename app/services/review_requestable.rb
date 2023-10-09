@@ -17,7 +17,6 @@ class ReviewRequestable
         review_note: note,
         reviewed_at: Time.zone.now,
       )
-
       requestable.after_reviewed(user:)
       application_form.reload
 
