@@ -182,8 +182,9 @@ class ApplicationFormStatusUpdater
         "none"
       elsif preliminary_check?
         "admin"
-      elsif dqt_trn_request.present? || overdue_further_information ||
-            overdue_lops || overdue_qualification || overdue_reference ||
+      elsif dqt_trn_request.present? || assessment_in_review? ||
+            overdue_further_information || overdue_lops ||
+            overdue_qualification || overdue_reference ||
             received_further_information || received_lops ||
             received_qualification || received_reference
         "assessor"
@@ -203,7 +204,7 @@ class ApplicationFormStatusUpdater
            application_form.declined_at.present? ||
            application_form.awarded_at.present?
         "completed"
-      elsif dqt_trn_request.present?
+      elsif assessment_in_review? || dqt_trn_request.present?
         "review"
       elsif preliminary_check? ||
             (teaching_authority_provides_written_statement && waiting_on_lops)
@@ -240,6 +241,8 @@ class ApplicationFormStatusUpdater
       elsif assessment.present?
         if preliminary_check?
           %w[preliminary_check] + requestable_statuses
+        elsif assessment_in_review?
+          %w[review]
         elsif requestable_statuses.present?
           requestable_statuses
         elsif assessment.any_not_preliminary_section_finished?
@@ -268,6 +271,10 @@ class ApplicationFormStatusUpdater
         assessment.any_preliminary_section_failed? ||
           !assessment.all_preliminary_sections_passed?
       )
+  end
+
+  def assessment_in_review?
+    assessment&.review? || false
   end
 
   def requestable_statuses

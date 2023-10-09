@@ -64,6 +64,11 @@ Rails.application.routes.draw do
           post "confirm", to: "assessment_recommendation_decline#update_confirm"
         end
 
+        resource :assessment_recommendation_review,
+                 controller: "assessment_recommendation_review",
+                 path: "/recommendation/review",
+                 only: %i[edit update]
+
         resource :assessment_recommendation_verify,
                  controller: "assessment_recommendation_verify",
                  path: "/recommendation/verify",
