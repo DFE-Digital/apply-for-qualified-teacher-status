@@ -116,9 +116,8 @@ Rails.application.routes.draw do
                  path: "/professional-standing-request",
                  only: [] do
           member do
-            get "location", to: "professional_standing_requests#edit_location"
-            post "location",
-                 to: "professional_standing_requests#update_location"
+            get "locate", to: "professional_standing_requests#edit_locate"
+            post "locate", to: "professional_standing_requests#update_locate"
             get "review", to: "professional_standing_requests#edit_review"
             post "review", to: "professional_standing_requests#update_review"
             get "verify", to: "professional_standing_requests#edit_verify"

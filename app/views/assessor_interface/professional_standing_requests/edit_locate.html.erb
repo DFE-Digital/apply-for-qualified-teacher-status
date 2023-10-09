@@ -3,7 +3,7 @@
 <% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<%= form_with model: @form, url: [:location, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
+<%= form_with model: @form, url: [:locate, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl"><%= title %></h1>

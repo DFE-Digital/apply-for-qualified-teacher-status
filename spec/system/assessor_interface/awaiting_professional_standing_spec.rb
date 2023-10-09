@@ -14,8 +14,8 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
     and_i_see_a_waiting_on_status
     and_i_click_awaiting_professional_standing
     then_i_see_the(
-      :assessor_edit_professional_standing_request_location_page,
-      application_id:,
+      :assessor_locate_professional_standing_request_page,
+      application_form_id:,
     )
 
     when_i_fill_in_the_form
@@ -41,7 +41,7 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
   end
 
   def when_i_fill_in_the_form
-    form = assessor_edit_professional_standing_request_location_page.form
+    form = assessor_locate_professional_standing_request_page.form
 
     form.received_checkbox.click
     form.note_textarea.fill_in with: "Note."
@@ -77,7 +77,9 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
       )
   end
 
-  def application_id
+  def application_form_id
     application_form.id
   end
+
+  alias_method :application_id, :application_form_id
 end

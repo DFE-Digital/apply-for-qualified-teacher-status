@@ -37,11 +37,6 @@ module PageHelpers
       PageObjects::AssessorInterface::EditApplication.new
   end
 
-  def assessor_edit_professional_standing_request_location_page
-    @assessor_edit_professional_standing_request_location_page ||=
-      PageObjects::AssessorInterface::EditProfessionalStandingRequestLocation.new
-  end
-
   def assessor_edit_qualification_request_page
     @assessor_edit_qualification_request_page ||=
       PageObjects::AssessorInterface::EditQualificationRequest.new
@@ -55,6 +50,11 @@ module PageHelpers
   def assessor_edit_work_history_page
     @assessor_edit_work_history_page ||=
       PageObjects::AssessorInterface::EditWorkHistory.new
+  end
+
+  def assessor_locate_professional_standing_request_page
+    @assessor_locate_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::LocateProfessionalStandingRequest.new
   end
 
   def assessor_qualification_requests_page
