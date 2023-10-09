@@ -20,6 +20,12 @@ module PageObjects
       def decline_qts
         new_states.find { |radio_item| radio_item.label.text == "Decline QTS" }
       end
+
+      def send_for_review
+        new_states.find do |radio_item|
+          radio_item.label.text == "Send application for review"
+        end
+      end
     end
   end
 end
