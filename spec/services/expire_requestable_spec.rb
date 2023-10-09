@@ -30,7 +30,7 @@ RSpec.describe ExpireRequestable do
 
     shared_examples_for "not expiring a requestable" do
       it "raises an error" do
-        expect { call }.to raise_error(ExpireRequestable::NotRequested)
+        expect { call }.to raise_error(ExpireRequestable::InvalidState)
       end
     end
 

@@ -33,7 +33,7 @@ class FurtherInformationRequest < ApplicationRecord
         -> do
           where
             .not(requested_at: nil)
-            .where(expired_at: nil)
+            .where(expired_at: nil, received_at: nil)
             .joins(assessment: :application_form)
             .merge(ApplicationForm.assessable)
         end

@@ -9,7 +9,7 @@ class ExpireRequestable
   end
 
   def call
-    raise NotRequested unless requestable.requested?
+    raise InvalidState if invalid_state?
 
     ActiveRecord::Base.transaction do
       requestable.expired!
@@ -21,7 +21,7 @@ class ExpireRequestable
     requestable
   end
 
-  class NotRequested < StandardError
+  class InvalidState < StandardError
   end
 
   private
@@ -29,6 +29,10 @@ class ExpireRequestable
   attr_reader :requestable, :user, :force
 
   delegate :application_form, to: :requestable
+
+  def invalid_state?
+    requestable.expired? || requestable.received? || !requestable.requested?
+  end
 
   def create_timeline_event
     creator = user.is_a?(String) ? nil : user

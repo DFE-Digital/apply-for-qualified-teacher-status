@@ -91,12 +91,8 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       )
     end
 
-    it do
-      is_expected.to_not include_task_list_section(
-        "Further information requests",
-      )
-    end
-    it { is_expected.to_not include_task_list_section("Verification requests") }
+    it { is_expected.to_not include_task_list_section("Verification") }
+    it { is_expected.to_not include_task_list_section("Review") }
 
     context "when teaching authority provides written statement and a professional standing request" do
       let!(:professional_standing_request) do
