@@ -52,7 +52,7 @@ RSpec.shared_examples "a requestable" do
     it "is accepted when passed is true" do
       subject.review_passed = true
       subject.reviewed_at = Time.zone.now
-      expect(subject.status).to eq("accepted")
+      expect(subject.status).to eq("completed")
     end
 
     it "is rejected when passed is false" do

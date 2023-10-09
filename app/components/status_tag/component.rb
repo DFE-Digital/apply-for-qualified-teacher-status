@@ -53,7 +53,7 @@ module StatusTag
       received_reference: "purple",
       rejected: "red",
       requested: "yellow",
-      review: "purple",
+      review: "pink",
       submitted: "grey",
       valid: "green",
       verification: "yellow",

@@ -3,6 +3,10 @@
 
 <h1 class="govuk-heading-xl">Review verifications</h1>
 
+<p class="govuk-body govuk-!-padding-bottom-2">
+  The following verification tasks have been flagged for review:
+</p>
+
 <%= govuk_table do |table|
   if @professional_standing_request.present?
     table.with_caption(text: "LoPS")
@@ -15,4 +19,6 @@
   end
 end %>
 
-<%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>
+<div class="govuk-!-padding-top-3">
+  <%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>
+</div>
