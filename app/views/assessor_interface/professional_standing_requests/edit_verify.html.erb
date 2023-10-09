@@ -1,0 +1,28 @@
+<% title = region_certificate_name(@application_form.region) %>
+
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <% if (location_note = @professional_standing_request.location_note).present? %>
+    <h2 class="govuk-heading-m">How to find the response</h2>
+    <%= govuk_inset_text { simple_format location_note } %>
+  <% end %>
+
+  <% if @professional_standing_request.received? || @professional_standing_request.expired? || @professional_standing_request.ready_for_review %>
+    <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: t(".passed"), size: "s" } do %>
+      <%= f.govuk_radio_button :passed, :true, link_errors: true %>
+      <%= f.govuk_radio_button :passed, :false do %>
+        <%= f.govuk_text_area :note, label: { text: t(".failure_assessor_note").html_safe } %>
+      <% end %>
+    <% end %>
+
+    <%= f.govuk_submit "Save and continue" do %>
+      <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+    <% end %>
+  <% end %>
+<% end %>

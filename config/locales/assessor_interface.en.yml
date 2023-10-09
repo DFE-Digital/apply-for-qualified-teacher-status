@@ -240,7 +240,7 @@ en:
     professional_standing_requests:
       edit_location:
         title: Third-party professional standing – response received
-      edit_review:
+      edit_verify:
         passed: Does the response confirm that this document is legitimate?
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why the document should not be accepted.'
 

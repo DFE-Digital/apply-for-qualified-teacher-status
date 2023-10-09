@@ -361,7 +361,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         if professional_standing_request.received? ||
              professional_standing_request.ready_for_review
           [
-            :review,
+            :verify,
             :assessor_interface,
             application_form,
             assessment,
@@ -429,7 +429,12 @@ class AssessorInterface::ApplicationFormsShowViewObject
         I18n.t(
           "assessor_interface.application_forms.show.assessment_tasks.items.review_verifications",
         ),
-      link: [:edit, :assessor_interface, application_form, assessment],
+      link: [
+        :assessor_interface,
+        application_form,
+        assessment,
+        :review_verifications,
+      ],
       status:
         if assessment.recommendable?
           :completed

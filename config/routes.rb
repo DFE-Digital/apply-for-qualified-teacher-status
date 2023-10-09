@@ -121,19 +121,14 @@ Rails.application.routes.draw do
                  to: "professional_standing_requests#update_location"
             get "review", to: "professional_standing_requests#edit_review"
             post "review", to: "professional_standing_requests#update_review"
+            get "verify", to: "professional_standing_requests#edit_verify"
+            post "verify", to: "professional_standing_requests#update_verify"
           end
         end
 
         resources :qualification_requests,
                   path: "/qualification-requests",
                   only: %i[index edit update]
-
-        get "/preliminary-check",
-            to: "preliminary_checks#edit",
-            as: :preliminary_check
-        put "/preliminary-check",
-            to: "preliminary_checks#update",
-            as: :update_preliminary_check
 
         resources :reference_requests,
                   path: "/reference-requests",
@@ -142,6 +137,10 @@ Rails.application.routes.draw do
                to: "reference_requests#update_verify_references",
                on: :collection
         end
+
+        resources :review_verifications,
+                  path: "/review-verifications",
+                  only: %i[index]
       end
     end
 

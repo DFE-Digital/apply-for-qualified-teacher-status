@@ -2,9 +2,9 @@
 
 module PageObjects
   module AssessorInterface
-    class EditProfessionalStandingRequestReview < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
-                "/professional-standing-request/review"
+    class VerifyProfessionalStandingRequest < SitePrism::Page
+      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
+                "/professional-standing-request/verify"
 
       section :form, "form" do
         section :yes_radio_item,

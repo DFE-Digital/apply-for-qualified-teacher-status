@@ -74,10 +74,6 @@ module PageObjects
         task_list.find_item("Review qualifications responses")
       end
 
-      def assessment_recommendation_task
-        task_list.find_item("Assessment recommendation")
-      end
-
       def verify_references_task
         task_list.find_item("Verify reference requests")
       end
@@ -88,6 +84,18 @@ module PageObjects
 
       def review_professional_standing_request_task
         task_list.find_item("Review LOPS response")
+      end
+
+      def assessment_decision_task
+        task_list.find_item("Assessment decision")
+      end
+
+      def review_verifications_task
+        task_list.find_item("Review verifications")
+      end
+
+      def verification_decision_task
+        task_list.find_item("Verification decision")
       end
     end
   end
