@@ -111,10 +111,12 @@ Rails.application.routes.draw do
 
         resource :professional_standing_request,
                  path: "/professional-standing-request",
-                 only: [] do
+                 only: [:show] do
           member do
             get "locate", to: "professional_standing_requests#edit_locate"
             post "locate", to: "professional_standing_requests#update_locate"
+            get "request", to: "professional_standing_requests#edit_request"
+            post "request", to: "professional_standing_requests#update_request"
             get "review", to: "professional_standing_requests#edit_review"
             post "review", to: "professional_standing_requests#update_review"
             get "verify", to: "professional_standing_requests#edit_verify"
