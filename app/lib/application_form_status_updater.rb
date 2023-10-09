@@ -209,9 +209,10 @@ class ApplicationFormStatusUpdater
       elsif preliminary_check? ||
             (teaching_authority_provides_written_statement && waiting_on_lops)
         "pre_assessment"
-      elsif overdue_lops || overdue_qualification || overdue_reference ||
-            received_lops || received_qualification || received_reference ||
-            waiting_on_lops || waiting_on_qualification || waiting_on_reference
+      elsif assessment_in_verify? || overdue_lops || overdue_qualification ||
+            overdue_reference || received_lops || received_qualification ||
+            received_reference || waiting_on_lops || waiting_on_qualification ||
+            waiting_on_reference
         "verification"
       elsif overdue_further_information || received_further_information ||
             waiting_on_further_information ||
@@ -245,6 +246,8 @@ class ApplicationFormStatusUpdater
           %w[review]
         elsif requestable_statuses.present?
           requestable_statuses
+        elsif assessment_in_verify?
+          %w[verification_in_progress]
         elsif assessment.any_not_preliminary_section_finished?
           %w[assessment_in_progress]
         else
@@ -275,6 +278,10 @@ class ApplicationFormStatusUpdater
 
   def assessment_in_review?
     assessment&.review? || false
+  end
+
+  def assessment_in_verify?
+    assessment&.verify? || false
   end
 
   def requestable_statuses

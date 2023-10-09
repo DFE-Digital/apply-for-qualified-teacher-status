@@ -441,6 +441,17 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes statuses", %w[review]
     end
 
+    context "with an assessment in verify" do
+      before do
+        application_form.update!(submitted_at: Time.zone.now)
+        create(:assessment, :verify, application_form:)
+      end
+
+      include_examples "changes action required by", "assessor"
+      include_examples "changes stage", "verification"
+      include_examples "changes statuses", %w[verification_in_progress]
+    end
+
     context "with a started assessment" do
       before do
         application_form.update!(submitted_at: Time.zone.now)
