@@ -392,6 +392,10 @@ en:
               blank: Enter why you selected ‘No’
             failed:
               inclusion: Select whether you want to mark this qualification as ‘Rejected’
+        assessor_interface/requestable_request_form:
+          attributes:
+            passed:
+              inclusion: Select whether you are satisfied that this is completed
         assessor_interface/requestable_review_form:
           attributes:
             passed:

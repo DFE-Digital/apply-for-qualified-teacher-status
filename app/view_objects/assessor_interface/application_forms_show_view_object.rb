@@ -327,20 +327,18 @@ class AssessorInterface::ApplicationFormsShowViewObject
           "assessor_interface.application_forms.show.assessment_tasks.items.professional_standing_request",
         ),
       link: [
-        :locate,
         :assessor_interface,
         application_form,
         assessment,
         :professional_standing_request,
       ],
       status:
-        if professional_standing_request.ready_for_review ||
-             professional_standing_request.received?
-          :completed
-        elsif professional_standing_request.expired?
-          :overdue
+        if professional_standing_request.verified?
+          "completed"
+        elsif professional_standing_request.requested?
+          "waiting_on"
         else
-          :waiting_on
+          "not_started"
         end,
     }
   end

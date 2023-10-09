@@ -15,8 +15,6 @@ en:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
       assessor_interface_filter_form:
         reference: "Example: 210245"
-      assessor_interface_professional_standing_request_location_form:
-        location_note: Use this space to add any useful notes, for example, where to locate the response.
       assessor_interface_work_history_contact_form:
         name: Type the updated full name in the text box below
         job: Type the updated job title in the text box below
@@ -106,14 +104,6 @@ en:
         location: Country trained in
         name: Applicant name
         reference: Application reference number
-      assessor_interface_professional_standing_request_location_form:
-        received_options:
-          true: "Yes"
-          false: "No"
-        ready_for_review_options:
-          true: "Yes, move to review"
-          false: "No, allow more time for a response"
-        location_note: Your notes (optional)
       assessor_interface_qualification_request_form:
         received_options:
           true: "Yes"
@@ -286,9 +276,6 @@ en:
         submitted_at: Created date
         submitted_at_after: Start date
         submitted_at_before: End date
-      assessor_interface_professional_standing_request_location_form:
-        received: Have you received a response about this letter of professional standing?
-        ready_for_review: Do you want to mark this for review?
       assessor_interface_qualification_request_form:
         received: Have you received a response about this qualification?
         passed: Does the response show that the qualification is legitimate?

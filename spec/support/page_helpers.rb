@@ -82,11 +82,6 @@ module PageHelpers
       PageObjects::AssessorInterface::ConfirmAssessmentRecommendation.new
   end
 
-  def assessor_contact_professional_standing_assessment_recommendation_verify_page
-    @assessor_contact_professional_standing_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::ContactProfessionalStandingAssessmentRecommendationVerify.new
-  end
-
   def assessor_create_note_page
     @assessor_create_note_page ||=
       PageObjects::AssessorInterface::CreateNote.new
@@ -161,6 +156,11 @@ module PageHelpers
       PageObjects::AssessorInterface::PreviewTeacherAssessmentRecommendationAward.new
   end
 
+  def assessor_professional_standing_request_page
+    @assessor_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::ProfessionalStandingRequest.new
+  end
+
   def assessor_qualification_requests_assessment_recommendation_verify_page
     @assessor_qualification_requests_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
@@ -184,6 +184,11 @@ module PageHelpers
   def assessor_request_further_information_page
     @request_further_information_form =
       PageObjects::AssessorInterface::RequestFurtherInformation.new
+  end
+
+  def assessor_request_professional_standing_request_page
+    @assessor_request_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::RequestProfessionalStandingRequest.new
   end
 
   def assessor_reverse_decision_page
