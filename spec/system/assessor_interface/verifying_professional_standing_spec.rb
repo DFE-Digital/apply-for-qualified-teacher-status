@@ -43,18 +43,18 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     )
     and_the_request_lops_verification_status_is("COMPLETED")
 
-    # when_i_click_record_lops_verification
-    # then_i_see_the(
-    #   :assessor_verify_professional_standing_request_page,
-    #   application_form_id:,
-    #   assessment_id:,
-    # )
-    # and_i_fill_in_the_verify_form
-    # then_i_see_the(
-    #   :assessor_professional_standing_request_page,
-    #   application_form_id:,
-    #   assessment_id:,
-    # )
+    when_i_click_record_lops_verification
+    then_i_see_the(
+      :assessor_verify_professional_standing_request_page,
+      application_form_id:,
+      assessment_id:,
+    )
+    and_i_fill_in_the_verify_form
+    then_i_see_the(
+      :assessor_professional_standing_request_page,
+      application_form_id:,
+      assessment_id:,
+    )
   end
 
   private
