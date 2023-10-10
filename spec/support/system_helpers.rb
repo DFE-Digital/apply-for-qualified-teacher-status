@@ -80,7 +80,7 @@ module SystemHelpers
     user =
       create(
         :staff,
-        :with_award_decline_permission,
+        :with_assess_permission,
         :confirmed,
         name: "Authorized User",
       )

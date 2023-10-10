@@ -3,7 +3,7 @@
 # Table name: staff
 #
 #  id                             :bigint           not null, primary key
-#  award_decline_permission       :boolean          default(FALSE)
+#  assess_permission              :boolean          default(FALSE)
 #  azure_ad_uid                   :string
 #  change_name_permission         :boolean          default(FALSE), not null
 #  change_work_history_permission :boolean          default(FALSE), not null
@@ -69,7 +69,7 @@ class Staff < ApplicationRecord
 
   validates :name, presence: true
 
-  scope :assessors, -> { where(award_decline_permission: true) }
+  scope :assessors, -> { where(assess_permission: true) }
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

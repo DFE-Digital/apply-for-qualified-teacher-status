@@ -2,7 +2,7 @@
 
 class AssessorInterface::AssessmentPolicy < ApplicationPolicy
   def update?
-    user.award_decline_permission
+    user.assess_permission
   end
 
   def destroy?

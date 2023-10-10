@@ -55,7 +55,7 @@ def staff_members
     {
       name: "Dave Assessor",
       email: "assessor-dave@example.com",
-      award_decline_permission: true,
+      assess_permission: true,
       change_name_permission: false,
       change_work_history_permission: false,
       reverse_decision_permission: false,
@@ -66,7 +66,7 @@ def staff_members
     {
       name: "Beryl Assessor",
       email: "assessor-beryl@example.com",
-      award_decline_permission: true,
+      assess_permission: true,
       change_name_permission: false,
       change_work_history_permission: false,
       reverse_decision_permission: false,
@@ -77,7 +77,7 @@ def staff_members
     {
       name: "Sally Manager",
       email: "manager-sally@example.com",
-      award_decline_permission: false,
+      assess_permission: false,
       change_name_permission: true,
       change_work_history_permission: true,
       reverse_decision_permission: true,
@@ -88,7 +88,7 @@ def staff_members
     {
       name: "Antonio Helpdesk",
       email: "helpdesk-antonio@example.com",
-      award_decline_permission: false,
+      assess_permission: false,
       change_name_permission: false,
       change_work_history_permission: false,
       reverse_decision_permission: false,
@@ -99,7 +99,7 @@ def staff_members
     {
       name: "Victarion Verifier",
       email: "victarion-verifier@example.com",
-      award_decline_permission: false,
+      assess_permission: false,
       change_name_permission: false,
       change_work_history_permission: false,
       reverse_decision_permission: false,

@@ -3,7 +3,7 @@
 # Table name: staff
 #
 #  id                             :bigint           not null, primary key
-#  award_decline_permission       :boolean          default(FALSE)
+#  assess_permission              :boolean          default(FALSE)
 #  azure_ad_uid                   :string
 #  change_name_permission         :boolean          default(FALSE), not null
 #  change_work_history_permission :boolean          default(FALSE), not null
@@ -60,8 +60,8 @@ FactoryBot.define do
       confirmed_at { Time.zone.now }
     end
 
-    trait :with_award_decline_permission do
-      award_decline_permission { true }
+    trait :with_assess_permission do
+      assess_permission { true }
     end
 
     trait :with_change_name_permission do

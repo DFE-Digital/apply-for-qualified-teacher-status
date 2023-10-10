@@ -21,11 +21,11 @@
     end
 
     summary_list.with_row do |row|
-      row.with_key { t("activerecord.attributes.staff.award_decline_permission") }
-      row.with_value { govuk_boolean_tag(staff.award_decline_permission) }
+      row.with_key { t("activerecord.attributes.staff.assess_permission") }
+      row.with_value { govuk_boolean_tag(staff.assess_permission) }
       row.with_action(
         href: edit_support_interface_staff_path(staff),
-        visually_hidden_text: t("activerecord.attributes.staff.award_decline_permission")
+        visually_hidden_text: t("activerecord.attributes.staff.assess_permission")
       )
     end
 

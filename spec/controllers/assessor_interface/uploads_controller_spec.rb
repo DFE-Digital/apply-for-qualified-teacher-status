@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe AssessorInterface::UploadsController, type: :controller do
   before { FeatureFlags::FeatureFlag.activate(:service_open) }
 
-  let(:staff) { create(:staff, :with_award_decline_permission, :confirmed) }
+  let(:staff) { create(:staff, :with_assess_permission, :confirmed) }
   let(:application_form) { create(:application_form) }
 
   before { sign_in staff, scope: :staff }

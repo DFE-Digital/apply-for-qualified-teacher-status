@@ -63,7 +63,7 @@ RSpec.describe "Assessor change application form name", type: :system do
   alias_method :application_id, :application_form_id
 
   def assessor
-    create(:staff, :confirmed, :with_award_decline_permission)
+    create(:staff, :confirmed, :with_assess_permission)
   end
 
   def manager

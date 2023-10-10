@@ -128,7 +128,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
 
     context "with an assessor user" do
-      let!(:staff) { create(:staff, :with_award_decline_permission) }
+      let!(:staff) { create(:staff, :with_assess_permission) }
 
       it { is_expected.to include(staff) }
     end

@@ -24,7 +24,7 @@ class AssessorInterface::ProfessionalStandingRequestPolicy < ApplicationPolicy
   alias_method :edit_verify?, :update_verify?
 
   def update_review?
-    user.award_decline_permission
+    user.assess_permission
   end
 
   alias_method :edit_review?, :update_review?
