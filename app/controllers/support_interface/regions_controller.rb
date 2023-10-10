@@ -32,10 +32,10 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
 
   def region_params
     params.require(:region).permit(
-      :application_form_skip_work_history,
+      :all_sections_necessary,
+      :work_history_section_to_omit,
       :other_information,
       :qualifications_information,
-      :reduced_evidence_accepted,
       :requires_preliminary_check,
       :sanction_check,
       :sanction_information,

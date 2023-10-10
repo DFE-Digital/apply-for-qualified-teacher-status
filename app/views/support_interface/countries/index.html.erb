@@ -40,11 +40,11 @@
             <% end %>
 
             <% if region.application_form_skip_work_history %>
-              <%= govuk_tag(text: "Work history removed", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
+              <%= govuk_tag(text: "No work history section required", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
             <% end %>
 
             <% if region.reduced_evidence_accepted %>
-              <%= govuk_tag(text: "Accepts reduced evidence", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
+              <%= govuk_tag(text: "No work history contact details required", colour: "yellow", classes: ["govuk-!-margin-left-2"]) %>
             <% end %>
           <% end %>
         <% end %>

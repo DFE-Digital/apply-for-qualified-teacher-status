@@ -86,4 +86,41 @@ class Region < ApplicationRecord
     teaching_authority_name.present? || teaching_authority_address.present? ||
       teaching_authority_emails.present? || teaching_authority_websites.present?
   end
+
+  def all_sections_necessary
+    !application_form_skip_work_history && !reduced_evidence_accepted
+  end
+
+  def all_sections_necessary=(value)
+    application_form_skip_work_history_will_change!
+    reduced_evidence_accepted_will_change!
+
+    if value
+      self.application_form_skip_work_history = false
+      self.reduced_evidence_accepted = false
+    end
+  end
+
+  def work_history_section_to_omit
+    if application_form_skip_work_history
+      "whole_section"
+    elsif reduced_evidence_accepted
+      "contact_details"
+    end
+  end
+
+  def work_history_section_to_omit=(value)
+    return if all_sections_necessary
+    application_form_skip_work_history_will_change!
+    reduced_evidence_accepted_will_change!
+
+    case value
+    when "whole_section"
+      self.application_form_skip_work_history = true
+      self.reduced_evidence_accepted = false
+    when "contact_details"
+      self.application_form_skip_work_history = false
+      self.reduced_evidence_accepted = true
+    end
+  end
 end
