@@ -332,7 +332,7 @@
     - work_history_id
     - selected_failure_reason_id
   :staff:
-    - award_decline_permission
+    - assess_permission
     - azure_ad_uid
     - change_name_permission
     - change_work_history_permission

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_04_150531) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_10_075849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -447,7 +447,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_04_150531) do
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
     t.text "name", default: "", null: false
-    t.boolean "award_decline_permission", default: false
+    t.boolean "assess_permission", default: false
     t.boolean "support_console_permission", default: false, null: false
     t.string "azure_ad_uid"
     t.boolean "change_work_history_permission", default: false, null: false
