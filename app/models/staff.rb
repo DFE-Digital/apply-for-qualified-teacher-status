@@ -69,7 +69,7 @@ class Staff < ApplicationRecord
 
   validates :name, presence: true
 
-  scope :assessors, -> { where(award_decline_permission: true) }
+  scope :assessors, -> { where(assess_permission: true) }
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

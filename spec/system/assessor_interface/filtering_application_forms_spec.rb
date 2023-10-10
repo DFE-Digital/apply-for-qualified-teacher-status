@@ -209,8 +209,8 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def assessors
     @assessors ||= [
-      create(:staff, :with_award_decline_permission, name: "Fal Staff"),
-      create(:staff, :with_award_decline_permission, name: "Wag Staff"),
+      create(:staff, :with_assess_permission, name: "Fal Staff"),
+      create(:staff, :with_assess_permission, name: "Wag Staff"),
     ]
   end
 end

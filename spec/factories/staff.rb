@@ -60,8 +60,8 @@ FactoryBot.define do
       confirmed_at { Time.zone.now }
     end
 
-    trait :with_award_decline_permission do
-      award_decline_permission { true }
+    trait :with_assess_permission do
+      assess_permission { true }
     end
 
     trait :with_change_name_permission do

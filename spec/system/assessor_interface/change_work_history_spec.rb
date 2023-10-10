@@ -128,7 +128,7 @@ RSpec.describe "Assessor change work history", type: :system do
   end
 
   def assessor
-    create(:staff, :confirmed, :with_award_decline_permission)
+    create(:staff, :confirmed, :with_assess_permission)
   end
 
   def manager

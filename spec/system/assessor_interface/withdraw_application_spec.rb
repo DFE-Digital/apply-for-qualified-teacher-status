@@ -65,7 +65,7 @@ RSpec.describe "Assessor withdraw application", type: :system do
   delegate :id, to: :assessment, prefix: true
 
   def assessor
-    create(:staff, :confirmed, :with_award_decline_permission)
+    create(:staff, :confirmed, :with_assess_permission)
   end
 
   def manager

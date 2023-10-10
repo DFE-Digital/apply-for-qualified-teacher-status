@@ -10,14 +10,14 @@ class AssessorPolicy < ApplicationPolicy
   end
 
   def create?
-    user.award_decline_permission?
+    user.assess_permission
   end
 
   def update?
-    user.award_decline_permission?
+    user.assess_permission
   end
 
   def destroy?
-    user.award_decline_permission?
+    user.assess_permission
   end
 end

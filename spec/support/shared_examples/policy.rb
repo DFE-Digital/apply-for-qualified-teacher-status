@@ -23,7 +23,7 @@ RSpec.shared_examples "a policy method requiring the award decline permission" d
   end
 
   context "with permission" do
-    let(:user) { create(:staff, :with_award_decline_permission) }
+    let(:user) { create(:staff, :with_assess_permission) }
     it { is_expected.to be true }
   end
 end

@@ -72,15 +72,13 @@ RSpec.describe Staff, type: :model do
     describe ".assessors" do
       subject { described_class.assessors }
 
-      context "when award_decline_permission == true" do
-        let(:with_award_decline_permission) do
-          create(:staff, :with_award_decline_permission)
-        end
+      context "when assess_permission == true" do
+        let(:with_assess_permission) { create(:staff, :with_assess_permission) }
 
-        it { is_expected.to include(with_award_decline_permission) }
+        it { is_expected.to include(with_assess_permission) }
       end
 
-      context "when with_award_decline_permission == false" do
+      context "when with_assess_permission == false" do
         let(:non_assessor) { create(:staff) }
 
         it { is_expected.not_to include(non_assessor) }
