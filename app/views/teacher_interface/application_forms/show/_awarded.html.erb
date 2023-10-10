@@ -1,24 +1,47 @@
 <h2 class="govuk-heading-l">Your QTS application was successful</h2>
 
-<p class="govuk-body">As someone with qualified teacher status, you’ve been assigned a teacher reference number (TRN).</p>
+<p class="govuk-body">Your application <%= view_object.application_form.reference %> has been reviewed and you have been awarded qualified teacher status.</p>
 
-<p class="govuk-body">Your TRN is:</p>
-<%= govuk_inset_text(text: view_object.teacher.trn) %>
+<h3 class="govuk-heading-m">Teacher reference number (TRN)</h3>
 
-<h3 class="govuk-heading-m">Next steps</h3>
+<p class="govuk-body">You’ve been assigned a teacher reference number (TRN). This is a 7-digit number that identifies you in the education sector in England.</p>
 
-<p class="govuk-body">To download a PDF of your QTS certificate and find your date of recognition, visit:</p>
-<p class="govuk-body"><%= govuk_link_to "https://www.gov.uk/guidance/teacher-self-service-portal", "https://www.gov.uk/guidance/teacher-self-service-portal" %></p>
+<p class="govuk-body">Your TRN: <%= view_object.teacher.trn %></p>
+
+<h3 class="govuk-heading-m">Access your QTS certificate</h3>
+
+<p class="govuk-body">You can now get your QTS certificate. You will need this, as well as your TRN, to be recognised in the education sector in England.</p>
+
+<p class="govuk-body">Get your certificate at <%= govuk_link_to "Access your teaching qualifications", view_object.teacher.access_your_teaching_qualifications_url.presence || "https://access-your-teaching-qualifications.education.gov.uk" %>.</p>
+
+<p class="govuk-body">You will be asked to create a Department for Education (DfE) Identity account to log in.</p>
+
+<h3 class="govuk-heading-m">About DfE Identity accounts</h3>
+
+<p class="govuk-body">You’ll need your name and mobile phone number (for account security only) to create an account. Your DfE Identity account can be used to:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>access your teaching qualifications, for example your QTS certification (to show employers evidence of your teaching status)</li>
+  <li>sign into different DfE teacher services</li>
+  <li>update your details</li>
+</ul>
 
 <h3 class="govuk-heading-m">Find out more about teaching in England</h3>
 
-<p class="govuk-body">There’s more information about coming to teach in England at <%= govuk_link_to "Get Into Teaching", "https://getintoteaching.education.gov.uk/non-uk-teachers" %>.</p>
+<p class="govuk-body">There is more information available about coming to teach in England at <%= govuk_link_to "Get into Teaching", "https://getintoteaching.education.gov.uk/non-uk-teachers" %>.</p>
 
-<h3 class="govuk-heading-m">Search for a job in teaching</h3>
+<p class="govuk-body">The Get into Teaching website also offers <%= govuk_link_to "help and support", "https://getintoteaching.education.gov.uk/help-and-support" %>.</p>
 
-<p class="govuk-body">You can search for a teaching job using <%= govuk_link_to "Teaching Vacancies", "https://teaching-vacancies.service.gov.uk" %>. It’s the official government service that schools use to list their teaching roles. You can also sign up to alerts for the latest jobs matching your key search criteria.</p>
+<p class="govuk-body">You may be eligible to <%= govuk_link_to "receive help from a return to teaching adviser", "https://getintoteaching.education.gov.uk/teacher-training-adviser/sign_up/identity" %>. They can give you one-to-one support with applications and applying for interviews. They cannot provide visa advice or offer you a teaching role in England. To register for support you will need your TRN.</p>
 
-<h3 class="govuk-heading-m">Get support with your application</h3>
+<h3 class="govuk-heading-m">Search for a teaching job in England</h3>
 
-<p class="govuk-body">If you’re applying for a secondary school maths, physics or modern foreign languages teaching role in England, use the Get into Teaching service for one-to-one support with your application through <%= govuk_link_to "Get an advisor", "https://adviser-getintoteaching.education.gov.uk" %>.</p>
-<p class="govuk-body">Your adviser can help with writing a personal statement, preparing for an interview and accessing courses to enhance your subject knowledge.</p>
+<p class="govuk-body">You can search for a job in teaching through the government’s official <%= govuk_link_to "Teaching Vacancies service", "https://teaching-vacancies.service.gov.uk" %>.</p>
+
+<p class="govuk-body">The service is free and is used by English schools to list their teaching roles. As well as applying for jobs you can:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>set up job alerts</li>
+  <li>create a profile which allows schools to find and invite you to apply for their jobs</li>
+  <li>read advice for jobseekers</li>
+</ul>

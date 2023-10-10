@@ -2,14 +2,46 @@ Dear <%= application_form_full_name(@application_form) %>
 
 # Your QTS application was successful
 
-<%= render "shared/teacher_mailer/reference_number" %>
+We are pleased to tell you that your application <%= @application_form.reference %> has been reviewed and you have been awarded qualified teacher status.
+
+## Teacher reference number (TRN)
+
+You’ve been assigned a teacher reference number (TRN). This is a 7-digit number that identifies you in the education sector in England.
+
+Your TRN: <%= @application_form.teacher.trn %>
+
+## Access your QTS certificate
+
+You can now get your QTS certificate. You will need this, as well as your TRN, to be recognised in the education sector in England.
+
+Get your certificate at [Access your teaching qualifications](<%= @application_form.teacher.access_your_teaching_qualifications_url.presence || "https://access-your-teaching-qualifications.education.gov.uk" %>).
+
+You will be asked to create a Department for Education (DfE) Identity account to log in.
+
+## About DfE Identity accounts
+
+You’ll need your name and mobile phone number (for account security only) to create an account. Your DfE Identity account can be used to:
+- access your teaching qualifications, for example your QTS certificate (to show employers evidence of your teaching status)
+- sign into different DfE teacher services
+- update your details
 
 We’re pleased to tell you that the assessor has now completed their review of your application and you’ve been awarded qualified teacher status (QTS).
 
-# What happens next
+## Find out more about teaching in England
 
-You can sign in to get your Teacher Reference Number (TRN) and get some guidance about your next steps:
+There is more information available about coming to teach in England at [Get into Teaching](https://getintoteaching.education.gov.uk/non-uk-teachers).
 
-<%= new_teacher_session_url %>
+The Get into Teaching website also offers [help and support](https://getintoteaching.education.gov.uk/help-and-support).
+
+You may be eligible to [receive help from a return to teaching adviser](https://getintoteaching.education.gov.uk/teacher-training-adviser/sign_up/identity). They can give you one-to-one support with applications and applying for interviews. They cannot provide visa advice or offer you a teaching role in England. To register for support you will need your TRN.
+
+## Search for a teaching job in England
+
+You can search for a job in teaching through the government’s official [Teaching Vacancies service](https://teaching-vacancies.service.gov.uk).
+
+The service is free and is used by English schools to list their teaching roles. As well as applying for jobs you can:
+- set up job alerts
+- create a profile which allows schools to find and invite you to apply for their jobs
+- read advice for jobseekers
 
 <%= render "shared/teacher_mailer/footer" %>

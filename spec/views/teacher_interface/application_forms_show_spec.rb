@@ -28,6 +28,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
     it { is_expected.to match(/Your QTS application was successful/) }
     it { is_expected.to match(/ABCDEF/) }
+    it { is_expected.to match(/Access your teaching qualifications/) }
   end
 
   context "when declined" do

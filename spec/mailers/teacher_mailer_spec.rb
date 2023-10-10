@@ -21,6 +21,13 @@ RSpec.describe TeacherMailer, type: :mailer do
   describe "#application_awarded" do
     subject(:mail) { described_class.with(teacher:).application_awarded }
 
+    before do
+      teacher.update!(
+        trn: "ABCDEF",
+        access_your_teaching_qualifications_url: "https://aytq.com",
+      )
+    end
+
     describe "#subject" do
       subject(:subject) { mail.subject }
 
@@ -38,6 +45,8 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
+      it { is_expected.to include("ABCDEF") }
+      it { is_expected.to include("https://aytq.com") }
     end
 
     it_behaves_like "an observable mailer", "application_awarded"
