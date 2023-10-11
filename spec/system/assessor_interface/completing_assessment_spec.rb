@@ -43,7 +43,9 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_check_declaration
-    then_i_see_the(:assessor_age_range_subjects_assessment_recommendation_award_page)
+    then_i_see_the(
+      :assessor_age_range_subjects_assessment_recommendation_award_page,
+    )
     and_i_see_the_age_range_subjects
 
     when_i_click_change_age_range_minimum
@@ -52,7 +54,9 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_click_continue
-    then_i_see_the(:assessor_age_range_subjects_assessment_recommendation_award_page)
+    then_i_see_the(
+      :assessor_age_range_subjects_assessment_recommendation_award_page,
+    )
     and_i_continue_from_age_range_subjects
 
     then_i_see_the(

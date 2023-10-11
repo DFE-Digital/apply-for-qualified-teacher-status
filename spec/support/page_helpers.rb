@@ -37,14 +37,14 @@ module PageHelpers
       PageObjects::AssessorInterface::AssignAssessor.new
   end
 
-  def assessor_assessment_section_page
-    @assessor_assessment_section_page ||=
-      PageObjects::AssessorInterface::AssessmentSection.new
-  end
-
   def assessor_assign_reviewer_page
     @assessor_assign_reviewer_page ||=
       PageObjects::AssessorInterface::AssignReviewer.new
+  end
+
+  def assessor_assessment_section_page
+    @assessor_assessment_section_page ||=
+      PageObjects::AssessorInterface::AssessmentSection.new
   end
 
   def assessor_check_english_language_proficiency_page
@@ -291,6 +291,16 @@ module PageHelpers
 
   def personas_page
     @personas_page ||= PageObjects::Personas.new
+  end
+
+  def support_edit_english_language_provider_page
+    @support_edit_english_language_provider_page ||=
+      PageObjects::SupportInterface::EditEnglishLanguageProvider.new
+  end
+
+  def support_english_language_providers_index_page
+    @support_english_language_providers_index_page ||=
+      PageObjects::SupportInterface::EnglishLanguageProvidersIndex.new
   end
 
   def staff_signed_out_page
@@ -592,15 +602,5 @@ module PageHelpers
   def teacher_written_statement_page
     @teacher_written_statement_page =
       PageObjects::TeacherInterface::WrittenStatement.new
-  end
-
-  def support_edit_english_language_provider_page
-    @support_edit_english_language_provider_page ||=
-      PageObjects::SupportInterface::EditEnglishLanguageProvider.new
-  end
-
-  def support_english_language_providers_index_page
-    @support_english_language_providers_index_page ||=
-      PageObjects::SupportInterface::EnglishLanguageProvidersIndex.new
   end
 end
