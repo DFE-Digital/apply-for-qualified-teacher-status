@@ -14,7 +14,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     when_i_visit_the(:assessor_application_page, application_id:)
     and_i_click_review_requested_information
     then_i_see_the(
-      :review_further_information_request_page,
+      :assessor_review_further_information_request_page,
       application_id:,
       assessment_id:,
       further_information_request_id:,
@@ -30,7 +30,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     when_i_visit_the(:assessor_application_page, application_id:)
     and_i_click_review_requested_information
     then_i_see_the(
-      :review_further_information_request_page,
+      :assessor_review_further_information_request_page,
       application_id:,
       assessment_id:,
       further_information_request_id:,
@@ -49,7 +49,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     when_i_visit_the(:assessor_application_page, application_id:)
     and_i_click_review_requested_information
     then_i_see_the(
-      :review_further_information_request_page,
+      :assessor_review_further_information_request_page,
       application_id:,
       assessment_id:,
       further_information_request_id:,
@@ -74,7 +74,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
 
   def and_i_see_the_check_your_answers_items
     rows =
-      review_further_information_request_page.summary_lists.flat_map(&:rows)
+      assessor_review_further_information_request_page.summary_lists.flat_map(&:rows)
 
     expect(rows.count).to eq(8)
 
@@ -86,8 +86,8 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def when_i_mark_the_section_as_complete
-    review_further_information_request_page.form.yes_radio_item.input.click
-    review_further_information_request_page.form.continue_button.click
+    assessor_review_further_information_request_page.form.yes_radio_item.input.click
+    assessor_review_further_information_request_page.form.continue_button.click
   end
 
   def and_i_see_an_award_qts_option
@@ -95,10 +95,10 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def when_i_mark_the_section_as_incomplete
-    review_further_information_request_page.form.no_radio_item.input.click
-    review_further_information_request_page.form.failure_reason_textarea.fill_in with:
+    assessor_review_further_information_request_page.form.no_radio_item.input.click
+    assessor_review_further_information_request_page.form.failure_reason_textarea.fill_in with:
       "Failure reason"
-    review_further_information_request_page.form.continue_button.click
+    assessor_review_further_information_request_page.form.continue_button.click
   end
 
   def and_i_see_a_decline_qts_option
@@ -106,7 +106,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def and_i_do_not_see_the_review_further_information_form
-    expect(review_further_information_request_page).not_to have_form
+    expect(assessor_review_further_information_request_page).not_to have_form
   end
 
   def application_form

@@ -89,6 +89,11 @@ module PageHelpers
       PageObjects::AssessorInterface::DeclareAssessmentRecommendation.new
   end
 
+  def assessor_edit_age_range_subjects_assessment_recommendation_award_page
+    @assessor_edit_age_range_subjects_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::EditAgeRangeSubjectsAssessmentRecommendationAward.new
+  end
+
   def assessor_edit_application_page
     @assessor_edit_application_page ||=
       PageObjects::AssessorInterface::EditApplication.new
@@ -109,9 +114,38 @@ module PageHelpers
       PageObjects::AssessorInterface::EditWorkHistory.new
   end
 
+  def assessor_email_consent_letters_requests_assessment_recommendation_verify_page
+    @assessor_email_consent_letters_requests_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::EmailConsentLettersAssessmentRecommendationVerify.new
+  end
+
   def assessor_locate_professional_standing_request_page
     @assessor_locate_professional_standing_request_page ||=
       PageObjects::AssessorInterface::LocateProfessionalStandingRequest.new
+  end
+
+  def assessor_login_page
+    @assessor_login_page ||= PageObjects::AssessorInterface::Login.new
+  end
+
+  def assessor_preview_assessment_recommendation_page
+    @assessor_preview_assessment_recommendation_page ||=
+      PageObjects::AssessorInterface::PreviewAssessmentRecommendation.new
+  end
+
+  def assessor_preview_referee_assessment_recommendation_award_page
+    @assessor_preview_referee_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::PreviewRefereeAssessmentRecommendationAward.new
+  end
+
+  def assessor_preview_teacher_assessment_recommendation_award_page
+    @assessor_preview_teacher_assessment_recommendation_award_page ||=
+      PageObjects::AssessorInterface::PreviewTeacherAssessmentRecommendationAward.new
+  end
+
+  def assessor_qualification_requests_assessment_recommendation_verify_page
+    @assessor_qualification_requests_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
   end
 
   def assessor_qualification_requests_page
@@ -124,9 +158,19 @@ module PageHelpers
       PageObjects::AssessorInterface::ReferenceRequests.new
   end
 
+  def assessor_reference_requests_assessment_recommendation_verify_page
+    @assessor_reference_requests_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationVerify.new
+  end
+
   def assessor_reverse_decision_page
     @assessor_reverse_decision_page ||=
       PageObjects::AssessorInterface::ReverseDecision.new
+  end
+
+  def assessor_review_further_information_request_page
+    @assessor_review_further_information_request_page ||=
+      PageObjects::AssessorInterface::ReviewFurtherInformationRequest.new
   end
 
   def assessor_review_professional_standing_request_page
@@ -139,6 +183,7 @@ module PageHelpers
       PageObjects::AssessorInterface::ReviewVerifications.new
   end
 
+
   def assessor_timeline_page
     @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end
@@ -150,6 +195,21 @@ module PageHelpers
 
   def assessor_qualified_for_subject_page
     @assessor_qualified_for_subject_page ||= PageObjects::AssessorInterface::CreateNote.new
+  end
+
+  def assessor_verify_age_range_subjects_page
+    @assessor_verify_age_range_subjects_page ||=
+      PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
+  end
+
+  def assessor_verify_professional_standing_assessment_recommendation_verify_page
+    @assessor_verify_professional_standing_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::VerifyProfessionalStandingAssessmentRecommendationVerify.new
+  end
+
+  def assessor_verify_qualifications_assessment_recommendation_verify_page
+    @assessor_verify_qualifications_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::VerifyQualificationsAssessmentRecommendationVerify.new
   end
 
   def assessor_withdraw_application_page
@@ -203,16 +263,6 @@ module PageHelpers
     @eligibility_work_experience_page ||=
       PageObjects::EligibilityInterface::WorkExperience.new
   end
-  
-  def edit_age_range_subjects_assessment_recommendation_award_page
-    @edit_age_range_subjects_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::EditAgeRangeSubjectsAssessmentRecommendationAward.new
-  end
-
-  def email_consent_letters_requests_assessment_recommendation_verify_page
-    @email_consent_letters_requests_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::EmailConsentLettersAssessmentRecommendationVerify.new
-  end
 
   def further_information_requested_page
     @further_information_requested_page =
@@ -229,48 +279,12 @@ module PageHelpers
       PageObjects::TeacherInterface::FurtherInformationRequired.new
   end
 
-  def login_page
-    @login_page ||= PageObjects::AssessorInterface::Login.new
-  end
-
-  
-
   def performance_page
     @performance_page ||= PageObjects::Performance.new
   end
 
   def personas_page
     @personas_page ||= PageObjects::Personas.new
-  end
-
-  def preview_assessment_recommendation_page
-    @preview_assessment_recommendation_page ||=
-      PageObjects::AssessorInterface::PreviewAssessmentRecommendation.new
-  end
-
-  def preview_referee_assessment_recommendation_award_page
-    @preview_referee_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::PreviewRefereeAssessmentRecommendationAward.new
-  end
-
-  def preview_teacher_assessment_recommendation_award_page
-    @preview_teacher_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::PreviewTeacherAssessmentRecommendationAward.new
-  end
-  
-  def qualification_requests_assessment_recommendation_verify_page
-    @qualification_requests_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
-  end
-
-  def reference_requests_assessment_recommendation_verify_page
-    @reference_requests_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationVerify.new
-  end
-
-  def review_further_information_request_page
-    @review_further_information_request_page ||=
-      PageObjects::AssessorInterface::ReviewFurtherInformationRequest.new
   end
 
   def staff_signed_out_page
@@ -582,20 +596,5 @@ module PageHelpers
   def support_english_language_providers_index_page
     @support_english_language_providers_index_page ||=
       PageObjects::SupportInterface::EnglishLanguageProvidersIndex.new
-  end
-
-  def verify_age_range_subjects_page
-    @verify_age_range_subjects_page ||=
-      PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
-  end
-
-  def verify_professional_standing_assessment_recommendation_verify_page
-    @verify_professional_standing_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::VerifyProfessionalStandingAssessmentRecommendationVerify.new
-  end
-
-  def verify_qualifications_assessment_recommendation_verify_page
-    @verify_qualifications_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::VerifyQualificationsAssessmentRecommendationVerify.new
   end
 end

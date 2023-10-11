@@ -8,7 +8,7 @@ RSpec.describe "Assessor authentication", type: :system do
     given_staff_exist
 
     when_i_visit_the(:assessor_applications_page)
-    then_i_see_the(:login_page)
+    then_i_see_the(:assessor_login_page)
 
     when_i_login
     then_i_see_the(:assessor_applications_page)
@@ -24,7 +24,7 @@ RSpec.describe "Assessor authentication", type: :system do
   end
 
   def when_i_login
-    login_page.submit(email: "staff@example.com", password: "password")
+    assessor_login_page.submit(email: "staff@example.com", password: "password")
   end
 
   def when_i_click_sign_out
