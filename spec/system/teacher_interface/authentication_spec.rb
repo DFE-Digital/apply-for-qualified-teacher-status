@@ -182,7 +182,7 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   def when_i_select_a_country
-    country_page.submit(country: "Scotland")
+    eligibility_country_page.submit(country: "Scotland")
   end
 
   def when_i_click_sign_out

@@ -148,30 +148,65 @@ module PageHelpers
       PageObjects::AssessorInterface::VerifyProfessionalStandingRequest.new
   end
 
+  def assessor_qualified_for_subject_page
+    @assessor_qualified_for_subject_page ||= PageObjects::AssessorInterface::CreateNote.new
+  end
+
   def assessor_withdraw_application_page
     @assessor_withdraw_application_page ||=
       PageObjects::AssessorInterface::WithdrawApplication.new
   end
 
-  def country_page
-    @country_page ||= PageObjects::EligibilityInterface::Country.new
+  def eligibility_country_page
+    @eligibility_country_page ||= PageObjects::EligibilityInterface::Country.new
   end
 
-  def create_note_page
-    @create_note_page ||= PageObjects::AssessorInterface::CreateNote.new
+  def eligibility_degree_page
+    @eligibility_degree_page ||= PageObjects::EligibilityInterface::Degree.new
   end
 
-  def degree_page
-    @degree_page ||= PageObjects::EligibilityInterface::Degree.new
+  def eligibility_eligible_page
+    @eligibility_eligible_page = PageObjects::EligibilityInterface::Eligible.new
   end
 
+  def eligibility_ineligible_page
+    @eligibility_ineligible_page = PageObjects::EligibilityInterface::Ineligible.new
+  end
+
+  def eligibility_misconduct_page
+    @eligibility_misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
+  end
+
+  def eligibility_qualification_page
+    @eligibility_qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
+  end
+
+  def eligibility_region_page
+    @eligibility_region_page ||= PageObjects::EligibilityInterface::Region.new
+  end
+
+  def eligibility_start_page
+    @eligibility_start_page ||= PageObjects::EligibilityInterface::Start.new
+  end
+
+  def eligibility_teach_children_page
+    @eligibility_teach_children_page ||=
+      PageObjects::EligibilityInterface::TeachChildren.new
+  end
+
+  def eligibility_qualified_for_subject_page
+    @eligibility_qualified_for_subject_page ||=
+      PageObjects::EligibilityInterface::QualifiedForSubject.new
+  end
+
+  def eligibility_work_experience_page
+    @eligibility_work_experience_page ||=
+      PageObjects::EligibilityInterface::WorkExperience.new
+  end
+  
   def edit_age_range_subjects_assessment_recommendation_award_page
     @edit_age_range_subjects_assessment_recommendation_award_page ||=
       PageObjects::AssessorInterface::EditAgeRangeSubjectsAssessmentRecommendationAward.new
-  end
-
-  def eligible_page
-    @eligible_page = PageObjects::EligibilityInterface::Eligible.new
   end
 
   def email_consent_letters_requests_assessment_recommendation_verify_page
@@ -194,17 +229,11 @@ module PageHelpers
       PageObjects::TeacherInterface::FurtherInformationRequired.new
   end
 
-  def ineligible_page
-    @ineligible_page = PageObjects::EligibilityInterface::Ineligible.new
-  end
-
   def login_page
     @login_page ||= PageObjects::AssessorInterface::Login.new
   end
 
-  def misconduct_page
-    @misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
-  end
+  
 
   def performance_page
     @performance_page ||= PageObjects::Performance.new
@@ -228,11 +257,7 @@ module PageHelpers
     @preview_teacher_assessment_recommendation_award_page ||=
       PageObjects::AssessorInterface::PreviewTeacherAssessmentRecommendationAward.new
   end
-
-  def qualification_page
-    @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
-  end
-
+  
   def qualification_requests_assessment_recommendation_verify_page
     @qualification_requests_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
@@ -243,10 +268,6 @@ module PageHelpers
       PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationVerify.new
   end
 
-  def region_page
-    @region_page ||= PageObjects::EligibilityInterface::Region.new
-  end
-
   def review_further_information_request_page
     @review_further_information_request_page ||=
       PageObjects::AssessorInterface::ReviewFurtherInformationRequest.new
@@ -254,20 +275,6 @@ module PageHelpers
 
   def staff_signed_out_page
     @staff_signed_out_page ||= PageObjects::Staff::SignedOut.new
-  end
-
-  def start_page
-    @start_page ||= PageObjects::EligibilityInterface::Start.new
-  end
-
-  def teach_children_page
-    @teach_children_page ||=
-      PageObjects::EligibilityInterface::TeachChildren.new
-  end
-
-  def qualified_for_subject_page
-    @qualified_for_subject_page ||=
-      PageObjects::EligibilityInterface::QualifiedForSubject.new
   end
 
   def teacher_add_another_qualification_page
@@ -585,11 +592,6 @@ module PageHelpers
   def verify_professional_standing_assessment_recommendation_verify_page
     @verify_professional_standing_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::VerifyProfessionalStandingAssessmentRecommendationVerify.new
-  end
-
-  def work_experience_page
-    @work_experience_page ||=
-      PageObjects::EligibilityInterface::WorkExperience.new
   end
 
   def verify_qualifications_assessment_recommendation_verify_page
