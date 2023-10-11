@@ -9,11 +9,11 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   it "save and sign out" do
-    when_i_visit_the(:further_information_requested_start_page)
-    then_i_see_the(:further_information_requested_start_page)
+    when_i_visit_the(:teacher_further_information_requested_start_page)
+    then_i_see_the(:teacher_further_information_requested_start_page)
 
     when_i_click_the_start_button
-    then_i_see_the(:further_information_requested_page)
+    then_i_see_the(:teacher_further_information_requested_page)
     and_i_see_the_text_task_list_item
     and_i_see_the_document_task_list_item
 
@@ -23,20 +23,20 @@ RSpec.describe "Teacher further information", type: :system do
 
   it "check your answers" do
     when_i_visit_the(
-      :further_information_requested_page,
+      :teacher_further_information_requested_page,
       request_id: further_information_request.id,
     )
 
     when_i_click_the_text_task_list_item
-    then_i_see_the(:further_information_required_page)
+    then_i_see_the(:teacher_further_information_required_page)
 
     when_i_fill_in_the_response
     and_i_click_continue
-    then_i_see_the(:further_information_requested_page)
+    then_i_see_the(:teacher_further_information_requested_page)
     and_i_see_a_completed_text_task_list_item
 
     when_i_click_the_document_task_list_item
-    then_i_see_the(:further_information_required_page)
+    then_i_see_the(:teacher_further_information_required_page)
     and_i_click_continue
     then_i_see_the(:teacher_upload_document_page)
 
@@ -44,11 +44,11 @@ RSpec.describe "Teacher further information", type: :system do
     then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_need_to_upload_another_file
-    then_i_see_the(:further_information_requested_page)
+    then_i_see_the(:teacher_further_information_requested_page)
     and_i_see_a_completed_document_task_list_item
 
     when_i_click_the_work_history_contact_task_list_item
-    then_i_see_the(:further_information_required_page)
+    then_i_see_the(:teacher_further_information_required_page)
     when_i_fill_in_the_work_history_contact_response
     and_i_click_continue
     and_i_see_the_completed_work_history_contact_list_item
@@ -67,7 +67,7 @@ RSpec.describe "Teacher further information", type: :system do
     then_i_see_the(:teacher_check_further_information_request_answers_page)
 
     when_i_submit_the_further_information
-    then_i_see_the(:submitted_application_page)
+    then_i_see_the(:teacher_submitted_application_page)
     and_i_see_the_further_information_received_information
     and_i_receive_a_further_information_received_email
   end
@@ -77,7 +77,7 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def when_i_click_the_start_button
-    further_information_requested_start_page.start_button.click
+    teacher_further_information_requested_start_page.start_button.click
   end
 
   def and_i_see_the_text_task_list_item
@@ -113,14 +113,14 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def when_i_fill_in_the_response
-    further_information_required_page.form.response_textarea.fill_in with:
+    teacher_further_information_required_page.form.response_textarea.fill_in with:
       "Response"
   end
 
   def when_i_fill_in_the_work_history_contact_response
-    further_information_required_page.form.contact_name.fill_in with: "James"
-    further_information_required_page.form.contact_job.fill_in with: "Carpenter"
-    further_information_required_page.form.contact_email.fill_in with:
+    teacher_further_information_required_page.form.contact_name.fill_in with: "James"
+    teacher_further_information_required_page.form.contact_job.fill_in with: "Carpenter"
+    teacher_further_information_required_page.form.contact_email.fill_in with:
       "jamescarpenter@sample.com"
   end
 
@@ -137,15 +137,15 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def and_i_click_continue
-    further_information_required_page.form.continue_button.click
+    teacher_further_information_required_page.form.continue_button.click
   end
 
   def when_i_click_the_save_and_sign_out_button
-    further_information_requested_page.save_and_sign_out_button.click
+    teacher_further_information_requested_page.save_and_sign_out_button.click
   end
 
   def when_i_click_the_check_your_answers_button
-    further_information_requested_page.check_your_answers_button.click
+    teacher_further_information_requested_page.check_your_answers_button.click
   end
 
   def and_i_see_the_check_your_answers_items
@@ -176,10 +176,10 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def and_i_see_the_further_information_received_information
-    expect(submitted_application_page.panel.title.text).to eq(
+    expect(teacher_submitted_application_page.panel.title.text).to eq(
       "Further information successfully submitted",
     )
-    expect(submitted_application_page.panel.body.text).to eq(
+    expect(teacher_submitted_application_page.panel.body.text).to eq(
       "Your application reference number\n#{@application_form.reference}",
     )
   end
@@ -216,7 +216,7 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def text_task_list_item
-    further_information_requested_page.task_list.find_item(
+    teacher_further_information_requested_page.task_list.find_item(
       "Tell us more about the subjects you can teach",
     )
   end
@@ -226,13 +226,13 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def work_history_task_list_item
-    further_information_requested_page.task_list.find_item(
+    teacher_further_information_requested_page.task_list.find_item(
       "Add your work history contact’s details",
     )
   end
 
   def document_task_list_item
-    further_information_requested_page.task_list.find_item(
+    teacher_further_information_requested_page.task_list.find_item(
       "Upload your identity document",
     )
   end

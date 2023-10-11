@@ -75,21 +75,21 @@ RSpec.describe "Teacher documents", type: :system do
   end
 
   def then_i_see_the_check_your_uploaded_files_page
-    expect(check_uploaded_files_page).to have_title("Check your uploaded files")
-    expect(check_uploaded_files_page.heading.text).to eq(
+    expect(teacher_check_uploaded_files_page).to have_title("Check your uploaded files")
+    expect(teacher_check_uploaded_files_page.heading.text).to eq(
       "Check your uploaded files – written statement document",
     )
-    expect(check_uploaded_files_page.files).to have_content(
+    expect(teacher_check_uploaded_files_page.files).to have_content(
       "File 1\tupload.pdf (opens in a new tab)\tDelete",
     )
-    expect(check_uploaded_files_page.files).to have_content(
+    expect(teacher_check_uploaded_files_page.files).to have_content(
       "File 2\tupload.pdf (opens in a new tab)\tDelete",
     )
   end
 
   def then_i_see_the_check_your_uploaded_files_page_with_three_files
     then_i_see_the_check_your_uploaded_files_page
-    expect(check_uploaded_files_page.files).to have_content(
+    expect(teacher_check_uploaded_files_page.files).to have_content(
       "File 3\tupload.pdf (opens in a new tab)\tDelete",
     )
   end

@@ -182,8 +182,7 @@ module PageHelpers
     @assessor_review_verifications_page ||=
       PageObjects::AssessorInterface::ReviewVerifications.new
   end
-
-
+  
   def assessor_timeline_page
     @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end
@@ -264,21 +263,6 @@ module PageHelpers
       PageObjects::EligibilityInterface::WorkExperience.new
   end
 
-  def further_information_requested_page
-    @further_information_requested_page =
-      PageObjects::TeacherInterface::FurtherInformationRequested.new
-  end
-
-  def further_information_requested_start_page
-    @further_information_requested_start_page =
-      PageObjects::TeacherInterface::FurtherInformationRequestedStart.new
-  end
-
-  def further_information_required_page
-    @further_information_required_page =
-      PageObjects::TeacherInterface::FurtherInformationRequired.new
-  end
-
   def performance_page
     @performance_page ||= PageObjects::Performance.new
   end
@@ -348,6 +332,11 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckQualifications.new
   end
 
+  def teacher_check_uploaded_files_page
+    @teacher_check_uploaded_files_page =
+      PageObjects::TeacherInterface::CheckUploadedFiles.new
+  end
+
   def teacher_check_reference_request_answers_page
     @teacher_check_reference_request_answers_page ||=
       PageObjects::TeacherInterface::CheckReferenceRequestAnswers.new
@@ -361,6 +350,17 @@ module PageHelpers
   def teacher_check_work_histories_page
     @teacher_check_work_histories_page ||=
       PageObjects::TeacherInterface::CheckWorkHistories.new
+  end
+
+
+  def teacher_check_your_answers_page
+    @teacher_check_your_answers_page =
+      PageObjects::TeacherInterface::CheckYourAnswers.new
+  end
+
+  def teacher_check_your_uploads_page
+    @teacher_check_your_uploads_page =
+      PageObjects::TeacherInterface::CheckYourUploads.new
   end
 
   def teacher_declined_application_page
@@ -468,6 +468,21 @@ module PageHelpers
       PageObjects::TeacherInterface::EnglishLanguageProviderReference.new
   end
 
+  def teacher_further_information_requested_page
+    @teacher_further_information_requested_page =
+      PageObjects::TeacherInterface::FurtherInformationRequested.new
+  end
+
+  def teacher_further_information_requested_start_page
+    @teacher_further_information_requested_start_page =
+      PageObjects::TeacherInterface::FurtherInformationRequestedStart.new
+  end
+
+  def teacher_further_information_required_page
+    @teacher_further_information_required_page =
+      PageObjects::TeacherInterface::FurtherInformationRequired.new
+  end
+
   def teacher_magic_link_page
     @teacher_magic_link_page = PageObjects::TeacherInterface::MagicLink.new
   end
@@ -497,6 +512,16 @@ module PageHelpers
       PageObjects::TeacherInterface::PartOfUniversityDegree.new
   end
 
+  def teacher_personal_information_summary_page
+    @teacher_personal_information_summary_page =
+      PageObjects::TeacherInterface::PersonalInformationSummary.new
+  end
+
+  def teacher_qualifications_form_page
+    @teacher_qualifications_form_page =
+      PageObjects::TeacherInterface::QualificationForm.new
+  end
+
   def teacher_reference_received_page
     @teacher_reference_received_page ||=
       PageObjects::TeacherInterface::ReferenceReceived.new
@@ -520,6 +545,11 @@ module PageHelpers
     @teacher_subjects_page = PageObjects::TeacherInterface::Subjects.new
   end
 
+  def teacher_submitted_application_page
+    @teacher_submitted_application_page =
+      PageObjects::TeacherInterface::SubmittedApplication.new
+  end
+
   def teacher_sign_in_page
     @teacher_sign_in_page = PageObjects::TeacherInterface::SignIn.new
   end
@@ -538,39 +568,9 @@ module PageHelpers
       PageObjects::TeacherInterface::UploadDocument.new
   end
 
-  def check_uploaded_files_page
-    @check_uploaded_files_page =
-      PageObjects::TeacherInterface::CheckUploadedFiles.new
-  end
-
-  def written_statement_page
-    @written_statement_page =
+  def teacher_written_statement_page
+    @teacher_written_statement_page =
       PageObjects::TeacherInterface::WrittenStatement.new
-  end
-
-  def personal_information_summary_page
-    @personal_information_summary_page =
-      PageObjects::TeacherInterface::PersonalInformationSummary.new
-  end
-
-  def qualifications_form_page
-    @qualifications_form_page =
-      PageObjects::TeacherInterface::QualificationForm.new
-  end
-
-  def check_your_answers_page
-    @check_your_answers_page =
-      PageObjects::TeacherInterface::CheckYourAnswers.new
-  end
-
-  def submitted_application_page
-    @submitted_application_page =
-      PageObjects::TeacherInterface::SubmittedApplication.new
-  end
-
-  def check_your_uploads_page
-    @check_your_uploads_page =
-      PageObjects::TeacherInterface::CheckYourUploads.new
   end
 
   def request_further_information_page
