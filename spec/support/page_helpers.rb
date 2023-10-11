@@ -82,6 +82,10 @@ module PageHelpers
       PageObjects::AssessorInterface::ReviewVerifications.new
   end
 
+  def assessor_timeline_page
+    @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
+  end
+
   def assessor_verify_professional_standing_request_page
     @assessor_verify_professional_standing_request_page ||=
       PageObjects::AssessorInterface::VerifyProfessionalStandingRequest.new
@@ -493,10 +497,6 @@ module PageHelpers
 
   def teacher_subjects_page
     @teacher_subjects_page = PageObjects::TeacherInterface::Subjects.new
-  end
-
-  def timeline_page
-    @timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end
 
   def teacher_sign_in_page
