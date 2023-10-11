@@ -10,9 +10,6 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
   attribute :received, :boolean
   validates :received, inclusion: [true, false]
 
-  attribute :ready_for_review, :boolean
-  validates :ready_for_review, inclusion: [true, false], unless: :received
-
   attribute :location_note, :string
 
   def save
@@ -30,10 +27,7 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
         ApplicationFormStatusUpdater.call(application_form:, user:)
       end
 
-      requestable.update!(
-        location_note: location_note.presence || "",
-        ready_for_review: ready_for_review || false,
-      )
+      requestable.update!(location_note: location_note.presence || "")
     end
 
     true

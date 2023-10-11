@@ -8,30 +8,16 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestLocationForm,
   let(:user) { create(:staff) }
 
   let(:received) { "" }
-  let(:ready_for_review) { "" }
   let(:location_note) { "" }
 
   subject(:form) do
-    described_class.new(
-      requestable:,
-      user:,
-      received:,
-      ready_for_review:,
-      location_note:,
-    )
+    described_class.new(requestable:, user:, received:, location_note:)
   end
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:requestable) }
     it { is_expected.to validate_presence_of(:user) }
     it { is_expected.to allow_values(true, false).for(:received) }
-    it { is_expected.to allow_values(true, false).for(:ready_for_review) }
-
-    context "when not received" do
-      let(:received) { "false" }
-
-      it { is_expected.to_not allow_values(nil).for(:ready_for_review) }
-    end
   end
 
   describe "#save" do
@@ -60,26 +46,10 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestLocationForm,
       end
     end
 
-    context "when not received and ready for review" do
+    context "when not received" do
       let(:received) { "false" }
-      let(:ready_for_review) { "true" }
 
       it { is_expected.to be true }
-
-      it "sets ready for review" do
-        expect { save }.to change(requestable, :ready_for_review).to(true)
-      end
-    end
-
-    context "when not received and not ready for review" do
-      let(:received) { "false" }
-      let(:ready_for_review) { "false" }
-
-      it { is_expected.to be true }
-
-      it "doesn't set ready for review" do
-        expect { save }.to_not change(requestable, :ready_for_review)
-      end
     end
   end
 end
