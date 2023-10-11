@@ -75,7 +75,9 @@ RSpec.describe "Teacher documents", type: :system do
   end
 
   def then_i_see_the_check_your_uploaded_files_page
-    expect(teacher_check_uploaded_files_page).to have_title("Check your uploaded files")
+    expect(teacher_check_uploaded_files_page).to have_title(
+      "Check your uploaded files",
+    )
     expect(teacher_check_uploaded_files_page.heading.text).to eq(
       "Check your uploaded files – written statement document",
     )

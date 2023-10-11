@@ -18,7 +18,8 @@ module PageHelpers
   end
 
   def assessor_applications_page
-    @assessor_applications_page ||= PageObjects::AssessorInterface::Applications.new
+    @assessor_applications_page ||=
+      PageObjects::AssessorInterface::Applications.new
   end
 
   def assessor_application_status_page
@@ -32,16 +33,18 @@ module PageHelpers
   end
 
   def assessor_assign_assessor_page
-    @assessor_assign_assessor_page ||= PageObjects::AssessorInterface::AssignAssessor.new
+    @assessor_assign_assessor_page ||=
+      PageObjects::AssessorInterface::AssignAssessor.new
   end
 
   def assessor_assessment_section_page
     @assessor_assessment_section_page ||=
       PageObjects::AssessorInterface::AssessmentSection.new
   end
-  
+
   def assessor_assign_reviewer_page
-    @assessor_assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
+    @assessor_assign_reviewer_page ||=
+      PageObjects::AssessorInterface::AssignReviewer.new
   end
 
   def assessor_check_english_language_proficiency_page
@@ -197,7 +200,7 @@ module PageHelpers
     @assessor_review_verifications_page ||=
       PageObjects::AssessorInterface::ReviewVerifications.new
   end
-  
+
   def assessor_timeline_page
     @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end
@@ -208,7 +211,8 @@ module PageHelpers
   end
 
   def assessor_qualified_for_subject_page
-    @assessor_qualified_for_subject_page ||= PageObjects::AssessorInterface::CreateNote.new
+    @assessor_qualified_for_subject_page ||=
+      PageObjects::AssessorInterface::CreateNote.new
   end
 
   def assessor_verify_age_range_subjects_page
@@ -244,15 +248,18 @@ module PageHelpers
   end
 
   def eligibility_ineligible_page
-    @eligibility_ineligible_page = PageObjects::EligibilityInterface::Ineligible.new
+    @eligibility_ineligible_page =
+      PageObjects::EligibilityInterface::Ineligible.new
   end
 
   def eligibility_misconduct_page
-    @eligibility_misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
+    @eligibility_misconduct_page ||=
+      PageObjects::EligibilityInterface::Misconduct.new
   end
 
   def eligibility_qualification_page
-    @eligibility_qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
+    @eligibility_qualification_page ||=
+      PageObjects::EligibilityInterface::Qualification.new
   end
 
   def eligibility_region_page
@@ -366,7 +373,6 @@ module PageHelpers
     @teacher_check_work_histories_page ||=
       PageObjects::TeacherInterface::CheckWorkHistories.new
   end
-
 
   def teacher_check_your_answers_page
     @teacher_check_your_answers_page =

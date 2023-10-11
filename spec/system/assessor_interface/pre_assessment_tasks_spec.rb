@@ -94,7 +94,10 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
 
   def and_i_see_the_failure_reasons
     failure_reason_items =
-      assessor_declare_assessment_recommendation_page.failure_reason_lists.first.items
+      assessor_declare_assessment_recommendation_page
+        .failure_reason_lists
+        .first
+        .items
 
     expect(failure_reason_items.first.text).to eq(
       "The teaching qualifications do not meet the required academic level (level 6).",

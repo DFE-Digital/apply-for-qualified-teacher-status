@@ -91,7 +91,9 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def then_i_see_a_list_of_applications_filtered_by_reference
     expect(assessor_applications_page.search_results.count).to eq(1)
-    expect(assessor_applications_page.search_results.first.name.text).to eq("Cher Bert")
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
+      "Cher Bert",
+    )
   end
 
   def and_i_apply_the_name_filter
@@ -101,7 +103,9 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def then_i_see_a_list_of_applications_filtered_by_name
     expect(assessor_applications_page.search_results.count).to eq(1)
-    expect(assessor_applications_page.search_results.first.name.text).to eq("Cher Bert")
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
+      "Cher Bert",
+    )
   end
 
   def and_i_apply_the_email_filter
@@ -125,7 +129,9 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def then_i_see_a_list_of_applications_filtered_by_submitted_at
     expect(assessor_applications_page.search_results.count).to eq(1)
-    expect(assessor_applications_page.search_results.first.name.text).to eq("John Smith")
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
+      "John Smith",
+    )
   end
 
   def and_i_apply_the_action_required_by_filter
@@ -159,7 +165,9 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def then_i_see_a_list_of_applications_filtered_by_stage
     expect(assessor_applications_page.search_results.count).to eq(1)
-    expect(assessor_applications_page.search_results.first.name.text).to eq("John Smith")
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
+      "John Smith",
+    )
   end
 
   def application_forms

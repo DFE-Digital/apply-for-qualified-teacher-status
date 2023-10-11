@@ -503,7 +503,9 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def and_i_see_the_ineligible_degree_text
-    expect(eligibility_ineligible_page.reasons).to have_content("You do not have a degree.")
+    expect(eligibility_ineligible_page.reasons).to have_content(
+      "You do not have a degree.",
+    )
   end
 
   def when_i_press_back

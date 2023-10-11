@@ -239,10 +239,16 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def then_i_see_the_personal_information
     expect(
-      assessor_check_personal_information_page.personal_information.given_names.text,
+      assessor_check_personal_information_page
+        .personal_information
+        .given_names
+        .text,
     ).to eq(application_form.given_names)
     expect(
-      assessor_check_personal_information_page.personal_information.family_name.text,
+      assessor_check_personal_information_page
+        .personal_information
+        .family_name
+        .text,
     ).to eq(application_form.family_name)
   end
 
@@ -281,9 +287,9 @@ RSpec.describe "Assessor check submitted details", type: :system do
   def then_i_see_the_qualifications
     teaching_qualification =
       application_form.qualifications.find(&:is_teaching_qualification?)
-    expect(assessor_check_qualifications_page.teaching_qualification.title.text).to eq(
-      teaching_qualification.title,
-    )
+    expect(
+      assessor_check_qualifications_page.teaching_qualification.title.text,
+    ).to eq(teaching_qualification.title)
   end
 
   def when_i_choose_check_qualifications_yes
@@ -313,18 +319,21 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def then_i_see_the_age_range_and_subjects
-    expect(assessor_verify_age_range_subjects_page.age_range.heading.text).to eq(
-      "Enter the age range you can teach",
-    )
+    expect(
+      assessor_verify_age_range_subjects_page.age_range.heading.text,
+    ).to eq("Enter the age range you can teach")
     expect(assessor_verify_age_range_subjects_page.subjects.heading.text).to eq(
       "Enter the subjects you can teach",
     )
   end
 
   def when_i_fill_in_age_range
-    assessor_verify_age_range_subjects_page.age_range_form.minimum.fill_in with: "7"
-    assessor_verify_age_range_subjects_page.age_range_form.maximum.fill_in with: "11"
-    assessor_verify_age_range_subjects_page.age_range_form.note.fill_in with: "A note."
+    assessor_verify_age_range_subjects_page.age_range_form.minimum.fill_in with:
+      "7"
+    assessor_verify_age_range_subjects_page.age_range_form.maximum.fill_in with:
+      "11"
+    assessor_verify_age_range_subjects_page.age_range_form.note.fill_in with:
+      "A note."
   end
 
   def and_i_fill_in_subjects
@@ -362,9 +371,9 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def then_i_see_the_work_history
     most_recent_role = application_form.work_histories.first
-    expect(assessor_check_work_history_page.most_recent_role.school_name.text).to eq(
-      most_recent_role.school_name,
-    )
+    expect(
+      assessor_check_work_history_page.most_recent_role.school_name.text,
+    ).to eq(most_recent_role.school_name)
   end
 
   def when_i_choose_check_work_history_yes

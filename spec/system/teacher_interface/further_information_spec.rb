@@ -118,8 +118,10 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def when_i_fill_in_the_work_history_contact_response
-    teacher_further_information_required_page.form.contact_name.fill_in with: "James"
-    teacher_further_information_required_page.form.contact_job.fill_in with: "Carpenter"
+    teacher_further_information_required_page.form.contact_name.fill_in with:
+      "James"
+    teacher_further_information_required_page.form.contact_job.fill_in with:
+      "Carpenter"
     teacher_further_information_required_page.form.contact_email.fill_in with:
       "jamescarpenter@sample.com"
   end
@@ -149,7 +151,8 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def and_i_see_the_check_your_answers_items
-    rows = teacher_check_further_information_request_answers_page.summary_list.rows
+    rows =
+      teacher_check_further_information_request_answers_page.summary_list.rows
 
     expect(rows.count).to eq(3)
 
@@ -222,7 +225,10 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def text_check_answers_item
-    teacher_check_further_information_request_answers_page.summary_list.rows.first
+    teacher_check_further_information_request_answers_page
+      .summary_list
+      .rows
+      .first
   end
 
   def work_history_task_list_item
@@ -238,6 +244,9 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def document_check_answers_item
-    teacher_check_further_information_request_answers_page.summary_list.rows.last
+    teacher_check_further_information_request_answers_page
+      .summary_list
+      .rows
+      .last
   end
 end

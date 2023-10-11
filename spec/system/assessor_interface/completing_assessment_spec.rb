@@ -27,7 +27,11 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_there_is_an_awardable_application_form(%i[old_regs])
     given_i_can_request_dqt_api
 
-    when_i_visit_the(:assessor_complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(
+      :assessor_complete_assessment_page,
+      application_id:,
+      assessment_id:,
+    )
 
     when_i_select_award_qts
     and_i_click_continue
@@ -78,7 +82,11 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_awardable_application_form_under_new_regulations
 
-    when_i_visit_the(:assessor_complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(
+      :assessor_complete_assessment_page,
+      application_id:,
+      assessment_id:,
+    )
 
     when_i_select_award_qts
     and_i_click_continue
@@ -149,7 +157,11 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_a_declinable_application_form
 
-    when_i_visit_the(:assessor_complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(
+      :assessor_complete_assessment_page,
+      application_id:,
+      assessment_id:,
+    )
 
     when_i_select_decline_qts
     and_i_click_continue
@@ -304,7 +316,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_check_declaration
-    assessor_declare_assessment_recommendation_page.form.declaration_checkbox.click
+    assessor_declare_assessment_recommendation_page
+      .form
+      .declaration_checkbox
+      .click
     assessor_declare_assessment_recommendation_page.form.submit_button.click
   end
 
@@ -365,7 +380,11 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_check_confirmation
-    assessor_confirm_assessment_recommendation_page.form.yes_radio_item.input.click
+    assessor_confirm_assessment_recommendation_page
+      .form
+      .yes_radio_item
+      .input
+      .click
     assessor_confirm_assessment_recommendation_page.form.continue_button.click
   end
 

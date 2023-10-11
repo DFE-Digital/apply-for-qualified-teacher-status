@@ -32,7 +32,9 @@ RSpec.describe "Assessor view timeline events", type: :system do
 
   def then_i_see_the_timeline
     expect(assessor_timeline_page).to have_heading
-    expect(assessor_timeline_page.heading).to have_content("Application history")
+    expect(assessor_timeline_page.heading).to have_content(
+      "Application history",
+    )
 
     expect(assessor_timeline_page).to have_timeline_items
     expect(assessor_timeline_page.timeline_items.first.title).to have_content(

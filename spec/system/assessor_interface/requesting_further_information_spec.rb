@@ -26,7 +26,11 @@ RSpec.describe "Assessor requesting further information", type: :system do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form_with_failure_reasons
 
-    when_i_visit_the(:assessor_complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(
+      :assessor_complete_assessment_page,
+      application_id:,
+      assessment_id:,
+    )
 
     when_i_select_request_further_information
     and_i_click_continue
@@ -71,12 +75,14 @@ RSpec.describe "Assessor requesting further information", type: :system do
 
   def and_i_see_the_further_information_request_items
     expect(assessor_request_further_information_page.items.count).to eq(1)
-    expect(assessor_request_further_information_page.items.first.heading.text).to eq(
+    expect(
+      assessor_request_further_information_page.items.first.heading.text,
+    ).to eq(
       "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
     )
-    expect(assessor_request_further_information_page.items.first.feedback.text).to eq(
-      "A note.",
-    )
+    expect(
+      assessor_request_further_information_page.items.first.feedback.text,
+    ).to eq("A note.")
   end
 
   def when_i_click_continue_to_email_button
@@ -90,7 +96,10 @@ RSpec.describe "Assessor requesting further information", type: :system do
   end
 
   def when_i_click_send_to_applicant
-    assessor_further_information_request_preview_page.form.send_to_applicant_button.click
+    assessor_further_information_request_preview_page
+      .form
+      .send_to_applicant_button
+      .click
   end
 
   def and_i_receive_a_further_information_requested_email

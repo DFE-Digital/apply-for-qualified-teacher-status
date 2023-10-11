@@ -42,7 +42,11 @@ RSpec.describe "Teacher submitting", type: :system do
       .confirm_no_sanctions
       .click
 
-    teacher_check_your_answers_page.submission_declaration.form.submit_button.click
+    teacher_check_your_answers_page
+      .submission_declaration
+      .form
+      .submit_button
+      .click
   end
 
   def and_i_see_the_submitted_application_information

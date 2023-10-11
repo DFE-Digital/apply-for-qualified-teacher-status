@@ -95,7 +95,9 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def then_i_should_be_eligible_to_apply
-    expect(eligibility_eligible_page).to have_content("You’re eligible to apply")
+    expect(eligibility_eligible_page).to have_content(
+      "You’re eligible to apply",
+    )
   end
 
   def eligibility_start_page
@@ -111,7 +113,8 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def eligibility_qualification_page
-    @eligibility_qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
+    @eligibility_qualification_page ||=
+      PageObjects::EligibilityInterface::Qualification.new
   end
 
   def eligibility_degree_page
@@ -129,10 +132,12 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def eligibility_misconduct_page
-    @eligibility_misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
+    @eligibility_misconduct_page ||=
+      PageObjects::EligibilityInterface::Misconduct.new
   end
 
   def eligibility_eligible_page
-    @eligibility_eligible_page ||= PageObjects::EligibilityInterface::Eligible.new
+    @eligibility_eligible_page ||=
+      PageObjects::EligibilityInterface::Eligible.new
   end
 end

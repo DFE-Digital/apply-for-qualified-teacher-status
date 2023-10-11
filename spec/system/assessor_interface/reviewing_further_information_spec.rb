@@ -74,7 +74,9 @@ RSpec.describe "Assessor reviewing further information", type: :system do
 
   def and_i_see_the_check_your_answers_items
     rows =
-      assessor_review_further_information_request_page.summary_lists.flat_map(&:rows)
+      assessor_review_further_information_request_page.summary_lists.flat_map(
+        &:rows
+      )
 
     expect(rows.count).to eq(8)
 
@@ -86,7 +88,11 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def when_i_mark_the_section_as_complete
-    assessor_review_further_information_request_page.form.yes_radio_item.input.click
+    assessor_review_further_information_request_page
+      .form
+      .yes_radio_item
+      .input
+      .click
     assessor_review_further_information_request_page.form.continue_button.click
   end
 
@@ -95,7 +101,11 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def when_i_mark_the_section_as_incomplete
-    assessor_review_further_information_request_page.form.no_radio_item.input.click
+    assessor_review_further_information_request_page
+      .form
+      .no_radio_item
+      .input
+      .click
     assessor_review_further_information_request_page.form.failure_reason_textarea.fill_in with:
       "Failure reason"
     assessor_review_further_information_request_page.form.continue_button.click
