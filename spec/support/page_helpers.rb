@@ -17,7 +17,6 @@ module PageHelpers
       PageObjects::AssessorInterface::Application.new
   end
 
-
   def assessor_applications_page
     @assessor_applications_page ||= PageObjects::AssessorInterface::Applications.new
   end
@@ -32,9 +31,17 @@ module PageHelpers
       PageObjects::AssessorInterface::AssessmentRecommendationReview.new
   end
 
+  def assessor_assign_assessor_page
+    @assessor_assign_assessor_page ||= PageObjects::AssessorInterface::AssignAssessor.new
+  end
+
   def assessor_assessment_section_page
     @assessor_assessment_section_page ||=
       PageObjects::AssessorInterface::AssessmentSection.new
+  end
+  
+  def assessor_assign_reviewer_page
+    @assessor_assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
   end
 
   def assessor_edit_application_page
@@ -99,14 +106,6 @@ module PageHelpers
   def assessor_withdraw_application_page
     @assessor_withdraw_application_page ||=
       PageObjects::AssessorInterface::WithdrawApplication.new
-  end
-
-  def assign_assessor_page
-    @assign_assessor_page ||= PageObjects::AssessorInterface::AssignAssessor.new
-  end
-
-  def assign_reviewer_page
-    @assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
   end
 
   def check_further_information_request_answers_page
