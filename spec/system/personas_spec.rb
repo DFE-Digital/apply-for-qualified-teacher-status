@@ -22,7 +22,7 @@ RSpec.describe "Personas", type: :system do
       and_i_see_some_personas
 
       when_i_sign_in_as_a_staff_persona
-      then_i_see_the(:applications_page)
+      then_i_see_the(:assessor_applications_page)
 
       when_i_visit_the(:personas_page)
 

@@ -10,7 +10,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   end
 
   it "applies the filters" do
-    when_i_visit_the(:applications_page)
+    when_i_visit_the(:assessor_applications_page)
 
     when_i_clear_the_filters
     and_i_apply_the_assessor_filter
@@ -56,110 +56,110 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   end
 
   def when_i_clear_the_filters
-    applications_page.clear_filters.click
+    assessor_applications_page.clear_filters.click
   end
 
   def and_i_apply_the_assessor_filter
-    expect(applications_page.assessor_filter.assessors.count).to eq(4)
-    applications_page.assessor_filter.assessors.second.checkbox.click
-    applications_page.apply_filters.click
+    expect(assessor_applications_page.assessor_filter.assessors.count).to eq(4)
+    assessor_applications_page.assessor_filter.assessors.second.checkbox.click
+    assessor_applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_assessor
-    expect(applications_page.search_results.count).to eq(1)
-    expect(applications_page.search_results.first.name.text).to eq(
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
       "Arnold Drummond",
     )
   end
 
   def and_i_apply_the_country_filter
-    applications_page.country_filter.country.set("France")
-    applications_page.apply_filters.click
+    assessor_applications_page.country_filter.country.set("France")
+    assessor_applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_country
-    expect(applications_page.search_results.count).to eq(1)
-    expect(applications_page.search_results.first.name.text).to eq(
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
       "Emma Dubois",
     )
   end
 
   def and_i_apply_the_reference_filter
-    applications_page.reference_filter.reference.set("CHER")
-    applications_page.apply_filters.click
+    assessor_applications_page.reference_filter.reference.set("CHER")
+    assessor_applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_reference
-    expect(applications_page.search_results.count).to eq(1)
-    expect(applications_page.search_results.first.name.text).to eq("Cher Bert")
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq("Cher Bert")
   end
 
   def and_i_apply_the_name_filter
-    applications_page.name_filter.name.set("cher")
-    applications_page.apply_filters.click
+    assessor_applications_page.name_filter.name.set("cher")
+    assessor_applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_name
-    expect(applications_page.search_results.count).to eq(1)
-    expect(applications_page.search_results.first.name.text).to eq("Cher Bert")
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq("Cher Bert")
   end
 
   def and_i_apply_the_email_filter
-    applications_page.email_filter.email.set("emma.dubois@example.org")
-    applications_page.apply_filters.click
+    assessor_applications_page.email_filter.email.set("emma.dubois@example.org")
+    assessor_applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_email
-    expect(applications_page.search_results.count).to eq(1)
-    expect(applications_page.search_results.first.name.text).to eq(
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
       "Emma Dubois",
     )
   end
 
   def and_i_apply_the_submitted_at_filter
-    applications_page.submitted_at_filter.start_day.set(1)
-    applications_page.submitted_at_filter.start_month.set(1)
-    applications_page.submitted_at_filter.start_year.set(2020)
-    applications_page.apply_filters.click
+    assessor_applications_page.submitted_at_filter.start_day.set(1)
+    assessor_applications_page.submitted_at_filter.start_month.set(1)
+    assessor_applications_page.submitted_at_filter.start_year.set(2020)
+    assessor_applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_submitted_at
-    expect(applications_page.search_results.count).to eq(1)
-    expect(applications_page.search_results.first.name.text).to eq("John Smith")
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq("John Smith")
   end
 
   def and_i_apply_the_action_required_by_filter
     admin_action_item =
-      applications_page.action_required_by_filter.items.find do |item|
+      assessor_applications_page.action_required_by_filter.items.find do |item|
         item.label.text == "Admin (1)"
       rescue Capybara::ElementNotFound
         false
       end
     admin_action_item.checkbox.click
-    applications_page.apply_filters.click
+    assessor_applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_action_required_by
-    expect(applications_page.search_results.count).to eq(1)
-    expect(applications_page.search_results.first.name.text).to eq(
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
       "Emma Dubois",
     )
   end
 
   def and_i_apply_the_stage_filter
     completed_item =
-      applications_page.stage_filter.items.find do |item|
+      assessor_applications_page.stage_filter.items.find do |item|
         item.label.text == "Completed (1)"
       rescue Capybara::ElementNotFound
         false
       end
     completed_item.checkbox.click
-    applications_page.apply_filters.click
+    assessor_applications_page.apply_filters.click
   end
 
   def then_i_see_a_list_of_applications_filtered_by_stage
-    expect(applications_page.search_results.count).to eq(1)
-    expect(applications_page.search_results.first.name.text).to eq("John Smith")
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq("John Smith")
   end
 
   def application_forms

@@ -17,6 +17,11 @@ module PageHelpers
       PageObjects::AssessorInterface::Application.new
   end
 
+
+  def assessor_applications_page
+    @assessor_applications_page ||= PageObjects::AssessorInterface::Applications.new
+  end
+
   def assessor_application_status_page
     @assessor_application_status_page ||=
       PageObjects::AssessorInterface::ApplicationStatus.new
@@ -94,10 +99,6 @@ module PageHelpers
   def assessor_withdraw_application_page
     @assessor_withdraw_application_page ||=
       PageObjects::AssessorInterface::WithdrawApplication.new
-  end
-
-  def applications_page
-    @applications_page ||= PageObjects::AssessorInterface::Applications.new
   end
 
   def assign_assessor_page
