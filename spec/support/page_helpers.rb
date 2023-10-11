@@ -119,6 +119,16 @@ module PageHelpers
       PageObjects::AssessorInterface::EmailConsentLettersAssessmentRecommendationVerify.new
   end
 
+  def assessor_further_information_request_page
+    @assessor_further_information_request_page ||=
+      PageObjects::AssessorInterface::FurtherInformationRequest.new
+  end
+
+  def assessor_further_information_request_preview_page
+    @assessor_further_information_request_preview_page ||=
+      PageObjects::AssessorInterface::FurtherInformationRequestPreview.new
+  end
+
   def assessor_locate_professional_standing_request_page
     @assessor_locate_professional_standing_request_page ||=
       PageObjects::AssessorInterface::LocateProfessionalStandingRequest.new
@@ -161,6 +171,11 @@ module PageHelpers
   def assessor_reference_requests_assessment_recommendation_verify_page
     @assessor_reference_requests_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationVerify.new
+  end
+
+  def assessor_request_further_information_page
+    @request_further_information_form =
+      PageObjects::AssessorInterface::RequestFurtherInformation.new
   end
 
   def assessor_reverse_decision_page
@@ -571,21 +586,6 @@ module PageHelpers
   def teacher_written_statement_page
     @teacher_written_statement_page =
       PageObjects::TeacherInterface::WrittenStatement.new
-  end
-
-  def request_further_information_page
-    @request_further_information_form =
-      PageObjects::AssessorInterface::RequestFurtherInformation.new
-  end
-
-  def further_information_request_page
-    @further_information_request_page ||=
-      PageObjects::AssessorInterface::FurtherInformationRequest.new
-  end
-
-  def further_information_request_preview_page
-    @further_information_request_preview_page ||=
-      PageObjects::AssessorInterface::FurtherInformationRequestPreview.new
   end
 
   def support_edit_english_language_provider_page

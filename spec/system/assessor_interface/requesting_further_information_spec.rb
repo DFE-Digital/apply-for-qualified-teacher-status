@@ -31,7 +31,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
     when_i_select_request_further_information
     and_i_click_continue
     then_i_see_the(
-      :request_further_information_page,
+      :assessor_request_further_information_page,
       application_id:,
       assessment_id:,
     )
@@ -39,7 +39,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
 
     when_i_click_continue_to_email_button
     then_i_see_the(
-      :further_information_request_preview_page,
+      :assessor_further_information_request_preview_page,
       application_id:,
       assessment_id:,
     )
@@ -47,7 +47,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
 
     when_i_click_send_to_applicant
     then_i_see_the(
-      :further_information_request_page,
+      :assessor_further_information_request_page,
       application_id:,
       assessment_id:,
       further_information_request_id:,
@@ -70,27 +70,27 @@ RSpec.describe "Assessor requesting further information", type: :system do
   end
 
   def and_i_see_the_further_information_request_items
-    expect(request_further_information_page.items.count).to eq(1)
-    expect(request_further_information_page.items.first.heading.text).to eq(
+    expect(assessor_request_further_information_page.items.count).to eq(1)
+    expect(assessor_request_further_information_page.items.first.heading.text).to eq(
       "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
     )
-    expect(request_further_information_page.items.first.feedback.text).to eq(
+    expect(assessor_request_further_information_page.items.first.feedback.text).to eq(
       "A note.",
     )
   end
 
   def when_i_click_continue_to_email_button
-    request_further_information_page.continue_button.click
+    assessor_request_further_information_page.continue_button.click
   end
 
   def and_i_see_the_email_preview
     expect(
-      further_information_request_preview_page.email_preview,
+      assessor_further_information_request_preview_page.email_preview,
     ).to have_content("I am an email")
   end
 
   def when_i_click_send_to_applicant
-    further_information_request_preview_page.form.send_to_applicant_button.click
+    assessor_further_information_request_preview_page.form.send_to_applicant_button.click
   end
 
   def and_i_receive_a_further_information_requested_email
