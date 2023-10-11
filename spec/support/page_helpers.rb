@@ -108,11 +108,6 @@ module PageHelpers
       PageObjects::AssessorInterface::WithdrawApplication.new
   end
 
-  def check_further_information_request_answers_page
-    @check_further_information_request_answers_page =
-      PageObjects::TeacherInterface::CheckFurtherInformationRequestAnswers.new
-  end
-
   def check_personal_information_page
     @check_personal_information_page ||=
       PageObjects::AssessorInterface::CheckPersonalInformation.new
@@ -310,6 +305,11 @@ module PageHelpers
   def teacher_check_english_language_page
     @teacher_check_english_language_page ||=
       PageObjects::TeacherInterface::CheckEnglishLanguage.new
+  end
+
+  def teacher_check_further_information_request_answers_page
+    @teacher_check_further_information_request_answers_page =
+      PageObjects::TeacherInterface::CheckFurtherInformationRequestAnswers.new
   end
 
   def teacher_check_personal_information_page

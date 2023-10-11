@@ -54,17 +54,17 @@ RSpec.describe "Teacher further information", type: :system do
     and_i_see_the_completed_work_history_contact_list_item
 
     when_i_click_the_check_your_answers_button
-    then_i_see_the(:check_further_information_request_answers_page)
+    then_i_see_the(:teacher_check_further_information_request_answers_page)
     and_i_see_the_check_your_answers_items
 
     when_i_click_the_text_check_your_answers_item
     and_i_click_continue
-    then_i_see_the(:check_further_information_request_answers_page)
+    then_i_see_the(:teacher_check_further_information_request_answers_page)
 
     when_i_click_the_document_check_your_answers_item
     and_i_click_continue
     when_i_dont_need_to_upload_another_file
-    then_i_see_the(:check_further_information_request_answers_page)
+    then_i_see_the(:teacher_check_further_information_request_answers_page)
 
     when_i_submit_the_further_information
     then_i_see_the(:submitted_application_page)
@@ -149,7 +149,7 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def and_i_see_the_check_your_answers_items
-    rows = check_further_information_request_answers_page.summary_list.rows
+    rows = teacher_check_further_information_request_answers_page.summary_list.rows
 
     expect(rows.count).to eq(3)
 
@@ -172,7 +172,7 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def when_i_submit_the_further_information
-    check_further_information_request_answers_page.submit_button.click
+    teacher_check_further_information_request_answers_page.submit_button.click
   end
 
   def and_i_see_the_further_information_received_information
@@ -222,7 +222,7 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def text_check_answers_item
-    check_further_information_request_answers_page.summary_list.rows.first
+    teacher_check_further_information_request_answers_page.summary_list.rows.first
   end
 
   def work_history_task_list_item
@@ -238,6 +238,6 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def document_check_answers_item
-    check_further_information_request_answers_page.summary_list.rows.last
+    teacher_check_further_information_request_answers_page.summary_list.rows.last
   end
 end
