@@ -43,7 +43,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_check_declaration
-    then_i_see_the(:age_range_subjects_assessment_recommendation_award_page)
+    then_i_see_the(:assessor_age_range_subjects_assessment_recommendation_award_page)
     and_i_see_the_age_range_subjects
 
     when_i_click_change_age_range_minimum
@@ -52,7 +52,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_click_continue
-    then_i_see_the(:age_range_subjects_assessment_recommendation_award_page)
+    then_i_see_the(:assessor_age_range_subjects_assessment_recommendation_award_page)
     and_i_continue_from_age_range_subjects
 
     then_i_see_the(
@@ -274,7 +274,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def and_i_see_the_age_range_subjects
     rows =
-      age_range_subjects_assessment_recommendation_award_page.summary_list.rows
+      assessor_age_range_subjects_assessment_recommendation_award_page.summary_list.rows
 
     expect(rows.count).to eq(3)
 
@@ -289,7 +289,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_click_change_age_range_minimum
-    age_range_subjects_assessment_recommendation_award_page
+    assessor_age_range_subjects_assessment_recommendation_award_page
       .summary_list
       .rows
       .first
@@ -299,7 +299,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def and_i_continue_from_age_range_subjects
-    age_range_subjects_assessment_recommendation_award_page.continue_button.click
+    assessor_age_range_subjects_assessment_recommendation_award_page.continue_button.click
   end
 
   def and_i_see_failure_reasons

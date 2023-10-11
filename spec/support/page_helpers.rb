@@ -7,8 +7,8 @@ module PageHelpers
     send(page.to_sym).load(**args)
   end
 
-  def age_range_subjects_assessment_recommendation_award_page
-    @age_range_subjects_assessment_recommendation_award_page ||=
+  def assessor_age_range_subjects_assessment_recommendation_award_page
+    @assessor_age_range_subjects_assessment_recommendation_award_page ||=
       PageObjects::AssessorInterface::AgeRangeSubjectsAssessmentRecommendationAward.new
   end
 
