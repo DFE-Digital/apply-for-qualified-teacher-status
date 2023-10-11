@@ -44,6 +44,11 @@ module PageHelpers
     @assessor_assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
   end
 
+  def assessor_check_personal_information_page
+    @assessor_check_personal_information_page ||=
+      PageObjects::AssessorInterface::CheckPersonalInformation.new
+  end
+
   def assessor_edit_application_page
     @assessor_edit_application_page ||=
       PageObjects::AssessorInterface::EditApplication.new
@@ -106,11 +111,6 @@ module PageHelpers
   def assessor_withdraw_application_page
     @assessor_withdraw_application_page ||=
       PageObjects::AssessorInterface::WithdrawApplication.new
-  end
-
-  def check_personal_information_page
-    @check_personal_information_page ||=
-      PageObjects::AssessorInterface::CheckPersonalInformation.new
   end
 
   def check_professional_standing_page

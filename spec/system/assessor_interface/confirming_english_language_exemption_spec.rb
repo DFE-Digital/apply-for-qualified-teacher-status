@@ -19,17 +19,17 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     then_i_am_asked_to_confirm_english_language_proficiency_in_the_personal_information_section
 
     when_i_visit_the(
-      :check_personal_information_page,
+      :assessor_check_personal_information_page,
       application_id:,
       assessment_id:,
       section_id: section_id("personal_information"),
     )
     then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
-      check_personal_information_page,
+      assessor_check_personal_information_page,
       "english_language_exemption_by_citizenship_not_confirmed",
     )
-    and_i_confirm_english_language_exemption(check_personal_information_page)
-    and_i_confirm_the_section_as_complete(check_personal_information_page)
+    and_i_confirm_english_language_exemption(assessor_check_personal_information_page)
+    and_i_confirm_the_section_as_complete(assessor_check_personal_information_page)
     then_i_see_the_personal_information_section_is_complete
     and_the_english_language_section_is_complete
   end
