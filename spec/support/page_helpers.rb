@@ -44,9 +44,29 @@ module PageHelpers
     @assessor_assign_reviewer_page ||= PageObjects::AssessorInterface::AssignReviewer.new
   end
 
+  def assessor_check_english_language_proficiency_page
+    @assessor_check_english_language_proficiency_page ||=
+      PageObjects::AssessorInterface::CheckEnglishLanguageProficiency.new
+  end
+
   def assessor_check_personal_information_page
     @assessor_check_personal_information_page ||=
       PageObjects::AssessorInterface::CheckPersonalInformation.new
+  end
+
+  def assessor_check_professional_standing_page
+    @assessor_check_professional_standing_page ||=
+      PageObjects::AssessorInterface::CheckProfessionalStanding.new
+  end
+
+  def assessor_check_qualifications_page
+    @assessor_check_qualifications_page ||=
+      PageObjects::AssessorInterface::CheckQualifications.new
+  end
+
+  def assessor_check_work_history_page
+    @assessor_check_work_history_page ||=
+      PageObjects::AssessorInterface::CheckWorkHistory.new
   end
 
   def assessor_edit_application_page
@@ -111,26 +131,6 @@ module PageHelpers
   def assessor_withdraw_application_page
     @assessor_withdraw_application_page ||=
       PageObjects::AssessorInterface::WithdrawApplication.new
-  end
-
-  def check_professional_standing_page
-    @check_professional_standing_page ||=
-      PageObjects::AssessorInterface::CheckProfessionalStanding.new
-  end
-
-  def check_qualifications_page
-    @check_qualifications_page ||=
-      PageObjects::AssessorInterface::CheckQualifications.new
-  end
-
-  def check_english_language_proficiency_page
-    @check_english_language_proficiency_page ||=
-      PageObjects::AssessorInterface::CheckEnglishLanguageProficiency.new
-  end
-
-  def check_work_history_page
-    @check_work_history_page ||=
-      PageObjects::AssessorInterface::CheckWorkHistory.new
   end
 
   def complete_assessment_page

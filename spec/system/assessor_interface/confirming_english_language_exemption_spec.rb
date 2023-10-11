@@ -11,7 +11,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     then_i_see_the_application
 
     when_i_visit_the(
-      :check_english_language_proficiency_page,
+      :assessor_check_english_language_proficiency_page,
       application_id:,
       assessment_id:,
       section_id: section_id("english_language_proficiency"),
@@ -44,7 +44,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     then_i_see_the_application
 
     when_i_visit_the(
-      :check_english_language_proficiency_page,
+      :assessor_check_english_language_proficiency_page,
       application_id:,
       assessment_id:,
       section_id: section_id("english_language_proficiency"),
@@ -52,17 +52,17 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     then_i_am_asked_to_confirm_english_language_proficiency_in_the_qualifications_section
 
     when_i_visit_the(
-      :check_qualifications_page,
+      :assessor_check_qualifications_page,
       application_id:,
       assessment_id:,
       section_id: section_id("qualifications"),
     )
     then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
-      check_qualifications_page,
+      assessor_check_qualifications_page,
       "english_language_exemption_by_qualification_not_confirmed",
     )
-    and_i_confirm_english_language_exemption(check_qualifications_page)
-    and_i_confirm_the_section_as_complete(check_qualifications_page)
+    and_i_confirm_english_language_exemption(assessor_check_qualifications_page)
+    and_i_confirm_the_section_as_complete(assessor_check_qualifications_page)
     then_i_see_the_qualifications_section_is_complete
     and_the_english_language_section_is_complete
   end
@@ -73,7 +73,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     and_the_application_english_language_proof_method_is_provider
     given_i_am_authorized_as_an_assessor_user
     when_i_visit_the(
-      :check_english_language_proficiency_page,
+      :assessor_check_english_language_proficiency_page,
       application_id:,
       assessment_id:,
       section_id: section_id("english_language_proficiency"),
@@ -81,7 +81,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     then_i_am_asked_to_confirm_english_language_proficiency_by_provider
     and_i_can_see_provider_failure_reasons_if_i_do_not_wish_to_confirm
     and_i_confirm_the_section_as_complete(
-      check_english_language_proficiency_page,
+      assessor_check_english_language_proficiency_page,
     )
     then_the_english_language_section_is_complete
   end
@@ -92,7 +92,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     and_the_application_english_language_proof_method_is_moi
     given_i_am_authorized_as_an_assessor_user
     when_i_visit_the(
-      :check_english_language_proficiency_page,
+      :assessor_check_english_language_proficiency_page,
       application_id:,
       assessment_id:,
       section_id: section_id("english_language_proficiency"),
@@ -100,7 +100,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     then_i_am_asked_to_confirm_english_language_proficiency_by_moi
     and_i_can_see_moi_failure_reasons_if_i_do_not_wish_to_confirm
     and_i_confirm_the_section_as_complete(
-      check_english_language_proficiency_page,
+      assessor_check_english_language_proficiency_page,
     )
     then_the_english_language_section_is_complete
   end
@@ -173,33 +173,33 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   def then_i_am_asked_to_confirm_english_language_proficiency_in_the_personal_information_section
-    expect(check_english_language_proficiency_page.heading.text).to eq(
+    expect(assessor_check_english_language_proficiency_page.heading.text).to eq(
       "Check English language proficiency",
     )
-    expect(check_english_language_proficiency_page.h2s.last.text).to eq(
+    expect(assessor_check_english_language_proficiency_page.h2s.last.text).to eq(
       "English language exemption by birth/citizenship",
     )
-    check_english_language_proficiency_page.return_button.click
+    assessor_check_english_language_proficiency_page.return_button.click
   end
 
   def then_i_am_asked_to_confirm_english_language_proficiency_in_the_qualifications_section
-    expect(check_english_language_proficiency_page.heading.text).to eq(
+    expect(assessor_check_english_language_proficiency_page.heading.text).to eq(
       "Check English language proficiency",
     )
-    expect(check_english_language_proficiency_page.h2s.last.text).to eq(
+    expect(assessor_check_english_language_proficiency_page.h2s.last.text).to eq(
       "English language exemption by country of study",
     )
-    check_english_language_proficiency_page.return_button.click
+    assessor_check_english_language_proficiency_page.return_button.click
   end
 
   def then_i_am_asked_to_confirm_english_language_proficiency_by_provider
-    expect(check_english_language_proficiency_page.heading.text).to eq(
+    expect(assessor_check_english_language_proficiency_page.heading.text).to eq(
       "Check English language proficiency",
     )
     expect(
-      check_english_language_proficiency_page.cards.first.heading.text,
+      assessor_check_english_language_proficiency_page.cards.first.heading.text,
     ).to eq("Verify your English language proficiency")
-    expect(check_english_language_proficiency_page.lists.last.text).to eq(
+    expect(assessor_check_english_language_proficiency_page.lists.last.text).to eq(
       I18n.t(
         "assessor_interface.assessment_sections.checks.english_language_valid_provider",
       ),
@@ -207,14 +207,14 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   def then_i_am_asked_to_confirm_english_language_proficiency_by_moi
-    expect(check_english_language_proficiency_page.heading.text).to eq(
+    expect(assessor_check_english_language_proficiency_page.heading.text).to eq(
       "Check English language proficiency",
     )
     expect(
-      check_english_language_proficiency_page.cards.first.heading.text,
+      assessor_check_english_language_proficiency_page.cards.first.heading.text,
     ).to eq("Verify your English language proficiency")
 
-    expect(check_english_language_proficiency_page.lists.last.text).to eq(
+    expect(assessor_check_english_language_proficiency_page.lists.last.text).to eq(
       I18n.t(
         "assessor_interface.assessment_sections.checks.english_language_valid_moi",
       ),
@@ -223,14 +223,14 @@ RSpec.describe "Assessor confirms English language section", type: :system do
 
   def and_i_can_see_provider_failure_reasons_if_i_do_not_wish_to_confirm
     then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
-      check_english_language_proficiency_page,
+      assessor_check_english_language_proficiency_page,
       "english_language_qualification_invalid",
     )
   end
 
   def and_i_can_see_moi_failure_reasons_if_i_do_not_wish_to_confirm
     then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(
-      check_english_language_proficiency_page,
+      assessor_check_english_language_proficiency_page,
       "english_language_moi_invalid_format",
     )
   end
