@@ -218,7 +218,6 @@
     - expired_at
     - id
     - location_note
-    - ready_for_review
     - received_at
     - requested_at
     - review_note

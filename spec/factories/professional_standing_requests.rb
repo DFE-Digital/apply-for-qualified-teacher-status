@@ -4,21 +4,20 @@
 #
 # Table name: professional_standing_requests
 #
-#  id               :bigint           not null, primary key
-#  expired_at       :datetime
-#  location_note    :text             default(""), not null
-#  ready_for_review :boolean          default(FALSE), not null
-#  received_at      :datetime
-#  requested_at     :datetime
-#  review_note      :string           default(""), not null
-#  review_passed    :boolean
-#  reviewed_at      :datetime
-#  verified_at      :datetime
-#  verify_note      :text             default(""), not null
-#  verify_passed    :boolean
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  assessment_id    :bigint           not null
+#  id            :bigint           not null, primary key
+#  expired_at    :datetime
+#  location_note :text             default(""), not null
+#  received_at   :datetime
+#  requested_at  :datetime
+#  review_note   :string           default(""), not null
+#  review_passed :boolean
+#  reviewed_at   :datetime
+#  verified_at   :datetime
+#  verify_note   :text             default(""), not null
+#  verify_passed :boolean
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  assessment_id :bigint           not null
 #
 # Indexes
 #

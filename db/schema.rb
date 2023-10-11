@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_10_075849) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_11_121802) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -279,7 +279,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_10_075849) do
     t.datetime "reviewed_at"
     t.boolean "review_passed"
     t.string "review_note", default: "", null: false
-    t.boolean "ready_for_review", default: false, null: false
     t.datetime "requested_at"
     t.datetime "expired_at"
     t.boolean "verify_passed"
