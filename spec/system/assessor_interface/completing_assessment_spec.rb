@@ -27,12 +27,12 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_there_is_an_awardable_application_form(%i[old_regs])
     given_i_can_request_dqt_api
 
-    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(:assessor_complete_assessment_page, application_id:, assessment_id:)
 
     when_i_select_award_qts
     and_i_click_continue
     then_i_see_the(
-      :declare_assessment_recommendation_page,
+      :assessor_declare_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "award",
@@ -60,7 +60,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_send_the_email
     then_i_see_the(
-      :confirm_assessment_recommendation_page,
+      :assessor_confirm_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "award",
@@ -78,7 +78,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_awardable_application_form_under_new_regulations
 
-    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(:assessor_complete_assessment_page, application_id:, assessment_id:)
 
     when_i_select_award_qts
     and_i_click_continue
@@ -111,7 +111,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_select_yes_verify_professional_standing
     then_i_see_the(
-      :contact_professional_standing_assessment_recommendation_verify_page,
+      :assessor_contact_professional_standing_assessment_recommendation_verify_page,
       application_id:,
       assessment_id:,
     )
@@ -149,12 +149,12 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_a_declinable_application_form
 
-    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(:assessor_complete_assessment_page, application_id:, assessment_id:)
 
     when_i_select_decline_qts
     and_i_click_continue
     then_i_see_the(
-      :declare_assessment_recommendation_page,
+      :assessor_declare_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "decline",
@@ -171,7 +171,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_send_the_email
     then_i_see_the(
-      :confirm_assessment_recommendation_page,
+      :assessor_confirm_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "decline",
@@ -253,11 +253,11 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_select_award_qts
-    complete_assessment_page.award_qts.input.choose
+    assessor_complete_assessment_page.award_qts.input.choose
   end
 
   def when_i_select_decline_qts
-    complete_assessment_page.decline_qts.input.choose
+    assessor_complete_assessment_page.decline_qts.input.choose
   end
 
   def and_i_see_the_age_range_subjects
@@ -292,7 +292,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def and_i_see_failure_reasons
     failure_reason_item =
-      declare_assessment_recommendation_page
+      assessor_declare_assessment_recommendation_page
         .failure_reason_lists
         .first
         .items
@@ -304,8 +304,8 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_check_declaration
-    declare_assessment_recommendation_page.form.declaration_checkbox.click
-    declare_assessment_recommendation_page.form.submit_button.click
+    assessor_declare_assessment_recommendation_page.form.declaration_checkbox.click
+    assessor_declare_assessment_recommendation_page.form.submit_button.click
   end
 
   def when_i_select_yes_verify_qualifications
@@ -342,7 +342,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_click_continue_from_contact_professional_standing
-    contact_professional_standing_assessment_recommendation_verify_page.continue_button.click
+    assessor_contact_professional_standing_assessment_recommendation_verify_page.continue_button.click
   end
 
   def when_i_select_the_work_histories
@@ -365,8 +365,8 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_check_confirmation
-    confirm_assessment_recommendation_page.form.yes_radio_item.input.click
-    confirm_assessment_recommendation_page.form.continue_button.click
+    assessor_confirm_assessment_recommendation_page.form.yes_radio_item.input.click
+    assessor_confirm_assessment_recommendation_page.form.continue_button.click
   end
 
   def when_i_click_on_overview_button

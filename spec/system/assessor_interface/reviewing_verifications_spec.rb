@@ -56,7 +56,7 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
 
     when_i_click_on_assessment_decision
     then_i_see_the(
-      :complete_assessment_page,
+      :assessor_complete_assessment_page,
       application_id: application_form_id,
       assessment_id:,
     )

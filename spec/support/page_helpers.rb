@@ -69,6 +69,26 @@ module PageHelpers
       PageObjects::AssessorInterface::CheckWorkHistory.new
   end
 
+  def assessor_complete_assessment_page
+    @assessor_complete_assessment_page ||=
+      PageObjects::AssessorInterface::CompleteAssessment.new
+  end
+
+  def assessor_confirm_assessment_recommendation_page
+    @assessor_confirm_assessment_recommendation_page ||=
+      PageObjects::AssessorInterface::ConfirmAssessmentRecommendation.new
+  end
+
+  def assessor_contact_professional_standing_assessment_recommendation_verify_page
+    @assessor_contact_professional_standing_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::ContactProfessionalStandingAssessmentRecommendationVerify.new
+  end
+
+  def assessor_declare_assessment_recommendation_page
+    @assessor_declare_assessment_recommendation_page ||=
+      PageObjects::AssessorInterface::DeclareAssessmentRecommendation.new
+  end
+
   def assessor_edit_application_page
     @assessor_edit_application_page ||=
       PageObjects::AssessorInterface::EditApplication.new
@@ -131,26 +151,6 @@ module PageHelpers
   def assessor_withdraw_application_page
     @assessor_withdraw_application_page ||=
       PageObjects::AssessorInterface::WithdrawApplication.new
-  end
-
-  def complete_assessment_page
-    @complete_assessment_page ||=
-      PageObjects::AssessorInterface::CompleteAssessment.new
-  end
-
-  def confirm_assessment_recommendation_page
-    @confirm_assessment_recommendation_page ||=
-      PageObjects::AssessorInterface::ConfirmAssessmentRecommendation.new
-  end
-
-  def contact_professional_standing_assessment_recommendation_verify_page
-    @contact_professional_standing_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::ContactProfessionalStandingAssessmentRecommendationVerify.new
-  end
-
-  def declare_assessment_recommendation_page
-    @declare_assessment_recommendation_page ||=
-      PageObjects::AssessorInterface::DeclareAssessmentRecommendation.new
   end
 
   def country_page

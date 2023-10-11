@@ -31,11 +31,11 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
 
     when_i_click_on_the_preliminary_check_task
     and_i_choose_no_to_both_questions
-    then_i_see_the(:complete_assessment_page, application_id:)
+    then_i_see_the(:assessor_complete_assessment_page, application_id:)
 
     when_i_select_decline_qts
     then_i_see_the(
-      :declare_assessment_recommendation_page,
+      :assessor_declare_assessment_recommendation_page,
       application_id:,
       recommendation: "decline",
     )
@@ -87,14 +87,14 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
   end
 
   def when_i_select_decline_qts
-    expect(complete_assessment_page.new_states.count).to eq(1)
-    complete_assessment_page.decline_qts.input.choose
-    complete_assessment_page.continue_button.click
+    expect(assessor_complete_assessment_page.new_states.count).to eq(1)
+    assessor_complete_assessment_page.decline_qts.input.choose
+    assessor_complete_assessment_page.continue_button.click
   end
 
   def and_i_see_the_failure_reasons
     failure_reason_items =
-      declare_assessment_recommendation_page.failure_reason_lists.first.items
+      assessor_declare_assessment_recommendation_page.failure_reason_lists.first.items
 
     expect(failure_reason_items.first.text).to eq(
       "The teaching qualifications do not meet the required academic level (level 6).",

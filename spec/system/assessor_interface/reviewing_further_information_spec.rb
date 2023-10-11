@@ -22,7 +22,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     and_i_see_the_check_your_answers_items
 
     when_i_mark_the_section_as_complete
-    then_i_see_the(:complete_assessment_page, application_id:)
+    then_i_see_the(:assessor_complete_assessment_page, application_id:)
     and_i_see_an_award_qts_option
   end
 
@@ -38,7 +38,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     and_i_see_the_check_your_answers_items
 
     when_i_mark_the_section_as_incomplete
-    then_i_see_the(:complete_assessment_page, application_id:)
+    then_i_see_the(:assessor_complete_assessment_page, application_id:)
     and_i_see_a_decline_qts_option
   end
 
@@ -91,7 +91,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def and_i_see_an_award_qts_option
-    expect(complete_assessment_page.award_qts).to_not be_nil
+    expect(assessor_complete_assessment_page.award_qts).to_not be_nil
   end
 
   def when_i_mark_the_section_as_incomplete
@@ -102,7 +102,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def and_i_see_a_decline_qts_option
-    expect(complete_assessment_page.decline_qts).to_not be_nil
+    expect(assessor_complete_assessment_page.decline_qts).to_not be_nil
   end
 
   def and_i_do_not_see_the_review_further_information_form

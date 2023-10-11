@@ -26,7 +26,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form_with_failure_reasons
 
-    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(:assessor_complete_assessment_page, application_id:, assessment_id:)
 
     when_i_select_request_further_information
     and_i_click_continue
@@ -66,7 +66,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
   end
 
   def when_i_select_request_further_information
-    complete_assessment_page.request_further_information.input.choose
+    assessor_complete_assessment_page.request_further_information.input.choose
   end
 
   def and_i_see_the_further_information_request_items
