@@ -1,4 +1,3 @@
-
 <% content_for :page_title, "#{'Error: ' if @work_experience_form.errors.any?}#{t("helpers.legend.eligibility_interface_work_experience_form.work_experience")}" %>
 <% content_for :back_link_url, back_link_url(@eligibility_check.qualified_for_subject_required? ? eligibility_interface_qualified_for_subject_path : eligibility_interface_teach_children_path) %>
 

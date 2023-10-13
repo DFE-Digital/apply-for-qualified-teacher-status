@@ -17,19 +17,24 @@ module PageHelpers
       PageObjects::AssessorInterface::Application.new
   end
 
-  def assessor_applications_page
-    @assessor_applications_page ||=
-      PageObjects::AssessorInterface::Applications.new
-  end
-
   def assessor_application_status_page
     @assessor_application_status_page ||=
       PageObjects::AssessorInterface::ApplicationStatus.new
   end
 
+  def assessor_applications_page
+    @assessor_applications_page ||=
+      PageObjects::AssessorInterface::Applications.new
+  end
+
   def assessor_assessment_recommendation_review_page
     @assessor_assessment_recommendation_review_page ||=
       PageObjects::AssessorInterface::AssessmentRecommendationReview.new
+  end
+
+  def assessor_assessment_section_page
+    @assessor_assessment_section_page ||=
+      PageObjects::AssessorInterface::AssessmentSection.new
   end
 
   def assessor_assign_assessor_page
@@ -40,11 +45,6 @@ module PageHelpers
   def assessor_assign_reviewer_page
     @assessor_assign_reviewer_page ||=
       PageObjects::AssessorInterface::AssignReviewer.new
-  end
-
-  def assessor_assessment_section_page
-    @assessor_assessment_section_page ||=
-      PageObjects::AssessorInterface::AssessmentSection.new
   end
 
   def assessor_check_english_language_proficiency_page
@@ -166,14 +166,14 @@ module PageHelpers
       PageObjects::AssessorInterface::QualificationRequests.new
   end
 
-  def assessor_reference_requests_page
-    @assessor_reference_requests_page ||=
-      PageObjects::AssessorInterface::ReferenceRequests.new
-  end
-
   def assessor_reference_requests_assessment_recommendation_verify_page
     @assessor_reference_requests_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::ReferenceRequestsAssessmentRecommendationVerify.new
+  end
+
+  def assessor_reference_requests_page
+    @assessor_reference_requests_page ||=
+      PageObjects::AssessorInterface::ReferenceRequests.new
   end
 
   def assessor_request_further_information_page
@@ -201,18 +201,13 @@ module PageHelpers
       PageObjects::AssessorInterface::ReviewVerifications.new
   end
 
-  def assessor_timeline_page
-    @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
-  end
-
-  def assessor_verify_professional_standing_request_page
-    @assessor_verify_professional_standing_request_page ||=
-      PageObjects::AssessorInterface::VerifyProfessionalStandingRequest.new
-  end
-
   def assessor_qualified_for_subject_page
     @assessor_qualified_for_subject_page ||=
       PageObjects::AssessorInterface::CreateNote.new
+  end
+
+  def assessor_timeline_page
+    @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end
 
   def assessor_verify_age_range_subjects_page
@@ -223,6 +218,11 @@ module PageHelpers
   def assessor_verify_professional_standing_assessment_recommendation_verify_page
     @assessor_verify_professional_standing_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::VerifyProfessionalStandingAssessmentRecommendationVerify.new
+  end
+
+  def assessor_verify_professional_standing_request_page
+    @assessor_verify_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::VerifyProfessionalStandingRequest.new
   end
 
   def assessor_verify_qualifications_assessment_recommendation_verify_page
@@ -262,6 +262,11 @@ module PageHelpers
       PageObjects::EligibilityInterface::Qualification.new
   end
 
+  def eligibility_qualified_for_subject_page
+    @eligibility_qualified_for_subject_page ||=
+      PageObjects::EligibilityInterface::QualifiedForSubject.new
+  end
+
   def eligibility_region_page
     @eligibility_region_page ||= PageObjects::EligibilityInterface::Region.new
   end
@@ -273,11 +278,6 @@ module PageHelpers
   def eligibility_teach_children_page
     @eligibility_teach_children_page ||=
       PageObjects::EligibilityInterface::TeachChildren.new
-  end
-
-  def eligibility_qualified_for_subject_page
-    @eligibility_qualified_for_subject_page ||=
-      PageObjects::EligibilityInterface::QualifiedForSubject.new
   end
 
   def eligibility_work_experience_page
@@ -364,24 +364,24 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckQualifications.new
   end
 
-  def teacher_check_uploaded_files_page
-    @teacher_check_uploaded_files_page =
-      PageObjects::TeacherInterface::CheckUploadedFiles.new
-  end
-
   def teacher_check_reference_request_answers_page
     @teacher_check_reference_request_answers_page ||=
       PageObjects::TeacherInterface::CheckReferenceRequestAnswers.new
   end
 
-  def teacher_check_work_history_page
-    @teacher_check_work_history_page ||=
-      PageObjects::TeacherInterface::CheckWorkHistory.new
+  def teacher_check_uploaded_files_page
+    @teacher_check_uploaded_files_page =
+      PageObjects::TeacherInterface::CheckUploadedFiles.new
   end
 
   def teacher_check_work_histories_page
     @teacher_check_work_histories_page ||=
       PageObjects::TeacherInterface::CheckWorkHistories.new
+  end
+
+  def teacher_check_work_history_page
+    @teacher_check_work_history_page ||=
+      PageObjects::TeacherInterface::CheckWorkHistory.new
   end
 
   def teacher_check_your_answers_page
@@ -572,15 +572,6 @@ module PageHelpers
     @teacher_signed_out_page = PageObjects::TeacherInterface::SignedOut.new
   end
 
-  def teacher_subjects_page
-    @teacher_subjects_page = PageObjects::TeacherInterface::Subjects.new
-  end
-
-  def teacher_submitted_application_page
-    @teacher_submitted_application_page =
-      PageObjects::TeacherInterface::SubmittedApplication.new
-  end
-
   def teacher_sign_in_page
     @teacher_sign_in_page = PageObjects::TeacherInterface::SignIn.new
   end
@@ -592,6 +583,15 @@ module PageHelpers
 
   def teacher_sign_up_page
     @teacher_sign_up_page = PageObjects::TeacherInterface::SignUp.new
+  end
+
+  def teacher_subjects_page
+    @teacher_subjects_page = PageObjects::TeacherInterface::Subjects.new
+  end
+
+  def teacher_submitted_application_page
+    @teacher_submitted_application_page =
+      PageObjects::TeacherInterface::SubmittedApplication.new
   end
 
   def teacher_upload_document_page
