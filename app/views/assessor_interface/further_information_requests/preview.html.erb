@@ -2,7 +2,7 @@
 <% content_for :back_link_url, edit_assessor_interface_application_form_assessment_path(@application_form, @assessment) %>
 
 <h1 class="govuk-heading-xl">
-  Check the further information you’re asking the applicant for
+  Check the information you’re asking the applicant for
 </h1>
 
 <p class="govuk-body">This screen shows your reasons for requesting further information, along with your notes to the applicant.</p>
@@ -10,15 +10,39 @@
 
 <h2 class="govuk-heading-l">Your further information request reasons and notes</h2>
 
-<% @further_information_request.items.each do |item| %>
-  <section class="app-further-information-request-item">
-    <h3 class="govuk-heading-s"><%= t(item.failure_reason_key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %></h3>
-    <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
+<% @further_information_request.items.group_by(&:failure_reason_key).each do |failure_reason_key, items| %>
+  <% if failure_reason_key == "school_details_cannot_be_verified" %>
+    <section class="app-further-information-request-item">
+      <h2 class="govuk-heading-s">Reason for request</h2>
+      <% if items.size == 1 %>
+        <p class="govuk-body">We were unable to verify the details for <%= items.first.work_history.school_name %></p>
+      <% elsif items.size > 1 %>
+        <p class="govuk-body">We were unable to verify the details for:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <% items.each do |item| %>
+            <li><%= item.work_history.school_name %></li>
+          <% end %>
+        </ul>
+      <%end%>
+      <h2 class="govuk-heading-s">Note to applicant</h2>
 
-    <%= govuk_inset_text do %>
-      <%= simple_format item.failure_reason_assessor_feedback %>
+      <%= govuk_inset_text do %>
+        <%= simple_format items.first.failure_reason_assessor_feedback %>
+      <% end %>
+    </section>  
+  <% else %>
+    <% items.each do |item| %>
+      <section class="app-further-information-request-item">
+        <h3 class="govuk-heading-s"><%= t(item.failure_reason_key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %></h3>
+
+        <h2 class="govuk-heading-s">Note to applicant</h2>
+
+        <%= govuk_inset_text do %>
+          <%= simple_format item.failure_reason_assessor_feedback %>
+        <% end %>
+      </section>
     <% end %>
-  </section>
+  <% end %>  
 <% end %>
 
 <h2 class="govuk-heading-l">Send the further information request email</h2>

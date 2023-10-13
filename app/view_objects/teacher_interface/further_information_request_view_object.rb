@@ -88,7 +88,7 @@ module TeacherInterface
           "teacher_interface.further_information_request.show.failure_reason.#{item.failure_reason_key}",
         )
       when "work_history_contact"
-        "Add your work history contact’s details"
+        "Add work history details"
       when "document"
         "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
       end
