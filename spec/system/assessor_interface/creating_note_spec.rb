@@ -14,7 +14,7 @@ RSpec.describe "Creating a note", type: :system do
     )
     and_i_click_add_note
     then_i_see_the(
-      :assessor_qualified_for_subject_page,
+      :assessor_create_note_page,
       application_form_id: application_form.id,
     )
 
@@ -46,9 +46,8 @@ RSpec.describe "Creating a note", type: :system do
   end
 
   def when_i_create_a_note
-    assessor_qualified_for_subject_page.form.text_textarea.fill_in with:
-      "A note."
-    assessor_qualified_for_subject_page.form.submit_button.click
+    assessor_create_note_page.form.text_textarea.fill_in with: "A note."
+    assessor_create_note_page.form.submit_button.click
   end
 
   def and_i_see_the_note_timeline_event
