@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class ReferenceRequests < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
+      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
                 "/reference-requests"
 
       section :task_list, ".app-task-list__item" do

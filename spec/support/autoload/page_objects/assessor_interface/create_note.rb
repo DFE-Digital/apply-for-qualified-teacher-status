@@ -1,7 +1,7 @@
 module PageObjects
   module AssessorInterface
     class CreateNote < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/notes/new"
+      set_url "/assessor/applications/{application_form_id}/notes/new"
 
       element :heading, "h1"
 

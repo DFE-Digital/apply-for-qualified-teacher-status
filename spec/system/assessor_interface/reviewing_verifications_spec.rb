@@ -10,20 +10,11 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   end
 
   it "sends for review" do
-    when_i_visit_the(
-      :assessor_application_page,
-      application_id: application_form_id,
-    )
-    then_i_see_the(
-      :assessor_application_page,
-      application_id: application_form_id,
-    )
+    when_i_visit_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
 
     when_i_click_on_verification_decision
-    then_i_see_the(
-      :assessor_application_page,
-      application_id: application_form_id,
-    )
+    then_i_see_the(:assessor_application_page, application_form_id:)
 
     when_i_click_on_review_verifications
     then_i_see_the(
@@ -49,15 +40,12 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
     and_i_see_the_lops_accepted
 
     when_i_click_on_back_to_overview
-    then_i_see_the(
-      :assessor_application_page,
-      application_id: application_form_id,
-    )
+    then_i_see_the(:assessor_application_page, application_form_id:)
 
     when_i_click_on_assessment_decision
     then_i_see_the(
       :assessor_complete_assessment_page,
-      application_id: application_form_id,
+      application_form_id:,
       assessment_id:,
     )
   end
@@ -75,10 +63,7 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
     application_form.assessment.review!
 
     # TODO: reload the page
-    when_i_visit_the(
-      :assessor_application_page,
-      application_id: application_form_id,
-    )
+    when_i_visit_the(:assessor_application_page, application_form_id:)
   end
 
   def when_i_click_on_review_verifications

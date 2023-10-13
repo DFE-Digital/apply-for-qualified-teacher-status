@@ -13,12 +13,12 @@ RSpec.describe "Assigning an assessor", type: :system do
 
     when_i_visit_the(
       :assessor_assign_assessor_page,
-      application_id: application_form.id,
+      application_form_id: application_form.id,
     )
     and_i_select_an_assessor
     then_i_see_the(
       :assessor_application_page,
-      application_id: application_form.id,
+      application_form_id: application_form.id,
     )
     and_the_assessor_is_assigned_to_the_application_form
   end
@@ -28,12 +28,12 @@ RSpec.describe "Assigning an assessor", type: :system do
 
     when_i_visit_the(
       :assessor_assign_reviewer_page,
-      application_id: application_form.id,
+      application_form_id: application_form.id,
     )
     and_i_select_a_reviewer
     then_i_see_the(
       :assessor_application_page,
-      application_id: application_form.id,
+      application_form_id: application_form.id,
     )
     and_the_assessor_is_assigned_as_reviewer_to_the_application_form
   end
@@ -43,7 +43,7 @@ RSpec.describe "Assigning an assessor", type: :system do
 
     when_i_visit_the(
       :assessor_assign_assessor_page,
-      application_id: application_form.id,
+      application_form_id: application_form.id,
     )
     then_i_see_the_forbidden_page
   end
@@ -66,7 +66,7 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def when_i_visit_the_assign_reviewer_page
-    assessor_assign_reviewer_page.load(application_id: application_form.id)
+    assessor_assign_reviewer_page.load(application_form_id: application_form.id)
   end
 
   def and_i_select_a_reviewer

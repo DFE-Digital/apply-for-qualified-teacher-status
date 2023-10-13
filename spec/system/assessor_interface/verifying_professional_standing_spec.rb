@@ -10,7 +10,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   end
 
   it "record location and review" do
-    when_i_visit_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
     and_i_see_a_waiting_on_status
     and_i_click_record_professional_standing_task
     then_i_see_the(
@@ -19,7 +19,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     )
 
     when_i_fill_in_the_location_form
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_a_received_status
 
     when_i_click_review_professional_standing_task
@@ -29,7 +29,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     )
 
     when_i_fill_in_the_review_form
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
   end
 
   private
@@ -95,9 +95,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       end
   end
 
-  def application_id
+  def application_form_id
     application_form.id
   end
-
-  alias_method :application_form_id, :application_id
 end

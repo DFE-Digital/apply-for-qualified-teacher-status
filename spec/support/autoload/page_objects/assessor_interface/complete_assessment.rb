@@ -1,7 +1,7 @@
 module PageObjects
   module AssessorInterface
     class CompleteAssessment < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}/edit"
+      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}/edit"
 
       element :heading, "h1"
       sections :new_states, GovukRadioItem, ".govuk-radios__item"

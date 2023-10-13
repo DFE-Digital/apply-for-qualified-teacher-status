@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class AgeRangeSubjectsAssessmentRecommendationAward < SitePrism::Page
-      set_url "/assessor/applications/{application_id}/assessments/{assessment_id}" \
+      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
                 "/recommendation/award/age-range-subjects"
 
       element :heading, "h1"

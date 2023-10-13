@@ -10,33 +10,33 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
   end
 
   it "passes preliminary check" do
-    when_i_visit_the(:assessor_application_page, application_id:)
-    then_i_see_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_a_waiting_on_status
     and_i_see_an_unstarted_preliminary_check_task
 
     when_i_click_on_the_preliminary_check_task
     and_i_choose_yes_to_both_questions
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_a_completed_preliminary_check_task
     and_an_email_has_been_sent_to_the_teacher
     and_the_assessor_is_unassigned
   end
 
   it "fails preliminary check" do
-    when_i_visit_the(:assessor_application_page, application_id:)
-    then_i_see_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_a_waiting_on_status
     and_i_see_an_unstarted_preliminary_check_task
 
     when_i_click_on_the_preliminary_check_task
     and_i_choose_no_to_both_questions
-    then_i_see_the(:assessor_complete_assessment_page, application_id:)
+    then_i_see_the(:assessor_complete_assessment_page, application_form_id:)
 
     when_i_select_decline_qts
     then_i_see_the(
       :assessor_declare_assessment_recommendation_page,
-      application_id:,
+      application_form_id:,
       recommendation: "decline",
     )
     and_i_see_the_failure_reasons
@@ -153,7 +153,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
       end
   end
 
-  def application_id
+  def application_form_id
     application_form.id
   end
 end

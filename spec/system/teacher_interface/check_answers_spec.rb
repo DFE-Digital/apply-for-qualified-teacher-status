@@ -6,7 +6,7 @@ RSpec.describe "Teacher application check answers", type: :system do
     given_i_am_authorized_as_a_user(teacher)
     given_there_is_an_application_form
 
-    when_i_visit_the(:teacher_check_your_answers_page, application_id:)
+    when_i_visit_the(:teacher_check_your_answers_page, application_form_id:)
   end
 
   it "about you section" do
@@ -69,25 +69,25 @@ RSpec.describe "Teacher application check answers", type: :system do
 
   it "display application form work history before qualifications banner" do
     #should display the banner
-    when_i_visit_the(:teacher_check_your_answers_page, application_id:) do
+    when_i_visit_the(:teacher_check_your_answers_page, application_form_id:) do
       and_i_have_early_work_history
       then_i_see_the_banner
     end
 
     #should not display the banner
-    when_i_visit_the(:teacher_check_your_answers_page, application_id:) do
+    when_i_visit_the(:teacher_check_your_answers_page, application_form_id:) do
       and_i_have_later_work_history
       then_i_do_not_see_the_banner
     end
 
     #should not display the banner
-    when_i_visit_the(:teacher_check_your_answers_page, application_id:) do
+    when_i_visit_the(:teacher_check_your_answers_page, application_form_id:) do
       and_i_have_no_work_history
       then_i_do_not_see_the_banner
     end
 
     #should not display the banner
-    when_i_visit_the(:teacher_check_your_answers_page, application_id:) do
+    when_i_visit_the(:teacher_check_your_answers_page, application_form_id:) do
       and_i_have_no_qualifications
       then_i_do_not_see_the_banner
     end
@@ -177,7 +177,5 @@ RSpec.describe "Teacher application check answers", type: :system do
       )
   end
 
-  def application_id
-    application_form.id
-  end
+  delegate :id, to: :application_form, prefix: true
 end

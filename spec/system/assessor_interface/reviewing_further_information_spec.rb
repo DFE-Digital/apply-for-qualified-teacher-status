@@ -11,34 +11,34 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   it "review complete" do
-    when_i_visit_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
     and_i_click_review_requested_information
     then_i_see_the(
       :assessor_review_further_information_request_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       further_information_request_id:,
     )
     and_i_see_the_check_your_answers_items
 
     when_i_mark_the_section_as_complete
-    then_i_see_the(:assessor_complete_assessment_page, application_id:)
+    then_i_see_the(:assessor_complete_assessment_page, application_form_id:)
     and_i_see_an_award_qts_option
   end
 
   it "review incomplete" do
-    when_i_visit_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
     and_i_click_review_requested_information
     then_i_see_the(
       :assessor_review_further_information_request_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       further_information_request_id:,
     )
     and_i_see_the_check_your_answers_items
 
     when_i_mark_the_section_as_incomplete
-    then_i_see_the(:assessor_complete_assessment_page, application_id:)
+    then_i_see_the(:assessor_complete_assessment_page, application_form_id:)
     and_i_see_a_decline_qts_option
   end
 
@@ -46,11 +46,11 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     further_information_request.update!(review_passed: true)
     further_information_request.assessment.award!
 
-    when_i_visit_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
     and_i_click_review_requested_information
     then_i_see_the(
       :assessor_review_further_information_request_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       further_information_request_id:,
     )
@@ -142,7 +142,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       )
   end
 
-  def application_id
+  def application_form_id
     application_form.id
   end
 
