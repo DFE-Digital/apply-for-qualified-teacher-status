@@ -61,9 +61,7 @@ RSpec.describe "Assessor views duplicate applicant's application form",
       end
   end
 
-  def application_form_id
-    application_form.id
-  end
+  delegate :id, to: :application_form, prefix: true
 
   def dqt_match
     {

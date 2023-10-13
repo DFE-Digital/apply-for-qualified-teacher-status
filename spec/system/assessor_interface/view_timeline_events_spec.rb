@@ -60,9 +60,7 @@ RSpec.describe "Assessor view timeline events", type: :system do
       end
   end
 
-  def application_form_id
-    application_form.id
-  end
+  delegate :id, to: :application_form, prefix: true
 
   def assessor
     @assessor ||= create(:staff, :confirmed)

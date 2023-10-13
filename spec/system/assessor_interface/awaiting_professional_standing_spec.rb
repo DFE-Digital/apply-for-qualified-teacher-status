@@ -77,7 +77,5 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
       )
   end
 
-  def application_form_id
-    application_form.id
-  end
+  delegate :id, to: :application_form, prefix: true
 end

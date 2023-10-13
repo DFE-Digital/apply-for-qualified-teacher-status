@@ -142,9 +142,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       )
   end
 
-  def application_form_id
-    application_form.id
-  end
+  delegate :id, to: :application_form, prefix: true
 
   def assessment_id
     application_form.assessment.id
