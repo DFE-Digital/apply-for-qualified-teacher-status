@@ -27,32 +27,40 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_there_is_an_awardable_application_form(%i[old_regs])
     given_i_can_request_dqt_api
 
-    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(
+      :assessor_complete_assessment_page,
+      application_id:,
+      assessment_id:,
+    )
 
     when_i_select_award_qts
     and_i_click_continue
     then_i_see_the(
-      :declare_assessment_recommendation_page,
+      :assessor_declare_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "award",
     )
 
     when_i_check_declaration
-    then_i_see_the(:age_range_subjects_assessment_recommendation_award_page)
+    then_i_see_the(
+      :assessor_age_range_subjects_assessment_recommendation_award_page,
+    )
     and_i_see_the_age_range_subjects
 
     when_i_click_change_age_range_minimum
     then_i_see_the(
-      :edit_age_range_subjects_assessment_recommendation_award_page,
+      :assessor_edit_age_range_subjects_assessment_recommendation_award_page,
     )
 
     when_i_click_continue
-    then_i_see_the(:age_range_subjects_assessment_recommendation_award_page)
+    then_i_see_the(
+      :assessor_age_range_subjects_assessment_recommendation_award_page,
+    )
     and_i_continue_from_age_range_subjects
 
     then_i_see_the(
-      :preview_assessment_recommendation_page,
+      :assessor_preview_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "award",
@@ -60,7 +68,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_send_the_email
     then_i_see_the(
-      :confirm_assessment_recommendation_page,
+      :assessor_confirm_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "award",
@@ -78,61 +86,65 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_awardable_application_form_under_new_regulations
 
-    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(
+      :assessor_complete_assessment_page,
+      application_id:,
+      assessment_id:,
+    )
 
     when_i_select_award_qts
     and_i_click_continue
     then_i_see_the(
-      :verify_qualifications_assessment_recommendation_verify_page,
+      :assessor_verify_qualifications_assessment_recommendation_verify_page,
       application_id:,
       assessment_id:,
     )
 
     when_i_select_yes_verify_qualifications
     then_i_see_the(
-      :qualification_requests_assessment_recommendation_verify_page,
+      :assessor_qualification_requests_assessment_recommendation_verify_page,
       application_id:,
       assessment_id:,
     )
 
     when_i_select_the_qualifications
     then_i_see_the(
-      :email_consent_letters_requests_assessment_recommendation_verify_page,
+      :assessor_email_consent_letters_requests_assessment_recommendation_verify_page,
       application_id:,
       assessment_id:,
     )
 
     when_i_click_continue_from_email_consent_letters
     then_i_see_the(
-      :verify_professional_standing_assessment_recommendation_verify_page,
+      :assessor_verify_professional_standing_assessment_recommendation_verify_page,
       application_id:,
       assessment_id:,
     )
 
     when_i_select_yes_verify_professional_standing
     then_i_see_the(
-      :contact_professional_standing_assessment_recommendation_verify_page,
+      :assessor_contact_professional_standing_assessment_recommendation_verify_page,
       application_id:,
       assessment_id:,
     )
 
     when_i_click_continue_from_contact_professional_standing
     then_i_see_the(
-      :reference_requests_assessment_recommendation_verify_page,
+      :assessor_reference_requests_assessment_recommendation_verify_page,
       application_id:,
       assessment_id:,
     )
 
     when_i_select_the_work_histories
     then_i_see_the(
-      :preview_referee_assessment_recommendation_award_page,
+      :assessor_preview_referee_assessment_recommendation_award_page,
       application_id:,
       assessment_id:,
     )
 
     when_i_send_the_referee_email
     then_i_see_the(
-      :preview_teacher_assessment_recommendation_award_page,
+      :assessor_preview_teacher_assessment_recommendation_award_page,
       application_id:,
       assessment_id:,
     )
@@ -149,12 +161,16 @@ RSpec.describe "Assessor completing assessment", type: :system do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_a_declinable_application_form
 
-    when_i_visit_the(:complete_assessment_page, application_id:, assessment_id:)
+    when_i_visit_the(
+      :assessor_complete_assessment_page,
+      application_id:,
+      assessment_id:,
+    )
 
     when_i_select_decline_qts
     and_i_click_continue
     then_i_see_the(
-      :declare_assessment_recommendation_page,
+      :assessor_declare_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "decline",
@@ -163,7 +179,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_check_declaration
     then_i_see_the(
-      :preview_assessment_recommendation_page,
+      :assessor_preview_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "decline",
@@ -171,7 +187,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_send_the_email
     then_i_see_the(
-      :confirm_assessment_recommendation_page,
+      :assessor_confirm_assessment_recommendation_page,
       application_id:,
       assessment_id:,
       recommendation: "decline",
@@ -253,16 +269,16 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_select_award_qts
-    complete_assessment_page.award_qts.input.choose
+    assessor_complete_assessment_page.award_qts.input.choose
   end
 
   def when_i_select_decline_qts
-    complete_assessment_page.decline_qts.input.choose
+    assessor_complete_assessment_page.decline_qts.input.choose
   end
 
   def and_i_see_the_age_range_subjects
     rows =
-      age_range_subjects_assessment_recommendation_award_page.summary_list.rows
+      assessor_age_range_subjects_assessment_recommendation_award_page.summary_list.rows
 
     expect(rows.count).to eq(3)
 
@@ -277,7 +293,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_click_change_age_range_minimum
-    age_range_subjects_assessment_recommendation_award_page
+    assessor_age_range_subjects_assessment_recommendation_award_page
       .summary_list
       .rows
       .first
@@ -287,12 +303,12 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def and_i_continue_from_age_range_subjects
-    age_range_subjects_assessment_recommendation_award_page.continue_button.click
+    assessor_age_range_subjects_assessment_recommendation_award_page.continue_button.click
   end
 
   def and_i_see_failure_reasons
     failure_reason_item =
-      declare_assessment_recommendation_page
+      assessor_declare_assessment_recommendation_page
         .failure_reason_lists
         .first
         .items
@@ -304,69 +320,76 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_check_declaration
-    declare_assessment_recommendation_page.form.declaration_checkbox.click
-    declare_assessment_recommendation_page.form.submit_button.click
+    assessor_declare_assessment_recommendation_page
+      .form
+      .declaration_checkbox
+      .click
+    assessor_declare_assessment_recommendation_page.form.submit_button.click
   end
 
   def when_i_select_yes_verify_qualifications
-    verify_qualifications_assessment_recommendation_verify_page
+    assessor_verify_qualifications_assessment_recommendation_verify_page
       .form
       .yes_radio_item
       .choose
-    verify_qualifications_assessment_recommendation_verify_page
+    assessor_verify_qualifications_assessment_recommendation_verify_page
       .form
       .submit_button
       .click
   end
 
   def when_i_select_the_qualifications
-    qualification_requests_assessment_recommendation_verify_page
+    assessor_qualification_requests_assessment_recommendation_verify_page
       .form
       .submit_button
       .click
   end
 
   def when_i_click_continue_from_email_consent_letters
-    email_consent_letters_requests_assessment_recommendation_verify_page.continue_button.click
+    assessor_email_consent_letters_requests_assessment_recommendation_verify_page.continue_button.click
   end
 
   def when_i_select_yes_verify_professional_standing
-    verify_professional_standing_assessment_recommendation_verify_page
+    assessor_verify_professional_standing_assessment_recommendation_verify_page
       .form
       .yes_radio_item
       .choose
-    verify_professional_standing_assessment_recommendation_verify_page
+    assessor_verify_professional_standing_assessment_recommendation_verify_page
       .form
       .submit_button
       .click
   end
 
   def when_i_click_continue_from_contact_professional_standing
-    contact_professional_standing_assessment_recommendation_verify_page.continue_button.click
+    assessor_contact_professional_standing_assessment_recommendation_verify_page.continue_button.click
   end
 
   def when_i_select_the_work_histories
-    reference_requests_assessment_recommendation_verify_page
+    assessor_reference_requests_assessment_recommendation_verify_page
       .form
       .submit_button
       .click
   end
 
   def when_i_send_the_referee_email
-    preview_referee_assessment_recommendation_award_page.send_button.click
+    assessor_preview_referee_assessment_recommendation_award_page.send_button.click
   end
 
   def when_i_send_the_teacher_email
-    preview_teacher_assessment_recommendation_award_page.send_button.click
+    assessor_preview_teacher_assessment_recommendation_award_page.send_button.click
   end
 
   def when_i_send_the_email
-    preview_assessment_recommendation_page.send_button.click
+    assessor_preview_assessment_recommendation_page.send_button.click
   end
 
   def when_i_check_confirmation
-    confirm_assessment_recommendation_page.form.yes_radio_item.input.click
-    confirm_assessment_recommendation_page.form.continue_button.click
+    assessor_confirm_assessment_recommendation_page
+      .form
+      .yes_radio_item
+      .input
+      .click
+    assessor_confirm_assessment_recommendation_page.form.continue_button.click
   end
 
   def when_i_click_on_overview_button

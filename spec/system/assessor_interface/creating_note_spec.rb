@@ -13,7 +13,10 @@ RSpec.describe "Creating a note", type: :system do
       application_id: application_form.id,
     )
     and_i_click_add_note
-    then_i_see_the(:create_note_page, application_id: application_form.id)
+    then_i_see_the(
+      :assessor_qualified_for_subject_page,
+      application_id: application_form.id,
+    )
 
     when_i_create_a_note
     then_i_see_the(
@@ -21,8 +24,11 @@ RSpec.describe "Creating a note", type: :system do
       application_id: application_form.id,
     )
 
-    when_i_visit_the(:timeline_page, application_id: application_form.id)
-    then_i_see_the(:timeline_page, application_id: application_form.id)
+    when_i_visit_the(
+      :assessor_timeline_page,
+      application_id: application_form.id,
+    )
+    then_i_see_the(:assessor_timeline_page, application_id: application_form.id)
     and_i_see_the_note_timeline_event
   end
 
@@ -37,12 +43,13 @@ RSpec.describe "Creating a note", type: :system do
   end
 
   def when_i_create_a_note
-    create_note_page.form.text_textarea.fill_in with: "A note."
-    create_note_page.form.submit_button.click
+    assessor_qualified_for_subject_page.form.text_textarea.fill_in with:
+      "A note."
+    assessor_qualified_for_subject_page.form.submit_button.click
   end
 
   def and_i_see_the_note_timeline_event
-    timeline_item = timeline_page.timeline_items.first
+    timeline_item = assessor_timeline_page.timeline_items.first
 
     expect(timeline_item.title).to have_content("Note created")
 

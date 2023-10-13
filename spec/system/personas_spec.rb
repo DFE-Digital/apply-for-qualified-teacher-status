@@ -22,12 +22,12 @@ RSpec.describe "Personas", type: :system do
       and_i_see_some_personas
 
       when_i_sign_in_as_a_staff_persona
-      then_i_see_the(:applications_page)
+      then_i_see_the(:assessor_applications_page)
 
       when_i_visit_the(:personas_page)
 
       when_i_sign_in_as_an_eligible_persona
-      then_i_see_the(:eligible_page)
+      then_i_see_the(:eligibility_eligible_page)
 
       when_i_visit_the(:personas_page)
 
@@ -42,7 +42,7 @@ RSpec.describe "Personas", type: :system do
     given_personas_are_deactivated
 
     when_i_visit_the(:personas_page)
-    then_i_see_the(:start_page)
+    then_i_see_the(:eligibility_start_page)
     and_i_see_the_feature_disabled_message
   end
 

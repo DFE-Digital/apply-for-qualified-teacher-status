@@ -11,7 +11,10 @@ RSpec.describe "Assigning an assessor", type: :system do
   it "assigns an assessor" do
     given_i_am_authorized_as_an_assessor_user
 
-    when_i_visit_the(:assign_assessor_page, application_id: application_form.id)
+    when_i_visit_the(
+      :assessor_assign_assessor_page,
+      application_id: application_form.id,
+    )
     and_i_select_an_assessor
     then_i_see_the(
       :assessor_application_page,
@@ -23,7 +26,10 @@ RSpec.describe "Assigning an assessor", type: :system do
   it "assigns a reviewer" do
     given_i_am_authorized_as_an_assessor_user
 
-    when_i_visit_the(:assign_reviewer_page, application_id: application_form.id)
+    when_i_visit_the(
+      :assessor_assign_reviewer_page,
+      application_id: application_form.id,
+    )
     and_i_select_a_reviewer
     then_i_see_the(
       :assessor_application_page,
@@ -35,7 +41,10 @@ RSpec.describe "Assigning an assessor", type: :system do
   it "requires permission" do
     given_i_am_authorized_as_a_support_user
 
-    when_i_visit_the(:assign_assessor_page, application_id: application_form.id)
+    when_i_visit_the(
+      :assessor_assign_assessor_page,
+      application_id: application_form.id,
+    )
     then_i_see_the_forbidden_page
   end
 
@@ -46,8 +55,8 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def and_i_select_an_assessor
-    assign_assessor_page.assessors.second.input.click
-    assign_assessor_page.continue_button.click
+    assessor_assign_assessor_page.assessors.second.input.click
+    assessor_assign_assessor_page.continue_button.click
   end
 
   def and_the_assessor_is_assigned_to_the_application_form
@@ -57,12 +66,12 @@ RSpec.describe "Assigning an assessor", type: :system do
   end
 
   def when_i_visit_the_assign_reviewer_page
-    assign_reviewer_page.load(application_id: application_form.id)
+    assessor_assign_reviewer_page.load(application_id: application_form.id)
   end
 
   def and_i_select_a_reviewer
-    assign_reviewer_page.reviewers.second.input.click
-    assign_reviewer_page.continue_button.click
+    assessor_assign_reviewer_page.reviewers.second.input.click
+    assessor_assign_reviewer_page.continue_button.click
   end
 
   def and_the_assessor_is_assigned_as_reviewer_to_the_application_form

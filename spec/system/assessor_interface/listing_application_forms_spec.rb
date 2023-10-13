@@ -10,12 +10,12 @@ RSpec.describe "Assessor listing application forms", type: :system do
   end
 
   it "displays a list of applications" do
-    when_i_visit_the(:applications_page)
+    when_i_visit_the(:assessor_applications_page)
     then_i_see_a_list_of_applications
   end
 
   it "paginates the results" do
-    when_i_visit_the(:applications_page)
+    when_i_visit_the(:assessor_applications_page)
     then_i_see_the_pagination_controls
 
     when_i_click_on_next
@@ -29,7 +29,7 @@ RSpec.describe "Assessor listing application forms", type: :system do
   end
 
   def when_i_click_on_next
-    applications_page.pagination.next.click
+    assessor_applications_page.pagination.next.click
   end
 
   def then_i_see_a_list_of_applications
@@ -42,7 +42,7 @@ RSpec.describe "Assessor listing application forms", type: :system do
   end
 
   def then_i_see_the_pagination_controls
-    expect(applications_page.pagination).to be_visible
+    expect(assessor_applications_page.pagination).to be_visible
   end
 
   def then_i_see_the_next_page_of_applications
@@ -55,7 +55,7 @@ RSpec.describe "Assessor listing application forms", type: :system do
   end
 
   def visible_names
-    applications_page.search_results.map { |result| result.name.text }
+    assessor_applications_page.search_results.map { |result| result.name.text }
   end
 
   def application_forms

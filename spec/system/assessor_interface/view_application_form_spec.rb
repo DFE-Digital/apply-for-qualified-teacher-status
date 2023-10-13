@@ -11,7 +11,7 @@ RSpec.describe "Assessor view application form", type: :system do
     and_i_see_the_assessment_tasks
 
     when_i_click_back_link
-    then_i_see_the(:applications_page)
+    then_i_see_the(:assessor_applications_page)
   end
 
   private

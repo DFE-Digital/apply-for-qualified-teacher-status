@@ -48,7 +48,7 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def and_i_click_the_start_button
-    start_page.start_button.click
+    eligibility_start_page.start_button.click
   end
 
   def and_i_need_to_check_my_eligibility
@@ -61,23 +61,23 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def and_i_enter_a_country
-    country_page.submit(country: "Canada")
+    eligibility_country_page.submit(country: "Canada")
   end
 
   def and_i_select_a_state
-    region_page.submit(region: "Ontario")
+    eligibility_region_page.submit(region: "Ontario")
   end
 
   def and_i_have_a_teaching_qualification
-    qualification_page.submit_yes
+    eligibility_qualification_page.submit_yes
   end
 
   def and_i_have_a_university_degree
-    degree_page.submit_yes
+    eligibility_degree_page.submit_yes
   end
 
   def and_i_am_qualified_to_teach_children
-    teach_children_page.submit_yes
+    eligibility_teach_children_page.submit_yes
   end
 
   def and_i_have_work_experience
@@ -86,53 +86,58 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
     if page.has_content?(
          "How long have you been employed as a recognised teacher?",
        )
-      work_experience_page.submit_over_20_months
+      eligibility_work_experience_page.submit_over_20_months
     end
   end
 
   def and_i_dont_have_sanctions
-    misconduct_page.submit_no
+    eligibility_misconduct_page.submit_no
   end
 
   def then_i_should_be_eligible_to_apply
-    expect(eligible_page).to have_content("You’re eligible to apply")
+    expect(eligibility_eligible_page).to have_content(
+      "You’re eligible to apply",
+    )
   end
 
-  def start_page
-    @start_page ||= PageObjects::EligibilityInterface::Start.new
+  def eligibility_start_page
+    @eligibility_start_page ||= PageObjects::EligibilityInterface::Start.new
   end
 
-  def country_page
-    @country_page ||= PageObjects::EligibilityInterface::Country.new
+  def eligibility_country_page
+    @eligibility_country_page ||= PageObjects::EligibilityInterface::Country.new
   end
 
-  def region_page
-    @region_page ||= PageObjects::EligibilityInterface::Region.new
+  def eligibility_region_page
+    @eligibility_region_page ||= PageObjects::EligibilityInterface::Region.new
   end
 
-  def qualification_page
-    @qualification_page ||= PageObjects::EligibilityInterface::Qualification.new
+  def eligibility_qualification_page
+    @eligibility_qualification_page ||=
+      PageObjects::EligibilityInterface::Qualification.new
   end
 
-  def degree_page
-    @degree_page ||= PageObjects::EligibilityInterface::Degree.new
+  def eligibility_degree_page
+    @eligibility_degree_page ||= PageObjects::EligibilityInterface::Degree.new
   end
 
-  def teach_children_page
-    @teach_children_page ||=
+  def eligibility_teach_children_page
+    @eligibility_teach_children_page ||=
       PageObjects::EligibilityInterface::TeachChildren.new
   end
 
-  def work_experience_page
-    @work_experience_page ||=
+  def eligibility_work_experience_page
+    @eligibility_work_experience_page ||=
       PageObjects::EligibilityInterface::WorkExperience.new
   end
 
-  def misconduct_page
-    @misconduct_page ||= PageObjects::EligibilityInterface::Misconduct.new
+  def eligibility_misconduct_page
+    @eligibility_misconduct_page ||=
+      PageObjects::EligibilityInterface::Misconduct.new
   end
 
-  def eligible_page
-    @eligible_page ||= PageObjects::EligibilityInterface::Eligible.new
+  def eligibility_eligible_page
+    @eligibility_eligible_page ||=
+      PageObjects::EligibilityInterface::Eligible.new
   end
 end

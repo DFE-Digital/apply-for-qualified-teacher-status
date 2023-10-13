@@ -9,7 +9,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows passing the personal information" do
     when_i_visit_the(
-      :check_personal_information_page,
+      :assessor_check_personal_information_page,
       application_id:,
       assessment_id:,
       section_id: section_id("personal_information"),
@@ -23,7 +23,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows failing the personal information" do
     when_i_visit_the(
-      :check_personal_information_page,
+      :assessor_check_personal_information_page,
       application_id:,
       assessment_id:,
       section_id: section_id("personal_information"),
@@ -38,7 +38,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows viewing personal information once submitted" do
     given_there_are_selected_failure_reasons("personal_information")
     when_i_visit_the(
-      :check_personal_information_page,
+      :assessor_check_personal_information_page,
       application_id:,
       assessment_id:,
       section_id: section_id("personal_information"),
@@ -48,7 +48,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows passing the qualifications" do
     when_i_visit_the(
-      :check_qualifications_page,
+      :assessor_check_qualifications_page,
       application_id:,
       assessment_id:,
       section_id: section_id("qualifications"),
@@ -62,7 +62,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows failing the qualifications" do
     when_i_visit_the(
-      :check_qualifications_page,
+      :assessor_check_qualifications_page,
       application_id:,
       assessment_id:,
       section_id: section_id("qualifications"),
@@ -77,7 +77,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows viewing qualifications once submitted" do
     given_there_are_selected_failure_reasons("qualifications")
     when_i_visit_the(
-      :check_qualifications_page,
+      :assessor_check_qualifications_page,
       application_id:,
       assessment_id:,
       section_id: section_id("qualifications"),
@@ -87,7 +87,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows passing the age range and subjects" do
     when_i_visit_the(
-      :verify_age_range_subjects_page,
+      :assessor_verify_age_range_subjects_page,
       application_id:,
       assessment_id:,
       section_id: section_id("age_range_subjects"),
@@ -103,7 +103,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows failing the age range and subjects" do
     when_i_visit_the(
-      :verify_age_range_subjects_page,
+      :assessor_verify_age_range_subjects_page,
       application_id:,
       assessment_id:,
       section_id: section_id("age_range_subjects"),
@@ -120,7 +120,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows viewing age_range_and_subjects once submitted" do
     given_there_are_selected_failure_reasons("age_range_subjects")
     when_i_visit_the(
-      :verify_age_range_subjects_page,
+      :assessor_verify_age_range_subjects_page,
       application_id:,
       assessment_id:,
       section_id: section_id("age_range_subjects"),
@@ -130,7 +130,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows passing the work history" do
     when_i_visit_the(
-      :check_work_history_page,
+      :assessor_check_work_history_page,
       application_id:,
       assessment_id:,
       section_id: section_id("work_history"),
@@ -144,7 +144,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows failing the work history" do
     when_i_visit_the(
-      :check_work_history_page,
+      :assessor_check_work_history_page,
       application_id:,
       assessment_id:,
       section_id: section_id("work_history"),
@@ -159,7 +159,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows viewing work history once submitted" do
     given_there_are_selected_failure_reasons("work_history")
     when_i_visit_the(
-      :check_work_history_page,
+      :assessor_check_work_history_page,
       application_id:,
       assessment_id:,
       section_id: section_id("work_history"),
@@ -169,7 +169,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows passing the professional standing" do
     when_i_visit_the(
-      :check_professional_standing_page,
+      :assessor_check_professional_standing_page,
       application_id:,
       assessment_id:,
       section_id: section_id("professional_standing"),
@@ -183,7 +183,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   it "allows failing the professional standing" do
     when_i_visit_the(
-      :check_professional_standing_page,
+      :assessor_check_professional_standing_page,
       application_id:,
       assessment_id:,
       section_id: section_id("professional_standing"),
@@ -199,7 +199,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     given_application_form_doesnt_need_work_history
 
     when_i_visit_the(
-      :check_professional_standing_page,
+      :assessor_check_professional_standing_page,
       application_id:,
       assessment_id:,
       section_id: section_id("professional_standing"),
@@ -216,7 +216,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows viewing professional standing once submitted" do
     given_there_are_selected_failure_reasons("professional_standing")
     when_i_visit_the(
-      :check_professional_standing_page,
+      :assessor_check_professional_standing_page,
       application_id:,
       assessment_id:,
       section_id: section_id("professional_standing"),
@@ -239,16 +239,22 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def then_i_see_the_personal_information
     expect(
-      check_personal_information_page.personal_information.given_names.text,
+      assessor_check_personal_information_page
+        .personal_information
+        .given_names
+        .text,
     ).to eq(application_form.given_names)
     expect(
-      check_personal_information_page.personal_information.family_name.text,
+      assessor_check_personal_information_page
+        .personal_information
+        .family_name
+        .text,
     ).to eq(application_form.family_name)
   end
 
   def when_i_choose_check_personal_information_yes
-    check_personal_information_page.form.yes_radio_item.choose
-    check_personal_information_page.form.continue_button.click
+    assessor_check_personal_information_page.form.yes_radio_item.choose
+    assessor_check_personal_information_page.form.continue_button.click
   end
 
   def personal_information_task_item
@@ -264,46 +270,46 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_personal_information_no
-    check_personal_information_page.form.no_radio_item.choose
-    check_personal_information_page
+    assessor_check_personal_information_page.form.no_radio_item.choose
+    assessor_check_personal_information_page
       .form
       .failure_reason_checkbox_items
       .first
       .checkbox
       .click
-    check_personal_information_page
+    assessor_check_personal_information_page
       .form
       .failure_reason_note_textareas
       .first.fill_in with: "Note."
-    check_personal_information_page.form.continue_button.click
+    assessor_check_personal_information_page.form.continue_button.click
   end
 
   def then_i_see_the_qualifications
     teaching_qualification =
       application_form.qualifications.find(&:is_teaching_qualification?)
-    expect(check_qualifications_page.teaching_qualification.title.text).to eq(
-      teaching_qualification.title,
-    )
+    expect(
+      assessor_check_qualifications_page.teaching_qualification.title.text,
+    ).to eq(teaching_qualification.title)
   end
 
   def when_i_choose_check_qualifications_yes
-    check_qualifications_page.form.yes_radio_item.choose
-    check_qualifications_page.form.continue_button.click
+    assessor_check_qualifications_page.form.yes_radio_item.choose
+    assessor_check_qualifications_page.form.continue_button.click
   end
 
   def when_i_choose_check_qualifications_no
-    check_qualifications_page.form.no_radio_item.choose
-    check_qualifications_page
+    assessor_check_qualifications_page.form.no_radio_item.choose
+    assessor_check_qualifications_page
       .form
       .failure_reason_checkbox_items
       .first
       .checkbox
       .click
-    check_qualifications_page
+    assessor_check_qualifications_page
       .form
       .failure_reason_note_textareas
       .first.fill_in with: "Note."
-    check_qualifications_page.form.continue_button.click
+    assessor_check_qualifications_page.form.continue_button.click
   end
 
   def and_i_see_check_qualifications_completed
@@ -313,45 +319,48 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def then_i_see_the_age_range_and_subjects
-    expect(verify_age_range_subjects_page.age_range.heading.text).to eq(
-      "Enter the age range you can teach",
-    )
-    expect(verify_age_range_subjects_page.subjects.heading.text).to eq(
+    expect(
+      assessor_verify_age_range_subjects_page.age_range.heading.text,
+    ).to eq("Enter the age range you can teach")
+    expect(assessor_verify_age_range_subjects_page.subjects.heading.text).to eq(
       "Enter the subjects you can teach",
     )
   end
 
   def when_i_fill_in_age_range
-    verify_age_range_subjects_page.age_range_form.minimum.fill_in with: "7"
-    verify_age_range_subjects_page.age_range_form.maximum.fill_in with: "11"
-    verify_age_range_subjects_page.age_range_form.note.fill_in with: "A note."
+    assessor_verify_age_range_subjects_page.age_range_form.minimum.fill_in with:
+      "7"
+    assessor_verify_age_range_subjects_page.age_range_form.maximum.fill_in with:
+      "11"
+    assessor_verify_age_range_subjects_page.age_range_form.note.fill_in with:
+      "A note."
   end
 
   def and_i_fill_in_subjects
-    verify_age_range_subjects_page.subjects_form.first_field.fill_in with:
+    assessor_verify_age_range_subjects_page.subjects_form.first_field.fill_in with:
       "Physics"
-    verify_age_range_subjects_page.subjects_form.note_textarea.fill_in with:
+    assessor_verify_age_range_subjects_page.subjects_form.note_textarea.fill_in with:
       "Another note."
   end
 
   def and_i_choose_verify_age_range_subjects_yes
-    verify_age_range_subjects_page.form.yes_radio_item.choose
-    verify_age_range_subjects_page.form.continue_button.click
+    assessor_verify_age_range_subjects_page.form.yes_radio_item.choose
+    assessor_verify_age_range_subjects_page.form.continue_button.click
   end
 
   def and_i_choose_verify_age_range_subjects_no
-    verify_age_range_subjects_page.form.no_radio_item.choose
-    verify_age_range_subjects_page
+    assessor_verify_age_range_subjects_page.form.no_radio_item.choose
+    assessor_verify_age_range_subjects_page
       .form
       .failure_reason_checkbox_items
       .first
       .checkbox
       .click
-    verify_age_range_subjects_page
+    assessor_verify_age_range_subjects_page
       .form
       .failure_reason_note_textareas
       .first.fill_in with: "Note."
-    verify_age_range_subjects_page.form.continue_button.click
+    assessor_verify_age_range_subjects_page.form.continue_button.click
   end
 
   def and_i_see_verify_age_range_subjects_completed
@@ -362,14 +371,14 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def then_i_see_the_work_history
     most_recent_role = application_form.work_histories.first
-    expect(check_work_history_page.most_recent_role.school_name.text).to eq(
-      most_recent_role.school_name,
-    )
+    expect(
+      assessor_check_work_history_page.most_recent_role.school_name.text,
+    ).to eq(most_recent_role.school_name)
   end
 
   def when_i_choose_check_work_history_yes
-    check_work_history_page.form.yes_radio_item.choose
-    check_work_history_page.form.continue_button.click
+    assessor_check_work_history_page.form.yes_radio_item.choose
+    assessor_check_work_history_page.form.continue_button.click
   end
 
   def and_i_see_check_work_history_completed
@@ -379,24 +388,24 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_work_history_no
-    check_work_history_page.form.no_radio_item.choose
-    check_work_history_page
+    assessor_check_work_history_page.form.no_radio_item.choose
+    assessor_check_work_history_page
       .form
       .failure_reason_checkbox_items
       .first
       .checkbox
       .click
-    check_work_history_page.school_checkbox_items.first.click
-    check_work_history_page
+    assessor_check_work_history_page.school_checkbox_items.first.click
+    assessor_check_work_history_page
       .form
       .failure_reason_note_textareas
       .first.fill_in with: "Note."
-    check_work_history_page.form.continue_button.click
+    assessor_check_work_history_page.form.continue_button.click
   end
 
   def then_i_see_the_professional_standing
     expect(
-      check_professional_standing_page
+      assessor_check_professional_standing_page
         .proof_of_recognition
         .registration_number
         .text,
@@ -404,22 +413,22 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_professional_standing_yes
-    check_professional_standing_page.form.yes_radio_item.choose
-    check_professional_standing_page.form.continue_button.click
+    assessor_check_professional_standing_page.form.yes_radio_item.choose
+    assessor_check_professional_standing_page.form.continue_button.click
   end
 
   alias_method :and_i_choose_check_professional_standing_yes,
                :when_i_choose_check_professional_standing_yes
 
   def when_i_choose_full_registration
-    check_professional_standing_page
+    assessor_check_professional_standing_page
       .scotland_full_registration_form
       .yes_radio_item
       .choose
   end
 
   def and_i_choose_induction_not_required
-    check_professional_standing_page
+    assessor_check_professional_standing_page
       .induction_required_form
       .no_radio_item
       .choose
@@ -432,18 +441,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_professional_standing_no
-    check_professional_standing_page.form.no_radio_item.choose
-    check_professional_standing_page
+    assessor_check_professional_standing_page.form.no_radio_item.choose
+    assessor_check_professional_standing_page
       .form
       .failure_reason_checkbox_items
       .first
       .checkbox
       .click
-    check_professional_standing_page
+    assessor_check_professional_standing_page
       .form
       .failure_reason_note_textareas
       .first.fill_in with: "Note."
-    check_professional_standing_page.form.continue_button.click
+    assessor_check_professional_standing_page.form.continue_button.click
   end
 
   def application_form

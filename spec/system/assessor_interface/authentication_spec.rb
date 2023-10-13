@@ -7,11 +7,11 @@ RSpec.describe "Assessor authentication", type: :system do
     given_the_service_is_open
     given_staff_exist
 
-    when_i_visit_the(:applications_page)
-    then_i_see_the(:login_page)
+    when_i_visit_the(:assessor_applications_page)
+    then_i_see_the(:assessor_login_page)
 
     when_i_login
-    then_i_see_the(:applications_page)
+    then_i_see_the(:assessor_applications_page)
 
     when_i_click_sign_out
     then_i_see_the(:staff_signed_out_page)
@@ -24,10 +24,10 @@ RSpec.describe "Assessor authentication", type: :system do
   end
 
   def when_i_login
-    login_page.submit(email: "staff@example.com", password: "password")
+    assessor_login_page.submit(email: "staff@example.com", password: "password")
   end
 
   def when_i_click_sign_out
-    applications_page.header.sign_out_link.click
+    assessor_applications_page.header.sign_out_link.click
   end
 end

@@ -23,12 +23,12 @@ RSpec.describe "Assessor change work history", type: :system do
     given_i_am_authorized_as_a_user(manager)
 
     when_i_visit_the(
-      :check_work_history_page,
+      :assessor_check_work_history_page,
       application_id:,
       assessment_id:,
       section_id: assessment_section.id,
     )
-    then_i_see_the(:check_work_history_page)
+    then_i_see_the(:assessor_check_work_history_page)
 
     when_i_click_on_change_from_assessment
     then_i_see_the(
@@ -68,7 +68,7 @@ RSpec.describe "Assessor change work history", type: :system do
   end
 
   def when_i_click_on_change_from_assessment
-    check_work_history_page
+    assessor_check_work_history_page
       .cards
       .first
       .find_row(key: "Reference contact’s full name")

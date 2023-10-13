@@ -31,17 +31,19 @@ RSpec.describe "Assessor view timeline events", type: :system do
   end
 
   def then_i_see_the_timeline
-    expect(timeline_page).to have_heading
-    expect(timeline_page.heading).to have_content("Application history")
+    expect(assessor_timeline_page).to have_heading
+    expect(assessor_timeline_page.heading).to have_content(
+      "Application history",
+    )
 
-    expect(timeline_page).to have_timeline_items
-    expect(timeline_page.timeline_items.first.title).to have_content(
+    expect(assessor_timeline_page).to have_timeline_items
+    expect(assessor_timeline_page.timeline_items.first.title).to have_content(
       "Note created",
     )
-    expect(timeline_page.timeline_items.second.title).to have_content(
+    expect(assessor_timeline_page.timeline_items.second.title).to have_content(
       "Status changed",
     )
-    expect(timeline_page.timeline_items.third.title).to have_content(
+    expect(assessor_timeline_page.timeline_items.third.title).to have_content(
       "Assessor assigned",
     )
   end

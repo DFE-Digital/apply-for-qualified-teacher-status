@@ -14,10 +14,10 @@ RSpec.describe "Teacher submitting", type: :system do
     then_i_see_the(:teacher_application_page)
 
     when_i_click_check_your_answers
-    then_i_see_the(:check_your_answers_page)
+    then_i_see_the(:teacher_check_your_answers_page)
 
     when_i_confirm_i_have_no_sanctions
-    then_i_see_the(:submitted_application_page)
+    then_i_see_the(:teacher_submitted_application_page)
     and_i_see_the_submitted_application_information
     and_i_receive_an_application_email
   end
@@ -36,20 +36,24 @@ RSpec.describe "Teacher submitting", type: :system do
       reverse_name: true,
     ).and_return([])
 
-    check_your_answers_page
+    teacher_check_your_answers_page
       .submission_declaration
       .form
       .confirm_no_sanctions
       .click
 
-    check_your_answers_page.submission_declaration.form.submit_button.click
+    teacher_check_your_answers_page
+      .submission_declaration
+      .form
+      .submit_button
+      .click
   end
 
   def and_i_see_the_submitted_application_information
-    expect(submitted_application_page.panel.title.text).to eq(
+    expect(teacher_submitted_application_page.panel.title.text).to eq(
       "Application complete",
     )
-    expect(submitted_application_page.panel.body.text).to eq(
+    expect(teacher_submitted_application_page.panel.body.text).to eq(
       "Your application reference number\n#{application_form.reference}",
     )
   end
