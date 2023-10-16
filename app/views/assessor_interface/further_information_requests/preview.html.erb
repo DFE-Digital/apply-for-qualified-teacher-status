@@ -15,15 +15,15 @@
     <section class="app-further-information-request-item">
       <h2 class="govuk-heading-s">Reason for request</h2>
       <% if items.size == 1 %>
-        <p class="govuk-body">We were unable to verify the details for <%= items.first.work_history.school_name %></p>
-      <% elsif items.size > 1 %>
+        <p class="govuk-body">We were unable to verify the details for <%= items.first.work_history.school_name %>.</p>
+      <% else %>
         <p class="govuk-body">We were unable to verify the details for:</p>
         <ul class="govuk-list govuk-list--bullet">
           <% items.each do |item| %>
             <li><%= item.work_history.school_name %></li>
           <% end %>
         </ul>
-      <%end%>
+      <% end %>
       <h2 class="govuk-heading-s">Note to applicant</h2>
 
       <%= govuk_inset_text do %>
@@ -33,7 +33,7 @@
   <% else %>
     <% items.each do |item| %>
       <section class="app-further-information-request-item">
-        <h3 class="govuk-heading-s"><%= t(item.failure_reason_key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %></h3>
+        <p class="govuk-body"><%= t(item.failure_reason_key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %></p>
 
         <h2 class="govuk-heading-s">Note to applicant</h2>
 
@@ -44,9 +44,6 @@
     <% end %>
   <% end %>  
 <% end %>
-
-<h2 class="govuk-heading-l">Send the further information request email</h2>
-<p class="govuk-body">On the next screen, you’ll see a preview of the email.</p>
 
 <div class="govuk-button-group">
   <%= govuk_button_link_to "Continue", new_assessor_interface_application_form_assessment_further_information_request_path(@application_form, @assessment) %>
