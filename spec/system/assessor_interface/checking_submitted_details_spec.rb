@@ -10,28 +10,28 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows passing the personal information" do
     when_i_visit_the(
       :assessor_check_personal_information_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("personal_information"),
     )
     then_i_see_the_personal_information
 
     when_i_choose_check_personal_information_yes
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_check_personal_information_completed
   end
 
   it "allows failing the personal information" do
     when_i_visit_the(
       :assessor_check_personal_information_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("personal_information"),
     )
     then_i_see_the_personal_information
 
     when_i_choose_check_personal_information_no
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_check_personal_information_completed
   end
 
@@ -39,7 +39,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     given_there_are_selected_failure_reasons("personal_information")
     when_i_visit_the(
       :assessor_check_personal_information_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("personal_information"),
     )
@@ -49,28 +49,28 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows passing the qualifications" do
     when_i_visit_the(
       :assessor_check_qualifications_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("qualifications"),
     )
     then_i_see_the_qualifications
 
     when_i_choose_check_qualifications_yes
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_check_qualifications_completed
   end
 
   it "allows failing the qualifications" do
     when_i_visit_the(
       :assessor_check_qualifications_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("qualifications"),
     )
     then_i_see_the_qualifications
 
     when_i_choose_check_qualifications_no
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_check_qualifications_completed
   end
 
@@ -78,7 +78,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     given_there_are_selected_failure_reasons("qualifications")
     when_i_visit_the(
       :assessor_check_qualifications_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("qualifications"),
     )
@@ -88,7 +88,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows passing the age range and subjects" do
     when_i_visit_the(
       :assessor_verify_age_range_subjects_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("age_range_subjects"),
     )
@@ -97,14 +97,14 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_fill_in_age_range
     and_i_fill_in_subjects
     and_i_choose_verify_age_range_subjects_yes
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_verify_age_range_subjects_completed
   end
 
   it "allows failing the age range and subjects" do
     when_i_visit_the(
       :assessor_verify_age_range_subjects_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("age_range_subjects"),
     )
@@ -113,7 +113,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_fill_in_age_range
     and_i_fill_in_subjects
     and_i_choose_verify_age_range_subjects_no
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_verify_age_range_subjects_completed
   end
 
@@ -121,7 +121,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     given_there_are_selected_failure_reasons("age_range_subjects")
     when_i_visit_the(
       :assessor_verify_age_range_subjects_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("age_range_subjects"),
     )
@@ -131,28 +131,28 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows passing the work history" do
     when_i_visit_the(
       :assessor_check_work_history_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("work_history"),
     )
     then_i_see_the_work_history
 
     when_i_choose_check_work_history_yes
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_check_work_history_completed
   end
 
   it "allows failing the work history" do
     when_i_visit_the(
       :assessor_check_work_history_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("work_history"),
     )
     then_i_see_the_work_history
 
     when_i_choose_check_work_history_no
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_check_work_history_completed
   end
 
@@ -160,7 +160,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     given_there_are_selected_failure_reasons("work_history")
     when_i_visit_the(
       :assessor_check_work_history_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("work_history"),
     )
@@ -170,28 +170,28 @@ RSpec.describe "Assessor check submitted details", type: :system do
   it "allows passing the professional standing" do
     when_i_visit_the(
       :assessor_check_professional_standing_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("professional_standing"),
     )
     then_i_see_the_professional_standing
 
     when_i_choose_check_professional_standing_yes
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_check_professional_standing_completed
   end
 
   it "allows failing the professional standing" do
     when_i_visit_the(
       :assessor_check_professional_standing_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("professional_standing"),
     )
     then_i_see_the_professional_standing
 
     when_i_choose_check_professional_standing_no
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_check_professional_standing_completed
   end
 
@@ -200,7 +200,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
     when_i_visit_the(
       :assessor_check_professional_standing_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("professional_standing"),
     )
@@ -209,7 +209,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     when_i_choose_full_registration
     and_i_choose_induction_not_required
     and_i_choose_check_professional_standing_yes
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_check_professional_standing_completed
   end
 
@@ -217,7 +217,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
     given_there_are_selected_failure_reasons("professional_standing")
     when_i_visit_the(
       :assessor_check_professional_standing_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("professional_standing"),
     )
@@ -509,9 +509,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
       end
   end
 
-  def application_id
-    application_form.id
-  end
+  delegate :id, to: :application_form, prefix: true
 
   def assessment_id
     application_form.assessment.id

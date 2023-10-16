@@ -10,7 +10,7 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
   end
 
   it "review complete" do
-    when_i_visit_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
     and_i_see_a_waiting_on_status
     and_i_click_awaiting_professional_standing
     then_i_see_the(
@@ -19,7 +19,7 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
     )
 
     when_i_fill_in_the_form
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_a_not_started_status
     and_the_teacher_receives_a_professional_standing_received_email
   end
@@ -77,9 +77,5 @@ RSpec.describe "Assessor awaiting professional standing", type: :system do
       )
   end
 
-  def application_form_id
-    application_form.id
-  end
-
-  alias_method :application_id, :application_form_id
+  delegate :id, to: :application_form, prefix: true
 end

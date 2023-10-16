@@ -7,12 +7,12 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     and_the_application_states_english_language_exemption_by_citizenship
     given_i_am_authorized_as_an_assessor_user
 
-    when_i_visit_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
     then_i_see_the_application
 
     when_i_visit_the(
       :assessor_check_english_language_proficiency_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("english_language_proficiency"),
     )
@@ -20,7 +20,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
 
     when_i_visit_the(
       :assessor_check_personal_information_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("personal_information"),
     )
@@ -44,12 +44,12 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     and_the_application_states_english_language_exemption_by_qualification
     given_i_am_authorized_as_an_assessor_user
 
-    when_i_visit_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
     then_i_see_the_application
 
     when_i_visit_the(
       :assessor_check_english_language_proficiency_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("english_language_proficiency"),
     )
@@ -57,7 +57,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
 
     when_i_visit_the(
       :assessor_check_qualifications_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("qualifications"),
     )
@@ -78,7 +78,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     given_i_am_authorized_as_an_assessor_user
     when_i_visit_the(
       :assessor_check_english_language_proficiency_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("english_language_proficiency"),
     )
@@ -97,7 +97,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
     given_i_am_authorized_as_an_assessor_user
     when_i_visit_the(
       :assessor_check_english_language_proficiency_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: section_id("english_language_proficiency"),
     )
@@ -320,9 +320,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
       end
   end
 
-  def application_id
-    application_form.id
-  end
+  delegate :id, to: :application_form, prefix: true
 
   def assessment_id
     application_form.assessment.id

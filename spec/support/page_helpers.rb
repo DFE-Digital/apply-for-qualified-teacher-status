@@ -87,6 +87,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ContactProfessionalStandingAssessmentRecommendationVerify.new
   end
 
+  def assessor_create_note_page
+    @assessor_create_note_page ||=
+      PageObjects::AssessorInterface::CreateNote.new
+  end
+
   def assessor_declare_assessment_recommendation_page
     @assessor_declare_assessment_recommendation_page ||=
       PageObjects::AssessorInterface::DeclareAssessmentRecommendation.new
@@ -199,11 +204,6 @@ module PageHelpers
   def assessor_review_verifications_page
     @assessor_review_verifications_page ||=
       PageObjects::AssessorInterface::ReviewVerifications.new
-  end
-
-  def assessor_qualified_for_subject_page
-    @assessor_qualified_for_subject_page ||=
-      PageObjects::AssessorInterface::CreateNote.new
   end
 
   def assessor_timeline_page

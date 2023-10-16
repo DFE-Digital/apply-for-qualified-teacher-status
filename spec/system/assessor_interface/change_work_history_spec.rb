@@ -24,7 +24,7 @@ RSpec.describe "Assessor change work history", type: :system do
 
     when_i_visit_the(
       :assessor_check_work_history_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       section_id: assessment_section.id,
     )
@@ -38,7 +38,7 @@ RSpec.describe "Assessor change work history", type: :system do
     )
 
     when_i_fill_in_the_contact_information
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
   end
 
   it "allows changing work history from verification" do
@@ -46,7 +46,7 @@ RSpec.describe "Assessor change work history", type: :system do
 
     when_i_visit_the(
       :assessor_edit_reference_request_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       id: reference_request.id,
     )
@@ -60,7 +60,7 @@ RSpec.describe "Assessor change work history", type: :system do
     )
 
     when_i_fill_in_the_contact_information
-    then_i_see_the(:assessor_application_page, application_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
   end
 
   def given_there_is_an_application_form
@@ -100,7 +100,6 @@ RSpec.describe "Assessor change work history", type: :system do
   end
 
   delegate :id, to: :application_form, prefix: true
-  alias_method :application_id, :application_form_id
 
   def assessment
     @assessment ||= create(:assessment, application_form:)

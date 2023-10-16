@@ -6,7 +6,7 @@ RSpec.describe "Assessor view application form", type: :system do
     given_there_is_an_application_form
     given_i_am_authorized_as_an_assessor_user
 
-    when_i_visit_the(:assessor_application_page, application_id:)
+    when_i_visit_the(:assessor_application_page, application_form_id:)
     then_i_see_the_application
     and_i_see_the_assessment_tasks
 
@@ -74,7 +74,5 @@ RSpec.describe "Assessor view application form", type: :system do
       end
   end
 
-  def application_id
-    application_form.id
-  end
+  delegate :id, to: :application_form, prefix: true
 end

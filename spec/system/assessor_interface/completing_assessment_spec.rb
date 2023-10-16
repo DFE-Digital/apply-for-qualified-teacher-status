@@ -29,7 +29,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_visit_the(
       :assessor_complete_assessment_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
@@ -37,7 +37,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     and_i_click_continue
     then_i_see_the(
       :assessor_declare_assessment_recommendation_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       recommendation: "award",
     )
@@ -61,7 +61,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     then_i_see_the(
       :assessor_preview_assessment_recommendation_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       recommendation: "award",
     )
@@ -69,13 +69,13 @@ RSpec.describe "Assessor completing assessment", type: :system do
     when_i_send_the_email
     then_i_see_the(
       :assessor_confirm_assessment_recommendation_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       recommendation: "award",
     )
 
     when_i_check_confirmation
-    then_i_see_the(:assessor_application_status_page, application_id:)
+    then_i_see_the(:assessor_application_status_page, application_form_id:)
 
     when_i_click_on_overview_button
     then_the_application_form_is_awarded
@@ -88,7 +88,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_visit_the(
       :assessor_complete_assessment_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
@@ -96,61 +96,61 @@ RSpec.describe "Assessor completing assessment", type: :system do
     and_i_click_continue
     then_i_see_the(
       :assessor_verify_qualifications_assessment_recommendation_verify_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
     when_i_select_yes_verify_qualifications
     then_i_see_the(
       :assessor_qualification_requests_assessment_recommendation_verify_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
     when_i_select_the_qualifications
     then_i_see_the(
       :assessor_email_consent_letters_requests_assessment_recommendation_verify_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
     when_i_click_continue_from_email_consent_letters
     then_i_see_the(
       :assessor_verify_professional_standing_assessment_recommendation_verify_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
     when_i_select_yes_verify_professional_standing
     then_i_see_the(
       :assessor_contact_professional_standing_assessment_recommendation_verify_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
     when_i_click_continue_from_contact_professional_standing
     then_i_see_the(
       :assessor_reference_requests_assessment_recommendation_verify_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
     when_i_select_the_work_histories
     then_i_see_the(
       :assessor_preview_referee_assessment_recommendation_award_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
     when_i_send_the_referee_email
     then_i_see_the(
       :assessor_preview_teacher_assessment_recommendation_award_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
     when_i_send_the_teacher_email
-    then_i_see_the(:assessor_application_status_page, application_id:)
+    then_i_see_the(:assessor_application_status_page, application_form_id:)
 
     when_i_click_on_overview_button
     then_the_application_form_is_waiting_on
@@ -163,7 +163,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_visit_the(
       :assessor_complete_assessment_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
     )
 
@@ -171,7 +171,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     and_i_click_continue
     then_i_see_the(
       :assessor_declare_assessment_recommendation_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       recommendation: "decline",
     )
@@ -180,7 +180,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     when_i_check_declaration
     then_i_see_the(
       :assessor_preview_assessment_recommendation_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       recommendation: "decline",
     )
@@ -188,13 +188,13 @@ RSpec.describe "Assessor completing assessment", type: :system do
     when_i_send_the_email
     then_i_see_the(
       :assessor_confirm_assessment_recommendation_page,
-      application_id:,
+      application_form_id:,
       assessment_id:,
       recommendation: "decline",
     )
 
     when_i_check_confirmation
-    then_i_see_the(:assessor_application_status_page, application_id:)
+    then_i_see_the(:assessor_application_status_page, application_form_id:)
 
     when_i_click_on_overview_button
     then_the_application_form_is_declined
@@ -414,9 +414,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
   end
 
-  def application_id
-    application_form.id
-  end
+  delegate :id, to: :application_form, prefix: true
 
   def assessment_id
     application_form.assessment.id

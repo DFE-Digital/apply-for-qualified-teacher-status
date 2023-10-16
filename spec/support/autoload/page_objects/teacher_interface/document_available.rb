@@ -3,7 +3,7 @@
 module PageObjects
   module TeacherInterface
     class DocumentAvailable < SitePrism::Page
-      set_url "/teacher/application/documents/{application_id}/edit"
+      set_url "/teacher/application/documents/{application_form_id}/edit"
 
       element :heading, "h1"
 
