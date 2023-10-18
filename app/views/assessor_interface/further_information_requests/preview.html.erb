@@ -6,7 +6,7 @@
 <% @further_information_request.items.group_by(&:failure_reason_key).each do |failure_reason_key, items| %>
   <% if failure_reason_key == "school_details_cannot_be_verified" %>
     <section class="app-further-information-request-item">
-      <h2 class="govuk-heading-l">Reason for request</h2>
+      <h2 class="govuk-heading-m">Reason for request</h2>
       <% if items.size == 1 %>
         <p class="govuk-body">We were unable to verify the details for <%= items.first.work_history.school_name %>.</p>
       <% else %>
@@ -17,7 +17,7 @@
           <% end %>
         </ul>
       <% end %>
-      <h2 class="govuk-heading-l">Note to applicant</h2>
+      <h2 class="govuk-heading-m">Note to applicant</h2>
 
       <%= govuk_inset_text do %>
         <%= simple_format items.first.failure_reason_assessor_feedback %>
@@ -28,7 +28,7 @@
       <section class="app-further-information-request-item">
         <p class="govuk-body"><%= t(item.failure_reason_key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %></p>
 
-        <h2 class="govuk-heading-s">Note to applicant</h2>
+        <h2 class="govuk-heading-m">Note to applicant</h2>
 
         <%= govuk_inset_text do %>
           <%= simple_format item.failure_reason_assessor_feedback %>
