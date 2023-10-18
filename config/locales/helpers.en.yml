@@ -8,7 +8,7 @@ en:
       assessor_interface_assessment_section_form:
         selected_failure_reasons: Select all options that are relevant to you.
         failure_reason_notes:
-          text: This FI reason gives the applicant a free text box. Use this space to give them clear instructions on what they need to provide.
+          text: This FI allows the applicant to send us a typed response. Use this space to give them clear instructions on what they need to provide.
           document: This FI reason asks the applicant to upload a file. Use this space to give them clear instructions on what they need to provide.
           decline: As this reason triggers a decline, you do not need to add a note, but you can use the space below to add anything you feel might be helpful, if you want to.
       assessor_interface_create_note_form:
@@ -278,7 +278,7 @@ en:
       assessor_interface_assessment_section_form:
         selected_failure_reasons: What are the reasons for your recommendation?
         scotland_full_registration: Does the applicant have or are they eligible for full registration?
-        school_details_cannot_be_verified_work_history_checked: Choose the schools that need reference details to be amended
+        school_details_cannot_be_verified_work_history_checked: Select the school that we were unable to verify (there may be more than one)
       assessor_interface_filter_form:
         action_required_by: Action required by
         assessor_ids: Assessor name

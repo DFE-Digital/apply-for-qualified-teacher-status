@@ -75,9 +75,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
 
   def and_i_see_the_further_information_request_items
     expect(assessor_request_further_information_page.items.count).to eq(1)
-    expect(
-      assessor_request_further_information_page.items.first.heading.text,
-    ).to eq(
+    expect(assessor_request_further_information_page).to have_content(
       "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
     )
     expect(

@@ -159,9 +159,7 @@ RSpec.describe "Teacher further information", type: :system do
     expect(rows.first.key.text).to eq(
       "Tell us more about the subjects you can teach",
     )
-    expect(rows.second.key.text).to eq(
-      "Add your work history contact’s details",
-    )
+    expect(rows.second.key.text).to eq("Add work history details")
 
     expect(rows.last.key.text).to eq("Upload your identity document")
   end
@@ -233,7 +231,7 @@ RSpec.describe "Teacher further information", type: :system do
 
   def work_history_task_list_item
     teacher_further_information_requested_page.task_list.find_item(
-      "Add your work history contact’s details",
+      "Add work history details",
     )
   end
 
