@@ -39,11 +39,11 @@ RSpec.describe "Assessor withdraw application", type: :system do
   end
 
   def and_i_see_the_withdraw_link
-    expect(assessor_application_page.management_tasks).to be_visible
+    expect(assessor_application_page.task_list).to have_content("Withdraw")
   end
 
   def when_i_click_on_withdraw
-    assessor_application_page.management_tasks.links.first.click
+    assessor_application_page.task_list.click_on("Withdraw")
   end
 
   def when_i_confirm_the_withdrawal

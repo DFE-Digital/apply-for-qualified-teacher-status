@@ -24,6 +24,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       assessment_task_list_section,
       verification_task_list_section,
       review_task_list_section,
+      management_task_list_section,
     ].compact
   end
 
@@ -89,6 +90,18 @@ class AssessorInterface::ApplicationFormsShowViewObject
            :reference_requests,
            to: :assessment
   delegate :canonical_email, to: :teacher
+
+  def management_task_list_section
+    return nil if management_tasks.blank?
+
+    {
+      title: "Management",
+      items:
+        management_tasks.map do |task|
+          { name: task[:title], link: task[:path] }
+        end,
+    }
+  end
 
   def pre_assessment_task_list_section
     {
