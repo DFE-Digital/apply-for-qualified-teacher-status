@@ -33,7 +33,7 @@
                           label: { text: t(".declaration") } %>
   <% end %>
 
-  <%= f.govuk_submit t(".button"), prevent_double_click: false do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <%= f.govuk_submit t(".button") do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
   <% end %>
 <% end %>
