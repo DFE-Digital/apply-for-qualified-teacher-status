@@ -6,13 +6,17 @@
 
   <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
-  <p class="govuk-body">If you choose to verify this applicant’s qualifications, you’ll need to submit 1 or more verification requests to Ecctis.</p>
+  <p class="govuk-body">
+    If you choose to verify this applicant’s qualifications, you’ll need to submit 1 or more verification requests to Ecctis.
+  </p>
 
-  <p class="govuk-body">On the next screen you’ll see a list of the applicant’s qualifications. You can select which ones you want to verify.</p>
+  <p class="govuk-body">
+    On the next screen you’ll see a list of the applicant’s qualifications. You can select which ones you want to verify.
+  </p>
 
   <%= f.govuk_collection_radio_buttons :verify_qualifications, %i[true false], :itself, legend: nil %>
 
   <%= f.govuk_submit do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
   <% end %>
 <% end %>

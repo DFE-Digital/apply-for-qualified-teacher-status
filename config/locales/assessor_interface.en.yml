@@ -80,17 +80,21 @@ en:
         legend: Decline this QTS application?
         hint: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
 
+    assessment_recommendation_review:
+      edit:
+        heading: Send application for review
+
     assessment_recommendation_verify:
       edit_qualification_requests:
         heading: Verify qualifications
       edit_verify_qualifications:
         heading: Do you want to verify qualifications?
-      email_consent_letters:
-        heading: Email consent letters
       edit_reference_requests:
         heading: Request work history references
       edit_professional_standing:
         heading: Do you want to verify LoPS?
+      email_consent_letters:
+        heading: Email consent letters
       preview_referee:
         heading: Check and send the reference request email
       preview_teacher:

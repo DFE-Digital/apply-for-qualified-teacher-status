@@ -3,7 +3,9 @@
 
 <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
-<p class="govuk-body">This screen shows the email that the applicant will see, to tell them you’ve contacted the references they provided.</p>
+<p class="govuk-body">
+  This screen shows the email that the applicant will see, to tell them you’ve contacted the references they provided.
+</p>
 
 <%= render(PreviewMailer::Component.new(
   mailer_class: TeacherMailer,
