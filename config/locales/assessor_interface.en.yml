@@ -41,26 +41,23 @@ en:
           can_verify: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.
 
+    assessment_recommendation:
+      back_instruction: If you need to check something, use the ‘Back’ button.
+
     assessment_recommendation_award:
       edit:
         heading: You’re about to award QTS
-        instruction: Read the declaration and if you’re happy to award QTS, select ‘Accept and award QTS’.
-        declaration: I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status.
-        button: Accept and award QTS
         important_notes:
           invalid_references: This application has one or more invalid references.
           induction_required: This applicant will need to do a statutory induction period.
       age_range_subjects:
         heading: Confirm age range and subjects
-        cancel: Cancel
       edit_age_range_subjects:
         heading: Edit age range and subjects
-        cancel: Cancel
       preview:
         heading: Check the email
         subheading: This screen shows how the email to the applicant will look.
         description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
-        cancel: Cancel
       edit_confirm:
         legend: Award this QTS application?
         hint: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
@@ -68,9 +65,6 @@ en:
     assessment_recommendation_decline:
       edit:
         heading: You’re about to decline QTS
-        instruction: If you’re happy to proceed, read the declaration and if you want to decline, select ‘Continue’.
-        declaration: I’ve reviewed this QTS application and the applicant does not meet all the requirements. I understand that by continuing, this application for qualified teacher status will be declined.
-        button: Accept and decline QTS
         assessment_section:
           personal_information: Personal information
           qualifications: Qualifications
@@ -82,7 +76,6 @@ en:
         heading: Check the email
         subheading: This screen shows how the email to the applicant will look.
         description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
-        cancel: Cancel
       edit_confirm:
         legend: Decline this QTS application?
         hint: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.
@@ -94,20 +87,14 @@ en:
         heading: Do you want to verify qualifications?
       email_consent_letters:
         heading: Email consent letters
-        continue: Continue
-        cancel: Cancel
       edit_reference_requests:
         heading: Request work history references
       edit_professional_standing:
         heading: Do you want to verify LoPS?
       preview_referee:
         heading: Check and send the reference request email
-        button: Continue
-        cancel: Cancel
       preview_teacher:
         heading: Check and send the email to applicant
-        button: Send emails
-        cancel: Cancel
 
     assessment_sections:
       show:

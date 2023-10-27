@@ -22,6 +22,6 @@
 )) %>
 
 <div class="govuk-button-group">
-  <%= govuk_button_link_to t(".button"), [:preview_teacher, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] %>
-  <%= govuk_link_to t(".cancel"), assessor_interface_application_form_path(@application_form) %>
+  <%= govuk_button_link_to "Continue", [:preview_teacher, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] %>
+  <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
 </div>

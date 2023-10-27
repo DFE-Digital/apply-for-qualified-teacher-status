@@ -18,6 +18,6 @@
 <p class="govuk-body">The task list will show a ‘Verify qualifications’ task. The status will remain ‘Waiting on’ until you receive responses from Ecctis.</p>
 
 <div class="govuk-button-group">
-  <%= govuk_button_link_to t(".continue"), [:professional_standing, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] %>
-  <%= govuk_link_to t(".cancel"), assessor_interface_application_form_path(@application_form) %>
+  <%= govuk_button_link_to "Continue", [:professional_standing, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] %>
+  <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
 </div>

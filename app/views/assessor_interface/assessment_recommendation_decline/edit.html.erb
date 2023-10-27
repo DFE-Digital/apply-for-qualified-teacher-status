@@ -63,18 +63,18 @@
 
   <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 
-  <p class="govuk-body"><%= t(".instruction") %></p>
-  <p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
+  <p class="govuk-body">If you’re happy to proceed, read the declaration and if you want to decline, select ‘Continue’.</p>
+  <p class="govuk-body"><%= t("assessor_interface.assessment_recommendation.back_instruction") %></p>
 
   <%= f.govuk_check_boxes_fieldset :declaration, multiple: false, small: true do %>
     <%= f.govuk_check_box :declaration,
                           true,
                           false,
                           link_errors: true,
-                          label: { text: t(".declaration") } %>
+                          label: { text: "I’ve reviewed this QTS application and the applicant does not meet all the requirements. I understand that by continuing, this application for qualified teacher status will be declined." } %>
   <% end %>
 
-  <%= f.govuk_submit t(".button") do %>
+  <%= f.govuk_submit "Accept and decline QTS" do %>
     <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
   <% end %>
 <% end %>

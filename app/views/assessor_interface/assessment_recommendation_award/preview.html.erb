@@ -13,5 +13,5 @@
 
 <div class="govuk-button-group">
   <%= govuk_button_link_to "Continue", [:confirm, :assessor_interface, @application_form, @assessment, :assessment_recommendation_award] %>
-  <%= govuk_link_to t(".cancel"), assessor_interface_application_form_path(@application_form) %>
+  <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
 </div>
