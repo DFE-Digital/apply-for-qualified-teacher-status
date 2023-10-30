@@ -117,7 +117,7 @@ RSpec.describe "Assessor verifying references", type: :system do
   def then_i_see_the_reference_request_status_is_accepted
     expect(
       assessor_reference_requests_page.task_list.status_tags.first.text,
-    ).to eq("ACCEPTED")
+    ).to eq("COMPLETED")
   end
 
   def when_i_verify_that_all_references_are_accepted

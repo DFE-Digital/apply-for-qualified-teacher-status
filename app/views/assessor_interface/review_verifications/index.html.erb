@@ -3,6 +3,10 @@
 
 <h1 class="govuk-heading-xl">Review verifications</h1>
 
+<p class="govuk-body">
+  The following verification tasks ahve been flagged for review:
+</p>
+
 <%= govuk_table do |table|
   if @professional_standing_request.present?
     table.with_caption(text: "LoPS")
