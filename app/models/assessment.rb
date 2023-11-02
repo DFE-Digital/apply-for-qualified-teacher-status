@@ -115,6 +115,10 @@ class Assessment < ApplicationRecord
       any_further_information_request_failed?
     elsif review?
       professional_standing_request_review_failed?
+    elsif verify?
+      enough_reference_requests_reviewed? &&
+        all_qualification_requests_reviewed? &&
+        professional_standing_request_verified? && !can_review? && !can_award?
     else
       false
     end
@@ -253,6 +257,14 @@ class Assessment < ApplicationRecord
   def professional_standing_request_review_passed?
     if professional_standing_request_part_of_verification?
       professional_standing_request.review_passed?
+    else
+      true
+    end
+  end
+
+  def professional_standing_request_verified?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.verified?
     else
       true
     end
