@@ -15,13 +15,15 @@
   <li> send the email to the relevant teaching authority</li>
 </ul>
 
-<p class="govuk-body">
-  Do you want to mark this task as completed or come back after you have sent the email from Zendesk?
+<p class="govuk-body govuk-!-padding-top-6">
+  Do you want to mark this task as completed and come back after you have sent the email from Zendesk?
 </p>
 
 <%= form_with model: @form, url: [:request, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
-  <%= f.govuk_radio_button :passed, :true, label: { text: "Yes, mark as completed" }, link_errors: true %>
-  <%= f.govuk_radio_button :passed, :false, label: { text: "No, come back later" } %>
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: nil do %>
+    <%= f.govuk_radio_button :passed, :true, label: { text: "Yes, mark as completed" }, link_errors: true %>
+    <%= f.govuk_radio_button :passed, :false, label: { text: "No, come back later" } %>
+  <% end %>
 
   <%= f.govuk_submit do %>
     <%= govuk_link_to "Cancel", [:assessor_interface, @application_form, @assessment, :professional_standing_request] %>
