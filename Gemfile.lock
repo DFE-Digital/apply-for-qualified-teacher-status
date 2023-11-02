@@ -164,7 +164,7 @@ GEM
     devise-passwordless (1.0.1)
       devise
       globalid
-    devise_invitable (2.0.8)
+    devise_invitable (2.0.9)
       actionmailer (>= 5.0)
       devise (>= 4.6)
     diff-lcs (1.5.0)
@@ -312,7 +312,7 @@ GEM
     mutex_m (0.1.2)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.4.2)
+    net-imap (0.4.3)
       date
       net-protocol
     net-pop (0.1.2)
@@ -372,7 +372,7 @@ GEM
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     raabro (1.4.0)
-    racc (1.7.1)
+    racc (1.7.2)
     rack (2.2.8)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
@@ -415,7 +415,7 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
-    rake (13.0.6)
+    rake (13.1.0)
     rbs (3.2.2)
     rdoc (6.5.0)
       psych (>= 4.0.0)
