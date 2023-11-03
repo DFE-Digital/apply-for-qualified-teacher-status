@@ -7,17 +7,20 @@
   The following verification tasks have been flagged for review:
 </p>
 
-<%= govuk_table do |table|
-  if @professional_standing_request.present?
-    table.with_caption(text: "LoPS")
-    table.with_body do |body|
-      body.with_row do |row|
-        row.with_cell { govuk_link_to region_certificate_name(@application_form.region), [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request] }
-        row.with_cell { render(StatusTag::Component.new(@professional_standing_request.review_status)) }
-      end
-    end
-  end
-end %>
+<%= render(TaskList::Component.new(
+  [
+    {
+      title: "LoPS",
+      items: [
+        {
+          name: @teaching_authority_name,
+          link: [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request],
+          status: @professional_standing_request.review_status,
+        }
+      ],
+    }
+  ]
+)) %>
 
 <div class="govuk-!-padding-top-3">
   <%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>

@@ -11,6 +11,14 @@ module AssessorInterface
       @professional_standing_request =
         assessment.professional_standing_request if assessment.professional_standing_request.verify_failed?
 
+      @region = @assessment.application_form.region
+
+      if @region.teaching_authority_name.present?
+        @teaching_authority_name = @region.teaching_authority_name
+      else
+        @teaching_authority_name = "Contact relevant competent authority"
+      end      
+
       render layout: "full_from_desktop"
     end
 
