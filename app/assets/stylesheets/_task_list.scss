@@ -27,9 +27,6 @@
   @include govuk-responsive-margin(9, "bottom");
   list-style: none;
   padding-left: 0;
-  @include govuk-media-query($from: tablet) {
-    padding-left: govuk-spacing(0);
-  }
 }
 
 .app-task-list__items {
