@@ -96,7 +96,6 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   def when_i_click_on_lops
     find(".govuk-link").click
   end
-  
 
   def when_i_fill_in_the_review_lops_form
     form = assessor_review_professional_standing_request_page.form
@@ -115,7 +114,8 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   end
 
   def and_i_see_the_lops_accepted
-    status_text = find('strong.govuk-tag.govuk-tag--green.app-task-list__tag').text
+    status_text =
+      find("strong.govuk-tag.govuk-tag--green.app-task-list__tag").text
     expect(status_text).to eq("ACCEPTED")
   end
 
