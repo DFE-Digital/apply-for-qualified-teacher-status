@@ -13,11 +13,11 @@ module AssessorInterface
 
       @region = @assessment.application_form.region
 
-      if @region.teaching_authority_name.present?
-        @teaching_authority_name = @region.teaching_authority_name
-      else
-        @teaching_authority_name = "Contact relevant competent authority"
-      end      
+      @teaching_authority_name =
+        (
+          @region.teaching_authority_name.presence ||
+            "Contact relevant competent authority"
+        )
 
       render layout: "full_from_desktop"
     end
