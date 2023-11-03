@@ -6,6 +6,8 @@ module AssessorInterface
 
     def show
       authorize [:assessor_interface, professional_standing_request]
+
+      render layout: "full_from_desktop"
     end
 
     def edit_locate
