@@ -9,7 +9,7 @@
         <%= section[:title] %>
       </h2>
 
-      <ul class="app-task-list__items">
+      <ul class="<%= section[:title].present? ? 'app-task-list__items' : 'app-task-list__items-no-indentation' %>">
         <% section[:items].each do |item| %>
           <li class="app-task-list__item">
             <% status_id = "#{section[:number]}-#{section[:key]}-#{item[:key]}-status" %>
