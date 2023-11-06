@@ -14,7 +14,7 @@
         title: "LoPS",
         items: [
           {
-            name: region_teaching_authority_name(@application_form.region),
+            name: (region_teaching_authority_name(@application_form.region) == "teaching authority") ? "Contact relevant competent authority" : region_teaching_authority_name(@application_form.region),
             link: [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request],
             status: @professional_standing_request.review_status,
           }

@@ -111,13 +111,19 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   end
 
   def and_i_see_the_lops_not_started
-    status_tag = assessor_application_page.task_list.not_started_status
-    expect(status_tag.text).to eq("NOT STARTED")
+    item =
+      assessor_review_verifications_page.task_list.find_item(
+        "Contact relevant competent authority",
+      )
+    expect(item.status_tag.text).to eq("NOT STARTED")
   end
 
   def and_i_see_the_lops_accepted
-    status_tag = assessor_application_page.task_list.accepted_status
-    expect(status_tag.text).to eq("ACCEPTED")
+    item =
+      assessor_review_verifications_page.task_list.find_item(
+        "Contact relevant competent authority",
+      )
+    expect(item.status_tag.text).to eq("ACCEPTED")
   end
 
   def application_form
