@@ -2,7 +2,6 @@
 
 module AssessorInterface
   class ReviewVerificationsController < BaseController
-    include RegionHelper
     before_action :authorize_assessor
 
     def index
