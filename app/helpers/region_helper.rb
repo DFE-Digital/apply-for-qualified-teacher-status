@@ -11,8 +11,8 @@ module RegionHelper
     "#{certificate.indefinite_article} #{tag.span(certificate, lang: region.country.code)}".html_safe
   end
 
-  def region_teaching_authority_name(region, default = nil)
-    region.teaching_authority_name.presence || default || "teaching authority"
+  def region_teaching_authority_name(region)
+    region.teaching_authority_name.presence || "teaching authority"
   end
 
   def region_teaching_authority_name_phrase(region)

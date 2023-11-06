@@ -14,7 +14,7 @@
         title: "LoPS",
         items: [
           {
-            name: @teaching_authority_name,
+            name: region_teaching_authority_name(@application_form.region),
             link: [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request],
             status: @professional_standing_request.review_status,
           }
