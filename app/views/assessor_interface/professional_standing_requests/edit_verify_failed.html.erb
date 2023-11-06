@@ -1,13 +1,14 @@
 <% content_for :page_title, "#{"Error: " if @form.errors.any?}Record LoPS response" %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
+<%= form_with model: @form, url: [:verify_failed, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl">Record LoPS response</h1>
 
-  <%= f.govuk_collection_radio_buttons :passed, %i[true false], :itself,
-                                       legend: { text: "Does the response confirm that the LoPS is valid?" } %>
+  <p class="govuk-body">You have opted to send this LoPS for review.</p>
+
+  <%= f.govuk_text_area :note, label: { text: "Internal note: briefly explain to the assessor why you are sending this LoPS for review." } %>
 
   <%= f.govuk_submit do %>
     <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>

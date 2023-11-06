@@ -225,6 +225,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ProfessionalStandingAssessmentRecommendationVerify.new
   end
 
+  def assessor_verify_failed_professional_standing_request_page
+    @assessor_verify_failed_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::VerifyFailedProfessionalStandingRequest.new
+  end
+
   def assessor_verify_professional_standing_request_page
     @assessor_verify_professional_standing_request_page ||=
       PageObjects::AssessorInterface::VerifyProfessionalStandingRequest.new

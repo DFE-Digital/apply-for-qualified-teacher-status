@@ -2,11 +2,13 @@
 <% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
 
 <% if @view_object.assessment.review? %>
-  <%= govuk_panel(title_text: "Application sent for review") %>
+  <h1 class="govuk-heading-xl">Application sent for review</h1>
 <% elsif @view_object.application_form.waiting_on? %>
-  <%= govuk_panel(title_text: "Reference requests sent successfully") %>
+  <h1 class="govuk-heading-xl">Reference requests sent successfully</h1>
+<% elsif @view_object.application_form.awarded? %>
+  <%= govuk_panel(text: "QTS application #{@view_object.application_form.reference} has been awarded") %>
 <% else %>
-  <%= govuk_panel(title_text: "QTS application #{@view_object.application_form.reference} has been #{@view_object.status.downcase}") %>
+  <h1 class="govuk-heading-xl">QTS application <%= @view_object.application_form.reference %> has been <%= @view_object.status.downcase %></h1>
 <% end %>
 
 <% if @view_object.assessment.review? %>

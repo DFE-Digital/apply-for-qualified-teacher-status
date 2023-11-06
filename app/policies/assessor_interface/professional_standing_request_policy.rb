@@ -23,6 +23,12 @@ class AssessorInterface::ProfessionalStandingRequestPolicy < ApplicationPolicy
 
   alias_method :edit_verify?, :update_verify?
 
+  def update_verify_failed?
+    user.verify_permission
+  end
+
+  alias_method :edit_verify_failed?, :update_verify_failed?
+
   def update_review?
     user.assess_permission
   end

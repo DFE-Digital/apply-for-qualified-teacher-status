@@ -397,12 +397,14 @@ en:
               inclusion: Select whether you are satisfied with the request
             note:
               blank: Enter why you are not satisfied
-        assessor_interface/requestable_verify_form:
+        assessor_interface/requestable_verify_failed_form:
+          attributes:
+            note:
+              blank: Enter why you are not satisfied
+        assessor_interface/requestable_verify_passed_form:
           attributes:
             passed:
               inclusion: Select whether you are satisfied with the request
-            note:
-              blank: Enter why you are not satisfied
         assessor_interface/select_qualifications_form:
           attributes:
             qualification_ids:
