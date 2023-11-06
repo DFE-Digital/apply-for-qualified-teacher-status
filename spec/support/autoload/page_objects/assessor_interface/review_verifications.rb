@@ -11,6 +11,8 @@ module PageObjects
         element :tag, ".govuk-tag"
       end
 
+      section :task_list, TaskList, ".app-task-list"
+
       element :back_to_overview_button, ".govuk-button"
     end
   end

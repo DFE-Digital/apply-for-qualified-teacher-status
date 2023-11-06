@@ -94,7 +94,9 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   end
 
   def when_i_click_on_lops
-    find(".govuk-link").click
+    assessor_application_page.task_list.click_item(
+      "Contact relevant competent authority",
+    )
   end
 
   def when_i_fill_in_the_review_lops_form
@@ -109,14 +111,13 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   end
 
   def and_i_see_the_lops_not_started
-    status_text = find(".govuk-tag.govuk-tag--grey.app-task-list__tag").text
-    expect(status_text).to eq("NOT STARTED")
+    status_tag = assessor_application_page.task_list.not_started_status
+    expect(status_tag.text).to eq("NOT STARTED")
   end
 
   def and_i_see_the_lops_accepted
-    status_text =
-      find("strong.govuk-tag.govuk-tag--green.app-task-list__tag").text
-    expect(status_text).to eq("ACCEPTED")
+    status_tag = assessor_application_page.task_list.accepted_status
+    expect(status_tag.text).to eq("ACCEPTED")
   end
 
   def application_form
