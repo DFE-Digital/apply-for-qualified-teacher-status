@@ -4,15 +4,15 @@ module AssessorInterface
   class ProfessionalStandingRequestsController < BaseController
     before_action :set_variables
 
-    def show
+    before_action do
       authorize [:assessor_interface, professional_standing_request]
+    end
 
+    def show
       render layout: "full_from_desktop"
     end
 
     def edit_locate
-      authorize [:assessor_interface, professional_standing_request]
-
       @form =
         ProfessionalStandingRequestLocationForm.new(
           requestable:,
@@ -24,8 +24,6 @@ module AssessorInterface
     end
 
     def update_locate
-      authorize [:assessor_interface, professional_standing_request]
-
       @form =
         ProfessionalStandingRequestLocationForm.new(
           location_form_params.merge(requestable:, user: current_staff),
@@ -39,14 +37,10 @@ module AssessorInterface
     end
 
     def edit_request
-      authorize [:assessor_interface, professional_standing_request]
-
       @form = RequestableRequestForm.new(requestable:, user: current_staff)
     end
 
     def update_request
-      authorize [:assessor_interface, professional_standing_request]
-
       @form =
         RequestableRequestForm.new(
           request_form_params.merge(user: current_staff, requestable:),
@@ -63,8 +57,6 @@ module AssessorInterface
     end
 
     def edit_review
-      authorize [:assessor_interface, professional_standing_request]
-
       @form =
         RequestableReviewForm.new(
           requestable:,
@@ -75,8 +67,6 @@ module AssessorInterface
     end
 
     def update_review
-      authorize [:assessor_interface, professional_standing_request]
-
       @form =
         RequestableReviewForm.new(
           review_form_params.merge(requestable:, user: current_staff),
@@ -95,23 +85,55 @@ module AssessorInterface
     end
 
     def edit_verify
-      authorize [:assessor_interface, professional_standing_request]
-
       @form =
-        RequestableVerifyForm.new(
+        RequestableVerifyPassedForm.new(
           requestable:,
           user: current_staff,
           passed: requestable.verify_passed,
-          note: requestable.verify_note,
         )
     end
 
     def update_verify
-      authorize [:assessor_interface, professional_standing_request]
-
       @form =
-        RequestableVerifyForm.new(
-          verify_form_params.merge(requestable:, user: current_staff),
+        RequestableVerifyPassedForm.new(
+          verify_passed_form_params.merge(requestable:, user: current_staff),
+        )
+
+      if @form.save
+        if @form.passed
+          redirect_to [
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :professional_standing_request,
+                      ]
+        else
+          redirect_to [
+                        :verify_failed,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :professional_standing_request,
+                      ]
+        end
+      else
+        render :edit_verify, status: :unprocessable_entity
+      end
+    end
+
+    def edit_verify_failed
+      @form =
+        RequestableVerifyFailedForm.new(
+          requestable:,
+          user: current_staff,
+          note: requestable.verify_note,
+        )
+    end
+
+    def update_verify_failed
+      @form =
+        RequestableVerifyFailedForm.new(
+          verify_failed_form_params.merge(requestable:, user: current_staff),
         )
 
       if @form.save
@@ -122,7 +144,7 @@ module AssessorInterface
                       :professional_standing_request,
                     ]
       else
-        render :edit_verify, status: :unprocessable_entity
+        render :edit_verify_failed, status: :unprocessable_entity
       end
     end
 
@@ -153,9 +175,14 @@ module AssessorInterface
       )
     end
 
-    def verify_form_params
-      params.require(:assessor_interface_requestable_verify_form).permit(
+    def verify_passed_form_params
+      params.require(:assessor_interface_requestable_verify_passed_form).permit(
         :passed,
+      )
+    end
+
+    def verify_failed_form_params
+      params.require(:assessor_interface_requestable_verify_failed_form).permit(
         :note,
       )
     end

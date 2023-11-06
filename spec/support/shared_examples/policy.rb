@@ -16,7 +16,7 @@ RSpec.shared_examples "a policy" do
   end
 end
 
-RSpec.shared_examples "a policy method requiring the award decline permission" do
+RSpec.shared_examples "a policy method requiring the assess permission" do
   context "without permission" do
     let(:user) { create(:staff) }
     it { is_expected.to be false }

@@ -13,7 +13,17 @@ module PageObjects
         element :no_radio_item,
                 "#assessor-interface-requestable-request-form-passed-false-field",
                 visible: false
-        element :continue_button, "button"
+        element :submit_button, ".govuk-button"
+      end
+
+      def submit_yes
+        form.yes_radio_item.click
+        form.submit_button.click
+      end
+
+      def submit_no
+        form.no_radio_item.click
+        form.submit_button.click
       end
     end
   end

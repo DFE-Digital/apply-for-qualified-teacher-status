@@ -220,6 +220,11 @@ module PageHelpers
       PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
   end
 
+  def assessor_verify_failed_professional_standing_request_page
+    @assessor_verify_failed_professional_standing_request_page ||=
+      PageObjects::AssessorInterface::VerifyFailedProfessionalStandingRequest.new
+  end
+
   def assessor_verify_professional_standing_assessment_recommendation_verify_page
     @assessor_verify_professional_standing_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::VerifyProfessionalStandingAssessmentRecommendationVerify.new

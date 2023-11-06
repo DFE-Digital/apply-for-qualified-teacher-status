@@ -121,6 +121,10 @@ Rails.application.routes.draw do
             post "review", to: "professional_standing_requests#update_review"
             get "verify", to: "professional_standing_requests#edit_verify"
             post "verify", to: "professional_standing_requests#update_verify"
+            get "verify-failed",
+                to: "professional_standing_requests#edit_verify_failed"
+            post "verify-failed",
+                 to: "professional_standing_requests#update_verify_failed"
           end
         end
 

@@ -13,8 +13,8 @@ module PageObjects
         task_list.find_item("Request LoPS verification")
       end
 
-      def record_lops_verification_task
-        task_list.find_item("Record LoPS verification")
+      def record_lops_response_task
+        task_list.find_item("Record LoPS response")
       end
     end
   end

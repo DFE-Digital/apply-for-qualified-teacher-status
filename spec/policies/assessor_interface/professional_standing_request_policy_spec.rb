@@ -86,14 +86,24 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestPolicy do
     it_behaves_like "a policy method requiring the verify permission"
   end
 
+  describe "#update_verify_failed?" do
+    subject(:update_verify_failed?) { policy.update_verify_failed? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#edit_verify_failed?" do
+    subject(:edit_verify_failed?) { policy.edit_verify_failed? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
   describe "#update_review?" do
     subject(:update_review?) { policy.update_review? }
-    it_behaves_like "a policy method requiring the award decline permission"
+    it_behaves_like "a policy method requiring the assess permission"
   end
 
   describe "#edit_review?" do
     subject(:edit_review?) { policy.edit_review? }
-    it_behaves_like "a policy method requiring the award decline permission"
+    it_behaves_like "a policy method requiring the assess permission"
   end
 
   describe "#destroy?" do

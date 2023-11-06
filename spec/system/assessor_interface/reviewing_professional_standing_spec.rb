@@ -43,13 +43,28 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
       assessment_id:,
     )
 
-    when_i_fill_in_the_review_lops_form
+    when_i_submit_yes_on_the_review_form
     then_i_see_the(
       :assessor_review_verifications_page,
       application_form_id:,
       assessment_id:,
     )
     and_i_see_the_lops_accepted
+
+    when_i_click_on_lops
+    then_i_see_the(
+      :assessor_review_professional_standing_request_page,
+      application_form_id:,
+      assessment_id:,
+    )
+
+    when_i_submit_no_on_the_review_form
+    then_i_see_the(
+      :assessor_review_verifications_page,
+      application_form_id:,
+      assessment_id:,
+    )
+    and_i_see_the_lops_rejected
 
     when_i_click_on_back_to_overview
     then_i_see_the(:assessor_application_page, application_form_id:)
@@ -97,11 +112,14 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
     assessor_review_verifications_page.rows.first.link.click
   end
 
-  def when_i_fill_in_the_review_lops_form
-    form = assessor_review_professional_standing_request_page.form
+  def when_i_submit_yes_on_the_review_form
+    assessor_review_professional_standing_request_page.submit_yes
+  end
 
-    form.yes_radio_item.choose
-    form.submit_button.click
+  def when_i_submit_no_on_the_review_form
+    assessor_review_professional_standing_request_page.submit_no(
+      note: "A note.",
+    )
   end
 
   def when_i_click_on_back_to_overview
@@ -117,6 +135,12 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   def and_i_see_the_lops_accepted
     expect(assessor_review_verifications_page.rows.first.tag.text).to eq(
       "ACCEPTED",
+    )
+  end
+
+  def and_i_see_the_lops_rejected
+    expect(assessor_review_verifications_page.rows.first.tag.text).to eq(
+      "REJECTED",
     )
   end
 
