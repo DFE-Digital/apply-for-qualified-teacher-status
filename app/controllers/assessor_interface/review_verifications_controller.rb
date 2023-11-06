@@ -2,6 +2,7 @@
 
 module AssessorInterface
   class ReviewVerificationsController < BaseController
+  include RegionHelper
     before_action :authorize_assessor
 
     def index
@@ -11,13 +12,7 @@ module AssessorInterface
       @professional_standing_request =
         assessment.professional_standing_request if assessment.professional_standing_request.verify_failed?
 
-      @region = @assessment.application_form.region
-
-      @teaching_authority_name =
-        (
-          @region.teaching_authority_name.presence ||
-            "Contact relevant competent authority"
-        )
+      @teaching_authority_name = region_teaching_authority_name(@assessment.application_form.region, "Contact relevant competent authority")
 
       render layout: "full_from_desktop"
     end
