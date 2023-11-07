@@ -68,7 +68,7 @@ en:
           decline: Decline QTS
           request_further_information: Request further information
           review: Send application for review
-          verify: Award QTS
+          verify: Award QTS pending verifications
       assessor_interface_assessment_confirmation_form:
         confirmation_options:
           true: "Yes"
@@ -135,8 +135,8 @@ en:
           false: "No"
       assessor_interface_verify_professional_standing_form:
         verify_professional_standing_options:
-          true: Yes, verify letter of professional standing
-          false: No, skip this step
+          true: Yes, verify LoPS
+          false: No, do not verify
       assessor_interface_verify_qualifications_form:
         verify_qualifications_options:
           true: Yes, verify qualifications

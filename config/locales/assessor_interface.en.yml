@@ -100,7 +100,7 @@ en:
       edit_reference_requests:
         heading: Request work history references
       edit_professional_standing:
-        heading: Do you want to verify the letter of professional standing?
+        heading: Do you want to verify LoPS?
       preview_referee:
         heading: Check and send the reference request email
         button: Continue
