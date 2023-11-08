@@ -21,21 +21,7 @@
   <%= render "shared/employment_warning" %>
 <% end %>
 
-<h2 class="govuk-heading-s">Help us to improve this service</h2>
-
-<p class="govuk-body">
-  Please <%= govuk_link_to "give us feedback", t("service.form.feedback") %> about your experience of using this service. It should take less than 2 minutes to complete.
-</p>
-
-<p class="govuk-body">
-  We’re always trying to improve this service and boost teacher recruitment from overseas. So we’d like to talk to people about their experience of using this service.
-</p>
-
-<p class="govuk-body">
-  If you'd like to help, please <%= govuk_link_to "complete this form", t("service.form.research") %>.
-</p>
-
-<p class="govuk-body">If you match our search criteria, we'll invite you to take part in research.</p>
+<%= render "shared/help_us_to_improve_this_service", show_feedback: true %>
 
 <h2 class="govuk-heading-s">If you have any questions, contact:</h2>
 <p class="govuk-body"><%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %></p>

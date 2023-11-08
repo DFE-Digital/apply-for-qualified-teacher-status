@@ -1,5 +1,13 @@
+<% show_feedback ||= false %>
+
 <aside class="govuk-!-margin-top-6">
   <h2 class="govuk-heading-s">Help us to improve this service</h2>
+
+  <% if show_feedback %>
+    <p class="govuk-body">
+      Please <%= govuk_link_to "give us feedback", t("service.form.feedback") %> about your experience of using this service. It should take less than 2 minutes to complete.
+    </p>
+  <% end %>
 
   <p class="govuk-body">
     We're always trying to improve this service and boost teacher recruitment from overseas. So we'd like to talk to people about their experience of using this service.
