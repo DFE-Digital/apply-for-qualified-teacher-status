@@ -6,14 +6,16 @@
 
   <h1 class="govuk-heading-xl">Review LoPS</h1>
 
-  <h2 class="govuk-heading-m"><%= region_certificate_name(@application_form.region) %></h2>
+  <h2 class="govuk-heading-m">
+    <%= region_teaching_authority_name(@application_form.region, context: :assessor).upcase_first %>
+  </h2>
 
   <%= govuk_inset_text do %>
     <h3 class="govuk-heading-s">Internal note</h3>
     <%= simple_format @professional_standing_request.verify_note %>
   <% end %>
 
-  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "After review, does the response confirm that this LoPS is legitimate?" } do %>
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "After review, does the response confirm that this LoPS is legitimate?", size: "s" } do %>
     <%= f.govuk_radio_button :passed, :true, link_errors: true %>
     <%= f.govuk_radio_button :passed, :false do %>
       <%= f.govuk_text_area :note, label: { text: "Internal note: briefly explain why the document should not be accepted." } %>

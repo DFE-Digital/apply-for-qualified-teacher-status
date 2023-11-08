@@ -93,15 +93,11 @@ Rails.application.routes.draw do
               to: "assessment_recommendation_verify#preview_referee"
           get "preview-teacher",
               to: "assessment_recommendation_verify#preview_teacher"
-          get "verify-professional-standing",
-              to:
-                "assessment_recommendation_verify#edit_verify_professional_standing"
-          post "verify-professional-standing",
+          get "professional-standing",
+              to: "assessment_recommendation_verify#edit_professional_standing"
+          post "professional-standing",
                to:
-                 "assessment_recommendation_verify#update_verify_professional_standing"
-          get "contact-professional-standing",
-              to:
-                "assessment_recommendation_verify#contact_professional_standing"
+                 "assessment_recommendation_verify#update_professional_standing"
         end
 
         resources :further_information_requests,
@@ -114,14 +110,20 @@ Rails.application.routes.draw do
 
         resource :professional_standing_request,
                  path: "/professional-standing-request",
-                 only: [] do
+                 only: [:show] do
           member do
             get "locate", to: "professional_standing_requests#edit_locate"
             post "locate", to: "professional_standing_requests#update_locate"
+            get "request", to: "professional_standing_requests#edit_request"
+            post "request", to: "professional_standing_requests#update_request"
             get "review", to: "professional_standing_requests#edit_review"
             post "review", to: "professional_standing_requests#update_review"
             get "verify", to: "professional_standing_requests#edit_verify"
             post "verify", to: "professional_standing_requests#update_verify"
+            get "verify-failed",
+                to: "professional_standing_requests#edit_verify_failed"
+            post "verify-failed",
+                 to: "professional_standing_requests#update_verify_failed"
           end
         end
 

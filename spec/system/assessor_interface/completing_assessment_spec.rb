@@ -92,7 +92,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       assessment_id:,
     )
 
-    when_i_select_award_qts
+    when_i_select_award_qts_pending_verifications
     and_i_click_continue
     then_i_see_the(
       :assessor_verify_qualifications_assessment_recommendation_verify_page,
@@ -116,19 +116,12 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_click_continue_from_email_consent_letters
     then_i_see_the(
-      :assessor_verify_professional_standing_assessment_recommendation_verify_page,
+      :assessor_professional_standing_assessment_recommendation_verify_page,
       application_form_id:,
       assessment_id:,
     )
 
     when_i_select_yes_verify_professional_standing
-    then_i_see_the(
-      :assessor_contact_professional_standing_assessment_recommendation_verify_page,
-      application_form_id:,
-      assessment_id:,
-    )
-
-    when_i_click_continue_from_contact_professional_standing
     then_i_see_the(
       :assessor_reference_requests_assessment_recommendation_verify_page,
       application_form_id:,
@@ -272,6 +265,13 @@ RSpec.describe "Assessor completing assessment", type: :system do
     assessor_complete_assessment_page.award_qts.input.choose
   end
 
+  def when_i_select_award_qts_pending_verifications
+    assessor_complete_assessment_page
+      .award_qts_pending_verifications
+      .input
+      .choose
+  end
+
   def when_i_select_decline_qts
     assessor_complete_assessment_page.decline_qts.input.choose
   end
@@ -350,18 +350,14 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_select_yes_verify_professional_standing
-    assessor_verify_professional_standing_assessment_recommendation_verify_page
+    assessor_professional_standing_assessment_recommendation_verify_page
       .form
       .yes_radio_item
       .choose
-    assessor_verify_professional_standing_assessment_recommendation_verify_page
+    assessor_professional_standing_assessment_recommendation_verify_page
       .form
       .submit_button
       .click
-  end
-
-  def when_i_click_continue_from_contact_professional_standing
-    assessor_contact_professional_standing_assessment_recommendation_verify_page.continue_button.click
   end
 
   def when_i_select_the_work_histories

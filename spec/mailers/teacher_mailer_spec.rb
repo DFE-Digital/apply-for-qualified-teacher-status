@@ -377,7 +377,8 @@ RSpec.describe TeacherMailer, type: :mailer do
       it do
         is_expected.to include(
           "Thank you for requesting your letter that proves you’re recognised as a teacher from " \
-            "the teaching authority. We have now received this document and attached it to your application.",
+            "the teaching authority. We have now received this document and attached it " \
+            "to your application.",
         )
       end
     end

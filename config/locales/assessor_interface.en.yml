@@ -22,10 +22,9 @@ en:
             assessment_decision: Assessment decision
             await_professional_standing_request: Awaiting third-party professional standing
             initial_assessment_recommendation: Initial assessment recommendation
-            locate_professional_standing_request: Record LOPS response
+            professional_standing_request: Verify LoPS
             qualification_requests: Record qualifications responses
             reference_requests: Verify reference requests
-            review_professional_standing_request: Review LOPS response
             review_requested_information: Review requested information from applicant
             review_verifications: Review verifications
             verification_decision: Verification decision
@@ -99,8 +98,8 @@ en:
         cancel: Cancel
       edit_reference_requests:
         heading: Request work history references
-      edit_verify_professional_standing:
-        heading: Do you want to verify the letter of professional standing?
+      edit_professional_standing:
+        heading: Do you want to verify LoPS?
       preview_referee:
         heading: Check and send the reference request email
         button: Continue
@@ -236,11 +235,6 @@ en:
         check_your_answers: Further information requested
         passed: Has the applicant completed this section to your satisfaction?
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
-
-    professional_standing_requests:
-      edit_verify:
-        passed: Does the response confirm that this document is legitimate?
-        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why the document should not be accepted.'
 
     reference_requests:
       edit:
@@ -393,18 +387,24 @@ en:
               blank: Enter why you selected ‘No’
             failed:
               inclusion: Select whether you want to mark this qualification as ‘Rejected’
+        assessor_interface/requestable_request_form:
+          attributes:
+            passed:
+              inclusion: Select whether you are satisfied that this is completed
         assessor_interface/requestable_review_form:
           attributes:
             passed:
               inclusion: Select whether you are satisfied with the request
             note:
               blank: Enter why you are not satisfied
-        assessor_interface/requestable_verify_form:
+        assessor_interface/requestable_verify_failed_form:
+          attributes:
+            note:
+              blank: Enter why you are not satisfied
+        assessor_interface/requestable_verify_passed_form:
           attributes:
             passed:
               inclusion: Select whether you are satisfied with the request
-            note:
-              blank: Enter why you are not satisfied
         assessor_interface/select_qualifications_form:
           attributes:
             qualification_ids:

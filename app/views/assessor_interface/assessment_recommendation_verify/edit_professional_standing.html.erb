@@ -1,0 +1,16 @@
+<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".heading")}" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<%= form_with model: @form, url: [:professional_standing, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+
+  <p class="govuk-body">If you choose to verify this application's LoPS an admin will email the competent authority and record the response.</p>
+
+  <%= f.govuk_collection_radio_buttons :verify_professional_standing, %i[true false], :itself, legend: nil %>
+
+  <%= f.govuk_submit do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+  <% end %>
+<% end %>

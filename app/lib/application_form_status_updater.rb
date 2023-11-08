@@ -87,12 +87,7 @@ class ApplicationFormStatusUpdater
 
   def received_lops
     return false if teaching_authority_provides_written_statement
-
-    professional_standing_requests
-      .reject(&:reviewed?)
-      .any? do |requestable|
-        requestable.received? || requestable.ready_for_review
-      end
+    received?(requestables: professional_standing_requests)
   end
 
   def received_qualification
@@ -180,14 +175,14 @@ class ApplicationFormStatusUpdater
            application_form.declined_at.present? ||
            application_form.awarded_at.present?
         "none"
-      elsif preliminary_check?
-        "admin"
       elsif dqt_trn_request.present? || assessment_in_review? ||
-            overdue_further_information || overdue_lops ||
-            overdue_qualification || overdue_reference ||
-            received_further_information || received_lops ||
+            overdue_further_information || overdue_qualification ||
+            overdue_reference || received_further_information ||
             received_qualification || received_reference
         "assessor"
+      elsif preliminary_check? || need_to_request_lops? || overdue_lops ||
+            received_lops
+        "admin"
       elsif waiting_on_further_information || waiting_on_lops ||
             waiting_on_qualification || waiting_on_reference
         "external"
@@ -209,10 +204,10 @@ class ApplicationFormStatusUpdater
       elsif preliminary_check? ||
             (teaching_authority_provides_written_statement && waiting_on_lops)
         "pre_assessment"
-      elsif assessment_in_verify? || overdue_lops || overdue_qualification ||
-            overdue_reference || received_lops || received_qualification ||
-            received_reference || waiting_on_lops || waiting_on_qualification ||
-            waiting_on_reference
+      elsif assessment_in_verify? || need_to_request_lops? || overdue_lops ||
+            overdue_qualification || overdue_reference || received_lops ||
+            received_qualification || received_reference || waiting_on_lops ||
+            waiting_on_qualification || waiting_on_reference
         "verification"
       elsif overdue_further_information || received_further_information ||
             waiting_on_further_information ||
@@ -284,6 +279,14 @@ class ApplicationFormStatusUpdater
     assessment&.verify? || false
   end
 
+  def need_to_request_lops?
+    return false if teaching_authority_provides_written_statement
+
+    professional_standing_requests.any? do |requestable|
+      !requestable.requested?
+    end
+  end
+
   def requestable_statuses
     @requestable_statuses ||=
       %w[overdue received waiting_on]
@@ -312,11 +315,12 @@ class ApplicationFormStatusUpdater
   end
 
   def overdue?(requestables:)
-    requestables.reject(&:reviewed?).any?(&:expired?)
+    requestables.reject(&:verified?).reject(&:reviewed?).any?(&:expired?)
   end
 
   def waiting_on?(requestables:)
     requestables
+      .reject(&:verified?)
       .reject(&:reviewed?)
       .reject(&:expired?)
       .reject(&:received?)
@@ -324,7 +328,11 @@ class ApplicationFormStatusUpdater
   end
 
   def received?(requestables:)
-    requestables.reject(&:reviewed?).reject(&:expired?).any?(&:received?)
+    requestables
+      .reject(&:verified?)
+      .reject(&:reviewed?)
+      .reject(&:expired?)
+      .any?(&:received?)
   end
 
   def create_timeline_event(event_type:, **kwargs)

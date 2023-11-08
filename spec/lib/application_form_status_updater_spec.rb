@@ -240,7 +240,7 @@ RSpec.describe ApplicationFormStatusUpdater do
           create(:professional_standing_request, :received, assessment:)
         end
 
-        include_examples "changes action required by", "assessor"
+        include_examples "changes action required by", "admin"
         include_examples "changes stage", "verification"
         include_examples "changes statuses", %w[received_lops]
         include_examples "changes status", "received"

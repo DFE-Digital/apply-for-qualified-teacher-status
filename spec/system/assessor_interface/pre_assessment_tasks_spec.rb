@@ -19,7 +19,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     and_i_choose_yes_to_both_questions
     then_i_see_the(:assessor_application_page, application_form_id:)
     and_i_see_a_completed_preliminary_check_task
-    and_an_email_has_been_sent_to_the_teacher
+    and_the_teacher_receives_a_checks_passed_email
     and_the_assessor_is_unassigned
   end
 
@@ -40,6 +40,22 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
       recommendation: "decline",
     )
     and_i_see_the_failure_reasons
+  end
+
+  it "locate professional standing" do
+    when_i_visit_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, application_form_id:)
+    and_i_see_a_waiting_on_status
+    and_i_click_awaiting_professional_standing
+    then_i_see_the(
+      :assessor_locate_professional_standing_request_page,
+      application_form_id:,
+    )
+
+    when_i_fill_in_the_locate_form
+    then_i_see_the(:assessor_application_page, application_form_id:)
+    and_i_see_a_preliminary_check_status
+    and_the_teacher_receives_a_professional_standing_received_email
   end
 
   private
@@ -117,7 +133,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     ).to have_content("WAITING ON")
   end
 
-  def and_an_email_has_been_sent_to_the_teacher
+  def and_the_teacher_receives_a_checks_passed_email
     expect(TeacherMailer.deliveries.count).to eq(1)
     expect(TeacherMailer.deliveries.first.subject).to eq(
       I18n.t("mailer.teacher.initial_checks_passed.subject"),
@@ -126,6 +142,34 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
 
   def and_the_assessor_is_unassigned
     expect(application_form.reload.assessor).to be_nil
+  end
+
+  def and_i_click_awaiting_professional_standing
+    assessor_application_page.awaiting_professional_standing_task.link.click
+  end
+
+  def when_i_fill_in_the_locate_form
+    form = assessor_locate_professional_standing_request_page.form
+
+    form.received_checkbox.click
+    form.note_textarea.fill_in with: "Note."
+    form.submit_button.click
+  end
+
+  def and_i_see_a_preliminary_check_status
+    expect(assessor_application_page.status_summary.value).to have_text(
+      "PRELIMINARY CHECK",
+    )
+  end
+
+  def and_the_teacher_receives_a_professional_standing_received_email
+    expect(TeacherMailer.deliveries.count).to eq(1)
+    expect(TeacherMailer.deliveries.first.subject).to eq(
+      I18n.t(
+        "mailer.teacher.professional_standing_received.subject",
+        certificate: "letter that proves you’re recognised as a teacher",
+      ),
+    )
   end
 
   def application_form
@@ -142,7 +186,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
         create(
           :assessment,
           :with_preliminary_qualifications_section,
-          :with_professional_standing_request,
+          :with_requested_professional_standing_request,
           application_form:,
         )
         application_form.region.update!(

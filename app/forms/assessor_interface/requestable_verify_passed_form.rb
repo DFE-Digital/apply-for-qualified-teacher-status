@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AssessorInterface::RequestableVerifyForm
+class AssessorInterface::RequestableVerifyPassedForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
@@ -10,13 +10,12 @@ class AssessorInterface::RequestableVerifyForm
   attribute :passed, :boolean
   validates :passed, inclusion: [true, false]
 
-  attribute :note, :string
-  validates :note, presence: true, if: -> { passed == false }
-
   def save
     return false if invalid?
 
-    VerifyRequestable.call(requestable:, user:, passed:, note:)
+    ReceiveRequestable.call(requestable:, user:) unless requestable.received?
+
+    VerifyRequestable.call(requestable:, user:, passed:, note: "") if passed
 
     true
   end

@@ -254,8 +254,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     items = [
       qualification_requests_task_list_item,
       reference_requests_task_list_item,
-      locate_professional_standing_request_task_list_item,
-      review_professional_standing_request_task_list_item,
+      professional_standing_request_task_list_item,
     ].compact
 
     items << verification_decision_task_list_item if items.present?
@@ -316,7 +315,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     }
   end
 
-  def locate_professional_standing_request_task_list_item
+  def professional_standing_request_task_list_item
     if teaching_authority_provides_written_statement ||
          professional_standing_request.blank?
       return
@@ -325,57 +324,21 @@ class AssessorInterface::ApplicationFormsShowViewObject
     {
       name:
         I18n.t(
-          "assessor_interface.application_forms.show.assessment_tasks.items.locate_professional_standing_request",
+          "assessor_interface.application_forms.show.assessment_tasks.items.professional_standing_request",
         ),
       link: [
-        :locate,
         :assessor_interface,
         application_form,
         assessment,
         :professional_standing_request,
       ],
       status:
-        if professional_standing_request.ready_for_review ||
-             professional_standing_request.received?
-          :completed
-        elsif professional_standing_request.expired?
-          :overdue
+        if professional_standing_request.verified?
+          "completed"
+        elsif professional_standing_request.requested?
+          "waiting_on"
         else
-          :waiting_on
-        end,
-    }
-  end
-
-  def review_professional_standing_request_task_list_item
-    if teaching_authority_provides_written_statement ||
-         professional_standing_request.blank?
-      return
-    end
-
-    {
-      name:
-        I18n.t(
-          "assessor_interface.application_forms.show.assessment_tasks.items.review_professional_standing_request",
-        ),
-      link:
-        if professional_standing_request.received? ||
-             professional_standing_request.ready_for_review
-          [
-            :verify,
-            :assessor_interface,
-            application_form,
-            assessment,
-            :professional_standing_request,
-          ]
-        end,
-      status:
-        if professional_standing_request.reviewed?
-          :completed
-        elsif professional_standing_request.received? ||
-              professional_standing_request.ready_for_review
-          :received
-        else
-          :cannot_start
+          "not_started"
         end,
     }
   end
@@ -436,13 +399,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
         :review_verifications,
       ],
       status:
-        if assessment.recommendable?
+        if assessment.completed? || assessment.recommendable?
           :completed
-        elsif (
-              !teaching_authority_provides_written_statement &&
-                professional_standing_request&.reviewed?
-            ) || qualification_requests.any?(&:reviewed?) ||
-              reference_requests.any?(&:reviewed?)
+        elsif !teaching_authority_provides_written_statement &&
+              professional_standing_request&.reviewed?
           :in_progress
         else
           :not_started

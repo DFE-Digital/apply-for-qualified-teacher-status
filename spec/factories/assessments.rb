@@ -81,6 +81,12 @@ FactoryBot.define do
 
     trait :with_professional_standing_request do
       after(:create) do |assessment, _evaluator|
+        create(:professional_standing_request, assessment:)
+      end
+    end
+
+    trait :with_requested_professional_standing_request do
+      after(:create) do |assessment, _evaluator|
         create(:professional_standing_request, :requested, assessment:)
       end
     end

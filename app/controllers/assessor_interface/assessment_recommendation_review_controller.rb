@@ -2,16 +2,21 @@
 
 module AssessorInterface
   class AssessmentRecommendationReviewController < BaseController
-    before_action :authorize_assessor
     before_action :ensure_can_review
     before_action :load_assessment_and_application_form
 
     def edit
+      authorize %i[assessor_interface assessment_recommendation]
+
       @professional_standing_request =
         assessment.professional_standing_request if assessment.professional_standing_request.verify_failed?
+
+      render layout: "full_from_desktop"
     end
 
     def update
+      authorize %i[assessor_interface assessment_recommendation]
+
       ActiveRecord::Base.transaction do
         assessment.review!
         ApplicationFormStatusUpdater.call(

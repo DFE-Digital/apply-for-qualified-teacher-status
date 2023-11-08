@@ -40,12 +40,12 @@ RSpec.describe AssessorInterface::AssessmentPolicy do
 
   describe "#update?" do
     subject(:update?) { policy.update? }
-    it_behaves_like "a policy method requiring the award decline permission"
+    it_behaves_like "a policy method requiring the assess permission"
   end
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
-    it_behaves_like "a policy method requiring the award decline permission"
+    it_behaves_like "a policy method requiring the assess permission"
   end
 
   describe "#destroy?" do
