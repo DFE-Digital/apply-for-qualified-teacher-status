@@ -335,6 +335,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
       status:
         if professional_standing_request.verified?
           "completed"
+        elsif professional_standing_request.expired?
+          "overdue"
         elsif professional_standing_request.requested?
           "waiting_on"
         else
