@@ -221,6 +221,10 @@ class ApplicationForm < ApplicationRecord
 
   scope :remindable, -> { draft.where("created_at < ?", 5.months.ago) }
 
+  def to_param
+    reference
+  end
+
   def teaching_qualification
     qualifications.find(&:is_teaching_qualification?)
   end

@@ -16,7 +16,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
     {
       id: further_information_request.id,
       assessment_id: assessment.id,
-      application_form_id: application_form.id,
+      application_form_reference: application_form.reference,
     }
   end
 

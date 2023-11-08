@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class EditQualificationRequest < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
+      set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/qualification-requests/{id}/edit"
 
       section :form, "form" do

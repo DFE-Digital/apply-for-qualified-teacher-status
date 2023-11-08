@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class LocateProfessionalStandingRequest < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
+      set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/professional-standing-request/locate"
 
       section :form, "form" do

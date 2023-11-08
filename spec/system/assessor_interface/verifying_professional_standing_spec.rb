@@ -10,11 +10,11 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   end
 
   it "verify" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_professional_standing_task
     then_i_see_the(
       :assessor_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_the_request_lops_verification_status_is("NOT STARTED")
@@ -23,13 +23,13 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     when_i_click_request_lops_verification
     then_i_see_the(
       :assessor_request_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_i_submit_unchecked_on_the_request_form
     then_i_see_the(
       :assessor_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_the_request_lops_verification_status_is("NOT STARTED")
@@ -39,7 +39,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     and_i_submit_checked_on_the_request_form
     then_i_see_the(
       :assessor_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_the_request_lops_verification_status_is("COMPLETED")
@@ -48,13 +48,13 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     when_i_click_record_lops_response
     then_i_see_the(
       :assessor_verify_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_i_submit_yes_on_the_verify_form
     then_i_see_the(
       :assessor_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_the_record_lops_response_status_is("COMPLETED")
@@ -62,19 +62,19 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     when_i_click_record_lops_response
     then_i_see_the(
       :assessor_verify_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_i_submit_no_on_the_verify_form
     then_i_see_the(
       :assessor_verify_failed_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_i_submit_an_internal_note
     then_i_see_the(
       :assessor_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_the_record_lops_response_status_is("REVIEW")
@@ -151,7 +151,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       end
   end
 
-  delegate :id, to: :application_form, prefix: true
+  delegate :reference, to: :application_form
 
   def assessment_id
     application_form.assessment.id

@@ -5,7 +5,7 @@ module PageObjects
     end
 
     class CheckEnglishLanguageProficiency < AssessmentSection
-      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}/sections/{section_id}"
+      set_url "/assessor/applications/{reference}/assessments/{assessment_id}/sections/{section_id}"
 
       sections :cards, EnglishLanguageProficiencyCard, ".govuk-summary-card"
 

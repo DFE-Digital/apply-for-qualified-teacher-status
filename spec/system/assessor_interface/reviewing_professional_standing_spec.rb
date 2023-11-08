@@ -10,28 +10,25 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   end
 
   it "sends for review" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
+    then_i_see_the(:assessor_application_page, reference:)
 
     when_i_click_on_verification_decision
-    then_i_see_the(:assessor_complete_assessment_page, application_form_id:)
+    then_i_see_the(:assessor_complete_assessment_page, reference:)
 
     when_i_select_send_for_review
-    then_i_see_the(
-      :assessor_assessment_recommendation_review_page,
-      application_form_id:,
-    )
+    then_i_see_the(:assessor_assessment_recommendation_review_page, reference:)
 
     when_i_click_continue_from_review
-    then_i_see_the(:assessor_application_status_page, application_form_id:)
+    then_i_see_the(:assessor_application_status_page, reference:)
 
     when_i_click_on_overview_button
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, reference:)
 
     when_i_click_on_review_verifications
     then_i_see_the(
       :assessor_review_verifications_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_i_see_the_lops_not_started
@@ -39,14 +36,14 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
     when_i_click_on_lops
     then_i_see_the(
       :assessor_review_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
 
     when_i_submit_yes_on_the_review_form
     then_i_see_the(
       :assessor_review_verifications_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_i_see_the_lops_accepted
@@ -54,25 +51,25 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
     when_i_click_on_lops
     then_i_see_the(
       :assessor_review_professional_standing_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
 
     when_i_submit_no_on_the_review_form
     then_i_see_the(
       :assessor_review_verifications_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
     and_i_see_the_lops_rejected
 
     when_i_click_on_back_to_overview
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, reference:)
 
     when_i_click_on_assessment_decision
     then_i_see_the(
       :assessor_complete_assessment_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
     )
   end
@@ -171,7 +168,7 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
       end
   end
 
-  delegate :id, to: :application_form, prefix: true
+  delegate :reference, to: :application_form
 
   def assessment_id
     application_form.assessment.id

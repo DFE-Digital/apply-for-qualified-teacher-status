@@ -68,7 +68,7 @@ class UpdateWorkingDaysJob < ApplicationJob
     Assessment
       .joins(:application_form)
       .includes(:application_form)
-      .where.not(application_forms: { submitted_at: nil })
+      .where.not(application_form: { submitted_at: nil })
       .where.not(recommended_at: nil)
       .find_each do |assessment|
         assessment.update!(
@@ -85,7 +85,7 @@ class UpdateWorkingDaysJob < ApplicationJob
     Assessment
       .joins(:application_form)
       .includes(:application_form)
-      .where.not(application_forms: { submitted_at: nil })
+      .where.not(application_form: { submitted_at: nil })
       .where.not(started_at: nil)
       .find_each do |assessment|
         assessment.update!(

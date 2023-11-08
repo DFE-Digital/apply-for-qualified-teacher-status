@@ -9,7 +9,7 @@ RSpec.describe "Assessor view timeline events", type: :system do
   end
 
   it "displays the timeline events" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_view_timeline
     then_i_see_the_timeline
   end
@@ -60,7 +60,7 @@ RSpec.describe "Assessor view timeline events", type: :system do
       end
   end
 
-  delegate :id, to: :application_form, prefix: true
+  delegate :reference, to: :application_form
 
   def assessor
     @assessor ||= create(:staff, :confirmed)

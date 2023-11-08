@@ -105,7 +105,7 @@ module AssessorInterface
       @application_form ||=
         ApplicationForm.includes(
           assessment: :further_information_requests,
-        ).find(params[:application_form_id])
+        ).find_by(reference: params[:application_form_reference])
     end
 
     def view_object

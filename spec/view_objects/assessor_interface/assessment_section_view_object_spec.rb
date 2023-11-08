@@ -15,7 +15,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     {
       id: assessment_section.id,
       assessment_id: assessment.id,
-      application_form_id: application_form.id,
+      application_form_reference: application_form.reference,
     }
   end
 

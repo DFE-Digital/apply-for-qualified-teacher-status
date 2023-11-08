@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class ReverseDecision < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}/rollback"
+      set_url "/assessor/applications/{reference}/assessments/{assessment_id}/rollback"
 
       section :form, "form" do
         element :submit_button, ".govuk-button:not(.govuk-button--secondary)"

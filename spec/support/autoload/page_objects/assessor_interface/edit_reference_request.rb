@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class EditReferenceRequest < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
+      set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/reference-requests/{id}/edit"
 
       section :summary_list, GovukSummaryList, "#reference-details-summary-list"

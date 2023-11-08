@@ -1,7 +1,7 @@
 module PageObjects
   module AssessorInterface
     class ApplicationStatus < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/status"
+      set_url "/assessor/applications/{reference}/status"
 
       element :back_link, "a", text: "Back"
 

@@ -8,7 +8,7 @@ RSpec.describe "Assessor views duplicate applicant's application form",
     given_there_is_an_application_form
     and_the_applicant_matches_a_record_in_dqt
 
-    when_i_visit_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
     then_i_see_the_application
     and_i_see_the_warning_of_an_existing_record_in_dqt
   end
@@ -61,7 +61,7 @@ RSpec.describe "Assessor views duplicate applicant's application form",
       end
   end
 
-  delegate :id, to: :application_form, prefix: true
+  delegate :reference, to: :application_form
 
   def dqt_match
     {

@@ -5,7 +5,8 @@ module AssessorInterface
     before_action :authorize_assessor
 
     def index
-      @application_form = ApplicationForm.find(params[:application_form_id])
+      @application_form =
+        ApplicationForm.find_by!(reference: params[:application_form_reference])
 
       @timeline_events =
         TimelineEvent

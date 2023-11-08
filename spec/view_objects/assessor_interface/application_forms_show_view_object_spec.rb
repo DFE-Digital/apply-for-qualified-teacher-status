@@ -21,7 +21,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "with a draft application form" do
-      let(:params) { { id: create(:application_form, :draft).id } }
+      let(:params) do
+        { reference: create(:application_form, :draft).reference }
+      end
 
       it "raise an error" do
         expect { application_form }.to raise_error(ActiveRecord::RecordNotFound)
@@ -29,7 +31,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "with a submitted application form" do
-      let(:params) { { id: create(:application_form, :submitted).id } }
+      let(:params) do
+        { reference: create(:application_form, :submitted).reference }
+      end
 
       it { is_expected.to_not be_nil }
     end
@@ -44,7 +48,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       create(:assessment_section, :personal_information, assessment:)
     end
 
-    let(:params) { { id: application_form.id } }
+    let(:params) { { reference: application_form.reference } }
 
     it do
       is_expected.to_not include_task_list_item(
@@ -457,7 +461,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       )
     end
 
-    let(:params) { { id: application_form.id } }
+    let(:params) { { reference: application_form.reference } }
 
     context "the email address is used as a reference" do
       before do
@@ -497,7 +501,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       )
     end
 
-    let(:params) { { id: application_form.id } }
+    let(:params) { { reference: application_form.reference } }
 
     context "the email address is used as a reference" do
       before do
@@ -535,7 +539,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       )
     end
 
-    let(:params) { { id: application_form.id } }
+    let(:params) { { reference: application_form.reference } }
 
     context "the email address is used as a reference in the same application" do
       before do
@@ -581,7 +585,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       create(:application_form, :submitted, :with_assessment)
     end
 
-    let(:params) { { id: application_form.id } }
+    let(:params) { { reference: application_form.reference } }
 
     it { is_expected.to be_empty }
 

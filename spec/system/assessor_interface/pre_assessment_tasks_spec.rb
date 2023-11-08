@@ -10,50 +10,50 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
   end
 
   it "passes preliminary check" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
+    then_i_see_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
     and_i_see_an_unstarted_preliminary_check_task
 
     when_i_click_on_the_preliminary_check_task
     and_i_choose_yes_to_both_questions
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, reference:)
     and_i_see_a_completed_preliminary_check_task
     and_the_teacher_receives_a_checks_passed_email
     and_the_assessor_is_unassigned
   end
 
   it "fails preliminary check" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
+    then_i_see_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
     and_i_see_an_unstarted_preliminary_check_task
 
     when_i_click_on_the_preliminary_check_task
     and_i_choose_no_to_both_questions
-    then_i_see_the(:assessor_complete_assessment_page, application_form_id:)
+    then_i_see_the(:assessor_complete_assessment_page, reference:)
 
     when_i_select_decline_qts
     then_i_see_the(
       :assessor_declare_assessment_recommendation_page,
-      application_form_id:,
+      reference:,
       recommendation: "decline",
     )
     and_i_see_the_failure_reasons
   end
 
   it "locate professional standing" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
+    then_i_see_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
     and_i_click_awaiting_professional_standing
     then_i_see_the(
       :assessor_locate_professional_standing_request_page,
-      application_form_id:,
+      reference:,
     )
 
     when_i_fill_in_the_locate_form
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, reference:)
     and_i_see_a_preliminary_check_status
     and_the_teacher_receives_a_professional_standing_received_email
   end
@@ -197,5 +197,5 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
       end
   end
 
-  delegate :id, to: :application_form, prefix: true
+  delegate :reference, to: :application_form
 end
