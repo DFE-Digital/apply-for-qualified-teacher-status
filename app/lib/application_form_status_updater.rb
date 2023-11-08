@@ -137,6 +137,11 @@ class ApplicationFormStatusUpdater
     waiting_on?(requestables: reference_requests)
   end
 
+  def needs_references_verified?
+    reference_requests.present? && !waiting_on_reference &&
+      references_verified != true
+  end
+
   def status
     @status ||=
       if dqt_trn_request&.potential_duplicate?
@@ -178,7 +183,8 @@ class ApplicationFormStatusUpdater
       elsif dqt_trn_request.present? || assessment_in_review? ||
             overdue_further_information || overdue_qualification ||
             overdue_reference || received_further_information ||
-            received_qualification || received_reference
+            received_qualification || received_reference ||
+            needs_references_verified?
         "assessor"
       elsif preliminary_check? || need_to_request_lops? || overdue_lops ||
             received_lops
@@ -207,7 +213,8 @@ class ApplicationFormStatusUpdater
       elsif assessment_in_verify? || need_to_request_lops? || overdue_lops ||
             overdue_qualification || overdue_reference || received_lops ||
             received_qualification || received_reference || waiting_on_lops ||
-            waiting_on_qualification || waiting_on_reference
+            waiting_on_qualification || waiting_on_reference ||
+            needs_references_verified?
         "verification"
       elsif overdue_further_information || received_further_information ||
             waiting_on_further_information ||
