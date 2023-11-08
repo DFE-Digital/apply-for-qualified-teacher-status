@@ -116,7 +116,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_click_continue_from_email_consent_letters
     then_i_see_the(
-      :assessor_verify_professional_standing_assessment_recommendation_verify_page,
+      :assessor_professional_standing_assessment_recommendation_verify_page,
       application_form_id:,
       assessment_id:,
     )
@@ -343,11 +343,11 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_select_yes_verify_professional_standing
-    assessor_verify_professional_standing_assessment_recommendation_verify_page
+    assessor_professional_standing_assessment_recommendation_verify_page
       .form
       .yes_radio_item
       .choose
-    assessor_verify_professional_standing_assessment_recommendation_verify_page
+    assessor_professional_standing_assessment_recommendation_verify_page
       .form
       .submit_button
       .click

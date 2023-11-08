@@ -11,8 +11,15 @@ module RegionHelper
     "#{certificate.indefinite_article} #{tag.span(certificate, lang: region.country.code)}".html_safe
   end
 
-  def region_teaching_authority_name(region)
-    region.teaching_authority_name.presence || "teaching authority"
+  def region_teaching_authority_name(region, context: :teacher)
+    region.teaching_authority_name.presence ||
+      (
+        if context == :assessor
+          "relevant competent authority"
+        else
+          "teaching authority"
+        end
+      )
   end
 
   def region_teaching_authority_name_phrase(region)

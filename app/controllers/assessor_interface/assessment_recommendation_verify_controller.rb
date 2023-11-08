@@ -61,7 +61,7 @@ module AssessorInterface
                         if @form.verify_qualifications
                           :qualification_requests
                         else
-                          :verify_professional_standing
+                          :professional_standing
                         end
                       ),
                       :assessor_interface,
@@ -121,7 +121,7 @@ module AssessorInterface
         application_form.qualifications.where(id: session[:qualification_ids])
     end
 
-    def edit_verify_professional_standing
+    def edit_professional_standing
       authorize %i[assessor_interface assessment_recommendation], :edit?
 
       if application_form.teaching_authority_provides_written_statement
@@ -138,7 +138,7 @@ module AssessorInterface
       @form = VerifyProfessionalStandingForm.new
     end
 
-    def update_verify_professional_standing
+    def update_professional_standing
       authorize %i[assessor_interface assessment_recommendation], :update?
 
       @form =
@@ -161,7 +161,7 @@ module AssessorInterface
                       :assessment_recommendation_verify,
                     ]
       else
-        render :edit_verify_professional_standing, status: :unprocessable_entity
+        render :edit_professional_standing, status: :unprocessable_entity
       end
     end
 

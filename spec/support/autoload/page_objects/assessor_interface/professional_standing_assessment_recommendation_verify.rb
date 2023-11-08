@@ -2,9 +2,9 @@
 
 module PageObjects
   module AssessorInterface
-    class VerifyProfessionalStandingAssessmentRecommendationVerify < SitePrism::Page
+    class ProfessionalStandingAssessmentRecommendationVerify < SitePrism::Page
       set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
-                "/recommendation/verify/verify-professional-standing"
+                "/recommendation/verify/professional-standing"
 
       element :heading, "h1"
 

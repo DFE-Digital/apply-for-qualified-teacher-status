@@ -93,12 +93,11 @@ Rails.application.routes.draw do
               to: "assessment_recommendation_verify#preview_referee"
           get "preview-teacher",
               to: "assessment_recommendation_verify#preview_teacher"
-          get "verify-professional-standing",
-              to:
-                "assessment_recommendation_verify#edit_verify_professional_standing"
-          post "verify-professional-standing",
+          get "professional-standing",
+              to: "assessment_recommendation_verify#edit_professional_standing"
+          post "professional-standing",
                to:
-                 "assessment_recommendation_verify#update_verify_professional_standing"
+                 "assessment_recommendation_verify#update_professional_standing"
         end
 
         resources :further_information_requests,
