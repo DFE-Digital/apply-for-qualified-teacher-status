@@ -24,6 +24,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       assessment_task_list_section,
       verification_task_list_section,
       review_task_list_section,
+      management_task_list_section,
     ].compact
   end
 
@@ -58,8 +59,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
            assessment,
          ).rollback?
         {
-          title: "Reverse decision",
-          path: [:rollback, :assessor_interface, application_form, assessment],
+          name: "Reverse decision",
+          link: [:rollback, :assessor_interface, application_form, assessment],
         }
       end,
       if AssessorInterface::ApplicationFormPolicy.new(
@@ -67,8 +68,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
            application_form,
          ).withdraw?
         {
-          title: "Withdraw",
-          path: [:withdraw, :assessor_interface, application_form],
+          name: "Withdraw",
+          link: [:withdraw, :assessor_interface, application_form],
         }
       end,
     ].compact
@@ -89,6 +90,12 @@ class AssessorInterface::ApplicationFormsShowViewObject
            :reference_requests,
            to: :assessment
   delegate :canonical_email, to: :teacher
+
+  def management_task_list_section
+    return nil if management_tasks.blank?
+
+    { title: "Management", items: management_tasks }
+  end
 
   def pre_assessment_task_list_section
     {

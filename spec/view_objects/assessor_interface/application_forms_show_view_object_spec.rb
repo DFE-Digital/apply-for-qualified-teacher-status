@@ -598,8 +598,8 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         is_expected.to eq(
           [
             {
-              title: "Reverse decision",
-              path: [
+              name: "Reverse decision",
+              link: [
                 :rollback,
                 :assessor_interface,
                 application_form,
@@ -607,8 +607,8 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               ],
             },
             {
-              title: "Withdraw",
-              path: [:withdraw, :assessor_interface, application_form],
+              name: "Withdraw",
+              link: [:withdraw, :assessor_interface, application_form],
             },
           ],
         )
