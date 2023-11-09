@@ -18,7 +18,6 @@ module AssessorInterface
           requestable:,
           user: current_staff,
           received: requestable.received?,
-          ready_for_review: requestable.ready_for_review,
           location_note: requestable.location_note,
         )
     end
@@ -170,7 +169,7 @@ module AssessorInterface
     def location_form_params
       params.require(
         :assessor_interface_professional_standing_request_location_form,
-      ).permit(:received, :ready_for_review, :location_note)
+      ).permit(:received, :location_note)
     end
 
     def review_form_params
