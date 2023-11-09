@@ -94,10 +94,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def management_task_list_section
     return nil if management_tasks.blank?
 
-    {
-      title: "Management",
-      items: management_tasks,
-    }
+    { title: "Management", items: management_tasks }
   end
 
   def pre_assessment_task_list_section
