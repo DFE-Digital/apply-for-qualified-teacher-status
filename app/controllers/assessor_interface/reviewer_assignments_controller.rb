@@ -30,7 +30,8 @@ module AssessorInterface
     private
 
     def application_form
-      @application_form ||= ApplicationForm.find(params[:application_form_id])
+      @application_form ||=
+        ApplicationForm.find_by!(reference: params[:application_form_reference])
     end
 
     def reviewer_params

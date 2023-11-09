@@ -1,7 +1,7 @@
 module PageObjects
   module AssessorInterface
     class FurtherInformationRequestPreview < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
+      set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/further-information-requests/new"
 
       element :email_preview, "div.app-email-preview"

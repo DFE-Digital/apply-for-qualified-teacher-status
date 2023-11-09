@@ -36,7 +36,11 @@ module AssessorInterface
       @work_history ||=
         WorkHistory
           .includes(:application_form)
-          .where(application_form_id: params[:application_form_id])
+          .where(
+            application_form: {
+              reference: params[:application_form_reference],
+            },
+          )
           .find(params[:id])
     end
 

@@ -13,7 +13,7 @@ RSpec.describe "Assessor change work history", type: :system do
 
     when_i_visit_the(
       :assessor_edit_work_history_page,
-      application_form_id:,
+      reference:,
       work_history_id:,
     )
     then_i_see_the_forbidden_page
@@ -24,7 +24,7 @@ RSpec.describe "Assessor change work history", type: :system do
 
     when_i_visit_the(
       :assessor_check_work_history_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
       section_id: assessment_section.id,
     )
@@ -33,12 +33,12 @@ RSpec.describe "Assessor change work history", type: :system do
     when_i_click_on_change_from_assessment
     then_i_see_the(
       :assessor_edit_work_history_page,
-      application_form_id:,
+      reference:,
       work_history_id:,
     )
 
     when_i_fill_in_the_contact_information
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, reference:)
   end
 
   it "allows changing work history from verification" do
@@ -46,7 +46,7 @@ RSpec.describe "Assessor change work history", type: :system do
 
     when_i_visit_the(
       :assessor_edit_reference_request_page,
-      application_form_id:,
+      reference:,
       assessment_id:,
       id: reference_request.id,
     )
@@ -55,12 +55,12 @@ RSpec.describe "Assessor change work history", type: :system do
     when_i_click_on_change_from_verification
     then_i_see_the(
       :assessor_edit_work_history_page,
-      application_form_id:,
+      reference:,
       work_history_id:,
     )
 
     when_i_fill_in_the_contact_information
-    then_i_see_the(:assessor_application_page, application_form_id:)
+    then_i_see_the(:assessor_application_page, reference:)
   end
 
   def given_there_is_an_application_form
@@ -99,7 +99,7 @@ RSpec.describe "Assessor change work history", type: :system do
       create(:application_form, :submitted, :with_personal_information)
   end
 
-  delegate :id, to: :application_form, prefix: true
+  delegate :reference, to: :application_form
 
   def assessment
     @assessment ||= create(:assessment, application_form:)

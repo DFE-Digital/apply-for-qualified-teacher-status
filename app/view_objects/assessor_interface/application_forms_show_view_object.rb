@@ -11,7 +11,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
       ApplicationForm
         .includes(assessment: :sections)
         .not_draft
-        .find(params[:id])
+        .find_by!(reference: params[:reference])
   end
 
   def duplicate_matches

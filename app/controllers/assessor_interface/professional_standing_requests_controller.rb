@@ -197,8 +197,8 @@ module AssessorInterface
           assessment: :application_form,
         ).find_by(
           assessment_id: params[:assessment_id],
-          assessment: {
-            application_form_id: params[:application_form_id],
+          application_form: {
+            reference: params[:application_form_reference],
           },
         )
     end

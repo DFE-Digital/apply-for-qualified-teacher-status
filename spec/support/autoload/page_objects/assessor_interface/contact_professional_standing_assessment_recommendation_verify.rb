@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class ContactProfessionalStandingAssessmentRecommendationVerify < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
+      set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/recommendation/verify/contact-professional-standing"
 
       element :heading, "h1"

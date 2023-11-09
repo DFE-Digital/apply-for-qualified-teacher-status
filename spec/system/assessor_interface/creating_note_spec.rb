@@ -8,30 +8,15 @@ RSpec.describe "Creating a note", type: :system do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form
 
-    when_i_visit_the(
-      :assessor_application_page,
-      application_form_id: application_form.id,
-    )
+    when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_add_note
-    then_i_see_the(
-      :assessor_create_note_page,
-      application_form_id: application_form.id,
-    )
+    then_i_see_the(:assessor_create_note_page, reference:)
 
     when_i_create_a_note
-    then_i_see_the(
-      :assessor_application_page,
-      application_form_id: application_form.id,
-    )
+    then_i_see_the(:assessor_application_page, reference:)
 
-    when_i_visit_the(
-      :assessor_timeline_page,
-      application_form_id: application_form.id,
-    )
-    then_i_see_the(
-      :assessor_timeline_page,
-      application_form_id: application_form.id,
-    )
+    when_i_visit_the(:assessor_timeline_page, reference:)
+    then_i_see_the(:assessor_timeline_page, reference:)
     and_i_see_the_note_timeline_event
   end
 
@@ -62,4 +47,6 @@ RSpec.describe "Creating a note", type: :system do
     @application_form ||=
       create(:application_form, :submitted, :with_assessment)
   end
+
+  delegate :reference, to: :application_form
 end

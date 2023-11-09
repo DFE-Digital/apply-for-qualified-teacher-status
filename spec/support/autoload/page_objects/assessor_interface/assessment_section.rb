@@ -1,7 +1,7 @@
 module PageObjects
   module AssessorInterface
     class AssessmentSection < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}/sections/{section_id}"
+      set_url "/assessor/applications/{reference}/assessments/{assessment_id}/sections/{section_id}"
 
       element :heading, "h1"
 

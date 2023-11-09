@@ -446,6 +446,11 @@ RSpec.describe ApplicationForm, type: :model do
     expect(application_form.written_statement_document).to_not be_nil
   end
 
+  describe "#to_param" do
+    subject(:to_param) { application_form.to_param }
+    it { is_expected.to eq(application_form.reference) }
+  end
+
   describe "#created_under_new_regulations?" do
     subject(:created_under_new_regulations?) do
       application_form.created_under_new_regulations?

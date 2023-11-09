@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class EditWorkHistory < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/work-histories/{work_history_id}/edit"
+      set_url "/assessor/applications/{reference}/work-histories/{work_history_id}/edit"
 
       section :form, "form" do
         element :name_field,

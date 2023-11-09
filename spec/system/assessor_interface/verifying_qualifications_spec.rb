@@ -10,76 +10,64 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   it "received and passed" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
     and_i_click_record_qualifications_task
-    then_i_see_the(:assessor_qualification_requests_page, application_form_id:)
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_select_the_first_qualification_request
-    then_i_see_the(
-      :assessor_edit_qualification_request_page,
-      application_form_id:,
-    )
+    then_i_see_the(:assessor_edit_qualification_request_page, reference:)
 
     when_the_request_is_received_and_passed
-    then_i_see_the(:assessor_qualification_requests_page, application_form_id:)
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_go_back_to_overview
     and_i_see_an_in_progress_status
   end
 
   it "received and not passed" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
     and_i_click_record_qualifications_task
-    then_i_see_the(:assessor_qualification_requests_page, application_form_id:)
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_select_the_first_qualification_request
-    then_i_see_the(
-      :assessor_edit_qualification_request_page,
-      application_form_id:,
-    )
+    then_i_see_the(:assessor_edit_qualification_request_page, reference:)
 
     when_the_request_is_received_and_not_passed
-    then_i_see_the(:assessor_qualification_requests_page, application_form_id:)
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_go_back_to_overview
     and_i_see_an_in_progress_status
   end
 
   it "not received and failed" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
     and_i_click_record_qualifications_task
-    then_i_see_the(:assessor_qualification_requests_page, application_form_id:)
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_select_the_first_qualification_request
-    then_i_see_the(
-      :assessor_edit_qualification_request_page,
-      application_form_id:,
-    )
+    then_i_see_the(:assessor_edit_qualification_request_page, reference:)
 
     when_the_request_is_not_received_and_failed
-    then_i_see_the(:assessor_qualification_requests_page, application_form_id:)
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_go_back_to_overview
     and_i_see_an_in_progress_status
   end
 
   it "not received and not failed" do
-    when_i_visit_the(:assessor_application_page, application_form_id:)
+    when_i_visit_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
     and_i_click_record_qualifications_task
-    then_i_see_the(:assessor_qualification_requests_page, application_form_id:)
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_select_the_first_qualification_request
-    then_i_see_the(
-      :assessor_edit_qualification_request_page,
-      application_form_id:,
-    )
+    then_i_see_the(:assessor_edit_qualification_request_page, reference:)
 
     when_the_request_is_not_received_and_not_failed
-    then_i_see_the(:assessor_qualification_requests_page, application_form_id:)
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_go_back_to_overview
     and_i_see_a_waiting_on_status
@@ -174,5 +162,5 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
       end
   end
 
-  delegate :id, to: :application_form, prefix: true
+  delegate :reference, to: :application_form
 end

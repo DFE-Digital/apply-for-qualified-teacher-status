@@ -1,7 +1,7 @@
 module PageObjects
   module AssessorInterface
     class RequestFurtherInformation < SitePrism::Page
-      set_url "/assessor/applications/{application_form_id}/assessments/{assessment_id}" \
+      set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/further-information-requests/preview"
 
       sections :items, ".app-further-information-request-item" do
