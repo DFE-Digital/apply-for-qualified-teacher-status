@@ -59,8 +59,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
            assessment,
          ).rollback?
         {
-          title: "Reverse decision",
-          path: [:rollback, :assessor_interface, application_form, assessment],
+          name: "Reverse decision",
+          link: [:rollback, :assessor_interface, application_form, assessment],
         }
       end,
       if AssessorInterface::ApplicationFormPolicy.new(
@@ -68,8 +68,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
            application_form,
          ).withdraw?
         {
-          title: "Withdraw",
-          path: [:withdraw, :assessor_interface, application_form],
+          name: "Withdraw",
+          link: [:withdraw, :assessor_interface, application_form],
         }
       end,
     ].compact
@@ -96,10 +96,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
     {
       title: "Management",
-      items:
-        management_tasks.map do |task|
-          { name: task[:title], link: task[:path] }
-        end,
+      items: management_tasks,
     }
   end
 
