@@ -3,12 +3,12 @@
 <h3 class="govuk-heading-m">Why your application was declined</h3>
 
 <% if view_object.show_further_information_request_expired_content? %>
-  <%= govuk_inset_text(text: t(".further_information_request_expired")) %>
+  <%= govuk_inset_text(text: t(".failure_reasons.further_information_request_expired")) %>
 <% end %>
 
 <% if view_object.show_professional_standing_request_expired_content? %>
   <%= govuk_inset_text(text: t(
-    ".professional_standing_request_expired",
+    ".failure_reasons.professional_standing_request_expired",
     certificate_name: region_certificate_name(view_object.region),
     teaching_authority_name: region_teaching_authority_name(view_object.region)
   )) %>
@@ -18,13 +18,11 @@
   <h4 class="govuk-heading-s">Notes from the assessor:</h4>
 
   <% sections.each do |section| %>
-    <h5 class="govuk-heading-s"><%= t(".assessment_section.#{section[:assessment_section_key]}") %></h5>
+    <h5 class="govuk-heading-s"><%= section[:assessment_section_key].humanize %></h5>
     <ul class="govuk-list">
       <% section[:failure_reasons].each do |failure_reason| %>
         <li>
-          <h6 class="govuk-body">
-            <%= t(failure_reason[:key], scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %>
-          </h6>
+          <h6 class="govuk-body"><%= t(".failure_reasons.#{failure_reason[:key]}") %></h6>
 
           <% if (text = failure_reason[:assessor_feedback]).present? %>
             <%= govuk_inset_text { simple_format text } %>
