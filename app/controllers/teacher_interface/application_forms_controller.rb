@@ -13,7 +13,7 @@ module TeacherInterface
     define_history_check :edit
 
     def new
-      existing_application_form = current_teacher.application_form
+      existing_application_form = application_form
 
       @already_applied = existing_application_form.present?
       @needs_region = false
@@ -26,7 +26,7 @@ module TeacherInterface
     end
 
     def create
-      @already_applied = current_teacher.application_form.present?
+      @already_applied = application_form.present?
 
       @country_region_form =
         CountryRegionForm.new(
@@ -44,15 +44,15 @@ module TeacherInterface
     end
 
     def show
-      @view_object = ApplicationFormShowViewObject.new(current_teacher:)
-
-      if @view_object.application_form.nil?
+      if application_form.nil?
         redirect_to %i[new teacher_interface application_form]
       end
+
+      @view_object = ApplicationFormViewObject.new(application_form:)
     end
 
     def edit
-      @view_object = ApplicationFormShowViewObject.new(current_teacher:)
+      @view_object = ApplicationFormViewObject.new(application_form:)
 
       @sanction_confirmation_form =
         SanctionConfirmationForm.new(
@@ -62,7 +62,7 @@ module TeacherInterface
     end
 
     def update
-      @view_object = ApplicationFormShowViewObject.new(current_teacher:)
+      @view_object = ApplicationFormViewObject.new(application_form:)
 
       if (
            @sanction_confirmation_form =

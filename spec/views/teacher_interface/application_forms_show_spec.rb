@@ -5,9 +5,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
   before do
     assign(
       :view_object,
-      TeacherInterface::ApplicationFormShowViewObject.new(
-        current_teacher: application_form.teacher,
-      ),
+      TeacherInterface::ApplicationFormViewObject.new(application_form:),
     )
   end
 
@@ -46,7 +44,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       end
 
       it { is_expected.to match(/Your QTS application has been declined/) }
-      it { is_expected.to match(/Notes/) }
+      it { is_expected.to match(/Why your application was declined/) }
       it { is_expected.to match(/you can make a new application in future/) }
     end
 

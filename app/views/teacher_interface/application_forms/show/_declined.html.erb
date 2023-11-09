@@ -2,39 +2,18 @@
 
 <h3 class="govuk-heading-m">Why your application was declined</h3>
 
-<% if view_object.show_further_information_request_expired_content? %>
-  <%= govuk_inset_text(text: t(".failure_reasons.further_information_request_expired")) %>
-<% end %>
+<% if (declined_reasons = view_object.declined_reasons).present? %>
+  <% declined_reasons.each do |title, reasons| %>
+    <% if title.present? %>
+      <h4 class="govuk-heading-s"><%= title %></h4>
+    <% end %>
 
-<% if view_object.show_professional_standing_request_expired_content? %>
-  <%= govuk_inset_text(text: t(
-    ".failure_reasons.professional_standing_request_expired",
-    certificate_name: region_certificate_name(view_object.region),
-    teaching_authority_name: region_teaching_authority_name(view_object.region)
-  )) %>
-<% end %>
-
-<% if (sections = view_object.notes_from_assessors).present? %>
-  <h4 class="govuk-heading-s">Notes from the assessor:</h4>
-
-  <% sections.each do |section| %>
-    <h5 class="govuk-heading-s"><%= section[:assessment_section_key].humanize %></h5>
     <ul class="govuk-list">
-      <% section[:failure_reasons].each do |failure_reason| %>
-        <li>
-          <h6 class="govuk-body"><%= t(".failure_reasons.#{failure_reason[:key]}") %></h6>
-
-          <% if (text = failure_reason[:assessor_feedback]).present? %>
-            <%= govuk_inset_text { simple_format text } %>
-          <% end %>
-        </li>
+      <% reasons.each do |reason| %>
+        <li><%= simple_format reason %></li>
       <% end %>
     </ul>
   <% end %>
-<% end %>
-
-<% if (recommendation_assessor_note = view_object.assessment.recommendation_assessor_note).present? %>
-  <%= govuk_inset_text { simple_format recommendation_assessor_note } %>
 <% end %>
 
 <% unless view_object.declined_cannot_reapply? %>
