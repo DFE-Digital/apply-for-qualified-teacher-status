@@ -32,21 +32,21 @@
     <% @assessment.sections.not_preliminary.each do |section| %>
       <% if (selected_failure_reasons = section.selected_failure_reasons).present? %>
         <h3 class="govuk-heading-m"><%= t(".assessment_section.#{section.key}") %></h3>
-        <ul class="govuk-list">
+        <ul class="govuk-list govuk-list--bullet">
           <% selected_failure_reasons.each do |failure_reason| %>
             <li>
               <h4 class="govuk-heading-s">
                 <%= t(failure_reason.key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %>
               </h4>
 
-              <% if FailureReasons.decline?(failure_reason: failure_reason.key) %>
-                <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
-              <% else %>
-                <p class="govuk-body govuk-!-margin-bottom-2">Your note (the applicant won’t see this):</p>
-              <% end %>
+              <% if (assessor_feedback = failure_reason.assessor_feedback).present? %>
+                <% if FailureReasons.decline?(failure_reason: failure_reason.key) %>
+                  <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
+                <% else %>
+                  <p class="govuk-body govuk-!-margin-bottom-2">Your note (the applicant won’t see this):</p>
+                <% end %>
 
-              <%= govuk_inset_text do %>
-                <%= simple_format failure_reason.assessor_feedback %>
+                <%= govuk_inset_text { simple_format assessor_feedback } %>
               <% end %>
             </li>
           <% end %>

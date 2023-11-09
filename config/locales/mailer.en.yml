@@ -9,7 +9,7 @@ en:
       application_awarded:
         subject: Your QTS application was successful
       application_declined:
-        subject: Your QTS application has been declined
+        subject: Your QTS application was unsuccessful
       application_not_submitted:
         subject:
           0: Your draft QTS application will be deleted in 2 weeks

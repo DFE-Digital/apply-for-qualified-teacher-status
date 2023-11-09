@@ -1,25 +1,43 @@
 Dear <%= application_form_full_name(@application_form) %>
 
-# Your QTS application has been declined
-
 <%= render "shared/teacher_mailer/reference_number" %>
 
-Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application.
+Thank you for applying for QTS in England. Unfortunately, your application has been declined.
 
-Unfortunately, we’re unable to award QTS status.
+# Reason for decline
 
-<%- if @further_information_requested -%>
+<% @view_object.declined_reasons.each do |title, reasons| %>
+<% if title.present? %>
+## <%= title %>
+
+<% end %>
+<% reasons.each do |reason| %>
+- <%= reason.gsub("\n\n", "\n").gsub("\n", "\n  ") %>
+<% end %>
+
+<% end %>
+<% unless @view_object.declined_cannot_reapply? %>
 # What you can do next
 
-You can sign in to find out why your application was declined:
-<%- else -%>
-# Why your QTS application was declined
+You’ll be able to make a new application for QTS once you've addressed the decline reasons we've given. If you reapply for QTS, you’ll not be able to review the details of your previous application.
 
-You can sign in to find out why your application was declined:
-<%- end -%>
+[Apply again](<%= new_teacher_interface_application_form_url %>)
 
-<%= new_teacher_session_url %>
+You may want to [explore other routes to getting QTS](https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk).
 
-<%= render "shared/teacher_mailer/help_us_to_improve_this_service" %>
+<% end %>
+# Decision review
+
+Applicants who have been declined for QTS are entitled to a review of the decline decision by a Casework Manager.
+If you would like to request a decision review, you’ll need to provide:
+
+- formal evidence and reasoning as to how you meet the required assessment criteria
+- additional information not included in your original application that would support your decision review
+
+Your request for review must be received within 28 days of receipt of the decision to decline QTS. Email your request for review, including the information required as above, to <%= t("service.email.enquiries") %>.
+
+If you are not satisfied with the outcome of the decision review, you can request a final formal appeal to a senior Teacher Qualification Manager.
+
+[Sign in](<%= new_teacher_session_url %>) to review the outcome of your application.
 
 <%= render "shared/teacher_mailer/footer" %>

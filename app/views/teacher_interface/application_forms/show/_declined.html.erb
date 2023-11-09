@@ -1,50 +1,35 @@
 <h2 class="govuk-heading-l">Your QTS application has been declined</h2>
 
-<h3 class="govuk-heading-m">Why your application was declined</h3>
+<p class="govuk-body">Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application.</p>
 
-<% if (declined_reasons = view_object.declined_reasons).present? %>
-  <% declined_reasons.each do |title, reasons| %>
-    <% if title.present? %>
-      <h4 class="govuk-heading-s"><%= title %></h4>
-    <% end %>
+<h3 class="govuk-heading-m">Reason for decline</h3>
 
-    <ul class="govuk-list">
-      <% reasons.each do |reason| %>
-        <li><%= simple_format reason %></li>
-      <% end %>
-    </ul>
+<% view_object.declined_reasons.each do |title, reasons| %>
+  <% if title.present? %>
+    <h4 class="govuk-heading-s"><%= title %></h4>
   <% end %>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <% reasons.each do |reason| %>
+      <li><%= simple_format reason %></li>
+    <% end %>
+  </ul>
 <% end %>
 
 <% unless view_object.declined_cannot_reapply? %>
-  <h3 class="govuk-heading-m">What you can do next</h3>
+  <h2 class="govuk-heading-l">What you can do next</h2>
 
-  <p class="govuk-body">While your QTS application was declined this time, you can make a new application in future, if you’re able to address the decline reasons we’ve set out.</p>
+  <p class="govuk-body">You’ll be able to make a new application for QTS once you've addressed the decline reasons we've given. If you reapply for QTS, you’ll not be able to review the details of your previous application.</p>
 
-  <p class="govuk-body">If you reapply for QTS, you will not be able to review the details of your previous application.</p>
+  <p class="govuk-body"><%= govuk_button_link_to "Apply again", %i[new teacher_interface application_form] %></p>
 
-  <p class="govuk-body"><%= govuk_button_link_to "Apply again", new_teacher_interface_application_form_path %></p>
-
-  <h3 class="govuk-heading-m">Other routes to teaching in England</h3>
-
-  <p class="govuk-body">You may want to explore other routes to teaching in England. QTS is not a requirement to teach in independent (private) schools, academies, free schools and in the further education (FE) sector in England.</p>
-
-  <p class="govuk-body">You can find out more about working in these sectors from:</p>
-
-  <ul class="govuk-list">
-    <li><%= govuk_link_to "Independent Schools Council", "http://www.isc.co.uk/" %></li>
-    <li><%= govuk_link_to "The Education & Training Foundation", "http://www.et-foundation.co.uk/" %></li>
-    <li><%= govuk_link_to "Academies and Free Schools", "https://www.gov.uk/types-of-school" %></li>
-  </ul>
-
-  <p class="govuk-body">For further information on other routes to gaining QTS visit <%= govuk_link_to "Get Into Teaching", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" %>.</p>
-  <p class="govuk-body">You can also learn more about <%= govuk_link_to "training to teach in England", "https://getintoteaching.education.gov.uk/non-uk-teachers/train-to-teach-in-england-as-an-international-student" %>.</p>
+  <p class="govuk-body">You may want to <%= govuk_link_to "explore other routes to getting QTS", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk" %>.</p>
 <% end %>
 
-<h3 class="govuk-heading-m">Decision review</h3>
+<h2 class="govuk-heading-l">Decision review</h2>
 
 <p class="govuk-body">Applicants who have been declined for QTS are entitled to a review of the decline decision by a Casework Manager.</p>
-<p class="govuk-body">If you would like to request a decision review, you will need to provide:</p>
+<p class="govuk-body">If you would like to request a decision review, you’ll need to provide:</p>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>formal evidence and reasoning as to how you meet the required assessment criteria</li>
@@ -52,7 +37,5 @@
 </ul>
 
 <p class="govuk-body">Your request for review must be received within 28 days of receipt of the decision to decline QTS.</p>
-
 <p class="govuk-body">Email your request for review, including the information required as above, to <%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %>.</p>
-
 <p class="govuk-body">If you are not satisfied with the outcome of the decision review, you can request a final formal appeal to a senior Teacher Qualification Manager.</p>

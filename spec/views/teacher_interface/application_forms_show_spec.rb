@@ -44,8 +44,8 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       end
 
       it { is_expected.to match(/Your QTS application has been declined/) }
-      it { is_expected.to match(/Why your application was declined/) }
-      it { is_expected.to match(/you can make a new application in future/) }
+      it { is_expected.to match(/Reason for decline/) }
+      it { is_expected.to match(/You’ll be able to make a new application/) }
     end
 
     context "and a further information request" do
@@ -62,7 +62,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       end
 
       it { is_expected.to match(/Your QTS application has been declined/) }
-      it { is_expected.to match(/you can make a new application in future/) }
+      it { is_expected.to match(/You’ll be able to make a new application/) }
 
       it "does not show the assessor notes to the applicant" do
         expect(subject).not_to match(/A note/)

@@ -19,6 +19,9 @@ class TeacherMailer < ApplicationMailer
   end
 
   def application_declined
+    @view_object =
+      TeacherInterface::ApplicationFormViewObject.new(application_form:)
+
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
       to: teacher.email,

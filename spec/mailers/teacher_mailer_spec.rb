@@ -58,7 +58,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     describe "#subject" do
       subject(:subject) { mail.subject }
 
-      it { is_expected.to eq("Your QTS application has been declined") }
+      it { is_expected.to eq("Your QTS application was unsuccessful") }
     end
 
     describe "#to" do
@@ -72,30 +72,10 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
-      it do
-        is_expected.to include(
-          "You can sign in to find out why your application was declined:",
-        )
-      end
+      it { is_expected.to include("Reason for decline") }
     end
 
     it_behaves_like "an observable mailer", "application_declined"
-
-    context "further information requested" do
-      let(:assessment) do
-        create(:assessment, :with_further_information_request)
-      end
-
-      describe "#body" do
-        subject(:body) { mail.body.encoded }
-
-        it do
-          is_expected.to include(
-            "You can sign in to find out why your application was declined:",
-          )
-        end
-      end
-    end
   end
 
   describe "#application_not_submitted" do
