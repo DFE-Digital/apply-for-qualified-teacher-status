@@ -33,9 +33,6 @@
   :qualifications:
     - institution_name
     - institution_country_code
-    - start_date
-    - complete_date
-    - certificate_date
   :qualification_requests:
     - location_note
     - review_note
@@ -70,8 +67,5 @@
     - contact_email
     - country_code
     - email
-    - end_date
     - job
     - school_name
-    - start_date
-    - still_employed
