@@ -25,14 +25,7 @@ class ApplicationFormStatusUpdater
         waiting_on_reference:,
       )
 
-      if (old_status = application_form.status) != status
-        application_form.update!(status:)
-        create_timeline_event(
-          event_type: "status_changed",
-          old_value: old_status,
-          new_value: status,
-        )
-      end
+      application_form.update!(status:) if application_form.status != status
 
       if (old_action_required_by = application_form.action_required_by) !=
            action_required_by

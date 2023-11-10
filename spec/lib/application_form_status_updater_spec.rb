@@ -66,16 +66,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     it "changes status to #{new_status}" do
       expect { call }.to change(application_form, :status).to(new_status)
     end
-
-    it "records a timeline event" do
-      expect { call }.to have_recorded_timeline_event(
-        :status_changed,
-        creator: user,
-        application_form:,
-        old_value: "draft",
-        new_value: new_status,
-      )
-    end
   end
 
   describe "#call" do
@@ -479,10 +469,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     context "when status is unchanged" do
       it "doesn't change the status from draft" do
         expect { call }.to_not change(application_form, :status).from("draft")
-      end
-
-      it "doesn't record a timeline event" do
-        expect { call }.to_not have_recorded_timeline_event(:status_changed)
       end
 
       include_examples "doesn't change action required by"

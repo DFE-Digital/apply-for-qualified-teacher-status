@@ -187,11 +187,11 @@ FactoryBot.define do
       after(:create) do |application_form, _evaluator|
         create(
           :timeline_event,
-          :status_changed,
+          :stage_changed,
           application_form:,
           creator: application_form.teacher,
           old_value: "draft",
-          new_value: "submitted",
+          new_value: "not_started",
         )
       end
     end

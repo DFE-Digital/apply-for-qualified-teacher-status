@@ -9,29 +9,19 @@ RSpec.describe SubmitApplicationForm do
 
   subject(:call) { described_class.call(application_form:, user:) }
 
-  describe "application form submitted status" do
-    subject(:submitted?) { application_form.submitted? }
-
-    it { is_expected.to be false }
-
-    context "when calling the service" do
-      before { call }
-
-      it { is_expected.to be true }
-    end
+  it "changes stage to not started" do
+    expect { call }.to change(application_form, :stage).from("draft").to(
+      "not_started",
+    )
   end
 
-  describe "application form preliminary check status" do
-    subject(:submitted?) { application_form.preliminary_check? }
+  context "when region requires preliminary check" do
+    let(:region) { create(:region, :requires_preliminary_check) }
 
-    it { is_expected.to be false }
-
-    context "when calling the service" do
-      let(:region) { create(:region, :requires_preliminary_check) }
-
-      before { call }
-
-      it { is_expected.to be true }
+    it "changes stage to pre-assessment" do
+      expect { call }.to change(application_form, :stage).from("draft").to(
+        "pre_assessment",
+      )
     end
   end
 
@@ -75,11 +65,11 @@ RSpec.describe SubmitApplicationForm do
 
   it "records a timeline event" do
     expect { call }.to have_recorded_timeline_event(
-      :status_changed,
+      :stage_changed,
       creator: user,
       application_form:,
       old_value: "draft",
-      new_value: "submitted",
+      new_value: "not_started",
     )
   end
 
