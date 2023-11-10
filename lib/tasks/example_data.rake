@@ -163,7 +163,18 @@ def create_application_forms
 
       assessment = AssessmentFactory.call(application_form:)
 
-      if application_form.waiting_on?
+      if application_form.declined?
+        FactoryBot.create(
+          :selected_failure_reason,
+          :fi_requestable,
+          assessment_section: assessment.sections.first,
+        )
+        FactoryBot.create(
+          :selected_failure_reason,
+          :declinable,
+          assessment_section: assessment.sections.second,
+        )
+      elsif application_form.waiting_on?
         if application_form.teaching_authority_provides_written_statement
           FactoryBot.create(
             :professional_standing_request,

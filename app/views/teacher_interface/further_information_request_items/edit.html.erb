@@ -1,14 +1,15 @@
 <% content_for :page_title, "#{"Error: " if @form&.errors&.any?}Further information required" %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_further_information_request_path(@further_information_request)) %>
 
-<h1 class="govuk-heading-l">Further information required</h1>
-<h3 class="govuk-heading-s">Notes from the assessor</h3>
+<%= form_with model: @form, url: [:teacher_interface, :application_form, @further_information_request, @further_information_request_item], method: :put do |f| %>
+  <h1 class="govuk-heading-l">Further information required</h1>
 
-<%= govuk_inset_text do %>
-  <%= simple_format @further_information_request_item.failure_reason_assessor_feedback %>
-<% end %>
+  <h2 class="govuk-heading-s">Notes from the assessor</h2>
 
-<%= form_with model: @form, url: teacher_interface_application_form_further_information_request_further_information_request_item_path, method: :put do |f| %>
+  <%= govuk_inset_text do %>
+    <%= simple_format @further_information_request_item.failure_reason_assessor_feedback %>
+  <% end %>
+
   <% if @further_information_request_item.text? %>
     <%= f.govuk_text_area :response, label: { size: "s" } %>
   <% end %>
