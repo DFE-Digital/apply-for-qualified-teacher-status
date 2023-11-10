@@ -26,7 +26,11 @@ class MailerPreview
   attr_reader :mailer_class, :params
 
   def client
-    @client ||= Notifications::Client.new(ENV.fetch("GOVUK_NOTIFY_API_KEY"))
+    @client ||=
+      begin
+        api_key = ENV["GOVUK_NOTIFY_API_KEY"]
+        Notifications::Client.new(api_key) if api_key.present?
+      end
   end
 
   def mailer
@@ -34,6 +38,8 @@ class MailerPreview
   end
 
   def generate_preview(mail)
+    return "<p>Missing GOV.UK Notify API key.</p>" if client.nil?
+
     client.generate_template_preview(
       ApplicationMailer::GOVUK_NOTIFY_TEMPLATE_ID,
       personalisation: {
