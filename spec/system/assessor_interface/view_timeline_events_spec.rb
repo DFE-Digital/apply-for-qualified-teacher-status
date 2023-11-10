@@ -41,7 +41,7 @@ RSpec.describe "Assessor view timeline events", type: :system do
       "Note created",
     )
     expect(assessor_timeline_page.timeline_items.second.title).to have_content(
-      "Status changed",
+      "Stage changed",
     )
     expect(assessor_timeline_page.timeline_items.third.title).to have_content(
       "Assessor assigned",
@@ -54,7 +54,7 @@ RSpec.describe "Assessor view timeline events", type: :system do
         application_form =
           create(:application_form, :submitted, :with_assessment)
         create(:timeline_event, :assessor_assigned, application_form:)
-        create(:timeline_event, :status_changed, application_form:)
+        create(:timeline_event, :stage_changed, application_form:)
         create(:timeline_event, :note_created, application_form:)
         application_form
       end

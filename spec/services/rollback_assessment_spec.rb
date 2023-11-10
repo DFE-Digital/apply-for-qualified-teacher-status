@@ -19,12 +19,12 @@ RSpec.describe RollbackAssessment do
       end
 
       it "reverts application form status" do
-        expect { call }.to change(application_form, :status).to("waiting_on")
+        expect { call }.to change(application_form, :stage).to("verification")
       end
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :status_changed,
+          :stage_changed,
           creator: user,
         )
       end
@@ -40,12 +40,12 @@ RSpec.describe RollbackAssessment do
       end
 
       it "reverts application form status" do
-        expect { call }.to change(application_form, :status).to("waiting_on")
+        expect { call }.to change(application_form, :stage).to("assessment")
       end
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :status_changed,
+          :stage_changed,
           creator: user,
         )
       end
@@ -57,12 +57,12 @@ RSpec.describe RollbackAssessment do
       end
 
       it "reverts application form status" do
-        expect { call }.to change(application_form, :status).to("submitted")
+        expect { call }.to change(application_form, :stage).to("not_started")
       end
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :status_changed,
+          :stage_changed,
           creator: user,
         )
       end
@@ -81,12 +81,12 @@ RSpec.describe RollbackAssessment do
       end
 
       it "reverts application form status" do
-        expect { call }.to change(application_form, :status).to("waiting_on")
+        expect { call }.to change(application_form, :stage).to("verification")
       end
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :status_changed,
+          :stage_changed,
           creator: user,
         )
       end
@@ -102,12 +102,12 @@ RSpec.describe RollbackAssessment do
       end
 
       it "reverts application form status" do
-        expect { call }.to change(application_form, :status).to("waiting_on")
+        expect { call }.to change(application_form, :stage).to("assessment")
       end
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :status_changed,
+          :stage_changed,
           creator: user,
         )
       end
@@ -119,12 +119,12 @@ RSpec.describe RollbackAssessment do
       end
 
       it "reverts application form status" do
-        expect { call }.to change(application_form, :status).to("submitted")
+        expect { call }.to change(application_form, :stage).to("not_started")
       end
 
       it "records a timeline event" do
         expect { call }.to have_recorded_timeline_event(
-          :status_changed,
+          :stage_changed,
           creator: user,
         )
       end
@@ -164,12 +164,12 @@ RSpec.describe RollbackAssessment do
     end
 
     it "reverts application form status" do
-      expect { call }.to change(application_form, :status).to("submitted")
+      expect { call }.to change(application_form, :stage).to("not_started")
     end
 
     it "records a timeline event" do
       expect { call }.to have_recorded_timeline_event(
-        :status_changed,
+        :stage_changed,
         creator: user,
       )
     end

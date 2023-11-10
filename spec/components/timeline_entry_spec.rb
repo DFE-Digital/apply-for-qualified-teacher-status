@@ -51,7 +51,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
-  context "state changed" do
+  context "status changed" do
     let(:timeline_event) do
       create(
         :timeline_event,
