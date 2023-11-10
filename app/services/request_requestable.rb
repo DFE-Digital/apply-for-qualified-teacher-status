@@ -14,7 +14,6 @@ class RequestRequestable
     ActiveRecord::Base.transaction do
       requestable.requested!
       create_timeline_event
-      ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
     requestable.after_requested(user:)
