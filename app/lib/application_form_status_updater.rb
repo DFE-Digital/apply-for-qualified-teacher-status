@@ -25,11 +25,11 @@ class ApplicationFormStatusUpdater
         waiting_on_reference:,
       )
 
-      application_form.update!(status:) if application_form.status != status
+      application_form.status = status if application_form.status != status
 
       if (old_action_required_by = application_form.action_required_by) !=
            action_required_by
-        application_form.update!(action_required_by:)
+        application_form.action_required_by = action_required_by
         create_timeline_event(
           event_type: "action_required_by_changed",
           old_value: old_action_required_by,
@@ -38,7 +38,7 @@ class ApplicationFormStatusUpdater
       end
 
       if (old_stage = application_form.stage) != stage
-        application_form.update!(stage:)
+        application_form.stage = stage
         create_timeline_event(
           event_type: "stage_changed",
           old_value: old_stage,
@@ -47,8 +47,10 @@ class ApplicationFormStatusUpdater
       end
 
       if statuses != application_form.statuses
-        application_form.update!(statuses:)
+        application_form.statuses = statuses
       end
+
+      application_form.save! if application_form.changed?
     end
   end
 
