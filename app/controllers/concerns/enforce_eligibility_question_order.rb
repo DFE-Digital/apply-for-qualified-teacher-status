@@ -30,7 +30,7 @@ module EnforceEligibilityQuestionOrder
       qualified_for_subject: eligibility_interface_qualified_for_subject_path,
       work_experience: eligibility_interface_work_experience_path,
       misconduct: eligibility_interface_misconduct_path,
-      eligibility: eligibility_interface_result_path,
+      result: eligibility_interface_result_path,
     }.slice(*eligibility_check.status_route)
   end
 end

@@ -95,10 +95,10 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_start_page)
 
     when_i_visit_the(:eligibility_eligible_page)
-    then_i_see_the(:eligibility_start_page)
+    then_i_see_the(:eligibility_country_page)
 
     when_i_visit_the(:eligibility_ineligible_page)
-    then_i_see_the(:eligibility_start_page)
+    then_i_see_the(:eligibility_country_page)
 
     when_i_press_start_now
     then_i_see_the(:eligibility_country_page)

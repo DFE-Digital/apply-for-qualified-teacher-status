@@ -23,8 +23,7 @@ RSpec.describe "Throttling", rack_attack: true do
     /eligibility/qualifications
     /eligibility/teach-children
     /eligibility/start
-    /eligibility/eligible
-    /eligibility/ineligible
+    /eligibility/result
     /eligibility/misconduct
     /support
   ].each { |path| include_examples "throttled", path }
