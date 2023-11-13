@@ -91,6 +91,7 @@
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class ApplicationForm < ApplicationRecord
+  include Expirable
   include Remindable
 
   belongs_to :teacher
@@ -261,8 +262,8 @@ class ApplicationForm < ApplicationRecord
     created_at >= Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
   end
 
-  def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)
-    return false if teacher.application_form != self
+  def should_send_reminder_email?(number_of_reminders_sent)
+    return false if days_until_expired.nil? || teacher.application_form != self
 
     (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
       (days_until_expired <= 7 && number_of_reminders_sent == 1)

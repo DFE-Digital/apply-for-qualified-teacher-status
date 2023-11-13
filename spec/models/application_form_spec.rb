@@ -102,6 +102,7 @@ RSpec.describe ApplicationForm, type: :model do
     )
   end
 
+  it_behaves_like "an expirable"
   it_behaves_like "a remindable"
 
   describe "columns" do

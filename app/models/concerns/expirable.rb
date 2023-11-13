@@ -9,6 +9,11 @@ module Expirable
     requested_at + expires_after
   end
 
+  def days_until_expired
+    return nil if expires_at.nil?
+    (expires_at.to_date - Time.zone.today).to_i
+  end
+
   def expired!
     update!(expired_at: Time.zone.now)
   end
