@@ -162,6 +162,23 @@ class EligibilityCheck < ApplicationRecord
     :eligibility
   end
 
+  def status_route
+    if country_code.present? && country_eligibility_status == :ineligible
+      %i[country eligibility]
+    elsif skip_additional_questions? && qualification
+      %i[country region qualification eligibility]
+    else
+      %i[country region qualification degree teach_children] +
+        (
+          if qualified_for_subject_required?
+            %i[qualified_for_subject]
+          else
+            []
+          end
+        ) + %i[work_experience misconduct eligibility]
+    end
+  end
+
   def qualified_for_subject_required?
     return false if country_code.blank?
 

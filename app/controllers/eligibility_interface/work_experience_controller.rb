@@ -17,7 +17,7 @@ module EligibilityInterface
           work_experience_form_params.merge(eligibility_check:),
         )
       if @work_experience_form.save
-        redirect_to paths[:misconduct]
+        redirect_to eligibility_interface_misconduct_path
       else
         render :new, status: :unprocessable_entity
       end

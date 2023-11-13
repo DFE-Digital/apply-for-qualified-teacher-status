@@ -5,6 +5,14 @@ class EligibilityInterface::FinishController < EligibilityInterface::BaseControl
   before_action :complete_eligibility_check
   before_action :load_eligibility_check
 
+  def result
+    if eligibility_check.eligible?
+      redirect_to %i[eligibility_interface eligible]
+    else
+      redirect_to %i[eligibility_interface ineligible]
+    end
+  end
+
   def eligible
     unless eligibility_check.eligible?
       redirect_to %i[eligibility_interface ineligible]

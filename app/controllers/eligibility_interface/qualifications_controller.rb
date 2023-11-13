@@ -32,7 +32,7 @@ module EligibilityInterface
            eligibility_check.eligible?
         eligibility_interface_eligible_path
       else
-        paths[:degree]
+        eligibility_interface_degree_path
       end
     end
   end

@@ -157,6 +157,8 @@ Rails.application.routes.draw do
     root to: "start#root"
 
     resource :start, controller: "start", only: %i[show create]
+
+    get "result", to: "finish#result"
     get "eligible", to: "finish#eligible"
     get "ineligible", to: "finish#ineligible"
 
