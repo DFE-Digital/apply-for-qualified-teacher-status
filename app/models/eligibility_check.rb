@@ -142,7 +142,7 @@ class EligibilityCheck < ApplicationRecord
   def status
     return :country if country_code.blank?
 
-    return :eligibility if country_eligibility_status == :ineligible
+    return :result if country_eligibility_status == :ineligible
 
     return :region if region.nil?
     return :qualification if qualification.nil?
@@ -159,7 +159,24 @@ class EligibilityCheck < ApplicationRecord
       return :misconduct if free_of_sanctions.nil?
     end
 
-    :eligibility
+    :result
+  end
+
+  def status_route
+    if country_code.present? && country_eligibility_status == :ineligible
+      %i[country result]
+    elsif skip_additional_questions? && qualification
+      %i[country region qualification result]
+    else
+      %i[country region qualification degree teach_children] +
+        (
+          if qualified_for_subject_required?
+            %i[qualified_for_subject]
+          else
+            []
+          end
+        ) + %i[work_experience misconduct result]
+    end
   end
 
   def qualified_for_subject_required?

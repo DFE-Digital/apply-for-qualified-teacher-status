@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EnforceEligibilityQuestionOrder
   extend ActiveSupport::Concern
 
@@ -13,7 +15,7 @@ module EnforceEligibilityQuestionOrder
   private
 
   def current_page_is_allowed?
-    order = paths.keys.index(eligibility_check&.status)
+    order = paths.keys.index(eligibility_check.status)
     current_position = paths.values.index(request.path)
     current_position && order && current_position <= order
   end
@@ -28,6 +30,7 @@ module EnforceEligibilityQuestionOrder
       qualified_for_subject: eligibility_interface_qualified_for_subject_path,
       work_experience: eligibility_interface_work_experience_path,
       misconduct: eligibility_interface_misconduct_path,
-    }
+      result: eligibility_interface_result_path,
+    }.slice(*eligibility_check.status_route)
   end
 end

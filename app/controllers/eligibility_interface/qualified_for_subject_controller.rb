@@ -15,7 +15,7 @@ module EligibilityInterface
           qualified_for_subject_form_params.merge(eligibility_check:),
         )
       if @qualified_for_subject_form.save
-        redirect_to paths[:work_experience]
+        redirect_to eligibility_interface_work_experience_path
       else
         render :new, status: :unprocessable_entity
       end

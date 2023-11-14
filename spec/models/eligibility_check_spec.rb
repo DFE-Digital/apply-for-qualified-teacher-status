@@ -379,13 +379,13 @@ RSpec.describe EligibilityCheck, type: :model do
         }
       end
 
-      it { is_expected.to eq(:eligibility) }
+      it { is_expected.to eq(:result) }
     end
 
     context "with an ineligible country" do
       let(:attributes) { { country_code: "XX" } }
 
-      it { is_expected.to eq(:eligibility) }
+      it { is_expected.to eq(:result) }
     end
   end
 

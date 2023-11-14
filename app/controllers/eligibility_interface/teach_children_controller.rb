@@ -26,9 +26,9 @@ module EligibilityInterface
 
     def next_path
       if eligibility_check.qualified_for_subject_required?
-        paths[:qualified_for_subject]
+        eligibility_interface_qualified_for_subject_path
       else
-        paths[:work_experience]
+        eligibility_interface_work_experience_path
       end
     end
 

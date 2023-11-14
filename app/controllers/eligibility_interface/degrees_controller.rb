@@ -10,7 +10,7 @@ module EligibilityInterface
       @degree_form =
         DegreeForm.new(degree_form_params.merge(eligibility_check:))
       if @degree_form.save
-        redirect_to paths[:teach_children]
+        redirect_to eligibility_interface_teach_children_path
       else
         render :new, status: :unprocessable_entity
       end

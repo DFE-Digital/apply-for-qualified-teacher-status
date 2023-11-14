@@ -21,7 +21,7 @@ module EligibilityInterface
     def next_url
       {
         eligible: eligibility_interface_qualifications_path,
-        ineligible: eligibility_interface_ineligible_path,
+        ineligible: eligibility_interface_result_path,
         region: eligibility_interface_region_path,
       }.fetch(eligibility_check.country_eligibility_status)
     end

@@ -157,8 +157,7 @@ Rails.application.routes.draw do
     root to: "start#root"
 
     resource :start, controller: "start", only: %i[show create]
-    get "eligible", to: "finish#eligible"
-    get "ineligible", to: "finish#ineligible"
+    resource :result, controller: "result", only: %i[show]
 
     get "countries", to: "countries#new"
     post "countries", to: "countries#create"

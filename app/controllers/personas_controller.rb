@@ -27,7 +27,7 @@ class PersonasController < ApplicationController
 
     session[:eligibility_check_id] = eligibility_check.id
 
-    redirect_to %i[eligibility_interface eligible]
+    redirect_to %i[eligibility_interface result]
   end
 
   def staff_sign_in

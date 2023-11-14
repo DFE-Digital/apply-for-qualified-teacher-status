@@ -95,10 +95,10 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_start_page)
 
     when_i_visit_the(:eligibility_eligible_page)
-    then_i_see_the(:eligibility_start_page)
+    then_i_see_the(:eligibility_country_page)
 
     when_i_visit_the(:eligibility_ineligible_page)
-    then_i_see_the(:eligibility_start_page)
+    then_i_see_the(:eligibility_country_page)
 
     when_i_press_start_now
     then_i_see_the(:eligibility_country_page)
@@ -308,6 +308,20 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_ineligible_page)
+  end
+
+  it "ineligible path when filtering by country, not qualified in relevant subject" do
+    when_i_visit_the(:eligibility_start_page)
+    then_i_see_the(:eligibility_start_page)
+
+    when_i_press_start_now
+    then_i_see_the(:eligibility_country_page)
+
+    when_i_select_an_ineligible_country
+    then_i_see_the(:eligibility_ineligible_page)
+
+    when_i_visit_the(:eligibility_qualification_page)
     then_i_see_the(:eligibility_ineligible_page)
   end
 
