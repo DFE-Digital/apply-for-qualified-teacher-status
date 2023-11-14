@@ -28,6 +28,8 @@ class VerifyAssessment
         create_qualification_requests
         reference_requests = create_reference_requests
 
+        application_form.reload
+
         ApplicationFormStatusUpdater.call(application_form:, user:)
 
         reference_requests

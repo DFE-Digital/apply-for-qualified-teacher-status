@@ -27,6 +27,8 @@ class SubmitApplicationForm
 
       create_professional_standing_request(assessment)
 
+      application_form.reload
+
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 

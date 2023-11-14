@@ -22,6 +22,8 @@ class CreateFurtherInformationRequest
 
         RequestRequestable.call(requestable:, user:)
 
+        application_form.reload
+
         ApplicationFormStatusUpdater.call(application_form:, user:)
 
         requestable
