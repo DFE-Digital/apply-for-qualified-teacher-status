@@ -247,14 +247,9 @@ class Assessment < ApplicationRecord
     return false unless references_verified
 
     months_count =
-      WorkHistoryDuration.new(
-        work_history_relation:
-          application_form.work_histories.where(
-            id:
-              reference_requests.where(review_passed: true).map(
-                &:work_history_id
-              ),
-          ),
+      WorkHistoryDuration.for_ids(
+        reference_requests.where(review_passed: true).pluck(:work_history_id),
+        application_form:,
       ).count_months
 
     months_count >= 9

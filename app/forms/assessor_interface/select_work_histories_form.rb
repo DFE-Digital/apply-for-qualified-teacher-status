@@ -38,12 +38,6 @@ class AssessorInterface::SelectWorkHistoriesForm
   end
 
   def work_history_duration
-    WorkHistoryDuration.new(
-      work_history_relation:
-        WorkHistory.where(
-          application_form_id: application_form.id,
-          id: work_history_ids,
-        ),
-    )
+    WorkHistoryDuration.for_ids(work_history_ids, application_form:)
   end
 end

@@ -14,8 +14,7 @@ module WorkHistoryHelper
   end
 
   def work_history_name_and_duration(work_history, most_recent: false)
-    months =
-      WorkHistoryDuration.new(work_history_record: work_history).count_months
+    months = WorkHistoryDuration.for_record(work_history).count_months
 
     result = "#{work_history.school_name} (#{months} months)"
     result.concat(" ", most_recent_tag) if most_recent

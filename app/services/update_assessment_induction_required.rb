@@ -25,7 +25,10 @@ class UpdateAssessmentInductionRequired
 
   def passed_months_count
     @passed_months_count ||=
-      WorkHistoryDuration.new(work_history_relation:).count_months
+      WorkHistoryDuration.new(
+        application_form:,
+        relation: work_history_relation,
+      ).count_months
   end
 
   def work_history_relation
