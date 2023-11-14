@@ -17,6 +17,7 @@ class AssessorInterface::RequestableRequestForm
 
     if passed && !requestable.requested?
       RequestRequestable.call(requestable:, user:)
+      application_form.reload
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
