@@ -21,7 +21,7 @@
 
     summary_list.with_row do |row|
       row.with_key { "Number of months" }
-      row.with_value { WorkHistoryDuration.new(work_history_record: work_history).count_months.to_s }
+      row.with_value { WorkHistoryDuration.for_record(work_history).count_months.to_s }
     end
 
     summary_list.with_row do |row|

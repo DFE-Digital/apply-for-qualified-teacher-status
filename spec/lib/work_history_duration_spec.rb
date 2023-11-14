@@ -105,7 +105,9 @@ RSpec.describe WorkHistoryDuration do
 
   describe "#count_months" do
     context "passing an application form" do
-      subject(:work_history_duration) { described_class.new(application_form:) }
+      subject(:work_history_duration) do
+        described_class.for_application_form(application_form)
+      end
 
       it_behaves_like "month counter"
     end
@@ -113,7 +115,19 @@ RSpec.describe WorkHistoryDuration do
     context "passing a work history relation" do
       subject(:work_history_duration) do
         described_class.new(
-          work_history_relation: application_form.work_histories,
+          application_form:,
+          relation: application_form.work_histories,
+        )
+      end
+
+      it_behaves_like "month counter"
+    end
+
+    context "passing work history IDs" do
+      subject(:work_history_duration) do
+        described_class.for_ids(
+          application_form.work_histories.pluck(:id),
+          application_form:,
         )
       end
 
@@ -131,34 +145,11 @@ RSpec.describe WorkHistoryDuration do
         )
       end
 
-      let(:work_history_duration) do
-        described_class.new(work_history_record: work_history)
-      end
+      let(:work_history_duration) { described_class.for_record(work_history) }
 
       subject(:count) { work_history_duration.count_months }
 
       it { is_expected.to eq(12) }
-    end
-
-    context "passing nothing" do
-      subject(:work_history_duration) { described_class.new }
-
-      it "raises an error" do
-        expect { work_history_duration }.to raise_error(/only/)
-      end
-    end
-
-    context "passing both" do
-      subject(:work_history_duration) do
-        described_class.new(
-          application_form:,
-          work_history_relation: application_form.work_histories,
-        )
-      end
-
-      it "raises an error" do
-        expect { work_history_duration }.to raise_error(/only/)
-      end
     end
   end
 end

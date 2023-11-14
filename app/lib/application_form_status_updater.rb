@@ -95,11 +95,9 @@ class ApplicationFormStatusUpdater
     received_requests = reference_requests.filter(&:received?)
 
     months_count =
-      WorkHistoryDuration.new(
-        work_history_relation:
-          application_form.work_histories.where(
-            id: received_requests.map(&:work_history_id),
-          ),
+      WorkHistoryDuration.for_ids(
+        received_requests.map(&:work_history_id),
+        application_form:,
       ).count_months
 
     most_recent_reference_request =

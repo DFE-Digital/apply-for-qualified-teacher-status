@@ -13,7 +13,7 @@
 
 <% if application_form.created_under_new_regulations? %>
   <%
-    months_count = WorkHistoryDuration.new(application_form:).count_months
+    months_count = WorkHistoryDuration.for_application_form(application_form).count_months
     years_count = (months_count / 12).floor
     remaining_months_count = months_count - years_count * 12
   %>

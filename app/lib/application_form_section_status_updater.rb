@@ -142,7 +142,8 @@ class ApplicationFormSectionStatusUpdater
       return :not_started if work_histories.empty?
       return :in_progress unless all_work_histories_complete
 
-      months_count = WorkHistoryDuration.new(application_form:).count_months
+      months_count =
+        WorkHistoryDuration.for_application_form(application_form).count_months
       return :in_progress unless months_count >= 9
 
       :completed
