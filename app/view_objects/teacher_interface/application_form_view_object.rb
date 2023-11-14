@@ -1,43 +1,31 @@
 # frozen_string_literal: true
 
-class TeacherInterface::ApplicationFormShowViewObject
+class TeacherInterface::ApplicationFormViewObject
   include RegionHelper
 
-  def initialize(current_teacher:)
-    @current_teacher = current_teacher
+  def initialize(application_form:)
+    @application_form = application_form
   end
 
-  def teacher
-    @current_teacher
-  end
+  attr_reader :application_form
 
-  def application_form
-    @application_form ||= teacher.application_form
-  end
-
-  def assessment
-    @assessment ||= application_form&.assessment
-  end
+  delegate :assessment, :region, :teacher, to: :application_form
 
   def further_information_request
     @further_information_request ||=
       assessment&.further_information_requests&.first
   end
 
-  def professional_standing_request
-    @professional_standing_request ||= assessment&.professional_standing_request
-  end
-
   def started_at
-    application_form.created_at.strftime("%e %B %Y")
+    application_form.created_at.to_fs(:date).strip
   end
 
   def expires_at
-    (application_form.created_at + 6.months).strftime("%e %B %Y")
+    application_form.expires_at.to_fs(:date).strip
   end
 
   def task_list_sections
-    @task_list_sections ||= [
+    [
       task_list_section(
         :about_you,
         %i[personal_information identification_document],
@@ -62,40 +50,46 @@ class TeacherInterface::ApplicationFormShowViewObject
   end
 
   def completed_task_list_sections
-    @completed_task_list_sections ||=
-      task_list_sections.filter do |section|
-        section[:items].all? { |item| item[:status] == "completed" }
-      end
+    task_list_sections.filter do |section|
+      section[:items].all? { |item| item[:status] == "completed" }
+    end
   end
 
   def can_submit?
     completed_task_list_sections.count == task_list_sections.count
   end
 
-  def notes_from_assessors
-    return [] if assessment.nil? || further_information_request.present?
+  def declined_reasons
+    if further_information_request&.expired?
+      {
+        "" => [
+          I18n.t(
+            "teacher_interface.application_forms.show.declined.failure_reasons.further_information_request_expired",
+          ),
+        ],
+      }
+    elsif professional_standing_request&.expired?
+      {
+        "" => [
+          I18n.t(
+            "teacher_interface.application_forms.show.declined.failure_reasons.professional_standing_request_expired",
+            certificate_name: region_certificate_name(region),
+            teaching_authority_name: region_teaching_authority_name(region),
+          ),
+        ],
+      }
+    else
+      reasons = {}
 
-    assessment.sections.filter_map do |section|
-      next nil if section.selected_failure_reasons.empty?
+      if (note = assessment&.recommendation_assessor_note).present?
+        reasons.merge!({ "" => [note] })
+      end
 
-      failure_reasons =
-        section.selected_failure_reasons.map do |failure_reason|
-          is_decline =
-            FailureReasons.decline?(failure_reason: failure_reason.key)
+      if assessment.present? && further_information_request.nil?
+        reasons.merge!(assessment_declined_reasons)
+      end
 
-          {
-            key: failure_reason.key,
-            is_decline:,
-            assessor_feedback: failure_reason.assessor_feedback,
-          }
-        end
-
-      failure_reasons =
-        failure_reasons.sort_by do |failure_reason|
-          [failure_reason[:is_decline] ? 0 : 1, failure_reason[:key]]
-        end
-
-      { assessment_section_key: section.key, failure_reasons: }
+      reasons
     end
   end
 
@@ -109,14 +103,6 @@ class TeacherInterface::ApplicationFormShowViewObject
         )
       end
     end
-  end
-
-  def show_further_information_request_expired_content?
-    further_information_request&.expired? || false
-  end
-
-  def show_professional_standing_request_expired_content?
-    professional_standing_request&.expired? || false
   end
 
   def request_further_information?
@@ -134,8 +120,6 @@ class TeacherInterface::ApplicationFormShowViewObject
       ) || false
   end
 
-  delegate :region, to: :application_form
-
   private
 
   delegate :needs_work_history,
@@ -143,8 +127,9 @@ class TeacherInterface::ApplicationFormShowViewObject
            :needs_registration_number,
            :teaching_authority_provides_written_statement,
            :requires_preliminary_check,
-           to: :application_form,
-           allow_nil: true
+           to: :application_form
+
+  delegate :professional_standing_request, to: :assessment, allow_nil: true
 
   def task_list_section(key, item_keys)
     {
@@ -156,14 +141,14 @@ class TeacherInterface::ApplicationFormShowViewObject
   def task_list_items(keys)
     keys.map do |key|
       {
-        name: name_for_task_item(key),
-        link: link_for_task_item(key),
-        status: status_for_task_item(key),
+        name: task_list_item_name(key),
+        link: task_list_item_link(key),
+        status: task_list_item_status(key),
       }
     end
   end
 
-  def name_for_task_item(key)
+  def task_list_item_name(key)
     if key == :written_statement
       if application_form.teaching_authority_provides_written_statement
         I18n.t("application_form.tasks.items.written_statement.provide")
@@ -175,7 +160,7 @@ class TeacherInterface::ApplicationFormShowViewObject
     end
   end
 
-  def link_for_task_item(key)
+  def task_list_item_link(key)
     case key
     when :identification_document
       [
@@ -205,7 +190,49 @@ class TeacherInterface::ApplicationFormShowViewObject
     end
   end
 
-  def status_for_task_item(key)
+  def task_list_item_status(key)
     application_form.send("#{key}_status")
+  end
+
+  def assessment_declined_reasons
+    assessment
+      .sections
+      .each_with_object({}) do |section, hash|
+        next if section.selected_failure_reasons.empty?
+
+        sorted_reasons =
+          section.selected_failure_reasons.sort_by do |failure_reason|
+            is_decline =
+              FailureReasons.decline?(failure_reason: failure_reason.key)
+
+            [is_decline ? 0 : 1, failure_reason.key]
+          end
+
+        reasons =
+          sorted_reasons.map do |failure_reason|
+            title =
+              I18n.t(
+                failure_reason.key,
+                scope: %i[
+                  teacher_interface
+                  application_forms
+                  show
+                  declined
+                  failure_reasons
+                ],
+              )
+
+            if (
+                 assessor_feedback = failure_reason.assessor_feedback
+               ).present? &&
+                 FailureReasons.decline?(failure_reason: failure_reason.key)
+              "#{title}\n\n#{assessor_feedback}"
+            else
+              title
+            end
+          end
+
+        hash[section.key.humanize] = reasons
+      end
   end
 end

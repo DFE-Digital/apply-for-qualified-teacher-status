@@ -2,22 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
-  subject(:view_object) { described_class.new(current_teacher:) }
+RSpec.describe TeacherInterface::ApplicationFormViewObject do
+  subject(:view_object) { described_class.new(application_form:) }
 
-  let(:current_teacher) { create(:teacher) }
-
-  describe "#application_form" do
-    subject(:application_form) { view_object.application_form }
-
-    it { is_expected.to be_nil }
-
-    context "with an application form" do
-      before { create(:application_form, teacher: current_teacher) }
-
-      it { is_expected.to_not be_nil }
-    end
-  end
+  let(:application_form) { create(:application_form) }
 
   describe "#assessment" do
     subject(:assessment) { view_object.assessment }
@@ -25,10 +13,7 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     it { is_expected.to be_nil }
 
     context "with an assessment form" do
-      before do
-        application_form = create(:application_form, teacher: current_teacher)
-        create(:assessment, application_form:)
-      end
+      before { create(:assessment, application_form:) }
 
       it { is_expected.to_not be_nil }
     end
@@ -43,13 +28,32 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
 
     context "with an application form" do
       before do
-        application_form = create(:application_form, teacher: current_teacher)
         assessment = create(:assessment, application_form:)
         create(:further_information_request, assessment:)
       end
 
       it { is_expected.to_not be_nil }
     end
+  end
+
+  describe "#started_at" do
+    subject(:started_at) { view_object.started_at }
+
+    let(:application_form) do
+      create(:application_form, created_at: Date.new(2020, 1, 1))
+    end
+
+    it { is_expected.to eq("1 January 2020") }
+  end
+
+  describe "#expires_at" do
+    subject(:expires_at) { view_object.expires_at }
+
+    let(:application_form) do
+      create(:application_form, created_at: Date.new(2020, 1, 1))
+    end
+
+    it { is_expected.to eq("1 July 2020") }
   end
 
   describe "#task_list_sections" do
@@ -59,10 +63,9 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     let(:needs_written_statement) { false }
     let(:needs_registration_number) { false }
 
-    before do
+    let(:application_form) do
       create(
         :application_form,
-        teacher: current_teacher,
         needs_work_history:,
         needs_written_statement:,
         needs_registration_number:,
@@ -167,10 +170,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
       view_object.completed_task_list_sections
     end
 
-    let!(:application_form) do
-      create(:application_form, teacher: current_teacher)
-    end
-
     context "without any completed sections" do
       it { is_expected.to be_empty }
     end
@@ -191,110 +190,92 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     subject(:can_submit?) { view_object.can_submit? }
 
     context "without any completed sections" do
-      before { create(:application_form, teacher: current_teacher) }
-
       it { is_expected.to be false }
     end
 
     context "with a completed application form" do
-      before { create(:application_form, :completed, teacher: current_teacher) }
+      let(:application_form) { create(:application_form, :completed) }
 
       it { is_expected.to be true }
     end
   end
 
-  describe "#notes_from_assessors" do
-    subject(:notes_from_assessors) { view_object.notes_from_assessors }
+  describe "#declined_reasons" do
+    subject(:declined_reasons) { view_object.declined_reasons }
 
     it { is_expected.to be_empty }
 
-    context "with failure reasons" do
-      let(:application_form) do
-        create(:application_form, teacher: current_teacher)
+    let(:assessment) { create(:assessment, application_form:) }
+
+    context "when further_information_request is present and expired" do
+      before { create(:further_information_request, :expired, assessment:) }
+      it do
+        is_expected.to eq(
+          {
+            "" => [
+              "Your application has been declined as you did not respond to the " \
+                "assessor’s request for further information within the specified time.",
+            ],
+          },
+        )
       end
-      let(:assessment) { create(:assessment, application_form:) }
+    end
+
+    context "when professional_standing_request is present and expired" do
+      before { create(:professional_standing_request, :expired, assessment:) }
+      it do
+        is_expected.to eq(
+          {
+            "" => [
+              "Your application has been declined as we did not receive your letter " \
+                "that proves you’re recognised as a teacher from teaching authority " \
+                "within 180 days.",
+            ],
+          },
+        )
+      end
+    end
+
+    context "with a recommendation note" do
+      before { assessment.update!(recommendation_assessor_note: "A note.") }
+      it { is_expected.to eq({ "" => ["A note."] }) }
+    end
+
+    context "with failure reasons" do
       let(:assessment_section) do
-        create(:assessment_section, :personal_information, :failed, assessment:)
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          assessment:,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::QUALIFIED_TO_TEACH,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::AGE_RANGE,
+              assessor_feedback: "A note.",
+            ),
+          ],
+        )
       end
       let!(:failure_reasons) { assessment_section.selected_failure_reasons }
 
       it do
         is_expected.to eq(
-          [
-            {
-              assessment_section_key: "personal_information",
-              failure_reasons:
-                failure_reasons.map do |failure_reason|
-                  {
-                    assessor_feedback: failure_reason.assessor_feedback,
-                    is_decline: false,
-                    key: failure_reason.key,
-                  }
-                end,
-            },
-          ],
+          {
+            "Personal information" => [
+              "The age range you are qualified to teach does not fall " \
+                "within the requirements of QTS.\n\nA note.",
+              "We were not provided with sufficient evidence to confirm " \
+                "qualification to teach at state or government schools.",
+            ],
+          },
         )
       end
-    end
-  end
-
-  describe "#show_further_information_request_expired_content?" do
-    let(:application_form) do
-      create(:application_form, teacher: current_teacher)
-    end
-    let(:assessment) { create(:assessment, application_form:) }
-
-    subject(:show_fi_expired) do
-      view_object.show_further_information_request_expired_content?
-    end
-
-    context "when further_information_request is present" do
-      context "and it has expired" do
-        let!(:further_information_request) do
-          create(:further_information_request, :expired, assessment:)
-        end
-        it { is_expected.to eq(true) }
-      end
-
-      context "and it hasn't expired" do
-        let!(:further_information_request) do
-          create(:further_information_request, assessment:)
-        end
-        it { is_expected.to eq(false) }
-      end
-    end
-
-    context "when further_information_request is nil" do
-      it { is_expected.to eq(false) }
-    end
-  end
-
-  describe "#show_professional_standing_request_expired_content?" do
-    let(:application_form) do
-      create(:application_form, teacher: current_teacher)
-    end
-    let(:assessment) { create(:assessment, application_form:) }
-
-    subject { view_object.show_professional_standing_request_expired_content? }
-
-    context "when professional_standing_request is present" do
-      context "and it has expired" do
-        let!(:professional_standing_request) do
-          create(:professional_standing_request, :expired, assessment:)
-        end
-        it { is_expected.to eq(true) }
-      end
-
-      context "and it hasn't expired" do
-        let!(:professional_standing_request) do
-          create(:professional_standing_request, assessment:)
-        end
-        it { is_expected.to eq(false) }
-      end
-    end
-
-    context "when professional_standing_request is nil" do
-      it { is_expected.to eq(false) }
     end
   end
 
@@ -304,9 +285,6 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
     it { is_expected.to be false }
 
     context "with failure reasons" do
-      let(:application_form) do
-        create(:application_form, teacher: current_teacher)
-      end
       let(:assessment) { create(:assessment, application_form:) }
 
       context "with sanctions" do
@@ -338,11 +316,11 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
   end
 
   describe "#request_professional_standing_certificate?" do
-    let(:assessment) { create(:assessment) }
-
     subject(:request_professional_standing_certificate?) do
       view_object.request_professional_standing_certificate?
     end
+
+    let(:assessment) { create(:assessment, application_form:) }
 
     it { is_expected.to be false }
 
@@ -350,15 +328,20 @@ RSpec.describe TeacherInterface::ApplicationFormShowViewObject do
       let(:application_form) do
         create(
           :application_form,
-          assessment:,
-          teacher: current_teacher,
           teaching_authority_provides_written_statement: true,
         )
       end
 
       before { create(:professional_standing_request, :requested, assessment:) }
 
-      it { is_expected.to be false }
+      context "when there are preliminary checks and they are not complete" do
+        before do
+          application_form.update!(requires_preliminary_check: true)
+          create(:assessment_section, :preliminary, assessment:)
+        end
+
+        it { is_expected.to be false }
+      end
 
       context "when there are preliminary checks and they are complete" do
         before do
