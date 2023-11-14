@@ -1,28 +1,46 @@
 # frozen_string_literal: true
 
 class WorkHistoryDuration
-  def initialize(application_form:, relation:)
+  def initialize(
+    application_form:,
+    relation:,
+    consider_teaching_qualification: false
+  )
     @application_form = application_form
     @relation =
       relation.where.not(start_date: nil).where.not(hours_per_week: nil)
+    @consider_teaching_qualification = consider_teaching_qualification
   end
 
-  def self.for_application_form(application_form)
+  def self.for_application_form(
+    application_form,
+    consider_teaching_qualification: false
+  )
     WorkHistoryDuration.new(
       application_form:,
       relation: application_form.work_histories,
+      consider_teaching_qualification:,
     )
   end
 
-  def self.for_ids(ids, application_form:)
+  def self.for_ids(
+    ids,
+    application_form:,
+    consider_teaching_qualification: false
+  )
     WorkHistoryDuration.new(
       application_form:,
       relation: application_form.work_histories.where(id: ids),
+      consider_teaching_qualification:,
     )
   end
 
-  def self.for_record(record)
-    for_ids([record.id], application_form: record.application_form)
+  def self.for_record(record, consider_teaching_qualification: false)
+    for_ids(
+      [record.id],
+      application_form: record.application_form,
+      consider_teaching_qualification:,
+    )
   end
 
   def count_months
@@ -37,7 +55,7 @@ class WorkHistoryDuration
   AVERAGE_WEEKS_PER_MONTH = 4.34
   HOURS_PER_FULL_TIME_MONTH = 130.0
 
-  attr_reader :application_form, :relation
+  attr_reader :application_form, :relation, :consider_teaching_qualification
 
   def work_histories
     @work_histories ||=
@@ -46,6 +64,13 @@ class WorkHistoryDuration
         :end_date,
         :hours_per_week,
       )
+  end
+
+  def teaching_qualification
+    @teaching_qualification ||=
+      if consider_teaching_qualification
+        application_form.teaching_qualification
+      end
   end
 
   def work_history_full_time_months(work_history)
@@ -62,10 +87,21 @@ class WorkHistoryDuration
   end
 
   def work_history_number_of_months(work_history)
-    start = date_first_of_month(work_history.start_date)
-    finish = date_first_of_month(work_history.end_date || Time.zone.today)
+    start = date_first_of_month(work_history_start_date(work_history))
+    finish = date_first_of_month(work_history_end_date(work_history))
 
     date_range(start..finish).every(months: 1).count
+  end
+
+  def work_history_start_date(work_history)
+    [
+      work_history.start_date,
+      teaching_qualification&.certificate_date,
+    ].compact.max
+  end
+
+  def work_history_end_date(work_history)
+    work_history.end_date || Time.zone.today
   end
 
   def date_first_of_month(date)
