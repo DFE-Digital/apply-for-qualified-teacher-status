@@ -94,6 +94,20 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def references_reminder
+    @number_of_reminders_sent = params[:number_of_reminders_sent]
+    @reference_requests = params[:reference_requests]
+
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject:
+        I18n.t(
+          "mailer.teacher.references_reminder.subject.#{@number_of_reminders_sent}",
+        ),
+    )
+  end
+
   def references_requested
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,

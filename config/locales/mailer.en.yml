@@ -28,6 +28,10 @@ en:
         subject: Your qualified teacher status application – we’ve received your %{certificate}
       references_requested:
         subject: Your qualified teacher status application – we’ve contacted your references
+      references_reminder:
+        subject:
+          0: Waiting on references – QTS application
+          1: Your references only have two weeks left to respond
     teaching_authority:
       application_submitted:
         subject: "%{name} has made an application for qualified teacher status (QTS) in England"

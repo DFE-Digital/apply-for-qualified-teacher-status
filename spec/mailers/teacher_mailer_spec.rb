@@ -366,6 +366,81 @@ RSpec.describe TeacherMailer, type: :mailer do
     it_behaves_like "an observable mailer", "professional_standing_received"
   end
 
+  describe "#references_reminder" do
+    let(:reference_request) do
+      create(
+        :reference_request,
+        requested_at: Date.new(2020, 1, 1),
+        work_history:
+          create(
+            :work_history,
+            school_name: "St Smith School",
+            contact_name: "John Smith",
+          ),
+        assessment:,
+      )
+    end
+    let(:number_of_reminders_sent) { nil }
+    subject(:mail) do
+      described_class.with(
+        teacher:,
+        number_of_reminders_sent:,
+        reference_requests: [reference_request],
+      ).references_reminder
+    end
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      context "with no reminder emails" do
+        let(:number_of_reminders_sent) { 0 }
+        it { is_expected.to eq("Waiting on references – QTS application") }
+      end
+
+      context "with one reminder email" do
+        let(:number_of_reminders_sent) { 1 }
+        it do
+          is_expected.to eq(
+            "Your references only have two weeks left to respond",
+          )
+        end
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      let(:number_of_reminders_sent) { 0 }
+
+      it { is_expected.to include("Dear First Last") }
+      it do
+        is_expected.to include(
+          "We’re still waiting for a response from one or more of the " \
+            "references you provided to verify your work history.",
+        )
+      end
+      it { is_expected.to include("John Smith — St Smith School") }
+
+      context "when the second reminder email" do
+        let(:number_of_reminders_sent) { 1 }
+
+        it do
+          is_expected.to include(
+            "The following references have just 2 weeks to respond to the reference request.",
+          )
+        end
+      end
+    end
+
+    it_behaves_like "an observable mailer", "references_reminder"
+  end
+
   describe "#references_requested" do
     subject(:mail) { described_class.with(teacher:).references_requested }
 
