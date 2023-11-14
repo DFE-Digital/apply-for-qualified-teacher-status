@@ -18,9 +18,9 @@ RSpec.describe SendReminderEmail do
 
     shared_examples "sends an email" do
       it "logs an email" do
-        expect { call }.to change { ReminderEmail.where(remindable:).count }.by(
-          1,
-        )
+        expect { call }.to change {
+          ReminderEmail.where(remindable:, name: "expiration").count
+        }.by(1)
       end
     end
 
@@ -75,12 +75,14 @@ RSpec.describe SendReminderEmail do
       end
 
       context "when a previous reminder has been sent" do
-        before { remindable.reminder_emails.create }
+        before { remindable.reminder_emails.create!(name: "expiration") }
         include_examples "doesn't send an email"
       end
 
       context "when two previous reminders have been sent" do
-        before { 2.times { remindable.reminder_emails.create } }
+        before do
+          2.times { remindable.reminder_emails.create!(name: "expiration") }
+        end
         include_examples "doesn't send an email"
       end
     end
@@ -91,12 +93,14 @@ RSpec.describe SendReminderEmail do
       end
 
       context "when one previous reminder has been sent" do
-        before { remindable.reminder_emails.create }
+        before { remindable.reminder_emails.create!(name: "expiration") }
         include_examples shared_example
       end
 
       context "when two previous reminders have been sent" do
-        before { 2.times { remindable.reminder_emails.create } }
+        before do
+          2.times { remindable.reminder_emails.create!(name: "expiration") }
+        end
         include_examples "doesn't send an email"
       end
     end
@@ -107,12 +111,14 @@ RSpec.describe SendReminderEmail do
       end
 
       context "when one previous reminder has been sent" do
-        before { remindable.reminder_emails.create }
+        before { remindable.reminder_emails.create!(name: "expiration") }
         include_examples shared_example
       end
 
       context "when two previous reminders have been sent" do
-        before { 2.times { remindable.reminder_emails.create } }
+        before do
+          2.times { remindable.reminder_emails.create!(name: "expiration") }
+        end
         include_examples shared_example
       end
     end

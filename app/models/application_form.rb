@@ -262,14 +262,14 @@ class ApplicationForm < ApplicationRecord
     created_at >= Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
   end
 
-  def should_send_reminder_email?(number_of_reminders_sent)
+  def should_send_reminder_email?(_name, number_of_reminders_sent)
     return false if days_until_expired.nil? || teacher.application_form != self
 
     (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
       (days_until_expired <= 7 && number_of_reminders_sent == 1)
   end
 
-  def send_reminder_email(number_of_reminders_sent)
+  def send_reminder_email(_name, number_of_reminders_sent)
     TeacherMailer
       .with(teacher:, number_of_reminders_sent:)
       .application_not_submitted

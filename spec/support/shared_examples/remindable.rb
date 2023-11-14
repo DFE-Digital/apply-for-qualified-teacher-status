@@ -13,7 +13,9 @@ RSpec.shared_examples "a remindable" do
   end
 
   describe "#should_send_reminder_email?" do
-    let(:should_send_reminder_email?) { subject.should_send_reminder_email?(0) }
+    let(:should_send_reminder_email?) do
+      subject.should_send_reminder_email?("type", 0)
+    end
 
     it "returns a boolean" do
       expect(should_send_reminder_email?).to be_in([true, false])
@@ -21,7 +23,7 @@ RSpec.shared_examples "a remindable" do
   end
 
   describe "#send_reminder_email" do
-    let(:send_reminder_email) { subject.send_reminder_email(0) }
+    let(:send_reminder_email) { subject.send_reminder_email("type", 0) }
 
     it "enqueues an email" do
       expect { send_reminder_email }.to have_enqueued_mail

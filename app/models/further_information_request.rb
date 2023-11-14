@@ -40,13 +40,13 @@ class FurtherInformationRequest < ApplicationRecord
 
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
 
-  def should_send_reminder_email?(number_of_reminders_sent)
+  def should_send_reminder_email?(_name, number_of_reminders_sent)
     (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
       (days_until_expired <= 7 && number_of_reminders_sent == 1) ||
       (days_until_expired <= 2 && number_of_reminders_sent == 2)
   end
 
-  def send_reminder_email(_number_of_reminders_sent)
+  def send_reminder_email(_name, _number_of_reminders_sent)
     TeacherMailer
       .with(teacher:, further_information_request: self)
       .further_information_reminder
