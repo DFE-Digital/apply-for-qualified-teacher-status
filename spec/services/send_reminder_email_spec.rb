@@ -16,16 +16,16 @@ RSpec.describe SendReminderEmail do
       end
     end
 
-    shared_examples "sends an email" do
+    shared_examples "sends an email" do |name|
       it "logs an email" do
         expect { call }.to change {
-          ReminderEmail.where(remindable:, name: "expiration").count
+          ReminderEmail.where(remindable:, name:).count
         }.by(1)
       end
     end
 
     shared_examples "sends a further information reminder email" do
-      include_examples "sends an email"
+      include_examples "sends an email", "expiration"
 
       it "sends an email" do
         expect { call }.to have_enqueued_mail(
@@ -42,7 +42,7 @@ RSpec.describe SendReminderEmail do
     end
 
     shared_examples "sends a reference reminder email" do
-      include_examples "sends an email"
+      include_examples "sends an email", "expiration"
 
       it "sends an email" do
         expect { subject }.to have_enqueued_mail(
@@ -53,7 +53,7 @@ RSpec.describe SendReminderEmail do
     end
 
     shared_examples "sends an application not submitted email" do
-      include_examples "sends an email"
+      include_examples "sends an email", "expiration"
 
       it "sends an email" do
         expect { subject }.to have_enqueued_mail(
@@ -69,56 +69,68 @@ RSpec.describe SendReminderEmail do
       end
     end
 
-    shared_examples "first reminder email" do |shared_example|
+    shared_examples "sends an application references reminder email" do
+      include_examples "sends an email", "references"
+
+      it "sends an email" do
+        expect { subject }.to have_enqueued_mail(
+          TeacherMailer,
+          :references_reminder,
+        ).with(
+          params: {
+            teacher: remindable.teacher,
+            number_of_reminders_sent: a_kind_of(Integer),
+            reference_requests: [reference_request],
+          },
+          args: [],
+        )
+      end
+    end
+
+    shared_examples "first reminder email" do |shared_example, name|
       context "when no previous reminder has been sent" do
         include_examples shared_example
       end
 
       context "when a previous reminder has been sent" do
-        before { remindable.reminder_emails.create!(name: "expiration") }
+        before { remindable.reminder_emails.create!(name:) }
         include_examples "doesn't send an email"
       end
 
       context "when two previous reminders have been sent" do
-        before do
-          2.times { remindable.reminder_emails.create!(name: "expiration") }
-        end
+        before { 2.times { remindable.reminder_emails.create!(name:) } }
         include_examples "doesn't send an email"
       end
     end
 
-    shared_examples "second reminder email" do |shared_example|
+    shared_examples "second reminder email" do |shared_example, name|
       context "when no previous reminder has been sent" do
         include_examples shared_example
       end
 
       context "when one previous reminder has been sent" do
-        before { remindable.reminder_emails.create!(name: "expiration") }
+        before { remindable.reminder_emails.create!(name:) }
         include_examples shared_example
       end
 
       context "when two previous reminders have been sent" do
-        before do
-          2.times { remindable.reminder_emails.create!(name: "expiration") }
-        end
+        before { 2.times { remindable.reminder_emails.create!(name:) } }
         include_examples "doesn't send an email"
       end
     end
 
-    shared_examples "third reminder email" do |shared_example|
+    shared_examples "third reminder email" do |shared_example, name|
       context "when no previous reminder has been sent" do
         include_examples shared_example
       end
 
       context "when one previous reminder has been sent" do
-        before { remindable.reminder_emails.create!(name: "expiration") }
+        before { remindable.reminder_emails.create!(name:) }
         include_examples shared_example
       end
 
       context "when two previous reminders have been sent" do
-        before do
-          2.times { remindable.reminder_emails.create!(name: "expiration") }
-        end
+        before { 2.times { remindable.reminder_emails.create!(name:) } }
         include_examples shared_example
       end
     end
@@ -131,13 +143,15 @@ RSpec.describe SendReminderEmail do
       context "with less than two weeks remaining" do
         let(:application_created_at) { (6.months - 13.days).ago }
         include_examples "first reminder email",
-                         "sends an application not submitted email"
+                         "sends an application not submitted email",
+                         "expiration"
       end
 
       context "with less than one week remaining" do
         let(:application_created_at) { (6.months - 1.day).ago }
         include_examples "second reminder email",
-                         "sends an application not submitted email"
+                         "sends an application not submitted email",
+                         "expiration"
       end
     end
 
@@ -150,19 +164,22 @@ RSpec.describe SendReminderEmail do
       context "with less than two weeks remaining" do
         let(:further_information_requested_at) { (6.weeks - 13.days).ago }
         include_examples "first reminder email",
-                         "sends a further information reminder email"
+                         "sends a further information reminder email",
+                         "expiration"
       end
 
       context "with less than one week remaining" do
         let(:further_information_requested_at) { (6.weeks - 5.days).ago }
         include_examples "second reminder email",
-                         "sends a further information reminder email"
+                         "sends a further information reminder email",
+                         "expiration"
       end
 
       context "with one day remaining" do
         let(:further_information_requested_at) { (6.weeks - 47.hours).ago }
         include_examples "third reminder email",
-                         "sends a further information reminder email"
+                         "sends a further information reminder email",
+                         "expiration"
       end
     end
 
@@ -170,19 +187,22 @@ RSpec.describe SendReminderEmail do
       context "with less than two weeks remaining" do
         let(:further_information_requested_at) { (4.weeks - 13.days).ago }
         include_examples "first reminder email",
-                         "sends a further information reminder email"
+                         "sends a further information reminder email",
+                         "expiration"
       end
 
       context "with less than one week remaining" do
         let(:further_information_requested_at) { (4.weeks - 5.days).ago }
         include_examples "second reminder email",
-                         "sends a further information reminder email"
+                         "sends a further information reminder email",
+                         "expiration"
       end
 
       context "with one day remaining" do
         let(:further_information_requested_at) { (4.weeks - 47.hours).ago }
         include_examples "third reminder email",
-                         "sends a further information reminder email"
+                         "sends a further information reminder email",
+                         "expiration"
       end
     end
 
@@ -276,13 +296,15 @@ RSpec.describe SendReminderEmail do
       context "with less than four weeks remaining" do
         let(:reference_requested_at) { (6.weeks - 27.days).ago }
         include_examples "first reminder email",
-                         "sends a reference reminder email"
+                         "sends a reference reminder email",
+                         "expiration"
       end
 
       context "with less than two weeks remaining" do
         let(:reference_requested_at) { (6.weeks - 13.days).ago }
         include_examples "second reminder email",
-                         "sends a reference reminder email"
+                         "sends a reference reminder email",
+                         "expiration"
       end
     end
 
@@ -298,6 +320,51 @@ RSpec.describe SendReminderEmail do
         create(:reference_request, :expired, requested_at: Time.zone.now)
       end
       include_examples "doesn't send an email"
+    end
+
+    context "with a teacher with an remindable reference request" do
+      let(:remindable) { create(:application_form, :submitted) }
+      let(:assessment) { create(:assessment, application_form: remindable) }
+      let!(:reference_request) do
+        create(
+          :reference_request,
+          requested_at: reference_requested_at,
+          assessment:,
+        )
+      end
+
+      context "with less than four weeks remaining" do
+        let(:reference_requested_at) { (6.weeks - 27.days).ago }
+        include_examples "first reminder email",
+                         "sends an application references reminder email",
+                         "references"
+      end
+
+      context "with less than two weeks remaining" do
+        let(:reference_requested_at) { (6.weeks - 13.days).ago }
+        include_examples "second reminder email",
+                         "sends an application references reminder email",
+                         "references"
+      end
+
+      context "with more than four weeks remaining" do
+        let(:reference_requested_at) { 2.days.ago }
+        include_examples "doesn't send an email"
+      end
+
+      context "with a received reference request" do
+        let!(:reference_request) do
+          create(:reference_request, :received, requested_at: Time.zone.now)
+        end
+        include_examples "doesn't send an email"
+      end
+
+      context "with an expired reference request" do
+        let!(:reference_request) do
+          create(:reference_request, :expired, requested_at: Time.zone.now)
+        end
+        include_examples "doesn't send an email"
+      end
     end
   end
 end
