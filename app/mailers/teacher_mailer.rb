@@ -109,6 +109,8 @@ class TeacherMailer < ApplicationMailer
   end
 
   def references_requested
+    @reference_requests = params[:reference_requests]
+
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
       to: teacher.email,

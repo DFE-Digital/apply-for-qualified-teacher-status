@@ -442,15 +442,18 @@ RSpec.describe TeacherMailer, type: :mailer do
   end
 
   describe "#references_requested" do
-    subject(:mail) { described_class.with(teacher:).references_requested }
+    subject(:mail) do
+      described_class.with(
+        teacher:,
+        reference_requests: [create(:reference_request, :requested)],
+      ).references_requested
+    end
 
     describe "#subject" do
       subject(:subject) { mail.subject }
 
       it do
-        is_expected.to eq(
-          "Your qualified teacher status application – we’ve contacted your references",
-        )
+        is_expected.to eq("We’ve contacted your references – QTS application")
       end
     end
 
@@ -466,7 +469,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it do
         is_expected.to include(
-          "We’ve contacted the references you provided to verify your work history",
+          "We’ve contacted the references you provided to verify the work history",
         )
       end
     end

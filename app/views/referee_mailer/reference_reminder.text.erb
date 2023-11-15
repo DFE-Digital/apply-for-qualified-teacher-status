@@ -1,14 +1,35 @@
 Dear <%= @work_history.contact_name %>
 
-We still need you to confirm some information about <%= application_form_full_name(@application_form) %> as part of their application for qualified teacher status (QTS) in England.
+<% if @number_of_reminders_sent == 1 %>
+You have just 2 weeks to complete the reference request for <%= application_form_full_name(@application_form) %>.
+<% end %>
 
-We recently contacted you to ask you to help us confirm that the information <%= application_form_full_name(@application_form) %> has provided about their work history and experience is accurate.
+<%= application_form_full_name(@application_form) %> has applied for qualified teacher status (QTS) in England.
 
-Please follow the link below and answer the questions by <%= @reference_request.expires_at.to_date.to_fs(:long_ordinal_uk) %>. If we do not receive your response by this date, it could affect the outcome for the applicant.
+<% if @number_of_reminders_sent == 0 %>
+We recently asked you to confirm the information they’ve provided about their work history and experience. We have not yet received a response from you. The applicant may not be awarded QTS if we cannot confirm the information they have provided.
+<% elsif @number_of_reminders_sent == 1 %>
+They have given us your name and email address to confirm the information they’ve provided about their work history and experience.
+
+The applicant may not be awarded QTS if we cannot confirm the information they have provided.
+<% end %>
+
+# What you need to do
+
+You need to answer a few questions about <%= application_form_full_name(@application_form) %> by <%= @reference_request.expires_at.to_date.to_fs(:long_ordinal_uk) %>. This should take no longer than 5 minutes.
+
+Follow the link below to start.
 
 <%= teacher_interface_reference_request_url(@reference_request.slug) %>
 
-It should take no longer than 5 minutes.
+# About QTS
+
+QTS is a legal requirement to teach in many English schools, and most schools prefer their teachers to have it.
+
+<%= application_form_full_name(@application_form) %> has not applied for a job. Having QTS does not guarantee a job or give someone the right to work in England.
+
+The QTS application allows us to assess a person’s teacher training and experience to understand if they have the skills and qualifications needed to gain QTS in England.
 
 Kind regards,
-The Teacher Qualifications Team (part of the Teaching Regulation Agency)
+Teaching Regulation Authority (TRA)
+(an executive agency sponsored by the Department for Education, England)

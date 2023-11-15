@@ -207,7 +207,6 @@ module AssessorInterface
 
     def preview_referee
       authorize %i[assessor_interface assessment_recommendation], :edit?
-      @reference_requests = assessment.reference_requests
     end
 
     def preview_teacher

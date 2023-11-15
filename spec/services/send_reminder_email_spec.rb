@@ -48,7 +48,13 @@ RSpec.describe SendReminderEmail do
         expect { subject }.to have_enqueued_mail(
           RefereeMailer,
           :reference_reminder,
-        ).with(params: { reference_request: remindable }, args: [])
+        ).with(
+          params: {
+            reference_request: remindable,
+            number_of_reminders_sent: a_kind_of(Integer),
+          },
+          args: [],
+        )
       end
     end
 

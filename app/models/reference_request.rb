@@ -98,8 +98,11 @@ class ReferenceRequest < ApplicationRecord
       (days_until_expired <= 14 && number_of_reminders_sent == 1)
   end
 
-  def send_reminder_email(_name, _number_of_reminders_sent)
-    RefereeMailer.with(reference_request: self).reference_reminder.deliver_later
+  def send_reminder_email(_name, number_of_reminders_sent)
+    RefereeMailer
+      .with(reference_request: self, number_of_reminders_sent:)
+      .reference_reminder
+      .deliver_later
   end
 
   def expires_after
