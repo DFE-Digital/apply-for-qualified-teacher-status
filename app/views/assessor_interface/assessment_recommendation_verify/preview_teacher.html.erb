@@ -3,7 +3,9 @@
 
 <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
-<p class="govuk-body">This screen shows the email that the applicant will see, to tell them you’ve contacted the references they provided.</p>
+<p class="govuk-body">
+  This screen shows the email that the applicant will see, to tell them you’ve contacted the references they provided.
+</p>
 
 <%= render(PreviewMailer::Component.new(
   mailer_class: TeacherMailer,
@@ -12,6 +14,6 @@
 )) %>
 
 <div class="govuk-button-group">
-  <%= govuk_button_to t(".button"), [:assessor_interface, @application_form, @assessment, :assessment_recommendation_verify], method: :put %>
-  <%= govuk_link_to t(".cancel"), assessor_interface_application_form_path(@application_form) %>
+  <%= govuk_button_to "Send emails", [:assessor_interface, @application_form, @assessment, :assessment_recommendation_verify], method: :put %>
+  <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
 </div>

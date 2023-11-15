@@ -44,7 +44,7 @@
         <% label = 'Activate ' %>
       <% end %>
       <%= form_with url: feature_url do |f| %>
-        <%= f.govuk_submit label + feature_name.humanize, prevent_double_click: false %>
+        <%= f.govuk_submit label + feature_name.humanize %>
     <% end %>
   <% end %>
 <% end %>

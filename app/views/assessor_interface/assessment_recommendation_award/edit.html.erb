@@ -22,18 +22,18 @@
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
   <% end %>
 
-  <p class="govuk-body"><%= t(".instruction") %></p>
-  <p class="govuk-body">If you need to check something, use the ‘Back’ button.</p>
+  <p class="govuk-body">If you’re happy to proceed, read the declaration and if you want to award, select ‘Continue’.</p>
+  <p class="govuk-body"><%= t("assessor_interface.assessment_recommendation.back_instruction") %></p>
 
   <%= f.govuk_check_boxes_fieldset :declaration, multiple: false, small: true do %>
     <%= f.govuk_check_box :declaration,
                           true,
                           false,
                           link_errors: true,
-                          label: { text: t(".declaration") } %>
+                          label: { text: "I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status." } %>
   <% end %>
 
-  <%= f.govuk_submit t(".button"), prevent_double_click: false do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <%= f.govuk_submit "Accept and award QTS" do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
   <% end %>
 <% end %>

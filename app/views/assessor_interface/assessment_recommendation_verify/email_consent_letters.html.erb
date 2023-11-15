@@ -3,7 +3,9 @@
 
 <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
-<p class="govuk-body"><strong class="govuk-!-font-weight-bold">Step 1</strong> – log in to the Ecctis portal and check the consent letter requirements for:</p>
+<p class="govuk-body">
+  <strong class="govuk-!-font-weight-bold">Step 1</strong> – log in to the Ecctis portal and check the consent letter requirements for:
+</p>
 
 <ul class="govuk-list govuk-list--bullet">
   <% @qualifications.each do |qualification| %>
@@ -11,13 +13,19 @@
   <% end %>
 </ul>
 
-<p class="govuk-body"><strong class="govuk-!-font-weight-bold">Step 2</strong> – arrange for the applicant to receive (and return) the consent letters by email.</p>
+<p class="govuk-body">
+  <strong class="govuk-!-font-weight-bold">Step 2</strong> – arrange for the applicant to receive (and return) the consent letters by email.
+</p>
 
-<p class="govuk-body"><strong class="govuk-!-font-weight-bold">Step 3</strong> – submit verification requests to Ecctis (attaching the qualification documents and proof of consent).</p>
+<p class="govuk-body">
+  <strong class="govuk-!-font-weight-bold">Step 3</strong> – submit verification requests to Ecctis (attaching the qualification documents and proof of consent).
+</p>
 
-<p class="govuk-body">The task list will show a ‘Verify qualifications’ task. The status will remain ‘Waiting on’ until you receive responses from Ecctis.</p>
+<p class="govuk-body">
+  The task list will show a ‘Verify qualifications’ task. The status will remain ‘Waiting on’ until you receive responses from Ecctis.
+</p>
 
 <div class="govuk-button-group">
-  <%= govuk_button_link_to t(".continue"), [:professional_standing, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] %>
-  <%= govuk_link_to t(".cancel"), assessor_interface_application_form_path(@application_form) %>
+  <%= govuk_button_link_to "Continue", [:professional_standing, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] %>
+  <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
 </div>

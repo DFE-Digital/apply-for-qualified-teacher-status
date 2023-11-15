@@ -1,14 +1,20 @@
-<% content_for :page_title, "Application" %>
+<% title = if @view_object.assessment.review?
+             "An assessor will now review the application and make a decision on awarding or declining QTS."
+           elsif @view_object.application_form.waiting_on?
+             "Reference requests sent successfully"
+           elsif @view_object.application_form.awarded?
+             "QTS application #{@view_object.application_form.reference} has been awarded"
+           else
+             "QTS application #{@view_object.application_form.reference} has been #{@view_object.status.downcase}"
+           end %>
+
+<% content_for :page_title, title %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
 
-<% if @view_object.assessment.review? %>
-  <h1 class="govuk-heading-xl">Application sent for review</h1>
-<% elsif @view_object.application_form.waiting_on? %>
-  <h1 class="govuk-heading-xl">Reference requests sent successfully</h1>
-<% elsif @view_object.application_form.awarded? %>
-  <%= govuk_panel(text: "QTS application #{@view_object.application_form.reference} has been awarded") %>
+<% if @view_object.application_form.awarded? %>
+  <%= govuk_panel(text: title) %>
 <% else %>
-  <h1 class="govuk-heading-xl">QTS application <%= @view_object.application_form.reference %> has been <%= @view_object.status.downcase %></h1>
+  <h1 class="govuk-heading-xl"><%= title %></h1>
 <% end %>
 
 <% if @view_object.assessment.review? %>
@@ -27,6 +33,6 @@
 <p class="govuk-body">You can now return to the application itself, or go back to your list of applications.</p>
 
 <div class="govuk-button-group">
-  <%= govuk_button_link_to "Back to application list", assessor_interface_application_forms_path %>
-  <%= govuk_button_link_to "See application overview", assessor_interface_application_form_path(@view_object.application_form), secondary: true %>
+  <%= govuk_button_link_to "Back to application list", %i[assessor_interface application_forms] %>
+  <%= govuk_button_link_to "See application overview", [:assessor_interface, @view_object.application_form], secondary: true %>
 </div>

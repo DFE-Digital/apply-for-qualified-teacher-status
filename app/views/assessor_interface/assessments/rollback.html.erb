@@ -9,7 +9,7 @@
 </p>
 
 <%= form_with url: [:assessor_interface, @application_form, @assessment], method: :delete do |f| %>
-  <%= f.govuk_submit "Reverse", prevent_double_click: false do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+  <%= f.govuk_submit "Reverse" do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
   <% end %>
 <% end %>

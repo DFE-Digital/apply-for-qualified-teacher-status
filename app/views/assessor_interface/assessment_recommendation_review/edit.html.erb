@@ -1,7 +1,7 @@
-<% content_for :page_title, "Send application for review" %>
+<% content_for :page_title, t(".heading") %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<h1 class="govuk-heading-xl">Send application for review</h1>
+<h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
 <p class="govuk-body">The following verification tasks have been flagged for review:</p>
 
@@ -9,7 +9,7 @@
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th class="govuk-table__header ">LoPS</th>
+        <th class="govuk-table__header">LoPS</th>
         <th scope="col" class="govuk-table__header"></th>
       </tr>
     </thead>
