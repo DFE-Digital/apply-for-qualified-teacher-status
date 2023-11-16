@@ -1,5 +1,5 @@
 <% title = if @view_object.assessment.review?
-             "An assessor will now review the application and make a decision on awarding or declining QTS."
+             "Application sent for review"
            elsif @view_object.application_form.waiting_on?
              "Reference requests sent successfully"
            elsif @view_object.application_form.awarded?
