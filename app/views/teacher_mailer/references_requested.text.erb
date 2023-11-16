@@ -6,6 +6,6 @@ They need to respond by <%= @reference_requests.first.expires_at.to_date.to_fs(:
 
 Contact them to make sure they have received the request. They may need to check their junk email folder.
 
-If they have not received the request, email QTS.Enquiries@education.gov.uk
+If they have not received the request, email [<%= t("service.email.enquiries") %>](mailto:<%= t("service.email.enquiries") %>).
 
 <%= render "shared/teacher_mailer/footer" %>

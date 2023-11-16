@@ -81,7 +81,7 @@ They’ve told us that they’re qualified to teach children Maths and French fr
 
 We’d be grateful if you could provide written evidence of their professional standing as a teacher in Region Name, and email it to us at:
 
-ApplyQTS.Verification@education.gov.uk
+[ApplyQTS.Verification@education.gov.uk](mailto:ApplyQTS.Verification@education.gov.uk)
 
 Please include their QTS application reference number abc.
 
