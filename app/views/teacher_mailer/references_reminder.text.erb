@@ -1,0 +1,17 @@
+Dear <%= application_form_full_name(@application_form) %>
+
+## We’re still waiting for a response from one or more of the references you provided to verify your work history.
+
+<% if @number_of_reminders_sent == 0 %>
+We contacted your references on <%= @reference_requests.first.requested_at.to_date.to_fs(:long_ordinal_uk) %> but have not received a response from:
+<% elsif @number_of_reminders_sent == 1 %>
+The following references have just 2 weeks to respond to the reference request.
+<% end %>
+
+<% @reference_requests.each do |reference_request| %>
+- <%= reference_request.work_history.contact_name %> — <%= reference_request.work_history.school_name %>
+<% end %>
+
+They need to respond by <%= @reference_requests.first.expires_at.to_date.to_fs(:long_ordinal_uk) %>. If your references do not respond, and, as a result, we cannot verify your work history, we may not be able to award you QTS. You should contact your reference to remind them about the request.
+
+<%= render "shared/teacher_mailer/footer" %>

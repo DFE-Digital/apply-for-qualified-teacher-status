@@ -8,9 +8,11 @@ class SendReminderEmail
   end
 
   def call
-    if send_reminder?
-      send_email
-      record_reminder
+    remindable.reminder_email_names.each do |name|
+      if send_reminder?(name)
+        send_email(name)
+        record_reminder(name)
+      end
     end
   end
 
@@ -18,29 +20,19 @@ class SendReminderEmail
 
   attr_reader :remindable
 
-  def send_reminder?
-    return false unless remindable.expires_at
-
-    remindable.should_send_reminder_email?(
-      days_until_expired,
-      number_of_reminders_sent,
-    )
+  def send_reminder?(name)
+    remindable.should_send_reminder_email?(name, number_of_reminders_sent(name))
   end
 
-  def number_of_reminders_sent
-    remindable.reminder_emails.count
+  def number_of_reminders_sent(name)
+    remindable.reminder_emails.where(name:).count
   end
 
-  def days_until_expired
-    today = Time.zone.today
-    (remindable.expires_at.to_date - today).to_i
+  def send_email(name)
+    remindable.send_reminder_email(name, number_of_reminders_sent(name))
   end
 
-  def send_email
-    remindable.send_reminder_email(number_of_reminders_sent)
-  end
-
-  def record_reminder
-    remindable.reminder_emails.create!
+  def record_reminder(name)
+    remindable.reminder_emails.create!(name:)
   end
 end

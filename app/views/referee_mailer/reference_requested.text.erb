@@ -1,22 +1,26 @@
 Dear <%= @work_history.contact_name %>
 
-We need you to confirm some information about <%= application_form_full_name(@application_form) %> as part of their application for qualified teacher status (QTS) in England.
+<%= application_form_full_name(@application_form) %> has applied for qualified teacher status (QTS) in England.
 
-As part of the QTS application process, our assessors need to understand each applicant’s work history and experience.
+They have given us your name and email address to confirm the information they’ve provided about their work history and experience.
 
-<%= application_form_full_name(@application_form) %> has given us your name and email address to help us confirm that the information they’ve provided about their work history and experience is accurate.
+# What you need to do
 
-# About QTS
+You need to answer a few questions about <%= application_form_full_name(@application_form) %> by <%= @reference_request.expires_at.to_date.to_fs(:long_ordinal_uk) %>. This should take no longer than 5 minutes.
 
-<%= application_form_full_name(@application_form) %> is NOT applying for a job – their QTS application just allows us to assess their qualifications and teaching experience to understand whether they can teach in England.
-
-# What we need you to do
-
-Please follow the link below and answer the questions by <%= @reference_request.expires_at.to_date.to_fs(:long_ordinal_uk) %>.
+Follow the link below to start.
 
 <%= teacher_interface_reference_request_url(@reference_request.slug) %>
 
-It should take no longer than 5 minutes.
+Please complete the reference by the due date. The applicant may not be awarded QTS if we cannot confirm the information they have provided.
+
+# About QTS
+
+QTS is a legal requirement to teach in many English schools, and most schools prefer their teachers to have it.
+
+<%= application_form_full_name(@application_form) %> has not applied for a job. Having QTS does not guarantee a job or give someone the right to work in England.
+
+The QTS application allows us to assess a person’s teacher training and experience to understand if they have the skills and qualifications needed to gain QTS in England.
 
 Kind regards,
 Teaching Regulation Authority (TRA)

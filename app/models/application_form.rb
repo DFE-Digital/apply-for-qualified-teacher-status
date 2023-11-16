@@ -91,6 +91,7 @@
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class ApplicationForm < ApplicationRecord
+  include Expirable
   include Remindable
 
   belongs_to :teacher
@@ -219,7 +220,12 @@ class ApplicationForm < ApplicationRecord
             .or(withdrawn.where("withdrawn_at < ?", 5.years.ago))
         end
 
-  scope :remindable, -> { draft.where("created_at < ?", 5.months.ago) }
+  scope :remindable,
+        -> do
+          verification_stage.or(
+            draft_stage.where("created_at < ?", 5.months.ago),
+          )
+        end
 
   def to_param
     reference
@@ -261,18 +267,46 @@ class ApplicationForm < ApplicationRecord
     created_at >= Date.parse(ENV.fetch("NEW_REGS_DATE", "2023-02-01"))
   end
 
-  def should_send_reminder_email?(days_until_expired, number_of_reminders_sent)
-    return false if teacher.application_form != self
-
-    (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
-      (days_until_expired <= 7 && number_of_reminders_sent == 1)
+  def reminder_email_names
+    %w[expiration references]
   end
 
-  def send_reminder_email(number_of_reminders_sent)
-    TeacherMailer
-      .with(teacher:, number_of_reminders_sent:)
-      .application_not_submitted
-      .deliver_later
+  def should_send_reminder_email?(name, number_of_reminders_sent)
+    return false if teacher.application_form != self
+
+    case name
+    when "expiration"
+      return false if days_until_expired.nil?
+
+      (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
+        (days_until_expired <= 7 && number_of_reminders_sent == 1)
+    when "references"
+      unreviewed_reference_requests.any? do |reference_request|
+        reference_request.should_send_reminder_email?(
+          "expiration",
+          number_of_reminders_sent,
+        )
+      end
+    end
+  end
+
+  def send_reminder_email(name, number_of_reminders_sent)
+    case name
+    when "expiration"
+      TeacherMailer
+        .with(teacher:, number_of_reminders_sent:)
+        .application_not_submitted
+        .deliver_later
+    when "references"
+      TeacherMailer
+        .with(
+          teacher:,
+          number_of_reminders_sent:,
+          reference_requests: unreviewed_reference_requests.to_a,
+        )
+        .references_reminder
+        .deliver_later
+    end
   end
 
   def expires_after
@@ -291,5 +325,12 @@ class ApplicationForm < ApplicationRecord
     documents.build(document_type: :medium_of_instruction)
     documents.build(document_type: :english_language_proficiency)
     documents.build(document_type: :written_statement)
+  end
+
+  def unreviewed_reference_requests
+    ReferenceRequest
+      .joins(:work_history)
+      .where(work_histories: { application_form_id: id })
+      .where(received_at: nil, expired_at: nil)
   end
 end

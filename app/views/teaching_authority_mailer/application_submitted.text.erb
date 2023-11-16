@@ -17,7 +17,7 @@ They’ve told us that they’re qualified to teach children <%= @application_fo
 
 We’d be grateful if you could provide written evidence of their professional standing as a teacher in <%= CountryName.from_region(@region, with_definite_article: true) %>, and email it to us at:
 
-<%= t("service.email.verification") %>
+[<%= t("service.email.verification") %>](mailto:<%= t("service.email.verification") %>)
 
 Please include their QTS application reference number <%= @application_form.reference %>.
 

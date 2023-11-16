@@ -294,11 +294,12 @@
     - updated_at
     - written_statement_optional
   :reminder_emails:
-    - id
     - created_at
-    - updated_at
+    - id
+    - name
     - remindable_id
     - remindable_type
+    - updated_at
   :selected_failure_reasons:
     - id
     - created_at

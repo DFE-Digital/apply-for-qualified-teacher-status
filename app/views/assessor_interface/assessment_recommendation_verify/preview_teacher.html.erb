@@ -11,6 +11,9 @@
   mailer_class: TeacherMailer,
   name: :references_requested,
   teacher: @application_form.teacher,
+  reference_requests: [OpenStruct.new(
+    expires_at: Time.zone.now + 6.weeks,
+  )],
 )) %>
 
 <div class="govuk-button-group">

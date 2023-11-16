@@ -23,7 +23,10 @@ RSpec.describe RefereeMailer, type: :mailer do
 
   describe "#reference_reminder" do
     subject(:mail) do
-      described_class.with(reference_request:).reference_reminder
+      described_class.with(
+        reference_request:,
+        number_of_reminders_sent: 0,
+      ).reference_reminder
     end
 
     describe "#subject" do
@@ -31,7 +34,7 @@ RSpec.describe RefereeMailer, type: :mailer do
 
       it do
         is_expected.to eq(
-          "We still need you to verify First Last’s application for qualified teacher status (QTS)",
+          "Waiting on reference request for First Last’s application for QTS",
         )
       end
     end
@@ -48,7 +51,7 @@ RSpec.describe RefereeMailer, type: :mailer do
       it { is_expected.to include("Dear Contact Name") }
       it do
         is_expected.to include(
-          "We still need you to confirm some information about First Last",
+          "You need to answer a few questions about First Last",
         )
       end
       it do
@@ -71,7 +74,7 @@ RSpec.describe RefereeMailer, type: :mailer do
 
       it do
         is_expected.to eq(
-          "Please help us to verify First Last’s application for qualified teacher status (QTS)",
+          "Reference request for First Last’s application for qualified teacher status (QTS)",
         )
       end
     end
@@ -88,7 +91,7 @@ RSpec.describe RefereeMailer, type: :mailer do
       it { is_expected.to include("Dear Contact Name") }
       it do
         is_expected.to include(
-          "We need you to confirm some information about First Last",
+          "You need to answer a few questions about First Last",
         )
       end
       it do

@@ -2,9 +2,11 @@ en:
   mailer:
     referee:
       reference_reminder:
-        subject: We still need you to verify %{name}’s application for qualified teacher status (QTS)
+        subject:
+          0: Waiting on reference request for %{name}’s application for QTS
+          1: Please complete reference request for %{name}’s application for QTS
       reference_requested:
-        subject: Please help us to verify %{name}’s application for qualified teacher status (QTS)
+        subject: Reference request for %{name}’s application for qualified teacher status (QTS)
     teacher:
       application_awarded:
         subject: Your QTS application was successful
@@ -27,7 +29,11 @@ en:
       professional_standing_received:
         subject: Your qualified teacher status application – we’ve received your %{certificate}
       references_requested:
-        subject: Your qualified teacher status application – we’ve contacted your references
+        subject: We’ve contacted your references – QTS application
+      references_reminder:
+        subject:
+          0: Waiting on references – QTS application
+          1: Your references only have two weeks left to respond
     teaching_authority:
       application_submitted:
         subject: "%{name} has made an application for qualified teacher status (QTS) in England"

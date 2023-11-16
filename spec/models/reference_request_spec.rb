@@ -55,7 +55,11 @@ require "rails_helper"
 RSpec.describe ReferenceRequest do
   subject(:reference_request) { create(:reference_request) }
 
-  it_behaves_like "a remindable"
+  it_behaves_like "an expirable"
+
+  it_behaves_like "a remindable" do
+    subject { create(:reference_request, :requested) }
+  end
 
   it_behaves_like "a requestable" do
     subject { create(:reference_request, :receivable) }

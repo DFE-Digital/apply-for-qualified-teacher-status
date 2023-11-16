@@ -27,7 +27,10 @@ class UpdateWorkHistoryContact
 
     if email.present? && (reference_request = work_history.reference_request)
       RefereeMailer.with(reference_request:).reference_requested.deliver_later
-      TeacherMailer.with(teacher:).references_requested.deliver_later
+      TeacherMailer
+        .with(teacher:, reference_requests: [reference_request])
+        .references_requested
+        .deliver_later
     end
   end
 

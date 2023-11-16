@@ -5,6 +5,7 @@
 # Table name: reminder_emails
 #
 #  id              :bigint           not null, primary key
+#  name            :string           default("expiration"), not null
 #  remindable_type :string           default(""), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

@@ -83,6 +83,9 @@ class VerifyAssessment
       RefereeMailer.with(reference_request:).reference_requested.deliver_later
     end
 
-    TeacherMailer.with(teacher:).references_requested.deliver_later
+    TeacherMailer
+      .with(teacher:, reference_requests:)
+      .references_requested
+      .deliver_later
   end
 end
