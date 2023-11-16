@@ -281,7 +281,7 @@ class ApplicationForm < ApplicationRecord
       (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
         (days_until_expired <= 7 && number_of_reminders_sent == 1)
     when "references"
-      unreviewed_reference_requests.any? do |reference_request|
+      reference_requests_not_yet_received_or_rejected.any? do |reference_request|
         reference_request.should_send_reminder_email?(
           "expiration",
           number_of_reminders_sent,
@@ -302,7 +302,8 @@ class ApplicationForm < ApplicationRecord
         .with(
           teacher:,
           number_of_reminders_sent:,
-          reference_requests: unreviewed_reference_requests.to_a,
+          reference_requests:
+            reference_requests_not_yet_received_or_rejected.to_a,
         )
         .references_reminder
         .deliver_later
@@ -327,10 +328,10 @@ class ApplicationForm < ApplicationRecord
     documents.build(document_type: :written_statement)
   end
 
-  def unreviewed_reference_requests
+  def reference_requests_not_yet_received_or_rejected
     ReferenceRequest
       .joins(:work_history)
       .where(work_histories: { application_form_id: id })
-      .where(received_at: nil, expired_at: nil)
+      .where(received_at: nil, verify_passed: nil, review_passed: nil)
   end
 end
