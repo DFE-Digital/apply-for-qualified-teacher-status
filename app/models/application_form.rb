@@ -332,6 +332,7 @@ class ApplicationForm < ApplicationRecord
     ReferenceRequest
       .joins(:work_history)
       .where(work_histories: { application_form_id: id })
+      .where.not(requested_at: nil)
       .where(received_at: nil, verify_passed: nil, review_passed: nil)
   end
 end
