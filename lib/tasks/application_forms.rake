@@ -34,4 +34,36 @@ namespace :application_forms do
         puts "#{application_form.reference}: #{application_form.action_required_by} - #{application_form.status}"
       end
   end
+
+  desc "Update hidden from assessment status for all application forms."
+  task update_hidden_from_assessment: :environment do |_task, _args|
+    zimbabwe_applications =
+      ApplicationForm.joins(region: :country).where(countries: { code: "ZW" })
+
+    puts "Zimbabwe: #{zimbabwe_applications.count}"
+    zimbabwe_applications.pluck(:reference).each { |reference| puts reference }
+    puts
+
+    work_history_duration_applications =
+      ApplicationForm
+        .where(stage: %w[not_started pre_assessment], needs_work_history: true)
+        .select(&:created_under_new_regulations?)
+        .select do |application_form|
+          WorkHistoryDuration.for_application_form(
+            application_form,
+            consider_teaching_qualification: true,
+          ).count_months < 9
+        end
+
+    puts "Work history duration: #{work_history_duration_applications.count}"
+    work_history_duration_applications
+      .map(&:reference)
+      .each { |reference| puts reference }
+
+    ApplicationForm.where(
+      id:
+        zimbabwe_applications.pluck(:id) +
+          work_history_duration_applications.map(&:id),
+    ).update_all(hidden_from_assessment: true)
+  end
 end
