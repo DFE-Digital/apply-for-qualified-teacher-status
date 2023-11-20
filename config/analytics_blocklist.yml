@@ -21,6 +21,8 @@
     - record_id
     - blob_id
     - created_at
+  :application_forms:
+    - hidden_from_assessment
   :sessions:
     - id
     - session_id

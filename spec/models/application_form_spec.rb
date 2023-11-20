@@ -24,6 +24,7 @@
 #  given_names                                   :text             default(""), not null
 #  has_alternative_name                          :boolean
 #  has_work_history                              :boolean
+#  hidden_from_assessment                        :boolean          default(FALSE), not null
 #  identification_document_status                :string           default("not_started"), not null
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
@@ -351,6 +352,14 @@ RSpec.describe ApplicationForm, type: :model do
         end
 
         it { is_expected.to eq([application_form]) }
+      end
+
+      context "when hidden from assessment" do
+        before do
+          create(:application_form, :submitted, hidden_from_assessment: true)
+        end
+
+        it { is_expected.to be_empty }
       end
     end
 

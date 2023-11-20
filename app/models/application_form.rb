@@ -24,6 +24,7 @@
 #  given_names                                   :text             default(""), not null
 #  has_alternative_name                          :boolean
 #  has_work_history                              :boolean
+#  hidden_from_assessment                        :boolean          default(FALSE), not null
 #  identification_document_status                :string           default("not_started"), not null
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
@@ -199,16 +200,14 @@ class ApplicationForm < ApplicationRecord
 
   scope :active,
         -> do
-          joins(region: :country)
-            .where.not(countries: { code: "ZW" })
-            .merge(
-              assessable
-                .or(awarded_pending_checks)
-                .or(potential_duplicate_in_dqt)
-                .or(awarded.where("awarded_at >= ?", 90.days.ago))
-                .or(declined.where("declined_at >= ?", 90.days.ago))
-                .or(withdrawn.where("withdrawn_at >= ?", 90.days.ago)),
-            )
+          where(hidden_from_assessment: false).merge(
+            assessable
+              .or(awarded_pending_checks)
+              .or(potential_duplicate_in_dqt)
+              .or(awarded.where("awarded_at >= ?", 90.days.ago))
+              .or(declined.where("declined_at >= ?", 90.days.ago))
+              .or(withdrawn.where("withdrawn_at >= ?", 90.days.ago)),
+          )
         end
 
   scope :destroyable,
