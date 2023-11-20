@@ -353,6 +353,14 @@ RSpec.describe ApplicationForm, type: :model do
 
         it { is_expected.to eq([application_form]) }
       end
+
+      context "when hidden from assessment" do
+        before do
+          create(:application_form, :submitted, hidden_from_assessment: true)
+        end
+
+        it { is_expected.to be_empty }
+      end
     end
 
     describe "#destroyable" do
