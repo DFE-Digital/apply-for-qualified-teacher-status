@@ -13,10 +13,11 @@ class SubmitApplicationForm
 
     ActiveRecord::Base.transaction do
       application_form.update!(
-        subjects: application_form.subjects.compact_blank,
-        working_days_since_submission: 0,
+        hidden_from_assessment:,
         requires_preliminary_check: region.requires_preliminary_check,
+        subjects: application_form.subjects.compact_blank,
         submitted_at: Time.zone.now,
+        working_days_since_submission: 0,
       )
 
       assessment = AssessmentFactory.call(application_form:)
@@ -74,5 +75,13 @@ class SubmitApplicationForm
     ProfessionalStandingRequest
       .create!(assessment:)
       .tap { |requestable| RequestRequestable.call(requestable:, user:) }
+  end
+
+  def hidden_from_assessment
+    region.country.code == "ZW" ||
+      WorkHistoryDuration.for_application_form(
+        application_form,
+        consider_teaching_qualification: true,
+      ).count_months < 9
   end
 end
