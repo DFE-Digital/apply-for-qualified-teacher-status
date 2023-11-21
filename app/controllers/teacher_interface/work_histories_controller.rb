@@ -258,7 +258,10 @@ module TeacherInterface
 
     def load_months_count
       @months_count =
-        WorkHistoryDuration.for_application_form(application_form).count_months
+        WorkHistoryDuration.for_application_form(
+          application_form,
+          consider_teaching_qualification: true,
+        ).count_months
     end
 
     def check_member_identifier
