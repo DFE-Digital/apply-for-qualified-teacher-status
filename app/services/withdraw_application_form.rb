@@ -9,7 +9,7 @@ class WithdrawApplicationForm
   end
 
   def call
-    return if application_form.withdrawn?
+    return if application_form.withdrawn_at.present?
 
     ActiveRecord::Base.transaction do
       application_form.update!(withdrawn_at: Time.zone.now)

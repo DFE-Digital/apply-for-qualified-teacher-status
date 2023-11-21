@@ -8,18 +8,6 @@ RSpec.describe WithdrawApplicationForm do
 
   subject(:call) { described_class.call(application_form:, user:) }
 
-  describe "application form status" do
-    subject(:withdrawn?) { application_form.withdrawn? }
-
-    it { is_expected.to be false }
-
-    context "when calling the service" do
-      before { call }
-
-      it { is_expected.to be true }
-    end
-  end
-
   describe "application form withdrawn_at" do
     subject(:withdrawn_at) { application_form.withdrawn_at }
 

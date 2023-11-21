@@ -30,6 +30,8 @@ RSpec.describe AwardQTS do
       create(:application_form, :awarded_pending_checks, teacher:)
     end
 
+    before { create(:dqt_trn_request, application_form:) }
+
     it "sets the TRN" do
       expect { call }.to change(teacher, :trn).to("abcdef")
     end
@@ -49,7 +51,7 @@ RSpec.describe AwardQTS do
     end
 
     it "changes the status" do
-      expect { call }.to change(application_form, :status).to("awarded")
+      expect { call }.to change(application_form, :stage).to("completed")
     end
 
     it "sets the awarded at date" do
@@ -74,6 +76,8 @@ RSpec.describe AwardQTS do
       create(:application_form, :potential_duplicate_in_dqt, teacher:)
     end
 
+    before { create(:dqt_trn_request, application_form:) }
+
     it "sets the TRN" do
       expect { call }.to change(teacher, :trn).to("abcdef")
     end
@@ -93,7 +97,7 @@ RSpec.describe AwardQTS do
     end
 
     it "changes the status" do
-      expect { call }.to change(application_form, :status).to("awarded")
+      expect { call }.to change(application_form, :stage).to("completed")
     end
 
     it "sets the awarded at date" do
@@ -116,6 +120,8 @@ RSpec.describe AwardQTS do
   context "with an awarded application form" do
     let(:application_form) { create(:application_form, :awarded, teacher:) }
 
+    before { create(:dqt_trn_request, application_form:) }
+
     it "doesn't change the TRN" do
       expect { call }.to_not change(teacher, :trn)
     end
@@ -134,8 +140,8 @@ RSpec.describe AwardQTS do
       )
     end
 
-    it "doesn't change the status" do
-      expect { call }.to_not change(application_form, :status)
+    it "doesn't change the stage" do
+      expect { call }.to_not change(application_form, :stage)
     end
 
     it "doesn't change the awarded at date" do

@@ -29,15 +29,9 @@ RSpec.describe ReceiveRequestable do
   end
 
   it "changes the application form status" do
-    expect { call }.to change { application_form.reload.received? }.from(
-      false,
-    ).to(true)
-  end
-
-  it "changes the application form qualification received" do
-    expect { call }.to change {
-      application_form.reload.received_qualification
-    }.from(false).to(true)
+    expect { call }.to change { application_form.reload.statuses }.to(
+      %w[received_qualification],
+    )
   end
 
   it "changes the requestable received at" do

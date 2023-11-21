@@ -29,7 +29,7 @@ RSpec.describe BackfillPreliminaryChecks do
         :waiting_on,
         :with_assessment,
         region:,
-        waiting_on_professional_standing: true,
+        statuses: %w[waiting_on_lops],
         teaching_authority_provides_written_statement: true,
         requires_preliminary_check: false,
       )
@@ -46,25 +46,25 @@ RSpec.describe BackfillPreliminaryChecks do
 
       it "doesn't backfill the submitted application form" do
         expect { call }.to_not(
-          change { submitted_application_form.reload.status },
+          change { submitted_application_form.reload.stage },
         )
       end
 
       it "doesn't backfill the waiting on application form" do
         expect { call }.to_not(
-          change { waiting_on_application_form.reload.status },
+          change { waiting_on_application_form.reload.stage },
         )
       end
 
       it "doesn't backfill the preliminary checked application form" do
         expect { call }.to_not(
-          change { preliminary_check_application_form.reload.status },
+          change { preliminary_check_application_form.reload.stage },
         )
       end
 
       it "doesn't backfill the awarded application form" do
         expect { call }.to_not(
-          change { awarded_check_application_form.reload.status },
+          change { awarded_check_application_form.reload.stage },
         )
       end
     end
@@ -77,7 +77,8 @@ RSpec.describe BackfillPreliminaryChecks do
 
         submitted_application_form.reload
 
-        expect(submitted_application_form.status).to eq("preliminary_check")
+        expect(submitted_application_form.stage).to eq("pre_assessment")
+        expect(submitted_application_form.statuses).to eq(%w[preliminary_check])
         expect(submitted_application_form.requires_preliminary_check).to be true
         expect(
           submitted_application_form.assessment.sections.preliminary,
@@ -89,7 +90,10 @@ RSpec.describe BackfillPreliminaryChecks do
 
         waiting_on_application_form.reload
 
-        expect(waiting_on_application_form.status).to eq("preliminary_check")
+        expect(waiting_on_application_form.stage).to eq("pre_assessment")
+        expect(waiting_on_application_form.statuses).to eq(
+          %w[preliminary_check],
+        )
         expect(
           waiting_on_application_form.requires_preliminary_check,
         ).to be true
@@ -100,13 +104,13 @@ RSpec.describe BackfillPreliminaryChecks do
 
       it "doesn't backfill the preliminary checked application form" do
         expect { call }.to_not(
-          change { preliminary_check_application_form.reload.status },
+          change { preliminary_check_application_form.reload.stage },
         )
       end
 
       it "doesn't backfill the awarded application form" do
         expect { call }.to_not(
-          change { awarded_check_application_form.reload.status },
+          change { awarded_check_application_form.reload.stage },
         )
       end
     end

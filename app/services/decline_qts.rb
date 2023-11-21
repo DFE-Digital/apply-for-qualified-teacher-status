@@ -9,7 +9,7 @@ class DeclineQTS
   end
 
   def call
-    return if application_form.declined?
+    return if application_form.declined_at.present?
 
     ActiveRecord::Base.transaction do
       application_form.update!(declined_at: Time.zone.now)

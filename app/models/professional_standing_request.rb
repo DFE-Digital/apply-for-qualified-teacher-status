@@ -46,7 +46,7 @@ class ProfessionalStandingRequest < ApplicationRecord
 
   def after_expired(user:)
     if application_form.teaching_authority_provides_written_statement &&
-         !application_form.withdrawn?
+         application_form.withdrawn_at.nil?
       DeclineQTS.call(application_form:, user:)
     end
   end
@@ -56,7 +56,7 @@ class ProfessionalStandingRequest < ApplicationRecord
   private
 
   def should_send_received_email?
-    !application_form.declined? &&
+    application_form.declined_at.nil? &&
       application_form.teaching_authority_provides_written_statement
   end
 end

@@ -94,7 +94,6 @@
 FactoryBot.define do
   factory :application_form do
     sequence(:reference) { |n| n.to_s.rjust(7, "0") }
-    status { "draft" }
     association :teacher
     association :region
 
@@ -180,7 +179,6 @@ FactoryBot.define do
 
     trait :submitted do
       not_started_stage
-      status { "submitted" }
       statuses { %w[assessment_not_started] }
       submitted_at { Time.zone.now }
       working_days_since_submission { 0 }
@@ -201,14 +199,12 @@ FactoryBot.define do
       submitted
       pre_assessment_stage
       requires_preliminary_check { true }
-      status { "preliminary_check" }
       statuses { %w[preliminary_check] }
     end
 
     trait :assessment_in_progress do
       submitted
       assessment_stage
-      status { "assessment_in_progress" }
       statuses { %w[assessment_in_progress] }
     end
 
@@ -216,7 +212,6 @@ FactoryBot.define do
       submitted
       action_required_by_external
       verification_stage
-      status { "waiting_on" }
       statuses do
         %w[
           waiting_on_further_information
@@ -230,7 +225,6 @@ FactoryBot.define do
     trait :received do
       submitted
       verification_stage
-      status { "received" }
       statuses do
         %w[
           received_further_information
@@ -244,7 +238,6 @@ FactoryBot.define do
     trait :overdue do
       submitted
       verification_stage
-      status { "overdue" }
       statuses do
         %w[
           overdue_further_information
@@ -258,21 +251,18 @@ FactoryBot.define do
     trait :awarded_pending_checks do
       submitted
       review_stage
-      status { "awarded_pending_checks" }
       statuses { %w[awarded_pending_checks] }
     end
 
     trait :potential_duplicate_in_dqt do
       submitted
       review_stage
-      status { "potential_duplicate_in_dqt" }
       statuses { %w[potential_duplicate_in_dqt] }
     end
 
     trait :awarded do
       submitted
       completed_stage
-      status { "awarded" }
       statuses { %w[awarded] }
       awarded_at { Time.zone.now }
     end
@@ -280,7 +270,6 @@ FactoryBot.define do
     trait :declined do
       submitted
       completed_stage
-      status { "declined" }
       statuses { %w[declined] }
       declined_at { Time.zone.now }
     end
@@ -288,7 +277,6 @@ FactoryBot.define do
     trait :withdrawn do
       submitted
       completed_stage
-      status { "withdrawn" }
       statuses { %w[withdrawn] }
       withdrawn_at { Time.zone.now }
     end

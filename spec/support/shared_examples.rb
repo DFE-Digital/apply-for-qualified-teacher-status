@@ -2,9 +2,7 @@
 
 RSpec.shared_examples "redirect unless application form is draft" do
   context "with a submitted application form" do
-    before do
-      application_form.update!(status: "submitted", submitted_at: Time.zone.now)
-    end
+    before { application_form.update!(submitted_at: Time.zone.now) }
 
     it "redirects to the application form" do
       perform

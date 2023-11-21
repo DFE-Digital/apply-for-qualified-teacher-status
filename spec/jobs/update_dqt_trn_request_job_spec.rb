@@ -80,10 +80,10 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           perform_rescue_exception
         end
 
-        it "doesn't change the state" do
+        it "doesn't change the stage" do
           expect { perform_rescue_exception }.to_not change(
             application_form,
-            :status,
+            :stage,
           )
         end
 
@@ -116,8 +116,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "changes the state" do
-          expect { perform }.to change(application_form, :status).to(
-            "potential_duplicate_in_dqt",
+          expect { perform }.to change(application_form, :statuses).to(
+            %w[potential_duplicate_in_dqt],
           )
         end
 
@@ -193,10 +193,10 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
           perform_rescue_exception
         end
 
-        it "doesn't change the state" do
+        it "doesn't change the stage" do
           expect { perform_rescue_exception }.to_not change(
             application_form,
-            :status,
+            :stage,
           )
         end
 
@@ -232,8 +232,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "changes the state" do
-          expect { perform }.to change(application_form, :status).to(
-            "potential_duplicate_in_dqt",
+          expect { perform }.to change(application_form, :statuses).to(
+            %w[potential_duplicate_in_dqt],
           )
         end
 
@@ -265,8 +265,8 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         perform
       end
 
-      it "doesn't change the state" do
-        expect { perform }.to_not change(application_form, :status)
+      it "doesn't change the stage" do
+        expect { perform }.to_not change(application_form, :stage)
       end
 
       it "doesn't queue another job" do

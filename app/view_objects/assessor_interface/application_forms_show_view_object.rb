@@ -10,7 +10,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     @application_form ||=
       ApplicationForm
         .includes(assessment: :sections)
-        .not_draft
+        .where.not(submitted_at: nil)
         .find_by!(reference: params[:reference])
   end
 
@@ -29,7 +29,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def status
-    application_form.status.humanize
+    application_form.statuses.map(&:humanize).to_sentence
   end
 
   def email_used_as_reference_in_this_application_form?
@@ -43,7 +43,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         .includes(:application_form)
         .where(canonical_contact_email: canonical_email)
         .where.not(application_form:)
-        .where.not(application_form: { status: "draft" })
+        .where.not(application_form: { submitted_at: nil })
         .map(&:application_form)
   end
 
@@ -73,6 +73,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
         }
       end,
     ].compact
+  end
+
+  def waiting_on_references?
+    assessment.reference_requests.reject(&:reviewed?).any?(&:requested?)
   end
 
   private

@@ -18,8 +18,12 @@ RSpec.describe DeclineQTS do
       ).with(params: { teacher: }, args: [])
     end
 
-    it "changes the status" do
-      expect { call }.to change(application_form, :status).to("declined")
+    it "changes the stage" do
+      expect { call }.to change(application_form, :stage).to("completed")
+    end
+
+    it "changes the statuses" do
+      expect { call }.to change(application_form, :statuses).to(%w[declined])
     end
 
     it "sets the declined at date" do
@@ -41,8 +45,8 @@ RSpec.describe DeclineQTS do
       )
     end
 
-    it "doesn't change the status" do
-      expect { call }.to_not change(application_form, :status)
+    it "doesn't change the stage" do
+      expect { call }.to_not change(application_form, :stage)
     end
 
     it "doesn't change the declined at date" do

@@ -62,12 +62,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
   end
 
-  shared_examples "changes status" do |new_status|
-    it "changes status to #{new_status}" do
-      expect { call }.to change(application_form, :status).to(new_status)
-    end
-  end
-
   describe "#call" do
     subject(:call) { described_class.call(application_form:, user:) }
 
@@ -80,7 +74,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "review"
       include_examples "changes statuses", %w[potential_duplicate_in_dqt]
-      include_examples "changes status", "potential_duplicate_in_dqt"
     end
 
     context "with a withdrawn_at date" do
@@ -94,7 +87,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "doesn't change action required by"
       include_examples "changes stage", "completed"
       include_examples "changes statuses", %w[withdrawn]
-      include_examples "changes status", "withdrawn"
     end
 
     context "with a declined_at date" do
@@ -108,7 +100,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "doesn't change action required by"
       include_examples "changes stage", "completed"
       include_examples "changes statuses", %w[declined]
-      include_examples "changes status", "declined"
     end
 
     context "with an awarded_at date" do
@@ -122,7 +113,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "doesn't change action required by"
       include_examples "changes stage", "completed"
       include_examples "changes statuses", %w[awarded]
-      include_examples "changes status", "awarded"
     end
 
     context "with a DQT TRN request" do
@@ -134,7 +124,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "review"
       include_examples "changes statuses", %w[awarded_pending_checks]
-      include_examples "changes status", "awarded_pending_checks"
     end
 
     context "with a received further information request" do
@@ -148,14 +137,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "assessment"
       include_examples "changes statuses", %w[received_further_information]
-      include_examples "changes status", "received"
-
-      it "changes received_further_information" do
-        expect { call }.to change(
-          application_form,
-          :received_further_information,
-        ).from(false).to(true)
-      end
     end
 
     context "with a requested further information request" do
@@ -169,14 +150,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "external"
       include_examples "changes stage", "assessment"
       include_examples "changes statuses", %w[waiting_on_further_information]
-      include_examples "changes status", "waiting_on"
-
-      it "changes waiting_on_further_information" do
-        expect { call }.to change(
-          application_form,
-          :waiting_on_further_information,
-        ).from(false).to(true)
-      end
     end
 
     context "with a requested profession standing request" do
@@ -190,14 +163,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "external"
       include_examples "changes stage", "verification"
       include_examples "changes statuses", %w[waiting_on_lops]
-      include_examples "changes status", "waiting_on"
-
-      it "changes waiting_on_professional_standing" do
-        expect { call }.to change(
-          application_form,
-          :waiting_on_professional_standing,
-        ).from(false).to(true)
-      end
     end
 
     context "with a received profession standing request" do
@@ -215,13 +180,6 @@ RSpec.describe ApplicationFormStatusUpdater do
         include_examples "changes action required by", "assessor"
         include_examples "changes stage", "not_started"
         include_examples "changes statuses", %w[assessment_not_started]
-
-        it "doesn't change received_professional_standing" do
-          expect { call }.to_not change(
-            application_form,
-            :received_professional_standing,
-          ).from(false)
-        end
       end
 
       context "when the teaching authority doesn't provide the written statement" do
@@ -233,14 +191,6 @@ RSpec.describe ApplicationFormStatusUpdater do
         include_examples "changes action required by", "admin"
         include_examples "changes stage", "verification"
         include_examples "changes statuses", %w[received_lops]
-        include_examples "changes status", "received"
-
-        it "changes received_professional_standing" do
-          expect { call }.to change(
-            application_form,
-            :received_professional_standing,
-          ).from(false).to(true)
-        end
       end
     end
 
@@ -255,14 +205,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "verification"
       include_examples "changes statuses", %w[received_qualification]
-      include_examples "changes status", "received"
-
-      it "changes received_further_information" do
-        expect { call }.to change(
-          application_form,
-          :received_qualification,
-        ).from(false).to(true)
-      end
     end
 
     context "with a requested qualification request" do
@@ -276,14 +218,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "external"
       include_examples "changes stage", "verification"
       include_examples "changes statuses", %w[waiting_on_qualification]
-      include_examples "changes status", "waiting_on"
-
-      it "changes waiting_on_qualification" do
-        expect { call }.to change(
-          application_form,
-          :waiting_on_qualification,
-        ).from(false).to(true)
-      end
     end
 
     context "with a received reference request" do
@@ -312,14 +246,6 @@ RSpec.describe ApplicationFormStatusUpdater do
         include_examples "changes action required by", "external"
         include_examples "changes stage", "verification"
         include_examples "changes statuses", %w[waiting_on_reference]
-        include_examples "changes status", "waiting_on"
-
-        it "doesn't change received_reference" do
-          expect { call }.to_not change(
-            application_form,
-            :received_reference,
-          ).from(false)
-        end
       end
 
       context "with less than 20 months" do
@@ -343,14 +269,6 @@ RSpec.describe ApplicationFormStatusUpdater do
           include_examples "changes action required by", "assessor"
           include_examples "changes stage", "verification"
           include_examples "changes statuses", %w[received_reference]
-          include_examples "changes status", "received"
-
-          it "changes received_reference" do
-            expect { call }.to change(
-              application_form,
-              :received_reference,
-            ).from(false).to(true)
-          end
         end
 
         context "and there are other reference requests" do
@@ -359,14 +277,6 @@ RSpec.describe ApplicationFormStatusUpdater do
           include_examples "changes action required by", "external"
           include_examples "changes stage", "verification"
           include_examples "changes statuses", %w[waiting_on_reference]
-          include_examples "changes status", "waiting_on"
-
-          it "doesn't change received_reference" do
-            expect { call }.to_not change(
-              application_form,
-              :received_reference,
-            ).from(false)
-          end
         end
       end
 
@@ -390,13 +300,6 @@ RSpec.describe ApplicationFormStatusUpdater do
         include_examples "changes action required by", "assessor"
         include_examples "changes stage", "verification"
         include_examples "changes statuses", %w[received_reference]
-        include_examples "changes status", "received"
-
-        it "changes received_reference" do
-          expect { call }.to change(application_form, :received_reference).from(
-            false,
-          ).to(true)
-        end
       end
     end
 
@@ -411,13 +314,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "external"
       include_examples "changes stage", "verification"
       include_examples "changes statuses", %w[waiting_on_reference]
-      include_examples "changes status", "waiting_on"
-
-      it "changes waiting_on_reference" do
-        expect { call }.to change(application_form, :waiting_on_reference).from(
-          false,
-        ).to(true)
-      end
     end
 
     context "when a reviewed assessment" do
@@ -451,7 +347,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "assessment"
       include_examples "changes statuses", %w[assessment_in_progress]
-      include_examples "changes status", "assessment_in_progress"
     end
 
     context "with an unstarted assessment" do
@@ -463,14 +358,9 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "not_started"
       include_examples "changes statuses", %w[assessment_not_started]
-      include_examples "changes status", "submitted"
     end
 
     context "when status is unchanged" do
-      it "doesn't change the status from draft" do
-        expect { call }.to_not change(application_form, :status).from("draft")
-      end
-
       include_examples "doesn't change action required by"
 
       it "doesn't change the stage from draft" do
@@ -505,7 +395,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes action required by", "admin"
       include_examples "changes stage", "pre_assessment"
       include_examples "changes statuses", %w[preliminary_check]
-      include_examples "changes status", "preliminary_check"
 
       context "when teaching authority provides written statement" do
         before do
@@ -519,7 +408,6 @@ RSpec.describe ApplicationFormStatusUpdater do
         include_examples "changes stage", "pre_assessment"
         include_examples "changes statuses",
                          %w[preliminary_check waiting_on_lops]
-        include_examples "changes status", "preliminary_check"
 
         context "when the preliminary check has passed" do
           before { preliminary_assessment_section.update!(passed: true) }
@@ -527,7 +415,6 @@ RSpec.describe ApplicationFormStatusUpdater do
           include_examples "changes action required by", "external"
           include_examples "changes stage", "pre_assessment"
           include_examples "changes statuses", %w[waiting_on_lops]
-          include_examples "changes status", "waiting_on"
         end
 
         context "when the preliminary check has failed" do
@@ -543,7 +430,6 @@ RSpec.describe ApplicationFormStatusUpdater do
           include_examples "changes stage", "pre_assessment"
           include_examples "changes statuses",
                            %w[preliminary_check waiting_on_lops]
-          include_examples "changes status", "preliminary_check"
 
           context "and the application form is declined" do
             before { application_form.update!(declined_at: Time.zone.now) }
@@ -551,7 +437,6 @@ RSpec.describe ApplicationFormStatusUpdater do
             include_examples "doesn't change action required by"
             include_examples "changes stage", "completed"
             include_examples "changes statuses", %w[declined]
-            include_examples "changes status", "declined"
           end
         end
       end

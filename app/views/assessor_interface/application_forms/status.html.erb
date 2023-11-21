@@ -1,9 +1,9 @@
-<% title = if @view_object.assessment.review?
-             "Application sent for review"
-           elsif @view_object.application_form.waiting_on?
-             "Reference requests sent successfully"
-           elsif @view_object.application_form.awarded?
+<% title = if @view_object.application_form.awarded_at.present?
              "QTS application #{@view_object.application_form.reference} has been awarded"
+           elsif @view_object.assessment.review?
+             "Application sent for review"
+           elsif @view_object.waiting_on_references?
+             "Reference requests sent successfully"
            else
              "QTS application #{@view_object.application_form.reference} has been #{@view_object.status.downcase}"
            end %>
@@ -11,7 +11,7 @@
 <% content_for :page_title, title %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
 
-<% if @view_object.application_form.awarded? %>
+<% if @view_object.application_form.awarded_at.present? %>
   <%= govuk_panel(text: title) %>
 <% else %>
   <h1 class="govuk-heading-xl"><%= title %></h1>
@@ -19,12 +19,12 @@
 
 <% if @view_object.assessment.review? %>
   <p class="govuk-body">An assessor will now review the application and make a decision on awarding or declining QTS.</p>
-<% elsif @view_object.application_form.declined? %>
+<% elsif @view_object.application_form.declined_at.present? %>
   <p class="govuk-body">The application will be deleted after 90 days unless the applicant chooses to appeal.</p>
-<% elsif @view_object.application_form.awarded_pending_checks? %>
+<% elsif @view_object.application_form.dqt_trn_request.present? %>
   <p class="govuk-body">This status will appear while the award is reconciled with the information in the Database of Qualified Teachers (DQT).</p>
   <p class="govuk-body">Once these checks are complete, the status will change to ‘Awarded’ and the applicant will receive the email telling them they’ve been awarded QTS.</p>
-<% elsif @view_object.application_form.waiting_on? %>
+<% elsif @view_object.waiting_on_references? %>
   <p class="govuk-body">You’ve successfully sent requests to each of the references that the applicant provided.</p>
   <p class="govuk-body govuk-!-font-weight-bold">The applicant will also receive an email to tell them you’ve contacted their references.</p>
   <p class="govuk-body">When the references respond, you’ll see the status of the application change to ‘Received’.</p>

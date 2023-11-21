@@ -10,23 +10,6 @@ class ApplicationFormStatusUpdater
 
   def call
     ActiveRecord::Base.transaction do
-      application_form.update!(
-        overdue_further_information:,
-        overdue_professional_standing: overdue_lops,
-        overdue_qualification:,
-        overdue_reference:,
-        received_further_information:,
-        received_professional_standing: received_lops,
-        received_qualification:,
-        received_reference:,
-        waiting_on_further_information:,
-        waiting_on_professional_standing: waiting_on_lops,
-        waiting_on_qualification:,
-        waiting_on_reference:,
-      )
-
-      application_form.status = status if application_form.status != status
-
       if (old_action_required_by = application_form.action_required_by) !=
            action_required_by
         application_form.action_required_by = action_required_by
@@ -57,115 +40,6 @@ class ApplicationFormStatusUpdater
   private
 
   attr_reader :application_form, :user
-
-  def overdue_further_information
-    overdue?(requestables: further_information_requests)
-  end
-
-  def overdue_lops
-    return false if teaching_authority_provides_written_statement
-    overdue?(requestables: professional_standing_requests)
-  end
-
-  def overdue_qualification
-    overdue?(requestables: qualification_requests)
-  end
-
-  def overdue_reference
-    return false if references_verified
-    overdue?(requestables: reference_requests)
-  end
-
-  def received_further_information
-    received?(requestables: further_information_requests)
-  end
-
-  def received_lops
-    return false if teaching_authority_provides_written_statement
-    received?(requestables: professional_standing_requests)
-  end
-
-  def received_qualification
-    received?(requestables: qualification_requests)
-  end
-
-  def received_reference
-    return false unless received?(requestables: reference_requests)
-
-    received_requests = reference_requests.filter(&:received?)
-
-    months_count =
-      WorkHistoryDuration.for_ids(
-        received_requests.map(&:work_history_id),
-        application_form:,
-      ).count_months
-
-    most_recent_reference_request =
-      reference_requests.max_by { |request| request.work_history.start_date }
-
-    if months_count < 9
-      false
-    elsif months_count >= 20 &&
-          (region.checks_available? || most_recent_reference_request&.received?)
-      true
-    else
-      reference_requests.all? { |r| r.received? || r.expired? }
-    end
-  end
-
-  def waiting_on_further_information
-    waiting_on?(requestables: further_information_requests)
-  end
-
-  def waiting_on_lops
-    waiting_on?(requestables: professional_standing_requests)
-  end
-
-  def waiting_on_qualification
-    waiting_on?(requestables: qualification_requests)
-  end
-
-  def waiting_on_reference
-    return false if references_verified
-    waiting_on?(requestables: reference_requests)
-  end
-
-  def needs_references_verified?
-    reference_requests.present? && !waiting_on_reference &&
-      references_verified != true
-  end
-
-  def status
-    @status ||=
-      if dqt_trn_request&.potential_duplicate?
-        "potential_duplicate_in_dqt"
-      elsif application_form.withdrawn_at.present?
-        "withdrawn"
-      elsif application_form.declined_at.present?
-        "declined"
-      elsif application_form.awarded_at.present?
-        "awarded"
-      elsif dqt_trn_request.present?
-        "awarded_pending_checks"
-      elsif preliminary_check?
-        "preliminary_check"
-      elsif overdue_further_information || overdue_lops ||
-            overdue_qualification || overdue_reference
-        "overdue"
-      elsif received_further_information || received_lops ||
-            received_qualification || received_reference
-        "received"
-      elsif waiting_on_further_information || waiting_on_lops ||
-            waiting_on_qualification || waiting_on_reference
-        "waiting_on"
-      elsif assessment&.any_not_preliminary_section_finished?
-        "assessment_in_progress"
-      elsif application_form.submitted_at.present?
-        "submitted"
-      else
-        "draft"
-      end
-  end
 
   def action_required_by
     @action_required_by ||=
@@ -293,6 +167,83 @@ class ApplicationFormStatusUpdater
         .product(%w[further_information lops qualification reference])
         .map { |status, requestable| "#{status}_#{requestable}" }
         .filter { |column| send(column) }
+  end
+
+  def overdue_further_information
+    overdue?(requestables: further_information_requests)
+  end
+
+  def overdue_lops
+    return false if teaching_authority_provides_written_statement
+    overdue?(requestables: professional_standing_requests)
+  end
+
+  def overdue_qualification
+    overdue?(requestables: qualification_requests)
+  end
+
+  def overdue_reference
+    return false if references_verified
+    overdue?(requestables: reference_requests)
+  end
+
+  def received_further_information
+    received?(requestables: further_information_requests)
+  end
+
+  def received_lops
+    return false if teaching_authority_provides_written_statement
+    received?(requestables: professional_standing_requests)
+  end
+
+  def received_qualification
+    received?(requestables: qualification_requests)
+  end
+
+  def received_reference
+    return false unless received?(requestables: reference_requests)
+
+    received_requests = reference_requests.filter(&:received?)
+
+    months_count =
+      WorkHistoryDuration.for_ids(
+        received_requests.map(&:work_history_id),
+        application_form:,
+      ).count_months
+
+    most_recent_reference_request =
+      reference_requests.max_by { |request| request.work_history.start_date }
+
+    if months_count < 9
+      false
+    elsif months_count >= 20 &&
+          (region.checks_available? || most_recent_reference_request&.received?)
+      true
+    else
+      reference_requests.all? { |r| r.received? || r.expired? }
+    end
+  end
+
+  def waiting_on_further_information
+    waiting_on?(requestables: further_information_requests)
+  end
+
+  def waiting_on_lops
+    waiting_on?(requestables: professional_standing_requests)
+  end
+
+  def waiting_on_qualification
+    waiting_on?(requestables: qualification_requests)
+  end
+
+  def waiting_on_reference
+    return false if references_verified
+    waiting_on?(requestables: reference_requests)
+  end
+
+  def needs_references_verified?
+    reference_requests.present? && !waiting_on_reference &&
+      references_verified != true
   end
 
   def further_information_requests
