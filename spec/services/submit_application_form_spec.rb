@@ -29,21 +29,6 @@ RSpec.describe SubmitApplicationForm do
     context "when country is not Zimbabwe and work history is above 9 months" do
       let(:region) { create(:region, :in_country, country_code: "FR") }
 
-      before do
-        create(
-          :qualification,
-          application_form:,
-          certificate_date: Date.new(2019, 1, 1),
-        )
-        create(
-          :work_history,
-          application_form:,
-          start_date: Date.new(2019, 1, 1),
-          end_date: Date.new(2020, 1, 1),
-          hours_per_week: 38,
-        )
-      end
-
       it "doesn't hide the application form" do
         expect { call }.to_not change(application_form, :hidden_from_assessment)
       end
@@ -51,29 +36,6 @@ RSpec.describe SubmitApplicationForm do
 
     context "when country is Zimbabwe" do
       let(:region) { create(:region, :in_country, country_code: "ZW") }
-
-      it "hides the application form" do
-        expect { call }.to change(application_form, :hidden_from_assessment).to(
-          true,
-        )
-      end
-    end
-
-    context "when work history considering qualification is less than 9 months" do
-      before do
-        create(
-          :qualification,
-          application_form:,
-          certificate_date: Date.new(2020, 1, 1),
-        )
-        create(
-          :work_history,
-          application_form:,
-          start_date: Date.new(2019, 1, 1),
-          end_date: Date.new(2020, 1, 1),
-          hours_per_week: 38,
-        )
-      end
 
       it "hides the application form" do
         expect { call }.to change(application_form, :hidden_from_assessment).to(
