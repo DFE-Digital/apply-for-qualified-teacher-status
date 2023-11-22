@@ -122,6 +122,16 @@ class TeacherInterface::ApplicationFormViewObject
       ) || false
   end
 
+  def show_work_history_under_submission_banner?
+    application_form.qualification_changed_work_history_duration &&
+      !work_history_duration.enough_for_submission?
+  end
+
+  def show_work_history_under_induction_banner?
+    application_form.qualification_changed_work_history_duration &&
+      !work_history_duration.enough_to_skip_induction?
+  end
+
   private
 
   delegate :needs_work_history,
@@ -236,5 +246,13 @@ class TeacherInterface::ApplicationFormViewObject
 
         hash[section.key.humanize] = reasons
       end
+  end
+
+  def work_history_duration
+    @work_history_duration ||=
+      WorkHistoryDuration.for_application_form(
+        application_form,
+        consider_teaching_qualification: true,
+      )
   end
 end

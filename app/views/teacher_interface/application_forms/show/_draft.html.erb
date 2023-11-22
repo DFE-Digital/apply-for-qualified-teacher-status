@@ -1,3 +1,18 @@
+<% if view_object.show_work_history_under_submission_banner? || view_object.show_work_history_under_induction_banner? %>
+  <%= govuk_notification_banner(title_text: "Important") do %>
+    <p>You have added at least one teaching role that started before you were qualified as a teacher.</p>
+    <p>We do not accept teaching work experience that was gained before you were qualified as a teacher.</p>
+
+    <% if view_object.show_work_history_under_submission_banner? %>
+      <p>This means you have less than 9 months teaching work history and are not eligible for QTS.</p>
+      <p>To submit your application, you will need to add more teaching work experience. This must be from after you became qualified as a teacher.</p>
+    <% elsif view_object.show_work_history_under_induction_banner? %>
+      <p>This means you have between 9 and 20 months of teaching work history. You will have to complete a 2-year statutory induction as a newly qualified teacher if you are awarded QTS.</p>
+      <p>If you have more work experience gained after you were qualified as a teacher, you should add it to your work history.</p>
+    <% end %>
+  <% end %>
+<% end %>
+
 <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
   <% if view_object.can_submit? %>
     Application complete
