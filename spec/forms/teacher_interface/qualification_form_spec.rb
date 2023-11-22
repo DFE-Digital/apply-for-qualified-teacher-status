@@ -88,15 +88,21 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
 
     subject(:save) { form.save(validate: true) }
 
-    before { expect(save).to be true }
-
     it "saves the qualification" do
+      expect(save).to be true
       expect(qualification.title).to eq("Title")
       expect(qualification.institution_name).to eq("Institution name")
       expect(qualification.institution_country_code).to eq("FR")
       expect(qualification.start_date).to eq(Date.new(2020, 1, 1))
       expect(qualification.complete_date).to eq(Date.new(2022, 1, 1))
       expect(qualification.certificate_date).to eq(Date.new(2022, 6, 1))
+    end
+
+    it "doesn't show the duration banner" do
+      expect(save).to be true
+      expect(
+        application_form.qualification_changed_work_history_duration,
+      ).to be false
     end
 
     context "without validation, with invalid date values" do
@@ -107,6 +113,7 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
       subject(:save) { form.save(validate: false) }
 
       it "applies valid date values" do
+        expect(save).to be true
         expect(qualification.start_date).to eq(
           Date.new(Time.zone.now.year, 1, 1),
         )
@@ -116,6 +123,63 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
         expect(qualification.certificate_date).to eq(
           Date.new(Time.zone.now.year, 1, 1),
         )
+      end
+    end
+
+    context "with existing work history prior to certificate date" do
+      before do
+        create(
+          :work_history,
+          application_form:,
+          start_date: Date.new(2020, 1, 1),
+          end_date: Date.new(2021, 1, 1),
+          hours_per_week: 40,
+        )
+      end
+
+      it "shows the duration banner" do
+        expect(save).to be true
+        expect(
+          application_form.qualification_changed_work_history_duration,
+        ).to be true
+      end
+    end
+
+    context "with existing work history crossing the certificate date" do
+      before do
+        create(
+          :work_history,
+          application_form:,
+          start_date: Date.new(2020, 1, 1),
+          end_date: Date.new(2023, 9, 1),
+          hours_per_week: 40,
+        )
+      end
+
+      it "shows the duration banner" do
+        expect(save).to be true
+        expect(
+          application_form.qualification_changed_work_history_duration,
+        ).to be true
+      end
+    end
+
+    context "with existing work history after the certificate date" do
+      before do
+        create(
+          :work_history,
+          application_form:,
+          start_date: Date.new(2021, 1, 1),
+          end_date: Date.new(2026, 1, 1),
+          hours_per_week: 40,
+        )
+      end
+
+      it "doesn't show the duration banner" do
+        expect(save).to be true
+        expect(
+          application_form.qualification_changed_work_history_duration,
+        ).to be false
       end
     end
   end

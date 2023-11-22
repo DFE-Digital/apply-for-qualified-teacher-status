@@ -3,7 +3,8 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
-  let(:work_history) { build(:work_history) }
+  let(:application_form) { create(:application_form) }
+  let(:work_history) { build(:work_history, application_form:) }
 
   subject(:form) do
     described_class.new(
@@ -137,6 +138,35 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
       it "clears the end date" do
         expect(work_history.still_employed).to be true
         expect(work_history.end_date).to be_nil
+      end
+    end
+
+    context "when showing the duration banner" do
+      let(:application_form) do
+        create(
+          :application_form,
+          qualification_changed_work_history_duration: true,
+        )
+      end
+
+      context "with enough work history for submission" do
+        let(:end_date) { { 1 => 2021, 2 => 10, 3 => 1 } }
+
+        it "clears the banner" do
+          expect(
+            application_form.qualification_changed_work_history_duration,
+          ).to be false
+        end
+      end
+
+      context "without enough work history for submission" do
+        let(:end_date) { { 1 => 2020, 2 => 11, 3 => 1 } }
+
+        it "doesn't clear the banner" do
+          expect(
+            application_form.qualification_changed_work_history_duration,
+          ).to be true
+        end
       end
     end
   end

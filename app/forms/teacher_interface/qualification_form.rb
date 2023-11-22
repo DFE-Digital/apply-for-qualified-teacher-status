@@ -46,6 +46,8 @@ module TeacherInterface
     def update_model
       sanitize_dates!(start_date, complete_date, certificate_date)
 
+      old_work_history_duration = create_work_history_duration
+
       qualification.update!(
         title:,
         institution_name:,
@@ -54,6 +56,18 @@ module TeacherInterface
         complete_date:,
         certificate_date:,
       )
+
+      application_form.reload
+      new_work_history_duration = create_work_history_duration
+
+      if changed_work_history_duration?(
+           old_work_history_duration,
+           new_work_history_duration,
+         )
+        application_form.update!(
+          qualification_changed_work_history_duration: true,
+        )
+      end
     end
 
     delegate :application_form, to: :qualification
@@ -62,6 +76,24 @@ module TeacherInterface
 
     def institution_country_code
       CountryCode.from_location(institution_country_location)
+    end
+
+    def create_work_history_duration
+      WorkHistoryDuration.for_application_form(
+        application_form,
+        consider_teaching_qualification: true,
+      ).tap(&:count_months)
+    end
+
+    def changed_work_history_duration?(old_duration, new_duration)
+      (
+        old_duration.enough_for_submission? &&
+          !new_duration.enough_for_submission?
+      ) ||
+        (
+          old_duration.enough_to_skip_induction? &&
+            !new_duration.enough_to_skip_induction?
+        )
     end
   end
 end
