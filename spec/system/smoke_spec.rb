@@ -83,9 +83,7 @@ describe "Smoke test", type: :system, js: true, smoke_test: true do
   def and_i_have_work_experience
     # dev & test environments have this feature enabled currently but production does
     # not. We can remove this conditional when the feature is released
-    if page.has_content?(
-         "How long have you been employed as a recognised teacher?",
-       )
+    if page.has_content?("How long have you worked as a recognised teacher?")
       eligibility_work_experience_page.submit_over_20_months
     end
   end

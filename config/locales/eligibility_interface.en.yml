@@ -33,8 +33,8 @@ en:
         eligibility_interface/work_experience_form:
           attributes:
             work_experience:
-              blank: Tell us how long have you been employed as a recognised teacher
-              inclusion: Tell us how long have you been employed as a recognised teacher
+              blank: Tell us how long you have worked as a recognised teacher
+              inclusion: Tell us how long you have worked as a recognised teacher
 
     attributes:
       eligibility_check:

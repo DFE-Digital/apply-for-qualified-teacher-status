@@ -13,12 +13,14 @@
   ) %>
 
   <% unless @region.reduced_evidence_accepted %>
-    <p class="govuk-body">We’ll ask for email addresses for contacts who can verify your work history (in English). If you’re successful, we’ll contact them before awarding QTS.</p>
+    <p class="govuk-body">You’ll need to provide references from your places of employment so we can verify your teaching work history.</p>
   <% end %>
 
-  <%= govuk_details(summary_text: "How to calculate your work experience") do %>
-    <p>Add up the months you’ve spent employed as a teacher. This should include school holidays but not include any other time spent away from teaching.</p>
-    <p>You’ll need to complete a 2-year ‘statutory induction’ period as a newly qualified teacher if you’re awarded QTS and have between 9 and 20 months of teaching experience. This statutory induction is not required if you have more than 20 months experience.</p>
+  <%= govuk_details(summary_text: "How to calculate your teaching work history") do %>
+    <p>We only accept teaching work experience after you qualified as a teacher.</p>
+    <p>Add up the months you’ve spent employed as a qualified teacher. This should include school holidays but not any other time spent away from teaching.</p>
+    <p>If you have between 9 and 20 months of teaching work experience, you must complete a 2-year ‘statutory induction’ period as an early career teacher.</p>
+    <p>You will not need to complete this statutory induction if you have more than 20 months of teaching work experience.</p>
   <% end %>
 
   <%= f.govuk_submit %>
