@@ -155,16 +155,4 @@ module ApplicationFormHelper
       },
     ].compact
   end
-
-  def application_form_display_work_history_before_teaching_qualification_banner?(
-    application_form
-  )
-    earliest_certificate_date =
-      application_form.teaching_qualification&.certificate_date
-    earliest_work_history_date =
-      application_form.work_histories.pluck(:start_date).compact.min
-
-    earliest_certificate_date.present? && earliest_work_history_date.present? &&
-      earliest_work_history_date < earliest_certificate_date
-  end
 end
