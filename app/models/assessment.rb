@@ -246,13 +246,10 @@ class Assessment < ApplicationRecord
     return true if reference_requests.empty?
     return false unless references_verified
 
-    months_count =
-      WorkHistoryDuration.for_ids(
-        reference_requests.where(review_passed: true).pluck(:work_history_id),
-        application_form:,
-      ).count_months
-
-    months_count >= 9
+    WorkHistoryDuration.for_ids(
+      reference_requests.where(review_passed: true).pluck(:work_history_id),
+      application_form:,
+    ).enough_for_submission?
   end
 
   def all_qualification_requests_reviewed?
