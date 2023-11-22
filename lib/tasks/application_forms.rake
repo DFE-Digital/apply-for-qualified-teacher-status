@@ -34,4 +34,37 @@ namespace :application_forms do
         puts "#{application_form.reference}: #{application_form.action_required_by} - #{application_form.status}"
       end
   end
+
+  desc "Update work history duration."
+  task update_work_history_duration: :environment do |_task, _args|
+    ApplicationForm.draft_stage.each do |application_form|
+      old_work_history_duration =
+        WorkHistoryDuration.for_application_form(application_form)
+
+      new_work_history_duration =
+        WorkHistoryDuration.for_application_form(
+          application_form,
+          consider_teaching_qualification: true,
+        )
+
+      unless (
+               old_work_history_duration.enough_for_submission? &&
+                 !new_work_history_duration.enough_for_submission?
+             ) ||
+               (
+                 old_work_history_duration.enough_to_skip_induction? &&
+                   !new_work_history_duration.enough_to_skip_induction?
+               )
+        next
+      end
+
+      application_form.update!(
+        qualification_changed_work_history_duration: true,
+      )
+
+      ApplicationFormSectionStatusUpdater.call(application_form:)
+
+      puts application_form.reference
+    end
+  end
 end
