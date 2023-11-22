@@ -31,6 +31,7 @@
     - needs_work_history
     - needs_written_statement
     - personal_information_status
+    - qualification_changed_work_history_duration
     - qualifications_status
     - reduced_evidence_accepted
     - reference
