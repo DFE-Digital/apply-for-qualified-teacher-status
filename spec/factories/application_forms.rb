@@ -29,32 +29,19 @@
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
-#  overdue_further_information                   :boolean          default(FALSE), not null
-#  overdue_professional_standing                 :boolean          default(FALSE), not null
-#  overdue_qualification                         :boolean          default(FALSE), not null
-#  overdue_reference                             :boolean          default(FALSE), not null
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualifications_status                         :string           default("not_started"), not null
-#  received_further_information                  :boolean          default(FALSE), not null
-#  received_professional_standing                :boolean          default(FALSE), not null
-#  received_qualification                        :boolean          default(FALSE), not null
-#  received_reference                            :boolean          default(FALSE), not null
 #  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
 #  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  stage                                         :string           default("draft"), not null
-#  status                                        :string           default("draft"), not null
 #  statuses                                      :string           default(["\"draft\""]), not null, is an Array
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
 #  submitted_at                                  :datetime
 #  teaching_authority_provides_written_statement :boolean          default(FALSE), not null
-#  waiting_on_further_information                :boolean          default(FALSE), not null
-#  waiting_on_professional_standing              :boolean          default(FALSE), not null
-#  waiting_on_qualification                      :boolean          default(FALSE), not null
-#  waiting_on_reference                          :boolean          default(FALSE), not null
 #  withdrawn_at                                  :datetime
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
@@ -80,7 +67,6 @@
 #  index_application_forms_on_region_id                     (region_id)
 #  index_application_forms_on_reviewer_id                   (reviewer_id)
 #  index_application_forms_on_stage                         (stage)
-#  index_application_forms_on_status                        (status)
 #  index_application_forms_on_teacher_id                    (teacher_id)
 #
 # Foreign Keys
