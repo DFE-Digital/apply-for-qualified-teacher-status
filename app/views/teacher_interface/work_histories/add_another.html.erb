@@ -5,14 +5,18 @@
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">
-    <% if @months_count <= 8 %>
-      You’ve added <%= pluralize(@months_count, "month") %> of work experience. You need to add at least <%= pluralize(9 - @months_count, "more month") %>.
-    <% elsif @months_count <= 20 %>
-      You’ve told us about <%= pluralize(@months_count, "month") %> of work experience
-    <% else %>
-      You’ve added enough work experience
-    <% end %>
+    You’ve added <%= pluralize(@months_count, "month") %> of work experience
   </h1>
+
+  <% if @months_count < 9 %>
+    <%= govuk_warning_text do %>
+      You need to add at least <%= pluralize(9 - @months_count, "more month") %> of teaching work experience to be eligible for QTS.
+    <% end %>
+  <% elsif @months_count < 20 %>
+    <%= govuk_inset_text do %>
+      <p>You have indicated you have between 9 and 20 months of teaching work experience. If you are awarded QTS you must complete a 2-year ‘statutory induction’ period as a newly qualified teacher.</p>
+    <% end %>
+  <% end %>
 
   <h2 class="govuk-heading-s">How we calculate your work experience</h2>
 

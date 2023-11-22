@@ -192,7 +192,7 @@ RSpec.describe "Teacher work history", type: :system do
 
   def and_i_see_the_heading_with_the_number_of_months
     expect(teacher_add_another_work_history_page.heading.text).to eq(
-      "You’ve added enough work experience",
+      "You’ve added 24 months of work experience",
     )
   end
 
