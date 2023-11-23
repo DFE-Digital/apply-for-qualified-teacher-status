@@ -72,7 +72,6 @@ module TeacherInterface
     def has_enough_work_history_for_submission?
       WorkHistoryDuration.for_application_form(
         application_form.reload,
-        consider_teaching_qualification: true,
       ).enough_for_submission?
     end
   end

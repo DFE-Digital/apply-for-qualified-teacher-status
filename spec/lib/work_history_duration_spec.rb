@@ -6,7 +6,7 @@ RSpec.describe WorkHistoryDuration do
   let(:application_form) { create(:application_form) }
   let(:today) { Date.new(2021, 1, 15) }
 
-  shared_examples "month counter" do |consider_teaching_qualification|
+  shared_examples "month counter" do
     subject(:count_months) do
       travel_to(today) { work_history_duration.count_months }
     end
@@ -32,7 +32,7 @@ RSpec.describe WorkHistoryDuration do
         )
       end
 
-      it { is_expected.to eq(consider_teaching_qualification ? 6 : 12) }
+      it { is_expected.to eq(6) }
     end
 
     context "with a finished full time work history with extra hours" do
@@ -46,7 +46,7 @@ RSpec.describe WorkHistoryDuration do
         )
       end
 
-      it { is_expected.to eq(consider_teaching_qualification ? 6 : 12) }
+      it { is_expected.to eq(6) }
     end
 
     context "with a finished part time work history" do
@@ -60,7 +60,7 @@ RSpec.describe WorkHistoryDuration do
         )
       end
 
-      it { is_expected.to eq(consider_teaching_qualification ? 3 : 6) }
+      it { is_expected.to eq(3) }
     end
 
     context "with an ongoing full time work history" do
@@ -73,7 +73,7 @@ RSpec.describe WorkHistoryDuration do
         )
       end
 
-      it { is_expected.to eq(consider_teaching_qualification ? 7 : 13) }
+      it { is_expected.to eq(7) }
     end
 
     context "with an ongoing part time work history" do
@@ -86,7 +86,7 @@ RSpec.describe WorkHistoryDuration do
         )
       end
 
-      it { is_expected.to eq(consider_teaching_qualification ? 4 : 7) }
+      it { is_expected.to eq(4) }
     end
 
     context "with a full time and a part time work history" do
@@ -107,7 +107,7 @@ RSpec.describe WorkHistoryDuration do
         )
       end
 
-      it { is_expected.to eq(consider_teaching_qualification ? 3 : 10) }
+      it { is_expected.to eq(3) }
     end
 
     context "with work history before the teaching qualification" do
@@ -121,80 +121,39 @@ RSpec.describe WorkHistoryDuration do
         )
       end
 
-      it { is_expected.to eq(consider_teaching_qualification ? 0 : 12) }
+      it { is_expected.to eq(0) }
     end
   end
 
   describe "#count_months" do
     context "passing an application form" do
-      context "when not considering the teaching qualification" do
-        subject(:work_history_duration) do
-          described_class.for_application_form(application_form)
-        end
-
-        it_behaves_like "month counter", false
+      subject(:work_history_duration) do
+        described_class.for_application_form(application_form)
       end
 
-      context "when considering the teaching qualification" do
-        subject(:work_history_duration) do
-          described_class.for_application_form(
-            application_form,
-            consider_teaching_qualification: true,
-          )
-        end
-
-        it_behaves_like "month counter", true
-      end
+      it_behaves_like "month counter"
     end
 
     context "passing a work history relation" do
-      context "when not considering the teaching qualification" do
-        subject(:work_history_duration) do
-          described_class.new(
-            application_form:,
-            relation: application_form.work_histories,
-          )
-        end
-
-        it_behaves_like "month counter", false
+      subject(:work_history_duration) do
+        described_class.new(
+          application_form:,
+          relation: application_form.work_histories,
+        )
       end
 
-      context "when considering the teaching qualification" do
-        subject(:work_history_duration) do
-          described_class.new(
-            application_form:,
-            relation: application_form.work_histories,
-            consider_teaching_qualification: true,
-          )
-        end
-
-        it_behaves_like "month counter", true
-      end
+      it_behaves_like "month counter"
     end
 
     context "passing work history IDs" do
-      context "when not considering the teaching qualification" do
-        subject(:work_history_duration) do
-          described_class.for_ids(
-            application_form.work_histories.pluck(:id),
-            application_form:,
-          )
-        end
-
-        it_behaves_like "month counter", false
+      subject(:work_history_duration) do
+        described_class.for_ids(
+          application_form.work_histories.pluck(:id),
+          application_form:,
+        )
       end
 
-      context "when considering the teaching qualification" do
-        subject(:work_history_duration) do
-          described_class.for_ids(
-            application_form.work_histories.pluck(:id),
-            application_form:,
-            consider_teaching_qualification: true,
-          )
-        end
-
-        it_behaves_like "month counter", true
-      end
+      it_behaves_like "month counter"
     end
 
     context "passing a work history record" do
@@ -216,22 +175,11 @@ RSpec.describe WorkHistoryDuration do
         )
       end
 
+      let(:work_history_duration) { described_class.for_record(work_history) }
+
       subject(:count) { work_history_duration.count_months }
 
-      context "when not considering the teaching qualification" do
-        let(:work_history_duration) { described_class.for_record(work_history) }
-        it { is_expected.to eq(12) }
-      end
-
-      context "when considering the teaching qualification" do
-        let(:work_history_duration) do
-          described_class.for_record(
-            work_history,
-            consider_teaching_qualification: true,
-          )
-        end
-        it { is_expected.to eq(6) }
-      end
+      it { is_expected.to eq(6) }
     end
   end
 end

@@ -261,7 +261,6 @@ module TeacherInterface
       @years_count, @months_count =
         WorkHistoryDuration.for_application_form(
           application_form,
-          consider_teaching_qualification: true,
         ).count_years_and_months
     end
 
