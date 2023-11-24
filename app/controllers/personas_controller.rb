@@ -117,10 +117,10 @@ class PersonasController < ApplicationController
     %w[online written none]
       .product(
         %w[online written none],
-        %w[draft not_started verification completed],
+        %w[draft not_started verification awarded declined],
       )
-      .map do |status_check, sanction_check, stage|
-        { status_check:, sanction_check:, stage: }
+      .map do |status_check, sanction_check, stage_or_status|
+        { status_check:, sanction_check:, stage_or_status: }
       end
 
   def load_teacher_personas
@@ -141,9 +141,20 @@ class PersonasController < ApplicationController
           all_application_forms.find do |application_form|
             region = application_form.region
 
-            region.status_check == persona[:status_check] &&
-              region.sanction_check == persona[:sanction_check] &&
-              application_form.stage == persona[:stage]
+            unless region.status_check == persona[:status_check] &&
+                     region.sanction_check == persona[:sanction_check]
+              next
+            end
+
+            stage_or_status = persona[:stage_or_status]
+
+            if stage_or_status == "awarded"
+              application_form.awarded_at.present?
+            elsif stage_or_status == "declined"
+              application_form.declined_at.present?
+            else
+              application_form.stage == stage_or_status
+            end
           end
 
         if (application_form = found_application_form)
