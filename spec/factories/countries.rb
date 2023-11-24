@@ -26,6 +26,10 @@ FactoryBot.define do
       subject_limited { true }
     end
 
+    trait :ineligible do
+      eligibility_enabled { false }
+    end
+
     trait :with_national_region do
       after(:create) do |country, _evaluator|
         create(:region, :national, country:)

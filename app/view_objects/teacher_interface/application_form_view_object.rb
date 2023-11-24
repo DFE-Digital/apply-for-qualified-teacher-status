@@ -96,6 +96,8 @@ class TeacherInterface::ApplicationFormViewObject
   def declined_cannot_reapply?
     return false if assessment.nil?
 
+    return true unless region.country.eligibility_enabled
+
     assessment.sections.any? do |section|
       section.selected_failure_reasons.any? do |failure_reason|
         %w[authorisation_to_teach applicant_already_qts].include?(
