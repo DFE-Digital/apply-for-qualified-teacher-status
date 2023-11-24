@@ -105,6 +105,13 @@
   <% end %>
 </section>
 
+<section id="app-personas-ineligibles" class="app-personas">
+  <h2 class="govuk-heading-l">Ineligible check</h2>
+  <p class="govuk-body">
+    <%= govuk_button_to "Sign&nbsp;in".html_safe, ineligible_sign_in_personas_path %>
+  </p>
+</section>
+
 <section id="app-personas-teachers" class="app-personas">
   <h2 class="govuk-heading-l">Teachers</h2>
 
@@ -118,7 +125,7 @@
           row.with_cell(header: true, text: "Country")
           row.with_cell(header: true, text: "Status check")
           row.with_cell(header: true, text: "Sanction check")
-          row.with_cell(header: true, text: "Stage")
+          row.with_cell(header: true, text: "Stage/status")
           row.with_cell(header: true, text: "Email address")
           row.with_cell(header: true, text: "Actions", numeric: true)
         end
@@ -136,7 +143,7 @@
             row.with_cell { persona_check_tag(persona[:status_check]) }
             row.with_cell { persona_check_tag(persona[:sanction_check]) }
             row.with_cell do
-              render(StatusTag::Component.new(persona[:stage]))
+              render(StatusTag::Component.new(persona[:stage_or_status]))
             end
             row.with_cell { persona[:teacher].email }
 

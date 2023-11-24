@@ -31,6 +31,11 @@ RSpec.describe "Personas", type: :system do
 
       when_i_visit_the(:personas_page)
 
+      when_i_sign_in_as_an_ineligible_persona
+      then_i_see_the(:eligibility_ineligible_page)
+
+      when_i_visit_the(:personas_page)
+
       when_i_sign_in_as_a_teacher_persona
       then_i_see_the(:teacher_application_page)
 
@@ -71,6 +76,10 @@ RSpec.describe "Personas", type: :system do
 
   def when_i_sign_in_as_an_eligible_persona
     personas_page.eligibles.buttons.first.click
+  end
+
+  def when_i_sign_in_as_an_ineligible_persona
+    personas_page.ineligibles.buttons.first.click
   end
 
   def when_i_sign_in_as_a_teacher_persona

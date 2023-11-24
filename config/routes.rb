@@ -405,6 +405,12 @@ Rails.application.routes.draw do
       post "staff", to: "personas#staff_sign_in", as: "staff_sign_in"
       post "teacher", to: "personas#teacher_sign_in", as: "teacher_sign_in"
     end
+
+    collection do
+      post "ineligible",
+           to: "personas#ineligible_sign_in",
+           as: "ineligible_sign_in"
+    end
   end
 
   resources :autocomplete_locations, only: %i[index]
