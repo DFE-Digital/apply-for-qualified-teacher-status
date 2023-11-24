@@ -30,6 +30,18 @@ class PersonasController < ApplicationController
     redirect_to %i[eligibility_interface result]
   end
 
+  def ineligible_sign_in
+    eligibility_check =
+      EligibilityCheck.create!(
+        completed_at: Time.zone.now,
+        country_code: INELIGIBLE_COUNTRY_CODES.sample,
+      )
+
+    session[:eligibility_check_id] = eligibility_check.id
+
+    redirect_to %i[eligibility_interface result]
+  end
+
   def staff_sign_in
     staff = Staff.find(params[:id])
     sign_in_and_redirect(staff)
@@ -77,6 +89,8 @@ class PersonasController < ApplicationController
           reduced_evidence_accepted: persona[4],
         }
       end
+
+  INELIGIBLE_COUNTRY_CODES = Country::CODES - Country.pluck(:code)
 
   def load_eligible_personas
     all_regions = Region.includes(:country).order(:id)
