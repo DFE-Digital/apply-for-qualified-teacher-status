@@ -46,7 +46,7 @@ Rails.application.routes.draw do
         resource :assessment_recommendation_award,
                  controller: "assessment_recommendation_award",
                  path: "/recommendation/award",
-                 only: %i[edit update] do
+                 only: %i[show edit update] do
           get "age-range-subjects",
               to: "assessment_recommendation_award#age_range_subjects"
           get "age-range-subjects/edit",
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
         resource :assessment_recommendation_decline,
                  controller: "assessment_recommendation_decline",
                  path: "/recommendation/decline",
-                 only: %i[edit update] do
+                 only: %i[show edit update] do
           get "preview"
           get "confirm", to: "assessment_recommendation_decline#edit_confirm"
           post "confirm", to: "assessment_recommendation_decline#update_confirm"
@@ -70,12 +70,12 @@ Rails.application.routes.draw do
         resource :assessment_recommendation_review,
                  controller: "assessment_recommendation_review",
                  path: "/recommendation/review",
-                 only: %i[edit update]
+                 only: %i[show edit update]
 
         resource :assessment_recommendation_verify,
                  controller: "assessment_recommendation_verify",
                  path: "/recommendation/verify",
-                 only: %i[edit update] do
+                 only: %i[show edit update] do
           get "verify-qualifications",
               to: "assessment_recommendation_verify#edit_verify_qualifications"
           post "verify-qualifications",

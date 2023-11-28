@@ -19,9 +19,8 @@ RSpec.describe AssessorInterface::AssessmentRecommendationPolicy do
 
   describe "#show?" do
     subject(:show?) { policy.show? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#create?" do

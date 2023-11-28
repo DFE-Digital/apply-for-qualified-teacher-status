@@ -5,7 +5,7 @@ module AssessorInterface
     before_action :ensure_can_verify
     before_action :load_assessment_and_application_form
 
-    def edit
+    def show
       authorize %i[assessor_interface assessment_recommendation]
 
       redirect_to [
@@ -15,6 +15,10 @@ module AssessorInterface
                     assessment,
                     :assessment_recommendation_verify,
                   ]
+    end
+
+    def edit
+      authorize %i[assessor_interface assessment_recommendation]
     end
 
     def update
