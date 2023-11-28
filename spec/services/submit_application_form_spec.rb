@@ -25,26 +25,6 @@ RSpec.describe SubmitApplicationForm do
     end
   end
 
-  describe "hidden_from_assessment column" do
-    context "when country is not Zimbabwe and work history is above 9 months" do
-      let(:region) { create(:region, :in_country, country_code: "FR") }
-
-      it "doesn't hide the application form" do
-        expect { call }.to_not change(application_form, :hidden_from_assessment)
-      end
-    end
-
-    context "when country is Zimbabwe" do
-      let(:region) { create(:region, :in_country, country_code: "ZW") }
-
-      it "hides the application form" do
-        expect { call }.to change(application_form, :hidden_from_assessment).to(
-          true,
-        )
-      end
-    end
-  end
-
   describe "compacting blank subjects" do
     subject(:subjects) { application_form.subjects }
 

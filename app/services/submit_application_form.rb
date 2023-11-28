@@ -13,7 +13,6 @@ class SubmitApplicationForm
 
     ActiveRecord::Base.transaction do
       application_form.update!(
-        hidden_from_assessment:,
         requires_preliminary_check: region.requires_preliminary_check,
         subjects: application_form.subjects.compact_blank,
         submitted_at: Time.zone.now,
@@ -75,9 +74,5 @@ class SubmitApplicationForm
     ProfessionalStandingRequest
       .create!(assessment:)
       .tap { |requestable| RequestRequestable.call(requestable:, user:) }
-  end
-
-  def hidden_from_assessment
-    region.country.code == "ZW"
   end
 end
