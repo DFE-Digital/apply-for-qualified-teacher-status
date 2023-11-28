@@ -85,6 +85,8 @@ en:
         heading: Send application for review
 
     assessment_recommendation_verify:
+      edit:
+        heading: Verification requests
       edit_qualification_requests:
         heading: Verify qualifications
       edit_verify_qualifications:

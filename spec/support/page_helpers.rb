@@ -32,6 +32,11 @@ module PageHelpers
       PageObjects::AssessorInterface::AssessmentRecommendationReview.new
   end
 
+  def assessor_assessment_recommendation_verify_page
+    @assessor_assessment_recommendation_verify_page ||=
+      PageObjects::AssessorInterface::AssessmentRecommendationVerify.new
+  end
+
   def assessor_assessment_section_page
     @assessor_assessment_section_page ||=
       PageObjects::AssessorInterface::AssessmentSection.new

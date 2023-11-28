@@ -1,0 +1,54 @@
+<% content_for :page_title, t(".heading") %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+
+<p class="govuk-body">You have selected the following items for verification:</p>
+
+<%= govuk_summary_list do |summary_list| %>
+  <%= summary_list.with_row do |row|
+    row.with_key { "LoPS" }
+    row.with_value { @professional_standing ? region_teaching_authority_name(@application_form.region).upcase_first : "Not selected" }
+    row.with_action(text: "Change", href: professional_standing_assessor_interface_application_form_assessment_assessment_recommendation_verify_path(@application_form, @assessment, back_to_summary: "true"), visually_hidden_text: "LoPS")
+  end %>
+
+  <%= summary_list.with_row do |row|
+    row.with_key { "Qualifications" }
+    row.with_value do %>
+      <% if @qualifications.present? %>
+        <ul class="govuk-list govuk-list--bullet">
+          <% @qualifications.each do |qualification| %>
+            <li><%= qualification_title(qualification) %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="govuk-body">None selected</p>
+      <% end %>
+    <% end
+    row.with_action(text: "Change", href: verify_qualifications_assessor_interface_application_form_assessment_assessment_recommendation_verify_path(@application_form, @assessment, back_to_summary: "true"), visually_hidden_text: "qualifications")
+  end %>
+
+  <%= summary_list.with_row do |row|
+    row.with_key { "References" }
+    row.with_value do %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% @work_histories.each do |work_history| %>
+          <li><%= work_history_name(work_history) %></li>
+        <% end %>
+      </ul>
+    <% end
+    row.with_action(text: "Change", href: reference_requests_assessor_interface_application_form_assessment_assessment_recommendation_verify_path(@application_form, @assessment, back_to_summary: "true"), visually_hidden_text: "references")
+  end %>
+<% end %>
+
+<h2 class="govuk-heading-m">Submit your verification requests</h2>
+
+<p class="govuk-body">Select submit to:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>email reference requests to the referee</li>
+  <li>email the applicant to let them know you have requested references</li>
+  <li>move this application into verification</li>
+</ul>
+
+<%= govuk_button_to "Submit", [:assessor_interface, @application_form, @assessment, :assessment_recommendation_verify], method: :put %>

@@ -2,6 +2,8 @@
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @form, url: [:verify_qualifications, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] do |f| %>
+  <%= hidden_field_tag :back_to_summary, params[:back_to_summary] %>
+
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>

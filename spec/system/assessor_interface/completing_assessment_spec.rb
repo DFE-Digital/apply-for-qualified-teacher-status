@@ -129,6 +129,13 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_select_the_work_histories
+    then_i_see_the(
+      :assessor_assessment_recommendation_verify_page,
+      reference:,
+      assessment_id:,
+    )
+
+    when_i_select_submit_verification_requests
     then_i_see_the(:assessor_application_status_page, reference:)
 
     when_i_click_on_overview_button
@@ -351,6 +358,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
       assessor_reference_requests_assessment_recommendation_verify_page.form
     form.work_history_checkboxes.first.click
     form.submit_button.click
+  end
+
+  def when_i_select_submit_verification_requests
+    assessor_assessment_recommendation_verify_page.submit_button.click
   end
 
   def when_i_send_the_email
