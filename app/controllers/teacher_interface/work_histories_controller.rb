@@ -8,7 +8,8 @@ module TeacherInterface
     before_action :redirect_unless_application_form_is_draft
     before_action :load_application_form
 
-    before_action :load_months_count, only: %i[add_another submit_add_another]
+    before_action :load_years_and_months_count,
+                  only: %i[add_another submit_add_another]
 
     skip_before_action :track_history, only: :index
 
@@ -256,12 +257,12 @@ module TeacherInterface
       )
     end
 
-    def load_months_count
-      @months_count =
+    def load_years_and_months_count
+      @years_count, @months_count =
         WorkHistoryDuration.for_application_form(
           application_form,
           consider_teaching_qualification: true,
-        ).count_months
+        ).count_years_and_months
     end
 
     def check_member_identifier

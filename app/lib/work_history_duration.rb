@@ -51,6 +51,16 @@ class WorkHistoryDuration
         .round
   end
 
+  def count_years_and_months
+    if count_months <= 24
+      [0, count_months]
+    else
+      years_count = (count_months / 12).floor
+      remaining_months_count = count_months - years_count * 12
+      [years_count, remaining_months_count]
+    end
+  end
+
   def enough_for_submission?
     count_months >= THRESHOLD_MONTHS_FOR_SUBMISSION
   end
