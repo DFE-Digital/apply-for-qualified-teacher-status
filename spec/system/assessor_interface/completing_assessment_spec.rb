@@ -361,10 +361,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_select_the_work_histories
-    assessor_reference_requests_assessment_recommendation_verify_page
-      .form
-      .submit_button
-      .click
+    form =
+      assessor_reference_requests_assessment_recommendation_verify_page.form
+    form.work_history_checkboxes.first.click
+    form.submit_button.click
   end
 
   def when_i_send_the_referee_email

@@ -6,24 +6,22 @@
 
   <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
-  <p class="govuk-body-l">In the next step you’ll send reference requests to all the references the applicant provided.</p>
+  <p class="govuk-body">Select which references you want to request from the list below.</p>
 
-  <p class="govuk-body">These are shown below.</p>
+  <p class="govuk-body">You will be able to check your selection before submitting.</p>
 
-  <%= f.govuk_collection_check_boxes :work_history_ids,
-                                      @application_form.work_histories.order_by_role,
-                                      :id,
-                                      :school_name,
-                                      small: true %>
-
-  <%= govuk_inset_text do %>
-    <p class="govuk-body">
-      You can deselect 1 or more references if you need to.
-      If the remaining references account for less than 9 months,
-      you’ll need to request further information in
-      <%= govuk_link_to "Check work history", assessor_interface_application_form_assessment_assessment_section_path(@application_form, @assessment, :work_history) %>.
-    </p>
+  <%= f.govuk_check_boxes_fieldset :work_history_ids do %>
+    <% @application_form.work_histories.order_by_role.each_with_index do |work_history, index| %>
+      <%= f.govuk_check_box :work_history_ids, work_history.id.to_s, label: { text: work_history_name_and_duration(work_history) }, link_errors: index.zero? %>
+    <% end %>
   <% end %>
+
+  <h2 class="govuk-heading-m">Check:</h2>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>you have selected the current or most recent role if required</li>
+    <li>the selected references add up to the required number of months for this application to progress</li>
+  </ul>
 
   <%= f.govuk_submit do %>
     <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>

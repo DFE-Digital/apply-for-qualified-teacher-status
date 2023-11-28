@@ -171,12 +171,7 @@ module AssessorInterface
     def edit_reference_requests
       authorize %i[assessor_interface assessment_recommendation], :edit?
 
-      @form =
-        SelectWorkHistoriesForm.new(
-          application_form:,
-          session:,
-          work_history_ids: application_form.work_histories.pluck(:id),
-        )
+      @form = SelectWorkHistoriesForm.new(application_form:, session:)
     end
 
     def update_reference_requests
