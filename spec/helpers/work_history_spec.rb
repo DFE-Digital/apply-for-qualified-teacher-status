@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe WorkHistoryHelper do
-  describe "#work_history_title" do
-    subject(:title) { work_history_title(work_history) }
+  describe "#work_history_name" do
+    subject(:name) { work_history_name(work_history) }
 
     let(:work_history) { build(:work_history) }
 
@@ -34,9 +34,12 @@ RSpec.describe WorkHistoryHelper do
   end
 
   describe "#work_history_name_and_duration" do
+    let(:application_form) { create(:application_form) }
+
     let(:work_history) do
       create(
         :work_history,
+        application_form:,
         school_name: "School of Rock",
         start_date: Date.new(2022, 1, 1),
         end_date: Date.new(2022, 12, 22),
@@ -46,16 +49,16 @@ RSpec.describe WorkHistoryHelper do
 
     subject(:name_and_duration) { work_history_name_and_duration(work_history) }
 
-    it { is_expected.to eq("School of Rock (12 months)") }
+    context "when it is not the most recent" do
+      before { create(:work_history, application_form:) }
 
-    context "when work history is most recent" do
-      subject(:name_and_duration) do
-        work_history_name_and_duration(work_history, most_recent: true)
-      end
+      it { is_expected.to eq("School of Rock — 12 months") }
+    end
 
+    context "when it is the most recent" do
       it do
         is_expected.to eq(
-          %(School of Rock (12 months) <span class="govuk-!-font-weight-bold">MOST RECENT</span>),
+          %(School of Rock — 12 months <span class="govuk-!-font-weight-bold">(MOST RECENT)</span>),
         )
       end
     end
