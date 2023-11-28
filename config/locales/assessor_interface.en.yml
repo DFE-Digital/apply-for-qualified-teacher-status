@@ -95,10 +95,6 @@ en:
         heading: Do you want to verify LoPS?
       email_consent_letters:
         heading: Email consent letters
-      preview_referee:
-        heading: Check and send the reference request email
-      preview_teacher:
-        heading: Check and send the email to applicant
 
     assessment_sections:
       show:

@@ -192,7 +192,6 @@ module AssessorInterface
 
       if @form.save
         redirect_to [
-                      :preview_referee,
                       :assessor_interface,
                       application_form,
                       assessment,
@@ -201,14 +200,6 @@ module AssessorInterface
       else
         render :edit_reference_requests, status: :unprocessable_entity
       end
-    end
-
-    def preview_referee
-      authorize %i[assessor_interface assessment_recommendation], :edit?
-    end
-
-    def preview_teacher
-      authorize %i[assessor_interface assessment_recommendation], :edit?
     end
 
     private

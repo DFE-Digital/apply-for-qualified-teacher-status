@@ -146,16 +146,6 @@ module PageHelpers
       PageObjects::AssessorInterface::PreviewAssessmentRecommendation.new
   end
 
-  def assessor_preview_referee_assessment_recommendation_award_page
-    @assessor_preview_referee_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::PreviewRefereeAssessmentRecommendationAward.new
-  end
-
-  def assessor_preview_teacher_assessment_recommendation_award_page
-    @assessor_preview_teacher_assessment_recommendation_award_page ||=
-      PageObjects::AssessorInterface::PreviewTeacherAssessmentRecommendationAward.new
-  end
-
   def assessor_professional_standing_request_page
     @assessor_professional_standing_request_page ||=
       PageObjects::AssessorInterface::ProfessionalStandingRequest.new
