@@ -75,10 +75,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
     ].compact
   end
 
-  def waiting_on_references?
-    assessment.reference_requests.reject(&:reviewed?).any?(&:requested?)
-  end
-
   private
 
   attr_reader :params, :current_staff
