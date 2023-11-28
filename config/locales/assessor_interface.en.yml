@@ -405,7 +405,8 @@ en:
         assessor_interface/select_work_histories_form:
           attributes:
             work_history_ids:
-              blank: References account for less than 9 months
+              less_than_9_months: References account for less than 9 months
+              most_recent_not_selected: Current or most recent reference has not been selected
         assessor_interface/scotland_full_registration_form:
           attributes:
             scotland_full_registration:
