@@ -2,12 +2,12 @@
 
 module AssessorInterface
   class ReferenceRequestsController < BaseController
-    before_action :authorize_assessor, except: %i[edit update_verify_references]
-
     before_action :set_list_variables, only: %i[index update_verify_references]
     before_action :set_individual_variables, only: %i[edit update]
 
     def index
+      authorize %i[assessor_interface reference_request]
+
       @form =
         VerifyReferencesForm.new(
           assessment:,
@@ -18,7 +18,7 @@ module AssessorInterface
     end
 
     def update_verify_references
-      authorize :assessor, :update?
+      authorize %i[assessor_interface reference_request], :update?
 
       @form =
         VerifyReferencesForm.new(assessment:, **verify_references_form_params)
@@ -31,12 +31,14 @@ module AssessorInterface
     end
 
     def edit
-      authorize :assessor, :show?
+      authorize [:assessor_interface, requestable]
 
       @form = RequestableReviewForm.new(requestable:)
     end
 
     def update
+      authorize [:assessor_interface, requestable]
+
       @form =
         RequestableReviewForm.new(
           requestable:,

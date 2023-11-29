@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe AssessorInterface::WorkHistoryPolicy do
+RSpec.describe AssessorInterface::ReferenceRequestPolicy do
   it_behaves_like "a policy"
 
   let(:user) { nil }
@@ -12,9 +12,8 @@ RSpec.describe AssessorInterface::WorkHistoryPolicy do
 
   describe "#index?" do
     subject(:index?) { policy.index? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#show?" do
@@ -40,12 +39,15 @@ RSpec.describe AssessorInterface::WorkHistoryPolicy do
 
   describe "#update?" do
     subject(:update?) { policy.update? }
-    it_behaves_like "a policy method requiring the change work history permission"
+    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
+    it_behaves_like "a policy method requiring the assess permission"
     it_behaves_like "a policy method requiring the change work history permission"
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#destroy?" do
