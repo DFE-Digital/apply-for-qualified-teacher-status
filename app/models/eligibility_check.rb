@@ -81,6 +81,10 @@ class EligibilityCheck < ApplicationRecord
     CountryCode.england?(country_code) || CountryCode.wales?(country_code)
   end
 
+  def european_free_trade_association?
+    CountryCode.european_free_trade_association?(country_code)
+  end
+
   def skip_additional_questions?
     country&.eligibility_skip_questions || false
   end

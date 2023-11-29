@@ -26,6 +26,16 @@
   </ul>
 <% end %>
 
+<% if @eligibility_check.ineligible_reasons.include?(:work_experience) && @eligibility_check.european_free_trade_association? %>
+  <p class="govuk-body">
+    To apply for QTS, you’ll need at least 9 months of teaching work experience that was gained after completing your teaching qualification.
+  </p>
+
+  <p class="govuk-body">
+    The adaptation period for citizens of Iceland, Norway, and Lichtenstein can be used to gain more teaching experience; contact <%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %> for more information.
+  </p>
+<% end %>
+
 <% unless @eligibility_check.ineligible_reasons.include?(:misconduct) || @eligibility_check.england_or_wales? %>
   <p class="govuk-body">You can also:</p>
 
