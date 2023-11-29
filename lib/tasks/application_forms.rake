@@ -60,13 +60,13 @@ namespace :application_forms do
           key: FailureReasons::WORK_HISTORY_DURATION,
           assessor_feedback:
             "You have added at least one teaching role that started before you " \
-              "were recognised as a teacher.\n\nWe do not accept teaching work " \
-              "experience that was gained before you were recognised as a " \
-              "teacher.\n\nThis means you have less than 9 months eligible teaching " \
-              "work history and are not eligible for QTS.\n\nYou can reapply for " \
-              "QTS once you have gained more teaching work experience. If you have " \
-              "this experience already, you can reapply and provide evidence of " \
-              "this as part of your new application.",
+              "qualified as a teacher.\n\nWe do not accept teaching work experience " \
+              "that was gained before you qualified as a teacher.\n\nThis means you " \
+              "have less than 9 months eligible teaching work history and are not " \
+              "eligible for QTS.\n\nYou can reapply for QTS once you have gained " \
+              "more teaching work experience. If you have this experience already, " \
+              "you can reapply and provide evidence of this as part of your new " \
+              "application.",
         )
 
         application_form.reload
