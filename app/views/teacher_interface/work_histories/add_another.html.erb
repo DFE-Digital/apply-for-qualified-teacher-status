@@ -5,14 +5,37 @@
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">
-    <% if @months_count <= 8 %>
-      You’ve added <%= pluralize(@months_count, "month") %> of work experience. You need to add at least <%= pluralize(9 - @months_count, "more month") %>.
-    <% elsif @months_count <= 20 %>
-      You’ve told us about <%= pluralize(@months_count, "month") %> of work experience
+    <% if @years_count > 0 %>
+      You’ve added <%= pluralize(@years_count, "year") %> and <%= pluralize(@months_count, "month") %> of work experience
     <% else %>
-      You’ve added enough work experience
+      You’ve added <%= pluralize(@months_count, "month") %> of work experience
     <% end %>
   </h1>
+
+  <% if @years_count == 0 && @months_count < 9 %>
+    <%= govuk_warning_text do %>
+      You need to add at least <%= pluralize(9 - @months_count, "more month") %> of teaching work experience to be eligible for QTS.
+    <% end %>
+  <% elsif @years_count == 0 && @months_count < 20 %>
+    <%= govuk_inset_text do %>
+      <p>You have indicated you have between 9 and 20 months of teaching work experience. If you are awarded QTS you must complete a 2-year ‘statutory induction’ period as an early career teacher.</p>
+    <% end %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to "Learn more about statutory induction periods for early career teachers in England.", "https://www.gov.uk/government/publications/induction-for-early-career-teachers-england" %>
+    </p>
+
+    <p class="govuk-body">If you have more teaching work experience you should add it now.</p>
+  <% else %>
+    <%= govuk_inset_text do %>
+      <p>You have indicated you have more than 20 months of work experience.</p>
+    <% end %>
+
+    <p class="govuk-body">
+      You have added enough teaching work history to be eligible for QTS without an induction period. You can add more if you wish.
+      You’ll need to provide references for each role so we can verify your teaching work history.
+    </p>
+  <% end %>
 
   <h2 class="govuk-heading-s">How we calculate your work experience</h2>
 
@@ -24,18 +47,24 @@
     For example, if you tell us about a role where you worked 15 hours per week for 18 months, we’ll convert this to 9 months of 30-hour weeks. We’ll then add this role to your total as 9 months.
   </div>
 
+  <p class="govuk-body">
+    Teaching work experience can be gained in any country but must be from after you qualified as a teacher.
+    Any teaching work experience gained before you qualified as a teacher will not be considered.
+  </p>
+
   <h3 class="govuk-heading-s">Understanding how much work experience to add</h3>
 
   <ul class="govuk-list govuk-list--bullet">
+    <li><strong class="govuk-!-font-weight-bold">Less than 9 months</strong> – you are not eligible for QTS.</li>
     <li><strong class="govuk-!-font-weight-bold">More than 9 months but under 20</strong> – if you’re awarded QTS you’ll need to do a 2-year period of statutory induction.</li>
-    <li><strong class="govuk-!-font-weight-bold">20 months</strong> – if you’re awarded QTS, there’s no need to do an induction period.</li>
-    <li><strong class="govuk-!-font-weight-bold">More than 20 months</strong> – you do not need to add more, but if there are additional roles that you want to tell us about you can add them.</li>
+    <li><strong class="govuk-!-font-weight-bold">20 months or more</strong> – if you’re awarded QTS, there’s no need to do an induction period. You do not need to add more work experience.</li>
   </ul>
 
-  <%= govuk_details(summary_text: "I do not have more than 9 months of teaching experience") do %>
-    <p class="govuk-body">QTS requires a minimum of 9 months of active teaching experience. We can keep your application open for 6 months, so you can continue later, if you gain enough experience in that time.</p>
-
-    <p class="govuk-body">Alternatively, you can <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" class="govuk-link" rel="noreferrer noopener" target="_blank">explore other ways to teach in England (opens in new tab)</a>.</p>
+  <% if @years_count == 0 && @months_count < 9 %>
+    <%= govuk_details(summary_text: "I do not have more than 9 months of teaching experience") do %>
+      <p class="govuk-body">QTS requires a minimum of 9 months of active teaching experience. We can keep your application open for 6 months, so you can continue later, if you gain enough experience in that time.</p>
+      <p class="govuk-body">Alternatively, you can <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" class="govuk-link" rel="noreferrer noopener" target="_blank">explore other ways to teach in England (opens in new tab)</a>.</p>
+    <% end %>
   <% end %>
 
   <%= f.govuk_collection_radio_buttons :add_another,

@@ -1,13 +1,6 @@
 <% content_for :page_title, "Check your answers" %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<% if application_form_display_work_history_before_teaching_qualification_banner?(@application_form) %>
-  <%= govuk_notification_banner(
-    title_text: "Important",
-    text: "You’ve added at least one teaching role that started before you were recognised as a qualified teacher. Any time spent in teaching roles that took place before you were recognised will not count towards your QTS application."
-  ) %>
-<% end %>
-
 <h1 class="govuk-heading-xl">Check your answers before submitting your application</h1>
 
 <section id="app-application-form-about-you">

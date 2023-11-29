@@ -205,18 +205,18 @@ class ApplicationFormStatusUpdater
 
     received_requests = reference_requests.filter(&:received?)
 
-    months_count =
+    work_history_duration =
       WorkHistoryDuration.for_ids(
         received_requests.map(&:work_history_id),
         application_form:,
-      ).count_months
+      )
 
     most_recent_reference_request =
       reference_requests.max_by { |request| request.work_history.start_date }
 
-    if months_count < 9
+    if !work_history_duration.enough_for_submission?
       false
-    elsif months_count >= 20 &&
+    elsif work_history_duration.enough_to_skip_induction? &&
           (region.checks_available? || most_recent_reference_request&.received?)
       true
     else

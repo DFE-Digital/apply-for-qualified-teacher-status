@@ -1,25 +1,24 @@
-<p class="govuk-body">You need to show you’ve been employed as a teacher in a school for at least 9 months or more.</p>
+<p class="govuk-body">You must provide evidence that you have been employed as a qualified teacher for at least 9 months or more.</p>
 
-<p class="govuk-inset-text">The teaching roles you include as proof can be from working in any country but must have occurred after becoming qualified to teach.</p>
+<p class="govuk-inset-text">Teaching work experience can be gained in any country but must be from after you qualified as a teacher.</p>
 
-<% if region.reduced_evidence_accepted %>
-  <p class="govuk-body">You’ll need to tell us about any professional teaching work experience where you:</p>
-<% else %>
-  <p class="govuk-body">You’ll need to provide the name and email address of a contact who can confirm that during your professional work experience you:</p>
+<% if eligibility_check&.work_experience_between_9_and_20_months? %>
+  <p class="govuk-body">You have indicated you have between 9 and 20 months of teaching work experience. If you are awarded QTS you must complete a 2-year ‘statutory induction’ period as a newly qualified teacher.</p>
+  <p class="govuk-body"><%= govuk_link_to "Learn more about statutory induction periods for early career teachers in England.", "https://www.gov.uk/government/publications/induction-for-early-career-teachers-england" %></p>
 <% end %>
 
+<h3 class="govuk-heading-s">References</h3>
+
+<p class="govuk-body">You must provide the names and email addresses of references who can confirm that during your teaching work experience you:</p>
+
 <ul class="govuk-list govuk-list--bullet">
+  <li>worked in the role after becoming qualified as a teacher</li>
   <li>worked in a school that delivers mandatory education</li>
   <li>worked unsupervised with children aged between 5 and 16 years</li>
-  <li>were solely responsible for planning, preparing and delivering lessons to at least 4 students at a time</li>
+  <li>were solely responsible for planning, preparing, and delivering lessons to at least 4 students at a time</li>
   <li>were solely responsible for assessing and reporting on the progress of those students</li>
 </ul>
 
 <% unless region.reduced_evidence_accepted %>
-  <p class="govuk-body">We’ll contact the references you’ve provided to verify your work history before we award QTS.</p>
-<% end %>
-
-<% if eligibility_check&.work_experience_between_9_and_20_months? %>
-  <p class="govuk-body">As a teacher with more than 1 year of professional experience, but less than 2 years, you’ll need to complete a 2-year ‘statutory induction’ period as a newly qualified teacher.</p>
-  <p class="govuk-body"><a href="https://www.gov.uk/government/publications/induction-for-newly-qualified-teachers-nqts">Learn more about statutory induction periods for newly qualified teachers.</a></p>
+  <p class="govuk-body">We will contact the references you’ve provided to confirm your teaching work history before we award QTS.</p>
 <% end %>

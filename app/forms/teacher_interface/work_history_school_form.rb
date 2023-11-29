@@ -52,6 +52,13 @@ module TeacherInterface
         end_date: still_employed ? nil : end_date,
         end_date_is_estimate: end_date_is_estimate || false,
       )
+
+      if application_form.qualification_changed_work_history_duration &&
+           has_enough_work_history_for_submission?
+        application_form.update!(
+          qualification_changed_work_history_duration: false,
+        )
+      end
     end
 
     delegate :application_form, to: :work_history
@@ -60,6 +67,13 @@ module TeacherInterface
 
     def country_code
       CountryCode.from_location(country_location)
+    end
+
+    def has_enough_work_history_for_submission?
+      WorkHistoryDuration.for_application_form(
+        application_form.reload,
+        consider_teaching_qualification: true,
+      ).enough_for_submission?
     end
   end
 end

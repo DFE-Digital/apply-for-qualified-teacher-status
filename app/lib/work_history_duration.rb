@@ -44,13 +44,35 @@ class WorkHistoryDuration
   end
 
   def count_months
-    work_histories
-      .map { |work_history| work_history_full_time_months(work_history) }
-      .sum
-      .round
+    @count_months ||=
+      work_histories
+        .map { |work_history| work_history_full_time_months(work_history) }
+        .sum
+        .round
+  end
+
+  def count_years_and_months
+    if count_months <= 24
+      [0, count_months]
+    else
+      years_count = (count_months / 12).floor
+      remaining_months_count = count_months - years_count * 12
+      [years_count, remaining_months_count]
+    end
+  end
+
+  def enough_for_submission?
+    count_months >= THRESHOLD_MONTHS_FOR_SUBMISSION
+  end
+
+  def enough_to_skip_induction?
+    count_months >= THRESHOLD_MONTHS_TO_SKIP_INDUCTION
   end
 
   private
+
+  THRESHOLD_MONTHS_FOR_SUBMISSION = 9
+  THRESHOLD_MONTHS_TO_SKIP_INDUCTION = 20
 
   AVERAGE_WEEKS_PER_MONTH = 4.34
   HOURS_PER_FULL_TIME_MONTH = 130.0

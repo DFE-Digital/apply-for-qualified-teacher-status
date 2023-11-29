@@ -30,6 +30,7 @@
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
 #  personal_information_status                   :string           default("not_started"), not null
+#  qualification_changed_work_history_duration   :boolean          default(FALSE), not null
 #  qualifications_status                         :string           default("not_started"), not null
 #  reduced_evidence_accepted                     :boolean          default(FALSE), not null
 #  reference                                     :string(31)       not null

@@ -24,7 +24,7 @@ en:
       eligibility_interface_region_form:
         region_id: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
       eligibility_interface_work_experience_form:
-        work_experience: You can include teaching work experience gained from any country.
+        work_experience: Your teaching work experience can be gained in any country but must be from after you qualified as a teacher.
       qualification:
         add_another: You can use the next section to tell us about additional degrees if you want to.
       teacher:
@@ -287,7 +287,7 @@ en:
       eligibility_interface_region_form:
         region_id: In which state/territory are you currently recognised as a teacher?
       eligibility_interface_work_experience_form:
-        work_experience: How long have you been employed as a recognised teacher?
+        work_experience: How long have you worked as a recognised teacher?
       qualification:
         add_another: Add another qualification?
       teacher_interface_add_another_work_history_form:

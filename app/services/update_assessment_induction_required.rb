@@ -20,15 +20,10 @@ class UpdateAssessmentInductionRequired
   delegate :application_form, to: :assessment
 
   def induction_required
-    passed_months_count < 20
-  end
-
-  def passed_months_count
-    @passed_months_count ||=
-      WorkHistoryDuration.new(
-        application_form:,
-        relation: work_history_relation,
-      ).count_months
+    !WorkHistoryDuration.new(
+      application_form:,
+      relation: work_history_relation,
+    ).enough_to_skip_induction?
   end
 
   def work_history_relation

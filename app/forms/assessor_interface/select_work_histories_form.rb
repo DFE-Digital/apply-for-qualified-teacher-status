@@ -32,12 +32,13 @@ class AssessorInterface::SelectWorkHistoriesForm
   def work_history_enough_months
     return if application_form.nil? || session.nil?
 
-    if work_history_duration.count_months < 9
-      errors.add(:work_history_ids, :blank)
-    end
+    errors.add(:work_history_ids, :blank) unless has_enough_work_history?
   end
 
-  def work_history_duration
-    WorkHistoryDuration.for_ids(work_history_ids, application_form:)
+  def has_enough_work_history?
+    WorkHistoryDuration.for_ids(
+      work_history_ids,
+      application_form:,
+    ).enough_for_submission?
   end
 end

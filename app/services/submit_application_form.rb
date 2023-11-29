@@ -78,10 +78,6 @@ class SubmitApplicationForm
   end
 
   def hidden_from_assessment
-    region.country.code == "ZW" ||
-      WorkHistoryDuration.for_application_form(
-        application_form,
-        consider_teaching_qualification: true,
-      ).count_months < 9
+    region.country.code == "ZW"
   end
 end
