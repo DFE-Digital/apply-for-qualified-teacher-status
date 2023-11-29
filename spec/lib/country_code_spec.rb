@@ -84,4 +84,12 @@ RSpec.describe CountryCode do
 
     include_examples "true with codes", Country::CODES_IN_EUROPEAN_ECONOMIC_AREA
   end
+
+  describe "#european_free_trade_association?" do
+    subject(:european_free_trade_association?) do
+      described_class.european_free_trade_association?(code)
+    end
+
+    include_examples "true with codes", %w[CH IS NO LI]
+  end
 end

@@ -32,5 +32,10 @@ class Country < ApplicationRecord
   CODES_IN_EUROPEAN_ECONOMIC_AREA =
     YAML.load(File.read("lib/countries-in-european-economic-area.yaml"))
 
+  CODES_IN_EUROPEAN_FREE_TRADE_ASSOCIATION =
+    YAML.load(
+      File.read("lib/countries-in-european-free-trade-association.yaml"),
+    )
+
   validates :code, inclusion: { in: CODES }
 end

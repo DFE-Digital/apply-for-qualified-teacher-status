@@ -28,6 +28,10 @@ class CountryCode
       Country::CODES_IN_EUROPEAN_ECONOMIC_AREA.include?(code)
     end
 
+    def european_free_trade_association?(code)
+      Country::CODES_IN_EUROPEAN_FREE_TRADE_ASSOCIATION.include?(code)
+    end
+
     LOCATIONS_BY_COUNTRY_CODE =
       Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST
         .map { |row| [CountryCode.from_location(row.last), row.last] }
