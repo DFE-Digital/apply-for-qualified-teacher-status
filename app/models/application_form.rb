@@ -160,12 +160,10 @@ class ApplicationForm < ApplicationRecord
 
   scope :active,
         -> do
-          where(hidden_from_assessment: false).merge(
-            assessable
-              .or(where("awarded_at >= ?", 90.days.ago))
-              .or(where("declined_at >= ?", 90.days.ago))
-              .or(where("withdrawn_at >= ?", 90.days.ago)),
-          )
+          assessable
+            .or(where("awarded_at >= ?", 90.days.ago))
+            .or(where("declined_at >= ?", 90.days.ago))
+            .or(where("withdrawn_at >= ?", 90.days.ago))
         end
 
   scope :destroyable,
