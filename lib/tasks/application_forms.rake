@@ -68,6 +68,7 @@ namespace :application_forms do
               "you can reapply and provide evidence of this as part of your new " \
               "application.",
         )
+        assessment_section.update!(passed: false)
 
         application_form.reload
 
