@@ -396,6 +396,8 @@ en:
           attributes:
             passed:
               inclusion: Select whether you are satisfied with the request
+            received:
+              inclusion: Select whether you have received the request
         assessor_interface/select_qualifications_form:
           attributes:
             qualification_ids:

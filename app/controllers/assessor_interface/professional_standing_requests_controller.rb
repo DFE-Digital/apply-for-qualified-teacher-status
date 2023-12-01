@@ -177,6 +177,7 @@ module AssessorInterface
     def verify_passed_form_params
       params.require(:assessor_interface_requestable_verify_passed_form).permit(
         :passed,
+        :received,
       )
     end
 

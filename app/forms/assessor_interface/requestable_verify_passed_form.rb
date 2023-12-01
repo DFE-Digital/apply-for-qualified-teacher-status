@@ -10,10 +10,17 @@ class AssessorInterface::RequestableVerifyPassedForm
   attribute :passed, :boolean
   validates :passed, inclusion: [true, false]
 
+  attribute :received, :boolean
+  validates :received, inclusion: [nil, true, false]
+
   def save
     return false if invalid?
 
-    ReceiveRequestable.call(requestable:, user:) unless requestable.received?
+    if (passed || received) && !requestable.received?
+      ReceiveRequestable.call(requestable:, user:)
+    elsif received == false && requestable.received?
+      UnreceiveRequestable.call(requestable:, user:)
+    end
 
     VerifyRequestable.call(requestable:, user:, passed:, note: "") if passed
 
