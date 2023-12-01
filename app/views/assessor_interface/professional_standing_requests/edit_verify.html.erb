@@ -25,7 +25,18 @@
                 "After following the steps above, have you received a valid response?" :
                 "Does the response confirm that the LoPS is valid?" %>
 
-  <%= f.govuk_collection_radio_buttons :passed, %i[true false], :itself, legend: { text: legend } %>
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: legend, size: "s" } do %>
+    <%= f.govuk_radio_button :passed, :true, link_errors: true %>
+
+    <% if @professional_standing_request.expired? %>
+      <%= f.govuk_radio_button :passed, :false do %>
+        <%= f.govuk_radio_button :received, :true %>
+        <%= f.govuk_radio_button :received, :false %>
+      <% end %>
+    <% else %>
+      <%= f.govuk_radio_button :passed, :false %>
+    <% end %>
+  <% end %>
 
   <%= f.govuk_submit do %>
     <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>

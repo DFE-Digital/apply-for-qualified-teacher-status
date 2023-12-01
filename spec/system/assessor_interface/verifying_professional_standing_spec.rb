@@ -129,7 +129,27 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_i_submit_no_on_the_verify_form
+    and_i_submit_no_and_not_received_on_the_verify_form
+    then_i_see_the(
+      :assessor_verify_failed_professional_standing_request_page,
+      reference:,
+      assessment_id:,
+    )
+    and_i_submit_an_internal_note
+    then_i_see_the(
+      :assessor_professional_standing_request_page,
+      reference:,
+      assessment_id:,
+    )
+    and_the_record_lops_response_status_is("REVIEW")
+
+    when_i_click_record_lops_response
+    then_i_see_the(
+      :assessor_verify_professional_standing_request_page,
+      reference:,
+      assessment_id:,
+    )
+    and_i_submit_no_and_received_on_the_verify_form
     then_i_see_the(
       :assessor_verify_failed_professional_standing_request_page,
       reference:,
@@ -208,6 +228,16 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
 
   def and_i_submit_no_on_the_verify_form
     assessor_verify_professional_standing_request_page.submit_no
+  end
+
+  def and_i_submit_no_and_received_on_the_verify_form
+    assessor_verify_professional_standing_request_page.submit_no(received: true)
+  end
+
+  def and_i_submit_no_and_not_received_on_the_verify_form
+    assessor_verify_professional_standing_request_page.submit_no(
+      received: false,
+    )
   end
 
   def and_i_submit_an_internal_note
