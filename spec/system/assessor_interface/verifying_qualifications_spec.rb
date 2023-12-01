@@ -156,7 +156,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
         application_form =
           create(
             :application_form,
-            :waiting_on,
+            :submitted,
             statuses: %w[waiting_on_qualification],
           )
         qualification = create(:qualification, :completed, application_form:)

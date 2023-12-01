@@ -195,46 +195,6 @@ FactoryBot.define do
       statuses { %w[assessment_in_progress] }
     end
 
-    trait :waiting_on do
-      submitted
-      action_required_by_external
-      verification_stage
-      statuses do
-        %w[
-          waiting_on_further_information
-          waiting_on_lops
-          waiting_on_qualification
-          waiting_on_reference
-        ]
-      end
-    end
-
-    trait :received do
-      submitted
-      verification_stage
-      statuses do
-        %w[
-          received_further_information
-          received_lops
-          received_qualification
-          received_reference
-        ]
-      end
-    end
-
-    trait :overdue do
-      submitted
-      verification_stage
-      statuses do
-        %w[
-          overdue_further_information
-          overdue_lops
-          overdue_qualification
-          overdue_reference
-        ]
-      end
-    end
-
     trait :awarded_pending_checks do
       submitted
       review_stage
