@@ -9,7 +9,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     given_there_is_an_application_form_with_professional_standing_request
   end
 
-  it "verify" do
+  it "request" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_professional_standing_task
     then_i_see_the(
@@ -37,6 +37,20 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
 
     when_i_click_request_lops_verification
     and_i_submit_checked_on_the_request_form
+    then_i_see_the(
+      :assessor_professional_standing_request_page,
+      reference:,
+      assessment_id:,
+    )
+    and_the_request_lops_verification_status_is("COMPLETED")
+    and_the_record_lops_response_status_is("WAITING ON")
+  end
+
+  it "record" do
+    given_the_professional_standing_request_has_been_requested
+
+    when_i_visit_the(:assessor_application_page, reference:)
+    and_i_click_professional_standing_task
     then_i_see_the(
       :assessor_professional_standing_request_page,
       reference:,
@@ -84,6 +98,10 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
 
   def given_there_is_an_application_form_with_professional_standing_request
     application_form
+  end
+
+  def given_the_professional_standing_request_has_been_requested
+    application_form.assessment.professional_standing_request.requested!
   end
 
   def and_i_click_professional_standing_task
@@ -142,7 +160,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
     @application_form ||=
       begin
         application_form =
-          create(:application_form, :submitted, statuses: %w[waiting_on_lops])
+          create(:application_form, :submitted, :verification_stage)
         create(
           :assessment,
           :with_professional_standing_request,
