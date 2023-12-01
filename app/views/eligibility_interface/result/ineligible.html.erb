@@ -24,6 +24,12 @@
       <li><%= I18n.t("activemodel.attributes.eligibility_check.ineligible_reason.#{reason}", country_name: CountryName.from_eligibility_check(@eligibility_check, with_definite_article: true)) %></li>
     <% end %>
   </ul>
+
+  <% if @eligibility_check.ineligible_reasons.include?(:work_experience) %>
+    <p class="govuk-body">
+      To apply for QTS, you’ll need at least 9 months of teaching work experience. This can be gained in any country but must be from after you qualified as a teacher.
+    </p>
+  <% end %>
 <% end %>
 
 <% unless @eligibility_check.ineligible_reasons.include?(:misconduct) || @eligibility_check.england_or_wales? %>
@@ -34,6 +40,12 @@
     <li><%= govuk_link_to "learn more about teaching in England", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" %></li>
     <li><%= govuk_link_to "learn more about the new QTS regulations", "https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers--2" %></li>
   </ul>
+
+  <% if @eligibility_check.ineligible_reasons.include?(:work_experience) %>
+    <p class="govuk-body">
+      If you’re a citizen of Iceland, Norway, or Lichtenstein you can gain more teaching experience during an adaptation period.
+    </p>
+  <% end %>
 <% end %>
 
 <% if @eligibility_check.ineligible_reasons.include?(:country) %>
