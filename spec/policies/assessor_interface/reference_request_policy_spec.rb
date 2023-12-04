@@ -30,17 +30,6 @@ RSpec.describe AssessorInterface::ReferenceRequestPolicy do
     it_behaves_like "a policy method without permission"
   end
 
-  describe "#update?" do
-    subject(:update?) { policy.update? }
-    it_behaves_like "a policy method requiring the assess permission"
-  end
-
-  describe "#edit?" do
-    subject(:edit?) { policy.edit? }
-    it_behaves_like "a policy method requiring the assess permission"
-    it_behaves_like "a policy method requiring the change work history permission"
-  end
-
   describe "#update_review?" do
     subject(:update_review?) { policy.update_review? }
     it_behaves_like "a policy method requiring the assess permission"
@@ -49,6 +38,27 @@ RSpec.describe AssessorInterface::ReferenceRequestPolicy do
   describe "#edit_review?" do
     subject(:edit_review?) { policy.edit_review? }
     it_behaves_like "a policy method requiring the assess permission"
+  end
+
+  describe "#update_verify?" do
+    subject(:update_verify?) { policy.update_verify? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#edit_verify?" do
+    subject(:edit_verify?) { policy.edit_verify? }
+    it_behaves_like "a policy method requiring the verify permission"
+    it_behaves_like "a policy method requiring the change work history permission"
+  end
+
+  describe "#update_verify_failed?" do
+    subject(:update_verify_failed?) { policy.update_verify_failed? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#edit_verify_failed?" do
+    subject(:edit_verify?) { policy.edit_verify_failed? }
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#destroy?" do

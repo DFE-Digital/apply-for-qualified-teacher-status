@@ -12,7 +12,7 @@
     items: @reference_requests.map do |reference_request|
       {
         name: work_history_name_and_duration(reference_request.work_history),
-        link: [:edit, :assessor_interface, @application_form, @assessment, reference_request],
+        link: [:verify, :assessor_interface, @application_form, @assessment, reference_request],
         status: reference_request.status
       }
     end

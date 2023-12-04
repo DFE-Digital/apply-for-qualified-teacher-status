@@ -2,9 +2,9 @@
 
 module PageObjects
   module AssessorInterface
-    class VerifyFailedProfessionalStandingRequest < VerifyFailedRequestablePage
+    class VerifyFailedReferenceRequest < VerifyFailedRequestablePage
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
-                "/professional-standing-request/verify-failed"
+                "/reference-requests/{id}/verify-failed"
     end
   end
 end

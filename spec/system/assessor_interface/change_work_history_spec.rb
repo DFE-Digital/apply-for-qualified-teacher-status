@@ -45,12 +45,12 @@ RSpec.describe "Assessor change work history", type: :system do
     given_i_am_authorized_as_a_user(manager)
 
     when_i_visit_the(
-      :assessor_edit_reference_request_page,
+      :assessor_verify_reference_request_page,
       reference:,
       assessment_id:,
       id: reference_request.id,
     )
-    then_i_see_the(:assessor_edit_reference_request_page)
+    then_i_see_the(:assessor_verify_reference_request_page)
 
     when_i_click_on_change_from_verification
     then_i_see_the(
@@ -78,7 +78,7 @@ RSpec.describe "Assessor change work history", type: :system do
   end
 
   def when_i_click_on_change_from_verification
-    assessor_edit_reference_request_page
+    assessor_verify_reference_request_page
       .summary_list
       .find_row(key: "Name of reference")
       .actions

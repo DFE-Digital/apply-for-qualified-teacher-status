@@ -113,8 +113,8 @@ en:
           false: "No"
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why you selected ‘No’'
         failed_options:
-          true: "Yes, mark as ‘Rejected’"
-          false: "No, allow more time for a response"
+          true: Yes, mark as ‘Rejected’
+          false: No, allow more time for a response
       assessor_interface_requestable_review_form:
         passed_options:
           true: "Yes"

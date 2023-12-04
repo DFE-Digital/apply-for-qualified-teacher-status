@@ -291,7 +291,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
         :qualification_requests,
       ],
-      status: requestables_task_item_status(qualification_requests),
+      status:
+        requestables_task_item_status(
+          qualification_requests.reject(&:reviewed?),
+        ),
     }
   end
 
@@ -311,7 +314,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
         :reference_requests,
       ],
-      status: requestables_task_item_status(reference_requests),
+      status:
+        requestables_task_item_status(reference_requests.reject(&:verified?)),
     }
   end
 
@@ -333,15 +337,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
         :professional_standing_request,
       ],
       status:
-        if professional_standing_request.verified?
-          "completed"
-        elsif professional_standing_request.expired?
-          "overdue"
-        elsif professional_standing_request.requested?
-          "waiting_on"
-        else
-          "not_started"
-        end,
+        requestables_task_item_status(
+          [professional_standing_request].reject(&:verified?),
+        ),
     }
   end
 
@@ -448,16 +446,16 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def requestables_task_item_status(requestables)
-    unreviewed_requests = requestables.reject(&:reviewed?)
-
-    if unreviewed_requests.empty?
-      :completed
-    elsif unreviewed_requests.any?(&:expired?)
-      :overdue
-    elsif unreviewed_requests.any?(&:received?)
-      :received
+    if requestables.empty?
+      "completed"
+    elsif requestables.any?(&:expired?)
+      "overdue"
+    elsif requestables.any?(&:received?)
+      "received"
+    elsif requestables.any?(&:requested?)
+      "waiting_on"
     else
-      :waiting_on
+      "not_started"
     end
   end
 

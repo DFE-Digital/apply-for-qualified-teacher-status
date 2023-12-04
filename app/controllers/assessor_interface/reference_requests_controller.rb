@@ -14,16 +14,75 @@ module AssessorInterface
       render layout: "full_from_desktop"
     end
 
-    def edit
+    def edit_review
       @form = RequestableReviewForm.new(requestable:)
     end
 
-    def update
+    def update_review
       @form =
         RequestableReviewForm.new(
           requestable:,
           user: current_staff,
-          **requestable_review_form_params,
+          **review_form_params,
+        )
+
+      if @form.save
+        redirect_to [:review, :assessor_interface, application_form, assessment]
+      else
+        render :edit_review, status: :unprocessable_entity
+      end
+    end
+
+    def edit_verify
+      @form =
+        RequestableVerifyPassedForm.new(
+          requestable:,
+          user: current_staff,
+          passed: requestable.verify_passed,
+        )
+    end
+
+    def update_verify
+      @form =
+        RequestableVerifyPassedForm.new(
+          verify_passed_form_params.merge(requestable:, user: current_staff),
+        )
+
+      if @form.save
+        if @form.passed
+          redirect_to [
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :reference_requests,
+                      ]
+        else
+          redirect_to [
+                        :verify_failed,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        reference_request,
+                      ]
+        end
+      else
+        render :edit_verify, status: :unprocessable_entity
+      end
+    end
+
+    def edit_verify_failed
+      @form =
+        RequestableVerifyFailedForm.new(
+          requestable:,
+          user: current_staff,
+          note: requestable.verify_note,
+        )
+    end
+
+    def update_verify_failed
+      @form =
+        RequestableVerifyFailedForm.new(
+          verify_failed_form_params.merge(requestable:, user: current_staff),
         )
 
       if @form.save
@@ -34,26 +93,7 @@ module AssessorInterface
                       :reference_requests,
                     ]
       else
-        render :edit, status: :unprocessable_entity
-      end
-    end
-
-    def edit_review
-      @form = RequestableReviewForm.new(requestable:)
-    end
-
-    def update_review
-      @form =
-        RequestableReviewForm.new(
-          requestable:,
-          user: current_staff,
-          **requestable_review_form_params,
-        )
-
-      if @form.save
-        redirect_to [:review, :assessor_interface, application_form, assessment]
-      else
-        render :edit_review, status: :unprocessable_entity
+        render :edit_verify_failed, status: :unprocessable_entity
       end
     end
 
@@ -65,9 +105,21 @@ module AssessorInterface
       @assessment = reference_request.assessment
     end
 
-    def requestable_review_form_params
+    def review_form_params
       params.require(:assessor_interface_requestable_review_form).permit(
         :passed,
+        :note,
+      )
+    end
+
+    def verify_passed_form_params
+      params.require(:assessor_interface_requestable_verify_passed_form).permit(
+        :passed,
+      )
+    end
+
+    def verify_failed_form_params
+      params.require(:assessor_interface_requestable_verify_failed_form).permit(
         :note,
       )
     end

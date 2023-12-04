@@ -53,11 +53,10 @@ class ApplicationFormStatusUpdater
         "none"
       elsif dqt_trn_request.present? || assessment_in_review? ||
             overdue_further_information || overdue_qualification ||
-            overdue_reference || received_further_information ||
-            received_qualification || received_reference
+            received_further_information || received_qualification
         "assessor"
       elsif preliminary_check? || need_to_request_lops? || overdue_lops ||
-            received_lops
+            received_lops || overdue_reference || received_reference
         "admin"
       elsif waiting_on_further_information || waiting_on_lops ||
             waiting_on_qualification || waiting_on_reference

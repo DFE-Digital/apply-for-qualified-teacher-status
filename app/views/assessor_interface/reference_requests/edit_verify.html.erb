@@ -6,7 +6,7 @@
 <% work_history = @reference_request.work_history %>
 <% can_edit_work_history = AssessorInterface::WorkHistoryPolicy.new(current_staff, work_history).edit? %>
 
-<%= form_with model: @form, url: [:assessor_interface, application_form, @reference_request.assessment, @reference_request], method: :put do |f| %>
+<%= form_with model: @form, url: [:verify, :assessor_interface, application_form, @reference_request.assessment, @reference_request] do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
@@ -48,15 +48,13 @@
     end
   end %>
 
+  <p class="govuk-body">You must send this reference for review if any of the responses contain a comment.</p>
+  
   <% if @reference_request.received? %>
     <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
 
-    <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: t(".passed"), size: "s" } do %>
-      <%= f.govuk_radio_button :passed, :true, link_errors: true %>
-      <%= f.govuk_radio_button :passed, :false do %>
-        <%= f.govuk_text_area :note, label: { text: t(".failure_assessor_note").html_safe } %>
-      <% end %>
-    <% end %>
+    <%= f.govuk_collection_radio_buttons :passed, %i[true false], :itself,
+                                         legend: { text: "Are you satisfied that this reference should count towards the applicant’s work experience?" } %>
 
     <%= f.govuk_submit do %>
       <%= govuk_link_to "Cancel", [:assessor_interface, application_form] %>

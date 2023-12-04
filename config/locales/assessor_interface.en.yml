@@ -226,10 +226,8 @@ en:
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
 
     reference_requests:
-      edit:
-        title: Review work reference
-        passed: Are you satisfied that this reference should count towards the applicant’s work experience?
-        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this reference should not count towards the applicant’s work experience'
+      edit_verify:
+        title: Review reference
 
   activemodel:
     errors:
