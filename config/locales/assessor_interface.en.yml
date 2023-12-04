@@ -417,10 +417,6 @@ en:
           attributes:
             verify_qualifications:
               inclusion: Select whether you want to verify qualifications
-        assessor_interface/verify_references_form:
-          attributes:
-            references_verified:
-              inclusion: Select whether enough valid work references been received for this application to progress to either an award or decline
         assessor_interface/reviewer_assignment_form:
           attributes:
             reviewer_id:
