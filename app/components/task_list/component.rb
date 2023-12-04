@@ -30,7 +30,7 @@ module TaskList
         .map do |section, index|
           section.merge(
             number: index + 1,
-            key: section[:title].parameterize,
+            key: section[:title]&.parameterize,
             items:
               section[:items].map do |item|
                 item.merge(key: item[:name].parameterize)

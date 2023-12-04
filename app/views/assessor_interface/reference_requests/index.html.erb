@@ -17,6 +17,7 @@
         [
           {
             title: "Work references",
+            indentation: false,
             items: @reference_requests.each_with_index.map do |reference_request, index|
               {
                 name: work_history_name_and_duration(reference_request.work_history, most_recent: index.zero?),
