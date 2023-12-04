@@ -2,42 +2,16 @@
 
 module AssessorInterface
   class ReferenceRequestsController < BaseController
-    before_action only: %i[index update_verify_references] do
-      authorize %i[assessor_interface reference_request]
-    end
-
-    before_action except: %i[index update_verify_references] do
-      authorize [:assessor_interface, reference_request]
-    end
-
-    before_action :set_list_variables, only: %i[index update_verify_references]
-    before_action :set_individual_variables,
-                  except: %i[index update_verify_references]
+    before_action :set_individual_variables, except: :index
 
     def index
-      @form =
-        VerifyReferencesForm.new(
-          assessment: @assessment,
-          references_verified: @assessment.references_verified,
-        )
+      authorize %i[assessor_interface reference_request]
+
+      @reference_requests = reference_requests
+      @application_form = reference_requests.first.application_form
+      @assessment = reference_requests.first.assessment
 
       render layout: "full_from_desktop"
-    end
-
-    def update_verify_references
-      @form =
-        VerifyReferencesForm.new(
-          assessment: @assessment,
-          **verify_references_form_params,
-        )
-
-      if @form.save
-        redirect_to [:assessor_interface, @application_form]
-      else
-        render :index,
-               layout: "full_from_desktop",
-               status: :unprocessable_entity
-      end
     end
 
     def edit
@@ -85,14 +59,8 @@ module AssessorInterface
 
     private
 
-    def set_list_variables
-      @reference_requests = reference_requests
-      @application_form = reference_requests.first.application_form
-      @assessment = reference_requests.first.assessment
-    end
-
     def set_individual_variables
-      @reference_request = reference_request
+      @reference_request = authorize [:assessor_interface, reference_request]
       @application_form = reference_request.application_form
       @assessment = reference_request.assessment
     end
@@ -101,12 +69,6 @@ module AssessorInterface
       params.require(:assessor_interface_requestable_review_form).permit(
         :passed,
         :note,
-      )
-    end
-
-    def verify_references_form_params
-      params.fetch(:assessor_interface_verify_references_form, {}).permit(
-        :references_verified,
       )
     end
 

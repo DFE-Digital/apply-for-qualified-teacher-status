@@ -142,10 +142,6 @@ Rails.application.routes.draw do
         resources :reference_requests,
                   path: "/reference-requests",
                   only: %i[index edit update] do
-          post "verify-references",
-               to: "reference_requests#update_verify_references",
-               on: :collection
-
           member do
             get "review", to: "reference_requests#edit_review"
             post "review", to: "reference_requests#update_review"

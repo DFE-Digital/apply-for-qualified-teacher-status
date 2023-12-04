@@ -128,8 +128,7 @@ RSpec.describe "Assessor verifying references", type: :system do
   end
 
   def when_i_verify_that_all_references_are_accepted
-    assessor_reference_requests_page.form.true_radio_item.choose
-    assessor_reference_requests_page.form.continue_button.click
+    assessor_reference_requests_page.continue_button.click
   end
 
   def then_i_see_the_verify_references_task_is_completed

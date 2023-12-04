@@ -77,7 +77,7 @@ module PageObjects
       end
 
       def verify_references_task
-        task_list.find_item("Verify reference requests")
+        task_list.find_item("Verify references")
       end
 
       def verify_professional_standing_task
