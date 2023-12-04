@@ -311,17 +311,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
         :reference_requests,
       ],
-      status:
-        (
-          if assessment.references_verified
-            :completed
-          else
-            requestables_task_item_status(
-              reference_requests,
-              default: :in_progress,
-            )
-          end
-        ),
+      status: requestables_task_item_status(reference_requests),
     }
   end
 
@@ -457,11 +447,11 @@ class AssessorInterface::ApplicationFormsShowViewObject
     !assessment.unknown? && !request_further_information_unfinished?
   end
 
-  def requestables_task_item_status(requestables, default: :completed)
+  def requestables_task_item_status(requestables)
     unreviewed_requests = requestables.reject(&:reviewed?)
 
     if unreviewed_requests.empty?
-      default
+      :completed
     elsif unreviewed_requests.any?(&:expired?)
       :overdue
     elsif unreviewed_requests.any?(&:received?)

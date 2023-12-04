@@ -142,11 +142,7 @@ RSpec.describe Assessment, type: :model do
 
       context "with enough passed reference requests" do
         before do
-          assessment.update!(
-            recommendation: "verify",
-            references_verified: true,
-            induction_required: true,
-          )
+          assessment.update!(recommendation: "verify", induction_required: true)
 
           work_history =
             create(

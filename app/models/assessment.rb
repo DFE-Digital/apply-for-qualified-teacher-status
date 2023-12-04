@@ -119,22 +119,22 @@ class Assessment < ApplicationRecord
     elsif verify?
       return false if professional_standing_request_verify_failed?
 
-      unless enough_reference_requests_reviewed? &&
+      unless all_reference_requests_reviewed? &&
                all_qualification_requests_reviewed? &&
                professional_standing_request_verify_passed?
         return false
       end
 
-      !enough_reference_requests_review_passed? ||
+      any_reference_requests_review_failed? ||
         any_qualification_requests_review_failed?
     elsif review?
-      unless enough_reference_requests_reviewed? &&
+      unless all_reference_requests_reviewed? &&
                all_qualification_requests_reviewed? &&
                professional_standing_request_reviewed?
         return false
       end
 
-      !enough_reference_requests_review_passed? ||
+      any_reference_requests_review_failed? ||
         any_qualification_requests_review_failed? ||
         professional_standing_request_review_failed?
     else
@@ -244,18 +244,19 @@ class Assessment < ApplicationRecord
     further_information_requests.any?(&:review_failed?)
   end
 
-  def enough_reference_requests_reviewed?
-    references_verified || reference_requests.empty?
+  def all_reference_requests_reviewed?
+    qualification_requests.all?(&:reviewed?)
   end
 
   def enough_reference_requests_review_passed?
-    return true if reference_requests.empty?
-    return false unless references_verified
-
     WorkHistoryDuration.for_ids(
       reference_requests.where(review_passed: true).pluck(:work_history_id),
       application_form:,
     ).enough_for_submission?
+  end
+
+  def any_reference_requests_review_failed?
+    reference_requests.any?(&:review_failed?)
   end
 
   def any_reference_requests_verify_failed?

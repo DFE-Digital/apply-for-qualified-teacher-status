@@ -54,8 +54,7 @@ class ApplicationFormStatusUpdater
       elsif dqt_trn_request.present? || assessment_in_review? ||
             overdue_further_information || overdue_qualification ||
             overdue_reference || received_further_information ||
-            received_qualification || received_reference ||
-            needs_references_verified?
+            received_qualification || received_reference
         "assessor"
       elsif preliminary_check? || need_to_request_lops? || overdue_lops ||
             received_lops
@@ -84,8 +83,7 @@ class ApplicationFormStatusUpdater
       elsif assessment_in_verify? || need_to_request_lops? || overdue_lops ||
             overdue_qualification || overdue_reference || received_lops ||
             received_qualification || received_reference || waiting_on_lops ||
-            waiting_on_qualification || waiting_on_reference ||
-            needs_references_verified?
+            waiting_on_qualification || waiting_on_reference
         "verification"
       elsif overdue_further_information || received_further_information ||
             waiting_on_further_information ||
@@ -137,7 +135,6 @@ class ApplicationFormStatusUpdater
            :teacher,
            :teaching_authority_provides_written_statement,
            to: :application_form
-  delegate :references_verified, to: :assessment, allow_nil: true
 
   def preliminary_check?
     return false if assessment.nil?
@@ -187,7 +184,6 @@ class ApplicationFormStatusUpdater
   end
 
   def overdue_reference
-    return false if references_verified
     overdue?(requestables: reference_requests)
   end
 
@@ -241,13 +237,7 @@ class ApplicationFormStatusUpdater
   end
 
   def waiting_on_reference
-    return false if references_verified
     waiting_on?(requestables: reference_requests)
-  end
-
-  def needs_references_verified?
-    reference_requests.present? && !waiting_on_reference &&
-      references_verified != true
   end
 
   def further_information_requests
