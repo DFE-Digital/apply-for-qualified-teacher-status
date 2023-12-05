@@ -75,7 +75,6 @@ module AssessorInterface
         ]
       else
         [
-          :edit,
           :assessor_interface,
           application_form,
           assessment,

@@ -5,6 +5,18 @@ module AssessorInterface
     before_action :ensure_can_review
     before_action :load_assessment_and_application_form
 
+    def show
+      authorize %i[assessor_interface assessment_recommendation]
+
+      redirect_to [
+                    :edit,
+                    :assessor_interface,
+                    application_form,
+                    assessment,
+                    :assessment_recommendation_review,
+                  ]
+    end
+
     def edit
       authorize %i[assessor_interface assessment_recommendation]
 

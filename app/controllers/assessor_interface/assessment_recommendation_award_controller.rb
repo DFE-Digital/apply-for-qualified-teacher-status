@@ -6,6 +6,18 @@ module AssessorInterface
     before_action :load_assessment_and_application_form
     before_action :load_important_notes, only: %i[edit update]
 
+    def show
+      authorize %i[assessor_interface assessment_recommendation]
+
+      redirect_to [
+                    :edit,
+                    :assessor_interface,
+                    application_form,
+                    assessment,
+                    :assessment_recommendation_award,
+                  ]
+    end
+
     def edit
       authorize %i[assessor_interface assessment_recommendation]
 
