@@ -27,8 +27,6 @@
   <p class="govuk-body">Once these checks are complete, the status will change to ‘Awarded’ and the applicant will receive the email telling them they’ve been awarded QTS.</p>
 <% end %>
 
-<p class="govuk-body">You can now return to the application itself, or go back to your list of applications.</p>
-
 <div class="govuk-button-group">
   <%= govuk_button_link_to "Back to application list", %i[assessor_interface application_forms] %>
   <%= govuk_button_link_to "See application overview", [:assessor_interface, @view_object.application_form], secondary: true %>

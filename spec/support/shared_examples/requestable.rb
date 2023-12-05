@@ -51,7 +51,7 @@ RSpec.shared_examples "a requestable" do
   describe "#status" do
     it "is completed when review passed is true" do
       subject.review_passed = true
-      expect(subject.status).to eq("completed")
+      expect(subject.status).to eq("accepted")
     end
 
     it "is rejected when review passed is false" do

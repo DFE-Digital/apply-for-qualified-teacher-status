@@ -83,15 +83,31 @@ FactoryBot.define do
       reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
 
-    trait :passed do
+    trait :review_passed do
       reviewed
       review_passed { true }
     end
 
-    trait :failed do
+    trait :review_failed do
       reviewed
       review_passed { false }
       review_note { "Notes." }
+    end
+
+    trait :verified do
+      received
+      verified_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+    end
+
+    trait :verify_passed do
+      verified
+      verify_passed { true }
+    end
+
+    trait :verify_failed do
+      verified
+      verify_passed { false }
+      verify_note { "Notes." }
     end
 
     trait :receivable do

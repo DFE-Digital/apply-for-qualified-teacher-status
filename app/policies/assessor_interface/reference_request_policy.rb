@@ -16,7 +16,8 @@ class AssessorInterface::ReferenceRequestPolicy < ApplicationPolicy
   end
 
   def edit_verify?
-    user.verify_permission || user.change_work_history_permission
+    user.assess_permission || user.change_work_history_permission ||
+      user.verify_permission
   end
 
   def update_verify_failed?

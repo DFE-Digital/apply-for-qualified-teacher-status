@@ -3,7 +3,10 @@
 
 <%= render "shared/assessor_header", title: "Verify references", application_form: @application_form %>
 
-<p class="govuk-body">This page shows the references that have been requested for this application. You can review those that have the status RECEIVED.</p>
+<p class="govuk-body">
+  This page shows the references that have been requested for this application.
+  You can review those that have the status RECEIVED.
+</p>
 
 <%= render TaskList::Component.new([
   {
@@ -19,4 +22,6 @@
   }
 ]) %>
 
-<%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>
+<% if @assessment.enough_reference_requests_verify_passed? || @assessment.all_reference_requests_verified? %>
+  <%= govuk_button_link_to "Continue", [:assessor_interface, @application_form] %>
+<% end %>

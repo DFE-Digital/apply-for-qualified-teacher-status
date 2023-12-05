@@ -145,7 +145,6 @@ RSpec.describe "Assessor reviewing references", type: :system do
             :verify,
             application_form:,
             induction_required: false,
-            references_verified: true,
           )
         create(
           :reference_request,
