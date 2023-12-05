@@ -1,46 +1,28 @@
 # frozen_string_literal: true
 
 class WorkHistoryDuration
-  def initialize(
-    application_form:,
-    relation:,
-    consider_teaching_qualification: true
-  )
+  def initialize(application_form:, relation:)
     @application_form = application_form
     @relation =
       relation.where.not(start_date: nil).where.not(hours_per_week: nil)
-    @consider_teaching_qualification = consider_teaching_qualification
   end
 
-  def self.for_application_form(
-    application_form,
-    consider_teaching_qualification: true
-  )
+  def self.for_application_form(application_form)
     WorkHistoryDuration.new(
       application_form:,
       relation: application_form.work_histories,
-      consider_teaching_qualification:,
     )
   end
 
-  def self.for_ids(
-    ids,
-    application_form:,
-    consider_teaching_qualification: true
-  )
+  def self.for_ids(ids, application_form:)
     WorkHistoryDuration.new(
       application_form:,
       relation: application_form.work_histories.where(id: ids),
-      consider_teaching_qualification:,
     )
   end
 
-  def self.for_record(record, consider_teaching_qualification: true)
-    for_ids(
-      [record.id],
-      application_form: record.application_form,
-      consider_teaching_qualification:,
-    )
+  def self.for_record(record)
+    for_ids([record.id], application_form: record.application_form)
   end
 
   def count_months
@@ -77,7 +59,7 @@ class WorkHistoryDuration
   AVERAGE_WEEKS_PER_MONTH = 4.34
   HOURS_PER_FULL_TIME_MONTH = 130.0
 
-  attr_reader :application_form, :relation, :consider_teaching_qualification
+  attr_reader :application_form, :relation
 
   def work_histories
     @work_histories ||=
@@ -89,10 +71,7 @@ class WorkHistoryDuration
   end
 
   def teaching_qualification
-    @teaching_qualification ||=
-      if consider_teaching_qualification
-        application_form.teaching_qualification
-      end
+    @teaching_qualification ||= application_form.teaching_qualification
   end
 
   def work_history_full_time_months(work_history)
