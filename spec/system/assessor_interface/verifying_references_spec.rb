@@ -137,7 +137,7 @@ RSpec.describe "Assessor verifying references", type: :system do
         application_form =
           create(
             :application_form,
-            :waiting_on,
+            :submitted,
             statuses: %w[waiting_on_reference received_reference],
           )
         work_history =

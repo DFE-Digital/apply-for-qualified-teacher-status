@@ -26,7 +26,7 @@ RSpec.describe BackfillPreliminaryChecks do
     let!(:waiting_on_application_form) do
       create(
         :application_form,
-        :waiting_on,
+        :submitted,
         :with_assessment,
         region:,
         statuses: %w[waiting_on_lops],

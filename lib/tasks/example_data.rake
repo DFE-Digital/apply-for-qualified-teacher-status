@@ -148,10 +148,78 @@ def application_form_traits_for(region)
     traits,
     traits + %i[submitted],
     (traits + %i[preliminary_check] if region.requires_preliminary_check),
-    traits + %i[waiting_on],
+    traits + %i[submitted action_required_by_external],
+    traits + %i[submitted action_required_by_admin],
     traits + %i[awarded],
     traits + %i[declined],
   ].compact
+end
+
+def create_requestables(application_form, assessment, state)
+  status_prefix = {
+    expired: "overdue",
+    received: "received",
+    requested: "waiting_on",
+  }.fetch(state)
+
+  unless application_form.teaching_authority_provides_written_statement
+    assessment.sections.update_all(passed: true)
+  end
+
+  if application_form.teaching_authority_provides_written_statement ||
+       (
+         application_form.needs_written_statement && state != :received &&
+           rand(4).zero?
+       )
+    FactoryBot.create(:professional_standing_request, state, assessment:)
+
+    application_form.update!(
+      statuses: ["#{status_prefix}_lops"],
+      stage:
+        (
+          if application_form.teaching_authority_provides_written_statement
+            "pre_assessment"
+          else
+            "verification"
+          end
+        ),
+    )
+
+    unless application_form.teaching_authority_provides_written_statement
+      assessment.verify!
+    end
+  elsif (work_history = application_form.work_histories.first) && rand(3).zero?
+    FactoryBot.create(:reference_request, state, assessment:, work_history:)
+    application_form.update!(
+      statuses: ["#{status_prefix}_reference"],
+      stage: "verification",
+    )
+    assessment.verify!
+  elsif (qualification = application_form.qualifications.first) && rand(2).zero?
+    FactoryBot.create(
+      :qualification_request,
+      state,
+      assessment:,
+      qualification:,
+    )
+    application_form.update!(
+      statuses: ["#{status_prefix}_qualification"],
+      stage: "verification",
+    )
+    assessment.verify!
+  elsif state != :expired
+    FactoryBot.create(
+      :further_information_request,
+      state,
+      :with_items,
+      assessment:,
+    )
+    application_form.update!(
+      statuses: ["#{status_prefix}_further_information"],
+      stage: "assessment",
+    )
+    assessment.request_further_information!
+  end
 end
 
 def create_application_forms
@@ -175,62 +243,13 @@ def create_application_forms
           assessment_section: assessment.sections.second,
         )
       elsif application_form.action_required_by_external?
-        if application_form.teaching_authority_provides_written_statement
-          FactoryBot.create(
-            :professional_standing_request,
-            :requested,
-            assessment:,
-          )
-          application_form.update!(
-            statuses: %w[waiting_on_lops],
-            stage: "pre_assessment",
-          )
-        elsif application_form.needs_written_statement && rand(4).zero?
-          FactoryBot.create(
-            :professional_standing_request,
-            :requested,
-            assessment:,
-          )
-          application_form.update!(
-            statuses: %w[waiting_on_lops],
-            stage: "verification",
-          )
-        elsif (work_history = application_form.work_histories.first) &&
-              rand(3).zero?
-          FactoryBot.create(
-            :reference_request,
-            %i[requested received expired].sample,
-            assessment:,
-            work_history:,
-          )
-          application_form.update!(
-            statuses: %w[waiting_on_reference],
-            stage: "verification",
-          )
-        elsif (qualification = application_form.qualifications.first) &&
-              rand(2).zero?
-          FactoryBot.create(
-            :qualification_request,
-            %i[requested received expired].sample,
-            assessment:,
-            qualification:,
-          )
-          application_form.update!(
-            statuses: %w[waiting_on_qualification],
-            stage: "verification",
-          )
-        else
-          FactoryBot.create(
-            :further_information_request,
-            :requested,
-            :with_items,
-            assessment:,
-          )
-          application_form.update!(
-            statuses: %w[waiting_on_further_information],
-            stage: "assessment",
-          )
-        end
+        create_requestables(application_form, assessment, :requested)
+      elsif application_form.action_required_by_admin?
+        create_requestables(
+          application_form,
+          assessment,
+          %i[received expired].sample,
+        )
       end
     end
   end
