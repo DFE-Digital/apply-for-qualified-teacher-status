@@ -79,10 +79,9 @@ module TeacherInterface
     end
 
     def create_work_history_duration
-      WorkHistoryDuration.for_application_form(
-        application_form,
-        consider_teaching_qualification: true,
-      ).tap(&:count_months)
+      WorkHistoryDuration.for_application_form(application_form).tap(
+        &:count_months
+      )
     end
 
     def changed_work_history_duration?(old_duration, new_duration)

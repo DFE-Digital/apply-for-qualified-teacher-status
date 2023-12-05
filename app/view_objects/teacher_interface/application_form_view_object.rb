@@ -250,9 +250,6 @@ class TeacherInterface::ApplicationFormViewObject
 
   def work_history_duration
     @work_history_duration ||=
-      WorkHistoryDuration.for_application_form(
-        application_form,
-        consider_teaching_qualification: true,
-      )
+      WorkHistoryDuration.for_application_form(application_form)
   end
 end

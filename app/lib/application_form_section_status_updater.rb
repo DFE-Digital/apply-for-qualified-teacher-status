@@ -145,7 +145,6 @@ class ApplicationFormSectionStatusUpdater
       enough_for_submission =
         WorkHistoryDuration.for_application_form(
           application_form,
-          consider_teaching_qualification: true,
         ).enough_for_submission?
 
       enough_for_submission ? :completed : :in_progress
