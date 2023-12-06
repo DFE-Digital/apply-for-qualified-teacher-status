@@ -2,6 +2,12 @@ variable "app_environment" {
   type = string
 }
 
+variable "app_replicas" {
+  type        = number
+  description = "Number of replicas of the web app"
+  default     = 1
+}
+
 variable "app_suffix" {
   type    = string
   default = ""
