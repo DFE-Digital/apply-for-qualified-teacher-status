@@ -26,14 +26,14 @@ module TeacherInterface
     end
 
     def new
-      @upload_form = UploadForm.new(document:)
+      @form = UploadForm.new(document:)
     end
 
     def create
-      @upload_form = UploadForm.new(upload_form_params.merge(document:))
+      @form = UploadForm.new(upload_form_params.merge(document:))
 
       handle_application_form_section(
-        form: @upload_form,
+        form: @form,
         if_success_then_redirect: ->(_check_path) do
           history_stack.replace_self(
             path:
@@ -49,17 +49,17 @@ module TeacherInterface
     end
 
     def delete
-      @delete_upload_form = DeleteUploadForm.new
+      @form = DeleteUploadForm.new
     end
 
     def destroy
-      @delete_upload_form =
+      @form =
         TeacherInterface::DeleteUploadForm.new(
           confirm: params.dig(:teacher_interface_delete_upload_form, :confirm),
           upload: @upload,
         )
 
-      if @delete_upload_form.save(validate: true)
+      if @form.save(validate: true)
         redirect_to [:teacher_interface, :application_form, document]
       else
         render :delete, status: :unprocessable_entity

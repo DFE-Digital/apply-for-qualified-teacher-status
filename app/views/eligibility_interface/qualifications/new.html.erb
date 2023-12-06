@@ -1,8 +1,9 @@
 <% content_for :page_title, "#{'Error: ' if @qualification_form.errors.any?}Do you have a teaching qualification?" %>
 <% content_for :back_link_url, back_link_url(eligibility_interface_countries_path) %>
 
-<%= form_with model: @qualification_form, url: eligibility_interface_qualifications_url, method: :post do |f| %>
+<%= form_with model: @form, url: [:eligibility_interface, :qualifications] do |f| %>
   <%= f.govuk_error_summary %>
+
   <%= f.govuk_collection_radio_buttons(
     :qualification,
     [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
@@ -11,5 +12,6 @@
     legend: { size: 'l', tag: 'h1', text: "Do you have a teaching qualification that was completed in #{CountryName.from_eligibility_check(@eligibility_check)}?" },
     hint: { text: "Your teaching qualification must have been completed in the country where you are recognised as a teacher to be eligible for QTS.<br /><br />Qualifications gained from other countries should not be included in your application.".html_safe }
   ) %>
+
   <%= f.govuk_submit %>
 <% end %>

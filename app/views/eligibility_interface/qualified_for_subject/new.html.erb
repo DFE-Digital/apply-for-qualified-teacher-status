@@ -1,7 +1,7 @@
 <% content_for :page_title, "#{'Error: ' if @qualified_for_subject_form.errors.any?}Does your teaching qualification or university degree qualify you to teach one of the following subjects?" %>
 <% content_for :back_link_url, back_link_url(eligibility_interface_teach_children_path) %>
 
-<%= form_with model: @qualified_for_subject_form, url: eligibility_interface_qualified_for_subject_url, method: :post do |f| %>
+<%= form_with model: @form, url: [:eligibility_interface, :qualified_for_subject] do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">Does your teaching qualification certificate or university degree certificate state that you’re qualified to teach one of the following subjects?</h1>

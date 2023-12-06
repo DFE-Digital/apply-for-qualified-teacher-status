@@ -24,6 +24,6 @@
   <%= f.govuk_text_area :location_note, label: { text: "Where to find the response", size: "m" }, hint: nil %>
 
   <%= f.govuk_submit do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
   <% end %>
 <% end %>

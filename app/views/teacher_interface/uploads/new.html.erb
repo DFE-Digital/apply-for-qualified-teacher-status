@@ -1,7 +1,7 @@
 <% content_for :page_title, "#{"Error: " if @upload_form.errors.any?}Upload a document" %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<%= render "upload_timeout_error" if @upload_form.timeout_error %>
+<%= render "upload_timeout_error" if @form.timeout_error %>
 
 <% if @document.uploads.empty? %>
   <% if @document.identification? %>
@@ -151,7 +151,7 @@
   <p class="govuk-body">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document. If your document has more pages, you can add them on the next screen.</p>
 <% end %>
 
-<%= form_with model: @upload_form, url: [:teacher_interface, :application_form, @document, :uploads] do |f| %>
+<%= form_with model: @form, url: [:teacher_interface, :application_form, @document, :uploads] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_file_field :original_attachment,

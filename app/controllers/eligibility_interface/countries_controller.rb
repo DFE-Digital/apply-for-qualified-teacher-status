@@ -1,15 +1,16 @@
+# frozen_string_literal: true
+
 module EligibilityInterface
   class CountriesController < BaseController
     include EnforceEligibilityQuestionOrder
 
     def new
-      @country_form = CountryForm.new(location: eligibility_check.location)
+      @form = CountryForm.new(location: eligibility_check.location)
     end
 
     def create
-      @country_form =
-        CountryForm.new(location_form_params.merge(eligibility_check:))
-      if @country_form.save
+      @form = CountryForm.new(form_params.merge(eligibility_check:))
+      if @form.save
         redirect_to next_url
       else
         render :new, status: :unprocessable_entity
@@ -26,7 +27,7 @@ module EligibilityInterface
       }.fetch(eligibility_check.country_eligibility_status)
     end
 
-    def location_form_params
+    def form_params
       params.require(:eligibility_interface_country_form).permit(:location)
     end
   end

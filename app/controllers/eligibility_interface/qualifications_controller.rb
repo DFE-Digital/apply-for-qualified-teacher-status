@@ -1,18 +1,17 @@
+# frozen_string_literal: true
+
 module EligibilityInterface
   class QualificationsController < BaseController
     include EnforceEligibilityQuestionOrder
 
     def new
-      @qualification_form =
+      @form =
         QualificationForm.new(qualification: eligibility_check.qualification)
     end
 
     def create
-      @qualification_form =
-        QualificationForm.new(
-          qualification_form_params.merge(eligibility_check:),
-        )
-      if @qualification_form.save
+      @form = QualificationForm.new(form_params.merge(eligibility_check:))
+      if @form.save
         redirect_to next_path
       else
         render :new, status: :unprocessable_entity
@@ -21,7 +20,7 @@ module EligibilityInterface
 
     private
 
-    def qualification_form_params
+    def form_params
       params.require(:eligibility_interface_qualification_form).permit(
         :qualification,
       )

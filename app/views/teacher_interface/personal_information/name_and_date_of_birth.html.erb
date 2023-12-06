@@ -1,10 +1,10 @@
 <% content_for :page_title, "#{"Error: " if @name_and_date_of_birth_form.errors.any?}About you" %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<span class="govuk-caption-l">About you</span>
+<span class="govuk-caption-l"><%= t("application_form.tasks.sections.about_you") %></span>
 <h1 class="govuk-heading-l">Personal information</h1>
 
-<%= form_with model: @name_and_date_of_birth_form, url: [:name_and_date_of_birth, :teacher_interface, :application_form, :personal_information] do |f| %>
+<%= form_with model: @form, url: [:name_and_date_of_birth, :teacher_interface, :application_form, :personal_information] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_text_field :given_names,

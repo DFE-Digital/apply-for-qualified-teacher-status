@@ -3,7 +3,7 @@
   hint = "You do not need to be qualified to teach this full age range. \
           For example, you might be qualified to teach children aged 5 to 11, or 14 to 16."
 
-  if @teach_children_form.eligibility_check.qualified_for_subject_required?
+  if @form.eligibility_check.qualified_for_subject_required?
     legend = "Are you qualified to teach children aged 11-16 years?"
     hint = "You must be qualified to teach children aged 11-16 to be eligible for QTS."
   end
@@ -12,7 +12,7 @@
 <% content_for :page_title, "#{'Error: ' if @teach_children_form.errors.any?}#{legend}" %>
 <% content_for :back_link_url, back_link_url(eligibility_interface_degree_path) %>
 
-<%= form_with model: @teach_children_form, url: eligibility_interface_teach_children_url, method: :post do |f| %>
+<%= form_with model: @form, url: [:eligibility_interface, :teach_children] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons(

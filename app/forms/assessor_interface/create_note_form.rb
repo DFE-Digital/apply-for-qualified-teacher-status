@@ -10,7 +10,7 @@ class AssessorInterface::CreateNoteForm
 
   validates :application_form, :author, :text, presence: true
 
-  def save!
+  def save
     if valid?
       CreateNote.call(application_form:, author:, text:)
       true

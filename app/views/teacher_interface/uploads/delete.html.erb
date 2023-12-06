@@ -1,7 +1,7 @@
 <% content_for :page_title, "#{"Error: " if @delete_upload_form.errors.any?}Delete #{@upload.attachment.filename}" %>
 <% content_for :back_link_url, back_history_path(default: edit_teacher_interface_application_form_document_path(@document)) %>
 
-<%= form_with model: @delete_upload_form, url: [:teacher_interface, :application_form, @document, @upload], method: :delete do |f| %>
+<%= form_with model: @form, url: [:teacher_interface, :application_form, @document, @upload], method: :delete do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :confirm,

@@ -3,7 +3,7 @@
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 
-<%= form_with model: @part_of_university_degree_form, url: [:part_of_university_degree, :teacher_interface, :application_form, @qualification] do |f| %>
+<%= form_with model: @form, url: [:part_of_university_degree, :teacher_interface, :application_form, @qualification] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :part_of_university_degree,

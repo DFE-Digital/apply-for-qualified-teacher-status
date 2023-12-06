@@ -1,7 +1,7 @@
 <% content_for :page_title, "#{"Error: " if @create_note_form.errors.any?}Add a note" %>
 <% content_for :back_link_url, params[:next].presence || assessor_interface_application_form_path(@application_form) %>
 
-<%= form_with model: @create_note_form, url: assessor_interface_application_form_notes_path(@application_form) do |f| %>
+<%= form_with model: @form, url: [:assessor_interface, @application_form, :notes] do |f| %>
   <%= hidden_field_tag :next, params[:next] %>
 
   <%= f.govuk_error_summary %>
@@ -9,6 +9,6 @@
   <%= f.govuk_text_area :text, label: { tag: "h1", size: "l" }, rows: 5 %>
 
   <%= f.govuk_submit "Save and continue" do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
   <% end %>
 <% end %>

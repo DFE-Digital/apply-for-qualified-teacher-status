@@ -3,7 +3,7 @@
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 
-<%= form_with model: @age_range_form, url: %i[age_range teacher_interface application_form] do |f| %>
+<%= form_with model: @form, url: %i[age_range teacher_interface application_form] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_fieldset legend: { text: t("application_form.age_range.heading"), tag: "h1", size: "l" } do %>
