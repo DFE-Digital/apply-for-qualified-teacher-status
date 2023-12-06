@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}Record LoPS response" %>
+<% content_for :page_title, title_with_error_prefix("Record LoPS response", error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>

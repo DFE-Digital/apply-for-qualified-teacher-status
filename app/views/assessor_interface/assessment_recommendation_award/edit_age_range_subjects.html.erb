@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".heading")}" %>
+<% content_for :page_title, title_with_error_prefix(t(".heading"), error: @form.errors.any?) %>
 <% content_for :back_link_url, age_range_subjects_assessor_interface_application_form_assessment_assessment_recommendation_award_path(@application_form) %>
 
 <%= form_with model: @form, url: [:age_range_subjects, :edit, :assessor_interface, @application_form, @assessment, :assessment_recommendation_award] do |f| %>

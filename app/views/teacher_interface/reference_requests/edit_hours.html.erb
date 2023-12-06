@@ -1,6 +1,6 @@
 <% title = t("helpers.legend.teacher_interface_reference_request_hours_response_form.hours_response", count: @work_history.hours_per_week) %>
 
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_reference_request_path) %>
 <% content_for :feedback_url, t("service.form.referee_feedback") %>
 

@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{'Error: ' if @qualification_form.errors.any?}Do you have a teaching qualification?" %>
+<% content_for :page_title, title_with_error_prefix("Do you have a teaching qualification?", error: @form.errors.any?) %>
 <% content_for :back_link_url, back_link_url(eligibility_interface_countries_path) %>
 
 <%= form_with model: @form, url: [:eligibility_interface, :qualifications] do |f| %>

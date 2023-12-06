@@ -1,4 +1,4 @@
-<% content_for :page_title, CountryName.from_country(@country) %>
+<% content_for :page_title, title_with_error_prefix(CountryName.from_country(@country), error: @form.errors.any?) %>
 
 <%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>
   <%= f.govuk_error_summary %>

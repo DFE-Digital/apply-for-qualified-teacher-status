@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{"Error: " if @upload_form.errors.any?}Upload a document" %>
+<% content_for :page_title, title_with_error_prefix("Upload a document", error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
 <%= render "upload_timeout_error" if @form.timeout_error %>

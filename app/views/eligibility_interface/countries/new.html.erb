@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{'Error: ' if @country_form.errors.any?}#{t("helpers.label.eligibility_interface_country_form.location")}" %>
+<% content_for :page_title, title_with_error_prefix(t("helpers.label.eligibility_interface_country_form.location"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_link_url(FeatureFlags::FeatureFlag.active?(:teacher_applications) ? create_or_new_teacher_session_path : eligibility_interface_start_path) %>
 
 <%= form_with model: @form, url: [:eligibility_interface, :countries] do |f| %>

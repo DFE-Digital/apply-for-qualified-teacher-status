@@ -1,6 +1,6 @@
 <% title = "Change details for ‘#{application_form_full_name(@application_form)}’" %>
 
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @form, url: [:assessor_interface, @application_form], method: :put do |f| %>

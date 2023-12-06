@@ -1,4 +1,4 @@
-<% content_for :page_title, "Delete qualification" %>
+<% content_for :page_title, title_with_error_prefix("Delete qualification", error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_qualifications_path) %>
 
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @qualification], method: :delete do |f| %>

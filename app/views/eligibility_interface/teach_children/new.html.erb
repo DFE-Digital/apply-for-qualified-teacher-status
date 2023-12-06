@@ -9,7 +9,7 @@
   end
 %>
 
-<% content_for :page_title, "#{'Error: ' if @teach_children_form.errors.any?}#{legend}" %>
+<% content_for :page_title, title_with_error_prefix(legend, error: @form.errors.any?) %>
 <% content_for :back_link_url, back_link_url(eligibility_interface_degree_path) %>
 
 <%= form_with model: @form, url: [:eligibility_interface, :teach_children] do |f| %>

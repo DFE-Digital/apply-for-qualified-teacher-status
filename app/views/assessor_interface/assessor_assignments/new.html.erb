@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{"Error: " if @assessor_assignment_form.errors.any?}Select an assessor" %>
+<% content_for :page_title, title_with_error_prefix("Select an assessor", error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= render "shared/assessor_header", title: "Select an assessor", application_form: @application_form %>

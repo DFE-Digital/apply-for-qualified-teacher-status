@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t("application_form.tasks.items.written_statement.provide")}" %>
+<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.items.written_statement.provide"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
 <%= form_with model: @form, url: %i[teacher_interface application_form written_statement], method: :put do |f| %>

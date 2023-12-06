@@ -1,6 +1,6 @@
 <% title = qualification_title(@qualification_request.qualification) %>
 
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_assessment_qualification_requests_path(@application_form, @assessment) %>
 
 <%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment, @qualification_request], method: :put do |f| %>
