@@ -2,6 +2,12 @@ variable "app_environment" {
   type = string
 }
 
+variable "app_replicas" {
+  type        = number
+  description = "number of replicas of the web app"
+  default     = 1
+}
+
 variable "app_suffix" {
   type    = string
   default = ""
@@ -68,3 +74,4 @@ variable "uploads_storage_account_name" {
   type    = string
   default = null
 }
+

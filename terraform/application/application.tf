@@ -50,6 +50,8 @@ module "web_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
+  replicas                   = var.app_replicas
+
   docker_image = var.docker_image
 }
 
