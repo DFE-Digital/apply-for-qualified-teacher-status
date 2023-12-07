@@ -12,40 +12,32 @@ RSpec.describe AssessorInterface::AssessmentPolicy do
 
   describe "#index?" do
     subject(:index?) { policy.index? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#show?" do
     subject(:show?) { policy.show? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#create?" do
     subject(:create?) { policy.create? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#new?" do
     subject(:new?) { policy.new? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#update?" do
     subject(:update?) { policy.update? }
-    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
-    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#destroy?" do
