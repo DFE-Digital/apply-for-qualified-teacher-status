@@ -39,8 +39,18 @@
           </ul>
         <% end %>
       <% end %>
-    <% elsif timeline_event.requestable_reviewed? && timeline_event.requestable.is_a?(FurtherInformationRequest) %>
-      <p class="govuk-body">Further information request has been assessed.</p>
+    <% elsif timeline_event.requestable_reviewed? %>
+      <p class="govuk-body">
+        Status has changed to: <%= render(StatusTag::Component.new(description_vars[:new_status])) %>
+      </p>
+
+      <% if (note = description_vars[:note]).present? %>
+        <%= govuk_inset_text { simple_format note } %>
+      <% end %>
+    <% elsif timeline_event.requestable_verified? %>
+      <p class="govuk-body">
+        Status has changed to: <%= render(StatusTag::Component.new(description_vars[:new_status])) %>
+      </p>
 
       <% if (note = description_vars[:note]).present? %>
         <%= govuk_inset_text { simple_format note } %>

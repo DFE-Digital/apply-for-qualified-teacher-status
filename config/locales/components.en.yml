@@ -106,16 +106,6 @@ en:
           ProfessionalStandingRequest: The professional standing request has expired.
           QualificationRequest: A qualification request has expired.
           ReferenceRequest: A reference has expired.
-        requestable_reviewed:
-          FurtherInformationRequest: Further information request has been assessed.
-          ProfessionalStandingRequest: The professional standing request has been reviewed.
-          QualificationRequest: A qualification has been reviewed.
-          ReferenceRequest: A reference has been reviewed.
-        requestable_verified:
-          FurtherInformationRequest: Further information request has been verified.
-          ProfessionalStandingRequest: The professional standing request has been verified.
-          QualificationRequest: A qualification has been verified.
-          ReferenceRequest: A reference has been verified.
         stage_changed: Stage changed from %{old_stage} to %{new_stage}.
         status_changed: Status changed from %{old_status} to %{new_status}.
       columns:

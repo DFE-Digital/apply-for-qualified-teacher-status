@@ -140,15 +140,25 @@ module TimelineEntry
 
     def requestable_reviewed_vars
       {
-        passed: timeline_event.requestable.review_passed,
-        note: timeline_event.requestable.review_note,
+        old_status: timeline_event.old_value.presence || "not_started",
+        new_status:
+          timeline_event.new_value.presence ||
+            timeline_event.requestable.review_status,
+        note:
+          timeline_event.note_text.presence ||
+            timeline_event.requestable.review_note,
       }
     end
 
     def requestable_verified_vars
       {
-        passed: timeline_event.requestable.verify_passed,
-        note: timeline_event.requestable.verify_note,
+        old_status: timeline_event.old_value.presence || "not_started",
+        new_status:
+          timeline_event.new_value.presence ||
+            timeline_event.requestable.verify_status,
+        note:
+          timeline_event.note_text.presence ||
+            timeline_event.requestable.verify_note,
       }
     end
 
