@@ -37,3 +37,5 @@
     - invitation_token
   :teachers:
     - access_your_teaching_qualifications_url
+  :timeline_events:
+    - note_text

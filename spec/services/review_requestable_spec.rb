@@ -6,7 +6,7 @@ RSpec.describe ReviewRequestable do
   let(:requestable) { create(:further_information_request, :received) }
   let(:user) { create(:staff) }
   let(:passed) { true }
-  let(:note) { "Note" }
+  let(:note) { "Note." }
 
   subject(:call) { described_class.call(requestable:, user:, passed:, note:) }
 
@@ -30,7 +30,7 @@ RSpec.describe ReviewRequestable do
     context "after calling the service" do
       before { call }
 
-      it { is_expected.to eq("Note") }
+      it { is_expected.to eq("Note.") }
     end
   end
 
@@ -41,6 +41,7 @@ RSpec.describe ReviewRequestable do
       requestable:,
       old_value: "not_started",
       new_value: "accepted",
+      note_text: "Note.",
     )
   end
 end

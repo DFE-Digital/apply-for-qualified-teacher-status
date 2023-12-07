@@ -16,6 +16,7 @@
 #  mailer_class_name     :string           default(""), not null
 #  message_subject       :string           default(""), not null
 #  new_value             :text             default(""), not null
+#  note_text             :text             default(""), not null
 #  old_value             :text             default(""), not null
 #  requestable_type      :string
 #  subjects              :text             default([]), not null, is an Array
@@ -156,6 +157,10 @@ class TimelineEvent < ApplicationRecord
                 information_changed? || requestable_reviewed? ||
                 requestable_verified? || stage_changed? || status_changed?
             end
+
+  validates :note_text,
+            absence: true,
+            unless: -> { requestable_reviewed? || requestable_verified? }
 
   validates :column_name, presence: true, if: :information_changed?
   validates :work_history_id,

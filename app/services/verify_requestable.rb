@@ -41,6 +41,7 @@ class VerifyRequestable
       application_form:,
       old_value: old_status,
       new_value: requestable.verify_status,
+      note_text: note,
     )
   end
 

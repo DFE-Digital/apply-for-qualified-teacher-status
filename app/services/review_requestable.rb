@@ -41,6 +41,7 @@ class ReviewRequestable
       application_form:,
       old_value: old_status,
       new_value: requestable.review_status,
+      note_text: note,
     )
   end
 

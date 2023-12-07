@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_22_103728) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_07_095541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -496,6 +496,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_103728) do
     t.string "column_name", default: "", null: false
     t.text "old_value", default: "", null: false
     t.text "new_value", default: "", null: false
+    t.text "note_text", default: "", null: false
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
     t.index ["assessment_id"], name: "index_timeline_events_on_assessment_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
