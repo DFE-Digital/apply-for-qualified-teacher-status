@@ -40,12 +40,12 @@ RSpec.describe AssessorInterface::WorkHistoryPolicy do
 
   describe "#update?" do
     subject(:update?) { policy.update? }
-    it_behaves_like "a policy method requiring change the work history permission"
+    it_behaves_like "a policy method requiring the change work history permission"
   end
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
-    it_behaves_like "a policy method requiring change the work history permission"
+    it_behaves_like "a policy method requiring the change work history permission"
   end
 
   describe "#destroy?" do

@@ -40,7 +40,7 @@ RSpec.shared_examples "a policy method requiring the change name permission" do
   end
 end
 
-RSpec.shared_examples "a policy method requiring change the work history permission" do
+RSpec.shared_examples "a policy method requiring the change work history permission" do
   context "without permission" do
     let(:user) { create(:staff) }
     it { is_expected.to be false }
