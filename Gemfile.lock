@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 40128e6252a9084325bcf6db0c68190de6eff707
+  revision: 06b9d7bceaa91f151bcd09a0f861ebda80a16ba2
   specs:
     dfe-analytics (1.11.3)
       google-cloud-bigquery (~> 1.38)
@@ -240,11 +240,11 @@ GEM
       google-cloud-core (~> 1.6)
       googleauth (>= 0.16.2, < 2.a)
       mini_mime (~> 1.0)
-    google-cloud-core (1.6.0)
-      google-cloud-env (~> 1.0)
+    google-cloud-core (1.6.1)
+      google-cloud-env (>= 1.0, < 3.a)
       google-cloud-errors (~> 1.0)
-    google-cloud-env (1.6.0)
-      faraday (>= 0.17.3, < 3.0)
+    google-cloud-env (2.0.1)
+      faraday (>= 1.0, < 3.a)
     google-cloud-errors (1.3.1)
     googleauth (1.8.1)
       faraday (>= 0.17.3, < 3.a)
