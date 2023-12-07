@@ -39,6 +39,8 @@ RSpec.describe ReviewRequestable do
       :requestable_reviewed,
       creator: user,
       requestable:,
+      old_value: "not_started",
+      new_value: "accepted",
     )
   end
 end

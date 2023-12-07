@@ -88,6 +88,16 @@ module Requestable
     end
   end
 
+  def verify_status
+    if verify_passed?
+      "accepted"
+    elsif verify_failed?
+      "rejected"
+    else
+      "not_started"
+    end
+  end
+
   def after_requested(user:)
     # implement logic after this requestable has been requested
   end

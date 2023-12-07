@@ -362,8 +362,8 @@ RSpec.describe TimelineEvent do
       end
       it { is_expected.to validate_absence_of(:work_history_id) }
       it { is_expected.to validate_absence_of(:column_name) }
-      it { is_expected.to validate_absence_of(:old_value) }
-      it { is_expected.to validate_absence_of(:new_value) }
+      it { is_expected.to validate_presence_of(:old_value) }
+      it { is_expected.to validate_presence_of(:new_value) }
     end
 
     context "with a requestable verified event type" do
@@ -393,8 +393,8 @@ RSpec.describe TimelineEvent do
       end
       it { is_expected.to validate_absence_of(:work_history_id) }
       it { is_expected.to validate_absence_of(:column_name) }
-      it { is_expected.to validate_absence_of(:old_value) }
-      it { is_expected.to validate_absence_of(:new_value) }
+      it { is_expected.to validate_presence_of(:old_value) }
+      it { is_expected.to validate_presence_of(:new_value) }
     end
 
     context "with an action required by changed event type" do

@@ -145,14 +145,16 @@ class TimelineEvent < ApplicationRecord
             presence: true,
             if: -> do
               action_required_by_changed? || assessment_section_recorded? ||
-                information_changed? || stage_changed? || status_changed?
+                information_changed? || requestable_reviewed? ||
+                requestable_verified? || stage_changed? || status_changed?
             end
   validates :old_value,
             :new_value,
             absence: true,
             unless: -> do
               action_required_by_changed? || assessment_section_recorded? ||
-                information_changed? || stage_changed? || status_changed?
+                information_changed? || requestable_reviewed? ||
+                requestable_verified? || stage_changed? || status_changed?
             end
 
   validates :column_name, presence: true, if: :information_changed?

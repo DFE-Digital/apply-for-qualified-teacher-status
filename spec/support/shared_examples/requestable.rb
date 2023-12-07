@@ -49,15 +49,13 @@ RSpec.shared_examples "a requestable" do
   end
 
   describe "#status" do
-    it "is accepted when passed is true" do
+    it "is completed when review passed is true" do
       subject.review_passed = true
-      subject.reviewed_at = Time.zone.now
       expect(subject.status).to eq("completed")
     end
 
-    it "is rejected when passed is false" do
+    it "is rejected when review passed is false" do
       subject.review_passed = false
-      subject.reviewed_at = Time.zone.now
       expect(subject.status).to eq("rejected")
     end
 
@@ -81,6 +79,36 @@ RSpec.shared_examples "a requestable" do
     end
   end
 
+  describe "#review_status" do
+    it "is accepted when passed is true" do
+      subject.review_passed = true
+      expect(subject.review_status).to eq("accepted")
+    end
+
+    it "is rejected when passed is false" do
+      subject.review_passed = false
+      expect(subject.review_status).to eq("rejected")
+    end
+
+    it "is not started if not reviewed" do
+      expect(subject.review_status).to eq("not_started")
+    end
+  end
+
+  describe "#verify_status" do
+    it "is not started if not verified" do
+      expect(subject.verify_status).to eq("not_started")
+    end
+  end
+
+  describe "#after_requested" do
+    let(:after_requested) { subject.after_requested(user: "User") }
+
+    it "doesn't raise an error" do
+      expect { after_requested }.to_not raise_error
+    end
+  end
+
   describe "#after_received" do
     let(:after_received) { subject.after_received(user: "User") }
 
@@ -94,6 +122,14 @@ RSpec.shared_examples "a requestable" do
 
     it "doesn't raise an error" do
       expect { after_reviewed }.to_not raise_error
+    end
+  end
+
+  describe "#after_verified" do
+    let(:after_verified) { subject.after_verified(user: "User") }
+
+    it "doesn't raise an error" do
+      expect { after_verified }.to_not raise_error
     end
   end
 
