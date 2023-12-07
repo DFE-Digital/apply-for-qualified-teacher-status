@@ -55,20 +55,10 @@ FactoryBot.define do
 
     association :creator, factory: :staff
 
-    trait :assessor_assigned do
-      event_type { "assessor_assigned" }
-      association :assignee, factory: :staff
-    end
-
-    trait :reviewer_assigned do
-      event_type { "reviewer_assigned" }
-      association :assignee, factory: :staff
-    end
-
-    trait :status_changed do
-      event_type { "status_changed" }
-      old_value { ApplicationForm.statuses.keys.sample }
-      new_value { ApplicationForm.statuses.keys.sample }
+    trait :action_required_by_changed do
+      event_type { "action_required_by_changed" }
+      old_value { %w[admin assessor external none].sample }
+      new_value { %w[admin assessor external none].sample }
     end
 
     trait :assessment_section_recorded do
@@ -85,9 +75,9 @@ FactoryBot.define do
       new_value { %i[not_started invalid completed].sample }
     end
 
-    trait :note_created do
-      event_type { "note_created" }
-      association :note
+    trait :assessor_assigned do
+      event_type { "assessor_assigned" }
+      association :assignee, factory: :staff
     end
 
     trait :email_sent do
@@ -105,16 +95,38 @@ FactoryBot.define do
       new_value { Faker::Internet.email }
     end
 
-    trait :action_required_by_changed do
-      event_type { "action_required_by_changed" }
-      old_value { %w[admin assessor external none].sample }
-      new_value { %w[admin assessor external none].sample }
+    trait :note_created do
+      event_type { "note_created" }
+      association :note
+    end
+
+    trait :requestable_reviewed do
+      event_type { "requestable_reviewed" }
+      old_value { "not_started" }
+      new_value { %w[accepted rejected].sample }
+    end
+
+    trait :requestable_verified do
+      event_type { "requestable_verified" }
+      old_value { "not_started" }
+      new_value { %w[accepted rejected].sample }
+    end
+
+    trait :reviewer_assigned do
+      event_type { "reviewer_assigned" }
+      association :assignee, factory: :staff
     end
 
     trait :stage_changed do
       event_type { "stage_changed" }
       old_value { ApplicationForm.stages.values.sample }
       new_value { ApplicationForm.stages.values.sample }
+    end
+
+    trait :status_changed do
+      event_type { "status_changed" }
+      old_value { ApplicationForm.statuses.keys.sample }
+      new_value { ApplicationForm.statuses.keys.sample }
     end
   end
 end
