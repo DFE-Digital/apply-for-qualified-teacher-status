@@ -83,12 +83,7 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to [
-                      :assessor_interface,
-                      application_form,
-                      assessment,
-                      :review_verifications,
-                    ]
+        redirect_to [:review, :assessor_interface, application_form, assessment]
       else
         render :edit_review, status: :unprocessable_entity
       end

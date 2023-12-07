@@ -39,7 +39,10 @@ Rails.application.routes.draw do
       resources :work_histories, path: "/work-histories", only: %i[edit update]
 
       resources :assessments, only: %i[edit update destroy] do
-        get "rollback", on: :member
+        member do
+          get "review"
+          get "rollback"
+        end
 
         resources :assessment_sections, path: "/sections", only: %i[show update]
 
@@ -141,10 +144,6 @@ Rails.application.routes.draw do
                to: "reference_requests#update_verify_references",
                on: :collection
         end
-
-        resources :review_verifications,
-                  path: "/review-verifications",
-                  only: %i[index]
       end
     end
 

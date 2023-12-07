@@ -12,6 +12,13 @@ module AssessorInterface
       authorize [:assessor_interface, assessment]
     end
 
+    def review
+      @professional_standing_request =
+        assessment.professional_standing_request if assessment.professional_standing_request.verify_failed?
+
+      render layout: "full_from_desktop"
+    end
+
     def edit
       @form = AssessmentRecommendationForm.new(assessment:)
     end
