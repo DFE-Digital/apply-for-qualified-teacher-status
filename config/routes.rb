@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
       member do
         get "status"
+        get "timeline"
         get "withdraw"
       end
 
@@ -34,7 +35,6 @@ Rails.application.routes.draw do
       post "assign-reviewer", to: "reviewer_assignments#create"
 
       resources :notes, only: %i[new create]
-      resources :timeline_events, only: :index
 
       resources :work_histories, path: "/work-histories", only: %i[edit update]
 

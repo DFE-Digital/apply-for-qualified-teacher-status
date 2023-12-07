@@ -35,6 +35,11 @@ RSpec.describe AssessorInterface::ApplicationFormPolicy do
     it_behaves_like "a policy method with permission"
   end
 
+  describe "#timeline?" do
+    subject(:timeline?) { policy.timeline? }
+    it_behaves_like "a policy method with permission"
+  end
+
   describe "#create?" do
     subject(:create?) { policy.create? }
     it_behaves_like "a policy method without permission"

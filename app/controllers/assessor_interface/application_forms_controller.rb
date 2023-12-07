@@ -35,6 +35,16 @@ module AssessorInterface
       @view_object = show_view_object
     end
 
+    def timeline
+      @view_object = show_view_object
+
+      @timeline_events =
+        TimelineEvent
+          .includes(:assignee, :assessment_section, :note)
+          .where(application_form: @application_form)
+          .order(created_at: :desc)
+    end
+
     def edit
       @form = ApplicationFormNameForm.new
     end
