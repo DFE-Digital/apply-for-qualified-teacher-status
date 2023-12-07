@@ -2,16 +2,17 @@
 
 module AssessorInterface
   class NotesController < BaseController
-    before_action :authorize_note
+    before_action { authorize %i[assessor_interface note] }
 
     def new
-      @application_form = application_form
-      @form = CreateNoteForm.new
+      @form = CreateNoteForm.new(application_form:)
     end
 
     def create
-      @application_form = application_form
-      @form = CreateNoteForm.new(form_params.merge(application_form:, author:))
+      @form =
+        CreateNoteForm.new(
+          form_params.merge(application_form:, author: current_staff),
+        )
 
       if @form.save
         redirect_to params[:next].presence ||
@@ -26,10 +27,6 @@ module AssessorInterface
     def application_form
       @application_form ||=
         ApplicationForm.find_by!(reference: params[:application_form_reference])
-    end
-
-    def author
-      @author ||= current_staff
     end
 
     def form_params

@@ -11,8 +11,4 @@ class AssessorInterface::BaseController < ApplicationController
   def authorize_assessor
     authorize :assessor
   end
-
-  def authorize_note
-    authorize :note
-  end
 end
