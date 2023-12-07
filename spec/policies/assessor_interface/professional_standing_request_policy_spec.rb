@@ -12,58 +12,42 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestPolicy do
 
   describe "#index?" do
     subject(:index?) { policy.index? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#show?" do
     subject(:show?) { policy.show? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be true }
+    it_behaves_like "a policy method with permission"
   end
 
   describe "#create?" do
     subject(:create?) { policy.create? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#new?" do
     subject(:new?) { policy.new? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#update?" do
     subject(:update?) { policy.update? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#update_locate?" do
     subject(:update_locate?) { policy.update_locate? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be true }
+    it_behaves_like "a policy method with permission"
   end
 
   describe "#edit_locate?" do
     subject(:edit?) { policy.edit_locate? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be true }
+    it_behaves_like "a policy method with permission"
   end
 
   describe "#update_request?" do
@@ -108,8 +92,6 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestPolicy do
 
   describe "#destroy?" do
     subject(:destroy?) { policy.destroy? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 end
