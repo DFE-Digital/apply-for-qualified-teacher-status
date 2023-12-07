@@ -2,14 +2,20 @@
 
 module AssessorInterface
   class FurtherInformationRequestsController < BaseController
-    before_action :authorize_assessor, except: %i[preview edit]
+    before_action only: %i[preview new create] do
+      authorize %i[assessor_interface further_information_request]
+    end
+
+    before_action except: %i[preview new create] do
+      authorize [:assessor_interface, further_information_request]
+    end
+
     before_action :load_application_form_and_assessment,
                   only: %i[preview new show edit]
     before_action :load_new_further_information_request, only: %i[preview new]
     before_action :load_view_object, only: %i[edit update]
 
     def preview
-      authorize :assessor, :show?
     end
 
     def new
@@ -35,8 +41,6 @@ module AssessorInterface
     end
 
     def edit
-      authorize :assessor, :show?
-
       @form =
         RequestableReviewForm.new(
           requestable: view_object.further_information_request,
