@@ -5,9 +5,11 @@ module AssessorInterface
     before_action :ensure_can_review
     before_action :load_assessment_and_application_form
 
-    def show
+    before_action only: %i[show edit update] do
       authorize %i[assessor_interface assessment_recommendation]
+    end
 
+    def show
       redirect_to [
                     :edit,
                     :assessor_interface,
@@ -18,8 +20,6 @@ module AssessorInterface
     end
 
     def edit
-      authorize %i[assessor_interface assessment_recommendation]
-
       @professional_standing_request =
         assessment.professional_standing_request if assessment.professional_standing_request.verify_failed?
 
@@ -27,8 +27,6 @@ module AssessorInterface
     end
 
     def update
-      authorize %i[assessor_interface assessment_recommendation]
-
       ActiveRecord::Base.transaction do
         assessment.review!
         ApplicationFormStatusUpdater.call(
