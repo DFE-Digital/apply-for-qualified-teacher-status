@@ -22,7 +22,12 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   def assessor_filter_options
-    Staff.assessors.order(:name) +
+    ApplicationForm
+      .active
+      .joins(:assessor)
+      .pluck(Arel.sql("DISTINCT ON(assessor_id) assessor_id"), "staff.name")
+      .sort_by { |_id, name| name }
+      .map { |id, name| OpenStruct.new(id:, name:) } +
       [OpenStruct.new(id: "null", name: "Not assigned")]
   end
 
