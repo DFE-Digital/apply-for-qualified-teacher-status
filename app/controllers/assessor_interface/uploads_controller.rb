@@ -10,9 +10,9 @@ module AssessorInterface
     skip_before_action :authenticate_staff!
     before_action -> { authenticate_or_redirect(:staff) }
 
-    before_action :authorize_assessor
-
     def show
+      authorize %i[assessor_interface application_form]
+
       if downloadable?(upload)
         send_blob_stream(upload.attachment, disposition: :inline)
       else
