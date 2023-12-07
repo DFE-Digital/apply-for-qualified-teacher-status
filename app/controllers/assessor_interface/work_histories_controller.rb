@@ -2,9 +2,9 @@
 
 module AssessorInterface
   class WorkHistoriesController < BaseController
-    def edit
-      authorize [:assessor_interface, work_history]
+    before_action { authorize [:assessor_interface, work_history] }
 
+    def edit
       @form =
         WorkHistoryContactForm.new(
           work_history:,
@@ -16,8 +16,6 @@ module AssessorInterface
     end
 
     def update
-      authorize [:assessor_interface, work_history]
-
       @form =
         WorkHistoryContactForm.new(
           form_params.merge(work_history:, user: current_staff),
