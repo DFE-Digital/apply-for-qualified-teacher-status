@@ -14,7 +14,7 @@
   <% end %>
 <% end %>
 
-<% if policy(:assessor).update? && @view_object.can_update? %>
+<% if policy([:assessor_interface, @view_object.further_information_request]).update? && @view_object.can_update? %>
   <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
     <%= f.govuk_error_summary %>
 

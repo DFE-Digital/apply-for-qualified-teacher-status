@@ -7,8 +7,4 @@ class AssessorInterface::BaseController < ApplicationController
   layout "two_thirds"
 
   after_action :verify_authorized
-
-  def authorize_assessor
-    authorize :assessor
-  end
 end
