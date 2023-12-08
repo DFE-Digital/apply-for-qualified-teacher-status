@@ -135,7 +135,12 @@ Rails.application.routes.draw do
 
         resources :qualification_requests,
                   path: "/qualification-requests",
-                  only: %i[index edit update]
+                  only: %i[index edit update] do
+          member do
+            get "review", to: "qualification_requests#edit_review"
+            post "review", to: "qualification_requests#update_review"
+          end
+        end
 
         resources :reference_requests,
                   path: "/reference-requests",
@@ -143,6 +148,11 @@ Rails.application.routes.draw do
           post "verify-references",
                to: "reference_requests#update_verify_references",
                on: :collection
+
+          member do
+            get "review", to: "reference_requests#edit_review"
+            post "review", to: "reference_requests#update_review"
+          end
         end
       end
     end

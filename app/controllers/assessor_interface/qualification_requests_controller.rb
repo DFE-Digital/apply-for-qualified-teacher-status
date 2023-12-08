@@ -13,7 +13,7 @@ module AssessorInterface
 
       @qualification_requests = qualification_requests
       @application_form = qualification_requests.first.application_form
-      @assessment = @application_form.assessment
+      @assessment = qualification_requests.first.assessment
 
       render layout: "application"
     end
@@ -67,6 +67,25 @@ module AssessorInterface
       end
     end
 
+    def edit_review
+      @form = RequestableReviewForm.new(requestable:)
+    end
+
+    def update_review
+      @form =
+        RequestableReviewForm.new(
+          requestable:,
+          user: current_staff,
+          **requestable_review_form_params,
+        )
+
+      if @form.save
+        redirect_to [:review, :assessor_interface, application_form, assessment]
+      else
+        render :edit_review, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def set_variables
@@ -81,6 +100,13 @@ module AssessorInterface
         :passed,
         :note,
         :failed,
+      )
+    end
+
+    def requestable_review_form_params
+      params.require(:assessor_interface_requestable_review_form).permit(
+        :passed,
+        :note,
       )
     end
 
@@ -101,6 +127,8 @@ module AssessorInterface
     def qualification_request
       @qualification_request ||= qualification_requests.find(params[:id])
     end
+
+    delegate :application_form, :assessment, to: :qualification_request
 
     alias_method :requestable, :qualification_request
   end

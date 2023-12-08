@@ -8,4 +8,10 @@ class AssessorInterface::QualificationRequestPolicy < ApplicationPolicy
   def update?
     user.assess_permission
   end
+
+  def update_review?
+    user.assess_permission
+  end
+
+  alias_method :edit_review?, :update_review?
 end

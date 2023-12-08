@@ -1,0 +1,28 @@
+<% content_for :page_title, title_with_error_prefix("Review reference", error: @form.errors.any?) %>
+<% content_for :back_link_url, review_assessor_interface_application_form_assessment_path %>
+
+<%= form_with model: @form, url: [:review, :assessor_interface, @application_form, @assessment, @reference_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl">Review reference</h1>
+
+  <h2 class="govuk-heading-m">
+    <%= work_history_name(@reference_request.work_history) %>
+  </h2>
+
+  <%= govuk_inset_text do %>
+    <h3 class="govuk-heading-s">Internal note</h3>
+    <%= simple_format @reference_request.verify_note %>
+  <% end %>
+
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "After review, does the response confirm that this reference is legitimate?", size: "s" } do %>
+    <%= f.govuk_radio_button :passed, :true, link_errors: true %>
+    <%= f.govuk_radio_button :passed, :false do %>
+      <%= f.govuk_text_area :note, label: { text: "Internal note: briefly explain why the reference should not be accepted." } %>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_submit do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+  <% end %>
+<% end %>

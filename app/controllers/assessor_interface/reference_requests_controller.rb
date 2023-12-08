@@ -11,13 +11,14 @@ module AssessorInterface
     end
 
     before_action :set_list_variables, only: %i[index update_verify_references]
-    before_action :set_individual_variables, only: %i[edit update]
+    before_action :set_individual_variables,
+                  except: %i[index update_verify_references]
 
     def index
       @form =
         VerifyReferencesForm.new(
-          assessment:,
-          references_verified: assessment.references_verified,
+          assessment: @assessment,
+          references_verified: @assessment.references_verified,
         )
 
       render layout: "application"
@@ -25,7 +26,10 @@ module AssessorInterface
 
     def update_verify_references
       @form =
-        VerifyReferencesForm.new(assessment:, **verify_references_form_params)
+        VerifyReferencesForm.new(
+          assessment: @assessment,
+          **verify_references_form_params,
+        )
 
       if @form.save
         redirect_to [:assessor_interface, @application_form]
@@ -58,12 +62,31 @@ module AssessorInterface
       end
     end
 
+    def edit_review
+      @form = RequestableReviewForm.new(requestable:)
+    end
+
+    def update_review
+      @form =
+        RequestableReviewForm.new(
+          requestable:,
+          user: current_staff,
+          **requestable_review_form_params,
+        )
+
+      if @form.save
+        redirect_to [:review, :assessor_interface, application_form, assessment]
+      else
+        render :edit_review, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def set_list_variables
       @reference_requests = reference_requests
       @application_form = reference_requests.first.application_form
-      @assessment = assessment
+      @assessment = reference_requests.first.assessment
     end
 
     def set_individual_variables
@@ -103,9 +126,7 @@ module AssessorInterface
       @reference_request ||= reference_requests.find(params[:id])
     end
 
-    def assessment
-      @assessment ||= reference_requests.first.assessment
-    end
+    delegate :application_form, :assessment, to: :reference_request
 
     alias_method :requestable, :reference_request
   end
