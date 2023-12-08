@@ -206,6 +206,16 @@ module PageHelpers
       PageObjects::AssessorInterface::ReviewProfessionalStandingRequest.new
   end
 
+  def assessor_review_qualification_request_page
+    @assessor_review_qualification_request_page ||=
+      PageObjects::AssessorInterface::ReviewQualificationRequest.new
+  end
+
+  def assessor_review_reference_request_page
+    @assessor_review_reference_request_page ||=
+      PageObjects::AssessorInterface::ReviewReferenceRequest.new
+  end
+
   def assessor_review_verifications_page
     @assessor_review_verifications_page ||=
       PageObjects::AssessorInterface::ReviewVerifications.new

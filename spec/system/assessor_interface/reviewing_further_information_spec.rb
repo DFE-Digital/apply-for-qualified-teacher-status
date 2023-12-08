@@ -17,7 +17,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       :assessor_review_further_information_request_page,
       reference:,
       assessment_id:,
-      further_information_request_id:,
+      id: further_information_request.id,
     )
     and_i_see_the_check_your_answers_items
 
@@ -33,7 +33,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       :assessor_review_further_information_request_page,
       reference:,
       assessment_id:,
-      further_information_request_id:,
+      id: further_information_request.id,
     )
     and_i_see_the_check_your_answers_items
 
@@ -52,7 +52,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       :assessor_review_further_information_request_page,
       reference:,
       assessment_id:,
-      further_information_request_id:,
+      id: further_information_request.id,
     )
     and_i_see_the_check_your_answers_items
     and_i_do_not_see_the_review_further_information_form
@@ -88,12 +88,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def when_i_mark_the_section_as_complete
-    assessor_review_further_information_request_page
-      .form
-      .yes_radio_item
-      .input
-      .click
-    assessor_review_further_information_request_page.form.continue_button.click
+    assessor_review_further_information_request_page.submit_yes
   end
 
   def and_i_see_an_award_qts_option
@@ -103,14 +98,9 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def when_i_mark_the_section_as_incomplete
-    assessor_review_further_information_request_page
-      .form
-      .no_radio_item
-      .input
-      .click
-    assessor_review_further_information_request_page.form.failure_reason_textarea.fill_in with:
-      "Failure reason"
-    assessor_review_further_information_request_page.form.continue_button.click
+    assessor_review_further_information_request_page.submit_no(
+      note: "Failure reason",
+    )
   end
 
   def and_i_see_a_decline_qts_option
@@ -148,9 +138,5 @@ RSpec.describe "Assessor reviewing further information", type: :system do
 
   def assessment_id
     application_form.assessment.id
-  end
-
-  def further_information_request_id
-    further_information_request.id
   end
 end
