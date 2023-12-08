@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module WorkHistoryHelper
-  def work_history_title(work_history)
+  def work_history_name(work_history)
     work_history.school_name.presence || work_history.city.presence ||
       work_history.country_name.presence || work_history.job.presence ||
       I18n.t(
@@ -13,15 +15,16 @@ module WorkHistoryHelper
       )
   end
 
-  def work_history_name_and_duration(work_history, most_recent: false)
+  def work_history_name_and_duration(work_history)
     months = WorkHistoryDuration.for_record(work_history).count_months
 
-    result = "#{work_history.school_name} (#{months} months)"
-    result.concat(" ", most_recent_tag) if most_recent
-    result.html_safe
-  end
-
-  def most_recent_tag
-    tag.span("MOST RECENT", class: "govuk-!-font-weight-bold")
+    [
+      "#{work_history_name(work_history)} — #{months} months",
+      (
+        if work_history.current_or_most_recent_role?
+          tag.span("(MOST RECENT)", class: "govuk-!-font-weight-bold")
+        end
+      ),
+    ].compact_blank.join(" ").html_safe
   end
 end

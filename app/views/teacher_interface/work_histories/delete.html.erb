@@ -8,7 +8,7 @@
                                        [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
                                        :value,
                                        inline: true,
-                                       legend: { text: "Are you sure you want to delete #{work_history_title(@work_history)}?", size: "l", tag: "h1" } %>
+                                       legend: { text: "Are you sure you want to delete #{work_history_name(@work_history)}?", size: "l", tag: "h1" } %>
 
   <%= f.govuk_submit %>
 <% end %>

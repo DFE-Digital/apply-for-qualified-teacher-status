@@ -18,9 +18,9 @@
           {
             title: "Work references",
             indentation: false,
-            items: @reference_requests.each_with_index.map do |reference_request, index|
+            items: @reference_requests.map do |reference_request|
               {
-                name: work_history_name_and_duration(reference_request.work_history, most_recent: index.zero?),
+                name: work_history_name_and_duration(reference_request.work_history),
                 link: [:edit, :assessor_interface, @application_form, @assessment, reference_request],
                 status: reference_request.status
               }

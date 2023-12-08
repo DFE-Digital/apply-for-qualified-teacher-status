@@ -1,4 +1,4 @@
-<% title = "Change details for ‘#{work_history_title(@work_history)}’" %>
+<% title = "Change details for ‘#{work_history_name(@work_history)}’" %>
 <% application_form = @work_history.application_form %>
 
 <% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
