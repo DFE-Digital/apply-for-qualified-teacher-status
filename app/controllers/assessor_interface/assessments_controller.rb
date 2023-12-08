@@ -14,7 +14,19 @@ module AssessorInterface
 
     def review
       @professional_standing_request =
-        assessment.professional_standing_request if assessment.professional_standing_request.verify_failed?
+        assessment.professional_standing_request if assessment.professional_standing_request&.verify_failed?
+
+      @qualification_requests =
+        assessment
+          .qualification_requests
+          .includes(:qualification)
+          .where(verify_passed: false)
+
+      @reference_requests =
+        assessment
+          .reference_requests
+          .includes(:work_history)
+          .where(verify_passed: false)
 
       render layout: "full_from_desktop"
     end
