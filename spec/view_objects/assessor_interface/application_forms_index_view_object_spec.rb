@@ -128,15 +128,23 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
 
     context "with an assessor user" do
-      let!(:staff) { create(:staff, :with_assess_permission) }
+      let!(:staff) { create(:staff) }
 
-      it { is_expected.to include(staff) }
+      before { create(:application_form, :submitted, assessor: staff) }
+
+      it do
+        is_expected.to include(OpenStruct.new(id: staff.id, name: staff.name))
+      end
     end
 
     context "with an non-assessor user" do
       let!(:staff) { create(:staff) }
 
-      it { is_expected.not_to include(staff) }
+      it do
+        is_expected.to_not include(
+          OpenStruct.new(id: staff.id, name: staff.name),
+        )
+      end
     end
   end
 
