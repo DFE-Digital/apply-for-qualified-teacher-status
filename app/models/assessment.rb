@@ -157,9 +157,15 @@ class Assessment < ApplicationRecord
     return false unless verify?
     return false if skip_verification?
 
-    enough_reference_requests_reviewed? &&
-      all_qualification_requests_reviewed? &&
-      professional_standing_request_verify_failed?
+    (
+      enough_reference_requests_reviewed? &&
+        all_qualification_requests_reviewed?
+    ) &&
+      (
+        any_qualification_requests_verify_failed? ||
+          any_reference_requests_verify_failed? ||
+          professional_standing_request_verify_failed?
+      )
   end
 
   def can_verify?
@@ -252,6 +258,10 @@ class Assessment < ApplicationRecord
     ).enough_for_submission?
   end
 
+  def any_reference_requests_verify_failed?
+    reference_requests.any?(&:verify_failed?)
+  end
+
   def all_qualification_requests_reviewed?
     qualification_requests.all?(&:reviewed?)
   end
@@ -262,6 +272,10 @@ class Assessment < ApplicationRecord
 
   def any_qualification_requests_review_failed?
     qualification_requests.any?(&:review_failed?)
+  end
+
+  def any_qualification_requests_verify_failed?
+    qualification_requests.any?(&:verify_failed?)
   end
 
   def professional_standing_request_reviewed?
