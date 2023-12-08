@@ -1,15 +1,17 @@
 <ol class="app-task-list">
   <% sections.each do |section| %>
     <li>
-      <h2 class="app-task-list__section">
-        <% if sections.count > 1 %>
-          <span class="app-task-list__section-number"><%= section[:number] %>. </span>
-        <% end %>
+      <% if (title = section[:title]).present? %>
+        <h2 class="app-task-list__section">
+          <% if sections.count > 1 %>
+            <span class="app-task-list__section-number"><%= section[:number] %>. </span>
+          <% end %>
 
-        <%= section[:title] %>
-      </h2>
+          <%= title %>
+        </h2>
+      <% end %>
 
-      <ul class="<%= section[:title].present? ? 'app-task-list__items' : 'app-task-list__items-no-indentation' %>">
+      <ul class="<%= section[:indentation] == false ? 'app-task-list__items-no-indentation' : 'app-task-list__items' %>">
         <% section[:items].each do |item| %>
           <li class="app-task-list__item">
             <% status_id = "#{section[:number]}-#{section[:key]}-#{item[:key]}-status" %>

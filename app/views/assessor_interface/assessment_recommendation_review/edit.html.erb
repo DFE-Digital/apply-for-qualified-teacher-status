@@ -21,7 +21,7 @@
           <%= simple_format @professional_standing_request.verify_note %>
         </td>
 
-        <td class="govuk-table__cell app-table__center">
+        <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
           <%= render(StatusTag::Component.new(@professional_standing_request.status)) %>
         </td>
       </tr>
