@@ -51,6 +51,7 @@ en:
       title:
         action_required_by_changed: Action required by changed
         age_range_subjects_verified: Age range and subjects verified
+        application_declined: Application declined
         assessment_section_completed: Section completed
         assessment_section_recorded: Assessment section recorded
         assessor_assigned: Assessor assigned

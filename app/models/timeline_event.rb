@@ -64,6 +64,7 @@ class TimelineEvent < ApplicationRecord
   enum event_type: {
          action_required_by_changed: "action_required_by_changed",
          age_range_subjects_verified: "age_range_subjects_verified",
+         application_declined: "application_declined",
          assessment_section_recorded: "assessment_section_recorded",
          assessor_assigned: "assessor_assigned",
          email_sent: "email_sent",
