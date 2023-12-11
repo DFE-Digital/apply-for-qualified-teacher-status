@@ -415,13 +415,13 @@ RSpec.describe TimelineEntry::Component, type: :component do
         :timeline_event,
         :requestable_reviewed,
         requestable: further_information_request,
+        new_value: "rejected",
+        note_text: "For this reason.",
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include(
-        "Further information request has been assessed.",
-      )
+      expect(component.text).to include("Status has changed to: Rejected")
       expect(component.text).to include("For this reason.")
     end
 
@@ -436,13 +436,12 @@ RSpec.describe TimelineEntry::Component, type: :component do
         :timeline_event,
         :requestable_reviewed,
         requestable: create(:professional_standing_request),
+        new_value: "accepted",
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include(
-        "The professional standing request has been reviewed.",
-      )
+      expect(component.text).to include("Status has changed to: Accepted")
     end
 
     it "attributes to the creator" do
@@ -456,11 +455,12 @@ RSpec.describe TimelineEntry::Component, type: :component do
         :timeline_event,
         :requestable_reviewed,
         requestable: create(:qualification_request),
+        new_value: "rejected",
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include("A qualification has been reviewed.")
+      expect(component.text).to include("Status has changed to: Rejected")
     end
 
     it "attributes to the creator" do
@@ -474,11 +474,12 @@ RSpec.describe TimelineEntry::Component, type: :component do
         :timeline_event,
         :requestable_reviewed,
         requestable: create(:reference_request),
+        new_value: "accepted",
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include("A reference has been reviewed.")
+      expect(component.text).to include("Status has changed to: Accepted")
     end
 
     it "attributes to the creator" do
@@ -492,13 +493,12 @@ RSpec.describe TimelineEntry::Component, type: :component do
         :timeline_event,
         :requestable_verified,
         requestable: create(:professional_standing_request),
+        new_value: "rejected",
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include(
-        "The professional standing request has been verified.",
-      )
+      expect(component.text).to include("Status has changed to: Rejected")
     end
 
     it "attributes to the creator" do
@@ -512,11 +512,12 @@ RSpec.describe TimelineEntry::Component, type: :component do
         :timeline_event,
         :requestable_verified,
         requestable: create(:qualification_request),
+        new_value: "accepted",
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include("A qualification has been verified.")
+      expect(component.text).to include("Status has changed to: Accepted")
     end
 
     it "attributes to the creator" do
@@ -530,11 +531,12 @@ RSpec.describe TimelineEntry::Component, type: :component do
         :timeline_event,
         :requestable_verified,
         requestable: create(:reference_request),
+        new_value: "rejected",
       )
     end
 
     it "describes the event" do
-      expect(component.text).to include("A reference has been verified.")
+      expect(component.text).to include("Status has changed to: Rejected")
     end
 
     it "attributes to the creator" do

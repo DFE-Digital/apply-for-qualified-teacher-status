@@ -6,7 +6,7 @@ RSpec.describe VerifyRequestable do
   let(:requestable) { create(:professional_standing_request, :received) }
   let(:user) { create(:staff) }
   let(:passed) { true }
-  let(:note) { "Note" }
+  let(:note) { "Note." }
 
   subject(:call) { described_class.call(requestable:, user:, passed:, note:) }
 
@@ -30,7 +30,7 @@ RSpec.describe VerifyRequestable do
     context "after calling the service" do
       before { call }
 
-      it { is_expected.to eq("Note") }
+      it { is_expected.to eq("Note.") }
     end
   end
 
@@ -39,6 +39,9 @@ RSpec.describe VerifyRequestable do
       :requestable_verified,
       creator: user,
       requestable:,
+      old_value: "not_started",
+      new_value: "accepted",
+      note_text: "Note.",
     )
   end
 end

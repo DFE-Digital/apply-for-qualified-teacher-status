@@ -11,6 +11,8 @@ class ReviewRequestable
   end
 
   def call
+    old_status = requestable.review_status
+
     ActiveRecord::Base.transaction do
       requestable.update!(
         review_passed: passed,
@@ -21,7 +23,7 @@ class ReviewRequestable
       requestable.after_reviewed(user:)
       application_form.reload
 
-      create_timeline_event
+      create_timeline_event(old_status:)
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
@@ -31,12 +33,15 @@ class ReviewRequestable
 
   attr_reader :requestable, :user, :passed, :note
 
-  def create_timeline_event
+  def create_timeline_event(old_status:)
     TimelineEvent.create!(
       creator: user,
       event_type: "requestable_reviewed",
       requestable:,
       application_form:,
+      old_value: old_status,
+      new_value: requestable.review_status,
+      note_text: note,
     )
   end
 
