@@ -24,7 +24,7 @@
   <% if (online_checker_url = region.teaching_authority_online_checker_url).present? %>
     <% accordion.with_section(heading_text: "Online checker") do %>
       <p class="govuk-body">This authority has an online checker for validating the supplied registration number:</p>
-      <p class="govuk-body"><%= govuk_link_to online_checker_url, online_checker_url, target: "_blank", rel: "noreferrer noopener" %></p>
+      <p class="govuk-body"><%= govuk_link_to online_checker_url, online_checker_url, new_tab: true %></p>
     <% end %>
   <% end %>
 

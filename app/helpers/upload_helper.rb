@@ -4,8 +4,7 @@ module UploadHelper
       govuk_link_to(
         "#{upload.name} (opens in a new tab)",
         [interface, :application_form, upload.document, upload],
-        target: :_blank,
-        rel: :noopener,
+        new_tab: true,
       )
     else
       output =
