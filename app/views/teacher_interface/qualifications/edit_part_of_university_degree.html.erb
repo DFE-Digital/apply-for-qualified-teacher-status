@@ -1,9 +1,9 @@
-<% content_for :page_title, I18n.t("application_form.tasks.sections.qualifications") %>
+<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.sections.qualifications"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_qualifications_path) %>
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 
-<%= form_with model: @part_of_university_degree_form, url: [:part_of_university_degree, :teacher_interface, :application_form, @qualification] do |f| %>
+<%= form_with model: @form, url: [:part_of_university_degree, :teacher_interface, :application_form, @qualification] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :part_of_university_degree,

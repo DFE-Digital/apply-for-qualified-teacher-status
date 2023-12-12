@@ -1,7 +1,7 @@
 <% preliminary_key = @view_object.assessment_section.preliminary? ? "preliminary" : "not_preliminary" %>
 <% section_key = @view_object.assessment_section.key %>
 
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".title.#{preliminary_key}.#{section_key}")}" %>
+<% content_for :page_title, title_with_error_prefix(t(".title.#{preliminary_key}.#{section_key}"), error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
 
 <%= render "linked_application_forms",

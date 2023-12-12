@@ -9,7 +9,7 @@ module TeacherInterface
     before_action :load_application_form
 
     def edit
-      @registration_number_form =
+      @form =
         RegistrationNumberForm.new(
           application_form:,
           registration_number: application_form.registration_number,
@@ -17,17 +17,14 @@ module TeacherInterface
     end
 
     def update
-      @registration_number_form =
-        RegistrationNumberForm.new(
-          registration_number_form_params.merge(application_form:),
-        )
+      @form = RegistrationNumberForm.new(form_params.merge(application_form:))
 
-      handle_application_form_section(form: @registration_number_form)
+      handle_application_form_section(form: @form)
     end
 
     private
 
-    def registration_number_form_params
+    def form_params
       params.require(:teacher_interface_registration_number_form).permit(
         :registration_number,
       )

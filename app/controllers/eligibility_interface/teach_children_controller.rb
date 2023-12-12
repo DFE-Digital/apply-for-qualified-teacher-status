@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module EligibilityInterface
   class TeachChildrenController < BaseController
     include EnforceEligibilityQuestionOrder
 
     def new
-      @teach_children_form =
+      @form =
         TeachChildrenForm.new(
           eligibility_check:,
           teach_children: eligibility_check.teach_children,
@@ -11,11 +13,8 @@ module EligibilityInterface
     end
 
     def create
-      @teach_children_form =
-        TeachChildrenForm.new(
-          teach_children_form_params.merge(eligibility_check:),
-        )
-      if @teach_children_form.save
+      @form = TeachChildrenForm.new(form_params.merge(eligibility_check:))
+      if @form.save
         redirect_to next_path
       else
         render :new, status: :unprocessable_entity
@@ -32,7 +31,7 @@ module EligibilityInterface
       end
     end
 
-    def teach_children_form_params
+    def form_params
       params.require(:eligibility_interface_teach_children_form).permit(
         :teach_children,
       )

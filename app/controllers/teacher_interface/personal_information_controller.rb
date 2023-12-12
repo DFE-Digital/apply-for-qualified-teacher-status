@@ -30,7 +30,7 @@ module TeacherInterface
     end
 
     def name_and_date_of_birth
-      @name_and_date_of_birth_form =
+      @form =
         NameAndDateOfBirthForm.new(
           given_names: application_form.given_names,
           family_name: application_form.family_name,
@@ -39,13 +39,13 @@ module TeacherInterface
     end
 
     def update_name_and_date_of_birth
-      @name_and_date_of_birth_form =
+      @form =
         NameAndDateOfBirthForm.new(
-          name_and_date_of_birth_params.merge(application_form:),
+          name_and_date_of_birth_form_params.merge(application_form:),
         )
 
       handle_application_form_section(
-        form: @name_and_date_of_birth_form,
+        form: @form,
         if_success_then_redirect: %i[
           alternative_name
           teacher_interface
@@ -57,7 +57,7 @@ module TeacherInterface
     end
 
     def alternative_name
-      @alternative_name_form =
+      @form =
         AlternativeNameForm.new(
           has_alternative_name: application_form.has_alternative_name,
           alternative_given_names: application_form.alternative_given_names,
@@ -66,15 +66,15 @@ module TeacherInterface
     end
 
     def update_alternative_name
-      @alternative_name_form =
+      @form =
         AlternativeNameForm.new(
-          alternative_name_params.merge(application_form:),
+          alternative_name_form_params.merge(application_form:),
         )
 
       handle_application_form_section(
-        form: @alternative_name_form,
+        form: @form,
         if_success_then_redirect: ->(check_path) do
-          if @alternative_name_form.has_alternative_name
+          if @form.has_alternative_name
             teacher_interface_application_form_document_path(
               application_form.name_change_document,
             )
@@ -92,7 +92,7 @@ module TeacherInterface
 
     private
 
-    def name_and_date_of_birth_params
+    def name_and_date_of_birth_form_params
       params.require(:teacher_interface_name_and_date_of_birth_form).permit(
         :given_names,
         :family_name,
@@ -100,7 +100,7 @@ module TeacherInterface
       )
     end
 
-    def alternative_name_params
+    def alternative_name_form_params
       params.require(:teacher_interface_alternative_name_form).permit(
         :has_alternative_name,
         :alternative_given_names,

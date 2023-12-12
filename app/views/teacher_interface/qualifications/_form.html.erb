@@ -1,4 +1,4 @@
-<%= form_with model: qualification_form, url: [:teacher_interface, :application_form, qualification], method: qualification.new_record? ? :post : :put do |f| %>
+<%= form_with model: form, url: [:teacher_interface, :application_form, qualification], method: qualification.new_record? ? :post : :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_fieldset legend: { text: I18n.t("application_form.qualifications.form.title.#{qualification.locale_key}") } do %>
@@ -6,7 +6,7 @@
     <%= f.govuk_text_field :institution_name, label: { text: I18n.t("application_form.qualifications.form.fields.institution_name") } %>
 
     <%= f.govuk_select :institution_country_location,
-                       options_for_select(locations, qualification_form.institution_country_location),
+                       options_for_select(locations, form.institution_country_location),
                        options: { include_blank: true },
                        hint: { text: qualification.is_teaching_qualification? ? "This must be the country in which you’re recognised as a teacher." : nil } %>
   <% end %>

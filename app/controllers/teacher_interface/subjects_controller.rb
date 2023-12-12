@@ -9,7 +9,7 @@ module TeacherInterface
     before_action :load_application_form
 
     def edit
-      @subjects_form =
+      @form =
         SubjectsForm.new(
           application_form:,
           subject_1: application_form.subjects.first,
@@ -19,15 +19,14 @@ module TeacherInterface
     end
 
     def update
-      @subjects_form =
-        SubjectsForm.new(subjects_form_params.merge(application_form:))
+      @form = SubjectsForm.new(form_params.merge(application_form:))
 
-      handle_application_form_section(form: @subjects_form)
+      handle_application_form_section(form: @form)
     end
 
     private
 
-    def subjects_form_params
+    def form_params
       params.require(:teacher_interface_subjects_form).permit(
         :subject_1,
         :subject_2,

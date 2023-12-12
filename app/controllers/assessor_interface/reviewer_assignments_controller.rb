@@ -5,7 +5,7 @@ module AssessorInterface
     before_action :authorize_assessor
 
     def new
-      @reviewer_assignment_form =
+      @form =
         ReviewerAssignmentForm.new(
           application_form:,
           reviewer_id: application_form.reviewer_id,
@@ -13,17 +13,15 @@ module AssessorInterface
     end
 
     def create
-      @reviewer_assignment_form =
+      @form =
         ReviewerAssignmentForm.new(
-          application_form:,
-          staff: current_staff,
-          reviewer_id: reviewer_params[:reviewer_id],
+          form_params.merge(application_form:, staff: current_staff),
         )
 
-      if @reviewer_assignment_form.save
-        redirect_to assessor_interface_application_form_path(application_form)
+      if @form.save
+        redirect_to [:assessor_interface, application_form]
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -34,7 +32,7 @@ module AssessorInterface
         ApplicationForm.find_by!(reference: params[:application_form_reference])
     end
 
-    def reviewer_params
+    def form_params
       params.require(:assessor_interface_reviewer_assignment_form).permit(
         :reviewer_id,
       )

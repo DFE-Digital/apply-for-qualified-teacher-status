@@ -1,7 +1,7 @@
-<% content_for :page_title, "#{'Error: ' if @region_form.errors.any?}#{t("helpers.legend.eligibility_interface_region_form.region_id")}" %>
+<% content_for :page_title, title_with_error_prefix(t("helpers.legend.eligibility_interface_region_form.region_id"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_link_url(eligibility_interface_countries_path) %>
 
-<%= form_with model: @region_form, url: eligibility_interface_region_path, method: :post do |f| %>
+<%= form_with model: @form, url: [:eligibility_interface, :region] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :region_id,

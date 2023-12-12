@@ -6,17 +6,14 @@ module AssessorInterface
 
     def new
       @application_form = application_form
-      @create_note_form = CreateNoteForm.new
+      @form = CreateNoteForm.new
     end
 
     def create
       @application_form = application_form
-      @create_note_form =
-        CreateNoteForm.new(
-          create_new_form_params.merge(application_form:, author:),
-        )
+      @form = CreateNoteForm.new(form_params.merge(application_form:, author:))
 
-      if @create_note_form.save!
+      if @form.save
         redirect_to params[:next].presence ||
                       [:assessor_interface, application_form]
       else
@@ -35,7 +32,7 @@ module AssessorInterface
       @author ||= current_staff
     end
 
-    def create_new_form_params
+    def form_params
       params.require(:assessor_interface_create_note_form).permit(:text)
     end
   end

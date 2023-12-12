@@ -5,19 +5,16 @@ module EligibilityInterface
     include EnforceEligibilityQuestionOrder
 
     def new
-      @work_experience_form =
+      @form =
         WorkExperienceForm.new(
           work_experience: eligibility_check.work_experience,
         )
     end
 
     def create
-      @work_experience_form =
-        WorkExperienceForm.new(
-          work_experience_form_params.merge(eligibility_check:),
-        )
-      if @work_experience_form.save
-        redirect_to eligibility_interface_misconduct_path
+      @form = WorkExperienceForm.new(form_params.merge(eligibility_check:))
+      if @form.save
+        redirect_to %i[eligibility_interface misconduct]
       else
         render :new, status: :unprocessable_entity
       end
@@ -25,7 +22,7 @@ module EligibilityInterface
 
     private
 
-    def work_experience_form_params
+    def form_params
       params.require(:eligibility_interface_work_experience_form).permit(
         :work_experience,
       )

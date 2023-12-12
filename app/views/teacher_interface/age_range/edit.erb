@@ -1,9 +1,9 @@
-<% content_for :page_title, "#{"Error: " if @age_range_form.errors.any?}#{t("application_form.tasks.items.age_range")}" %>
+<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.items.age_range"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
 <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
 
-<%= form_with model: @age_range_form, url: %i[age_range teacher_interface application_form] do |f| %>
+<%= form_with model: @form, url: %i[age_range teacher_interface application_form] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_fieldset legend: { text: t("application_form.age_range.heading"), tag: "h1", size: "l" } do %>

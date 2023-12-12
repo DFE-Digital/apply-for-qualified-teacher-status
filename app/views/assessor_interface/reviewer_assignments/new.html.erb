@@ -1,9 +1,9 @@
-<% content_for :page_title, "#{"Error: " if @reviewer_assignment_form.errors.any?}Select a reviewer" %>
+<% content_for :page_title, title_with_error_prefix("Select a reviewer", error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= render "shared/assessor_header", title: "Select a reviewer", application_form: @application_form %>
 
-<%= form_with model: @reviewer_assignment_form, url: assessor_interface_application_form_assign_reviewer_path(@application_form) do |f| %>
+<%= form_with model: @form, url: [:assessor_interface, @application_form, :assign_reviewer] do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :reviewer_id,
@@ -13,6 +13,6 @@
                                        legend: nil %>
 
   <%= f.govuk_submit do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
   <% end %>
 <% end %>

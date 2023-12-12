@@ -1,6 +1,6 @@
 <% application_form = @reference_request.application_form %>
 
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{t(".title")}" %>
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(application_form) %>
 
 <% work_history = @reference_request.work_history %>

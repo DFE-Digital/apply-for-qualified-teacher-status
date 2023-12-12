@@ -44,7 +44,7 @@ module TeacherInterface
     def new
       qualification = Qualification.new(application_form:)
       @view_object = QualificationViewObject.new(qualification:)
-      @qualification_form = QualificationForm.new(qualification:)
+      @form = QualificationForm.new(qualification:)
     end
 
     def create
@@ -52,11 +52,11 @@ module TeacherInterface
 
       @view_object = QualificationViewObject.new(qualification:)
 
-      @qualification_form =
+      @form =
         QualificationForm.new(qualification_form_params.merge(qualification:))
 
       handle_application_form_section(
-        form: @qualification_form,
+        form: @form,
         if_success_then_redirect: ->(_check_path) do
           history_stack.replace_self(
             path:
@@ -115,7 +115,7 @@ module TeacherInterface
 
       @view_object = QualificationViewObject.new(qualification:)
 
-      @qualification_form =
+      @form =
         QualificationForm.new(
           qualification:,
           title: qualification.title,
@@ -132,11 +132,11 @@ module TeacherInterface
 
       @view_object = QualificationViewObject.new(qualification:)
 
-      @qualification_form =
+      @form =
         QualificationForm.new(qualification_form_params.merge(qualification:))
 
       handle_application_form_section(
-        form: @qualification_form,
+        form: @form,
         check_identifier: check_member_identifier,
         if_success_then_redirect: [
           :teacher_interface,
@@ -149,7 +149,7 @@ module TeacherInterface
     def edit_part_of_university_degree
       @qualification = qualification
 
-      @part_of_university_degree_form =
+      @form =
         PartOfUniversityDegreeForm.new(
           qualification:,
           part_of_university_degree: qualification.part_of_university_degree,
@@ -159,17 +159,17 @@ module TeacherInterface
     def update_part_of_university_degree
       @qualification = qualification
 
-      @part_of_university_degree_form =
+      @form =
         PartOfUniversityDegreeForm.new(
           part_of_university_degree_form_params.merge(qualification:),
         )
 
       handle_application_form_section(
-        form: @part_of_university_degree_form,
+        form: @form,
         check_identifier: check_member_identifier,
         if_success_then_redirect: ->(check_path) do
-          if @part_of_university_degree_form.part_of_university_degree ==
-               false && application_form.degree_qualifications.empty?
+          if @form.part_of_university_degree == false &&
+               application_form.degree_qualifications.empty?
             application_form.qualifications.create!
           end
 
@@ -190,18 +190,18 @@ module TeacherInterface
 
     def delete
       @qualification = qualification
-      @delete_qualification_form = DeleteQualificationForm.new
+      @form = DeleteQualificationForm.new
     end
 
     def destroy
-      @delete_qualification_form =
+      @form =
         DeleteQualificationForm.new(
           confirm:
             params.dig(:teacher_interface_delete_qualification_form, :confirm),
           qualification:,
         )
 
-      if @delete_qualification_form.save(validate: true)
+      if @form.save(validate: true)
         redirect_to %i[check teacher_interface application_form qualifications]
       else
         render :delete, status: :unprocessable_entity

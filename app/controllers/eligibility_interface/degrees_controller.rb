@@ -1,16 +1,17 @@
+# frozen_string_literal: true
+
 module EligibilityInterface
   class DegreesController < BaseController
     include EnforceEligibilityQuestionOrder
 
     def new
-      @degree_form = DegreeForm.new(degree: eligibility_check.degree)
+      @form = DegreeForm.new(degree: eligibility_check.degree)
     end
 
     def create
-      @degree_form =
-        DegreeForm.new(degree_form_params.merge(eligibility_check:))
-      if @degree_form.save
-        redirect_to eligibility_interface_teach_children_path
+      @form = DegreeForm.new(form_params.merge(eligibility_check:))
+      if @form.save
+        redirect_to %i[eligibility_interface teach_children]
       else
         render :new, status: :unprocessable_entity
       end
@@ -18,7 +19,7 @@ module EligibilityInterface
 
     private
 
-    def degree_form_params
+    def form_params
       params.require(:eligibility_interface_degree_form).permit(:degree)
     end
   end

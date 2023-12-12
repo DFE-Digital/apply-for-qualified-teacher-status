@@ -1,6 +1,6 @@
 <% title = region_certificate_name(@application_form.region) %>
 
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}#{title}" %>
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @form, url: [:locate, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
@@ -24,6 +24,6 @@
   <%= f.govuk_text_area :location_note, label: { text: "Where to find the response", size: "m" }, hint: nil %>
 
   <%= f.govuk_submit do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
   <% end %>
 <% end %>

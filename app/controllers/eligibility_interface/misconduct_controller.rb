@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module EligibilityInterface
   class MisconductController < BaseController
     include EnforceEligibilityQuestionOrder
 
     def new
-      @misconduct_form =
+      @form =
         MisconductForm.new(
           misconduct:
             (
@@ -17,10 +19,9 @@ module EligibilityInterface
     end
 
     def create
-      @misconduct_form =
-        MisconductForm.new(misconduct_params.merge(eligibility_check:))
-      if @misconduct_form.save
-        redirect_to eligibility_interface_result_path
+      @form = MisconductForm.new(form_params.merge(eligibility_check:))
+      if @form.save
+        redirect_to %i[eligibility_interface result]
       else
         render :new, status: :unprocessable_entity
       end
@@ -28,7 +29,7 @@ module EligibilityInterface
 
     private
 
-    def misconduct_params
+    def form_params
       params.require(:eligibility_interface_misconduct_form).permit(:misconduct)
     end
   end

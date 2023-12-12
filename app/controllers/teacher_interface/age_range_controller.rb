@@ -9,7 +9,7 @@ module TeacherInterface
     before_action :load_application_form
 
     def edit
-      @age_range_form =
+      @form =
         AgeRangeForm.new(
           application_form:,
           minimum: application_form.age_range_min,
@@ -18,15 +18,14 @@ module TeacherInterface
     end
 
     def update
-      @age_range_form =
-        AgeRangeForm.new(age_range_form_params.merge(application_form:))
+      @form = AgeRangeForm.new(form_params.merge(application_form:))
 
-      handle_application_form_section(form: @age_range_form)
+      handle_application_form_section(form: @form)
     end
 
     private
 
-    def age_range_form_params
+    def form_params
       params.require(:teacher_interface_age_range_form).permit(
         :minimum,
         :maximum,

@@ -1,21 +1,20 @@
+# frozen_string_literal: true
+
 module EligibilityInterface
   class QualifiedForSubjectController < BaseController
     include EnforceEligibilityQuestionOrder
 
     def new
-      @qualified_for_subject_form =
+      @form =
         QualifiedForSubjectForm.new(
           qualified_for_subject: eligibility_check.qualified_for_subject,
         )
     end
 
     def create
-      @qualified_for_subject_form =
-        QualifiedForSubjectForm.new(
-          qualified_for_subject_form_params.merge(eligibility_check:),
-        )
-      if @qualified_for_subject_form.save
-        redirect_to eligibility_interface_work_experience_path
+      @form = QualifiedForSubjectForm.new(form_params.merge(eligibility_check:))
+      if @form.save
+        redirect_to %i[eligibility_interface work_experience]
       else
         render :new, status: :unprocessable_entity
       end
@@ -23,7 +22,7 @@ module EligibilityInterface
 
     private
 
-    def qualified_for_subject_form_params
+    def form_params
       params.require(:eligibility_interface_qualified_for_subject_form).permit(
         :qualified_for_subject,
       )

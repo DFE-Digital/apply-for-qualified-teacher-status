@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EligibilityInterface
   class RegionController < BaseController
     include EnforceEligibilityQuestionOrder
@@ -5,14 +7,13 @@ module EligibilityInterface
     before_action :load_regions
 
     def new
-      @region_form = RegionForm.new(region_id: eligibility_check.region_id)
+      @form = RegionForm.new(region_id: eligibility_check.region_id)
     end
 
     def create
-      @region_form =
-        RegionForm.new(region_form_params.merge(eligibility_check:))
-      if @region_form.save
-        redirect_to eligibility_interface_qualifications_path
+      @form = RegionForm.new(form_params.merge(eligibility_check:))
+      if @form.save
+        redirect_to %i[eligibility_interface qualifications]
       else
         render :new, status: :unprocessable_entity
       end
@@ -20,7 +21,7 @@ module EligibilityInterface
 
     private
 
-    def region_form_params
+    def form_params
       params.require(:eligibility_interface_region_form).permit(:region_id)
     end
 
