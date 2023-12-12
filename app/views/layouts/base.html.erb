@@ -22,9 +22,9 @@
   </head>
 
   <body class="govuk-template__body">
-    <%= javascript_tag nonce: true do -%>
-      document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-    <% end -%>
+    <%= javascript_tag nonce: true do %>
+      document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+    <% end %>
 
     <%= govuk_skip_link %>
 
