@@ -12,7 +12,7 @@ RSpec.describe AssessorInterface::QualificationRequestPolicy do
 
   describe "#index?" do
     subject(:index?) { policy.index? }
-    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method with permission"
   end
 
   describe "#show?" do

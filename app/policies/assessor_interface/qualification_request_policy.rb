@@ -2,7 +2,7 @@
 
 class AssessorInterface::QualificationRequestPolicy < ApplicationPolicy
   def index?
-    user.assess_permission
+    true
   end
 
   def update?
