@@ -3,7 +3,7 @@ $govuk-new-link-styles: true;
 $govuk-assets-path: "/";
 $moj-images-path: "/";
 
-@import "govuk-frontend/govuk/all";
+@import "govuk-frontend/dist/govuk/all";
 @import "@ministryofjustice/frontend/moj/components/ticket-panel/ticket-panel";
 @import "@ministryofjustice/frontend/moj/components/timeline/timeline";
 @import "dfe-autocomplete/src/dfe-autocomplete";
