@@ -10,7 +10,6 @@
   <p class="govuk-body">
     See the list of <%= govuk_link_to "approved providers (opens in new tab)",
                                       reduced_evidence_accepted ? "https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" : english_language_guidance_path,
-                                      rel: "noreferrer noopener",
-                                      target: "_blank" %>.
+                                      new_tab: true %>.
   </p>
 <% end %>

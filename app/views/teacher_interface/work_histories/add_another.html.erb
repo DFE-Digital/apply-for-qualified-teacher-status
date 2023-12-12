@@ -63,7 +63,7 @@
   <% if @years_count == 0 && @months_count < 9 %>
     <%= govuk_details(summary_text: "I do not have more than 9 months of teaching experience") do %>
       <p class="govuk-body">QTS requires a minimum of 9 months of active teaching experience. We can keep your application open for 6 months, so you can continue later, if you gain enough experience in that time.</p>
-      <p class="govuk-body">Alternatively, you can <a href="https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" class="govuk-link" rel="noreferrer noopener" target="_blank">explore other ways to teach in England (opens in new tab)</a>.</p>
+      <p class="govuk-body">Alternatively, you can <%= govuk_link_to "explore other ways to teach in England (opens in new tab)", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas", new_tab: true %>.</p>
     <% end %>
   <% end %>
 

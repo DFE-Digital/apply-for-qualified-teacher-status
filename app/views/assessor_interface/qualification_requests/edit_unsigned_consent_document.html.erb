@@ -22,7 +22,7 @@
 
   <article class="moj-ticket-panel">
     <section class="moj-ticket-panel__content moj-ticket-panel__content--blue">
-      <%= govuk_button_link_to "Generate consent document", [:generate_unsigned_consent_document, :assessor_interface, @application_form, @assessment, :qualification_requests], inverse: true, target: :_blank, rel: :noopener %>
+      <%= govuk_button_link_to "Generate consent document", [:generate_unsigned_consent_document, :assessor_interface, @application_form, @assessment, :qualification_requests], inverse: true, new_tab: true %>
     </section>
   </article>
 

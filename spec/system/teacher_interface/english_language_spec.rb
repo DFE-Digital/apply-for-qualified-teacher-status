@@ -247,7 +247,7 @@ RSpec.describe "Teacher English language", type: :system do
       "Medium of instruction document",
     )
     expect(document_summary_list_row.value.text).to eq(
-      "upload.pdf (opens in a new tab)",
+      "upload.pdf (opens in new tab)",
     )
   end
 
@@ -374,7 +374,7 @@ RSpec.describe "Teacher English language", type: :system do
       "English language proficiency test document",
     )
     expect(reference_summary_list_row.value.text).to eq(
-      "upload.pdf (opens in a new tab)",
+      "upload.pdf (opens in new tab)",
     )
   end
 
