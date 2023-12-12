@@ -9,7 +9,7 @@
     <%= f.govuk_submit t(".filters.apply") do %>
       <a href="<%= filters_clear_assessor_interface_application_forms_path %>" class="govuk-link">
         <%= t(".filters.clear") %>
-        <span class="govuk-visually-hidden"><%= t(".filters.of_filter") %></span>
+        <%= govuk_visually_hidden(t(".filters.of_filter")) %>
       </a>
     <% end %>
 
