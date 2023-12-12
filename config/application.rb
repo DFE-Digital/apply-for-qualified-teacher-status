@@ -39,9 +39,12 @@ module ApplyForQualifiedTeacherStatus
 
     config.exceptions_app = routes
 
-    config.assets.paths << Rails.root.join(
-      "node_modules/govuk-frontend/govuk/assets",
-    )
+    config.assets.paths +=
+      %w[
+        node_modules/govuk-frontend/dist/govuk/assets
+        node_modules/govuk-frontend/dist/govuk/assets/images
+        node_modules/govuk-frontend/dist/govuk/assets/fonts
+      ].map { |path| Rails.root.join(path) }
 
     config.action_dispatch.rescue_responses[
       "Pundit::NotAuthorizedError"
