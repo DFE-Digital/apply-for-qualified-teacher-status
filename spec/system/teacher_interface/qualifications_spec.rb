@@ -157,12 +157,12 @@ RSpec.describe "Teacher qualifications", type: :system do
 
     expect(summary_list_rows[6].key.text).to eq("Certificate document")
     expect(summary_list_rows[6].value.text).to eq(
-      "upload.pdf (opens in a new tab)",
+      "upload.pdf (opens in new tab)",
     )
 
     expect(summary_list_rows[7].key.text).to eq("Transcript document")
     expect(summary_list_rows[7].value.text).to eq(
-      "upload.pdf (opens in a new tab)",
+      "upload.pdf (opens in new tab)",
     )
 
     expect(summary_list_rows[8].key.text).to eq(

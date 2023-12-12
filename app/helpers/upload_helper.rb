@@ -11,12 +11,7 @@ module UploadHelper
           )
       end
     elsif upload.safe_to_link?
-      govuk_link_to(
-        "#{upload.filename} (opens in a new tab)",
-        upload_path(upload),
-        target: :_blank,
-        rel: :noopener,
-      )
+      govuk_link_to(upload.filename, upload_path(upload), new_tab: true)
     else
       upload.filename
     end
