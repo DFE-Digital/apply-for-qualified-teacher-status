@@ -12,7 +12,7 @@ RSpec.describe AssessorInterface::ReferenceRequestPolicy do
 
   describe "#index?" do
     subject(:index?) { policy.index? }
-    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method with permission"
   end
 
   describe "#update_verify_references?" do

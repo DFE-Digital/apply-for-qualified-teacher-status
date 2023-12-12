@@ -2,7 +2,7 @@
 
 class AssessorInterface::ReferenceRequestPolicy < ApplicationPolicy
   def index?
-    user.assess_permission
+    true
   end
 
   def update_verify_references?
