@@ -2,10 +2,15 @@
 
 module AssessorInterface
   class QualificationRequestsController < BaseController
-    before_action :authorize_assessor
+    before_action except: :index do
+      authorize [:assessor_interface, qualification_request]
+    end
+
     before_action :set_variables, except: :index
 
     def index
+      authorize %i[assessor_interface qualification_request]
+
       @qualification_requests = qualification_requests
       @application_form = qualification_requests.first.application_form
       @assessment = @application_form.assessment

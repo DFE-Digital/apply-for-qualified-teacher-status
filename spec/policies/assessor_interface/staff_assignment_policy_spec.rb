@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe AssessorInterface::AssessmentPolicy do
+RSpec.describe AssessorInterface::StaffAssignmentPolicy do
   it_behaves_like "a policy"
 
   let(:user) { nil }
@@ -20,19 +20,14 @@ RSpec.describe AssessorInterface::AssessmentPolicy do
     it_behaves_like "a policy method without permission"
   end
 
-  describe "#review?" do
-    subject(:review?) { policy.review? }
-    it_behaves_like "a policy method requiring the assess permission"
-  end
-
   describe "#create?" do
     subject(:create?) { policy.create? }
-    it_behaves_like "a policy method without permission"
+    it_behaves_like "a policy method requiring the assess permission"
   end
 
   describe "#new?" do
     subject(:new?) { policy.new? }
-    it_behaves_like "a policy method without permission"
+    it_behaves_like "a policy method requiring the assess permission"
   end
 
   describe "#update?" do
@@ -47,11 +42,6 @@ RSpec.describe AssessorInterface::AssessmentPolicy do
 
   describe "#destroy?" do
     subject(:destroy?) { policy.destroy? }
-    it_behaves_like "a policy method requiring the reverse decision permission"
-  end
-
-  describe "#rollback?" do
-    subject(:rollback?) { policy.rollback? }
-    it_behaves_like "a policy method requiring the reverse decision permission"
+    it_behaves_like "a policy method without permission"
   end
 end

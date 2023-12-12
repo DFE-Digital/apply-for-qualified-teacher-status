@@ -2,7 +2,7 @@
 
 module AssessorInterface
   class AssessmentSectionsController < BaseController
-    before_action :authorize_assessor
+    before_action { authorize [:assessor_interface, assessment_section] }
 
     def show
       @form =

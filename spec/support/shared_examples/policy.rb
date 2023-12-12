@@ -11,9 +11,18 @@ RSpec.shared_examples "a policy" do
 
   context "with a user" do
     let(:user) { create(:staff, :confirmed) }
-
     it { is_expected.to_not be_nil }
   end
+end
+
+RSpec.shared_examples "a policy method with permission" do
+  let(:user) { create(:staff) }
+  it { is_expected.to be true }
+end
+
+RSpec.shared_examples "a policy method without permission" do
+  let(:user) { create(:staff) }
+  it { is_expected.to be false }
 end
 
 RSpec.shared_examples "a policy method requiring the assess permission" do
@@ -40,7 +49,7 @@ RSpec.shared_examples "a policy method requiring the change name permission" do
   end
 end
 
-RSpec.shared_examples "a policy method requiring change the work history permission" do
+RSpec.shared_examples "a policy method requiring the change work history permission" do
   context "without permission" do
     let(:user) { create(:staff) }
     it { is_expected.to be false }

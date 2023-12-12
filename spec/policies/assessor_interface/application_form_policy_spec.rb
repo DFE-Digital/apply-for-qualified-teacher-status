@@ -12,37 +12,47 @@ RSpec.describe AssessorInterface::ApplicationFormPolicy do
 
   describe "#index?" do
     subject(:index?) { policy.index? }
+    it_behaves_like "a policy method with permission"
+  end
 
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be true }
+  describe "#apply_filters?" do
+    subject(:apply_filters?) { policy.apply_filters? }
+    it_behaves_like "a policy method with permission"
+  end
+
+  describe "#clear_filters?" do
+    subject(:clear_filter?) { policy.clear_filters? }
+    it_behaves_like "a policy method with permission"
   end
 
   describe "#show?" do
     subject(:show?) { policy.show? }
+    it_behaves_like "a policy method with permission"
+  end
 
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be true }
+  describe "#status?" do
+    subject(:status?) { policy.status? }
+    it_behaves_like "a policy method with permission"
+  end
+
+  describe "#timeline?" do
+    subject(:timeline?) { policy.timeline? }
+    it_behaves_like "a policy method with permission"
   end
 
   describe "#create?" do
     subject(:create?) { policy.create? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#new?" do
     subject(:new?) { policy.new? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#update?" do
     subject(:update?) { policy.update? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#edit?" do

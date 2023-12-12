@@ -29,7 +29,7 @@ module ApplicationFormOverview
               text:
                 govuk_link_to(
                   I18n.t("application_form.overview.view_timeline"),
-                  [:assessor_interface, application_form, :timeline_events],
+                  [:timeline, :assessor_interface, application_form],
                 ),
             },
           },

@@ -12,9 +12,7 @@ RSpec.describe AssessorInterface::AssessmentRecommendationPolicy do
 
   describe "#index?" do
     subject(:index?) { policy.index? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#show?" do
@@ -25,16 +23,12 @@ RSpec.describe AssessorInterface::AssessmentRecommendationPolicy do
 
   describe "#create?" do
     subject(:create?) { policy.create? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#new?" do
     subject(:new?) { policy.new? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#update?" do
@@ -51,8 +45,6 @@ RSpec.describe AssessorInterface::AssessmentRecommendationPolicy do
 
   describe "#destroy?" do
     subject(:destroy?) { policy.destroy? }
-
-    let(:user) { create(:staff, :confirmed) }
-    it { is_expected.to be false }
+    it_behaves_like "a policy method without permission"
   end
 end

@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
       member do
         get "status"
+        get "timeline"
         get "withdraw"
       end
 
@@ -34,12 +35,14 @@ Rails.application.routes.draw do
       post "assign-reviewer", to: "reviewer_assignments#create"
 
       resources :notes, only: %i[new create]
-      resources :timeline_events, only: :index
 
       resources :work_histories, path: "/work-histories", only: %i[edit update]
 
       resources :assessments, only: %i[edit update destroy] do
-        get "rollback", on: :member
+        member do
+          get "review"
+          get "rollback"
+        end
 
         resources :assessment_sections, path: "/sections", only: %i[show update]
 
@@ -141,10 +144,6 @@ Rails.application.routes.draw do
                to: "reference_requests#update_verify_references",
                on: :collection
         end
-
-        resources :review_verifications,
-                  path: "/review-verifications",
-                  only: %i[index]
       end
     end
 

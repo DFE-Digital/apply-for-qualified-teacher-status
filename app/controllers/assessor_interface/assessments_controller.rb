@@ -4,15 +4,26 @@ module AssessorInterface
   class AssessmentsController < BaseController
     before_action :load_assessment_and_application_form
 
-    def edit
+    before_action only: %i[edit update] do
       authorize %i[assessor_interface assessment_recommendation]
+    end
 
+    before_action except: %i[edit update] do
+      authorize [:assessor_interface, assessment]
+    end
+
+    def review
+      @professional_standing_request =
+        assessment.professional_standing_request if assessment.professional_standing_request.verify_failed?
+
+      render layout: "full_from_desktop"
+    end
+
+    def edit
       @form = AssessmentRecommendationForm.new(assessment:)
     end
 
     def update
-      authorize %i[assessor_interface assessment_recommendation]
-
       @form =
         AssessmentRecommendationForm.new(
           assessment:,
@@ -31,11 +42,9 @@ module AssessorInterface
     end
 
     def rollback
-      authorize [:assessor_interface, assessment]
     end
 
     def destroy
-      authorize [:assessor_interface, assessment]
       RollbackAssessment.call(assessment:, user: current_staff)
       redirect_to [:assessor_interface, application_form]
     rescue RollbackAssessment::InvalidState => e

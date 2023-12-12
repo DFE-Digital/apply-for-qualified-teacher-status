@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-class AssessorPolicy < ApplicationPolicy
-  def index?
-    true
-  end
-
+class AssessorInterface::FurtherInformationRequestPolicy < ApplicationPolicy
   def show?
     true
   end
@@ -13,11 +9,13 @@ class AssessorPolicy < ApplicationPolicy
     user.assess_permission
   end
 
+  alias_method :preview?, :new?
+
   def update?
     user.assess_permission
   end
 
-  def destroy?
-    user.assess_permission
+  def edit?
+    true
   end
 end

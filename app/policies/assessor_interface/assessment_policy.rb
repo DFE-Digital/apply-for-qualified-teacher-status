@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class AssessorInterface::AssessmentPolicy < ApplicationPolicy
-  def update?
-    user.assess_permission
+  def review?
+    user.assess_permission || user.verify_permission
   end
 
   def destroy?

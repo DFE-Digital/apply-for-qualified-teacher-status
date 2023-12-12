@@ -2,7 +2,7 @@
 
 module AssessorInterface
   class AssessorAssignmentsController < BaseController
-    before_action :authorize_assessor
+    before_action { authorize %i[assessor_interface staff_assignment] }
 
     def new
       @form =

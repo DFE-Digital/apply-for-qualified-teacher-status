@@ -9,7 +9,7 @@ RSpec.describe "Assessor verifying references", type: :system do
     given_there_is_an_application_form_with_reference_request
   end
 
-  it "Verify accepted references" do
+  it "verify" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
     and_i_click_verify_references
