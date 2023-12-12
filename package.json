@@ -10,7 +10,7 @@
     "sass": "^1.69.5"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --target=ie11 --outdir=app/assets/builds",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --target=es6 --outdir=app/assets/builds",
     "build:css": "sass ./app/assets/stylesheets/application.sass.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet-deps"
   },
   "devDependencies": {
