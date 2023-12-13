@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-autocomplete.git
-  revision: 36d80e6b5bba67c92cd9ec6982a4e536d1889aed
+  revision: 6fcc0f12f6663f43608a0c681b038d7ee172e298
   specs:
     dfe-autocomplete (0.1.0)
       actionview (>= 7.0.2.3)
@@ -124,7 +124,7 @@ GEM
       nokogiri (~> 1, >= 1.10.8)
     base64 (0.2.0)
     bcrypt (3.1.19)
-    bigdecimal (3.1.4)
+    bigdecimal (3.1.5)
     bindex (0.8.1)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
@@ -277,7 +277,7 @@ GEM
       concurrent-ruby (~> 1.0)
     indefinite_article (0.2.5)
       activesupport
-    io-console (0.6.0)
+    io-console (0.7.0)
     irb (1.10.1)
       rdoc
       reline (>= 0.3.8)
@@ -313,7 +313,7 @@ GEM
     mutex_m (0.2.0)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.4.4)
+    net-imap (0.4.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -322,7 +322,7 @@ GEM
       timeout
     net-smtp (0.4.0)
       net-protocol
-    nio4r (2.5.9)
+    nio4r (2.7.0)
     nokogiri (1.15.5-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.15.5-x86_64-darwin)
