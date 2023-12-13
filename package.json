@@ -14,7 +14,7 @@
     "build:css": "sass ./app/assets/stylesheets/application.sass.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet-deps"
   },
   "devDependencies": {
-    "@prettier/plugin-ruby": "^4.0.3",
+    "@prettier/plugin-ruby": "^4.0.4",
     "prettier": "^3.1.1"
   },
   "prettier": {
