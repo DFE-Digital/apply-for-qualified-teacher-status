@@ -6,10 +6,7 @@ module PageObjects
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/reference-requests"
 
-      section :task_list, ".app-task-list__item" do
-        elements :reference_requests, ".app-task-list__task-name a"
-        elements :status_tags, ".app-task-list__tag"
-      end
+      section :task_list, TaskList, ".app-task-list"
 
       section :form, "form" do
         element :yes_radio_item,

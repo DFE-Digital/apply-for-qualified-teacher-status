@@ -29,4 +29,56 @@
   </table>
 <% end %>
 
+<% if @qualification_requests.present? %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">References</th>
+        <th scope="col" class="govuk-table__header"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @qualification_requests.each do |qualification_request| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <p><%= qualification_title(qualification_request.qualification) %></p>
+            <h3 class="govuk-heading-s">Internal note</h3>
+            <%= simple_format qualification_request.verify_note %>
+          </td>
+
+          <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
+            <%= render(StatusTag::Component.new(qualification_request.status)) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if @reference_requests.present? %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">References</th>
+        <th scope="col" class="govuk-table__header"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reference_requests.each do |reference_request| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <p><%= work_history_name(reference_request.work_history) %></p>
+            <h3 class="govuk-heading-s">Internal note</h3>
+            <%= simple_format reference_request.verify_note %>
+          </td>
+
+          <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
+            <%= render(StatusTag::Component.new(reference_request.status)) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
 <%= govuk_button_to "Continue", [:assessor_interface, @application_form, @assessment, :assessment_recommendation_review], method: :put %>

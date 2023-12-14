@@ -7,23 +7,47 @@
   The following verification tasks have been flagged for review:
 </p>
 
-<%= render(TaskList::Component.new(
+<%= render(TaskList::Component.new([
   if @professional_standing_request.present?
-    [
-      {
-        title: "LoPS",
-        indentation: false,
-        items: [
-          {
-            name: region_teaching_authority_name(@application_form.region, context: :assessor).upcase_first,
-            link: [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request],
-            status: @professional_standing_request.review_status,
-          }
-        ],
-      }
-    ]
+    {
+      title: "LoPS",
+      indentation: false,
+      items: [
+        {
+          name: region_teaching_authority_name(@application_form.region, context: :assessor).upcase_first,
+          link: [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request],
+          status: @professional_standing_request.review_status,
+        }
+      ],
+    }
+  end,
+  if @qualification_requests.present?
+    {
+      title: "Qualifications",
+      indentation: false,
+      items: @qualification_requests.map do |qualification_request|
+        {
+          name: qualification_title(qualification_request.qualification),
+          link: [:review, :assessor_interface, @application_form, @assessment, qualification_request],
+          status: qualification_request.review_status,
+        }
+      end
+    }
+  end,
+  if @reference_requests.present?
+    {
+      title: "References",
+      indentation: false,
+      items: @reference_requests.map do |reference_request|
+        {
+          name: work_history_name(reference_request.work_history),
+          link: [:review, :assessor_interface, @application_form, @assessment, reference_request],
+          status: reference_request.review_status,
+        }
+      end
+    }
   end
-)) %>
+].compact)) %>
 
 <div class="govuk-!-padding-top-3">
   <%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>
