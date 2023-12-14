@@ -5,8 +5,9 @@ class ApplicationController < ActionController::Base
   include DfE::Analytics::Requests
   include Pundit::Authorization
 
-  default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
   append_view_path Rails.root.join("app/components")
+  default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
+  layout "two_thirds"
 
   before_action :authenticate,
                 unless: -> { FeatureFlags::FeatureFlag.active?(:service_open) }
