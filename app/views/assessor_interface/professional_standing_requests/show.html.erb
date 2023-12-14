@@ -7,40 +7,34 @@
   You need to request verification for this application’s LoPS.
 </p>
 
-<%= render(TaskList::Component.new(
-  [
-    {
-      indentation: false,
-      items: [
-        {
-          name: "Request LoPS verification",
-          link: unless @professional_standing_request.requested?
-                  [
-                    :request,
-                    :assessor_interface,
-                    @application_form,
-                    @assessment,
-                    :professional_standing_request,
-                  ]
-                end,
-          status: @professional_standing_request.requested? ? "completed" : "not_started"
-        },
-        {
-          name: "Record LoPS response",
-          link: if @professional_standing_request.requested?
-                  [
-                    :verify,
-                    :assessor_interface,
-                    @application_form,
-                    @assessment,
-                    :professional_standing_request
-                  ]
-                end,
-          status: @professional_standing_request.requested? ? @professional_standing_request.status : "cannot_start"
-        }
-      ],
-    }
-  ]
-)) %>
+<%= govuk_task_list do |task_list|
+  task_list.with_item(
+    title: "Request LoPS verification",
+    href: unless @professional_standing_request.requested?
+            [
+              :request,
+              :assessor_interface,
+              @application_form,
+              @assessment,
+              :professional_standing_request,
+            ]
+          end,
+    status: render(StatusTag::Component.new(@professional_standing_request.requested? ? "completed" : "not_started"))
+  )
+
+  task_list.with_item(
+    title: "Record LoPS response",
+    href: if @professional_standing_request.requested?
+            [
+              :verify,
+              :assessor_interface,
+              @application_form,
+              @assessment,
+              :professional_standing_request
+            ]
+          end,
+    status: render(StatusTag::Component.new(@professional_standing_request.requested? ? @professional_standing_request.status : "cannot_start"))
+  )
+end %>
 
 <%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>

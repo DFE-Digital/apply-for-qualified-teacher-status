@@ -1,30 +1,18 @@
 <% content_for :page_title, t("assessor_interface.application_forms.show.assessment_tasks.items.qualification_requests") %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= render "shared/assessor_header", title: t("assessor_interface.application_forms.show.assessment_tasks.items.qualification_requests"), application_form: @application_form %>
-  </div>
+<%= render "shared/assessor_header", title: t("assessor_interface.application_forms.show.assessment_tasks.items.qualification_requests"), application_form: @application_form %>
 
-  <div class="govuk-grid-column-full-from-desktop">
-    <%= render TaskList::Component.new(
-      [
-        {
-          title: "Qualifications",
-          indentation: false,
-          items: @qualification_requests.map do |qualification_request|
-            {
-              name: qualification_title(qualification_request.qualification),
-              link: [:edit, :assessor_interface, @application_form, @assessment, qualification_request],
-              status: qualification_request.status
-            }
-          end
-        }
-      ]
-    ) %>
-  </div>
+<h2 class="govuk-heading-m">Qualifications</h2>
 
-  <div class="govuk-grid-column-two-thirds">
-    <%= govuk_button_link_to "Back to overview", assessor_interface_application_form_path(@application_form) %>
-  </div>
-</div>
+<%= govuk_task_list do |task_list|
+  @qualification_requests.each do |qualification_request|
+    task_list.with_item(
+      title: qualification_title(qualification_request.qualification),
+      href: [:edit, :assessor_interface, @application_form, @assessment, qualification_request],
+      status: render(StatusTag::Component.new(qualification_request.status))
+    )
+  end
+end %>
+
+<%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>

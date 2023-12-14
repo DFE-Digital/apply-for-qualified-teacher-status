@@ -7,48 +7,41 @@
   The following verification tasks have been flagged for review:
 </p>
 
-<%= render(TaskList::Component.new([
-  if @professional_standing_request.present?
-    {
-      title: "LoPS",
-      indentation: false,
-      items: [
-        {
-          name: region_teaching_authority_name(@application_form.region, context: :assessor).upcase_first,
-          link: [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request],
-          status: @professional_standing_request.review_status,
-        }
-      ],
-    }
-  end,
-  if @qualification_requests.present?
-    {
-      title: "Qualifications",
-      indentation: false,
-      items: @qualification_requests.map do |qualification_request|
-        {
-          name: qualification_title(qualification_request.qualification),
-          link: [:review, :assessor_interface, @application_form, @assessment, qualification_request],
-          status: qualification_request.review_status,
-        }
-      end
-    }
-  end,
-  if @reference_requests.present?
-    {
-      title: "References",
-      indentation: false,
-      items: @reference_requests.map do |reference_request|
-        {
-          name: work_history_name(reference_request.work_history),
-          link: [:review, :assessor_interface, @application_form, @assessment, reference_request],
-          status: reference_request.review_status,
-        }
-      end
-    }
-  end
-].compact)) %>
+<% if @professional_standing_request.present? %>
+  <h2 class="govuk-heading-m">LoPS</h2>
+  <%= govuk_task_list(id_prefix: "lops") do |task_list|
+    task_list.with_item(
+      title: region_teaching_authority_name(@application_form.region, context: :assessor).upcase_first,
+      href: [:review, :assessor_interface, @application_form, @assessment, :professional_standing_request],
+      status: render(StatusTag::Component.new(@professional_standing_request.review_status)),
+    )
+  end %>
+<% end %>
 
-<div class="govuk-!-padding-top-3">
-  <%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>
-</div>
+<% if @qualification_requests.present? %>
+  <h2 class="govuk-heading-m">Qualifications</h2>
+  <%= govuk_task_list(id_prefix: "qualifications") do |task_list|
+    @qualification_requests.each do |qualification_request|
+      task_list.with_item(
+        title: qualification_title(qualification_request.qualification),
+        href: [:review, :assessor_interface, @application_form, @assessment, qualification_request],
+        status: render(StatusTag::Component.new(qualification_request.review_status)),
+      )
+    end
+  end %>
+<% end %>
+
+<% if @reference_requests.present? %>
+  <h2 class="govuk-heading-m">References</h2>
+  <%= govuk_task_list(id_prefix: "references") do |task_list|
+    @reference_requests.each do |reference_request|
+      task_list.with_item(
+        title: work_history_name(reference_request.work_history),
+        href: [:review, :assessor_interface, @application_form, @assessment, reference_request],
+        status: render(StatusTag::Component.new(reference_request.review_status)),
+      )
+    end
+  end %>
+<% end %>
+
+<%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>
