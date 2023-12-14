@@ -105,7 +105,7 @@ RSpec.describe "Assessor reviewing qualifications", type: :system do
   end
 
   def when_i_click_on_the_qualification
-    assessor_application_page.task_list.click_item("BSc Teaching")
+    assessor_review_verifications_page.task_list.click_item("BSc Teaching")
   end
 
   def when_i_submit_yes_on_the_review_form

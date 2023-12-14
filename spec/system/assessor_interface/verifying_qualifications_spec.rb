@@ -159,7 +159,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def and_i_click_the_verify_qualifications_task
-    assessor_application_page.verify_qualifications_task.link.click
+    assessor_application_page.verify_qualifications_task.click
   end
 
   def and_the_check_and_select_consent_method_task_is_not_started
