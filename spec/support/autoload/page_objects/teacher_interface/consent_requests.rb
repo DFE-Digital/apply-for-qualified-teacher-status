@@ -5,7 +5,7 @@ module PageObjects
     class ConsentRequests < SitePrism::Page
       set_url "/teacher/application/consent-requests"
 
-      section :task_list, TaskList, ".app-task-list"
+      sections :task_lists, GovukTaskList, ".govuk-task-list"
 
       element :check_your_answers_button,
               ".govuk-button:not(.govuk-button--secondary)"

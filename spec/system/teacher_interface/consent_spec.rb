@@ -85,15 +85,15 @@ RSpec.describe "Teacher consent", type: :system do
   end
 
   def and_i_see_the_download_and_upload_tasks
-    task_list = teacher_consent_requests_page.task_list
-    expect(task_list.sections.count).to eq(1)
+    task_lists = teacher_consent_requests_page.task_lists
+    expect(task_lists.count).to eq(1)
 
-    task_list_section = task_list.sections.first
-    expect(task_list_section.items.count).to eq(2)
+    task_list = task_lists.first
+    expect(task_list.items.count).to eq(2)
   end
 
   def when_i_click_the_download_task
-    teacher_consent_requests_page.task_list.sections.first.items.first.click
+    teacher_consent_requests_page.task_lists.first.items.first.click
   end
 
   def when_i_check_the_downloaded_checkbox
@@ -102,7 +102,7 @@ RSpec.describe "Teacher consent", type: :system do
   end
 
   def when_i_click_the_upload_task
-    teacher_consent_requests_page.task_list.sections.first.items.second.click
+    teacher_consent_requests_page.task_lists.first.items.second.click
   end
 
   def when_i_upload_a_file

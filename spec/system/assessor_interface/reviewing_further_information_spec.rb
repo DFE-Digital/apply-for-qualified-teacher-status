@@ -68,7 +68,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def and_i_click_review_requested_information
-    assessor_application_page.review_requested_information_task.link.click
+    assessor_application_page.review_requested_information_task.click
   end
 
   def and_i_see_the_check_your_answers_items

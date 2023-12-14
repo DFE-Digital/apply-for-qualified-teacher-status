@@ -11,42 +11,46 @@ module PageObjects
       element :save_and_sign_out, ".govuk-button.govuk-button--secondary"
       element :start_now_button, ".govuk-button:not(.govuk-button--secondary)"
 
-      section :task_list, TaskList, ".app-task-list"
+      sections :task_lists, GovukTaskList, ".govuk-task-list"
+
+      def find_task_list_item(name)
+        task_lists.map { |task_list| task_list.find_item(name) }.compact.first
+      end
 
       def personal_information_task_item
-        task_list.find_item("Enter your personal information")
+        find_task_list_item("Enter your personal information")
       end
 
       def qualifications_task_item
-        task_list.find_item("Add your teaching qualifications")
+        find_task_list_item("Add your teaching qualifications")
       end
 
       def age_range_task_item
-        task_list.find_item("Enter the age range you can teach")
+        find_task_list_item("Enter the age range you can teach")
       end
 
       def subjects_task_item
-        task_list.find_item("Enter the subjects you can teach")
+        find_task_list_item("Enter the subjects you can teach")
       end
 
       def english_language_task_item
-        task_list.find_item("Verify your English language proficiency")
+        find_task_list_item("Verify your English language proficiency")
       end
 
       def work_history_task_item
-        task_list.find_item("Add your work history")
+        find_task_list_item("Add your work history")
       end
 
       def registration_number_task_item
-        task_list.find_item("Enter your registration number")
+        find_task_list_item("Enter your registration number")
       end
 
       def upload_written_statement_task_item
-        task_list.find_item("Upload your written statement")
+        find_task_list_item("Upload your written statement")
       end
 
       def provide_written_statement_task_item
-        task_list.find_item("Provide your written statement")
+        find_task_list_item("Provide your written statement")
       end
     end
   end

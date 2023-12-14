@@ -168,7 +168,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   end
 
   def and_i_click_professional_standing_task
-    assessor_application_page.verify_professional_standing_task.link.click
+    assessor_application_page.verify_professional_standing_task.click
   end
 
   def when_i_click_request_lops_verification

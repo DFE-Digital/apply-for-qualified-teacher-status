@@ -3,7 +3,15 @@
 
 <h1 class="govuk-heading-xl">Consent documents overview</h1>
 
-<%= render(TaskList::Component.new(@view_object.task_list_sections)) %>
+<% @view_object.task_list_sections.each do |section| %>
+  <h3 class="govuk-heading-m"><%= section[:title] %></h3>
+
+  <%= govuk_task_list(id_prefix: section[:title].parameterize) do |task_list|
+    section[:items].each do |item|
+      task_list.with_item(title: item[:name], href: item[:link], status: render(StatusTag::Component.new(item[:status])))
+    end
+  end %>
+<% end %>
 
 <div class="govuk-button-group">
   <% if @view_object.can_submit? %>

@@ -151,15 +151,17 @@ RSpec.describe "Assessor verifying references", type: :system do
   end
 
   def and_i_click_verify_references
-    assessor_application_page.verify_references_task.link.click
+    assessor_application_page.verify_references_task.click
   end
 
   def and_the_reference_request_status_is(status)
-    expect(reference_request_task_item.status_tag.text).to eq(status)
+    expect(
+      assessor_reference_requests_page.task_list.items.first.status_tag.text,
+    ).to eq(status)
   end
 
   def when_i_click_on_the_reference_request
-    reference_request_task_item.click
+    assessor_reference_requests_page.task_list.items.first.click
   end
 
   def and_i_see_the_reference_summary
@@ -251,14 +253,7 @@ RSpec.describe "Assessor verifying references", type: :system do
 
   def then_i_see_the_reference_request_status_is_accepted
     expect(
-      assessor_reference_requests_page
-        .task_list
-        .sections
-        .first
-        .items
-        .first
-        .status_tag
-        .text,
+      assessor_reference_requests_page.task_list.items.first.status_tag.text,
     ).to eq("Completed")
   end
 
@@ -268,14 +263,7 @@ RSpec.describe "Assessor verifying references", type: :system do
 
   def then_i_see_the_verify_references_task_is_completed
     expect(
-      assessor_reference_requests_page
-        .task_list
-        .sections
-        .first
-        .items
-        .first
-        .status_tag
-        .text,
+      assessor_application_page.verify_references_task.status_tag.text,
     ).to eq("Completed")
   end
 

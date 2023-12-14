@@ -105,7 +105,7 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
   end
 
   def when_i_click_on_lops
-    assessor_application_page.task_list.click_item(
+    assessor_review_verifications_page.task_list.click_item(
       "Relevant competent authority",
     )
   end

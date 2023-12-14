@@ -80,7 +80,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
   end
 
   def and_i_see_an_unstarted_preliminary_check_task
-    expect(assessor_application_page.task_list).to have_content(
+    expect(assessor_application_page.task_lists.first).to have_content(
       "Preliminary check (qualifications)",
     )
     expect(assessor_application_page.preliminary_check_task).to have_content(
@@ -154,7 +154,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
   end
 
   def and_i_click_awaiting_professional_standing
-    assessor_application_page.awaiting_professional_standing_task.link.click
+    assessor_application_page.awaiting_professional_standing_task.click
   end
 
   def when_i_fill_in_the_locate_form

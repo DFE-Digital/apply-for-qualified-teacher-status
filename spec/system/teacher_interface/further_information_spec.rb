@@ -100,15 +100,15 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def when_i_click_the_text_task_list_item
-    text_task_list_item.link.click
+    text_task_list_item.click
   end
 
   def when_i_click_the_work_history_contact_task_list_item
-    work_history_task_list_item.link.click
+    work_history_task_list_item.click
   end
 
   def when_i_click_the_document_task_list_item
-    document_task_list_item.link.click
+    document_task_list_item.click
   end
 
   def when_i_fill_in_the_response

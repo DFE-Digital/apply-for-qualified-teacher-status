@@ -11,12 +11,13 @@
   <p class="govuk-body">Complete the following tasks:</p>
 <% end %>
 
-<%= render TaskList::Component.new([
-  {
-    indentation: false,
-    items: @view_object.all_task_items
-  }
-]) %>
+<%= govuk_task_list do |task_list|
+  @view_object.all_task_items.each do |item|
+    task_list.with_item(
+      title: item[:title], href: item[:href], status: render(StatusTag::Component.new(item[:status]))
+    )
+  end
+end %>
 
 <% if @view_object.show_individual_task_items? %>
   <h2 class="govuk-heading-m">Qualification specific</h2>
@@ -26,12 +27,13 @@
   <% @view_object.qualification_requests.map do |qualification_request| %>
     <h3 class="govuk-heading-s"><%= qualification_title(qualification_request.qualification) %></h3>
 
-    <%= render TaskList::Component.new([
-      {
-        indentation: false,
-        items: @view_object.individual_task_items_for(qualification_request:)
-      }
-    ]) %>
+    <%= govuk_task_list do |task_list|
+      @view_object.individual_task_items_for(qualification_request:).each do |item|
+        task_list.with_item(
+          title: item[:title], href: item[:href], status: render(StatusTag::Component.new(item[:status]))
+        )
+      end
+    end %>
   <% end %>
 <% end %>
 

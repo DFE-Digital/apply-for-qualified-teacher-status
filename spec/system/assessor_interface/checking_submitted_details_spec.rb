@@ -256,12 +256,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
     assessor_check_personal_information_page.form.continue_button.click
   end
 
-  def personal_information_task_item
-    assessor_application_page.task_list.tasks.first.items.find do |item|
-      item.link.text == "Check personal information"
-    end
-  end
-
   def and_i_see_check_personal_information_completed
     expect(
       assessor_application_page.personal_information_task.status_tag.text,

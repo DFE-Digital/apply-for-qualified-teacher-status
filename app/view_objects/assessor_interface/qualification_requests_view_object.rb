@@ -65,8 +65,8 @@ module AssessorInterface
           consent_requests.exists? || qualification_requests.requested.exists?
 
       {
-        name: "Check and select consent method",
-        link:
+        title: "Check and select consent method",
+        href:
           unless cannot_change
             [
               (
@@ -100,8 +100,8 @@ module AssessorInterface
 
     def generate_consent_document_task_item
       {
-        name: "Generate consent document",
-        link: [
+        title: "Generate consent document",
+        href: [
           :unsigned_consent_document,
           :assessor_interface,
           application_form,
@@ -133,9 +133,9 @@ module AssessorInterface
       all_consents_requested = consent_requests.all?(&:requested?)
 
       {
-        name:
+        title:
           "Send consent #{"document".pluralize(consent_requests.count)} to applicant",
-        link:
+        href:
           if all_documents_completed && !all_consents_requested
             [
               :request,
@@ -162,8 +162,8 @@ module AssessorInterface
 
       [
         {
-          name: "Upload consent document",
-          link:
+          title: "Upload consent document",
+          href:
             if consent_request.nil?
               Rails
                 .application
@@ -190,8 +190,8 @@ module AssessorInterface
           send_consent_document_task_item
         end,
         {
-          name: "Record applicant response",
-          link:
+          title: "Record applicant response",
+          href:
             if consent_request&.requested?
               [
                 :verify,
@@ -239,8 +239,8 @@ module AssessorInterface
 
       [
         {
-          name: "Request Ecctis verification",
-          link:
+          title: "Request Ecctis verification",
+          href:
             if can_start && !qualification_request.requested?
               [
                 :request,
@@ -260,8 +260,8 @@ module AssessorInterface
             end,
         },
         {
-          name: "Record Ecctis response",
-          link:
+          title: "Record Ecctis response",
+          href:
             if qualification_request.requested?
               [
                 :verify,

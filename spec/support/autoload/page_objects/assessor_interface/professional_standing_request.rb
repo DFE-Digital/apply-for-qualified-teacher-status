@@ -6,7 +6,7 @@ module PageObjects
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/professional-standing-request"
 
-      section :task_list, TaskList, ".app-task-list"
+      section :task_list, GovukTaskList, ".govuk-task-list"
       element :status_tag, ".govuk-tag"
 
       def request_lops_verification_task

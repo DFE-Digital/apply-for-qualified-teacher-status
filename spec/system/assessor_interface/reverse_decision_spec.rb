@@ -36,13 +36,13 @@ RSpec.describe "Assessor reverse decision", type: :system do
   end
 
   def and_i_see_the_reverse_decision_link
-    expect(assessor_application_page.task_list).to have_content(
+    expect(assessor_application_page.task_lists.last).to have_content(
       "Reverse decision",
     )
   end
 
   def when_i_click_on_reverse_decision
-    assessor_application_page.task_list.click_on("Reverse decision")
+    assessor_application_page.task_lists.last.click_on("Reverse decision")
   end
 
   def when_i_confirm_the_reversal

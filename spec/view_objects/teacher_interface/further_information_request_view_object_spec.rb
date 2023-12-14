@@ -26,8 +26,8 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
     }
   end
 
-  describe "#task_list_sections" do
-    subject(:task_list_sections) { view_object.task_list_sections }
+  describe "#task_list_items" do
+    subject(:task_list_items) { view_object.task_list_items }
 
     let!(:text_item) do
       create(
@@ -46,32 +46,34 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
     end
 
     it do
-      is_expected.to include_task_list_item(
-        "Further information requested",
-        "Tell us more about the subjects you can teach",
-        link: [
-          :edit,
-          :teacher_interface,
-          :application_form,
-          further_information_request,
-          text_item,
-        ],
-        status: "not_started",
+      is_expected.to include(
+        {
+          title: "Tell us more about the subjects you can teach",
+          href: [
+            :edit,
+            :teacher_interface,
+            :application_form,
+            further_information_request,
+            text_item,
+          ],
+          status: "not_started",
+        },
       )
     end
 
     it do
-      is_expected.to include_task_list_item(
-        "Further information requested",
-        "Upload your identity document",
-        link: [
-          :edit,
-          :teacher_interface,
-          :application_form,
-          further_information_request,
-          document_item,
-        ],
-        status: "not_started",
+      is_expected.to include(
+        {
+          title: "Upload your identity document",
+          href: [
+            :edit,
+            :teacher_interface,
+            :application_form,
+            further_information_request,
+            document_item,
+          ],
+          status: "not_started",
+        },
       )
     end
   end
