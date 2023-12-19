@@ -55,6 +55,8 @@ require "rails_helper"
 RSpec.describe Staff, type: :model do
   subject(:staff) { build(:staff) }
 
+  it_behaves_like "an emailable"
+
   describe "validations" do
     it { is_expected.to be_valid }
 

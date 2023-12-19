@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Emailable
   extend ActiveSupport::Concern
 
@@ -14,7 +16,7 @@ module Emailable
 
   class_methods do
     def find_by_email(email)
-      find_by("LOWER(email) = ?", email.downcase)
+      find_by("LOWER(email) = ?", email&.downcase)
     end
 
     def find_or_initialize_by_email(email)
