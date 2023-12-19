@@ -409,6 +409,23 @@ RSpec.describe ApplicationForm, type: :model do
         it { is_expected.to be_empty }
       end
     end
+
+    describe "#from_ineligible_country" do
+      subject(:from_ineligible_country) do
+        described_class.from_ineligible_country
+      end
+
+      let(:eligible_application_form) { create(:application_form) }
+      let(:ineligible_application_form) do
+        create(
+          :application_form,
+          region: create(:region, country: create(:country, :ineligible)),
+        )
+      end
+
+      it { is_expected.to_not include(eligible_application_form) }
+      it { is_expected.to include(ineligible_application_form) }
+    end
   end
 
   it "attaches empty documents" do

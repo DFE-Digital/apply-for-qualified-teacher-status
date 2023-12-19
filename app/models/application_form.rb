@@ -182,6 +182,15 @@ class ApplicationForm < ApplicationRecord
           )
         end
 
+  scope :from_ineligible_country,
+        -> do
+          joins(region: :country).where(
+            countries: {
+              eligibility_enabled: false,
+            },
+          )
+        end
+
   def submitted?
     submitted_at.present?
   end
