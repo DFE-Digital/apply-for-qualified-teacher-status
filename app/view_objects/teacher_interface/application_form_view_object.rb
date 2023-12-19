@@ -60,7 +60,20 @@ class TeacherInterface::ApplicationFormViewObject
   end
 
   def declined_reasons
-    if further_information_request&.expired?
+    if country_ineligible?
+      country_name = CountryName.from_country(region.country)
+      teaching_authority_name = region_teaching_authority_name(region)
+
+      {
+        "" => [
+          "As we are unable to verify professional standing documents with the #{teaching_authority_name} in " \
+            "#{country_name}, we have removed #{country_name} from the list of eligible countries.\n\nWe need to be " \
+            "able to verify all documents submitted by applicants with the relevant authorities. This is to ensure " \
+            "QTS requirements are applied fairly and consistently to every teacher, regardless of the country they " \
+            "trained to teach in.",
+        ],
+      }
+    elsif further_information_request&.expired?
       {
         "" => [
           I18n.t(
@@ -96,7 +109,7 @@ class TeacherInterface::ApplicationFormViewObject
   def declined_cannot_reapply?
     return false if assessment.nil?
 
-    return true unless region.country.eligibility_enabled
+    return true if country_ineligible?
 
     assessment.sections.any? do |section|
       section.selected_failure_reasons.any? do |failure_reason|
@@ -204,6 +217,10 @@ class TeacherInterface::ApplicationFormViewObject
 
   def task_list_item_status(key)
     application_form.send("#{key}_status")
+  end
+
+  def country_ineligible?
+    @country_ineligible ||= !region.country.eligibility_enabled
   end
 
   def assessment_declined_reasons
