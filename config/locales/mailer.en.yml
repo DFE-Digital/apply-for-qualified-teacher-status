@@ -12,6 +12,8 @@ en:
         subject: Your QTS application was successful
       application_declined:
         subject: Your QTS application was unsuccessful
+      application_from_ineligible_country:
+        subject: "Update: Your qualified teacher status (QTS) application"
       application_not_submitted:
         subject:
           0: Your draft QTS application will be deleted in 2 weeks

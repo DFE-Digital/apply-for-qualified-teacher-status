@@ -9,12 +9,13 @@ RSpec.describe TeacherMailer, type: :mailer do
   let!(:application_form) do
     create(
       :application_form,
-      teacher:,
-      reference: "abc",
-      given_names: "First",
-      family_name: "Last",
       assessment:,
       created_at: Date.new(2020, 1, 1),
+      family_name: "Last",
+      given_names: "First",
+      reference: "abc",
+      region: create(:region, :in_country, country_code: "FR"),
+      teacher:,
     )
   end
 
@@ -76,6 +77,43 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     it_behaves_like "an observable mailer", "application_declined"
+  end
+
+  describe "#application_from_ineligible_country" do
+    subject(:mail) do
+      described_class.with(teacher:).application_from_ineligible_country
+    end
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      it do
+        is_expected.to eq(
+          "Update: Your qualified teacher status (QTS) application",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      it { is_expected.to include("Dear First Last") }
+      it do
+        is_expected.to include(
+          "As we are unable to verify professional standing documents with the teaching authority in France, we " \
+            "have removed France from the list of eligible countries.",
+        )
+      end
+    end
+
+    it_behaves_like "an observable mailer",
+                    "application_from_ineligible_country"
   end
 
   describe "#application_not_submitted" do
@@ -249,7 +287,9 @@ RSpec.describe TeacherMailer, type: :mailer do
       ).further_information_requested
     end
 
-    let(:further_information_request) { create(:further_information_request) }
+    let(:further_information_request) do
+      create(:further_information_request, assessment:)
+    end
 
     describe "#subject" do
       subject(:subject) { mail.subject }
@@ -291,7 +331,11 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     let(:further_information_request) do
-      create(:further_information_request, requested_at: Date.new(2020, 1, 1))
+      create(
+        :further_information_request,
+        assessment:,
+        requested_at: Date.new(2020, 1, 1),
+      )
     end
 
     describe "#subject" do
@@ -370,14 +414,15 @@ RSpec.describe TeacherMailer, type: :mailer do
     let(:reference_request) do
       create(
         :reference_request,
+        assessment:,
         requested_at: Date.new(2020, 1, 1),
         work_history:
           create(
             :work_history,
-            school_name: "St Smith School",
+            application_form:,
             contact_name: "John Smith",
+            school_name: "St Smith School",
           ),
-        assessment:,
       )
     end
     let(:number_of_reminders_sent) { nil }
@@ -445,7 +490,9 @@ RSpec.describe TeacherMailer, type: :mailer do
     subject(:mail) do
       described_class.with(
         teacher:,
-        reference_requests: [create(:reference_request, :requested)],
+        reference_requests: [
+          create(:reference_request, :requested, assessment:),
+        ],
       ).references_requested
     end
 

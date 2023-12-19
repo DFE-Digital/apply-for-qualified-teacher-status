@@ -1,0 +1,15 @@
+Dear <%= application_form_full_name(@application_form) %>,
+
+Thank you for beginning your application for qualified teacher status (QTS) in England. Unfortunately, we have had to close your application.
+
+As we are unable to verify professional standing documents with the <%= region_teaching_authority_name(@application_form.region) %> in <%= CountryName.from_country(@application_form.country) %>, we have removed <%= CountryName.from_country(@application_form.country) %> from the list of eligible countries.
+
+This means you will not be able to complete and submit your application.
+
+## Why we need to verify documents
+
+We need to be able to verify all documents submitted by applicants with the relevant authorities. This is to ensure QTS requirements are applied fairly and consistently to every teacher, regardless of the country they trained to teach in.
+
+[Sign in](<%= new_teacher_session_url %>) for more information about QTS in England.
+
+<%= render "shared/teacher_mailer/footer" %>
