@@ -6,7 +6,7 @@ namespace :application_forms do
 
     original_count = ApplicationForm.count
 
-    ApplicationForm.draft.each do |application_form|
+    ApplicationForm.draft_stage.each do |application_form|
       DestroyApplicationForm.call(application_form:)
     end
 
@@ -14,6 +14,40 @@ namespace :application_forms do
 
     puts "There were #{original_count} draft applications and there are now #{new_count}."
     puts "There are #{ApplicationForm.count} applications overall."
+  end
+
+  desc "Send emails for applications from ineligible countries."
+  task send_draft_emails_from_ineligible_country: :environment do
+    application_forms = ApplicationForm.draft_stage.from_ineligible_country
+    puts "Sending emails for #{application_forms.count} applications! Are you sure you want to continue?"
+    $stdin.gets.chomp
+
+    application_forms.each do |application_form|
+      puts application_form.reference
+
+      teacher = application_form.teacher
+      next unless teacher.application_form == application_form
+
+      TeacherMailer
+        .with(teacher:)
+        .application_from_ineligible_country
+        .deliver_now
+    end
+  end
+
+  desc "Decline application forms from ineligible countries."
+  task :decline_from_ineligible_countries,
+       %i[staff_email] => :environment do |_task, args|
+    user = Staff.find_by!(email: args[:staff_email])
+    application_forms = ApplicationForm.assessable.from_ineligible_country
+    puts "Declining #{application_forms.count} applications! Are you sure you want to continue?"
+    $stdin.gets.chomp
+
+    application_forms.each do |application_form|
+      puts application_form.reference
+
+      DeclineQTS.call(application_form:, user:)
+    end
   end
 
   desc "Backfill preliminary checks on applications after enabling them."
