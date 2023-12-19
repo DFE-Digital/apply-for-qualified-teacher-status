@@ -278,7 +278,7 @@ GEM
       concurrent-ruby (~> 1.0)
     indefinite_article (0.2.5)
       activesupport
-    io-console (0.7.0)
+    io-console (0.7.1)
     irb (1.10.1)
       rdoc
       reline (>= 0.3.8)
@@ -366,7 +366,7 @@ GEM
       activesupport (>= 7.0.0)
       rack
       railties (>= 7.0.0)
-    psych (5.1.1.1)
+    psych (5.1.2)
       stringio
     public_suffix (5.0.4)
     puma (6.4.0)
@@ -419,7 +419,7 @@ GEM
     rainbow (3.1.1)
     rake (13.1.0)
     rbs (3.2.2)
-    rdoc (6.6.1)
+    rdoc (6.6.2)
       psych (>= 4.0.0)
     redcarpet (3.6.0)
     redis (4.8.1)
@@ -496,9 +496,9 @@ GEM
     ruby-vips (2.2.0)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
-    sentry-rails (5.15.0)
+    sentry-rails (5.15.1)
       railties (>= 5.0)
-      sentry-ruby (~> 5.15.0)
+      sentry-ruby (~> 5.15.1)
     sentry-ruby (5.15.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (5.3.0)
