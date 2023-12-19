@@ -306,8 +306,14 @@ COUNTRIES = {
   },
   "UA" => [{ reduced_evidence_accepted: true }],
   "ZW" => {
+    eligibility_enabled: false,
     subject_limited: true,
-    regions: [{ status_check: "written" }],
+    regions: [
+      {
+        status_check: "written",
+        teaching_authority_name: "Ministry of Primary and Secondary Education",
+      },
+    ],
   },
   "GG" => [],
   "JE" => [],
