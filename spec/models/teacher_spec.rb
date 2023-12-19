@@ -27,6 +27,8 @@ require "rails_helper"
 RSpec.describe Teacher, type: :model do
   subject(:teacher) { create(:teacher) }
 
+  it_behaves_like "an emailable"
+
   describe "validations" do
     it { is_expected.to be_valid }
 
