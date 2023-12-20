@@ -9,7 +9,7 @@ RSpec.describe "Assessor verifying references", type: :system do
     given_there_is_an_application_form_with_reference_request
   end
 
-  it "verify" do
+  it "verify received" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_verify_references
     then_i_see_the(
@@ -61,10 +61,51 @@ RSpec.describe "Assessor verifying references", type: :system do
     then_i_see_the_verify_references_task_is_completed
   end
 
+  it "verify overdue" do
+    given_the_reference_request_is_overdue
+
+    when_i_visit_the(:assessor_application_page, reference:)
+    and_i_click_verify_references
+    then_i_see_the(
+      :assessor_reference_requests_page,
+      reference:,
+      assessment_id:,
+    )
+    and_the_reference_request_status_is("OVERDUE")
+
+    when_i_click_on_the_reference_request
+    then_i_see_the(
+      :assessor_verify_reference_request_page,
+      reference:,
+      assessment_id:,
+      id: reference_request.id,
+    )
+    and_i_submit_yes_on_the_verify_form
+    then_i_see_the(
+      :assessor_verify_failed_reference_request_page,
+      reference:,
+      assessment_id:,
+    )
+    and_i_submit_an_internal_note
+    then_i_see_the(
+      :assessor_reference_requests_page,
+      reference:,
+      assessment_id:,
+    )
+    and_the_reference_request_status_is("REVIEW")
+
+    when_i_verify_that_all_references_are_accepted
+    then_i_see_the_verify_references_task_is_completed
+  end
+
   private
 
   def given_there_is_an_application_form_with_reference_request
     application_form
+  end
+
+  def given_the_reference_request_is_overdue
+    reference_request.update!(expired_at: Time.zone.now, received_at: nil)
   end
 
   def and_i_click_verify_references
@@ -197,6 +238,7 @@ RSpec.describe "Assessor verifying references", type: :system do
           create(
             :assessment,
             :with_received_professional_standing_request,
+            :verify,
             application_form:,
           )
         create(:assessment_section, :passed, assessment:)

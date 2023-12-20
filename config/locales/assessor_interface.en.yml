@@ -225,10 +225,6 @@ en:
         passed: Has the applicant completed this section to your satisfaction?
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
 
-    reference_requests:
-      edit_verify:
-        title: Review reference
-
   activemodel:
     errors:
       models:

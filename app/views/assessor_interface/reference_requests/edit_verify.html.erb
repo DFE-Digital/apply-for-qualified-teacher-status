@@ -1,15 +1,17 @@
 <% application_form = @reference_request.application_form %>
-
-<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
-<% content_for :back_link_url, assessor_interface_application_form_path(application_form) %>
-
 <% work_history = @reference_request.work_history %>
-<% can_edit_work_history = AssessorInterface::WorkHistoryPolicy.new(current_staff, work_history).edit? %>
+<% can_edit_work_history = policy([:assessor_interface, work_history]).edit? %>
+<% can_update_verify_reference_request = @assessment.verify? && policy([:assessor_interface, @reference_request]).update_verify? %>
+
+<% title = can_update_verify_reference_request ? "Review reference" : "View reference" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(application_form) %>
 
 <%= form_with model: @form, url: [:verify, :assessor_interface, application_form, @reference_request.assessment, @reference_request] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+  <h1 class="govuk-heading-xl"><%= title %></h1>
 
   <h2 class="govuk-heading-m">Reference details</h2>
 
@@ -48,13 +50,28 @@
     end
   end %>
 
-  <p class="govuk-body">You must send this reference for review if any of the responses contain a comment.</p>
-  
   <% if @reference_request.received? %>
-    <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
+    <% unless can_update_verify_reference_request %>
+      <p class="govuk-body">This reference is view only. Return to the review reference screen to make your decision.</p>
+    <% end %>
 
-    <%= f.govuk_collection_radio_buttons :passed, %i[true false], :itself,
-                                         legend: { text: "Are you satisfied that this reference should count towards the applicant’s work experience?" } %>
+    <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
+  <% end %>
+
+  <% if @reference_request.expired? %>
+    <%= govuk_warning_text(text: "This reference is overdue.") %>
+  <% end %>
+
+  <% if can_update_verify_reference_request && (@reference_request.received? || @reference_request.expired?) %>
+    <p class="govuk-body">You must send this reference for review if any of the responses contain a comment.</p>
+
+    <% if @reference_request.received? %>
+      <%= f.govuk_collection_radio_buttons :passed, %i[true false], :itself,
+                                           legend: { text: "Are you satisfied that this reference should count towards the applicant’s work experience?" } %>
+    <% else %>
+      <%= f.govuk_collection_radio_buttons :passed, [OpenStruct.new(value: false, label: "Yes, send for review")], :value, :label,
+                                           legend: { text: "Do you want to send this reference for review?" } %>
+    <% end %>
 
     <%= f.govuk_submit do %>
       <%= govuk_link_to "Cancel", [:assessor_interface, application_form] %>

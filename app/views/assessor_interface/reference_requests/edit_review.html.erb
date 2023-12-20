@@ -10,9 +10,24 @@
     <%= work_history_name(@reference_request.work_history) %>
   </h2>
 
-  <%= govuk_inset_text do %>
-    <h3 class="govuk-heading-s">Internal note</h3>
-    <%= simple_format @reference_request.verify_note %>
+  <% if @reference_request.expired? && @reference_request.received? %>
+    <%= govuk_inset_text do %>
+      <p>This reference’s status has changed from <%= render(StatusTag::Component.new("overdue")) %> to <%= render(StatusTag::Component.new("received")) %>.</p>
+      <p><%= govuk_link_to "View reference details", [:verify, :assessor_interface, @application_form, @assessment, @reference_request] %></p>
+    <% end %>
+
+    <%= govuk_details(summary_text: "See previous notes") do %>
+      <%= govuk_inset_text do %>
+        <h3 class="govuk-heading-s">Internal note</h3>
+        <%= simple_format @reference_request.verify_note %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= govuk_inset_text do %>
+      <h3 class="govuk-heading-s">Internal note</h3>
+      <%= simple_format @reference_request.verify_note %>
+      <p><%= govuk_link_to "View reference details", [:verify, :assessor_interface, @application_form, @assessment, @reference_request] %></p>
+    <% end %>
   <% end %>
 
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "After review, does the response confirm that this reference is legitimate?", size: "s" } do %>

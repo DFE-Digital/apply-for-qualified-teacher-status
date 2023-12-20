@@ -117,8 +117,8 @@ en:
           false: No, allow more time for a response
       assessor_interface_requestable_review_form:
         passed_options:
-          true: "Yes"
-          false: "No"
+          true: Yes, mark as accepted
+          false: No, mark as rejected
       assessor_interface_requestable_verify_passed_form:
         passed_options:
           true: Yes, mark as completed
