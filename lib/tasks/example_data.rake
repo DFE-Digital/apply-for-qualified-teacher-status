@@ -223,7 +223,7 @@ def create_requestables(application_form, assessment, state)
 end
 
 def create_application_forms
-  Region.all.each do |region|
+  Region.all.find_each do |region|
     application_form_traits_for(region).each do |traits|
       application_form = FactoryBot.create(:application_form, *traits, region:)
 

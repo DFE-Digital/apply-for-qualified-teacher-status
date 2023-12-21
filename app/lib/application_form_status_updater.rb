@@ -248,7 +248,7 @@ class ApplicationFormStatusUpdater
 
   def further_information_requests
     @further_information_requests ||=
-      assessment&.further_information_requests&.to_a || []
+      assessment&.further_information_requests.to_a
   end
 
   def professional_standing_requests
@@ -258,11 +258,11 @@ class ApplicationFormStatusUpdater
   end
 
   def qualification_requests
-    @qualification_requests ||= assessment&.qualification_requests&.to_a || []
+    @qualification_requests ||= assessment&.qualification_requests.to_a
   end
 
   def reference_requests
-    @reference_requests ||= assessment&.reference_requests&.to_a || []
+    @reference_requests ||= assessment&.reference_requests.to_a
   end
 
   def overdue?(requestables:)
