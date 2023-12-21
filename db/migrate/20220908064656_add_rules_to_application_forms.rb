@@ -8,7 +8,7 @@ class AddRulesToApplicationForms < ActiveRecord::Migration[7.0]
 
     ApplicationForm
       .includes(:region)
-      .each do |application_form|
+      .find_each do |application_form|
         region = application_form.region
 
         application_form.update!(
