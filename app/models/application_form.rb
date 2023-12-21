@@ -177,8 +177,14 @@ class ApplicationForm < ApplicationRecord
 
   scope :remindable,
         -> do
-          verification_stage.or(
-            where(submitted_at: nil).where("created_at < ?", 5.months.ago),
+          joins(region: :country).verification_stage.or(
+            where(
+              countries: {
+                eligibility_enabled: true,
+              },
+              created_at: ...5.months.ago,
+              submitted_at: nil,
+            ),
           )
         end
 
