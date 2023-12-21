@@ -332,15 +332,21 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
         it { is_expected.to be true }
       end
+    end
+  end
 
-      context "with an ineligible country" do
-        let(:country) { create(:country, :ineligible) }
-        let(:application_form) do
-          create(:application_form, region: create(:region, country:))
-        end
+  describe "#from_ineligible_country?" do
+    subject(:from_ineligible_country?) { view_object.from_ineligible_country? }
 
-        it { is_expected.to be true }
+    it { is_expected.to be false }
+
+    context "with an ineligible country" do
+      let(:country) { create(:country, :ineligible) }
+      let(:application_form) do
+        create(:application_form, region: create(:region, country:))
       end
+
+      it { is_expected.to be true }
     end
   end
 

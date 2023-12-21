@@ -60,7 +60,7 @@ class TeacherInterface::ApplicationFormViewObject
   end
 
   def declined_reasons
-    if country_ineligible?
+    if from_ineligible_country?
       country_name = CountryName.from_country(region.country)
       teaching_authority_name = region_teaching_authority_name(region)
 
@@ -109,8 +109,6 @@ class TeacherInterface::ApplicationFormViewObject
   def declined_cannot_reapply?
     return false if assessment.nil?
 
-    return true if country_ineligible?
-
     assessment.sections.any? do |section|
       section.selected_failure_reasons.any? do |failure_reason|
         %w[authorisation_to_teach applicant_already_qts].include?(
@@ -118,6 +116,10 @@ class TeacherInterface::ApplicationFormViewObject
         )
       end
     end
+  end
+
+  def from_ineligible_country?
+    @from_ineligible_country ||= !region.country.eligibility_enabled
   end
 
   def request_further_information?
@@ -217,10 +219,6 @@ class TeacherInterface::ApplicationFormViewObject
 
   def task_list_item_status(key)
     application_form.send("#{key}_status")
-  end
-
-  def country_ineligible?
-    @country_ineligible ||= !region.country.eligibility_enabled
   end
 
   def assessment_declined_reasons
