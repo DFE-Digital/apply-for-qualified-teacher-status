@@ -9,7 +9,7 @@ class TeacherInterface::ApplicationFormViewObject
 
   attr_reader :application_form
 
-  delegate :assessment, :region, :teacher, to: :application_form
+  delegate :assessment, :country, :region, :teacher, to: :application_form
 
   def further_information_request
     @further_information_request ||=
@@ -61,7 +61,7 @@ class TeacherInterface::ApplicationFormViewObject
 
   def declined_reasons
     if from_ineligible_country?
-      country_name = CountryName.from_country(region.country)
+      country_name = CountryName.from_country(country)
       teaching_authority_name = region_teaching_authority_name(region)
 
       {
@@ -119,7 +119,7 @@ class TeacherInterface::ApplicationFormViewObject
   end
 
   def from_ineligible_country?
-    @from_ineligible_country ||= !region.country.eligibility_enabled
+    @from_ineligible_country ||= !country.eligibility_enabled
   end
 
   def request_further_information?
