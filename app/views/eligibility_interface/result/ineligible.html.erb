@@ -1,11 +1,13 @@
+<% ineligible_country = @eligibility_check.ineligible_reasons.include?(:country) %>
+
 <% content_for :page_title, "You’re not eligible" %>
-<% content_for :back_link_url, back_link_url %>
+<% content_for :back_link_url, ineligible_country ? eligibility_interface_countries_path : eligibility_interface_misconduct_path %>
 
 <h1 class="govuk-heading-xl">
   You’re not eligible to apply for qualified teacher status (QTS) in England
 </h1>
 
-<% if @eligibility_check.ineligible_reasons.include?(:country) %>
+<% if ineligible_country %>
   <% if @eligibility_check.england_or_wales? %>
     <p class="govuk-body">This service is for qualified teachers who trained to teach outside of England who want to apply for qualified teacher status (QTS) to teach in English schools.</p>
     <p class="govuk-body">If you trained in England or Wales, or have not yet qualified, learn more about <%= govuk_link_to "other routes to QTS", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk" %>.</p>
@@ -48,7 +50,7 @@
   <% end %>
 <% end %>
 
-<% if @eligibility_check.ineligible_reasons.include?(:country) %>
+<% if ineligible_country %>
   <%= render "shared/help_us_to_improve_this_service" %>
 <% else %>
   <p class="govuk-body">If you have any questions about QTS contact the help team at:</p>

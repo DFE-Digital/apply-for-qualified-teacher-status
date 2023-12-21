@@ -45,7 +45,7 @@
 <% if region.reduced_evidence_accepted %>
   <p class="govuk-body">Find an <a href="https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" class="govuk-link">approved provider</a> if you need to get an English language certificate.</p>
 <% else %>
-  <p class="govuk-body">Find an <%= govuk_link_to "approved provider", english_language_guidance_path%> if you need to get an English language certificate.</p>
+  <p class="govuk-body">Find an <%= govuk_link_to "approved provider", english_language_guidance_path %> if you need to get an English language certificate.</p>
 <% end %>
 
 <%= govuk_details(summary_text: "What if you have more than one nationality?") do %>
