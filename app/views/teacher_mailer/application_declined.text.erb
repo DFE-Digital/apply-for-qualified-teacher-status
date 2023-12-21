@@ -1,4 +1,8 @@
+<% if @view_object.from_ineligible_country? %>
+Dear <%= application_form_full_name(@application_form) %>,
+<% else %>
 Dear <%= application_form_full_name(@application_form) %>
+<% end %>
 
 <%= render "shared/teacher_mailer/reference_number" %>
 
@@ -12,9 +16,9 @@ Thank you for applying for QTS in England. Unfortunately, your application has b
 
 <% end %>
 <% reasons.each do |reason| %>
-- <%= reason.gsub("\n\n", "\n").gsub("\n", "\n  ") %>
-<% end %>
+<%= reason %>
 
+<% end %>
 <% end %>
 <% unless @view_object.declined_cannot_reapply? || @view_object.from_ineligible_country? %>
 # What you can do next
@@ -26,7 +30,9 @@ You’ll be able to make a new application for QTS once you've addressed the dec
 You may want to [explore other routes to getting QTS](https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk).
 
 <% end %>
-<% unless @view_object.from_ineligible_country? %>
+<% if @view_object.from_ineligible_country? %>
+[Sign in](<%= new_teacher_session_url %>) for more information about QTS in England.
+<% else %>
 # Decision review
 
 Applicants who have been declined for QTS are entitled to a review of the decline decision by a Casework Manager.
@@ -39,7 +45,7 @@ Your request for review must be received within 28 days of receipt of the decisi
 
 If you are not satisfied with the outcome of the decision review, you can request a final formal appeal to a senior Teacher Qualification Manager.
 
-<% end %>
 [Sign in](<%= new_teacher_session_url %>) to review the outcome of your application.
+<% end %>
 
 <%= render "shared/teacher_mailer/footer" %>
