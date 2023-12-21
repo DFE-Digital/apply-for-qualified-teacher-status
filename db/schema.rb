@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_07_095541) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_21_091416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -95,7 +95,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_095541) do
     t.string "action_required_by", default: "none", null: false
     t.string "stage", default: "draft", null: false
     t.string "statuses", default: ["draft"], null: false, array: true
-    t.boolean "hidden_from_assessment", default: false, null: false
     t.boolean "qualification_changed_work_history_duration", default: false, null: false
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
