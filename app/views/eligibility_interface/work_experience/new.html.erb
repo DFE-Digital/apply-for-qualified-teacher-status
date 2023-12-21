@@ -1,5 +1,5 @@
 <% content_for :page_title, title_with_error_prefix(t("helpers.legend.eligibility_interface_work_experience_form.work_experience"), error: @form.errors.any?) %>
-<% content_for :back_link_url, back_link_url(@eligibility_check.qualified_for_subject_required? ? eligibility_interface_qualified_for_subject_path : eligibility_interface_teach_children_path) %>
+<% content_for :back_link_url, @eligibility_check.qualified_for_subject_required? ? eligibility_interface_qualified_for_subject_path : eligibility_interface_teach_children_path %>
 
 <%= form_with model: @form, url: [:eligibility_interface, :work_experience] do |f| %>
   <%= f.govuk_error_summary %>
