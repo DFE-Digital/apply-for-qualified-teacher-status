@@ -195,7 +195,7 @@ RSpec.describe "Teacher personal information", type: :system do
   def and_i_see_the_completed_personal_information_task
     expect(
       teacher_application_page.personal_information_task_item.status_tag.text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def teacher

@@ -105,8 +105,8 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def then_i_see_region_changes_confirmation
-    expect(page).to have_content("CREATE California")
-    expect(page).to have_content("DELETE Hawaii")
+    expect(page).to have_content("Create California")
+    expect(page).to have_content("Delete Hawaii")
   end
 
   def when_i_click_on_a_region

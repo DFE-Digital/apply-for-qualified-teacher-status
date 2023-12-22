@@ -281,7 +281,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   def assert_section_is_complete(section)
     expect(
       assessor_application_page.send("#{section}_task").status_tag.text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def application_form

@@ -16,7 +16,7 @@ RSpec.describe "Assessor verifying references", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_reference_request_status_is("RECEIVED")
+    and_the_reference_request_status_is("Received")
 
     when_i_click_on_the_reference_request
     then_i_see_the(
@@ -32,7 +32,7 @@ RSpec.describe "Assessor verifying references", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_reference_request_status_is("COMPLETED")
+    and_the_reference_request_status_is("Completed")
 
     when_i_click_on_the_reference_request
     then_i_see_the(
@@ -54,7 +54,7 @@ RSpec.describe "Assessor verifying references", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_reference_request_status_is("REVIEW")
+    and_the_reference_request_status_is("Review")
 
     when_i_verify_that_all_references_are_accepted
     then_i_see_the_verify_references_task_is_completed
@@ -70,7 +70,7 @@ RSpec.describe "Assessor verifying references", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_reference_request_status_is("OVERDUE")
+    and_the_reference_request_status_is("Overdue")
 
     when_i_click_on_the_reference_request
     then_i_see_the(
@@ -91,7 +91,7 @@ RSpec.describe "Assessor verifying references", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_reference_request_status_is("REVIEW")
+    and_the_reference_request_status_is("Review")
 
     when_i_verify_that_all_references_are_accepted
     then_i_see_the_verify_references_task_is_completed
@@ -105,6 +105,12 @@ RSpec.describe "Assessor verifying references", type: :system do
 
   def given_the_reference_request_is_overdue
     reference_request.update!(expired_at: Time.zone.now, received_at: nil)
+  end
+
+  def and_i_see_a_waiting_on_status
+    expect(assessor_application_page.status_summary.value).to have_text(
+      "Waiting on reference",
+    )
   end
 
   def and_i_click_verify_references
@@ -194,6 +200,19 @@ RSpec.describe "Assessor verifying references", type: :system do
     assessor_verify_failed_reference_request_page.submit(note: "A note.")
   end
 
+  def then_i_see_the_reference_request_status_is_accepted
+    expect(
+      assessor_reference_requests_page
+        .task_list
+        .sections
+        .first
+        .items
+        .first
+        .status_tag
+        .text,
+    ).to eq("Completed")
+  end
+
   def when_i_verify_that_all_references_are_accepted
     assessor_reference_requests_page.continue_button.click
   end
@@ -208,7 +227,7 @@ RSpec.describe "Assessor verifying references", type: :system do
         .first
         .status_tag
         .text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def reference_request_task_item

@@ -132,12 +132,12 @@ RSpec.describe "Staff support", type: :system do
 
   def then_i_see_the_invited_staff_user
     expect(page).to have_content("test@example.com")
-    expect(page).to have_content("NOT ACCEPTED")
+    expect(page).to have_content("Not accepted")
   end
 
   def then_i_see_the_accepted_staff_user
     expect(page).to have_content("test@example.com")
-    expect(page).to have_content("ACCEPTED")
+    expect(page).to have_content("Accepted")
   end
 
   def and_i_fill_name
@@ -162,7 +162,7 @@ RSpec.describe "Staff support", type: :system do
   end
 
   def and_i_see_the_helpdesk_user
-    expect(page).to have_content("Support console access\tNO")
+    expect(page).to have_content("Support console access\tNo")
   end
 
   def when_i_click_on_the_helpdesk_user
@@ -181,7 +181,7 @@ RSpec.describe "Staff support", type: :system do
   end
 
   def then_i_see_the_changed_permission
-    expect(page).to_not have_content("Support console access\tNO")
+    expect(page).to_not have_content("Support console access\tNo")
   end
 
   def then_i_am_taken_to_the_azure_login_page

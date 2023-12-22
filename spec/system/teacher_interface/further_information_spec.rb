@@ -80,23 +80,23 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def and_i_see_the_text_task_list_item
-    expect(text_task_list_item.status_tag.text).to eq("NOT STARTED")
+    expect(text_task_list_item.status_tag.text).to eq("Not started")
   end
 
   def and_i_see_a_completed_text_task_list_item
-    expect(text_task_list_item.status_tag.text).to eq("COMPLETED")
+    expect(text_task_list_item.status_tag.text).to eq("Completed")
   end
 
   def and_i_see_the_document_task_list_item
-    expect(document_task_list_item.status_tag.text).to eq("NOT STARTED")
+    expect(document_task_list_item.status_tag.text).to eq("Not started")
   end
 
   def and_i_see_a_completed_document_task_list_item
-    expect(document_task_list_item.status_tag.text).to eq("COMPLETED")
+    expect(document_task_list_item.status_tag.text).to eq("Completed")
   end
 
   def and_i_see_the_completed_work_history_contact_list_item
-    expect(work_history_task_list_item.status_tag.text).to eq("COMPLETED")
+    expect(work_history_task_list_item.status_tag.text).to eq("Completed")
   end
 
   def when_i_click_the_text_task_list_item
