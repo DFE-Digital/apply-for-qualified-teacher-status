@@ -112,13 +112,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_select_the_qualifications
     then_i_see_the(
-      :assessor_email_consent_letters_requests_assessment_recommendation_verify_page,
-      reference:,
-      assessment_id:,
-    )
-
-    when_i_click_continue_from_email_consent_letters
-    then_i_see_the(
       :assessor_professional_standing_assessment_recommendation_verify_page,
       reference:,
       assessment_id:,
@@ -172,13 +165,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_select_the_qualifications
-    then_i_see_the(
-      :assessor_email_consent_letters_requests_assessment_recommendation_verify_page,
-      reference:,
-      assessment_id:,
-    )
-
-    when_i_click_continue_from_email_consent_letters
     then_i_see_the(
       :assessor_assessment_recommendation_verify_page,
       reference:,
@@ -395,10 +381,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
       .form
       .submit_button
       .click
-  end
-
-  def when_i_click_continue_from_email_consent_letters
-    assessor_email_consent_letters_requests_assessment_recommendation_verify_page.continue_button.click
   end
 
   def when_i_select_yes_verify_professional_standing

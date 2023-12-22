@@ -89,8 +89,6 @@ Rails.application.routes.draw do
           post "qualification-requests",
                to:
                  "assessment_recommendation_verify#update_qualification_requests"
-          get "email-consent-letters",
-              to: "assessment_recommendation_verify#email_consent_letters"
           get "reference-requests",
               to: "assessment_recommendation_verify#edit_reference_requests"
           post "reference-requests",
