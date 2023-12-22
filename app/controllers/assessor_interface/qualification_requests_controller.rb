@@ -18,6 +18,15 @@ module AssessorInterface
       render layout: "application"
     end
 
+    def consent_letter
+      send_data(
+        ConsentLetter.new(qualification_request:).render_pdf,
+        filename: "Apply for QTS - Consent Letter.pdf",
+        type: "application/pdf",
+        disposition: "inline",
+      )
+    end
+
     def edit
       received =
         if requestable.received?
