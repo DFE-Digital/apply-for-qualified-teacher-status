@@ -95,8 +95,6 @@ en:
         heading: Request work history references
       edit_professional_standing:
         heading: Do you want to verify LoPS?
-      email_consent_letters:
-        heading: Email consent letters
 
     assessment_sections:
       show:

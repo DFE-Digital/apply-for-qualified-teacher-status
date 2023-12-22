@@ -117,11 +117,6 @@ module PageHelpers
       PageObjects::AssessorInterface::EditWorkHistory.new
   end
 
-  def assessor_email_consent_letters_requests_assessment_recommendation_verify_page
-    @assessor_email_consent_letters_requests_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::EmailConsentLettersAssessmentRecommendationVerify.new
-  end
-
   def assessor_further_information_request_preview_page
     @assessor_further_information_request_preview_page ||=
       PageObjects::AssessorInterface::FurtherInformationRequestPreview.new

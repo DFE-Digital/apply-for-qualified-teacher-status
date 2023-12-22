@@ -125,7 +125,7 @@ module AssessorInterface
           redirect_to check_path
         else
           redirect_to [
-                        :email_consent_letters,
+                        :professional_standing,
                         :assessor_interface,
                         application_form,
                         assessment,
@@ -135,13 +135,6 @@ module AssessorInterface
       else
         render :edit_qualification_requests, status: :unprocessable_entity
       end
-    end
-
-    def email_consent_letters
-      authorize %i[assessor_interface assessment_recommendation], :edit?
-
-      @qualifications =
-        application_form.qualifications.where(id: session[:qualification_ids])
     end
 
     def edit_professional_standing
