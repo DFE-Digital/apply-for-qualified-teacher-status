@@ -97,13 +97,7 @@ module AssessorInterface
     def edit_qualification_requests
       authorize %i[assessor_interface assessment_recommendation], :edit?
 
-      @form =
-        SelectQualificationsForm.new(
-          application_form:,
-          qualification_ids: application_form.qualifications.pluck(:id),
-          qualifications_assessor_note: assessment.qualifications_assessor_note,
-          session:,
-        )
+      @form = SelectQualificationsForm.new(application_form:, session:)
     end
 
     def update_qualification_requests

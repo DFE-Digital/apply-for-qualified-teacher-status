@@ -118,7 +118,7 @@ en:
           false: "No"
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why you selected ‘No’'
         failed_options:
-          true: Yes, mark as ‘Rejected’
+          true: Yes, mark as rejected
           false: No, allow more time for a response
       assessor_interface_requestable_review_form:
         passed_options:
@@ -140,7 +140,7 @@ en:
       assessor_interface_verify_qualifications_form:
         verify_qualifications_options:
           true: Yes, verify qualifications
-          false: No, skip this step
+          false: No, do not verify
       assessor_interface_work_history_contact_form:
         name: Change full name
         job: Change job title
@@ -290,8 +290,6 @@ en:
         received: Have you received a response about this qualification?
         passed: Does the response show that the qualification is legitimate?
         failed: Do you want to mark this qualification as ‘Rejected’?
-      assessor_interface_select_qualifications_form:
-        qualification_ids: Qualification
       assessor_interface_select_work_histories_form:
         work_history_ids: Schools
       eligibility_interface_region_form:
