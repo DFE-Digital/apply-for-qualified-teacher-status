@@ -619,6 +619,7 @@ DEPENDENCIES
   indefinite_article
   jsbundling-rails
   mail-notify
+  matrix
   okcomputer
   omniauth-azure-activedirectory-v2
   omniauth-rails_csrf_protection
