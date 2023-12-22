@@ -82,7 +82,8 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl
 
 # libpq: required to run postgres
 # vips-dev: dependencies for ruby-vips (image processing library)
-RUN apk add --update --no-cache libpq vips-dev
+# libreoffice-writer: for converting word documents to PDF
+RUN apk add --update --no-cache libpq vips-dev libreoffice-writer
 
 # Copy files generated in the builder image
 COPY --from=builder /app /app
