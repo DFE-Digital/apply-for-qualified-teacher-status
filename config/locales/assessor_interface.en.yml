@@ -88,14 +88,10 @@ en:
     assessment_recommendation_verify:
       edit:
         heading: Verification requests
-      edit_qualification_requests:
-        heading: Verify qualifications
-      edit_verify_qualifications:
-        heading: Do you want to verify qualifications?
-      edit_reference_requests:
-        heading: Request work history references
       edit_professional_standing:
         heading: Do you want to verify LoPS?
+      edit_reference_requests:
+        heading: Request work history references
 
     assessment_sections:
       show:
@@ -424,7 +420,7 @@ en:
         assessor_interface/verify_qualifications_form:
           attributes:
             verify_qualifications:
-              inclusion: Select whether you want to verify qualifications
+              inclusion: Tell us if you want to verify qualifications
         assessor_interface/reviewer_assignment_form:
           attributes:
             reviewer_id:

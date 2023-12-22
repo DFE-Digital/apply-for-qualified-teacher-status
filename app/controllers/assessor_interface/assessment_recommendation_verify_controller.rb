@@ -81,6 +81,9 @@ module AssessorInterface
         session[:qualification_ids] = []
 
         if @form.verify_qualifications
+          # To ensure the user goes back to the check page afterwards.
+          history_stack.pop if history_stack.last_entry_is_check?
+
           redirect_to [
                         :qualification_requests,
                         :assessor_interface,
@@ -107,13 +110,7 @@ module AssessorInterface
     def edit_qualification_requests
       authorize %i[assessor_interface assessment_recommendation], :edit?
 
-      @form =
-        SelectQualificationsForm.new(
-          application_form:,
-          qualification_ids: application_form.qualifications.pluck(:id),
-          qualifications_assessor_note: assessment.qualifications_assessor_note,
-          session:,
-        )
+      @form = SelectQualificationsForm.new(application_form:, session:)
     end
 
     def update_qualification_requests
