@@ -20,7 +20,8 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl
 # postgresql-dev: postgres driver and libraries
 # git: dependencies for bundle
 # vips-dev: dependencies for ruby-vips (image processing library)
-RUN apk add --update --no-cache build-base yarn postgresql14-dev git vips-dev
+# imagemagick-dev: dependencies for rmagick (image conversion library)
+RUN apk add --update --no-cache build-base yarn postgresql14-dev git vips-dev imagemagick-dev
 
 # Install gems defined in Gemfile
 COPY Gemfile Gemfile.lock ./
@@ -83,7 +84,8 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl
 # libpq: required to run postgres
 # vips-dev: dependencies for ruby-vips (image processing library)
 # libreoffice-writer: for converting word documents to PDF
-RUN apk add --update --no-cache libpq vips-dev libreoffice-writer
+# imagemagick-dev and imagemagick-pdf: for converting images to PDF
+RUN apk add --update --no-cache libpq vips-dev libreoffice-writer imagemagick-dev imagemagick-pdf
 
 # Copy files generated in the builder image
 COPY --from=builder /app /app

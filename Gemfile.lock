@@ -363,6 +363,7 @@ GEM
       racc
     pdf-core (0.9.0)
     pg (1.5.4)
+    pkg-config (1.5.6)
     prawn (2.4.0)
       pdf-core (~> 0.9.0)
       ttfunk (~> 1.7)
@@ -445,6 +446,8 @@ GEM
     retriable (3.1.2)
     rexml (3.2.6)
     rladr (1.2.0)
+    rmagick (5.3.0)
+      pkg-config (~> 1.4)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
       rspec-expectations (~> 3.12.0)
@@ -638,6 +641,7 @@ DEPENDENCIES
   rack-attack
   rails (= 7.1.2)
   rladr
+  rmagick
   rspec
   rspec-rails
   rubocop-govuk
