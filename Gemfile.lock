@@ -359,7 +359,11 @@ GEM
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
+    pdf-core (0.9.0)
     pg (1.5.4)
+    prawn (2.4.0)
+      pdf-core (~> 0.9.0)
+      ttfunk (~> 1.7)
     prettier_print (1.2.1)
     propshaft (0.8.0)
       actionpack (>= 7.0.0)
@@ -545,6 +549,7 @@ GEM
     tilt (2.3.0)
     timeout (0.4.1)
     trailblazer-option (0.1.2)
+    ttfunk (1.7.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
@@ -619,6 +624,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   pagy
   pg
+  prawn
   prettier_print
   propshaft
   puma
