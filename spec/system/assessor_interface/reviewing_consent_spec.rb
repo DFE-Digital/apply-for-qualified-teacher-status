@@ -96,7 +96,7 @@ RSpec.describe "Assessor reviewing references", type: :system do
 
   def and_i_see_the_overdue_status
     expect(assessor_review_verifications_page).to have_content(
-      "This consent’s status has changed from OVERDUE to RECEIVED",
+      "This consent’s status has changed from Overdue to Received",
     )
   end
 
@@ -109,11 +109,15 @@ RSpec.describe "Assessor reviewing references", type: :system do
   end
 
   def and_i_see_the_consent_not_started
-    expect(consent_task_item.status_tag.text).to eq("NOT STARTED")
+    expect(consent_task_item.status_tag.text).to eq("Not started")
+  end
+
+  def and_i_see_the_consent_accepted
+    expect(consent_task_item.status_tag.text).to eq("Accepted")
   end
 
   def and_i_see_the_consent_rejected
-    expect(consent_task_item.status_tag.text).to eq("REJECTED")
+    expect(consent_task_item.status_tag.text).to eq("Rejected")
   end
 
   def consent_task_item

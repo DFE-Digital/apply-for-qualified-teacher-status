@@ -129,7 +129,7 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
       assessor_review_verifications_page.task_list.find_item(
         "Relevant competent authority",
       )
-    expect(item.status_tag.text).to eq("NOT STARTED")
+    expect(item.status_tag.text).to eq("Not started")
   end
 
   def and_i_see_the_lops_accepted
@@ -137,7 +137,7 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
       assessor_review_verifications_page.task_list.find_item(
         "Relevant competent authority",
       )
-    expect(item.status_tag.text).to eq("ACCEPTED")
+    expect(item.status_tag.text).to eq("Accepted")
   end
 
   def and_i_see_the_lops_rejected
@@ -145,7 +145,7 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
       assessor_review_verifications_page.task_list.find_item(
         "Relevant competent authority",
       )
-    expect(item.status_tag.text).to eq("REJECTED")
+    expect(item.status_tag.text).to eq("Rejected")
   end
 
   def application_form

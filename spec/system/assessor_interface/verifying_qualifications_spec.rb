@@ -164,7 +164,12 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
   def and_the_check_and_select_consent_method_task_is_not_started
     expect(check_and_select_consent_method_task_item.status_tag.text).to eq(
-      "NOT STARTED",
+      "Not started",
+    )
+  end
+  def and_i_see_a_waiting_on_status
+    expect(assessor_application_page.status_summary.value).to have_text(
+      "Waiting on qualification",
     )
   end
 
@@ -190,19 +195,19 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
   def and_the_check_and_select_consent_method_task_is_completed
     expect(check_and_select_consent_method_task_item.status_tag.text).to eq(
-      "COMPLETED",
+      "Completed",
     )
   end
 
   def and_the_generate_consent_document_task_item_is_not_started
     expect(generate_consent_document_task_item.status_tag.text).to eq(
-      "NOT STARTED",
+      "Not started",
     )
   end
 
   def and_the_upload_consent_document_task_item_is_not_started
     expect(upload_consent_document_task_item.status_tag.text).to eq(
-      "NOT STARTED",
+      "Not started",
     )
   end
 
@@ -216,7 +221,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
   def and_the_generate_consent_document_task_item_is_completed
     expect(generate_consent_document_task_item.status_tag.text).to eq(
-      "COMPLETED",
+      "Completed",
     )
   end
 
@@ -231,12 +236,12 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def and_the_upload_consent_document_task_item_is_completed
-    expect(upload_consent_document_task_item.status_tag.text).to eq("COMPLETED")
+    expect(upload_consent_document_task_item.status_tag.text).to eq("Completed")
   end
 
   def and_the_send_consent_document_to_applicant_task_is_not_started
     expect(send_consent_document_to_applicant_task_item.status_tag.text).to eq(
-      "NOT STARTED",
+      "Not started",
     )
   end
 
@@ -250,19 +255,19 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
   def and_the_send_consent_document_to_applicant_task_is_completed
     expect(send_consent_document_to_applicant_task_item.status_tag.text).to eq(
-      "COMPLETED",
+      "Completed",
     )
   end
 
   def and_the_record_applicant_response_task_is_waiting_on
     expect(record_applicant_response_task_item.status_tag.text).to eq(
-      "WAITING ON",
+      "Waiting on",
     )
   end
 
   def and_the_record_applicant_response_task_is_received
     expect(record_applicant_response_task_item.status_tag.text).to eq(
-      "RECEIVED",
+      "Received",
     )
   end
 
@@ -276,7 +281,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
   def and_the_record_applicant_response_task_is_accepted
     expect(record_applicant_response_task_item.status_tag.text).to eq(
-      "COMPLETED",
+      "Completed",
     )
   end
 
@@ -284,23 +289,19 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     assessor_verify_consent_request_page.submit_no
   end
 
-  def and_i_submit_an_internal_note
-    assessor_verify_failed_consent_request_page.submit(note: "A note.")
-  end
-
   def and_the_record_applicant_response_task_is_review
-    expect(record_applicant_response_task_item.status_tag.text).to eq("REVIEW")
+    expect(record_applicant_response_task_item.status_tag.text).to eq("Review")
   end
 
   def and_the_request_ecctis_verification_task_is_not_started
     expect(request_ecctis_verification_task_item.status_tag.text).to eq(
-      "NOT STARTED",
+      "Not started",
     )
   end
 
   def and_the_record_ecctis_response_task_is_cannot_start
     expect(record_ecctis_response_task_item.status_tag.text).to eq(
-      "CANNOT START",
+      "Cannot start",
     )
   end
 
@@ -318,12 +319,12 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
   def and_the_request_ecctis_verification_task_is_completed
     expect(request_ecctis_verification_task_item.status_tag.text).to eq(
-      "COMPLETED",
+      "Completed",
     )
   end
 
   def and_the_record_ecctis_response_task_is_waiting_on
-    expect(record_ecctis_response_task_item.status_tag.text).to eq("WAITING ON")
+    expect(record_ecctis_response_task_item.status_tag.text).to eq("Waiting on")
   end
 
   def when_i_click_the_record_ecctis_response_task
@@ -335,7 +336,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def and_the_record_ecctis_response_task_is_completed
-    expect(record_ecctis_response_task_item.status_tag.text).to eq("COMPLETED")
+    expect(record_ecctis_response_task_item.status_tag.text).to eq("Completed")
   end
 
   def and_i_submit_no_on_the_verify_form
@@ -347,7 +348,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def and_the_record_ecctis_response_task_is_review
-    expect(record_ecctis_response_task_item.status_tag.text).to eq("REVIEW")
+    expect(record_ecctis_response_task_item.status_tag.text).to eq("Review")
   end
 
   def when_i_go_back_to_overview

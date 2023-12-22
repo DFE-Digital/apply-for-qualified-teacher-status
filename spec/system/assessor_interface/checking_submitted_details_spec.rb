@@ -265,7 +265,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   def and_i_see_check_personal_information_completed
     expect(
       assessor_application_page.personal_information_task.status_tag.text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def when_i_choose_check_personal_information_no
@@ -313,7 +313,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_qualifications_completed
     expect(assessor_application_page.qualifications_task.status_tag.text).to eq(
-      "COMPLETED",
+      "Completed",
     )
   end
 
@@ -365,7 +365,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   def and_i_see_verify_age_range_subjects_completed
     expect(
       assessor_application_page.age_range_subjects_task.status_tag.text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def then_i_see_the_work_history
@@ -382,7 +382,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
 
   def and_i_see_check_work_history_completed
     expect(assessor_application_page.work_history_task.status_tag.text).to eq(
-      "COMPLETED",
+      "Completed",
     )
   end
 
@@ -436,7 +436,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   def and_i_see_check_professional_standing_completed
     expect(
       assessor_application_page.professional_standing_task.status_tag.text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def when_i_choose_check_professional_standing_no

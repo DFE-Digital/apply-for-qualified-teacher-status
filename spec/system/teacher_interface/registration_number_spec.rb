@@ -44,7 +44,7 @@ RSpec.describe "Teacher registration number", type: :system do
   def and_i_see_the_completed_registration_number_task
     expect(
       teacher_application_page.registration_number_task_item.status_tag.text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def teacher
