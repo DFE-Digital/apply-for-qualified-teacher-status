@@ -20,6 +20,11 @@ RSpec.describe AssessorInterface::QualificationRequestPolicy do
     it_behaves_like "a policy method without permission"
   end
 
+  describe "#consent_letter?" do
+    subject(:consent_letter?) { policy.consent_letter? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
   describe "#create?" do
     subject(:create?) { policy.create? }
     it_behaves_like "a policy method without permission"
