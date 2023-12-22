@@ -8,7 +8,7 @@ module PageObjects
 
       section :form, "form" do
         element :received_checkbox, ".govuk-checkboxes__input", visible: false
-        element :received_yes_radio_item,
+        element :received_true_radio_item,
                 "#assessor-interface-professional-standing-request-location-form-received-true-field",
                 visible: false
         element :note_textarea, ".govuk-textarea"

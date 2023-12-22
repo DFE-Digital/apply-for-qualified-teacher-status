@@ -9,7 +9,7 @@ module PageObjects
       section :task_list, TaskList, ".app-task-list"
 
       section :form, "form" do
-        element :yes_radio_item,
+        element :true_radio_item,
                 "#assessor-interface-verify-references-form-references-verified-true-field",
                 visible: false
         element :continue_button, ".govuk-button:not(.govuk-button--secondary)"

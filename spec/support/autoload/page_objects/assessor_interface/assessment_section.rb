@@ -6,10 +6,10 @@ module PageObjects
       element :heading, "h1"
 
       section :form, "form" do
-        element :yes_radio_item,
+        element :true_radio_item,
                 "#assessor-interface-assessment-section-form-passed-true-field",
                 visible: false
-        element :no_radio_item,
+        element :false_radio_item,
                 "#assessor-interface-assessment-section-form-passed-field",
                 visible: false
         sections :failure_reason_checkbox_items,

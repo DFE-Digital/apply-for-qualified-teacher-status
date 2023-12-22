@@ -261,12 +261,12 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def when_i_dont_upload_another_document
-    teacher_check_document_page.form.no_radio_item.choose
+    teacher_check_document_page.form.false_radio_item.choose
     teacher_check_document_page.form.continue_button.click
   end
 
   def when_i_do_upload_another_document
-    teacher_check_document_page.form.yes_radio_item.choose
+    teacher_check_document_page.form.true_radio_item.choose
     teacher_check_document_page.form.continue_button.click
   end
 
@@ -299,7 +299,7 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def when_i_add_another_qualification
-    teacher_add_another_qualification_page.form.yes_radio_item.choose
+    teacher_add_another_qualification_page.form.true_radio_item.choose
     teacher_add_another_qualification_page.form.continue_button.click
   end
 

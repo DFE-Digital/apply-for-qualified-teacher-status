@@ -9,25 +9,25 @@ module PageObjects
         sections :radio_items,
                  PageObjects::GovukRadioItem,
                  ".govuk-radios__item"
-        section :no_radio_item,
+        section :false_radio_item,
                 PageObjects::GovukRadioItem,
                 ".govuk-radios__item:nth-of-type(2)"
-        section :yes_radio_item,
+        section :true_radio_item,
                 PageObjects::GovukRadioItem,
                 ".govuk-radios__item:nth-of-type(1)"
-        section :no_radio_item,
+        section :false_radio_item,
                 PageObjects::GovukRadioItem,
                 ".govuk-radios__item:nth-of-type(2)"
         element :continue_button, "button"
       end
 
       def submit_yes
-        form.yes_radio_item.input.click
+        form.true_radio_item.input.click
         form.continue_button.click
       end
 
       def submit_no
-        form.no_radio_item.input.click
+        form.false_radio_item.input.click
         form.continue_button.click
       end
     end

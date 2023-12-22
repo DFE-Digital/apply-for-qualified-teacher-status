@@ -149,7 +149,7 @@ RSpec.describe "Teacher application check answers", type: :system do
   end
 
   def and_i_dont_need_to_upload_another_file
-    teacher_check_document_page.form.no_radio_item.input.click
+    teacher_check_document_page.form.false_radio_item.input.click
     teacher_check_document_page.form.continue_button.click
   end
 

@@ -15,7 +15,7 @@ module PageObjects
       end
 
       section :form, "form" do
-        element :yes_radio_item,
+        element :true_radio_item,
                 "#assessor-interface-requestable-review-form-passed-true-field",
                 visible: false
         element :continue_button, ".govuk-button"

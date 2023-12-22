@@ -110,7 +110,7 @@ RSpec.describe "Assessor verifying references", type: :system do
   end
 
   def when_i_verify_the_reference_request
-    assessor_edit_reference_request_page.form.yes_radio_item.choose
+    assessor_edit_reference_request_page.form.true_radio_item.choose
     assessor_edit_reference_request_page.form.continue_button.click
   end
 
@@ -128,7 +128,7 @@ RSpec.describe "Assessor verifying references", type: :system do
   end
 
   def when_i_verify_that_all_references_are_accepted
-    assessor_reference_requests_page.form.yes_radio_item.choose
+    assessor_reference_requests_page.form.true_radio_item.choose
     assessor_reference_requests_page.form.continue_button.click
   end
 

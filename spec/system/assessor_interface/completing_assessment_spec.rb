@@ -330,7 +330,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def when_i_select_yes_verify_qualifications
     assessor_verify_qualifications_assessment_recommendation_verify_page
       .form
-      .yes_radio_item
+      .true_radio_item
       .choose
     assessor_verify_qualifications_assessment_recommendation_verify_page
       .form
@@ -352,7 +352,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def when_i_select_yes_verify_professional_standing
     assessor_professional_standing_assessment_recommendation_verify_page
       .form
-      .yes_radio_item
+      .true_radio_item
       .choose
     assessor_professional_standing_assessment_recommendation_verify_page
       .form
@@ -382,7 +382,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def when_i_check_confirmation
     assessor_confirm_assessment_recommendation_page
       .form
-      .yes_radio_item
+      .true_radio_item
       .input
       .click
     assessor_confirm_assessment_recommendation_page.form.continue_button.click

@@ -91,12 +91,12 @@ RSpec.describe "Teacher written statement", type: :system do
   end
 
   def when_i_dont_have_the_document
-    teacher_document_available_page.form.no_radio_item.choose
+    teacher_document_available_page.form.false_radio_item.choose
     teacher_document_available_page.form.continue_button.click
   end
 
   def when_i_dont_need_to_upload_another_file
-    teacher_check_document_page.form.no_radio_item.input.click
+    teacher_check_document_page.form.false_radio_item.input.click
     teacher_check_document_page.form.continue_button.click
   end
 

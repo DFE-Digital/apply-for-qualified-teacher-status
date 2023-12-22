@@ -253,7 +253,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_personal_information_yes
-    assessor_check_personal_information_page.form.yes_radio_item.choose
+    assessor_check_personal_information_page.form.true_radio_item.choose
     assessor_check_personal_information_page.form.continue_button.click
   end
 
@@ -270,7 +270,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_personal_information_no
-    assessor_check_personal_information_page.form.no_radio_item.choose
+    assessor_check_personal_information_page.form.false_radio_item.choose
     assessor_check_personal_information_page
       .form
       .failure_reason_checkbox_items
@@ -293,12 +293,12 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_qualifications_yes
-    assessor_check_qualifications_page.form.yes_radio_item.choose
+    assessor_check_qualifications_page.form.true_radio_item.choose
     assessor_check_qualifications_page.form.continue_button.click
   end
 
   def when_i_choose_check_qualifications_no
-    assessor_check_qualifications_page.form.no_radio_item.choose
+    assessor_check_qualifications_page.form.false_radio_item.choose
     assessor_check_qualifications_page
       .form
       .failure_reason_checkbox_items
@@ -344,12 +344,12 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def and_i_choose_verify_age_range_subjects_yes
-    assessor_verify_age_range_subjects_page.form.yes_radio_item.choose
+    assessor_verify_age_range_subjects_page.form.true_radio_item.choose
     assessor_verify_age_range_subjects_page.form.continue_button.click
   end
 
   def and_i_choose_verify_age_range_subjects_no
-    assessor_verify_age_range_subjects_page.form.no_radio_item.choose
+    assessor_verify_age_range_subjects_page.form.false_radio_item.choose
     assessor_verify_age_range_subjects_page
       .form
       .failure_reason_checkbox_items
@@ -377,7 +377,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_work_history_yes
-    assessor_check_work_history_page.form.yes_radio_item.choose
+    assessor_check_work_history_page.form.true_radio_item.choose
     assessor_check_work_history_page.form.continue_button.click
   end
 
@@ -388,7 +388,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_work_history_no
-    assessor_check_work_history_page.form.no_radio_item.choose
+    assessor_check_work_history_page.form.false_radio_item.choose
     assessor_check_work_history_page
       .form
       .failure_reason_checkbox_items
@@ -413,7 +413,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_professional_standing_yes
-    assessor_check_professional_standing_page.form.yes_radio_item.choose
+    assessor_check_professional_standing_page.form.true_radio_item.choose
     assessor_check_professional_standing_page.form.continue_button.click
   end
 
@@ -423,14 +423,14 @@ RSpec.describe "Assessor check submitted details", type: :system do
   def when_i_choose_full_registration
     assessor_check_professional_standing_page
       .scotland_full_registration_form
-      .yes_radio_item
+      .true_radio_item
       .choose
   end
 
   def and_i_choose_induction_not_required
     assessor_check_professional_standing_page
       .induction_required_form
-      .no_radio_item
+      .false_radio_item
       .choose
   end
 
@@ -441,7 +441,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def when_i_choose_check_professional_standing_no
-    assessor_check_professional_standing_page.form.no_radio_item.choose
+    assessor_check_professional_standing_page.form.false_radio_item.choose
     assessor_check_professional_standing_page
       .form
       .failure_reason_checkbox_items
