@@ -244,7 +244,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   def then_i_can_see_failure_reasons_if_i_do_not_wish_to_confirm(page, key)
-    page.form.no_radio_item.choose
+    page.form.false_radio_item.choose
 
     expect(page.form.failure_reason_checkbox_items.last.text).to eq(
       I18n.t(
@@ -264,7 +264,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   def and_i_confirm_the_section_as_complete(page)
-    page.form.yes_radio_item.choose
+    page.form.true_radio_item.choose
     page.form.continue_button.click
   end
 

@@ -197,7 +197,7 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   def when_i_dont_add_another_work_history
-    teacher_add_another_work_history_page.form.no_radio_item.choose
+    teacher_add_another_work_history_page.form.false_radio_item.choose
     teacher_add_another_work_history_page.form.continue_button.click
   end
 
@@ -217,7 +217,7 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   def when_i_delete_work_history
-    teacher_delete_work_history_page.form.yes_radio_item.choose
+    teacher_delete_work_history_page.form.true_radio_item.choose
     teacher_delete_work_history_page.form.continue_button.click
   end
 

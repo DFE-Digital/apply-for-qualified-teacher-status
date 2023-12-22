@@ -104,16 +104,16 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   def when_the_request_is_received_and_passed
     form = assessor_edit_qualification_request_page.form
 
-    form.received_yes_radio_item.choose
-    form.passed_yes_radio_item.choose
+    form.received_true_radio_item.choose
+    form.passed_true_radio_item.choose
     form.submit_button.click
   end
 
   def when_the_request_is_received_and_not_passed
     form = assessor_edit_qualification_request_page.form
 
-    form.received_yes_radio_item.choose
-    form.passed_no_radio_item.choose
+    form.received_true_radio_item.choose
+    form.passed_false_radio_item.choose
     form.note_field.fill_in with: "Note."
     form.submit_button.click
   end
@@ -121,16 +121,16 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   def when_the_request_is_not_received_and_failed
     form = assessor_edit_qualification_request_page.form
 
-    form.received_no_radio_item.choose
-    form.failed_yes_radio_item.choose
+    form.received_false_radio_item.choose
+    form.failed_true_radio_item.choose
     form.submit_button.click
   end
 
   def when_the_request_is_not_received_and_not_failed
     form = assessor_edit_qualification_request_page.form
 
-    form.received_no_radio_item.choose
-    form.failed_no_radio_item.choose
+    form.received_false_radio_item.choose
+    form.failed_false_radio_item.choose
     form.submit_button.click
   end
 
