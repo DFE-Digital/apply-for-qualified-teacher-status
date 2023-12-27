@@ -23,7 +23,7 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl
 RUN apk add --update --no-cache build-base yarn postgresql14-dev git vips-dev
 
 # Install gems defined in Gemfile
-COPY .ruby-version Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock ./
 
 # Install gems and remove gem cache
 RUN bundler -v && \
