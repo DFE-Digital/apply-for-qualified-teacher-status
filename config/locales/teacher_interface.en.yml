@@ -96,17 +96,6 @@ en:
         title: Check your answers
       edit_contact:
         title: About you
-    uploads:
-      malware_scan:
-        error:
-          title: There’s a problem with your file
-          body: There’s a problem with this file. You’ll need to take another image of the document you want to upload, then try again.
-        pending:
-          title: We’re checking your file
-          body: We’re carrying out some checks on the file you’ve uploaded. Once we’ve successfully completed these checks, you’ll be able to preview your file.
-        suspect:
-          title: There’s a problem with your file
-          body: There’s a problem with this file. You’ll need to take another image of the document you want to upload, then try again.
     work_histories:
       add_another:
         title: Add another role
