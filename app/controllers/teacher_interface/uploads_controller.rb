@@ -18,7 +18,7 @@ module TeacherInterface
     before_action :load_upload, only: %i[delete destroy show]
 
     def show
-      if downloadable?(@upload)
+      if upload_downloadable?(@upload)
         send_blob_stream(@upload.attachment, disposition: :inline)
       else
         render "shared/malware_scan"

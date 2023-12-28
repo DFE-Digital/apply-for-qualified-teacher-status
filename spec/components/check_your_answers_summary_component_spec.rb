@@ -268,10 +268,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
         "upload.pdf (opens in a new tab)",
       )
       expect(row.at_css(".govuk-summary-list__value a")[:href]).to eq(
-        teacher_interface_application_form_document_upload_path(
-          model.document,
-          model.document.uploads.last,
-        ),
+        "/teacher/application/documents/#{model.document.id}/uploads/#{model.document.uploads.last.id}",
       )
     end
 
@@ -335,11 +332,11 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
         expect(row.at_css(".govuk-summary-list__value a").text).to eq(
           "upload.pdf (opens in a new tab)",
         )
+
+        document = model.translatable_document
+
         expect(row.at_css(".govuk-summary-list__value a")[:href]).to eq(
-          teacher_interface_application_form_document_upload_path(
-            model.translatable_document,
-            model.translatable_document.uploads.last,
-          ),
+          "/teacher/application/documents/#{document.id}/uploads/#{document.uploads.last.id}",
         )
       end
 
@@ -364,11 +361,11 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
         expect(row.at_css(".govuk-summary-list__value a").text).to eq(
           "translation_upload.pdf (opens in a new tab)",
         )
+
+        document = model.translatable_document
+
         expect(row.at_css(".govuk-summary-list__value a")[:href]).to include(
-          teacher_interface_application_form_document_upload_path(
-            model.translatable_document,
-            model.translatable_document.uploads.first,
-          ),
+          "/teacher/application/documents/#{document.id}/uploads/#{document.uploads.first.id}",
         )
       end
 
