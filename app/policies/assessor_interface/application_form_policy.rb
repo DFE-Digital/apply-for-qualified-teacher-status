@@ -14,6 +14,7 @@ class AssessorInterface::ApplicationFormPolicy < ApplicationPolicy
 
   alias_method :status?, :show?
   alias_method :timeline?, :show?
+  alias_method :show_pdf?, :show?
 
   def update?
     user.change_name_permission
