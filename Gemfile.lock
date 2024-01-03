@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-autocomplete.git
-  revision: 0d7038c0f8ecc47dbd09907d762fa0dd1b686b8e
+  revision: 11738c0e25778162e26eb7ab5e22a6ffce671b08
   specs:
     dfe-autocomplete (0.1.0)
       actionview (>= 7.0.2.3)
@@ -314,7 +314,7 @@ GEM
     mutex_m (0.2.0)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.4.8)
+    net-imap (0.4.9)
       date
       net-protocol
     net-pop (0.1.2)
