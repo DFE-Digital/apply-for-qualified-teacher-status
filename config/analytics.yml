@@ -389,7 +389,6 @@
     - created_at
     - end_date
     - end_date_is_estimate
-    - end_date_is_estimate
     - hours_per_week
     - id
     - job
