@@ -65,7 +65,8 @@
     - canonical_contact_email
     - city
     - contact_email
-    - country_code
+    - contact_job
+    - contact_name
     - email
     - job
     - school_name
