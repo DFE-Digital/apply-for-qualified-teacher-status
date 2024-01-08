@@ -17,26 +17,49 @@ class ConsentLetter
 
   delegate :application_form, to: :qualification_request
 
+  MARGIN = 62
+  LINE_PAD = 12
+  SECTION_PAD = 48
+
+  PRIVACY_URL = "https://apply-for-qts-in-england.education.gov.uk/privacy"
+
   def document
     @document ||=
-      Prawn::Document.new.tap do |pdf|
-        pdf.text "By submitting an application to the Apply for qualified teacher status (QTS) in England."
-        pdf.text "I have given consent for my data to be shared with organisations that can confirm teaching " \
-                   "qualifications or professional standing as a teacher."
-        pdf.text "I hereby authorise and request all parties to release information on my academic standing/records " \
-                   "to the TRA for the purpose of verification in accordance with UK GDPR."
+      Prawn::Document
+        .new(margin: MARGIN)
+        .tap do |pdf|
+          pdf.image("public/tra-logo.png", position: :right)
 
-        pdf.pad(30) do
+          pdf.pad(SECTION_PAD) do
+            pdf.text "By submitting an application to the Apply for qualified teacher status (QTS) in England."
+
+            pdf.pad(LINE_PAD) do
+              pdf.text "I have given consent for my data to be shared with organisations that can confirm " \
+                         "teaching qualifications or professional standing as a teacher."
+            end
+
+            pdf.text "I hereby authorise and request all parties to release information on my academic " \
+                       "standing/records to the TRA for the purpose of verification in accordance with UK GDPR."
+          end
+
           pdf.text "Name: #{application_form_full_name(application_form)}"
-          pdf.text "Date of birth: #{application_form.date_of_birth.to_fs(:long_ordinal_uk)}"
-          pdf.text "Date of consent: #{qualification_request.created_at.to_fs(:long_ordinal_uk)}"
-        end
 
-        pdf.text "The service is run by the Teaching Regulation Agency (TRA) an executive agency of the Department " \
-                   "for Education (DfE)."
-        pdf.text "The full privacy statement can be found " \
-                   "<link href='https://apply-for-qts-in-england.education.gov.uk/privacy'>here</link>.",
-                 inline_format: true
-      end
+          pdf.pad(LINE_PAD * 2) do
+            pdf.text "Date of birth: #{application_form.date_of_birth.to_fs(:long_ordinal_uk)}"
+          end
+
+          pdf.text "Date of consent: #{qualification_request.created_at.to_date.to_fs(:long_ordinal_uk)}"
+
+          pdf.pad(SECTION_PAD) do
+            pdf.text "The service is run by the Teaching Regulation Agency (TRA) an executive agency of the " \
+                       "Department for Education (DfE)."
+
+            pdf.pad_top(LINE_PAD) do
+              pdf.text "The full privacy statement can be found " \
+                         "<link href='#{PRIVACY_URL}'><u><color rgb='0000EE'>here</color></u></link>.",
+                       inline_format: true
+            end
+          end
+        end
   end
 end
