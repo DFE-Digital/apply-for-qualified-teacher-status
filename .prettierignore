@@ -16,7 +16,6 @@
 .prettierignore
 .rladr
 .rspec
-.ruby-version
 .tool-versions
 Dockerfile
 LICENCE

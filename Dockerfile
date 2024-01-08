@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.2.2-alpine as builder
+FROM ruby:3.3.0-alpine as builder
 
 WORKDIR /app
 
@@ -23,7 +23,7 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl
 RUN apk add --update --no-cache build-base yarn postgresql14-dev git vips-dev
 
 # Install gems defined in Gemfile
-COPY .ruby-version Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock ./
 
 # Install gems and remove gem cache
 RUN bundler -v && \
@@ -60,7 +60,7 @@ RUN rm -rf node_modules log/* tmp/* /tmp && \
     find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
-FROM ruby:3.2.2-alpine as production
+FROM ruby:3.3.0-alpine as production
 
 # The application runs from /app
 WORKDIR /app
