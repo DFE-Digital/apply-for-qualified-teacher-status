@@ -1,4 +1,10 @@
 feature_flags:
+  convert_documents_to_pdf:
+    author: Thomas Leese
+    description: >
+      Provide a way of automatically converting documents to a single PDF suitable for
+      uploading to the Ecctis portal.
+
   fetch_malware_scan_result:
     author: Steve Laing
     description: >
