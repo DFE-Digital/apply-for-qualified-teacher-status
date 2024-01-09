@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 DfE::Analytics.configure do |config|
-  config.queue = :analytics
+  config.entity_table_checks_enabled = Rails.env.production?
   config.environment = HostingEnvironment.name
+  config.queue = :analytics
 
   config.enable_analytics =
     proc do
