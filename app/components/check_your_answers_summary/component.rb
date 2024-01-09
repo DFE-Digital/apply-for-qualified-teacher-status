@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CheckYourAnswersSummary
   class Component < ViewComponent::Base
     def initialize(
@@ -63,11 +65,9 @@ module CheckYourAnswersSummary
     end
 
     def href_for(field)
-      return if (path = field[:href]).blank?
-
-      return path if path.is_a?(String)
-
-      Rails.application.routes.url_helpers.polymorphic_path(path)
+      if (path = field[:href]).present?
+        path.is_a?(String) ? path : url_helpers.polymorphic_path(path)
+      end
     end
 
     def row_for_field(field)
@@ -135,13 +135,21 @@ module CheckYourAnswersSummary
             .order(:created_at)
             .select { |upload| upload.attachment.present? }
 
-        malware_scan_active =
-          FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
-
         [
           format_array(uploads, field),
           if malware_scan_active && scope.scan_result_suspect.exists?
             "<em>One or more upload has been deleted by the virus scanner.</em>"
+          elsif request.path.starts_with?("/assessor") &&
+                convert_to_pdf_active && !uploads.all?(&:is_pdf?)
+            helpers.govuk_link_to(
+              "Download as PDF (opens in a new tab)",
+              url_helpers.assessor_interface_application_form_document_pdf_path(
+                document,
+                field[:translation] ? "translated" : "original",
+              ),
+              target: :_blank,
+              rel: :noopener,
+            )
           end,
         ].compact_blank.join("<br /><br />").html_safe
       end
@@ -149,6 +157,20 @@ module CheckYourAnswersSummary
 
     def format_array(list, field)
       list.map { |v| format_value(v, field) }.join("<br />").html_safe
+    end
+
+    def url_helpers
+      @url_helpers ||= Rails.application.routes.url_helpers
+    end
+
+    def malware_scan_active
+      @malware_scan_active ||=
+        FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
+    end
+
+    def convert_to_pdf_active
+      @convert_to_pdf_active =
+        FeatureFlags::FeatureFlag.active?(:convert_documents_to_pdf)
     end
   end
 end
