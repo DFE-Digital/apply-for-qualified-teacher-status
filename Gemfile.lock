@@ -142,6 +142,9 @@ GEM
       xpath (~> 3.2)
     cgi (0.4.1)
     climate_control (1.2.0)
+    combine_pdf (1.0.26)
+      matrix
+      ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crack (0.4.5)
@@ -504,6 +507,7 @@ GEM
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
+    ruby-rc4 (0.1.5)
     ruby-vips (2.2.0)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
@@ -606,6 +610,7 @@ DEPENDENCIES
   business
   capybara
   climate_control
+  combine_pdf
   cssbundling-rails
   cuprite
   debug

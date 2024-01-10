@@ -9,6 +9,7 @@ gem "activerecord-session_store"
 gem "azure-storage-blob"
 gem "bootsnap", require: false
 gem "business"
+gem "combine_pdf"
 gem "cssbundling-rails"
 gem "devise"
 gem "devise_invitable"
