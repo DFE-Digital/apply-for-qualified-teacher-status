@@ -1,0 +1,21 @@
+<h2 class="govuk-heading-l">Your QTS application has been closed</h2>
+
+<p class="govuk-body">
+  Thank you for beginning your application for qualified teacher status (QTS) in England. Unfortunately, your application has been closed.
+</p>
+
+<p class="govuk-body">
+  As we are unable to verify professional standing documents with the <%= region_teaching_authority_name(view_object.region) %> in <%= CountryName.from_country(view_object.country) %>, we have removed <%= CountryName.from_country(view_object.country) %> from the list of eligible countries.
+</p>
+
+<p class="govuk-body">
+  This means you will not be able to complete and submit your application.
+</p>
+
+<h3 class="govuk-heading-m">Why we need to verify documents</h3>
+
+<p class="govuk-body">
+  We need to be able to verify all documents submitted by applicants with the relevant authorities. This is to ensure QTS requirements are applied fairly and consistently to every teacher, regardless of the country they trained to teach in.
+</p>
+
+<%= render "teacher_interface/application_forms/show/what_can_you_do_next", view_object: %>

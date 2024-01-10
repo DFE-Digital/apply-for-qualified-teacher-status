@@ -5,7 +5,9 @@ require "rails_helper"
 RSpec.describe TeacherInterface::ApplicationFormViewObject do
   subject(:view_object) { described_class.new(application_form:) }
 
-  let(:application_form) { create(:application_form) }
+  let(:country) { create(:country) }
+  let(:region) { create(:region, country:) }
+  let(:application_form) { create(:application_form, region:) }
 
   describe "#assessment" do
     subject(:assessment) { view_object.assessment }
@@ -207,6 +209,24 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
     let(:assessment) { create(:assessment, application_form:) }
 
+    context "when the country has been made ineligible" do
+      let(:country) { create(:country, :ineligible, code: "ZW") }
+
+      it do
+        is_expected.to eq(
+          {
+            "" => [
+              "As we are unable to verify professional standing documents with the teaching authority in Zimbabwe, " \
+                "we have removed Zimbabwe from the list of eligible countries.\n\nWe need to be able to verify all " \
+                "documents submitted by applicants with the relevant authorities. This is to ensure QTS requirements " \
+                "are applied fairly and consistently to every teacher, regardless of the country they trained to " \
+                "teach in.",
+            ],
+          },
+        )
+      end
+    end
+
     context "when further_information_request is present and expired" do
       before { create(:further_information_request, :expired, assessment:) }
       it do
@@ -312,15 +332,21 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
         it { is_expected.to be true }
       end
+    end
+  end
 
-      context "with an ineligible country" do
-        let(:country) { create(:country, :ineligible) }
-        let(:application_form) do
-          create(:application_form, region: create(:region, country:))
-        end
+  describe "#from_ineligible_country?" do
+    subject(:from_ineligible_country?) { view_object.from_ineligible_country? }
 
-        it { is_expected.to be true }
+    it { is_expected.to be false }
+
+    context "with an ineligible country" do
+      let(:country) { create(:country, :ineligible) }
+      let(:application_form) do
+        create(:application_form, region: create(:region, country:))
       end
+
+      it { is_expected.to be true }
     end
   end
 

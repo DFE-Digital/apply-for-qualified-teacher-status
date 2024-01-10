@@ -29,6 +29,15 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def application_from_ineligible_country
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject:
+        I18n.t("mailer.teacher.application_from_ineligible_country.subject"),
+    )
+  end
+
   def application_not_submitted
     @number_of_reminders_sent = params[:number_of_reminders_sent]
 

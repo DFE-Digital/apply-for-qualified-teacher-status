@@ -12,6 +12,8 @@
   <%= render "teacher_interface/application_forms/show/request_professional_standing_certificate", view_object: @view_object %>
 <% elsif @view_object.application_form.submitted? %>
   <%= render "teacher_interface/application_forms/show/complete", view_object: @view_object %>
+<% elsif @view_object.from_ineligible_country? %>
+  <%= render "teacher_interface/application_forms/show/from_ineligible_country", view_object: @view_object %>
 <% else %>
   <%= render "teacher_interface/application_forms/show/draft", view_object: @view_object %>
 <% end %>

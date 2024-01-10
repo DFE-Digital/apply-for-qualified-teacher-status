@@ -160,12 +160,10 @@ class ApplicationForm < ApplicationRecord
 
   scope :active,
         -> do
-          where(hidden_from_assessment: false).merge(
-            assessable
-              .or(where("awarded_at >= ?", 90.days.ago))
-              .or(where("declined_at >= ?", 90.days.ago))
-              .or(where("withdrawn_at >= ?", 90.days.ago)),
-          )
+          assessable
+            .or(where("awarded_at >= ?", 90.days.ago))
+            .or(where("declined_at >= ?", 90.days.ago))
+            .or(where("withdrawn_at >= ?", 90.days.ago))
         end
 
   scope :destroyable,
@@ -179,8 +177,23 @@ class ApplicationForm < ApplicationRecord
 
   scope :remindable,
         -> do
-          verification_stage.or(
-            where(submitted_at: nil).where("created_at < ?", 5.months.ago),
+          joins(region: :country).verification_stage.or(
+            where(
+              countries: {
+                eligibility_enabled: true,
+              },
+              created_at: ...5.months.ago,
+              submitted_at: nil,
+            ),
+          )
+        end
+
+  scope :from_ineligible_country,
+        -> do
+          joins(region: :country).where(
+            countries: {
+              eligibility_enabled: false,
+            },
           )
         end
 
