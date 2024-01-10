@@ -2,7 +2,6 @@ class ErrorsController < ApplicationController
   include EligibilityCurrentNamespace
 
   skip_before_action :verify_authenticity_token
-  layout "two_thirds"
 
   def forbidden
     render "forbidden", formats: :html, status: :forbidden

@@ -20,5 +20,7 @@ class PerformanceController < ApplicationController
       stats.live_service_usage
     @time_to_complete_data = stats.time_to_complete
     @usage_by_country_count, @usage_by_country_data = stats.usage_by_country
+
+    render layout: "full_from_desktop"
   end
 end

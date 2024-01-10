@@ -20,7 +20,8 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl
 # postgresql-dev: postgres driver and libraries
 # git: dependencies for bundle
 # vips-dev: dependencies for ruby-vips (image processing library)
-RUN apk add --update --no-cache build-base yarn postgresql14-dev git vips-dev
+# imagemagick-dev: dependencies for rmagick (image conversion library)
+RUN apk add --update --no-cache build-base yarn postgresql14-dev git vips-dev imagemagick-dev
 
 # Install gems defined in Gemfile
 COPY Gemfile Gemfile.lock ./
@@ -82,7 +83,13 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl
 
 # libpq: required to run postgres
 # vips-dev: dependencies for ruby-vips (image processing library)
-RUN apk add --update --no-cache libpq vips-dev
+# libreoffice-writer: for converting word documents to PDF
+# imagemagick-dev and imagemagick-pdf: for converting images to PDF
+RUN apk add --update --no-cache libpq vips-dev libreoffice-writer imagemagick-dev imagemagick-pdf
+
+# Install fonts suitable for rendering DOCX and ODT files to PDF
+# https://wiki.alpinelinux.org/wiki/Fonts#Installation
+RUN apk add font-terminus font-bitstream-100dpi font-bitstream-75dpi font-bitstream-type1 font-noto font-noto-extra font-arabic-misc font-misc-cyrillic font-mutt-misc font-screen-cyrillic font-winitzki-cyrillic font-cronyx-cyrillic font-noto-arabic font-noto-armenian font-noto-cherokee font-noto-devanagari font-noto-ethiopic font-noto-georgian font-noto-hebrew font-noto-lao font-noto-malayalam font-noto-tamil font-noto-thaana font-noto-thai
 
 # Copy files generated in the builder image
 COPY --from=builder /app /app

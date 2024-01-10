@@ -8,12 +8,12 @@ module AssessorInterface
     include UploadHelper
 
     skip_before_action :authenticate_staff!
-    before_action -> { authenticate_or_redirect(:staff) }
+    before_action { authenticate_or_redirect(:staff) }
 
     def show
       authorize %i[assessor_interface application_form]
 
-      if downloadable?(upload)
+      if upload_downloadable?(upload)
         send_blob_stream(upload.attachment, disposition: :inline)
       else
         render "shared/malware_scan"

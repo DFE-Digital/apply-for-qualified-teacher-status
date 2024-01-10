@@ -46,4 +46,8 @@ class Upload < ApplicationRecord
   end
 
   delegate :application_form, to: :document
+
+  def is_pdf?
+    attachment.blob.content_type == "application/pdf"
+  end
 end
