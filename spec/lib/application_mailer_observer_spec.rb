@@ -46,7 +46,7 @@ RSpec.describe ApplicationMailerObserver do
       create(
         :application_form,
         :with_personal_information,
-        :with_completed_qualification,
+        :with_teaching_qualification,
         region:,
       )
     end

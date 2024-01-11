@@ -84,7 +84,7 @@ RSpec.describe "Teacher submitting", type: :system do
         :with_registration_number,
         :with_work_history,
         :with_written_statement,
-        :with_completed_qualification,
+        :with_teaching_qualification,
         teacher:,
       )
   end

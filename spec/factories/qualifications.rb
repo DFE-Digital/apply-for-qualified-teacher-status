@@ -30,9 +30,9 @@ FactoryBot.define do
       title { Faker::Educator.degree }
       institution_name { Faker::University.name }
       sequence :institution_country_code, Country::CODES.cycle
-      start_date { Date.new(2020, 1, 1) }
-      complete_date { Date.new(2021, 1, 1) }
-      certificate_date { Date.new(2021, 1, 1) }
+      start_date { Faker::Date.between(from: 30.years.ago, to: 10.years.ago) }
+      complete_date { start_date + 5.years }
+      certificate_date { complete_date + 1.year }
       part_of_university_degree { true }
 
       after(:create) do |qualification, _evaluator|

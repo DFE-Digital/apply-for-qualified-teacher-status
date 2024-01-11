@@ -37,16 +37,25 @@ FactoryBot.define do
     canonical_contact_email { EmailAddress.canonical(contact_email) }
 
     trait :completed do
-      school_name { "School" }
-      city { "City" }
-      sequence :country_code, Country::CODES.cycle
-      job { "Job" }
-      hours_per_week { 30 }
-      start_date { Date.new(2020, 1, 1) }
-      still_employed { true }
+      city { Faker::Address.city }
+      contact_job { Faker::Job.title }
       contact_name { Faker::Name.name }
-      contact_job { "Job" }
+      hours_per_week { Faker::Number.between(from: 20, to: 40) }
+      job { Faker::Job.title }
+      school_name { Faker::Educator.primary_school }
+      sequence :country_code, Country::CODES.cycle
       sequence(:contact_email) { |n| "school#{n}@example.org" }
+      start_date { Faker::Date.between(from: 5.years.ago, to: 9.months.ago) }
+      still_employed
+    end
+
+    trait :still_employed do
+      still_employed { true }
+    end
+
+    trait :not_still_employed do
+      end_date { Faker::Date.between(from: start_date, to: 3.months.ago) }
+      still_employed { false }
     end
   end
 end

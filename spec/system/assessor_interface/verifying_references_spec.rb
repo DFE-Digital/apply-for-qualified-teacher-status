@@ -159,8 +159,9 @@ RSpec.describe "Assessor verifying references", type: :system do
             :work_history,
             :completed,
             application_form:,
-            contact_name: "John Smith",
             contact_job: "Headteacher",
+            contact_name: "John Smith",
+            school_name: "School",
           )
         assessment =
           create(
