@@ -35,6 +35,10 @@ FactoryBot.define do
   factory :assessment do
     association :application_form, :submitted
 
+    induction_required do
+      application_form.reduced_evidence_accepted ? false : nil
+    end
+
     trait :started do
       started_at { Time.zone.now }
       after(:create) do |assessment, _evaluator|
