@@ -137,7 +137,7 @@ def application_form_traits_for(region)
   traits =
     %i[
       with_personal_information
-      with_completed_qualification
+      with_degree_qualification
       with_identification_document
       with_age_range
       with_subjects
@@ -188,20 +188,28 @@ def create_requestables(application_form, assessment, state)
     unless application_form.teaching_authority_provides_written_statement
       assessment.verify!
     end
-  elsif (work_history = application_form.work_histories.first) && rand(3).zero?
-    FactoryBot.create(:reference_request, state, assessment:, work_history:)
+  elsif (work_histories = application_form.work_histories).present? &&
+        rand(3).zero?
+    work_histories.each do |work_history|
+      FactoryBot.create(:reference_request, state, assessment:, work_history:)
+    end
+
     application_form.update!(
       statuses: ["#{status_prefix}_reference"],
       stage: "verification",
     )
     assessment.verify!
-  elsif (qualification = application_form.qualifications.first) && rand(2).zero?
-    FactoryBot.create(
-      :qualification_request,
-      state,
-      assessment:,
-      qualification:,
-    )
+  elsif (qualifications = application_form.qualifications).present? &&
+        rand(2).zero?
+    qualifications.each do |qualification|
+      FactoryBot.create(
+        :qualification_request,
+        state,
+        assessment:,
+        qualification:,
+      )
+    end
+
     application_form.update!(
       statuses: ["#{status_prefix}_qualification"],
       stage: "verification",

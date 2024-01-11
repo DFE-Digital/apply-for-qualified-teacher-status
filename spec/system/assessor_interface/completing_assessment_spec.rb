@@ -200,7 +200,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
       create(
         :application_form,
         :with_personal_information,
-        :with_completed_qualification,
+        :with_teaching_qualification,
         :submitted,
         *traits,
       )

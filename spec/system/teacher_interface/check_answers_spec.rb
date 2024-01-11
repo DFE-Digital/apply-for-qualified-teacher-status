@@ -135,16 +135,21 @@ RSpec.describe "Teacher application check answers", type: :system do
     index = 0
     while (
             row =
-              teacher_check_your_answers_page
-                .send(section)
-                .send("#{summary_list}_summary_list")
-                .rows[
-                index
-              ]
+              find_change_link_summary_list(section, summary_list).rows[index]
           )
       row.actions.link.click
       block.call
       index += 1
+    end
+  end
+
+  def find_change_link_summary_list(section, summary_list)
+    section_page_object = teacher_check_your_answers_page.send(section)
+
+    begin
+      section_page_object.send("#{summary_list}_summary_list")
+    rescue NoMethodError
+      section_page_object.send("#{summary_list}_summary_lists").first
     end
   end
 
@@ -168,7 +173,7 @@ RSpec.describe "Teacher application check answers", type: :system do
         :with_registration_number,
         :with_work_history,
         :with_written_statement,
-        :with_completed_qualification,
+        :with_teaching_qualification,
         teacher:,
       )
   end

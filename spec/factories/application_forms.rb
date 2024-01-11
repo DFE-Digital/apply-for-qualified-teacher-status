@@ -289,7 +289,7 @@ FactoryBot.define do
       end
     end
 
-    trait :with_completed_qualification do
+    trait :with_teaching_qualification do
       after(:create) do |application_form, _evaluator|
         create(
           :qualification,
@@ -297,6 +297,13 @@ FactoryBot.define do
           application_form:,
           institution_country_code: application_form.country.code,
         )
+      end
+    end
+
+    trait :with_degree_qualification do
+      with_teaching_qualification
+      after(:create) do |application_form, _evaluator|
+        create(:qualification, :completed, application_form:)
       end
     end
 
@@ -356,7 +363,13 @@ FactoryBot.define do
       has_work_history { true }
 
       after(:create) do |application_form, _evaluator|
-        create(:work_history, :completed, application_form:)
+        create(:work_history, :completed, :still_employed, application_form:)
+        create(
+          :work_history,
+          :completed,
+          :not_still_employed,
+          application_form:,
+        )
       end
     end
 
