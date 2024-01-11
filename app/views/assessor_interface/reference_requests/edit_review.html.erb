@@ -1,5 +1,5 @@
 <% content_for :page_title, title_with_error_prefix("Review reference", error: @form.errors.any?) %>
-<% content_for :back_link_url, review_assessor_interface_application_form_assessment_path %>
+<% content_for :back_link_url, review_assessor_interface_application_form_assessment_path(@application_form, @assessment) %>
 
 <%= form_with model: @form, url: [:review, :assessor_interface, @application_form, @assessment, @reference_request] do |f| %>
   <%= f.govuk_error_summary %>
@@ -13,7 +13,7 @@
   <% if @reference_request.expired? && @reference_request.received? %>
     <%= govuk_inset_text do %>
       <p>This reference’s status has changed from <%= render(StatusTag::Component.new("overdue")) %> to <%= render(StatusTag::Component.new("received")) %>.</p>
-      <p><%= govuk_link_to "View reference details", [:verify, :assessor_interface, @application_form, @assessment, @reference_request] %></p>
+      <p><%= govuk_link_to "View reference details", verify_assessor_interface_application_form_assessment_reference_request_path(@application_form, @assessment, @reference_request, back_to: "review") %></p>
     <% end %>
 
     <%= govuk_details(summary_text: "See previous notes") do %>
@@ -26,7 +26,7 @@
     <%= govuk_inset_text do %>
       <h3 class="govuk-heading-s">Internal note</h3>
       <%= simple_format @reference_request.verify_note %>
-      <p><%= govuk_link_to "View reference details", [:verify, :assessor_interface, @application_form, @assessment, @reference_request] %></p>
+      <p><%= govuk_link_to "View reference details", verify_assessor_interface_application_form_assessment_reference_request_path(@application_form, @assessment, @reference_request, back_to: "review") %></p>
     <% end %>
   <% end %>
 
