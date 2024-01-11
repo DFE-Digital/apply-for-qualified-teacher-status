@@ -67,6 +67,9 @@ class ReferenceRequest < ApplicationRecord
             .merge(ApplicationForm.assessable)
         end
 
+  scope :order_by_role, -> { order("work_histories.start_date": :desc) }
+  scope :order_by_user, -> { order("work_histories.created_at": :asc) }
+
   with_options if: :received? do
     validates :contact_response, inclusion: [true, false]
     validates :dates_response, inclusion: [true, false]

@@ -34,6 +34,7 @@ module AssessorInterface
           .reference_requests
           .includes(:work_history)
           .where(verify_passed: false)
+          .order_by_role
 
       render layout: "full_from_desktop"
     end

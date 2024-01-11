@@ -21,7 +21,7 @@
     <h2 class="govuk-heading-m">Your work history</h2>
 
     <%= render "shared/application_form/work_history_summary",
-               work_histories: @application_form.work_histories.ordered,
+               work_histories: @application_form.work_histories.order_by_user,
                highlighted_contact_emails: [] %>
   </section>
 <% end %>

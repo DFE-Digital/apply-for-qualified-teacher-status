@@ -40,11 +40,12 @@ class WorkHistory < ApplicationRecord
           required: false,
           dependent: :destroy
 
-  scope :ordered, -> { order(created_at: :asc) }
+  scope :order_by_role, -> { order(start_date: :desc) }
+  scope :order_by_user, -> { order(created_at: :asc) }
 
   def current_or_most_recent_role?
     application_form.work_histories.empty? ||
-      application_form.work_histories.ordered.first == self
+      application_form.work_histories.order_by_role.first == self
   end
 
   def locale_key

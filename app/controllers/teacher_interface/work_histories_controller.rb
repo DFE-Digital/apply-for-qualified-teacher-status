@@ -23,7 +23,7 @@ module TeacherInterface
         redirect_to %i[new teacher_interface application_form work_history]
       elsif (
             work_history =
-              application_form.work_histories.ordered.find(&:incomplete?)
+              application_form.work_histories.order_by_user.find(&:incomplete?)
           )
         redirect_to [
                       :school,
@@ -42,7 +42,7 @@ module TeacherInterface
     end
 
     def check_collection
-      @work_histories = application_form.work_histories.ordered
+      @work_histories = application_form.work_histories.order_by_user
       @came_from_add_another =
         history_stack.last_entry&.fetch(:path) ==
           add_another_teacher_interface_application_form_work_histories_path
@@ -202,7 +202,7 @@ module TeacherInterface
     def check_member
       @work_history = work_history
 
-      work_histories = application_form.work_histories.ordered.to_a
+      work_histories = application_form.work_histories.order_by_user.to_a
       @next_work_history =
         work_histories[work_histories.index(work_history) + 1]
     end
