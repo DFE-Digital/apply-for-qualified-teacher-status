@@ -29,14 +29,8 @@
 FactoryBot.define do
   factory :further_information_request_item do
     association :further_information_request
-    failure_reason_assessor_feedback do
-      {
-        notes: Faker::Lorem.paragraph,
-        contact_name: nil,
-        contact_job: nil,
-        contact_email: nil,
-      }
-    end
+
+    failure_reason_assessor_feedback { Faker::Lorem.paragraph }
 
     trait :with_text_response do
       information_type { "text" }
