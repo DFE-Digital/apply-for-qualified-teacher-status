@@ -147,7 +147,14 @@ RSpec.describe "Assessor reviewing references", type: :system do
             induction_required: false,
             references_verified: true,
           )
-        create(:reference_request, :received, assessment:, verify_passed: false)
+        create(
+          :reference_request,
+          :received,
+          assessment:,
+          verify_passed: false,
+          work_history:
+            create(:work_history, :completed, school_name: "School"),
+        )
       end
   end
 

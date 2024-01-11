@@ -173,9 +173,12 @@ RSpec.describe "Teacher reference", type: :system do
           create(
             :work_history,
             :completed,
-            end_date: Date.new(2023, 1, 1),
-            contact_name: "John Smith",
             contact_job: "Headteacher",
+            contact_name: "John Smith",
+            end_date: Date.new(2023, 1, 1),
+            hours_per_week: 30,
+            school_name: "School",
+            start_date: Date.new(2020, 1, 1),
           ),
       )
   end
