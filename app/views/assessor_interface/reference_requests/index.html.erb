@@ -1,64 +1,57 @@
-<% content_for :page_title, "#{"Error: " if @form.errors.any?}Work references" %>
+<% content_for :page_title, title_with_error_prefix("Work references", error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @form, url: [:verify_references, :assessor_interface, @application_form, @assessment, :reference_requests] do |f| %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <%= render "shared/assessor_header", title: "Work references", application_form: @application_form %>
+  <%= render "shared/assessor_header", title: "Work references", application_form: @application_form %>
 
-      <%= f.govuk_error_summary %>
+  <%= f.govuk_error_summary %>
 
-      <p>This page shows all the work references requested for this application and the number of months of work experience that each one represents.</p>
-      <p>You can select and review any reference that has the status <span>RECEIVED</span>.</p>
-    </div>
+  <p class="govuk-body">This page shows all the work references requested for this application and the number of months of work experience that each one represents.</p>
+  <p class="govuk-body">You can select and review any reference that has the status <span>RECEIVED</span>.</p>
 
-    <div class="govuk-grid-column-full-from-desktop">
-      <%= render TaskList::Component.new(
-        [
+  <%= render TaskList::Component.new(
+    [
+      {
+        title: "Work references",
+        indentation: false,
+        items: @reference_requests.map do |reference_request|
           {
-            title: "Work references",
-            indentation: false,
-            items: @reference_requests.map do |reference_request|
-              {
-                name: work_history_name_and_duration(reference_request.work_history),
-                link: [:edit, :assessor_interface, @application_form, @assessment, reference_request],
-                status: reference_request.status
-              }
-            end
+            name: work_history_name_and_duration(reference_request.work_history),
+            link: [:edit, :assessor_interface, @application_form, @assessment, reference_request],
+            status: reference_request.status
           }
-        ]
-      ) %>
-    </div>
+        end
+      }
+    ]
+  ) %>
 
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-s">Check:</h2>
-      <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-        <li>the reference from the current or most recent role has been received and is valid (if required)</li>
-        <li>the references that you’ve checked and marked as valid add up to the required number of months for this application to progress</li>
-      </ul>
+  <h2 class="govuk-heading-s">Check:</h2>
+  <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+    <li>the reference from the current or most recent role has been received and is valid (if required)</li>
+    <li>the references that you’ve checked and marked as valid add up to the required number of months for this application to progress</li>
+  </ul>
 
-      <%= f.govuk_radio_buttons_fieldset(
-        :references_verified,
-        legend: {
-          text: "Have enough valid work references been received for this application to progress to either an award or decline?",
-          size: "s"
-        }) do %>
-        <%= f.govuk_radio_button(
-              :references_verified,
-              :true,
-              link_errors: true,
-              label: { text: "Yes, I can progress this application to award or decline" },
-              ) %>
-        <%= f.govuk_radio_button(
-              :references_verified,
-              :false,
-              label: { text: "No, I cannot progress this application yet" },
-              ) %>
-      <% end %>
+  <%= f.govuk_radio_buttons_fieldset(
+    :references_verified,
+    legend: {
+      text: "Have enough valid work references been received for this application to progress to either an award or decline?",
+      size: "s"
+  }) do %>
+    <%= f.govuk_radio_button(
+      :references_verified,
+      :true,
+      link_errors: true,
+      label: { text: "Yes, I can progress this application to award or decline" }
+    ) %>
 
-      <%= f.govuk_submit do %>
-        <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
-      <% end %>
-    </div>
-  </div>
+    <%= f.govuk_radio_button(
+      :references_verified,
+      :false,
+      label: { text: "No, I cannot progress this application yet" }
+    ) %>
+  <% end %>
+
+  <%= f.govuk_submit do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+  <% end %>
 <% end %>

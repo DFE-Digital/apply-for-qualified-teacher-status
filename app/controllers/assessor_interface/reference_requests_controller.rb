@@ -21,7 +21,7 @@ module AssessorInterface
           references_verified: @assessment.references_verified,
         )
 
-      render layout: "application"
+      render layout: "full_from_desktop"
     end
 
     def update_verify_references
@@ -34,7 +34,9 @@ module AssessorInterface
       if @form.save
         redirect_to [:assessor_interface, @application_form]
       else
-        render :index, layout: "application", status: :unprocessable_entity
+        render :index,
+               layout: "full_from_desktop",
+               status: :unprocessable_entity
       end
     end
 
