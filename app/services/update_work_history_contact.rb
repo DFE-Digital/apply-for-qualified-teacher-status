@@ -48,10 +48,10 @@ class UpdateWorkHistoryContact
   end
 
   def create_timeline_event(column_name, old_value, new_value)
-    TimelineEvent.create!(
-      event_type: "information_changed",
+    CreateTimelineEvent.call(
+      "information_changed",
       application_form:,
-      creator: user,
+      user:,
       work_history:,
       column_name:,
       old_value:,

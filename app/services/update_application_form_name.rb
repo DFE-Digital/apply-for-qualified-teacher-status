@@ -28,14 +28,11 @@ class UpdateApplicationFormName
     return if new_value == old_value
 
     application_form.update!(column_name => new_value)
-    create_timeline_event(column_name, old_value, new_value)
-  end
 
-  def create_timeline_event(column_name, old_value, new_value)
-    TimelineEvent.create!(
-      event_type: "information_changed",
+    CreateTimelineEvent.call(
+      "information_changed",
       application_form:,
-      creator: user,
+      user:,
       column_name:,
       old_value:,
       new_value:,

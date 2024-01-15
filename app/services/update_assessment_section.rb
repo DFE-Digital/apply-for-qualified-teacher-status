@@ -65,11 +65,11 @@ class UpdateAssessmentSection
     new_status = assessment_section.status
     return if old_status == new_status
 
-    TimelineEvent.create!(
-      creator: user,
-      event_type: "assessment_section_recorded",
-      assessment_section:,
+    CreateTimelineEvent.call(
+      "assessment_section_recorded",
       application_form:,
+      user:,
+      assessment_section:,
       old_value: old_status,
       new_value: new_status,
     )

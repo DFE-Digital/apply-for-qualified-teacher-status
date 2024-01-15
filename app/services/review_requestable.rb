@@ -34,11 +34,11 @@ class ReviewRequestable
   attr_reader :requestable, :user, :passed, :note
 
   def create_timeline_event(old_status:)
-    TimelineEvent.create!(
-      creator: user,
-      event_type: "requestable_reviewed",
-      requestable:,
+    CreateTimelineEvent.call(
+      "requestable_reviewed",
       application_form:,
+      user:,
+      requestable:,
       old_value: old_status,
       new_value: requestable.review_status,
       note_text: note,

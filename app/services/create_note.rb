@@ -13,10 +13,10 @@ class CreateNote
     ActiveRecord::Base.transaction do
       note = Note.create!(application_form:, author:, text:)
 
-      TimelineEvent.create!(
+      CreateTimelineEvent.call(
+        "note_created",
         application_form:,
-        event_type: "note_created",
-        creator: author,
+        user: author,
         note:,
       )
 

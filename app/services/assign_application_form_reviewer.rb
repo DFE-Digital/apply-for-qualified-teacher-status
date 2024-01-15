@@ -15,10 +15,10 @@ class AssignApplicationFormReviewer
     ActiveRecord::Base.transaction do
       application_form.update!(reviewer:)
 
-      TimelineEvent.create!(
+      CreateTimelineEvent.call(
+        "reviewer_assigned",
         application_form:,
-        event_type: "reviewer_assigned",
-        creator: user,
+        user:,
         assignee: reviewer,
       )
     end
