@@ -14,7 +14,14 @@ class ExpireRequestable
     ActiveRecord::Base.transaction do
       requestable.expired!
       requestable.after_expired(user:)
-      create_timeline_event
+
+      CreateTimelineEvent.call(
+        "requestable_expired",
+        application_form:,
+        user:,
+        requestable:,
+      )
+
       ApplicationFormStatusUpdater.call(user:, application_form:)
     end
 
@@ -32,18 +39,5 @@ class ExpireRequestable
 
   def invalid_state?
     requestable.expired? || requestable.received? || !requestable.requested?
-  end
-
-  def create_timeline_event
-    creator = user.is_a?(String) ? nil : user
-    creator_name = user.is_a?(String) ? user : ""
-
-    TimelineEvent.create!(
-      application_form:,
-      creator:,
-      creator_name:,
-      event_type: "requestable_expired",
-      requestable:,
-    )
   end
 end

@@ -23,7 +23,15 @@ class VerifyRequestable
       requestable.after_verified(user:)
       application_form.reload
 
-      create_timeline_event(old_status:)
+      CreateTimelineEvent.call(
+        "requestable_verified",
+        application_form:,
+        user:,
+        requestable:,
+        old_value: old_status,
+        new_value: requestable.verify_status,
+        note_text: note,
+      )
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
@@ -32,18 +40,6 @@ class VerifyRequestable
   private
 
   attr_reader :requestable, :user, :passed, :note
-
-  def create_timeline_event(old_status:)
-    TimelineEvent.create!(
-      creator: user,
-      event_type: "requestable_verified",
-      requestable:,
-      application_form:,
-      old_value: old_status,
-      new_value: requestable.verify_status,
-      note_text: note,
-    )
-  end
 
   delegate :application_form, to: :requestable
 end

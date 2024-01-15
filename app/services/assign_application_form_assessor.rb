@@ -15,10 +15,10 @@ class AssignApplicationFormAssessor
     ActiveRecord::Base.transaction do
       application_form.update!(assessor:)
 
-      TimelineEvent.create!(
+      CreateTimelineEvent.call(
+        "assessor_assigned",
         application_form:,
-        event_type: "assessor_assigned",
-        creator: user,
+        user:,
         assignee: assessor,
       )
     end

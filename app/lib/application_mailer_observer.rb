@@ -12,10 +12,12 @@ class ApplicationMailerObserver
       return
     end
 
-    TimelineEvent.create!(
-      creator_name: "Mailer",
-      event_type: "email_sent",
-      application_form_id:,
+    application_form = ApplicationForm.find(application_form_id)
+
+    CreateTimelineEvent.call(
+      "email_sent",
+      application_form:,
+      user: "Mailer",
       mailer_class_name:,
       mailer_action_name:,
       message_subject:,

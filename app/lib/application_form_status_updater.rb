@@ -13,8 +13,10 @@ class ApplicationFormStatusUpdater
       if (old_action_required_by = application_form.action_required_by) !=
            action_required_by
         application_form.action_required_by = action_required_by
-        create_timeline_event(
-          event_type: "action_required_by_changed",
+        CreateTimelineEvent.call(
+          "action_required_by_changed",
+          application_form:,
+          user:,
           old_value: old_action_required_by,
           new_value: action_required_by,
         )
@@ -22,8 +24,10 @@ class ApplicationFormStatusUpdater
 
       if (old_stage = application_form.stage) != stage
         application_form.stage = stage
-        create_timeline_event(
-          event_type: "stage_changed",
+        CreateTimelineEvent.call(
+          "stage_changed",
+          application_form:,
+          user:,
           old_value: old_stage,
           new_value: stage,
         )
@@ -284,18 +288,5 @@ class ApplicationFormStatusUpdater
       .reject(&:reviewed?)
       .reject(&:expired?)
       .any?(&:received?)
-  end
-
-  def create_timeline_event(event_type:, **kwargs)
-    creator = user.is_a?(String) ? nil : user
-    creator_name = user.is_a?(String) ? user : ""
-
-    TimelineEvent.create!(
-      application_form:,
-      event_type:,
-      creator:,
-      creator_name:,
-      **kwargs,
-    )
   end
 end

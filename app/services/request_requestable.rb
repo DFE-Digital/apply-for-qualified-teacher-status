@@ -13,7 +13,13 @@ class RequestRequestable
 
     ActiveRecord::Base.transaction do
       requestable.requested!
-      create_timeline_event
+
+      CreateTimelineEvent.call(
+        "requestable_requested",
+        application_form:,
+        user:,
+        requestable:,
+      )
     end
 
     requestable.after_requested(user:)
@@ -27,17 +33,4 @@ class RequestRequestable
   attr_reader :requestable, :user
 
   delegate :application_form, to: :requestable
-
-  def create_timeline_event
-    creator = user.is_a?(String) ? nil : user
-    creator_name = user.is_a?(String) ? user : ""
-
-    TimelineEvent.create!(
-      application_form:,
-      creator:,
-      creator_name:,
-      event_type: "requestable_requested",
-      requestable:,
-    )
-  end
 end

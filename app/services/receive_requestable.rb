@@ -13,7 +13,14 @@ class ReceiveRequestable
 
     ActiveRecord::Base.transaction do
       requestable.received!
-      create_timeline_event
+
+      CreateTimelineEvent.call(
+        "requestable_received",
+        application_form:,
+        user:,
+        requestable:,
+      )
+
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
@@ -28,17 +35,4 @@ class ReceiveRequestable
   attr_reader :requestable, :user
 
   delegate :application_form, to: :requestable
-
-  def create_timeline_event
-    creator = user.is_a?(String) ? nil : user
-    creator_name = user.is_a?(String) ? user : ""
-
-    TimelineEvent.create!(
-      application_form:,
-      creator:,
-      creator_name:,
-      event_type: "requestable_received",
-      requestable:,
-    )
-  end
 end
