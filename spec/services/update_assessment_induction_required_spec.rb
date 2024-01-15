@@ -4,7 +4,9 @@ require "rails_helper"
 
 RSpec.describe UpdateAssessmentInductionRequired do
   let(:application_form) { create(:application_form) }
-  let(:assessment) { create(:assessment, application_form:) }
+  let(:assessment) do
+    create(:assessment, application_form:, induction_required: nil)
+  end
 
   subject(:call) { described_class.call(assessment:) }
 
