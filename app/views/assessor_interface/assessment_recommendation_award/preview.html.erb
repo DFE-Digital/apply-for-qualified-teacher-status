@@ -8,7 +8,7 @@
 <%= render(PreviewMailer::Component.new(
   mailer_class: TeacherMailer,
   name: :application_awarded,
-  teacher: @application_form.teacher,
+  application_form: @application_form,
 )) %>
 
 <div class="govuk-button-group">

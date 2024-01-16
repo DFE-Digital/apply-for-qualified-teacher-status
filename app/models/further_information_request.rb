@@ -48,7 +48,7 @@ class FurtherInformationRequest < ApplicationRecord
 
   def send_reminder_email(_name, _number_of_reminders_sent)
     TeacherMailer
-      .with(teacher:, further_information_request: self)
+      .with(application_form:, further_information_request: self)
       .further_information_reminder
       .deliver_later
   end
@@ -63,7 +63,10 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def after_received(*)
-    TeacherMailer.with(teacher:).further_information_received.deliver_later
+    TeacherMailer
+      .with(application_form:)
+      .further_information_received
+      .deliver_later
   end
 
   def after_expired(user:)

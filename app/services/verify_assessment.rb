@@ -52,9 +52,7 @@ class VerifyAssessment
               :work_histories
 
   delegate :application_form, to: :assessment
-  delegate :teacher,
-           :teaching_authority_provides_written_statement,
-           to: :application_form
+  delegate :teaching_authority_provides_written_statement, to: :application_form
 
   def create_professional_standing_request
     if professional_standing && !teaching_authority_provides_written_statement
@@ -84,7 +82,7 @@ class VerifyAssessment
     end
 
     TeacherMailer
-      .with(teacher:, reference_requests:)
+      .with(application_form:, reference_requests:)
       .references_requested
       .deliver_later
   end

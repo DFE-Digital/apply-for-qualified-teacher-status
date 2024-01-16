@@ -267,13 +267,13 @@ class ApplicationForm < ApplicationRecord
     case name
     when "expiration"
       TeacherMailer
-        .with(teacher:, number_of_reminders_sent:)
+        .with(application_form: self, number_of_reminders_sent:)
         .application_not_submitted
         .deliver_later
     when "references"
       TeacherMailer
         .with(
-          teacher:,
+          application_form: self,
           number_of_reminders_sent:,
           reference_requests:
             reference_requests_not_yet_received_or_rejected.to_a,

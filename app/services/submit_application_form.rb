@@ -32,17 +32,11 @@ class SubmitApplicationForm
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
-    TeacherMailer
-      .with(teacher: application_form.teacher)
-      .application_received
-      .deliver_later
+    TeacherMailer.with(application_form:).application_received.deliver_later
 
     if !application_form.requires_preliminary_check &&
          application_form.teaching_authority_provides_written_statement
-      TeacherMailer
-        .with(teacher: application_form.teacher)
-        .initial_checks_passed
-        .deliver_later
+      TeacherMailer.with(application_form:).initial_checks_passed.deliver_later
     end
 
     if region.teaching_authority_requires_submission_email

@@ -29,7 +29,10 @@ class CreateFurtherInformationRequest
         requestable
       end
 
-    TeacherMailer.with(teacher:).further_information_requested.deliver_later
+    TeacherMailer
+      .with(application_form:)
+      .further_information_requested
+      .deliver_later
 
     further_information_request
   end
@@ -38,11 +41,5 @@ class CreateFurtherInformationRequest
 
   attr_reader :assessment, :user
 
-  def application_form
-    @application_form ||= assessment.application_form
-  end
-
-  def teacher
-    @teacher ||= application_form.teacher
-  end
+  delegate :application_form, to: :assessment
 end

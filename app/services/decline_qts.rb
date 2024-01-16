@@ -16,11 +16,10 @@ class DeclineQTS
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
-    TeacherMailer.with(teacher:).application_declined.deliver_later
+    TeacherMailer.with(application_form:).application_declined.deliver_later
   end
 
   private
 
   attr_reader :application_form, :user
-  delegate :teacher, to: :application_form
 end

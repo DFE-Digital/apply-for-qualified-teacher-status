@@ -47,7 +47,7 @@ RSpec.describe AwardQTS do
       expect { call }.to have_enqueued_mail(
         TeacherMailer,
         :application_awarded,
-      ).with(params: { teacher: }, args: [])
+      ).with(params: { application_form: }, args: [])
     end
 
     it "changes the status" do
@@ -93,7 +93,7 @@ RSpec.describe AwardQTS do
       expect { call }.to have_enqueued_mail(
         TeacherMailer,
         :application_awarded,
-      ).with(params: { teacher: }, args: [])
+      ).with(params: { application_form: }, args: [])
     end
 
     it "changes the status" do

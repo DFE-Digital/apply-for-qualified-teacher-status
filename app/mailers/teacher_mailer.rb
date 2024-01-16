@@ -4,9 +4,6 @@ class TeacherMailer < ApplicationMailer
   include RegionHelper
 
   before_action :set_application_form
-  before_action :set_further_information_request,
-                only: :further_information_reminder
-  before_action :set_further_information_requested, only: :application_declined
 
   helper :application_form, :region
 
@@ -76,6 +73,8 @@ class TeacherMailer < ApplicationMailer
   end
 
   def further_information_reminder
+    @further_information_request = params[:further_information_request]
+
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
       to: teacher.email,
@@ -129,23 +128,13 @@ class TeacherMailer < ApplicationMailer
 
   private
 
-  def teacher
-    params[:teacher]
+  def application_form
+    params[:application_form]
   end
 
-  delegate :application_form, to: :teacher
-  delegate :assessment, :region, to: :application_form
+  delegate :assessment, :region, :teacher, to: :application_form
 
   def set_application_form
     @application_form = application_form
-  end
-
-  def set_further_information_request
-    @further_information_request = params[:further_information_request]
-  end
-
-  def set_further_information_requested
-    @further_information_requested =
-      assessment.further_information_requests.any?
   end
 end
