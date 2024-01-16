@@ -15,7 +15,7 @@ module AssessorInterface
       @application_form = qualification_requests.first.application_form
       @assessment = qualification_requests.first.assessment
 
-      render layout: "application"
+      render layout: "full_from_desktop"
     end
 
     def consent_letter
