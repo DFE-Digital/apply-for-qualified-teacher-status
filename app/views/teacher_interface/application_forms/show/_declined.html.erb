@@ -9,11 +9,15 @@
     <h4 class="govuk-heading-s"><%= title %></h4>
   <% end %>
 
-  <ul class="govuk-list govuk-list--bullet">
-    <% reasons.each do |reason| %>
-      <li><%= simple_format reason %></li>
-    <% end %>
-  </ul>
+  <% if reasons.count == 1 %>
+    <%= simple_format reasons.first %>
+  <% else %>
+    <ul class="govuk-list govuk-list--bullet">
+      <% reasons.each do |reason| %>
+        <li><%= simple_format reason %></li>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>
 
 <%= render "teacher_interface/application_forms/show/what_can_you_do_next", view_object: %>
