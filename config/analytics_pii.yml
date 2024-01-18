@@ -32,7 +32,6 @@
     - verify_note
   :qualifications:
     - institution_name
-    - institution_country_code
   :qualification_requests:
     - location_note
     - review_note
@@ -65,8 +64,6 @@
     - canonical_contact_email
     - city
     - contact_email
-    - contact_job
     - contact_name
     - email
-    - job
     - school_name
