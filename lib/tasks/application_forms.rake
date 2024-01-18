@@ -79,7 +79,7 @@ namespace :application_forms do
     note =
       "We switched the teaching qualification to be the first eligible " \
         "qualification provided from #{teaching_qualification.title} to " \
-        "#{degree_qualification.title}. This was approved by Humzah on 12/12/2023."
+        "#{degree_qualification.title}. This was approved by Humzah on 18/01/2024."
     user = Staff.find_by!(email: args[:staff_email])
 
     SwapQualifications.call(
