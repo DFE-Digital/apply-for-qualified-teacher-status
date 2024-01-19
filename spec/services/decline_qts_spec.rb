@@ -15,7 +15,7 @@ RSpec.describe DeclineQTS do
       expect { call }.to have_enqueued_mail(
         TeacherMailer,
         :application_declined,
-      ).with(params: { teacher: }, args: [])
+      ).with(params: { application_form: }, args: [])
     end
 
     it "changes the stage" do

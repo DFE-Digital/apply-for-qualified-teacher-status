@@ -20,7 +20,9 @@ RSpec.describe TeacherMailer, type: :mailer do
   end
 
   describe "#application_awarded" do
-    subject(:mail) { described_class.with(teacher:).application_awarded }
+    subject(:mail) do
+      described_class.with(application_form:).application_awarded
+    end
 
     before do
       teacher.update!(
@@ -54,7 +56,9 @@ RSpec.describe TeacherMailer, type: :mailer do
   end
 
   describe "#application_declined" do
-    subject(:mail) { described_class.with(teacher:).application_declined }
+    subject(:mail) do
+      described_class.with(application_form:).application_declined
+    end
 
     describe "#subject" do
       subject(:subject) { mail.subject }
@@ -81,7 +85,9 @@ RSpec.describe TeacherMailer, type: :mailer do
 
   describe "#application_from_ineligible_country" do
     subject(:mail) do
-      described_class.with(teacher:).application_from_ineligible_country
+      described_class.with(
+        application_form:,
+      ).application_from_ineligible_country
     end
 
     describe "#subject" do
@@ -119,7 +125,7 @@ RSpec.describe TeacherMailer, type: :mailer do
   describe "#application_not_submitted" do
     subject(:mail) do
       described_class.with(
-        teacher:,
+        application_form:,
         number_of_reminders_sent:,
       ).application_not_submitted
     end
@@ -199,7 +205,9 @@ RSpec.describe TeacherMailer, type: :mailer do
   end
 
   describe "#application_received" do
-    subject(:mail) { described_class.with(teacher:).application_received }
+    subject(:mail) do
+      described_class.with(application_form:).application_received
+    end
 
     describe "#subject" do
       subject(:subject) { mail.subject }
@@ -250,7 +258,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
   describe "#further_information_received" do
     subject(:mail) do
-      described_class.with(teacher:).further_information_received
+      described_class.with(application_form:).further_information_received
     end
 
     describe "#subject" do
@@ -282,7 +290,7 @@ RSpec.describe TeacherMailer, type: :mailer do
   describe "#further_information_requested" do
     subject(:mail) do
       described_class.with(
-        teacher:,
+        application_form:,
         further_information_request:,
       ).further_information_requested
     end
@@ -325,7 +333,7 @@ RSpec.describe TeacherMailer, type: :mailer do
   describe "#further_information_reminder" do
     subject(:mail) do
       described_class.with(
-        teacher:,
+        application_form:,
         further_information_request:,
       ).further_information_reminder
     end
@@ -373,7 +381,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
   describe "#professional_standing_received" do
     subject(:mail) do
-      described_class.with(teacher:).professional_standing_received
+      described_class.with(application_form:).professional_standing_received
     end
 
     describe "#subject" do
@@ -428,7 +436,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     let(:number_of_reminders_sent) { nil }
     subject(:mail) do
       described_class.with(
-        teacher:,
+        application_form:,
         number_of_reminders_sent:,
         reference_requests: [reference_request],
       ).references_reminder
@@ -489,7 +497,7 @@ RSpec.describe TeacherMailer, type: :mailer do
   describe "#references_requested" do
     subject(:mail) do
       described_class.with(
-        teacher:,
+        application_form:,
         reference_requests: [
           create(:reference_request, :requested, assessment:),
         ],

@@ -154,7 +154,7 @@ RSpec.describe SubmitApplicationForm do
       expect { call }.to have_enqueued_mail(
         TeacherMailer,
         :application_received,
-      ).with(params: { teacher: application_form.teacher }, args: [])
+      ).with(params: { application_form: }, args: [])
     end
   end
 
@@ -191,7 +191,7 @@ RSpec.describe SubmitApplicationForm do
         expect { call }.to have_enqueued_mail(
           TeacherMailer,
           :initial_checks_passed,
-        ).with(params: { teacher: application_form.teacher }, args: [])
+        ).with(params: { application_form: }, args: [])
       end
     end
   end

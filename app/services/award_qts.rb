@@ -24,12 +24,15 @@ class AwardQTS
     raise MissingTRN if trn.blank?
 
     ActiveRecord::Base.transaction do
-      teacher.update!(trn:, access_your_teaching_qualifications_url:)
+      application_form.teacher.update!(
+        trn:,
+        access_your_teaching_qualifications_url:,
+      )
       application_form.update!(awarded_at: Time.zone.now)
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
-    TeacherMailer.with(teacher:).application_awarded.deliver_later
+    TeacherMailer.with(application_form:).application_awarded.deliver_later
   end
 
   class InvalidState < StandardError
@@ -44,6 +47,4 @@ class AwardQTS
               :user,
               :trn,
               :access_your_teaching_qualifications_url
-
-  delegate :teacher, to: :application_form
 end

@@ -33,7 +33,7 @@ RSpec.describe SendReminderEmail do
           :further_information_reminder,
         ).with(
           params: {
-            teacher:,
+            application_form:,
             further_information_request: remindable,
           },
           args: [],
@@ -67,7 +67,7 @@ RSpec.describe SendReminderEmail do
           :application_not_submitted,
         ).with(
           params: {
-            teacher: remindable.teacher,
+            application_form: remindable,
             number_of_reminders_sent: a_kind_of(Integer),
           },
           args: [],
@@ -84,7 +84,7 @@ RSpec.describe SendReminderEmail do
           :references_reminder,
         ).with(
           params: {
-            teacher: remindable.teacher,
+            application_form: remindable,
             number_of_reminders_sent: a_kind_of(Integer),
             reference_requests: [reference_request],
           },

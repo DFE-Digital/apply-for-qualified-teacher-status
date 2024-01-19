@@ -29,7 +29,7 @@ namespace :application_forms do
       next unless teacher.application_form == application_form
 
       TeacherMailer
-        .with(teacher:)
+        .with(application_form:)
         .application_from_ineligible_country
         .deliver_now
     end

@@ -96,10 +96,7 @@ module AssessorInterface
         return
       end
 
-      TeacherMailer
-        .with(teacher: application_form.teacher)
-        .initial_checks_passed
-        .deliver_later
+      TeacherMailer.with(application_form:).initial_checks_passed.deliver_later
     end
 
     def unassign_assessor

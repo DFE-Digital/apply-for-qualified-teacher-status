@@ -31,9 +31,7 @@ RSpec.describe ApplicationMailerObserver do
 
   context "with a teacher mailer" do
     let(:application_form) { create(:application_form) }
-    let(:message) do
-      TeacherMailer.with(teacher: application_form.teacher).application_received
-    end
+    let(:message) { TeacherMailer.with(application_form:).application_received }
 
     include_examples "observes mail"
   end

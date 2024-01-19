@@ -28,7 +28,7 @@ class UpdateWorkHistoryContact
     if email.present? && (reference_request = work_history.reference_request)
       RefereeMailer.with(reference_request:).reference_requested.deliver_later
       TeacherMailer
-        .with(teacher:, reference_requests: [reference_request])
+        .with(application_form:, reference_requests: [reference_request])
         .references_requested
         .deliver_later
     end
@@ -39,7 +39,6 @@ class UpdateWorkHistoryContact
   attr_reader :work_history, :user, :name, :job, :email
 
   delegate :application_form, to: :work_history
-  delegate :teacher, to: :application_form
 
   def change_value(column_name, new_value)
     old_value = work_history.send(column_name)

@@ -10,7 +10,7 @@
 <%= render(PreviewMailer::Component.new(
   mailer_class: TeacherMailer,
   name: :references_requested,
-  teacher: @application_form.teacher,
+  application_form: @application_form,
   reference_requests: [OpenStruct.new(
     expires_at: Time.zone.now + 6.weeks,
   )],

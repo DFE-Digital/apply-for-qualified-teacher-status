@@ -6,7 +6,7 @@
 <%= render(PreviewMailer::Component.new(
   mailer_class: TeacherMailer,
   name: :further_information_requested,
-  teacher: @application_form.teacher,
+  application_form: @application_form,
 )) %>
 
 <%= form_with model: [:assessor_interface, @application_form, @assessment, @further_information_request] do |f| %>
