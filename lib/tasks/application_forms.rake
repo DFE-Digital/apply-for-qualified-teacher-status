@@ -75,7 +75,7 @@ namespace :application_forms do
     application_form = ApplicationForm.find_by!(reference: args[:reference])
     teaching_qualification = application_form.teaching_qualification
     degree_qualification =
-      application_form.qualifications.ordered[args[:index].to_i]
+      application_form.qualifications.order_by_user[args[:index].to_i]
     note =
       "We switched the teaching qualification to be the first eligible " \
         "qualification provided from #{teaching_qualification.title} to " \

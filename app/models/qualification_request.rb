@@ -35,6 +35,9 @@ class QualificationRequest < ApplicationRecord
 
   belongs_to :qualification
 
+  scope :order_by_role, -> { order("qualifications.start_date": :desc) }
+  scope :order_by_user, -> { order("qualifications.created_at": :asc) }
+
   def expires_after
     6.weeks
   end

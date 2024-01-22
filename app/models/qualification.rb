@@ -26,7 +26,8 @@ class Qualification < ApplicationRecord
   belongs_to :application_form
   has_many :documents, as: :documentable, dependent: :destroy
 
-  scope :ordered, -> { order(created_at: :asc) }
+  scope :order_by_role, -> { order(start_date: :desc) }
+  scope :order_by_user, -> { order(created_at: :asc) }
 
   before_create :build_documents
 

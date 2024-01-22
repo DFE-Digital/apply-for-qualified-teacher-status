@@ -1,6 +1,6 @@
 <%= render "shared/application_form/qualifications_summary",
            application_form:,
-           qualifications: application_form.qualifications.ordered,
+           qualifications: application_form.qualifications.order_by_user,
            changeable: false,
            preliminary: assessment_section.preliminary? %>
 

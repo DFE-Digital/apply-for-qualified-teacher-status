@@ -9,7 +9,7 @@
   <p class="govuk-body">The list of qualifications that the applicant has submitted is shown below:</p>
 
   <%= f.govuk_collection_check_boxes :qualification_ids,
-                                     @application_form.qualifications.ordered,
+                                     @application_form.qualifications.order_by_role,
                                      :id,
                                      ->(qualification) { qualification_title(qualification) },
                                      small: true,
