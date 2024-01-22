@@ -95,6 +95,8 @@ module AssessorInterface
           requestable:,
           user: current_staff,
           passed: requestable.verify_passed,
+          received:
+            requestable.verify_passed == false ? requestable.received? : nil,
         )
     end
 
@@ -177,6 +179,7 @@ module AssessorInterface
     def verify_passed_form_params
       params.require(:assessor_interface_requestable_verify_passed_form).permit(
         :passed,
+        :received,
       )
     end
 
@@ -190,7 +193,7 @@ module AssessorInterface
       @professional_standing_request ||=
         ProfessionalStandingRequest.joins(
           assessment: :application_form,
-        ).find_by(
+        ).find_by!(
           assessment_id: params[:assessment_id],
           application_form: {
             reference: params[:application_form_reference],

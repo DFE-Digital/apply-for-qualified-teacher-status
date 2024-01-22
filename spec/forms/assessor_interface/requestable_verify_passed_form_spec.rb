@@ -4,22 +4,35 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::RequestableVerifyPassedForm, type: :model do
   let(:requestable) do
-    create(:reference_request, :received, verify_note: "Old note")
+    create(:reference_request, :requested, :receivable, verify_note: "Old note")
   end
   let(:user) { create(:staff) }
   let(:passed) { nil }
+  let(:received) { nil }
 
-  subject(:form) { described_class.new(requestable:, user:, passed:) }
+  subject(:form) do
+    described_class.new(requestable:, user:, passed:, received:)
+  end
 
   describe "validations" do
     it { is_expected.to allow_values(true, false).for(:passed) }
+    it { is_expected.to allow_values(nil, true, false).for(:received) }
   end
 
   describe "#save" do
     subject(:save) { form.save }
 
-    context "when passed is true" do
+    context "when passed and received is true" do
       let(:passed) { true }
+      let(:received) { nil }
+
+      it "sets received_at" do
+        freeze_time do
+          expect { save }.to change(requestable, :received_at).from(nil).to(
+            Time.zone.now,
+          )
+        end
+      end
 
       it "sets verify_passed" do
         expect { save }.to change(requestable, :verify_passed).from(nil).to(
@@ -47,6 +60,11 @@ RSpec.describe AssessorInterface::RequestableVerifyPassedForm, type: :model do
 
     context "when passed is false" do
       let(:passed) { false }
+      let(:received) { false }
+
+      it "doesn't set received_at" do
+        expect { save }.to_not change(requestable, :received_at)
+      end
 
       it "doesn't set verify_passed" do
         expect { save }.to_not change(requestable, :verify_passed)
