@@ -3,21 +3,18 @@
 require "rails_helper"
 
 RSpec.describe PreliminaryAssessmentSectionsFactory do
-  let(:application_form) { create(:application_form) }
-
   describe "#call" do
-    before { create(:country, :subject_limited, code: "SG") }
     subject(:assessment_sections) { described_class.call(application_form:) }
 
-    it { is_expected.to be_empty }
+    context "when the application form doesn't require a preliminary check" do
+      let(:application_form) { create(:application_form) }
 
-    context "when application form requires a preliminary check" do
+      it { is_expected.to be_empty }
+    end
+
+    context "when the application form requires a preliminary check" do
       let(:application_form) do
-        create(
-          :application_form,
-          :requires_preliminary_check,
-          region: create(:region, :in_country, country_code: "FR"),
-        )
+        create(:application_form, :requires_preliminary_check)
       end
 
       it { is_expected.to_not be_empty }
@@ -31,12 +28,14 @@ RSpec.describe PreliminaryAssessmentSectionsFactory do
         )
       end
 
-      context "with an application form with subject criteria" do
+      context "and the country is subject limited" do
+        let(:country) { create(:country, :subject_limited, code: "SG") }
+
         let(:application_form) do
           create(
             :application_form,
             :requires_preliminary_check,
-            region: create(:region, :in_country, country_code: "SG"),
+            region: create(:region, country:),
           )
         end
 
