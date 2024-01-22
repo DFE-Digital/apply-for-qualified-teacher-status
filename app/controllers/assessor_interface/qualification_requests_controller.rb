@@ -130,7 +130,7 @@ module AssessorInterface
               reference: params[:application_form_reference],
             },
           )
-          .order("qualifications.start_date": :desc)
+          .order_by_role
     end
 
     def qualification_request

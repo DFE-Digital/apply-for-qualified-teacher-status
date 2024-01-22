@@ -11,7 +11,7 @@
 
 <section id="app-application-form-who-you-can-teach">
   <h2 class="govuk-heading-m">Who you can teach</h2>
-  <%= render "shared/application_form/qualifications_summary", application_form: @application_form, qualifications: @application_form.qualifications.ordered, changeable: true %>
+  <%= render "shared/application_form/qualifications_summary", application_form: @application_form, qualifications: @application_form.qualifications.order_by_user, changeable: true %>
   <%= render "shared/application_form/age_range_summary", application_form: @application_form, changeable: true %>
   <%= render "shared/application_form/subjects_summary", application_form: @application_form, changeable: true %>
 </section>

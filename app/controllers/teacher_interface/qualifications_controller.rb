@@ -19,7 +19,7 @@ module TeacherInterface
       elsif application_form.qualifications.empty?
         redirect_to %i[new teacher_interface application_form qualification]
       else
-        ordered_qualifications = application_form.qualifications.ordered
+        ordered_qualifications = application_form.qualifications.order_by_user
 
         qualification =
           ordered_qualifications.find(&:incomplete?) ||
@@ -35,7 +35,7 @@ module TeacherInterface
     end
 
     def check_collection
-      @qualifications = application_form.qualifications.ordered
+      @qualifications = application_form.qualifications.order_by_user
       @came_from_add_another =
         history_stack.last_entry&.fetch(:path) ==
           add_another_teacher_interface_application_form_qualifications_path
@@ -183,7 +183,7 @@ module TeacherInterface
     def check_member
       @qualification = qualification
 
-      qualifications = application_form.qualifications.ordered.to_a
+      qualifications = application_form.qualifications.order_by_user.to_a
       @next_qualification =
         qualifications[qualifications.index(qualification) + 1]
     end

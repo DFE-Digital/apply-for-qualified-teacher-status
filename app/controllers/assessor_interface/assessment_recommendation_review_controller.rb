@@ -28,6 +28,7 @@ module AssessorInterface
           .qualification_requests
           .includes(:qualification)
           .where(verify_passed: false)
+          .order_by_role
 
       @reference_requests =
         assessment
