@@ -11,7 +11,7 @@
   <p class="govuk-body">These are shown below.</p>
 
   <%= f.govuk_collection_check_boxes :work_history_ids,
-                                      @application_form.work_histories.ordered,
+                                      @application_form.work_histories.order_by_role,
                                       :id,
                                       :school_name,
                                       small: true %>

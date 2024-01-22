@@ -39,13 +39,22 @@ RSpec.describe WorkHistory, type: :model do
     it { is_expected.to be_valid }
   end
 
-  describe "#ordered" do
+  describe "#order_by_role" do
+    subject(:order_by_role) { described_class.order_by_role }
+
+    let!(:newest) { create(:work_history, start_date: 1.week.ago) }
+    let!(:oldest) { create(:work_history, start_date: 1.month.ago) }
+
+    it { is_expected.to eq([newest, oldest]) }
+  end
+
+  describe "#order_by_user" do
+    subject(:order_by_user) { described_class.order_by_user }
+
     let!(:newest) { create(:work_history, created_at: 1.week.ago) }
     let!(:oldest) { create(:work_history, created_at: 1.month.ago) }
 
-    it "orders in reverse order of start date" do
-      expect(described_class.ordered).to eq([oldest, newest])
-    end
+    it { is_expected.to eq([oldest, newest]) }
   end
 
   describe "#current_or_most_recent_role?" do
