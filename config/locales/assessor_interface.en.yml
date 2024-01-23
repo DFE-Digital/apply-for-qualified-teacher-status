@@ -395,7 +395,7 @@ en:
         assessor_interface/requestable_verify_passed_form:
           attributes:
             passed:
-              inclusion: Tell us if you have received a valid response
+              inclusion: Tell us if the response confirms that it is legitimate
             received:
               inclusion: Tell us if you have received a response that's not valid, or if you have not received a response
         assessor_interface/select_qualifications_form:
