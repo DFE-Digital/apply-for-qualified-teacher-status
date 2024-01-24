@@ -31,12 +31,17 @@ class UpdateAssessmentInductionRequired
       if application_form.reduced_evidence_accepted
         WorkHistory.where(application_form:)
       else
-        WorkHistory.joins(:reference_request).where(
-          reference_requests: {
-            review_passed: true,
-            assessment:,
-          },
-        )
+        WorkHistory
+          .joins(:reference_request)
+          .where(reference_requests: { verify_passed: true, assessment: })
+          .or(
+            WorkHistory.where(
+              reference_requests: {
+                review_passed: true,
+                assessment:,
+              },
+            ),
+          )
       end
   end
 end

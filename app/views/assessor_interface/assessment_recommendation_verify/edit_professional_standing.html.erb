@@ -1,8 +1,10 @@
 <% content_for :page_title, title_with_error_prefix(t(".heading"), error: @form.errors.any?) %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, verify_qualifications_assessor_interface_application_form_assessment_assessment_recommendation_verify_path(@application_form) %>
 
 <%= form_with model: @form, url: [:professional_standing, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] do |f| %>
   <%= f.govuk_error_summary %>
+
+  <%= hidden_field_tag :back_to_summary, params[:back_to_summary] %>
 
   <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 

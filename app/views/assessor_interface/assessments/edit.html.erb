@@ -1,4 +1,4 @@
-<% legend = if @assessment.verify?
+<% title = if @assessment.verify?
               t(".legend.verify")
            elsif @assessment.review?
              t(".legend.review")
@@ -6,7 +6,7 @@
              t(".legend.other")
            end %>
 
-<% hint = if @assessment.can_verify?
+<% description = if @assessment.can_verify?
            t(".hint.can_verify")
          elsif @assessment.can_review?
            t(".hint.can_review")
@@ -16,17 +16,19 @@
            t(".hint.cant_award")
          end %>
 
-<% content_for :page_title, title_with_error_prefix(legend, error: @form.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+  <p class="govuk-body"><%= description %></p>
+
   <%= f.govuk_collection_radio_buttons :recommendation,
                                        @assessment.available_recommendations,
                                        :itself,
-                                       legend: { size: "xl", tag: "h1", text: legend },
-                                       hint: { text: hint } %>
+                                       legend: { text: "You can:", size: "s" } %>
 
   <%= f.govuk_submit do %>
     <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>

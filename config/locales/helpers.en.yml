@@ -113,12 +113,12 @@ en:
           false: "No"
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why you selected ‘No’'
         failed_options:
-          true: "Yes, mark as ‘Rejected’"
-          false: "No, allow more time for a response"
+          true: Yes, mark as ‘Rejected’
+          false: No, allow more time for a response
       assessor_interface_requestable_review_form:
         passed_options:
-          true: "Yes"
-          false: "No"
+          true: Yes, mark as accepted
+          false: No, mark as rejected
       assessor_interface_requestable_verify_passed_form:
         passed_options:
           true: Yes, mark as completed
@@ -286,7 +286,7 @@ en:
       assessor_interface_select_qualifications_form:
         qualification_ids: Qualification
       assessor_interface_select_work_histories_form:
-        work_history_ids: School
+        work_history_ids: Schools
       eligibility_interface_region_form:
         region_id: In which state/territory are you currently recognised as a teacher?
       eligibility_interface_work_experience_form:

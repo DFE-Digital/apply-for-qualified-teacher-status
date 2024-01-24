@@ -20,6 +20,11 @@ module AssessorInterface
     end
 
     def edit
+      @professional_standing = session[:professional_standing]
+      @qualifications =
+        application_form.qualifications.where(id: session[:qualification_ids])
+      @work_histories =
+        application_form.work_histories.where(id: session[:work_history_ids])
     end
 
     def update
@@ -59,19 +64,25 @@ module AssessorInterface
       if @form.valid?
         session[:qualification_ids] = []
 
-        redirect_to [
-                      (
-                        if @form.verify_qualifications
-                          :qualification_requests
-                        else
-                          :professional_standing
-                        end
-                      ),
-                      :assessor_interface,
-                      application_form,
-                      assessment,
-                      :assessment_recommendation_verify,
-                    ]
+        if @form.verify_qualifications
+          # rubocop:disable Layout/LineLength
+          redirect_to qualification_requests_assessor_interface_application_form_assessment_assessment_recommendation_verify_path(
+                        application_form,
+                        assessment,
+                        back_to_summary: params[:back_to_summary],
+                      )
+          # rubocop:enable Layout/LineLength
+        else
+          redirect_to back_to_summary_path(
+                        [
+                          :professional_standing,
+                          :assessor_interface,
+                          application_form,
+                          assessment,
+                          :assessment_recommendation_verify,
+                        ],
+                      )
+        end
       else
         render :edit_verify_qualifications, status: :unprocessable_entity
       end
@@ -105,13 +116,15 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to [
-                      :email_consent_letters,
-                      :assessor_interface,
-                      application_form,
-                      assessment,
-                      :assessment_recommendation_verify,
-                    ]
+        redirect_to back_to_summary_path(
+                      [
+                        :email_consent_letters,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :assessment_recommendation_verify,
+                      ],
+                    )
       else
         render :edit_qualification_requests, status: :unprocessable_entity
       end
@@ -156,13 +169,15 @@ module AssessorInterface
       if @form.valid?
         session[:professional_standing] = @form.verify_professional_standing
 
-        redirect_to [
-                      :reference_requests,
-                      :assessor_interface,
-                      application_form,
-                      assessment,
-                      :assessment_recommendation_verify,
-                    ]
+        redirect_to back_to_summary_path(
+                      [
+                        :reference_requests,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :assessment_recommendation_verify,
+                      ],
+                    )
       else
         render :edit_professional_standing, status: :unprocessable_entity
       end
@@ -171,12 +186,7 @@ module AssessorInterface
     def edit_reference_requests
       authorize %i[assessor_interface assessment_recommendation], :edit?
 
-      @form =
-        SelectWorkHistoriesForm.new(
-          application_form:,
-          session:,
-          work_history_ids: application_form.work_histories.pluck(:id),
-        )
+      @form = SelectWorkHistoriesForm.new(application_form:, session:)
     end
 
     def update_reference_requests
@@ -196,24 +206,18 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to [
-                      :preview_referee,
-                      :assessor_interface,
-                      application_form,
-                      assessment,
-                      :assessment_recommendation_verify,
-                    ]
+        redirect_to back_to_summary_path(
+                      [
+                        :edit,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :assessment_recommendation_verify,
+                      ],
+                    )
       else
         render :edit_reference_requests, status: :unprocessable_entity
       end
-    end
-
-    def preview_referee
-      authorize %i[assessor_interface assessment_recommendation], :edit?
-    end
-
-    def preview_teacher
-      authorize %i[assessor_interface assessment_recommendation], :edit?
     end
 
     private
@@ -241,6 +245,20 @@ module AssessorInterface
     def load_assessment_and_application_form
       @assessment = assessment
       @application_form = application_form
+    end
+
+    def back_to_summary_path(ordinary_path)
+      if ActiveModel::Type::Boolean.new.cast(params[:back_to_summary])
+        [
+          :edit,
+          :assessor_interface,
+          application_form,
+          assessment,
+          :assessment_recommendation_verify,
+        ]
+      else
+        ordinary_path
+      end
     end
   end
 end

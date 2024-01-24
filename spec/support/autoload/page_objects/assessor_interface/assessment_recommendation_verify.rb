@@ -2,9 +2,11 @@
 
 module PageObjects
   module AssessorInterface
-    class VerifyFailedProfessionalStandingRequest < VerifyFailedRequestablePage
+    class AssessmentRecommendationVerify < SitePrism::Page
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
-                "/professional-standing-request/verify-failed"
+                "/recommendation/verify/edit"
+
+      element :submit_button, ".govuk-button"
     end
   end
 end

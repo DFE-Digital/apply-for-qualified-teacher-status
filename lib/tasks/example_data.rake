@@ -97,8 +97,8 @@ def staff_members
       withdraw_permission: false,
     },
     {
-      name: "Victarion Verifier",
-      email: "victarion-verifier@example.com",
+      name: "Jeff Admin",
+      email: "jeff-admin@example.com",
       assess_permission: false,
       change_name_permission: false,
       change_work_history_permission: false,

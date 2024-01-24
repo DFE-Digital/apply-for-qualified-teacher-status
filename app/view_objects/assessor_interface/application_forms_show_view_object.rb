@@ -75,10 +75,6 @@ class AssessorInterface::ApplicationFormsShowViewObject
     ].compact
   end
 
-  def waiting_on_references?
-    assessment.reference_requests.reject(&:reviewed?).any?(&:requested?)
-  end
-
   private
 
   attr_reader :params, :current_staff
@@ -295,7 +291,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
         :qualification_requests,
       ],
-      status: requestables_task_item_status(qualification_requests),
+      status:
+        requestables_task_item_status(
+          qualification_requests.reject(&:reviewed?),
+        ),
     }
   end
 
@@ -315,17 +314,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
         :reference_requests,
       ],
-      status:
-        (
-          if assessment.references_verified
-            :completed
-          else
-            requestables_task_item_status(
-              reference_requests,
-              default: :in_progress,
-            )
-          end
-        ),
+      status: reference_requests_task_item_status,
     }
   end
 
@@ -347,15 +336,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
         :professional_standing_request,
       ],
       status:
-        if professional_standing_request.verified?
-          "completed"
-        elsif professional_standing_request.expired?
-          "overdue"
-        elsif professional_standing_request.requested?
-          "waiting_on"
-        else
-          "not_started"
-        end,
+        requestables_task_item_status(
+          [professional_standing_request].reject(&:verified?),
+        ),
     }
   end
 
@@ -412,8 +395,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
       status:
         if assessment.completed? || assessment.recommendable?
           :completed
-        elsif !teaching_authority_provides_written_statement &&
-              professional_standing_request&.reviewed?
+        elsif (
+              !teaching_authority_provides_written_statement &&
+                professional_standing_request&.reviewed?
+            ) || reference_requests.any?(:reviewed?)
           :in_progress
         else
           :not_started
@@ -461,17 +446,25 @@ class AssessorInterface::ApplicationFormsShowViewObject
     !assessment.unknown? && !request_further_information_unfinished?
   end
 
-  def requestables_task_item_status(requestables, default: :completed)
-    unreviewed_requests = requestables.reject(&:reviewed?)
-
-    if unreviewed_requests.empty?
-      default
-    elsif unreviewed_requests.any?(&:expired?)
-      :overdue
-    elsif unreviewed_requests.any?(&:received?)
-      :received
+  def requestables_task_item_status(requestables)
+    if requestables.empty?
+      "completed"
+    elsif requestables.any?(&:expired?)
+      "overdue"
+    elsif requestables.any?(&:received?)
+      "received"
+    elsif requestables.any?(&:requested?)
+      "waiting_on"
     else
-      :waiting_on
+      "not_started"
+    end
+  end
+
+  def reference_requests_task_item_status
+    if assessment.enough_reference_requests_verify_passed?
+      "completed"
+    else
+      requestables_task_item_status(reference_requests.reject(&:verified?))
     end
   end
 

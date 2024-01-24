@@ -19,7 +19,8 @@ class AssessorInterface::SelectWorkHistoriesForm
                   &.map(&:to_s) || []
               end,
             }
-  validate :work_history_enough_months
+  validate :work_history_enough_months_selected
+  validate :work_history_most_recent_selected
 
   def save
     return false unless valid?
@@ -29,16 +30,26 @@ class AssessorInterface::SelectWorkHistoriesForm
 
   private
 
-  def work_history_enough_months
+  def work_history_enough_months_selected
     return if application_form.nil? || session.nil?
 
-    errors.add(:work_history_ids, :blank) unless has_enough_work_history?
+    unless WorkHistoryDuration.for_ids(
+             work_history_ids,
+             application_form:,
+           ).enough_for_submission?
+      errors.add(:work_history_ids, :less_than_9_months)
+    end
   end
 
-  def has_enough_work_history?
-    WorkHistoryDuration.for_ids(
-      work_history_ids,
-      application_form:,
-    ).enough_for_submission?
+  def work_history_most_recent_selected
+    return if application_form.nil? || session.nil?
+    return if application_form.region.checks_available?
+
+    most_recent_work_history_id =
+      application_form.work_histories.order_by_role.first.id.to_s
+
+    unless work_history_ids.include?(most_recent_work_history_id)
+      errors.add(:work_history_ids, :most_recent_not_selected)
+    end
   end
 end

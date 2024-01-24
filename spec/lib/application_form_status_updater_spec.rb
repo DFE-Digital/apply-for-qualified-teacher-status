@@ -266,7 +266,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         end
 
         context "and it's the only reference request" do
-          include_examples "changes action required by", "assessor"
+          include_examples "changes action required by", "admin"
           include_examples "changes stage", "verification"
           include_examples "changes statuses", %w[received_reference]
         end
@@ -297,7 +297,7 @@ RSpec.describe ApplicationFormStatusUpdater do
           )
         end
 
-        include_examples "changes action required by", "assessor"
+        include_examples "changes action required by", "admin"
         include_examples "changes stage", "verification"
         include_examples "changes statuses", %w[received_reference]
       end

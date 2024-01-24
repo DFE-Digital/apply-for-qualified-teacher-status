@@ -59,10 +59,10 @@ module Requestable
   end
 
   def status
-    if verify_passed? || review_passed?
-      "completed"
-    elsif review_failed?
-      "rejected"
+    if review_passed? || review_failed?
+      review_status
+    elsif verify_passed?
+      "accepted"
     elsif verify_failed?
       "review"
     elsif received? && expired?

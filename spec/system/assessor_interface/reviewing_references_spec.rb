@@ -39,6 +39,7 @@ RSpec.describe "Assessor reviewing references", type: :system do
       reference:,
       assessment_id:,
     )
+    and_i_see_the_overdue_status
 
     when_i_submit_yes_on_the_review_form
     then_i_see_the(
@@ -106,7 +107,13 @@ RSpec.describe "Assessor reviewing references", type: :system do
   end
 
   def when_i_click_on_the_reference
-    assessor_application_page.task_list.click_item("School")
+    assessor_review_verifications_page.task_list.click_item("School")
+  end
+
+  def and_i_see_the_overdue_status
+    expect(assessor_review_verifications_page).to have_content(
+      "This reference’s status has changed from OVERDUE to RECEIVED",
+    )
   end
 
   def when_i_submit_yes_on_the_review_form
@@ -145,11 +152,11 @@ RSpec.describe "Assessor reviewing references", type: :system do
             :verify,
             application_form:,
             induction_required: false,
-            references_verified: true,
           )
         create(
           :reference_request,
           :received,
+          :expired,
           assessment:,
           verify_passed: false,
           work_history:

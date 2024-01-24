@@ -395,7 +395,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         is_expected.to include_task_list_item(
           "Verification",
-          "Verify reference requests",
+          "Verify references",
         )
       end
       it do

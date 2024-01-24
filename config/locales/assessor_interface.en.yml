@@ -24,7 +24,7 @@ en:
             initial_assessment_recommendation: Initial assessment recommendation
             professional_standing_request: Verify LoPS
             qualification_requests: Record qualifications responses
-            reference_requests: Verify reference requests
+            reference_requests: Verify references
             review_requested_information: Review requested information from applicant
             review_verifications: Review verifications
             verification_decision: Verification decision
@@ -85,6 +85,8 @@ en:
         heading: Send application for review
 
     assessment_recommendation_verify:
+      edit:
+        heading: Verification requests
       edit_qualification_requests:
         heading: Verify qualifications
       edit_verify_qualifications:
@@ -95,10 +97,6 @@ en:
         heading: Do you want to verify LoPS?
       email_consent_letters:
         heading: Email consent letters
-      preview_referee:
-        heading: Check and send the reference request email
-      preview_teacher:
-        heading: Check and send the email to applicant
 
     assessment_sections:
       show:
@@ -226,12 +224,6 @@ en:
         check_your_answers: Further information requested
         passed: Has the applicant completed this section to your satisfaction?
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
-
-    reference_requests:
-      edit:
-        title: Review work reference
-        passed: Are you satisfied that this reference should count towards the applicant’s work experience?
-        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this reference should not count towards the applicant’s work experience'
 
   activemodel:
     errors:
@@ -405,7 +397,8 @@ en:
         assessor_interface/select_work_histories_form:
           attributes:
             work_history_ids:
-              blank: References account for less than 9 months
+              less_than_9_months: References account for less than 9 months
+              most_recent_not_selected: Current or most recent reference has not been selected
         assessor_interface/scotland_full_registration_form:
           attributes:
             scotland_full_registration:
@@ -418,10 +411,6 @@ en:
           attributes:
             verify_qualifications:
               inclusion: Select whether you want to verify qualifications
-        assessor_interface/verify_references_form:
-          attributes:
-            references_verified:
-              inclusion: Select whether enough valid work references been received for this application to progress to either an award or decline
         assessor_interface/reviewer_assignment_form:
           attributes:
             reviewer_id:

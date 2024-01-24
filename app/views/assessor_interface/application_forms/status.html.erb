@@ -1,9 +1,7 @@
-<% title = if @view_object.application_form.awarded_at.present?
-             "QTS application #{@view_object.application_form.reference} has been awarded"
-           elsif @view_object.assessment.review?
+<% title = if @view_object.assessment.review?
              "Application sent for review"
-           elsif @view_object.waiting_on_references?
-             "Reference requests sent successfully"
+           elsif @view_object.assessment.verify?
+             "Verifications requested"
            else
              "QTS application #{@view_object.application_form.reference} has been #{@view_object.status.downcase}"
            end %>
@@ -19,18 +17,15 @@
 
 <% if @view_object.assessment.review? %>
   <p class="govuk-body">An assessor will now review the application and make a decision on awarding or declining QTS.</p>
+<% elsif @view_object.assessment.verify? %>
+  <p class="govuk-body">You have submitted your verification requests.</p>
+  <p class="govuk-body">These will now be verified by an admin. You do not need to do anything further with this application unless it is flagged for review.</p>
 <% elsif @view_object.application_form.declined_at.present? %>
   <p class="govuk-body">The application will be deleted after 90 days unless the applicant chooses to appeal.</p>
 <% elsif @view_object.application_form.dqt_trn_request.present? %>
   <p class="govuk-body">This status will appear while the award is reconciled with the information in the Database of Qualified Teachers (DQT).</p>
   <p class="govuk-body">Once these checks are complete, the status will change to ‘Awarded’ and the applicant will receive the email telling them they’ve been awarded QTS.</p>
-<% elsif @view_object.waiting_on_references? %>
-  <p class="govuk-body">You’ve successfully sent requests to each of the references that the applicant provided.</p>
-  <p class="govuk-body govuk-!-font-weight-bold">The applicant will also receive an email to tell them you’ve contacted their references.</p>
-  <p class="govuk-body">When the references respond, you’ll see the status of the application change to ‘Received’.</p>
 <% end %>
-
-<p class="govuk-body">You can now return to the application itself, or go back to your list of applications.</p>
 
 <div class="govuk-button-group">
   <%= govuk_button_link_to "Back to application list", %i[assessor_interface application_forms] %>

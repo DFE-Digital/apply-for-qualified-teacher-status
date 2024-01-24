@@ -4,8 +4,22 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::SelectWorkHistoriesForm, type: :model do
   let(:application_form) { create(:application_form, :submitted) }
-  let(:work_history_1) { create(:work_history, :completed, application_form:) }
-  let(:work_history_2) { create(:work_history, :completed, application_form:) }
+  let!(:work_history_1) do
+    create(
+      :work_history,
+      :completed,
+      application_form:,
+      start_date: Date.new(2021, 1, 1),
+    )
+  end
+  let!(:work_history_2) do
+    create(
+      :work_history,
+      :completed,
+      application_form:,
+      start_date: Date.new(2020, 1, 1),
+    )
+  end
   let(:session) { {} }
   let(:work_history_ids) { "" }
 
@@ -29,6 +43,11 @@ RSpec.describe AssessorInterface::SelectWorkHistoriesForm, type: :model do
     context "with enough hours" do
       let(:work_history_ids) { [work_history_1.id.to_s] }
       it { is_expected.to be_valid }
+    end
+
+    context "without most recent" do
+      let(:work_history_ids) { [work_history_2.id.to_s] }
+      it { is_expected.to_not be_valid }
     end
   end
 

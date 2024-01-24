@@ -95,10 +95,6 @@ Rails.application.routes.draw do
               to: "assessment_recommendation_verify#edit_reference_requests"
           post "reference-requests",
                to: "assessment_recommendation_verify#update_reference_requests"
-          get "preview-referee",
-              to: "assessment_recommendation_verify#preview_referee"
-          get "preview-teacher",
-              to: "assessment_recommendation_verify#preview_teacher"
           get "professional-standing",
               to: "assessment_recommendation_verify#edit_professional_standing"
           post "professional-standing",
@@ -116,7 +112,7 @@ Rails.application.routes.draw do
 
         resource :professional_standing_request,
                  path: "/professional-standing-request",
-                 only: [:show] do
+                 only: %i[show] do
           member do
             get "locate", to: "professional_standing_requests#edit_locate"
             post "locate", to: "professional_standing_requests#update_locate"
@@ -145,14 +141,14 @@ Rails.application.routes.draw do
 
         resources :reference_requests,
                   path: "/reference-requests",
-                  only: %i[index edit update] do
-          post "verify-references",
-               to: "reference_requests#update_verify_references",
-               on: :collection
-
+                  only: %i[index] do
           member do
             get "review", to: "reference_requests#edit_review"
             post "review", to: "reference_requests#update_review"
+            get "verify", to: "reference_requests#edit_verify"
+            post "verify", to: "reference_requests#update_verify"
+            get "verify-failed", to: "reference_requests#edit_verify_failed"
+            post "verify-failed", to: "reference_requests#update_verify_failed"
           end
         end
       end

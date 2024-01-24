@@ -140,13 +140,9 @@ RSpec.describe Assessment, type: :model do
 
       it { is_expected.to be false }
 
-      context "with enough passed reference requests" do
+      context "with enough verify passed reference requests" do
         before do
-          assessment.update!(
-            recommendation: "verify",
-            references_verified: true,
-            induction_required: true,
-          )
+          assessment.update!(recommendation: "verify", induction_required: true)
 
           work_history =
             create(
@@ -157,7 +153,32 @@ RSpec.describe Assessment, type: :model do
               hours_per_week: 30,
             )
 
-          create(:reference_request, :passed, assessment:, work_history:)
+          create(:reference_request, :verify_passed, assessment:, work_history:)
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with enough review passed reference requests" do
+        before do
+          assessment.update!(recommendation: "review", induction_required: true)
+
+          work_history =
+            create(
+              :work_history,
+              application_form:,
+              start_date: Date.new(2020, 1, 1),
+              end_date: Date.new(2021, 12, 31),
+              hours_per_week: 30,
+            )
+
+          create(
+            :reference_request,
+            :verify_failed,
+            :review_passed,
+            assessment:,
+            work_history:,
+          )
         end
 
         it { is_expected.to be true }

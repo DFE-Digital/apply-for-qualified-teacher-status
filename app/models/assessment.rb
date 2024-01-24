@@ -94,7 +94,7 @@ class Assessment < ApplicationRecord
       if skip_verification?
         all_sections_or_further_information_requests_passed?
       elsif verify?
-        enough_reference_requests_review_passed? &&
+        enough_reference_requests_verify_passed? &&
           all_qualification_requests_review_passed? &&
           professional_standing_request_verify_passed?
       elsif review?
@@ -117,24 +117,22 @@ class Assessment < ApplicationRecord
       all_further_information_requests_reviewed? &&
         any_further_information_requests_failed?
     elsif verify?
-      return false if professional_standing_request_verify_failed?
-
-      unless enough_reference_requests_reviewed? &&
-               all_qualification_requests_reviewed? &&
-               professional_standing_request_verify_passed?
+      if professional_standing_request_verify_failed? ||
+           any_reference_requests_verify_failed?
         return false
       end
 
-      !enough_reference_requests_review_passed? ||
-        any_qualification_requests_review_failed?
+      return false unless all_reference_requests_verified?
+      return false unless all_qualification_requests_reviewed?
+      return false unless professional_standing_request_verified?
+
+      any_qualification_requests_review_failed?
     elsif review?
-      unless enough_reference_requests_reviewed? &&
-               all_qualification_requests_reviewed? &&
-               professional_standing_request_reviewed?
-        return false
-      end
+      return false unless all_reference_requests_reviewed?
+      return false unless all_qualification_requests_reviewed?
+      return false unless professional_standing_request_reviewed?
 
-      !enough_reference_requests_review_passed? ||
+      any_reference_requests_review_failed? ||
         any_qualification_requests_review_failed? ||
         professional_standing_request_review_failed?
     else
@@ -153,19 +151,16 @@ class Assessment < ApplicationRecord
   end
 
   def can_review?
-    return false unless application_form.created_under_new_regulations?
     return false unless verify?
-    return false if skip_verification?
+    return false unless application_form.created_under_new_regulations?
 
-    (
-      enough_reference_requests_reviewed? &&
-        all_qualification_requests_reviewed?
-    ) &&
-      (
-        any_qualification_requests_verify_failed? ||
-          any_reference_requests_verify_failed? ||
-          professional_standing_request_verify_failed?
-      )
+    return false unless all_reference_requests_verified?
+    return false unless all_qualification_requests_reviewed?
+    return false unless professional_standing_request_verified?
+
+    any_qualification_requests_verify_failed? ||
+      any_reference_requests_verify_failed? ||
+      professional_standing_request_verify_failed?
   end
 
   def can_verify?
@@ -208,6 +203,26 @@ class Assessment < ApplicationRecord
     sections.not_preliminary.any?(&:finished?)
   end
 
+  def all_reference_requests_verified?
+    reference_requests.all?(&:verified?)
+  end
+
+  def enough_reference_requests_verify_passed?
+    return false if any_reference_requests_verify_failed?
+
+    work_history_duration =
+      WorkHistoryDuration.for_ids(
+        reference_requests.where(verify_passed: true).pluck(:work_history_id),
+        application_form:,
+      )
+
+    work_history_duration.enough_to_skip_induction? ||
+      (
+        reference_requests.all?(&:verified?) &&
+          work_history_duration.enough_for_submission?
+      )
+  end
+
   private
 
   def all_sections_finished?
@@ -244,22 +259,28 @@ class Assessment < ApplicationRecord
     further_information_requests.any?(&:review_failed?)
   end
 
-  def enough_reference_requests_reviewed?
-    references_verified || reference_requests.empty?
+  def all_reference_requests_reviewed?
+    reference_requests.where(verify_passed: false).all?(&:reviewed?)
   end
 
   def enough_reference_requests_review_passed?
-    return true if reference_requests.empty?
-    return false unless references_verified
+    return false unless all_reference_requests_reviewed?
 
     WorkHistoryDuration.for_ids(
-      reference_requests.where(review_passed: true).pluck(:work_history_id),
+      reference_requests
+        .where(review_passed: true)
+        .or(reference_requests.where(verify_passed: true))
+        .pluck(:work_history_id),
       application_form:,
     ).enough_for_submission?
   end
 
   def any_reference_requests_verify_failed?
     reference_requests.any?(&:verify_failed?)
+  end
+
+  def any_reference_requests_review_failed?
+    reference_requests.any?(&:review_failed?)
   end
 
   def all_qualification_requests_reviewed?
@@ -280,7 +301,8 @@ class Assessment < ApplicationRecord
 
   def professional_standing_request_reviewed?
     if professional_standing_request_part_of_verification?
-      professional_standing_request.reviewed?
+      professional_standing_request.verify_passed? ||
+        professional_standing_request.reviewed?
     else
       true
     end
@@ -288,7 +310,8 @@ class Assessment < ApplicationRecord
 
   def professional_standing_request_review_passed?
     if professional_standing_request_part_of_verification?
-      professional_standing_request.review_passed?
+      professional_standing_request.verify_passed? ||
+        professional_standing_request.review_passed?
     else
       true
     end
@@ -297,6 +320,14 @@ class Assessment < ApplicationRecord
   def professional_standing_request_review_failed?
     professional_standing_request_part_of_verification? &&
       professional_standing_request.review_failed?
+  end
+
+  def professional_standing_request_verified?
+    if professional_standing_request_part_of_verification?
+      professional_standing_request.verified?
+    else
+      true
+    end
   end
 
   def professional_standing_request_verify_passed?

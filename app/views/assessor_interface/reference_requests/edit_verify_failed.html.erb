@@ -1,0 +1,16 @@
+<% content_for :page_title, title_with_error_prefix("Send for review", error: @form.errors.any?) %>
+<% content_for :back_link_url, verify_assessor_interface_application_form_assessment_reference_request_path(@application_form, @assessment, @reference_request) %>
+
+<%= form_with model: @form, url: [:verify_failed, :assessor_interface, @application_form, @assessment, @reference_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl">Send for review</h1>
+
+  <p class="govuk-body">You have opted to send this reference for review.</p>
+
+  <%= f.govuk_text_area :note, label: { text: "Internal note: briefly explain to the assessor why you are sending this reference for review." } %>
+
+  <%= f.govuk_submit do %>
+    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+  <% end %>
+<% end %>

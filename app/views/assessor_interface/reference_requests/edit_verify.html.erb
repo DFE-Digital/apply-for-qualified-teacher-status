@@ -1,0 +1,81 @@
+<% work_history = @reference_request.work_history %>
+<% can_edit_work_history = policy([:assessor_interface, work_history]).edit? %>
+<% can_update_verify_reference_request = @assessment.verify? && policy([:assessor_interface, @reference_request]).update_verify? %>
+
+<% title = can_update_verify_reference_request ? "Review reference" : "View reference" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, params[:back_to] == "review" ?
+                                 review_assessor_interface_application_form_assessment_reference_request_path(@application_form, @assessment, @reference_request) :
+                                 assessor_interface_application_form_assessment_reference_requests_path(@application_form, @assessment) %>
+
+<%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, @reference_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h2 class="govuk-heading-m">Reference details</h2>
+
+  <%= govuk_summary_list(html_attributes: { id: "reference-details-summary-list" }) do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Name of institution" }
+      row.with_value { work_history.school_name }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Number of months" }
+      row.with_value { WorkHistoryDuration.for_record(work_history).count_months.to_s }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Name of reference" }
+      row.with_value { work_history.contact_name }
+
+      if can_edit_work_history
+        row.with_action(text: "Change", href: [:edit, :assessor_interface, @application_form, work_history])
+      end
+    end
+
+    if can_edit_work_history
+      summary_list.with_row do |row|
+        row.with_key { "Job title of reference" }
+        row.with_value { work_history.contact_job }
+        row.with_action(text: "Change", href: [:edit, :assessor_interface, @application_form, work_history])
+      end
+
+      summary_list.with_row do |row|
+        row.with_key { "Email address of reference" }
+        row.with_value { work_history.contact_email }
+        row.with_action(text: "Change", href: [:edit, :assessor_interface, @application_form, work_history])
+      end
+    end
+  end %>
+
+  <% if @reference_request.received? %>
+    <% unless can_update_verify_reference_request %>
+      <p class="govuk-body">This reference is view only. Return to the review reference screen to make your decision.</p>
+    <% end %>
+
+    <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
+  <% end %>
+
+  <% if @reference_request.expired? %>
+    <%= govuk_warning_text(text: "This reference is overdue.") %>
+  <% end %>
+
+  <% if can_update_verify_reference_request && (@reference_request.received? || @reference_request.expired?) %>
+    <p class="govuk-body">You must send this reference for review if any of the responses contain a comment.</p>
+
+    <% if @reference_request.received? %>
+      <%= f.govuk_collection_radio_buttons :passed, %i[true false], :itself,
+                                           legend: { text: "Are you satisfied that this reference should count towards the applicant’s work experience?" } %>
+    <% else %>
+      <%= f.govuk_collection_radio_buttons :passed, [OpenStruct.new(value: false, label: "Yes, send for review")], :value, :label,
+                                           legend: { text: "Do you want to send this reference for review?" } %>
+    <% end %>
+
+    <%= f.govuk_submit do %>
+      <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+    <% end %>
+  <% end %>
+<% end %>
