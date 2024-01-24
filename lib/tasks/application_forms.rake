@@ -65,7 +65,8 @@ namespace :application_forms do
       .order(:id)
       .find_each do |application_form|
         ApplicationFormStatusUpdater.call(application_form:, user:)
-        puts "#{application_form.reference}: #{application_form.action_required_by} - #{application_form.status}"
+        puts "#{application_form.reference}: #{application_form.action_required_by} - " \
+               "#{application_form.stage} - #{application_form.statuses.join(",")}"
       end
   end
 
