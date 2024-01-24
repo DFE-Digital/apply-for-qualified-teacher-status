@@ -305,10 +305,6 @@ module PageHelpers
       PageObjects::EligibilityInterface::WorkExperience.new
   end
 
-  def performance_page
-    @performance_page ||= PageObjects::Performance.new
-  end
-
   def personas_page
     @personas_page ||= PageObjects::Personas.new
   end

@@ -31,13 +31,6 @@ ul.autocomplete__menu {
   color: $govuk-link-colour;
 }
 
-.app-performance-table {
-  .govuk-table__header:nth-child(n + 2),
-  .govuk-table__cell:nth-child(n + 2) {
-    text-align: right;
-  }
-}
-
 .app-teaching-authority-address {
   white-space: pre-line;
 }

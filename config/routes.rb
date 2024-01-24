@@ -434,7 +434,5 @@ Rails.application.routes.draw do
   get "privacy", to: "static#privacy"
   get "english_language_guidance", to: "static#english_language_guidance"
 
-  get "performance", to: "performance#index"
-
   root to: redirect("/eligibility")
 end
