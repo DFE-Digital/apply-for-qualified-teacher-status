@@ -1,8 +1,4 @@
-<% if @view_object.from_ineligible_country? %>
 Dear <%= application_form_full_name(@application_form) %>,
-<% else %>
-Dear <%= application_form_full_name(@application_form) %>
-<% end %>
 
 <%= render "shared/teacher_mailer/reference_number" %>
 
