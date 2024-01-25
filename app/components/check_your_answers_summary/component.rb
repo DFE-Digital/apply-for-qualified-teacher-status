@@ -138,7 +138,7 @@ module CheckYourAnswersSummary
         [
           format_array(uploads, field),
           if malware_scan_active && scope.scan_result_suspect.exists?
-            "<em>One or more upload has been deleted by the virus scanner.</em>"
+            "<em>#{scope.count} #{"file upload".pluralize(scope.count)} has been scanned as malware and deleted.</em>"
           elsif request.path.starts_with?("/assessor") &&
                 convert_to_pdf_active && !uploads.all?(&:is_pdf?)
             helpers.govuk_link_to(

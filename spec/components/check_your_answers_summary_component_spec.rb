@@ -286,7 +286,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
 
       it "includes a warning" do
         expect(row.at_css(".govuk-summary-list__value").text).to include(
-          "One or more upload has been deleted by the virus scanner",
+          "2 file uploads has been scanned as malware and deleted.",
         )
       end
     end
