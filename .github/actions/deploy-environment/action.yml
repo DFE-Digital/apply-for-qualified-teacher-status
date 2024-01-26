@@ -33,7 +33,7 @@ runs:
         terraform_version: 1.5.0
         terraform_wrapper: false
 
-    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
         azure-credentials: ${{ inputs.azure-credentials }}
 
@@ -56,8 +56,10 @@ runs:
       if: ${{ inputs.pull-request-number != '' }}
       shell: bash
       run: |
-        az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
-        kubectl exec -n tra-development deployment/apply-for-qts-review-${{ inputs.pull-request-number }}-web -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed review_app:configure example_data:generate"
+        make ci review get-cluster-credentials
+        kubectl exec -n tra-development deployment/apply-for-qts-review-${PULL_REQUEST_NUMBER}-web -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed review_app:configure example_data:generate"
+      env:
+        PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
 
     - id: key-vault-name
       if: ${{ inputs.smoke-test-credentials-required == 'true' }}
