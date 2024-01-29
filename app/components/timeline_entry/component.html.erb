@@ -61,6 +61,24 @@
         has changed from <strong class="govuk-!-font-weight-bold"><%= description_vars[:old_value] %></strong>
         to <strong class="govuk-!-font-weight-bold"><%= description_vars[:new_value] %></strong>.
       </p>
+
+    <% elsif timeline_event.application_declined? %>
+      <p class="govuk-body">
+        Status has changed to: <%= render(StatusTag::Component.new(:declined)) %>
+      </p>
+      
+      <% TeacherInterface::ApplicationFormViewObject.new(application_form: timeline_event.application_form).declined_reasons.each do |title, reasons| %>
+        <% if title.present? %>
+          <h4 class="govuk-heading-s"><%= title %></h4>
+        <% end %>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <% reasons.each do |reason| %>
+            <li><%= simple_format reason %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
     <% else %>
       <p class="govuk-body"><%= simple_format description.html_safe %></p>
     <% end %>

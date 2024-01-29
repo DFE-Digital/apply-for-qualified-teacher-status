@@ -14,6 +14,7 @@ class DeclineQTS
     ActiveRecord::Base.transaction do
       application_form.update!(declined_at: Time.zone.now)
       ApplicationFormStatusUpdater.call(application_form:, user:)
+      CreateTimelineEvent.call("application_declined", application_form:, user:)
     end
 
     TeacherMailer.with(application_form:).application_declined.deliver_later

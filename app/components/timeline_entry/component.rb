@@ -199,5 +199,9 @@ module TimelineEntry
           ).strip,
       }
     end
+
+    def application_declined_vars
+      {}
+    end
   end
 end

@@ -80,6 +80,7 @@ RSpec.describe TimelineEvent do
       is_expected.to define_enum_for(:event_type).with_values(
         action_required_by_changed: "action_required_by_changed",
         age_range_subjects_verified: "age_range_subjects_verified",
+        application_declined: "application_declined",
         assessment_section_recorded: "assessment_section_recorded",
         assessor_assigned: "assessor_assigned",
         email_sent: "email_sent",

@@ -33,6 +33,14 @@ RSpec.describe DeclineQTS do
         )
       end
     end
+
+    it "records a timeline event" do
+      expect { call }.to have_recorded_timeline_event(
+        :application_declined,
+        creator: user,
+        application_form:,
+      )
+    end
   end
 
   context "with a declined application form" do
@@ -51,6 +59,14 @@ RSpec.describe DeclineQTS do
 
     it "doesn't change the declined at date" do
       expect { call }.to_not change(application_form, :declined_at)
+    end
+
+    it "doesn't record a timeline event" do
+      expect { call }.to_not have_recorded_timeline_event(
+        :application_declined,
+        creator: user,
+        application_form:,
+      )
     end
   end
 end

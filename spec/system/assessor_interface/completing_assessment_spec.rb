@@ -8,6 +8,9 @@ RSpec.describe "Assessor completing assessment", type: :system do
     double(generate_template_preview: notify_template_preview)
   end
   let(:notify_template_preview) { double(html: "I am an email") }
+  let(:assessor_user) do
+    create(:staff, :with_assess_permission, :confirmed, name: "Authorized User")
+  end
 
   around do |example|
     ClimateControl.modify GOVUK_NOTIFY_API_KEY: notify_key do
@@ -184,6 +187,9 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_click_on_overview_button
     then_the_application_form_is_declined
+
+    and_i_click_view_timeline
+    then_i_see_application_declined
   end
 
   private
@@ -397,6 +403,21 @@ RSpec.describe "Assessor completing assessment", type: :system do
     expect(assessor_application_page.status_summary.value).to have_text(
       "DECLINED",
     )
+  end
+
+  def and_i_click_view_timeline
+    assessor_application_page.click_link(
+      "View timeline of this applications actions",
+    )
+  end
+
+  def then_i_see_application_declined
+    declined_timeline_event =
+      assessor_timeline_page.timeline_items.find do |timeline_event|
+        timeline_event.title.text.include?("Application declined")
+      end
+
+    expect(declined_timeline_event).to_not be_nil
   end
 
   delegate :reference, to: :application_form
