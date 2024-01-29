@@ -23,13 +23,14 @@ Thank you for applying for qualified teacher status (QTS) and for your patience 
 <% unless @view_object.declined_cannot_reapply? || @view_object.from_ineligible_country? %>
 # What you can do next
 
-You'll be able to make a new application once you've addressed all decline reasons given. If you reapply for QTS, you’ll not be able to review the details of your previous application.
+You’ll be able to make a new application once you've addressed all decline reasons given. If you reapply for QTS, you’ll not be able to review the details of your previous application.
 
 You may want to explore [other routes to getting QTS](https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk).
 
 [Apply again](<%= new_teacher_interface_application_form_url %>)
 
 <% end %>
+<% if @view_object.from_ineligible_country? %>
 # Decision review
 
 Applicants who have been declined for QTS are entitled to a review of the decline decision by a Casework Manager. 
@@ -40,6 +41,8 @@ If you would like to request a decision review, you will need to provide:
 - additional information not included in your original application that would support your decision review
 
 Your request for review must be received within 28 days of receipt of the decision to decline QTS.
+
+<% end %>
 
 Email your request for review, including the information required as above to [<%= t("service.email.enquiries") %>](mailto:<%= t("service.email.enquiries") %>).
 
