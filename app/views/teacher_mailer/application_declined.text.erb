@@ -30,7 +30,7 @@ You may want to explore [other routes to getting QTS](https://www.gov.uk/governm
 [Apply again](<%= new_teacher_interface_application_form_url %>)
 
 <% end %>
-<% if @view_object.from_ineligible_country? %>
+<% unless @view_object.from_ineligible_country? %>
 # Decision review
 
 Applicants who have been declined for QTS are entitled to a review of the decline decision by a Casework Manager. 
@@ -42,8 +42,7 @@ If you would like to request a decision review, you will need to provide:
 
 Your request for review must be received within 28 days of receipt of the decision to decline QTS.
 
-<% end %>
-
 Email your request for review, including the information required as above to [<%= t("service.email.enquiries") %>](mailto:<%= t("service.email.enquiries") %>).
+<% end %>
 
 <%= render "shared/teacher_mailer/footer" %>
