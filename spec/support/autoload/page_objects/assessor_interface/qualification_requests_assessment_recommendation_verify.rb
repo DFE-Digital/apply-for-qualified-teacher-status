@@ -12,6 +12,7 @@ module PageObjects
         sections :qualification_checkboxes,
                  GovukCheckboxItem,
                  ".govuk-checkboxes__item"
+        element :qualifications_assessor_note_textarea, ".govuk-textarea"
         element :submit_button, ".govuk-button"
       end
     end

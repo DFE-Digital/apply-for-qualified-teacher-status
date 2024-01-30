@@ -8,6 +8,7 @@ RSpec.describe VerifyAssessment do
   let(:user) { create(:staff, :confirmed) }
   let(:professional_standing) { true }
   let(:qualification) { create(:qualification, :completed, application_form:) }
+  let(:qualifications_assessor_note) { "A note." }
   let(:work_history) { create(:work_history, :completed, application_form:) }
 
   subject(:call) do
@@ -16,6 +17,7 @@ RSpec.describe VerifyAssessment do
       user:,
       professional_standing:,
       qualifications: [qualification],
+      qualifications_assessor_note:,
       work_histories: [work_history],
     )
   end
@@ -99,6 +101,12 @@ RSpec.describe VerifyAssessment do
         expect(qualification_request.requested?).to be true
       end
     end
+  end
+
+  it "changes the assessment qualifications assessor note" do
+    expect { call }.to change(assessment, :qualifications_assessor_note).to(
+      "A note.",
+    )
   end
 
   it "changes the application form stage" do

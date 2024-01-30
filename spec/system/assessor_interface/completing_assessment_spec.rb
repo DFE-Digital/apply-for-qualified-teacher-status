@@ -331,10 +331,11 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_select_the_qualifications
-    assessor_qualification_requests_assessment_recommendation_verify_page
-      .form
-      .submit_button
-      .click
+    form =
+      assessor_qualification_requests_assessment_recommendation_verify_page.form
+
+    form.qualifications_assessor_note_textarea.fill_in with: "A note."
+    form.submit_button.click
   end
 
   def when_i_select_yes_verify_professional_standing

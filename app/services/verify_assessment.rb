@@ -8,12 +8,14 @@ class VerifyAssessment
     user:,
     professional_standing:,
     qualifications:,
+    qualifications_assessor_note:,
     work_histories:
   )
     @assessment = assessment
     @user = user
     @professional_standing = professional_standing
     @qualifications = qualifications
+    @qualifications_assessor_note = qualifications_assessor_note
     @work_histories = work_histories
   end
 
@@ -22,6 +24,7 @@ class VerifyAssessment
 
     reference_requests =
       ActiveRecord::Base.transaction do
+        assessment.qualifications_assessor_note = qualifications_assessor_note
         assessment.verify!
 
         create_professional_standing_request
@@ -49,6 +52,7 @@ class VerifyAssessment
               :user,
               :professional_standing,
               :qualifications,
+              :qualifications_assessor_note,
               :work_histories
 
   delegate :application_form, to: :assessment

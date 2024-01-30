@@ -21,9 +21,12 @@ class AssessorInterface::SelectQualificationsForm
               end,
             }
 
+  attribute :qualifications_assessor_note
+
   def save
     return false unless valid?
     session[:qualification_ids] = qualification_ids
+    session[:qualifications_assessor_note] = qualifications_assessor_note
     true
   end
 end
