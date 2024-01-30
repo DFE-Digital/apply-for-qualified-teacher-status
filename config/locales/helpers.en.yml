@@ -133,6 +133,8 @@ en:
         received_options:
           true: Response received and not valid
           false: Response not received
+      assessor_interface_select_qualifications_form:
+        qualifications_assessor_note: "Internal note: Add any explanatory notes for admins."
       assessor_interface_verify_professional_standing_form:
         verify_professional_standing_options:
           true: Yes, verify LoPS

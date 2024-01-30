@@ -12,9 +12,15 @@ RSpec.describe AssessorInterface::SelectQualificationsForm, type: :model do
   end
   let(:session) { {} }
   let(:qualification_ids) { "" }
+  let(:qualifications_assessor_note) { "A note." }
 
   subject(:form) do
-    described_class.new(application_form:, session:, qualification_ids:)
+    described_class.new(
+      application_form:,
+      session:,
+      qualification_ids:,
+      qualifications_assessor_note:,
+    )
   end
 
   describe "validations" do
@@ -25,6 +31,9 @@ RSpec.describe AssessorInterface::SelectQualificationsForm, type: :model do
       is_expected.to validate_inclusion_of(:qualification_ids).in_array(
         [qualification_1.id.to_s, qualification_2.id.to_s],
       )
+    end
+    it do
+      is_expected.to_not validate_presence_of(:qualifications_assessor_note)
     end
   end
 
@@ -37,9 +46,15 @@ RSpec.describe AssessorInterface::SelectQualificationsForm, type: :model do
 
     it { is_expected.to be true }
 
-    it "changes the session" do
+    it "sets the qualification IDs" do
       expect { save }.to change { session[:qualification_ids] }.to(
         [qualification_1.id.to_s, qualification_2.id.to_s],
+      )
+    end
+
+    it "sets the qualifications assessor note" do
+      expect { save }.to change { session[:qualifications_assessor_note] }.to(
+        "A note.",
       )
     end
   end

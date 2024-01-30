@@ -47,6 +47,7 @@ module AssessorInterface
         user: current_staff,
         professional_standing:,
         qualifications:,
+        qualifications_assessor_note: session[:qualifications_assessor_note],
         work_histories:,
       )
 
@@ -109,8 +110,9 @@ module AssessorInterface
       @form =
         SelectQualificationsForm.new(
           application_form:,
-          session:,
           qualification_ids: application_form.qualifications.pluck(:id),
+          qualifications_assessor_note: assessment.qualifications_assessor_note,
+          session:,
         )
     end
 
@@ -123,11 +125,18 @@ module AssessorInterface
           :qualification_ids,
         ).compact_blank
 
+      qualifications_assessor_note =
+        params.dig(
+          :assessor_interface_select_qualifications_form,
+          :qualifications_assessor_note,
+        ) || ""
+
       @form =
         SelectQualificationsForm.new(
           application_form:,
-          session:,
           qualification_ids:,
+          qualifications_assessor_note:,
+          session:,
         )
 
       if @form.save
