@@ -18,24 +18,9 @@ runs:
         terraform_version: 1.5.0
         terraform_wrapper: false
 
-    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
         azure-credentials: ${{ inputs.azure-credentials }}
-
-    - name: Refresh Terraform
-      shell: sh
-      run: make ci ${{ inputs.environment }} terraform-refresh
-      env:
-        TF_VAR_azure_sp_credentials_json: ${{ inputs.azure-credentials }}
-        DOCKER_IMAGE: "ghcr.io/dfe-digital/apply-for-qualified-teacher-status:no-tag"
-
-    - name: Get cluster details
-      id: cluster-details
-      working-directory: terraform/application
-      shell: bash
-      run: |
-        echo "name=$(terraform output -raw kubernetes_cluster_name)" >> $GITHUB_OUTPUT
-        echo "resource-group=$(terraform output -raw kubernetes_cluster_resource_group_name)" >> $GITHUB_OUTPUT
 
     - uses: Azure/login@v1
       with:
@@ -43,4 +28,4 @@ runs:
 
     - name: Set AKS credentials
       shell: bash
-      run: az aks get-credentials -g ${{ steps.cluster-details.outputs.resource-group }} -n ${{ steps.cluster-details.outputs.name }}
+      run: make ci ${{ inputs.environment }} get-cluster-credentials

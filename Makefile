@@ -11,13 +11,13 @@ help: ## Show this help
 	@grep -E '^[a-zA-Z\._\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: development
-development: set-test-azure-subscription ## Specify development configuration
+development: set-test-azure-subscription test-cluster ## Specify development configuration
 	$(eval CONFIG=development)
 	$(eval CONFIG_SHORT=dv)
 	$(eval DOMAINS_TERRAFORM_BACKEND_KEY=afqtsdomains_dev.tfstate)
 
 .PHONY: review
-review: set-test-azure-subscription ## Specify review configuration
+review: set-test-azure-subscription test-cluster ## Specify review configuration
 	$(if $(PULL_REQUEST_NUMBER), , $(error Missing environment variable "PULL_REQUEST_NUMBER"))
 	$(eval CONFIG=review)
 	$(eval CONFIG_SHORT=rv)
@@ -26,18 +26,18 @@ review: set-test-azure-subscription ## Specify review configuration
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
 .PHONY: test
-test: set-test-azure-subscription  ## Specify test configuration
+test: set-test-azure-subscription test-cluster ## Specify test configuration
 	$(eval CONFIG=test)
 	$(eval CONFIG_SHORT=ts)
 
 .PHONY: preproduction
-preproduction: set-test-azure-subscription ## Specify preproduction configuration
+preproduction: set-test-azure-subscription test-cluster ## Specify preproduction configuration
 	$(eval CONFIG=preproduction)
 	$(eval CONFIG_SHORT=pp)
 	$(eval DOMAINS_TERRAFORM_BACKEND_KEY=afqtsdomains_preprod.tfstate)
 
 .PHONY: production
-production: set-production-azure-subscription ## Specify production configuration
+production: set-production-azure-subscription production-cluster ## Specify production configuration
 	$(eval CONFIG=production)
 	$(eval CONFIG_SHORT=pd)
 	$(eval KEY_VAULT_PURGE_PROTECTION=true)
@@ -194,3 +194,15 @@ domains-apply: domains-init ## terraform apply for dns resources
 
 domains-destroy: domains-init ## terraform destroy for dns resources
 	terraform -chdir=terraform/domains/environment_domains destroy -var-file config/$(CONFIG).tfvars.json
+
+test-cluster:
+	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189t01-tsc-ts-rg)
+	$(eval CLUSTER_NAME=s189t01-tsc-test-aks)
+
+production-cluster:
+	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189p01-tsc-pd-rg)
+	$(eval CLUSTER_NAME=s189p01-tsc-production-aks)
+
+get-cluster-credentials: set-azure-account
+	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
+	kubelogin convert-kubeconfig -l $(if ${GITHUB_ACTIONS},spn,azurecli)

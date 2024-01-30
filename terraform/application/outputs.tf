@@ -10,14 +10,6 @@ output "postgres_azure_backup_storage_container_name" {
   value = module.postgres.azure_backup_storage_container_name
 }
 
-output "kubernetes_cluster_name" {
-  value = "${module.cluster_data.configuration_map.resource_prefix}-aks"
-}
-
-output "kubernetes_cluster_resource_group_name" {
-  value = module.cluster_data.configuration_map.resource_group_name
-}
-
 output "azure_storage_account_name" {
   value = azurerm_storage_account.uploads.name
 }
