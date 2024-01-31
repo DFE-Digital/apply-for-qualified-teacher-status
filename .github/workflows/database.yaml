@@ -36,6 +36,12 @@ jobs:
           environment: production
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Refresh Terraform
+        run: make ci production terraform-refresh
+        env:
+          TF_VAR_azure_sp_credentials_json: ${{ secrets.AZURE_CREDENTIALS }}
+          DOCKER_IMAGE: "ghcr.io/dfe-digital/apply-for-qualified-teacher-status:no-tag"
+
       - name: Get Azure backup storage details
         id: azure-backup-storage
         working-directory: terraform/application
