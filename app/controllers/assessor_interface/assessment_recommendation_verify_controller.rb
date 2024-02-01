@@ -30,22 +30,32 @@ module AssessorInterface
         application_form.qualifications.where(id: session[:qualification_ids])
       @work_histories =
         application_form.work_histories.where(id: session[:work_history_ids])
+
+      @skip_professional_standing = skip_professional_standing?
+      @skip_references = skip_references?
     end
 
     def update
+      professional_standing = session[:professional_standing]
+      qualifications =
+        application_form.qualifications.where(id: session[:qualification_ids])
+      work_histories =
+        application_form.work_histories.where(id: session[:work_history_ids])
+
       VerifyAssessment.call(
         assessment:,
         user: current_staff,
-        professional_standing: session[:professional_standing],
-        qualifications:
-          application_form.qualifications.where(
-            id: session[:qualification_ids],
-          ),
-        work_histories:
-          application_form.work_histories.where(id: session[:work_history_ids]),
+        professional_standing:,
+        qualifications:,
+        work_histories:,
       )
 
-      redirect_to [:status, :assessor_interface, application_form]
+      if professional_standing || qualifications.present? ||
+           work_histories.present?
+        redirect_to [:status, :assessor_interface, application_form]
+      else
+        redirect_to [:assessor_interface, application_form]
+      end
     end
 
     def edit_verify_qualifications
@@ -147,7 +157,7 @@ module AssessorInterface
     def edit_professional_standing
       authorize %i[assessor_interface assessment_recommendation], :edit?
 
-      if application_form.teaching_authority_provides_written_statement
+      if skip_professional_standing?
         redirect_to [
                       :reference_requests,
                       :assessor_interface,
@@ -194,6 +204,17 @@ module AssessorInterface
 
     def edit_reference_requests
       authorize %i[assessor_interface assessment_recommendation], :edit?
+
+      if skip_references?
+        redirect_to [
+                      :edit,
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :assessment_recommendation_verify,
+                    ]
+        return
+      end
 
       @form = SelectWorkHistoriesForm.new(application_form:, session:)
     end
@@ -256,6 +277,17 @@ module AssessorInterface
     def load_assessment_and_application_form
       @assessment = assessment
       @application_form = application_form
+    end
+
+    def skip_professional_standing?
+      application_form.teaching_authority_provides_written_statement ||
+        application_form.reduced_evidence_accepted ||
+        !application_form.needs_work_history
+    end
+
+    def skip_references?
+      application_form.reduced_evidence_accepted ||
+        !application_form.needs_work_history
     end
   end
 end

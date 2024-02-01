@@ -87,7 +87,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   it "verify" do
     given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
-    given_there_is_an_awardable_application_form_under_new_regulations
+    given_there_is_an_awardable_application_form_with_work_history
 
     when_i_visit_the(
       :assessor_complete_assessment_page,
@@ -132,6 +132,53 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
 
     when_i_select_the_work_histories
+    then_i_see_the(
+      :assessor_assessment_recommendation_verify_page,
+      reference:,
+      assessment_id:,
+    )
+
+    when_i_select_submit_verification_requests
+    then_i_see_the(:assessor_application_status_page, reference:)
+
+    when_i_click_on_overview_button
+    then_the_application_form_is_waiting_on
+  end
+
+  it "verify with reduced evidence" do
+    given_the_service_is_open
+    given_i_am_authorized_as_an_assessor_user
+    given_there_is_an_awardable_application_form_with_reduced_evidence
+
+    when_i_visit_the(
+      :assessor_complete_assessment_page,
+      reference:,
+      assessment_id:,
+    )
+
+    when_i_select_award_qts_pending_verifications
+    and_i_click_continue
+    then_i_see_the(
+      :assessor_verify_qualifications_assessment_recommendation_verify_page,
+      reference:,
+      assessment_id:,
+    )
+
+    when_i_select_yes_verify_qualifications
+    then_i_see_the(
+      :assessor_qualification_requests_assessment_recommendation_verify_page,
+      reference:,
+      assessment_id:,
+    )
+
+    when_i_select_the_qualifications
+    then_i_see_the(
+      :assessor_email_consent_letters_requests_assessment_recommendation_verify_page,
+      reference:,
+      assessment_id:,
+    )
+
+    when_i_click_continue_from_email_consent_letters
     then_i_see_the(
       :assessor_assessment_recommendation_verify_page,
       reference:,
@@ -202,6 +249,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
         :with_teaching_qualification,
         :submitted,
         *traits,
+        reduced_evidence_accepted: false,
       )
 
     assessment =
@@ -216,9 +264,14 @@ RSpec.describe "Assessor completing assessment", type: :system do
     create(:assessment_section, :personal_information, :passed, assessment:)
   end
 
-  def given_there_is_an_awardable_application_form_under_new_regulations
+  def given_there_is_an_awardable_application_form_with_work_history
     given_there_is_an_awardable_application_form
     create(:work_history, :completed, application_form:)
+  end
+
+  def given_there_is_an_awardable_application_form_with_reduced_evidence
+    given_there_is_an_awardable_application_form
+    application_form.update!(reduced_evidence_accepted: true)
   end
 
   def given_there_is_a_declinable_application_form

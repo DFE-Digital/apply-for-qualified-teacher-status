@@ -35,7 +35,9 @@ class VerifyAssessment
         reference_requests
       end
 
-    send_reference_request_emails(reference_requests)
+    if reference_requests.present?
+      send_reference_request_emails(reference_requests)
+    end
 
     reference_requests
   end
