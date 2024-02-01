@@ -95,9 +95,7 @@ class Assessment < ApplicationRecord
     if application_form.created_under_new_regulations?
       return false if induction_required.nil?
 
-      if skip_verification?
-        all_sections_or_further_information_requests_passed?
-      elsif verify?
+      if verify?
         enough_reference_requests_verify_passed? &&
           all_consent_requests_verify_passed? &&
           all_qualification_requests_review_passed? &&
@@ -176,8 +174,8 @@ class Assessment < ApplicationRecord
   end
 
   def can_verify?
+    return false unless unknown? || request_further_information?
     return false unless application_form.created_under_new_regulations?
-    return false if skip_verification?
 
     all_sections_or_further_information_requests_passed?
   end
@@ -220,6 +218,7 @@ class Assessment < ApplicationRecord
   end
 
   def enough_reference_requests_verify_passed?
+    return true if reference_requests.empty?
     return false if any_reference_requests_verify_failed?
 
     work_history_duration =
@@ -276,6 +275,7 @@ class Assessment < ApplicationRecord
   end
 
   def enough_reference_requests_review_passed?
+    return true if reference_requests.empty?
     return false unless all_reference_requests_reviewed?
 
     WorkHistoryDuration.for_ids(
@@ -330,7 +330,11 @@ class Assessment < ApplicationRecord
   end
 
   def all_qualification_requests_review_passed?
-    qualification_requests.all?(&:review_passed?)
+    if application_form.reduced_evidence_accepted
+      qualification_requests.all?(&:reviewed?)
+    else
+      qualification_requests.all?(&:review_passed?)
+    end
   end
 
   def any_qualification_requests_review_failed?
@@ -388,11 +392,6 @@ class Assessment < ApplicationRecord
   def professional_standing_request_part_of_verification?
     !application_form.teaching_authority_provides_written_statement &&
       professional_standing_request.present?
-  end
-
-  def skip_verification?
-    !application_form.needs_work_history ||
-      application_form.reduced_evidence_accepted
   end
 
   def all_sections_or_further_information_requests_passed?
