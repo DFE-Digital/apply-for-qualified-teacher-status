@@ -89,6 +89,7 @@ RSpec.describe ApplicationForm, type: :model do
     )
   end
 
+  it_behaves_like "a documentable"
   it_behaves_like "an expirable"
   it_behaves_like "a remindable"
 
@@ -425,15 +426,6 @@ RSpec.describe ApplicationForm, type: :model do
       it { is_expected.to_not include(eligible_application_form) }
       it { is_expected.to include(ineligible_application_form) }
     end
-  end
-
-  it "attaches empty documents" do
-    expect(application_form.identification_document).to_not be_nil
-    expect(application_form.name_change_document).to_not be_nil
-    expect(
-      application_form.english_language_medium_of_instruction_document,
-    ).to_not be_nil
-    expect(application_form.written_statement_document).to_not be_nil
   end
 
   describe "#to_param" do

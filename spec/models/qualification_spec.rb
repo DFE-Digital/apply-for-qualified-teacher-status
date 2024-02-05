@@ -27,6 +27,8 @@ require "rails_helper"
 RSpec.describe Qualification, type: :model do
   subject(:qualification) { create(:qualification) }
 
+  it_behaves_like "a documentable"
+
   describe "validations" do
     it { is_expected.to be_valid }
   end

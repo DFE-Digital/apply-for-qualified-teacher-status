@@ -78,6 +78,15 @@
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class ApplicationForm < ApplicationRecord
+  ATTACHABLE_DOCUMENT_TYPES = %w[
+    identification
+    name_change
+    medium_of_instruction
+    english_language_proficiency
+    written_statement
+  ].freeze
+
+  include Documentable
   include Expirable
   include Remindable
 
@@ -86,13 +95,10 @@ class ApplicationForm < ApplicationRecord
   belongs_to :english_language_provider, optional: true
   has_many :work_histories, dependent: :destroy
   has_many :qualifications, dependent: :destroy
-  has_many :documents, as: :documentable, dependent: :destroy
   has_many :timeline_events
   has_one :dqt_trn_request
   has_one :assessment
   has_many :notes, dependent: :destroy
-
-  before_save :build_documents, if: :new_record?
 
   validates :reference, presence: true, uniqueness: true, length: 3..31
 
@@ -292,14 +298,6 @@ class ApplicationForm < ApplicationRecord
   end
 
   private
-
-  def build_documents
-    documents.build(document_type: :identification)
-    documents.build(document_type: :name_change)
-    documents.build(document_type: :medium_of_instruction)
-    documents.build(document_type: :english_language_proficiency)
-    documents.build(document_type: :written_statement)
-  end
 
   def reference_requests_not_yet_received_or_rejected
     ReferenceRequest
