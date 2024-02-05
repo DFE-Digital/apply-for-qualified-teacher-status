@@ -344,6 +344,10 @@ Rails.application.routes.draw do
                   path: "/items",
                   only: %i[edit update]
       end
+
+      resources :qualification_requests,
+                path: "/qualification-requests",
+                only: %i[index]
     end
 
     resources :reference_requests,

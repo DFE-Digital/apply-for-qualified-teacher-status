@@ -53,6 +53,7 @@ class Teachers::SessionsController < Devise::SessionsController
   end
 
   def signed_out
+    @section = params[:section]
   end
 
   protected
@@ -61,8 +62,22 @@ class Teachers::SessionsController < Devise::SessionsController
     stored_location_for(resource) || teacher_interface_root_path
   end
 
-  def after_sign_out_path_for(_resource)
-    teacher_signed_out_path
+  def after_sign_out_path_for(resource)
+    if (application_form = resource.application_form)
+      view_object =
+        TeacherInterface::ApplicationFormViewObject.new(application_form:)
+
+      section =
+        if view_object.request_qualification_consent?
+          "qualification_consent"
+        else
+          "application"
+        end
+
+      teacher_signed_out_path(section:)
+    else
+      teacher_signed_out_path
+    end
   end
 
   private
