@@ -26,13 +26,15 @@ RSpec.describe Document, type: :model do
 
     it do
       is_expected.to define_enum_for(:document_type).with_values(
-        identification: "identification",
-        name_change: "name_change",
-        medium_of_instruction: "medium_of_instruction",
         english_language_proficiency: "english_language_proficiency",
+        identification: "identification",
+        medium_of_instruction: "medium_of_instruction",
+        name_change: "name_change",
         qualification_certificate: "qualification_certificate",
-        qualification_transcript: "qualification_transcript",
         qualification_document: "qualification_document",
+        qualification_transcript: "qualification_transcript",
+        signed_consent: "signed_consent",
+        unsigned_consent: "unsigned_consent",
         written_statement: "written_statement",
       ).backed_by_column_of_type(:string)
     end
