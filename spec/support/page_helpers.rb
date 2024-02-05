@@ -564,9 +564,9 @@ module PageHelpers
       PageObjects::TeacherInterface::PersonalInformationSummary.new
   end
 
-  def teacher_qualifications_form_page
-    @teacher_qualifications_form_page =
-      PageObjects::TeacherInterface::QualificationForm.new
+  def teacher_qualification_requests_page
+    @teacher_qualification_requests_page =
+      PageObjects::TeacherInterface::QualificationRequests.new
   end
 
   def teacher_reference_received_page

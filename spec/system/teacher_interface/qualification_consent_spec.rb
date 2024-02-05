@@ -11,13 +11,20 @@ RSpec.describe "Teacher qualification consent", type: :system do
   it "save and sign out" do
     when_i_visit_the(:teacher_application_page)
     then_i_see_the(:teacher_application_page)
-    and_i_see_qualification_consent_content
+    and_i_see_qualification_consent_start_now_content
+
+    when_i_click_the_start_button
+    then_i_see_the(:teacher_qualification_requests_page)
+
+    when_i_click_the_save_and_sign_out_button
+    then_i_see_the(:teacher_signed_out_page)
+    and_i_see_qualification_consent_sign_out_content
   end
 
   it "check your answers" do
     when_i_visit_the(:teacher_application_page)
     then_i_see_the(:teacher_application_page)
-    and_i_see_qualification_consent_content
+    and_i_see_qualification_consent_start_now_content
   end
 
   def given_there_is_an_application_form
@@ -28,9 +35,23 @@ RSpec.describe "Teacher qualification consent", type: :system do
     qualification_request
   end
 
-  def and_i_see_qualification_consent_content
+  def and_i_see_qualification_consent_start_now_content
     expect(teacher_application_page).to have_content(
       "We need your written consent to verify some of your qualifications",
+    )
+  end
+
+  def when_i_click_the_start_button
+    teacher_application_page.start_now_button.click
+  end
+
+  def when_i_click_the_save_and_sign_out_button
+    teacher_qualification_requests_page.save_and_sign_out_button.click
+  end
+
+  def and_i_see_qualification_consent_sign_out_content
+    expect(teacher_signed_out_page).to have_content(
+      "We’ve saved your progress regarding submitting the written consent",
     )
   end
 
