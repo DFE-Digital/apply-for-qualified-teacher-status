@@ -10,8 +10,10 @@
   <%= render "teacher_interface/application_forms/show/further_information_requested", view_object: @view_object %>
 <% elsif @view_object.request_professional_standing_certificate? %>
   <%= render "teacher_interface/application_forms/show/request_professional_standing_certificate", view_object: @view_object %>
+<% elsif @view_object.request_qualification_consent? %>
+  <%= render "teacher_interface/application_forms/show/request_qualification_consent", view_object: @view_object %>
 <% elsif @view_object.application_form.submitted? %>
-  <%= render "teacher_interface/application_forms/show/complete", view_object: @view_object %>
+  <%= render "teacher_interface/application_forms/show/submitted", view_object: @view_object %>
 <% elsif @view_object.from_ineligible_country? %>
   <%= render "teacher_interface/application_forms/show/from_ineligible_country", view_object: @view_object %>
 <% else %>

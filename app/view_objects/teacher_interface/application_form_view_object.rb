@@ -146,6 +146,15 @@ class TeacherInterface::ApplicationFormViewObject
       ) || false
   end
 
+  def request_qualification_consent?
+    return false if assessment.nil?
+
+    qualification_requests
+      .joins(assessment: :application_form)
+      .consent_respondable
+      .exists?
+  end
+
   def show_work_history_under_submission_banner?
     application_form.qualification_changed_work_history_duration &&
       !work_history_duration.enough_for_submission?
@@ -165,7 +174,10 @@ class TeacherInterface::ApplicationFormViewObject
            :requires_preliminary_check,
            to: :application_form
 
-  delegate :professional_standing_request, to: :assessment, allow_nil: true
+  delegate :professional_standing_request,
+           :qualification_requests,
+           to: :assessment,
+           allow_nil: true
 
   def task_list_section(key, item_keys)
     {
