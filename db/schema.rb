@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_21_091416) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_05_134202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -289,6 +289,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_21_091416) do
     t.boolean "verify_passed"
     t.text "verify_note", default: "", null: false
     t.datetime "verified_at"
+    t.boolean "unsigned_consent_document_downloaded", default: false, null: false
     t.index ["assessment_id"], name: "index_qualification_requests_on_assessment_id"
     t.index ["qualification_id"], name: "index_qualification_requests_on_qualification_id"
   end
