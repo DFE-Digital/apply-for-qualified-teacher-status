@@ -27,7 +27,7 @@ class TeacherInterface::BaseController < ApplicationController
                 .assessment
                 &.further_information_requests
                 &.flat_map(&:items) || []
-            ),
+            ) + (application_form.assessment&.qualification_requests || []),
       ).find(params[:document_id] || params[:id])
   end
 
@@ -37,9 +37,14 @@ class TeacherInterface::BaseController < ApplicationController
     end
   end
 
-  def redirect_unless_draft_or_further_information
+  def redirect_unless_draft_or_additional_information
     if document.for_further_information_request?
       unless document.documentable.further_information_request.requested?
+        redirect_to %i[teacher_interface application_form]
+      end
+    elsif document.for_qualification_request?
+      if document.documentable.consent_requested_at.nil? ||
+           document.documentable.consent_received_at.present?
         redirect_to %i[teacher_interface application_form]
       end
     else

@@ -81,8 +81,6 @@ class ReferenceRequest < ApplicationRecord
     validates :satisfied_response, inclusion: [true, false]
   end
 
-  delegate :application_form, to: :assessment
-
   def responses_given?
     [
       contact_response,

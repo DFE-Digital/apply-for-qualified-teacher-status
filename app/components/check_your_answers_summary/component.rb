@@ -117,42 +117,7 @@ module CheckYourAnswersSummary
     end
 
     def format_document(document, field)
-      scope =
-        (
-          if field[:translation]
-            document.translated_uploads
-          else
-            document.original_uploads
-          end
-        )
-
-      if document.optional? && !document.available
-        "<em>The applicant has indicated that they haven't done an induction period " \
-          "and don't have this document.</em>".html_safe
-      else
-        uploads =
-          scope
-            .order(:created_at)
-            .select { |upload| upload.attachment.present? }
-
-        [
-          format_array(uploads, field),
-          if malware_scan_active && scope.scan_result_suspect.exists?
-            "<em>#{scope.count} #{"file upload".pluralize(scope.count)} has been scanned as malware and deleted.</em>"
-          elsif request.path.starts_with?("/assessor") &&
-                convert_to_pdf_active && !uploads.all?(&:is_pdf?)
-            helpers.govuk_link_to(
-              "Download as PDF (opens in a new tab)",
-              url_helpers.assessor_interface_application_form_document_pdf_path(
-                document,
-                field[:translation] ? "translated" : "original",
-              ),
-              target: :_blank,
-              rel: :noopener,
-            )
-          end,
-        ].compact_blank.join("<br /><br />").html_safe
-      end
+      helpers.document_link_to(document, translated: field[:translation])
     end
 
     def format_array(list, field)
@@ -161,16 +126,6 @@ module CheckYourAnswersSummary
 
     def url_helpers
       @url_helpers ||= Rails.application.routes.url_helpers
-    end
-
-    def malware_scan_active
-      @malware_scan_active ||=
-        FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
-    end
-
-    def convert_to_pdf_active
-      @convert_to_pdf_active =
-        FeatureFlags::FeatureFlag.active?(:convert_documents_to_pdf)
     end
   end
 end

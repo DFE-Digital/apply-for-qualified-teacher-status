@@ -569,6 +569,11 @@ module PageHelpers
       PageObjects::TeacherInterface::QualificationRequests.new
   end
 
+  def teacher_qualification_request_download_page
+    @teacher_qualification_request_download_page =
+      PageObjects::TeacherInterface::QualificationRequestDownload.new
+  end
+
   def teacher_reference_received_page
     @teacher_reference_received_page ||=
       PageObjects::TeacherInterface::ReferenceReceived.new

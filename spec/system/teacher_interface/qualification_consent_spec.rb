@@ -29,6 +29,15 @@ RSpec.describe "Teacher qualification consent", type: :system do
     when_i_click_the_start_button
     then_i_see_the(:teacher_qualification_requests_page)
     and_i_see_the_download_and_upload_tasks
+
+    when_i_click_the_download_task
+    then_i_see_the(
+      :teacher_qualification_request_download_page,
+      id: qualification_request.id,
+    )
+
+    when_i_check_the_downloaded_checkbox
+    then_i_see_the(:teacher_qualification_requests_page)
   end
 
   def given_there_is_an_application_form
@@ -65,6 +74,21 @@ RSpec.describe "Teacher qualification consent", type: :system do
 
     task_list_section = task_list.sections.first
     expect(task_list_section.items.count).to eq(2)
+  end
+
+  def when_i_click_the_download_task
+    teacher_qualification_requests_page
+      .task_list
+      .sections
+      .first
+      .items
+      .first
+      .click
+  end
+
+  def when_i_check_the_downloaded_checkbox
+    teacher_qualification_request_download_page.downloaded_checkbox.check
+    teacher_qualification_request_download_page.continue_button.click
   end
 
   def teacher

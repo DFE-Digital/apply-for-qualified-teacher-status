@@ -349,8 +349,8 @@ Rails.application.routes.draw do
                 path: "/qualification-requests",
                 only: %i[index] do
         member do
-          get "download"
-          get "upload"
+          get "download", to: "qualification_requests#edit_download"
+          post "download", to: "qualification_requests#update_download"
         end
       end
     end
