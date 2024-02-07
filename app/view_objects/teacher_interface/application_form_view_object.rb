@@ -149,10 +149,7 @@ class TeacherInterface::ApplicationFormViewObject
   def request_qualification_consent?
     return false if assessment.nil?
 
-    qualification_requests
-      .joins(assessment: :application_form)
-      .consent_respondable
-      .exists?
+    qualification_requests.consent_respondable.exists?
   end
 
   def show_work_history_under_submission_banner?

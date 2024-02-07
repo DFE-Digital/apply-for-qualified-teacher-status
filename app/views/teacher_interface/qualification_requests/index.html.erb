@@ -1,6 +1,8 @@
 <% content_for :page_title, "Consent documents overview" %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<h1 class="govuk-heading-l">Consent documents overview</h1>
+<h1 class="govuk-heading-xl">Consent documents overview</h1>
+
+<%= render(TaskList::Component.new(@view_object.task_list_sections)) %>
 
 <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.save"), destroy_teacher_session_path, secondary: true %>

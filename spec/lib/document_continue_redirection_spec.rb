@@ -135,7 +135,7 @@ RSpec.describe DocumentContinueRedirection do
 
       it do
         is_expected.to eq(
-          [:teacher_interface, :application_form, qualification_request],
+          %i[teacher_interface application_form qualification_requests],
         )
       end
     end
@@ -152,7 +152,7 @@ RSpec.describe DocumentContinueRedirection do
 
       it do
         is_expected.to eq(
-          [:teacher_interface, :application_form, qualification_request],
+          %i[teacher_interface application_form qualification_requests],
         )
       end
     end
