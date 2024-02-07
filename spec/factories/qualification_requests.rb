@@ -41,6 +41,13 @@ FactoryBot.define do
 
     trait :consent_required do
       signed_consent_document_required { true }
+
+      after(:create) do |qualification_request, _evaluator|
+        create(
+          :upload,
+          document: qualification_request.unsigned_consent_document,
+        )
+      end
     end
 
     trait :consent_requested do

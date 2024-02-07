@@ -5,7 +5,7 @@ module TeacherInterface
     include HandleApplicationFormSection
     include HistoryTrackable
 
-    before_action :redirect_unless_draft_or_further_information
+    before_action :redirect_unless_draft_or_additional_information
     before_action :load_application_form
     before_action :load_document
 

@@ -12,7 +12,7 @@ module TeacherInterface
     skip_before_action :authenticate_teacher!
     before_action -> { authenticate_or_redirect(:teacher) }
 
-    before_action :redirect_unless_draft_or_further_information
+    before_action :redirect_unless_draft_or_additional_information
     before_action :load_application_form
     before_action :load_document
     before_action :load_upload, only: %i[delete destroy show]
