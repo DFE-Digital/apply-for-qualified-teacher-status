@@ -253,7 +253,7 @@ class TeacherInterface::ApplicationFormViewObject
                  assessor_feedback = failure_reason.assessor_feedback
                ).present? &&
                  FailureReasons.decline?(failure_reason: failure_reason.key)
-              "#{title}\n\n#{assessor_feedback}"
+              { decline_reason: title, assessor_note: assessor_feedback }
             else
               title
             end

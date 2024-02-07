@@ -288,10 +288,13 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
         is_expected.to eq(
           {
             "Personal information" => [
-              "The age range you are qualified to teach does not fall " \
-                "within the requirements of QTS.\n\nA note.",
-              "We were not provided with sufficient evidence to confirm " \
-                "qualification to teach at state or government schools.",
+              {
+                assessor_note: "A note.",
+                decline_reason:
+                  "The age range you are qualified to teach does not fall within the requirements of QTS.",
+              },
+              "We were not provided with sufficient evidence to confirm qualification to teach at state or " \
+                "government schools.",
             ],
           },
         )
