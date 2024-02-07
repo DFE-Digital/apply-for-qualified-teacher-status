@@ -23,13 +23,17 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
 class Qualification < ApplicationRecord
+  ATTACHABLE_DOCUMENT_TYPES = %w[
+    qualification_certificate
+    qualification_transcript
+  ].freeze
+
+  include Documentable
+
   belongs_to :application_form
-  has_many :documents, as: :documentable, dependent: :destroy
 
   scope :order_by_role, -> { order(start_date: :desc) }
   scope :order_by_user, -> { order(created_at: :asc) }
-
-  before_create :build_documents
 
   def is_teaching_qualification?
     application_form.qualifications.empty? ||
@@ -81,18 +85,6 @@ class Qualification < ApplicationRecord
     CountryName.from_code(institution_country_code)
   end
 
-  def certificate_document
-    documents.find(&:qualification_certificate?)
-  end
-
-  def transcript_document
-    documents.find(&:qualification_transcript?)
-  end
-
-  private
-
-  def build_documents
-    documents.build(document_type: :qualification_certificate)
-    documents.build(document_type: :qualification_transcript)
-  end
+  alias_method :certificate_document, :qualification_certificate_document
+  alias_method :transcript_document, :qualification_transcript_document
 end

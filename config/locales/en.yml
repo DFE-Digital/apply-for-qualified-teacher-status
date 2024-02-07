@@ -30,13 +30,15 @@ en:
 
   document:
     document_type:
-      identification: identity
-      name_change: name change
-      medium_of_instruction: medium of instruction
       english_language_proficiency: English language proficiency test
+      identification: identity
+      medium_of_instruction: medium of instruction
+      name_change: name change
       qualification_certificate: certificate
-      qualification_transcript: transcript
       qualification_document: qualification
+      qualification_transcript: transcript
+      signed_consent: signed consent
+      unsigned_consent: unsigned consent
       written_statement: written statement
 
   malware_scan:

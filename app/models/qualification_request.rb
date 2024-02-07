@@ -31,6 +31,9 @@
 #  fk_rails_...  (qualification_id => qualifications.id)
 #
 class QualificationRequest < ApplicationRecord
+  ATTACHABLE_DOCUMENT_TYPES = %w[signed_consent unsigned_consent].freeze
+
+  include Documentable
   include Requestable
 
   belongs_to :qualification

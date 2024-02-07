@@ -35,15 +35,17 @@ class Document < ApplicationRecord
   scope :not_completed, -> { where(completed: false) }
 
   UNTRANSLATABLE_TYPES = %w[
-    identification
-    name_change
-    medium_of_instruction
     english_language_proficiency
+    identification
+    medium_of_instruction
+    name_change
+    signed_consent
+    unsigned_consent
   ].freeze
   TRANSLATABLE_TYPES = %w[
     qualification_certificate
-    qualification_transcript
     qualification_document
+    qualification_transcript
     written_statement
   ].freeze
   DOCUMENT_TYPES = (UNTRANSLATABLE_TYPES + TRANSLATABLE_TYPES).freeze
@@ -62,6 +64,10 @@ class Document < ApplicationRecord
 
   def for_further_information_request?
     documentable.is_a?(FurtherInformationRequestItem)
+  end
+
+  def for_qualification_request?
+    documentable.is_a?(QualificationRequest)
   end
 
   def application_form

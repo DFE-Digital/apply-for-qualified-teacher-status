@@ -4,7 +4,12 @@
 <%= render "upload_timeout_error" if @form.timeout_error %>
 
 <% if @document.uploads.empty? %>
-  <% if @document.identification? %>
+  <% if @document.english_language_proficiency? %>
+    <h1 class="govuk-heading-l">Upload your English language proficiency test</h1>
+    <p class="govuk-body">This document must confirm that you have an English language proficiency test from an approved provider at level B2 of the Common European Framework of Reference for Languages (CEFR) scale.</p>
+    <p class="govuk-body">The test must be on the list of approved English language proficiency tests and awarded within the last 2 years before the date of your application.</p>
+    <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
+  <% elsif @document.identification? %>
     <h1 class="govuk-heading-l">Upload a valid identification document</h1>
 
     <p class="govuk-body">The document must show your date of birth and your nationality. If your ID document has several pages, you can add them on the next screen. </p>
@@ -19,7 +24,6 @@
     </ul>
 
     <p class="govuk-hint">If you’re uploading an identity card or driving licence, you’ll need to upload both sides of the card.</p>
-
   <% elsif @document.name_change? %>
     <h1 class="govuk-heading-l">Upload proof of your change of name</h1>
 
@@ -34,11 +38,40 @@
   <% elsif @document.medium_of_instruction? %>
     <h1 class="govuk-heading-l">Upload your Medium of Instruction (MOI)</h1>
     <p class="govuk-body">This document must confirm that the primary language used to teach this qualification was English.</p>
-  <% elsif @document.english_language_proficiency? %>
-    <h1 class="govuk-heading-l">Upload your English language proficiency test</h1>
-    <p class="govuk-body">This document must confirm that you have an English language proficiency test from an approved provider at level B2 of the Common European Framework of Reference for Languages (CEFR) scale.</p>
-    <p class="govuk-body">The test must be on the list of approved English language proficiency tests and awarded within the last 2 years before the date of your application.</p>
-    <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
+  <% elsif @document.qualification_certificate? %>
+    <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
+
+    <h1 class="govuk-heading-l">
+      <% if @document.documentable.try(:institution_name).present? %>
+        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_certificate") %>
+      <% elsif @document.documentable.is_teaching_qualification? %>
+        Upload your teaching qualification certificate
+      <% else %>
+        Upload your university degree certificate
+      <% end %>
+    </h1>
+
+    <div class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</div>
+  <% elsif @document.qualification_document? %>
+    <h1 class="govuk-heading-l">Upload your qualification document</h1>
+  <% elsif @document.qualification_transcript? %>
+    <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
+
+    <h1 class="govuk-heading-l">
+      <% if @document.documentable.try(:institution_name).present? %>
+        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_transcript") %>
+      <% elsif @document.documentable.is_teaching_qualification? %>
+        Upload your teaching qualification transcript
+      <% else %>
+        Upload your university degree transcript
+      <% end %>
+    </h1>
+
+    <p class="govuk-body"><%= I18n.t("application_form.qualifications.upload.transcript.description") %></p>
+  <% elsif @document.signed_consent? %>
+    <h1 class="govuk-heading-l">Upload your signed consent document</h1>
+  <% elsif @document.unsigned_consent? %>
+    <h1 class="govuk-heading-l">Upload your unsigned consent document</h1>
   <% elsif @document.written_statement? %>
     <span class="govuk-caption-l">Proof that you’re recognised as a teacher</span>
     <h1 class="govuk-heading-l">Upload your written statement</h1>
@@ -84,9 +117,9 @@
 
       <p class="govuk-body">It must confirm:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <%- proof_of_recognition_requirements_for(region: @application_form.region).each do |requirement| %>
+        <% proof_of_recognition_requirements_for(region: @application_form.region).each do |requirement| %>
           <li><%= requirement %></li>
-        <%- end -%>
+        <% end %>
       </ul>
       <p class="govuk-body">This written confirmation must be dated within 6 months of you applying for QTS.</p>
 
@@ -115,36 +148,6 @@
         <%= render "shared/teaching_authority_contact_information", region: @application_form.region %>
       <% end %>
     <% end %>
-  <% elsif @document.qualification_certificate? %>
-    <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-
-    <h1 class="govuk-heading-l">
-      <% if @document.documentable.try(:institution_name).present? %>
-        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_certificate") %>
-      <% elsif @document.documentable.is_teaching_qualification? %>
-        Upload your teaching qualification certificate
-      <% else %>
-        Upload your university degree certificate
-      <% end %>
-    </h1>
-
-    <div class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</div>
-  <% elsif @document.qualification_transcript? %>
-    <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-
-    <h1 class="govuk-heading-l">
-      <% if @document.documentable.try(:institution_name).present? %>
-        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_transcript") %>
-      <% elsif @document.documentable.is_teaching_qualification? %>
-        Upload your teaching qualification transcript
-      <% else %>
-        Upload your university degree transcript
-      <% end %>
-    </h1>
-
-    <p class="govuk-body"><%= I18n.t("application_form.qualifications.upload.transcript.description") %></p>
-  <% elsif @document.qualification_document? %>
-    <h1 class="govuk-heading-l">Upload your qualification document</h1>
   <% end %>
 <% else %>
   <h1 class="govuk-heading-l">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>

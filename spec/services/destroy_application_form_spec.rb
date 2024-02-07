@@ -43,8 +43,8 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", ApplicationForm
   include_examples "deletes model", Assessment
   include_examples "deletes model", AssessmentSection
-  include_examples "deletes model", SelectedFailureReason
-  include_examples "deletes model", Document, 16, 8
+  include_examples "deletes model", DQTTRNRequest
+  include_examples "deletes model", Document, 20, 10
   include_examples "deletes model", FurtherInformationRequest
   include_examples "deletes model", FurtherInformationRequestItem, 6, 3
   include_examples "deletes model", Note
@@ -52,9 +52,9 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", Qualification
   include_examples "deletes model", QualificationRequest
   include_examples "deletes model", ReferenceRequest
+  include_examples "deletes model", SelectedFailureReason
   include_examples "deletes model", Teacher
   include_examples "deletes model", TimelineEvent
   include_examples "deletes model", Upload
   include_examples "deletes model", WorkHistory, 4, 2
-  include_examples "deletes model", DQTTRNRequest
 end

@@ -10,6 +10,8 @@ class DocumentContinueRedirection
   def call
     if document.for_further_information_request?
       further_information_request_url
+    elsif document.for_qualification_request?
+      qualification_request_url
     else
       send("#{document.document_type}_url")
     end
@@ -64,5 +66,9 @@ class DocumentContinueRedirection
       :application_form,
       documentable.further_information_request,
     ]
+  end
+
+  def qualification_request_url
+    [:teacher_interface, :application_form, documentable]
   end
 end
