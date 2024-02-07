@@ -25,6 +25,10 @@ RSpec.describe "Teacher qualification consent", type: :system do
     when_i_visit_the(:teacher_application_page)
     then_i_see_the(:teacher_application_page)
     and_i_see_qualification_consent_start_now_content
+
+    when_i_click_the_start_button
+    then_i_see_the(:teacher_qualification_requests_page)
+    and_i_see_the_download_and_upload_tasks
   end
 
   def given_there_is_an_application_form
@@ -53,6 +57,14 @@ RSpec.describe "Teacher qualification consent", type: :system do
     expect(teacher_signed_out_page).to have_content(
       "We’ve saved your progress regarding submitting the written consent",
     )
+  end
+
+  def and_i_see_the_download_and_upload_tasks
+    task_list = teacher_qualification_requests_page.task_list
+    expect(task_list.sections.count).to eq(1)
+
+    task_list_section = task_list.sections.first
+    expect(task_list_section.items.count).to eq(2)
   end
 
   def teacher

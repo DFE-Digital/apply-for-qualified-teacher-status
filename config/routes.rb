@@ -347,7 +347,12 @@ Rails.application.routes.draw do
 
       resources :qualification_requests,
                 path: "/qualification-requests",
-                only: %i[index]
+                only: %i[index] do
+        member do
+          get "download"
+          get "upload"
+        end
+      end
     end
 
     resources :reference_requests,

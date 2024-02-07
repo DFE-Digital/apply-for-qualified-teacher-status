@@ -53,8 +53,10 @@ class QualificationRequest < ApplicationRecord
             .merge(ApplicationForm.assessable)
         end
 
-  scope :order_by_role, -> { order("qualifications.start_date": :desc) }
-  scope :order_by_user, -> { order("qualifications.created_at": :asc) }
+  scope :order_by_role,
+        -> { joins(:qualification).order("qualifications.start_date": :desc) }
+  scope :order_by_user,
+        -> { joins(:qualification).order("qualifications.created_at": :asc) }
 
   def expires_after
     6.weeks

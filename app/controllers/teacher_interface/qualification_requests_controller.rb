@@ -8,6 +8,7 @@ module TeacherInterface
     define_history_reset :index
 
     def index
+      @view_object = QualificationRequestsViewObject.new(application_form:)
     end
   end
 end
