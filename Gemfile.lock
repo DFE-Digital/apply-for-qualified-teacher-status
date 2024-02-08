@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: dad64e73d2915d9b569af0ab64cb8ae0e9571601
+  revision: dc34900e742ec35bdccadc6ce6868f168bd22658
   specs:
-    dfe-analytics (1.11.6)
+    dfe-analytics (1.11.7)
       google-cloud-bigquery (~> 1.38)
       request_store_rails (~> 2)
 
@@ -238,7 +238,7 @@ GEM
       representable (~> 3.0)
       retriable (>= 2.0, < 4.a)
       rexml
-    google-cloud-bigquery (1.46.1)
+    google-cloud-bigquery (1.47.0)
       concurrent-ruby (~> 1.0)
       google-apis-bigquery_v2 (~> 0.62)
       google-apis-core (~> 0.13)
@@ -248,7 +248,7 @@ GEM
     google-cloud-core (1.6.1)
       google-cloud-env (>= 1.0, < 3.a)
       google-cloud-errors (~> 1.0)
-    google-cloud-env (2.1.0)
+    google-cloud-env (2.1.1)
       faraday (>= 1.0, < 3.a)
     google-cloud-errors (1.3.1)
     googleauth (1.9.2)
@@ -316,7 +316,7 @@ GEM
     msgpack (1.7.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
-    multipart-post (2.3.0)
+    multipart-post (2.4.0)
     mutex_m (0.2.0)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
