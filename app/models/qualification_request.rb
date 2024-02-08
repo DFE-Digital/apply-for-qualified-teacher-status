@@ -42,10 +42,37 @@ class QualificationRequest < ApplicationRecord
 
   belongs_to :qualification
 
+  scope :consent_required, -> { where(signed_consent_document_required: true) }
+  scope :consent_requested, -> { where.not(consent_requested_at: nil) }
+  scope :consent_received, -> { where.not(consent_received_at: nil) }
+  scope :consent_respondable,
+        -> do
+          consent_required
+            .consent_requested
+            .where(consent_received_at: nil)
+            .merge(ApplicationForm.assessable)
+        end
+
   scope :order_by_role, -> { order("qualifications.start_date": :desc) }
   scope :order_by_user, -> { order("qualifications.created_at": :asc) }
 
   def expires_after
     6.weeks
+  end
+
+  def consent_requested!
+    update!(consent_requested_at: Time.zone.now)
+  end
+
+  def consent_requested?
+    consent_requested_at != nil
+  end
+
+  def consent_received!
+    update!(consent_received_at: Time.zone.now)
+  end
+
+  def consent_received?
+    consent_received_at != nil
   end
 end

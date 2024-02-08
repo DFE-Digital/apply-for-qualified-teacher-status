@@ -68,7 +68,8 @@ class Document < ApplicationRecord
   end
 
   def optional?
-    written_statement? && application_form.written_statement_optional
+    (signed_consent? && !documentable.signed_consent_document_required) ||
+      (written_statement? && application_form.written_statement_optional)
   end
 
   def for_further_information_request?
