@@ -5,6 +5,8 @@
 # Table name: qualification_requests
 #
 #  id                                   :bigint           not null, primary key
+#  consent_received_at                  :datetime
+#  consent_requested_at                 :datetime
 #  expired_at                           :datetime
 #  location_note                        :text             default(""), not null
 #  received_at                          :datetime
@@ -12,6 +14,7 @@
 #  review_note                          :string           default(""), not null
 #  review_passed                        :boolean
 #  reviewed_at                          :datetime
+#  signed_consent_document_required     :boolean          default(FALSE), not null
 #  unsigned_consent_document_downloaded :boolean          default(FALSE), not null
 #  verified_at                          :datetime
 #  verify_note                          :text             default(""), not null
