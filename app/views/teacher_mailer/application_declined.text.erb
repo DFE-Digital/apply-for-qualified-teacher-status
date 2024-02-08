@@ -12,7 +12,12 @@ Thank you for applying for QTS in England. Unfortunately, your application has b
 
 <% end %>
 <% reasons.each do |reason| %>
-<%= reason %>
+<%= reason.decline_reason %>
+
+<% if reason.assessor_note.present? %>
+## Assessor notes
+<%= reason.assessor_note %>
+<% end %>
 
 <% end %>
 <% end %>
