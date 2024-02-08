@@ -3,7 +3,7 @@
 
 <%= render "upload_timeout_error" if @form.timeout_error %>
 
-<% if @document.uploads.empty? %>
+<% if @document.uploads.empty? || !@document.allow_multiple_uploads? %>
   <% if @document.english_language_proficiency? %>
     <h1 class="govuk-heading-l">Upload your English language proficiency test</h1>
     <p class="govuk-body">This document must confirm that you have an English language proficiency test from an approved provider at level B2 of the Common European Framework of Reference for Languages (CEFR) scale.</p>
@@ -69,7 +69,9 @@
 
     <p class="govuk-body"><%= I18n.t("application_form.qualifications.upload.transcript.description") %></p>
   <% elsif @document.signed_consent? %>
-    <h1 class="govuk-heading-l">Upload your signed consent document</h1>
+    <h1 class="govuk-heading-l">Upload consent document</h1>
+    <h2 class="govuk-heading-m"><%= qualification_title(@document.documentable.qualification) %></h2>
+    <p class="govuk-body">Upload the signed document. Do not send it by email.</p>
   <% elsif @document.unsigned_consent? %>
     <h1 class="govuk-heading-l">Upload your unsigned consent document</h1>
   <% elsif @document.written_statement? %>

@@ -38,6 +38,15 @@ RSpec.describe "Teacher qualification consent", type: :system do
 
     when_i_check_the_downloaded_checkbox
     then_i_see_the(:teacher_qualification_requests_page)
+
+    when_i_click_the_upload_task
+    then_i_see_the(:teacher_upload_document_page)
+
+    when_i_upload_a_file
+    then_i_see_the(:teacher_check_document_page)
+
+    when_i_dont_need_to_upload_another_file
+    then_i_see_the(:teacher_qualification_requests_page)
   end
 
   def given_there_is_an_application_form
@@ -89,6 +98,27 @@ RSpec.describe "Teacher qualification consent", type: :system do
   def when_i_check_the_downloaded_checkbox
     teacher_qualification_request_download_page.downloaded_checkbox.check
     teacher_qualification_request_download_page.continue_button.click
+  end
+
+  def when_i_click_the_upload_task
+    teacher_qualification_requests_page
+      .task_list
+      .sections
+      .first
+      .items
+      .second
+      .click
+  end
+
+  def when_i_upload_a_file
+    teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
+      file_fixture("upload.pdf"),
+    )
+    teacher_upload_document_page.form.continue_button.click
+  end
+
+  def when_i_dont_need_to_upload_another_file
+    teacher_check_document_page.form.continue_button.click
   end
 
   def teacher
