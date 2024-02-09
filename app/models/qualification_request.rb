@@ -60,6 +60,10 @@ class QualificationRequest < ApplicationRecord
     6.weeks
   end
 
+  def status_for_consent?
+    signed_consent_document_required && consent_requested? && !requested?
+  end
+
   def consent_requested!
     update!(consent_requested_at: Time.zone.now)
   end
