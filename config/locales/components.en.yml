@@ -16,6 +16,7 @@ en:
       invalid: Invalid
       not_started: Not started
       overdue: Overdue
+      overdue_consent: Overdue consent
       overdue_further_information: Overdue further information
       overdue_lops: Overdue LOPS
       overdue_professional_standing: Overdue professional standing
@@ -25,12 +26,13 @@ en:
       pre_assessment: Pre-assessment
       preliminary_check: Preliminary check
       received: Received
+      received_and_overdue: Received (overdue)
+      received_consent: Received consent
       received_further_information: Received further information
       received_lops: Received LOPS
       received_professional_standing: Received professional standing
       received_qualification: Received qualification
       received_reference: Received reference
-      received_and_overdue: Received (overdue)
       rejected: Rejected
       requested: Waiting on
       review: Review
@@ -40,6 +42,7 @@ en:
       verification_in_progress: Verification in progress
       verification_not_started: Verification not started
       waiting_on: Waiting on
+      waiting_on_consent: Waiting on consent
       waiting_on_further_information: Waiting on further information
       waiting_on_lops: Waiting on LOPS
       waiting_on_professional_standing: Waiting on professional standing
