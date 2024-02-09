@@ -29,7 +29,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       custom_key: "Custom key value",
       nil_value: nil,
       boolean: true,
-      document: create(:document, :with_upload),
+      document: create(:document, :with_upload, document_type: :identification),
       array: %w[a b c],
       translatable_document:,
     )
