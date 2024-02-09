@@ -375,6 +375,11 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckQualification.new
   end
 
+  def teacher_check_qualification_requests_page
+    @teacher_check_qualification_requests_page =
+      PageObjects::TeacherInterface::CheckQualificationRequests.new
+  end
+
   def teacher_check_qualifications_page
     @teacher_check_qualifications_page ||=
       PageObjects::TeacherInterface::CheckQualifications.new

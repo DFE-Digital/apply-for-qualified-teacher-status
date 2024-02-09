@@ -352,6 +352,11 @@ Rails.application.routes.draw do
           get "download", to: "qualification_requests#edit_download"
           post "download", to: "qualification_requests#update_download"
         end
+
+        collection do
+          get "check"
+          post "submit"
+        end
       end
     end
 

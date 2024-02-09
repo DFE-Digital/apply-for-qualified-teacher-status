@@ -17,6 +17,29 @@ module TeacherInterface
       end
     end
 
+    def can_submit?
+      qualification_requests.all? do |qualification_request|
+        qualification_request.unsigned_consent_document_downloaded &&
+          qualification_request.signed_consent_document.completed?
+      end
+    end
+
+    def check_your_answers_fields
+      qualification_requests.each_with_object(
+        {},
+      ) do |qualification_request, memo|
+        memo[qualification_request.id] = {
+          title: qualification_title(qualification_request.qualification),
+          value: qualification_request.signed_consent_document,
+          href: [
+            :teacher_interface,
+            :application_form,
+            qualification_request.signed_consent_document,
+          ],
+        }
+      end
+    end
+
     private
 
     attr_reader :application_form

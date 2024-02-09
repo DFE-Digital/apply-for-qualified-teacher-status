@@ -152,6 +152,17 @@ class TeacherInterface::ApplicationFormViewObject
     qualification_requests.consent_respondable.exists?
   end
 
+  def qualification_consent_submitted?
+    return false if assessment.nil?
+
+    required_qualification_requests =
+      qualification_requests.where(signed_consent_document_required: true)
+
+    return false if required_qualification_requests.empty?
+
+    required_qualification_requests.all?(&:consent_received?)
+  end
+
   def show_work_history_under_submission_banner?
     application_form.qualification_changed_work_history_duration &&
       !work_history_duration.enough_for_submission?

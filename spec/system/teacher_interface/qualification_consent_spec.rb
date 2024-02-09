@@ -47,6 +47,14 @@ RSpec.describe "Teacher qualification consent", type: :system do
 
     when_i_dont_need_to_upload_another_file
     then_i_see_the(:teacher_qualification_requests_page)
+
+    when_i_click_check_your_answers
+    then_i_see_the(:teacher_check_qualification_requests_page)
+    and_i_see_the_documents
+
+    when_i_click_submit
+    then_i_see_the(:teacher_application_page)
+    and_i_see_the_consent_submitted_status
   end
 
   def given_there_is_an_application_form
@@ -119,6 +127,27 @@ RSpec.describe "Teacher qualification consent", type: :system do
 
   def when_i_dont_need_to_upload_another_file
     teacher_check_document_page.form.continue_button.click
+  end
+
+  def when_i_click_check_your_answers
+    teacher_qualification_requests_page.check_your_answers_button.click
+  end
+
+  def and_i_see_the_documents
+    expect(teacher_check_qualification_requests_page.summary_card).to be_visible
+  end
+
+  def when_i_click_submit
+    teacher_check_qualification_requests_page.submit_button.click
+  end
+
+  def and_i_see_the_consent_submitted_status
+    expect(teacher_submitted_application_page.panel.title.text).to eq(
+      "Consent documents successfully submitted",
+    )
+    expect(teacher_submitted_application_page.panel.body.text).to eq(
+      "Your application reference number\n#{@application_form.reference}",
+    )
   end
 
   def teacher
