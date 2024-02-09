@@ -50,6 +50,18 @@ FactoryBot.define do
       end
     end
 
+    trait :consent_received do
+      consent_requested
+      consent_received_at do
+        Faker::Time.between(from: 1.month.ago, to: Time.zone.now)
+      end
+    end
+
+    trait :consent_expired do
+      consent_requested
+      expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+    end
+
     trait :requested do
       requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end

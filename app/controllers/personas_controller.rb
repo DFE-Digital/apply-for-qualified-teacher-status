@@ -117,7 +117,14 @@ class PersonasController < ApplicationController
     %w[online written none]
       .product(
         %w[online written none],
-        %w[draft not_started verification awarded declined],
+        %w[
+          draft
+          not_started
+          waiting_on_consent
+          waiting_on_further_information
+          awarded
+          declined
+        ],
       )
       .map do |status_check, sanction_check, stage_or_status|
         { status_check:, sanction_check:, stage_or_status: }
@@ -148,13 +155,8 @@ class PersonasController < ApplicationController
 
             stage_or_status = persona[:stage_or_status]
 
-            if stage_or_status == "awarded"
-              application_form.awarded_at.present?
-            elsif stage_or_status == "declined"
-              application_form.declined_at.present?
-            else
-              application_form.stage == stage_or_status
-            end
+            application_form.stage == stage_or_status ||
+              application_form.statuses.include?(stage_or_status)
           end
 
         if (application_form = found_application_form)
