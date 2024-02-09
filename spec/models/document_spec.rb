@@ -106,4 +106,16 @@ RSpec.describe Document, type: :model do
       it { is_expected.to be(true) }
     end
   end
+
+  describe "#allow_multiple_uploads?" do
+    subject(:allow_multiple_uploads?) { document.allow_multiple_uploads? }
+
+    it { is_expected.to be(true) }
+
+    context "with a single page document" do
+      before { document.document_type = :signed_consent }
+
+      it { is_expected.to be(false) }
+    end
+  end
 end

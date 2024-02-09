@@ -21,6 +21,8 @@ module TeacherInterface
     attr_reader :timeout_error
 
     def update_model
+      document.uploads.each(&:destroy!) unless document.allow_multiple_uploads?
+
       if original_attachment.present?
         document.uploads.create!(
           attachment: original_attachment,

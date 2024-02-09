@@ -39,16 +39,21 @@ class Document < ApplicationRecord
     identification
     medium_of_instruction
     name_change
-    signed_consent
-    unsigned_consent
   ].freeze
+
+  UNTRANSLATABLE_SINGLE_TYPES = %w[signed_consent unsigned_consent].freeze
+
   TRANSLATABLE_TYPES = %w[
     qualification_certificate
     qualification_document
     qualification_transcript
     written_statement
   ].freeze
-  DOCUMENT_TYPES = (UNTRANSLATABLE_TYPES + TRANSLATABLE_TYPES).freeze
+
+  DOCUMENT_TYPES =
+    (
+      UNTRANSLATABLE_TYPES + UNTRANSLATABLE_SINGLE_TYPES + TRANSLATABLE_TYPES
+    ).freeze
 
   enum document_type:
          DOCUMENT_TYPES.each_with_object({}) { |type, memo| memo[type] = type }
@@ -56,6 +61,10 @@ class Document < ApplicationRecord
 
   def translatable?
     TRANSLATABLE_TYPES.include?(document_type)
+  end
+
+  def allow_multiple_uploads?
+    !UNTRANSLATABLE_SINGLE_TYPES.include?(document_type)
   end
 
   def optional?

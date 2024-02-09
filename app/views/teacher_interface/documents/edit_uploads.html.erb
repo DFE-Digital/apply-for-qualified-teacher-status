@@ -8,13 +8,25 @@
 <%= govuk_summary_list do |summary_list|
   @document.uploads.order(:created_at).each_with_index do |upload, index|
     summary_list.with_row do |row|
-      row.with_key(text: "File #{index + 1}")
+      if @document.allow_multiple_uploads?
+        row.with_key(text: "File #{index + 1}")
+      end
+
       row.with_value { upload_link_to(upload) }
-      row.with_action(
-        text: "Delete",
-        href: delete_teacher_interface_application_form_document_upload_path(@document, upload),
-        visually_hidden_text: upload.attachment.filename
-      )
+
+      if @document.allow_multiple_uploads?
+        row.with_action(
+          text: "Delete",
+          href: delete_teacher_interface_application_form_document_upload_path(@document, upload),
+          visually_hidden_text: upload.attachment.filename
+        )
+      else
+        row.with_action(
+          text: "Change",
+          href: new_teacher_interface_application_form_document_upload_path(@document),
+          visually_hidden_text: upload.attachment.filename
+        )
+      end
     end
   end
 end %>
@@ -22,11 +34,15 @@ end %>
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_radio_buttons_fieldset :add_another,
-                                     legend: { text: "Do you need to upload another page?" },
-                                     hint: { text: "If your document has several pages or you’re providing an image of the other side of your identity card or driving license, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’." } do %>
-    <%= f.govuk_radio_button :add_another, "true", label: { text: "Yes" } %>
-    <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
+  <% if @document.allow_multiple_uploads? %>
+    <%= f.govuk_radio_buttons_fieldset :add_another,
+                                       legend: { text: "Do you need to upload another page?" },
+                                       hint: { text: "If your document has several pages or you’re providing an image of the other side of your identity card or driving license, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’." } do %>
+      <%= f.govuk_radio_button :add_another, "true", label: { text: "Yes" } %>
+      <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
+    <% end %>
+  <% else %>
+    <%= f.hidden_field :add_another, value: "false" %>
   <% end %>
 
   <%= render "shared/save_submit_buttons", f: %>
