@@ -410,6 +410,59 @@ RSpec.describe ApplicationForm, type: :model do
       end
     end
 
+    describe "#should_send_reminder_email?" do
+      subject(:should_send_reminder_email?) do
+        application_form.should_send_reminder_email?(
+          name,
+          number_of_reminders_sent,
+        )
+      end
+
+      let(:application_form) { create(:application_form, :verification_stage) }
+      let(:assessment) { create(:assessment, application_form:) }
+      let(:qualification) { create(:qualification, application_form:) }
+
+      context "with consent reminders" do
+        let(:name) { "consent" }
+
+        context "with no reminders sent" do
+          let(:number_of_reminders_sent) { 0 }
+          it { is_expected.to be false }
+
+          context "with a qualification request" do
+            before do
+              create(
+                :qualification_request,
+                assessment:,
+                qualification:,
+                consent_requested_at: 1.week.ago,
+              )
+            end
+
+            it { is_expected.to be false }
+          end
+
+          context "with a qualification request older than 3 weeks ago" do
+            before do
+              create(
+                :qualification_request,
+                assessment:,
+                qualification:,
+                consent_requested_at: 4.weeks.ago,
+              )
+            end
+
+            it { is_expected.to be true }
+          end
+        end
+
+        context "with no reminders sent" do
+          let(:number_of_reminders_sent) { 1 }
+          it { is_expected.to be false }
+        end
+      end
+    end
+
     describe "#from_ineligible_country" do
       subject(:from_ineligible_country) do
         described_class.from_ineligible_country
