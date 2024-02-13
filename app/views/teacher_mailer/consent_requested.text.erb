@@ -1,0 +1,24 @@
+Dear <%= application_form_full_name(@application_form) %>,
+
+As part of your QTS application we need to verify some of your qualifications. To allow us to do this you need to sign and return a consent document for each qualification we need to verify.
+
+Consent documents have been added to your application.
+
+## What you need to do
+
+Download each document then:
+
+- print it
+- sign it, making sure your signature is clear
+- scan or photograph it
+- upload the signed document
+
+[Sign in to access your documents](<%= new_teacher_session_url %>)
+
+You need to sign and upload these documents by <%= @expires_at.to_fs(:date) %> so that we can proceed with your application.
+
+## Why we need your written consent
+
+We need your written consent so we can share your data with organisations that can verify your qualifications. This is in accordance with UK General Data Protection Regulation (GDPR).
+
+<%= render "shared/teacher_mailer/footer" %>

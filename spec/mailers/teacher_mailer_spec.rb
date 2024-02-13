@@ -256,6 +256,51 @@ RSpec.describe TeacherMailer, type: :mailer do
     it_behaves_like "an observable mailer", "application_received"
   end
 
+  describe "#consent_requested" do
+    subject(:mail) { described_class.with(application_form:).consent_requested }
+
+    before do
+      create(
+        :qualification_request,
+        :consent_requested,
+        assessment:,
+        consent_requested_at: Date.new(2020, 1, 1),
+      )
+    end
+
+    describe "#subject" do
+      subject(:subject) { mail.subject }
+
+      it do
+        is_expected.to eq(
+          "We need your written consent to progress your QTS application",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body.encoded }
+
+      it { is_expected.to include("Dear First Last") }
+      it do
+        is_expected.to include(
+          "As part of your QTS application we need to verify some of your qualifications",
+        )
+      end
+      it do
+        is_expected.to include("upload these documents by 12 February 2020")
+      end
+    end
+
+    it_behaves_like "an observable mailer", "consent_requested"
+  end
+
   describe "#further_information_received" do
     subject(:mail) do
       described_class.with(application_form:).further_information_received
