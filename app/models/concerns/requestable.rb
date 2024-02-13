@@ -18,6 +18,10 @@ module Requestable
     has_one :application_form, through: :assessment
   end
 
+  def expires_from
+    requested_at || try(:consent_requested_at)
+  end
+
   def requested!
     update!(requested_at: Time.zone.now)
   end

@@ -4,9 +4,9 @@ module Expirable
   extend ActiveSupport::Concern
 
   def expires_at
-    return nil if requested_at.nil? || expires_after.nil?
+    return nil if expires_from.nil? || expires_after.nil?
 
-    requested_at + expires_after
+    expires_from + expires_after
   end
 
   def days_until_expired
