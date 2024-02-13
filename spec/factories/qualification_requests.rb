@@ -39,6 +39,17 @@ FactoryBot.define do
     association :assessment
     association :qualification, :completed
 
+    trait :consent_required do
+      signed_consent_document_required { true }
+    end
+
+    trait :consent_requested do
+      consent_required
+      consent_requested_at do
+        Faker::Time.between(from: 1.month.ago, to: Time.zone.now)
+      end
+    end
+
     trait :requested do
       requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end

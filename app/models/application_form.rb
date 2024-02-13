@@ -289,12 +289,12 @@ class ApplicationForm < ApplicationRecord
     end
   end
 
-  def expires_after
-    submitted? ? nil : 6.months
+  def expires_from
+    created_at
   end
 
-  def requested_at
-    created_at
+  def expires_after
+    submitted? ? nil : 6.months
   end
 
   private

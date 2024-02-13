@@ -56,9 +56,49 @@ RSpec.describe QualificationRequest, type: :model do
     end
   end
 
+  describe "#expires_from" do
+    subject(:expires_from) { qualification_request.expires_from }
+
+    context "when consent has been requested" do
+      let(:qualification_request) do
+        create(
+          :qualification_request,
+          consent_requested_at: Date.new(2020, 1, 1),
+        )
+      end
+
+      it { is_expected.to eq(Date.new(2020, 1, 1)) }
+    end
+
+    context "when verification has been requested" do
+      let(:qualification_request) do
+        create(
+          :qualification_request,
+          consent_requested_at: Date.new(2020, 1, 1),
+          requested_at: Date.new(2021, 1, 1),
+        )
+      end
+
+      it { is_expected.to eq(Date.new(2021, 1, 1)) }
+    end
+  end
+
   describe "#expires_after" do
-    subject(:expires_after) { described_class.new.expires_after }
-    it { is_expected.to eq(6.weeks) }
+    subject(:expires_after) { qualification_request.expires_after }
+
+    context "when consent has been requested" do
+      let(:qualification_request) do
+        create(:qualification_request, :consent_requested)
+      end
+
+      it { is_expected.to eq(6.weeks) }
+    end
+
+    context "when verification has been requested" do
+      let(:qualification_request) { create(:qualification_request, :requested) }
+
+      it { is_expected.to eq(6.weeks) }
+    end
   end
 
   describe "#consent_requested!" do
