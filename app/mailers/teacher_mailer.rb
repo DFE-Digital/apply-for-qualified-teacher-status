@@ -56,6 +56,17 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def consent_reminder
+    @expires_at =
+      assessment.qualification_requests.consent_required.map(&:expires_at).max
+
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject: I18n.t("mailer.teacher.consent_reminder.subject"),
+    )
+  end
+
   def consent_requested
     @expires_at =
       assessment.qualification_requests.consent_required.map(&:expires_at).max
