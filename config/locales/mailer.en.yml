@@ -24,6 +24,8 @@ en:
         subject: "Reminder: we need your written consent to progress your QTS application"
       consent_requested:
         subject: We need your written consent to progress your QTS application
+      consent_submitted:
+        subject: We’ve received your consent documents
       further_information_received:
         subject: We’ve received the additional information you sent us
       further_information_requested:
