@@ -216,11 +216,15 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
         is_expected.to eq(
           {
             "" => [
-              "As we are unable to verify professional standing documents with the teaching authority in Zimbabwe, " \
-                "we have removed Zimbabwe from the list of eligible countries.\n\nWe need to be able to verify all " \
-                "documents submitted by applicants with the relevant authorities. This is to ensure QTS requirements " \
-                "are applied fairly and consistently to every teacher, regardless of the country they trained to " \
-                "teach in.",
+              {
+                name:
+                  "As we are unable to verify professional standing documents with the " \
+                    "teaching authority in Zimbabwe, we have removed Zimbabwe from the " \
+                    "list of eligible countries.\n\nWe need to be able to verify all " \
+                    "documents submitted by applicants with the relevant authorities. " \
+                    "This is to ensure QTS requirements are applied fairly and consistently " \
+                    "to every teacher, regardless of the country they trained to teach in.",
+              },
             ],
           },
         )
@@ -233,8 +237,11 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
         is_expected.to eq(
           {
             "" => [
-              "Your application has been declined as you did not respond to the " \
-                "assessor’s request for further information within the specified time.",
+              {
+                name:
+                  "Your application has been declined as you did not respond to the " \
+                    "assessor’s request for further information within the specified time.",
+              },
             ],
           },
         )
@@ -247,9 +254,12 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
         is_expected.to eq(
           {
             "" => [
-              "Your application has been declined as we did not receive your letter " \
-                "that proves you’re recognised as a teacher from teaching authority " \
-                "within 180 days.",
+              {
+                name:
+                  "Your application has been declined as we did not receive your letter " \
+                    "that proves you’re recognised as a teacher from teaching authority " \
+                    "within 180 days.",
+              },
             ],
           },
         )
@@ -288,10 +298,17 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
         is_expected.to eq(
           {
             "Personal information" => [
-              "The age range you are qualified to teach does not fall " \
-                "within the requirements of QTS.\n\nA note.",
-              "We were not provided with sufficient evidence to confirm " \
-                "qualification to teach at state or government schools.",
+              {
+                assessor_note: "A note.",
+                name:
+                  "The age range you are qualified to teach does not fall " \
+                    "within the requirements of QTS.",
+              },
+              {
+                name:
+                  "We were not provided with sufficient evidence to confirm " \
+                    "qualification to teach at state or government schools.",
+              },
             ],
           },
         )

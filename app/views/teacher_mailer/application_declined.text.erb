@@ -12,8 +12,12 @@ Thank you for applying for QTS in England. Unfortunately, your application has b
 
 <% end %>
 <% reasons.each do |reason| %>
-<%= reason %>
+<%= reason[:name] %>
 
+<% if reason[:assessor_note].present? %>
+<%= reason[:assessor_note] %>
+
+<% end %>
 <% end %>
 <% end %>
 <% unless @view_object.declined_cannot_reapply? || @view_object.from_ineligible_country? %>

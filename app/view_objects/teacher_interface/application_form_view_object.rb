@@ -63,32 +63,41 @@ class TeacherInterface::ApplicationFormViewObject
     if from_ineligible_country?
       country_name = CountryName.from_country(country)
       teaching_authority_name = region_teaching_authority_name(region)
-
       {
         "" => [
-          "As we are unable to verify professional standing documents with the #{teaching_authority_name} in " \
-            "#{country_name}, we have removed #{country_name} from the list of eligible countries.\n\nWe need to be " \
-            "able to verify all documents submitted by applicants with the relevant authorities. This is to ensure " \
-            "QTS requirements are applied fairly and consistently to every teacher, regardless of the country they " \
-            "trained to teach in.",
+          {
+            name:
+              "As we are unable to verify professional standing documents with the #{teaching_authority_name} in " \
+                "#{country_name}, we have removed #{country_name} from the list of eligible countries.\n\n" \
+                "We need to be able to verify all documents submitted by " \
+                "applicants with the relevant authorities. This is to ensure QTS requirements are applied " \
+                "fairly and consistently to every teacher, regardless of the country they trained to teach in.",
+          },
         ],
       }
     elsif further_information_request&.expired?
       {
         "" => [
-          I18n.t(
-            "teacher_interface.application_forms.show.declined.failure_reasons.further_information_request_expired",
-          ),
+          {
+            name:
+              I18n.t(
+                "teacher_interface.application_forms.show.declined.failure_reasons.further_information_request_expired",
+              ),
+          },
         ],
       }
     elsif professional_standing_request&.expired?
       {
         "" => [
-          I18n.t(
-            "teacher_interface.application_forms.show.declined.failure_reasons.professional_standing_request_expired",
-            certificate_name: region_certificate_name(region),
-            teaching_authority_name: region_teaching_authority_name(region),
-          ),
+          {
+            name:
+              I18n.t(
+                "teacher_interface.application_forms.show.declined.failure_reasons." \
+                  "professional_standing_request_expired",
+                certificate_name: region_certificate_name(region),
+                teaching_authority_name: region_teaching_authority_name(region),
+              ),
+          },
         ],
       }
     else
@@ -253,9 +262,9 @@ class TeacherInterface::ApplicationFormViewObject
                  assessor_feedback = failure_reason.assessor_feedback
                ).present? &&
                  FailureReasons.decline?(failure_reason: failure_reason.key)
-              "#{title}\n\n#{assessor_feedback}"
+              { name: title, assessor_note: assessor_feedback }
             else
-              title
+              { name: title }
             end
           end
 

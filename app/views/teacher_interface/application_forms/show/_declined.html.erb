@@ -9,16 +9,26 @@
     <h4 class="govuk-heading-s"><%= title %></h4>
   <% end %>
 
-  <% if reasons.count == 1 %>
-    <%= simple_format reasons.first %>
+  <% if reasons.size == 1 %>
+    <%= simple_format reasons.first[:name] %>
+    <% if reasons.first[:assessor_note].present? %>
+      <%= simple_format reasons.first[:assessor_note] %>
+    <% end %>
   <% else %>
     <ul class="govuk-list govuk-list--bullet">
       <% reasons.each do |reason| %>
-        <li><%= simple_format reason %></li>
+        <li>
+          <%= simple_format reason[:name] %>
+          <% if reason[:assessor_note].present? %>
+            <%= simple_format reason[:assessor_note] %>
+          <% end %>
+        </li>
       <% end %>
     </ul>
   <% end %>
 <% end %>
+
+
 
 <%= render "teacher_interface/application_forms/show/what_can_you_do_next", view_object: %>
 

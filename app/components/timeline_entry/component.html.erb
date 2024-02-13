@@ -74,8 +74,11 @@
 
         <ul class="govuk-list govuk-list--bullet">
           <% reasons.each do |reason| %>
-            <li><%= simple_format reason %></li>
-          <% end %>
+            <li><%= simple_format reason[:name] %></li>
+            <% if reason[:assessor_note].present? %>
+              <li><%= simple_format reason[:assessor_note] %></li>
+            <% end %>
+          <% end %> 
         </ul>
       <% end %>
 
