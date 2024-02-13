@@ -20,6 +20,12 @@ en:
           1: Your draft QTS application will be deleted in 1 week
       application_received:
         subject: We’ve received your application for qualified teacher status (QTS)
+      consent_reminder:
+        subject: "Reminder: we need your written consent to progress your QTS application"
+      consent_requested:
+        subject: We need your written consent to progress your QTS application
+      consent_submitted:
+        subject: We’ve received your consent documents
       further_information_received:
         subject: We’ve received the additional information you sent us
       further_information_requested:
