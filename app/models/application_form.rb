@@ -247,13 +247,18 @@ class ApplicationForm < ApplicationRecord
   end
 
   def reminder_email_names
-    %w[expiration references]
+    %w[consent expiration references]
   end
 
   def should_send_reminder_email?(name, number_of_reminders_sent)
     return false if teacher.application_form != self
 
     case name
+    when "consent"
+      number_of_reminders_sent.zero? &&
+        consent_requests_not_yet_received.any? do |qualification_request|
+          qualification_request.days_until_expired <= 21
+        end
     when "expiration"
       return false if days_until_expired.nil?
 
@@ -271,6 +276,8 @@ class ApplicationForm < ApplicationRecord
 
   def send_reminder_email(name, number_of_reminders_sent)
     case name
+    when "consent"
+      TeacherMailer.with(application_form: self).consent_reminder.deliver_later
     when "expiration"
       TeacherMailer
         .with(application_form: self, number_of_reminders_sent:)
@@ -305,5 +312,12 @@ class ApplicationForm < ApplicationRecord
       .where(work_histories: { application_form_id: id })
       .where.not(requested_at: nil)
       .where(received_at: nil, verify_passed: nil, review_passed: nil)
+  end
+
+  def consent_requests_not_yet_received
+    QualificationRequest
+      .joins(:qualification)
+      .where(qualifications: { application_form_id: id })
+      .consent_respondable
   end
 end

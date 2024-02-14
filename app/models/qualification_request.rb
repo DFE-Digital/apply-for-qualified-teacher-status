@@ -47,9 +47,9 @@ class QualificationRequest < ApplicationRecord
   scope :consent_received, -> { where.not(consent_received_at: nil) }
   scope :consent_respondable,
         -> do
-          consent_required
-            .consent_requested
+          consent_requested
             .where(consent_received_at: nil)
+            .joins(assessment: :application_form)
             .merge(ApplicationForm.assessable)
         end
 
