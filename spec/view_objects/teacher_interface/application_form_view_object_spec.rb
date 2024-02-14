@@ -268,7 +268,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
     context "with a recommendation note" do
       before { assessment.update!(recommendation_assessor_note: "A note.") }
-      it { is_expected.to eq({ "" => ["A note."] }) }
+      it { is_expected.to eq({ "" => [{ name: "A note." }] }) }
     end
 
     context "with failure reasons" do
