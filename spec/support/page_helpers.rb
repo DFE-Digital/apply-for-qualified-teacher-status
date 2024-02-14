@@ -375,6 +375,11 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckQualification.new
   end
 
+  def teacher_check_qualification_requests_page
+    @teacher_check_qualification_requests_page =
+      PageObjects::TeacherInterface::CheckQualificationRequests.new
+  end
+
   def teacher_check_qualifications_page
     @teacher_check_qualifications_page ||=
       PageObjects::TeacherInterface::CheckQualifications.new
@@ -564,9 +569,14 @@ module PageHelpers
       PageObjects::TeacherInterface::PersonalInformationSummary.new
   end
 
-  def teacher_qualifications_form_page
-    @teacher_qualifications_form_page =
-      PageObjects::TeacherInterface::QualificationForm.new
+  def teacher_qualification_requests_page
+    @teacher_qualification_requests_page =
+      PageObjects::TeacherInterface::QualificationRequests.new
+  end
+
+  def teacher_qualification_request_download_page
+    @teacher_qualification_request_download_page =
+      PageObjects::TeacherInterface::QualificationRequestDownload.new
   end
 
   def teacher_reference_received_page

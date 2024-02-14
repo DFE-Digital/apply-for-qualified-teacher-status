@@ -1,10 +1,25 @@
-<%= govuk_panel(title_text: view_object.further_information_request&.received? ? "Further information successfully submitted" : "Application complete") do %>
+<% further_information_submitted = view_object.further_information_request&.received? %>
+<% qualification_consent_submitted = view_object.qualification_consent_submitted? %>
+
+<% title_text = if qualification_consent_submitted
+                  "Consent documents successfully submitted"
+                elsif further_information_submitted
+                  "Further information successfully submitted"
+                else
+                  "Application complete"
+                end %>
+
+<%= govuk_panel(title_text:) do %>
   Your application reference number
   <br />
   <strong><%= view_object.application_form.reference %></strong>
 <% end %>
 
-<% if view_object.further_information_request&.received? %>
+<% if qualification_consent_submitted %>
+  <p class="govuk-body">We’ve sent you an email to confirm.</p>
+  <p class="govuk-body">Once an assessor has checked the documents to make sure you’ve provided the required information, they’ll continue reviewing your application.</p>
+  <p class="govuk-body">You can now close this page.</p>
+<% elsif further_information_submitted %>
   <h3 class="govuk-heading-m">You’ve successfully submitted your further information</h3>
   <p class="govuk-body">We’ve sent you an email to confirm that we’ve received it.</p>
   <p class="govuk-body">The assessor will continue to review your QTS application once they’ve checked that the further information you’ve provided can be accepted.</p>

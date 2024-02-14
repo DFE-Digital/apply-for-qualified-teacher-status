@@ -1,38 +1,38 @@
 <% content_for :page_title, title_with_error_prefix("Check your uploaded files", error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<h1 class="govuk-heading-l">Check your uploaded files – <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>
-
-<h2 class="govuk-heading-m">Files added</h2>
-
-<%= govuk_summary_list do |summary_list|
-  @document.uploads.order(:created_at).each_with_index do |upload, index|
-    summary_list.with_row do |row|
-      if @document.allow_multiple_uploads?
-        row.with_key(text: "File #{index + 1}")
-      end
-
-      row.with_value { upload_link_to(upload) }
-
-      if @document.allow_multiple_uploads?
-        row.with_action(
-          text: "Delete",
-          href: delete_teacher_interface_application_form_document_upload_path(@document, upload),
-          visually_hidden_text: upload.attachment.filename
-        )
-      else
-        row.with_action(
-          text: "Change",
-          href: new_teacher_interface_application_form_document_upload_path(@document),
-          visually_hidden_text: upload.attachment.filename
-        )
-      end
-    end
-  end
-end %>
-
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l">Check your uploaded files – <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>
+
+  <h2 class="govuk-heading-m">Files added</h2>
+
+  <%= govuk_summary_list do |summary_list|
+    @document.uploads.order(:created_at).each_with_index do |upload, index|
+      summary_list.with_row do |row|
+        if @document.allow_multiple_uploads?
+          row.with_key(text: "File #{index + 1}")
+        end
+
+        row.with_value { upload_link_to(upload) }
+
+        if @document.allow_multiple_uploads?
+          row.with_action(
+            text: "Delete",
+            href: delete_teacher_interface_application_form_document_upload_path(@document, upload),
+            visually_hidden_text: upload.attachment.filename
+          )
+        else
+          row.with_action(
+            text: "Change",
+            href: new_teacher_interface_application_form_document_upload_path(@document),
+            visually_hidden_text: upload.attachment.filename
+          )
+        end
+      end
+    end
+  end %>
 
   <% if @document.allow_multiple_uploads? %>
     <%= f.govuk_radio_buttons_fieldset :add_another,

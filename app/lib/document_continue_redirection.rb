@@ -69,6 +69,6 @@ class DocumentContinueRedirection
   end
 
   def qualification_request_url
-    [:teacher_interface, :application_form, documentable]
+    %i[teacher_interface application_form qualification_requests]
   end
 end
