@@ -156,12 +156,6 @@ def application_form_traits_for(region)
 end
 
 def create_requestables(application_form, assessment, state)
-  status_prefix = {
-    expired: "overdue",
-    received: "received",
-    requested: "waiting_on",
-  }.fetch(state)
-
   unless application_form.teaching_authority_provides_written_statement
     assessment.sections.update_all(passed: true)
   end
@@ -173,18 +167,6 @@ def create_requestables(application_form, assessment, state)
        )
     FactoryBot.create(:professional_standing_request, state, assessment:)
 
-    application_form.update!(
-      statuses: ["#{status_prefix}_lops"],
-      stage:
-        (
-          if application_form.teaching_authority_provides_written_statement
-            "pre_assessment"
-          else
-            "verification"
-          end
-        ),
-    )
-
     unless application_form.teaching_authority_provides_written_statement
       assessment.verify!
     end
@@ -194,26 +176,18 @@ def create_requestables(application_form, assessment, state)
       FactoryBot.create(:reference_request, state, assessment:, work_history:)
     end
 
-    application_form.update!(
-      statuses: ["#{status_prefix}_reference"],
-      stage: "verification",
-    )
     assessment.verify!
   elsif (qualifications = application_form.qualifications).present? &&
         rand(2).zero?
     qualifications.each do |qualification|
       FactoryBot.create(
         :qualification_request,
-        state,
+        [state, "consent_#{state}"].sample,
         assessment:,
         qualification:,
       )
     end
 
-    application_form.update!(
-      statuses: ["#{status_prefix}_qualification"],
-      stage: "verification",
-    )
     assessment.verify!
   elsif state != :expired
     FactoryBot.create(
@@ -222,12 +196,13 @@ def create_requestables(application_form, assessment, state)
       :with_items,
       assessment:,
     )
-    application_form.update!(
-      statuses: ["#{status_prefix}_further_information"],
-      stage: "assessment",
-    )
     assessment.request_further_information!
   end
+
+  ApplicationFormStatusUpdater.call(
+    application_form:,
+    user: "Example data generator",
+  )
 end
 
 def create_application_forms
