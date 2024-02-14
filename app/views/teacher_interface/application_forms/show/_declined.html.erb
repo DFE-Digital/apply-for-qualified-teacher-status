@@ -6,13 +6,13 @@
 
 <% view_object.declined_reasons.each do |title, reasons| %>
   <% if title.present? %>
-    <h3 class="govuk-heading-s"><%= title %></h3>
+    <h4 class="govuk-heading-s"><%= title %></h4>
   <% end %>
 
   <% if reasons.size == 1 %>
     <%= simple_format reasons.first[:name] %>
     <% if reasons.first[:assessor_note].present? %>
-      <h3 class="govuk-heading-s"><%= "Assessor notes" %></h3>
+      <h5 class="govuk-heading-s"><%= "Assessor notes" %></h5>
       <%= simple_format reasons.first[:assessor_note] %>
     <% end %>
   <% else %>
@@ -21,7 +21,7 @@
         <li>
           <%= simple_format reason[:name] %>
           <% if reason[:assessor_note].present? %>
-          <h3 class="govuk-heading-s"><%= "Assessor notes" %></h3>
+          <h5 class="govuk-heading-s"><%= "Assessor notes" %></h5>
             <%= simple_format reason[:assessor_note] %>
           <% end %>
         </li>
