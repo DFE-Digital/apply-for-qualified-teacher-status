@@ -63,7 +63,7 @@ class Teachers::SessionsController < Devise::SessionsController
   end
 
   def after_sign_out_path_for(resource)
-    if (application_form = resource.application_form)
+    if (application_form = resource.try(:application_form))
       view_object =
         TeacherInterface::ApplicationFormViewObject.new(application_form:)
 
