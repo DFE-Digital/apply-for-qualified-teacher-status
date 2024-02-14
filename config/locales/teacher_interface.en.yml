@@ -8,7 +8,7 @@ en:
             additional_degree_transcript_illegible: Your additional degree transcript (or translation) is illegible or in a format we cannot accept.
             age_range: The age range you are qualified to teach does not fall within the requirements of QTS.
             applicant_already_dqt: Your details have been matched with someone who already has QTS and is registered in our database for qualified teachers.
-            applicant_already_qts: You already hold QTS and induction exemption. 
+            applicant_already_qts: You already hold QTS and induction exemption.
             application_and_qualification_names_do_not_match: The name on the application form is different from 1 or more qualification documents, but no evidence of change of name has been provided.
             authorisation_to_teach: Sanctions or restrictions were detected on your professional record.
             confirm_age_range_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the application form.
@@ -22,7 +22,7 @@ en:
             english_language_not_achieved_b2: You provided evidence of a secure English language test (SELT) that has not achieved B2 level. Find out what tests we can accept.
             english_language_proficiency_document_illegible: Your English language proficiency test document is illegible or in a format we cannot accept.
             english_language_qualification_invalid: Your English language qualification is not from one of the approved providers.
-            english_language_selt_expired: You have provided evidence of a secure English language test (SELT) but the test was not completed within the last 2 years. 
+            english_language_selt_expired: You have provided evidence of a secure English language test (SELT) but the test was not completed within the last 2 years.
             english_language_unverifiable_reference_number: We were unable to verify the reference number you have provided.
             full_professional_status: Your recognition level as a teacher does not match the required level or has outstanding conditions.
             further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
