@@ -104,7 +104,7 @@ class TeacherInterface::ApplicationFormViewObject
       reasons = {}
 
       if (note = assessment&.recommendation_assessor_note).present?
-        reasons.merge!({ "" => [note] })
+        reasons.merge!({ "" => [{ name: note }] })
       end
 
       if assessment.present? && further_information_request.nil?
