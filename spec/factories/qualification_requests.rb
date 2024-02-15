@@ -40,7 +40,7 @@ FactoryBot.define do
     association :qualification, :completed
 
     trait :consent_required do
-      signed_consent_document_required { true }
+      consent_method { %i[signed_ecctis signed_institution].sample }
 
       after(:create) do |qualification_request, _evaluator|
         create(

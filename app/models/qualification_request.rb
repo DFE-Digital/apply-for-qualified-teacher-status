@@ -50,7 +50,11 @@ class QualificationRequest < ApplicationRecord
        },
        _prefix: true
 
-  scope :consent_required, -> { where(signed_consent_document_required: true) }
+  scope :signed_consent_required,
+        -> do
+          consent_method_signed_ecctis.or(consent_method_signed_institution)
+        end
+
   scope :consent_requested, -> { where.not(consent_requested_at: nil) }
   scope :consent_received, -> { where.not(consent_received_at: nil) }
   scope :consent_respondable,
@@ -68,6 +72,10 @@ class QualificationRequest < ApplicationRecord
 
   def expires_after
     6.weeks
+  end
+
+  def signed_consent_required?
+    consent_method_signed_ecctis? || consent_method_signed_institution?
   end
 
   def consent_requested!
