@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_08_101256) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_15_085624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -292,7 +292,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_08_101256) do
     t.boolean "unsigned_consent_document_downloaded", default: false, null: false
     t.datetime "consent_received_at"
     t.datetime "consent_requested_at"
-    t.boolean "signed_consent_document_required", default: false, null: false
+    t.string "consent_method", default: "unknown", null: false
     t.index ["assessment_id"], name: "index_qualification_requests_on_assessment_id"
     t.index ["qualification_id"], name: "index_qualification_requests_on_qualification_id"
   end
