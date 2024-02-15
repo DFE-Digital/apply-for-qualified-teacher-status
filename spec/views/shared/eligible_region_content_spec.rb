@@ -47,8 +47,9 @@ RSpec.describe "Eligible region content", type: :view do
     let(:region) do
       create(
         :region,
-        status_check: :online,
+        application_form_skip_work_history: false,
         sanction_check: :written,
+        status_check: :online,
         teaching_authority_address: "address",
         teaching_authority_certificate: "certificate",
       )
