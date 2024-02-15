@@ -45,6 +45,20 @@ RSpec.describe QualificationRequest, type: :model do
     subject { create(:qualification_request, :receivable) }
   end
 
+  describe "columns" do
+    it do
+      is_expected.to define_enum_for(:consent_method)
+        .with_values(
+          signed_ecctis: "signed_ecctis",
+          signed_institution: "signed_institution",
+          unknown: "unknown",
+          unsigned: "unsigned",
+        )
+        .with_prefix
+        .backed_by_column_of_type(:string)
+    end
+  end
+
   describe "validations" do
     it { is_expected.to_not validate_presence_of(:consent_requested_at) }
     it { is_expected.to_not validate_presence_of(:consent_received_at) }

@@ -42,6 +42,14 @@ class QualificationRequest < ApplicationRecord
 
   belongs_to :qualification
 
+  enum consent_method: {
+         signed_ecctis: "signed_ecctis",
+         signed_institution: "signed_institution",
+         unknown: "unknown",
+         unsigned: "unsigned",
+       },
+       _prefix: true
+
   scope :consent_required, -> { where(signed_consent_document_required: true) }
   scope :consent_requested, -> { where.not(consent_requested_at: nil) }
   scope :consent_received, -> { where.not(consent_received_at: nil) }
