@@ -5,6 +5,7 @@
 # Table name: qualification_requests
 #
 #  id                                   :bigint           not null, primary key
+#  consent_method                       :string           default("unknown"), not null
 #  consent_received_at                  :datetime
 #  consent_requested_at                 :datetime
 #  expired_at                           :datetime
@@ -14,7 +15,6 @@
 #  review_note                          :string           default(""), not null
 #  review_passed                        :boolean
 #  reviewed_at                          :datetime
-#  signed_consent_document_required     :boolean          default(FALSE), not null
 #  unsigned_consent_document_downloaded :boolean          default(FALSE), not null
 #  verified_at                          :datetime
 #  verify_note                          :text             default(""), not null
@@ -43,6 +43,20 @@ RSpec.describe QualificationRequest, type: :model do
 
   it_behaves_like "a requestable" do
     subject { create(:qualification_request, :receivable) }
+  end
+
+  describe "columns" do
+    it do
+      is_expected.to define_enum_for(:consent_method)
+        .with_values(
+          signed_ecctis: "signed_ecctis",
+          signed_institution: "signed_institution",
+          unknown: "unknown",
+          unsigned: "unsigned",
+        )
+        .with_prefix
+        .backed_by_column_of_type(:string)
+    end
   end
 
   describe "validations" do

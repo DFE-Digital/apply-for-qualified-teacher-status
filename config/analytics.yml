@@ -208,6 +208,7 @@
     - part_of_university_degree
   :qualification_requests:
     - assessment_id
+    - consent_method
     - consent_received_at
     - consent_requested_at
     - created_at
@@ -220,7 +221,6 @@
     - review_note
     - review_passed
     - reviewed_at
-    - signed_consent_document_required
     - unsigned_consent_document_downloaded
     - updated_at
     - verified_at

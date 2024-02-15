@@ -5,6 +5,7 @@
 # Table name: qualification_requests
 #
 #  id                                   :bigint           not null, primary key
+#  consent_method                       :string           default("unknown"), not null
 #  consent_received_at                  :datetime
 #  consent_requested_at                 :datetime
 #  expired_at                           :datetime
@@ -14,7 +15,6 @@
 #  review_note                          :string           default(""), not null
 #  review_passed                        :boolean
 #  reviewed_at                          :datetime
-#  signed_consent_document_required     :boolean          default(FALSE), not null
 #  unsigned_consent_document_downloaded :boolean          default(FALSE), not null
 #  verified_at                          :datetime
 #  verify_note                          :text             default(""), not null
@@ -42,7 +42,19 @@ class QualificationRequest < ApplicationRecord
 
   belongs_to :qualification
 
-  scope :consent_required, -> { where(signed_consent_document_required: true) }
+  enum consent_method: {
+         signed_ecctis: "signed_ecctis",
+         signed_institution: "signed_institution",
+         unknown: "unknown",
+         unsigned: "unsigned",
+       },
+       _prefix: true
+
+  scope :signed_consent_required,
+        -> do
+          consent_method_signed_ecctis.or(consent_method_signed_institution)
+        end
+
   scope :consent_requested, -> { where.not(consent_requested_at: nil) }
   scope :consent_received, -> { where.not(consent_received_at: nil) }
   scope :consent_respondable,
@@ -60,6 +72,10 @@ class QualificationRequest < ApplicationRecord
 
   def expires_after
     6.weeks
+  end
+
+  def signed_consent_required?
+    consent_method_signed_ecctis? || consent_method_signed_institution?
   end
 
   def consent_requested!
