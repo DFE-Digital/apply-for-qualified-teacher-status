@@ -34,9 +34,13 @@ module DocumentHelper
           "<em>#{scope.count} #{"file upload".pluralize(scope.count)} has been scanned as malware and deleted.</em>"
         elsif request.path.starts_with?("/assessor") && convert_to_pdf_active &&
               !uploads.all?(&:is_pdf?)
-          helpers.govuk_link_to(
+          govuk_link_to(
             "Download as PDF (opens in a new tab)",
-            url_helpers.assessor_interface_application_form_document_pdf_path(
+            Rails
+              .application
+              .routes
+              .url_helpers
+              .assessor_interface_application_form_document_pdf_path(
               document,
               translated ? "translated" : "original",
             ),
