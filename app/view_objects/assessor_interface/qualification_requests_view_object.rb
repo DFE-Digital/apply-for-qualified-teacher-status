@@ -29,6 +29,10 @@ module AssessorInterface
       end
     end
 
+    def all_consent_methods_selected?
+      qualification_requests.none?(&:consent_method_unknown?)
+    end
+
     def show_individual_task_items?
       all_consent_methods_selected? && qualification_requests.count > 1
     end
@@ -58,10 +62,6 @@ module AssessorInterface
     attr_reader :application_form
 
     delegate :assessment, to: :application_form
-
-    def all_consent_methods_selected?
-      qualification_requests.none?(&:consent_method_unknown?)
-    end
 
     def check_consent_method_task_item
       status =

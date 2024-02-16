@@ -37,12 +37,12 @@ RSpec.describe AssessorInterface::QualificationRequestPolicy do
 
   describe "#update?" do
     subject(:update?) { policy.update? }
-    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
-    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#update_review?" do
