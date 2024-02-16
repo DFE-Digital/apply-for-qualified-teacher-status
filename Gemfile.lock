@@ -451,7 +451,7 @@ GEM
     retriable (3.1.2)
     rexml (3.2.6)
     rladr (1.2.0)
-    rmagick (5.4.3)
+    rmagick (5.4.4)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     rspec (3.13.0)
