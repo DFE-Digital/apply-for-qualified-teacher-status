@@ -16,7 +16,6 @@
 #  review_passed                        :boolean
 #  reviewed_at                          :datetime
 #  unsigned_consent_document_downloaded :boolean          default(FALSE), not null
-#  unsigned_consent_document_generated  :boolean          default(FALSE), not null
 #  verified_at                          :datetime
 #  verify_note                          :text             default(""), not null
 #  verify_passed                        :boolean
