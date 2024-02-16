@@ -10,11 +10,10 @@ module AssessorInterface
     define_history_origin :index
 
     def index
-      authorize %i[assessor_interface qualification_request]
-
-      @qualification_requests = qualification_requests
-      @application_form = qualification_requests.first.application_form
-      @assessment = qualification_requests.first.assessment
+      @view_object =
+        AssessorInterface::QualificationRequestsViewObject.new(
+          application_form:,
+        )
 
       render layout: "full_from_desktop"
     end

@@ -10,7 +10,7 @@ class AssessorInterface::QualificationRequestPolicy < ApplicationPolicy
   end
 
   def update?
-    user.assess_permission
+    user.verify_permission
   end
 
   def update_review?
