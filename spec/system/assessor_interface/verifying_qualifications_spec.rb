@@ -12,7 +12,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   it "received and passed" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
-    and_i_click_record_qualifications_task
+    and_i_click_the_verify_qualifications_task
     then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_select_the_first_qualification_request
@@ -28,7 +28,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   it "received and not passed" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
-    and_i_click_record_qualifications_task
+    and_i_click_the_verify_qualifications_task
     then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_select_the_first_qualification_request
@@ -44,7 +44,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   it "not received and failed" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
-    and_i_click_record_qualifications_task
+    and_i_click_the_verify_qualifications_task
     then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_select_the_first_qualification_request
@@ -60,7 +60,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   it "not received and not failed" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_see_a_waiting_on_status
-    and_i_click_record_qualifications_task
+    and_i_click_the_verify_qualifications_task
     then_i_see_the(:assessor_qualification_requests_page, reference:)
 
     when_i_select_the_first_qualification_request
@@ -85,12 +85,8 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     )
   end
 
-  def and_i_click_record_qualifications_task
-    assessor_application_page.record_qualification_requests_task.link.click
-  end
-
-  def when_i_click_review_qualifications_task
-    assessor_application_page.review_qualification_requests_task.link.click
+  def and_i_click_the_verify_qualifications_task
+    assessor_application_page.verify_qualifications_task.link.click
   end
 
   def when_i_select_the_first_qualification_request
