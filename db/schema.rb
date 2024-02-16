@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_15_092915) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_16_114800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -141,6 +141,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_15_092915) do
     t.text "recommendation_assessor_note", default: "", null: false
     t.boolean "references_verified"
     t.boolean "scotland_full_registration"
+    t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 
@@ -293,7 +294,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_15_092915) do
     t.datetime "consent_received_at"
     t.datetime "consent_requested_at"
     t.string "consent_method", default: "unknown", null: false
-    t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.index ["assessment_id"], name: "index_qualification_requests_on_assessment_id"
     t.index ["qualification_id"], name: "index_qualification_requests_on_qualification_id"
   end
