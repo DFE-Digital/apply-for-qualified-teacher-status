@@ -384,7 +384,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         is_expected.to include_task_list_item(
           "Verification",
-          "Record qualifications responses",
+          "Verify qualifications",
         )
       end
       it do

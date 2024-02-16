@@ -23,7 +23,7 @@ en:
             await_professional_standing_request: Awaiting third-party professional standing
             initial_assessment_recommendation: Initial assessment recommendation
             professional_standing_request: Verify LoPS
-            qualification_requests: Record qualifications responses
+            qualification_requests: Verify qualifications
             reference_requests: Verify references
             review_requested_information: Review requested information from applicant
             review_verifications: Review verifications
