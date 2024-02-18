@@ -4,6 +4,8 @@ module AssessorInterface
   class ReferenceRequestsController < BaseController
     before_action :set_individual_variables, except: :index
 
+    define_history_origin :index
+
     def index
       authorize %i[assessor_interface reference_request]
 

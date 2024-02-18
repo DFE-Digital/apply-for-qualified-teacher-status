@@ -10,6 +10,9 @@ module AssessorInterface
       authorize [:assessor_interface, application_form]
     end
 
+    define_history_origin :index, :show
+    define_history_reset :index
+
     def index
       @view_object = ApplicationFormsIndexViewObject.new(params:, session:)
       render layout: "full_from_desktop"
