@@ -12,7 +12,8 @@ module HandleApplicationFormSection
     save_and_continue = params[:button] != "save_and_return"
 
     if form.save(validate: save_and_continue)
-      check_path = check_path_if_previous(check_identifier)
+      check_path =
+        history_stack.last_path_if_check(identifier: check_identifier)
 
       if save_and_continue
         redirect_to if_success_then_redirect.try(:call, check_path) ||
@@ -29,21 +30,5 @@ module HandleApplicationFormSection
 
   def history_stack
     @history_stack ||= HistoryStack.new(session:)
-  end
-
-  def check_path_if_previous(check_identifier)
-    entry = history_stack.last_entry
-    return nil unless entry
-
-    return nil unless entry[:check]
-
-    is_check =
-      if check_identifier.present?
-        entry[:check] == true || entry[:check] == check_identifier
-      else
-        entry[:check].present?
-      end
-
-    entry[:path] if is_check
   end
 end

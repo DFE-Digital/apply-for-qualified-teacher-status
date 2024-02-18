@@ -5,6 +5,7 @@ module HistoryTrackable
 
   included do
     before_action :track_history, if: -> { request.get? }
+
     cattr_accessor :history_origin_actions,
                    :history_check_actions,
                    :history_reset_actions
