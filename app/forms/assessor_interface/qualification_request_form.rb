@@ -26,7 +26,7 @@ class AssessorInterface::QualificationRequestForm
       if received && !requestable.received?
         ReceiveRequestable.call(requestable:, user:)
       elsif !received && requestable.received?
-        revert_receive_requestable
+        UnreceiveRequestable.call(requestable:, user:)
       end
 
       if review_passed.nil?
@@ -55,11 +55,5 @@ class AssessorInterface::QualificationRequestForm
     else
       failed ? false : nil
     end
-  end
-
-  def revert_receive_requestable
-    requestable.requested!
-    TimelineEvent.requestable_received.where(requestable:).destroy_all
-    ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 end
