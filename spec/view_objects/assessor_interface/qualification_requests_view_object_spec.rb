@@ -29,7 +29,13 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
         [
           {
             name: "Check and select consent method",
-            link: "#",
+            link: [
+              :consent_methods,
+              :assessor_interface,
+              application_form,
+              assessment,
+              :qualification_requests,
+            ],
             status: "not_started",
           },
         ],
@@ -44,7 +50,13 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
           [
             {
               name: "Check and select consent method",
-              link: "#",
+              link: [
+                :consent_methods,
+                :assessor_interface,
+                application_form,
+                assessment,
+                :qualification_requests,
+              ],
               status: "completed",
             },
             {
