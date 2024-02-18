@@ -97,6 +97,11 @@ en:
         subject_2: Subject 2 (optional)
         subject_3: Subject 3 (optional)
         subjects_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> If you''ve edited the subjects please explain why (optional)'
+      assessor_interface_consent_method_form:
+        consent_method_options:
+          unsigned: Non-signed TRA consent document
+          signed_ecctis: Ecctis standard consent document with signature
+          signed_institution: Institution’s custom consent document
       assessor_interface_create_note_form:
         text: Add a note to this application
       assessor_interface_filter_form:
