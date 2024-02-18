@@ -1,4 +1,4 @@
-<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
 
 <%= govuk_panel(title_text: "Further information email sent successfully") %>
 

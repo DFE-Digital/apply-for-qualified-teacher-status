@@ -8,7 +8,5 @@
 
   <%= f.govuk_text_area :text, label: { tag: "h1", size: "l" }, rows: 5 %>
 
-  <%= f.govuk_submit "Save and continue" do %>
-    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
-  <% end %>
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
 <% end %>

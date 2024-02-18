@@ -1,5 +1,5 @@
 <% content_for :page_title, t(".heading") %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
 
 <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 <p class="govuk-body-l"><%= t(".subheading") %></p>
@@ -13,5 +13,5 @@
 
 <div class="govuk-button-group">
   <%= govuk_button_link_to "Continue", [:confirm, :assessor_interface, @application_form, @assessment, :assessment_recommendation_award] %>
-  <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+  <%= render "shared/assessor_interface/cancel_link" %>
 </div>

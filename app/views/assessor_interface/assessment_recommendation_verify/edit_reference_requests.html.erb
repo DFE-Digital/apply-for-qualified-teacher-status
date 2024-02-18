@@ -1,5 +1,5 @@
 <% content_for :page_title, title_with_error_prefix(t(".heading"), error: @form.errors.any?) %>
-<% content_for :back_link_url, professional_standing_assessor_interface_application_form_assessment_assessment_recommendation_verify_path(@application_form) %>
+<% content_for :back_link_url, back_history_path(default: professional_standing_assessor_interface_application_form_assessment_assessment_recommendation_verify_path) %>
 
 <%= form_with model: @form, url: [:reference_requests, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] do |f| %>
   <%= f.govuk_error_summary %>
@@ -25,7 +25,5 @@
     <li>the selected references add up to the required number of months for this application to progress</li>
   </ul>
 
-  <%= f.govuk_submit do %>
-    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
-  <% end %>
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
 <% end %>

@@ -1,8 +1,10 @@
 <% preliminary_key = @view_object.assessment_section.preliminary? ? "preliminary" : "not_preliminary" %>
 <% section_key = @view_object.assessment_section.key %>
 
+<% @application_form = @view_object.application_form %>
+
 <% content_for :page_title, title_with_error_prefix(t(".title.#{preliminary_key}.#{section_key}"), error: @form.errors.any?) %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
 
 <%= render "linked_application_forms",
           application_forms_contact_email_used_as_teacher: @view_object.work_history_application_forms_contact_email_used_as_teacher,

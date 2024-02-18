@@ -12,7 +12,7 @@ class HistoryController < ApplicationController
   private
 
   def default_path
-    URI.parse(back_params[:default] || "/teacher/application").path
+    URI.parse(back_params[:default]).path
   end
 
   def back_params
