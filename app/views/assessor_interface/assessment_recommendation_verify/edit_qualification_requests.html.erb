@@ -4,8 +4,6 @@
 <%= form_with model: @form, url: [:qualification_requests, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= hidden_field_tag :back_to_summary, params[:back_to_summary] %>
-
   <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
   <p class="govuk-body">The list of qualifications that the applicant has submitted is shown below:</p>

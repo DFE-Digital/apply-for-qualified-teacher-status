@@ -69,23 +69,23 @@ module AssessorInterface
         session[:qualification_ids] = []
 
         if @form.verify_qualifications
-          # rubocop:disable Layout/LineLength
-          redirect_to qualification_requests_assessor_interface_application_form_assessment_assessment_recommendation_verify_path(
+          redirect_to [
+                        :qualification_requests,
+                        :assessor_interface,
+                        @application_form,
+                        @assessment,
+                        :assessment_recommendation_verify,
+                      ]
+        elsif (check_path = history_stack.last_path_if_check)
+          redirect_to check_path
+        else
+          redirect_to [
+                        :professional_standing,
+                        :assessor_interface,
                         application_form,
                         assessment,
-                        back_to_summary: params[:back_to_summary],
-                      )
-          # rubocop:enable Layout/LineLength
-        else
-          redirect_to back_to_summary_path(
-                        [
-                          :professional_standing,
-                          :assessor_interface,
-                          application_form,
-                          assessment,
-                          :assessment_recommendation_verify,
-                        ],
-                      )
+                        :assessment_recommendation_verify,
+                      ]
         end
       else
         render :edit_verify_qualifications, status: :unprocessable_entity
@@ -120,15 +120,17 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to back_to_summary_path(
-                      [
+        if (check_path = history_stack.last_path_if_check)
+          redirect_to check_path
+        else
+          redirect_to [
                         :email_consent_letters,
                         :assessor_interface,
                         application_form,
                         assessment,
                         :assessment_recommendation_verify,
-                      ],
-                    )
+                      ]
+        end
       else
         render :edit_qualification_requests, status: :unprocessable_entity
       end
@@ -173,15 +175,17 @@ module AssessorInterface
       if @form.valid?
         session[:professional_standing] = @form.verify_professional_standing
 
-        redirect_to back_to_summary_path(
-                      [
+        if (check_path = history_stack.last_path_if_check)
+          redirect_to check_path
+        else
+          redirect_to [
                         :reference_requests,
                         :assessor_interface,
                         application_form,
                         assessment,
                         :assessment_recommendation_verify,
-                      ],
-                    )
+                      ]
+        end
       else
         render :edit_professional_standing, status: :unprocessable_entity
       end
@@ -210,15 +214,17 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to back_to_summary_path(
-                      [
+        if (check_path = history_stack.last_path_if_check)
+          redirect_to check_path
+        else
+          redirect_to [
                         :edit,
                         :assessor_interface,
                         application_form,
                         assessment,
                         :assessment_recommendation_verify,
-                      ],
-                    )
+                      ]
+        end
       else
         render :edit_reference_requests, status: :unprocessable_entity
       end
@@ -249,20 +255,6 @@ module AssessorInterface
     def load_assessment_and_application_form
       @assessment = assessment
       @application_form = application_form
-    end
-
-    def back_to_summary_path(ordinary_path)
-      if ActiveModel::Type::Boolean.new.cast(params[:back_to_summary])
-        [
-          :edit,
-          :assessor_interface,
-          application_form,
-          assessment,
-          :assessment_recommendation_verify,
-        ]
-      else
-        ordinary_path
-      end
     end
   end
 end
