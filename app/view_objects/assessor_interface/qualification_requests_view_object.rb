@@ -64,16 +64,24 @@ module AssessorInterface
     delegate :assessment, to: :application_form
 
     def check_consent_method_task_item
-      status =
-        if qualification_requests.all?(&:consent_method_unknown?)
-          "not_started"
-        elsif all_consent_methods_selected?
-          "completed"
-        else
-          "in_progress"
-        end
-
-      { name: "Check and select consent method", link: "#", status: }
+      {
+        name: "Check and select consent method",
+        link: [
+          :consent_methods,
+          :assessor_interface,
+          application_form,
+          assessment,
+          :qualification_requests,
+        ],
+        status:
+          if qualification_requests.all?(&:consent_method_unknown?)
+            "not_started"
+          elsif all_consent_methods_selected?
+            "completed"
+          else
+            "in_progress"
+          end,
+      }
     end
 
     def generate_consent_document_in_all_qualifications?

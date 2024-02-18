@@ -14,7 +14,15 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     and_i_click_the_verify_qualifications_task
     then_i_see_the(:assessor_qualification_requests_page, reference:)
 
-    when_i_go_back_to_overview
+    when_i_click_the_check_and_select_consent_method_task
+    then_i_see_the(:assessor_qualification_requests_consent_methods_page)
+
+    when_i_visit_the(
+      :assessor_qualification_requests_page,
+      reference:,
+      assessment_id: application_form.assessment.id,
+    )
+    and_i_go_back_to_overview
     then_i_see_the(:assessor_application_page, reference:)
   end
 
@@ -28,7 +36,13 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     assessor_application_page.verify_qualifications_task.link.click
   end
 
-  def when_i_go_back_to_overview
+  def when_i_click_the_check_and_select_consent_method_task
+    assessor_qualification_requests_page.task_list.click_item(
+      "Check and select consent method",
+    )
+  end
+
+  def and_i_go_back_to_overview
     assessor_qualification_requests_page.continue_button.click
   end
 

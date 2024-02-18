@@ -1,0 +1,30 @@
+<% content_for :page_title, "Check consent method" %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_qualification_requests_path) %>
+
+<h1 class="govuk-heading-l">Check consent method</h1>
+
+<p class="govuk-body">You need to:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>go to the <%= govuk_link_to "Ecctis portal", "https://www.ecctis.com/login.aspx" %> to check the method of consent for each qualification</li>
+  <li>download any documents you may need</li>
+  <li>return to this page to continue</li>
+</ul>
+
+<p class="govuk-body">If the consent method required is the non-signed TRA consent document you can generate that later.</p>
+
+<h2 class="govuk-heading-m"><%= "Qualification".pluralize(@qualification_requests.count) %> requiring consent</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <% @qualification_requests.each do |qualification_request| %>
+    <li><%= qualification_title(qualification_request.qualification) %></li>
+  <% end %>
+</ul>
+
+<% if (qualifications_assessor_note = @assessment.qualifications_assessor_note).present? %>
+  <p class="govuk-inset-text"><%= qualifications_assessor_note %></p>
+<% end %>
+
+<div class="govuk-button-group">
+  <%= render "shared/assessor_interface/cancel_link" %>
+</div>

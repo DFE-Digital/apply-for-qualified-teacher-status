@@ -151,6 +151,11 @@ module PageHelpers
       PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
   end
 
+  def assessor_qualification_requests_consent_methods_page
+    @assessor_qualification_requests_consent_methods_page ||=
+      PageObjects::AssessorInterface::QualificationRequestsConsentMethods.new
+  end
+
   def assessor_qualification_requests_page
     @assessor_qualification_requests_page ||=
       PageObjects::AssessorInterface::QualificationRequests.new

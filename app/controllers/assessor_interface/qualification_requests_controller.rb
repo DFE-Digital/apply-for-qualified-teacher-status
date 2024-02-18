@@ -4,8 +4,10 @@ module AssessorInterface
   class QualificationRequestsController < BaseController
     include HistoryTrackable
 
-    before_action :set_collection_variables, only: %i[index consent_letter]
-    before_action :set_member_variables, except: %i[index consent_letter]
+    before_action :set_collection_variables,
+                  only: %i[index index_consent_methods consent_letter]
+    before_action :set_member_variables,
+                  only: %i[edit update edit_review update_review]
 
     define_history_origin :index
 
@@ -14,6 +16,9 @@ module AssessorInterface
         AssessorInterface::QualificationRequestsViewObject.new(
           application_form:,
         )
+    end
+
+    def index_consent_methods
     end
 
     def consent_letter
