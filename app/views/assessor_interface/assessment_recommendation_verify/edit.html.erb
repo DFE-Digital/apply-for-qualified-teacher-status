@@ -5,7 +5,7 @@
 
 <p class="govuk-body">You have selected the following items for verification:</p>
 
-<%= govuk_summary_list do |summary_list| %>
+<%= govuk_summary_list(classes: %w[app-summary-list]) do |summary_list| %>
   <%= summary_list.with_row do |row|
     row.with_key { "Qualifications" }
     row.with_value do %>
