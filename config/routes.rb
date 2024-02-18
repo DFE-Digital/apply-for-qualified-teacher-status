@@ -132,8 +132,11 @@ Rails.application.routes.draw do
         resources :qualification_requests,
                   path: "/qualification-requests",
                   only: %i[index edit update] do
-          member do
+          collection do
             get "consent-letter", to: "qualification_requests#consent_letter"
+          end
+
+          member do
             get "review", to: "qualification_requests#edit_review"
             post "review", to: "qualification_requests#update_review"
           end

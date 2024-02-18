@@ -4,15 +4,17 @@ require "rails_helper"
 
 RSpec.describe ConsentLetter do
   let(:application_form) do
-    create(:application_form, :with_personal_information)
+    create(
+      :application_form,
+      :with_personal_information,
+      :with_teaching_qualification,
+    )
   end
-  let(:assessment) { create(:assessment, application_form:) }
-  let(:qualification_request) { create(:qualification_request, assessment:) }
+
+  before { create(:assessment, :with_qualification_request, application_form:) }
 
   describe "#render_pdf" do
-    subject(:render_pdf) do
-      described_class.new(qualification_request:).render_pdf
-    end
+    subject(:render_pdf) { described_class.new(application_form:).render_pdf }
 
     it "doesn't raise an error" do
       expect { render_pdf }.to_not raise_error

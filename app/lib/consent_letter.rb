@@ -3,8 +3,15 @@
 class ConsentLetter
   include ApplicationFormHelper
 
-  def initialize(qualification_request:)
-    @qualification_request = qualification_request
+  def initialize(application_form:)
+    @application_form = application_form
+    @date_of_consent =
+      application_form
+        .assessment
+        .qualification_requests
+        .first
+        .created_at
+        .to_date
   end
 
   def render_pdf
@@ -13,9 +20,7 @@ class ConsentLetter
 
   private
 
-  attr_reader :qualification_request
-
-  delegate :application_form, to: :qualification_request
+  attr_reader :application_form, :date_of_consent
 
   MARGIN = 62
   LINE_PAD = 12
@@ -48,7 +53,7 @@ class ConsentLetter
             pdf.text "Date of birth: #{application_form.date_of_birth.to_fs(:long_ordinal_uk)}"
           end
 
-          pdf.text "Date of consent: #{qualification_request.created_at.to_date.to_fs(:long_ordinal_uk)}"
+          pdf.text "Date of consent: #{date_of_consent.to_fs(:long_ordinal_uk)}"
 
           pdf.pad(SECTION_PAD) do
             pdf.text "The service is run by the Teaching Regulation Agency (TRA) an executive agency of the " \
