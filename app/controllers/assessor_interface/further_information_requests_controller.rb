@@ -4,23 +4,25 @@ module AssessorInterface
   class FurtherInformationRequestsController < BaseController
     include HistoryTrackable
 
-    before_action only: %i[preview new create] do
+    before_action only: %i[new create] do
       authorize %i[assessor_interface further_information_request]
     end
 
-    before_action except: %i[preview new create] do
+    before_action except: %i[new create] do
       authorize [:assessor_interface, further_information_request]
     end
 
-    before_action :load_application_form_and_assessment,
-                  only: %i[preview new edit]
-    before_action :load_new_further_information_request, only: %i[preview new]
+    before_action :load_application_form_and_assessment, only: %i[new edit]
     before_action :load_view_object, only: %i[edit update]
 
-    def preview
-    end
-
     def new
+      @further_information_request =
+        assessment.further_information_requests.build(
+          items:
+            FurtherInformationRequestItemsFactory.call(
+              assessment_sections: assessment.sections,
+            ),
+        )
     end
 
     def create
@@ -68,16 +70,6 @@ module AssessorInterface
     def load_application_form_and_assessment
       @application_form = application_form
       @assessment = assessment
-    end
-
-    def load_new_further_information_request
-      @further_information_request =
-        assessment.further_information_requests.build(
-          items:
-            FurtherInformationRequestItemsFactory.call(
-              assessment_sections: assessment.sections,
-            ),
-        )
     end
 
     def load_view_object

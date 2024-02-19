@@ -8,7 +8,7 @@ module PageObjects
 
       element :heading, "h1"
       section :summary_list, GovukSummaryList, ".govuk-summary-list"
-      element :continue_button, "a.govuk-button"
+      element :continue_button, ".govuk-button"
     end
   end
 end

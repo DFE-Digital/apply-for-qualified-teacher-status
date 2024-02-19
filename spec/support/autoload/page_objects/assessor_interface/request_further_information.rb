@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module PageObjects
   module AssessorInterface
     class RequestFurtherInformation < SitePrism::Page
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
-                "/further-information-requests/preview"
+                "/further-information-requests/new"
 
       sections :items, ".app-further-information-request-item" do
         element :heading, ".govuk-heading-s"
