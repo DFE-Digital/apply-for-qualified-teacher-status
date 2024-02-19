@@ -5,13 +5,7 @@
 
 <p class="govuk-body">You have selected the following items for verification:</p>
 
-<%= govuk_summary_list do |summary_list| %>
-  <%= summary_list.with_row do |row|
-    row.with_key { "LoPS" }
-    row.with_value { @professional_standing ? region_teaching_authority_name(@application_form.region).upcase_first : "Not selected" }
-    row.with_action(text: "Change", href: [:professional_standing, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify], visually_hidden_text: "LoPS")
-  end %>
-
+<%= govuk_summary_list(classes: %w[app-summary-list]) do |summary_list| %>
   <%= summary_list.with_row do |row|
     row.with_key { "Qualifications" }
     row.with_value do %>
@@ -26,6 +20,12 @@
       <% end %>
     <% end
     row.with_action(text: "Change", href: [:verify_qualifications, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify], visually_hidden_text: "qualifications")
+  end %>
+
+  <%= summary_list.with_row do |row|
+    row.with_key { "LoPS" }
+    row.with_value { @professional_standing ? region_teaching_authority_name(@application_form.region).upcase_first : "Not selected" }
+    row.with_action(text: "Change", href: [:professional_standing, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify], visually_hidden_text: "LoPS")
   end %>
 
   <%= summary_list.with_row do |row|
