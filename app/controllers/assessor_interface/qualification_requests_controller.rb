@@ -2,11 +2,8 @@
 
 module AssessorInterface
   class QualificationRequestsController < BaseController
-    before_action except: :index do
-      authorize [:assessor_interface, qualification_request]
-    end
-
-    before_action :set_variables, except: :index
+    before_action :set_collection_variables, only: %i[index consent_letter]
+    before_action :set_member_variables, except: %i[index consent_letter]
 
     def index
       authorize %i[assessor_interface qualification_request]
@@ -20,7 +17,7 @@ module AssessorInterface
 
     def consent_letter
       send_data(
-        ConsentLetter.new(qualification_request:).render_pdf,
+        ConsentLetter.new(application_form:).render_pdf,
         filename: "Apply for QTS - Consent Letter.pdf",
         type: "application/pdf",
         disposition: "inline",
@@ -97,8 +94,42 @@ module AssessorInterface
 
     private
 
-    def set_variables
-      @qualification_request = qualification_request
+    def application_form
+      @application_form ||=
+        ApplicationForm.includes(:assessment).find_by(
+          reference: params[:application_form_reference],
+          assessment: {
+            id: params[:assessment_id],
+          },
+        )
+    end
+
+    def assessment
+      @assessment ||= application_form.assessment
+    end
+
+    def qualification_requests
+      @qualification_requests ||=
+        assessment.qualification_requests.includes(:qualification).order_by_role
+    end
+
+    def qualification_request
+      @qualification_request ||= qualification_requests.find(params[:id])
+    end
+
+    alias_method :requestable, :qualification_request
+
+    def set_collection_variables
+      authorize %i[assessor_interface qualification_request]
+
+      @application_form = application_form
+      @assessment = assessment
+      @qualification_requests = qualification_requests
+    end
+
+    def set_member_variables
+      @qualification_request =
+        authorize [:assessor_interface, qualification_request]
       @application_form = qualification_request.application_form
       @assessment = qualification_request.assessment
     end
@@ -118,27 +149,5 @@ module AssessorInterface
         :note,
       )
     end
-
-    def qualification_requests
-      @qualification_requests ||=
-        QualificationRequest
-          .joins(assessment: :application_form)
-          .includes(:qualification)
-          .where(
-            assessment_id: params[:assessment_id],
-            application_form: {
-              reference: params[:application_form_reference],
-            },
-          )
-          .order_by_role
-    end
-
-    def qualification_request
-      @qualification_request ||= qualification_requests.find(params[:id])
-    end
-
-    delegate :application_form, :assessment, to: :qualification_request
-
-    alias_method :requestable, :qualification_request
   end
 end
