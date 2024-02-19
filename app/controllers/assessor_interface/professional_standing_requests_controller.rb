@@ -8,6 +8,8 @@ module AssessorInterface
       authorize [:assessor_interface, professional_standing_request]
     end
 
+    define_history_origin :show
+
     def show
       render layout: "full_from_desktop"
     end

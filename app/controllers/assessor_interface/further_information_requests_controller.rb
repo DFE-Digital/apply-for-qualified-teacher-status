@@ -15,6 +15,8 @@ module AssessorInterface
     before_action :load_new_further_information_request, only: %i[preview new]
     before_action :load_view_object, only: %i[edit update]
 
+    define_history_origin :preview
+
     def preview
     end
 

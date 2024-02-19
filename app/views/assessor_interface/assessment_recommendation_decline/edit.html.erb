@@ -1,5 +1,5 @@
 <% content_for :page_title, title_with_error_prefix(t(".heading"), error: @form.errors.any?) %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
 
 <% preliminary_decline = @assessment.unknown? && @assessment.any_preliminary_section_failed? %>
 
@@ -75,6 +75,6 @@
   <% end %>
 
   <%= f.govuk_submit "Accept and decline QTS" do %>
-    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
+    <%= render "shared/assessor_interface/cancel_link" %>
   <% end %>
 <% end %>

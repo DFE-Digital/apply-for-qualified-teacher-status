@@ -1,12 +1,10 @@
 <% content_for :page_title, "Withdraw application" %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
 
 <h1 class="govuk-heading-l">Are you sure you want to withdraw this application?</h1>
 
 <p class="govuk-body">This will require the applicant to reapply if they wish to receive QTS. The applicant will not be informed of the withdrawal.</p>
 
 <%= form_with url: [:assessor_interface, @application_form], method: :delete do |f| %>
-  <%= f.govuk_submit "Withdraw" do %>
-    <%= govuk_link_to "Cancel", [:assessor_interface, @application_form] %>
-  <% end %>
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
 <% end %>

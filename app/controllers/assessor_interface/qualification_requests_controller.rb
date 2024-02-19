@@ -5,6 +5,8 @@ module AssessorInterface
     before_action :set_collection_variables, only: %i[index consent_letter]
     before_action :set_member_variables, except: %i[index consent_letter]
 
+    define_history_origin :index
+
     def index
       authorize %i[assessor_interface qualification_request]
 

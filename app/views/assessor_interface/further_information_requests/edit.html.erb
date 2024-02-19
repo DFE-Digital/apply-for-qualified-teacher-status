@@ -1,5 +1,5 @@
 <% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
-<% content_for :back_link_url, assessor_interface_application_form_path(@view_object.application_form) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
 
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
@@ -25,8 +25,6 @@
       <% end %>
     <% end %>
 
-    <%= f.govuk_submit do %>
-      <%= govuk_link_to "Cancel", [:assessor_interface, @view_object.application_form] %>
-    <% end %>
+    <%= render "shared/assessor_interface/continue_cancel_button", f: %>
   <% end %>
 <% end %>

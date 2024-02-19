@@ -1,7 +1,7 @@
 <% title = qualification_title(@qualification_request.qualification) %>
 
 <% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
-<% content_for :back_link_url, assessor_interface_application_form_assessment_qualification_requests_path(@application_form, @assessment) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_qualification_requests_path) %>
 
 <%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment, @qualification_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
@@ -26,7 +26,5 @@
     <% end %>
   <% end %>
 
-  <%= f.govuk_submit "Save and continue" do %>
-    <%= govuk_link_to "Cancel", assessor_interface_application_form_path(@application_form) %>
-  <% end %>
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
 <% end %>

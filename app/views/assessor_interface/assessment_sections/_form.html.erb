@@ -80,7 +80,5 @@
     <% end %>
   <% end %>
 
-  <%= f.govuk_submit do %>
-    <%= govuk_link_to "Cancel", [:assessor_interface, view_object.application_form] %>
-  <% end %>
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
 <% end %>
