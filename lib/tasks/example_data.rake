@@ -181,16 +181,18 @@ def create_requestables(application_form, assessment, state)
   elsif (qualifications = application_form.qualifications).present? &&
         rand(2).zero?
     qualifications.each do |qualification|
-      FactoryBot.create(
-        :qualification_request,
-        state,
-        assessment:,
-        qualification:,
-      )
+      qualification_request =
+        FactoryBot.create(
+          :qualification_request,
+          :with_consent_method,
+          state,
+          assessment:,
+          qualification:,
+        )
 
-      next unless rand(2).zero?
-
-      FactoryBot.create(:consent_request, state, assessment:, qualification:)
+      if qualification_request.consent_method_signed?
+        FactoryBot.create(:consent_request, state, assessment:, qualification:)
+      end
     end
 
     assessment.verify!

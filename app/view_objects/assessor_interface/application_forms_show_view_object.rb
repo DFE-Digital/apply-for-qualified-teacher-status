@@ -292,7 +292,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
         :qualification_requests,
       ],
-      status: requestables_task_item_status(qualification_requests),
+      status: qualification_requests_task_item_status,
     }
   end
 
@@ -443,7 +443,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     !assessment.unknown? && !request_further_information_unfinished?
   end
 
-  def requestables_task_item_status(requestables)
+  def requestables_task_item_status(requestables, not_started: "not_started")
     unverified_requestables = requestables.reject(&:verified?)
 
     if unverified_requestables.empty?
@@ -455,7 +455,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
     elsif unverified_requestables.any?(&:requested?)
       "waiting_on"
     else
-      "not_started"
+      not_started
     end
   end
 
@@ -464,6 +464,18 @@ class AssessorInterface::ApplicationFormsShowViewObject
       "completed"
     else
       requestables_task_item_status(reference_requests)
+    end
+  end
+
+  def qualification_requests_task_item_status
+    if qualification_requests.consent_method_unknown.count ==
+         qualification_requests.count
+      "not_started"
+    else
+      requestables_task_item_status(
+        qualification_requests.to_a + consent_requests.to_a,
+        not_started: "in_progress",
+      )
     end
   end
 

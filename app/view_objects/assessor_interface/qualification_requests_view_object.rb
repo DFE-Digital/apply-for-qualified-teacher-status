@@ -48,13 +48,8 @@ module AssessorInterface
     end
 
     def individual_task_items_for(qualification_request:)
-      return [] if qualification_request.consent_method_unknown?
-
-      if qualification_request.consent_method_unsigned?
-        unsigned_consent_method_task_items(qualification_request)
-      else
-        signed_consent_method_task_items(qualification_request)
-      end + ecctis_task_items(qualification_request)
+      consent_task_items(qualification_request) +
+        ecctis_task_items(qualification_request)
     end
 
     private
@@ -110,16 +105,9 @@ module AssessorInterface
       }
     end
 
-    def unsigned_consent_method_task_items(_qualification_request)
-      if generate_consent_document_in_all_qualifications?
-        []
-      else
-        [generate_consent_document_task_item]
-      end
-    end
-
     def send_consent_document_in_all_qualifications?
-      all_consent_methods_selected? && consent_requests.count >= 2
+      all_consent_methods_selected? &&
+        qualification_requests.consent_method_signed.count >= 2
     end
 
     def send_consent_document_task_item
@@ -167,14 +155,34 @@ module AssessorInterface
       ]
     end
 
+    def consent_task_items(qualification_request)
+      if qualification_request.consent_method_unsigned? &&
+           !generate_consent_document_in_all_qualifications?
+        [generate_consent_document_task_item]
+      elsif qualification_request.consent_method_signed?
+        signed_consent_method_task_items(qualification_request)
+      else
+        []
+      end
+    end
+
     def ecctis_task_items(qualification_request)
+      if qualification_request.consent_method_unknown? &&
+           !qualification_request.requested?
+        return []
+      end
+
       can_start =
-        (
-          qualification_request.consent_method_unsigned? &&
-            assessment.unsigned_consent_document_generated
-        ) ||
-          consent_requests.verified.exists?(
-            qualification: qualification_request.qualification,
+        qualification_request.consent_method_none? ||
+          (
+            qualification_request.consent_method_unsigned? &&
+              assessment.unsigned_consent_document_generated
+          ) ||
+          (
+            qualification_request.consent_method_signed? &&
+              consent_requests.verified.exists?(
+                qualification: qualification_request.qualification,
+              )
           )
 
       [

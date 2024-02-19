@@ -15,7 +15,7 @@ RSpec.describe AssessorInterface::ConsentMethodForm, type: :model do
     it { is_expected.to validate_presence_of(:consent_method) }
     it do
       is_expected.to validate_inclusion_of(:consent_method).in_array(
-        %w[signed_ecctis signed_institution unsigned],
+        %w[signed_ecctis signed_institution unsigned none],
       )
     end
   end

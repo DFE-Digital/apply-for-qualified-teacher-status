@@ -44,6 +44,7 @@ RSpec.describe QualificationRequest, type: :model do
     it do
       is_expected.to define_enum_for(:consent_method)
         .with_values(
+          none: "none",
           signed_ecctis: "signed_ecctis",
           signed_institution: "signed_institution",
           unknown: "unknown",

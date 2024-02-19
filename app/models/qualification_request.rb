@@ -37,6 +37,7 @@ class QualificationRequest < ApplicationRecord
   belongs_to :qualification
 
   enum consent_method: {
+         none: "none",
          signed_ecctis: "signed_ecctis",
          signed_institution: "signed_institution",
          unknown: "unknown",
@@ -48,6 +49,9 @@ class QualificationRequest < ApplicationRecord
         -> { joins(:qualification).order("qualifications.start_date": :desc) }
   scope :order_by_user,
         -> { joins(:qualification).order("qualifications.created_at": :asc) }
+
+  scope :consent_method_signed,
+        -> { where(consent_method: %w[signed_ecctis signed_institution]) }
 
   def expires_after
     6.weeks

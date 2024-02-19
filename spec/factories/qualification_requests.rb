@@ -36,8 +36,8 @@ FactoryBot.define do
     association :assessment
     association :qualification, :completed
 
-    trait :consent_method_signed do
-      consent_method { %i[signed_ecctis signed_institution].sample }
+    trait :with_consent_method do
+      consent_method { %i[signed_ecctis signed_institution unsigned].sample }
     end
 
     trait :requested do

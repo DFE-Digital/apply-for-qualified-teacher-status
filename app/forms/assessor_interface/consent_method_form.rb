@@ -10,7 +10,7 @@ class AssessorInterface::ConsentMethodForm
   attribute :consent_method
   validates :consent_method,
             presence: true,
-            inclusion: %w[signed_ecctis signed_institution unsigned]
+            inclusion: %w[signed_ecctis signed_institution unsigned none]
 
   def save
     return false if invalid?

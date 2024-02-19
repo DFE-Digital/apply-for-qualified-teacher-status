@@ -17,6 +17,12 @@ class AssessorInterface::QualificationRequestPolicy < ApplicationPolicy
     user.verify_permission
   end
 
+  def update_consent_method?
+    user.verify_permission
+  end
+
+  alias_method :edit_consent_method?, :update_consent_method?
+
   def update_review?
     user.assess_permission
   end
