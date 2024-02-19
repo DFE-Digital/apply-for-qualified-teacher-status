@@ -51,7 +51,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             {
               name: "Check and select consent method",
               link: [
-                :consent_methods,
+                :check_consent_methods,
                 :assessor_interface,
                 application_form,
                 assessment,

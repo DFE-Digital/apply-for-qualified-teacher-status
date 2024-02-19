@@ -21,16 +21,15 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     when_i_click_the_continue_button
     then_i_see_the(:assessor_consent_qualification_request_page)
 
-    when_i_choose_the_consent_method
+    when_i_choose_the_unsigned_consent_method
     then_i_see_the(:assessor_consent_qualification_request_page)
 
-    when_i_choose_the_consent_method
+    when_i_choose_a_signed_consent_method
+    then_i_see_the(:assessor_qualification_requests_check_consent_methods_page)
 
-    when_i_visit_the(
-      :assessor_qualification_requests_page,
-      reference:,
-      assessment_id: application_form.assessment.id,
-    )
+    when_i_confirm_the_consent_methods
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_check_and_select_consent_method_task_is_completed
     and_i_go_back_to_overview
     then_i_see_the(:assessor_application_page, reference:)
   end
@@ -59,8 +58,22 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     assessor_qualification_requests_consent_methods_page.continue_button.click
   end
 
-  def when_i_choose_the_consent_method
+  def when_i_choose_the_unsigned_consent_method
     assessor_consent_qualification_request_page.submit_unsigned
+  end
+
+  def when_i_choose_a_signed_consent_method
+    assessor_consent_qualification_request_page.submit_signed_ecctis
+  end
+
+  def when_i_confirm_the_consent_methods
+    assessor_qualification_requests_check_consent_methods_page.continue_button.click
+  end
+
+  def and_the_check_and_select_consent_method_task_is_completed
+    expect(check_and_select_consent_method_task_item.status_tag.text).to eq(
+      "COMPLETED",
+    )
   end
 
   def and_i_go_back_to_overview
@@ -74,7 +87,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   end
 
   def check_and_select_consent_method_task_item
-    assessor_qualification_requests_page.task_list.find_item(
+    assessor_qualification_requests_page.task_lists.first.find_item(
       "Check and select consent method",
     )
   end

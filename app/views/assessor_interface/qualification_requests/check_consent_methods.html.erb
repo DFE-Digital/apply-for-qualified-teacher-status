@@ -1,0 +1,41 @@
+<% title = "Consent methods selected" %>
+
+<% content_for :page_title, title %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_qualification_requests_path) %>
+
+<h1 class="govuk-heading-l"><%= title %></h1>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Qualification
+    </dt>
+
+    <dt class="govuk-summary-list__key">
+      Consent method
+    </dt>
+
+    <dd class="govuk-summary-list__actions"></dd>
+  </div>
+
+  <% @qualification_requests.each do |qualification_request| %>
+    <div class="govuk-summary-list__row">
+      <dd class="govuk-summary-list__value">
+        <%= qualification_title(qualification_request.qualification) %>
+      </dd>
+      <dd class="govuk-summary-list__value">
+        <%= t(qualification_request.consent_method, scope: %i[helpers label assessor_interface_consent_method_form consent_method_options]) %>
+      </dd>
+      <dd class="govuk-summary-list__actions" style="vertical-align: middle;">
+        <a class="govuk-link" href="<%= consent_method_assessor_interface_application_form_assessment_qualification_request_path(@application_form, @assessment, qualification_request) %>">
+          Change<span class="govuk-visually-hidden"> name</span>
+        </a>
+      </dd>
+    </div>
+  <% end %>
+</dl>
+
+<div class="govuk-button-group">
+  <%= govuk_button_link_to "Continue", [:assessor_interface, @application_form, @assessment, :qualification_requests] %>
+  <%= render "shared/assessor_interface/cancel_link" %>
+</div>

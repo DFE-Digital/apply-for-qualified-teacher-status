@@ -9,6 +9,10 @@ class AssessorInterface::QualificationRequestPolicy < ApplicationPolicy
     user.verify_permission
   end
 
+  def check_consent_methods?
+    user.verify_permission
+  end
+
   def consent_letter?
     user.verify_permission
   end
