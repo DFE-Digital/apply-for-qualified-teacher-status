@@ -13,9 +13,18 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_the_verify_qualifications_task
     then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_check_and_select_consent_method_task_is_not_started
 
     when_i_click_the_check_and_select_consent_method_task
     then_i_see_the(:assessor_qualification_requests_consent_methods_page)
+
+    when_i_click_the_continue_button
+    then_i_see_the(:assessor_consent_qualification_request_page)
+
+    when_i_choose_the_consent_method
+    then_i_see_the(:assessor_consent_qualification_request_page)
+
+    when_i_choose_the_consent_method
 
     when_i_visit_the(
       :assessor_qualification_requests_page,
@@ -36,10 +45,22 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     assessor_application_page.verify_qualifications_task.link.click
   end
 
-  def when_i_click_the_check_and_select_consent_method_task
-    assessor_qualification_requests_page.task_list.click_item(
-      "Check and select consent method",
+  def and_the_check_and_select_consent_method_task_is_not_started
+    expect(check_and_select_consent_method_task_item.status_tag.text).to eq(
+      "NOT STARTED",
     )
+  end
+
+  def when_i_click_the_check_and_select_consent_method_task
+    check_and_select_consent_method_task_item.click
+  end
+
+  def when_i_click_the_continue_button
+    assessor_qualification_requests_consent_methods_page.continue_button.click
+  end
+
+  def when_i_choose_the_consent_method
+    assessor_consent_qualification_request_page.submit_unsigned
   end
 
   def and_i_go_back_to_overview
@@ -52,9 +73,9 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     )
   end
 
-  def and_i_see_an_in_progress_status
-    expect(assessor_application_page.status_summary.value).to have_text(
-      "VERIFICATION IN PROGRESS",
+  def check_and_select_consent_method_task_item
+    assessor_qualification_requests_page.task_list.find_item(
+      "Check and select consent method",
     )
   end
 
@@ -64,7 +85,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
         :application_form,
         :submitted,
         :verification_stage,
-        :with_teaching_qualification,
+        :with_degree_qualification,
       ).tap do |application_form|
         create(
           :assessment,

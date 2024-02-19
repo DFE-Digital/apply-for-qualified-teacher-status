@@ -144,6 +144,11 @@ Rails.application.routes.draw do
           end
 
           member do
+            get "consent-method",
+                to: "qualification_requests#edit_consent_method"
+            post "consent-method",
+                 to: "qualification_requests#update_consent_method"
+
             get "review", to: "qualification_requests#edit_review"
             post "review", to: "qualification_requests#update_review"
           end

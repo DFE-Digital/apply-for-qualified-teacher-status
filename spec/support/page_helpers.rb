@@ -87,6 +87,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ConfirmAssessmentRecommendation.new
   end
 
+  def assessor_consent_qualification_request_page
+    @assessor_consent_qualification_request_page ||=
+      PageObjects::AssessorInterface::ConsentQualificationRequest.new
+  end
+
   def assessor_create_note_page
     @assessor_create_note_page ||=
       PageObjects::AssessorInterface::CreateNote.new

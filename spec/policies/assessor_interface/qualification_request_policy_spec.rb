@@ -50,6 +50,16 @@ RSpec.describe AssessorInterface::QualificationRequestPolicy do
     it_behaves_like "a policy method requiring the verify permission"
   end
 
+  describe "#update_consent_method?" do
+    subject(:update?) { policy.update_consent_method? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#edit_consent_method?" do
+    subject(:edit?) { policy.edit_consent_method? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
   describe "#update_review?" do
     subject(:update_review?) { policy.update_review? }
     it_behaves_like "a policy method requiring the assess permission"

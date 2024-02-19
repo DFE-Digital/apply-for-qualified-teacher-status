@@ -7,7 +7,14 @@ module AssessorInterface
     before_action :set_collection_variables,
                   only: %i[index index_consent_methods consent_letter]
     before_action :set_member_variables,
-                  only: %i[edit update edit_review update_review]
+                  only: %i[
+                    edit
+                    update
+                    edit_consent_method
+                    update_consent_method
+                    edit_review
+                    update_review
+                  ]
 
     define_history_origin :index
 
@@ -70,12 +77,56 @@ module AssessorInterface
       if @form.save
         redirect_to [
                       :assessor_interface,
-                      qualification_request.application_form,
-                      qualification_request.assessment,
+                      application_form,
+                      assessment,
                       :qualification_requests,
                     ]
       else
         render :edit, status: :unprocessable_entity
+      end
+    end
+
+    def edit_consent_method
+      @form =
+        ConsentMethodForm.new(
+          qualification_request:,
+          consent_method: qualification_request.consent_method,
+        )
+    end
+
+    def update_consent_method
+      @form =
+        ConsentMethodForm.new(
+          consent_method_form_params.merge(qualification_request:),
+        )
+
+      if @form.save
+        if (check_path = history_stack.last_path_if_check)
+          redirect_to check_path
+        elsif (
+              next_qualification_request =
+                qualification_requests[
+                  qualification_requests.index(qualification_request) + 1
+                ]
+            )
+          redirect_to [
+                        :consent_method,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        next_qualification_request,
+                      ]
+        else
+          redirect_to [
+                        :check_consent_method,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :qualification_requests,
+                      ]
+        end
+      else
+        render :edit_consent_method, status: :unprocessable_entity
       end
     end
 
@@ -146,6 +197,12 @@ module AssessorInterface
         :passed,
         :note,
         :failed,
+      )
+    end
+
+    def consent_method_form_params
+      params.require(:assessor_interface_consent_method_form).permit(
+        :consent_method,
       )
     end
 

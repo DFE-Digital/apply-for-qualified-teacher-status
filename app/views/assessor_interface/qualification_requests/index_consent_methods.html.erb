@@ -26,5 +26,6 @@
 <% end %>
 
 <div class="govuk-button-group">
+  <%= govuk_button_link_to "Continue", [:consent_method, :assessor_interface, @application_form, @assessment, @qualification_requests.first] %>
   <%= render "shared/assessor_interface/cancel_link" %>
 </div>
