@@ -7,6 +7,7 @@
 #  age_range_min                             :integer
 #  age_range_note                            :text             default(""), not null
 #  induction_required                        :boolean
+#  qualifications_assessor_note              :text             default(""), not null
 #  recommendation                            :string           default("unknown"), not null
 #  recommendation_assessor_note              :text             default(""), not null
 #  recommended_at                            :datetime
@@ -125,6 +126,8 @@ FactoryBot.define do
     end
 
     trait :with_qualification_request do
+      qualifications_assessor_note { Faker::Lorem.sentence }
+
       after(:create) do |assessment, _evaluator|
         create(
           :qualification_request,

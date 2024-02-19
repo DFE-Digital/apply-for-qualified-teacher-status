@@ -21,6 +21,8 @@
     - record_id
     - blob_id
     - created_at
+  :assessments:
+    - qualifications_assessor_note
   :sessions:
     - id
     - session_id
