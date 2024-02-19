@@ -214,6 +214,15 @@ def create_application_forms
 
       assessment = AssessmentFactory.call(application_form:)
 
+      if application_form.reduced_evidence_accepted ||
+           !application_form.needs_work_history
+        assessment.update!(induction_required: false)
+      end
+
+      if CountryCode.scotland?(application_form.country.code)
+        assessment.update!(scotland_full_registration: true)
+      end
+
       if application_form.declined_at.present?
         FactoryBot.create(
           :selected_failure_reason,
