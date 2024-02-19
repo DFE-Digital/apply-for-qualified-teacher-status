@@ -346,6 +346,10 @@ en:
               blank: Enter the maximum age
             subject_1:
               blank: Enter the subject
+        assessor_interface/consent_method_form:
+          attributes:
+            consent_method:
+              inclusion: Tell us which method of consent is required for this qualification
         assessor_interface/create_note_form:
           attributes:
             text:
