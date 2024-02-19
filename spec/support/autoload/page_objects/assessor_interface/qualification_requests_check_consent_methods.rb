@@ -2,11 +2,9 @@
 
 module PageObjects
   module AssessorInterface
-    class QualificationRequests < SitePrism::Page
+    class QualificationRequestsCheckConsentMethods < SitePrism::Page
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
-                "/qualification-requests"
-
-      sections :task_lists, TaskList, ".app-task-list"
+                "/qualification-requests/check-consent-methods"
 
       element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
     end

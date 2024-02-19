@@ -141,6 +141,8 @@ Rails.application.routes.draw do
             get "consent-letter", to: "qualification_requests#consent_letter"
             get "consent-methods",
                 to: "qualification_requests#index_consent_methods"
+            get "check-consent-methods",
+                to: "qualification_requests#check_consent_methods"
           end
 
           member do

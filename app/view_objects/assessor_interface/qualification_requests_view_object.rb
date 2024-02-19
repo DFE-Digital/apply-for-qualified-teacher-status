@@ -59,20 +59,33 @@ module AssessorInterface
     delegate :assessment, to: :application_form
 
     def check_consent_method_task_item
+      cannot_change =
+        assessment.unsigned_consent_document_generated ||
+          consent_requests.exists? || qualification_requests.requested.exists?
+
       {
         name: "Check and select consent method",
-        link: [
-          :consent_methods,
-          :assessor_interface,
-          application_form,
-          assessment,
-          :qualification_requests,
-        ],
+        link:
+          unless cannot_change
+            [
+              (
+                if all_consent_methods_selected?
+                  :check_consent_methods
+                else
+                  :consent_methods
+                end
+              ),
+              :assessor_interface,
+              application_form,
+              assessment,
+              :qualification_requests,
+            ]
+          end,
         status:
-          if qualification_requests.all?(&:consent_method_unknown?)
-            "not_started"
-          elsif all_consent_methods_selected?
+          if all_consent_methods_selected?
             "completed"
+          elsif qualification_requests.all?(&:consent_method_unknown?)
+            "not_started"
           else
             "in_progress"
           end,
@@ -127,7 +140,7 @@ module AssessorInterface
 
     def signed_consent_method_task_items(qualification_request)
       consent_request =
-        consent_requests.find_by!(
+        consent_requests.find_by(
           qualification: qualification_request.qualification,
         )
 
@@ -137,7 +150,7 @@ module AssessorInterface
           link: "#",
           status:
             (
-              if consent_request.unsigned_consent_document.completed?
+              if consent_request&.unsigned_consent_document&.completed?
                 "completed"
               else
                 "not_started"
@@ -150,7 +163,9 @@ module AssessorInterface
         {
           name: "Record applicant response",
           link: "#",
-          status: consent_request.status(not_requested: "cannot_start"),
+          status:
+            consent_request&.status(not_requested: "cannot_start") ||
+              "cannot_start",
         },
       ]
     end
@@ -200,7 +215,7 @@ module AssessorInterface
           name: "Record Ecctis response",
           link: "#",
           status:
-            if can_start && qualification_request.requested?
+            if qualification_request.requested?
               qualification_request.received? ? "completed" : "not_started"
             else
               "cannot_start"

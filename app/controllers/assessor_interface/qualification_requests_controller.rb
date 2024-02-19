@@ -5,7 +5,12 @@ module AssessorInterface
     include HistoryTrackable
 
     before_action :set_collection_variables,
-                  only: %i[index index_consent_methods consent_letter]
+                  only: %i[
+                    index
+                    index_consent_methods
+                    check_consent_methods
+                    consent_letter
+                  ]
     before_action :set_member_variables,
                   only: %i[
                     edit
@@ -17,6 +22,7 @@ module AssessorInterface
                   ]
 
     define_history_origin :index
+    define_history_check :check_consent_methods
 
     def index
       @view_object =
@@ -28,6 +34,9 @@ module AssessorInterface
     end
 
     def index_consent_methods
+    end
+
+    def check_consent_methods
     end
 
     def consent_letter
@@ -120,7 +129,7 @@ module AssessorInterface
                       ]
         else
           redirect_to [
-                        :check_consent_method,
+                        :check_consent_methods,
                         :assessor_interface,
                         application_form,
                         assessment,
