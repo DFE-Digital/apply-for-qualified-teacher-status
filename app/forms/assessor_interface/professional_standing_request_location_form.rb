@@ -19,7 +19,7 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
       if received && !requestable.received?
         ReceiveRequestable.call(requestable:, user:)
       elsif !received && requestable.received?
-        revert_receive_requestable
+        UnreceiveRequestable.call(requestable:, user:)
       end
 
       if requestable.requested? && requestable.reviewed?
@@ -33,13 +33,5 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
     true
   end
 
-  private
-
   delegate :application_form, to: :requestable
-
-  def revert_receive_requestable
-    requestable.requested!
-    TimelineEvent.requestable_received.where(requestable:).destroy_all
-    ApplicationFormStatusUpdater.call(application_form:, user:)
-  end
 end
