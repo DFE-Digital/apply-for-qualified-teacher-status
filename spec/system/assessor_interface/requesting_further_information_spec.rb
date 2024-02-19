@@ -3,24 +3,6 @@
 require "rails_helper"
 
 RSpec.describe "Assessor requesting further information", type: :system do
-  let(:notify_key) { "notify-key" }
-  let(:notify_client) do
-    double(generate_template_preview: notify_template_preview)
-  end
-  let(:notify_template_preview) { double(html: "I am an email") }
-
-  around do |example|
-    ClimateControl.modify GOVUK_NOTIFY_API_KEY: notify_key do
-      example.run
-    end
-  end
-
-  before do
-    allow(Notifications::Client).to receive(:new).with(notify_key).and_return(
-      notify_client,
-    )
-  end
-
   it "completes an assessment" do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form_with_failure_reasons
@@ -40,15 +22,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
     )
     and_i_see_the_further_information_request_items
 
-    when_i_click_continue_to_email_button
-    then_i_see_the(
-      :assessor_further_information_request_preview_page,
-      reference:,
-      assessment_id:,
-    )
-    and_i_see_the_email_preview
-
-    when_i_click_send_to_applicant
+    when_i_click_the_continue_button
     then_i_see_the(:assessor_application_status_page, reference:)
     and_i_receive_a_further_information_requested_email
   end
@@ -77,21 +51,8 @@ RSpec.describe "Assessor requesting further information", type: :system do
     ).to eq("A note.")
   end
 
-  def when_i_click_continue_to_email_button
+  def when_i_click_the_continue_button
     assessor_request_further_information_page.continue_button.click
-  end
-
-  def and_i_see_the_email_preview
-    expect(
-      assessor_further_information_request_preview_page.email_preview,
-    ).to have_content("I am an email")
-  end
-
-  def when_i_click_send_to_applicant
-    assessor_further_information_request_preview_page
-      .form
-      .send_to_applicant_button
-      .click
   end
 
   def and_i_receive_a_further_information_requested_email

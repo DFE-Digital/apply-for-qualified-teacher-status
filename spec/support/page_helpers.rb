@@ -136,11 +136,6 @@ module PageHelpers
     @assessor_login_page ||= PageObjects::AssessorInterface::Login.new
   end
 
-  def assessor_preview_assessment_recommendation_page
-    @assessor_preview_assessment_recommendation_page ||=
-      PageObjects::AssessorInterface::PreviewAssessmentRecommendation.new
-  end
-
   def assessor_professional_standing_assessment_recommendation_verify_page
     @assessor_professional_standing_assessment_recommendation_verify_page ||=
       PageObjects::AssessorInterface::ProfessionalStandingAssessmentRecommendationVerify.new
