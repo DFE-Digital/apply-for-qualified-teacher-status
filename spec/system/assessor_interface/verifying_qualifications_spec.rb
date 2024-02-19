@@ -146,7 +146,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
   def and_i_see_an_in_progress_status
     expect(assessor_application_page.status_summary.value).to have_text(
-      "ASSESSMENT IN PROGRESS",
+      "VERIFICATION IN PROGRESS",
     )
   end
 
@@ -160,7 +160,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
             statuses: %w[waiting_on_qualification],
           )
         qualification = create(:qualification, :completed, application_form:)
-        assessment = create(:assessment, :started, application_form:)
+        assessment = create(:assessment, :started, :verify, application_form:)
         create(:qualification_request, :requested, assessment:, qualification:)
         application_form
       end

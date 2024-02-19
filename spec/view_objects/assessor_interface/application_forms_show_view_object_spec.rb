@@ -359,7 +359,10 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "with a professional standing request" do
-      before { create(:professional_standing_request, assessment:) }
+      before do
+        assessment.verify!
+        create(:professional_standing_request, assessment:)
+      end
 
       it do
         is_expected.to include_task_list_item("Verification", "Verify LoPS")
@@ -373,7 +376,10 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "with a qualification request" do
-      before { create(:qualification_request, assessment:) }
+      before do
+        assessment.verify!
+        create(:qualification_request, assessment:)
+      end
 
       it do
         is_expected.to include_task_list_item(
@@ -390,7 +396,10 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "with a reference request" do
-      before { create(:reference_request, assessment:) }
+      before do
+        assessment.verify!
+        create(:reference_request, assessment:)
+      end
 
       it do
         is_expected.to include_task_list_item(

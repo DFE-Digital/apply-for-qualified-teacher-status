@@ -257,14 +257,14 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def verification_task_list_section
     return unless pre_assessment_complete?
+    return if assessment.unknown? || assessment.request_further_information?
 
     items = [
       qualification_requests_task_list_item,
       reference_requests_task_list_item,
       professional_standing_request_task_list_item,
+      verification_decision_task_list_item,
     ].compact
-
-    items << verification_decision_task_list_item if items.present?
 
     {
       title:

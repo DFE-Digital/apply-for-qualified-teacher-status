@@ -253,7 +253,9 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
           create(:application_form, :submitted, :verification_stage)
         create(
           :assessment,
+          :started,
           :with_professional_standing_request,
+          :verify,
           application_form:,
         )
         application_form
