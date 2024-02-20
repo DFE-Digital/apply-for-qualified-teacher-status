@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class ReferenceRequestsController < BaseController
+    include HistoryTrackable
+
     before_action :set_individual_variables, except: :index
 
     define_history_origin :index

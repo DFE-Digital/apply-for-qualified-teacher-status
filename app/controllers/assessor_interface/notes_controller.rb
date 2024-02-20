@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class NotesController < BaseController
+    include HistoryTrackable
+
     before_action { authorize %i[assessor_interface note] }
 
     def new
