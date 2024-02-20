@@ -62,7 +62,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             {
               name: "Generate consent document",
               link: [
-                :consent_letter,
+                :unsigned_consent_document,
                 :assessor_interface,
                 application_form,
                 assessment,
@@ -124,7 +124,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             {
               name: "Generate consent document",
               link: [
-                :consent_letter,
+                :unsigned_consent_document,
                 :assessor_interface,
                 application_form,
                 assessment,
