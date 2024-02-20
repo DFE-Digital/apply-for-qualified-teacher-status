@@ -13,7 +13,14 @@ class AssessorInterface::QualificationRequestPolicy < ApplicationPolicy
     user.verify_permission
   end
 
-  def consent_letter?
+  def update_unsigned_consent_document?
+    user.verify_permission
+  end
+
+  alias_method :edit_unsigned_consent_document?,
+               :update_unsigned_consent_document?
+
+  def generate_unsigned_consent_document?
     user.verify_permission
   end
 

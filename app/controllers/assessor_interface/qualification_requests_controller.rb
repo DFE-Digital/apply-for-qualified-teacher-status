@@ -9,7 +9,9 @@ module AssessorInterface
                     index
                     index_consent_methods
                     check_consent_methods
-                    consent_letter
+                    edit_unsigned_consent_document
+                    update_unsigned_consent_document
+                    generate_unsigned_consent_document
                   ]
     before_action :set_member_variables,
                   only: %i[
@@ -21,6 +23,7 @@ module AssessorInterface
                     update_review
                   ]
 
+    skip_before_action :track_history, only: :generate_unsigned_consent_document
     define_history_origin :index
     define_history_check :check_consent_methods
 
@@ -37,7 +40,33 @@ module AssessorInterface
     def check_consent_methods
     end
 
-    def consent_letter
+    def edit_unsigned_consent_document
+      @form =
+        GenerateUnsignedConsentDocumentForm.new(
+          assessment:,
+          generated: assessment.unsigned_consent_document_generated,
+        )
+    end
+
+    def update_unsigned_consent_document
+      @form =
+        GenerateUnsignedConsentDocumentForm.new(
+          generate_unsigned_consent_document_form_params.merge(assessment:),
+        )
+
+      if @form.save
+        redirect_to [
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :qualification_requests,
+                    ]
+      else
+        render :edit_unsigned_consent_document, status: :unprocessable_entity
+      end
+    end
+
+    def generate_unsigned_consent_document
       send_data(
         ConsentLetter.new(application_form:).render_pdf,
         filename: "Apply for QTS - Consent Letter.pdf",
@@ -198,6 +227,12 @@ module AssessorInterface
         authorize [:assessor_interface, qualification_request]
       @application_form = qualification_request.application_form
       @assessment = qualification_request.assessment
+    end
+
+    def generate_unsigned_consent_document_form_params
+      params.require(
+        :assessor_interface_generate_unsigned_consent_document_form,
+      ).permit(:generated)
     end
 
     def form_params

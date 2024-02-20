@@ -166,6 +166,11 @@ module PageHelpers
       PageObjects::AssessorInterface::QualificationRequestsConsentMethods.new
   end
 
+  def assessor_qualification_requests_unsigned_consent_document_page
+    @assessor_qualification_requests_unsigned_consent_document_page ||=
+      PageObjects::AssessorInterface::QualificationRequestsUnsignedConsentDocument.new
+  end
+
   def assessor_qualification_requests_page
     @assessor_qualification_requests_page ||=
       PageObjects::AssessorInterface::QualificationRequests.new

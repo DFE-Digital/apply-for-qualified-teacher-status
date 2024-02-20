@@ -25,14 +25,30 @@ RSpec.describe AssessorInterface::QualificationRequestPolicy do
     it_behaves_like "a policy method requiring the verify permission"
   end
 
+  describe "#update_unsigned_consent_document?" do
+    subject(:update_unsigned_consent_document?) do
+      policy.update_unsigned_consent_document?
+    end
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#edit_unsigned_consent_document?" do
+    subject(:edit_unsigned_consent_document?) do
+      policy.edit_unsigned_consent_document?
+    end
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#generate_unsigned_consent_document?" do
+    subject(:generate_unsigned_consent_document?) do
+      policy.generate_unsigned_consent_document?
+    end
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
   describe "#show?" do
     subject(:show?) { policy.show? }
     it_behaves_like "a policy method without permission"
-  end
-
-  describe "#consent_letter?" do
-    subject(:consent_letter?) { policy.consent_letter? }
-    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#create?" do

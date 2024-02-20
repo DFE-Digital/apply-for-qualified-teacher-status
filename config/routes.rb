@@ -138,11 +138,17 @@ Rails.application.routes.draw do
                   path: "/qualification-requests",
                   only: %i[index edit update] do
           collection do
-            get "consent-letter", to: "qualification_requests#consent_letter"
             get "consent-methods",
                 to: "qualification_requests#index_consent_methods"
             get "check-consent-methods",
                 to: "qualification_requests#check_consent_methods"
+
+            get "unsigned-consent-document",
+                to: "qualification_requests#edit_unsigned_consent_document"
+            post "unsigned-consent-document",
+                 to: "qualification_requests#update_unsigned_consent_document"
+            get "generate-unsigned-consent-document",
+                to: "qualification_requests#generate_unsigned_consent_document"
           end
 
           member do

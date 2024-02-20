@@ -1,0 +1,34 @@
+<% title = "Generate consent document" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_qualification_requests_path) %>
+
+<%= form_with model: @form, url: [:unsigned_consent_document, :assessor_interface, @application_form, @assessment, :qualification_requests] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l"><%= title %></h1>
+
+  <p class="govuk-body">You need to generate the non-signed TRA PDF consent documents for:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <% @qualification_requests.consent_method_unsigned.each do |qualification_request| %>
+      <li><%= qualification_title(qualification_request.qualification) %></li>
+    <% end %>
+  </ul>
+
+  <p class="govuk-body">
+    Generate the document below and save it. Go to the Request Ecctis verification task for this qualification to upload the PDF.
+  </p>
+
+  <article class="moj-ticket-panel">
+    <section class="moj-ticket-panel__content moj-ticket-panel__content--blue">
+      <%= govuk_button_link_to "Generate consent document", [:generate_unsigned_consent_document, :assessor_interface, @application_form, @assessment, :qualification_requests], inverse: true %>
+    </section>
+  </article>
+
+  <%= f.govuk_check_boxes_fieldset :generated, small: true, legend: nil do %>
+    <%= f.govuk_check_box :generated, true, false, link_errors: true, multiple: false, label: { text: "I have generated and downloaded the consent document." } %>
+  <% end %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>
