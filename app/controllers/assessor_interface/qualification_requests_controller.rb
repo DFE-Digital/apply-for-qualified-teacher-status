@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class QualificationRequestsController < BaseController
+    include HistoryTrackable
+
     before_action :set_collection_variables, only: %i[index consent_letter]
     before_action :set_member_variables, except: %i[index consent_letter]
 

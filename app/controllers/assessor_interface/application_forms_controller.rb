@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class ApplicationFormsController < BaseController
+    include HistoryTrackable
+
     before_action only: %i[index apply_filters clear_filters] do
       authorize %i[assessor_interface application_form]
     end

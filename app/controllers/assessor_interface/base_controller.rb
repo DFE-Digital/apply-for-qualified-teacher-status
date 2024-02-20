@@ -2,7 +2,6 @@
 
 class AssessorInterface::BaseController < ApplicationController
   include AssessorCurrentNamespace
-  include HistoryTrackable
   include StaffAuthenticatable
 
   after_action :verify_authorized

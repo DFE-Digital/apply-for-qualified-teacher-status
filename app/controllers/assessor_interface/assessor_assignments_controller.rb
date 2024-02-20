@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class AssessorAssignmentsController < BaseController
+    include HistoryTrackable
+
     before_action { authorize %i[assessor_interface staff_assignment] }
 
     def new

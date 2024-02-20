@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class ProfessionalStandingRequestsController < BaseController
+    include HistoryTrackable
+
     before_action :set_variables
 
     before_action do

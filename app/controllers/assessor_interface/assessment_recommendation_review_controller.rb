@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class AssessmentRecommendationReviewController < BaseController
+    include HistoryTrackable
+
     before_action :ensure_can_review
     before_action :load_assessment_and_application_form
 

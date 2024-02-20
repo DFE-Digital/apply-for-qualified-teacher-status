@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class AssessmentRecommendationAwardController < BaseController
+    include HistoryTrackable
+
     before_action :ensure_can_award
     before_action :load_assessment_and_application_form
     before_action :load_important_notes, only: %i[edit update]

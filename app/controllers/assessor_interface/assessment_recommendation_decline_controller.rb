@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class AssessmentRecommendationDeclineController < BaseController
+    include HistoryTrackable
+
     before_action :ensure_can_decline
     before_action :load_assessment_and_application_form
 

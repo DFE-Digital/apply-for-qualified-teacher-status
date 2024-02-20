@@ -2,6 +2,8 @@
 
 module AssessorInterface
   class AssessmentRecommendationVerifyController < BaseController
+    include HistoryTrackable
+
     before_action :ensure_can_verify
     before_action :load_assessment_and_application_form
 
@@ -72,8 +74,8 @@ module AssessorInterface
           redirect_to [
                         :qualification_requests,
                         :assessor_interface,
-                        @application_form,
-                        @assessment,
+                        application_form,
+                        assessment,
                         :assessment_recommendation_verify,
                       ]
         elsif (check_path = history_stack.last_path_if_check)
