@@ -3,7 +3,6 @@
 module AssessorInterface
   class DocumentsController < BaseController
     include ActiveStorage::Streaming
-    include HistoryTrackable
     include StreamedResponseAuthenticatable
     include RescueActiveStorageErrors
     include UploadHelper
