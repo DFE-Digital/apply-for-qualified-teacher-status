@@ -354,6 +354,10 @@ en:
           attributes:
             text:
               blank: Enter the note
+        assessor_interface/generate_unsigned_consent_document_form:
+          attributes:
+            generated:
+              blank: Confirm you have generated the non-signed TRA consent document
         assessor_interface/induction_required_form:
           attributes:
             induction_required:
@@ -407,10 +411,6 @@ en:
           attributes:
             scotland_full_registration:
               inclusion: Select whether the teacher has or is eligible for full registration
-        assessor_interface/unsigned_consent_document_form:
-          attributes:
-            generated:
-              blank: Confirm you have generated the non-signed TRA consent document
         assessor_interface/upload_unsigned_consent_document_form:
           attributes:
             original_attachment:
