@@ -2,7 +2,8 @@
 
 require "rails_helper"
 
-RSpec.describe AssessorInterface::UnsignedConsentDocumentForm, type: :model do
+RSpec.describe AssessorInterface::GenerateUnsignedConsentDocumentForm,
+               type: :model do
   let(:assessment) { create(:assessment) }
 
   subject(:form) { described_class.new(assessment:, generated:) }
