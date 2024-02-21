@@ -1,0 +1,40 @@
+<% title = "Upload consent document" %>
+
+<% qualification = @consent_request.qualification %>
+<% qualification_request = @assessment.qualification_requests.find_by!(qualification:) %>
+
+<% content_for :page_title, title %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_qualification_requests_path) %>
+
+<h1 class="govuk-heading-xl"><%= title %></h1>
+
+<h2 class="govuk-heading-m"><%= qualification_title(qualification) %></h2>
+
+<% if qualification_request.consent_method_signed_institution? %>
+  <p class="govuk-body">You have chosen to upload the institution’s custom consent document.</p>
+<% elsif qualification_request.consent_method_signed_ecctis? %>
+  <p class="govuk-body">You have chosen to upload the Ecctis standard consent document with signature.</p>
+<% end %>
+
+<%= govuk_summary_list do |summary_list|
+  summary_list.with_row do |row|
+    row.with_value { document_link_to(@consent_request.unsigned_consent_document) }
+
+    row.with_action(
+      text: "Change",
+      href: [
+        :upload,
+        :assessor_interface,
+        @application_form,
+        @assessment,
+        @consent_request,
+      ],
+      visually_hidden_text: "document"
+    )
+  end
+end %>
+
+<div class="govuk-button-group">
+  <%= govuk_button_link_to "Continue", [:assessor_interface, @application_form, @assessment, :qualification_requests] %>
+  <%= render "shared/assessor_interface/cancel_link" %>
+</div>

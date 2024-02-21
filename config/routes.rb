@@ -100,8 +100,11 @@ Rails.application.routes.draw do
                  "assessment_recommendation_verify#update_professional_standing"
         end
 
-        resources :consent_requests, path: "/consent-requests", only: [] do
+        resources :consent_requests, path: "/consent-requests", only: %i[new] do
           member do
+            get "upload", to: "consent_requests#edit_upload"
+            post "upload", to: "consent_requests#update_upload"
+            get "check-upload", to: "consent_requests#check_upload"
             get "review", to: "consent_requests#edit_review"
             post "review", to: "consent_requests#update_review"
           end

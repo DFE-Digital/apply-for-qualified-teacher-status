@@ -13,7 +13,7 @@ module AssessorInterface
     def show_pdf
       authorize %i[assessor_interface application_form]
 
-      unless all_uploads_downloadable?
+      unless document.downloadable?
         render "shared/malware_scan"
         return
       end
@@ -31,10 +31,6 @@ module AssessorInterface
 
     def document
       @document ||= Document.find(params[:id])
-    end
-
-    def all_uploads_downloadable?
-      document.uploads.all? { |upload| upload_downloadable?(upload) }
     end
   end
 end

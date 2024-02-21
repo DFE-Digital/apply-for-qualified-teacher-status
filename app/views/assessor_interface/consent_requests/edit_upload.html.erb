@@ -1,0 +1,25 @@
+<% title = "Upload consent document" %>
+
+<% qualification = @consent_request.qualification %>
+<% qualification_request = @assessment.qualification_requests.find_by!(qualification:) %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_qualification_requests_path) %>
+
+<%= form_with model: @form, url: [:upload, :assessor_interface, @application_form, @assessment, @consent_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h2 class="govuk-heading-m"><%= qualification_title(qualification) %></h2>
+
+  <% if qualification_request.consent_method_signed_institution? %>
+    <p class="govuk-body">You have chosen to upload the institution’s custom consent document.</p>
+  <% elsif qualification_request.consent_method_signed_ecctis? %>
+    <p class="govuk-body">You have chosen to upload the Ecctis standard consent document with signature.</p>
+  <% end %>
+
+  <%= f.govuk_file_field :original_attachment, label: nil, hint: { text: "You must upload the file as a PDF." } %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>
