@@ -13,7 +13,7 @@ module AssessorInterface
     def show
       authorize %i[assessor_interface application_form]
 
-      if upload_downloadable?(upload)
+      if upload.downloadable?
         send_blob_stream(upload.attachment, disposition: :inline)
       else
         render "shared/malware_scan"

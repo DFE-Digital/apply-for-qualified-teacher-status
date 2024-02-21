@@ -31,6 +31,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     then_i_see_the(:assessor_qualification_requests_page, reference:)
     and_the_check_and_select_consent_method_task_is_completed
     and_the_generate_consent_document_task_item_is_not_started
+    and_the_upload_consent_document_task_item_is_not_started
 
     when_i_click_the_generate_consent_document_task
     then_i_see_the(
@@ -40,6 +41,13 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     when_i_check_unsigned_consent_document_generated
     then_i_see_the(:assessor_qualification_requests_page, reference:)
     and_the_generate_consent_document_task_item_is_completed
+
+    when_i_click_the_upload_consent_document_task
+    then_i_see_the(:assessor_upload_consent_document_page)
+
+    when_i_upload_the_consent_document
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_upload_consent_document_task_item_is_completed
 
     and_i_go_back_to_overview
     then_i_see_the(:assessor_application_page, reference:)
@@ -93,6 +101,12 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     )
   end
 
+  def and_the_upload_consent_document_task_item_is_not_started
+    expect(upload_consent_document_task_item.status_tag.text).to eq(
+      "NOT STARTED",
+    )
+  end
+
   def when_i_click_the_generate_consent_document_task
     generate_consent_document_task_item.click
   end
@@ -105,6 +119,20 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     expect(generate_consent_document_task_item.status_tag.text).to eq(
       "COMPLETED",
     )
+  end
+
+  def when_i_click_the_upload_consent_document_task
+    upload_consent_document_task_item.click
+  end
+
+  def when_i_upload_the_consent_document
+    assessor_upload_consent_document_page.submit(
+      file: Rails.root.join(file_fixture("upload.pdf")),
+    )
+  end
+
+  def and_the_upload_consent_document_task_item_is_completed
+    expect(upload_consent_document_task_item.status_tag.text).to eq("COMPLETED")
   end
 
   def and_i_go_back_to_overview
@@ -126,6 +154,12 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   def generate_consent_document_task_item
     assessor_qualification_requests_page.task_lists.second.find_item(
       "Generate consent document",
+    )
+  end
+
+  def upload_consent_document_task_item
+    assessor_qualification_requests_page.task_lists.third.find_item(
+      "Upload consent document",
     )
   end
 

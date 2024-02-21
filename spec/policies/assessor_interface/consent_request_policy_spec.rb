@@ -22,12 +22,32 @@ RSpec.describe AssessorInterface::ConsentRequestPolicy do
 
   describe "#create?" do
     subject(:create?) { policy.create? }
-    it_behaves_like "a policy method without permission"
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#new?" do
     subject(:new?) { policy.new? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#update?" do
+    subject(:update?) { policy.update? }
     it_behaves_like "a policy method without permission"
+  end
+
+  describe "#edit?" do
+    subject(:edit?) { policy.edit? }
+    it_behaves_like "a policy method without permission"
+  end
+
+  describe "#update_upload?" do
+    subject(:update?) { policy.update_upload? }
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#edit_upload?" do
+    subject(:edit?) { policy.edit_upload? }
+    it_behaves_like "a policy method requiring the verify permission"
   end
 
   describe "#update_review?" do

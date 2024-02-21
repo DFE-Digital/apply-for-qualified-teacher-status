@@ -235,6 +235,11 @@ module PageHelpers
     @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end
 
+  def assessor_upload_consent_document_page
+    @assessor_upload_consent_document_page ||=
+      PageObjects::AssessorInterface::UploadConsentDocument.new
+  end
+
   def assessor_verify_age_range_subjects_page
     @assessor_verify_age_range_subjects_page ||=
       PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new

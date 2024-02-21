@@ -250,6 +250,12 @@ module AssessorInterface
       )
     end
 
+    def upload_unsigned_consent_document_form_params
+      params.require(
+        :assessor_interface_upload_unsigned_consent_document_form,
+      ).permit(:original_attachment)
+    end
+
     def requestable_review_form_params
       params.require(:assessor_interface_requestable_review_form).permit(
         :passed,

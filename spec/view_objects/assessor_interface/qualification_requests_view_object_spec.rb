@@ -148,8 +148,9 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
     end
 
     context "when signed consent method" do
-      before do
-        qualification_request.consent_method_signed_ecctis!
+      before { qualification_request.consent_method_signed_ecctis! }
+
+      let!(:consent_request) do
         create(:consent_request, assessment:, qualification:)
       end
 
@@ -158,7 +159,13 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
           [
             {
               name: "Upload consent document",
-              link: "#",
+              link: [
+                :edit,
+                :assessor_interface,
+                application_form,
+                assessment,
+                consent_request,
+              ],
               status: "not_started",
             },
             {

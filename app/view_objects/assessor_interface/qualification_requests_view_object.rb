@@ -159,11 +159,34 @@ module AssessorInterface
       [
         {
           name: "Upload consent document",
-          link: "#",
+          link:
+            if consent_request.nil?
+              Rails
+                .application
+                .routes
+                .url_helpers
+                .new_assessor_interface_application_form_assessment_consent_request_path(
+                application_form,
+                assessment,
+                qualification_id: qualification_request.qualification.id,
+              )
+            elsif !consent_request.requested?
+              [
+                :upload,
+                :assessor_interface,
+                application_form,
+                assessment,
+                consent_request,
+              ]
+            end,
           status:
             (
               if consent_request&.unsigned_consent_document&.completed?
-                "completed"
+                if consent_request&.unsigned_consent_document&.downloadable?
+                  "completed"
+                else
+                  "in_progress"
+                end
               else
                 "not_started"
               end
