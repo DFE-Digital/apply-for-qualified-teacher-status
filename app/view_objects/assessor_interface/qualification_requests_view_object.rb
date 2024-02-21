@@ -14,6 +14,9 @@ module AssessorInterface
         if generate_consent_document_in_all_qualifications?
           generate_consent_document_task_item
         end,
+        if send_consent_document_in_all_qualifications?
+          send_consent_document_task_item
+        end,
       ].compact
 
       if show_individual_task_items?
@@ -102,40 +105,55 @@ module AssessorInterface
       end
     end
 
-    def signed_consent_method_task_items(qualification_request)
-      document_uploaded =
-        qualification_request.unsigned_consent_document.completed?
+    def send_consent_document_in_all_qualifications?
+      all_consent_methods_selected? &&
+        qualification_requests.consent_method_signed.count >= 2
+    end
 
+    def send_consent_document_task_item
+      {
+        name: "Send consent document to applicant",
+        link: "#",
+        status:
+          if qualification_requests.map(&:unsigned_consent_document).all?(
+               &:completed?
+             )
+            if qualification_requests.all(&:consent_requested?)
+              "completed"
+            else
+              "not_started"
+            end
+          else
+            "cannot_start"
+          end,
+      }
+    end
+
+    def signed_consent_method_task_items(qualification_request)
       [
         {
           name: "Upload consent document",
           link: "#",
-          status: document_uploaded ? "completed" : "not_started",
-        },
-        {
-          name: "Send consent document to applicant",
-          link: "#",
           status:
-            if document_uploaded
-              if qualification_request.consent_requested?
+            (
+              if qualification_request.unsigned_consent_document.completed?
                 "completed"
               else
                 "not_started"
               end
-            else
-              "cannot_start"
-            end,
+            ),
         },
+        unless send_consent_document_in_all_qualifications?
+          send_consent_document_task_item
+        end,
         {
           name: "Record applicant response",
           link: "#",
           status:
-            if document_uploaded
-              if qualification_request.consent_received?
-                "completed"
-              else
-                "not_started"
-              end
+            if qualification_request.consent_received?
+              "completed"
+            elsif qualification_request.consent_requested?
+              "not_started"
             else
               "cannot_start"
             end,
