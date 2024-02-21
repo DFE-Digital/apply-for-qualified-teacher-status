@@ -25,7 +25,10 @@ module AssessorInterface
     end
 
     def edit
-      @form = AssessmentDeclarationDeclineForm.new
+      @form =
+        AssessmentDeclarationDeclineForm.new(
+          recommendation_assessor_note: session[:recommendation_assessor_note],
+        )
     end
 
     def update
