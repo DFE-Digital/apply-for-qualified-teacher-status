@@ -15,7 +15,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestItemTextForm,
   it { is_expected.to validate_presence_of(:response) }
 
   describe "#save" do
-    subject(:save) { form.save }
+    subject(:save) { form.save(validate: true) }
 
     context "with a blank value" do
       let(:response) { "" }
