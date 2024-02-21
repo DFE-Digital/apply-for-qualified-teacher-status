@@ -52,10 +52,7 @@ module AssessorInterface
     delegate :assessment, to: :application_form
 
     def all_consent_methods_selected?
-      qualification_requests.all? do |qualification_request|
-        qualification_request.consent_method_unsigned? ||
-          qualification_request.consent_requested?
-      end
+      qualification_requests.none?(&:consent_method_unknown?)
     end
 
     def check_consent_method_task_item
