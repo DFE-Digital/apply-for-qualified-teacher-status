@@ -60,7 +60,7 @@ class TeacherMailer < ApplicationMailer
     @expires_at =
       assessment
         .qualification_requests
-        .signed_consent_required
+        .consent_method_signed
         .map(&:expires_at)
         .max
 
@@ -75,7 +75,7 @@ class TeacherMailer < ApplicationMailer
     @expires_at =
       assessment
         .qualification_requests
-        .signed_consent_required
+        .consent_method_signed
         .map(&:expires_at)
         .max
 

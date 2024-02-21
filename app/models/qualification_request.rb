@@ -50,7 +50,7 @@ class QualificationRequest < ApplicationRecord
        },
        _prefix: true
 
-  scope :signed_consent_required,
+  scope :consent_method_signed,
         -> do
           consent_method_signed_ecctis.or(consent_method_signed_institution)
         end
@@ -74,7 +74,7 @@ class QualificationRequest < ApplicationRecord
     6.weeks
   end
 
-  def signed_consent_required?
+  def consent_method_signed?
     consent_method_signed_ecctis? || consent_method_signed_institution?
   end
 

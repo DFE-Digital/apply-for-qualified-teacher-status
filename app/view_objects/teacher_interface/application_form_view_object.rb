@@ -156,7 +156,7 @@ class TeacherInterface::ApplicationFormViewObject
     return false if assessment.nil?
 
     required_qualification_requests =
-      qualification_requests.signed_consent_required
+      qualification_requests.consent_method_signed
 
     return false if required_qualification_requests.empty?
 
