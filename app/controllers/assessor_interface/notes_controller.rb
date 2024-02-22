@@ -17,7 +17,7 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to params[:next].presence ||
+        redirect_to history_stack.pop_back ||
                       [:assessor_interface, application_form]
       else
         render :new, status: :unprocessable_entity
