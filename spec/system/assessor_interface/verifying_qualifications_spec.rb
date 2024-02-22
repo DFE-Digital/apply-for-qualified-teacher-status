@@ -48,8 +48,16 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     when_i_upload_the_consent_document
     then_i_see_the(:assessor_qualification_requests_page, reference:)
     and_the_upload_consent_document_task_item_is_completed
+    and_the_send_consent_document_to_applicant_task_is_not_started
 
-    and_i_go_back_to_overview
+    when_i_click_the_send_consent_document_to_applicant_task
+    then_i_see_the(:assessor_send_signed_consent_documents_page)
+
+    when_i_send_the_signed_consent_documents
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_send_consent_document_to_applicant_task_is_completed
+
+    when_i_go_back_to_overview
     then_i_see_the(:assessor_application_page, reference:)
   end
 
@@ -135,7 +143,27 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     expect(upload_consent_document_task_item.status_tag.text).to eq("COMPLETED")
   end
 
-  def and_i_go_back_to_overview
+  def and_the_send_consent_document_to_applicant_task_is_not_started
+    expect(send_consent_document_to_applicant_task_item.status_tag.text).to eq(
+      "NOT STARTED",
+    )
+  end
+
+  def when_i_click_the_send_consent_document_to_applicant_task
+    send_consent_document_to_applicant_task_item.click
+  end
+
+  def when_i_send_the_signed_consent_documents
+    assessor_send_signed_consent_documents_page.continue_button.click
+  end
+
+  def and_the_send_consent_document_to_applicant_task_is_completed
+    expect(send_consent_document_to_applicant_task_item.status_tag.text).to eq(
+      "COMPLETED",
+    )
+  end
+
+  def when_i_go_back_to_overview
     assessor_qualification_requests_page.continue_button.click
   end
 
@@ -160,6 +188,12 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   def upload_consent_document_task_item
     assessor_qualification_requests_page.task_lists.third.find_item(
       "Upload consent document",
+    )
+  end
+
+  def send_consent_document_to_applicant_task_item
+    assessor_qualification_requests_page.task_lists.third.find_item(
+      "Send consent document to applicant",
     )
   end
 

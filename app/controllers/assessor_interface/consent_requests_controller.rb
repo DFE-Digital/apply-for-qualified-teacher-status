@@ -4,7 +4,16 @@ module AssessorInterface
   class ConsentRequestsController < BaseController
     include HistoryTrackable
 
-    before_action :set_variables, except: :new
+    before_action :set_collection_variables,
+                  only: %i[new edit_request update_request]
+    before_action :set_member_variables,
+                  only: %i[
+                    edit_upload
+                    update_upload
+                    check_upload
+                    edit_review
+                    update_review
+                  ]
 
     skip_before_action :track_history, only: :new
 
@@ -20,6 +29,34 @@ module AssessorInterface
                     application_form,
                     assessment,
                     consent_requests.find_or_create_by(qualification:),
+                  ]
+    end
+
+    def edit_request
+    end
+
+    def update_request
+      if consent_requests.present?
+        ActiveRecord::Base.transaction do
+          consent_requests.each do |requestable|
+            RequestRequestable.call(requestable:, user: current_staff)
+          end
+
+          application_form.reload
+          ApplicationFormStatusUpdater.call(
+            application_form:,
+            user: current_staff,
+          )
+        end
+
+        TeacherMailer.with(application_form:).consent_requested.deliver_later
+      end
+
+      redirect_to [
+                    :assessor_interface,
+                    application_form,
+                    assessment,
+                    :qualification_requests,
                   ]
     end
 
@@ -112,7 +149,14 @@ module AssessorInterface
       @consent_request ||= consent_requests.find(params[:id])
     end
 
-    def set_variables
+    def set_collection_variables
+      authorize %i[assessor_interface consent_request]
+      @consent_requests = consent_requests
+      @application_form = application_form
+      @assessment = assessment
+    end
+
+    def set_member_variables
       @consent_request = authorize [:assessor_interface, consent_request]
       @application_form = application_form
       @assessment = assessment
