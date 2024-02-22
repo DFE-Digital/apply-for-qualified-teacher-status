@@ -101,6 +101,11 @@ Rails.application.routes.draw do
         end
 
         resources :consent_requests, path: "/consent-requests", only: %i[new] do
+          collection do
+            get "request", to: "consent_requests#edit_request"
+            post "request", to: "consent_requests#update_request"
+          end
+
           member do
             get "upload", to: "consent_requests#edit_upload"
             post "upload", to: "consent_requests#update_upload"

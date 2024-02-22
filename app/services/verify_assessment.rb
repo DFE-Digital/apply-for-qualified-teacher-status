@@ -66,9 +66,7 @@ class VerifyAssessment
 
   def create_qualification_requests
     qualifications.map do |qualification|
-      QualificationRequest
-        .create!(assessment:, qualification:)
-        .tap { |requestable| RequestRequestable.call(requestable:, user:) }
+      QualificationRequest.create!(assessment:, qualification:)
     end
   end
 

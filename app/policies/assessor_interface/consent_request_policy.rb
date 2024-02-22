@@ -11,6 +11,12 @@ class AssessorInterface::ConsentRequestPolicy < ApplicationPolicy
 
   alias_method :edit_upload?, :update_upload?
 
+  def update_request?
+    user.verify_permission
+  end
+
+  alias_method :edit_request?, :update_request?
+
   def update_review?
     user.assess_permission
   end

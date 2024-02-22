@@ -231,6 +231,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ReviewVerifications.new
   end
 
+  def assessor_send_signed_consent_documents_page
+    @assessor_send_signed_consent_documents_page ||=
+      PageObjects::AssessorInterface::SendSignedConsentDocuments.new
+  end
+
   def assessor_timeline_page
     @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end

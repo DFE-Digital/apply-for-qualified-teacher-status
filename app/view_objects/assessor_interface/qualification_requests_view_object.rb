@@ -136,14 +136,29 @@ module AssessorInterface
     end
 
     def send_consent_document_task_item
+      all_documents_completed =
+        consent_requests
+          .map(&:unsigned_consent_document)
+          .all? { |document| document.completed? && document.downloadable? }
+
+      all_consents_requested = consent_requests.all?(&:requested?)
+
       {
-        name: "Send consent document to applicant",
-        link: "#",
+        name:
+          "Send consent #{"document".pluralize(consent_requests.count)} to applicant",
+        link:
+          if all_documents_completed && !all_consents_requested
+            [
+              :request,
+              :assessor_interface,
+              application_form,
+              assessment,
+              :consent_requests,
+            ]
+          end,
         status:
-          if consent_requests.map(&:unsigned_consent_document).all?(
-               &:completed?
-             )
-            consent_requests.all?(&:requested?) ? "completed" : "not_started"
+          if all_documents_completed
+            all_consents_requested ? "completed" : "not_started"
           else
             "cannot_start"
           end,

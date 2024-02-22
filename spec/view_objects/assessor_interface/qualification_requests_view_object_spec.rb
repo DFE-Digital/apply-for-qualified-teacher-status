@@ -160,7 +160,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             {
               name: "Upload consent document",
               link: [
-                :edit,
+                :upload,
                 :assessor_interface,
                 application_form,
                 assessment,
@@ -170,7 +170,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             },
             {
               name: "Send consent document to applicant",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {
