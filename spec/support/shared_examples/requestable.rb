@@ -9,7 +9,6 @@ RSpec.shared_examples "a requestable" do
     it { is_expected.to_not validate_presence_of(:requested_at) }
     it { is_expected.to_not validate_presence_of(:received_at) }
     it { is_expected.to_not validate_presence_of(:expired_at) }
-    it { is_expected.to_not validate_presence_of(:reviewed_at) }
   end
 
   describe "#requested!" do
@@ -49,16 +48,6 @@ RSpec.shared_examples "a requestable" do
   end
 
   describe "#status" do
-    it "is completed when review passed is true" do
-      subject.review_passed = true
-      expect(subject.status).to eq("accepted")
-    end
-
-    it "is rejected when review passed is false" do
-      subject.review_passed = false
-      expect(subject.status).to eq("rejected")
-    end
-
     it "is received when received at is set" do
       subject.received_at = Time.zone.now
       expect(subject.status).to eq("received")
@@ -81,13 +70,17 @@ RSpec.shared_examples "a requestable" do
 
   describe "#review_status" do
     it "is accepted when passed is true" do
-      subject.review_passed = true
-      expect(subject.review_status).to eq("accepted")
+      if subject.respond_to?(:review_passed)
+        subject.review_passed = true
+        expect(subject.review_status).to eq("accepted")
+      end
     end
 
     it "is rejected when passed is false" do
-      subject.review_passed = false
-      expect(subject.review_status).to eq("rejected")
+      if subject.respond_to?(:review_passed)
+        subject.review_passed = false
+        expect(subject.review_status).to eq("rejected")
+      end
     end
 
     it "is not started if not reviewed" do
@@ -96,6 +89,20 @@ RSpec.shared_examples "a requestable" do
   end
 
   describe "#verify_status" do
+    it "is accepted when passed is true" do
+      if subject.respond_to?(:verify_passed)
+        subject.verify_passed = true
+        expect(subject.verify_status).to eq("accepted")
+      end
+    end
+
+    it "is rejected when passed is false" do
+      if subject.respond_to?(:verify_passed)
+        subject.verify_passed = false
+        expect(subject.verify_status).to eq("rejected")
+      end
+    end
+
     it "is not started if not verified" do
       expect(subject.verify_status).to eq("not_started")
     end

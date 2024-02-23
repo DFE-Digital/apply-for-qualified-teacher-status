@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_16_114800) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_23_065851) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -144,6 +144,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_114800) do
     t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.text "qualifications_assessor_note", default: "", null: false
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
+  end
+
+  create_table "consent_requests", force: :cascade do |t|
+    t.datetime "received_at"
+    t.datetime "requested_at"
+    t.datetime "expired_at"
+    t.boolean "unsigned_document_downloaded", default: false, null: false
+    t.datetime "verified_at"
+    t.text "verify_note", default: "", null: false
+    t.boolean "verify_passed"
+    t.bigint "assessment_id", null: false
+    t.bigint "qualification_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_consent_requests_on_assessment_id"
+    t.index ["qualification_id"], name: "index_consent_requests_on_qualification_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -551,6 +567,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_114800) do
   add_foreign_key "application_forms", "teachers"
   add_foreign_key "assessment_sections", "assessments"
   add_foreign_key "assessments", "application_forms"
+  add_foreign_key "consent_requests", "assessments"
+  add_foreign_key "consent_requests", "qualifications"
   add_foreign_key "dqt_trn_requests", "application_forms"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "further_information_request_items", "work_histories"
