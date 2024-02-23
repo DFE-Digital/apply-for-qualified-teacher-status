@@ -10,16 +10,12 @@ module Requestable
 
     scope :requested, -> { where.not(requested_at: nil) }
     scope :received, -> { where.not(received_at: nil) }
+    scope :not_received, -> { where(received_at: nil) }
     scope :respondable,
-          -> do
-            requested.where(received_at: nil).merge(ApplicationForm.assessable)
-          end
+          -> { requested.not_received.merge(ApplicationForm.assessable) }
+    scope :verified, -> { where.not(verified_at: nil) }
 
     has_one :application_form, through: :assessment
-  end
-
-  def expires_from
-    requested_at || try(:consent_requested_at)
   end
 
   def requested!
@@ -62,7 +58,7 @@ module Requestable
     try(:verify_passed) == false
   end
 
-  def status
+  def status(not_requested: "not_started")
     if review_passed? || review_failed?
       review_status
     elsif verify_passed?
@@ -78,7 +74,7 @@ module Requestable
     elsif requested?
       "waiting_on"
     else
-      "not_started"
+      not_requested
     end
   end
 

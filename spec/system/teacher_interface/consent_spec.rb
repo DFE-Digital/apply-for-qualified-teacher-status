@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe "Teacher qualification consent", type: :system do
+RSpec.describe "Teacher consent", type: :system do
   before do
     given_the_service_is_open
     given_i_am_authorized_as_a_user(teacher)
     given_there_is_an_application_form
-    given_there_is_a_qualification_request
+    given_there_is_a_consent_request
   end
 
   it "save and sign out" do
@@ -14,7 +14,7 @@ RSpec.describe "Teacher qualification consent", type: :system do
     and_i_see_qualification_consent_start_now_content
 
     when_i_click_the_start_button
-    then_i_see_the(:teacher_qualification_requests_page)
+    then_i_see_the(:teacher_consent_requests_page)
 
     when_i_click_the_save_and_sign_out_button
     then_i_see_the(:teacher_signed_out_page)
@@ -27,17 +27,17 @@ RSpec.describe "Teacher qualification consent", type: :system do
     and_i_see_qualification_consent_start_now_content
 
     when_i_click_the_start_button
-    then_i_see_the(:teacher_qualification_requests_page)
+    then_i_see_the(:teacher_consent_requests_page)
     and_i_see_the_download_and_upload_tasks
 
     when_i_click_the_download_task
     then_i_see_the(
-      :teacher_qualification_request_download_page,
-      id: qualification_request.id,
+      :teacher_download_consent_request_page,
+      id: consent_request.id,
     )
 
     when_i_check_the_downloaded_checkbox
-    then_i_see_the(:teacher_qualification_requests_page)
+    then_i_see_the(:teacher_consent_requests_page)
 
     when_i_click_the_upload_task
     then_i_see_the(:teacher_upload_document_page)
@@ -46,10 +46,10 @@ RSpec.describe "Teacher qualification consent", type: :system do
     then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_need_to_upload_another_file
-    then_i_see_the(:teacher_qualification_requests_page)
+    then_i_see_the(:teacher_consent_requests_page)
 
     when_i_click_check_your_answers
-    then_i_see_the(:teacher_check_qualification_requests_page)
+    then_i_see_the(:teacher_check_consent_requests_page)
     and_i_see_the_documents
 
     when_i_click_submit
@@ -61,8 +61,8 @@ RSpec.describe "Teacher qualification consent", type: :system do
     application_form
   end
 
-  def given_there_is_a_qualification_request
-    qualification_request
+  def given_there_is_a_consent_request
+    consent_request
   end
 
   def and_i_see_qualification_consent_start_now_content
@@ -76,7 +76,7 @@ RSpec.describe "Teacher qualification consent", type: :system do
   end
 
   def when_i_click_the_save_and_sign_out_button
-    teacher_qualification_requests_page.save_and_sign_out_button.click
+    teacher_consent_requests_page.save_and_sign_out_button.click
   end
 
   def and_i_see_qualification_consent_sign_out_content
@@ -86,7 +86,7 @@ RSpec.describe "Teacher qualification consent", type: :system do
   end
 
   def and_i_see_the_download_and_upload_tasks
-    task_list = teacher_qualification_requests_page.task_list
+    task_list = teacher_consent_requests_page.task_list
     expect(task_list.sections.count).to eq(1)
 
     task_list_section = task_list.sections.first
@@ -94,28 +94,16 @@ RSpec.describe "Teacher qualification consent", type: :system do
   end
 
   def when_i_click_the_download_task
-    teacher_qualification_requests_page
-      .task_list
-      .sections
-      .first
-      .items
-      .first
-      .click
+    teacher_consent_requests_page.task_list.sections.first.items.first.click
   end
 
   def when_i_check_the_downloaded_checkbox
-    teacher_qualification_request_download_page.downloaded_checkbox.check
-    teacher_qualification_request_download_page.continue_button.click
+    teacher_download_consent_request_page.downloaded_checkbox.check
+    teacher_download_consent_request_page.continue_button.click
   end
 
   def when_i_click_the_upload_task
-    teacher_qualification_requests_page
-      .task_list
-      .sections
-      .first
-      .items
-      .second
-      .click
+    teacher_consent_requests_page.task_list.sections.first.items.second.click
   end
 
   def when_i_upload_a_file
@@ -130,15 +118,15 @@ RSpec.describe "Teacher qualification consent", type: :system do
   end
 
   def when_i_click_check_your_answers
-    teacher_qualification_requests_page.check_your_answers_button.click
+    teacher_consent_requests_page.check_your_answers_button.click
   end
 
   def and_i_see_the_documents
-    expect(teacher_check_qualification_requests_page.summary_card).to be_visible
+    expect(teacher_check_consent_requests_page.summary_card).to be_visible
   end
 
   def when_i_click_submit
-    teacher_check_qualification_requests_page.submit_button.click
+    teacher_check_consent_requests_page.submit_button.click
   end
 
   def and_i_see_the_consent_submitted_status
@@ -161,17 +149,18 @@ RSpec.describe "Teacher qualification consent", type: :system do
         :submitted,
         :with_assessment,
         :with_teaching_qualification,
-        statuses: %w[waiting_on_qualification],
+        statuses: %w[waiting_on_consent],
         teacher:,
       )
   end
 
-  def qualification_request
-    @qualification_request ||=
+  def consent_request
+    @consent_request ||=
       create(
-        :qualification_request,
-        :consent_requested,
+        :consent_request,
+        :requested,
         assessment: application_form.assessment,
+        qualification: application_form.qualifications.first,
       )
   end
 end

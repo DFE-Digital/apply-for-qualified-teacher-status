@@ -1,5 +1,5 @@
 <% content_for :page_title, "Check your uploaded consent documents" %>
-<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_qualification_requests_path) %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_consent_requests_path) %>
 
 <h1 class="govuk-heading-l">Check your uploaded consent documents</h1>
 
@@ -14,5 +14,5 @@
   <h2 class="govuk-heading-m">Submit your consent documents</h2>
   <p class="govuk-body">By selecting the ‘Submit’ button you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
   <p class="govuk-body">You will not be able to change your response, add new documents, or delete anything once you submit.</p>
-  <%= govuk_button_to "Submit", submit_teacher_interface_application_form_qualification_requests_path %>
+  <%= govuk_button_to "Submit", submit_teacher_interface_application_form_consent_requests_path %>
 <% end %>

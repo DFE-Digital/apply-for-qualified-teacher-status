@@ -15,13 +15,10 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
   end
 
   let(:assessment) { application_form.assessment }
+  let(:qualification) { application_form.qualifications.first }
 
   let!(:qualification_request) do
-    create(
-      :qualification_request,
-      assessment:,
-      qualification: application_form.qualifications.first,
-    )
+    create(:qualification_request, assessment:, qualification:)
   end
 
   describe "#all_task_items" do
@@ -139,7 +136,10 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
     end
 
     context "when signed consent method" do
-      before { qualification_request.consent_method_signed_ecctis! }
+      before do
+        qualification_request.consent_method_signed_ecctis!
+        create(:consent_request, assessment:, qualification:)
+      end
 
       it do
         is_expected.to eq(

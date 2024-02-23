@@ -68,16 +68,15 @@ class Document < ApplicationRecord
   end
 
   def optional?
-    (signed_consent? && !documentable.consent_method_signed?) ||
-      (written_statement? && application_form.written_statement_optional)
+    written_statement? && application_form.written_statement_optional
   end
 
   def for_further_information_request?
     documentable.is_a?(FurtherInformationRequestItem)
   end
 
-  def for_qualification_request?
-    documentable.is_a?(QualificationRequest)
+  def for_consent_request?
+    documentable.is_a?(ConsentRequest)
   end
 
   def application_form

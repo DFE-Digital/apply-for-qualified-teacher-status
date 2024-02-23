@@ -5,8 +5,8 @@ class AssessorInterface::UploadUnsignedConsentDocumentForm
   include ActiveModel::Attributes
   include UploadableForm
 
-  attr_accessor :qualification_request
-  validates :qualification_request, presence: true
+  attr_accessor :consent_request
+  validates :consent_request, presence: true
 
   def save
     return false if invalid?
@@ -17,6 +17,6 @@ class AssessorInterface::UploadUnsignedConsentDocumentForm
   end
 
   def document
-    qualification_request&.unsigned_consent_document
+    consent_request&.unsigned_consent_document
   end
 end

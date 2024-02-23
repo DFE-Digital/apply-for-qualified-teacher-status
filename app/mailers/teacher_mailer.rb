@@ -57,12 +57,7 @@ class TeacherMailer < ApplicationMailer
   end
 
   def consent_reminder
-    @expires_at =
-      assessment
-        .qualification_requests
-        .consent_method_signed
-        .map(&:expires_at)
-        .max
+    @expires_at = assessment.consent_requests.map(&:expires_at).max
 
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
@@ -72,12 +67,7 @@ class TeacherMailer < ApplicationMailer
   end
 
   def consent_requested
-    @expires_at =
-      assessment
-        .qualification_requests
-        .consent_method_signed
-        .map(&:expires_at)
-        .max
+    @expires_at = assessment.consent_requests.map(&:expires_at).max
 
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,

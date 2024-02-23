@@ -172,7 +172,7 @@ class ApplicationFormStatusUpdater
   end
 
   def overdue_consent
-    overdue?(requestables: qualification_requests.reject(&:requested?))
+    overdue?(requestables: consent_requests)
   end
 
   def overdue_further_information
@@ -193,12 +193,7 @@ class ApplicationFormStatusUpdater
   end
 
   def received_consent
-    qualification_requests
-      .reject(&:verified?)
-      .reject(&:reviewed?)
-      .reject(&:expired?)
-      .reject(&:requested?)
-      .any?(&:consent_received?)
+    received?(requestables: consent_requests)
   end
 
   def received_further_information
@@ -239,12 +234,7 @@ class ApplicationFormStatusUpdater
   end
 
   def waiting_on_consent
-    qualification_requests
-      .reject(&:verified?)
-      .reject(&:reviewed?)
-      .reject(&:expired?)
-      .reject(&:consent_received?)
-      .any?(&:consent_requested?)
+    waiting_on?(requestables: consent_requests)
   end
 
   def waiting_on_further_information
@@ -261,6 +251,10 @@ class ApplicationFormStatusUpdater
 
   def waiting_on_reference
     waiting_on?(requestables: reference_requests)
+  end
+
+  def consent_requests
+    @consent_requests ||= assessment&.consent_requests.to_a
   end
 
   def further_information_requests

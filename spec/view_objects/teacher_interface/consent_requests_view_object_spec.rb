@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe TeacherInterface::QualificationRequestsViewObject do
+RSpec.describe TeacherInterface::ConsentRequestsViewObject do
   subject(:view_object) { described_class.new(application_form:) }
 
   let(:application_form) do
@@ -14,11 +14,11 @@ RSpec.describe TeacherInterface::QualificationRequestsViewObject do
 
     it { is_expected.to be_empty }
 
-    context "with a qualification request" do
-      let!(:qualification_request) do
+    context "with a consent request" do
+      let!(:consent_request) do
         create(
-          :qualification_request,
-          :consent_requested,
+          :consent_request,
+          :requested,
           assessment: application_form.assessment,
           qualification:
             create(
@@ -42,7 +42,7 @@ RSpec.describe TeacherInterface::QualificationRequestsViewObject do
                     :download,
                     :teacher_interface,
                     :application_form,
-                    qualification_request,
+                    consent_request,
                   ],
                   status: :not_started,
                 },
@@ -51,7 +51,7 @@ RSpec.describe TeacherInterface::QualificationRequestsViewObject do
                   link: [
                     :teacher_interface,
                     :application_form,
-                    qualification_request.signed_consent_document,
+                    consent_request.signed_consent_document,
                   ],
                   status: :cannot_start,
                 },
@@ -62,11 +62,7 @@ RSpec.describe TeacherInterface::QualificationRequestsViewObject do
       end
 
       context "when the unsigned consent document is downloaded" do
-        before do
-          qualification_request.update!(
-            unsigned_consent_document_downloaded: true,
-          )
-        end
+        before { consent_request.update!(unsigned_document_downloaded: true) }
 
         it do
           is_expected.to eq(
@@ -80,7 +76,7 @@ RSpec.describe TeacherInterface::QualificationRequestsViewObject do
                       :download,
                       :teacher_interface,
                       :application_form,
-                      qualification_request,
+                      consent_request,
                     ],
                     status: :completed,
                   },
@@ -89,7 +85,7 @@ RSpec.describe TeacherInterface::QualificationRequestsViewObject do
                     link: [
                       :teacher_interface,
                       :application_form,
-                      qualification_request.signed_consent_document,
+                      consent_request.signed_consent_document,
                     ],
                     status: :not_started,
                   },
@@ -101,9 +97,7 @@ RSpec.describe TeacherInterface::QualificationRequestsViewObject do
 
         context "when the signed consent document is uploaded" do
           before do
-            qualification_request.signed_consent_document.update!(
-              completed: true,
-            )
+            consent_request.signed_consent_document.update!(completed: true)
           end
 
           it do
@@ -118,7 +112,7 @@ RSpec.describe TeacherInterface::QualificationRequestsViewObject do
                         :download,
                         :teacher_interface,
                         :application_form,
-                        qualification_request,
+                        consent_request,
                       ],
                       status: :completed,
                     },
@@ -127,7 +121,7 @@ RSpec.describe TeacherInterface::QualificationRequestsViewObject do
                       link: [
                         :teacher_interface,
                         :application_form,
-                        qualification_request.signed_consent_document,
+                        consent_request.signed_consent_document,
                       ],
                       status: :completed,
                     },

@@ -63,26 +63,31 @@ en:
         note_created: Note created
         reviewer_assigned: Reviewer assigned
         requestable_requested:
+          ConsentRequest: Consent requested
           FurtherInformationRequest: Further information requested
           ProfessionalStandingRequest: Professional standing requested
           QualificationRequest: Qualification requested
           ReferenceRequest: Reference requested
         requestable_received:
+          ConsentRequest: Consent received
           FurtherInformationRequest: Further information received
           ProfessionalStandingRequest: Professional standing received
           QualificationRequest: Qualification received
           ReferenceRequest: Reference received
         requestable_expired:
+          ConsentRequest: Consent expired
           FurtherInformationRequest: Further information expired
           ProfessionalStandingRequest: Professional standing expired
           QualificationRequest: Qualification expired
           ReferenceRequest: Reference expired
         requestable_reviewed:
+          ConsentRequest: Consent reviewed
           FurtherInformationRequest: Further information assessed
           ProfessionalStandingRequest: Professional standing reviewed
           QualificationRequest: Qualification reviewed
           ReferenceRequest: Reference reviewed
         requestable_verified:
+          ConsentRequest: Consent verified
           FurtherInformationRequest: Further information verified
           ProfessionalStandingRequest: Professional standing verified
           QualificationRequest: Qualification verified
@@ -96,16 +101,19 @@ en:
         note_created: "%{text}"
         reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
         requestable_requested:
+          ConsentRequest: Consent has been requested.
           FurtherInformationRequest: Further information has been requested.
           ProfessionalStandingRequest: The professional standing has been requested.
           QualificationRequest: A qualification has been requested.
           ReferenceRequest: A reference has been requested.
         requestable_received:
+          ConsentRequest: A consent request has been received.
           FurtherInformationRequest: Further information requested on %{requested_at} has been received.
           ProfessionalStandingRequest: "The professional standing has been received: %{location_note}"
           QualificationRequest: A qualification has been received.
           ReferenceRequest: A reference has been received.
         requestable_expired:
+          ConsentRequest: A consent request has expired.
           FurtherInformationRequest: Further information requested on %{requested_at} has expired. Application has been declined.
           ProfessionalStandingRequest: The professional standing request has expired.
           QualificationRequest: A qualification request has expired.

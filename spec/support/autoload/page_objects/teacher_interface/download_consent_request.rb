@@ -2,8 +2,8 @@
 
 module PageObjects
   module TeacherInterface
-    class QualificationRequestDownload < SitePrism::Page
-      set_url "/teacher/application/qualification-requests/{id}/download"
+    class DownloadConsentRequest < SitePrism::Page
+      set_url "/teacher/application/consent-requests/{id}/download"
 
       element :downloaded_checkbox, ".govuk-checkboxes__input", visible: false
 

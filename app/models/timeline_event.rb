@@ -131,6 +131,7 @@ class TimelineEvent < ApplicationRecord
   validates :requestable_type,
             presence: true,
             inclusion: %w[
+              ConsentRequest
               FurtherInformationRequest
               ProfessionalStandingRequest
               QualificationRequest

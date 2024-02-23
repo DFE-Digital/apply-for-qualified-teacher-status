@@ -149,18 +149,13 @@ class TeacherInterface::ApplicationFormViewObject
   def request_qualification_consent?
     return false if assessment.nil?
 
-    qualification_requests.consent_respondable.exists?
+    consent_requests.requested.not_received.exists?
   end
 
   def qualification_consent_submitted?
-    return false if assessment.nil?
+    return false if assessment.nil? || consent_requests.empty?
 
-    required_qualification_requests =
-      qualification_requests.consent_method_signed
-
-    return false if required_qualification_requests.empty?
-
-    required_qualification_requests.all?(&:consent_received?)
+    consent_requests.all?(&:received?)
   end
 
   def show_work_history_under_submission_banner?
@@ -182,7 +177,8 @@ class TeacherInterface::ApplicationFormViewObject
            :requires_preliminary_check,
            to: :application_form
 
-  delegate :professional_standing_request,
+  delegate :consent_requests,
+           :professional_standing_request,
            :qualification_requests,
            to: :assessment,
            allow_nil: true

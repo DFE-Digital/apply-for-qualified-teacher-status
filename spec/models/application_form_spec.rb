@@ -429,26 +429,26 @@ RSpec.describe ApplicationForm, type: :model do
           let(:number_of_reminders_sent) { 0 }
           it { is_expected.to be false }
 
-          context "with a qualification request" do
+          context "with a consent request" do
             before do
               create(
-                :qualification_request,
+                :consent_request,
                 assessment:,
                 qualification:,
-                consent_requested_at: 1.week.ago,
+                requested_at: 1.week.ago,
               )
             end
 
             it { is_expected.to be false }
           end
 
-          context "with a qualification request older than 3 weeks ago" do
+          context "with a consent request older than 3 weeks ago" do
             before do
               create(
-                :qualification_request,
+                :consent_request,
                 assessment:,
                 qualification:,
-                consent_requested_at: 4.weeks.ago,
+                requested_at: 4.weeks.ago,
               )
             end
 

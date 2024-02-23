@@ -10,8 +10,8 @@ class DocumentContinueRedirection
   def call
     if document.for_further_information_request?
       further_information_request_url
-    elsif document.for_qualification_request?
-      qualification_request_url
+    elsif document.for_consent_request?
+      consent_request_url
     else
       send("#{document.document_type}_url")
     end
@@ -68,7 +68,7 @@ class DocumentContinueRedirection
     ]
   end
 
-  def qualification_request_url
-    %i[teacher_interface application_form qualification_requests]
+  def consent_request_url
+    %i[teacher_interface application_form consent_requests]
   end
 end

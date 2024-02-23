@@ -263,10 +263,10 @@ RSpec.describe TeacherMailer, type: :mailer do
 
     before do
       create(
-        :qualification_request,
-        :consent_requested,
+        :consent_request,
+        :requested,
         assessment:,
-        consent_requested_at: Date.new(2020, 1, 1),
+        requested_at: Date.new(2020, 1, 1),
         qualification:,
       )
     end
@@ -309,10 +309,9 @@ RSpec.describe TeacherMailer, type: :mailer do
 
     before do
       create(
-        :qualification_request,
-        :consent_requested,
+        :consent_request,
         assessment:,
-        consent_requested_at: Date.new(2020, 1, 1),
+        requested_at: Date.new(2020, 1, 1),
         qualification:,
       )
     end

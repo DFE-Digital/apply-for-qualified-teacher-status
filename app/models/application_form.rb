@@ -256,8 +256,8 @@ class ApplicationForm < ApplicationRecord
     case name
     when "consent"
       number_of_reminders_sent.zero? &&
-        consent_requests_not_yet_received.any? do |qualification_request|
-          qualification_request.days_until_expired <= 21
+        consent_requests_not_yet_received_or_rejected.any? do |consent_request|
+          consent_request.days_until_expired <= 21
         end
     when "expiration"
       return false if days_until_expired.nil?
@@ -296,7 +296,7 @@ class ApplicationForm < ApplicationRecord
     end
   end
 
-  def expires_from
+  def requested_at
     created_at
   end
 
@@ -314,10 +314,11 @@ class ApplicationForm < ApplicationRecord
       .where(received_at: nil, verify_passed: nil, review_passed: nil)
   end
 
-  def consent_requests_not_yet_received
-    QualificationRequest
+  def consent_requests_not_yet_received_or_rejected
+    ConsentRequest
       .joins(:qualification)
       .where(qualifications: { application_form_id: id })
-      .consent_respondable
+      .where.not(requested_at: nil)
+      .where(received_at: nil, verify_passed: nil)
   end
 end

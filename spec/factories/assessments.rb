@@ -74,6 +74,16 @@ FactoryBot.define do
       end
     end
 
+    trait :with_consent_request do
+      after(:create) do |assessment, _evaluator|
+        create(
+          :consent_request,
+          assessment:,
+          qualification: assessment.application_form.qualifications.first,
+        )
+      end
+    end
+
     trait :with_further_information_request do
       after(:create) do |assessment, _evaluator|
         create(

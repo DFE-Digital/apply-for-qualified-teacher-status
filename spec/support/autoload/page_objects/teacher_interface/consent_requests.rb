@@ -2,8 +2,8 @@
 
 module PageObjects
   module TeacherInterface
-    class QualificationRequests < SitePrism::Page
-      set_url "/teacher/application/qualification-requests"
+    class ConsentRequests < SitePrism::Page
+      set_url "/teacher/application/consent-requests"
 
       section :task_list, TaskList, ".app-task-list"
 
