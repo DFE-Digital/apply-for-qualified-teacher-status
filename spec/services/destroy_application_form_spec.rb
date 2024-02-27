@@ -16,10 +16,11 @@ RSpec.describe DestroyApplicationForm do
       assessment =
         create(
           :assessment,
+          :with_consent_request,
           :with_further_information_request,
           :with_professional_standing_request,
-          :with_reference_request,
           :with_qualification_request,
+          :with_reference_request,
           application_form:,
         )
 
@@ -43,6 +44,7 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", ApplicationForm
   include_examples "deletes model", Assessment
   include_examples "deletes model", AssessmentSection
+  include_examples "deletes model", ConsentRequest
   include_examples "deletes model", DQTTRNRequest
   include_examples "deletes model", Document, 20, 10
   include_examples "deletes model", FurtherInformationRequest

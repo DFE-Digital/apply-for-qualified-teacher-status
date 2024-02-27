@@ -1,7 +1,7 @@
 <% content_for :page_title, "Download consent document" %>
-<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_qualification_requests_path) %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_consent_requests_path) %>
 
-<%= form_with model: @form, url: [:download, :teacher_interface, :application_form, @qualification_request] do |f| %>
+<%= form_with model: @form, url: [:download, :teacher_interface, :application_form, @consent_request] do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">Download consent document</h1>
@@ -11,7 +11,7 @@
   <article class="moj-ticket-panel">
     <section class="moj-ticket-panel__content moj-ticket-panel__content--blue">
       <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Download the consent document</h2>
-      <p class="govuk-body"><%= document_link_to(@qualification_request.unsigned_consent_document) %></p>
+      <p class="govuk-body"><%= document_link_to(@consent_request.unsigned_consent_document) %></p>
     </section>
   </article>
 

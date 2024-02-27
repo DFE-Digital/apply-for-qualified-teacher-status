@@ -86,6 +86,19 @@
     - working_days_started_to_recommendation
     - working_days_submission_to_recommendation
     - working_days_submission_to_started
+  :consent_requests:
+    - assessment_id
+    - created_at
+    - expired_at
+    - id
+    - qualification_id
+    - received_at
+    - requested_at
+    - unsigned_document_downloaded
+    - updated_at
+    - verified_at
+    - verify_note
+    - verify_passed
   :countries:
     - code
     - created_at
@@ -210,8 +223,6 @@
   :qualification_requests:
     - assessment_id
     - consent_method
-    - consent_received_at
-    - consent_requested_at
     - created_at
     - expired_at
     - id
@@ -222,7 +233,6 @@
     - review_note
     - review_passed
     - reviewed_at
-    - unsigned_consent_document_downloaded
     - updated_at
     - verified_at
     - verify_note

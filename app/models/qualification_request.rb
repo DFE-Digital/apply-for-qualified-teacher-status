@@ -4,25 +4,22 @@
 #
 # Table name: qualification_requests
 #
-#  id                                   :bigint           not null, primary key
-#  consent_method                       :string           default("unknown"), not null
-#  consent_received_at                  :datetime
-#  consent_requested_at                 :datetime
-#  expired_at                           :datetime
-#  location_note                        :text             default(""), not null
-#  received_at                          :datetime
-#  requested_at                         :datetime
-#  review_note                          :string           default(""), not null
-#  review_passed                        :boolean
-#  reviewed_at                          :datetime
-#  unsigned_consent_document_downloaded :boolean          default(FALSE), not null
-#  verified_at                          :datetime
-#  verify_note                          :text             default(""), not null
-#  verify_passed                        :boolean
-#  created_at                           :datetime         not null
-#  updated_at                           :datetime         not null
-#  assessment_id                        :bigint           not null
-#  qualification_id                     :bigint           not null
+#  id               :bigint           not null, primary key
+#  consent_method   :string           default("unknown"), not null
+#  expired_at       :datetime
+#  location_note    :text             default(""), not null
+#  received_at      :datetime
+#  requested_at     :datetime
+#  review_note      :string           default(""), not null
+#  review_passed    :boolean
+#  reviewed_at      :datetime
+#  verified_at      :datetime
+#  verify_note      :text             default(""), not null
+#  verify_passed    :boolean
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  assessment_id    :bigint           not null
+#  qualification_id :bigint           not null
 #
 # Indexes
 #
@@ -35,9 +32,6 @@
 #  fk_rails_...  (qualification_id => qualifications.id)
 #
 class QualificationRequest < ApplicationRecord
-  ATTACHABLE_DOCUMENT_TYPES = %w[signed_consent unsigned_consent].freeze
-
-  include Documentable
   include Requestable
 
   belongs_to :qualification
@@ -50,21 +44,6 @@ class QualificationRequest < ApplicationRecord
        },
        _prefix: true
 
-  scope :consent_method_signed,
-        -> do
-          consent_method_signed_ecctis.or(consent_method_signed_institution)
-        end
-
-  scope :consent_requested, -> { where.not(consent_requested_at: nil) }
-  scope :consent_received, -> { where.not(consent_received_at: nil) }
-  scope :consent_respondable,
-        -> do
-          consent_requested
-            .where(consent_received_at: nil)
-            .joins(assessment: :application_form)
-            .merge(ApplicationForm.assessable)
-        end
-
   scope :order_by_role,
         -> { joins(:qualification).order("qualifications.start_date": :desc) }
   scope :order_by_user,
@@ -76,21 +55,5 @@ class QualificationRequest < ApplicationRecord
 
   def consent_method_signed?
     consent_method_signed_ecctis? || consent_method_signed_institution?
-  end
-
-  def consent_requested!
-    update!(consent_requested_at: Time.zone.now)
-  end
-
-  def consent_requested?
-    consent_requested_at != nil
-  end
-
-  def consent_received!
-    update!(consent_received_at: Time.zone.now)
-  end
-
-  def consent_received?
-    consent_received_at != nil
   end
 end

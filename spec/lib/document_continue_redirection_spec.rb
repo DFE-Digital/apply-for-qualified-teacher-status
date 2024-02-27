@@ -128,31 +128,23 @@ RSpec.describe DocumentContinueRedirection do
     end
 
     context "with an signed consent document" do
-      let(:qualification_request) { create(:qualification_request) }
-      let(:document) do
-        create(:document, :signed_consent, documentable: qualification_request)
-      end
+      let(:documentable) { create(:consent_request) }
+      let(:document) { create(:document, :signed_consent, documentable:) }
 
       it do
         is_expected.to eq(
-          %i[teacher_interface application_form qualification_requests],
+          %i[teacher_interface application_form consent_requests],
         )
       end
     end
 
     context "with an unsigned consent document" do
-      let(:qualification_request) { create(:qualification_request) }
-      let(:document) do
-        create(
-          :document,
-          :unsigned_consent,
-          documentable: qualification_request,
-        )
-      end
+      let(:documentable) { create(:consent_request) }
+      let(:document) { create(:document, :unsigned_consent, documentable:) }
 
       it do
         is_expected.to eq(
-          %i[teacher_interface application_form qualification_requests],
+          %i[teacher_interface application_form consent_requests],
         )
       end
     end

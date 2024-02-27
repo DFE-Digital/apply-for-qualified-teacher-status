@@ -346,6 +346,11 @@ module PageHelpers
     @teacher_application_page = PageObjects::TeacherInterface::Application.new
   end
 
+  def teacher_check_consent_requests_page
+    @teacher_check_consent_requests_page =
+      PageObjects::TeacherInterface::CheckConsentRequests.new
+  end
+
   def teacher_check_document_page
     @teacher_check_document_page =
       PageObjects::TeacherInterface::CheckDocument.new
@@ -373,11 +378,6 @@ module PageHelpers
   def teacher_check_qualification_page
     @teacher_check_qualification_page ||=
       PageObjects::TeacherInterface::CheckQualification.new
-  end
-
-  def teacher_check_qualification_requests_page
-    @teacher_check_qualification_requests_page =
-      PageObjects::TeacherInterface::CheckQualificationRequests.new
   end
 
   def teacher_check_qualifications_page
@@ -415,6 +415,11 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckYourUploads.new
   end
 
+  def teacher_consent_requests_page
+    @teacher_consent_requests_page =
+      PageObjects::TeacherInterface::ConsentRequests.new
+  end
+
   def teacher_declined_application_page
     @teacher_declined_application_page ||=
       PageObjects::TeacherInterface::DeclinedApplication.new
@@ -433,6 +438,11 @@ module PageHelpers
   def teacher_document_available_page
     @teacher_document_available_page =
       PageObjects::TeacherInterface::DocumentAvailable.new
+  end
+
+  def teacher_download_consent_request_page
+    @teacher_download_consent_request_page =
+      PageObjects::TeacherInterface::DownloadConsentRequest.new
   end
 
   def teacher_edit_qualification_page
@@ -567,16 +577,6 @@ module PageHelpers
   def teacher_personal_information_summary_page
     @teacher_personal_information_summary_page =
       PageObjects::TeacherInterface::PersonalInformationSummary.new
-  end
-
-  def teacher_qualification_requests_page
-    @teacher_qualification_requests_page =
-      PageObjects::TeacherInterface::QualificationRequests.new
-  end
-
-  def teacher_qualification_request_download_page
-    @teacher_qualification_request_download_page =
-      PageObjects::TeacherInterface::QualificationRequestDownload.new
   end
 
   def teacher_reference_received_page

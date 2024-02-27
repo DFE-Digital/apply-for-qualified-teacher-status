@@ -38,6 +38,11 @@ module AssessorInterface
         application_form.assessment.qualification_requests.order_by_role
     end
 
+    def consent_requests
+      @consent_requests ||=
+        application_form.assessment.consent_requests.order_by_role
+    end
+
     def individual_task_items_for(qualification_request:)
       return [] if qualification_request.consent_method_unknown?
 
@@ -106,8 +111,7 @@ module AssessorInterface
     end
 
     def send_consent_document_in_all_qualifications?
-      all_consent_methods_selected? &&
-        qualification_requests.consent_method_signed.count >= 2
+      all_consent_methods_selected? && consent_requests.count >= 2
     end
 
     def send_consent_document_task_item
@@ -115,14 +119,10 @@ module AssessorInterface
         name: "Send consent document to applicant",
         link: "#",
         status:
-          if qualification_requests.map(&:unsigned_consent_document).all?(
+          if consent_requests.map(&:unsigned_consent_document).all?(
                &:completed?
              )
-            if qualification_requests.all(&:consent_requested?)
-              "completed"
-            else
-              "not_started"
-            end
+            consent_requests.all?(&:requested?) ? "completed" : "not_started"
           else
             "cannot_start"
           end,
@@ -130,13 +130,18 @@ module AssessorInterface
     end
 
     def signed_consent_method_task_items(qualification_request)
+      consent_request =
+        consent_requests.find_by!(
+          qualification: qualification_request.qualification,
+        )
+
       [
         {
           name: "Upload consent document",
           link: "#",
           status:
             (
-              if qualification_request.unsigned_consent_document.completed?
+              if consent_request.unsigned_consent_document.completed?
                 "completed"
               else
                 "not_started"
@@ -149,14 +154,7 @@ module AssessorInterface
         {
           name: "Record applicant response",
           link: "#",
-          status:
-            if qualification_request.consent_received?
-              "completed"
-            elsif qualification_request.consent_requested?
-              "not_started"
-            else
-              "cannot_start"
-            end,
+          status: consent_request.status(not_requested: "cannot_start"),
         },
       ]
     end
@@ -166,7 +164,10 @@ module AssessorInterface
         (
           qualification_request.consent_method_unsigned? &&
             assessment.unsigned_consent_document_generated
-        ) || qualification_request.consent_received?
+        ) ||
+          consent_requests.verified.exists?(
+            qualification: qualification_request.qualification,
+          )
 
       [
         {

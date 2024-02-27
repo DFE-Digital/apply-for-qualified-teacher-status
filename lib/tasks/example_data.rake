@@ -30,6 +30,7 @@ namespace :example_data do
     TimelineEvent.delete_all
     DQTTRNRequest.delete_all
     ReminderEmail.delete_all
+    ConsentRequest.delete_all
     FurtherInformationRequestItem.delete_all
     FurtherInformationRequest.delete_all
     ProfessionalStandingRequest.delete_all
@@ -182,10 +183,14 @@ def create_requestables(application_form, assessment, state)
     qualifications.each do |qualification|
       FactoryBot.create(
         :qualification_request,
-        [state, "consent_#{state}"].sample,
+        state,
         assessment:,
         qualification:,
       )
+
+      next unless rand(2).zero?
+
+      FactoryBot.create(:consent_request, state, assessment:, qualification:)
     end
 
     assessment.verify!

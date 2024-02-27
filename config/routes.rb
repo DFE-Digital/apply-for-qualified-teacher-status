@@ -348,12 +348,10 @@ Rails.application.routes.draw do
                   only: %i[edit update]
       end
 
-      resources :qualification_requests,
-                path: "/qualification-requests",
-                only: %i[index] do
+      resources :consent_requests, path: "/consent-requests", only: %i[index] do
         member do
-          get "download", to: "qualification_requests#edit_download"
-          post "download", to: "qualification_requests#update_download"
+          get "download", to: "consent_requests#edit_download"
+          post "download", to: "consent_requests#update_download"
         end
 
         collection do

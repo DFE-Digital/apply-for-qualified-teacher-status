@@ -4,15 +4,13 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::UploadUnsignedConsentDocumentForm,
                type: :model do
-  subject(:form) do
-    described_class.new(qualification_request:, original_attachment:)
-  end
+  subject(:form) { described_class.new(consent_request:, original_attachment:) }
 
-  let(:qualification_request) { create(:qualification_request) }
-  let(:document) { qualification_request.unsigned_consent_document }
+  let(:consent_request) { create(:consent_request) }
+  let(:document) { consent_request.unsigned_consent_document }
   let(:original_attachment) { nil }
 
-  it { is_expected.to validate_presence_of(:qualification_request) }
+  it { is_expected.to validate_presence_of(:consent_request) }
 
   describe "validations" do
     it { is_expected.to validate_absence_of(:written_in_english) }

@@ -300,7 +300,7 @@ en:
               invalid: Enter the certificate date in the format 27 3 1980
               future: Certificate date must be in the past
               comparison: Certificate date must be after completion date
-        teacher_interface/qualification_request_download_form:
+        teacher_interface/download_unsigned_consent_document_form:
           attributes:
             downloaded:
               blank: Confirm that you have downloaded the consent document.
