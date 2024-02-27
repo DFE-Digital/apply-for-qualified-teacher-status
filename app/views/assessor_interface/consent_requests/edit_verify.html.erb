@@ -1,0 +1,42 @@
+<% qualification = @consent_request.qualification %>
+<% upload = @consent_request.signed_consent_document.uploads.first %>
+<% can_update_verify_consent_request = @assessment.verify? && policy([:assessor_interface, @consent_request]).update_verify? %>
+
+<% title = "Record applicant response" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_qualification_requests_path) %>
+
+<%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, @consent_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h2 class="govuk-heading-m"><%= qualification_title(qualification) %></h2>
+
+  <% if @consent_request.received? %>
+    <div class="govuk-inset-text" style="background-color: #f3f2f1">
+      <h2 class="govuk-heading-m">Returned file</h2>
+
+      <p class="govuk-body">
+        <%= upload.name %>
+      </p>
+
+      <div class="govuk-button-group">
+        <% if upload.is_pdf? %>
+          <%= govuk_button_link_to "Download", [:assessor_interface, :application_form, upload.document, upload] %>
+        <% else %>
+          <%= govuk_button_link_to "Download original", [:assessor_interface, :application_form, upload.document, upload] %>
+          <%= govuk_button_link_to "Download as PDF", assessor_interface_application_form_document_pdf_path(upload.document, "original"), inverse: true %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if can_update_verify_consent_request && (@consent_request.received? || @consent_request.expired?) %>
+    <%= f.govuk_collection_radio_buttons :passed, %i[true false], :itself,
+                                         legend: { text: "Is the consent document for this qualification valid?" } %>
+
+    <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <% end %>
+<% end %>

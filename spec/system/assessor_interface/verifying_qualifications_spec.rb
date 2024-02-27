@@ -9,7 +9,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     given_there_is_an_application_form_with_qualification_request
   end
 
-  it "check and select consent method" do
+  it "request consent" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_the_verify_qualifications_task
     then_i_see_the(:assessor_qualification_requests_page, reference:)
@@ -56,6 +56,33 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     when_i_send_the_signed_consent_documents
     then_i_see_the(:assessor_qualification_requests_page, reference:)
     and_the_send_consent_document_to_applicant_task_is_completed
+    and_the_record_applicant_response_task_is_waiting_on
+
+    when_i_go_back_to_overview
+    then_i_see_the(:assessor_application_page, reference:)
+  end
+
+  it "consent received" do
+    given_the_applicant_has_responded_to_the_consent_requests
+
+    when_i_visit_the(:assessor_application_page, reference:)
+    and_i_click_the_verify_qualifications_task
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_record_applicant_response_task_is_received
+
+    when_i_click_the_record_applicant_response_task
+    then_i_see_the(:assessor_verify_consent_request_page)
+    and_i_submit_yes_on_the_verify_consent_form
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_record_applicant_response_task_is_accepted
+
+    when_i_click_the_record_applicant_response_task
+    then_i_see_the(:assessor_verify_consent_request_page)
+    and_i_submit_no_on_the_verify_consent_form
+    then_i_see_the(:assessor_verify_failed_consent_request_page, reference:)
+    and_i_submit_an_internal_note
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_record_applicant_response_task_is_review
 
     when_i_go_back_to_overview
     then_i_see_the(:assessor_application_page, reference:)
@@ -65,6 +92,14 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
   def given_there_is_an_application_form_with_qualification_request
     application_form
+  end
+
+  def given_the_applicant_has_responded_to_the_consent_requests
+    assessment.qualification_requests.each do |qualification_request|
+      qualification_request.consent_method_signed_ecctis!
+      qualification = qualification_request.qualification
+      create(:consent_request, :received, assessment:, qualification:)
+    end
   end
 
   def and_i_click_the_verify_qualifications_task
@@ -163,14 +198,46 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     )
   end
 
-  def when_i_go_back_to_overview
-    assessor_qualification_requests_page.continue_button.click
+  def and_the_record_applicant_response_task_is_waiting_on
+    expect(record_applicant_response_task_item.status_tag.text).to eq(
+      "WAITING ON",
+    )
   end
 
-  def and_i_see_a_received_status
-    expect(assessor_application_page.status_summary.value).to have_text(
+  def and_the_record_applicant_response_task_is_received
+    expect(record_applicant_response_task_item.status_tag.text).to eq(
       "RECEIVED",
     )
+  end
+
+  def when_i_click_the_record_applicant_response_task
+    record_applicant_response_task_item.click
+  end
+
+  def and_i_submit_yes_on_the_verify_consent_form
+    assessor_verify_consent_request_page.submit_yes
+  end
+
+  def and_the_record_applicant_response_task_is_accepted
+    expect(record_applicant_response_task_item.status_tag.text).to eq(
+      "ACCEPTED",
+    )
+  end
+
+  def and_i_submit_no_on_the_verify_consent_form
+    assessor_verify_consent_request_page.submit_no
+  end
+
+  def and_i_submit_an_internal_note
+    assessor_verify_failed_consent_request_page.submit(note: "A note.")
+  end
+
+  def and_the_record_applicant_response_task_is_review
+    expect(record_applicant_response_task_item.status_tag.text).to eq("REVIEW")
+  end
+
+  def when_i_go_back_to_overview
+    assessor_qualification_requests_page.continue_button.click
   end
 
   def check_and_select_consent_method_task_item
@@ -197,6 +264,12 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     )
   end
 
+  def record_applicant_response_task_item
+    assessor_qualification_requests_page.task_lists.third.find_item(
+      "Record applicant response",
+    )
+  end
+
   def application_form
     @application_form ||=
       create(
@@ -208,11 +281,12 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
         create(
           :assessment,
           :started,
+          :verify,
           :with_qualification_requests,
           application_form:,
         )
       end
   end
 
-  delegate :reference, to: :application_form
+  delegate :assessment, :reference, to: :application_form
 end

@@ -7,13 +7,20 @@ module AssessorInterface
     before_action :set_collection_variables,
                   only: %i[new edit_request update_request]
     before_action :set_member_variables,
-                  only: %i[edit_upload update_upload edit_review update_review]
+                  only: %i[
+                    edit_upload
+                    update_upload
+                    edit_verify
+                    update_verify
+                    edit_verify_failed
+                    update_verify_failed
+                    edit_review
+                    update_review
+                  ]
 
     skip_before_action :track_history, only: :new
 
     def new
-      authorize %i[assessor_interface consent_request]
-
       qualification =
         application_form.qualifications.find(params[:qualification_id])
 
@@ -37,6 +44,7 @@ module AssessorInterface
           end
 
           application_form.reload
+
           ApplicationFormStatusUpdater.call(
             application_form:,
             user: current_staff,
@@ -77,6 +85,70 @@ module AssessorInterface
         end
       else
         render :edit_upload, status: :unprocessable_entity
+      end
+    end
+
+    def edit_verify
+      @form =
+        RequestableVerifyPassedForm.new(
+          requestable:,
+          user: current_staff,
+          passed: requestable.verify_passed,
+        )
+    end
+
+    def update_verify
+      @form =
+        RequestableVerifyPassedForm.new(
+          verify_passed_form_params.merge(requestable:, user: current_staff),
+        )
+
+      if @form.save
+        if @form.passed
+          redirect_to [
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :qualification_requests,
+                      ]
+        else
+          redirect_to [
+                        :verify_failed,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        consent_request,
+                      ]
+        end
+      else
+        render :edit_verify, status: :unprocessable_entity
+      end
+    end
+
+    def edit_verify_failed
+      @form =
+        RequestableVerifyFailedForm.new(
+          requestable:,
+          user: current_staff,
+          note: requestable.verify_note,
+        )
+    end
+
+    def update_verify_failed
+      @form =
+        RequestableVerifyFailedForm.new(
+          verify_failed_form_params.merge(requestable:, user: current_staff),
+        )
+
+      if @form.save
+        redirect_to [
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :qualification_requests,
+                    ]
+      else
+        render :edit_verify_failed, status: :unprocessable_entity
       end
     end
 
@@ -123,6 +195,8 @@ module AssessorInterface
       @consent_request ||= consent_requests.find(params[:id])
     end
 
+    alias_method :requestable, :consent_request
+
     def set_collection_variables
       authorize %i[assessor_interface consent_request]
       @consent_requests = consent_requests
@@ -142,13 +216,23 @@ module AssessorInterface
       ).permit(:original_attachment)
     end
 
+    def verify_passed_form_params
+      params.require(:assessor_interface_requestable_verify_passed_form).permit(
+        :passed,
+      )
+    end
+
+    def verify_failed_form_params
+      params.require(:assessor_interface_requestable_verify_failed_form).permit(
+        :note,
+      )
+    end
+
     def review_form_params
       params.require(:assessor_interface_requestable_review_form).permit(
         :passed,
         :note,
       )
     end
-
-    alias_method :requestable, :consent_request
   end
 end

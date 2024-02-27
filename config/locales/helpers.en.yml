@@ -124,6 +124,8 @@ en:
         passed_options:
           true: Yes, mark as accepted
           false: No, mark as rejected
+      assessor_interface_requestable_verify_failed_form:
+        note: "Internal note: briefly explain to the assessor why you are sending this for review."
       assessor_interface_requestable_verify_passed_form:
         passed_options:
           true: Yes, mark as completed

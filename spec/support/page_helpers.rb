@@ -250,6 +250,16 @@ module PageHelpers
       PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
   end
 
+  def assessor_verify_consent_request_page
+    @assessor_verify_consent_request_page ||=
+      PageObjects::AssessorInterface::VerifyConsentRequest.new
+  end
+
+  def assessor_verify_failed_consent_request_page
+    @assessor_verify_failed_consent_request_page ||=
+      PageObjects::AssessorInterface::VerifyFailedConsentRequest.new
+  end
+
   def assessor_verify_failed_professional_standing_request_page
     @assessor_verify_failed_professional_standing_request_page ||=
       PageObjects::AssessorInterface::VerifyFailedProfessionalStandingRequest.new
