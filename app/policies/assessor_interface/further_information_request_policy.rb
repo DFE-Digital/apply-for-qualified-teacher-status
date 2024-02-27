@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class AssessorInterface::FurtherInformationRequestPolicy < ApplicationPolicy
-  def show?
-    true
-  end
-
   def create?
     user.assess_permission
   end

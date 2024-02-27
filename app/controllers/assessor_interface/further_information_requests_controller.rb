@@ -13,7 +13,7 @@ module AssessorInterface
     end
 
     before_action :load_application_form_and_assessment,
-                  only: %i[preview new show edit]
+                  only: %i[preview new edit]
     before_action :load_new_further_information_request, only: %i[preview new]
     before_action :load_view_object, only: %i[edit update]
 
@@ -26,22 +26,12 @@ module AssessorInterface
     end
 
     def create
-      further_information_request =
-        ActiveRecord::Base.transaction do
-          assessment.request_further_information!
-          CreateFurtherInformationRequest.call(assessment:, user: current_staff)
-        end
+      ActiveRecord::Base.transaction do
+        assessment.request_further_information!
+        CreateFurtherInformationRequest.call(assessment:, user: current_staff)
+      end
 
-      redirect_to [
-                    :assessor_interface,
-                    application_form,
-                    assessment,
-                    further_information_request,
-                  ]
-    end
-
-    def show
-      @further_information_request = further_information_request
+      redirect_to [:status, :assessor_interface, application_form]
     end
 
     def edit

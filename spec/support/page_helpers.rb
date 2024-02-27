@@ -122,11 +122,6 @@ module PageHelpers
       PageObjects::AssessorInterface::EmailConsentLettersAssessmentRecommendationVerify.new
   end
 
-  def assessor_further_information_request_page
-    @assessor_further_information_request_page ||=
-      PageObjects::AssessorInterface::FurtherInformationRequest.new
-  end
-
   def assessor_further_information_request_preview_page
     @assessor_further_information_request_preview_page ||=
       PageObjects::AssessorInterface::FurtherInformationRequestPreview.new
