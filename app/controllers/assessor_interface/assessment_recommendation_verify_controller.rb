@@ -12,7 +12,6 @@ module AssessorInterface
     end
 
     skip_before_action :track_history, only: :show
-    define_history_origin :verify_qualifications
     define_history_check :edit
 
     def show

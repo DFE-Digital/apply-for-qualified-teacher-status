@@ -50,12 +50,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
     and_i_see_the_email_preview
 
     when_i_click_send_to_applicant
-    then_i_see_the(
-      :assessor_further_information_request_page,
-      reference:,
-      assessment_id:,
-      further_information_request_id:,
-    )
+    then_i_see_the(:assessor_application_status_page, reference:)
     and_i_receive_a_further_information_requested_email
   end
 
@@ -165,9 +160,5 @@ RSpec.describe "Assessor requesting further information", type: :system do
 
   def assessment_id
     application_form.assessment.id
-  end
-
-  def further_information_request_id
-    FurtherInformationRequest.last.id
   end
 end

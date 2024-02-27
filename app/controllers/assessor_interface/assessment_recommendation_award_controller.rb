@@ -13,7 +13,6 @@ module AssessorInterface
     end
 
     skip_before_action :track_history, only: :show
-    define_history_origin :edit
 
     def show
       redirect_to [

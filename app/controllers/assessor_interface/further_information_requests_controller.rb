@@ -13,11 +13,9 @@ module AssessorInterface
     end
 
     before_action :load_application_form_and_assessment,
-                  only: %i[preview new show edit]
+                  only: %i[preview new edit]
     before_action :load_new_further_information_request, only: %i[preview new]
     before_action :load_view_object, only: %i[edit update]
-
-    define_history_origin :preview
 
     def preview
     end
@@ -26,22 +24,15 @@ module AssessorInterface
     end
 
     def create
-      further_information_request =
-        ActiveRecord::Base.transaction do
-          assessment.request_further_information!
-          CreateFurtherInformationRequest.call(assessment:, user: current_staff)
-        end
+      ActiveRecord::Base.transaction do
+        CreateFurtherInformationRequest.call(assessment:, user: current_staff)
+        assessment.request_further_information!
+      end
 
-      redirect_to [
-                    :assessor_interface,
-                    application_form,
-                    assessment,
-                    further_information_request,
-                  ]
-    end
-
-    def show
-      @further_information_request = further_information_request
+      redirect_to [:status, :assessor_interface, application_form]
+    rescue CreateFurtherInformationRequest::AlreadyExists
+      flash[:warning] = "Further information has already been requested."
+      render :preview, status: :unprocessable_entity
     end
 
     def edit

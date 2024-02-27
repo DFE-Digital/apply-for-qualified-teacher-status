@@ -45,4 +45,14 @@ RSpec.describe CreateFurtherInformationRequest do
   it "records a requestable requested timeline event" do
     expect { call }.to have_recorded_timeline_event(:requestable_requested)
   end
+
+  context "with an existing request" do
+    before { create(:further_information_request, assessment:) }
+
+    it "raises an error" do
+      expect { call }.to raise_error(
+        CreateFurtherInformationRequest::AlreadyExists,
+      )
+    end
+  end
 end

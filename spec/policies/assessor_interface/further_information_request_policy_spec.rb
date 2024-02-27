@@ -17,7 +17,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestPolicy do
 
   describe "#show?" do
     subject(:show?) { policy.show? }
-    it_behaves_like "a policy method with permission"
+    it_behaves_like "a policy method without permission"
   end
 
   describe "#preview?" do

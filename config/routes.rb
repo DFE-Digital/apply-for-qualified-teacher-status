@@ -104,7 +104,7 @@ Rails.application.routes.draw do
 
         resources :further_information_requests,
                   path: "/further-information-requests",
-                  only: %i[new create show edit update] do
+                  only: %i[new create edit update] do
           get "preview",
               to: "further_information_requests#preview",
               on: :collection
