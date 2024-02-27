@@ -11,7 +11,9 @@ RSpec.describe ConsentLetter do
     )
   end
 
-  before { create(:assessment, :with_qualification_request, application_form:) }
+  before do
+    create(:assessment, :with_qualification_requests, application_form:)
+  end
 
   describe "#render_pdf" do
     subject(:render_pdf) { described_class.new(application_form:).render_pdf }

@@ -206,6 +206,7 @@ RSpec.describe "Teacher further information", type: :system do
           create(
             :application_form,
             :submitted,
+            :with_work_history,
             statuses: %w[waiting_on_further_information],
             teacher:,
           )
