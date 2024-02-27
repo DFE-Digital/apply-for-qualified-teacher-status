@@ -9,8 +9,13 @@ class CreateFurtherInformationRequest
   end
 
   def call
+    raise AlreadyExists if assessment.further_information_requests.exists?
+
     create_and_request
     send_email
+  end
+
+  class AlreadyExists < StandardError
   end
 
   private
