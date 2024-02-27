@@ -213,17 +213,16 @@
     - verify_note
     - verify_passed
   :qualifications:
-    - id
     - application_form_id
-    - title
-    - institution_name
-    - institution_country_code
-    - start_date
-    - complete_date
     - certificate_date
+    - complete_date
     - created_at
+    - id
+    - institution_country_code
+    - institution_name
+    - start_date
+    - title
     - updated_at
-    - part_of_university_degree
   :qualification_requests:
     - assessment_id
     - consent_method
