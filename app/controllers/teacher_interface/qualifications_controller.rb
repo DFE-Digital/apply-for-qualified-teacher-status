@@ -111,35 +111,47 @@ module TeacherInterface
     end
 
     def add_another
+      @form = AddAnotherQualificationForm.new
     end
 
     def submit_add_another
-      if ActiveModel::Type::Boolean.new.cast(
-           params.dig(:qualification, :add_another),
-         )
-        history_stack.replace_self(
-          path: check_teacher_interface_application_form_qualifications_path,
-          origin: false,
-          check: true,
+      @form =
+        AddAnotherQualificationForm.new(
+          add_another:
+            params.dig(
+              :teacher_interface_add_another_qualification_form,
+              :add_another,
+            ),
         )
 
-        redirect_to %i[new teacher_interface application_form qualification]
-      else
-        came_from_check_collection =
-          history_stack.last_entry&.fetch(:path) ==
-            check_teacher_interface_application_form_qualifications_path
+      if @form.save(validate: true)
+        if @form.add_another
+          history_stack.replace_self(
+            path: check_teacher_interface_application_form_qualifications_path,
+            origin: false,
+            check: true,
+          )
 
-        if came_from_check_collection ||
-             application_form.qualifications.count == 1
-          redirect_to %i[teacher_interface application_form]
+          redirect_to %i[new teacher_interface application_form qualification]
         else
-          redirect_to %i[
-                        check
-                        teacher_interface
-                        application_form
-                        qualifications
-                      ]
+          came_from_check_collection =
+            history_stack.last_entry&.fetch(:path) ==
+              check_teacher_interface_application_form_qualifications_path
+
+          if came_from_check_collection ||
+               application_form.qualifications.count == 1
+            redirect_to %i[teacher_interface application_form]
+          else
+            redirect_to %i[
+                          check
+                          teacher_interface
+                          application_form
+                          qualifications
+                        ]
+          end
         end
+      else
+        render :add_another, status: :unprocessable_entity
       end
     end
 

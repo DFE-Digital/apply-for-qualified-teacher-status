@@ -290,8 +290,7 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def when_i_add_another_qualification
-    teacher_add_another_qualification_page.form.true_radio_item.choose
-    teacher_add_another_qualification_page.form.continue_button.click
+    teacher_add_another_qualification_page.submit_yes
   end
 
   def teacher

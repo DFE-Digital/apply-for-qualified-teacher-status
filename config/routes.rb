@@ -264,8 +264,8 @@ Rails.application.routes.draw do
         collection do
           get "check", to: "qualifications#check_collection"
 
-          get "add_another", to: "qualifications#add_another"
-          post "add_another", to: "qualifications#submit_add_another"
+          get "add-another", to: "qualifications#add_another"
+          post "add-another", to: "qualifications#submit_add_another"
 
           get "part-of-degree", to: "qualifications#edit_part_of_degree"
           post "part-of-degree", to: "qualifications#update_part_of_degree"
@@ -320,8 +320,8 @@ Rails.application.routes.draw do
         collection do
           get "check", to: "work_histories#check_collection"
 
-          get "add_another"
-          post "add_another", to: "work_histories#submit_add_another"
+          get "add-another"
+          post "add-another", to: "work_histories#submit_add_another"
 
           get "requirements_unmet", to: "work_histories#requirements_unmet"
         end

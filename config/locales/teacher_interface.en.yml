@@ -216,6 +216,10 @@ en:
               blank: Enter your alternate family name
             has_alternative_name:
               inclusion: Tell us whether you have an alternative name
+        teacher_interface/add_another_qualification_form:
+          attributes:
+            add_another:
+              inclusion: Select whether you need to add another qualification
         teacher_interface/add_another_upload_form:
           attributes:
             add_another:

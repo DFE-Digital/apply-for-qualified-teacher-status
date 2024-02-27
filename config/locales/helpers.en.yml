@@ -25,10 +25,10 @@ en:
         region_id: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
       eligibility_interface_work_experience_form:
         work_experience: Your teaching work experience can be gained in any country but must be from after you qualified as a teacher.
-      qualification:
-        add_another: You can use the next section to tell us about additional degrees if you want to.
       teacher:
         email: We’ll use this to send you an email with a link to continue with your QTS application. Do not use a work or university email that you might lose access to.
+      teacher_interface_add_another_qualification_form:
+        add_another: You can use the next section to tell us about additional degrees if you want to.
       teacher_interface_alternative_name_form:
         has_alternative_name: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
         alternative_given_names: Enter your full name apart from your family name
@@ -161,12 +161,12 @@ en:
         reference_hint: Reference hint
         accepted_tests: Accepted tests (we can accept)
         check_url: Check website
-      qualification:
+      teacher:
+        email: Email address
+      teacher_interface_add_another_qualification_form:
         add_another_options:
           true: "Yes"
           false: "No"
-      teacher:
-        email: Email address
       teacher_interface_add_another_work_history_form:
         add_another_options:
           true: "Yes"
@@ -300,7 +300,7 @@ en:
         region_id: In which state/territory are you currently recognised as a teacher?
       eligibility_interface_work_experience_form:
         work_experience: How long have you worked as a recognised teacher?
-      qualification:
+      teacher_interface_add_another_qualification_form:
         add_another: Add another qualification?
       teacher_interface_add_another_work_history_form:
         add_another: Add another role?
@@ -340,5 +340,3 @@ en:
         start_date: When did you start this role?
         still_employed: Are you still employed at this school?
         end_date: Your end date
-      work_history:
-        add_another: Add another workplace?

@@ -2,21 +2,8 @@
 
 module PageObjects
   module TeacherInterface
-    class AddAnotherQualification < SitePrism::Page
-      set_url "/teacher/application/qualifications/add_another"
-
-      element :heading, "h1"
-
-      section :form, "form" do
-        section :true_radio_item,
-                PageObjects::GovukRadioItem,
-                ".govuk-radios__item:nth-of-type(1)"
-        section :false_radio_item,
-                PageObjects::GovukRadioItem,
-                ".govuk-radios__item:nth-of-type(2)"
-
-        element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
-      end
+    class AddAnotherQualification < AddAnother
+      set_url "/teacher/application/qualifications/add-another"
     end
   end
 end

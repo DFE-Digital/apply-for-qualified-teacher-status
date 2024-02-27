@@ -175,8 +175,7 @@ RSpec.describe "Teacher qualifications", type: :system do
   end
 
   def when_i_dont_add_another_qualification
-    teacher_add_another_qualification_page.form.false_radio_item.choose
-    teacher_add_another_qualification_page.form.continue_button.click
+    teacher_add_another_qualification_page.submit_no
   end
 
   def and_i_see_three_qualifications

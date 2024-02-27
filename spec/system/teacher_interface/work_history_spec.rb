@@ -197,8 +197,7 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   def when_i_dont_add_another_work_history
-    teacher_add_another_work_history_page.form.false_radio_item.choose
-    teacher_add_another_work_history_page.form.continue_button.click
+    teacher_add_another_work_history_page.submit_no
   end
 
   def and_i_see_three_work_histories
