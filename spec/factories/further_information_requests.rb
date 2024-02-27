@@ -68,11 +68,7 @@ FactoryBot.define do
           :with_work_history_contact_response,
           further_information_request:,
           work_history:
-            create(
-              :work_history,
-              :completed,
-              application_form: further_information_request.application_form,
-            ),
+            further_information_request.application_form.work_histories.first,
         )
         create(
           :further_information_request_item,

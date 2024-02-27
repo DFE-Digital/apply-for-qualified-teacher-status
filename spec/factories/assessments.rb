@@ -74,13 +74,11 @@ FactoryBot.define do
       end
     end
 
-    trait :with_consent_request do
+    trait :with_consent_requests do
       after(:create) do |assessment, _evaluator|
-        create(
-          :consent_request,
-          assessment:,
-          qualification: assessment.application_form.qualifications.first,
-        )
+        assessment.application_form.qualifications.each do |qualification|
+          create(:consent_request, assessment:, qualification:)
+        end
       end
     end
 
@@ -113,38 +111,21 @@ FactoryBot.define do
       end
     end
 
-    trait :with_reference_request do
+    trait :with_reference_requests do
       after(:create) do |assessment, _evaluator|
-        create(
-          :reference_request,
-          :requested,
-          assessment:,
-          work_history: assessment.application_form.work_histories.first,
-        )
+        assessment.application_form.work_histories.each do |work_history|
+          create(:reference_request, :requested, assessment:, work_history:)
+        end
       end
     end
 
-    trait :with_received_reference_request do
-      after(:create) do |assessment, _evaluator|
-        create(
-          :reference_request,
-          :received,
-          assessment:,
-          work_history: assessment.application_form.work_histories.first,
-        )
-      end
-    end
-
-    trait :with_qualification_request do
+    trait :with_qualification_requests do
       qualifications_assessor_note { Faker::Lorem.sentence }
 
       after(:create) do |assessment, _evaluator|
-        create(
-          :qualification_request,
-          :requested,
-          assessment:,
-          qualification: assessment.application_form.qualifications.first,
-        )
+        assessment.application_form.qualifications.each do |qualification|
+          create(:qualification_request, assessment:, qualification:)
+        end
       end
     end
   end

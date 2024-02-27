@@ -6,21 +6,25 @@ RSpec.describe DestroyApplicationForm do
   before do
     2.times do
       application_form =
-        create(:application_form, :submitted, :with_identification_document)
+        create(
+          :application_form,
+          :submitted,
+          :with_identification_document,
+          :with_teaching_qualification,
+          :with_work_history,
+        )
 
-      create(:qualification, application_form:)
-      create(:work_history, application_form:)
       create(:note, application_form:)
       create(:dqt_trn_request, application_form:)
 
       assessment =
         create(
           :assessment,
-          :with_consent_request,
+          :with_consent_requests,
           :with_further_information_request,
           :with_professional_standing_request,
-          :with_qualification_request,
-          :with_reference_request,
+          :with_qualification_requests,
+          :with_reference_requests,
           application_form:,
         )
 
@@ -53,10 +57,10 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", ProfessionalStandingRequest
   include_examples "deletes model", Qualification
   include_examples "deletes model", QualificationRequest
-  include_examples "deletes model", ReferenceRequest
+  include_examples "deletes model", ReferenceRequest, 4, 2
   include_examples "deletes model", SelectedFailureReason
   include_examples "deletes model", Teacher
   include_examples "deletes model", TimelineEvent
-  include_examples "deletes model", Upload
+  include_examples "deletes model", Upload, 6, 3
   include_examples "deletes model", WorkHistory, 4, 2
 end

@@ -115,8 +115,9 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     @application_form ||=
       create(
         :application_form,
-        :with_personal_information,
         :submitted,
+        :with_personal_information,
+        :with_work_history,
       ).tap do |application_form|
         assessment =
           create(:assessment, :request_further_information, application_form:)
