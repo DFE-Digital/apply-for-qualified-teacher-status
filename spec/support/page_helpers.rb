@@ -569,9 +569,9 @@ module PageHelpers
       PageObjects::TeacherInterface::NewWorkHistory.new
   end
 
-  def teacher_part_of_university_degree_page
-    @teacher_part_of_university_degree_page ||=
-      PageObjects::TeacherInterface::PartOfUniversityDegree.new
+  def teacher_teaching_qualification_part_of_degree_page
+    @teacher_teaching_qualification_part_of_degree_page ||=
+      PageObjects::TeacherInterface::TeachingQualificationPartOfDegree.new
   end
 
   def teacher_personal_information_summary_page

@@ -31,9 +31,9 @@ RSpec.describe "Teacher qualifications", type: :system do
     then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_need_to_upload_another_file
-    then_i_see_the(:teacher_part_of_university_degree_page)
+    then_i_see_the(:teacher_teaching_qualification_part_of_degree_page)
 
-    when_the_qualification_is_part_of_the_university_degree
+    when_the_qualification_is_part_of_the_degree
     then_i_see_the(:teacher_check_qualification_page)
     and_i_see_the_qualification_information
 
@@ -75,6 +75,7 @@ RSpec.describe "Teacher qualifications", type: :system do
 
   def given_some_qualifications_exist
     create_list(:qualification, 3, :completed, application_form:)
+    application_form.update!(teaching_qualification_part_of_degree: true)
     ApplicationFormSectionStatusUpdater.call(application_form:)
   end
 
@@ -119,12 +120,8 @@ RSpec.describe "Teacher qualifications", type: :system do
     teacher_check_document_page.form.continue_button.click
   end
 
-  def when_the_qualification_is_part_of_the_university_degree
-    teacher_part_of_university_degree_page
-      .form
-      .part_of_university_degree_true_field
-      .click
-    teacher_part_of_university_degree_page.form.continue_button.click
+  def when_the_qualification_is_part_of_the_degree
+    teacher_teaching_qualification_part_of_degree_page.submit_yes
   end
 
   def and_i_see_the_qualification_information

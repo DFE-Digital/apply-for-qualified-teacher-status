@@ -6,7 +6,7 @@ RSpec.describe TeacherInterface::QualificationsController, type: :controller do
   before { FeatureFlags::FeatureFlag.activate(:service_open) }
 
   let(:teacher) { create(:teacher) }
-  let(:application_form) { create(:application_form, teacher:) }
+  let!(:application_form) { create(:application_form, teacher:) }
 
   before { sign_in teacher, scope: :teacher }
 
@@ -30,6 +30,18 @@ RSpec.describe TeacherInterface::QualificationsController, type: :controller do
 
   describe "POST create" do
     subject(:perform) { post :create }
+
+    include_examples "redirect unless application form is draft"
+  end
+
+  describe "GET part_of_degree" do
+    subject(:perform) { get :edit_part_of_degree }
+
+    include_examples "redirect unless application form is draft"
+  end
+
+  describe "POST part_of_degree" do
+    subject(:perform) { post :update_part_of_degree }
 
     include_examples "redirect unless application form is draft"
   end
@@ -58,26 +70,6 @@ RSpec.describe TeacherInterface::QualificationsController, type: :controller do
     let(:qualification) { create(:qualification, application_form:) }
 
     subject(:perform) { patch :update, params: { id: qualification.id } }
-
-    include_examples "redirect unless application form is draft"
-  end
-
-  describe "GET part_of_university_degree" do
-    let(:qualification) { create(:qualification, application_form:) }
-
-    subject(:perform) do
-      get :edit_part_of_university_degree, params: { id: qualification.id }
-    end
-
-    include_examples "redirect unless application form is draft"
-  end
-
-  describe "PATCH part_of_university_degree" do
-    let(:qualification) { create(:qualification, application_form:) }
-
-    subject(:perform) do
-      patch :update_part_of_university_degree, params: { id: qualification.id }
-    end
 
     include_examples "redirect unless application form is draft"
   end

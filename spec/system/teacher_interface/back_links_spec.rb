@@ -56,7 +56,7 @@ RSpec.describe "Teacher back links", type: :system do
     )
 
     # teacher_edit_qualification_page -> document_form_page -> upload_document_page -> document_form_page
-    #  -> teacher_part_of_university_degree_page
+    #  -> teacher_part_of_degree_page
     #  <- document_form_page <- document_form_page <- teacher_edit_qualification_page
 
     when_i_click_continue
@@ -69,10 +69,7 @@ RSpec.describe "Teacher back links", type: :system do
     then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_upload_another_document
-    then_i_see_the(
-      :teacher_part_of_university_degree_page,
-      qualification_id: qualification.id,
-    )
+    then_i_see_the(:teacher_teaching_qualification_part_of_degree_page)
 
     when_i_click_back
     then_i_see_the(:teacher_check_document_page)
@@ -87,7 +84,7 @@ RSpec.describe "Teacher back links", type: :system do
     )
 
     # teacher_edit_qualification_page -> document_form_page -> document_form_page
-    #  -> teacher_part_of_university_degree_page -> teacher_check_qualification_page
+    #  -> teacher_part_of_degree_page -> teacher_check_qualification_page
     #  <- teacher_application_page
 
     when_i_click_continue
@@ -97,12 +94,9 @@ RSpec.describe "Teacher back links", type: :system do
     then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_upload_another_document
-    then_i_see_the(
-      :teacher_part_of_university_degree_page,
-      qualification_id: qualification.id,
-    )
+    then_i_see_the(:teacher_teaching_qualification_part_of_degree_page)
 
-    when_i_choose_part_of_university_degree
+    when_i_choose_part_of_degree
     then_i_see_the(:teacher_check_qualification_page)
 
     when_i_click_back
@@ -270,12 +264,8 @@ RSpec.describe "Teacher back links", type: :system do
     teacher_check_document_page.form.continue_button.click
   end
 
-  def when_i_choose_part_of_university_degree
-    teacher_part_of_university_degree_page
-      .form
-      .part_of_university_degree_true_field
-      .choose
-    teacher_part_of_university_degree_page.form.continue_button.click
+  def when_i_choose_part_of_degree
+    teacher_teaching_qualification_part_of_degree_page.submit_yes
   end
 
   def when_i_click_change_qualification_title

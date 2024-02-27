@@ -290,6 +290,8 @@ FactoryBot.define do
     end
 
     trait :with_teaching_qualification do
+      teaching_qualification_part_of_degree { true }
+
       after(:create) do |application_form, _evaluator|
         create(
           :qualification,

@@ -76,7 +76,7 @@ module DQT
 
     def degree_qualification
       @degree_qualification ||=
-        if teaching_qualification.part_of_university_degree?
+        if application_form.teaching_qualification_part_of_degree
           teaching_qualification
         else
           application_form.degree_qualifications.first

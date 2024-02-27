@@ -33,7 +33,6 @@ FactoryBot.define do
       start_date { Faker::Date.between(from: 30.years.ago, to: 10.years.ago) }
       complete_date { start_date + 5.years }
       certificate_date { complete_date + 1.year }
-      part_of_university_degree { true }
 
       after(:create) do |qualification, _evaluator|
         create(:upload, document: qualification.certificate_document)
