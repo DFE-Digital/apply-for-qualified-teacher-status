@@ -25,11 +25,14 @@ module AssessorInterface
 
     def create
       ActiveRecord::Base.transaction do
-        assessment.request_further_information!
         CreateFurtherInformationRequest.call(assessment:, user: current_staff)
+        assessment.request_further_information!
       end
 
       redirect_to [:status, :assessor_interface, application_form]
+    rescue CreateFurtherInformationRequest::AlreadyExists
+      flash[:warning] = "Further information has already been requested."
+      render :preview, status: :unprocessable_entity
     end
 
     def edit
