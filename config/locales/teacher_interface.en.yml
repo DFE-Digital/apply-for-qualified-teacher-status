@@ -367,6 +367,9 @@ en:
           attributes:
             subject_1:
               blank: Enter your first subject
+        teacher_interface/teaching_qualification_part_of_degree_form:
+          attributes:
+            teaching_qualification_part_of_degree: Tell us if your teaching qualification is part of your bachelor’s degree
         teacher_interface/upload_form:
           attributes:
             written_in_english:
