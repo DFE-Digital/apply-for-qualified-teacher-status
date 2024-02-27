@@ -7,7 +7,6 @@ namespace :review_app do
       raise "THIS TASK CANNOT BE RUN IN PRODUCTION"
     end
 
-    FeatureFlags::FeatureFlag.activate(:convert_documents_to_pdf)
     FeatureFlags::FeatureFlag.activate(:personas)
     FeatureFlags::FeatureFlag.activate(:teacher_applications)
   end
