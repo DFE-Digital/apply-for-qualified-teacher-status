@@ -157,6 +157,7 @@ module TeacherInterface
           start_date: qualification.start_date,
           complete_date: qualification.complete_date,
           certificate_date: qualification.certificate_date,
+          teaching_confirmation: true,
         )
     end
 
@@ -221,6 +222,7 @@ module TeacherInterface
         :start_date,
         :complete_date,
         :certificate_date,
+        :teaching_confirmation,
       )
     end
 

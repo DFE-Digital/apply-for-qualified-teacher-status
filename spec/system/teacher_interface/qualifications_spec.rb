@@ -104,6 +104,7 @@ RSpec.describe "Teacher qualifications", type: :system do
       "12"
     teacher_new_qualification_page.form.certificate_date_year_field.fill_in with:
       "2003"
+    teacher_new_qualification_page.form.teaching_confirmation_checkbox.check
     teacher_new_qualification_page.form.continue_button.click
   end
 

@@ -300,6 +300,8 @@ en:
               invalid: Enter the certificate date in the format 27 3 1980
               future: Certificate date must be in the past
               comparison: Certificate date must be after completion date
+            teaching_confirmation:
+              blank: Confirm this is the first qualification you have that qualifies you to teach
         teacher_interface/download_unsigned_consent_document_form:
           attributes:
             downloaded:

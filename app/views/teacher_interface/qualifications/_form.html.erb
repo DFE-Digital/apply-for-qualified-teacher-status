@@ -39,5 +39,20 @@
                          legend: { text: I18n.t("application_form.qualifications.form.fields.certificate_date.#{qualification.locale_key}") },
                          hint: { text: "For example, 3 2020" } %>
 
+  <% if qualification.is_teaching? %>
+    <p class="govuk-body govuk-!-padding-top-6">
+      This must be the first qualification that qualifies you to teach. You can add more qualifications later.
+    </p>
+
+    <%= f.govuk_check_boxes_fieldset :teaching_confirmation, multiple: false, legend: nil do %>
+      <%= f.govuk_check_box :teaching_confirmation,
+                            true,
+                            false,
+                            link_errors: true,
+                            multiple: false,
+                            label: { text: "I confirm this is the first qualification I have that qualifies me to teach.", size: "s" } %>
+    <% end %>
+  <% end %>
+
   <%= render "shared/save_submit_buttons", f: %>
 <% end %>

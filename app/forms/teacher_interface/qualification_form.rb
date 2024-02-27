@@ -12,6 +12,7 @@ module TeacherInterface
     attribute :start_date
     attribute :complete_date
     attribute :certificate_date
+    attribute :teaching_confirmation, :boolean
 
     validates :qualification, presence: true
     validates :title, presence: true
@@ -32,6 +33,9 @@ module TeacherInterface
                    earlier_field: :complete_date,
                    later_field: :certificate_date,
                    allow_equal: true
+    validates :teaching_confirmation,
+              presence: true,
+              if: -> { qualification&.is_teaching? }
 
     def initialize(values)
       if (country_code = values.delete(:institution_country_code))

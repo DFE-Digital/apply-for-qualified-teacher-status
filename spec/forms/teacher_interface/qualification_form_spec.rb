@@ -18,6 +18,7 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
       start_date:,
       complete_date:,
       certificate_date:,
+      teaching_confirmation:,
     )
   end
 
@@ -28,6 +29,7 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     let(:start_date) { "" }
     let(:complete_date) { "" }
     let(:certificate_date) { "" }
+    let(:teaching_confirmation) { "" }
 
     it { is_expected.to validate_presence_of(:qualification) }
     it { is_expected.to validate_presence_of(:title) }
@@ -41,6 +43,7 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to validate_presence_of(:complete_date) }
     it { is_expected.to validate_presence_of(:certificate_date) }
+    it { is_expected.to validate_presence_of(:teaching_confirmation) }
 
     context "with a university degree" do
       # create the teaching qualification first
@@ -51,6 +54,8 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
           :institution_country_location,
         ).in_array(%w[country:FR])
       end
+
+      it { is_expected.to_not validate_presence_of(:teaching_confirmation) }
     end
 
     context "with invalid dates" do
@@ -85,6 +90,7 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     let(:start_date) { { 1 => 2020, 2 => 1, 3 => 1 } }
     let(:complete_date) { { 1 => 2022, 2 => 1, 3 => 1 } }
     let(:certificate_date) { { 1 => 2022, 2 => 6, 3 => 1 } }
+    let(:teaching_confirmation) { "true" }
 
     subject(:save) { form.save(validate: true) }
 
