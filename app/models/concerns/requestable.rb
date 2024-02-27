@@ -58,11 +58,11 @@ module Requestable
     try(:verify_passed) == false
   end
 
-  def status(not_requested: "not_started")
-    if review_passed? || review_failed?
-      review_status
-    elsif verify_passed?
-      "accepted"
+  def status
+    if review_passed? || verify_passed?
+      "completed"
+    elsif review_failed?
+      "rejected"
     elsif verify_failed?
       "review"
     elsif received? && expired?
@@ -74,7 +74,7 @@ module Requestable
     elsif requested?
       "waiting_on"
     else
-      not_requested
+      "cannot_start"
     end
   end
 

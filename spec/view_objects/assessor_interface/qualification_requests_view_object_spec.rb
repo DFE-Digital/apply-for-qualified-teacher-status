@@ -175,7 +175,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             },
             {
               name: "Record applicant response",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {

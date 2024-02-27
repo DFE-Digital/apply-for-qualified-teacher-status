@@ -50,7 +50,7 @@ RSpec.shared_examples "a requestable" do
   describe "#status" do
     it "is completed when review passed is true" do
       subject.review_passed = true
-      expect(subject.status).to eq("accepted")
+      expect(subject.status).to eq("completed")
     end
 
     it "is rejected when review passed is false" do
@@ -73,8 +73,8 @@ RSpec.shared_examples "a requestable" do
       expect(subject.status).to eq("waiting_on")
     end
 
-    it "is not started by default" do
-      expect(subject.status).to eq("not_started")
+    it "is cannot start by default" do
+      expect(subject.status).to eq("cannot_start")
     end
   end
 

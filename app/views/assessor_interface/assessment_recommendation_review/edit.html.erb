@@ -22,7 +22,7 @@
         </td>
 
         <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
-          <%= render(StatusTag::Component.new(@professional_standing_request.status)) %>
+          <%= render(StatusTag::Component.new("review")) %>
         </td>
       </tr>
     </tbody>
@@ -47,7 +47,7 @@
           </td>
 
           <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
-            <%= render(StatusTag::Component.new(qualification_request.status)) %>
+            <%= render(StatusTag::Component.new("review")) %>
           </td>
         </tr>
       <% end %>
@@ -73,7 +73,7 @@
           </td>
 
           <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
-            <%= render(StatusTag::Component.new(reference_request.status)) %>
+            <%= render(StatusTag::Component.new("review")) %>
           </td>
         </tr>
       <% end %>

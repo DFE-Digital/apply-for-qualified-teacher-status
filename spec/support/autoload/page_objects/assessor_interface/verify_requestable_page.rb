@@ -10,7 +10,7 @@ module PageObjects
         section :false_radio_item,
                 PageObjects::GovukRadioItem,
                 ".govuk-radios__item:nth-of-type(2)"
-        element :submit_button, ".govuk-button"
+        element :submit_button, "button.govuk-button"
       end
 
       def submit_yes

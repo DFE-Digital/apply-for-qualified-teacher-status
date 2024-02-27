@@ -1,0 +1,60 @@
+<% qualification = @consent_request.qualification %>
+<% upload = @consent_request.signed_consent_document.uploads.first %>
+<% can_update_verify_consent_request = @assessment.verify? && policy([:assessor_interface, @consent_request]).update_verify? %>
+
+<% title = "Record applicant response" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_qualification_requests_path) %>
+
+<%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, @consent_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h2 class="govuk-heading-m"><%= qualification_title(qualification) %></h2>
+
+  <div class="govuk-inset-text app-background-inset-text">
+    <h2 class="govuk-heading-m">Returned file</h2>
+
+    <% if @consent_request.received? %>
+      <p class="govuk-body"><%= upload.name %></p>
+
+      <div class="govuk-button-group">
+        <% if upload.is_pdf? %>
+          <%= govuk_button_link_to "Download", [:assessor_interface, :application_form, upload.document, upload], target: "_blank", rel: "noreferrer noopener" %>
+        <% else %>
+          <%= govuk_button_link_to "Download original", [:assessor_interface, :application_form, upload.document, upload], target: "_blank", rel: "noreferrer noopener" %>
+          <%= govuk_button_link_to "Download as PDF", assessor_interface_application_form_document_pdf_path(upload.document, "original"), inverse: true, target: "_blank", rel: "noreferrer noopener" %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="govuk-body">
+        When the applicant has returned the consent document, it will be shown here.
+      </p>
+    <% end %>
+  </div>
+
+  <% if @consent_request.expired? %>
+    <%= govuk_warning_text(text: "This consent is overdue.") %>
+
+    <h2 class="govuk-heading-m">Please follow these steps</h2>
+
+    <ul class="govuk-list govuk-list--number">
+      <li>Go to Zendesk to email the applicant to remind them.</li>
+      <li>If no response, escalate to an EO.</li>
+    </ul>
+  <% end %>
+
+  <% if can_update_verify_consent_request && (@consent_request.received? || @consent_request.expired?) %>
+    <% if @consent_request.received? %>
+      <%= f.govuk_collection_radio_buttons :passed, %i[true false], :itself,
+                                           legend: { text: "Is the consent document for this qualification valid?" } %>
+    <% else %>
+      <%= f.govuk_collection_radio_buttons :passed, %i[nil false], :itself,
+                                           legend: { text: "After following the steps above, do you want to wait for a response?" } %>
+    <% end %>
+
+    <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <% end %>
+<% end %>

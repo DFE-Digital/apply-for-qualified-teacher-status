@@ -33,7 +33,7 @@ RSpec.describe "Assessor verifying references", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_reference_request_status_is("ACCEPTED")
+    and_the_reference_request_status_is("COMPLETED")
 
     when_i_click_on_the_reference_request
     then_i_see_the(

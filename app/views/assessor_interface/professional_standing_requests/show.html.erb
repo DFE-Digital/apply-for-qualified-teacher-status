@@ -36,13 +36,7 @@
                     :professional_standing_request
                   ]
                 end,
-          status: if @professional_standing_request.verify_passed?
-                    "completed"
-                  elsif @professional_standing_request.requested?
-                    @professional_standing_request.status
-                  else
-                    "cannot_start"
-                  end
+          status: @professional_standing_request.status
         }
       ],
     }

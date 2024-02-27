@@ -202,12 +202,19 @@ module AssessorInterface
         end,
         {
           name: "Record applicant response",
-          link: "#",
-          status:
-            consent_request&.status(not_requested: "cannot_start") ||
-              "cannot_start",
+          link:
+            if consent_request&.requested?
+              [
+                :verify,
+                :assessor_interface,
+                application_form,
+                assessment,
+                consent_request,
+              ]
+            end,
+          status: consent_request&.status || "cannot_start",
         },
-      ]
+      ].compact
     end
 
     def consent_task_items(qualification_request)

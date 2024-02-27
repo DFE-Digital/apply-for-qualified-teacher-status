@@ -110,6 +110,10 @@ Rails.application.routes.draw do
             get "upload", to: "consent_requests#edit_upload"
             post "upload", to: "consent_requests#update_upload"
             get "check-upload", to: "consent_requests#check_upload"
+            get "verify", to: "consent_requests#edit_verify"
+            post "verify", to: "consent_requests#update_verify"
+            get "verify-failed", to: "consent_requests#edit_verify_failed"
+            post "verify-failed", to: "consent_requests#update_verify_failed"
             get "review", to: "consent_requests#edit_review"
             post "review", to: "consent_requests#update_review"
           end

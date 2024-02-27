@@ -11,5 +11,6 @@ Rails.application.configure do
   config.content_security_policy_nonce_generator = ->(request) do
     request.session.id.to_s
   end
+
   config.content_security_policy_nonce_directives = %w[script-src]
 end
