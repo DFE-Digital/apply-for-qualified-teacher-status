@@ -28,7 +28,7 @@ en:
       teacher:
         email: We’ll use this to send you an email with a link to continue with your QTS application. Do not use a work or university email that you might lose access to.
       teacher_interface_add_another_qualification_form:
-        add_another: You can use the next section to tell us about additional degrees if you want to.
+        add_another: Add another degree or qualification if they are related to your teaching career. For example, to show you are qualified to teach a particular subject.
       teacher_interface_alternative_name_form:
         has_alternative_name: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
         alternative_given_names: Enter your full name apart from your family name
@@ -165,8 +165,8 @@ en:
         email: Email address
       teacher_interface_add_another_qualification_form:
         add_another_options:
-          true: "Yes"
-          false: "No"
+          true: Yes, I want to add another qualification
+          false: No, I don’t want to add another qualification
       teacher_interface_add_another_work_history_form:
         add_another_options:
           true: "Yes"
@@ -301,7 +301,7 @@ en:
       eligibility_interface_work_experience_form:
         work_experience: How long have you worked as a recognised teacher?
       teacher_interface_add_another_qualification_form:
-        add_another: Add another qualification?
+        add_another: Do you want to add another qualification?
       teacher_interface_add_another_work_history_form:
         add_another: Add another role?
       teacher_interface_alternative_name_form:
