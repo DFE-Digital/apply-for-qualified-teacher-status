@@ -4,7 +4,8 @@ class AssessorInterface::AssessmentDeclarationDeclineForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attr_accessor :session, :assessment
+  attr_accessor :assessment
+  validates :assessment, presence: true
 
   attribute :declaration, :boolean
   attribute :recommendation_assessor_note, :string
@@ -17,7 +18,8 @@ class AssessorInterface::AssessmentDeclarationDeclineForm
   def save
     return false unless valid?
 
-    session[:recommendation_assessor_note] = recommendation_assessor_note
+    assessment.update!(recommendation_assessor_note:)
+
     true
   end
 end
