@@ -52,7 +52,7 @@ class FurtherInformationRequestItem < ApplicationRecord
       )
   end
 
-  def is_teaching_qualification?
+  def is_teaching?
     %w[teaching_certificate_illegible teaching_transcript_illegible].include?(
       failure_reason_key,
     )

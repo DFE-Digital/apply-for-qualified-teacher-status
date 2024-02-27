@@ -44,7 +44,7 @@
     <h1 class="govuk-heading-l">
       <% if @document.documentable.try(:institution_name).present? %>
         Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_certificate") %>
-      <% elsif @document.documentable.is_teaching_qualification? %>
+      <% elsif @document.documentable.is_teaching? %>
         Upload your teaching qualification certificate
       <% else %>
         Upload your university degree certificate
@@ -60,7 +60,7 @@
     <h1 class="govuk-heading-l">
       <% if @document.documentable.try(:institution_name).present? %>
         Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_transcript") %>
-      <% elsif @document.documentable.is_teaching_qualification? %>
+      <% elsif @document.documentable.is_teaching? %>
         Upload your teaching qualification transcript
       <% else %>
         Upload your university degree transcript

@@ -212,11 +212,11 @@ class ApplicationForm < ApplicationRecord
   end
 
   def teaching_qualification
-    qualifications.find(&:is_teaching_qualification?)
+    qualifications.find(&:is_teaching?)
   end
 
-  def degree_qualifications
-    qualifications.select(&:is_university_degree?)
+  def bachelor_degree_qualification
+    qualifications.find(&:is_bachelor_degree?)
   end
 
   def identification_document

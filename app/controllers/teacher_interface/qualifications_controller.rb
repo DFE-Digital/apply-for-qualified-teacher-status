@@ -99,7 +99,7 @@ module TeacherInterface
         check_identifier: check_member_identifier(id: qualification.id),
         if_success_then_redirect: ->(check_path) do
           if @form.teaching_qualification_part_of_degree == false &&
-               application_form.degree_qualifications.empty?
+               application_form.qualifications.count == 1
             application_form.qualifications.create!
           end
 

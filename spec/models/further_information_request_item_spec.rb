@@ -86,10 +86,8 @@ RSpec.describe FurtherInformationRequestItem do
     end
   end
 
-  describe "#is_teaching_qualification?" do
-    subject(:is_teaching_qualification?) do
-      further_information_request_item.is_teaching_qualification?
-    end
+  describe "#is_teaching?" do
+    subject(:is_teaching?) { further_information_request_item.is_teaching? }
 
     context "with a teaching failure reason" do
       before do

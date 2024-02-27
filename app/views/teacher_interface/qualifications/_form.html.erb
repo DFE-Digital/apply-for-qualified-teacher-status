@@ -8,10 +8,10 @@
     <%= f.govuk_select :institution_country_location,
                        options_for_select(locations, form.institution_country_location),
                        options: { include_blank: true },
-                       hint: { text: qualification.is_teaching_qualification? ? "This must be the country in which you’re recognised as a teacher." : nil } %>
+                       hint: { text: qualification.is_teaching? ? "This must be the country in which you’re recognised as a teacher." : nil } %>
   <% end %>
 
-  <% if qualification.is_teaching_qualification? %>
+  <% if qualification.is_teaching? %>
     <%= govuk_details(summary_text: "Is this the same as my university degree?") do %>
       <p>Some applicants have a university degree qualification that includes their teaching qualification.</p>
       <p>Others have a teaching qualification that’s separate from their degree.</p>

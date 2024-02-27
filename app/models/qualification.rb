@@ -34,21 +34,25 @@ class Qualification < ApplicationRecord
   scope :order_by_role, -> { order(start_date: :desc) }
   scope :order_by_user, -> { order(created_at: :asc) }
 
-  def is_teaching_qualification?
+  def is_teaching?
     application_form.qualifications.empty? ||
-      application_form.qualifications.min_by(&:created_at) == self
+      application_form.qualifications.order(:created_at).first == self
   end
 
-  def is_university_degree?
-    !is_teaching_qualification?
+  def is_bachelor_degree?
+    if application_form.teaching_qualification_part_of_degree
+      is_teaching?
+    else
+      application_form.qualifications.order(:created_at).second == self
+    end
   end
 
   def locale_key
-    is_teaching_qualification? ? "teaching_qualification" : "university_degree"
+    is_teaching? ? "teaching_qualification" : "university_degree"
   end
 
   def can_delete?
-    return false if is_teaching_qualification?
+    return false if is_teaching?
 
     part_of_degree = application_form.teaching_qualification_part_of_degree
     return true if part_of_degree.nil? || part_of_degree
@@ -68,7 +72,7 @@ class Qualification < ApplicationRecord
       transcript_document.completed?,
     ]
 
-    if is_teaching_qualification? &&
+    if is_teaching? &&
          application_form.teaching_qualification_part_of_degree != false
       values.push(application_form.teaching_qualification_part_of_degree)
     end

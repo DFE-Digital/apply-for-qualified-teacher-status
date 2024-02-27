@@ -23,7 +23,7 @@ module TeacherInterface
                   [CountryCode.to_location(form.application_form.country.code)]
                 end,
               },
-              if: -> { qualification&.is_teaching_qualification? }
+              if: -> { qualification&.is_teaching? }
     validates :start_date, date: true
     validates :complete_date, date: true
     validates :certificate_date, date: true

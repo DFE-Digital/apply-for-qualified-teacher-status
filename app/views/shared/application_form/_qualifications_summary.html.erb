@@ -39,7 +39,7 @@
       transcript_document: {
         href: [:teacher_interface, :application_form, qualification.transcript_document],
       },
-      part_of_degree: !preliminary && qualification.is_teaching_qualification? ? {
+      part_of_degree: !preliminary && qualification.is_teaching? ? {
         title: "Part of your university degree?",
         href: %i[part_of_degree teacher_interface application_form qualifications],
         value: application_form.teaching_qualification_part_of_degree,
