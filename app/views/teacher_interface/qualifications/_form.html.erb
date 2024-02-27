@@ -1,43 +1,70 @@
 <%= form_with model: form, url: [:teacher_interface, :application_form, qualification], method: qualification.new_record? ? :post : :put do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_fieldset legend: { text: I18n.t("application_form.qualifications.form.title.#{qualification.locale_key}") } do %>
-    <%= f.govuk_text_field :title, label: { text: I18n.t("application_form.qualifications.form.fields.title.#{qualification.locale_key}") } %>
-    <%= f.govuk_text_field :institution_name, label: { text: I18n.t("application_form.qualifications.form.fields.institution_name") } %>
+  <span class="govuk-caption-l"><%= t("application_form.tasks.sections.qualifications") %></span>
+
+  <% if qualification.is_teaching? %>
+    <h1 class="govuk-heading-l">Teaching qualification</h1>
+
+    <p class="govuk-body">Enter the <span class="govuk-!-font-weight-bold">first</span> qualification you have that qualifies you to teach. We accept the following:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a bachelor’s (undergraduate) degree that includes a teaching qualification, for example a bachelor’s of education</li>
+      <li>a teaching qualification that’s separate to a bachelor’s degree, for example a master’s, (postgraduate) degree, diploma, or certificate in education</li>
+    </ul>
+
+    <p class="govuk-body">If your teaching qualification is separate to your bachelor’s degree, it must be equal to a <%= govuk_link_to "UK ‘level 6’ qualification or higher", "https://www.gov.uk/what-different-qualification-levels-mean/list-of-qualification-levels" %>. You will need to enter details of your bachelor’s degree later in the application.</p>
+
+    <h2 class="govuk-heading-m">More than one teaching qualification</h2>
+
+    <p class="govuk-body">If you have more than one teaching qualification enter the first one you received that qualifies you to teach. For example, if you have a bachelor’s and a master’s degree, and both qualify you to teach, enter the bachelor’s degree here.</p>
+
+    <p class="govuk-body">You can add more qualifications later.</p>
+  <% elsif qualification.is_bachelor_degree? %>
+    <h1 class="govuk-heading-l">Bachelor’s degree</h1>
+    <p class="govuk-body">Add details of your bachelor’s degree if your teaching qualification was separate.</p>
+  <% else %>
+    <h1 class="govuk-heading-l">Additional qualification</h1>
+    <p class="govuk-body">Add any additional qualifications you have that relate to your teaching career. These must be of a <%= govuk_link_to "UK ‘level 6’ equivalent or above", "https://www.gov.uk/what-different-qualification-levels-mean/list-of-qualification-levels" %>.</p>
+  <% end %>
+
+  <% if view_object.qualifications_information.present? %>
+    <section id="app-qualifications-information">
+      <%= raw GovukMarkdown.render(view_object.qualifications_information) %>
+    </section>
+  <% end %>
+
+  <%= f.govuk_fieldset legend: { text: t(qualification.locale_key, scope: %i[application_form qualifications form title]) } do %>
+    <%= f.govuk_text_field :title,
+                           label: { text: t(qualification.locale_key, scope: %i[application_form qualifications form fields title]) },
+                           hint: { text: qualification.is_teaching? ? "Enter the first qualification you have that qualifies you to teach" : nil } %>
+
+    <%= f.govuk_text_field :institution_name, label: { text: t("application_form.qualifications.form.fields.institution_name") } %>
 
     <%= f.govuk_select :institution_country_location,
                        options_for_select(locations, form.institution_country_location),
                        options: { include_blank: true },
-                       hint: { text: qualification.is_teaching? ? "This must be the country in which you’re recognised as a teacher." : nil } %>
+                       label: { text: t("application_form.qualifications.form.fields.institution_country") },
+                       hint: { text: qualification.is_teaching? ? "This must be the country in which you’re recognised as a teacher" : nil } %>
   <% end %>
-
-  <% if qualification.is_teaching? %>
-    <%= govuk_details(summary_text: "Is this the same as my university degree?") do %>
-      <p>Some applicants have a university degree qualification that includes their teaching qualification.</p>
-      <p>Others have a teaching qualification that’s separate from their degree.</p>
-      <p>If your qualifications are separate, you’ll need to add your university degree in the next section.</p>
-    <% end %>
-  <% end %>
-
-  <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
   <%= f.govuk_date_field :start_date,
                          omit_day: true,
                          maxlength_enabled: true,
-                         legend: { text: I18n.t("application_form.qualifications.form.fields.start_date.#{qualification.locale_key}") },
-                         hint: { text: "For example, 3 2020" } %>
+                         legend: { text: t(qualification.locale_key, scope: %i[application_form qualifications form fields start_date]) },
+                         hint: { text: "For example, 09 2004" } %>
 
   <%= f.govuk_date_field :complete_date,
                          omit_day: true,
                          maxlength_enabled: true,
-                         legend: { text: I18n.t("application_form.qualifications.form.fields.complete_date.#{qualification.locale_key}") },
-                         hint: { text: "For example, 3 2020" } %>
+                         legend: { text: t(qualification.locale_key, scope: %i[application_form qualifications form fields complete_date]) },
+                         hint: { text: "For example, 09 2004" } %>
 
   <%= f.govuk_date_field :certificate_date,
                          omit_day: true,
                          maxlength_enabled: true,
-                         legend: { text: I18n.t("application_form.qualifications.form.fields.certificate_date.#{qualification.locale_key}") },
-                         hint: { text: "For example, 3 2020" } %>
+                         legend: { text: t(qualification.locale_key, scope: %i[application_form qualifications form fields certificate_date]) },
+                         hint: { text: qualification.is_teaching? ? "Enter the month and year on the certificate you received when you were awarded this qualification. Do not enter the date of your teaching licence or registration.<br /><br />For example, 09 2004".html_safe : "For example, 09 2004" } %>
 
   <% if qualification.is_teaching? %>
     <p class="govuk-body govuk-!-padding-top-6">

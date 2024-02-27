@@ -273,7 +273,7 @@ RSpec.describe "Teacher back links", type: :system do
     teacher_check_qualifications_page
       .summary_cards
       .first
-      .find_row(key: "Qualification title")
+      .find_row(key: "Teaching qualification title")
       .actions
       .link
       .click

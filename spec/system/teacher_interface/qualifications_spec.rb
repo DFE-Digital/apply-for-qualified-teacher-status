@@ -130,7 +130,7 @@ RSpec.describe "Teacher qualifications", type: :system do
 
     expect(summary_list_rows.count).to eq(9)
 
-    expect(summary_list_rows[0].key.text).to eq("Qualification title")
+    expect(summary_list_rows[0].key.text).to eq("Teaching qualification title")
     expect(summary_list_rows[0].value.text).to eq("BSc Teaching")
 
     expect(summary_list_rows[1].key.text).to eq("Name of institution")
@@ -140,17 +140,17 @@ RSpec.describe "Teacher qualifications", type: :system do
     expect(summary_list_rows[2].value.text).to eq("France")
 
     expect(summary_list_rows[3].key.text).to eq(
-      "When did you start your teaching qualification?",
+      "When did you start this qualification?",
     )
     expect(summary_list_rows[3].value.text).to eq("January 1999")
 
     expect(summary_list_rows[4].key.text).to eq(
-      "When did you complete your teaching qualification?",
+      "When did you complete this qualification?",
     )
     expect(summary_list_rows[4].value.text).to eq("January 2003")
 
     expect(summary_list_rows[5].key.text).to eq(
-      "What is the date on your teaching qualification certificate?",
+      "When were you awarded this qualification?",
     )
     expect(summary_list_rows[5].value.text).to eq("December 2003")
 
@@ -165,7 +165,7 @@ RSpec.describe "Teacher qualifications", type: :system do
     )
 
     expect(summary_list_rows[8].key.text).to eq(
-      "Part of your university degree?",
+      "Part of your bachelor’s degree?",
     )
     expect(summary_list_rows[8].value.text).to eq("Yes")
   end

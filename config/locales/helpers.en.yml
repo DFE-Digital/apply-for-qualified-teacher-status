@@ -202,8 +202,6 @@ en:
           false: "No"
       teacher_interface_new_session_form:
         email: Email address
-      teacher_interface_qualification_form:
-        institution_country_location: Country of institution
       teacher_interface_reference_request_additional_information_response_form:
         additional_information_response: Do you have any other concerns about this applicant? (optional)
       teacher_interface_reference_request_children_response_form:

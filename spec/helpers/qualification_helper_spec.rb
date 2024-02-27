@@ -6,7 +6,7 @@ RSpec.describe QualificationHelper do
 
     let(:qualification) { build(:qualification) }
 
-    it { is_expected.to eq("Your teaching qualification") }
+    it { is_expected.to eq("Teaching qualification") }
 
     context "with a title" do
       before { qualification.title = "Title" }

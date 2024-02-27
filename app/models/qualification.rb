@@ -48,7 +48,13 @@ class Qualification < ApplicationRecord
   end
 
   def locale_key
-    is_teaching? ? "teaching_qualification" : "university_degree"
+    if is_teaching?
+      "teaching"
+    elsif is_bachelor_degree?
+      "bachelor_degree"
+    else
+      "additional"
+    end
   end
 
   def can_delete?
