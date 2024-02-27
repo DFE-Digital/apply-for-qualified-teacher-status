@@ -9,32 +9,8 @@ class CreateFurtherInformationRequest
   end
 
   def call
-    further_information_request =
-      ActiveRecord::Base.transaction do
-        requestable =
-          FurtherInformationRequest.create!(
-            assessment:,
-            items:
-              FurtherInformationRequestItemsFactory.call(
-                assessment_sections: assessment.sections,
-              ),
-          )
-
-        RequestRequestable.call(requestable:, user:)
-
-        application_form.reload
-
-        ApplicationFormStatusUpdater.call(application_form:, user:)
-
-        requestable
-      end
-
-    TeacherMailer
-      .with(application_form:)
-      .further_information_requested
-      .deliver_later
-
-    further_information_request
+    create_and_request
+    send_email
   end
 
   private
@@ -42,4 +18,32 @@ class CreateFurtherInformationRequest
   attr_reader :assessment, :user
 
   delegate :application_form, to: :assessment
+
+  def create_and_request
+    ActiveRecord::Base.transaction do
+      requestable =
+        FurtherInformationRequest.create!(
+          assessment:,
+          items:
+            FurtherInformationRequestItemsFactory.call(
+              assessment_sections: assessment.sections,
+            ),
+        )
+
+      RequestRequestable.call(requestable:, user:)
+
+      application_form.reload
+
+      ApplicationFormStatusUpdater.call(application_form:, user:)
+
+      requestable
+    end
+  end
+
+  def send_email
+    TeacherMailer
+      .with(application_form:)
+      .further_information_requested
+      .deliver_later
+  end
 end
