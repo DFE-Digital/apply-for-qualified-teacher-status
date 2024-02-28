@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_27_142809) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_28_140334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -159,6 +159,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_27_142809) do
     t.bigint "qualification_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "review_passed"
+    t.datetime "reviewed_at"
+    t.text "review_note", default: "", null: false
     t.index ["assessment_id"], name: "index_consent_requests_on_assessment_id"
     t.index ["qualification_id"], name: "index_consent_requests_on_qualification_id"
   end

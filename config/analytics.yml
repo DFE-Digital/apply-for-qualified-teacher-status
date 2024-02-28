@@ -95,6 +95,9 @@
     - qualification_id
     - received_at
     - requested_at
+    - review_note
+    - review_passed
+    - reviewed_at
     - unsigned_document_downloaded
     - updated_at
     - verified_at
