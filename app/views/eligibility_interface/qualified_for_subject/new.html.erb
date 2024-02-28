@@ -4,7 +4,7 @@
 <%= form_with model: @form, url: [:eligibility_interface, :qualified_for_subject] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-l">Does your teaching qualification certificate or university degree certificate state that you’re qualified to teach one of the following subjects?</h1>
+  <h1 class="govuk-heading-l">Does your teaching qualification certificate or bachelor’s degree certificate state that you’re qualified to teach one of the following subjects?</h1>
 
   <%= govuk_inset_text do %>
     <p class="govuk-body">
@@ -44,18 +44,23 @@
     We <strong>cannot</strong> accept similar or related subjects, for example, economics instead of maths, agricultural science instead of biology or engineering instead of physics.
   </p>
 
-  <%= f.govuk_collection_radio_buttons(
-    :qualified_for_subject,
-    [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
-    :value,
-    :label,
-    legend: nil,
-  ) %>
+  <%= f.govuk_collection_radio_buttons :qualified_for_subject,
+                                       [OpenStruct.new(label: "Yes", value: true), OpenStruct.new(label: "No", value: false)],
+                                       :value,
+                                       :label,
+                                       legend: nil %>
 
-  <%= govuk_details(
-    summary_text: "What we mean by qualified",
-    text: "Qualified means <strong>EITHER</strong> your teaching qualification specifically says that you can teach one of these subjects, <strong>OR</strong> your university degree certificate shows that at least 50% of your degree was in one of them.".html_safe,
-  ) %>
+  <%= govuk_details(summary_text: "What we mean by qualified") do %>
+    <p>Qualified means:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Your teaching qualification specifically states that you can teach one of the subjects listed above, for example, the subject is in the title of your teaching qualification</li>
+      <li>Your teaching qualification certificate shows at least 25% of your teaching qualification was in one of the listed subjects</li>
+      <li>Your bachelor’s degree certificate shows at least 50% of your degree was in one of the listed subjects</li>
+    </ul>
+
+    <p>We accept any of the above as evidence you are qualified to teach a specific subject.</p>
+  <% end %>
 
   <%= f.govuk_submit %>
 <% end %>
