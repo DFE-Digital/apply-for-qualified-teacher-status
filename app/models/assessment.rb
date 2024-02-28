@@ -122,19 +122,6 @@ class Assessment < ApplicationRecord
     elsif request_further_information?
       all_further_information_requests_reviewed? &&
         any_further_information_requests_failed?
-    elsif verify?
-      if professional_standing_request_verify_failed? ||
-           any_reference_requests_verify_failed? ||
-           any_consent_requests_verify_failed?
-        return false
-      end
-
-      return false unless all_consent_requests_verified?
-      return false unless all_qualification_requests_reviewed?
-      return false unless all_reference_requests_verified?
-      return false unless professional_standing_request_verified?
-
-      any_qualification_requests_review_failed?
     elsif review?
       return false unless all_consent_requests_reviewed?
       return false unless all_qualification_requests_reviewed?
@@ -165,7 +152,7 @@ class Assessment < ApplicationRecord
     return false unless application_form.created_under_new_regulations?
 
     return false unless all_consent_requests_verified?
-    return false unless all_qualification_requests_reviewed?
+    return false unless all_qualification_requests_verified?
     return false unless all_reference_requests_verified?
     return false unless professional_standing_request_verified?
 
@@ -213,10 +200,6 @@ class Assessment < ApplicationRecord
 
   def any_not_preliminary_section_finished?
     sections.not_preliminary.any?(&:finished?)
-  end
-
-  def all_reference_requests_verified?
-    reference_requests.all?(&:verified?)
   end
 
   def enough_reference_requests_verify_passed?
@@ -287,12 +270,16 @@ class Assessment < ApplicationRecord
     ).enough_for_submission?
   end
 
-  def any_reference_requests_verify_failed?
-    reference_requests.any?(&:verify_failed?)
-  end
-
   def any_reference_requests_review_failed?
     reference_requests.any?(&:review_failed?)
+  end
+
+  def all_reference_requests_verified?
+    reference_requests.all?(&:verified?)
+  end
+
+  def any_reference_requests_verify_failed?
+    reference_requests.any?(&:verify_failed?)
   end
 
   def all_consent_requests_reviewed?
@@ -326,15 +313,27 @@ class Assessment < ApplicationRecord
     if all_consent_requests_verified? && any_consent_requests_verify_failed?
       return true
     end
-    qualification_requests.all?(&:reviewed?)
+
+    qualification_requests.where(verify_passed: false).all?(&:reviewed?)
   end
 
   def all_qualification_requests_review_passed?
-    qualification_requests.all?(&:review_passed?)
+    qualification_requests.all? do |qualification_request|
+      qualification_request.verify_passed? ||
+        qualification_request.review_passed?
+    end
   end
 
   def any_qualification_requests_review_failed?
     qualification_requests.any?(&:review_failed?)
+  end
+
+  def all_qualification_requests_verified?
+    qualification_requests.all?(&:verified?)
+  end
+
+  def all_qualification_requests_verify_passed?
+    qualification_requests.all?(&:verify_passed?)
   end
 
   def any_qualification_requests_verify_failed?

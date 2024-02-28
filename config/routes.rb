@@ -147,7 +147,7 @@ Rails.application.routes.draw do
 
         resources :qualification_requests,
                   path: "/qualification-requests",
-                  only: %i[index edit update] do
+                  only: %i[index] do
           collection do
             get "consent-methods",
                 to: "qualification_requests#index_consent_methods"
@@ -169,6 +169,11 @@ Rails.application.routes.draw do
                  to: "qualification_requests#update_consent_method"
             get "request", to: "qualification_requests#edit_request"
             post "request", to: "qualification_requests#update_request"
+            get "verify", to: "qualification_requests#edit_verify"
+            post "verify", to: "qualification_requests#update_verify"
+            get "verify-failed", to: "qualification_requests#edit_verify_failed"
+            post "verify-failed",
+                 to: "qualification_requests#update_verify_failed"
             get "review", to: "qualification_requests#edit_review"
             post "review", to: "qualification_requests#update_review"
           end

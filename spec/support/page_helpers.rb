@@ -112,11 +112,6 @@ module PageHelpers
       PageObjects::AssessorInterface::EditApplication.new
   end
 
-  def assessor_edit_qualification_request_page
-    @assessor_edit_qualification_request_page ||=
-      PageObjects::AssessorInterface::EditQualificationRequest.new
-  end
-
   def assessor_edit_work_history_page
     @assessor_edit_work_history_page ||=
       PageObjects::AssessorInterface::EditWorkHistory.new
@@ -270,6 +265,11 @@ module PageHelpers
       PageObjects::AssessorInterface::VerifyFailedProfessionalStandingRequest.new
   end
 
+  def assessor_verify_failed_qualification_request_page
+    @assessor_verify_failed_qualification_request_page ||=
+      PageObjects::AssessorInterface::VerifyFailedQualificationRequest.new
+  end
+
   def assessor_verify_failed_reference_request_page
     @assessor_verify_failed_reference_request_page ||=
       PageObjects::AssessorInterface::VerifyFailedReferenceRequest.new
@@ -278,6 +278,11 @@ module PageHelpers
   def assessor_verify_professional_standing_request_page
     @assessor_verify_professional_standing_request_page ||=
       PageObjects::AssessorInterface::VerifyProfessionalStandingRequest.new
+  end
+
+  def assessor_verify_qualification_request_page
+    @assessor_verify_qualification_request_page ||=
+      PageObjects::AssessorInterface::VerifyQualificationRequest.new
   end
 
   def assessor_verify_qualifications_assessment_recommendation_verify_page
