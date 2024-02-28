@@ -26,16 +26,6 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_i_submit_unchecked_on_the_request_form
-    then_i_see_the(
-      :assessor_professional_standing_request_page,
-      reference:,
-      assessment_id:,
-    )
-    and_the_request_lops_verification_status_is("NOT STARTED")
-    and_the_record_lops_response_status_is("CANNOT START")
-
-    when_i_click_request_lops_verification
     and_i_submit_checked_on_the_request_form
     then_i_see_the(
       :assessor_professional_standing_request_page,

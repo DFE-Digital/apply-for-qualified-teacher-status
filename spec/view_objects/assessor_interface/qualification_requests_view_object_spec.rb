@@ -72,7 +72,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             },
             {
               name: "Request Ecctis verification",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {
@@ -134,7 +134,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             },
             {
               name: "Request Ecctis verification",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {
@@ -180,7 +180,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             },
             {
               name: "Request Ecctis verification",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {

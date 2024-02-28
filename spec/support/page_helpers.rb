@@ -196,6 +196,11 @@ module PageHelpers
       PageObjects::AssessorInterface::RequestProfessionalStandingRequest.new
   end
 
+  def assessor_request_qualification_request_page
+    @assessor_request_qualification_request_page ||=
+      PageObjects::AssessorInterface::RequestQualificationRequest.new
+  end
+
   def assessor_reverse_decision_page
     @assessor_reverse_decision_page ||=
       PageObjects::AssessorInterface::ReverseDecision.new

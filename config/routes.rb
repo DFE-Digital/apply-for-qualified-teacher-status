@@ -168,7 +168,8 @@ Rails.application.routes.draw do
                 to: "qualification_requests#edit_consent_method"
             post "consent-method",
                  to: "qualification_requests#update_consent_method"
-
+            get "request", to: "qualification_requests#edit_request"
+            post "request", to: "qualification_requests#update_request"
             get "review", to: "qualification_requests#edit_review"
             post "review", to: "qualification_requests#update_review"
           end

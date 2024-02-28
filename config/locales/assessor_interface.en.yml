@@ -376,7 +376,7 @@ en:
         assessor_interface/requestable_request_form:
           attributes:
             passed:
-              inclusion: Select whether you are satisfied that this is completed
+              blank: Confirm you have requested verification for this
         assessor_interface/requestable_review_form:
           attributes:
             passed:
