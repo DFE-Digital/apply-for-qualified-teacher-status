@@ -35,15 +35,15 @@ module Requestable
   end
 
   def reviewed?
-    try(:review_passed) != nil
+    review_passed != nil
   end
 
   def review_passed?
-    try(:review_passed) == true
+    review_passed == true
   end
 
   def review_failed?
-    try(:review_passed) == false
+    review_passed == false
   end
 
   def verified?
