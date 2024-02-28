@@ -2,9 +2,9 @@
 
 module PageObjects
   module AssessorInterface
-    class RequestProfessionalStandingRequest < RequestRequestablePage
+    class RequestQualificationRequest < RequestRequestablePage
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
-                "/professional-standing-request/request"
+                "/qualification-requests/{id}/request"
     end
   end
 end

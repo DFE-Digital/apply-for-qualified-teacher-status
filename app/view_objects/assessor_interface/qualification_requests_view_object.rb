@@ -242,7 +242,16 @@ module AssessorInterface
       [
         {
           name: "Request Ecctis verification",
-          link: "#",
+          link:
+            if can_start && !qualification_request.requested?
+              [
+                :request,
+                :assessor_interface,
+                application_form,
+                assessment,
+                qualification_request,
+              ]
+            end,
           status:
             if can_start
               qualification_request.requested? ? "completed" : "not_started"
@@ -255,7 +264,7 @@ module AssessorInterface
           link: "#",
           status:
             if can_start && qualification_request.requested?
-              qualification_request.received? ? "completed" : "not_started"
+              qualification_request.received? ? "completed" : "waiting_on"
             else
               "cannot_start"
             end,

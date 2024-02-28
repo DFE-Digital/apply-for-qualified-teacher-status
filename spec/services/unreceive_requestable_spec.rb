@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe UnreceiveRequestable do
   let(:application_form) do
-    create(:application_form, :submitted, statuses: %w[received_qualification])
+    create(:application_form, :submitted, statuses: %w[received_ecctis])
   end
   let(:requestable) do
     create(

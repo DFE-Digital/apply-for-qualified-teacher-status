@@ -88,6 +88,33 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     then_i_see_the(:assessor_application_page, reference:)
   end
 
+  it "request ecctis" do
+    given_the_admin_has_accepted_the_consent_requests
+
+    when_i_visit_the(:assessor_application_page, reference:)
+    and_i_click_the_verify_qualifications_task
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_request_ecctis_verification_task_is_not_started
+    and_the_record_ecctis_response_task_is_cannot_start
+
+    when_i_click_the_request_ecctis_verification_task
+    then_i_see_the(:assessor_request_qualification_request_page)
+    and_i_submit_unchecked_on_the_request_form
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_request_ecctis_verification_task_is_not_started
+    and_the_record_ecctis_response_task_is_cannot_start
+
+    when_i_click_the_request_ecctis_verification_task
+    then_i_see_the(:assessor_request_qualification_request_page)
+    and_i_submit_checked_on_the_request_form
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_request_ecctis_verification_task_is_completed
+    and_the_record_ecctis_response_task_is_waiting_on
+
+    when_i_go_back_to_overview
+    then_i_see_the(:assessor_application_page, reference:)
+  end
+
   private
 
   def given_there_is_an_application_form_with_qualification_request
@@ -100,6 +127,11 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
       qualification = qualification_request.qualification
       create(:consent_request, :received, assessment:, qualification:)
     end
+  end
+
+  def given_the_admin_has_accepted_the_consent_requests
+    assessment.update!(unsigned_consent_document_generated: true)
+    assessment.qualification_requests.each(&:consent_method_unsigned!)
   end
 
   def and_i_click_the_verify_qualifications_task
@@ -236,6 +268,40 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     expect(record_applicant_response_task_item.status_tag.text).to eq("REVIEW")
   end
 
+  def and_the_request_ecctis_verification_task_is_not_started
+    expect(request_ecctis_verification_task_item.status_tag.text).to eq(
+      "NOT STARTED",
+    )
+  end
+
+  def and_the_record_ecctis_response_task_is_cannot_start
+    expect(record_ecctis_response_task_item.status_tag.text).to eq(
+      "CANNOT START",
+    )
+  end
+
+  def when_i_click_the_request_ecctis_verification_task
+    request_ecctis_verification_task_item.click
+  end
+
+  def and_i_submit_checked_on_the_request_form
+    assessor_request_qualification_request_page.submit_checked
+  end
+
+  def and_i_submit_unchecked_on_the_request_form
+    assessor_request_qualification_request_page.submit_unchecked
+  end
+
+  def and_the_request_ecctis_verification_task_is_completed
+    expect(request_ecctis_verification_task_item.status_tag.text).to eq(
+      "COMPLETED",
+    )
+  end
+
+  def and_the_record_ecctis_response_task_is_waiting_on
+    expect(record_ecctis_response_task_item.status_tag.text).to eq("WAITING ON")
+  end
+
   def when_i_go_back_to_overview
     assessor_qualification_requests_page.continue_button.click
   end
@@ -267,6 +333,18 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   def record_applicant_response_task_item
     assessor_qualification_requests_page.task_lists.third.find_item(
       "Record applicant response",
+    )
+  end
+
+  def request_ecctis_verification_task_item
+    assessor_qualification_requests_page.task_lists.second.find_item(
+      "Request Ecctis verification",
+    )
+  end
+
+  def record_ecctis_response_task_item
+    assessor_qualification_requests_page.task_lists.second.find_item(
+      "Record Ecctis response",
     )
   end
 

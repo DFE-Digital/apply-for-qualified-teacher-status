@@ -19,6 +19,8 @@ module AssessorInterface
                     update
                     edit_consent_method
                     update_consent_method
+                    edit_request
+                    update_request
                     edit_review
                     update_review
                   ]
@@ -165,6 +167,37 @@ module AssessorInterface
         end
       else
         render :edit_consent_method, status: :unprocessable_entity
+      end
+    end
+
+    def edit_request
+      @form =
+        RequestableRequestForm.new(
+          requestable:,
+          user: current_staff,
+          passed: qualification_request.requested?,
+        )
+    end
+
+    def update_request
+      @form =
+        RequestableRequestForm.new(
+          requestable:,
+          user: current_staff,
+          passed:
+            params.dig(:assessor_interface_requestable_request_form, :passed) ||
+              false,
+        )
+
+      if @form.save
+        redirect_to [
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      :qualification_requests,
+                    ]
+      else
+        render :edit_request, status: :unprocessable_entity
       end
     end
 

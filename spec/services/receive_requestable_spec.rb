@@ -30,7 +30,7 @@ RSpec.describe ReceiveRequestable do
 
   it "changes the application form status" do
     expect { call }.to change { application_form.reload.statuses }.to(
-      %w[received_qualification],
+      %w[received_ecctis],
     )
   end
 
