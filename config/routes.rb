@@ -102,6 +102,13 @@ Rails.application.routes.draw do
                  "assessment_recommendation_verify#update_professional_standing"
         end
 
+        resources :consent_requests, path: "/consent-requests", only: [] do
+          member do
+            get "review", to: "consent_requests#edit_review"
+            post "review", to: "consent_requests#update_review"
+          end
+        end
+
         resources :further_information_requests,
                   path: "/further-information-requests",
                   only: %i[new create edit update] do

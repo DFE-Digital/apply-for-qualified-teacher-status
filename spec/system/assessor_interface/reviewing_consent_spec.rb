@@ -33,6 +33,37 @@ RSpec.describe "Assessor reviewing references", type: :system do
     )
     and_i_see_the_consent_not_started
 
+    when_i_click_on_the_consent
+    then_i_see_the(
+      :assessor_review_consent_request_page,
+      reference:,
+      assessment_id:,
+    )
+    and_i_see_the_overdue_status
+
+    when_i_submit_yes_on_the_review_form
+    then_i_see_the(
+      :assessor_review_verifications_page,
+      reference:,
+      assessment_id:,
+    )
+    and_i_see_the_consent_accepted
+
+    when_i_click_on_the_consent
+    then_i_see_the(
+      :assessor_review_consent_request_page,
+      reference:,
+      assessment_id:,
+    )
+
+    when_i_submit_no_on_the_review_form
+    then_i_see_the(
+      :assessor_review_verifications_page,
+      reference:,
+      assessment_id:,
+    )
+    and_i_see_the_consent_rejected
+
     when_i_click_on_back_to_overview
     then_i_see_the(:assessor_application_page, reference:)
 
@@ -75,10 +106,22 @@ RSpec.describe "Assessor reviewing references", type: :system do
     assessor_application_page.assessment_decision_task.click
   end
 
+  def when_i_click_on_the_consent
+    consent_task_item.click
+  end
+
   def and_i_see_the_overdue_status
     expect(assessor_review_verifications_page).to have_content(
       "This qualifications’s status has changed from OVERDUE to RECEIVED",
     )
+  end
+
+  def when_i_submit_yes_on_the_review_form
+    assessor_review_reference_request_page.submit_yes
+  end
+
+  def when_i_submit_no_on_the_review_form
+    assessor_review_reference_request_page.submit_no(note: "A note.")
   end
 
   def when_i_click_on_back_to_overview
@@ -86,9 +129,21 @@ RSpec.describe "Assessor reviewing references", type: :system do
   end
 
   def and_i_see_the_consent_not_started
-    item =
-      assessor_review_verifications_page.task_list.find_item("BSc Teaching")
-    expect(item.status_tag.text).to eq("NOT STARTED")
+    expect(consent_task_item.status_tag.text).to eq("NOT STARTED")
+  end
+
+  def and_i_see_the_consent_accepted
+    expect(consent_task_item.status_tag.text).to eq("ACCEPTED")
+  end
+
+  def and_i_see_the_consent_rejected
+    expect(consent_task_item.status_tag.text).to eq("REJECTED")
+  end
+
+  def consent_task_item
+    assessor_review_verifications_page.task_list.find_item(
+      "BSc Teaching (University of Teaching)",
+    )
   end
 
   def application_form
@@ -101,6 +156,7 @@ RSpec.describe "Assessor reviewing references", type: :system do
             :completed,
             application_form:,
             title: "BSc Teaching",
+            institution_name: "University of Teaching",
           )
         assessment = create(:assessment, :verify, application_form:)
         create(

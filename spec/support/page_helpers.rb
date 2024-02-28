@@ -186,6 +186,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ReverseDecision.new
   end
 
+  def assessor_review_consent_request_page
+    @assessor_review_consent_request_page ||=
+      PageObjects::AssessorInterface::ReviewConsentRequest.new
+  end
+
   def assessor_review_further_information_request_page
     @assessor_review_further_information_request_page ||=
       PageObjects::AssessorInterface::ReviewFurtherInformationRequest.new
