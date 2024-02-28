@@ -21,11 +21,17 @@
       ],
     }
   end,
-  if @qualification_requests.present?
+  if @consent_requests.present? || @qualification_requests.present?
     {
       title: "Qualifications",
       indentation: false,
-      items: @qualification_requests.map do |qualification_request|
+      items: @consent_requests.map do |consent_request|
+        {
+          name: qualification_title(consent_request.qualification),
+          link: [:review, :assessor_interface, @application_form, @assessment, consent_request],
+          status: consent_request.review_status,
+        }
+      end + @qualification_requests.map do |qualification_request|
         {
           name: qualification_title(qualification_request.qualification),
           link: [:review, :assessor_interface, @application_form, @assessment, qualification_request],

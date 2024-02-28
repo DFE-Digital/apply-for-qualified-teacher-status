@@ -85,7 +85,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
            :teaching_authority_provides_written_statement,
            :work_histories,
            to: :application_form
-  delegate :professional_standing_request,
+  delegate :consent_requests,
+           :professional_standing_request,
            :qualification_requests,
            :reference_requests,
            to: :assessment
@@ -370,7 +371,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
     if (
          !teaching_authority_provides_written_statement &&
            professional_standing_request&.verify_failed?
-       ) || qualification_requests.any?(&:verify_failed?) ||
+       ) || consent_requests.any?(&:verify_failed?) ||
+         qualification_requests.any?(&:verify_failed?) ||
          reference_requests.any?(&:verify_failed?)
       {
         title:
@@ -398,7 +400,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
         elsif (
               !teaching_authority_provides_written_statement &&
                 professional_standing_request&.reviewed?
-            ) || reference_requests.any?(:reviewed?)
+            ) || consent_requests.any?(:reviewed?) ||
+              reference_requests.any?(:reviewed?)
           :in_progress
         else
           :not_started
