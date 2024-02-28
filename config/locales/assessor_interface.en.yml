@@ -363,16 +363,6 @@ en:
               inclusion: Select whether you received a response about this letter of professional standing
             expired:
               inclusion: Select whether you want to mark this for review
-        assessor_interface/qualification_request_form:
-          attributes:
-            received:
-              inclusion: Select whether you have received a response about this qualification
-            passed:
-              inclusion: Select whether the response shows that the qualification is legitimate
-            failure_assessor_note:
-              blank: Enter why you selected ‘No’
-            failed:
-              inclusion: Select whether you want to mark this qualification as ‘Rejected’
         assessor_interface/requestable_request_form:
           attributes:
             passed:
@@ -386,13 +376,13 @@ en:
         assessor_interface/requestable_verify_failed_form:
           attributes:
             note:
-              blank: Add a note explaining why you are sending this for review
+              blank: Tell us why you are sending this response for review
         assessor_interface/requestable_verify_passed_form:
           attributes:
             passed:
-              inclusion: Tell us if the response confirms that it is legitimate
+              inclusion: Tell us if the response shows that this is valid
             received:
-              inclusion: Tell us if you have received a response that's not valid, or if you have not received a response
+              inclusion: Tell us if you have received a valid response
         assessor_interface/select_qualifications_form:
           attributes:
             qualification_ids:

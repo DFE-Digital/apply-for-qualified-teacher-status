@@ -9,6 +9,7 @@ module Requestable
     belongs_to :assessment
 
     scope :requested, -> { where.not(requested_at: nil) }
+    scope :not_requested, -> { where(requested_at: nil) }
     scope :received, -> { where.not(received_at: nil) }
     scope :not_received, -> { where(received_at: nil) }
     scope :respondable,
@@ -24,6 +25,10 @@ module Requestable
 
   def requested?
     requested_at != nil
+  end
+
+  def not_requested?
+    requested_at.nil?
   end
 
   def received!

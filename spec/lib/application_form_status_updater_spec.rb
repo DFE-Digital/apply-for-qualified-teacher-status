@@ -212,7 +212,12 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:qualification_request, :requested, assessment:)
+        create(
+          :qualification_request,
+          :requested,
+          assessment:,
+          consent_method: "unsigned",
+        )
       end
 
       include_examples "changes action required by", "external"

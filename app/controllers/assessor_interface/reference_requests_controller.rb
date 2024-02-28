@@ -43,13 +43,20 @@ module AssessorInterface
           requestable:,
           user: current_staff,
           passed: requestable.verify_passed,
+          received: requestable.received?,
         )
     end
 
     def update_verify
+      passed =
+        params.dig(:assessor_interface_requestable_verify_passed_form, :passed)
+
       @form =
         RequestableVerifyPassedForm.new(
-          verify_passed_form_params.merge(requestable:, user: current_staff),
+          requestable:,
+          user: current_staff,
+          passed:,
+          received: requestable.received?,
         )
 
       if @form.save
@@ -113,12 +120,6 @@ module AssessorInterface
       params.require(:assessor_interface_requestable_review_form).permit(
         :passed,
         :note,
-      )
-    end
-
-    def verify_passed_form_params
-      params.require(:assessor_interface_requestable_verify_passed_form).permit(
-        :passed,
       )
     end
 

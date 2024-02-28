@@ -395,7 +395,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
               !teaching_authority_provides_written_statement &&
                 professional_standing_request&.reviewed?
             ) || consent_requests.any?(:reviewed?) ||
-              reference_requests.any?(:reviewed?)
+              reference_requests.any?(:reviewed?) ||
+              qualification_requests.any?(:reviewed?)
           :in_progress
         else
           :not_started

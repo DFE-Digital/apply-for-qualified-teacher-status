@@ -262,21 +262,27 @@ module AssessorInterface
               ]
             end,
           status:
-            if can_start
-              qualification_request.requested? ? "completed" : "not_started"
+            if qualification_request.requested?
+              "completed"
+            elsif can_start
+              "not_started"
             else
               "cannot_start"
             end,
         },
         {
           name: "Record Ecctis response",
-          link: "#",
-          status:
+          link:
             if qualification_request.requested?
-              qualification_request.received? ? "completed" : "waiting_on"
-            else
-              "cannot_start"
+              [
+                :verify,
+                :assessor_interface,
+                application_form,
+                assessment,
+                qualification_request,
+              ]
             end,
+          status: qualification_request.status,
         },
       ]
     end

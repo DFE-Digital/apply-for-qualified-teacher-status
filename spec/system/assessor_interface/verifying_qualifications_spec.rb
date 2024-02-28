@@ -108,6 +108,34 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     then_i_see_the(:assessor_application_page, reference:)
   end
 
+  it "ecctis received" do
+    given_the_admin_has_accepted_the_consent_requests
+    given_the_admin_has_requested_the_qualification_requests
+
+    when_i_visit_the(:assessor_application_page, reference:)
+    and_i_click_the_verify_qualifications_task
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_request_ecctis_verification_task_is_completed
+    and_the_record_ecctis_response_task_is_waiting_on
+
+    when_i_click_the_record_ecctis_response_task
+    then_i_see_the(:assessor_verify_qualification_request_page)
+    and_i_submit_yes_on_the_verify_form
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_record_ecctis_response_task_is_completed
+
+    when_i_click_the_record_ecctis_response_task
+    then_i_see_the(:assessor_verify_qualification_request_page)
+    and_i_submit_no_on_the_verify_form
+    then_i_see_the(:assessor_verify_failed_qualification_request_page)
+    and_i_submit_an_internal_note
+    then_i_see_the(:assessor_qualification_requests_page, reference:)
+    and_the_record_ecctis_response_task_is_review
+
+    when_i_go_back_to_overview
+    then_i_see_the(:assessor_application_page, reference:)
+  end
+
   private
 
   def given_there_is_an_application_form_with_qualification_request
@@ -125,6 +153,10 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
   def given_the_admin_has_accepted_the_consent_requests
     assessment.update!(unsigned_consent_document_generated: true)
     assessment.qualification_requests.each(&:consent_method_unsigned!)
+  end
+
+  def given_the_admin_has_requested_the_qualification_requests
+    assessment.qualification_requests.each(&:requested!)
   end
 
   def and_i_click_the_verify_qualifications_task
@@ -293,6 +325,30 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
 
   def and_the_record_ecctis_response_task_is_waiting_on
     expect(record_ecctis_response_task_item.status_tag.text).to eq("WAITING ON")
+  end
+
+  def when_i_click_the_record_ecctis_response_task
+    record_ecctis_response_task_item.click
+  end
+
+  def and_i_submit_yes_on_the_verify_form
+    assessor_verify_qualification_request_page.submit_yes
+  end
+
+  def and_the_record_ecctis_response_task_is_completed
+    expect(record_ecctis_response_task_item.status_tag.text).to eq("COMPLETED")
+  end
+
+  def and_i_submit_no_on_the_verify_form
+    assessor_verify_qualification_request_page.submit_no
+  end
+
+  def and_i_submit_an_internal_note
+    assessor_verify_failed_qualification_request_page.submit(note: "A note.")
+  end
+
+  def and_the_record_ecctis_response_task_is_review
+    expect(record_ecctis_response_task_item.status_tag.text).to eq("REVIEW")
   end
 
   def when_i_go_back_to_overview

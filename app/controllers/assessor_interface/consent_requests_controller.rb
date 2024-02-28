@@ -115,6 +115,7 @@ module AssessorInterface
           requestable:,
           user: current_staff,
           passed: requestable.verify_passed,
+          received: requestable.received?,
         )
     end
 
@@ -127,6 +128,7 @@ module AssessorInterface
           requestable:,
           user: current_staff,
           passed:,
+          received: requestable.received?,
         )
 
       if passed == "nil" || @form.save

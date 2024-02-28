@@ -1,0 +1,46 @@
+<% title = "Record Ecctis response" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
+
+<%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, @qualification_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h2 class="govuk-heading-m"><%= qualification_title(@qualification_request.qualification) %></h2>
+
+  <% if @qualification_request.expired? %>
+    <%= govuk_warning_text(text: "This qualification’s Ecctis response is overdue.") %>
+
+    <h2 class="govuk-heading-m">Please follow these steps</h2>
+
+    <ul class="govuk-list govuk-list--number">
+      <li>Go to Zendesk to email the applicant to remind them.</li>
+      <li>If no response, escalate to an EO.</li>
+    </ul>
+  <% else %>
+    <p class="govuk-body">
+      Only use this screen when the response from Ecctis is received.
+    </p>
+  <% end %>
+
+  <% legend = @qualification_request.expired? ?
+                "After following the steps above, have you received a valid response?" :
+                "Does the response confirm that the qualification is valid?" %>
+
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: legend } do %>
+    <%= f.govuk_radio_button :passed, :true, link_errors: true %>
+
+    <% if @qualification_request.expired? %>
+      <%= f.govuk_radio_button :passed, :false do %>
+        <%= f.govuk_radio_button :received, :true %>
+        <%= f.govuk_radio_button :received, :false %>
+      <% end %>
+    <% else %>
+      <%= f.govuk_radio_button :passed, :false %>
+    <% end %>
+  <% end %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>

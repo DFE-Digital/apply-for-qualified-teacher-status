@@ -11,7 +11,9 @@ class AssessorInterface::RequestableVerifyPassedForm
   validates :passed, inclusion: [true, false]
 
   attribute :received, :boolean
-  validates :received, inclusion: [nil, true, false]
+  validates :received,
+            inclusion: [true, false],
+            if: -> { !requestable.received? && requestable.expired? && !passed }
 
   def save
     return false if invalid?

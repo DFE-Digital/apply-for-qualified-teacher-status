@@ -15,12 +15,14 @@ module AssessorInterface
                   ]
     before_action :set_member_variables,
                   only: %i[
-                    edit
-                    update
                     edit_consent_method
                     update_consent_method
                     edit_request
                     update_request
+                    edit_verify
+                    update_verify
+                    edit_verify_failed
+                    update_verify_failed
                     edit_review
                     update_review
                   ]
@@ -77,55 +79,6 @@ module AssessorInterface
         type: "application/pdf",
         disposition: "inline",
       )
-    end
-
-    def edit
-      received =
-        if requestable.received?
-          true
-        elsif requestable.expired?
-          false
-        end
-
-      passed = (requestable.review_passed if requestable.received?)
-
-      failed =
-        if requestable.expired?
-          case requestable.review_passed
-          when true
-            false
-          when false
-            true
-          end
-        end
-
-      @form =
-        QualificationRequestForm.new(
-          requestable:,
-          user: current_staff,
-          received:,
-          passed:,
-          note: requestable.review_note,
-          failed:,
-        )
-    end
-
-    def update
-      @form =
-        QualificationRequestForm.new(
-          form_params.merge(requestable:, user: current_staff),
-        )
-
-      if @form.save
-        redirect_to [
-                      :assessor_interface,
-                      application_form,
-                      assessment,
-                      :qualification_requests,
-                    ]
-      else
-        render :edit, status: :unprocessable_entity
-      end
     end
 
     def edit_consent_method
@@ -203,6 +156,85 @@ module AssessorInterface
       end
     end
 
+    def edit_verify
+      @form =
+        RequestableVerifyPassedForm.new(
+          requestable:,
+          user: current_staff,
+          passed: requestable.verify_passed,
+          received:
+            (requestable.received? if requestable.verify_passed == false),
+        )
+    end
+
+    def update_verify
+      @form =
+        RequestableVerifyPassedForm.new(
+          requestable:,
+          user: current_staff,
+          passed:
+            params.dig(
+              :assessor_interface_requestable_verify_passed_form,
+              :passed,
+            ),
+          received:
+            params.dig(
+              :assessor_interface_requestable_verify_passed_form,
+              :received,
+            ),
+        )
+
+      if @form.save
+        if @form.passed
+          redirect_to [
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        :qualification_requests,
+                      ]
+        else
+          redirect_to [
+                        :verify_failed,
+                        :assessor_interface,
+                        application_form,
+                        assessment,
+                        qualification_request,
+                      ]
+        end
+      else
+        render :edit_verify, status: :unprocessable_entity
+      end
+    end
+
+    def edit_verify_failed
+      @form =
+        RequestableVerifyFailedForm.new(
+          requestable:,
+          user: current_staff,
+          note: requestable.verify_note,
+        )
+    end
+
+    def update_verify_failed
+      @form =
+        RequestableVerifyFailedForm.new(
+          requestable:,
+          user: current_staff,
+          **verify_failed_form_params,
+        )
+
+      if @form.save
+        redirect_to [
+                      :assessor_interface,
+                      requestable.application_form,
+                      requestable.assessment,
+                      :qualification_requests,
+                    ]
+      else
+        render :edit_verify_failed, status: :unprocessable_entity
+      end
+    end
+
     def edit_review
       @form = RequestableReviewForm.new(requestable:)
     end
@@ -212,7 +244,7 @@ module AssessorInterface
         RequestableReviewForm.new(
           requestable:,
           user: current_staff,
-          **requestable_review_form_params,
+          **review_form_params,
         )
 
       if @form.save
@@ -270,15 +302,6 @@ module AssessorInterface
       ).permit(:generated)
     end
 
-    def form_params
-      params.require(:assessor_interface_qualification_request_form).permit(
-        :received,
-        :passed,
-        :note,
-        :failed,
-      )
-    end
-
     def consent_method_form_params
       params.require(:assessor_interface_consent_method_form).permit(
         :consent_method,
@@ -291,9 +314,15 @@ module AssessorInterface
       ).permit(:original_attachment)
     end
 
-    def requestable_review_form_params
+    def review_form_params
       params.require(:assessor_interface_requestable_review_form).permit(
         :passed,
+        :note,
+      )
+    end
+
+    def verify_failed_form_params
+      params.require(:assessor_interface_requestable_verify_failed_form).permit(
         :note,
       )
     end
