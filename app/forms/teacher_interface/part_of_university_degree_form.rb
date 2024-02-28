@@ -10,6 +10,9 @@ module TeacherInterface
 
     def update_model
       qualification.update!(part_of_university_degree:)
+      application_form.update!(
+        teaching_qualification_part_of_degree: part_of_university_degree,
+      )
     end
 
     delegate :application_form, to: :qualification

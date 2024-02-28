@@ -47,6 +47,7 @@
     - submitted_at
     - teacher_id
     - teaching_authority_provides_written_statement
+    - teaching_qualification_part_of_degree
     - updated_at
     - withdrawn_at
     - work_history_status
