@@ -1,22 +1,21 @@
-<% content_for :page_title, title_with_error_prefix("Do you have a university degree?", error: @form.errors.any?) %>
+<% title = "Do you have a bachelor’s (undergraduate) degree?" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, eligibility_interface_qualifications_path %>
 
 <%= form_with model: @form, url: [:eligibility_interface, :degree] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_collection_radio_buttons(
-    :degree,
-    [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
-    :value,
-    :label,
-    legend: { size: 'l', tag: 'h1', text: 'Do you have a university degree?' },
-    hint: { text: 'Your degree could include your teaching qualification, or it could be a degree in another subject.' }
-  ) %>
+  <%= f.govuk_collection_radio_buttons :degree,
+                                       [OpenStruct.new(label: "Yes", value: true), OpenStruct.new(label: "No", value: false)],
+                                       :value,
+                                       :label,
+                                       legend: { size: "l", tag: "h1", text: title },
+                                       hint: { text: "Your degree could include your teaching qualification, or it could be a degree in another subject." } %>
 
-  <%= govuk_details(
-    summary_text: "Why we ask this",
-    text: "Teaching is a graduate-level profession in England, which means you must be able to show that you’ve completed a university degree."
-  ) %>
+  <%= govuk_details(summary_text: "Why we ask this") do %>
+    <p>Teaching is a graduate-level profession in England, which means you must be able to show that you’ve completed a bachelor’s degree.</p>
+  <% end %>
 
   <%= f.govuk_submit %>
 <% end %>

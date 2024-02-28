@@ -9,7 +9,7 @@ en:
         eligibility_interface/degree_form:
           attributes:
             degree:
-              inclusion: Tell us whether you have a university degree
+              inclusion: Tell us whether you have a bachelor’s (undergraduate) degree
         eligibility_interface/misconduct_form:
           attributes:
             misconduct:
