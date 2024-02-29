@@ -99,10 +99,12 @@ class Assessment < ApplicationRecord
         all_sections_or_further_information_requests_passed?
       elsif verify?
         enough_reference_requests_verify_passed? &&
+          all_consent_requests_verify_passed? &&
           all_qualification_requests_review_passed? &&
           professional_standing_request_verify_passed?
       elsif review?
         enough_reference_requests_review_passed? &&
+          all_consent_requests_review_passed? &&
           all_qualification_requests_review_passed? &&
           professional_standing_request_review_passed?
       else
@@ -122,22 +124,26 @@ class Assessment < ApplicationRecord
         any_further_information_requests_failed?
     elsif verify?
       if professional_standing_request_verify_failed? ||
-           any_reference_requests_verify_failed?
+           any_reference_requests_verify_failed? ||
+           any_consent_requests_verify_failed?
         return false
       end
 
-      return false unless all_reference_requests_verified?
+      return false unless all_consent_requests_verified?
       return false unless all_qualification_requests_reviewed?
+      return false unless all_reference_requests_verified?
       return false unless professional_standing_request_verified?
 
       any_qualification_requests_review_failed?
     elsif review?
-      return false unless all_reference_requests_reviewed?
+      return false unless all_consent_requests_reviewed?
       return false unless all_qualification_requests_reviewed?
+      return false unless all_reference_requests_reviewed?
       return false unless professional_standing_request_reviewed?
 
-      any_reference_requests_review_failed? ||
+      any_consent_requests_review_failed? ||
         any_qualification_requests_review_failed? ||
+        any_reference_requests_review_failed? ||
         professional_standing_request_review_failed?
     else
       false
@@ -158,11 +164,13 @@ class Assessment < ApplicationRecord
     return false unless verify?
     return false unless application_form.created_under_new_regulations?
 
-    return false unless all_reference_requests_verified?
+    return false unless all_consent_requests_verified?
     return false unless all_qualification_requests_reviewed?
+    return false unless all_reference_requests_verified?
     return false unless professional_standing_request_verified?
 
-    any_qualification_requests_verify_failed? ||
+    any_consent_requests_verify_failed? ||
+      any_qualification_requests_verify_failed? ||
       any_reference_requests_verify_failed? ||
       professional_standing_request_verify_failed?
   end
@@ -287,7 +295,37 @@ class Assessment < ApplicationRecord
     reference_requests.any?(&:review_failed?)
   end
 
+  def all_consent_requests_reviewed?
+    consent_requests.where(verify_passed: false).all?(&:reviewed?)
+  end
+
+  def any_consent_requests_review_failed?
+    consent_requests.any?(&:review_failed?)
+  end
+
+  def all_consent_requests_review_passed?
+    consent_requests.all? do |consent_request|
+      consent_request.verify_passed? || consent_request.review_passed?
+    end
+  end
+
+  def all_consent_requests_verified?
+    consent_requests.all?(&:verified?)
+  end
+
+  def any_consent_requests_verify_failed?
+    consent_requests.any?(&:verify_failed?)
+  end
+
+  def all_consent_requests_verify_passed?
+    consent_requests.all?(&:verify_passed?)
+  end
+
   def all_qualification_requests_reviewed?
+    # we can skip qualifications if consent is invalid
+    if all_consent_requests_verified? && any_consent_requests_verify_failed?
+      return true
+    end
     qualification_requests.all?(&:reviewed?)
   end
 
