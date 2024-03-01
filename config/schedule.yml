@@ -53,3 +53,7 @@ analytics_entity_table_check:
 fetch_malware_scan_results:
   cron: "*/30 * * * *"
   class: FetchMalwareScanResultsJob
+
+check_for_consent_reminders:
+  cron: "0 2 * * *"
+  class: CheckForConsentRemindersJob
