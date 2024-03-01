@@ -117,12 +117,7 @@ RSpec.describe DocumentContinueRedirection do
 
       it do
         is_expected.to eq(
-          [
-            :part_of_university_degree,
-            :teacher_interface,
-            :application_form,
-            qualification,
-          ],
+          %i[part_of_degree teacher_interface application_form qualifications],
         )
       end
     end

@@ -88,13 +88,21 @@ RSpec.describe Qualification, type: :model do
       end
 
       context "and qualification part of degree" do
-        before { qualification.update!(part_of_university_degree: true) }
+        before do
+          qualification.application_form.update!(
+            teaching_qualification_part_of_degree: true,
+          )
+        end
 
         it { is_expected.to be true }
       end
 
       context "and qualification not part of degree" do
-        before { qualification.update!(part_of_university_degree: false) }
+        before do
+          qualification.application_form.update!(
+            teaching_qualification_part_of_degree: false,
+          )
+        end
 
         it { is_expected.to be false }
 
@@ -125,6 +133,10 @@ RSpec.describe Qualification, type: :model do
 
     context "with a complete qualification" do
       before do
+        qualification.application_form.update!(
+          teaching_qualification_part_of_degree: true,
+        )
+
         qualification.update!(
           title: "Title",
           institution_name: "Institution name",
@@ -132,7 +144,6 @@ RSpec.describe Qualification, type: :model do
           start_date: Date.new(2020, 1, 1),
           complete_date: Date.new(2021, 1, 1),
           certificate_date: Date.new(2021, 1, 1),
-          part_of_university_degree: true,
         )
 
         create(:upload, document: qualification.certificate_document)

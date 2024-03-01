@@ -51,9 +51,8 @@ class Qualification < ApplicationRecord
   def can_delete?
     return false if is_teaching_qualification?
 
-    part_of_university_degree =
-      application_form.teaching_qualification&.part_of_university_degree
-    return true if part_of_university_degree.nil? || part_of_university_degree
+    part_of_degree = application_form.teaching_qualification_part_of_degree
+    return true if part_of_degree.nil? || part_of_degree
 
     application_form.qualifications.count > 2
   end
@@ -70,8 +69,9 @@ class Qualification < ApplicationRecord
       transcript_document.completed?,
     ]
 
-    if is_teaching_qualification? && part_of_university_degree != false
-      values.push(part_of_university_degree)
+    if is_teaching_qualification? &&
+         application_form.teaching_qualification_part_of_degree != false
+      values.push(application_form.teaching_qualification_part_of_degree)
     end
 
     values.all?(&:present?)

@@ -254,6 +254,10 @@ en:
         subject_1: Subject 1
         subject_2: Subject 2 (optional)
         subject_3: Subject 3 (optional)
+      teacher_interface_teaching_qualification_part_of_degree_form:
+        teaching_qualification_part_of_degree_options:
+          true: "Yes"
+          false: "No"
       teacher_interface_work_history_contact_form:
         contact_name: This person’s full name
         contact_job: This person’s job title
@@ -330,6 +334,8 @@ en:
         reports_response: Was the applicant responsible for assessing and reporting on the progress of the students?
       teacher_interface_reference_request_satisfied_response_form:
         satisfied_response: Are you satisfied that the applicant is suitable to work with children?
+      teacher_interface_teaching_qualification_part_of_degree_form:
+        teaching_qualification_part_of_degree: Was this qualification part of your university degree?
       teacher_interface_work_history_school_form:
         start_date: When did you start this role?
         still_employed: Are you still employed at this school?

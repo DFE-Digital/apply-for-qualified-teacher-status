@@ -266,17 +266,14 @@ Rails.application.routes.draw do
 
           get "add_another", to: "qualifications#add_another"
           post "add_another", to: "qualifications#submit_add_another"
+
+          get "part-of-degree", to: "qualifications#edit_part_of_degree"
+          post "part-of-degree", to: "qualifications#update_part_of_degree"
         end
 
         member do
           get "delete"
-
           get "check", to: "qualifications#check_member"
-
-          get "part_of_university_degree",
-              to: "qualifications#edit_part_of_university_degree"
-          post "part_of_university_degree",
-               to: "qualifications#update_part_of_university_degree"
         end
       end
 

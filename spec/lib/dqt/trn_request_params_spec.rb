@@ -17,6 +17,7 @@ RSpec.describe DQT::TRNRequestParams do
         date_of_birth: Date.new(1960, 1, 1),
         given_names: "Given",
         family_name: "Family",
+        teaching_qualification_part_of_degree: true,
       )
     end
 

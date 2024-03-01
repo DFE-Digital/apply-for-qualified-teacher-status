@@ -80,13 +80,11 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "with all complete qualifications and not part of university degree" do
         let(:application_form) do
-          create(:application_form).tap do |application_form|
-            create(
-              :qualification,
-              :completed,
-              part_of_university_degree: false,
-              application_form:,
-            )
+          create(
+            :application_form,
+            teaching_qualification_part_of_degree: false,
+          ).tap do |application_form|
+            create(:qualification, :completed, application_form:)
             create(:qualification, :completed, application_form:)
           end
         end
@@ -95,13 +93,11 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "with an incomplete qualification" do
         let(:application_form) do
-          create(:application_form).tap do |application_form|
-            create(
-              :qualification,
-              :completed,
-              part_of_university_degree: true,
-              application_form:,
-            )
+          create(
+            :application_form,
+            teaching_qualification_part_of_degree: true,
+          ).tap do |application_form|
+            create(:qualification, :completed, application_form:)
           end
         end
         it { is_expected.to eq("completed") }

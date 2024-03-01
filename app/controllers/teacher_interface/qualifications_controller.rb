@@ -77,6 +77,39 @@ module TeacherInterface
       )
     end
 
+    def edit_part_of_degree
+      @form =
+        TeachingQualificationPartOfDegreeForm.new(
+          application_form:,
+          teaching_qualification_part_of_degree:
+            application_form.teaching_qualification_part_of_degree,
+        )
+    end
+
+    def update_part_of_degree
+      @form =
+        TeachingQualificationPartOfDegreeForm.new(
+          part_of_degree_form_params.merge(application_form:),
+        )
+
+      qualification = application_form.teaching_qualification
+
+      handle_application_form_section(
+        form: @form,
+        check_identifier: check_member_identifier(id: qualification.id),
+        if_success_then_redirect: ->(check_path) do
+          if @form.teaching_qualification_part_of_degree == false &&
+               application_form.degree_qualifications.empty?
+            application_form.qualifications.create!
+          end
+
+          check_path ||
+            [:check, :teacher_interface, :application_form, qualification]
+        end,
+        if_failure_then_render: :edit_part_of_degree,
+      )
+    end
+
     def add_another
     end
 
@@ -146,40 +179,6 @@ module TeacherInterface
       )
     end
 
-    def edit_part_of_university_degree
-      @qualification = qualification
-
-      @form =
-        PartOfUniversityDegreeForm.new(
-          qualification:,
-          part_of_university_degree: qualification.part_of_university_degree,
-        )
-    end
-
-    def update_part_of_university_degree
-      @qualification = qualification
-
-      @form =
-        PartOfUniversityDegreeForm.new(
-          part_of_university_degree_form_params.merge(qualification:),
-        )
-
-      handle_application_form_section(
-        form: @form,
-        check_identifier: check_member_identifier,
-        if_success_then_redirect: ->(check_path) do
-          if @form.part_of_university_degree == false &&
-               application_form.degree_qualifications.empty?
-            application_form.qualifications.create!
-          end
-
-          check_path ||
-            [:check, :teacher_interface, :application_form, qualification]
-        end,
-        if_failure_then_render: :edit_part_of_university_degree,
-      )
-    end
-
     def check_member
       @qualification = qualification
 
@@ -225,14 +224,14 @@ module TeacherInterface
       )
     end
 
-    def part_of_university_degree_form_params
-      params.require(:teacher_interface_part_of_university_degree_form).permit(
-        :part_of_university_degree,
-      )
+    def part_of_degree_form_params
+      params.require(
+        :teacher_interface_teaching_qualification_part_of_degree_form,
+      ).permit(:teaching_qualification_part_of_degree)
     end
 
-    def check_member_identifier
-      "qualification:#{qualification.id}"
+    def check_member_identifier(id: nil)
+      "qualification:#{id || qualification.id}"
     end
   end
 end

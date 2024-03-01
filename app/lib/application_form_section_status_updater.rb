@@ -79,9 +79,8 @@ class ApplicationFormSectionStatusUpdater
   def qualifications_status
     return :not_started if qualifications.empty?
 
-    part_of_university_degree = teaching_qualification.part_of_university_degree
-    if part_of_university_degree.nil? ||
-         (!part_of_university_degree && qualifications.count == 1)
+    part_of_degree = application_form.teaching_qualification_part_of_degree
+    if part_of_degree.nil? || (!part_of_degree && qualifications.count == 1)
       return :in_progress
     end
 
