@@ -326,7 +326,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_28_140334) do
     t.date "certificate_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "part_of_university_degree"
     t.index ["application_form_id"], name: "index_qualifications_on_application_form_id"
   end
 
