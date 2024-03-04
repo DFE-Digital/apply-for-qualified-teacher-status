@@ -76,6 +76,40 @@ RSpec.describe WorkHistoryDuration do
       it { is_expected.to eq(7) }
     end
 
+    context "with an ongoing full time work history and an awarded application form" do
+      let(:application_form) do
+        create(:application_form, awarded_at: Date.new(2020, 12, 1))
+      end
+
+      before do
+        create(
+          :work_history,
+          application_form:,
+          start_date: Date.new(2020, 1, 1),
+          hours_per_week: 30,
+        )
+      end
+
+      it { is_expected.to eq(6) }
+    end
+
+    context "with an ongoing full time work history and a declined application form" do
+      let(:application_form) do
+        create(:application_form, declined_at: Date.new(2020, 12, 1))
+      end
+
+      before do
+        create(
+          :work_history,
+          application_form:,
+          start_date: Date.new(2020, 1, 1),
+          hours_per_week: 30,
+        )
+      end
+
+      it { is_expected.to eq(6) }
+    end
+
     context "with an ongoing part time work history" do
       before do
         create(

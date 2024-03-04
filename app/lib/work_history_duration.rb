@@ -102,7 +102,8 @@ class WorkHistoryDuration
   end
 
   def work_history_end_date(work_history)
-    work_history.end_date || Time.zone.today
+    work_history.end_date || application_form.awarded_at ||
+      application_form.declined_at || Time.zone.today
   end
 
   def date_first_of_month(date)
