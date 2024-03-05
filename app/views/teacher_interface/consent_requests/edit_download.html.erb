@@ -16,7 +16,7 @@
   </article>
 
   <%= f.govuk_check_boxes_fieldset :downloaded, multiple: false, small: true, legend: nil do %>
-    <%= f.govuk_check_box :downloaded, true, false, link_errors: true, label: { text: "I have downloaded the consent document." } %>
+    <%= f.govuk_check_box :downloaded, true, false, link_errors: true, multiple: false, label: { text: "I have downloaded the consent document." } %>
   <% end %>
 
   <%= render "shared/save_submit_buttons", f: %>
