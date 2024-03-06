@@ -1,6 +1,6 @@
 <h2 class="govuk-heading-l">Your QTS application has been declined</h2>
 
-<p class="govuk-body">Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application.</p>
+<p class="govuk-body">Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application. Unfortunately, your application has been declined.</p>
 
 <h3 class="govuk-heading-m">Reason for decline</h3>
 
@@ -12,6 +12,7 @@
   <% if reasons.size == 1 %>
     <%= simple_format reasons.first[:name] %>
     <% if reasons.first[:assessor_note].present? %>
+      <h5 class="govuk-heading-s">Assessor notes</h5>
       <%= simple_format reasons.first[:assessor_note] %>
     <% end %>
   <% else %>
@@ -20,6 +21,7 @@
         <li>
           <%= simple_format reason[:name] %>
           <% if reason[:assessor_note].present? %>
+          <h5 class="govuk-heading-s">Assessor notes</h5>
             <%= simple_format reason[:assessor_note] %>
           <% end %>
         </li>
@@ -28,14 +30,13 @@
   <% end %>
 <% end %>
 
-
-
 <%= render "teacher_interface/application_forms/show/what_can_you_do_next", view_object: %>
 
 <% unless view_object.from_ineligible_country? %>
   <h3 class="govuk-heading-m">Decision review</h3>
 
   <p class="govuk-body">Applicants who have been declined for QTS are entitled to a review of the decline decision by a Casework Manager.</p>
+
   <p class="govuk-body">If you would like to request a decision review, you’ll need to provide:</p>
 
   <ul class="govuk-list govuk-list--bullet">
@@ -44,6 +45,8 @@
   </ul>
 
   <p class="govuk-body">Your request for review must be received within 28 days of receipt of the decision to decline QTS.</p>
+
   <p class="govuk-body">Email your request for review, including the information required as above, to <%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %>.</p>
+
   <p class="govuk-body">If you are not satisfied with the outcome of the decision review, you can request a final formal appeal to a senior Teacher Qualification Manager.</p>
 <% end %>
