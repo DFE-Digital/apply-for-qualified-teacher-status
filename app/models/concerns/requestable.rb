@@ -58,6 +58,10 @@ module Requestable
     try(:verify_passed) == false
   end
 
+  def review_or_verify_passed?
+    verify_passed? || review_passed?
+  end
+
   def status
     if review_passed? || verify_passed?
       "completed"

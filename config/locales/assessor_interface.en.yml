@@ -380,9 +380,9 @@ en:
         assessor_interface/requestable_review_form:
           attributes:
             passed:
-              inclusion: Select whether you are satisfied with the request
+              inclusion: Tell us if the response confirms that this is legitimate
             note:
-              blank: Enter why you are not satisfied
+              blank: Tell us why this should not be accepted
         assessor_interface/requestable_verify_failed_form:
           attributes:
             note:

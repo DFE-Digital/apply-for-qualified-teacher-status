@@ -163,12 +163,14 @@ class Assessment < ApplicationRecord
     return false unless application_form.created_under_new_regulations?
 
     return false unless all_consent_requests_verified?
-    return false unless all_qualification_requests_reviewed?
     return false unless all_reference_requests_verified?
     return false unless professional_standing_request_verified?
 
-    any_consent_requests_verify_failed? ||
-      any_qualification_requests_verify_failed? ||
+    # We can skip qualifications if consent has been rejected
+    return true if any_consent_requests_verify_failed?
+    return false unless all_qualification_requests_reviewed?
+
+    any_qualification_requests_verify_failed? ||
       any_reference_requests_verify_failed? ||
       professional_standing_request_verify_failed?
   end
@@ -304,9 +306,7 @@ class Assessment < ApplicationRecord
   end
 
   def all_consent_requests_review_passed?
-    consent_requests.all? do |consent_request|
-      consent_request.verify_passed? || consent_request.review_passed?
-    end
+    consent_requests.all?(&:review_or_verify_passed?)
   end
 
   def all_consent_requests_verified?
@@ -322,11 +322,7 @@ class Assessment < ApplicationRecord
   end
 
   def all_qualification_requests_reviewed?
-    # we can skip qualifications if consent is invalid
-    if all_consent_requests_verified? && any_consent_requests_verify_failed?
-      return true
-    end
-    qualification_requests.all?(&:reviewed?)
+    qualification_requests.where(verify_passed: false).all?(&:reviewed?)
   end
 
   def all_qualification_requests_review_passed?
@@ -356,8 +352,7 @@ class Assessment < ApplicationRecord
 
   def professional_standing_request_review_passed?
     if professional_standing_request_part_of_verification?
-      professional_standing_request.verify_passed? ||
-        professional_standing_request.review_passed?
+      professional_standing_request.review_or_verify_passed?
     else
       true
     end

@@ -14,7 +14,7 @@
 
   <% if @consent_request.expired? && @consent_request.received? %>
     <%= govuk_inset_text do %>
-      <p>This qualifications’s status has changed from <%= render(StatusTag::Component.new("overdue")) %> to <%= render(StatusTag::Component.new("received")) %>.</p>
+      <p>This consent’s status has changed from <%= render(StatusTag::Component.new("overdue")) %> to <%= render(StatusTag::Component.new("received")) %>.</p>
     <% end %>
 
     <%= govuk_details(summary_text: "See previous notes") do %>
@@ -30,10 +30,9 @@
     <% end %>
   <% end %>
 
-  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "After review, does the response confirm that this qualification is legitimate?", size: "s" } do %>
-    <%= f.govuk_radio_button :passed, :true, link_errors: true %>
-    <%= f.govuk_radio_button :passed, :false do %>
-      <%= f.govuk_text_area :note, label: { text: "Internal note: briefly explain why the qualification should not be accepted." } %>
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "The consent for this application is not valid or has not been received. You can only decline this application.", size: "s" } do %>
+    <%= f.govuk_radio_button :passed, :false, label: { text: "Decline this application" } do %>
+      <%= f.govuk_text_area :note, label: { text: "Internal note: briefly explain why this consent should not be accepted." } %>
     <% end %>
   <% end %>
 

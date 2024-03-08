@@ -242,7 +242,8 @@ module AssessorInterface
           ) ||
           (
             qualification_request.consent_method_signed? &&
-              consent_requests.verified.exists?(
+              consent_requests.exists?(
+                verify_passed: true,
                 qualification: qualification_request.qualification,
               )
           )
