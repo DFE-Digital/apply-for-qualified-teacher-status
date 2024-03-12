@@ -24,11 +24,11 @@
           to <%= work_history.end_date.to_fs(:month_and_year) %>
       <% end %></p>
 
-      <%= f.govuk_text_field :contact_name, label: {text: "Contact name"} %>
+      <%= f.govuk_text_field :contact_name, label: {text: "Contact’s name"} %>
 
-      <%= f.govuk_text_field :contact_job, label: {text: "Contact job"} %>
+      <%= f.govuk_text_field :contact_job, label: {text: "Contact’s job title"} %>
 
-      <%= f.govuk_email_field :contact_email, label: {text: "Contact email"} %>
+      <%= f.govuk_email_field :contact_email, label: {text: "Contact’s email address"} %>
 
       <%= govuk_details(summary_text: "Choosing someone to verify this role") do %>
 
