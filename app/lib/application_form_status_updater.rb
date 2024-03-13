@@ -164,15 +164,18 @@ class ApplicationFormStatusUpdater
   end
 
   def need_to_request_consent?
-    qualification_requests.any?(&:consent_method_unknown?) ||
-      consent_requests.any?(&:not_requested?)
+    (
+      qualification_requests.none?(&:requested?) &&
+        qualification_requests.any?(&:consent_method_unknown?)
+    ) || consent_requests.any?(&:not_requested?)
   end
 
   def need_to_request_ecctis?
     qualification_requests
       .select(&:not_requested?)
       .any? do |qualification_request|
-        qualification_request.consent_method_unsigned? ||
+        qualification_request.consent_method_none? ||
+          qualification_request.consent_method_unsigned? ||
           consent_requests
             .select(&:verify_passed?)
             .any? do |consent_request|

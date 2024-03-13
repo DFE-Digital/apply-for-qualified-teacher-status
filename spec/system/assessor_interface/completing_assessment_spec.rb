@@ -175,7 +175,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     then_i_see_the(:assessor_application_status_page, reference:)
 
     when_i_click_on_overview_button
-    then_the_application_form_is_waiting_on
+    then_the_application_form_is_verification_in_progress
   end
 
   it "decline" do
@@ -434,6 +434,12 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def then_the_application_form_is_waiting_on
     expect(assessor_application_page.status_summary.value.text).to include(
       "WAITING ON",
+    )
+  end
+
+  def then_the_application_form_is_verification_in_progress
+    expect(assessor_application_page.status_summary.value.text).to include(
+      "VERIFICATION IN PROGRESS",
     )
   end
 

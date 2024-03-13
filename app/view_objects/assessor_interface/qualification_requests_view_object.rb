@@ -30,7 +30,8 @@ module AssessorInterface
     end
 
     def all_consent_methods_selected?
-      qualification_requests.none?(&:consent_method_unknown?)
+      qualification_requests.none?(&:consent_method_unknown?) ||
+        qualification_requests.requested.exists?
     end
 
     def show_individual_task_items?
