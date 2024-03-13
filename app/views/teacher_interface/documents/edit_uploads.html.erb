@@ -4,7 +4,7 @@
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-l">Check your uploaded files – <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>
+  <h1 class="govuk-heading-l">Check your uploaded files – <%= t("document.document_type.#{@document.document_type}") %> document</h1>
 
   <h2 class="govuk-heading-m">Files added</h2>
 

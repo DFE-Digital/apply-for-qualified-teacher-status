@@ -69,11 +69,11 @@
 
     <p class="govuk-body"><%= I18n.t("application_form.qualifications.upload.transcript.description") %></p>
   <% elsif @document.signed_consent? %>
-    <h1 class="govuk-heading-l">Upload consent document</h1>
+    <h1 class="govuk-heading-xl">Upload consent document</h1>
     <h2 class="govuk-heading-m"><%= qualification_title(@document.documentable.qualification) %></h2>
     <p class="govuk-body">Upload the signed document. Do not send it by email.</p>
   <% elsif @document.unsigned_consent? %>
-    <h1 class="govuk-heading-l">Upload your unsigned consent document</h1>
+    <h1 class="govuk-heading-xl">Upload your unsigned consent document</h1>
   <% elsif @document.written_statement? %>
     <span class="govuk-caption-l">Proof that you’re recognised as a teacher</span>
     <h1 class="govuk-heading-l">Upload your written statement</h1>
