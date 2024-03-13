@@ -36,7 +36,9 @@
   <%= render "shared/employment_warning" %>
 <% end %>
 
-<%= render "shared/help_us_to_improve_this_service", show_feedback: true %>
+<% unless qualification_consent_submitted %>
+  <%= render "shared/help_us_to_improve_this_service", show_feedback: true %>
 
-<h2 class="govuk-heading-s">If you have any questions, contact:</h2>
-<p class="govuk-body"><%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %></p>
+  <h2 class="govuk-heading-s">If you have any questions, contact:</h2>
+  <p class="govuk-body"><%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %></p>
+<% end %>
