@@ -2,7 +2,7 @@
   "name": "app",
   "private": "true",
   "dependencies": {
-    "@ministryofjustice/frontend": "^1.8.1",
+    "@ministryofjustice/frontend": "^2.1.2",
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete",
     "esbuild": "^0.20.1",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
