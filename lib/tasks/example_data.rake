@@ -239,6 +239,22 @@ def create_application_forms
           :declinable,
           assessment_section: assessment.sections.second,
         )
+
+        declined_at = Faker::Time.between(from: 6.months.ago, to: Time.zone.now)
+
+        application_form.update!(
+          declined_at:,
+          submitted_at: declined_at - 2.months,
+          created_at: declined_at - 2.months,
+        )
+      elsif application_form.awarded_at.present?
+        awarded_at = Faker::Time.between(from: 6.months.ago, to: Time.zone.now)
+
+        application_form.update!(
+          awarded_at:,
+          submitted_at: awarded_at - 2.months,
+          created_at: awarded_at - 2.months,
+        )
       elsif application_form.action_required_by_external?
         create_requestables(application_form, assessment, :requested)
       elsif application_form.action_required_by_admin?
