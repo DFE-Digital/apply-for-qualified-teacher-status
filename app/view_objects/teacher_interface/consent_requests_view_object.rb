@@ -29,14 +29,11 @@ module TeacherInterface
         memo[consent_request.id] = {
           title: qualification_title(consent_request.qualification),
           value: consent_request.signed_consent_document,
-          href:
-            Rails
-              .application
-              .routes
-              .url_helpers
-              .new_teacher_interface_application_form_document_upload_path(
-              consent_request.signed_consent_document,
-            ),
+          href: [
+            :teacher_interface,
+            :application_form,
+            consent_request.signed_consent_document,
+          ],
         }
       end
     end
