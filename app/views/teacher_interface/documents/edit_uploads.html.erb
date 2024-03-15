@@ -4,9 +4,19 @@
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-l">Check your uploaded files – <%= t("document.document_type.#{@document.document_type}") %> document</h1>
+  <% if @document.allow_multiple_uploads? %>
+    <h1 class="govuk-heading-xl">Check your uploaded files – <%= t("document.document_type.#{@document.document_type}") %> document</h1>
+  <% else %>
+    <h1 class="govuk-heading-xl">Check your uploaded file</h1>
+  <% end %>
 
-  <h2 class="govuk-heading-m">Files added</h2>
+  <% if @document.for_consent_request? %>
+    <h2 class="govuk-heading-m"><%= qualification_title(@document.documentable.qualification) %></h2>
+  <% end %>
+
+  <% if @document.allow_multiple_uploads? %>
+    <h2 class="govuk-heading-m">Files added</h2>
+  <% end %>
 
   <%= govuk_summary_list do |summary_list|
     @document.uploads.order(:created_at).each_with_index do |upload, index|
