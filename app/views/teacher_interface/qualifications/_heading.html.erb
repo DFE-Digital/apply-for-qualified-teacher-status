@@ -1,9 +1,0 @@
-<span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-<h1 class="govuk-heading-l"><%= I18n.t("application_form.qualifications.heading.title.#{view_object.qualification.locale_key}") %></h1>
-<p class="govuk-body-l"><%= I18n.t("application_form.qualifications.heading.description.#{view_object.qualification.locale_key}") %></p>
-
-<% if view_object.qualifications_information.present? %>
-  <section id="app-qualifications-information">
-    <%= raw GovukMarkdown.render(view_object.qualifications_information) %>
-  </section>
-<% end %>

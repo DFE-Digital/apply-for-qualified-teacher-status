@@ -75,12 +75,7 @@ module DQT
     end
 
     def degree_qualification
-      @degree_qualification ||=
-        if application_form.teaching_qualification_part_of_degree
-          teaching_qualification
-        else
-          application_form.degree_qualifications.first
-        end
+      @degree_qualification ||= application_form.bachelor_degree_qualification
     end
 
     def qts_decision_at

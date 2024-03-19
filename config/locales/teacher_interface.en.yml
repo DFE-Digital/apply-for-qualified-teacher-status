@@ -129,30 +129,33 @@ en:
     qualifications:
       heading:
         title:
-          teaching_qualification: Your teaching qualification
-          university_degree: University degree
-        description:
-          teaching_qualification: This is the qualification that led to you being recognised as a teacher. It might be part of your university degree course, or it could be a separate qualification.
-          university_degree: Tell us about your university degree qualification. If you have more than one degree qualification, you’ll have the opportunity to add them later.
+          additional: Additional qualification
+          bachelor_degree: Bachelor’s degree
+          teaching: Teaching qualification
       form:
         title:
-          teaching_qualification: Enter the details of your teaching qualification
-          university_degree: Enter the details of your university degree
+          additional: Enter your additional qualification
+          bachelor_degree: Enter your bachelor’s degree
+          teaching: Enter your teaching qualification
         fields:
           title:
-            teaching_qualification: Qualification title
-            university_degree: University degree title
+            additional: Additional qualification title
+            bachelor_degree: Bachelor’s degree title
+            teaching: Teaching qualification title
           institution_name: Name of institution
           institution_country: Country of institution
           start_date:
-            teaching_qualification: When did you start your teaching qualification?
-            university_degree: When did you start this university degree?
+            additional: When did you start this qualification?
+            bachelor_degree: When did you start this degree?
+            teaching: When did you start this qualification?
           complete_date:
-            teaching_qualification: When did you complete your teaching qualification?
-            university_degree: When did you complete your university degree?
+            additional: When did you complete this qualification?
+            bachelor_degree: When did you complete this degree?
+            teaching: When did you complete this qualification?
           certificate_date:
-            teaching_qualification: What is the date on your teaching qualification certificate?
-            university_degree: What is the date on your university degree certificate?
+            additional: When were you awarded this qualification?
+            bachelor_degree: When were you awarded this degree?
+            teaching: When were you awarded this qualification?
       upload:
         transcript:
           description: Upload a transcript of your teaching qualification, issued by the awarding body. If your teaching qualification was completed as part of your degree, you should supply your degree transcript.
@@ -213,6 +216,10 @@ en:
               blank: Enter your alternate family name
             has_alternative_name:
               inclusion: Tell us whether you have an alternative name
+        teacher_interface/add_another_qualification_form:
+          attributes:
+            add_another:
+              inclusion: Select whether you need to add another qualification
         teacher_interface/add_another_upload_form:
           attributes:
             add_another:
@@ -300,6 +307,8 @@ en:
               invalid: Enter the certificate date in the format 27 3 1980
               future: Certificate date must be in the past
               comparison: Certificate date must be after completion date
+            teaching_confirmation:
+              blank: Confirm this is the first qualification you have that qualifies you to teach
         teacher_interface/download_unsigned_consent_document_form:
           attributes:
             downloaded:
@@ -362,6 +371,9 @@ en:
           attributes:
             subject_1:
               blank: Enter your first subject
+        teacher_interface/teaching_qualification_part_of_degree_form:
+          attributes:
+            teaching_qualification_part_of_degree: Tell us if your teaching qualification is part of your bachelor’s degree
         teacher_interface/upload_form:
           attributes:
             written_in_english:

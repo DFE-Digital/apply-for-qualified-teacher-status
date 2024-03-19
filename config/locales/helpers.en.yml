@@ -25,10 +25,10 @@ en:
         region_id: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
       eligibility_interface_work_experience_form:
         work_experience: Your teaching work experience can be gained in any country but must be from after you qualified as a teacher.
-      qualification:
-        add_another: You can use the next section to tell us about additional degrees if you want to.
       teacher:
         email: We’ll use this to send you an email with a link to continue with your QTS application. Do not use a work or university email that you might lose access to.
+      teacher_interface_add_another_qualification_form:
+        add_another: Add another degree or qualification if they are related to your teaching career. For example, to show you are qualified to teach a particular subject.
       teacher_interface_alternative_name_form:
         has_alternative_name: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
         alternative_given_names: Enter your full name apart from your family name
@@ -52,6 +52,8 @@ en:
         hours_response: This means all the hours they spent working per week, including time spent teaching as well as other non-teaching activities (such as planning lessons, after-school meetings, running extra-curricular clubs and marking work).
       teacher_interface_registration_number_form:
         registration_number: Your country has an online register of teachers. If you have a registration number, enter it on this screen. If you do not have one, just select ‘Continue’.
+      teacher_interface_teaching_qualification_part_of_degree_form:
+        teaching_qualification_part_of_degree: Enter your bachelor’s degree if your teaching qualification was separate, for example a postgraduate degree, diploma, or certificate in education.
       teacher_interface_work_history_school_form:
         hours_per_week: This means all the hours you spent working per week for this role (not just the hours you spent teaching students). In roles where you worked under 30 hours per week we may need to ask for more information when we assess your application.
         start_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
@@ -159,12 +161,12 @@ en:
         reference_hint: Reference hint
         accepted_tests: Accepted tests (we can accept)
         check_url: Check website
-      qualification:
-        add_another_options:
-          true: "Yes"
-          false: "No"
       teacher:
         email: Email address
+      teacher_interface_add_another_qualification_form:
+        add_another_options:
+          true: Yes, I want to add another qualification
+          false: No, I don’t want to add another qualification
       teacher_interface_add_another_work_history_form:
         add_another_options:
           true: "Yes"
@@ -202,8 +204,6 @@ en:
           false: "No"
       teacher_interface_new_session_form:
         email: Email address
-      teacher_interface_qualification_form:
-        institution_country_location: Country of institution
       teacher_interface_reference_request_additional_information_response_form:
         additional_information_response: Do you have any other concerns about this applicant? (optional)
       teacher_interface_reference_request_children_response_form:
@@ -256,8 +256,8 @@ en:
         subject_3: Subject 3 (optional)
       teacher_interface_teaching_qualification_part_of_degree_form:
         teaching_qualification_part_of_degree_options:
-          true: "Yes"
-          false: "No"
+          true: Yes, my teaching qualification is part of my bachelor’s degree
+          false: No, I need to enter my bachelor’s degree
       teacher_interface_work_history_contact_form:
         contact_name: This person’s full name
         contact_job: This person’s job title
@@ -300,8 +300,8 @@ en:
         region_id: In which state/territory are you currently recognised as a teacher?
       eligibility_interface_work_experience_form:
         work_experience: How long have you worked as a recognised teacher?
-      qualification:
-        add_another: Add another qualification?
+      teacher_interface_add_another_qualification_form:
+        add_another: Do you want to add another qualification?
       teacher_interface_add_another_work_history_form:
         add_another: Add another role?
       teacher_interface_alternative_name_form:
@@ -335,10 +335,8 @@ en:
       teacher_interface_reference_request_satisfied_response_form:
         satisfied_response: Are you satisfied that the applicant is suitable to work with children?
       teacher_interface_teaching_qualification_part_of_degree_form:
-        teaching_qualification_part_of_degree: Was this qualification part of your university degree?
+        teaching_qualification_part_of_degree: Is your teaching qualification part of your bachelor’s degree?
       teacher_interface_work_history_school_form:
         start_date: When did you start this role?
         still_employed: Are you still employed at this school?
         end_date: Your end date
-      work_history:
-        add_another: Add another workplace?

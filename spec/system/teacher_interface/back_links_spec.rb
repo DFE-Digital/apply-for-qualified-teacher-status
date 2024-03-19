@@ -243,6 +243,7 @@ RSpec.describe "Teacher back links", type: :system do
       "1"
     teacher_new_qualification_page.form.certificate_date_year_field.fill_in with:
       "2004"
+    teacher_new_qualification_page.form.teaching_confirmation_checkbox.check
     teacher_new_qualification_page.form.continue_button.click
   end
 
@@ -272,7 +273,7 @@ RSpec.describe "Teacher back links", type: :system do
     teacher_check_qualifications_page
       .summary_cards
       .first
-      .find_row(key: "Qualification title")
+      .find_row(key: "Teaching qualification title")
       .actions
       .link
       .click
@@ -289,8 +290,7 @@ RSpec.describe "Teacher back links", type: :system do
   end
 
   def when_i_add_another_qualification
-    teacher_add_another_qualification_page.form.true_radio_item.choose
-    teacher_add_another_qualification_page.form.continue_button.click
+    teacher_add_another_qualification_page.submit_yes
   end
 
   def teacher

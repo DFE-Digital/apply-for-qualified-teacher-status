@@ -27,6 +27,10 @@ module PageObjects
         element :certificate_date_year_field,
                 "#teacher_interface_qualification_form_certificate_date_1i"
 
+        element :teaching_confirmation_checkbox,
+                ".govuk-checkboxes__input",
+                visible: false
+
         element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
         element :save_and_come_back_later_button,
                 ".govuk-button.govuk-button--secondary"

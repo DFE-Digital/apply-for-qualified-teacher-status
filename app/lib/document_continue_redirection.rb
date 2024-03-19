@@ -44,7 +44,7 @@ class DocumentContinueRedirection
   end
 
   def qualification_transcript_url
-    if documentable.is_teaching_qualification?
+    if documentable.is_teaching?
       %i[part_of_degree teacher_interface application_form qualifications]
     else
       [:check, :teacher_interface, :application_form, documentable]

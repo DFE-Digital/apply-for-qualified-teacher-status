@@ -99,7 +99,7 @@ module TeacherInterface
         check_identifier: check_member_identifier(id: qualification.id),
         if_success_then_redirect: ->(check_path) do
           if @form.teaching_qualification_part_of_degree == false &&
-               application_form.degree_qualifications.empty?
+               application_form.qualifications.count == 1
             application_form.qualifications.create!
           end
 
@@ -111,35 +111,47 @@ module TeacherInterface
     end
 
     def add_another
+      @form = AddAnotherQualificationForm.new
     end
 
     def submit_add_another
-      if ActiveModel::Type::Boolean.new.cast(
-           params.dig(:qualification, :add_another),
-         )
-        history_stack.replace_self(
-          path: check_teacher_interface_application_form_qualifications_path,
-          origin: false,
-          check: true,
+      @form =
+        AddAnotherQualificationForm.new(
+          add_another:
+            params.dig(
+              :teacher_interface_add_another_qualification_form,
+              :add_another,
+            ),
         )
 
-        redirect_to %i[new teacher_interface application_form qualification]
-      else
-        came_from_check_collection =
-          history_stack.last_entry&.fetch(:path) ==
-            check_teacher_interface_application_form_qualifications_path
+      if @form.save(validate: true)
+        if @form.add_another
+          history_stack.replace_self(
+            path: check_teacher_interface_application_form_qualifications_path,
+            origin: false,
+            check: true,
+          )
 
-        if came_from_check_collection ||
-             application_form.qualifications.count == 1
-          redirect_to %i[teacher_interface application_form]
+          redirect_to %i[new teacher_interface application_form qualification]
         else
-          redirect_to %i[
-                        check
-                        teacher_interface
-                        application_form
-                        qualifications
-                      ]
+          came_from_check_collection =
+            history_stack.last_entry&.fetch(:path) ==
+              check_teacher_interface_application_form_qualifications_path
+
+          if came_from_check_collection ||
+               application_form.qualifications.count == 1
+            redirect_to %i[teacher_interface application_form]
+          else
+            redirect_to %i[
+                          check
+                          teacher_interface
+                          application_form
+                          qualifications
+                        ]
+          end
         end
+      else
+        render :add_another, status: :unprocessable_entity
       end
     end
 
@@ -157,6 +169,7 @@ module TeacherInterface
           start_date: qualification.start_date,
           complete_date: qualification.complete_date,
           certificate_date: qualification.certificate_date,
+          teaching_confirmation: true,
         )
     end
 
@@ -221,6 +234,7 @@ module TeacherInterface
         :start_date,
         :complete_date,
         :certificate_date,
+        :teaching_confirmation,
       )
     end
 

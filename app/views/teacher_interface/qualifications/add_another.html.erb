@@ -1,15 +1,12 @@
 <% content_for :page_title, t("application_form.tasks.sections.qualifications") %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-
-<%= form_with model: Qualification.new, url: %i[add_another teacher_interface application_form qualifications] do |f| %>
+<%= form_with model: @form, url: %i[add_another teacher_interface application_form qualifications] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_collection_radio_buttons :add_another,
-                                       [OpenStruct.new(value: :true), OpenStruct.new(value: :false)],
-                                       :value,
-                                       legend: { tag: "h1", size: "l" } %>
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
+
+  <%= f.govuk_collection_radio_buttons :add_another, %i[true false], :itself, legend: { tag: "h1", size: "l" } %>
 
   <%= f.govuk_submit %>
 <% end %>

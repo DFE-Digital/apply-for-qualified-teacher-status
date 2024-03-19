@@ -24,7 +24,9 @@
 require "rails_helper"
 
 RSpec.describe Qualification, type: :model do
-  subject(:qualification) { create(:qualification) }
+  subject(:qualification) { create(:qualification, application_form:) }
+
+  let(:application_form) { create(:application_form) }
 
   it_behaves_like "a documentable"
 
@@ -32,43 +34,33 @@ RSpec.describe Qualification, type: :model do
     it { is_expected.to be_valid }
   end
 
-  describe "#is_teaching_qualification?" do
-    subject(:is_teaching_qualification?) do
-      qualification.is_teaching_qualification?
-    end
+  describe "#is_teaching?" do
+    subject(:is_teaching?) { qualification.is_teaching? }
 
-    before { qualification.save! }
+    before { qualification }
 
     it { is_expected.to be true }
 
     context "with a second qualification" do
-      subject(:is_teaching_qualification?) do
-        second_qualification.is_teaching_qualification?
-      end
+      subject(:is_teaching?) { second_qualification.is_teaching? }
 
-      let(:second_qualification) do
-        create(:qualification, application_form: qualification.application_form)
-      end
+      let(:second_qualification) { create(:qualification, application_form:) }
 
       it { is_expected.to be false }
     end
   end
 
-  describe "#is_university_degree?" do
-    subject(:is_university_degree?) { qualification.is_university_degree? }
+  describe "#is_bachelor_degree?" do
+    subject(:is_bachelor_degree?) { qualification.is_bachelor_degree? }
 
-    before { qualification.save! }
+    before { qualification }
 
     it { is_expected.to be false }
 
     context "with a second qualification" do
-      subject(:is_university_degree?) do
-        second_qualification.is_university_degree?
-      end
+      subject(:is_bachelor_degree?) { second_qualification.is_bachelor_degree? }
 
-      let(:second_qualification) do
-        create(:qualification, application_form: qualification.application_form)
-      end
+      let(:second_qualification) { create(:qualification, application_form:) }
 
       it { is_expected.to be true }
     end
@@ -77,20 +69,18 @@ RSpec.describe Qualification, type: :model do
   describe "#can_delete?" do
     subject(:can_delete?) { qualification.can_delete? }
 
+    before { qualification }
+
     it { is_expected.to be false }
 
     context "is a university degree" do
       subject(:can_delete?) { second_qualification.reload.can_delete? }
 
-      let(:second_qualification) do
-        create(:qualification, application_form: qualification.application_form)
-      end
+      let(:second_qualification) { create(:qualification, application_form:) }
 
       context "and qualification part of degree" do
         before do
-          qualification.application_form.update!(
-            teaching_qualification_part_of_degree: true,
-          )
+          application_form.update!(teaching_qualification_part_of_degree: true)
         end
 
         it { is_expected.to be true }
@@ -98,20 +88,13 @@ RSpec.describe Qualification, type: :model do
 
       context "and qualification not part of degree" do
         before do
-          qualification.application_form.update!(
-            teaching_qualification_part_of_degree: false,
-          )
+          application_form.update!(teaching_qualification_part_of_degree: false)
         end
 
         it { is_expected.to be false }
 
         context "and more than 2 degree qualifications" do
-          before do
-            create(
-              :qualification,
-              application_form: qualification.application_form,
-            )
-          end
+          before { create(:qualification, application_form:) }
 
           it { is_expected.to be true }
         end
@@ -132,9 +115,7 @@ RSpec.describe Qualification, type: :model do
 
     context "with a complete qualification" do
       before do
-        qualification.application_form.update!(
-          teaching_qualification_part_of_degree: true,
-        )
+        application_form.update!(teaching_qualification_part_of_degree: true)
 
         qualification.update!(
           title: "Title",
