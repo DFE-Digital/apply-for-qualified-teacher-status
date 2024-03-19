@@ -9,7 +9,7 @@ en:
         eligibility_interface/degree_form:
           attributes:
             degree:
-              inclusion: Tell us whether you have a university degree
+              inclusion: Tell us whether you have a bachelor’s (undergraduate) degree
         eligibility_interface/misconduct_form:
           attributes:
             misconduct:
@@ -18,6 +18,10 @@ en:
           attributes:
             qualification:
               inclusion: Tell us if you have a teaching qualification
+        eligibility_interface/qualified_for_subject_form:
+          attributes:
+            qualified_for_subject:
+              inclusion: Tell us whether you’re qualified to teach one of these subjects
         eligibility_interface/region_form:
           attributes:
             region_id:
@@ -26,10 +30,6 @@ en:
           attributes:
             teach_children:
               inclusion: Tell us whether you’re qualified to teach children aged between 5 and 16
-        eligibility_interface/qualified_for_subject_form:
-          attributes:
-            qualified_for_subject:
-              inclusion: Tell us whether you’re qualified to teach one of these subjects
         eligibility_interface/work_experience_form:
           attributes:
             work_experience:
