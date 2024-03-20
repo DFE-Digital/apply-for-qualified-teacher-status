@@ -63,6 +63,12 @@
         <% end %>
       <% end %>
     </section>
+
+    <section id="app-applications-show-all-applicants">
+      <%= f.govuk_check_boxes_fieldset :display, legend: { size: "s" }, small: true do %>
+        <%= f.govuk_check_box :display, :show_all, label: { text: "All applications" }, checked: @view_object.filter_form.display&.include?("show_all") %>
+      <% end %>
+    </section>
   <% end %>
 </div>
 

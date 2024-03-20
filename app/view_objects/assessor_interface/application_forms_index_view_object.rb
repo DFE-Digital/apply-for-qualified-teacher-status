@@ -23,7 +23,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
 
   def assessor_filter_options
     ApplicationForm
-      .active
+      # .active
       .joins(:assessor)
       .pluck(Arel.sql("DISTINCT ON(assessor_id) assessor_id"), "staff.name")
       .sort_by { |_id, name| name }
@@ -75,9 +75,10 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ::Filters::Email,
           ::Filters::Reference,
           ::Filters::SubmittedAt,
+          ::Filters::ShowAllApplications,
         ]
         filters.reduce(
-          ApplicationForm.includes(region: :country).active,
+          ApplicationForm.includes(region: :country),
         ) { |scope, filter| filter.apply(scope:, params: filter_params) }
       end
   end
