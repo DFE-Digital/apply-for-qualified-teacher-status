@@ -1,7 +1,7 @@
 module Filters
   class ShowAllApplications < Base
     def apply
-      if show_all_applications.empty?
+      unless show_all_applications.include?("show_all")
         ninety_days_ago = 90.days.ago
         new_scope =
           scope.where(
