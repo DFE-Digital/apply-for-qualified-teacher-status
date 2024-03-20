@@ -18,7 +18,9 @@ class AssessorInterface::AssessmentDeclarationDeclineForm
   def save
     return false unless valid?
 
-    assessment.update!(recommendation_assessor_note:)
+    assessment.update!(
+      recommendation_assessor_note: recommendation_assessor_note.presence || "",
+    )
 
     true
   end
