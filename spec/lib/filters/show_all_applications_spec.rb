@@ -43,7 +43,7 @@ RSpec.describe Filters::ShowAllApplications do
   end
 
   context "the params does not include 'show_all' under display" do
-    let(:params) { { display: [] } }
+    let(:params) { { show_all: nil } }
     let(:scope) { ApplicationForm.all }
 
     it "includes recent applications and excludes old ones" do
@@ -61,8 +61,8 @@ RSpec.describe Filters::ShowAllApplications do
     end
   end
 
-  context "the params does include 'show_all' under display" do
-    let(:params) { { display: ["show_all"] } }
+  context "the params does include 'show_all' but not true under display" do
+    let(:params) { { show_all: "true" } }
     let(:scope) { double }
 
     it { is_expected.to eq(scope) }
