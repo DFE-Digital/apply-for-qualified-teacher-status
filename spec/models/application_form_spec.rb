@@ -276,7 +276,6 @@ RSpec.describe ApplicationForm, type: :model do
   end
 
   describe "scopes" do
-
     describe "#destroyable" do
       subject(:destroyable) { described_class.destroyable }
 
