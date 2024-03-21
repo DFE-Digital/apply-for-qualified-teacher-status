@@ -191,7 +191,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   def and_i_apply_the_show_all_filter
     show_all =
       assessor_applications_page.show_all_filter.items.find do |item|
-        item.label.text == "All applications"
+        item.label.text == "Show applications completed older than 90 days ago"
       rescue Capybara::ElementNotFound
         false
       end
