@@ -1,7 +1,7 @@
 module Filters
   class ShowAllApplications < Base
     def apply
-      unless show_all_applications.include?("show_all")
+      unless show_all?
         ninety_days_ago = 90.days.ago
         return scope.where(
             "(awarded_at >= :ninety_days OR awarded_at IS NULL)
