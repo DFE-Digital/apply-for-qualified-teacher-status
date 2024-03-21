@@ -13,6 +13,9 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     when_i_visit_the(:assessor_applications_page)
 
     when_i_clear_the_filters
+    then_i_see_applications_in_the_last_90_days
+
+    when_i_clear_the_filters
     and_i_apply_the_assessor_filter
     then_i_see_a_list_of_applications_filtered_by_assessor
 
@@ -43,6 +46,10 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     when_i_clear_the_filters
     and_i_apply_the_stage_filter
     then_i_see_a_list_of_applications_filtered_by_stage
+
+    when_i_clear_the_filters
+    and_i_apply_the_show_all_filter
+    then_i_see_a_list_of_all_applications
   end
 
   private
@@ -57,6 +64,10 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def when_i_clear_the_filters
     assessor_applications_page.clear_filters.click
+  end
+
+  def then_i_see_applications_in_the_last_90_days
+    expect(assessor_applications_page.search_results.count).to eq(4)
   end
 
   def and_i_apply_the_assessor_filter
@@ -121,9 +132,16 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   end
 
   def and_i_apply_the_submitted_at_filter
-    assessor_applications_page.submitted_at_filter.start_day.set(1)
-    assessor_applications_page.submitted_at_filter.start_month.set(1)
-    assessor_applications_page.submitted_at_filter.start_year.set(2020)
+    ten_days_ago = 10.days.ago
+    assessor_applications_page.submitted_at_filter.start_day.set(
+      ten_days_ago.day,
+    )
+    assessor_applications_page.submitted_at_filter.start_month.set(
+      ten_days_ago.month,
+    )
+    assessor_applications_page.submitted_at_filter.start_year.set(
+      ten_days_ago.year,
+    )
     assessor_applications_page.apply_filters.click
   end
 
@@ -170,6 +188,21 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     )
   end
 
+  def and_i_apply_the_show_all_filter
+    show_all =
+      assessor_applications_page.show_all_filter.items.find do |item|
+        item.label.text == "All applications"
+      rescue Capybara::ElementNotFound
+        false
+      end
+    show_all.checkbox.click
+    assessor_applications_page.apply_filters.click
+  end
+
+  def then_i_see_a_list_of_all_applications
+    expect(assessor_applications_page.search_results.count).to eq(5)
+  end
+
   def application_forms
     @application_forms ||= [
       create(
@@ -179,7 +212,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         given_names: "Cher",
         family_name: "Bert",
         assessor: assessors.second,
-        submitted_at: Date.new(2019, 12, 1),
+        submitted_at: 2.months.ago,
         reference: "CHERBERT",
       ),
       create(
@@ -190,7 +223,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         given_names: "Emma",
         family_name: "Dubois",
         assessor: assessors.second,
-        submitted_at: Date.new(2019, 12, 1),
+        submitted_at: 2.months.ago,
         teacher: create(:teacher, email: "emma.dubois@example.org"),
       ),
       create(
@@ -201,18 +234,30 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         given_names: "Arnold",
         family_name: "Drummond",
         assessor: assessors.first,
-        submitted_at: Date.new(2019, 12, 1),
+        submitted_at: 2.months.ago,
       ),
       create(
         :application_form,
         :awarded,
+        awarded_at: 2.days.ago,
         region: create(:region, country: create(:country, code: "PT")),
         given_names: "John",
         family_name: "Smith",
         assessor: assessors.second,
-        submitted_at: Date.new(2020, 1, 1),
+        submitted_at: 10.days.ago,
+      ),
+      create(
+        :application_form,
+        :awarded,
+        awarded_at: 6.months.ago,
+        region: create(:region, country: create(:country, code: "DE")),
+        given_names: "Nick",
+        family_name: "Johnson",
+        assessor: assessors.second,
+        submitted_at: 7.months.ago,
       ),
     ]
+    @application_forms
   end
 
   def assessors

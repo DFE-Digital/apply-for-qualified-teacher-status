@@ -49,6 +49,10 @@ module PageObjects
         sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
       end
 
+      section :show_all_filter, "#app-applications-show-all-applicants" do
+        sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
+      end
+
       sections :search_results, ".app-search-results__item" do
         element :name, "h2"
       end
