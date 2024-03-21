@@ -22,22 +22,36 @@
         </td>
 
         <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
-          <%= render(StatusTag::Component.new(@professional_standing_request.status)) %>
+          <%= render(StatusTag::Component.new("review")) %>
         </td>
       </tr>
     </tbody>
   </table>
 <% end %>
 
-<% if @qualification_requests.present? %>
+<% if @consent_requests.present? || @qualification_requests.present? %>
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th class="govuk-table__header">References</th>
+        <th class="govuk-table__header">Qualifications</th>
         <th scope="col" class="govuk-table__header"></th>
       </tr>
     </thead>
     <tbody>
+      <% @consent_requests.each do |consent_request| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <p><%= qualification_title(consent_request.qualification) %></p>
+            <h3 class="govuk-heading-s">Internal note</h3>
+            <%= simple_format consent_request.verify_note %>
+          </td>
+
+          <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
+            <%= render(StatusTag::Component.new("review")) %>
+          </td>
+        </tr>
+      <% end %>
+
       <% @qualification_requests.each do |qualification_request| %>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">
@@ -47,7 +61,7 @@
           </td>
 
           <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
-            <%= render(StatusTag::Component.new(qualification_request.status)) %>
+            <%= render(StatusTag::Component.new("review")) %>
           </td>
         </tr>
       <% end %>
@@ -73,7 +87,7 @@
           </td>
 
           <td class="govuk-table__cell app-table__center_right govuk-!-padding-right-1">
-            <%= render(StatusTag::Component.new(reference_request.status)) %>
+            <%= render(StatusTag::Component.new("review")) %>
           </td>
         </tr>
       <% end %>

@@ -6,6 +6,7 @@ RSpec.describe ConsentLetter do
   let(:application_form) do
     create(
       :application_form,
+      :submitted,
       :with_personal_information,
       :with_teaching_qualification,
     )

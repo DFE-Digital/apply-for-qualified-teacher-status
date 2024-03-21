@@ -6,10 +6,7 @@ module PageObjects
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/qualification-requests"
 
-      section :task_list, ".app-task-list__item" do
-        elements :qualification_requests, ".app-task-list__task-name a"
-        elements :status_tags, ".app-task-list__tag"
-      end
+      sections :task_lists, TaskList, ".app-task-list"
 
       element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
     end

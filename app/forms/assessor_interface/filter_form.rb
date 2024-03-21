@@ -10,8 +10,8 @@ class AssessorInterface::FilterForm
                 :location,
                 :name,
                 :reference,
+                :show_all,
                 :stage,
                 :submitted_at_after,
-                :submitted_at_before,
-                :show_all
+                :submitted_at_before
 end

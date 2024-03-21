@@ -89,8 +89,6 @@ Rails.application.routes.draw do
           post "qualification-requests",
                to:
                  "assessment_recommendation_verify#update_qualification_requests"
-          get "email-consent-letters",
-              to: "assessment_recommendation_verify#email_consent_letters"
           get "reference-requests",
               to: "assessment_recommendation_verify#edit_reference_requests"
           post "reference-requests",
@@ -102,8 +100,20 @@ Rails.application.routes.draw do
                  "assessment_recommendation_verify#update_professional_standing"
         end
 
-        resources :consent_requests, path: "/consent-requests", only: [] do
+        resources :consent_requests, path: "/consent-requests", only: %i[new] do
+          collection do
+            get "request", to: "consent_requests#edit_request"
+            post "request", to: "consent_requests#update_request"
+          end
+
           member do
+            get "upload", to: "consent_requests#edit_upload"
+            post "upload", to: "consent_requests#update_upload"
+            get "check-upload", to: "consent_requests#check_upload"
+            get "verify", to: "consent_requests#edit_verify"
+            post "verify", to: "consent_requests#update_verify"
+            get "verify-failed", to: "consent_requests#edit_verify_failed"
+            post "verify-failed", to: "consent_requests#update_verify_failed"
             get "review", to: "consent_requests#edit_review"
             post "review", to: "consent_requests#update_review"
           end
@@ -138,12 +148,33 @@ Rails.application.routes.draw do
 
         resources :qualification_requests,
                   path: "/qualification-requests",
-                  only: %i[index edit update] do
+                  only: %i[index] do
           collection do
-            get "consent-letter", to: "qualification_requests#consent_letter"
+            get "consent-methods",
+                to: "qualification_requests#index_consent_methods"
+            get "check-consent-methods",
+                to: "qualification_requests#check_consent_methods"
+
+            get "unsigned-consent-document",
+                to: "qualification_requests#edit_unsigned_consent_document"
+            post "unsigned-consent-document",
+                 to: "qualification_requests#update_unsigned_consent_document"
+            get "generate-unsigned-consent-document",
+                to: "qualification_requests#generate_unsigned_consent_document"
           end
 
           member do
+            get "consent-method",
+                to: "qualification_requests#edit_consent_method"
+            post "consent-method",
+                 to: "qualification_requests#update_consent_method"
+            get "request", to: "qualification_requests#edit_request"
+            post "request", to: "qualification_requests#update_request"
+            get "verify", to: "qualification_requests#edit_verify"
+            post "verify", to: "qualification_requests#update_verify"
+            get "verify-failed", to: "qualification_requests#edit_verify_failed"
+            post "verify-failed",
+                 to: "qualification_requests#update_verify_failed"
             get "review", to: "qualification_requests#edit_review"
             post "review", to: "qualification_requests#update_review"
           end

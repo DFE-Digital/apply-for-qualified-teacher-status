@@ -1,0 +1,18 @@
+<% title = "Request Ecctis verification" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
+
+<%= form_with model: @form, url: [:request, :assessor_interface, @application_form, @assessment, @qualification_request] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h2 class="govuk-heading-m"><%= qualification_title(@qualification_request.qualification) %></h2>
+
+  <%= f.govuk_check_boxes_fieldset :passed, multiple: false, legend: { text: "Confirm you have requested Ecctis verification for this qualification", size: "s" } do %>
+    <%= f.govuk_check_box :passed, true, false, multiple: false, link_errors: true, label: { text: "Ecctis verification has been requested." } %>
+  <% end %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>

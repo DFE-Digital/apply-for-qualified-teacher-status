@@ -17,10 +17,9 @@ en:
       not_started: Not started
       overdue: Overdue
       overdue_consent: Overdue consent
+      overdue_ecctis: Overdue Ecctis
       overdue_further_information: Overdue further information
-      overdue_lops: Overdue LOPS
-      overdue_professional_standing: Overdue professional standing
-      overdue_qualification: Overdue qualification
+      overdue_lops: Overdue LoPS
       overdue_reference: Overdue reference
       potential_duplicate_in_dqt: Potential duplication in DQT
       pre_assessment: Pre-assessment
@@ -28,10 +27,9 @@ en:
       received: Received
       received_and_overdue: Received (overdue)
       received_consent: Received consent
+      received_ecctis: Received Ecctis
       received_further_information: Received further information
-      received_lops: Received LOPS
-      received_professional_standing: Received professional standing
-      received_qualification: Received qualification
+      received_lops: Received LoPS
       received_reference: Received reference
       rejected: Rejected
       requested: Waiting on
@@ -43,10 +41,9 @@ en:
       verification_not_started: Verification not started
       waiting_on: Waiting on
       waiting_on_consent: Waiting on consent
+      waiting_on_ecctis: Waiting on Ecctis
       waiting_on_further_information: Waiting on further information
-      waiting_on_lops: Waiting on LOPS
-      waiting_on_professional_standing: Waiting on professional standing
-      waiting_on_qualification: Waiting on qualification
+      waiting_on_lops: Waiting on LoPS
       waiting_on_reference: Waiting on reference
       withdrawn: Withdrawn
 

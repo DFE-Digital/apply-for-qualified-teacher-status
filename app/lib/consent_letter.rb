@@ -5,13 +5,7 @@ class ConsentLetter
 
   def initialize(application_form:)
     @application_form = application_form
-    @date_of_consent =
-      application_form
-        .assessment
-        .qualification_requests
-        .first
-        .created_at
-        .to_date
+    @date_of_consent = application_form.submitted_at.to_date
   end
 
   def render_pdf
@@ -33,7 +27,7 @@ class ConsentLetter
       Prawn::Document
         .new(margin: MARGIN)
         .tap do |pdf|
-          pdf.image("public/tra-logo.png", position: :right)
+          pdf.image("public/tra-logo.png", position: :right, scale: 0.6)
 
           pdf.pad(SECTION_PAD) do
             pdf.text "By submitting an application to the Apply for qualified teacher status (QTS) in England."

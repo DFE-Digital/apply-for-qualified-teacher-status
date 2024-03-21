@@ -48,18 +48,19 @@ class HistoryStack
     apply_to_stack(&:second_to_last)
   end
 
-  def last_path_if_check(identifier: nil)
+  def last_entry_is_check?(identifier: nil)
     entry = last_entry
-    return nil unless entry
+    return false unless entry
 
-    is_check =
-      if identifier.present?
-        entry[:check] == true || entry[:check] == identifier
-      else
-        entry[:check].present?
-      end
+    if identifier.present?
+      entry[:check] == true || entry[:check] == identifier
+    else
+      entry[:check].present?
+    end
+  end
 
-    entry[:path] if is_check
+  def last_path_if_check(identifier: nil)
+    last_entry[:path] if last_entry_is_check?(identifier:)
   end
 
   private

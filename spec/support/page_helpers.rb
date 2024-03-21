@@ -87,6 +87,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ConfirmAssessmentRecommendation.new
   end
 
+  def assessor_consent_qualification_request_page
+    @assessor_consent_qualification_request_page ||=
+      PageObjects::AssessorInterface::ConsentQualificationRequest.new
+  end
+
   def assessor_create_note_page
     @assessor_create_note_page ||=
       PageObjects::AssessorInterface::CreateNote.new
@@ -107,19 +112,9 @@ module PageHelpers
       PageObjects::AssessorInterface::EditApplication.new
   end
 
-  def assessor_edit_qualification_request_page
-    @assessor_edit_qualification_request_page ||=
-      PageObjects::AssessorInterface::EditQualificationRequest.new
-  end
-
   def assessor_edit_work_history_page
     @assessor_edit_work_history_page ||=
       PageObjects::AssessorInterface::EditWorkHistory.new
-  end
-
-  def assessor_email_consent_letters_requests_assessment_recommendation_verify_page
-    @assessor_email_consent_letters_requests_assessment_recommendation_verify_page ||=
-      PageObjects::AssessorInterface::EmailConsentLettersAssessmentRecommendationVerify.new
   end
 
   def assessor_further_information_request_preview_page
@@ -156,6 +151,21 @@ module PageHelpers
       PageObjects::AssessorInterface::QualificationRequestsAssessmentRecommendationVerify.new
   end
 
+  def assessor_qualification_requests_check_consent_methods_page
+    @assessor_qualification_requests_check_consent_methods_page ||=
+      PageObjects::AssessorInterface::QualificationRequestsCheckConsentMethods.new
+  end
+
+  def assessor_qualification_requests_consent_methods_page
+    @assessor_qualification_requests_consent_methods_page ||=
+      PageObjects::AssessorInterface::QualificationRequestsConsentMethods.new
+  end
+
+  def assessor_qualification_requests_unsigned_consent_document_page
+    @assessor_qualification_requests_unsigned_consent_document_page ||=
+      PageObjects::AssessorInterface::QualificationRequestsUnsignedConsentDocument.new
+  end
+
   def assessor_qualification_requests_page
     @assessor_qualification_requests_page ||=
       PageObjects::AssessorInterface::QualificationRequests.new
@@ -179,6 +189,11 @@ module PageHelpers
   def assessor_request_professional_standing_request_page
     @assessor_request_professional_standing_request_page ||=
       PageObjects::AssessorInterface::RequestProfessionalStandingRequest.new
+  end
+
+  def assessor_request_qualification_request_page
+    @assessor_request_qualification_request_page ||=
+      PageObjects::AssessorInterface::RequestQualificationRequest.new
   end
 
   def assessor_reverse_decision_page
@@ -216,8 +231,18 @@ module PageHelpers
       PageObjects::AssessorInterface::ReviewVerifications.new
   end
 
+  def assessor_send_signed_consent_documents_page
+    @assessor_send_signed_consent_documents_page ||=
+      PageObjects::AssessorInterface::SendSignedConsentDocuments.new
+  end
+
   def assessor_timeline_page
     @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
+  end
+
+  def assessor_upload_consent_document_page
+    @assessor_upload_consent_document_page ||=
+      PageObjects::AssessorInterface::UploadConsentDocument.new
   end
 
   def assessor_verify_age_range_subjects_page
@@ -225,9 +250,24 @@ module PageHelpers
       PageObjects::AssessorInterface::VerifyAgeRangeSubjectsPage.new
   end
 
+  def assessor_verify_consent_request_page
+    @assessor_verify_consent_request_page ||=
+      PageObjects::AssessorInterface::VerifyConsentRequest.new
+  end
+
+  def assessor_verify_failed_consent_request_page
+    @assessor_verify_failed_consent_request_page ||=
+      PageObjects::AssessorInterface::VerifyFailedConsentRequest.new
+  end
+
   def assessor_verify_failed_professional_standing_request_page
     @assessor_verify_failed_professional_standing_request_page ||=
       PageObjects::AssessorInterface::VerifyFailedProfessionalStandingRequest.new
+  end
+
+  def assessor_verify_failed_qualification_request_page
+    @assessor_verify_failed_qualification_request_page ||=
+      PageObjects::AssessorInterface::VerifyFailedQualificationRequest.new
   end
 
   def assessor_verify_failed_reference_request_page
@@ -238,6 +278,11 @@ module PageHelpers
   def assessor_verify_professional_standing_request_page
     @assessor_verify_professional_standing_request_page ||=
       PageObjects::AssessorInterface::VerifyProfessionalStandingRequest.new
+  end
+
+  def assessor_verify_qualification_request_page
+    @assessor_verify_qualification_request_page ||=
+      PageObjects::AssessorInterface::VerifyQualificationRequest.new
   end
 
   def assessor_verify_qualifications_assessment_recommendation_verify_page

@@ -181,16 +181,18 @@ def create_requestables(application_form, assessment, state)
   elsif (qualifications = application_form.qualifications).present? &&
         rand(2).zero?
     qualifications.each do |qualification|
-      FactoryBot.create(
-        :qualification_request,
-        state,
-        assessment:,
-        qualification:,
-      )
+      qualification_request =
+        FactoryBot.create(
+          :qualification_request,
+          :with_consent_method,
+          state,
+          assessment:,
+          qualification:,
+        )
 
-      next unless rand(2).zero?
-
-      FactoryBot.create(:consent_request, state, assessment:, qualification:)
+      if qualification_request.consent_method_signed?
+        FactoryBot.create(:consent_request, state, assessment:, qualification:)
+      end
     end
 
     assessment.verify!
@@ -233,11 +235,13 @@ def create_application_forms
           :selected_failure_reason,
           :fi_requestable,
           assessment_section: assessment.sections.first,
+          key: assessment.sections.first.failure_reasons.sample,
         )
         FactoryBot.create(
           :selected_failure_reason,
           :declinable,
           assessment_section: assessment.sections.second,
+          key: assessment.sections.second.failure_reasons.sample,
         )
 
         declined_at = Faker::Time.between(from: 6.months.ago, to: Time.zone.now)

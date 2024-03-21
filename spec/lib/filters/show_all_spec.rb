@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe Filters::ShowAllApplications do
+RSpec.describe Filters::ShowAll do
   subject(:filtered_scope) { described_class.apply(scope:, params:) }
 
   let!(:application_awarded_recently) do

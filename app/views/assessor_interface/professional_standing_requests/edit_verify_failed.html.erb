@@ -8,7 +8,7 @@
 
   <p class="govuk-body">You have opted to send this LoPS for review.</p>
 
-  <%= f.govuk_text_area :note, label: { text: "Internal note: briefly explain to the assessor why you are sending this LoPS for review." } %>
+  <%= f.govuk_text_area :note %>
 
   <%= render "shared/assessor_interface/continue_cancel_button", f: %>
 <% end %>

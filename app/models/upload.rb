@@ -50,4 +50,9 @@ class Upload < ApplicationRecord
   def is_pdf?
     attachment.blob.content_type == "application/pdf"
   end
+
+  def downloadable?
+    !FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result) ||
+      scan_result_clean?
+  end
 end

@@ -1,25 +1,24 @@
-<% content_for :page_title, title_with_error_prefix(t(".heading"), error: @form.errors.any?) %>
-<% content_for :back_link_url, back_history_path(default: verify_qualifications_assessor_interface_application_form_assessment_assessment_recommendation_verify_path) %>
+<% title = "Verify qualifications" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: verify_qualifications_assessor_interface_application_form_assessment_assessment_recommendation_verify_path(@application_form, @assessment)) %>
 
 <%= form_with model: @form, url: [:qualification_requests, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+  <h1 class="govuk-heading-xl"><%= title %></h1>
 
-  <p class="govuk-body">The list of qualifications that the applicant has submitted is shown below:</p>
+  <p class="govuk-body">The list of submitted qualifications is shown below.</p>
+
+  <p class="govuk-body">Select the qualifications you want to verify. You will be able to check your selection before submitting.</p>
 
   <%= f.govuk_collection_check_boxes :qualification_ids,
                                      @application_form.qualifications.order_by_role,
                                      :id,
                                      ->(qualification) { qualification_title(qualification) },
-                                     small: true,
                                      legend: nil %>
 
-  <%= govuk_inset_text do %>
-    <p class="govuk-body">
-      You can deselect 1 or more qualifications from the list if you do not want to verify them.
-    </p>
-  <% end %>
+  <%= f.govuk_text_area :qualifications_assessor_note %>
 
   <p class="govuk-body">
     If you’re happy to proceed, select ‘Continue’.

@@ -52,15 +52,16 @@ class ApplicationFormStatusUpdater
            application_form.awarded_at.present?
         "none"
       elsif dqt_trn_request.present? || assessment_in_review? ||
-            overdue_further_information || overdue_qualification ||
-            received_further_information || received_qualification
+            overdue_further_information || overdue_ecctis ||
+            received_further_information || received_ecctis
         "assessor"
-      elsif preliminary_check? || need_to_request_lops? || overdue_consent ||
-            received_consent || overdue_lops || received_lops ||
-            overdue_reference || received_reference
+      elsif preliminary_check? || need_to_request_lops? ||
+            need_to_request_consent? || need_to_request_ecctis? ||
+            overdue_consent || received_consent || overdue_lops ||
+            received_lops || overdue_reference || received_reference
         "admin"
       elsif waiting_on_consent || waiting_on_further_information ||
-            waiting_on_lops || waiting_on_qualification || waiting_on_reference
+            waiting_on_lops || waiting_on_ecctis || waiting_on_reference
         "external"
       elsif application_form.submitted_at.present?
         "assessor"
@@ -80,11 +81,12 @@ class ApplicationFormStatusUpdater
       elsif preliminary_check? ||
             (teaching_authority_provides_written_statement && waiting_on_lops)
         "pre_assessment"
-      elsif assessment_in_verify? || need_to_request_lops? || overdue_consent ||
-            overdue_lops || overdue_qualification || overdue_reference ||
-            received_consent || received_lops || received_qualification ||
-            received_reference || waiting_on_consent || waiting_on_lops ||
-            waiting_on_qualification || waiting_on_reference
+      elsif assessment_in_verify? || need_to_request_lops? ||
+            need_to_request_consent? || need_to_request_ecctis? ||
+            overdue_consent || overdue_lops || overdue_ecctis ||
+            overdue_reference || received_consent || received_lops ||
+            received_ecctis || received_reference || waiting_on_consent ||
+            waiting_on_lops || waiting_on_ecctis || waiting_on_reference
         "verification"
       elsif overdue_further_information || received_further_information ||
             waiting_on_further_information ||
@@ -158,15 +160,35 @@ class ApplicationFormStatusUpdater
   def need_to_request_lops?
     return false if teaching_authority_provides_written_statement
 
-    professional_standing_requests.any? do |requestable|
-      !requestable.requested?
-    end
+    professional_standing_requests.any?(&:not_requested?)
+  end
+
+  def need_to_request_consent?
+    (
+      qualification_requests.none?(&:requested?) &&
+        qualification_requests.any?(&:consent_method_unknown?)
+    ) || consent_requests.any?(&:not_requested?)
+  end
+
+  def need_to_request_ecctis?
+    qualification_requests
+      .select(&:not_requested?)
+      .any? do |qualification_request|
+        qualification_request.consent_method_none? ||
+          qualification_request.consent_method_unsigned? ||
+          consent_requests
+            .select(&:verify_passed?)
+            .any? do |consent_request|
+              consent_request.qualification ==
+                qualification_request.qualification
+            end
+      end
   end
 
   def requestable_statuses
     @requestable_statuses ||=
       %w[overdue received waiting_on]
-        .product(%w[consent further_information lops qualification reference])
+        .product(%w[consent ecctis further_information lops reference])
         .map { |status, requestable| "#{status}_#{requestable}" }
         .filter { |column| send(column) }
   end
@@ -184,8 +206,8 @@ class ApplicationFormStatusUpdater
     overdue?(requestables: professional_standing_requests)
   end
 
-  def overdue_qualification
-    overdue?(requestables: qualification_requests.select(&:requested?))
+  def overdue_ecctis
+    overdue?(requestables: qualification_requests)
   end
 
   def overdue_reference
@@ -205,7 +227,7 @@ class ApplicationFormStatusUpdater
     received?(requestables: professional_standing_requests)
   end
 
-  def received_qualification
+  def received_ecctis
     received?(requestables: qualification_requests)
   end
 
@@ -245,7 +267,7 @@ class ApplicationFormStatusUpdater
     waiting_on?(requestables: professional_standing_requests)
   end
 
-  def waiting_on_qualification
+  def waiting_on_ecctis
     waiting_on?(requestables: qualification_requests)
   end
 

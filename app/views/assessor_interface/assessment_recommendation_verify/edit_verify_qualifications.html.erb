@@ -1,17 +1,19 @@
-<% content_for :page_title, title_with_error_prefix(t(".heading"), error: @form.errors.any?) %>
+<% title = "Do you want to verify qualifications?" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
 
 <%= form_with model: @form, url: [:verify_qualifications, :assessor_interface, @application_form, @assessment, :assessment_recommendation_verify] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+  <h1 class="govuk-heading-xl"><%= title %></h1>
 
   <p class="govuk-body">
-    If you choose to verify this applicant’s qualifications, you’ll need to submit 1 or more verification requests to Ecctis.
+    If you choose to verify qualifications an admin will request consent and submit verification requests to Ecctis.
   </p>
 
   <p class="govuk-body">
-    On the next screen you’ll see a list of the applicant’s qualifications. You can select which ones you want to verify.
+    You can select which qualifications to verify on the next screen.
   </p>
 
   <%= f.govuk_collection_radio_buttons :verify_qualifications, %i[true false], :itself, legend: nil %>

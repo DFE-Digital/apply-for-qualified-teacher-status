@@ -29,6 +29,11 @@ module AssessorInterface
       end
     end
 
+    def all_consent_methods_selected?
+      qualification_requests.none?(&:consent_method_unknown?) ||
+        qualification_requests.requested.exists?
+    end
+
     def show_individual_task_items?
       all_consent_methods_selected? && qualification_requests.count > 1
     end
@@ -44,13 +49,8 @@ module AssessorInterface
     end
 
     def individual_task_items_for(qualification_request:)
-      return [] if qualification_request.consent_method_unknown?
-
-      if qualification_request.consent_method_unsigned?
-        unsigned_consent_method_task_items(qualification_request)
-      else
-        signed_consent_method_task_items(qualification_request)
-      end + ecctis_task_items(qualification_request)
+      consent_task_items(qualification_request) +
+        ecctis_task_items(qualification_request)
     end
 
     private
@@ -59,21 +59,38 @@ module AssessorInterface
 
     delegate :assessment, to: :application_form
 
-    def all_consent_methods_selected?
-      qualification_requests.none?(&:consent_method_unknown?)
-    end
-
     def check_consent_method_task_item
-      status =
-        if qualification_requests.all?(&:consent_method_unknown?)
-          "not_started"
-        elsif all_consent_methods_selected?
-          "completed"
-        else
-          "in_progress"
-        end
+      cannot_change =
+        assessment.unsigned_consent_document_generated ||
+          consent_requests.exists? || qualification_requests.requested.exists?
 
-      { name: "Check and select consent method", link: "#", status: }
+      {
+        name: "Check and select consent method",
+        link:
+          unless cannot_change
+            [
+              (
+                if all_consent_methods_selected?
+                  :check_consent_methods
+                else
+                  :consent_methods
+                end
+              ),
+              :assessor_interface,
+              application_form,
+              assessment,
+              :qualification_requests,
+            ]
+          end,
+        status:
+          if all_consent_methods_selected?
+            "completed"
+          elsif qualification_requests.all?(&:consent_method_unknown?)
+            "not_started"
+          else
+            "in_progress"
+          end,
+      }
     end
 
     def generate_consent_document_in_all_qualifications?
@@ -85,7 +102,7 @@ module AssessorInterface
       {
         name: "Generate consent document",
         link: [
-          :consent_letter,
+          :unsigned_consent_document,
           :assessor_interface,
           application_form,
           assessment,
@@ -102,27 +119,37 @@ module AssessorInterface
       }
     end
 
-    def unsigned_consent_method_task_items(_qualification_request)
-      if generate_consent_document_in_all_qualifications?
-        []
-      else
-        [generate_consent_document_task_item]
-      end
-    end
-
     def send_consent_document_in_all_qualifications?
-      all_consent_methods_selected? && consent_requests.count >= 2
+      all_consent_methods_selected? &&
+        qualification_requests.consent_method_signed.count >= 2
     end
 
     def send_consent_document_task_item
+      all_documents_completed =
+        qualification_requests.consent_method_signed.count ==
+          consent_requests.count &&
+          consent_requests
+            .map(&:unsigned_consent_document)
+            .all? { |document| document.completed? && document.downloadable? }
+
+      all_consents_requested = consent_requests.all?(&:requested?)
+
       {
-        name: "Send consent document to applicant",
-        link: "#",
+        name:
+          "Send consent #{"document".pluralize(consent_requests.count)} to applicant",
+        link:
+          if all_documents_completed && !all_consents_requested
+            [
+              :request,
+              :assessor_interface,
+              application_form,
+              assessment,
+              :consent_requests,
+            ]
+          end,
         status:
-          if consent_requests.map(&:unsigned_consent_document).all?(
-               &:completed?
-             )
-            consent_requests.all?(&:requested?) ? "completed" : "not_started"
+          if all_documents_completed
+            all_consents_requested ? "completed" : "not_started"
           else
             "cannot_start"
           end,
@@ -131,18 +158,41 @@ module AssessorInterface
 
     def signed_consent_method_task_items(qualification_request)
       consent_request =
-        consent_requests.find_by!(
+        consent_requests.find_by(
           qualification: qualification_request.qualification,
         )
 
       [
         {
           name: "Upload consent document",
-          link: "#",
+          link:
+            if consent_request.nil?
+              Rails
+                .application
+                .routes
+                .url_helpers
+                .new_assessor_interface_application_form_assessment_consent_request_path(
+                application_form,
+                assessment,
+                qualification_id: qualification_request.qualification.id,
+              )
+            elsif !consent_request.requested?
+              [
+                :check_upload,
+                :assessor_interface,
+                application_form,
+                assessment,
+                consent_request,
+              ]
+            end,
           status:
             (
-              if consent_request.unsigned_consent_document.completed?
-                "completed"
+              if consent_request&.unsigned_consent_document&.completed?
+                if consent_request&.unsigned_consent_document&.downloadable?
+                  "completed"
+                else
+                  "in_progress"
+                end
               else
                 "not_started"
               end
@@ -153,42 +203,87 @@ module AssessorInterface
         end,
         {
           name: "Record applicant response",
-          link: "#",
-          status: consent_request.status(not_requested: "cannot_start"),
+          link:
+            if consent_request&.requested?
+              [
+                :verify,
+                :assessor_interface,
+                application_form,
+                assessment,
+                consent_request,
+              ]
+            end,
+          status: consent_request&.status || "cannot_start",
         },
-      ]
+      ].compact
+    end
+
+    def consent_task_items(qualification_request)
+      if qualification_request.consent_method_unsigned? &&
+           !generate_consent_document_in_all_qualifications?
+        [generate_consent_document_task_item]
+      elsif qualification_request.consent_method_signed?
+        signed_consent_method_task_items(qualification_request)
+      else
+        []
+      end
     end
 
     def ecctis_task_items(qualification_request)
+      if qualification_request.consent_method_unknown? &&
+           !qualification_request.requested?
+        return []
+      end
+
       can_start =
-        (
-          qualification_request.consent_method_unsigned? &&
-            assessment.unsigned_consent_document_generated
-        ) ||
-          consent_requests.verified.exists?(
-            qualification: qualification_request.qualification,
+        qualification_request.consent_method_none? ||
+          (
+            qualification_request.consent_method_unsigned? &&
+              assessment.unsigned_consent_document_generated
+          ) ||
+          (
+            qualification_request.consent_method_signed? &&
+              consent_requests.exists?(
+                verify_passed: true,
+                qualification: qualification_request.qualification,
+              )
           )
 
       [
         {
           name: "Request Ecctis verification",
-          link: "#",
+          link:
+            if can_start && !qualification_request.requested?
+              [
+                :request,
+                :assessor_interface,
+                application_form,
+                assessment,
+                qualification_request,
+              ]
+            end,
           status:
-            if can_start
-              qualification_request.requested? ? "completed" : "not_started"
+            if qualification_request.requested?
+              "completed"
+            elsif can_start
+              "not_started"
             else
               "cannot_start"
             end,
         },
         {
           name: "Record Ecctis response",
-          link: "#",
-          status:
-            if can_start && qualification_request.requested?
-              qualification_request.received? ? "completed" : "not_started"
-            else
-              "cannot_start"
+          link:
+            if qualification_request.requested?
+              [
+                :verify,
+                :assessor_interface,
+                application_form,
+                assessment,
+                qualification_request,
+              ]
             end,
+          status: qualification_request.status,
         },
       ]
     end

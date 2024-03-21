@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe UnreceiveRequestable do
   let(:application_form) do
-    create(:application_form, :submitted, statuses: %w[received_qualification])
+    create(:application_form, :submitted, statuses: %w[received_ecctis])
   end
   let(:requestable) do
     create(
@@ -49,7 +49,9 @@ RSpec.describe UnreceiveRequestable do
   end
 
   it "deletes the requestable received timeline event" do
-    expect { call }.to change(TimelineEvent, :count).by(-1)
+    expect { call }.to change { TimelineEvent.requestable_received.count }.by(
+      -1,
+    )
     expect { timeline_event.reload }.to raise_error(
       ActiveRecord::RecordNotFound,
     )

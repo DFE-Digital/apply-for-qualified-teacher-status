@@ -1,0 +1,20 @@
+<% title = "Send consent #{"document".pluralize(@consent_requests.count)} to applicant" %>
+
+<% content_for :page_title, title %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_qualification_requests_path) %>
+
+<h1 class="govuk-heading-xl"><%= title %></h1>
+
+<p class="govuk-body">You need to request a signature for the uploaded consent documents for:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <% @consent_requests.each do |consent_request| %>
+    <li class="govuk-!-font-weight-bold"><%= qualification_title(consent_request.qualification) %></li>
+  <% end %>
+</ul>
+
+<p class="govuk-body govuk-!-padding-top-3">Select ‘Continue’ to automatically send an email and the uploaded consent document to the applicant.</p>
+
+<%= form_with url: [:request, :assessor_interface, @application_form, @assessment, :consent_requests] do |f| %>
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>

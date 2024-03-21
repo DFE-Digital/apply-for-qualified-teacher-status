@@ -112,13 +112,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_select_the_qualifications
     then_i_see_the(
-      :assessor_email_consent_letters_requests_assessment_recommendation_verify_page,
-      reference:,
-      assessment_id:,
-    )
-
-    when_i_click_continue_from_email_consent_letters
-    then_i_see_the(
       :assessor_professional_standing_assessment_recommendation_verify_page,
       reference:,
       assessment_id:,
@@ -173,13 +166,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_select_the_qualifications
     then_i_see_the(
-      :assessor_email_consent_letters_requests_assessment_recommendation_verify_page,
-      reference:,
-      assessment_id:,
-    )
-
-    when_i_click_continue_from_email_consent_letters
-    then_i_see_the(
       :assessor_assessment_recommendation_verify_page,
       reference:,
       assessment_id:,
@@ -189,7 +175,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     then_i_see_the(:assessor_application_status_page, reference:)
 
     when_i_click_on_overview_button
-    then_the_application_form_is_waiting_on
+    then_the_application_form_is_verification_in_progress
   end
 
   it "decline" do
@@ -391,14 +377,12 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def when_i_select_the_qualifications
-    assessor_qualification_requests_assessment_recommendation_verify_page
-      .form
-      .submit_button
-      .click
-  end
+    form =
+      assessor_qualification_requests_assessment_recommendation_verify_page.form
 
-  def when_i_click_continue_from_email_consent_letters
-    assessor_email_consent_letters_requests_assessment_recommendation_verify_page.continue_button.click
+    form.qualification_checkboxes.first.click
+    form.qualifications_assessor_note_textarea.fill_in with: "A note."
+    form.submit_button.click
   end
 
   def when_i_select_yes_verify_professional_standing
@@ -415,6 +399,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def when_i_select_the_work_histories
     form =
       assessor_reference_requests_assessment_recommendation_verify_page.form
+
     form.work_history_checkboxes.first.click
     form.submit_button.click
   end
@@ -449,6 +434,12 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def then_the_application_form_is_waiting_on
     expect(assessor_application_page.status_summary.value.text).to include(
       "WAITING ON",
+    )
+  end
+
+  def then_the_application_form_is_verification_in_progress
+    expect(assessor_application_page.status_summary.value.text).to include(
+      "VERIFICATION IN PROGRESS",
     )
   end
 

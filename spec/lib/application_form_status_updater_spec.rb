@@ -204,7 +204,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "verification"
-      include_examples "changes statuses", %w[received_qualification]
+      include_examples "changes statuses", %w[received_ecctis]
     end
 
     context "with a requested qualification request" do
@@ -212,12 +212,17 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:qualification_request, :requested, assessment:)
+        create(
+          :qualification_request,
+          :requested,
+          assessment:,
+          consent_method: "unsigned",
+        )
       end
 
       include_examples "changes action required by", "external"
       include_examples "changes stage", "verification"
-      include_examples "changes statuses", %w[waiting_on_qualification]
+      include_examples "changes statuses", %w[waiting_on_ecctis]
     end
 
     context "with a received reference request" do

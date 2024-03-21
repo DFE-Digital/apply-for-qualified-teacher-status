@@ -1,16 +1,18 @@
-<% content_for :page_title, "Review verifications" %>
+<% title = "Review verifications" %>
+
+<% content_for :page_title, title %>
 <% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
 
-<h1 class="govuk-heading-xl">Review verifications</h1>
+<h1 class="govuk-heading-xl"><%= title %></h1>
 
 <p class="govuk-body govuk-!-padding-bottom-2">
   The following verification tasks have been flagged for review:
 </p>
 
-<%= render(TaskList::Component.new([
-  if @professional_standing_request.present?
-    {
-      title: "LoPS",
+<% if @professional_standing_request.present? %>
+  <h2 class="govuk-heading-m">LoPS</h2>
+
+  <%= render(TaskList::Component.new([{
       indentation: false,
       items: [
         {
@@ -19,11 +21,14 @@
           status: @professional_standing_request.review_status,
         }
       ],
-    }
-  end,
-  if @consent_requests.present? || @qualification_requests.present?
-    {
-      title: "Qualifications",
+    }])) %>
+<% end %>
+
+
+<% if @consent_requests.present? || @qualification_requests.present? %>
+  <h2 class="govuk-heading-m">Qualifications</h2>
+
+  <%= render(TaskList::Component.new([{
       indentation: false,
       items: @consent_requests.map do |consent_request|
         {
@@ -38,11 +43,13 @@
           status: qualification_request.review_status,
         }
       end
-    }
-  end,
-  if @reference_requests.present?
-    {
-      title: "References",
+    }])) %>
+<% end %>
+
+<% if @reference_requests.present? %>
+  <h2 class="govuk-heading-m">References</h2>
+
+  <%= render(TaskList::Component.new([{
       indentation: false,
       items: @reference_requests.map do |reference_request|
         {
@@ -51,9 +58,8 @@
           status: reference_request.review_status,
         }
       end
-    }
-  end
-].compact)) %>
+    }])) %>
+<% end %>
 
 <div class="govuk-!-padding-top-3">
   <%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>

@@ -29,7 +29,13 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
         [
           {
             name: "Check and select consent method",
-            link: "#",
+            link: [
+              :consent_methods,
+              :assessor_interface,
+              application_form,
+              assessment,
+              :qualification_requests,
+            ],
             status: "not_started",
           },
         ],
@@ -44,13 +50,19 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
           [
             {
               name: "Check and select consent method",
-              link: "#",
+              link: [
+                :check_consent_methods,
+                :assessor_interface,
+                application_form,
+                assessment,
+                :qualification_requests,
+              ],
               status: "completed",
             },
             {
               name: "Generate consent document",
               link: [
-                :consent_letter,
+                :unsigned_consent_document,
                 :assessor_interface,
                 application_form,
                 assessment,
@@ -60,12 +72,12 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             },
             {
               name: "Request Ecctis verification",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {
               name: "Record Ecctis response",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
           ],
@@ -112,7 +124,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             {
               name: "Generate consent document",
               link: [
-                :consent_letter,
+                :unsigned_consent_document,
                 :assessor_interface,
                 application_form,
                 assessment,
@@ -122,12 +134,12 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             },
             {
               name: "Request Ecctis verification",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {
               name: "Record Ecctis response",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
           ],
@@ -136,8 +148,9 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
     end
 
     context "when signed consent method" do
-      before do
-        qualification_request.consent_method_signed_ecctis!
+      before { qualification_request.consent_method_signed_ecctis! }
+
+      let!(:consent_request) do
         create(:consent_request, assessment:, qualification:)
       end
 
@@ -146,27 +159,33 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
           [
             {
               name: "Upload consent document",
-              link: "#",
+              link: [
+                :check_upload,
+                :assessor_interface,
+                application_form,
+                assessment,
+                consent_request,
+              ],
               status: "not_started",
             },
             {
               name: "Send consent document to applicant",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {
               name: "Record applicant response",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {
               name: "Request Ecctis verification",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
             {
               name: "Record Ecctis response",
-              link: "#",
+              link: nil,
               status: "cannot_start",
             },
           ],

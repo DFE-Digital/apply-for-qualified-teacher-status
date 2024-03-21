@@ -47,6 +47,7 @@ module AssessorInterface
         user: current_staff,
         professional_standing:,
         qualifications:,
+        qualifications_assessor_note: session[:qualifications_assessor_note],
         work_histories:,
       )
 
@@ -80,6 +81,9 @@ module AssessorInterface
         session[:qualification_ids] = []
 
         if @form.verify_qualifications
+          # To ensure the user goes back to the check page afterwards.
+          history_stack.pop if history_stack.last_entry_is_check?
+
           redirect_to [
                         :qualification_requests,
                         :assessor_interface,
@@ -106,12 +110,7 @@ module AssessorInterface
     def edit_qualification_requests
       authorize %i[assessor_interface assessment_recommendation], :edit?
 
-      @form =
-        SelectQualificationsForm.new(
-          application_form:,
-          session:,
-          qualification_ids: application_form.qualifications.pluck(:id),
-        )
+      @form = SelectQualificationsForm.new(application_form:, session:)
     end
 
     def update_qualification_requests
@@ -123,11 +122,18 @@ module AssessorInterface
           :qualification_ids,
         ).compact_blank
 
+      qualifications_assessor_note =
+        params.dig(
+          :assessor_interface_select_qualifications_form,
+          :qualifications_assessor_note,
+        ) || ""
+
       @form =
         SelectQualificationsForm.new(
           application_form:,
-          session:,
           qualification_ids:,
+          qualifications_assessor_note:,
+          session:,
         )
 
       if @form.save
@@ -135,7 +141,7 @@ module AssessorInterface
           redirect_to check_path
         else
           redirect_to [
-                        :email_consent_letters,
+                        :professional_standing,
                         :assessor_interface,
                         application_form,
                         assessment,
@@ -145,13 +151,6 @@ module AssessorInterface
       else
         render :edit_qualification_requests, status: :unprocessable_entity
       end
-    end
-
-    def email_consent_letters
-      authorize %i[assessor_interface assessment_recommendation], :edit?
-
-      @qualifications =
-        application_form.qualifications.where(id: session[:qualification_ids])
     end
 
     def edit_professional_standing

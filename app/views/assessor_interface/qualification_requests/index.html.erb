@@ -1,22 +1,38 @@
 <% content_for :page_title, t("assessor_interface.application_forms.show.assessment_tasks.items.qualification_requests") %>
 <% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
 
-<%= render "shared/assessor_header", title: t("assessor_interface.application_forms.show.assessment_tasks.items.qualification_requests"), application_form: @application_form %>
+<h1 class="govuk-heading-xl"><%= t("assessor_interface.application_forms.show.assessment_tasks.items.qualification_requests") %></h1>
 
-<%= render TaskList::Component.new(
-  [
-    {
-      title: "Qualifications",
-      indentation: false,
-      items: @qualification_requests.map do |qualification_request|
-        {
-          name: qualification_title(qualification_request.qualification),
-          link: [:edit, :assessor_interface, @application_form, @assessment, qualification_request],
-          status: qualification_request.status
-        }
-      end
-    }
-  ]
-) %>
+<h2 class="govuk-heading-m">All qualifications</h2>
+
+<% if !@view_object.all_consent_methods_selected? || @view_object.show_individual_task_items? %>
+  <p class="govuk-body">Complete the following tasks for each qualification:</p>
+<% else %>
+  <p class="govuk-body">Complete the following tasks:</p>
+<% end %>
+
+<%= render TaskList::Component.new([
+  {
+    indentation: false,
+    items: @view_object.all_task_items
+  }
+]) %>
+
+<% if @view_object.show_individual_task_items? %>
+  <h2 class="govuk-heading-m">Qualification specific</h2>
+
+  <p class="govuk-body">As you have to verify more than one qualification you will need to complete specific tasks for each one.</p>
+
+  <% @view_object.qualification_requests.map do |qualification_request| %>
+    <h3 class="govuk-heading-s"><%= qualification_title(qualification_request.qualification) %></h3>
+
+    <%= render TaskList::Component.new([
+      {
+        indentation: false,
+        items: @view_object.individual_task_items_for(qualification_request:)
+      }
+    ]) %>
+  <% end %>
+<% end %>
 
 <%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>

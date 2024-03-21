@@ -8,6 +8,7 @@ RSpec.describe VerifyAssessment do
   let(:user) { create(:staff, :confirmed) }
   let(:professional_standing) { true }
   let(:qualification) { create(:qualification, :completed, application_form:) }
+  let(:qualifications_assessor_note) { "A note." }
   let(:work_history) { create(:work_history, :completed, application_form:) }
 
   subject(:call) do
@@ -16,6 +17,7 @@ RSpec.describe VerifyAssessment do
       user:,
       professional_standing:,
       qualifications: [qualification],
+      qualifications_assessor_note:,
       work_histories: [work_history],
     )
   end
@@ -83,22 +85,16 @@ RSpec.describe VerifyAssessment do
     end
   end
 
-  describe "creating qualification request" do
-    subject(:qualification_request) do
-      QualificationRequest.find_by(assessment:, qualification:)
+  describe "qualification request" do
+    it "creates a qualification request" do
+      expect { call }.to change(QualificationRequest, :count).by(1)
     end
+  end
 
-    it { is_expected.to be_nil }
-
-    context "after calling the service" do
-      before { call }
-
-      it { is_expected.to_not be_nil }
-
-      it "sets the attributes correctly" do
-        expect(qualification_request.requested?).to be true
-      end
-    end
+  it "changes the assessment qualifications assessor note" do
+    expect { call }.to change(assessment, :qualifications_assessor_note).to(
+      "A note.",
+    )
   end
 
   it "changes the application form stage" do

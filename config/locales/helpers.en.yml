@@ -101,9 +101,10 @@ en:
         subjects_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> If you''ve edited the subjects please explain why (optional)'
       assessor_interface_consent_method_form:
         consent_method_options:
-          unsigned: Non-signed TRA consent document
           signed_ecctis: Ecctis standard consent document with signature
           signed_institution: Institution’s custom consent document
+          unsigned: Non-signed TRA consent document
+          none: No consent required
       assessor_interface_create_note_form:
         text: Add a note to this application
       assessor_interface_filter_form:
@@ -111,28 +112,22 @@ en:
         location: Country trained in
         name: Applicant name
         reference: Application reference number
-      assessor_interface_qualification_request_form:
-        received_options:
-          true: "Yes"
-          false: "No"
-        passed_options:
-          true: "Yes"
-          false: "No"
-        failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Briefly explain why you selected ‘No’'
-        failed_options:
-          true: Yes, mark as ‘Rejected’
-          false: No, allow more time for a response
       assessor_interface_requestable_review_form:
         passed_options:
           true: Yes, mark as accepted
           false: No, mark as rejected
+      assessor_interface_requestable_verify_failed_form:
+        note: "Internal note: briefly explain to the assessor why you are sending this for review."
       assessor_interface_requestable_verify_passed_form:
         passed_options:
-          true: Yes, mark as completed
           false: No, send for review
+          nil: Yes, wait for a response
+          true: Yes, mark as completed
         received_options:
           true: Response received and not valid
           false: Response not received
+      assessor_interface_select_qualifications_form:
+        qualifications_assessor_note: "Internal note: Add any explanatory notes for admins."
       assessor_interface_verify_professional_standing_form:
         verify_professional_standing_options:
           true: Yes, verify LoPS
@@ -140,7 +135,7 @@ en:
       assessor_interface_verify_qualifications_form:
         verify_qualifications_options:
           true: Yes, verify qualifications
-          false: No, skip this step
+          false: No, do not verify
       assessor_interface_work_history_contact_form:
         name: Change full name
         job: Change job title
@@ -288,12 +283,6 @@ en:
         submitted_at: Created date
         submitted_at_after: Start date
         submitted_at_before: End date
-      assessor_interface_qualification_request_form:
-        received: Have you received a response about this qualification?
-        passed: Does the response show that the qualification is legitimate?
-        failed: Do you want to mark this qualification as ‘Rejected’?
-      assessor_interface_select_qualifications_form:
-        qualification_ids: Qualification
       assessor_interface_select_work_histories_form:
         work_history_ids: Schools
       eligibility_interface_region_form:

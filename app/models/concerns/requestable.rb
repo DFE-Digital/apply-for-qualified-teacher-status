@@ -9,6 +9,7 @@ module Requestable
     belongs_to :assessment
 
     scope :requested, -> { where.not(requested_at: nil) }
+    scope :not_requested, -> { where(requested_at: nil) }
     scope :received, -> { where.not(received_at: nil) }
     scope :not_received, -> { where(received_at: nil) }
     scope :respondable,
@@ -24,6 +25,10 @@ module Requestable
 
   def requested?
     requested_at != nil
+  end
+
+  def not_requested?
+    requested_at.nil?
   end
 
   def received!
@@ -58,11 +63,15 @@ module Requestable
     try(:verify_passed) == false
   end
 
-  def status(not_requested: "not_started")
-    if review_passed? || review_failed?
-      review_status
-    elsif verify_passed?
-      "accepted"
+  def review_or_verify_passed?
+    verify_passed? || review_passed?
+  end
+
+  def status
+    if review_passed? || verify_passed?
+      "completed"
+    elsif review_failed?
+      "rejected"
     elsif verify_failed?
       "review"
     elsif received? && expired?
@@ -74,7 +83,7 @@ module Requestable
     elsif requested?
       "waiting_on"
     else
-      not_requested
+      "cannot_start"
     end
   end
 

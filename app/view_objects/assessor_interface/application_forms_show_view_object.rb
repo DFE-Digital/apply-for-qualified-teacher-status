@@ -292,10 +292,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
         :qualification_requests,
       ],
-      status:
-        requestables_task_item_status(
-          qualification_requests.reject(&:reviewed?),
-        ),
+      status: qualification_requests_task_item_status,
     }
   end
 
@@ -336,10 +333,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment,
         :professional_standing_request,
       ],
-      status:
-        requestables_task_item_status(
-          [professional_standing_request].reject(&:verified?),
-        ),
+      status: requestables_task_item_status([professional_standing_request]),
     }
   end
 
@@ -401,7 +395,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
               !teaching_authority_provides_written_statement &&
                 professional_standing_request&.reviewed?
             ) || consent_requests.any?(:reviewed?) ||
-              reference_requests.any?(:reviewed?)
+              reference_requests.any?(:reviewed?) ||
+              qualification_requests.any?(:reviewed?)
           :in_progress
         else
           :not_started
@@ -450,13 +445,15 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def requestables_task_item_status(requestables)
-    if requestables.empty?
+    unverified_requestables = requestables.reject(&:verified?)
+
+    if unverified_requestables.empty?
       "completed"
-    elsif requestables.any?(&:expired?)
+    elsif unverified_requestables.any?(&:expired?)
       "overdue"
-    elsif requestables.any?(&:received?)
+    elsif unverified_requestables.any?(&:received?)
       "received"
-    elsif requestables.any?(&:requested?)
+    elsif unverified_requestables.any?(&:requested?)
       "waiting_on"
     else
       "not_started"
@@ -467,7 +464,34 @@ class AssessorInterface::ApplicationFormsShowViewObject
     if assessment.enough_reference_requests_verify_passed?
       "completed"
     else
-      requestables_task_item_status(reference_requests.reject(&:verified?))
+      requestables_task_item_status(reference_requests)
+    end
+  end
+
+  def qualification_requests_task_item_status
+    requestables =
+      qualification_requests.map do |qualification_request|
+        consent_request =
+          consent_requests.find_by(
+            qualification: qualification_request.qualification,
+          )
+
+        if consent_request.nil? || consent_request.verify_passed?
+          qualification_request
+        else
+          consent_request
+        end
+      end
+
+    status = requestables_task_item_status(requestables)
+
+    return status if status != "not_started"
+
+    if qualification_requests.consent_method_unknown.count ==
+         qualification_requests.count
+      "not_started"
+    else
+      "in_progress"
     end
   end
 

@@ -27,6 +27,13 @@ module AssessorInterface
       @professional_standing_request =
         assessment.professional_standing_request if assessment.professional_standing_request&.verify_failed?
 
+      @consent_requests =
+        assessment
+          .consent_requests
+          .includes(:qualification)
+          .where(verify_passed: false)
+          .order_by_role
+
       @qualification_requests =
         assessment
           .qualification_requests
