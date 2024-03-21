@@ -164,8 +164,6 @@ class ApplicationForm < ApplicationRecord
 
   scope :assessable, -> { where.not(stage: %i[draft completed]) }
 
-  scope :assessable, -> { where.not(stage: %i[draft completed]) }
-
   scope :submitted, -> { where.not(stage: "draft") }
 
   scope :destroyable,
