@@ -159,6 +159,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
   end
 
   describe "#country_filter_options" do
+  subject(:country_filter_options) { view_object.country_filter_options }
     it do
       is_expected.to include(
         '<option value="country:US">United States</option>',
