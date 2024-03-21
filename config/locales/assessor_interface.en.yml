@@ -36,7 +36,8 @@ en:
           review: Assessment decision
           verify: Verification decision
         hint:
-          can_award: You’ve completed your assessment of this QTS application and reviewed the work references.
+          can_award_with_references: You’ve completed your assessment of this QTS application and reviewed the work references.
+          can_award_without_references: You’ve completed your assessment of this QTS application.
           can_review: You’ve completed your verification checks.
           can_verify: You’ve completed your review of this QTS application and marked all sections as complete to your satisfaction.
           cant_award: You’ve completed your review of this QTS application and marked 1 or more sections as not completed to your satisfaction.

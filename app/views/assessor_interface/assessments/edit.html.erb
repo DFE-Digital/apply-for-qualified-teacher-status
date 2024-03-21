@@ -11,7 +11,11 @@
          elsif @assessment.can_review?
            t(".hint.can_review")
          elsif @assessment.can_award?
-           t(".hint.can_award")
+           if @assessment.reference_requests.present?
+             t(".hint.can_award_with_references")
+           else
+             t(".hint.can_award_without_references")
+           end
          else
            t(".hint.cant_award")
          end %>
@@ -24,6 +28,10 @@
 
   <h1 class="govuk-heading-xl"><%= title %></h1>
   <p class="govuk-body"><%= description %></p>
+
+  <% if @assessment.can_award? && @assessment.can_decline? %>
+    <p class="govuk-body">Note: for <%= CountryName.from_region(@application_form.region, with_definite_article: true) %> applications you can still award QTS if the qualifications could not be verified.
+  <% end %>
 
   <%= f.govuk_collection_radio_buttons :recommendation,
                                        @assessment.available_recommendations,
