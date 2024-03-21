@@ -83,6 +83,16 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       context "with a stage filter" do
         before do
+          expect_any_instance_of(Filters::ShowAllApplications).to receive(
+            :apply,
+          ).and_return(ApplicationForm.none)
+        end
+
+        it { is_expected.to be_empty }
+      end
+
+      context "with show all filter" do
+        before do
           expect_any_instance_of(Filters::Stage).to receive(:apply).and_return(
             ApplicationForm.none,
           )
@@ -150,7 +160,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
   describe "#country_filter_options" do
     subject(:country_filter_options) { view_object.country_filter_options }
-
     it do
       is_expected.to include(
         '<option value="country:US">United States</option>',

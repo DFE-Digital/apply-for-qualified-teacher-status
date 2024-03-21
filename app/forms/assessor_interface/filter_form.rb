@@ -12,5 +12,6 @@ class AssessorInterface::FilterForm
                 :reference,
                 :stage,
                 :submitted_at_after,
-                :submitted_at_before
+                :submitted_at_before,
+                :show_all
 end

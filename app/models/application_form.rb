@@ -164,13 +164,7 @@ class ApplicationForm < ApplicationRecord
 
   scope :assessable, -> { where.not(stage: %i[draft completed]) }
 
-  scope :active,
-        -> do
-          assessable
-            .or(where("awarded_at >= ?", 90.days.ago))
-            .or(where("declined_at >= ?", 90.days.ago))
-            .or(where("withdrawn_at >= ?", 90.days.ago))
-        end
+  scope :submitted, -> { where.not(stage: "draft") }
 
   scope :destroyable,
         -> do

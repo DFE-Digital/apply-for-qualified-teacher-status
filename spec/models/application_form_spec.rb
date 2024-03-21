@@ -276,58 +276,6 @@ RSpec.describe ApplicationForm, type: :model do
   end
 
   describe "scopes" do
-    describe "#active" do
-      subject { described_class.active }
-
-      context "draft" do
-        let!(:application_form) { create(:application_form, :draft) }
-
-        it { is_expected.to be_empty }
-      end
-
-      context "submitted" do
-        let!(:application_form) { create(:application_form, :submitted) }
-
-        it { is_expected.to eq([application_form]) }
-      end
-
-      context "awarded" do
-        let!(:application_form) { create(:application_form, :awarded) }
-
-        it { is_expected.to eq([application_form]) }
-
-        context "older than 90 days" do
-          let!(:application_form) do
-            create(:application_form, :awarded, awarded_at: 90.days.ago)
-          end
-
-          it { is_expected.to be_empty }
-        end
-      end
-
-      context "declined" do
-        let!(:application_form) { create(:application_form, :declined) }
-
-        it { is_expected.to eq([application_form]) }
-
-        context "older than 90 days" do
-          let!(:application_form) do
-            create(:application_form, :declined, declined_at: 90.days.ago)
-          end
-
-          it { is_expected.to be_empty }
-        end
-      end
-
-      context "preliminary_check" do
-        let!(:application_form) do
-          create(:application_form, :preliminary_check)
-        end
-
-        it { is_expected.to eq([application_form]) }
-      end
-    end
-
     describe "#destroyable" do
       subject(:destroyable) { described_class.destroyable }
 
