@@ -16,8 +16,8 @@ module Filters
 
     private
 
-    def show_all_applications
-      Array(params[:display]).compact_blank
+    def show_all?
+      ActiveModel::Type::Boolean.new.cast(params[:show_all])
     end
   end
 end
