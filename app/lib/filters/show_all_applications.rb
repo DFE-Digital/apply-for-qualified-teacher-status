@@ -5,7 +5,9 @@ module Filters
         ninety_days_ago = 90.days.ago
         new_scope =
           scope.where(
-            "awarded_at >= :ninety_days OR declined_at >= :ninety_days OR withdrawn_at >= :ninety_days",
+            "(awarded_at >= :ninety_days OR awarded_at IS NULL)
+          AND (declined_at >= :ninety_days OR declined_at IS NULL)
+          AND (withdrawn_at >= :ninety_days OR withdrawn_at IS NULL)",
             ninety_days: ninety_days_ago,
           )
         return new_scope

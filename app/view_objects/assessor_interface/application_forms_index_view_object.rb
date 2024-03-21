@@ -77,7 +77,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ::Filters::ShowAllApplications,
         ]
         filters.reduce(
-          ApplicationForm.includes(region: :country),
+          ApplicationForm.includes(region: :country).submitted,
         ) { |scope, filter| filter.apply(scope:, params: filter_params) }
       end
   end
