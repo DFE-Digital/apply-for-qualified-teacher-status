@@ -52,13 +52,13 @@ class ApplicationFormStatusUpdater
            application_form.awarded_at.present?
         "none"
       elsif dqt_trn_request.present? || assessment_in_review? ||
-            overdue_further_information || overdue_ecctis ||
-            received_further_information || received_ecctis
+            overdue_further_information || received_further_information
         "assessor"
       elsif preliminary_check? || need_to_request_lops? ||
             need_to_request_consent? || need_to_request_ecctis? ||
-            overdue_consent || received_consent || overdue_lops ||
-            received_lops || overdue_reference || received_reference
+            overdue_consent || received_consent || overdue_ecctis ||
+            received_ecctis || overdue_lops || received_lops ||
+            overdue_reference || received_reference
         "admin"
       elsif waiting_on_consent || waiting_on_further_information ||
             waiting_on_lops || waiting_on_ecctis || waiting_on_reference

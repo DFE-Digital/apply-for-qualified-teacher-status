@@ -202,7 +202,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         create(:qualification_request, :received, assessment:)
       end
 
-      include_examples "changes action required by", "assessor"
+      include_examples "changes action required by", "admin"
       include_examples "changes stage", "verification"
       include_examples "changes statuses", %w[received_ecctis]
     end
