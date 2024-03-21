@@ -162,6 +162,8 @@ class ApplicationForm < ApplicationRecord
 
   STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }
 
+  scope :assessable, -> { where.not(stage: %i[draft completed]) }
+
   scope :submitted, -> { where.not(stage: %i[draft]) }
 
   scope :destroyable,
