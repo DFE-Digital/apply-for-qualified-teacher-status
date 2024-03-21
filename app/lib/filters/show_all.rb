@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Filters
-  class ShowAllApplications < Base
+  class ShowAll < Base
     def apply
       unless show_all?
         ninety_days_ago = 90.days.ago

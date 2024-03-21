@@ -4,11 +4,13 @@ require "rails_helper"
 
 RSpec.describe "Assessor filtering application forms", type: :system do
   before do
-    FeatureFlags::FeatureFlag.activate(:show_all_applicants_filter)
     given_the_service_is_open
     given_there_are_application_forms
     given_i_am_authorized_as_an_assessor_user
+    given_show_all_applications_is_activated
   end
+
+  after { given_show_all_applications_is_deactivated }
 
   it "applies the filters" do
     when_i_visit_the(:assessor_applications_page)
@@ -57,6 +59,14 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def given_there_are_application_forms
     application_forms
+  end
+
+  def given_show_all_applications_is_activated
+    FeatureFlags::FeatureFlag.activate(:show_all_applications_filter)
+  end
+
+  def given_show_all_applications_is_deactivated
+    FeatureFlags::FeatureFlag.deactivate(:show_all_applications_filter)
   end
 
   def when_i_visit_the_applications_page
@@ -190,13 +200,13 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   end
 
   def and_i_apply_the_show_all_filter
-    show_all =
+    show_all_item =
       assessor_applications_page.show_all_filter.items.find do |item|
-        item.label.text == "Show applications completed older than 90 days ago"
+        item.label.text == "Show applications completed over 90 days ago"
       rescue Capybara::ElementNotFound
         false
       end
-    show_all.checkbox.click
+    show_all_item.checkbox.click
     assessor_applications_page.apply_filters.click
   end
 
@@ -258,7 +268,6 @@ RSpec.describe "Assessor filtering application forms", type: :system do
         submitted_at: 7.months.ago,
       ),
     ]
-    @application_forms
   end
 
   def assessors
