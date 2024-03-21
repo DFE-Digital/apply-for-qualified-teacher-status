@@ -34,7 +34,7 @@ feature_flags:
       Allow starting an application on this service directly after completing
       an eligibility check.
 
-  show_all_applicants:
+  show_all_applicants_filter:
     author: Nick Diplos
     description: >
       Adds a filter that allows assessors to view applications that are older than 90 days old. 
