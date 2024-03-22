@@ -56,34 +56,6 @@
       </main>
     </div>
 
-    <%= govuk_footer(
-        meta_items_title: 'Footer links',
-        meta_items: {
-          'Accessibility': '/accessibility',
-          'Cookies': '/cookies',
-          'Privacy': '/privacy'
-        } ) do |footer| %>
-      <% footer.with_navigation do %>
-        <% if current_teacher %>
-          <div class="govuk-footer__section">
-            <h3 style="margin-left: 100px">Get help</h3>
-            <p>
-              If you’re having difficulty completing your application form, contact:
-              <%= govuk_link_to t("service.email.enquiries"), email_path("enquiries") %>
-              for support.
-            </p>
-            <p>
-              So that we can help you quickly, please include as much detail as possible
-              about the problem you‘re experiencing, for example:
-            </p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>any important details (such as application reference numbers etc)</li>
-              <li>screenshots that illustrate your problem</li>
-            </ul>
-            <p>We’ll aim to respond to you within 2 working days.</p>
-          </div>
-        <% end %>
-      <% end %>
-    <% end %>
+    <%= render partial: "shared/footer" %>
   </body>
 </html>

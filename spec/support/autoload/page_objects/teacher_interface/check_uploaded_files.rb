@@ -3,7 +3,7 @@ module PageObjects
     class CheckUploadedFiles < SitePrism::Page
       set_url "/teacher/application/documents/{reference}/edit"
 
-      element :heading, "h1"
+      element :heading, ".govuk-heading-xl"
       element :files, ".govuk-grid-row .govuk-grid-column-two-thirds"
       element :continue_button, ".govuk-button"
     end

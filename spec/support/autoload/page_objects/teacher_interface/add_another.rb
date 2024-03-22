@@ -3,7 +3,7 @@
 module PageObjects
   module TeacherInterface
     class AddAnother < SitePrism::Page
-      element :heading, "h1"
+      element :heading, ".govuk-heading-l"
 
       section :form, "form" do
         section :true_radio_item,
