@@ -39,6 +39,8 @@ module AssessorInterface
       professional_standing = session[:professional_standing]
       qualifications =
         application_form.qualifications.where(id: session[:qualification_ids])
+      qualifications_assessor_note =
+        session[:qualifications_assessor_note] || ""
       work_histories =
         application_form.work_histories.where(id: session[:work_history_ids])
 
@@ -47,7 +49,7 @@ module AssessorInterface
         user: current_staff,
         professional_standing:,
         qualifications:,
-        qualifications_assessor_note: session[:qualifications_assessor_note],
+        qualifications_assessor_note:,
         work_histories:,
       )
 
