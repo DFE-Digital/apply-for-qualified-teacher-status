@@ -31,6 +31,7 @@ module AssessorInterface
       if @form.save
         if assessment_section.preliminary?
           if assessment.all_preliminary_sections_passed?
+            request_professional_standing
             unassign_assessor
           else
             redirect_to [
@@ -90,6 +91,15 @@ module AssessorInterface
       form.permit_parameters(
         params.require(:assessor_interface_assessment_section_form),
       )
+    end
+
+    def request_professional_standing
+      requestable = assessment.professional_standing_request
+      return if requestable.nil? || requestable.requested?
+
+      RequestRequestable.call(requestable:, user: current_staff)
+
+      ApplicationFormStatusUpdater.call(application_form:, user: current_staff)
     end
 
     def unassign_assessor
