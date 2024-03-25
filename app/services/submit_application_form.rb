@@ -13,7 +13,7 @@ class SubmitApplicationForm
 
     ActiveRecord::Base.transaction do
       application_form.update!(
-        requires_preliminary_check: region.requires_preliminary_check,
+        requires_preliminary_check:,
         subjects: application_form.subjects.compact_blank,
         submitted_at: Time.zone.now,
         working_days_since_submission: 0,
@@ -21,7 +21,7 @@ class SubmitApplicationForm
 
       assessment = AssessmentFactory.call(application_form:)
 
-      if application_form.reduced_evidence_accepted
+      if reduced_evidence_accepted
         UpdateAssessmentInductionRequired.call(assessment:)
       end
 
@@ -38,7 +38,7 @@ class SubmitApplicationForm
       action: :application_received,
     )
 
-    if region.teaching_authority_requires_submission_email
+    if teaching_authority_requires_submission_email
       DeliverEmail.call(
         application_form:,
         mailer: TeachingAuthorityMailer,
@@ -46,23 +46,33 @@ class SubmitApplicationForm
       )
     end
 
-    FindApplicantInDQTJob.perform_later(application_form)
-
-    # Sometimes DQT doesn't find a result the first time
-    FindApplicantInDQTJob.set(wait: 5.minutes).perform_later(application_form)
+    perform_duplicate_jobs
   end
 
   private
 
   attr_reader :application_form, :user
 
-  delegate :region, to: :application_form
+  delegate :reduced_evidence_accepted,
+           :region,
+           :requires_preliminary_check,
+           :teaching_authority_provides_written_statement,
+           to: :application_form
+
+  delegate :teaching_authority_requires_submission_email, to: :region
 
   def create_professional_standing_request(assessment)
-    return unless application_form.teaching_authority_provides_written_statement
+    return unless teaching_authority_provides_written_statement
 
     ProfessionalStandingRequest
       .create!(assessment:)
       .tap { |requestable| RequestRequestable.call(requestable:, user:) }
+  end
+
+  def perform_duplicate_jobs
+    FindApplicantInDQTJob.perform_later(application_form)
+
+    # Sometimes DQT doesn't find a result the first time
+    FindApplicantInDQTJob.set(wait: 5.minutes).perform_later(application_form)
   end
 end
