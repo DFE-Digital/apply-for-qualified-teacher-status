@@ -13,5 +13,5 @@
 <p class="govuk-body">
   If the web address is correct or you selected a link or button and you need to speak to someone about this problem,
   contact the <%= t(current_namespace, scope: %i[service name]) %> team:
-  <%= govuk_link_to t("service.email.enquiries"), "mailto:#{t("service.email.enquiries")}" %>
+  <%= govuk_link_to t("service.email.enquiries"), email_path("enquiries") %>
 </p>

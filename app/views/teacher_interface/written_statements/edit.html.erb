@@ -21,7 +21,7 @@
                           false,
                           link_errors: true,
                           label: {
-                            text: "I understand that it’s my responsibility to request written evidence from #{region_teaching_authority_name_phrase(@application_form.region)} to be sent directly to #{govuk_link_to t("service.email.verification"), "mailto:#{t("service.email.verification")}"}.".html_safe,
+                            text: "I understand that it’s my responsibility to request written evidence from #{region_teaching_authority_name_phrase(@application_form.region)} to be sent directly to #{govuk_link_to t("service.email.verification"), email_path("verification")}.".html_safe,
                             size: "s",
                           } %>
   <% end %>

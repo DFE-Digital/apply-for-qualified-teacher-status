@@ -34,7 +34,7 @@
       </p>
 
       <p class="govuk-body">
-        You cannot send this document yourself – instead, you must contact <%= region_teaching_authority_name_phrase(region) %> and ask them to send it directly to us at <a class="govuk-link" href="mailto:<%= t("service.email.verification") %>"><%= t("service.email.verification") %></a>.
+        You cannot send this document yourself – instead, you must contact <%= region_teaching_authority_name_phrase(region) %> and ask them to send it directly to us at <%= govuk_link_to t("service.email.verification"), email_path("verification") %>.
       </p>
 
       <% if region.requires_preliminary_check %>

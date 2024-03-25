@@ -1,6 +1,6 @@
 <h2 class="govuk-heading-m">You should now request your <%= region_certificate_name(view_object.region) %></h2>
 <p class="govuk-body">You should now request your <%= region_certificate_name(view_object.region) %> from <%= region_teaching_authority_name(view_object.region) %>.</p>
-<p class="govuk-body">Contact them directly and instruct them to send the document to <%= govuk_link_to t("service.email.verification"), %(mailto: #{t("service.email.verification")}) %>.</p>
+<p class="govuk-body">Contact them directly and instruct them to send the document to <%= govuk_link_to t("service.email.verification"), email_path("verification") %>.</p>
 <h2 class="govuk-heading-m">Important information about your <%= region_certificate_name(view_object.region) %></h2>
 <p class="govuk-body">Once you've submitted your application, we’ll notify <%= region_teaching_authority_name(view_object.region) %> that you’ve applied for QTS. You do not need to contact us to get written confirmation of this.</p>
 
