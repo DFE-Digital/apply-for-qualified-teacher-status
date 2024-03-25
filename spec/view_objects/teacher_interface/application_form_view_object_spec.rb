@@ -256,9 +256,8 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
             "" => [
               {
                 name:
-                  "Your application has been declined as we did not receive your letter " \
-                    "that proves you’re recognised as a teacher from teaching authority " \
-                    "within 180 days.",
+                  "Your application has been declined as we did not receive your Letter " \
+                    "of Professional Standing from teaching authority within 180 days.",
               },
             ],
           },

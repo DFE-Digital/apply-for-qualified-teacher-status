@@ -511,7 +511,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it do
         is_expected.to eq(
           "Your qualified teacher status application – we’ve received your " \
-            "letter that proves you’re recognised as a teacher",
+            "Letter of Professional Standing",
         )
       end
     end
@@ -529,9 +529,9 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("abc") }
       it do
         is_expected.to include(
-          "Thank you for requesting your letter that proves you’re recognised as a teacher from " \
-            "the teaching authority. We have now received this document and attached it " \
-            "to your application.",
+          "Thank you for requesting your Letter of Professional Standing from the " \
+            "teaching authority. We have now received this document and attached " \
+            "it to your application.",
         )
       end
     end
