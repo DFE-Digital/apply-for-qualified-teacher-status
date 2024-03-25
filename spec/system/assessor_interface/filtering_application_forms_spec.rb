@@ -7,10 +7,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     given_the_service_is_open
     given_there_are_application_forms
     given_i_am_authorized_as_an_assessor_user
-    given_show_all_applications_is_activated
   end
-
-  after { given_show_all_applications_is_deactivated }
 
   it "applies the filters" do
     when_i_visit_the(:assessor_applications_page)
@@ -59,14 +56,6 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def given_there_are_application_forms
     application_forms
-  end
-
-  def given_show_all_applications_is_activated
-    FeatureFlags::FeatureFlag.activate(:show_all_applications_filter)
-  end
-
-  def given_show_all_applications_is_deactivated
-    FeatureFlags::FeatureFlag.deactivate(:show_all_applications_filter)
   end
 
   def when_i_visit_the_applications_page
