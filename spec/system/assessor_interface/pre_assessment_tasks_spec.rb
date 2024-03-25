@@ -8,10 +8,10 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     given_there_is_an_application_form_with_professional_standing_request
   end
 
-  it "passes preliminary check" do
+  it "passes preliminary check and locate professional standing" do
     when_i_visit_the(:assessor_application_page, reference:)
     then_i_see_the(:assessor_application_page, reference:)
-    and_i_see_a_waiting_on_status
+    and_i_see_a_preliminary_check_status
     and_i_see_an_unstarted_preliminary_check_task
 
     when_i_click_on_the_preliminary_check_task
@@ -20,12 +20,26 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     and_i_see_a_completed_preliminary_check_task
     and_the_teacher_receives_a_checks_passed_email
     and_the_assessor_is_unassigned
+
+    when_i_visit_the(:assessor_application_page, reference:)
+    then_i_see_the(:assessor_application_page, reference:)
+    and_i_see_a_waiting_on_status
+    and_i_click_awaiting_professional_standing
+    then_i_see_the(
+      :assessor_locate_professional_standing_request_page,
+      reference:,
+    )
+
+    when_i_fill_in_the_locate_form
+    then_i_see_the(:assessor_application_page, reference:)
+    and_i_see_a_assessment_not_started_status
+    and_the_teacher_receives_a_professional_standing_received_email
   end
 
   it "fails preliminary check" do
     when_i_visit_the(:assessor_application_page, reference:)
     then_i_see_the(:assessor_application_page, reference:)
-    and_i_see_a_waiting_on_status
+    and_i_see_a_preliminary_check_status
     and_i_see_an_unstarted_preliminary_check_task
 
     when_i_click_on_the_preliminary_check_task
@@ -41,22 +55,6 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     and_i_see_the_failure_reasons
   end
 
-  it "locate professional standing" do
-    when_i_visit_the(:assessor_application_page, reference:)
-    then_i_see_the(:assessor_application_page, reference:)
-    and_i_see_a_waiting_on_status
-    and_i_click_awaiting_professional_standing
-    then_i_see_the(
-      :assessor_locate_professional_standing_request_page,
-      reference:,
-    )
-
-    when_i_fill_in_the_locate_form
-    then_i_see_the(:assessor_application_page, reference:)
-    and_i_see_a_preliminary_check_status
-    and_the_teacher_receives_a_professional_standing_received_email
-  end
-
   private
 
   def given_there_is_an_application_form_with_professional_standing_request
@@ -65,7 +63,19 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
 
   def and_i_see_a_waiting_on_status
     expect(assessor_application_page.status_summary.value).to have_text(
+      "WAITING ON LOPS",
+    )
+  end
+
+  def and_i_see_a_preliminary_check_status
+    expect(assessor_application_page.status_summary.value).to have_text(
       "PRELIMINARY CHECK",
+    )
+  end
+
+  def and_i_see_a_assessment_not_started_status
+    expect(assessor_application_page.status_summary.value).to have_text(
+      "ASSESSMENT NOT STARTED",
     )
   end
 
@@ -78,7 +88,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     )
     expect(
       assessor_application_page.awaiting_professional_standing_task,
-    ).to have_content("WAITING ON")
+    ).to have_content("CANNOT START")
   end
 
   def when_i_click_on_the_preliminary_check_task
@@ -155,15 +165,9 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     form.submit_button.click
   end
 
-  def and_i_see_a_preliminary_check_status
-    expect(assessor_application_page.status_summary.value).to have_text(
-      "PRELIMINARY CHECK",
-    )
-  end
-
   def and_the_teacher_receives_a_professional_standing_received_email
-    expect(TeacherMailer.deliveries.count).to eq(1)
-    expect(TeacherMailer.deliveries.first.subject).to eq(
+    expect(TeacherMailer.deliveries.count).to eq(2)
+    expect(TeacherMailer.deliveries.second.subject).to eq(
       I18n.t(
         "mailer.teacher.professional_standing_received.subject",
         certificate: "Letter of Professional Standing",
@@ -185,7 +189,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
         create(
           :assessment,
           :with_preliminary_qualifications_section,
-          :with_requested_professional_standing_request,
+          :with_professional_standing_request,
           application_form:,
         )
         application_form.region.update!(

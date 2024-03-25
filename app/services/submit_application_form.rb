@@ -64,9 +64,11 @@ class SubmitApplicationForm
   def create_professional_standing_request(assessment)
     return unless teaching_authority_provides_written_statement
 
-    ProfessionalStandingRequest
-      .create!(assessment:)
-      .tap { |requestable| RequestRequestable.call(requestable:, user:) }
+    requestable = ProfessionalStandingRequest.create!(assessment:)
+
+    unless requires_preliminary_check
+      RequestRequestable.call(requestable:, user:)
+    end
   end
 
   def perform_duplicate_jobs
