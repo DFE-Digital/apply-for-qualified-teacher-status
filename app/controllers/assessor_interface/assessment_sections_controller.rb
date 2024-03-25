@@ -31,7 +31,6 @@ module AssessorInterface
       if @form.save
         if assessment_section.preliminary?
           if assessment.all_preliminary_sections_passed?
-            notify_teacher
             unassign_assessor
           else
             redirect_to [
@@ -92,19 +91,6 @@ module AssessorInterface
         params.require(:assessor_interface_assessment_section_form),
       )
     end
-
-    def notify_teacher
-      unless application_form.teaching_authority_provides_written_statement
-        return
-      end
-
-      DeliverEmail.call(
-        application_form:,
-        mailer: TeacherMailer,
-        action: :initial_checks_passed,
-      )
-    end
-
     def unassign_assessor
       AssignApplicationFormAssessor.call(
         application_form:,

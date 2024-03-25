@@ -38,15 +38,6 @@ class SubmitApplicationForm
       action: :application_received,
     )
 
-    if !application_form.requires_preliminary_check &&
-         application_form.teaching_authority_provides_written_statement
-      DeliverEmail.call(
-        application_form:,
-        mailer: TeacherMailer,
-        action: :initial_checks_passed,
-      )
-    end
-
     if region.teaching_authority_requires_submission_email
       DeliverEmail.call(
         application_form:,

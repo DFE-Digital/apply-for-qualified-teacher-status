@@ -38,8 +38,18 @@ class ProfessionalStandingRequest < ApplicationRecord
     end
   end
 
+  def after_requested(*)
+    if should_send_emails?
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :initial_checks_passed,
+      )
+    end
+  end
+
   def after_received(*)
-    if should_send_received_email?
+    if should_send_emails?
       DeliverEmail.call(
         application_form:,
         mailer: TeacherMailer,
@@ -59,7 +69,7 @@ class ProfessionalStandingRequest < ApplicationRecord
 
   private
 
-  def should_send_received_email?
+  def should_send_emails?
     application_form.declined_at.nil? &&
       application_form.teaching_authority_provides_written_statement
   end
