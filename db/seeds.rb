@@ -7,219 +7,64 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 COUNTRIES = {
-  "BE" => [
-    { name: "Flemish region", status_check: "none", sanction_check: "none" },
-    { name: "French region", status_check: "none", sanction_check: "none" },
-    { name: "German region", status_check: "none", sanction_check: "none" },
-  ],
-  "CZ" => [{ status_check: "written" }],
-  "EE" => [{ status_check: "written", sanction_check: "written" }],
-  "FR" => [{ status_check: "written", sanction_check: "written" }],
-  "IS" => [{ status_check: "written" }],
-  "LV" => [{ status_check: "written", sanction_check: "written" }],
-  "LI" => [{ status_check: "written" }],
-  "LU" => [{ status_check: "written" }],
-  "MT" => [{ status_check: "written", sanction_check: "written" }],
-  "SI" => [{ status_check: "written" }],
-  "NZ" => [{ status_check: "online", sanction_check: "online" }],
-  "GI" => [{ status_check: "written", sanction_check: "written" }],
-  "GB-SCT" => {
-    eligibility_skip_questions: true,
-    regions: [
-      {
-        status_check: "online",
-        sanction_check: "online",
-        application_form_skip_work_history: true,
-      },
-    ],
-  },
-  "GB-NIR" => {
-    eligibility_skip_questions: true,
-    regions: [
-      {
-        status_check: "online",
-        sanction_check: "written",
-        application_form_skip_work_history: true,
-        written_statement_optional: true,
-      },
-    ],
-  },
-  "AT" => [{ status_check: "written" }],
-  "CH" => [{ status_check: "written", sanction_check: "written" }],
-  "GR" => [],
-  "US" => [
-    { name: "Kentucky", status_check: "written", sanction_check: "written" },
-    { name: "Mississippi", status_check: "written", sanction_check: "written" },
-    { name: "Maryland", status_check: "written", sanction_check: "written" },
-    { name: "Nevada", status_check: "online", sanction_check: "written" },
-    { name: "Iowa", status_check: "online", sanction_check: "online" },
-    { name: "Massachusetts", status_check: "online", sanction_check: "online" },
-    { name: "Michigan", status_check: "online", sanction_check: "online" },
-    { name: "Missouri", status_check: "online", sanction_check: "online" },
-    { name: "New York", status_check: "online", sanction_check: "online" },
-    {
-      name: "North Carolina",
-      status_check: "online",
-      sanction_check: "online",
-    },
-    { name: "Oklahoma", status_check: "online", sanction_check: "online" },
-    { name: "Oregon", status_check: "online", sanction_check: "online" },
-    { name: "Pennsylvania", status_check: "online", sanction_check: "online" },
-    { name: "Tennessee", status_check: "online", sanction_check: "online" },
-    { name: "Texas", status_check: "online", sanction_check: "online" },
-    { name: "Utah", status_check: "online", sanction_check: "online" },
-    { name: "Washington", status_check: "written", sanction_check: "written" },
-    {
-      name: "Washington DC",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    { name: "Maine", status_check: "written", sanction_check: "written" },
-    { name: "Wyoming", status_check: "written", sanction_check: "written" },
-    { name: "North Dakota", status_check: "online", sanction_check: "written" },
-    { name: "South Dakota", status_check: "online", sanction_check: "written" },
-    { name: "Nebraska", status_check: "online", sanction_check: "online" },
-    { name: "New Mexico", status_check: "written", sanction_check: "written" },
-    { name: "Alabama", status_check: "written", sanction_check: "written" },
-    { name: "Hawaii", status_check: "online", sanction_check: "online" },
-    { name: "Colorado", status_check: "online", sanction_check: "online" },
-    { name: "Alaska", status_check: "online", sanction_check: "online" },
-    { name: "Arkansas", status_check: "online", sanction_check: "online" },
-    { name: "California", status_check: "online", sanction_check: "online" },
-    { name: "Delaware", status_check: "online", sanction_check: "online" },
-    { name: "Florida", status_check: "online", sanction_check: "online" },
-    { name: "Georgia", status_check: "online", sanction_check: "online" },
-    { name: "Idaho", status_check: "online", sanction_check: "online" },
-    { name: "Illinois", status_check: "online", sanction_check: "online" },
-    { name: "Louisiana", status_check: "online", sanction_check: "online" },
-    { name: "Indiana", status_check: "written", sanction_check: "written" },
-    { name: "Connecticut", status_check: "written", sanction_check: "written" },
-    {
-      name: "West Virginia",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    { name: "Minnesota", status_check: "online", sanction_check: "written" },
-    {
-      name: "New Hampshire",
-      status_check: "online",
-      sanction_check: "written",
-    },
-    { name: "Rhode Island", status_check: "online", sanction_check: "written" },
-    { name: "Vermont", status_check: "online", sanction_check: "written" },
-    { name: "Virginia", status_check: "online", sanction_check: "written" },
-    { name: "Wisconsin", status_check: "online", sanction_check: "written" },
-    { name: "Arizona", status_check: "written", sanction_check: "written" },
-    { name: "Kansas", status_check: "written", sanction_check: "written" },
-    { name: "Montana", status_check: "written", sanction_check: "written" },
-    { name: "Ohio", status_check: "written", sanction_check: "written" },
-    {
-      name: "South Carolina",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    { name: "New Jersey", status_check: "online", sanction_check: "written" },
-  ],
-  "HU" => [{ status_check: "written" }],
-  "DE" => [
-    {
-      name: "North Rhine-Westphalia",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    { name: "Lower Saxony", status_check: "written", sanction_check: "none" },
-    {
-      name: "Baden-Wurttemberg",
-      status_check: "written",
-      sanction_check: "none",
-    },
-    { name: "Bremen", status_check: "written", sanction_check: "none" },
-    { name: "Hessen", status_check: "written", sanction_check: "none" },
-    { name: "Saxony-Anhalt", status_check: "written", sanction_check: "none" },
-    { name: "Saarland", status_check: "written", sanction_check: "none" },
-    { name: "Berlin", status_check: "written", sanction_check: "written" },
-    { name: "Brandenburg", status_check: "written", sanction_check: "none" },
-    { name: "Bavaria", status_check: "written", sanction_check: "none" },
-    {
-      name: "Schleswig-Holstein",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    { name: "Hamburg", status_check: "written", sanction_check: "none" },
-    { name: "Saxony", status_check: "written", sanction_check: "none" },
-    {
-      name: "Mecklenburg-Vorpommern",
-      status_check: "written",
-      sanction_check: "none",
-    },
-    {
-      name: "Rhineland-Palatinate",
-      status_check: "written",
-      sanction_check: "none",
-    },
-    { name: "Thuringia", status_check: "written", sanction_check: "none" },
-  ],
-  "HR" => [{ status_check: "written" }],
-  "BG" => [{ status_check: "written", sanction_check: "written" }],
-  "NL" => [{ status_check: "written" }],
-  "IT" => [{ status_check: "written" }],
-  "PL" => [{ status_check: "written", sanction_check: "written" }],
-  "IE" => [{ status_check: "online", sanction_check: "written" }],
-  "ES" => [{ status_check: "written" }],
   "AU" => [
+    {
+      name: "Australian Capital Territory",
+      status_check: "written",
+      sanction_check: "written",
+    },
     {
       name: "New South Wales",
       status_check: "written",
       sanction_check: "written",
     },
     {
-      name: "South Australia",
-      status_check: "online",
-      sanction_check: "written",
-    },
-    {
-      name: "Australian Capital Territory",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    { name: "Queensland", status_check: "online", sanction_check: "online" },
-    { name: "Victoria", status_check: "online", sanction_check: "online" },
-    {
       name: "Northern Territory",
       status_check: "online",
       sanction_check: "online",
     },
+    { name: "Queensland", status_check: "online", sanction_check: "online" },
+    {
+      name: "South Australia",
+      status_check: "online",
+      sanction_check: "written",
+    },
+    { name: "Tasmania", status_check: "online", sanction_check: "written" },
+    { name: "Victoria", status_check: "online", sanction_check: "online" },
     {
       name: "Western Australia",
       status_check: "online",
       sanction_check: "online",
     },
-    { name: "Tasmania", status_check: "online", sanction_check: "written" },
+  ],
+  "AT" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Letter of Confirmation",
+    },
+  ],
+  "BE" => [
+    {
+      name: "Flemish region",
+      status_check: "written",
+      teaching_authority_certificate: "Certificate of Teaching Qualification",
+    },
+    {
+      name: "French region",
+      status_check: "written",
+      teaching_authority_certificate:
+        "Certificate for the Practice of Teaching",
+    },
+    { name: "German region", status_check: "written" },
+  ],
+  "BG" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate: "Teaching Certificate",
+    },
   ],
   "CA" => [
-    { name: "Manitoba", status_check: "written", sanction_check: "written" },
-    {
-      name: "Newfoundland and Labrador",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    {
-      name: "New Brunswick",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    {
-      name: "Northwest Territories",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    { name: "Nova Scotia", status_check: "written", sanction_check: "written" },
-    {
-      name: "Prince Edward Island",
-      status_check: "written",
-      sanction_check: "written",
-    },
-    { name: "Quebec", status_check: "written", sanction_check: "written" },
     {
       name: "Alberta",
       status_check: "written",
@@ -231,20 +76,107 @@ COUNTRIES = {
       status_check: "online",
       sanction_check: "online",
     },
+    { name: "Manitoba", status_check: "written", sanction_check: "written" },
+    {
+      name: "New Brunswick",
+      status_check: "written",
+      sanction_check: "written",
+    },
+    {
+      name: "Newfoundland and Labrador",
+      status_check: "written",
+      sanction_check: "written",
+    },
+    {
+      name: "Northwest Territories",
+      status_check: "written",
+      sanction_check: "written",
+    },
+    { name: "Nova Scotia", status_check: "written", sanction_check: "written" },
+    { name: "Nunavut", status_check: "written", sanction_check: "written" },
     { name: "Ontario", status_check: "online", sanction_check: "online" },
+    {
+      name: "Prince Edward Island",
+      status_check: "written",
+      sanction_check: "written",
+    },
+    {
+      name: "Quebec",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Brevet d’enseignement or Teaching Diploma",
+    },
     { name: "Saskatchewan", status_check: "online", sanction_check: "online" },
     { name: "Yukon", status_check: "written", sanction_check: "written" },
-    { name: "Nunavut", status_check: "written", sanction_check: "written" },
   ],
-  "LT" => [{ status_check: "written" }],
-  "CY" => [{ status_check: "written" }],
-  "RO" => [{ status_check: "written", sanction_check: "written" }],
-  "NO" => [{ status_check: "written" }],
-  "SK" => [{ status_check: "written" }],
-  "SE" => [{ status_check: "written", sanction_check: "written" }],
-  "PT" => [{ status_check: "written", sanction_check: "written" }],
-  "DK" => [{ status_check: "written" }],
-  "FI" => [{ status_check: "written" }],
+  "HR" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate: "Statement of Professional Standing",
+    },
+  ],
+  "CY" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate:
+        "Registration on the Waiting List of Teachers",
+    },
+  ],
+  "CZ" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Qualified Teacher Certificate",
+    },
+  ],
+  "DK" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Letter of Recognition",
+    },
+  ],
+  "EE" => [{ status_check: "written", sanction_check: "written" }],
+  "FI" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Formal Statement",
+    },
+  ],
+  "FR" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Confirmation of Tenure, Titularisation, Appointment or Internship",
+    },
+  ],
+  "DE" => [
+    { name: "Baden-Wurttemberg", status_check: "written" },
+    { name: "Bavaria", status_check: "written" },
+    { name: "Berlin", status_check: "written", sanction_check: "written" },
+    { name: "Brandenburg", status_check: "written" },
+    { name: "Bremen", status_check: "written" },
+    { name: "Hamburg", status_check: "written" },
+    { name: "Hessen", status_check: "written" },
+    { name: "Lower Saxony", status_check: "written" },
+    { name: "Mecklenburg-Vorpommern", status_check: "written" },
+    {
+      name: "North Rhine-Westphalia",
+      status_check: "written",
+      sanction_check: "written",
+    },
+    { name: "Rhineland-Palatinate", status_check: "written" },
+    { name: "Saarland", status_check: "written" },
+    { name: "Saxony", status_check: "written" },
+    { name: "Saxony-Anhalt", status_check: "written" },
+    {
+      name: "Schleswig-Holstein",
+      status_check: "written",
+      sanction_check: "written",
+    },
+    { name: "Thuringia", status_check: "written" },
+  ],
   "GH" => {
     subject_limited: true,
     regions: [
@@ -252,20 +184,75 @@ COUNTRIES = {
         requires_preliminary_check: true,
         status_check: "online",
         sanction_check: "online",
+        teaching_authority_certificate:
+          "letter that proves you’re recognised as a teacher",
       },
     ],
   },
+  "GI" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate: "Schedule 3 Certificate of Registration",
+    },
+  ],
+  "GR" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Formal Teacher Certificate",
+    },
+  ],
+  "GG" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate: "Guernsey Qualified Teacher document",
+    },
+  ],
   "HK" => [
     {
       status_check: "written",
       sanction_check: "written",
+      teaching_authority_certificate: "Statement of Professional Standing",
       teaching_authority_provides_written_statement: true,
+    },
+  ],
+  "HU" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Hatósági Bizonyítvány",
+    },
+  ],
+  "IS" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "letter of good standing",
     },
   ],
   "IN" => {
     subject_limited: true,
-    regions: [{ requires_preliminary_check: true }],
+    regions: [
+      {
+        requires_preliminary_check: true,
+        teaching_authority_certificate:
+          "letter that proves you’re recognised as a teacher",
+      },
+    ],
   },
+  "IE" => [
+    {
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate: "letter confirming you have no sanctions",
+    },
+  ],
+  "IT" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate:
+        "Certificate of Professional Qualification as a Teacher",
+    },
+  ],
   "JM" => {
     subject_limited: true,
     regions: [
@@ -273,9 +260,53 @@ COUNTRIES = {
         status_check: "written",
         sanction_check: "written",
         requires_preliminary_check: true,
+        teaching_authority_certificate: "Statement of Professional Standing",
       },
     ],
   },
+  "JE" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Government of Jersey Certificate",
+    },
+  ],
+  "LV" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate: "Letter of Reference",
+    },
+  ],
+  "LI" => [{ status_check: "written" }],
+  "LT" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Formal Letter",
+    },
+  ],
+  "LU" => [{ status_check: "written" }],
+  "MT" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Confirmation of Holding of Teachers Warrant",
+    },
+  ],
+  "NL" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Statement of Education",
+    },
+  ],
+  "NZ" => [
+    {
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "letter that proves you’re recognised as a teacher",
+    },
+  ],
   "NG" => {
     subject_limited: true,
     regions: [
@@ -290,10 +321,80 @@ COUNTRIES = {
       },
     ],
   },
+  "GB-NIR" => {
+    eligibility_skip_questions: true,
+    regions: [
+      {
+        status_check: "online",
+        sanction_check: "written",
+        application_form_skip_work_history: true,
+        written_statement_optional: true,
+        teaching_authority_certificate:
+          "Letter of Successful Completion of Induction",
+      },
+    ],
+  },
+  "NO" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Official Statement",
+    },
+  ],
+  "PL" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate: "Letter of Confirmation",
+    },
+  ],
+  "PT" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Certificate of Professional Qualification for Teaching",
+    },
+  ],
+  "RO" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate: "Adeverinta",
+    },
+  ],
+  "GB-SCT" => {
+    eligibility_skip_questions: true,
+    regions: [
+      {
+        status_check: "online",
+        sanction_check: "online",
+        application_form_skip_work_history: true,
+        teaching_authority_certificate:
+          "letter that proves you’re recognised as a teacher",
+      },
+    ],
+  },
   "SG" => {
     subject_limited: true,
-    regions: [{ status_check: "online" }],
+    regions: [
+      {
+        teaching_authority_certificate:
+          "letter that proves you’re recognised as a teacher",
+      },
+    ],
   },
+  "SK" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Confirmation of Teaching Competences",
+    },
+  ],
+  "SI" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate: "Confirmation of Teaching Competences",
+    },
+  ],
   "ZA" => {
     subject_limited: true,
     regions: [
@@ -301,10 +402,392 @@ COUNTRIES = {
         status_check: "written",
         sanction_check: "written",
         requires_preliminary_check: true,
+        teaching_authority_certificate: "Letter of Good Standing",
       },
     ],
   },
-  "UA" => [{ reduced_evidence_accepted: true }],
+  "ES" => [
+    {
+      status_check: "written",
+      teaching_authority_certificate:
+        "Certificate of Accreditation (certificado de acreditación profesional)",
+    },
+  ],
+  "SE" => [
+    {
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Certification of Qualified Teacher Status",
+    },
+  ],
+  "CH" => [{ status_check: "written", sanction_check: "written" }],
+  "UA" => [
+    {
+      reduced_evidence_accepted: true,
+      teaching_authority_certificate:
+        "letter that proves you’re recognised as a teacher",
+    },
+  ],
+  "US" => [
+    {
+      name: "Alabama",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Alaska",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Arizona",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Arkansas",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "California",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Colorado",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Connecticut",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Delaware",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Florida",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Georgia",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Hawaii",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Idaho",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Illinois",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Indiana",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Iowa",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Kansas",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Kentucky",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Louisiana",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Maine",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Maryland",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Massachusetts",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Michigan",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Minnesota",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Mississippi",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Missouri",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Montana",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Nebraska",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Nevada",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "New Hampshire",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "New Jersey",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "New Mexico",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "New York",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "North Carolina",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "North Dakota",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Ohio",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Oklahoma",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Oregon",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Pennsylvania",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Rhode Island",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "South Carolina",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "South Dakota",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Tennessee",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Texas",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Utah",
+      status_check: "online",
+      sanction_check: "online",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Vermont",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Virginia",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Washington DC",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Washington",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "West Virginia",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Wisconsin",
+      status_check: "online",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+    {
+      name: "Wyoming",
+      status_check: "written",
+      sanction_check: "written",
+      teaching_authority_certificate:
+        "Letter/Statement of Professional Standing",
+    },
+  ],
   "ZW" => {
     eligibility_enabled: false,
     subject_limited: true,
@@ -312,11 +795,10 @@ COUNTRIES = {
       {
         status_check: "written",
         teaching_authority_name: "Ministry of Primary and Secondary Education",
+        teaching_authority_certificate: "Letter of Good Standing",
       },
     ],
   },
-  "GG" => [],
-  "JE" => [],
 }.freeze
 
 DEFAULT_COUNTRY = { eligibility_enabled: true }.freeze
