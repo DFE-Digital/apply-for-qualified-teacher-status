@@ -1,55 +1,47 @@
-<section id="app-personas-staff" class="app-personas">
-  <h2 class="govuk-heading-l">Staff</h2>
+<%= govuk_table(classes: "app-personas") do |table|
+  table.with_colgroup do |colgroup|
+    colgroup.with_col(span: 1)
+    colgroup.with_col(span: 7)
+    colgroup.with_col(span: 1)
+  end
 
-  <% if @staff.empty? %>
-    <p class="govuk-body">No staff personas.</p>
-  <% else %>
-    <%= govuk_table do |table|
-      table.with_colgroup do |colgroup|
-        colgroup.with_col(span: 1)
-        colgroup.with_col(span: 7)
-        colgroup.with_col(span: 1)
-      end
+  table.with_head do |head|
+    head.with_row do |row|
+      row.with_cell(scope: false)
+      row.with_cell(header: true, text: "Permissions", colspan: 7)
+      row.with_cell(scope: false)
+    end
 
-      table.with_head do |head|
-        head.with_row do |row|
-          row.with_cell(scope: false)
-          row.with_cell(header: true, text: "Permissions", colspan: 7)
-          row.with_cell(scope: false)
-        end
+    head.with_row do |row|
+      row.with_cell(header: true, text: "Email")
+      row.with_cell(header: true, text: "Assess applicants")
+      row.with_cell(header: true, text: "Change names")
+      row.with_cell(header: true, text: "Change work history")
+      row.with_cell(header: true, text: "Reverse decisions")
+      row.with_cell(header: true, text: "Support console")
+      row.with_cell(header: true, text: "Verify applicants")
+      row.with_cell(header: true, text: "Withdraw")
+      row.with_cell(header: true, text: "Actions", numeric: true)
+    end
+  end
 
-        head.with_row do |row|
-          row.with_cell(header: true, text: "Email")
-          row.with_cell(header: true, text: "Assess applicants")
-          row.with_cell(header: true, text: "Change names")
-          row.with_cell(header: true, text: "Change work history")
-          row.with_cell(header: true, text: "Reverse decisions")
-          row.with_cell(header: true, text: "Support console")
-          row.with_cell(header: true, text: "Verify applicants")
-          row.with_cell(header: true, text: "Withdraw")
-          row.with_cell(header: true, text: "Actions", numeric: true)
-        end
-      end
+  table.with_body do |body|
+    @staff.each do |staff|
+      body.with_row do |row|
+        row.with_cell(text: staff.email)
 
-      table.with_body do |body|
-        @staff.each do |staff|
-          body.with_row do |row|
-            row.with_cell(text: staff.email)
+        row.with_cell { govuk_boolean_tag(staff.assess_permission) }
+        row.with_cell { govuk_boolean_tag(staff.change_name_permission) }
+        row.with_cell { govuk_boolean_tag(staff.change_work_history_permission) }
+        row.with_cell { govuk_boolean_tag(staff.reverse_decision_permission) }
+        row.with_cell { govuk_boolean_tag(staff.support_console_permission) }
+        row.with_cell { govuk_boolean_tag(staff.verify_permission) }
+        row.with_cell { govuk_boolean_tag(staff.withdraw_permission) }
 
-            row.with_cell { govuk_boolean_tag(staff.assess_permission) }
-            row.with_cell { govuk_boolean_tag(staff.change_name_permission) }
-            row.with_cell { govuk_boolean_tag(staff.change_work_history_permission) }
-            row.with_cell { govuk_boolean_tag(staff.reverse_decision_permission) }
-            row.with_cell { govuk_boolean_tag(staff.support_console_permission) }
-            row.with_cell { govuk_boolean_tag(staff.verify_permission) }
-            row.with_cell { govuk_boolean_tag(staff.withdraw_permission) }
-
-            row.with_cell(numeric: true) do
-              govuk_button_to "Sign&nbsp;in".html_safe, staff_sign_in_persona_path(staff)
-            end
-          end
+        row.with_cell(numeric: true) do
+          govuk_button_to "Sign&nbsp;in".html_safe, staff_sign_in_persona_path(staff)
         end
       end
-    end %>
-  <% end %>
-</section>
+    end
+  end
+end %>

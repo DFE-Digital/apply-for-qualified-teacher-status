@@ -2,7 +2,9 @@
 
 <h1 class="govuk-heading-xl">Personas</h1>
 
-<%= render "staff" %>
-<%= render "eligible_checks" %>
-<%= render "ineligible_checks" %>
-<%= render "teachers" %>
+<%= govuk_tabs(title: "Contents") do |tabs|
+  tabs.with_tab(label: "Staff") { render "staff" }
+  tabs.with_tab(label: "Eligible checks") { render "eligible_checks" }
+  tabs.with_tab(label: "Ineligible checks") { render "ineligible_checks" }
+  tabs.with_tab(label: "Teachers") { render "teachers" }
+end %>

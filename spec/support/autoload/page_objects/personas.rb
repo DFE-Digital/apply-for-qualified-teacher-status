@@ -1,27 +1,41 @@
+# frozen_string_literal: true
+
 module PageObjects
   class Personas < SitePrism::Page
     set_url "/personas"
 
-    element :heading, "h1"
+    element :heading, ".govuk-heading-xl"
 
-    section :staff, "#app-personas-staff" do
-      element :heading, "h2"
-      elements :buttons, ".govuk-button"
+    section :tabs, ".govuk-tabs" do
+      section :list, ".govuk-tabs__list" do
+        sections :items, ".govuk-tabs__list-item" do
+          element :link, ".govuk-tabs__tab"
+        end
+      end
+
+      section :panel, ".govuk-tabs__panel:not(.govuk-tabs__panel--hidden)" do
+        elements :buttons, ".govuk-button"
+      end
     end
 
-    section :eligibles, "#app-personas-eligibles" do
-      element :heading, "h2"
-      elements :buttons, ".govuk-button"
+    def staff_tab_item
+      find_tab_item("Staff")
     end
 
-    section :ineligibles, "#app-personas-ineligibles" do
-      element :heading, "h2"
-      elements :buttons, ".govuk-button"
+    def eligible_checks_tab_item
+      find_tab_item("Eligible checks")
     end
 
-    section :teachers, "#app-personas-teachers" do
-      element :heading, "h2"
-      elements :buttons, ".govuk-button"
+    def ineligible_checks_tab_item
+      find_tab_item("Ineligible checks")
+    end
+
+    def teachers_tab_item
+      find_tab_item("Teachers")
+    end
+
+    def find_tab_item(text)
+      tabs.list.items.find { |item| item.text == text }
     end
   end
 end

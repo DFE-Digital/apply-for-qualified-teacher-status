@@ -8,6 +8,8 @@ class PersonasController < ApplicationController
 
   def index
     @staff = Staff.all
+
+    render layout: "full_from_desktop"
   end
 
   def eligible_sign_in

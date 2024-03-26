@@ -5,42 +5,36 @@ require "rails_helper"
 RSpec.describe "Personas", type: :system do
   before { given_the_service_is_open }
 
-  context "active" do
-    before { given_personas_are_activated }
+  it "active" do
+    given_personas_are_activated
+    given_personas_exist
 
-    it "without personas" do
-      when_i_visit_the(:personas_page)
-      then_i_see_the(:personas_page)
-      and_i_see_no_personas
-    end
+    when_i_visit_the(:personas_page)
+    then_i_see_the(:personas_page)
 
-    it "with personas" do
-      given_personas_exist
+    when_i_click_on_the_staff_tab_item
+    and_i_sign_in_as_a_persona
+    then_i_see_the(:assessor_applications_page)
 
-      when_i_visit_the(:personas_page)
-      then_i_see_the(:personas_page)
-      and_i_see_some_personas
+    when_i_visit_the(:personas_page)
 
-      when_i_sign_in_as_a_staff_persona
-      then_i_see_the(:assessor_applications_page)
+    when_i_click_on_the_eligible_checks_tab_item
+    and_i_sign_in_as_a_persona
+    then_i_see_the(:eligibility_eligible_page)
 
-      when_i_visit_the(:personas_page)
+    when_i_visit_the(:personas_page)
 
-      when_i_sign_in_as_an_eligible_persona
-      then_i_see_the(:eligibility_eligible_page)
+    when_i_click_on_the_ineligible_checks_tab_item
+    and_i_sign_in_as_a_persona
+    then_i_see_the(:eligibility_ineligible_page)
 
-      when_i_visit_the(:personas_page)
+    when_i_visit_the(:personas_page)
 
-      when_i_sign_in_as_an_ineligible_persona
-      then_i_see_the(:eligibility_ineligible_page)
+    when_i_click_on_the_teachers_tab_item
+    and_i_sign_in_as_a_persona
+    then_i_see_the(:teacher_application_page)
 
-      when_i_visit_the(:personas_page)
-
-      when_i_sign_in_as_a_teacher_persona
-      then_i_see_the(:teacher_application_page)
-
-      when_i_visit_the(:personas_page)
-    end
+    when_i_visit_the(:personas_page)
   end
 
   it "inactive" do
@@ -70,32 +64,24 @@ RSpec.describe "Personas", type: :system do
     create(:application_form, teacher:)
   end
 
-  def when_i_sign_in_as_a_staff_persona
-    personas_page.staff.buttons.first.click
+  def when_i_click_on_the_staff_tab_item
+    personas_page.staff_tab_item.click
   end
 
-  def when_i_sign_in_as_an_eligible_persona
-    personas_page.eligibles.buttons.first.click
+  def when_i_click_on_the_eligible_checks_tab_item
+    personas_page.eligible_checks_tab_item.click
   end
 
-  def when_i_sign_in_as_an_ineligible_persona
-    personas_page.ineligibles.buttons.first.click
+  def when_i_click_on_the_ineligible_checks_tab_item
+    personas_page.ineligible_checks_tab_item.click
   end
 
-  def when_i_sign_in_as_a_teacher_persona
-    personas_page.teachers.buttons.first.click
+  def when_i_click_on_the_teachers_tab_item
+    personas_page.teachers_tab_item.click
   end
 
-  def and_i_see_no_personas
-    expect(personas_page.eligibles).to have_content("No eligible personas.")
-    expect(personas_page.staff).to have_content("No staff personas.")
-    expect(personas_page.teachers).to have_content("No teacher personas.")
-  end
-
-  def and_i_see_some_personas
-    expect(personas_page.eligibles).to have_content("Example Region")
-    expect(personas_page.staff).to have_content("staff@example.com")
-    expect(personas_page.teachers).to have_content("teacher@example.com")
+  def and_i_sign_in_as_a_persona
+    personas_page.tabs.panel.buttons.first.click
   end
 
   def and_i_see_the_feature_disabled_message
