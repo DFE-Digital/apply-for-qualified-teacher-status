@@ -167,7 +167,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     expect(TeacherMailer.deliveries.first.subject).to eq(
       I18n.t(
         "mailer.teacher.professional_standing_received.subject",
-        certificate: "letter that proves you’re recognised as a teacher",
+        certificate: "Letter of Professional Standing",
       ),
     )
   end

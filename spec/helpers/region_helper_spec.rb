@@ -10,7 +10,7 @@ RSpec.describe RegionHelper do
 
     it do
       is_expected.to eq(
-        "a <span lang=\"FR\">letter that proves you’re recognised as a teacher</span>",
+        "a <span lang=\"FR\">Letter of Professional Standing</span>",
       )
     end
 

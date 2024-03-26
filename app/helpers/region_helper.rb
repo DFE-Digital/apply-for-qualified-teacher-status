@@ -3,7 +3,7 @@
 module RegionHelper
   def region_certificate_name(region)
     region.teaching_authority_certificate.presence ||
-      "letter that proves you’re recognised as a teacher"
+      "Letter of Professional Standing"
   end
 
   def region_certificate_phrase(region)

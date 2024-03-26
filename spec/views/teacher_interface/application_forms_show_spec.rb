@@ -75,7 +75,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       it do
         is_expected.to match(/Your QTS application has been declined/)
         is_expected.to match(
-          /we did not receive your letter that proves you’re recognised as a teacher/,
+          /we did not receive your Letter of Professional Standing/,
         )
         is_expected.to match(/from teaching authority within 180 days/)
       end
