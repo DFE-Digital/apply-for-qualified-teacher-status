@@ -4,11 +4,13 @@ class PersonasController < ApplicationController
   include EligibilityCurrentNamespace
 
   before_action :ensure_feature_active
-  before_action :load_teacher_personas, :load_eligible_personas, only: :index
+
+  before_action :load_staff_personas,
+                :load_teacher_personas,
+                :load_eligible_personas,
+                only: :index
 
   def index
-    @staff = Staff.all
-
     render layout: "full_from_desktop"
   end
 
@@ -113,6 +115,20 @@ class PersonasController < ApplicationController
 
         persona.merge(region: found_region) if found_region
       end
+  end
+
+  def load_staff_personas
+    @staff_personas =
+      Staff.order(
+        assess_permission: :desc,
+        change_name_permission: :desc,
+        change_work_history_permission: :desc,
+        reverse_decision_permission: :desc,
+        support_console_permission: :desc,
+        verify_permission: :desc,
+        withdraw_permission: :desc,
+        email: :asc,
+      )
   end
 
   TEACHER_PERSONAS =

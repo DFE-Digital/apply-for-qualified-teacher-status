@@ -14,19 +14,19 @@
 
     head.with_row do |row|
       row.with_cell(header: true, text: "Email")
-      row.with_cell(header: true, text: "Assess applicants")
+      row.with_cell(header: true, text: "Assess")
       row.with_cell(header: true, text: "Change names")
       row.with_cell(header: true, text: "Change work history")
       row.with_cell(header: true, text: "Reverse decisions")
       row.with_cell(header: true, text: "Support console")
-      row.with_cell(header: true, text: "Verify applicants")
+      row.with_cell(header: true, text: "Verify")
       row.with_cell(header: true, text: "Withdraw")
-      row.with_cell(header: true, text: "Actions", numeric: true)
+      row.with_cell(header: true)
     end
   end
 
   table.with_body do |body|
-    @staff.each do |staff|
+    @staff_personas.each do |staff|
       body.with_row do |row|
         row.with_cell(text: staff.email)
 
@@ -39,7 +39,7 @@
         row.with_cell { govuk_boolean_tag(staff.withdraw_permission) }
 
         row.with_cell(numeric: true) do
-          govuk_button_to "Sign&nbsp;in".html_safe, staff_sign_in_persona_path(staff)
+          govuk_button_to "Sign&nbsp;in ".html_safe, staff_sign_in_persona_path(staff)
         end
       end
     end
