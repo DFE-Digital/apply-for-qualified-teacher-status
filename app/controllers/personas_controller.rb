@@ -138,6 +138,7 @@ class PersonasController < ApplicationController
         %w[
           draft
           not_started
+          waiting_on_lops
           waiting_on_consent
           waiting_on_further_information
           awarded
@@ -172,6 +173,11 @@ class PersonasController < ApplicationController
             end
 
             stage_or_status = persona[:stage_or_status]
+
+            if stage_or_status == "waiting_on_lops" &&
+                 !application_form.teaching_authority_provides_written_statement
+              next
+            end
 
             application_form.stage == stage_or_status ||
               application_form.statuses.include?(stage_or_status)
