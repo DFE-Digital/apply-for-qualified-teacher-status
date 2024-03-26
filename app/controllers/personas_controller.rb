@@ -4,10 +4,14 @@ class PersonasController < ApplicationController
   include EligibilityCurrentNamespace
 
   before_action :ensure_feature_active
-  before_action :load_teacher_personas, :load_eligible_personas, only: :index
+
+  before_action :load_staff_personas,
+                :load_teacher_personas,
+                :load_eligible_personas,
+                only: :index
 
   def index
-    @staff = Staff.all
+    render layout: "full_from_desktop"
   end
 
   def eligible_sign_in
@@ -113,6 +117,20 @@ class PersonasController < ApplicationController
       end
   end
 
+  def load_staff_personas
+    @staff_personas =
+      Staff.order(
+        assess_permission: :desc,
+        change_name_permission: :desc,
+        change_work_history_permission: :desc,
+        reverse_decision_permission: :desc,
+        support_console_permission: :desc,
+        verify_permission: :desc,
+        withdraw_permission: :desc,
+        email: :asc,
+      )
+  end
+
   TEACHER_PERSONAS =
     %w[online written none]
       .product(
@@ -120,6 +138,7 @@ class PersonasController < ApplicationController
         %w[
           draft
           not_started
+          waiting_on_lops
           waiting_on_consent
           waiting_on_further_information
           awarded
@@ -154,6 +173,11 @@ class PersonasController < ApplicationController
             end
 
             stage_or_status = persona[:stage_or_status]
+
+            if stage_or_status == "waiting_on_lops" &&
+                 !application_form.teaching_authority_provides_written_statement
+              next
+            end
 
             application_form.stage == stage_or_status ||
               application_form.statuses.include?(stage_or_status)

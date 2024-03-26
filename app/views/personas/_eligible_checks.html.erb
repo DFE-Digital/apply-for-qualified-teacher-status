@@ -1,0 +1,38 @@
+<%= govuk_table(classes: "app-personas") do |table|
+  table.with_head do |head|
+    head.with_row do |row|
+      row.with_cell(header: true, text: "Bucket")
+      row.with_cell(header: true, text: "Country/Region")
+      row.with_cell(header: true, text: "Status check")
+      row.with_cell(header: true, text: "Sanction check")
+      row.with_cell(header: true, text: "Skips work history")
+      row.with_cell(header: true, text: "Teaching authority provides written statement")
+      row.with_cell(header: true, text: "Reduced evidence accepted")
+      row.with_cell(header: true)
+    end
+  end
+
+  table.with_body do |body|
+    @eligible_personas.each do |persona|
+      body.with_row do |row|
+        row.with_cell do
+          bucket = region_bucket_for_persona(persona)
+          govuk_tag(text: bucket) if bucket
+        end
+
+        row.with_cell { CountryName.from_region(persona[:region]) }
+
+        row.with_cell { persona_check_tag(persona[:status_check]) }
+        row.with_cell { persona_check_tag(persona[:sanction_check]) }
+
+        row.with_cell { govuk_boolean_tag(persona[:application_form_skip_work_history]) }
+        row.with_cell { govuk_boolean_tag(persona[:teaching_authority_provides_written_statement]) }
+        row.with_cell { govuk_boolean_tag(persona[:reduced_evidence_accepted]) }
+
+        row.with_cell(numeric: true) do
+          govuk_button_to "Sign&nbsp;in".html_safe, eligible_sign_in_persona_path(persona[:region])
+        end
+      end
+    end
+  end
+end %>
