@@ -4,7 +4,6 @@ require "rails_helper"
 
 RSpec.describe "Assessor pre-assessment tasks", type: :system do
   before do
-    given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form_with_professional_standing_request
   end

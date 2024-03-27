@@ -1,18 +1,8 @@
+# frozen_string_literal: true
+
 module SystemHelpers
   include PageHelpers
   include Warden::Test::Helpers
-
-  def given_the_service_is_open
-    FeatureFlags::FeatureFlag.activate(:service_open)
-  end
-
-  def given_the_service_is_closed
-    FeatureFlags::FeatureFlag.deactivate(:service_open)
-  end
-
-  def given_the_service_allows_teacher_applications
-    FeatureFlags::FeatureFlag.activate(:teacher_applications)
-  end
 
   def given_an_eligible_eligibility_check(country_check:)
     country = create(:country, :with_national_region, code: "GB-SCT")
@@ -80,8 +70,8 @@ module SystemHelpers
     user =
       create(
         :staff,
-        :with_assess_permission,
         :confirmed,
+        :with_assess_permission,
         name: "Authorized User",
       )
     given_i_am_authorized_as_a_user(user)
@@ -91,8 +81,8 @@ module SystemHelpers
     user =
       create(
         :staff,
-        :with_verify_permission,
         :confirmed,
+        :with_verify_permission,
         name: "Authorized User",
       )
     given_i_am_authorized_as_a_user(user)
@@ -123,26 +113,11 @@ module SystemHelpers
     allow(stubbed_service).to receive(:call).and_return(stubbed_response)
   end
 
-  def when_i_am_authorized_as_a_test_user
-    page.driver.basic_authorize(
-      ENV.fetch("TEST_USERNAME", "test"),
-      ENV.fetch("TEST_PASSWORD", "test"),
-    )
-  end
-
   def when_i_sign_out
     sign_out @user
   end
 
   alias_method :then_i_sign_out, :when_i_sign_out
-
-  def given_the_test_user_is_disabled
-    FeatureFlags::FeatureFlag.deactivate(:staff_test_user)
-  end
-
-  def given_the_test_user_is_enabled
-    FeatureFlags::FeatureFlag.activate(:staff_test_user)
-  end
 
   def when_i_choose_yes
     choose "Yes", visible: false

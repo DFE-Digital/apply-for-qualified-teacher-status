@@ -1,15 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Staff sign in", type: :request do
-  before do
-    FeatureFlags::FeatureFlag.activate(:service_open)
-    FeatureFlags::FeatureFlag.activate(:sign_in_with_active_directory)
-  end
+  before { FeatureFlags::FeatureFlag.activate(:sign_in_with_active_directory) }
 
-  after do
-    FeatureFlags::FeatureFlag.deactivate(:service_open)
-    FeatureFlags::FeatureFlag.deactivate(:sign_in_with_active_directory)
-  end
+  after { FeatureFlags::FeatureFlag.deactivate(:sign_in_with_active_directory) }
 
   shared_examples "an Azure login" do
     it "redirects to Azure login" do

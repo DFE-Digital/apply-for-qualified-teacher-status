@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Staff support", type: :system do
-  before { given_the_service_is_open }
-
   it "requires permission" do
     given_i_am_authorized_as_an_assessor_user
     when_i_visit_the_staff_page

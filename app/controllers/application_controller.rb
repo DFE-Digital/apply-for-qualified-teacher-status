@@ -9,8 +9,7 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
   layout "two_thirds"
 
-  before_action :authenticate,
-                unless: -> { FeatureFlags::FeatureFlag.active?(:service_open) }
+  before_action :authenticate_support!, unless: :service_open?
 
   def current_user
     nil
@@ -20,25 +19,15 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def authenticate
-    valid_credentials = [
-      {
-        username: ENV.fetch("SUPPORT_USERNAME", "support"),
-        password: ENV.fetch("SUPPORT_PASSWORD", "support"),
-      },
-    ]
-
-    if FeatureFlags::FeatureFlag.active?(:staff_test_user)
-      valid_credentials.push(
-        {
-          username: ENV.fetch("TEST_USERNAME", "test"),
-          password: ENV.fetch("TEST_PASSWORD", "test"),
-        },
-      )
-    end
-
+  def authenticate_support!
     authenticate_or_request_with_http_basic do |username, password|
-      valid_credentials.include?({ username:, password: })
+      username == ENV.fetch("SUPPORT_USERNAME") &&
+        password == ENV.fetch("SUPPORT_PASSWORD")
     end
+  end
+
+  def service_open?
+    Rails.env.development? || Rails.env.test? ||
+      FeatureFlags::FeatureFlag.active?(:service_open)
   end
 end

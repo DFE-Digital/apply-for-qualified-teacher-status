@@ -22,7 +22,6 @@ RSpec.describe "Assessor requesting further information", type: :system do
   end
 
   it "completes an assessment" do
-    given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form_with_failure_reasons
 

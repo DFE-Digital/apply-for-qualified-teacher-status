@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::QualificationsController, type: :controller do
-  before { FeatureFlags::FeatureFlag.activate(:service_open) }
-
   let(:teacher) { create(:teacher) }
   let!(:application_form) { create(:application_form, teacher:) }
 

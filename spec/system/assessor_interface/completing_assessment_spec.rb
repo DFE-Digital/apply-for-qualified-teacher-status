@@ -25,7 +25,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   it "award" do
-    given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_awardable_application_form(%i[old_regs])
     given_i_can_request_dqt_api
@@ -85,7 +84,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   it "verify" do
-    given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_awardable_application_form_with_work_history
 
@@ -139,7 +137,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   it "verify with reduced evidence" do
-    given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_awardable_application_form_with_reduced_evidence
 
@@ -179,7 +176,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   it "decline" do
-    given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
     given_there_is_a_declinable_application_form
 

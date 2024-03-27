@@ -4,7 +4,6 @@ require "rails_helper"
 
 RSpec.describe "Assessor filtering application forms", type: :system do
   before do
-    given_the_service_is_open
     given_there_are_application_forms
     given_i_am_authorized_as_an_assessor_user
   end

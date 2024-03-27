@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "Assessor confirms English language section", type: :system do
   it "exemption via citizenship in the Personal Information section" do
-    given_the_service_is_open
     given_there_is_an_application_form
     and_the_application_states_english_language_exemption_by_citizenship
     given_i_am_authorized_as_an_assessor_user
@@ -39,7 +38,6 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   it "exemption via qualification in the Qualifications section" do
-    given_the_service_is_open
     given_there_is_an_application_form
     and_the_application_states_english_language_exemption_by_qualification
     given_i_am_authorized_as_an_assessor_user
@@ -72,7 +70,6 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   it "confirmation of proficiency by SELT from approved provider" do
-    given_the_service_is_open
     given_there_is_an_application_form
     and_the_application_english_language_proof_method_is_provider
     given_i_am_authorized_as_an_assessor_user
@@ -91,7 +88,6 @@ RSpec.describe "Assessor confirms English language section", type: :system do
   end
 
   it "confirmation of proficiency by medium of instruction document" do
-    given_the_service_is_open
     given_there_is_an_application_form
     and_the_application_english_language_proof_method_is_moi
     given_i_am_authorized_as_an_assessor_user

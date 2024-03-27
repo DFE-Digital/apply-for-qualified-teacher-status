@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe "Assessor views duplicate applicant's application form",
                type: :system do
   it "displays information about the duplicate applicant" do
-    given_the_service_is_open
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form
     and_the_applicant_matches_a_record_in_dqt
