@@ -3,7 +3,7 @@ module PageObjects
     class CheckDocument < SitePrism::Page
       set_url "/teacher/application/documents/{document_id}/edit"
 
-      element :heading, "h1"
+      element :heading, ".govuk-heading-l"
 
       section :form, "form" do
         section :true_radio_item,

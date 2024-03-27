@@ -1,0 +1,16 @@
+<%= govuk_footer(
+      meta_items_title: "Footer links",
+      meta_items: {
+        "Accessibility" => main_app.accessibility_path,
+        "Cookies" => main_app.cookies_path,
+        "Privacy" => main_app.privacy_path
+      }) do |footer| %>
+  <% if current_teacher %>
+    <% footer.with_navigation do %>
+      <h1 class="govuk-heading-s">Get help</h1>
+      <p class="govuk-body">Email: <%= govuk_link_to t("service.email.enquiries"), main_app.email_path("enquiries") %></p>
+      <p class="govuk-body">Please include as much detail as possible about your query.</p>
+      <p class="govuk-body">We aim to respond to you within 5 working days.</p>
+    <% end %>
+  <% end %>
+<% end %>
