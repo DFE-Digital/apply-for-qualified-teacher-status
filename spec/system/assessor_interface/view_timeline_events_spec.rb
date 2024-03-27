@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "Assessor view timeline events", type: :system do
   before do
-    given_the_service_is_open
     given_an_assessor_exists
     given_an_application_form_exists
     given_i_am_authorized_as_a_user(assessor)

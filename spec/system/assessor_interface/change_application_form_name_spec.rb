@@ -3,10 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Assessor change application form name", type: :system do
-  before do
-    given_the_service_is_open
-    given_there_is_an_application_form
-  end
+  before { given_there_is_an_application_form }
 
   it "checks manage applications permission" do
     given_i_am_authorized_as_a_user(assessor)

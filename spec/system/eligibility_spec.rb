@@ -3,10 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Eligibility check", type: :system do
-  before do
-    given_countries_exist
-    given_the_service_is_open
-  end
+  before { given_countries_exist }
 
   it "happy path" do
     when_i_visit_the(:eligibility_start_page)
@@ -190,38 +187,6 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_select_a_region
     then_i_see_the(:eligibility_qualification_page)
-  end
-
-  it "service is closed" do
-    given_the_service_is_closed
-    when_i_visit_the(:eligibility_start_page)
-    then_access_is_denied
-
-    given_the_service_is_open
-    given_i_am_authorized_as_a_support_user
-    when_i_visit_the(:eligibility_start_page)
-    then_i_see_the(:eligibility_start_page)
-
-    when_i_press_start_now
-    then_i_see_the(:eligibility_country_page)
-
-    when_i_select_an_eligible_country
-    then_i_see_the(:eligibility_qualification_page)
-  end
-
-  it "test user is disabled" do
-    given_the_service_is_closed
-    when_i_visit_the(:eligibility_start_page)
-    then_access_is_denied
-
-    when_i_am_authorized_as_a_test_user
-    when_i_visit_the(:eligibility_start_page)
-    then_access_is_denied
-
-    given_the_test_user_is_enabled
-    when_i_am_authorized_as_a_test_user
-    when_i_visit_the(:eligibility_start_page)
-    then_i_see_the(:eligibility_start_page)
   end
 
   it "happy path when filtering by country requiring qualification for subject" do

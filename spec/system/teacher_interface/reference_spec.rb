@@ -3,10 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Teacher reference", type: :system do
-  before do
-    given_the_service_is_open
-    given_there_is_a_reference_request
-  end
+  before { given_there_is_a_reference_request }
 
   it "allows filling in the reference" do
     when_i_visit_the(:teacher_reference_requested_page, slug:)

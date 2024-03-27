@@ -21,13 +21,6 @@ feature_flags:
     author: Richard Pattinson
     description: Allow users to sign in using accounts in Active Directory.
 
-  staff_test_user:
-    author: David Feetenby
-    description: >
-      Add extra user with access to the eligibility checker for user research.
-      When service_open is deactivated, and this flag is enabled, the user will
-      have full access to the service. Should be inactive on production.
-
   teacher_applications:
     author: Thomas Leese
     description: >

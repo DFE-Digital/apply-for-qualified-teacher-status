@@ -3,10 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Assigning an assessor", type: :system do
-  before do
-    given_the_service_is_open
-    given_there_is_an_application_form
-  end
+  before { given_there_is_an_application_form }
 
   it "assigns an assessor" do
     given_i_am_authorized_as_an_assessor_user

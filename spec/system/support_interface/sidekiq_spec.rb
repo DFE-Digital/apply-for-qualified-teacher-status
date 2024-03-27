@@ -20,7 +20,7 @@ RSpec.describe "Sidekiq support", type: :system do
   end
 
   def then_i_see_the_access_denied_page
-    expect(page).to have_content("Access denied")
+    expect(page).to have_content("Page not found")
   end
 
   def then_i_see_the_sidekiq_dashboard
