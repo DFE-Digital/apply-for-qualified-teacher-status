@@ -50,20 +50,37 @@ module AssessorInterface
           .order(created_at: :desc)
     end
 
-    def edit
-      @form = ApplicationFormNameForm.new
+    def edit_email
+      @form = ApplicationFormEmailForm.new
     end
 
-    def update
+    def update_email
       @form =
-        ApplicationFormNameForm.new(
-          form_params.merge(application_form:, user: current_staff),
+        ApplicationFormEmailForm.new(
+          email_form_params.merge(application_form:, user: current_staff),
         )
 
       if @form.save
         redirect_to [:assessor_interface, application_form]
       else
-        render :edit, status: :unprocessable_entity
+        render :edit_email, status: :unprocessable_entity
+      end
+    end
+
+    def edit_name
+      @form = ApplicationFormNameForm.new
+    end
+
+    def update_name
+      @form =
+        ApplicationFormNameForm.new(
+          name_form_params.merge(application_form:, user: current_staff),
+        )
+
+      if @form.save
+        redirect_to [:assessor_interface, application_form]
+      else
+        render :edit_name, status: :unprocessable_entity
       end
     end
 
@@ -99,7 +116,13 @@ module AssessorInterface
       @application_form ||= show_view_object.application_form
     end
 
-    def form_params
+    def email_form_params
+      params.require(:assessor_interface_application_form_email_form).permit(
+        :email,
+      )
+    end
+
+    def name_form_params
       params.require(:assessor_interface_application_form_name_form).permit(
         :given_names,
         :family_name,

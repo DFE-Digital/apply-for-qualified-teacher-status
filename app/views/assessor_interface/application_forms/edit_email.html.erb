@@ -1,0 +1,25 @@
+<% title = "Change email for ‘#{application_form_full_name(@application_form)}’" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
+
+<%= form_with model: @form, url: [:email, :assessor_interface, @application_form] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h2 class="govuk-heading-m">Current email</h2>
+
+  <%= govuk_summary_list(actions: false) do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Email" }
+      row.with_value { @application_form.teacher.email }
+    end
+  end %>
+
+  <h2 class="govuk-heading-m">Change email</h2>
+
+  <%= f.govuk_text_field :email %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>

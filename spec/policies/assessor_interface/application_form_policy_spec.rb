@@ -62,6 +62,26 @@ RSpec.describe AssessorInterface::ApplicationFormPolicy do
 
   describe "#edit?" do
     subject(:edit?) { policy.edit? }
+    it_behaves_like "a policy method without permission"
+  end
+
+  describe "#update_email?" do
+    subject(:update?) { policy.update_email? }
+    it_behaves_like "a policy method requiring the change email permission"
+  end
+
+  describe "#edit_email?" do
+    subject(:edit?) { policy.edit_email? }
+    it_behaves_like "a policy method requiring the change email permission"
+  end
+
+  describe "#update_name?" do
+    subject(:update?) { policy.update_name? }
+    it_behaves_like "a policy method requiring the change name permission"
+  end
+
+  describe "#edit_name?" do
+    subject(:edit?) { policy.edit_name? }
     it_behaves_like "a policy method requiring the change name permission"
   end
 

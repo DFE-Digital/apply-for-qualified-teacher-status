@@ -65,6 +65,10 @@ FactoryBot.define do
       assess_permission { true }
     end
 
+    trait :with_change_email_permission do
+      change_email_permission { true }
+    end
+
     trait :with_change_name_permission do
       change_name_permission { true }
     end

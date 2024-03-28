@@ -2,8 +2,8 @@
 
 module PageObjects
   module AssessorInterface
-    class EditApplication < SitePrism::Page
-      set_url "/assessor/applications/{reference}/edit"
+    class EditApplicationName < SitePrism::Page
+      set_url "/assessor/applications/{reference}/name"
 
       section :form, "form" do
         element :given_names_field,

@@ -107,9 +107,14 @@ module PageHelpers
       PageObjects::AssessorInterface::EditAgeRangeSubjectsAssessmentRecommendationAward.new
   end
 
-  def assessor_edit_application_page
-    @assessor_edit_application_page ||=
-      PageObjects::AssessorInterface::EditApplication.new
+  def assessor_edit_application_email_page
+    @assessor_edit_application_email_page ||=
+      PageObjects::AssessorInterface::EditApplicationEmail.new
+  end
+
+  def assessor_edit_application_name_page
+    @assessor_edit_application_name_page ||=
+      PageObjects::AssessorInterface::EditApplicationName.new
   end
 
   def assessor_edit_work_history_page
