@@ -355,6 +355,7 @@
     - current_sign_in_at
     - current_sign_in_ip
     - email
+    - email_domain
     - id
     - last_sign_in_at
     - last_sign_in_ip
@@ -401,6 +402,7 @@
     - canonical_contact_email
     - city
     - contact_email
+    - contact_email_domain
     - contact_job
     - contact_name
     - country_code

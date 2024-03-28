@@ -7,7 +7,8 @@
 #  canonical_email                         :text             default(""), not null
 #  current_sign_in_at                      :datetime
 #  current_sign_in_ip                      :string
-#  email                                   :string           default(""), not null
+#  email                                   :string           not null
+#  email_domain                            :text             default(""), not null
 #  last_sign_in_at                         :datetime
 #  last_sign_in_ip                         :string
 #  sign_in_count                           :integer          default(0), not null

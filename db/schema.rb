@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_28_140334) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_28_081412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -474,7 +474,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_28_140334) do
   end
 
   create_table "teachers", force: :cascade do |t|
-    t.string "email", default: "", null: false
+    t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sign_in_count", default: 0, null: false
@@ -486,6 +486,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_28_140334) do
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.text "canonical_email", default: "", null: false
     t.string "access_your_teaching_qualifications_url"
+    t.text "email_domain", default: "", null: false
     t.index "lower((email)::text)", name: "index_teacher_on_lower_email", unique: true
     t.index ["canonical_email"], name: "index_teachers_on_canonical_email"
     t.index ["uuid"], name: "index_teachers_on_uuid", unique: true
@@ -554,6 +555,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_28_140334) do
     t.boolean "end_date_is_estimate", default: false, null: false
     t.string "contact_job", default: "", null: false
     t.text "canonical_contact_email", default: "", null: false
+    t.text "contact_email_domain", default: "", null: false
     t.index ["application_form_id"], name: "index_work_histories_on_application_form_id"
     t.index ["canonical_contact_email"], name: "index_work_histories_on_canonical_contact_email"
   end
