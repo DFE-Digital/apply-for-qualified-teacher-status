@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
     resources :application_forms,
               path: "/applications",
-              except: :new,
+              only: %i[index show destroy],
               param: :reference do
       collection do
         post "filters/apply", to: "application_forms#apply_filters"
@@ -24,6 +24,12 @@ Rails.application.routes.draw do
       end
 
       member do
+        get "email", to: "application_forms#edit_email"
+        post "email", to: "application_forms#update_email"
+
+        get "name", to: "application_forms#edit_name"
+        post "name", to: "application_forms#update_name"
+
         get "status"
         get "timeline"
         get "withdraw"

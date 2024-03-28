@@ -223,6 +223,11 @@ en:
   activemodel:
     errors:
       models:
+        assessor_interface/application_form_email_form:
+          attributes:
+            email:
+              blank: Enter an email address
+              inclusion: A teacher already exists with this email address
         assessor_interface/assessor_assignment_form:
           attributes:
             assessor_id:

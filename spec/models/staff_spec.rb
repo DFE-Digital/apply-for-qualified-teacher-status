@@ -5,6 +5,7 @@
 #  id                             :bigint           not null, primary key
 #  assess_permission              :boolean          default(FALSE)
 #  azure_ad_uid                   :string
+#  change_email_permission        :boolean          default(FALSE), not null
 #  change_name_permission         :boolean          default(FALSE), not null
 #  change_work_history_permission :boolean          default(FALSE), not null
 #  confirmation_sent_at           :datetime

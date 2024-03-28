@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-RSpec.describe "Assessor change application form name", type: :system do
+RSpec.describe "Assessor change application form email", type: :system do
   before { given_there_is_an_application_form }
 
   it "checks manage applications permission" do
     given_i_am_authorized_as_a_user(assessor)
 
-    when_i_visit_the(:assessor_edit_application_name_page, reference:)
+    when_i_visit_the(:assessor_edit_application_email_page, reference:)
     then_i_see_the_forbidden_page
   end
 
@@ -18,10 +18,10 @@ RSpec.describe "Assessor change application form name", type: :system do
     when_i_visit_the(:assessor_application_page, reference:)
     then_i_see_the(:assessor_application_page)
 
-    when_i_click_on_change_name
-    then_i_see_the(:assessor_edit_application_name_page, reference:)
+    when_i_click_on_change_email
+    then_i_see_the(:assessor_edit_application_email_page, reference:)
 
-    when_i_fill_in_the_name
+    when_i_fill_in_the_email
     then_i_see_the(:assessor_application_page, reference:)
   end
 
@@ -29,21 +29,19 @@ RSpec.describe "Assessor change application form name", type: :system do
     application_form
   end
 
-  def when_i_click_on_change_name
+  def when_i_click_on_change_email
     assessor_application_page
       .summary_list
-      .find_row(key: "Name")
+      .find_row(key: "Email")
       .actions
       .link
       .click
   end
 
-  def when_i_fill_in_the_name
-    assessor_edit_application_name_page.form.given_names_field.fill_in with:
-      "New given names"
-    assessor_edit_application_name_page.form.family_name_field.fill_in with:
-      "New family name"
-    assessor_edit_application_name_page.form.submit_button.click
+  def when_i_fill_in_the_email
+    assessor_edit_application_email_page.form.email_field.fill_in with:
+      "new@example.com"
+    assessor_edit_application_email_page.form.submit_button.click
   end
 
   def application_form
@@ -63,6 +61,6 @@ RSpec.describe "Assessor change application form name", type: :system do
   end
 
   def manager
-    create(:staff, :confirmed, :with_change_name_permission)
+    create(:staff, :confirmed, :with_change_email_permission)
   end
 end

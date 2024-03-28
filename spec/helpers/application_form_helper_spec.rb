@@ -77,6 +77,7 @@ RSpec.describe ApplicationFormHelper do
             value: {
               text: application_form.teacher.email,
             },
+            actions: [],
           },
           { key: { text: "Created on" }, value: { text: " 1 January 2020" } },
           {
@@ -129,6 +130,31 @@ RSpec.describe ApplicationFormHelper do
       )
     end
 
+    context "user has change email permission" do
+      let(:current_staff) { create(:staff, :with_change_email_permission) }
+
+      it "has an action to change the name" do
+        email_row = summary_rows.find { |row| row[:key][:text] == "Email" }
+
+        expect(email_row).to eq(
+          {
+            key: {
+              text: "Email",
+            },
+            value: {
+              text: application_form.teacher.email,
+            },
+            actions: [
+              {
+                visually_hidden_text: "Email",
+                href: [:email, :assessor_interface, application_form],
+              },
+            ],
+          },
+        )
+      end
+    end
+
     context "user has change name permission" do
       let(:current_staff) { create(:staff, :with_change_name_permission) }
 
@@ -146,7 +172,7 @@ RSpec.describe ApplicationFormHelper do
             actions: [
               {
                 visually_hidden_text: "Name",
-                href: [:edit, :assessor_interface, application_form],
+                href: [:name, :assessor_interface, application_form],
               },
             ],
           },

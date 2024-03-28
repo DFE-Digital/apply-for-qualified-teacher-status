@@ -32,10 +32,10 @@ module ApplicationFormHelper
               if AssessorInterface::ApplicationFormPolicy.new(
                    current_staff,
                    application_form,
-                 ).edit?
+                 ).edit_name?
                 {
                   visually_hidden_text: I18n.t("application_form.summary.name"),
-                  href: [:edit, :assessor_interface, application_form],
+                  href: [:name, :assessor_interface, application_form],
                 }
               end,
             ].compact,
@@ -76,6 +76,17 @@ module ApplicationFormHelper
               end
             ),
         },
+        actions: [
+          if AssessorInterface::ApplicationFormPolicy.new(
+               current_staff,
+               application_form,
+             ).edit_email?
+            {
+              visually_hidden_text: I18n.t("application_form.summary.email"),
+              href: [:email, :assessor_interface, application_form],
+            }
+          end,
+        ].compact,
       },
       {
         key: {

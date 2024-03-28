@@ -37,6 +37,18 @@ RSpec.shared_examples "a policy method requiring the assess permission" do
   end
 end
 
+RSpec.shared_examples "a policy method requiring the change email permission" do
+  context "without permission" do
+    let(:user) { create(:staff) }
+    it { is_expected.to be false }
+  end
+
+  context "with permission" do
+    let(:user) { create(:staff, :with_change_email_permission) }
+    it { is_expected.to be true }
+  end
+end
+
 RSpec.shared_examples "a policy method requiring the change name permission" do
   context "without permission" do
     let(:user) { create(:staff) }

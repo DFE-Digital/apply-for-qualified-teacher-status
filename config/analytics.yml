@@ -319,6 +319,7 @@
   :staff:
     - assess_permission
     - azure_ad_uid
+    - change_email_permission
     - change_name_permission
     - change_work_history_permission
     - confirmation_sent_at
