@@ -62,6 +62,8 @@ en:
       assessor_interface_application_form_name_form:
         given_names: Change given names
         family_name: Change family name
+      assessor_interface_application_form_email_form:
+        email: New email address
       assessor_interface_assessment_recommendation_form:
         recommendation_options:
           award: Award QTS
