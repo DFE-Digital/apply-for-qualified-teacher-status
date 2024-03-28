@@ -139,37 +139,5 @@ FactoryBot.define do
 
       additional_information_response { Faker::Lorem.sentence }
     end
-
-    trait :responses_invalid do
-      contact_response { false }
-      contact_name { Faker::Name.name }
-      contact_job { Faker::Job.title }
-      contact_comment { Faker::Lorem.sentence }
-      dates_response { false }
-      dates_comment { Faker::Lorem.sentence }
-      hours_response { false }
-      hours_comment { Faker::Lorem.sentence }
-      children_response { false }
-      children_comment { Faker::Lorem.sentence }
-      lessons_response { false }
-      lessons_comment { Faker::Lorem.sentence }
-      reports_response { false }
-      reports_comment { Faker::Lorem.sentence }
-      misconduct_response { true }
-      misconduct_comment { Faker::Lorem.sentence }
-      satisfied_response { false }
-      satisfied_comment { Faker::Lorem.sentence }
-    end
-
-    trait :responses_valid do
-      contact_response { true }
-      dates_response { true }
-      hours_response { true }
-      children_response { true }
-      lessons_response { true }
-      reports_response { true }
-      misconduct_response { false }
-      satisfied_response { true }
-    end
   end
 end

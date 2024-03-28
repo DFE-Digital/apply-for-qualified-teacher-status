@@ -1,6 +1,7 @@
 <% work_history = @reference_request.work_history %>
 <% can_edit_work_history = policy([:assessor_interface, work_history]).edit? %>
 <% can_update_verify_reference_request = @assessment.verify? && policy([:assessor_interface, @reference_request]).update_verify? %>
+<% can_resend_email_reference_request = @assessment.verify? && policy([:assessor_interface, @reference_request]).resend_email? %>
 
 <% title = can_update_verify_reference_request ? "Review reference" : "View reference" %>
 
@@ -55,6 +56,12 @@
     <% end %>
 
     <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
+  <% elsif @reference_request.requested? && can_resend_email_reference_request %>
+    <%= govuk_details(summary_text: "Resend email to referee") do %>
+      <%= govuk_warning_text(text: "Only use this if a request has been made to resend the reference.") %>
+      <%= govuk_button_link_to "Resend reference request email", [:resend_email, :assessor_interface, @application_form, @assessment, @reference_request] %>
+      <p class="govuk-body">Reminders are sent automatically 4 weeks and 2 weeks before the reference goes overdue.</p>
+    <% end %>
   <% end %>
 
   <% if @reference_request.expired? %>
