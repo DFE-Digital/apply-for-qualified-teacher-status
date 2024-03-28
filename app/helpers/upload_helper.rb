@@ -2,13 +2,7 @@
 
 module UploadHelper
   def upload_link_to(upload)
-    href =
-      govuk_link_to(
-        "#{upload.name} (opens in a new tab)",
-        upload_path(upload),
-        target: :_blank,
-        rel: :noopener,
-      )
+    href = govuk_link_to(upload.name, upload_path(upload), new_tab: true)
 
     if upload.scan_result_error? || upload.scan_result_suspect?
       href +

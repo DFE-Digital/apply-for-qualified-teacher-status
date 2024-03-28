@@ -16,8 +16,8 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_request_lops_verification_status_is("NOT STARTED")
-    and_the_record_lops_response_status_is("CANNOT START")
+    and_the_request_lops_verification_status_is("Not started")
+    and_the_record_lops_response_status_is("Cannot start")
 
     when_i_click_request_lops_verification
     then_i_see_the(
@@ -31,8 +31,8 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_request_lops_verification_status_is("COMPLETED")
-    and_the_record_lops_response_status_is("WAITING ON")
+    and_the_request_lops_verification_status_is("Completed")
+    and_the_record_lops_response_status_is("Waiting on")
   end
 
   it "record" do
@@ -45,8 +45,8 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_request_lops_verification_status_is("COMPLETED")
-    and_the_record_lops_response_status_is("WAITING ON")
+    and_the_request_lops_verification_status_is("Completed")
+    and_the_record_lops_response_status_is("Waiting on")
 
     when_i_click_record_lops_response
     then_i_see_the(
@@ -60,7 +60,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_record_lops_response_status_is("COMPLETED")
+    and_the_record_lops_response_status_is("Completed")
 
     when_i_click_record_lops_response
     then_i_see_the(
@@ -80,7 +80,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_record_lops_response_status_is("REVIEW")
+    and_the_record_lops_response_status_is("Review")
   end
 
   it "record after overdue" do
@@ -94,8 +94,8 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_request_lops_verification_status_is("COMPLETED")
-    and_the_record_lops_response_status_is("OVERDUE")
+    and_the_request_lops_verification_status_is("Completed")
+    and_the_record_lops_response_status_is("Overdue")
 
     when_i_click_record_lops_response
     then_i_see_the(
@@ -110,7 +110,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_record_lops_response_status_is("COMPLETED")
+    and_the_record_lops_response_status_is("Completed")
 
     when_i_click_record_lops_response
     then_i_see_the(
@@ -130,7 +130,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_record_lops_response_status_is("REVIEW")
+    and_the_record_lops_response_status_is("Review")
 
     when_i_click_record_lops_response
     then_i_see_the(
@@ -150,7 +150,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
       reference:,
       assessment_id:,
     )
-    and_the_record_lops_response_status_is("REVIEW")
+    and_the_record_lops_response_status_is("Review")
   end
 
   private
@@ -168,7 +168,7 @@ RSpec.describe "Assessor verifying professional standing", type: :system do
   end
 
   def and_i_click_professional_standing_task
-    assessor_application_page.verify_professional_standing_task.link.click
+    assessor_application_page.verify_professional_standing_task.click
   end
 
   def when_i_click_request_lops_verification

@@ -22,10 +22,10 @@
 
       <div class="govuk-button-group">
         <% if upload.is_pdf? %>
-          <%= govuk_button_link_to "Download", [:assessor_interface, :application_form, upload.document, upload], target: "_blank", rel: "noreferrer noopener" %>
+          <%= govuk_button_link_to "Download", [:assessor_interface, :application_form, upload.document, upload], new_tab: true %>
         <% else %>
-          <%= govuk_button_link_to "Download original", [:assessor_interface, :application_form, upload.document, upload], target: "_blank", rel: "noreferrer noopener" %>
-          <%= govuk_button_link_to "Download as PDF", assessor_interface_application_form_document_pdf_path(upload.document, "original"), inverse: true, target: "_blank", rel: "noreferrer noopener" %>
+          <%= govuk_button_link_to "Download original", [:assessor_interface, :application_form, upload.document, upload], new_tab: true %>
+          <%= govuk_button_link_to "Download as PDF", assessor_interface_application_form_document_pdf_path(upload.document, "original"), inverse: true, new_tab: true %>
         <% end %>
       </div>
     <% else %>

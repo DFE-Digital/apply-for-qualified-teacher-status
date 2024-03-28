@@ -65,20 +65,20 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
 
   def and_i_see_a_waiting_on_status
     expect(assessor_application_page.status_summary.value).to have_text(
-      "PRELIMINARY CHECK",
+      "Preliminary check",
     )
   end
 
   def and_i_see_an_unstarted_preliminary_check_task
-    expect(assessor_application_page.task_list).to have_content(
+    expect(assessor_application_page.task_lists.first).to have_content(
       "Preliminary check (qualifications)",
     )
     expect(assessor_application_page.preliminary_check_task).to have_content(
-      "NOT STARTED",
+      "Not started",
     )
     expect(
       assessor_application_page.awaiting_professional_standing_task,
-    ).to have_content("WAITING ON")
+    ).to have_content("Waiting on")
   end
 
   def when_i_click_on_the_preliminary_check_task
@@ -125,11 +125,11 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
 
   def and_i_see_a_completed_preliminary_check_task
     expect(assessor_application_page.preliminary_check_task).to have_content(
-      "COMPLETED",
+      "Completed",
     )
     expect(
       assessor_application_page.awaiting_professional_standing_task,
-    ).to have_content("WAITING ON")
+    ).to have_content("Waiting on")
   end
 
   def and_the_teacher_receives_a_checks_passed_email
@@ -144,7 +144,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
   end
 
   def and_i_click_awaiting_professional_standing
-    assessor_application_page.awaiting_professional_standing_task.link.click
+    assessor_application_page.awaiting_professional_standing_task.click
   end
 
   def when_i_fill_in_the_locate_form
@@ -157,7 +157,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
 
   def and_i_see_a_preliminary_check_status
     expect(assessor_application_page.status_summary.value).to have_text(
-      "PRELIMINARY CHECK",
+      "Preliminary check",
     )
   end
 

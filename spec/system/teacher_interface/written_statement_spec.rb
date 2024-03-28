@@ -105,7 +105,7 @@ RSpec.describe "Teacher written statement", type: :system do
         .upload_written_statement_task_item
         .status_tag
         .text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def and_i_see_the_provide_written_statement_task
@@ -132,7 +132,7 @@ RSpec.describe "Teacher written statement", type: :system do
         .provide_written_statement_task_item
         .status_tag
         .text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def teacher
