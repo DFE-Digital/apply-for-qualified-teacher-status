@@ -15,7 +15,12 @@ namespace :example_data do
     Faker::UniqueGenerator.clear
 
     staff_members.each do |staff|
-      FactoryBot.create(:staff, :confirmed, **staff)
+      FactoryBot.create(
+        :staff,
+        :confirmed,
+        :with_change_email_permission,
+        **staff,
+      )
     end
 
     create_application_forms
@@ -54,65 +59,30 @@ end
 def staff_members
   [
     {
-      name: "Dave Assessor",
-      email: "assessor-dave@example.com",
+      name: "Dave (assessor)",
+      email: "assessor.dave@education.gov.uk",
       assess_permission: true,
-      change_email_permission: true,
-      change_name_permission: false,
-      change_work_history_permission: false,
-      reverse_decision_permission: false,
-      support_console_permission: false,
-      verify_permission: false,
-      withdraw_permission: false,
     },
     {
-      name: "Beryl Assessor",
-      email: "assessor-beryl@example.com",
+      name: "Beryl (assessor)",
+      email: "assessor.beryl@education.gov.uk",
       assess_permission: true,
-      change_email_permission: true,
-      change_name_permission: false,
-      change_work_history_permission: false,
-      reverse_decision_permission: false,
-      support_console_permission: false,
-      verify_permission: false,
-      withdraw_permission: false,
     },
     {
-      name: "Sally Manager",
-      email: "manager-sally@example.com",
-      assess_permission: false,
-      change_email_permission: true,
+      name: "Jeff (admin)",
+      email: "admin.jeff@education.gov.uk",
+      verify_permission: true,
+    },
+    {
+      name: "Sally (manager)",
+      email: "manager.sally@education.gov.uk",
       change_name_permission: true,
       change_work_history_permission: true,
       reverse_decision_permission: true,
       support_console_permission: true,
-      verify_permission: false,
       withdraw_permission: true,
     },
-    {
-      name: "Antonio Helpdesk",
-      email: "helpdesk-antonio@example.com",
-      assess_permission: false,
-      change_email_permission: true,
-      change_name_permission: false,
-      change_work_history_permission: false,
-      reverse_decision_permission: false,
-      support_console_permission: false,
-      verify_permission: false,
-      withdraw_permission: false,
-    },
-    {
-      name: "Jeff Admin",
-      email: "jeff-admin@example.com",
-      assess_permission: false,
-      change_email_permission: true,
-      change_name_permission: false,
-      change_work_history_permission: false,
-      reverse_decision_permission: false,
-      support_console_permission: false,
-      verify_permission: true,
-      withdraw_permission: false,
-    },
+    { name: "Antonio (helpdesk)", email: "helpdesk.antonio@education.gov.uk" },
   ]
 end
 
