@@ -7,7 +7,8 @@
 #  canonical_email                         :text             default(""), not null
 #  current_sign_in_at                      :datetime
 #  current_sign_in_ip                      :string
-#  email                                   :string           default(""), not null
+#  email                                   :string           not null
+#  email_domain                            :text             default(""), not null
 #  last_sign_in_at                         :datetime
 #  last_sign_in_ip                         :string
 #  sign_in_count                           :integer          default(0), not null
@@ -31,7 +32,11 @@ class Teacher < ApplicationRecord
 
   has_many :application_forms
 
-  before_create { self.canonical_email = EmailAddress.canonical(email) }
+  before_create do
+    email_address = EmailAddress.new(email)
+    self.canonical_email = email_address.canonical
+    self.email_domain = email_address.host_name
+  end
 
   def application_form
     @application_form ||=

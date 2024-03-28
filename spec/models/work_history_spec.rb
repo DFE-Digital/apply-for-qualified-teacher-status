@@ -6,6 +6,7 @@
 #  canonical_contact_email :text             default(""), not null
 #  city                    :text             default(""), not null
 #  contact_email           :text             default(""), not null
+#  contact_email_domain    :text             default(""), not null
 #  contact_job             :string           default(""), not null
 #  contact_name            :text             default(""), not null
 #  country_code            :text             default(""), not null

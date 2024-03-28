@@ -19,8 +19,11 @@ class UpdateWorkHistoryContact
 
       if email.present?
         change_value("contact_email", email)
+
+        email_address = EmailAddress.new(email)
         work_history.update!(
-          canonical_contact_email: EmailAddress.canonical(email),
+          canonical_contact_email: email_address.canonical,
+          contact_email_domain: email_address.host_name,
         )
       end
     end

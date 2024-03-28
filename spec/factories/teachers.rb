@@ -7,7 +7,8 @@
 #  canonical_email                         :text             default(""), not null
 #  current_sign_in_at                      :datetime
 #  current_sign_in_ip                      :string
-#  email                                   :string           default(""), not null
+#  email                                   :string           not null
+#  email_domain                            :text             default(""), not null
 #  last_sign_in_at                         :datetime
 #  last_sign_in_ip                         :string
 #  sign_in_count                           :integer          default(0), not null
@@ -27,6 +28,7 @@ FactoryBot.define do
     sequence(:email) { |n| "teacher#{n}@example.org" }
     uuid { SecureRandom.uuid }
     canonical_email { EmailAddress.canonical(email) }
+    email_domain { EmailAddress.new(email).host_name }
 
     trait :with_trn do
       trn { Faker::Number.leading_zero_number(digits: 6) }

@@ -37,6 +37,12 @@ RSpec.describe UpdateWorkHistoryContact do
     )
   end
 
+  it "changes the contact email domain" do
+    expect { call }.to change(work_history, :contact_email_domain).to(
+      "example.com",
+    )
+  end
+
   it "doesn't send any emails" do
     expect { call }.to_not have_enqueued_mail(
       RefereeMailer,
