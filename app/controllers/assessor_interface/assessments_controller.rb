@@ -99,11 +99,11 @@ module AssessorInterface
     def update_redirect_path(recommendation)
       if recommendation == "request_further_information"
         [
-          :preview,
+          :new,
           :assessor_interface,
           application_form,
           assessment,
-          :further_information_requests,
+          :further_information_request,
         ]
       else
         [

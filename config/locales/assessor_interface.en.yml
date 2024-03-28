@@ -55,10 +55,6 @@ en:
         heading: Confirm age range and subjects
       edit_age_range_subjects:
         heading: Edit age range and subjects
-      preview:
-        heading: Check the email
-        subheading: This screen shows how the email to the applicant will look.
-        description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
       edit_confirm:
         legend: Award this QTS application?
         hint: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
@@ -73,10 +69,6 @@ en:
           english_language_proficiency: English language proficiency
           work_history: Work history
           professional_standing: Professional standing
-      preview:
-        heading: Check the email
-        subheading: This screen shows how the email to the applicant will look.
-        description: Make sure you’re happy with the content, then select ‘Continue’, or select ‘Cancel’ to return to the application.
       edit_confirm:
         legend: Decline this QTS application?
         hint: Select ‘Yes’ to confirm you want to decline this application. If you’re not sure, or you need to check something, select ‘No’.

@@ -92,10 +92,6 @@ module AssessorInterface
       end
     end
 
-    def preview
-      authorize %i[assessor_interface assessment_recommendation], :edit?
-    end
-
     def edit_confirm
       authorize %i[assessor_interface assessment_recommendation], :edit?
       @form = AssessmentConfirmationForm.new

@@ -20,11 +20,6 @@ RSpec.describe AssessorInterface::FurtherInformationRequestPolicy do
     it_behaves_like "a policy method without permission"
   end
 
-  describe "#preview?" do
-    subject(:preview?) { policy.preview? }
-    it_behaves_like "a policy method requiring the assess permission"
-  end
-
   describe "#create?" do
     subject(:create?) { policy.create? }
     it_behaves_like "a policy method requiring the assess permission"
