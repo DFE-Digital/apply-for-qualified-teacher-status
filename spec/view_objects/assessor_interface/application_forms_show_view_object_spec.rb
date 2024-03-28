@@ -102,6 +102,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       let!(:professional_standing_request) do
         create(:professional_standing_request, assessment:)
       end
+
       before do
         application_form.update!(
           teaching_authority_provides_written_statement: true,
@@ -112,8 +113,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         is_expected.to include_task_list_item(
           "Pre-assessment tasks",
           "Awaiting third-party professional standing",
-          status: :waiting_on,
+          status: :cannot_start,
         )
+      end
+
+      context "and professional standing request is requested" do
+        before { professional_standing_request.requested! }
+
+        it do
+          is_expected.to include_task_list_item(
+            "Pre-assessment tasks",
+            "Awaiting third-party professional standing",
+            status: :waiting_on,
+          )
+        end
       end
 
       context "and professional standing request received" do
