@@ -36,6 +36,7 @@ FactoryBot.define do
     association :application_form
 
     canonical_contact_email { EmailAddress.canonical(contact_email) }
+    contact_email_domain { EmailAddress.new(contact_email).host_name }
 
     trait :completed do
       city { Faker::Address.city }

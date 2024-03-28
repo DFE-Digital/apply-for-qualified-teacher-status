@@ -28,6 +28,7 @@ FactoryBot.define do
     sequence(:email) { |n| "teacher#{n}@example.org" }
     uuid { SecureRandom.uuid }
     canonical_email { EmailAddress.canonical(email) }
+    email_domain { EmailAddress.new(email).host_name }
 
     trait :with_trn do
       trn { Faker::Number.leading_zero_number(digits: 6) }

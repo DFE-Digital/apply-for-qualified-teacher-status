@@ -32,7 +32,11 @@ class Teacher < ApplicationRecord
 
   has_many :application_forms
 
-  before_create { self.canonical_email = EmailAddress.canonical(email) }
+  before_create do
+    email_address = EmailAddress.new(email)
+    self.canonical_email = email_address.canonical
+    self.email_domain = email_address.host_name
+  end
 
   def application_form
     @application_form ||=
