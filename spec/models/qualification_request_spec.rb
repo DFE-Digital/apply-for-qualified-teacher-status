@@ -7,7 +7,6 @@
 #  id               :bigint           not null, primary key
 #  consent_method   :string           default("unknown"), not null
 #  expired_at       :datetime
-#  location_note    :text             default(""), not null
 #  received_at      :datetime
 #  requested_at     :datetime
 #  review_note      :string           default(""), not null
@@ -52,14 +51,6 @@ RSpec.describe QualificationRequest, type: :model do
         )
         .with_prefix
         .backed_by_column_of_type(:string)
-    end
-  end
-
-  describe "validations" do
-    context "when received" do
-      subject { build(:qualification_request, :received) }
-
-      it { is_expected.to_not validate_presence_of(:location_note) }
     end
   end
 
