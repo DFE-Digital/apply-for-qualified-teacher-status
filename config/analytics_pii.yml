@@ -33,7 +33,6 @@
   :qualifications:
     - institution_name
   :qualification_requests:
-    - location_note
     - review_note
     - verify_note
   :reference_requests:

@@ -229,7 +229,6 @@
     - created_at
     - expired_at
     - id
-    - location_note
     - qualification_id
     - received_at
     - requested_at
