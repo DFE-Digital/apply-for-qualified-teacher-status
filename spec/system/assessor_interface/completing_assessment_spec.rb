@@ -9,7 +9,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
   let(:notify_template_preview) { double(html: "I am an email") }
   let(:assessor_user) do
-    create(:staff, :with_assess_permission, :confirmed, name: "Authorized User")
+    create(:staff, :with_assess_permission, name: "Authorized User")
   end
 
   around do |example|

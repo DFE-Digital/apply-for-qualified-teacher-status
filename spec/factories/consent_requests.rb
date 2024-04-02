@@ -32,8 +32,15 @@
 #
 FactoryBot.define do
   factory :consent_request do
-    association :assessment
-    association :qualification, :completed
+    assessment
+
+    qualification do
+      create(
+        :qualification,
+        :completed,
+        application_form: assessment.application_form,
+      )
+    end
 
     trait :with_unsigned_upload do
       after(:create) do |consent_request, _evaluator|
@@ -47,20 +54,10 @@ FactoryBot.define do
       end
     end
 
-    trait :requested do
-      with_unsigned_upload
-      requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
     trait :received do
       requested
       with_signed_upload
       received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :expired do
-      requested
-      expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
   end
 end

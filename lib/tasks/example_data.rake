@@ -15,12 +15,7 @@ namespace :example_data do
     Faker::UniqueGenerator.clear
 
     staff_members.each do |staff|
-      FactoryBot.create(
-        :staff,
-        :confirmed,
-        :with_change_email_permission,
-        **staff,
-      )
+      FactoryBot.create(:staff, :with_change_email_permission, **staff)
     end
 
     create_application_forms
@@ -208,7 +203,7 @@ def create_application_forms
       if application_form.declined_at.present?
         FactoryBot.create(
           :selected_failure_reason,
-          :fi_requestable,
+          :further_informationable,
           assessment_section: assessment.sections.first,
           key: assessment.sections.first.failure_reasons.sample,
         )

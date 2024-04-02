@@ -56,7 +56,7 @@ RSpec.describe "Personas", type: :system do
   def given_personas_exist
     create(:region, :online_checks, name: "Example Region")
 
-    create(:staff, :confirmed, email: "staff@example.com")
+    create(:staff, email: "staff@example.com")
 
     teacher = create(:teacher, email: "teacher@example.com")
     create(:application_form, teacher:)

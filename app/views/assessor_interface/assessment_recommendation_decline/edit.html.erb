@@ -40,7 +40,7 @@
               </h4>
 
               <% if (assessor_feedback = failure_reason.assessor_feedback).present? %>
-                <% if FailureReasons.decline?(failure_reason: failure_reason.key) %>
+                <% if FailureReasons.decline?(failure_reason.key) %>
                   <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
                 <% else %>
                   <p class="govuk-body govuk-!-margin-bottom-2">Your note (the applicant won’t see this):</p>

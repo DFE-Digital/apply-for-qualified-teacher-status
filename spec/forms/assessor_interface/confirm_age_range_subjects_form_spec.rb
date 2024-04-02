@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::ConfirmAgeRangeSubjectsForm, type: :model do
   let(:assessment) { create(:assessment) }
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
   let(:age_range_subjects_attributes) { {} }
 
   subject(:form) do

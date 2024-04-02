@@ -23,7 +23,7 @@
 #
 FactoryBot.define do
   factory :assessment_section do
-    association :assessment
+    assessment
     key { AssessmentSection.keys.keys.sample }
     preliminary { false }
 
@@ -39,7 +39,7 @@ FactoryBot.define do
     trait :failed do
       passed { false }
       selected_failure_reasons do
-        [build(:selected_failure_reason, :fi_requestable)]
+        [build(:selected_failure_reason, :further_informationable)]
       end
     end
 

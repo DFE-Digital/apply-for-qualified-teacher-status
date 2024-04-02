@@ -29,24 +29,9 @@
 #
 FactoryBot.define do
   factory :professional_standing_request do
-    association :assessment
+    assessment
 
-    trait :requested do
-      requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :received do
-      requested
-      receivable
-      received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :expired do
-      requested
-      expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :receivable do
+    trait :with_location_note do
       location_note { Faker::Lorem.sentence }
     end
   end

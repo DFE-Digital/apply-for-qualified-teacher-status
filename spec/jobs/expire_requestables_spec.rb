@@ -31,6 +31,12 @@ RSpec.describe ExpireRequestablesJob, type: :job do
     end
   end
 
+  context "with consent requests" do
+    it_behaves_like "a job which expires requestables",
+                    "ConsentRequest",
+                    :consent_request
+  end
+
   context "with further information requests" do
     it_behaves_like "a job which expires requestables",
                     "FurtherInformationRequest",
@@ -41,6 +47,12 @@ RSpec.describe ExpireRequestablesJob, type: :job do
     it_behaves_like "a job which expires requestables",
                     "ProfessionalStandingRequest",
                     :professional_standing_request
+  end
+
+  context "with qualification requests" do
+    it_behaves_like "a job which expires requestables",
+                    "QualificationRequest",
+                    :qualification_request
   end
 
   context "with reference requests" do

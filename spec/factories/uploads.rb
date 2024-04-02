@@ -30,13 +30,13 @@ FactoryBot.define do
     translation { false }
 
     trait :translation do
-      translation { true }
       attachment do
         Rack::Test::UploadedFile.new(
           "spec/fixtures/files/translation_upload.pdf",
           "application/pdf",
         )
       end
+      translation { true }
     end
 
     trait :clean do

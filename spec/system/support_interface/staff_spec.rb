@@ -72,7 +72,7 @@ RSpec.describe "Staff support", type: :system do
   private
 
   def given_a_helpdesk_user_exists
-    create(:staff, :confirmed, name: "Helpdesk")
+    create(:staff, name: "Helpdesk")
   end
 
   def given_sign_in_with_active_directory_is_active

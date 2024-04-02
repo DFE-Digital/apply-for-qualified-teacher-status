@@ -75,15 +75,15 @@ RSpec.describe "Teacher submitting", type: :system do
     @application_form ||=
       create(
         :application_form,
-        :completed,
         :with_personal_information,
         :with_identification_document,
+        :with_teaching_qualification,
         :with_age_range,
         :with_subjects,
-        :with_registration_number,
+        :with_english_language_provider,
         :with_work_history,
         :with_written_statement,
-        :with_teaching_qualification,
+        :with_registration_number,
         teacher:,
       )
   end

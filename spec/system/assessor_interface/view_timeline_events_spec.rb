@@ -62,6 +62,6 @@ RSpec.describe "Assessor view timeline events", type: :system do
   delegate :reference, to: :application_form
 
   def assessor
-    @assessor ||= create(:staff, :confirmed)
+    @assessor ||= create(:staff)
   end
 end

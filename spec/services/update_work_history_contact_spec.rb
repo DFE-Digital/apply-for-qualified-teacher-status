@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe UpdateWorkHistoryContact do
   let(:work_history) { create(:work_history, :completed) }
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
   let(:new_name) { "New name" }
   let(:new_job) { "New job" }
   let(:new_email) { "new@example.com" }

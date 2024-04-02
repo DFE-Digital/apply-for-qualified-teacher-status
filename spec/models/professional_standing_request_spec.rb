@@ -31,7 +31,7 @@ require "rails_helper"
 
 RSpec.describe ProfessionalStandingRequest, type: :model do
   it_behaves_like "a requestable" do
-    subject { create(:professional_standing_request, :receivable) }
+    subject { create(:professional_standing_request, :with_location_note) }
   end
 
   describe "#expires_after" do

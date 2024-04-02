@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe CreateFurtherInformationRequest do
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
 
   subject(:call) { described_class.call(assessment:, user:) }
 

@@ -36,7 +36,6 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             :application_form,
             :with_personal_information,
             :with_alternative_name,
-            :with_name_change_document,
           )
         end
         it { is_expected.to eq("completed") }

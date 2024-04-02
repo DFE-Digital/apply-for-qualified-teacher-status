@@ -57,10 +57,10 @@ RSpec.describe "Assessor change application form email", type: :system do
   delegate :reference, to: :application_form
 
   def assessor
-    create(:staff, :confirmed, :with_assess_permission)
+    create(:staff, :with_assess_permission)
   end
 
   def manager
-    create(:staff, :confirmed, :with_change_email_permission)
+    create(:staff, :with_change_email_permission)
   end
 end

@@ -196,7 +196,19 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
     end
 
     context "with a completed application form" do
-      let(:application_form) { create(:application_form, :completed) }
+      let(:application_form) do
+        create(
+          :application_form,
+          :with_personal_information,
+          :with_identification_document,
+          :with_degree_qualification,
+          :with_age_range,
+          :with_subjects,
+          :with_work_history,
+          :with_written_statement,
+          :with_english_language_provider,
+        )
+      end
 
       it { is_expected.to be true }
     end

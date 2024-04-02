@@ -32,27 +32,18 @@
 #
 FactoryBot.define do
   factory :qualification_request do
-    association :assessment
-    association :qualification, :completed
+    assessment
+
+    qualification do
+      create(
+        :qualification,
+        :completed,
+        application_form: assessment.application_form,
+      )
+    end
 
     trait :with_consent_method do
       consent_method { %i[signed_ecctis signed_institution unsigned].sample }
-    end
-
-    trait :requested do
-      requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :received do
-      received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-      receivable
-    end
-
-    trait :expired do
-      expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :receivable do
     end
   end
 end

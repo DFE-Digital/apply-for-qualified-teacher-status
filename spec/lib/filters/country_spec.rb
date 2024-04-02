@@ -12,13 +12,13 @@ RSpec.describe Filters::Country do
     let!(:included) do
       create(
         :application_form,
-        region: create(:region, country: create(:country, code: "US")),
+        region: create(:region, :in_country, country_code: "US"),
       )
     end
     let!(:filtered) do
       create(
         :application_form,
-        region: create(:region, country: create(:country, code: "FR")),
+        region: create(:region, :in_country, country_code: "FR"),
       )
     end
 

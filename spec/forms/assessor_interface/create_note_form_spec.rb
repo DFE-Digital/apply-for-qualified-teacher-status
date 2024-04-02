@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::CreateNoteForm, type: :model do
   let(:application_form) { create(:application_form) }
-  let(:author) { create(:staff, :confirmed) }
+  let(:author) { create(:staff) }
   let(:text) { "A note." }
 
   subject { described_class.new(application_form:, author:, text:) }

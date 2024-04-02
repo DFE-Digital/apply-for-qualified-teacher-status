@@ -11,7 +11,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
   end
 
   let(:params) { {} }
-  let(:current_staff) { create(:staff, :confirmed) }
+  let(:current_staff) { create(:staff) }
 
   describe "#application_form" do
     subject(:application_form) { view_object.application_form }
@@ -251,7 +251,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       context "and request further information" do
         before do
           assessment.request_further_information!
-          create(:selected_failure_reason, :fi_requestable, assessment_section:)
+          create(
+            :selected_failure_reason,
+            :further_informationable,
+            assessment_section:,
+          )
           assessment_section.reload.update!(passed: false)
         end
 
@@ -303,7 +307,12 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     context "with a passed further information request" do
       before do
         assessment.request_further_information!
-        create(:further_information_request, :received, :passed, assessment:)
+        create(
+          :further_information_request,
+          :received,
+          :review_passed,
+          assessment:,
+        )
       end
 
       it do
@@ -318,7 +327,12 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     context "with a failed further information request" do
       before do
         assessment.request_further_information!
-        create(:further_information_request, :received, :failed, assessment:)
+        create(
+          :further_information_request,
+          :received,
+          :review_failed,
+          assessment:,
+        )
       end
 
       it do
@@ -333,7 +347,12 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     context "with a passed further information request and a finished assessment" do
       before do
         assessment.award!
-        create(:further_information_request, :received, :passed, assessment:)
+        create(
+          :further_information_request,
+          :received,
+          :review_passed,
+          assessment:,
+        )
       end
       it do
         is_expected.to include_task_list_item(
@@ -347,7 +366,12 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     context "with a failed further information request and a finished assessment" do
       before do
         assessment.decline!
-        create(:further_information_request, :received, :failed, assessment:)
+        create(
+          :further_information_request,
+          :received,
+          :review_failed,
+          assessment:,
+        )
       end
       it do
         is_expected.to include_task_list_item(

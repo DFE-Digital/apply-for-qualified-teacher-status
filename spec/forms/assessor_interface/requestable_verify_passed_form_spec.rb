@@ -4,7 +4,12 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::RequestableVerifyPassedForm, type: :model do
   let(:requestable) do
-    create(:reference_request, :requested, :receivable, verify_note: "Old note")
+    create(
+      :reference_request,
+      :requested,
+      :with_responses,
+      verify_note: "Old note",
+    )
   end
   let(:user) { create(:staff) }
   let(:passed) { nil }

@@ -21,7 +21,7 @@
 #
 FactoryBot.define do
   factory :note do
-    association :application_form
+    application_form
     association :author, factory: :staff
     text { Faker::Lorem.paragraph }
   end

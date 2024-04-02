@@ -37,7 +37,7 @@
 #
 FactoryBot.define do
   factory :region do
-    association :country
+    country
 
     sequence(:name) { |n| "Region #{n}" }
 

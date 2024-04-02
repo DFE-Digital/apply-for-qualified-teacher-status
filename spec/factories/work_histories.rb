@@ -33,7 +33,7 @@
 #
 FactoryBot.define do
   factory :work_history do
-    association :application_form
+    application_form
 
     canonical_contact_email { EmailAddress.canonical(contact_email) }
     contact_email_domain { EmailAddress.new(contact_email).host_name }

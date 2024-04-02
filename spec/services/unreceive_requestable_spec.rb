@@ -10,7 +10,6 @@ RSpec.describe UnreceiveRequestable do
     create(
       :qualification_request,
       :received,
-      :receivable,
       assessment: create(:assessment, application_form:),
     )
   end
@@ -40,7 +39,7 @@ RSpec.describe UnreceiveRequestable do
 
   it "changes the application form status" do
     expect { call }.to change { application_form.reload.statuses }.to(
-      %w[assessment_not_started],
+      %w[waiting_on_ecctis],
     )
   end
 

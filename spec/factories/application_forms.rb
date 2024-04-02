@@ -81,8 +81,9 @@
 FactoryBot.define do
   factory :application_form do
     sequence(:reference) { |n| n.to_s.rjust(7, "0") }
-    association :teacher
-    association :region
+
+    teacher
+    region
 
     needs_work_history { !region.application_form_skip_work_history }
     needs_written_statement do
@@ -102,16 +103,8 @@ FactoryBot.define do
       requires_preliminary_check { true }
     end
 
-    trait :completed do
-      personal_information_status { "completed" }
-      identification_document_status { "completed" }
-      qualifications_status { "completed" }
-      age_range_status { "completed" }
-      subjects_status { "completed" }
-      english_language_status { "completed" }
-      work_history_status { "completed" }
-      registration_number_status { "completed" }
-      written_statement_status { "completed" }
+    trait :teaching_authority_provides_written_statement do
+      teaching_authority_provides_written_statement { true }
     end
 
     trait :action_required_by_admin do
@@ -152,6 +145,7 @@ FactoryBot.define do
 
     trait :verification_stage do
       stage { "verification" }
+      action_required_by_admin
     end
 
     trait :review_stage do
@@ -185,7 +179,7 @@ FactoryBot.define do
     trait :preliminary_check do
       submitted
       pre_assessment_stage
-      requires_preliminary_check { true }
+      requires_preliminary_check
       statuses { %w[preliminary_check] }
     end
 
@@ -242,9 +236,36 @@ FactoryBot.define do
       end
     end
 
+    trait :with_personal_information do
+      given_names { Faker::Name.name }
+      family_name { Faker::Name.last_name }
+      date_of_birth do
+        Faker::Date.between(from: 65.years.ago, to: 21.years.ago)
+      end
+      has_alternative_name { false }
+      personal_information_status { "completed" }
+    end
+
+    trait :with_identification_document do
+      identification_document_status { "completed" }
+      after(:create) do |application_form, _evaluator|
+        create(:upload, document: application_form.identification_document)
+      end
+    end
+
+    trait :with_alternative_name do
+      has_alternative_name { true }
+      alternative_given_names { Faker::Name.name }
+      alternative_family_name { Faker::Name.last_name }
+      after(:create) do |application_form, _evaluator|
+        create(:upload, document: application_form.name_change_document)
+      end
+    end
+
     trait :with_age_range do
       age_range_min { Faker::Number.between(from: 5, to: 11) }
       age_range_max { Faker::Number.between(from: age_range_min, to: 18) }
+      age_range_status { "completed" }
     end
 
     trait :with_subjects do
@@ -253,44 +274,13 @@ FactoryBot.define do
       subjects do
         ([-> { Faker::Educator.subject }] * number_of_subjects).map(&:call)
       end
-    end
 
-    trait :with_identification_document do
-      after(:create) do |application_form, _evaluator|
-        create(:upload, document: application_form.identification_document)
-      end
-    end
-
-    trait :with_personal_information do
-      given_names { Faker::Name.name }
-      family_name { Faker::Name.last_name }
-      date_of_birth do
-        Faker::Date.between(from: 65.years.ago, to: 21.years.ago)
-      end
-      has_alternative_name { false }
-    end
-
-    trait :with_alternative_name do
-      has_alternative_name { true }
-      alternative_given_names { Faker::Name.name }
-      alternative_family_name { Faker::Name.last_name }
-    end
-
-    trait :with_name_change_document do
-      after(:create) do |application_form, _evaluator|
-        create(:upload, document: application_form.name_change_document)
-      end
-    end
-
-    trait :with_registration_number do
-      needs_registration_number { true }
-      registration_number do
-        Faker::Number.unique.leading_zero_number(digits: 8)
-      end
+      subjects_status { "completed" }
     end
 
     trait :with_teaching_qualification do
       teaching_qualification_part_of_degree { true }
+      qualifications_status { "completed" }
 
       after(:create) do |application_form, _evaluator|
         create(
@@ -311,6 +301,7 @@ FactoryBot.define do
 
     trait :with_english_language_medium_of_instruction do
       english_language_proof_method { "medium_of_instruction" }
+      english_language_status { "completed" }
 
       after(:create) do |application_form, _evaluator|
         create(
@@ -323,6 +314,7 @@ FactoryBot.define do
 
     trait :with_english_language_proficiency_document do
       with_english_language_provider
+      english_language_status { "completed" }
 
       after(:create) do |application_form, _evaluator|
         create(
@@ -338,11 +330,13 @@ FactoryBot.define do
         EnglishLanguageProvider.all.sample || create(:english_language_provider)
       end
       english_language_provider_reference { "reference" }
+      english_language_status { "completed" }
     end
 
     trait :with_english_language_other_provider do
       english_language_proof_method { "provider" }
       english_language_provider_other { true }
+      english_language_status { "completed" }
 
       after(:create) do |application_form, _evaluator|
         create(
@@ -354,15 +348,18 @@ FactoryBot.define do
 
     trait :with_english_language_exemption_by_citizenship do
       english_language_citizenship_exempt { true }
+      english_language_status { "completed" }
     end
 
     trait :with_english_language_exemption_by_qualification do
       english_language_qualification_exempt { true }
+      english_language_status { "completed" }
     end
 
     trait :with_work_history do
       needs_work_history { true }
       has_work_history { true }
+      work_history_status { "completed" }
 
       after(:create) do |application_form, _evaluator|
         create(:work_history, :completed, :still_employed, application_form:)
@@ -375,12 +372,9 @@ FactoryBot.define do
       end
     end
 
-    trait :teaching_authority_provides_written_statement do
-      teaching_authority_provides_written_statement { true }
-    end
-
     trait :with_written_statement do
       needs_written_statement { true }
+      written_statement_status { "completed" }
 
       after(:create) do |application_form, _evaluator|
         if application_form.teaching_authority_provides_written_statement
@@ -391,8 +385,12 @@ FactoryBot.define do
       end
     end
 
-    trait :with_reviewer do
-      association :reviewer, factory: :staff
+    trait :with_registration_number do
+      needs_registration_number { true }
+      registration_number do
+        Faker::Number.unique.leading_zero_number(digits: 8)
+      end
+      registration_number_status { "completed" }
     end
   end
 end

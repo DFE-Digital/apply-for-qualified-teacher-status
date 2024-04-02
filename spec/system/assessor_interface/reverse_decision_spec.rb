@@ -63,10 +63,10 @@ RSpec.describe "Assessor reverse decision", type: :system do
   delegate :id, to: :assessment, prefix: true
 
   def assessor
-    create(:staff, :confirmed, :with_assess_permission)
+    create(:staff, :with_assess_permission)
   end
 
   def manager
-    create(:staff, :confirmed, :with_reverse_decision_permission)
+    create(:staff, :with_reverse_decision_permission)
   end
 end

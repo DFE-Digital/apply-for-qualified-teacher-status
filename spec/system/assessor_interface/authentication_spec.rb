@@ -19,7 +19,7 @@ RSpec.describe "Assessor authentication", type: :system do
   private
 
   def given_staff_exist
-    create(:staff, :confirmed, email: "staff@example.com", password: "password")
+    create(:staff, email: "staff@example.com", password: "password")
   end
 
   def when_i_login

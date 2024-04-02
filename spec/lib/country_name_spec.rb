@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe CountryName do
+  let(:country) { create(:country, code: "US") }
+
   describe "#from_code" do
     subject(:name) { described_class.from_code(code, with_definite_article:) }
 
@@ -21,7 +23,6 @@ RSpec.describe CountryName do
       described_class.from_country(country, with_definite_article:)
     end
 
-    let(:country) { create(:country, code: "US") }
     let(:with_definite_article) { false }
 
     it { is_expected.to eq("United States") }
@@ -38,9 +39,7 @@ RSpec.describe CountryName do
       described_class.from_region(region, with_definite_article:)
     end
 
-    let(:region) do
-      create(:region, :national, country: create(:country, code: "US"))
-    end
+    let(:region) { create(:region, :national, country:) }
     let(:with_definite_article) { false }
 
     it { is_expected.to eq("United States") }
@@ -79,21 +78,14 @@ RSpec.describe CountryName do
 
     context "with a national region" do
       before do
-        eligibility_check.update!(
-          region:
-            create(:region, :national, country: create(:country, code: "US")),
-        )
+        eligibility_check.update!(region: create(:region, :national, country:))
       end
 
       it { is_expected.to eq("United States") }
     end
 
     context "with a named region" do
-      before do
-        eligibility_check.update!(
-          region: create(:region, country: create(:country, code: "US")),
-        )
-      end
+      before { eligibility_check.update!(region: create(:region, country:)) }
 
       it { is_expected.to eq("United States") }
     end

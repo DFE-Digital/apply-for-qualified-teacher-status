@@ -56,10 +56,7 @@ FactoryBot.define do
     sequence(:email) { |n| "test#{n}@example.org" }
     password { "example123" }
     name { Faker::Name.name }
-
-    trait :confirmed do
-      confirmed_at { Time.zone.now }
-    end
+    confirmed_at { Time.zone.now }
 
     trait :with_assess_permission do
       assess_permission { true }

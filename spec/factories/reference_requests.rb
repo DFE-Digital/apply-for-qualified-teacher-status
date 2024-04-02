@@ -52,9 +52,10 @@
 #
 FactoryBot.define do
   factory :reference_request do
+    assessment
+
     slug { Faker::Internet.unique.slug }
 
-    association :assessment
     work_history do
       create(
         :work_history,
@@ -63,54 +64,7 @@ FactoryBot.define do
       )
     end
 
-    trait :requested do
-      requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :received do
-      requested
-      receivable
-      received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :expired do
-      requested
-      expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :reviewed do
-      received
-      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :review_passed do
-      reviewed
-      review_passed { true }
-    end
-
-    trait :review_failed do
-      reviewed
-      review_passed { false }
-      review_note { "Notes." }
-    end
-
-    trait :verified do
-      received
-      verified_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :verify_passed do
-      verified
-      verify_passed { true }
-    end
-
-    trait :verify_failed do
-      verified
-      verify_passed { false }
-      verify_note { "Notes." }
-    end
-
-    trait :receivable do
+    trait :with_responses do
       contact_response { Faker::Boolean.boolean }
       contact_name { contact_response ? "" : Faker::Name.name }
       contact_job { contact_response ? "" : Faker::Job.title }
@@ -140,27 +94,6 @@ FactoryBot.define do
       additional_information_response { Faker::Lorem.sentence }
     end
 
-    trait :responses_invalid do
-      contact_response { false }
-      contact_name { Faker::Name.name }
-      contact_job { Faker::Job.title }
-      contact_comment { Faker::Lorem.sentence }
-      dates_response { false }
-      dates_comment { Faker::Lorem.sentence }
-      hours_response { false }
-      hours_comment { Faker::Lorem.sentence }
-      children_response { false }
-      children_comment { Faker::Lorem.sentence }
-      lessons_response { false }
-      lessons_comment { Faker::Lorem.sentence }
-      reports_response { false }
-      reports_comment { Faker::Lorem.sentence }
-      misconduct_response { true }
-      misconduct_comment { Faker::Lorem.sentence }
-      satisfied_response { false }
-      satisfied_comment { Faker::Lorem.sentence }
-    end
-
     trait :responses_valid do
       contact_response { true }
       dates_response { true }
@@ -170,6 +103,12 @@ FactoryBot.define do
       reports_response { true }
       misconduct_response { false }
       satisfied_response { true }
+    end
+
+    trait :received do
+      requested
+      with_responses
+      received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
   end
 end

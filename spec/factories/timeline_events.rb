@@ -51,7 +51,7 @@
 #
 FactoryBot.define do
   factory :timeline_event do
-    association :application_form
+    application_form
 
     association :creator, factory: :staff
 
@@ -89,7 +89,7 @@ FactoryBot.define do
 
     trait :information_changed do
       event_type { "information_changed" }
-      association :work_history
+      work_history
       column_name { "contact_email" }
       old_value { Faker::Internet.email }
       new_value { Faker::Internet.email }
@@ -97,7 +97,7 @@ FactoryBot.define do
 
     trait :note_created do
       event_type { "note_created" }
-      association :note
+      note
     end
 
     trait :requestable_reviewed do

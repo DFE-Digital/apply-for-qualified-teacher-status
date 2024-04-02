@@ -30,7 +30,7 @@ FactoryBot.define do
     qualified_for_subject { nil }
 
     trait :eligible do
-      association :region
+      region
       country_code { region.country.code }
       degree { true }
       free_of_sanctions { true }

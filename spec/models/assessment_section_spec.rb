@@ -99,7 +99,11 @@ RSpec.describe AssessmentSection, type: :model do
 
     context "with no decline failure reasons" do
       before do
-        create(:selected_failure_reason, :fi_requestable, assessment_section:)
+        create(
+          :selected_failure_reason,
+          :further_informationable,
+          assessment_section:,
+        )
       end
 
       it { is_expected.to be false }
