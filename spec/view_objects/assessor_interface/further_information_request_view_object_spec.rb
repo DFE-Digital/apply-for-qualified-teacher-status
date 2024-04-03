@@ -10,7 +10,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
   let(:further_information_request) do
-    create(:further_information_request, :received, assessment:)
+    create(:received_further_information_request, assessment:)
   end
   let(:params) do
     {

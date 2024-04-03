@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::RequestableVerifyFailedForm, type: :model do
-  let(:requestable) { create(:reference_request, :received) }
+  let(:requestable) { create(:received_reference_request) }
   let(:user) { create(:staff) }
   let(:note) { "" }
 

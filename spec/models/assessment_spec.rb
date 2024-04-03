@@ -156,8 +156,7 @@ RSpec.describe Assessment, type: :model do
             )
 
           create(
-            :reference_request,
-            :received,
+            :received_reference_request,
             :verify_passed,
             assessment:,
             work_history:,
@@ -181,8 +180,7 @@ RSpec.describe Assessment, type: :model do
             )
 
           create(
-            :reference_request,
-            :received,
+            :received_reference_request,
             :verify_failed,
             :review_passed,
             assessment:,

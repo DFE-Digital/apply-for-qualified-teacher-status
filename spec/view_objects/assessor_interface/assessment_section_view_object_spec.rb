@@ -177,7 +177,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
         create(:assessment_section, :professional_standing, assessment:)
       end
 
-      before { create(:professional_standing_request, :requested, assessment:) }
+      before { create(:requested_professional_standing_request, assessment:) }
 
       it { is_expected.to be false }
     end

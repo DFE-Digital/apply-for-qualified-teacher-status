@@ -94,21 +94,8 @@ FactoryBot.define do
       additional_information_response { Faker::Lorem.sentence }
     end
 
-    trait :responses_valid do
-      contact_response { true }
-      dates_response { true }
-      hours_response { true }
-      children_response { true }
-      lessons_response { true }
-      reports_response { true }
-      misconduct_response { false }
-      satisfied_response { true }
-    end
-
-    trait :received do
-      requested
-      with_responses
-      received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
+    factory :requested_reference_request, traits: %i[requested]
+    factory :received_reference_request,
+            traits: %i[requested with_responses received]
   end
 end

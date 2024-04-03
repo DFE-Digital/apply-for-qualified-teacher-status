@@ -7,9 +7,11 @@ RSpec.describe ExpireRequestablesJob, type: :job do
     describe "#perform" do
       subject(:perform) { described_class.new.perform(class_name) }
 
-      let!(:requested_requestable) { create(factory_name, :requested) }
-      let!(:received_requestable) { create(factory_name, :received) }
-      let!(:expired_requestable) { create(factory_name, :expired) }
+      let!(:requested_requestable) { create(:"requested_#{factory_name}") }
+      let!(:received_requestable) { create(:"received_#{factory_name}") }
+      let!(:expired_requestable) do
+        create(:"requested_#{factory_name}", :expired)
+      end
 
       it "enqueues a job for each 'requested' #{class_name}s" do
         expect { perform }.to have_enqueued_job(ExpireRequestableJob).with(

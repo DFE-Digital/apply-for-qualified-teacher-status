@@ -141,8 +141,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       let(:assessment) { create(:assessment, started_at: friday_previous) }
       let(:further_information_request) do
         create(
-          :further_information_request,
-          :received,
+          :received_further_information_request,
           assessment:,
           created_at: tuesday_today,
         )
@@ -159,8 +158,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       let(:requested_fi_request) { create(:further_information_request) }
       let(:received_fi_request) do
         create(
-          :further_information_request,
-          :received,
+          :received_further_information_request,
           assessment: create(:assessment, recommended_at: tuesday_today),
           received_at: friday_application_form.submitted_at,
         )
@@ -183,8 +181,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       let(:requested_fi_request) { create(:further_information_request) }
       let(:received_fi_request) do
         create(
-          :further_information_request,
-          :received,
+          :received_further_information_request,
           assessment: create(:assessment, recommended_at: tuesday_today),
           received_at: friday_application_form.submitted_at,
         )

@@ -57,8 +57,7 @@ RSpec.describe UpdateAssessmentInductionRequired do
           hours_per_week: 30,
         )
       create(
-        :reference_request,
-        :received,
+        :received_reference_request,
         :verify_passed,
         assessment:,
         work_history:,

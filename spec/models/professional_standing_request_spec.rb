@@ -30,11 +30,15 @@
 require "rails_helper"
 
 RSpec.describe ProfessionalStandingRequest, type: :model do
-  it_behaves_like "a requestable" do
-    subject { create(:professional_standing_request, :with_location_note) }
+  subject(:professional_standing_request) do
+    create(:professional_standing_request)
   end
 
+  it_behaves_like "a requestable"
+
   describe "#expires_after" do
+    subject(:expires_after) { professional_standing_request.expires_after }
+
     let(:professional_standing_request) do
       create(
         :professional_standing_request,
@@ -49,8 +53,6 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
           ),
       )
     end
-
-    subject(:expires_after) { professional_standing_request.expires_after }
 
     context "when the teaching authority provides the written statement" do
       let(:teaching_authority_provides_written_statement) { true }

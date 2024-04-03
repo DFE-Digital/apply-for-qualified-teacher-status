@@ -127,8 +127,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   def further_information_request
     @further_information_request ||=
       create(
-        :further_information_request,
-        :received,
+        :received_further_information_request,
         :with_items,
         assessment: application_form.assessment,
       )

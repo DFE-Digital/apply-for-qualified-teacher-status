@@ -131,7 +131,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:further_information_request, :received, assessment:)
+        create(:received_further_information_request, assessment:)
       end
 
       include_examples "changes action required by", "assessor"
@@ -144,7 +144,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:further_information_request, :requested, assessment:)
+        create(:requested_further_information_request, assessment:)
       end
 
       include_examples "changes action required by", "external"
@@ -157,7 +157,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:professional_standing_request, :requested, assessment:)
+        create(:requested_professional_standing_request, assessment:)
       end
 
       include_examples "changes action required by", "external"
@@ -174,7 +174,7 @@ RSpec.describe ApplicationFormStatusUpdater do
             submitted_at: Time.zone.now,
             teaching_authority_provides_written_statement: true,
           )
-          create(:professional_standing_request, :received, assessment:)
+          create(:received_professional_standing_request, assessment:)
         end
 
         include_examples "changes action required by", "assessor"
@@ -185,7 +185,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       context "when the teaching authority doesn't provide the written statement" do
         before do
           application_form.update!(submitted_at: Time.zone.now)
-          create(:professional_standing_request, :received, assessment:)
+          create(:received_professional_standing_request, assessment:)
         end
 
         include_examples "changes action required by", "admin"
@@ -199,7 +199,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:qualification_request, :received, assessment:)
+        create(:received_qualification_request, assessment:)
       end
 
       include_examples "changes action required by", "admin"
@@ -232,10 +232,9 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       context "with less than 9 months" do
         before do
-          create(:reference_request, :requested, assessment:)
+          create(:requested_reference_request, assessment:)
           create(
-            :reference_request,
-            :received,
+            :received_reference_request,
             assessment:,
             work_history:
               create(
@@ -256,8 +255,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       context "with less than 20 months" do
         before do
           create(
-            :reference_request,
-            :received,
+            :received_reference_request,
             assessment:,
             work_history:
               create(
@@ -277,7 +275,7 @@ RSpec.describe ApplicationFormStatusUpdater do
         end
 
         context "and there are other reference requests" do
-          before { create(:reference_request, :requested, assessment:) }
+          before { create(:requested_reference_request, assessment:) }
 
           include_examples "changes action required by", "external"
           include_examples "changes stage", "verification"
@@ -288,8 +286,7 @@ RSpec.describe ApplicationFormStatusUpdater do
       context "with more than 20 months" do
         before do
           create(
-            :reference_request,
-            :received,
+            :received_reference_request,
             assessment:,
             work_history:
               create(
@@ -313,7 +310,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:reference_request, :requested, assessment:)
+        create(:requested_reference_request, assessment:)
       end
 
       include_examples "changes action required by", "external"
@@ -406,7 +403,7 @@ RSpec.describe ApplicationFormStatusUpdater do
           application_form.update!(
             teaching_authority_provides_written_statement: true,
           )
-          create(:professional_standing_request, :requested, assessment:)
+          create(:requested_professional_standing_request, assessment:)
         end
 
         include_examples "changes action required by", "admin"

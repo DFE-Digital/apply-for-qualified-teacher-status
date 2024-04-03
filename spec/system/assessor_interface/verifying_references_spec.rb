@@ -236,17 +236,23 @@ RSpec.describe "Assessor verifying references", type: :system do
         assessment =
           create(
             :assessment,
-            :with_received_professional_standing_request,
+            :with_professional_standing_request,
             :verify,
             application_form:,
           )
         create(:assessment_section, :passed, assessment:)
         create(
-          :reference_request,
-          :received,
-          :responses_valid,
+          :received_reference_request,
           assessment:,
           work_history:,
+          contact_response: true,
+          dates_response: true,
+          hours_response: true,
+          children_response: true,
+          lessons_response: true,
+          reports_response: true,
+          misconduct_response: false,
+          satisfied_response: true,
         )
         application_form
       end

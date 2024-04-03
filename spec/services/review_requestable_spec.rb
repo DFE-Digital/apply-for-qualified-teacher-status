@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ReviewRequestable do
-  let(:requestable) { create(:further_information_request, :received) }
+  let(:requestable) { create(:received_further_information_request) }
   let(:user) { create(:staff) }
   let(:passed) { true }
   let(:note) { "Note." }

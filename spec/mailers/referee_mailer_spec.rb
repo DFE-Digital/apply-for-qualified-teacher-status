@@ -18,7 +18,7 @@ RSpec.describe RefereeMailer, type: :mailer do
   end
 
   let(:reference_request) do
-    create(:reference_request, :requested, assessment:, work_history:)
+    create(:requested_reference_request, assessment:, work_history:)
   end
 
   describe "#reference_reminder" do

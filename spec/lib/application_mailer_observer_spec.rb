@@ -22,7 +22,7 @@ RSpec.describe ApplicationMailerObserver do
   end
 
   context "with a referee mailer" do
-    let(:reference_request) { create(:reference_request, :requested) }
+    let(:reference_request) { create(:requested_reference_request) }
     let(:application_form) { reference_request.assessment.application_form }
     let(:message) { RefereeMailer.with(reference_request:).reference_requested }
 

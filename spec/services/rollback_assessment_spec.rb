@@ -12,7 +12,7 @@ RSpec.describe RollbackAssessment do
     let(:assessment) { create(:assessment, :award, application_form:) }
 
     context "having requested verification" do
-      before { create(:reference_request, :requested, assessment:) }
+      before { create(:requested_reference_request, assessment:) }
 
       it "sets the assessment to unknown" do
         expect { call }.to change(assessment, :verify?).to(true)
@@ -31,7 +31,7 @@ RSpec.describe RollbackAssessment do
     end
 
     context "having requested further information" do
-      before { create(:further_information_request, :requested, assessment:) }
+      before { create(:requested_further_information_request, assessment:) }
 
       it "sets the assessment to unknown" do
         expect { call }.to change(assessment, :request_further_information?).to(
@@ -74,7 +74,7 @@ RSpec.describe RollbackAssessment do
     let(:assessment) { create(:assessment, :decline, application_form:) }
 
     context "having requested verification" do
-      before { create(:reference_request, :requested, assessment:) }
+      before { create(:requested_reference_request, assessment:) }
 
       it "sets the assessment to unknown" do
         expect { call }.to change(assessment, :verify?).to(true)
@@ -93,7 +93,7 @@ RSpec.describe RollbackAssessment do
     end
 
     context "having requested further information" do
-      before { create(:further_information_request, :requested, assessment:) }
+      before { create(:requested_further_information_request, assessment:) }
 
       it "sets the assessment to unknown" do
         expect { call }.to change(assessment, :request_further_information?).to(

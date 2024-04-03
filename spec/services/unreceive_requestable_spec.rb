@@ -8,8 +8,7 @@ RSpec.describe UnreceiveRequestable do
   end
   let(:requestable) do
     create(
-      :qualification_request,
-      :received,
+      :received_qualification_request,
       assessment: create(:assessment, application_form:),
     )
   end

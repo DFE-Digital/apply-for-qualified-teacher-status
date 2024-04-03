@@ -153,8 +153,7 @@ RSpec.describe "Assessor reviewing references", type: :system do
             induction_required: false,
           )
         create(
-          :reference_request,
-          :received,
+          :received_reference_request,
           :expired,
           assessment:,
           verify_passed: false,

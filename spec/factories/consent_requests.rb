@@ -54,10 +54,14 @@ FactoryBot.define do
       end
     end
 
-    trait :received do
-      requested
-      with_signed_upload
-      received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
+    factory :requested_consent_request,
+            traits: %i[with_unsigned_upload requested]
+    factory :received_consent_request,
+            traits: %i[
+              with_unsigned_upload
+              requested
+              with_signed_upload
+              received
+            ]
   end
 end

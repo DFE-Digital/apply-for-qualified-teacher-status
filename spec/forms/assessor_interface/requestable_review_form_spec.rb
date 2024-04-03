@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
-  let(:requestable) { create(:reference_request, :received) }
+  let(:requestable) { create(:received_reference_request) }
   let(:user) { create(:staff) }
   let(:passed) { nil }
   let(:note) { "" }

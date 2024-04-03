@@ -392,5 +392,8 @@ FactoryBot.define do
       end
       registration_number_status { "completed" }
     end
+
+    factory :draft_application_form, traits: %i[draft_stage]
+    factory :submitted_application_form, traits: %i[submitted]
   end
 end

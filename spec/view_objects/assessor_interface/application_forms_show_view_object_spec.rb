@@ -281,7 +281,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "with a requested further information" do
-      before { create(:further_information_request, :requested, assessment:) }
+      before { create(:requested_further_information_request, assessment:) }
 
       it do
         is_expected.to include_task_list_item(
@@ -293,7 +293,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "with a received further information" do
-      before { create(:further_information_request, :received, assessment:) }
+      before { create(:received_further_information_request, assessment:) }
 
       it do
         is_expected.to include_task_list_item(
@@ -308,8 +308,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before do
         assessment.request_further_information!
         create(
-          :further_information_request,
-          :received,
+          :received_further_information_request,
           :review_passed,
           assessment:,
         )
@@ -328,8 +327,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before do
         assessment.request_further_information!
         create(
-          :further_information_request,
-          :received,
+          :received_further_information_request,
           :review_failed,
           assessment:,
         )
@@ -348,8 +346,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before do
         assessment.award!
         create(
-          :further_information_request,
-          :received,
+          :received_further_information_request,
           :review_passed,
           assessment:,
         )
@@ -367,8 +364,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before do
         assessment.decline!
         create(
-          :further_information_request,
-          :received,
+          :received_further_information_request,
           :review_failed,
           assessment:,
         )
