@@ -56,7 +56,13 @@ RSpec.describe UpdateAssessmentInductionRequired do
           end_date: Date.new(2021, 12, 1),
           hours_per_week: 30,
         )
-      create(:reference_request, :verify_passed, assessment:, work_history:)
+      create(
+        :reference_request,
+        :received,
+        :verify_passed,
+        assessment:,
+        work_history:,
+      )
     end
 
     include_examples "induction not required"

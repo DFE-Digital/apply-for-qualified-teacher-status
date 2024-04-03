@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe DeclineQTS do
   let(:teacher) { create(:teacher) }
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
 
   subject(:call) { described_class.call(application_form:, user:) }
 

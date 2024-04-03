@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe BackfillPreliminaryChecks do
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
 
   subject(:call) { described_class.call(user:) }
 

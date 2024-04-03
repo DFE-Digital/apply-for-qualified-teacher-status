@@ -8,7 +8,6 @@ RSpec.describe ReceiveRequestable do
     create(
       :qualification_request,
       :requested,
-      :receivable,
       assessment: create(:assessment, application_form:),
     )
   end

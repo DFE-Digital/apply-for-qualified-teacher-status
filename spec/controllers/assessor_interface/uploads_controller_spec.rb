@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::UploadsController, type: :controller do
-  let(:staff) { create(:staff, :with_assess_permission, :confirmed) }
+  let(:staff) { create(:staff, :with_assess_permission) }
   let(:application_form) { create(:application_form) }
 
   before { sign_in staff, scope: :staff }

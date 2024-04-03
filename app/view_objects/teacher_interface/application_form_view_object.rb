@@ -255,8 +255,7 @@ class TeacherInterface::ApplicationFormViewObject
 
         sorted_reasons =
           section.selected_failure_reasons.sort_by do |failure_reason|
-            is_decline =
-              FailureReasons.decline?(failure_reason: failure_reason.key)
+            is_decline = FailureReasons.decline?(failure_reason.key)
 
             [is_decline ? 0 : 1, failure_reason.key]
           end
@@ -277,8 +276,7 @@ class TeacherInterface::ApplicationFormViewObject
 
             if (
                  assessor_feedback = failure_reason.assessor_feedback
-               ).present? &&
-                 FailureReasons.decline?(failure_reason: failure_reason.key)
+               ).present? && FailureReasons.decline?(failure_reason.key)
               { name: title, assessor_note: assessor_feedback }
             else
               { name: title }

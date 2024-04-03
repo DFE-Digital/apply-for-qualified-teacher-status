@@ -23,7 +23,7 @@
 #
 FactoryBot.define do
   factory :qualification do
-    association :application_form
+    application_form
 
     trait :completed do
       title { Faker::Educator.degree }

@@ -109,14 +109,14 @@ RSpec.describe Assessment, type: :model do
 
           context "with a passed further information request" do
             before do
-              create(:further_information_request, :passed, assessment:)
+              create(:further_information_request, :review_passed, assessment:)
             end
             it { is_expected.to be true }
           end
 
           context "with a failed further information request" do
             before do
-              create(:further_information_request, :failed, assessment:)
+              create(:further_information_request, :review_failed, assessment:)
             end
             it { is_expected.to be false }
           end
@@ -155,7 +155,13 @@ RSpec.describe Assessment, type: :model do
               hours_per_week: 30,
             )
 
-          create(:reference_request, :verify_passed, assessment:, work_history:)
+          create(
+            :reference_request,
+            :received,
+            :verify_passed,
+            assessment:,
+            work_history:,
+          )
         end
 
         it { is_expected.to be true }
@@ -176,6 +182,7 @@ RSpec.describe Assessment, type: :model do
 
           create(
             :reference_request,
+            :received,
             :verify_failed,
             :review_passed,
             assessment:,
@@ -265,7 +272,7 @@ RSpec.describe Assessment, type: :model do
             :failed,
             assessment:,
           )
-          create(:further_information_request, :passed, assessment:)
+          create(:further_information_request, :review_passed, assessment:)
         end
         it { is_expected.to be false }
       end
@@ -278,7 +285,7 @@ RSpec.describe Assessment, type: :model do
             :failed,
             assessment:,
           )
-          create(:further_information_request, :failed, assessment:)
+          create(:further_information_request, :review_failed, assessment:)
         end
         it { is_expected.to be true }
       end
@@ -394,14 +401,14 @@ RSpec.describe Assessment, type: :model do
 
           context "with a passed further information request" do
             before do
-              create(:further_information_request, :passed, assessment:)
+              create(:further_information_request, :review_passed, assessment:)
             end
             it { is_expected.to be true }
           end
 
           context "with a failed further information request" do
             before do
-              create(:further_information_request, :failed, assessment:)
+              create(:further_information_request, :review_failed, assessment:)
             end
             it { is_expected.to be false }
           end

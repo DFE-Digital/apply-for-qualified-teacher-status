@@ -94,15 +94,19 @@ class FailureReasons
     WRITTEN_STATEMENT_RECENT => :written_statement,
   }.freeze
 
-  def self.decline?(failure_reason:)
+  def self.decline?(failure_reason)
     DECLINABLE.include?(failure_reason.to_s)
   end
 
-  def self.further_information_request_document_type(failure_reason:)
+  def self.further_information?(failure_reason)
+    FURTHER_INFORMATIONABLE.include?(failure_reason.to_s)
+  end
+
+  def self.further_information_request_document_type(failure_reason)
     DOCUMENT_FAILURE_REASONS[failure_reason.to_s]
   end
 
-  def self.chooses_work_history?(failure_reason:)
+  def self.chooses_work_history?(failure_reason)
     WORK_HISTORY_FAILURE_REASONS.include?(failure_reason.to_s)
   end
 end

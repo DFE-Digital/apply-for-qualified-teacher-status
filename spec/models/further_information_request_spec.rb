@@ -27,8 +27,6 @@ require "rails_helper"
 RSpec.describe FurtherInformationRequest do
   subject(:further_information_request) { create(:further_information_request) }
 
-  it_behaves_like "an expirable"
-
   it_behaves_like "a remindable" do
     subject { create(:further_information_request, :requested) }
   end

@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe AwardQTS do
   let(:teacher) { create(:teacher) }
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
   let(:trn) { "abcdef" }
   let(:access_your_teaching_qualifications_url) { "https://aytq.com" }
 

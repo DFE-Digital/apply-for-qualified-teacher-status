@@ -56,35 +56,17 @@ module SystemHelpers
   end
 
   def given_i_am_authorized_as_a_support_user
-    user =
-      create(
-        :staff,
-        :confirmed,
-        :with_support_console_permission,
-        name: "Admin",
-      )
+    user = create(:staff, :with_support_console_permission, name: "Admin")
     given_i_am_authorized_as_a_user(user)
   end
 
   def given_i_am_authorized_as_an_assessor_user
-    user =
-      create(
-        :staff,
-        :confirmed,
-        :with_assess_permission,
-        name: "Authorized User",
-      )
+    user = create(:staff, :with_assess_permission, name: "Authorized User")
     given_i_am_authorized_as_a_user(user)
   end
 
   def given_i_am_authorized_as_an_admin_user
-    user =
-      create(
-        :staff,
-        :confirmed,
-        :with_verify_permission,
-        name: "Authorized User",
-      )
+    user = create(:staff, :with_verify_permission, name: "Authorized User")
     given_i_am_authorized_as_a_user(user)
   end
 

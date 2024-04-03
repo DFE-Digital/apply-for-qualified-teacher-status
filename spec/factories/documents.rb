@@ -69,13 +69,6 @@ FactoryBot.define do
       association :documentable, factory: :application_form
     end
 
-    trait :optional_written_statement do
-      written_statement
-      after(:create) do |document, _evaluator|
-        document.application_form.update!(written_statement_optional: true)
-      end
-    end
-
     trait :signed_consent do
       document_type { "signed_consent" }
       association :documentable, factory: :qualification_request
@@ -89,6 +82,13 @@ FactoryBot.define do
     trait :written_statement do
       document_type { "written_statement" }
       association :documentable, factory: :application_form
+    end
+
+    trait :optional_written_statement do
+      written_statement
+      after(:create) do |document, _evaluator|
+        document.application_form.update!(written_statement_optional: true)
+      end
     end
   end
 end

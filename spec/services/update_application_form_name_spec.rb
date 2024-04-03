@@ -6,7 +6,7 @@ RSpec.describe UpdateApplicationFormName do
   let(:application_form) do
     create(:application_form, :submitted, :with_personal_information)
   end
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
   let(:new_given_names) { "New given names" }
   let(:new_family_name) { "New family name" }
 

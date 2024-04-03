@@ -59,10 +59,10 @@ RSpec.describe "Assessor change application form name", type: :system do
   delegate :reference, to: :application_form
 
   def assessor
-    create(:staff, :confirmed, :with_assess_permission)
+    create(:staff, :with_assess_permission)
   end
 
   def manager
-    create(:staff, :confirmed, :with_change_name_permission)
+    create(:staff, :with_change_name_permission)
   end
 end

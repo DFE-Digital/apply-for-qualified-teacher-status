@@ -13,7 +13,7 @@ RSpec.describe DQT::TRNRequestParams do
         teacher:,
         created_at: Date.new(2020, 1, 1),
         submitted_at: Date.new(2020, 1, 1),
-        region: create(:region, country: create(:country, code: "AU")),
+        region: create(:region, :in_country, country_code: "AU"),
         date_of_birth: Date.new(1960, 1, 1),
         given_names: "Given",
         family_name: "Family",

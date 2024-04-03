@@ -28,7 +28,7 @@
 #
 FactoryBot.define do
   factory :further_information_request_item do
-    association :further_information_request
+    further_information_request
 
     failure_reason_assessor_feedback { Faker::Lorem.paragraph }
 
@@ -49,7 +49,9 @@ FactoryBot.define do
     trait :with_work_history_contact_response do
       information_type { "work_history_contact" }
       failure_reason_key { "school_details_cannot_be_verified" }
-      association :work_history, :completed
+      work_history do
+        further_information_request.application_form.work_histories.first
+      end
     end
 
     trait :completed do

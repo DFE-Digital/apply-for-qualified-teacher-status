@@ -6,7 +6,7 @@ RSpec.describe AssessorInterface::ScotlandFullRegistrationForm, type: :model do
   let(:assessment_section) do
     create(:assessment_section, :professional_standing)
   end
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
   let(:attributes) { {} }
 
   subject(:form) do

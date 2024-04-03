@@ -44,7 +44,7 @@ RSpec.describe SelectedFailureReason do
 
     context "where a record has a key that isn't declinable" do
       let(:selected_failure_reason) do
-        create(:selected_failure_reason, :fi_requestable)
+        create(:selected_failure_reason, :further_informationable)
       end
 
       it "is not returned" do

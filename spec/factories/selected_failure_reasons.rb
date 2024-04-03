@@ -19,12 +19,19 @@
 #
 FactoryBot.define do
   factory :selected_failure_reason do
-    association :assessment_section
+    assessment_section
     key { FailureReasons::ALL.sample }
 
-    trait :fi_requestable do
+    assessor_feedback do
+      if FailureReasons.further_information?(key)
+        "We need more information."
+      else
+        ""
+      end
+    end
+
+    trait :further_informationable do
       key { FailureReasons::FURTHER_INFORMATIONABLE.sample }
-      assessor_feedback { "We need more things please" }
     end
 
     trait :declinable do

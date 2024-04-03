@@ -24,37 +24,7 @@
 #
 FactoryBot.define do
   factory :further_information_request do
-    association :assessment
-
-    trait :requested do
-      requested_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :received do
-      requested
-      received_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :expired do
-      requested
-      expired_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :reviewed do
-      received
-      reviewed_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-    end
-
-    trait :passed do
-      reviewed
-      review_passed { true }
-    end
-
-    trait :failed do
-      reviewed
-      review_passed { false }
-      review_note { "Notes." }
-    end
+    assessment
 
     trait :with_items do
       after(:create) do |further_information_request, _evaluator|
@@ -67,8 +37,6 @@ FactoryBot.define do
           :further_information_request_item,
           :with_work_history_contact_response,
           further_information_request:,
-          work_history:
-            further_information_request.application_form.work_histories.first,
         )
         create(
           :further_information_request_item,

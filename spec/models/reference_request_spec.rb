@@ -55,14 +55,12 @@ require "rails_helper"
 RSpec.describe ReferenceRequest do
   subject(:reference_request) { create(:reference_request) }
 
-  it_behaves_like "an expirable"
-
   it_behaves_like "a remindable" do
     subject { create(:reference_request, :requested) }
   end
 
   it_behaves_like "a requestable" do
-    subject { create(:reference_request, :receivable) }
+    subject { create(:reference_request, :with_responses) }
   end
 
   it { is_expected.to have_secure_token(:slug) }
@@ -126,20 +124,13 @@ RSpec.describe ReferenceRequest do
   describe "#responses_given?" do
     subject(:responses_given?) { reference_request.responses_given? }
 
-    context "when requested" do
-      let(:reference_request) { build(:reference_request, :requested) }
+    context "when no responses given" do
+      let(:reference_request) { build(:reference_request) }
       it { is_expected.to be false }
     end
 
-    context "when requested and all responses given" do
-      let(:reference_request) do
-        build(:reference_request, :requested, :receivable)
-      end
-      it { is_expected.to be true }
-    end
-
-    context "when received" do
-      let(:reference_request) { build(:reference_request, :received) }
+    context "when all responses given" do
+      let(:reference_request) { build(:reference_request, :with_responses) }
       it { is_expected.to be true }
     end
   end

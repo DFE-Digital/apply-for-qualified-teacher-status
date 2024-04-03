@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::QualificationsForm, type: :model do
   let(:assessment_section) { create(:assessment_section, :qualifications) }
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
   let(:attributes) { {} }
 
   subject(:form) do

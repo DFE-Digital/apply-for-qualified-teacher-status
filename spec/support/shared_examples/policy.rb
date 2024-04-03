@@ -10,7 +10,7 @@ RSpec.shared_examples "a policy" do
   end
 
   context "with a user" do
-    let(:user) { create(:staff, :confirmed) }
+    let(:user) { create(:staff) }
     it { is_expected.to_not be_nil }
   end
 end

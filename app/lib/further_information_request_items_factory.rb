@@ -35,7 +35,7 @@ class FurtherInformationRequestItemsFactory
     if (
          document_type =
            FailureReasons.further_information_request_document_type(
-             failure_reason: failure_reason_key,
+             failure_reason_key,
            )
        ).present?
       [

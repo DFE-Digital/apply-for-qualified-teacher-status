@@ -35,9 +35,7 @@ require "rails_helper"
 RSpec.describe QualificationRequest, type: :model do
   subject(:qualification_request) { create(:qualification_request) }
 
-  it_behaves_like "a requestable" do
-    subject { create(:qualification_request, :receivable) }
-  end
+  it_behaves_like "a requestable"
 
   describe "columns" do
     it do

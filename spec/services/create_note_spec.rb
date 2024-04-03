@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe CreateNote do
   let(:application_form) { create(:application_form, :submitted) }
-  let(:author) { create(:staff, :confirmed) }
+  let(:author) { create(:staff) }
   let(:text) { "Note text." }
 
   subject(:call) { described_class.call(application_form:, author:, text:) }

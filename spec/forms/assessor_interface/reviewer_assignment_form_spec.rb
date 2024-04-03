@@ -4,8 +4,8 @@ RSpec.describe AssessorInterface::ReviewerAssignmentForm, type: :model do
   let!(:application_form) do
     create(:application_form, :with_personal_information, :submitted)
   end
-  let(:staff) { create(:staff, :confirmed) }
-  let(:reviewer_id) { create(:staff, :confirmed).id }
+  let(:staff) { create(:staff) }
+  let(:reviewer_id) { create(:staff).id }
 
   subject(:form) do
     described_class.new(application_form:, staff:, reviewer_id:)

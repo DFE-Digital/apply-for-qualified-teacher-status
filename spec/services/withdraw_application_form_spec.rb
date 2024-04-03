@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe WithdrawApplicationForm do
   let(:application_form) { create(:application_form, :submitted) }
-  let(:user) { create(:staff, :confirmed) }
+  let(:user) { create(:staff) }
 
   subject(:call) { described_class.call(application_form:, user:) }
 
