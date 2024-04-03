@@ -116,7 +116,7 @@ class Assessment < ApplicationRecord
   def can_decline?
     if unknown?
       any_preliminary_section_failed? ||
-        (all_sections_finished? && any_section_failed? && any_section_declines?)
+        (all_sections_assessed? && any_section_failed? && any_section_declines?)
     elsif request_further_information?
       all_further_information_requests_reviewed? &&
         any_further_information_requests_failed?
@@ -137,7 +137,7 @@ class Assessment < ApplicationRecord
 
   def can_request_further_information?
     if unknown?
-      all_sections_finished? && any_section_failed? && no_section_declines?
+      all_sections_assessed? && any_section_failed? && no_section_declines?
     elsif request_further_information?
       further_information_requests.empty?
     else
@@ -191,15 +191,15 @@ class Assessment < ApplicationRecord
   end
 
   def all_preliminary_sections_passed?
-    sections.preliminary.all?(&:passed)
+    sections.preliminary.all?(&:passed?)
   end
 
   def any_preliminary_section_failed?
-    sections.preliminary.any?(&:failed)
+    sections.preliminary.any?(&:failed?)
   end
 
-  def any_not_preliminary_section_finished?
-    sections.not_preliminary.any?(&:finished?)
+  def any_not_preliminary_section_assessed?
+    sections.not_preliminary.any?(&:assessed?)
   end
 
   def enough_reference_requests_verify_passed?
@@ -221,16 +221,16 @@ class Assessment < ApplicationRecord
 
   private
 
-  def all_sections_finished?
-    sections.all?(&:finished?)
+  def all_sections_assessed?
+    sections.all?(&:assessed?)
   end
 
   def all_sections_passed?
-    sections.all?(&:passed)
+    sections.all?(&:passed?)
   end
 
   def any_section_failed?
-    sections.any?(&:failed)
+    sections.any?(&:failed?)
   end
 
   def any_section_declines?

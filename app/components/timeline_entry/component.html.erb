@@ -23,7 +23,7 @@
     <% elsif timeline_event.assessment_section_recorded? %>
       <p class="govuk-body">
         <%= description_vars[:section_name] %>:
-        <%= render StatusTag::Component.new(description_vars[:passed] ? "accepted" : "rejected") %>
+        <%= render StatusTag::Component.new(description_vars[:status]) %>
       </p>
 
       <% if (visible_failure_reasons = description_vars[:visible_failure_reasons]).present? %>
@@ -66,7 +66,7 @@
       <p class="govuk-body">
         Status has changed to: <%= render(StatusTag::Component.new(:declined)) %>
       </p>
-      
+
       <% TeacherInterface::ApplicationFormViewObject.new(application_form: timeline_event.application_form).declined_reasons.each do |title, reasons| %>
         <% if title.present? %>
           <h4 class="govuk-heading-s"><%= title %></h4>
@@ -78,7 +78,7 @@
             <% if reason[:assessor_note].present? %>
               <li><%= simple_format reason[:assessor_note] %></li>
             <% end %>
-          <% end %> 
+          <% end %>
         </ul>
       <% end %>
 

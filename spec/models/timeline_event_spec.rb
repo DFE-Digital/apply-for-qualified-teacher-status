@@ -453,4 +453,29 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:note_text) }
     end
   end
+
+  describe "#is_latest_of_type?" do
+    let(:application_form) { create(:application_form) }
+    let!(:timeline_event_1) do
+      create(
+        :timeline_event,
+        :assessment_section_recorded,
+        application_form:,
+        created_at: Date.new(2020, 1, 1),
+      )
+    end
+    let!(:timeline_event_2) do
+      create(
+        :timeline_event,
+        :assessment_section_recorded,
+        application_form:,
+        created_at: Date.new(2020, 1, 2),
+      )
+    end
+
+    it "returns the correct value" do
+      expect(timeline_event_1.is_latest_of_type?).to be false
+      expect(timeline_event_2.is_latest_of_type?).to be true
+    end
+  end
 end

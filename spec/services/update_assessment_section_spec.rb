@@ -23,8 +23,8 @@ RSpec.describe UpdateAssessmentSection do
 
     it "sets the state" do
       expect { subject }.to change(assessment_section, :status).from(
-        :not_started,
-      ).to(:completed)
+        "not_started",
+      ).to("rejected")
     end
 
     it "records a timeline event" do
