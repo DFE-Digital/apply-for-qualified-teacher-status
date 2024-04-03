@@ -45,5 +45,9 @@ FactoryBot.define do
         )
       end
     end
+
+    factory :requested_further_information_request, traits: %i[requested]
+    factory :received_further_information_request,
+            traits: %i[requested received]
   end
 end

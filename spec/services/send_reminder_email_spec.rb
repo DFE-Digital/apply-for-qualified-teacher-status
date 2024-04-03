@@ -264,8 +264,7 @@ RSpec.describe SendReminderEmail do
     context "with a received FI request" do
       let(:remindable) do
         create(
-          :further_information_request,
-          :received,
+          :received_further_information_request,
           requested_at: Time.zone.now,
         )
       end
@@ -316,7 +315,7 @@ RSpec.describe SendReminderEmail do
 
     context "with a received reference request" do
       let(:remindable) do
-        create(:reference_request, :received, requested_at: Time.zone.now)
+        create(:received_reference_request, requested_at: Time.zone.now)
       end
       include_examples "doesn't send an email"
     end
@@ -360,7 +359,7 @@ RSpec.describe SendReminderEmail do
 
       context "with a received reference request" do
         let!(:reference_request) do
-          create(:reference_request, :received, requested_at: Time.zone.now)
+          create(:received_reference_request, requested_at: Time.zone.now)
         end
         include_examples "doesn't send an email"
       end

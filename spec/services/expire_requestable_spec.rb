@@ -41,14 +41,14 @@ RSpec.describe ExpireRequestable do
     end
 
     context "with requested FI request" do
-      let(:requestable) { create(:further_information_request, :requested) }
+      let(:requestable) { create(:requested_further_information_request) }
 
       it_behaves_like "expiring a requestable"
       it_behaves_like "declining the application"
     end
 
     context "with any received FI request" do
-      let(:requestable) { create(:further_information_request, :received) }
+      let(:requestable) { create(:received_further_information_request) }
 
       it_behaves_like "not expiring a requestable"
     end
@@ -60,7 +60,7 @@ RSpec.describe ExpireRequestable do
     end
 
     context "with a requested professional standing request" do
-      let(:requestable) { create(:professional_standing_request, :requested) }
+      let(:requestable) { create(:requested_professional_standing_request) }
 
       it_behaves_like "expiring a requestable"
 
@@ -76,7 +76,7 @@ RSpec.describe ExpireRequestable do
     end
 
     context "with any received professional standing request" do
-      let(:requestable) { create(:professional_standing_request, :received) }
+      let(:requestable) { create(:received_professional_standing_request) }
 
       it_behaves_like "not expiring a requestable"
     end
@@ -88,13 +88,13 @@ RSpec.describe ExpireRequestable do
     end
 
     context "with a requested reference request" do
-      let(:requestable) { create(:reference_request, :requested) }
+      let(:requestable) { create(:requested_reference_request) }
 
       it_behaves_like "expiring a requestable"
     end
 
     context "with any received reference request" do
-      let(:requestable) { create(:reference_request, :received) }
+      let(:requestable) { create(:received_reference_request) }
 
       it_behaves_like "not expiring a requestable"
     end

@@ -139,8 +139,7 @@ RSpec.describe "Assessor reviewing qualifications", type: :system do
         qualification =
           create(:qualification, application_form:, title: "BSc Teaching")
         create(
-          :qualification_request,
-          :received,
+          :received_qualification_request,
           assessment:,
           qualification:,
           review_passed: false,

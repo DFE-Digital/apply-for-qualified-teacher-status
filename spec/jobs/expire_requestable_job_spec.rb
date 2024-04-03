@@ -71,11 +71,7 @@ RSpec.describe ExpireRequestableJob do
 
     context "with any received FI request" do
       let(:requestable) do
-        create(
-          :further_information_request,
-          :received,
-          requested_at: 1.year.ago,
-        )
+        create(:received_further_information_request, requested_at: 1.year.ago)
       end
 
       it_behaves_like "not expired requestable"
@@ -116,8 +112,7 @@ RSpec.describe ExpireRequestableJob do
     context "with any received professional standing request" do
       let(:requestable) do
         create(
-          :professional_standing_request,
-          :received,
+          :received_professional_standing_request,
           requested_at: 1.year.ago,
         )
       end
@@ -155,7 +150,7 @@ RSpec.describe ExpireRequestableJob do
 
     context "with any received reference request" do
       let(:requestable) do
-        create(:reference_request, :received, requested_at: 1.year.ago)
+        create(:received_reference_request, requested_at: 1.year.ago)
       end
 
       it_behaves_like "not expired requestable"

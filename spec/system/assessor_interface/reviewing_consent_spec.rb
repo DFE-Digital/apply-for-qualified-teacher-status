@@ -136,8 +136,7 @@ RSpec.describe "Assessor reviewing references", type: :system do
           )
         assessment = create(:assessment, :verify, application_form:)
         create(
-          :consent_request,
-          :received,
+          :received_consent_request,
           :expired,
           assessment:,
           verify_passed: false,

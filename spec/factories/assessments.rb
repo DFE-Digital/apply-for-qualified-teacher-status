@@ -101,20 +101,14 @@ FactoryBot.define do
 
     trait :with_requested_professional_standing_request do
       after(:create) do |assessment, _evaluator|
-        create(:professional_standing_request, :requested, assessment:)
-      end
-    end
-
-    trait :with_received_professional_standing_request do
-      after(:create) do |assessment, _evaluator|
-        create(:professional_standing_request, :received, assessment:)
+        create(:requested_professional_standing_request, assessment:)
       end
     end
 
     trait :with_reference_requests do
       after(:create) do |assessment, _evaluator|
         assessment.application_form.work_histories.each do |work_history|
-          create(:reference_request, :requested, assessment:, work_history:)
+          create(:reference_request, assessment:, work_history:)
         end
       end
     end

@@ -619,9 +619,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     subject(:mail) do
       described_class.with(
         application_form:,
-        reference_requests: [
-          create(:reference_request, :requested, assessment:),
-        ],
+        reference_requests: [create(:requested_reference_request, assessment:)],
       ).references_requested
     end
 

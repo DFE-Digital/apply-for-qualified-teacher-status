@@ -145,7 +145,7 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     assessment.qualification_requests.each do |qualification_request|
       qualification_request.consent_method_signed_ecctis!
       qualification = qualification_request.qualification
-      create(:consent_request, :received, assessment:, qualification:)
+      create(:received_consent_request, assessment:, qualification:)
     end
   end
 

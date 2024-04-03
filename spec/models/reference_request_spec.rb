@@ -56,7 +56,7 @@ RSpec.describe ReferenceRequest do
   subject(:reference_request) { create(:reference_request) }
 
   it_behaves_like "a remindable" do
-    subject { create(:reference_request, :requested) }
+    subject { create(:requested_reference_request) }
   end
 
   it_behaves_like "a requestable" do
@@ -101,7 +101,7 @@ RSpec.describe ReferenceRequest do
 
   describe "validations" do
     context "when received" do
-      subject { build(:reference_request, :received) }
+      subject { build(:received_reference_request) }
 
       it { is_expected.to_not allow_value(nil).for(:dates_response) }
 

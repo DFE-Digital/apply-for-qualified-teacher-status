@@ -395,7 +395,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
         )
       end
 
-      before { create(:professional_standing_request, :requested, assessment:) }
+      before { create(:requested_professional_standing_request, assessment:) }
 
       context "when there are preliminary checks and they are not complete" do
         before do

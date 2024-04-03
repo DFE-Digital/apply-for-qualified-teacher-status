@@ -126,17 +126,26 @@ def application_form_traits_for(region)
   ].compact
 end
 
-def create_requestables(application_form, assessment, state)
+def create_requestables(
+  application_form,
+  assessment,
+  received: false,
+  expired: false
+)
   unless application_form.teaching_authority_provides_written_statement
     assessment.sections.update_all(passed: true)
   end
 
+  factory_prefix = received ? "received" : "requested"
+  traits = expired ? %i[expired] : []
+
   if application_form.teaching_authority_provides_written_statement ||
-       (
-         application_form.needs_written_statement && state != :received &&
-           rand(4).zero?
-       )
-    FactoryBot.create(:professional_standing_request, state, assessment:)
+       (application_form.needs_written_statement && rand(4).zero?)
+    FactoryBot.create(
+      :"#{factory_prefix}_professional_standing_request",
+      *traits,
+      assessment:,
+    )
 
     unless application_form.teaching_authority_provides_written_statement
       assessment.verify!
@@ -144,7 +153,12 @@ def create_requestables(application_form, assessment, state)
   elsif (work_histories = application_form.work_histories).present? &&
         rand(3).zero?
     work_histories.each do |work_history|
-      FactoryBot.create(:reference_request, state, assessment:, work_history:)
+      FactoryBot.create(
+        :"#{factory_prefix}_reference_request",
+        *traits,
+        assessment:,
+        work_history:,
+      )
     end
 
     assessment.verify!
@@ -153,23 +167,25 @@ def create_requestables(application_form, assessment, state)
     qualifications.each do |qualification|
       qualification_request =
         FactoryBot.create(
-          :qualification_request,
-          :with_consent_method,
-          state,
+          :"#{factory_prefix}_qualification_request",
           assessment:,
           qualification:,
         )
 
-      if qualification_request.consent_method_signed?
-        FactoryBot.create(:consent_request, state, assessment:, qualification:)
-      end
+      next unless qualification_request.consent_method_signed?
+      FactoryBot.create(
+        :"#{factory_prefix}_consent_request",
+        *traits,
+        assessment:,
+        qualification:,
+      )
     end
 
     assessment.verify!
-  elsif state != :expired
+  elsif !expired
     FactoryBot.create(
-      :further_information_request,
-      state,
+      :"#{factory_prefix}_further_information_request",
+      *traits,
       :with_items,
       assessment:,
     )
@@ -230,12 +246,15 @@ def create_application_forms
           created_at: awarded_at - 2.months,
         )
       elsif application_form.action_required_by_external?
-        create_requestables(application_form, assessment, :requested)
+        create_requestables(application_form, assessment)
       elsif application_form.action_required_by_admin?
+        state = %i[received expired received_and_expired].sample
+
         create_requestables(
           application_form,
           assessment,
-          %i[received expired].sample,
+          received: %i[received received_and_expired].include?(state),
+          expired: %i[expired received_and_expired].include?(state),
         )
       end
     end

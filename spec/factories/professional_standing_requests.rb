@@ -32,7 +32,17 @@ FactoryBot.define do
     assessment
 
     trait :with_location_note do
-      location_note { Faker::Lorem.sentence }
+      location_note do
+        if assessment.application_form.teaching_authority_provides_written_statement
+          Faker::Lorem.sentence
+        else
+          ""
+        end
+      end
     end
+
+    factory :requested_professional_standing_request, traits: %i[requested]
+    factory :received_professional_standing_request,
+            traits: %i[requested with_location_note received]
   end
 end

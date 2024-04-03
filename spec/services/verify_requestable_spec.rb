@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe VerifyRequestable do
-  let(:requestable) { create(:professional_standing_request, :received) }
+  let(:requestable) { create(:received_professional_standing_request) }
   let(:user) { create(:staff) }
   let(:passed) { true }
   let(:note) { "Note." }

@@ -45,5 +45,10 @@ FactoryBot.define do
     trait :with_consent_method do
       consent_method { %i[signed_ecctis signed_institution unsigned].sample }
     end
+
+    factory :requested_qualification_request,
+            traits: %i[with_consent_method requested]
+    factory :received_qualification_request,
+            traits: %i[with_consent_method requested received]
   end
 end

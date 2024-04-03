@@ -159,8 +159,7 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
             induction_required: false,
           )
         create(
-          :professional_standing_request,
-          :received,
+          :received_professional_standing_request,
           assessment:,
           verify_passed: false,
         )
