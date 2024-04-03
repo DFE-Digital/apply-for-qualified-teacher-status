@@ -174,4 +174,11 @@ class TimelineEvent < ApplicationRecord
     requestable_expired? || requestable_received? || requestable_requested? ||
       requestable_reviewed? || requestable_verified?
   end
+
+  def is_latest_of_type?
+    application_form
+      .timeline_events
+      .order(created_at: :desc)
+      .find_by(event_type:) == self
+  end
 end

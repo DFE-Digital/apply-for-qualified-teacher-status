@@ -72,7 +72,26 @@ module TimelineEntry
 
     def assessment_section_recorded_vars
       section = timeline_event.assessment_section
-      selected_failure_reasons = section.selected_failure_reasons
+
+      # to handle old timeline events
+      status =
+        if timeline_event.new_value == "action_required"
+          "rejected"
+        elsif timeline_event.new_value == "completed" &&
+              timeline_event.is_latest_of_type?
+          section.status
+        else
+          timeline_event.new_value
+        end
+
+      selected_failure_reasons =
+        (
+          if timeline_event.is_latest_of_type?
+            section.selected_failure_reasons.to_a
+          else
+            []
+          end
+        )
 
       visible_failure_reasons =
         (
@@ -94,7 +113,7 @@ module TimelineEntry
 
       {
         section_name: section.key.titleize,
-        passed: section.passed,
+        status:,
         visible_failure_reasons:,
         hidden_failure_reasons:,
       }

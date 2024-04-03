@@ -90,7 +90,7 @@ class ApplicationFormStatusUpdater
         "verification"
       elsif overdue_further_information || received_further_information ||
             waiting_on_further_information ||
-            assessment&.any_not_preliminary_section_finished?
+            assessment&.any_not_preliminary_section_assessed?
         "assessment"
       elsif application_form.submitted_at.present?
         "not_started"
@@ -122,7 +122,7 @@ class ApplicationFormStatusUpdater
           requestable_statuses
         elsif assessment_in_verify?
           %w[verification_in_progress]
-        elsif assessment.any_not_preliminary_section_finished?
+        elsif assessment.any_not_preliminary_section_assessed?
           %w[assessment_in_progress]
         else
           %w[assessment_not_started]

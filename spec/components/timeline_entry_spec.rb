@@ -82,7 +82,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
       create(
         :timeline_event,
         :assessment_section_recorded,
-        new_value: "completed",
+        new_value: "rejected",
         assessment_section:,
       )
     end

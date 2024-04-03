@@ -189,10 +189,12 @@ class AssessorInterface::ApplicationFormsShowViewObject
         assessment_section,
       ],
       status:
-        if preliminary && assessment_section.failed && assessment.unknown?
+        if preliminary && assessment_section.failed? && assessment.unknown?
           :in_progress
+        elsif assessment_section.assessed?
+          :completed
         else
-          assessment_section.status
+          :not_started
         end,
     }
   end
