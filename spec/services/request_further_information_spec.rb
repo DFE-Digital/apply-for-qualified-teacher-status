@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe CreateFurtherInformationRequest do
+RSpec.describe RequestFurtherInformation do
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
   let(:user) { create(:staff) }
@@ -42,6 +42,12 @@ RSpec.describe CreateFurtherInformationRequest do
     end
   end
 
+  it "sets the assessment recommendation" do
+    expect { call }.to change(assessment, :request_further_information?).from(
+      false,
+    ).to(true)
+  end
+
   it "records a requestable requested timeline event" do
     expect { call }.to have_recorded_timeline_event(:requestable_requested)
   end
@@ -50,9 +56,7 @@ RSpec.describe CreateFurtherInformationRequest do
     before { create(:further_information_request, assessment:) }
 
     it "raises an error" do
-      expect { call }.to raise_error(
-        CreateFurtherInformationRequest::AlreadyExists,
-      )
+      expect { call }.to raise_error(RequestFurtherInformation::AlreadyExists)
     end
   end
 end
