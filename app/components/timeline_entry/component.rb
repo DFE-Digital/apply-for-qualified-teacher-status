@@ -44,19 +44,9 @@ module TimelineEntry
     def status_changed_vars
       {
         old_status:
-          render(
-            StatusTag::Component.new(
-              timeline_event.old_value,
-              class_context: "timeline-event",
-            ),
-          ).strip,
+          render(StatusTag::Component.new(timeline_event.old_value)).strip,
         new_status:
-          render(
-            StatusTag::Component.new(
-              timeline_event.new_value,
-              class_context: "timeline-event",
-            ),
-          ).strip,
+          render(StatusTag::Component.new(timeline_event.new_value)).strip,
       }
     end
 
@@ -71,51 +61,53 @@ module TimelineEntry
     alias_method :reviewer_assigned_vars, :assessor_assigned_vars
 
     def assessment_section_recorded_vars
-      section = timeline_event.assessment_section
+      assessment_section = timeline_event.assessment_section
 
-      # to handle old timeline events
+      is_most_recent =
+        timeline_event
+          .application_form
+          .timeline_events
+          .assessment_section_recorded
+          .order(created_at: :desc)
+          .find_by(assessment_section:) == timeline_event
+
+      # We need to transform the previous status values that aren't
+      # suitable for presenting to the user.
       status =
         if timeline_event.new_value == "action_required"
           "rejected"
-        elsif timeline_event.new_value == "completed" &&
-              timeline_event.is_latest_of_type?
-          section.status
+        elsif timeline_event.new_value == "completed" && is_most_recent
+          assessment_section.status
         else
           timeline_event.new_value
         end
 
+      # We can only show failure reasons for the most recent timeline
+      # event as we pull them direct from the assessment section.
       selected_failure_reasons =
         (
-          if timeline_event.is_latest_of_type?
-            section.selected_failure_reasons.to_a
+          if is_most_recent
+            assessment_section.selected_failure_reasons.to_a
           else
             []
-          end
-        )
-
-      visible_failure_reasons =
-        (
-          if selected_failure_reasons.count <= 2
-            selected_failure_reasons
-          else
-            selected_failure_reasons.take(1)
-          end
-        )
-
-      hidden_failure_reasons =
-        (
-          if selected_failure_reasons.count <= 2
-            []
-          else
-            selected_failure_reasons.drop(1)
           end
         )
 
       {
-        section_name: section.key.titleize,
+        section_name: assessment_section.key.titleize,
         status:,
-        visible_failure_reasons:,
-        hidden_failure_reasons:,
+        visible_failure_reasons:
+          if selected_failure_reasons.count <= 2
+            selected_failure_reasons
+          else
+            selected_failure_reasons.take(1)
+          end,
+        hidden_failure_reasons:
+          if selected_failure_reasons.count <= 2
+            []
+          else
+            selected_failure_reasons.drop(1)
+          end,
       }
     end
 
@@ -203,19 +195,9 @@ module TimelineEntry
     def stage_changed_vars
       {
         old_stage:
-          render(
-            StatusTag::Component.new(
-              timeline_event.old_value,
-              class_context: "timeline-event",
-            ),
-          ).strip,
+          render(StatusTag::Component.new(timeline_event.old_value)).strip,
         new_stage:
-          render(
-            StatusTag::Component.new(
-              timeline_event.new_value,
-              class_context: "timeline-event",
-            ),
-          ).strip,
+          render(StatusTag::Component.new(timeline_event.new_value)).strip,
       }
     end
 
