@@ -14,9 +14,7 @@ namespace :example_data do
     Faker::Config.locale = "en-GB"
     Faker::UniqueGenerator.clear
 
-    staff_members.each do |staff|
-      FactoryBot.create(:staff, :with_change_email_permission, **staff)
-    end
+    FakeData::StaffGenerator.call
 
     create_application_forms
   end
@@ -49,36 +47,6 @@ namespace :example_data do
 
   desc "Reset and regenerate example data."
   task regenerate: %i[reset generate]
-end
-
-def staff_members
-  [
-    {
-      name: "Dave (assessor)",
-      email: "assessor.dave@education.gov.uk",
-      assess_permission: true,
-    },
-    {
-      name: "Beryl (assessor)",
-      email: "assessor.beryl@education.gov.uk",
-      assess_permission: true,
-    },
-    {
-      name: "Jeff (admin)",
-      email: "admin.jeff@education.gov.uk",
-      verify_permission: true,
-    },
-    {
-      name: "Sally (manager)",
-      email: "manager.sally@education.gov.uk",
-      change_name_permission: true,
-      change_work_history_permission: true,
-      reverse_decision_permission: true,
-      support_console_permission: true,
-      withdraw_permission: true,
-    },
-    { name: "Antonio (helpdesk)", email: "helpdesk.antonio@education.gov.uk" },
-  ]
 end
 
 def evidential_traits_for(region)
