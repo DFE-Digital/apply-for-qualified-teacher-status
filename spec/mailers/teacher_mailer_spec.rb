@@ -53,8 +53,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("ABCDEF") }
       it { is_expected.to include("https://aytq.com") }
     end
-
-    it_behaves_like "an observable mailer", "application_awarded"
   end
 
   describe "#application_declined" do
@@ -81,8 +79,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("abc") }
       it { is_expected.to include("Reason for decline") }
     end
-
-    it_behaves_like "an observable mailer", "application_declined"
   end
 
   describe "#application_from_ineligible_country" do
@@ -119,9 +115,6 @@ RSpec.describe TeacherMailer, type: :mailer do
         )
       end
     end
-
-    it_behaves_like "an observable mailer",
-                    "application_from_ineligible_country"
   end
 
   describe "#application_not_submitted" do
@@ -202,8 +195,6 @@ RSpec.describe TeacherMailer, type: :mailer do
         end
       end
     end
-
-    it_behaves_like "an observable mailer", "application_not_submitted"
   end
 
   describe "#application_received" do
@@ -254,8 +245,6 @@ RSpec.describe TeacherMailer, type: :mailer do
         end
       end
     end
-
-    it_behaves_like "an observable mailer", "application_received"
   end
 
   describe "#consent_reminder" do
@@ -300,8 +289,6 @@ RSpec.describe TeacherMailer, type: :mailer do
         is_expected.to include("If you do not send them by 12 February 2020")
       end
     end
-
-    it_behaves_like "an observable mailer", "consent_reminder"
   end
 
   describe "#consent_requested" do
@@ -345,8 +332,6 @@ RSpec.describe TeacherMailer, type: :mailer do
         is_expected.to include("upload these documents by 12 February 2020")
       end
     end
-
-    it_behaves_like "an observable mailer", "consent_requested"
   end
 
   describe "#consent_submitted" do
@@ -373,8 +358,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
       it { is_expected.to include("Application reference number: abc") }
     end
-
-    it_behaves_like "an observable mailer", "consent_submitted"
   end
 
   describe "#further_information_received" do
@@ -404,8 +387,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
     end
-
-    it_behaves_like "an observable mailer", "further_information_received"
   end
 
   describe "#further_information_requested" do
@@ -447,8 +428,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
-
-    it_behaves_like "an observable mailer", "further_information_requested"
   end
 
   describe "#further_information_reminder" do
@@ -496,8 +475,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("abc") }
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
-
-    it_behaves_like "an observable mailer", "further_information_reminder"
   end
 
   describe "#professional_standing_received" do
@@ -535,8 +512,6 @@ RSpec.describe TeacherMailer, type: :mailer do
         )
       end
     end
-
-    it_behaves_like "an observable mailer", "professional_standing_received"
   end
 
   describe "#references_reminder" do
@@ -611,8 +586,6 @@ RSpec.describe TeacherMailer, type: :mailer do
         end
       end
     end
-
-    it_behaves_like "an observable mailer", "references_reminder"
   end
 
   describe "#references_requested" do
@@ -647,7 +620,5 @@ RSpec.describe TeacherMailer, type: :mailer do
         )
       end
     end
-
-    it_behaves_like "an observable mailer", "references_requested"
   end
 end

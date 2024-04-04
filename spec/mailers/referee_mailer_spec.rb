@@ -60,8 +60,6 @@ RSpec.describe RefereeMailer, type: :mailer do
         )
       end
     end
-
-    it_behaves_like "an observable mailer", "reference_reminder"
   end
 
   describe "#reference_requested" do
@@ -100,7 +98,5 @@ RSpec.describe RefereeMailer, type: :mailer do
         )
       end
     end
-
-    it_behaves_like "an observable mailer", "reference_requested"
   end
 end

@@ -32,7 +32,11 @@ class AwardQTS
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
-    TeacherMailer.with(application_form:).application_awarded.deliver_later
+    DeliverEmail.call(
+      application_form:,
+      mailer: TeacherMailer,
+      action: :application_awarded,
+    )
   end
 
   class InvalidState < StandardError

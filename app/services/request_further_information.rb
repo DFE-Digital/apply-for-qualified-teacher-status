@@ -48,9 +48,10 @@ class RequestFurtherInformation
   end
 
   def send_email
-    TeacherMailer
-      .with(application_form:)
-      .further_information_requested
-      .deliver_later
+    DeliverEmail.call(
+      application_form:,
+      mailer: TeacherMailer,
+      action: :further_information_requested,
+    )
   end
 end

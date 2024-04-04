@@ -29,11 +29,19 @@ class UpdateWorkHistoryContact
     end
 
     if email.present? && (reference_request = work_history.reference_request)
-      RefereeMailer.with(reference_request:).reference_requested.deliver_later
-      TeacherMailer
-        .with(application_form:, reference_requests: [reference_request])
-        .references_requested
-        .deliver_later
+      DeliverEmail.call(
+        application_form:,
+        mailer: RefereeMailer,
+        action: :reference_requested,
+        reference_request:,
+      )
+
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :references_requested,
+        reference_requests: [reference_request],
+      )
     end
   end
 

@@ -91,7 +91,5 @@ Teaching Regulation Agency (TRA)
 TRA is an executive agency, sponsored by the Department for Education. We have responsibility for the regulation of the teaching profession in England.
       EMAIL
     end
-
-    it_behaves_like "an observable mailer", "application_submitted"
   end
 end

@@ -26,7 +26,11 @@ module TeacherInterface
         end
       end
 
-      TeacherMailer.with(application_form:).consent_submitted.deliver_later
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :consent_submitted,
+      )
 
       redirect_to %i[teacher_interface application_form]
     end

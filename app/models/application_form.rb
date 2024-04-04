@@ -272,22 +272,27 @@ class ApplicationForm < ApplicationRecord
   def send_reminder_email(name, number_of_reminders_sent)
     case name
     when "consent"
-      TeacherMailer.with(application_form: self).consent_reminder.deliver_later
+      DeliverEmail.call(
+        application_form: self,
+        mailer: TeacherMailer,
+        action: :consent_reminder,
+      )
     when "expiration"
-      TeacherMailer
-        .with(application_form: self, number_of_reminders_sent:)
-        .application_not_submitted
-        .deliver_later
+      DeliverEmail.call(
+        application_form: self,
+        mailer: TeacherMailer,
+        action: :application_not_submitted,
+        number_of_reminders_sent:,
+      )
     when "references"
-      TeacherMailer
-        .with(
-          application_form: self,
-          number_of_reminders_sent:,
-          reference_requests:
-            reference_requests_not_yet_received_or_rejected.to_a,
-        )
-        .references_reminder
-        .deliver_later
+      DeliverEmail.call(
+        application_form: self,
+        mailer: TeacherMailer,
+        action: :references_reminder,
+        number_of_reminders_sent:,
+        reference_requests:
+          reference_requests_not_yet_received_or_rejected.to_a,
+      )
     end
   end
 
