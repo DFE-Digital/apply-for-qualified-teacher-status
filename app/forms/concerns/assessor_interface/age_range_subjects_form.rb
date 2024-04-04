@@ -38,46 +38,26 @@ module AssessorInterface::AgeRangeSubjectsForm
   def save
     return false unless valid?
 
-    ActiveRecord::Base.transaction do
-      update_age_range
-      update_subjects
-      create_timeline_event
-      super if defined?(super)
-    end
-
-    true
-  end
-
-  private
-
-  def update_age_range
-    note = age_range_note.presence || ""
-    assessment.update!(age_range_min:, age_range_max:, age_range_note: note)
-  end
-
-  def update_subjects
     subjects = [
       subject_1_raw.present? ? subject_1 : "",
       subject_2_raw.present? ? subject_2 : "",
       subject_3_raw.present? ? subject_3 : "",
     ].compact_blank
-    note = subjects_note.presence || ""
-    assessment.update!(subjects:, subjects_note: note)
-  end
 
-  def create_timeline_event
-    CreateTimelineEvent.call(
-      "age_range_subjects_verified",
-      application_form:,
-      user:,
-      assessment:,
-      age_range_min: assessment.age_range_min,
-      age_range_max: assessment.age_range_max,
-      age_range_note: assessment.age_range_note,
-      subjects: assessment.subjects,
-      subjects_note: assessment.subjects_note,
-    )
-  end
+    ActiveRecord::Base.transaction do
+      VerifyAgeRangeSubjects.call(
+        assessment:,
+        user:,
+        age_range_min:,
+        age_range_max:,
+        age_range_note:,
+        subjects:,
+        subjects_note:,
+      )
 
-  delegate :application_form, to: :assessment
+      super if defined?(super)
+    end
+
+    true
+  end
 end
