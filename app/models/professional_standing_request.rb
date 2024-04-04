@@ -40,10 +40,11 @@ class ProfessionalStandingRequest < ApplicationRecord
 
   def after_received(*)
     if should_send_received_email?
-      TeacherMailer
-        .with(application_form:)
-        .professional_standing_received
-        .deliver_later
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :professional_standing_received,
+      )
     end
   end
 

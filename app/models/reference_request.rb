@@ -100,10 +100,13 @@ class ReferenceRequest < ApplicationRecord
   end
 
   def send_reminder_email(_name, number_of_reminders_sent)
-    RefereeMailer
-      .with(reference_request: self, number_of_reminders_sent:)
-      .reference_reminder
-      .deliver_later
+    DeliverEmail.call(
+      application_form:,
+      mailer: RefereeMailer,
+      action: :reference_reminder,
+      reference_request: self,
+      number_of_reminders_sent:,
+    )
   end
 
   def expires_after

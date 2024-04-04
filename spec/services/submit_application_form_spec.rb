@@ -3,7 +3,13 @@ require "rails_helper"
 RSpec.describe SubmitApplicationForm do
   let(:region) { create(:region) }
   let(:application_form) do
-    create(:application_form, region:, subjects: ["Maths", "", ""])
+    create(
+      :application_form,
+      :with_personal_information,
+      :with_teaching_qualification,
+      region:,
+      subjects: ["Maths", "", ""],
+    )
   end
   let(:user) { create(:teacher) }
 

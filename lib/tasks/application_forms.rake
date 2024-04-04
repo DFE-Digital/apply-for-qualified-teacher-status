@@ -28,10 +28,11 @@ namespace :application_forms do
       teacher = application_form.teacher
       next unless teacher.application_form == application_form
 
-      TeacherMailer
-        .with(application_form:)
-        .application_from_ineligible_country
-        .deliver_now
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :application_from_ineligible_country,
+      )
     end
   end
 

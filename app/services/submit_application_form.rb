@@ -32,18 +32,27 @@ class SubmitApplicationForm
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
-    TeacherMailer.with(application_form:).application_received.deliver_later
+    DeliverEmail.call(
+      application_form:,
+      mailer: TeacherMailer,
+      action: :application_received,
+    )
 
     if !application_form.requires_preliminary_check &&
          application_form.teaching_authority_provides_written_statement
-      TeacherMailer.with(application_form:).initial_checks_passed.deliver_later
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :initial_checks_passed,
+      )
     end
 
     if region.teaching_authority_requires_submission_email
-      TeachingAuthorityMailer
-        .with(application_form:)
-        .application_submitted
-        .deliver_later
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeachingAuthorityMailer,
+        action: :application_submitted,
+      )
     end
 
     FindApplicantInDQTJob.perform_later(

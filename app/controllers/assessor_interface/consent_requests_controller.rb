@@ -52,7 +52,11 @@ module AssessorInterface
           )
         end
 
-        TeacherMailer.with(application_form:).consent_requested.deliver_later
+        DeliverEmail.call(
+          application_form:,
+          mailer: TeacherMailer,
+          action: :consent_requested,
+        )
       end
 
       redirect_to [

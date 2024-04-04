@@ -50,6 +50,7 @@ RSpec.describe SendReminderEmail do
           :reference_reminder,
         ).with(
           params: {
+            application_form:,
             reference_request: remindable,
             number_of_reminders_sent: a_kind_of(Integer),
           },

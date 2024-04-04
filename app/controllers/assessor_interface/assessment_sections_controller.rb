@@ -98,7 +98,11 @@ module AssessorInterface
         return
       end
 
-      TeacherMailer.with(application_form:).initial_checks_passed.deliver_later
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :initial_checks_passed,
+      )
     end
 
     def unassign_assessor

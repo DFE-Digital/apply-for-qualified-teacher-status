@@ -82,12 +82,19 @@ class VerifyAssessment
 
   def send_reference_request_emails(reference_requests)
     reference_requests.each do |reference_request|
-      RefereeMailer.with(reference_request:).reference_requested.deliver_later
+      DeliverEmail.call(
+        application_form:,
+        mailer: RefereeMailer,
+        action: :reference_requested,
+        reference_request:,
+      )
     end
 
-    TeacherMailer
-      .with(application_form:, reference_requests:)
-      .references_requested
-      .deliver_later
+    DeliverEmail.call(
+      application_form:,
+      mailer: TeacherMailer,
+      action: :references_requested,
+      reference_requests:,
+    )
   end
 end
