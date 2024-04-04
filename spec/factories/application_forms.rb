@@ -300,6 +300,8 @@ FactoryBot.define do
     end
 
     trait :with_english_language_medium_of_instruction do
+      english_language_citizenship_exempt { false }
+      english_language_qualification_exempt { false }
       english_language_proof_method { "medium_of_instruction" }
       english_language_status { "completed" }
 
@@ -314,7 +316,6 @@ FactoryBot.define do
 
     trait :with_english_language_proficiency_document do
       with_english_language_provider
-      english_language_status { "completed" }
 
       after(:create) do |application_form, _evaluator|
         create(
@@ -325,6 +326,8 @@ FactoryBot.define do
     end
 
     trait :with_english_language_provider do
+      english_language_citizenship_exempt { false }
+      english_language_qualification_exempt { false }
       english_language_proof_method { "provider" }
       english_language_provider do
         EnglishLanguageProvider.all.sample || create(:english_language_provider)
@@ -334,6 +337,8 @@ FactoryBot.define do
     end
 
     trait :with_english_language_other_provider do
+      english_language_citizenship_exempt { false }
+      english_language_qualification_exempt { false }
       english_language_proof_method { "provider" }
       english_language_provider_other { true }
       english_language_status { "completed" }
@@ -352,6 +357,7 @@ FactoryBot.define do
     end
 
     trait :with_english_language_exemption_by_qualification do
+      english_language_citizenship_exempt { false }
       english_language_qualification_exempt { true }
       english_language_status { "completed" }
     end

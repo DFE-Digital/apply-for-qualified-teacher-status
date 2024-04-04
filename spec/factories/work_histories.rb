@@ -42,11 +42,11 @@ FactoryBot.define do
       city { Faker::Address.city }
       contact_job { Faker::Job.title }
       contact_name { Faker::Name.name }
+      contact_email { Faker::Internet.email }
       hours_per_week { Faker::Number.between(from: 20, to: 40) }
       job { Faker::Job.title }
       school_name { Faker::Educator.primary_school }
       sequence :country_code, Country::CODES.cycle
-      sequence(:contact_email) { |n| "school#{n}@example.org" }
       start_date { Faker::Date.between(from: 5.years.ago, to: 9.months.ago) }
       still_employed
     end
