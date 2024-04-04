@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateFurtherInformationRequest
+class RequestFurtherInformation
   include ServicePattern
 
   def initialize(assessment:, user:)
@@ -26,6 +26,8 @@ class CreateFurtherInformationRequest
 
   def create_and_request
     ActiveRecord::Base.transaction do
+      assessment.request_further_information!
+
       requestable =
         FurtherInformationRequest.create!(
           assessment:,
