@@ -38,26 +38,7 @@ module AssessorInterface
     end
 
     def update_request
-      if consent_requests.present?
-        ActiveRecord::Base.transaction do
-          consent_requests.each do |requestable|
-            RequestRequestable.call(requestable:, user: current_staff)
-          end
-
-          application_form.reload
-
-          ApplicationFormStatusUpdater.call(
-            application_form:,
-            user: current_staff,
-          )
-        end
-
-        DeliverEmail.call(
-          application_form:,
-          mailer: TeacherMailer,
-          action: :consent_requested,
-        )
-      end
+      RequestConsent.call(assessment:, user: current_staff)
 
       redirect_to [
                     :assessor_interface,
