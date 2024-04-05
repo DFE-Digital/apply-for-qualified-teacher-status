@@ -17,6 +17,8 @@ namespace :fake_data do
 
     FakeData::StaffGenerator.call
 
+    DeliverEmail.pause
+
     countries = Country.includes(:regions)
     count = countries.count
 
@@ -31,6 +33,7 @@ namespace :fake_data do
     end
 
     UpdateWorkingDaysJob.new.perform
+    DeliverEmail.continue
   end
 
   desc "Reset database in preparation for generating fake data."
