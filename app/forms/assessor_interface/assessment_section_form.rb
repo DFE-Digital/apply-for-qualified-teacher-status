@@ -19,9 +19,7 @@ class AssessorInterface::AssessmentSectionForm
             presence: true,
             if: -> do
               passed == false &&
-                FailureReasons.chooses_work_history?(
-                  failure_reason: selected_failure_reasons,
-                )
+                FailureReasons.chooses_work_history?(selected_failure_reasons)
             end
 
   def selected_failure_reasons
