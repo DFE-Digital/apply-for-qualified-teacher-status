@@ -46,9 +46,7 @@ class FurtherInformationRequestItemsFactory
           document: Document.new(document_type:),
         ),
       ]
-    elsif FailureReasons.chooses_work_history?(
-          failure_reason: failure_reason_key,
-        )
+    elsif FailureReasons.chooses_work_history?(failure_reason_key)
       failure_reason_work_histories.map do |work_history|
         FurtherInformationRequestItem.new(
           information_type: :work_history_contact,
