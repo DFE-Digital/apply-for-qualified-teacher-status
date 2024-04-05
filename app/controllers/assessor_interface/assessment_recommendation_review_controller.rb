@@ -52,13 +52,7 @@ module AssessorInterface
     end
 
     def update
-      ActiveRecord::Base.transaction do
-        assessment.review!
-        ApplicationFormStatusUpdater.call(
-          application_form:,
-          user: current_staff,
-        )
-      end
+      ReviewAssessment.call(assessment:, user: current_staff)
 
       redirect_to [:status, :assessor_interface, application_form]
     end
