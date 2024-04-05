@@ -163,17 +163,6 @@ FactoryBot.define do
       statuses { %w[assessment_not_started] }
       submitted_at { Time.zone.now }
       working_days_since_submission { 0 }
-
-      after(:create) do |application_form, _evaluator|
-        create(
-          :timeline_event,
-          :stage_changed,
-          application_form:,
-          creator: application_form.teacher,
-          old_value: "draft",
-          new_value: "not_started",
-        )
-      end
     end
 
     trait :preliminary_check do

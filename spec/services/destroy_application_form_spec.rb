@@ -14,6 +14,7 @@ RSpec.describe DestroyApplicationForm do
           :with_work_history,
         )
 
+      create(:timeline_event, :stage_changed, application_form:)
       create(:note, application_form:)
       create(:dqt_trn_request, application_form:)
 
