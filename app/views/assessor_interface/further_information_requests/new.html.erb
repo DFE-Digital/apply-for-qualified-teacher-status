@@ -1,16 +1,43 @@
-<% content_for :page_title, "Further information request email preview" %>
-<% content_for :back_link_url, back_history_path(default: preview_assessor_interface_application_form_assessment_further_information_requests_path) %>
+<% content_for :page_title, "Check the further information you’re asking the applicant for" %>
+<% content_for :back_link_url, back_history_path(default: edit_assessor_interface_application_form_assessment_path(@application_form, @assessment)) %>
 
-<h1 class="govuk-heading-xl">Further information request email preview</h1>
+<h1 class="govuk-heading-xl">Check the information you’re asking the applicant for</h1>
 
-<%= render(PreviewMailer::Component.new(
-  mailer_class: TeacherMailer,
-  name: :further_information_requested,
-  application_form: @application_form,
-)) %>
+<% @further_information_request.items.group_by(&:failure_reason_key).each do |failure_reason_key, items| %>
+  <% if failure_reason_key == "school_details_cannot_be_verified" %>
+    <section class="app-further-information-request-item">
+      <h2 class="govuk-heading-m">Reason for request</h2>
+      <% if items.size == 1 %>
+        <p class="govuk-body">We were unable to verify the details for <%= items.first.work_history.school_name %>.</p>
+      <% else %>
+        <p class="govuk-body">We were unable to verify the details for:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <% items.each do |item| %>
+            <li><%= item.work_history.school_name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <h2 class="govuk-heading-m">Note to applicant</h2>
+
+      <%= govuk_inset_text do %>
+        <%= simple_format items.first.failure_reason_assessor_feedback %>
+      <% end %>
+    </section>
+  <% else %>
+    <% items.each do |item| %>
+      <section class="app-further-information-request-item">
+        <p class="govuk-body"><%= t(item.failure_reason_key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %></p>
+
+        <h2 class="govuk-heading-m">Note to applicant</h2>
+
+        <%= govuk_inset_text do %>
+          <%= simple_format item.failure_reason_assessor_feedback %>
+        <% end %>
+      </section>
+    <% end %>
+  <% end %>
+<% end %>
 
 <%= form_with model: [:assessor_interface, @application_form, @assessment, @further_information_request] do |f| %>
-  <%= f.govuk_submit "Send email to applicant" do %>
-    <%= govuk_button_link_to "Back to overview", assessor_interface_application_form_path(@application_form), secondary: true %>
-  <% end %>
+  <% render "shared/assessor_interface/continue_cancel_button", f: %>
 <% end %>

@@ -49,7 +49,7 @@ module AssessorInterface
 
       if @form.save
         redirect_to [
-                      :preview,
+                      :confirm,
                       :assessor_interface,
                       application_form,
                       assessment,
@@ -58,10 +58,6 @@ module AssessorInterface
       else
         render :edit, status: :unprocessable_entity
       end
-    end
-
-    def preview
-      authorize %i[assessor_interface assessment_recommendation], :edit?
     end
 
     def edit_confirm

@@ -62,7 +62,6 @@ Rails.application.routes.draw do
               to: "assessment_recommendation_award#edit_age_range_subjects"
           post "age-range-subjects/edit",
                to: "assessment_recommendation_award#update_age_range_subjects"
-          get "preview"
           get "confirm", to: "assessment_recommendation_award#edit_confirm"
           post "confirm", to: "assessment_recommendation_award#update_confirm"
         end
@@ -71,7 +70,6 @@ Rails.application.routes.draw do
                  controller: "assessment_recommendation_decline",
                  path: "/recommendation/decline",
                  only: %i[show edit update] do
-          get "preview"
           get "confirm", to: "assessment_recommendation_decline#edit_confirm"
           post "confirm", to: "assessment_recommendation_decline#update_confirm"
         end
@@ -127,11 +125,7 @@ Rails.application.routes.draw do
 
         resources :further_information_requests,
                   path: "/further-information-requests",
-                  only: %i[new create edit update] do
-          get "preview",
-              to: "further_information_requests#preview",
-              on: :collection
-        end
+                  only: %i[new create edit update]
 
         resource :professional_standing_request,
                  path: "/professional-standing-request",

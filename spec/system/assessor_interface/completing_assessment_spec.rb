@@ -3,25 +3,8 @@
 require "rails_helper"
 
 RSpec.describe "Assessor completing assessment", type: :system do
-  let(:notify_key) { "notify-key" }
-  let(:notify_client) do
-    double(generate_template_preview: notify_template_preview)
-  end
-  let(:notify_template_preview) { double(html: "I am an email") }
   let(:assessor_user) do
     create(:staff, :with_assess_permission, name: "Authorized User")
-  end
-
-  around do |example|
-    ClimateControl.modify GOVUK_NOTIFY_API_KEY: notify_key do
-      example.run
-    end
-  end
-
-  before do
-    allow(Notifications::Client).to receive(:new).with(notify_key).and_return(
-      notify_client,
-    )
   end
 
   it "award" do
@@ -60,15 +43,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
       :assessor_age_range_subjects_assessment_recommendation_award_page,
     )
     and_i_continue_from_age_range_subjects
-
-    then_i_see_the(
-      :assessor_preview_assessment_recommendation_page,
-      reference:,
-      assessment_id:,
-      recommendation: "award",
-    )
-
-    when_i_send_the_email
     then_i_see_the(
       :assessor_confirm_assessment_recommendation_page,
       reference:,
@@ -196,14 +170,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
     and_i_see_failure_reasons
 
     when_i_check_declaration
-    then_i_see_the(
-      :assessor_preview_assessment_recommendation_page,
-      reference:,
-      assessment_id:,
-      recommendation: "decline",
-    )
-
-    when_i_send_the_email
     then_i_see_the(
       :assessor_confirm_assessment_recommendation_page,
       reference:,
@@ -402,10 +368,6 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def when_i_select_submit_verification_requests
     assessor_assessment_recommendation_verify_page.submit_button.click
-  end
-
-  def when_i_send_the_email
-    assessor_preview_assessment_recommendation_page.send_button.click
   end
 
   def when_i_check_confirmation
