@@ -61,6 +61,13 @@ module AssessorInterface
       true
     end
 
+    def disable_form?
+      return true unless show_form?
+      return true unless assessment.unknown?
+
+      preliminary? ? assessment.all_preliminary_sections_passed? : false
+    end
+
     def show_english_language_exemption_content?
       assessment_section.english_language_proficiency? &&
         application_form.english_language_exempt?

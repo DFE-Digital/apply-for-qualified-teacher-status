@@ -15,7 +15,7 @@ module AssessorInterface
     end
 
     def update
-      unless view_object.show_form?
+      if view_object.disable_form?
         redirect_to [
                       :assessor_interface,
                       application_form,
