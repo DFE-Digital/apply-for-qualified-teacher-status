@@ -5,7 +5,12 @@ class FakeData::StaffGenerator
 
   def call
     RECORDS.each do |record|
-      Staff.create!(confirmed_at: Time.zone.now, password: "password", **record)
+      Staff.create!(
+        confirmed_at: Time.zone.now,
+        password: "password",
+        change_email_permission: true,
+        **record,
+      )
     end
   end
 
