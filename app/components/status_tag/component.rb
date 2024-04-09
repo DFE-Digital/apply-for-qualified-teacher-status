@@ -46,6 +46,7 @@ module StatusTag
       pre_assessment: "pink",
       preliminary_check: "pink",
       received: "purple",
+      received_and_overdue: "pink",
       received_consent: "purple",
       received_ecctis: "purple",
       received_further_information: "purple",

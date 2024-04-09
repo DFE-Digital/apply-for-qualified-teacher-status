@@ -1,4 +1,4 @@
-name: Example data
+name: Fake data
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
     name: Regenerate
     runs-on: ubuntu-latest
 
-    environment: ${{ github.event.inputs.environment }}_aks
+    environment: ${{ github.event.inputs.environment }}
 
     steps:
       - uses: actions/checkout@v4
@@ -35,4 +35,4 @@ jobs:
           kubectl exec \
             -n tra-${{ github.event.inputs.environment }} \
             deployment/apply-for-qts-${{ github.event.inputs.environment }}-web \
-            -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed example_data:regenerate"
+            -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed fake_data:regenerate"

@@ -121,10 +121,10 @@ Setup the project (re-run after `Gemfile` or `package.json` updates, automatical
 bin/setup
 ```
 
-Example data and personas. For development and non-production environments we have an example data generation script that includes persona based logins.
+Generate fake application forms and staff. For development and non-production environments we have a script that generates useful fake data.
 
 ```bash
-bundle exec rake example_data:generate
+bundle exec rake fake_data:generate
 ```
 
 To enable the 'personas' feature, from the rails console

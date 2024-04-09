@@ -15,6 +15,7 @@ module Requestable
     scope :respondable,
           -> { requested.not_received.merge(ApplicationForm.assessable) }
     scope :verified, -> { where.not(verified_at: nil) }
+    scope :not_verified, -> { where(verified_at: nil) }
 
     has_one :application_form, through: :assessment
   end

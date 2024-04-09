@@ -53,7 +53,7 @@
 #
 FactoryBot.define do
   factory :staff do
-    sequence(:email) { |n| "test#{n}@example.org" }
+    email { Faker::Internet.email }
     password { "example123" }
     name { Faker::Name.name }
     confirmed_at { Time.zone.now }

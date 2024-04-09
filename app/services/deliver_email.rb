@@ -11,11 +11,27 @@ class DeliverEmail
   end
 
   def call
-    create_job
+    create_job unless self.class.paused?
     create_timeline_event
   end
 
+  def self.pause
+    Rails.logger.info "Pausing email deliveries!"
+    @paused = true
+  end
+
+  def self.continue
+    Rails.logger.info "Continuing email deliveries!"
+    @paused = false
+  end
+
+  def self.paused?
+    @paused
+  end
+
   private
+
+  @paused = false
 
   attr_reader :application_form, :mailer, :action, :params
 
