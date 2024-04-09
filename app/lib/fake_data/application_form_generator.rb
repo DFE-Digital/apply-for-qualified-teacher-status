@@ -69,7 +69,7 @@ class FakeData::ApplicationFormGenerator
 
     return application_form unless params.receive_verification?
 
-    receive_verification
+    receive_references_and_consent
 
     unless params.review? || params.decline_after_review? || params.award?
       return application_form
@@ -82,7 +82,7 @@ class FakeData::ApplicationFormGenerator
       decline_application_form
     elsif params.award?
       review_verification(passed: true) if params.review?
-      award_application_form
+      award_application_form(user: params.review? ? assessor_user : admin_user)
     end
 
     application_form
@@ -378,14 +378,7 @@ class FakeData::ApplicationFormGenerator
     end
   end
 
-  def receive_verification
-    user = admin_user
-
-    if assessment.professional_standing_request.present? &&
-         !application_form.teaching_authority_provides_written_statement
-      receive_professional_standing
-    end
-
+  def receive_references_and_consent
     assessment.reference_requests.each do |requestable|
       contact_response = [true, false].sample
       dates_response = [true, false].sample
@@ -426,41 +419,11 @@ class FakeData::ApplicationFormGenerator
       end
     end
 
-    assessment.qualification_requests.each do |requestable|
-      consent_request =
-        assessment.consent_requests.find_by(
-          qualification: requestable.qualification,
-        )
-
-      if consent_request
-        FactoryBot.create(
-          :upload,
-          document: consent_request.signed_consent_document,
-        )
-
-        date_generator.travel_to_next_long do
-          ReceiveRequestable.call(
-            requestable: consent_request,
-            user: application_form.teacher,
-          )
-        end
-
-        date_generator.travel_to_next_long do
-          VerifyRequestable.call(
-            requestable: consent_request,
-            user:,
-            passed: true,
-            note: Faker::Lorem.sentence,
-          )
-        end
-
-        date_generator.travel_to_next_short do
-          RequestRequestable.call(requestable:, user:)
-        end
-      end
+    assessment.consent_requests.each do |requestable|
+      FactoryBot.create(:upload, document: requestable.signed_consent_document)
 
       date_generator.travel_to_next_long do
-        ReceiveRequestable.call(requestable:, user:)
+        ReceiveRequestable.call(requestable:, user: application_form.teacher)
       end
     end
   end
@@ -480,10 +443,32 @@ class FakeData::ApplicationFormGenerator
   def verify_verification(passed:)
     user = admin_user
 
+    if passed
+      assessment.consent_requests.each do |requestable|
+        date_generator.travel_to_next_short do
+          VerifyRequestable.call(requestable:, user:, passed: true, note: "")
+        end
+      end
+
+      assessment
+        .qualification_requests
+        .reject(&:requested?)
+        .each do |requestable|
+          date_generator.travel_to_next_short do
+            RequestRequestable.call(requestable:, user:)
+          end
+        end
+    end
+
     requestables
+      .select(&:requested?)
       .reject(&:verified?)
       .each do |requestable|
         date_generator.travel_to_next_short do
+          if !requestable.received? && (passed || [true, false].sample)
+            ReceiveRequestable.call(requestable:, user:)
+          end
+
           VerifyRequestable.call(
             requestable:,
             user:,
@@ -517,12 +502,11 @@ class FakeData::ApplicationFormGenerator
       end
   end
 
-  def award_application_form
+  def award_application_form(user:)
     assessment.award!
 
     trn = Faker::Number.leading_zero_number(digits: 10)
     access_your_teaching_qualifications_url = Faker::Internet.url
-    user = admin_user
 
     date_generator.travel_to_next_long do
       DQTTRNRequest.create!(request_id: SecureRandom.uuid, application_form:)
