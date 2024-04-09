@@ -149,8 +149,8 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     end
   end
 
-  describe "#render_form?" do
-    subject(:render_form?) { view_object.render_form? }
+  describe "#show_form?" do
+    subject(:show_form?) { view_object.show_form? }
 
     it { is_expected.to be true }
 
