@@ -390,12 +390,13 @@
     - updated_at
     - work_history_id
   :uploads:
-    - id
-    - document_id
-    - translation
     - created_at
-    - updated_at
+    - document_id
+    - filename
+    - id
     - malware_scan_result
+    - translation
+    - updated_at
   :work_histories:
     - application_form_id
     - canonical_contact_email
