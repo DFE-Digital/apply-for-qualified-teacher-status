@@ -20,7 +20,7 @@
     <h2 class="govuk-heading-m">Files added</h2>
   <% end %>
 
-  <%= govuk_summary_list do |summary_list|
+  <%= govuk_summary_list(html_attributes: { id: "teacher-interface-add-another-upload-form-uploads-field-error" }) do |summary_list|
     @document.uploads.order(:created_at).each_with_index do |upload, index|
       summary_list.with_row do |row|
         if @document.allow_multiple_uploads?

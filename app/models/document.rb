@@ -72,7 +72,11 @@ class Document < ApplicationRecord
   end
 
   def downloadable?
-    uploads.all?(&:downloadable?)
+    uploads.all?(&:safe_to_link?)
+  end
+
+  def any_unsafe_to_link?
+    uploads.any?(&:unsafe_to_link?)
   end
 
   def for_further_information_request?

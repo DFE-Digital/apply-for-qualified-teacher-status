@@ -26,14 +26,21 @@ module TeacherInterface
     end
 
     def edit
-      if show_available_form?
-        @form =
+      @form =
+        if show_available_form?
           DocumentAvailableForm.new(document:, available: document.available)
-        render :edit_available
-      else
-        @form = AddAnotherUploadForm.new
-        render :edit_uploads
+        else
+          AddAnotherUploadForm.new
+        end
+
+      if document.any_unsafe_to_link?
+        @form.errors.add(
+          :uploads,
+          I18n.t("teacher_interface.documents.unsafe_to_link"),
+        )
       end
+
+      render show_available_form? ? :edit_available : :edit_uploads
     end
 
     def update
@@ -56,6 +63,13 @@ module TeacherInterface
               ),
           )
         end
+
+      if document.any_unsafe_to_link?
+        @form.errors.add(
+          :uploads,
+          I18n.t("teacher_interface.documents.unsafe_to_link"),
+        )
+      end
 
       handle_application_form_section(
         form: @form,
