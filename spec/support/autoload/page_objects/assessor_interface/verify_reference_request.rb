@@ -13,6 +13,11 @@ module PageObjects
         elements :keys, ".govuk-summary-list__key"
         elements :values, ".govuk-summary-list__value"
       end
+
+      section :send_email_details, ".govuk-details" do
+        element :summary, ".govuk-details__summary"
+        element :button, ".govuk-button"
+      end
     end
   end
 end

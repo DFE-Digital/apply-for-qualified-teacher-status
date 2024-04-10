@@ -62,6 +62,12 @@ RSpec.describe AssessorInterface::ReferenceRequestPolicy do
     it_behaves_like "a policy method requiring the verify permission"
   end
 
+  describe "#resend_email?" do
+    subject(:resend_email?) { policy.resend_email? }
+    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
   describe "#destroy?" do
     subject(:destroy?) { policy.destroy? }
     it_behaves_like "a policy method without permission"

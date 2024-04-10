@@ -25,4 +25,8 @@ class AssessorInterface::ReferenceRequestPolicy < ApplicationPolicy
   end
 
   alias_method :edit_verify_failed?, :update_verify_failed?
+
+  def resend_email?
+    user.assess_permission || user.verify_permission
+  end
 end

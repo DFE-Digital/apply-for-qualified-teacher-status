@@ -8,7 +8,38 @@ RSpec.describe "Assessor verifying references", type: :system do
     given_there_is_an_application_form_with_reference_request
   end
 
+  it "resend emails" do
+    when_i_visit_the(:assessor_application_page, reference:)
+    and_i_click_verify_references
+    then_i_see_the(
+      :assessor_reference_requests_page,
+      reference:,
+      assessment_id:,
+    )
+    and_the_reference_request_status_is("WAITING ON")
+
+    when_i_click_on_the_reference_request
+    then_i_see_the(
+      :assessor_verify_reference_request_page,
+      reference:,
+      assessment_id:,
+      id: reference_request.id,
+    )
+    and_i_can_resend_the_email
+
+    when_i_click_on_resend_email_summary
+    and_i_click_on_send_email_button
+    then_i_see_the(
+      :assessor_verify_reference_request_page,
+      reference:,
+      assessment_id:,
+      id: reference_request.id,
+    )
+  end
+
   it "verify received" do
+    given_the_reference_request_is_received
+
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_verify_references
     then_i_see_the(
@@ -26,6 +57,7 @@ RSpec.describe "Assessor verifying references", type: :system do
       id: reference_request.id,
     )
     and_i_see_the_reference_summary
+    and_i_cant_resend_the_email
     and_i_submit_yes_on_the_verify_form
     then_i_see_the(
       :assessor_reference_requests_page,
@@ -79,6 +111,7 @@ RSpec.describe "Assessor verifying references", type: :system do
       assessment_id:,
       id: reference_request.id,
     )
+    and_i_can_resend_the_email
     and_i_submit_yes_on_the_verify_form
     then_i_see_the(
       :assessor_verify_failed_reference_request_page,
@@ -103,8 +136,12 @@ RSpec.describe "Assessor verifying references", type: :system do
     application_form
   end
 
+  def given_the_reference_request_is_received
+    reference_request.received!
+  end
+
   def given_the_reference_request_is_overdue
-    reference_request.update!(expired_at: Time.zone.now, received_at: nil)
+    reference_request.expired!
   end
 
   def and_i_click_verify_references
@@ -179,7 +216,19 @@ RSpec.describe "Assessor verifying references", type: :system do
     ).to eq("Yes")
     expect(
       assessor_verify_reference_request_page.responses.values[10].text,
-    ).to eq(reference_request.additional_information_response)
+    ).to eq("None provided")
+  end
+
+  def and_i_cant_resend_the_email
+    expect(assessor_verify_reference_request_page).to_not have_css(
+      ".govuk-details",
+    )
+  end
+
+  def and_i_can_resend_the_email
+    expect(
+      assessor_verify_reference_request_page.send_email_details,
+    ).to be_visible
   end
 
   def and_i_submit_yes_on_the_verify_form
@@ -209,6 +258,14 @@ RSpec.describe "Assessor verifying references", type: :system do
         .status_tag
         .text,
     ).to eq("COMPLETED")
+  end
+
+  def when_i_click_on_resend_email_summary
+    assessor_verify_reference_request_page.send_email_details.summary.click
+  end
+
+  def and_i_click_on_send_email_button
+    assessor_verify_reference_request_page.send_email_details.button.click
   end
 
   def reference_request_task_item
@@ -242,7 +299,7 @@ RSpec.describe "Assessor verifying references", type: :system do
           )
         create(:assessment_section, :passed, assessment:)
         create(
-          :received_reference_request,
+          :requested_reference_request,
           assessment:,
           work_history:,
           contact_response: true,

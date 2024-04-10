@@ -1,6 +1,7 @@
 <% work_history = @reference_request.work_history %>
 <% can_edit_work_history = policy([:assessor_interface, work_history]).edit? %>
 <% can_update_verify_reference_request = @assessment.verify? && policy([:assessor_interface, @reference_request]).update_verify? %>
+<% can_resend_email_reference_request = @assessment.verify? && policy([:assessor_interface, @reference_request]).resend_email? %>
 
 <% title = can_update_verify_reference_request ? "Review reference" : "View reference" %>
 
@@ -34,16 +35,20 @@
       end
     end
 
-    if can_edit_work_history
-      summary_list.with_row do |row|
-        row.with_key { "Job title of reference" }
-        row.with_value { work_history.contact_job }
+    summary_list.with_row do |row|
+      row.with_key { "Job title of reference" }
+      row.with_value { work_history.contact_job }
+
+      if can_edit_work_history
         row.with_action(text: "Change", href: [:edit, :assessor_interface, @application_form, work_history])
       end
+    end
 
-      summary_list.with_row do |row|
-        row.with_key { "Email address of reference" }
-        row.with_value { work_history.contact_email }
+    summary_list.with_row do |row|
+      row.with_key { "Email address of reference" }
+      row.with_value { work_history.contact_email }
+
+      if can_edit_work_history
         row.with_action(text: "Change", href: [:edit, :assessor_interface, @application_form, work_history])
       end
     end
@@ -55,6 +60,18 @@
     <% end %>
 
     <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
+  <% elsif @reference_request.requested? && can_resend_email_reference_request %>
+    <%= govuk_details(summary_text: "Resend reference request email") do %>
+      <%= govuk_warning_text(text: "Only resend reference requests if you have been asked to do so.") %>
+
+      <% if (timeline_event = @application_form.timeline_events.email_sent.where(mailer_class_name: "RefereeMailer", mailer_action_name: "reference_requested").order(created_at: :desc).first) %>
+        <p class="govuk-body">This email was last sent on <%= timeline_event.created_at.to_fs(:date_and_time) %></p>
+      <% end %>
+
+      <%= govuk_button_link_to "Resend reference request email", [:resend_email, :assessor_interface, @application_form, @assessment, @reference_request] %>
+
+      <p class="govuk-body">Resending this email will not affect the original reminder schedule. Reminders will be sent automatically 2 weeks and 4 weeks after the original reference request email was sent.</p>
+    <% end %>
   <% end %>
 
   <% if @reference_request.expired? %>

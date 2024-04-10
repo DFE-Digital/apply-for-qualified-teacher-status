@@ -5,6 +5,7 @@ module AssessorInterface
     include HistoryTrackable
 
     before_action :set_individual_variables, except: :index
+    skip_before_action :track_history, only: :resend_email
 
     define_history_origin :index
 
@@ -99,13 +100,34 @@ module AssessorInterface
       if @form.save
         redirect_to [
                       :assessor_interface,
-                      requestable.application_form,
-                      requestable.assessment,
+                      application_form,
+                      assessment,
                       :reference_requests,
                     ]
       else
         render :edit_verify_failed, status: :unprocessable_entity
       end
+    end
+
+    def resend_email
+      if reference_request.requested? && !reference_request.received?
+        DeliverEmail.call(
+          application_form:,
+          mailer: RefereeMailer,
+          action: :reference_requested,
+          reference_request:,
+        )
+
+        flash[:info] = "The reference requested email has been resent."
+      end
+
+      redirect_to [
+                    :verify,
+                    :assessor_interface,
+                    application_form,
+                    assessment,
+                    reference_request,
+                  ]
     end
 
     private
