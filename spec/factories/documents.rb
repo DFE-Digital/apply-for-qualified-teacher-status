@@ -20,25 +20,18 @@ FactoryBot.define do
   factory :document do
     association :documentable, factory: :application_form
     sequence :document_type, Document::UNTRANSLATABLE_TYPES.cycle
-    completed { false }
-
-    trait :completed do
-      completed { true }
-    end
 
     trait :translatable do
       sequence :document_type, Document::TRANSLATABLE_TYPES.cycle
     end
 
     trait :with_upload do
-      completed
       after(:create) do |document, _evaluator|
         create(:upload, :clean, document:)
       end
     end
 
     trait :with_translation do
-      completed
       after(:create) do |document, _evaluator|
         create(:upload, :translation, :clean, document:)
       end

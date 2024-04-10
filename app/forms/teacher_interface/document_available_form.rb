@@ -8,10 +8,7 @@ class TeacherInterface::DocumentAvailableForm < TeacherInterface::BaseForm
   validates :available, inclusion: { in: [true, false] }
 
   def update_model
-    document.update!(
-      available:,
-      completed: available ? !document.uploads.empty? : true,
-    )
+    document.update!(available:)
   end
 
   delegate :application_form, to: :document

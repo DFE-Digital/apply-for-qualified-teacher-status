@@ -1,19 +1,15 @@
 # frozen_string_literal: true
 
-module TeacherInterface
-  class DeleteUploadForm < BaseForm
-    attribute :confirm, :boolean
-    attr_accessor :upload
+class TeacherInterface::DeleteUploadForm < TeacherInterface::BaseForm
+  attr_accessor :upload
+  attribute :confirm, :boolean
 
-    validates :confirm, inclusion: { in: [true, false] }
-    validates :upload, presence: true, if: :confirm
+  validates :upload, presence: true
+  validates :confirm, inclusion: { in: [true, false] }
 
-    def update_model
-      upload.destroy! if confirm
-
-      document.update!(completed: false) if document.uploads.empty?
-    end
-
-    delegate :application_form, :document, to: :upload
+  def update_model
+    upload.destroy! if confirm
   end
+
+  delegate :application_form, :document, to: :upload
 end

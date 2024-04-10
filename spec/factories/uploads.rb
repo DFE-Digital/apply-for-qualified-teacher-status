@@ -19,7 +19,7 @@
 #
 FactoryBot.define do
   factory :upload do
-    association :document, :completed
+    association :document
 
     attachment do
       Rack::Test::UploadedFile.new(
@@ -45,10 +45,6 @@ FactoryBot.define do
 
     trait :suspect do
       malware_scan_result { "suspect" }
-    end
-
-    after(:create) do |upload, _evaluator|
-      upload.document.update!(completed: true)
     end
   end
 end

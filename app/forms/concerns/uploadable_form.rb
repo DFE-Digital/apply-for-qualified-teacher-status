@@ -41,8 +41,6 @@ module UploadableForm
     if FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
       fetch_and_update_malware_scan_results
     end
-
-    document.update!(completed: !document.uploads.empty?)
   end
 
   private

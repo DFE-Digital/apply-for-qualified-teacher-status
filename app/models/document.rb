@@ -31,9 +31,6 @@ class Document < ApplicationRecord
            -> { where(translation: true) },
            class_name: "Upload"
 
-  scope :completed, -> { where(completed: true) }
-  scope :not_completed, -> { where(completed: false) }
-
   UNTRANSLATABLE_TYPES = %w[
     english_language_proficiency
     identification
@@ -69,6 +66,10 @@ class Document < ApplicationRecord
 
   def optional?
     written_statement? && application_form.written_statement_optional
+  end
+
+  def completed?
+    uploads.present? || (optional? && available == false)
   end
 
   def downloadable?

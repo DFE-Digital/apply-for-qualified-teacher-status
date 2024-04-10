@@ -1,7 +1,12 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::DocumentAvailableForm, type: :model do
-  let(:document) { create(:document) }
+  let(:application_form) do
+    create(:application_form, written_statement_optional: true)
+  end
+  let(:document) do
+    create(:document, :written_statement, documentable: application_form)
+  end
 
   subject(:form) { described_class.new(document:, available:) }
 
@@ -20,7 +25,7 @@ RSpec.describe TeacherInterface::DocumentAvailableForm, type: :model do
 
       it "saves the document" do
         expect(document.available).to eq(true)
-        expect(document.completed).to eq(false)
+        expect(document.completed?).to eq(false)
       end
     end
 
@@ -29,7 +34,7 @@ RSpec.describe TeacherInterface::DocumentAvailableForm, type: :model do
 
       it "saves the document" do
         expect(document.available).to eq(false)
-        expect(document.completed).to eq(true)
+        expect(document.completed?).to eq(true)
       end
     end
   end
