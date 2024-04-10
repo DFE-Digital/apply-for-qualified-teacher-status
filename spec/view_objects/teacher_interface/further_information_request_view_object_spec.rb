@@ -56,7 +56,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
           further_information_request,
           text_item,
         ],
-        status: :not_started,
+        status: "not_started",
       )
     end
 
@@ -71,7 +71,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
           further_information_request,
           document_item,
         ],
-        status: :not_started,
+        status: "not_started",
       )
     end
   end

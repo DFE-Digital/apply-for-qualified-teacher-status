@@ -1,18 +1,16 @@
-<div class="govuk-error-summary" data-module="govuk-error-summary">
-  <div role="alert">
-    <h2 class="govuk-error-summary__title">
-      There was a problem uploading your document
-    </h2>
-    <div class="govuk-error-summary__body">
-      <ul class="govuk-list govuk-error-summary__list">
-        <li>
-          <a href="#teacher-interface-upload-form-original-attachment-field">Please try uploading it again.</a>
-        </li>
-        <li>
-          If you still experience this problem, email us at
-          <%= govuk_link_to t("service.email.enquiries"), email_path("enquiries") %>
-        </li>
-      </ul>
-    </div>
+<div role="alert" class="govuk-error-summary" data-module="govuk-error-summary">
+  <h2 class="govuk-error-summary__title">
+    There was a problem uploading your document
+  </h2>
+  <div class="govuk-error-summary__body">
+    <ul class="govuk-list govuk-error-summary__list">
+      <li>
+        <a href="#teacher-interface-upload-form-original-attachment-field">Please try uploading it again.</a>
+      </li>
+      <li>
+        If you still experience this problem, email us at
+        <%= govuk_link_to t("service.email.enquiries"), email_path("enquiries") %>
+      </li>
+    </ul>
   </div>
 </div>

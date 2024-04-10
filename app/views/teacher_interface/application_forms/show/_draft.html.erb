@@ -1,3 +1,18 @@
+<% if (errored_task_list_sections = view_object.errored_task_list_sections).present? %>
+  <div role="alert" class="govuk-error-summary" data-module="govuk-error-summary">
+    <h2 class="govuk-error-summary__title">There is a problem</h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <% errored_task_list_sections.each do |section| %>
+          <li>
+            <a href="#app-task-list-<%= section[:title].parameterize %>">A selected file in “<%= section[:title] %>” contains a suspected virus. Remove it and upload a new file.</a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
 <% if view_object.show_work_history_under_submission_banner? || view_object.show_work_history_under_induction_banner? %>
   <%= govuk_notification_banner(title_text: "Important") do %>
     <p>You have added at least one teaching role that started before you were qualified as a teacher.</p>
@@ -35,6 +50,10 @@
 <% end %>
 
 <%= render TaskList::Component.new(view_object.task_list_sections) %>
+
+<% if errored_task_list_sections.present? %>
+  <p class="govuk-body">You cannot submit your application until all errors have been fixed.</p>
+<% end %>
 
 <div class="govuk-button-group">
   <% if view_object.can_submit? %>

@@ -272,25 +272,6 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
       )
     end
 
-    context "with a suspect malware scan" do
-      before do
-        FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result)
-        create(
-          :upload,
-          malware_scan_result: "suspect",
-          document: model.document,
-        )
-      end
-
-      after { FeatureFlags::FeatureFlag.deactivate(:fetch_malware_scan_result) }
-
-      it "includes a warning" do
-        expect(row.at_css(".govuk-summary-list__value").text).to include(
-          "2 file uploads has been scanned as malware and deleted.",
-        )
-      end
-    end
-
     it "renders the change link" do
       a = row.at_css(".govuk-summary-list__actions .govuk-link")
 

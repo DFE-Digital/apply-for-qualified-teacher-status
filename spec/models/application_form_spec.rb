@@ -133,9 +133,10 @@ RSpec.describe ApplicationForm, type: :model do
     it do
       is_expected.to define_enum_for(:personal_information_status)
         .with_values(
-          not_started: "not_started",
-          in_progress: "in_progress",
           completed: "completed",
+          error: "error",
+          in_progress: "in_progress",
+          not_started: "not_started",
         )
         .with_prefix(:personal_information_status)
         .backed_by_column_of_type(:string)
@@ -144,9 +145,10 @@ RSpec.describe ApplicationForm, type: :model do
     it do
       is_expected.to define_enum_for(:identification_document_status)
         .with_values(
-          not_started: "not_started",
-          in_progress: "in_progress",
           completed: "completed",
+          error: "error",
+          in_progress: "in_progress",
+          not_started: "not_started",
         )
         .with_prefix(:identification_document_status)
         .backed_by_column_of_type(:string)
@@ -155,9 +157,10 @@ RSpec.describe ApplicationForm, type: :model do
     it do
       is_expected.to define_enum_for(:qualifications_status)
         .with_values(
-          not_started: "not_started",
-          in_progress: "in_progress",
           completed: "completed",
+          error: "error",
+          in_progress: "in_progress",
+          not_started: "not_started",
         )
         .with_prefix(:qualifications_status)
         .backed_by_column_of_type(:string)
@@ -166,9 +169,10 @@ RSpec.describe ApplicationForm, type: :model do
     it do
       is_expected.to define_enum_for(:age_range_status)
         .with_values(
-          not_started: "not_started",
-          in_progress: "in_progress",
           completed: "completed",
+          error: "error",
+          in_progress: "in_progress",
+          not_started: "not_started",
         )
         .with_prefix(:age_range_status)
         .backed_by_column_of_type(:string)
@@ -177,9 +181,10 @@ RSpec.describe ApplicationForm, type: :model do
     it do
       is_expected.to define_enum_for(:subjects_status)
         .with_values(
-          not_started: "not_started",
-          in_progress: "in_progress",
           completed: "completed",
+          error: "error",
+          in_progress: "in_progress",
+          not_started: "not_started",
         )
         .with_prefix(:subjects_status)
         .backed_by_column_of_type(:string)
@@ -188,9 +193,10 @@ RSpec.describe ApplicationForm, type: :model do
     it do
       is_expected.to define_enum_for(:english_language_status)
         .with_values(
-          not_started: "not_started",
-          in_progress: "in_progress",
           completed: "completed",
+          error: "error",
+          in_progress: "in_progress",
+          not_started: "not_started",
         )
         .with_prefix(:english_language_status)
         .backed_by_column_of_type(:string)
@@ -199,9 +205,10 @@ RSpec.describe ApplicationForm, type: :model do
     it do
       is_expected.to define_enum_for(:work_history_status)
         .with_values(
-          not_started: "not_started",
-          in_progress: "in_progress",
           completed: "completed",
+          error: "error",
+          in_progress: "in_progress",
+          not_started: "not_started",
         )
         .with_prefix(:work_history_status)
         .backed_by_column_of_type(:string)
@@ -210,9 +217,10 @@ RSpec.describe ApplicationForm, type: :model do
     it do
       is_expected.to define_enum_for(:registration_number_status)
         .with_values(
-          not_started: "not_started",
-          in_progress: "in_progress",
           completed: "completed",
+          error: "error",
+          in_progress: "in_progress",
+          not_started: "not_started",
         )
         .with_prefix(:registration_number_status)
         .backed_by_column_of_type(:string)
@@ -221,9 +229,10 @@ RSpec.describe ApplicationForm, type: :model do
     it do
       is_expected.to define_enum_for(:written_statement_status)
         .with_values(
-          not_started: "not_started",
-          in_progress: "in_progress",
           completed: "completed",
+          error: "error",
+          in_progress: "in_progress",
+          not_started: "not_started",
         )
         .with_prefix(:written_statement_status)
         .backed_by_column_of_type(:string)

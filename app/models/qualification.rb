@@ -90,6 +90,11 @@ class Qualification < ApplicationRecord
     !complete?
   end
 
+  def any_documents_unsafe_to_link?
+    certificate_document.any_unsafe_to_link? ||
+      transcript_document.any_unsafe_to_link?
+  end
+
   def institution_country_name
     CountryName.from_code(institution_country_code)
   end

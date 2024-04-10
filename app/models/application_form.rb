@@ -155,9 +155,10 @@ class ApplicationForm < ApplicationRecord
   ].freeze
 
   STATUS_VALUES = {
-    not_started: "not_started",
-    in_progress: "in_progress",
     completed: "completed",
+    error: "error",
+    in_progress: "in_progress",
+    not_started: "not_started",
   }.freeze
 
   STATUS_COLUMNS.each { |column| enum column, STATUS_VALUES, prefix: column }

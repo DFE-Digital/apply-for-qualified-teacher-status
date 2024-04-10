@@ -30,7 +30,7 @@ module TeacherInterface
                 further_information_request,
                 item,
               ],
-              status: item.state,
+              status: item.status,
             }
           end
 

@@ -80,8 +80,7 @@ module AssessorInterface
     end
 
     def check_upload
-      unless consent_request.unsigned_consent_document.completed? &&
-               consent_request.unsigned_consent_document.downloadable?
+      unless consent_request.unsigned_consent_document.completed?
         history_stack.pop
 
         redirect_to [

@@ -6,10 +6,11 @@ RSpec.describe "Teacher qualifications", type: :system do
   before do
     given_i_am_authorized_as_a_user(teacher)
     given_an_application_form_exists
-    given_malware_scanning_is_enabled
   end
 
   it "records qualifications" do
+    given_malware_scanning_is_enabled
+
     when_i_visit_the(:teacher_application_page)
     then_i_see_the(:teacher_application_page)
     and_i_see_the_qualifications_task
@@ -44,6 +45,7 @@ RSpec.describe "Teacher qualifications", type: :system do
   end
 
   it "deletes qualifications" do
+    given_malware_scanning_is_disabled
     given_some_qualifications_exist
 
     when_i_visit_the(:teacher_application_page)

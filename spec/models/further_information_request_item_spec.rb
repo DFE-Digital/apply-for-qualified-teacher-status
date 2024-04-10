@@ -45,8 +45,8 @@ RSpec.describe FurtherInformationRequestItem do
     create(:further_information_request_item)
   end
 
-  describe "#state" do
-    subject(:state) { further_information_request_item.state }
+  describe "#status" do
+    subject(:status) { further_information_request_item.status }
 
     context "with text information" do
       before do
@@ -54,7 +54,7 @@ RSpec.describe FurtherInformationRequestItem do
       end
 
       context "without a response" do
-        it { is_expected.to eq(:not_started) }
+        it { is_expected.to eq("not_started") }
       end
 
       context "with a response" do
@@ -62,7 +62,7 @@ RSpec.describe FurtherInformationRequestItem do
           further_information_request_item.update!(response: "response")
         end
 
-        it { is_expected.to eq(:completed) }
+        it { is_expected.to eq("completed") }
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe FurtherInformationRequestItem do
       end
 
       context "without an upload" do
-        it { is_expected.to eq(:not_started) }
+        it { is_expected.to eq("not_started") }
       end
 
       context "with an upload" do
@@ -81,7 +81,7 @@ RSpec.describe FurtherInformationRequestItem do
           create(:upload, document: further_information_request_item.document)
         end
 
-        it { is_expected.to eq(:completed) }
+        it { is_expected.to eq("completed") }
       end
     end
   end

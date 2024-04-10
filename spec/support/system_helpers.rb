@@ -95,6 +95,10 @@ module SystemHelpers
     allow(stubbed_service).to receive(:call).and_return(stubbed_response)
   end
 
+  def given_malware_scanning_is_disabled
+    FeatureFlags::FeatureFlag.deactivate(:fetch_malware_scan_result)
+  end
+
   def when_i_sign_out
     sign_out @user
   end

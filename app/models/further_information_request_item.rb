@@ -40,8 +40,14 @@ class FurtherInformationRequestItem < ApplicationRecord
          work_history_contact: "work_history_contact",
        }
 
-  def state
-    completed? ? :completed : :not_started
+  def status
+    if completed?
+      "completed"
+    elsif document? && document.any_unsafe_to_link?
+      "error"
+    else
+      "not_started"
+    end
   end
 
   def completed?

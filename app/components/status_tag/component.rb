@@ -32,6 +32,7 @@ module StatusTag
       cannot_start: "grey",
       declined: "red",
       draft: "grey",
+      error: "red",
       expired: "pink",
       in_progress: "blue",
       invalid: "red",

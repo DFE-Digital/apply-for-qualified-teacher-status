@@ -128,9 +128,7 @@ module AssessorInterface
       all_documents_completed =
         qualification_requests.consent_method_signed.count ==
           consent_requests.count &&
-          consent_requests
-            .map(&:unsigned_consent_document)
-            .all? { |document| document.completed? && document.downloadable? }
+          consent_requests.map(&:unsigned_consent_document).all?(&:completed?)
 
       all_consents_requested = consent_requests.all?(&:requested?)
 
@@ -186,17 +184,7 @@ module AssessorInterface
               ]
             end,
           status:
-            (
-              if consent_request&.unsigned_consent_document&.completed?
-                if consent_request&.unsigned_consent_document&.downloadable?
-                  "completed"
-                else
-                  "in_progress"
-                end
-              else
-                "not_started"
-              end
-            ),
+            consent_request&.unsigned_consent_document&.status || "not_started",
         },
         unless send_consent_document_in_all_qualifications?
           send_consent_document_task_item

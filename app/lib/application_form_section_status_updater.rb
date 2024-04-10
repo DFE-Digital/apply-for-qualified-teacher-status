@@ -73,7 +73,7 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def identification_document_status
-    identification_document.completed? ? :completed : :not_started
+    identification_document.status
   end
 
   def qualifications_status
@@ -84,7 +84,13 @@ class ApplicationFormSectionStatusUpdater
       return :in_progress
     end
 
-    qualifications.all?(&:complete?) ? :completed : :in_progress
+    if qualifications.any?(&:any_documents_unsafe_to_link?)
+      :error
+    elsif qualifications.all?(&:complete?)
+      :completed
+    else
+      :in_progress
+    end
   end
 
   def age_range_status
@@ -105,16 +111,20 @@ class ApplicationFormSectionStatusUpdater
 
     case english_language_proof_method
     when "medium_of_instruction"
-      status_for_document(
-        english_language_medium_of_instruction_document,
-        not_started: :in_progress,
-      )
+      if (status = english_language_medium_of_instruction_document.status) !=
+           "not_started"
+        status
+      else
+        "in_progress"
+      end
     when "provider"
       if english_language_provider_other
-        status_for_document(
-          english_language_proficiency_document,
-          not_started: :in_progress,
-        )
+        if (status = english_language_proficiency_document.status) !=
+             "not_started"
+          status
+        else
+          "in_progress"
+        end
       else
         status_for_values(
           english_language_proof_method,
@@ -167,7 +177,7 @@ class ApplicationFormSectionStatusUpdater
     if teaching_authority_provides_written_statement
       written_statement_confirmation ? :completed : :not_started
     else
-      status_for_document(written_statement_document)
+      written_statement_document.status
     end
   end
 
@@ -175,15 +185,5 @@ class ApplicationFormSectionStatusUpdater
     return :not_started if values.all?(&:blank?)
     return :completed if values.all?(&:present?)
     :in_progress
-  end
-
-  def status_for_document(document, not_started: :not_started)
-    if document.completed?
-      :completed
-    elsif !document.available.nil?
-      :in_progress
-    else
-      not_started
-    end
   end
 end
