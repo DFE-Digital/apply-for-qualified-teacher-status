@@ -3,6 +3,7 @@
 # Table name: uploads
 #
 #  id                  :bigint           not null, primary key
+#  filename            :string           default(""), not null
 #  malware_scan_result :string           default("pending"), not null
 #  translation         :boolean          not null
 #  created_at          :datetime         not null

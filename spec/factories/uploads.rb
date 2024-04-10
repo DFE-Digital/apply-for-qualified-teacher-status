@@ -3,6 +3,7 @@
 # Table name: uploads
 #
 #  id                  :bigint           not null, primary key
+#  filename            :string           default(""), not null
 #  malware_scan_result :string           default("pending"), not null
 #  translation         :boolean          not null
 #  created_at          :datetime         not null
@@ -21,21 +22,18 @@ FactoryBot.define do
   factory :upload do
     association :document
 
+    filename { Faker::File.file_name(ext: "pdf") }
+
     attachment do
       Rack::Test::UploadedFile.new(
         "spec/fixtures/files/upload.pdf",
         "application/pdf",
       )
     end
+
     translation { false }
 
     trait :translation do
-      attachment do
-        Rack::Test::UploadedFile.new(
-          "spec/fixtures/files/translation_upload.pdf",
-          "application/pdf",
-        )
-      end
       translation { true }
     end
 

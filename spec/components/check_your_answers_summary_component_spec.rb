@@ -359,7 +359,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
 
       it "renders the value" do
         expect(row.at_css(".govuk-summary-list__value a").text).to eq(
-          "translation_upload.pdf (opens in a new tab)",
+          "upload.pdf (opens in a new tab)",
         )
 
         document = model.translatable_document

@@ -27,6 +27,7 @@ module UploadableForm
     if original_attachment.present?
       document.uploads.create!(
         attachment: original_attachment,
+        filename: original_attachment.original_filename,
         translation: false,
       )
     end
@@ -34,6 +35,7 @@ module UploadableForm
     if translated_attachment.present?
       document.uploads.create!(
         attachment: translated_attachment,
+        filename: translated_attachment.original_filename,
         translation: true,
       )
     end
