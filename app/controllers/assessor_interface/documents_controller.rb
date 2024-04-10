@@ -14,7 +14,7 @@ module AssessorInterface
       authorize %i[assessor_interface application_form]
 
       unless document.completed?
-        render "shared/malware_scan"
+        render "errors/forbidden", status: :forbidden
         return
       end
 
