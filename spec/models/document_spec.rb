@@ -4,7 +4,6 @@
 #
 #  id                :bigint           not null, primary key
 #  available         :boolean
-#  completed         :boolean          default(FALSE)
 #  document_type     :string           not null
 #  documentable_type :string
 #  created_at        :datetime         not null
