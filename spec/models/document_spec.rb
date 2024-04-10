@@ -40,25 +40,6 @@ RSpec.describe Document, type: :model do
     end
   end
 
-  describe "scopes" do
-    let!(:incomplete_document) { create(:document) }
-    let!(:complete_document) { create(:document, :completed) }
-
-    describe "completed" do
-      it "includes only complete documents" do
-        expect(Document.completed).to include(complete_document)
-        expect(Document.completed).to_not include(incomplete_document)
-      end
-    end
-
-    describe "not_completed" do
-      it "includes only incomplete documents" do
-        expect(Document.not_completed).to include(incomplete_document)
-        expect(Document.not_completed).to_not include(complete_document)
-      end
-    end
-  end
-
   describe "#original_uploads" do
     subject(:original_uploads) { document.original_uploads }
 

@@ -6,21 +6,17 @@ RSpec.describe TeacherInterface::DeleteUploadForm, type: :model do
   subject(:form) { described_class.new(confirm:, upload:) }
 
   describe "validations" do
-    let(:confirm) { "" }
+    let(:confirm) { nil }
     let(:upload) { nil }
 
+    it { is_expected.to validate_presence_of(:upload) }
     it { is_expected.to allow_values(true, false).for(:confirm) }
-
-    context "when confirm is true" do
-      let(:confirm) { "true" }
-      it { is_expected.to validate_presence_of(:upload) }
-    end
   end
 
   describe "#save" do
     subject(:save) { form.save(validate: true) }
 
-    let(:document) { create(:document, :completed) }
+    let(:document) { create(:document) }
     let!(:upload) { create(:upload, document:) }
 
     context "when confirm is true" do
@@ -31,14 +27,16 @@ RSpec.describe TeacherInterface::DeleteUploadForm, type: :model do
       end
 
       it "marks the document as incomplete" do
-        expect { save }.to change(document, :completed).from(true).to(false)
+        expect { save }.to change { document.reload.completed? }.from(true).to(
+          false,
+        )
       end
 
       context "with another upload" do
         before { create(:upload, document:) }
 
         it "doesn't mark the document as incomplete" do
-          expect { save }.to_not change(document, :completed).from(true)
+          expect { save }.to_not change(document, :completed?).from(true)
         end
       end
     end

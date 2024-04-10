@@ -97,7 +97,7 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
 
         context "when the signed consent document is uploaded" do
           before do
-            consent_request.signed_consent_document.update!(completed: true)
+            create(:upload, document: consent_request.signed_consent_document)
           end
 
           it do

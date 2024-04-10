@@ -31,6 +31,8 @@ class Upload < ApplicationRecord
        },
        _prefix: :scan_result
 
+  delegate :application_form, to: :document
+
   def original?
     !translation?
   end
@@ -44,8 +46,6 @@ class Upload < ApplicationRecord
   def url
     attachment.url(expires_in: 5.minutes)
   end
-
-  delegate :application_form, to: :document
 
   def is_pdf?
     attachment.blob.content_type == "application/pdf"
