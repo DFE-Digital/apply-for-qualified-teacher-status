@@ -9,7 +9,7 @@ RSpec.describe UploadHelper do
 
       it "returns a link to the upload" do
         expect(upload_link_to).to have_link(
-          "#{upload.name} (opens in a new tab)",
+          "#{upload.filename} (opens in a new tab)",
           href:
             "/teacher/application/documents/#{upload.document.id}/uploads/#{upload.id}",
         )
@@ -24,7 +24,7 @@ RSpec.describe UploadHelper do
 
         it "returns a link to the upload" do
           expect(upload_link_to).to have_link(
-            "#{upload.name} (opens in a new tab)",
+            "#{upload.filename} (opens in a new tab)",
             href:
               "/assessor/application/documents/#{upload.document.id}/uploads/#{upload.id}",
           )
@@ -39,7 +39,7 @@ RSpec.describe UploadHelper do
 
       it "returns text for a pending scan" do
         expect(upload_link_to).to have_link(
-          upload.name,
+          upload.filename,
           href:
             "/teacher/application/documents/#{upload.document.id}/uploads/#{upload.id}",
         )

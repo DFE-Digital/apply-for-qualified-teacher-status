@@ -31,13 +31,13 @@
           row.with_action(
             text: "Delete",
             href: delete_teacher_interface_application_form_document_upload_path(@document, upload),
-            visually_hidden_text: upload.attachment.filename
+            visually_hidden_text: upload.filename
           )
         else
           row.with_action(
             text: "Change",
             href: new_teacher_interface_application_form_document_upload_path(@document),
-            visually_hidden_text: upload.attachment.filename
+            visually_hidden_text: upload.filename
           )
         end
       end

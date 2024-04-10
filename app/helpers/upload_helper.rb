@@ -4,7 +4,7 @@ module UploadHelper
   def upload_link_to(upload)
     href =
       govuk_link_to(
-        "#{upload.name} (opens in a new tab)",
+        "#{upload.filename} (opens in a new tab)",
         upload_path(upload),
         target: :_blank,
         rel: :noopener,

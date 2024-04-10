@@ -38,12 +38,6 @@ class Upload < ApplicationRecord
     !translation?
   end
 
-  def name
-    return "File upload error" if scan_result_suspect?
-
-    attachment.filename.to_s
-  end
-
   def url
     attachment.url(expires_in: 5.minutes)
   end
