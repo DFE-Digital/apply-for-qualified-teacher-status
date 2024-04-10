@@ -13,13 +13,15 @@ module TeacherInterface
 
     def show
       if document.uploads.empty? && !document.optional?
-        redirect_to new_teacher_interface_application_form_document_upload_path(
+        redirect_to [
+                      :new,
+                      :teacher_interface,
+                      :application_form,
                       document,
-                    )
+                      :upload,
+                    ]
       else
-        redirect_to edit_teacher_interface_application_form_document_path(
-                      document,
-                    )
+        redirect_to [:edit, :teacher_interface, :application_form, document]
       end
     end
 
@@ -46,7 +48,7 @@ module TeacherInterface
               ),
           )
         else
-          TeacherInterface::AddAnotherUploadForm.new(
+          AddAnotherUploadForm.new(
             add_another:
               params.dig(
                 :teacher_interface_add_another_upload_form,
