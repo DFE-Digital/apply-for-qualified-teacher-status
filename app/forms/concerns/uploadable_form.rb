@@ -63,10 +63,7 @@ module UploadableForm
 
   def fetch_and_update_malware_scan_results
     document.uploads.each do |upload|
-      # We need a delay here to ensure that the upload has been scanned before fetching the result.
-
-      FetchMalwareScanResultJob.set(wait: 5.seconds).perform_later(upload)
-      FetchMalwareScanResultJob.set(wait: 2.minutes).perform_later(upload)
+      UpdateMalwareScanResultJob.set(wait: 5.seconds).perform_later(upload)
     end
   end
 end

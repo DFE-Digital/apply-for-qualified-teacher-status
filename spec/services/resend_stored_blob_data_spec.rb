@@ -40,7 +40,7 @@ RSpec.describe ResendStoredBlobData do
 
     it "enqueues a FetchMalwareScanResultJob" do
       expect { resend_stored_blob_data }.to have_enqueued_job(
-        FetchMalwareScanResultJob,
+        UpdateMalwareScanResultJob,
       ).with(upload)
     end
 

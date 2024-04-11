@@ -54,7 +54,3 @@ analytics_entity_table_check:
   cron: "0 4 * * *"
   class: DfE::Analytics::EntityTableCheckJob
   queue: analytics
-
-fetch_malware_scan_results:
-  cron: "*/30 * * * *"
-  class: FetchMalwareScanResultsJob
