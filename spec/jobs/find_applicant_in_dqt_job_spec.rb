@@ -7,9 +7,8 @@ RSpec.describe FindApplicantInDQTJob do
     let(:application_form) do
       create(:application_form, :submitted, :with_personal_information)
     end
-    let(:application_form_id) { application_form.id }
 
-    subject(:perform) { described_class.perform_now(application_form_id:) }
+    subject(:perform) { described_class.perform_now(application_form) }
 
     it "calls the FindTeachersInDQT service" do
       expect(FindTeachersInDQT).to receive(:call).with(

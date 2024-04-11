@@ -55,14 +55,10 @@ class SubmitApplicationForm
       )
     end
 
-    FindApplicantInDQTJob.perform_later(
-      application_form_id: application_form.id,
-    )
+    FindApplicantInDQTJob.perform_later(application_form)
 
     # Sometimes DQT doesn't find a result the first time
-    FindApplicantInDQTJob.set(wait: 5.minutes).perform_later(
-      application_form_id: application_form.id,
-    )
+    FindApplicantInDQTJob.set(wait: 5.minutes).perform_later(application_form)
   end
 
   private

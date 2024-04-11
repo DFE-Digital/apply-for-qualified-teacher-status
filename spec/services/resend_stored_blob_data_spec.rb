@@ -39,13 +39,9 @@ RSpec.describe ResendStoredBlobData do
     end
 
     it "enqueues a FetchMalwareScanResultJob" do
-      expect(FetchMalwareScanResultJob).to receive(:set).with(
-        wait: 1.minute,
-      ).and_return(FetchMalwareScanResultJob)
-      expect(FetchMalwareScanResultJob).to receive(:perform_later).with(
-        upload_id: upload.id,
-      )
-      resend_stored_blob_data
+      expect { resend_stored_blob_data }.to have_enqueued_job(
+        FetchMalwareScanResultJob,
+      ).with(upload)
     end
 
     context "when the upload attachment is missing" do

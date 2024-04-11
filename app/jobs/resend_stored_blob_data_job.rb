@@ -6,7 +6,7 @@ class ResendStoredBlobDataJob < ApplicationJob
     return unless FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
 
     Upload
-      .where(malware_scan_result: "pending")
+      .malware_scan_pending
       .limit(batch_size)
       .find_each do |upload|
         sleep(2) # Avoid rate limiting

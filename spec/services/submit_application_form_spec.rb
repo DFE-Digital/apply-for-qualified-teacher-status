@@ -205,7 +205,7 @@ RSpec.describe SubmitApplicationForm do
   describe "finding matches in DQT" do
     it "calls a background job to find matching DQT records" do
       expect { call }.to have_enqueued_job(FindApplicantInDQTJob).with(
-        application_form_id: application_form.id,
+        application_form,
       ).twice
     end
   end
