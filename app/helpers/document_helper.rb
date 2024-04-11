@@ -25,7 +25,7 @@ module DocumentHelper
 
       items = uploads.map { |upload| upload_link_to(upload) }
 
-      if malware_scan_active && scope.scan_result_suspect.exists?
+      if malware_scan_active && scope.malware_scan_suspect.exists?
         items << tag.em(
           "#{scope.count} #{"file upload".pluralize(scope.count)} has been scanned as malware and deleted.",
         )

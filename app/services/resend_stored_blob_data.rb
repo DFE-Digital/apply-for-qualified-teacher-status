@@ -15,7 +15,9 @@ class ResendStoredBlobData
   end
 
   def call
-    return unless upload.scan_result_pending? && upload.attachment&.key.present?
+    unless upload.malware_scan_pending? && upload.attachment&.key.present?
+      return
+    end
 
     response = blob_service.call(:put, put_blob_url, attachment_data, headers)
 
