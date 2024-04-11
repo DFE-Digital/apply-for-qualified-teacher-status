@@ -22,7 +22,7 @@ class ResendStoredBlobData
     response = blob_service.call(:put, put_blob_url, attachment_data, headers)
 
     if response.success?
-      UpdateMalwareScanResultJob.set(wait: 5.seconds).perform_later(upload)
+      UpdateMalwareScanResultJob.set(wait: 2.seconds).perform_later(upload)
     end
   rescue ActiveStorage::FileNotFoundError
     upload.update!(malware_scan_result: "error")
