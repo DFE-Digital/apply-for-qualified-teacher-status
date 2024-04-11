@@ -21,3 +21,4 @@ Layout/LineLength:
 Lint/SuppressedException:
   Exclude:
     - spec/jobs/update_dqt_trn_request_job_spec.rb
+    - spec/jobs/update_malware_scan_result_job_spec.rb

@@ -30,7 +30,7 @@ class Upload < ApplicationRecord
          pending: "pending",
          suspect: "suspect",
        },
-       _prefix: :scan_result
+       _prefix: :malware_scan
 
   delegate :application_form, to: :document
 
@@ -48,6 +48,6 @@ class Upload < ApplicationRecord
 
   def downloadable?
     !FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result) ||
-      scan_result_clean?
+      malware_scan_clean?
   end
 end

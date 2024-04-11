@@ -10,7 +10,7 @@ module UploadHelper
         rel: :noopener,
       )
 
-    if upload.scan_result_error? || upload.scan_result_suspect?
+    if upload.malware_scan_error? || upload.malware_scan_suspect?
       href +
         tag.p("There’s a problem with this file", class: "govuk-error-message")
     else
