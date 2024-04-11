@@ -1,4 +1,4 @@
-<% content_for :page_title, title_with_error_prefix("Delete #{@upload.attachment.filename}", error: @form.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix("Delete #{@upload.filename}", error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: edit_teacher_interface_application_form_document_path(@document)) %>
 
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @document, @upload], method: :delete do |f| %>
@@ -9,7 +9,7 @@
                                        :id,
                                        :name,
                                        inline: true,
-                                       legend: { text: "Are you sure you want to delete #{@upload.attachment.filename}?", size: "l", tag: "h1" } %>
+                                       legend: { text: "Are you sure you want to delete #{@upload.filename}?", size: "l", tag: "h1" } %>
 
   <%= f.govuk_submit %>
 <% end %>

@@ -18,7 +18,7 @@
     <h2 class="govuk-heading-m">Returned file</h2>
 
     <% if @consent_request.received? %>
-      <p class="govuk-body"><%= upload.name %></p>
+      <p class="govuk-body"><%= upload.filename %></p>
 
       <div class="govuk-button-group">
         <% if upload.is_pdf? %>
