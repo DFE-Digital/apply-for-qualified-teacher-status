@@ -24,25 +24,27 @@ module UploadableForm
   def create_uploads!
     document.uploads.each(&:destroy!) unless document.allow_multiple_uploads?
 
+    uploads = []
+
     if original_attachment.present?
-      document.uploads.create!(
+      uploads << document.uploads.create!(
         attachment: original_attachment,
         filename: original_attachment.original_filename,
+        malware_scan_result: malware_scan_result(original_attachment),
         translation: false,
       )
     end
 
     if translated_attachment.present?
-      document.uploads.create!(
+      uploads << document.uploads.create!(
         attachment: translated_attachment,
         filename: translated_attachment.original_filename,
+        malware_scan_result: malware_scan_result(translated_attachment),
         translation: true,
       )
     end
 
-    if FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
-      fetch_and_update_malware_scan_results
-    end
+    fetch_and_update_malware_scan_results(uploads)
   end
 
   private
@@ -61,9 +63,23 @@ module UploadableForm
     end
   end
 
-  def fetch_and_update_malware_scan_results
-    document.uploads.each do |upload|
-      UpdateMalwareScanResultJob.set(wait: 2.seconds).perform_later(upload)
+  def fetch_and_update_malware_scan_results(uploads)
+    if FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
+      uploads
+        .select(&:malware_scan_pending?)
+        .each do |upload|
+          UpdateMalwareScanResultJob.set(wait: 2.seconds).perform_later(upload)
+        end
+    end
+  end
+
+  def malware_scan_result(attachment)
+    if FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
+      "pending"
+    elsif attachment.original_filename == "virus.pdf"
+      "suspect"
+    else
+      "clean"
     end
   end
 end

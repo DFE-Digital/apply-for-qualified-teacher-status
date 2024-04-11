@@ -46,10 +46,7 @@ class Upload < ApplicationRecord
     attachment.blob.content_type == "application/pdf"
   end
 
-  def safe_to_link?
-    malware_scan_clean? ||
-      !FeatureFlags::FeatureFlag.active?(:fetch_malware_scan_result)
-  end
+  alias_method :safe_to_link?, :malware_scan_clean?
 
   def unsafe_to_link?
     malware_scan_error? || malware_scan_suspect?

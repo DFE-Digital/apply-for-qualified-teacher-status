@@ -78,7 +78,11 @@ RSpec.describe FurtherInformationRequestItem do
 
       context "with an upload" do
         before do
-          create(:upload, document: further_information_request_item.document)
+          create(
+            :upload,
+            :clean,
+            document: further_information_request_item.document,
+          )
         end
 
         it { is_expected.to eq("completed") }

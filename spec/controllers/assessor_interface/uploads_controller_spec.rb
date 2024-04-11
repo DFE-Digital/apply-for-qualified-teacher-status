@@ -66,8 +66,6 @@ RSpec.describe AssessorInterface::UploadsController, type: :controller do
     context "when the upload malware scan is not clean" do
       let(:upload) { create(:upload, :suspect, document:) }
 
-      before { FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result) }
-
       it "responds with information about the malware scan" do
         perform
         expect(response.status).to eq(403)
