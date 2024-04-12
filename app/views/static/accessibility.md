@@ -4,7 +4,7 @@
 
 This accessibility statement is for Apply for qualified teacher status (QTS) in England.
 
-This service is run by the Becoming a Teacher team at the Department for Education. We want as many people as possible to be able to use the service. For example, that means users should be able to:
+This service is run by the Teacher Services and the Teacher and Trainee Recruitment Division (TTRD) at the Department for Education (DfE). We want as many people as possible to be able to use the service. For example, that means users should be able to:
 
 - change colours, contrast levels and fonts
 - zoom in up to 300% without the text spilling off the screen
@@ -22,7 +22,7 @@ If you need information on this service in a different format like accessible PD
 
 We’ll consider your request and get back to you in 5 days.
 
-This service was built following GOV.UK design guidelines, which meet the [Web Content Accessibility Guidelines (WCAG) 2.1 (level AAA)](https://www.w3.org/TR/WCAG21/).
+This service was built following GOV.UK design guidelines, which meet the [Web Content Accessibility Guidelines (WCAG) 2.2 (level AAA)](https://www.w3.org/TR/WCAG22/).
 
 ## Reporting accessibility problems with Apply for qualified teacher status (QTS) in England
 
@@ -34,14 +34,14 @@ The Equality and Human Rights Commission (EHRC) is responsible for enforcing the
 
 ## Technical information about this service’s accessibility
 
-The Becoming a Teacher team is committed to making Apply for qualified teacher status (QTS) in England accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No.2) Accessibility Regulations 2018.
+The TTRD is committed to making Apply for qualified teacher status (QTS) in England accessible, in accordance with the [Public Sector Bodies (Websites and Mobile Applications) (No.2) Accessibility Regulations 2018](https://www.legislation.gov.uk/uksi/2018/952/contents/made).
 
 ## Compliance status
 
-This service is fully compliant with the [Web Content Accessibility Guidelines (WCAG) 2.1 (level AAA)](https://www.w3.org/TR/WCAG21/).
+This service is fully compliant with the [Web Content Accessibility Guidelines (WCAG) 2.2 (level AAA)](https://www.w3.org/TR/WCAG22/).
 
 ## Preparation of this accessibility statement
 
-This statement was prepared on 4 November 2022.
+This statement was prepared on 10 April 2024.
 
-This service was last tested on 31 October 2022. The test was carried out by the Digital Accessibility Centre (DAC).
+This service was last tested on 4 April 2024. The test was carried out by the DfE Business Engagement and Accessibility Team.
