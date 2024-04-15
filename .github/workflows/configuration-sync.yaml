@@ -1,0 +1,104 @@
+name: Synchronise configuration
+
+on: workflow_dispatch
+
+jobs:
+  export:
+    name: Export from production
+    runs-on: ubuntu-latest
+
+    environment: production
+
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: ./.github/actions/set-kubernetes-credentials
+        with:
+          environment: production
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Get pod name
+        id: pod-name
+        run: |
+          echo "value=$(kubectl get pod \
+            -n tra-production \
+            -l app=apply-for-qts-production-web \
+            -o jsonpath="{.items[0].metadata.name}")" >> $GITHUB_OUTPUT
+
+      - name: Export configuration data
+        run: |
+          kubectl exec \
+            -n tra-production \
+            ${{ steps.pod-name.outputs.value }} \
+            -- sh -c "cd /app && /usr/local/bin/bundle exec rails configuration_sync:export[data.json]"
+
+      - name: Copy configuration data
+        run: |
+          kubectl cp \
+            -n tra-production \
+            ${{ steps.pod-name.outputs.value }}:data.json \
+            data.json
+
+      - name: Upload configuration data
+        uses: actions/upload-artifact@v4
+        with:
+          name: data
+          path: data.json
+          retention-days: 3
+
+  import:
+    name: Export from production
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        environment: [development, test]
+
+    environment: ${{ matrix.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: ./.github/actions/set-kubernetes-credentials
+        with:
+          environment: ${{ matrix.environment }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Download configuration data
+        uses: actions/download-artifact@v4
+        with:
+          name: data
+
+      - name: Get pod name
+        id: pod-name
+        run: |
+          echo "value=$(kubectl get pod \
+            -n tra-${{ matrix.environment }} \
+            -l app=apply-for-qts-${{ matrix.environment }}-web \
+            -o jsonpath="{.items[0].metadata.name}")" >> $GITHUB_OUTPUT
+
+      - name: Copy configuration data
+        run: |
+          kubectl cp \
+            -n tra-${{ matrix.environment }} \
+            data.json \
+            ${{ steps.pod-name.outputs.value }}:data.json
+
+      - name: Import configuration data
+        run: |
+          kubectl exec \
+            -n tra-${{ matrix.environment }} \
+            ${{ steps.pod-name.outputs.value }} \
+            -- sh -c "cd /app && /usr/local/bin/bundle exec rails configuration_sync:import[data.json]"
