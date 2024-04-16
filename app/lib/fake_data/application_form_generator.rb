@@ -95,35 +95,31 @@ class FakeData::ApplicationFormGenerator
   delegate :assessment, to: :application_form
 
   def create_application_form
-    traits = []
+    traits = %i[
+      with_personal_information
+      with_degree_qualification
+      with_identification_document
+      with_age_range
+      with_subjects
+    ]
 
-    if params.submit?
-      traits += %i[
-        with_personal_information
-        with_degree_qualification
-        with_identification_document
-        with_age_range
-        with_subjects
-      ]
+    traits << %i[
+      with_english_language_medium_of_instruction
+      with_english_language_provider
+      with_english_language_exemption_by_citizenship
+      with_english_language_exemption_by_qualification
+    ].sample
 
-      traits << %i[
-        with_english_language_medium_of_instruction
-        with_english_language_provider
-        with_english_language_exemption_by_citizenship
-        with_english_language_exemption_by_qualification
-      ].sample
+    unless region.application_form_skip_work_history
+      traits << :with_work_history
+    end
 
-      unless region.application_form_skip_work_history
-        traits << :with_work_history
-      end
+    if region.status_check_written? || region.sanction_check_written?
+      traits << :with_written_statement
+    end
 
-      if region.status_check_written? || region.sanction_check_written?
-        traits << :with_written_statement
-      end
-
-      if region.status_check_online? || region.sanction_check_online?
-        traits << :with_registration_number
-      end
+    if region.status_check_online? || region.sanction_check_online?
+      traits << :with_registration_number
     end
 
     @application_form =
