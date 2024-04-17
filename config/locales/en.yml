@@ -41,16 +41,6 @@ en:
       unsigned_consent: unsigned consent
       written_statement: written statement
 
-  malware_scan:
-    title:
-      error: There’s a problem with your file
-      pending: We’re checking your file
-      suspect: There’s a problem with your file
-    body:
-      error: There’s a problem with this file. You’ll need to take another image of the document you want to upload, then try again.
-      pending: We’re carrying out some checks on the file you’ve uploaded. Once we’ve successfully completed these checks, you’ll be able to preview your file.
-      suspect: There’s a problem with this file. You’ll need to take another image of the document you want to upload, then try again.
-
   staff:
     omniauth_callbacks:
       failure: There was a problem signing you in. Please try again.

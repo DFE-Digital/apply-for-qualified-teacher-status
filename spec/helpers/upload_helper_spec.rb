@@ -35,30 +35,19 @@ RSpec.describe UploadHelper do
     context "when the upload malware scan is pending" do
       let(:upload) { build_stubbed(:upload, :pending) }
 
-      before { FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result) }
-
       it "returns text for a pending scan" do
-        expect(upload_link_to).to have_link(
-          upload.filename,
-          href:
-            "/teacher/application/documents/#{upload.document.id}/uploads/#{upload.id}",
-        )
+        expect(upload_link_to).to have_content(upload.filename)
       end
     end
 
     context "when the upload malware scan is suspect" do
       let(:upload) { build_stubbed(:upload, :suspect) }
 
-      before { FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result) }
-
       it "appends an error for a suspect scan" do
         expect(upload_link_to).to have_content(
-          "There’s a problem with this file",
+          "The selected file contains a suspected virus",
         )
-        expect(upload_link_to).to have_css(
-          "p.govuk-error-message",
-          text: "There’s a problem with this file",
-        )
+        expect(upload_link_to).to have_css(".govuk-form-group--error")
       end
     end
   end

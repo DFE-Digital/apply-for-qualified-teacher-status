@@ -104,14 +104,11 @@ RSpec.describe TeacherInterface::UploadsController, type: :controller do
     end
 
     context "when the upload malware scan is not clean" do
-      render_views true
       let(:upload) { create(:upload, :suspect, document:) }
-
-      before { FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result) }
 
       it "renders information about the scan result" do
         perform
-        expect(response.body).to include("There’s a problem with your file")
+        expect(response.status).to eq(403)
       end
     end
   end

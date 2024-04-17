@@ -1,14 +1,16 @@
-<% content_for :page_title, title_with_error_prefix("Check your uploaded files", error: @form.errors.any?) %>
+<% title = if @document.allow_multiple_uploads?
+             "Check your uploaded files – #{t("document.document_type.#{@document.document_type}")} document"
+           else
+             "Check your uploaded file"
+           end %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
-  <% if @document.allow_multiple_uploads? %>
-    <h1 class="govuk-heading-xl">Check your uploaded files – <%= t("document.document_type.#{@document.document_type}") %> document</h1>
-  <% else %>
-    <h1 class="govuk-heading-xl">Check your uploaded file</h1>
-  <% end %>
+  <h1 class="govuk-heading-xl"><%= title %></h1>
 
   <% if @document.for_consent_request? %>
     <h2 class="govuk-heading-m"><%= qualification_title(@document.documentable.qualification) %></h2>
@@ -18,7 +20,7 @@
     <h2 class="govuk-heading-m">Files added</h2>
   <% end %>
 
-  <%= govuk_summary_list do |summary_list|
+  <%= govuk_summary_list(html_attributes: { id: "teacher-interface-add-another-upload-form-uploads-field-error" }) do |summary_list|
     @document.uploads.order(:created_at).each_with_index do |upload, index|
       summary_list.with_row do |row|
         if @document.allow_multiple_uploads?
@@ -45,12 +47,7 @@
   end %>
 
   <% if @document.allow_multiple_uploads? %>
-    <%= f.govuk_radio_buttons_fieldset :add_another,
-                                       legend: { text: "Do you need to upload another page?" },
-                                       hint: { text: "If your document has several pages or you’re providing an image of the other side of your identity card or driving license, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’." } do %>
-      <%= f.govuk_radio_button :add_another, "true", label: { text: "Yes" } %>
-      <%= f.govuk_radio_button :add_another, "false", label: { text: "No" } %>
-    <% end %>
+    <%= f.govuk_collection_radio_buttons :add_another, %i[true false], :itself %>
   <% else %>
     <%= f.hidden_field :add_another, value: "false" %>
   <% end %>

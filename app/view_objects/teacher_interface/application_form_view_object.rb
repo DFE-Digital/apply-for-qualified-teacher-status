@@ -55,6 +55,12 @@ class TeacherInterface::ApplicationFormViewObject
     end
   end
 
+  def errored_task_list_sections
+    task_list_sections.filter do |section|
+      section[:items].any? { |item| item[:status] == "error" }
+    end
+  end
+
   def can_submit?
     completed_task_list_sections.count == task_list_sections.count
   end

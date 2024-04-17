@@ -19,10 +19,10 @@ module TeacherInterface
     before_action :load_upload, only: %i[delete destroy show]
 
     def show
-      if @upload.downloadable?
+      if @upload.safe_to_link?
         send_blob_stream(@upload.attachment, disposition: :inline)
       else
-        render "shared/malware_scan"
+        render "errors/forbidden", status: :forbidden
       end
     end
 

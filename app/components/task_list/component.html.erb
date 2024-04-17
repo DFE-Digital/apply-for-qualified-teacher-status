@@ -1,6 +1,6 @@
 <ol class="app-task-list">
   <% sections.each do |section| %>
-    <li>
+    <li id="app-task-list-<%= section[:key] %>">
       <% if (title = section[:title]).present? %>
         <h2 class="app-task-list__section">
           <% if sections.count > 1 %>

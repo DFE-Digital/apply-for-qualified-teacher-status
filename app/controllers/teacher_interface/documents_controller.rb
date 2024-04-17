@@ -13,25 +13,34 @@ module TeacherInterface
 
     def show
       if document.uploads.empty? && !document.optional?
-        redirect_to new_teacher_interface_application_form_document_upload_path(
+        redirect_to [
+                      :new,
+                      :teacher_interface,
+                      :application_form,
                       document,
-                    )
+                      :upload,
+                    ]
       else
-        redirect_to edit_teacher_interface_application_form_document_path(
-                      document,
-                    )
+        redirect_to [:edit, :teacher_interface, :application_form, document]
       end
     end
 
     def edit
-      if show_available_form?
-        @form =
+      @form =
+        if show_available_form?
           DocumentAvailableForm.new(document:, available: document.available)
-        render :edit_available
-      else
-        @form = AddAnotherUploadForm.new
-        render :edit_uploads
+        else
+          AddAnotherUploadForm.new
+        end
+
+      if document.any_unsafe_to_link?
+        @form.errors.add(
+          :uploads,
+          I18n.t("teacher_interface.documents.unsafe_to_link"),
+        )
       end
+
+      render show_available_form? ? :edit_available : :edit_uploads
     end
 
     def update
@@ -46,7 +55,7 @@ module TeacherInterface
               ),
           )
         else
-          TeacherInterface::AddAnotherUploadForm.new(
+          AddAnotherUploadForm.new(
             add_another:
               params.dig(
                 :teacher_interface_add_another_upload_form,
@@ -54,6 +63,13 @@ module TeacherInterface
               ),
           )
         end
+
+      if document.any_unsafe_to_link?
+        @form.errors.add(
+          :uploads,
+          I18n.t("teacher_interface.documents.unsafe_to_link"),
+        )
+      end
 
       handle_application_form_section(
         form: @form,

@@ -34,8 +34,8 @@ FactoryBot.define do
       certificate_date { complete_date + 1.year }
 
       after(:create) do |qualification, _evaluator|
-        create(:upload, document: qualification.certificate_document)
-        create(:upload, document: qualification.transcript_document)
+        create(:upload, :clean, document: qualification.certificate_document)
+        create(:upload, :clean, document: qualification.transcript_document)
       end
     end
   end

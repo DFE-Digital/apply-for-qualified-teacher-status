@@ -2,19 +2,23 @@
 
 module UploadHelper
   def upload_link_to(upload)
-    href =
+    if upload.unsafe_to_link?
+      tag.div(class: "govuk-form-group--error") do
+        tag.p(upload.filename, class: "govuk-!-font-weight-bold") +
+          tag.p(
+            I18n.t("teacher_interface.documents.unsafe_to_link"),
+            class: "govuk-error-message",
+          )
+      end
+    elsif upload.safe_to_link?
       govuk_link_to(
         "#{upload.filename} (opens in a new tab)",
         upload_path(upload),
         target: :_blank,
         rel: :noopener,
       )
-
-    if upload.malware_scan_error? || upload.malware_scan_suspect?
-      href +
-        tag.p("There’s a problem with this file", class: "govuk-error-message")
     else
-      href
+      upload.filename
     end
   end
 

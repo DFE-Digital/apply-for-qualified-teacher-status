@@ -68,11 +68,28 @@ class Document < ApplicationRecord
   end
 
   def completed?
-    uploads.present? || (optional? && available == false)
+    (uploads.present? && uploads.all?(&:safe_to_link?)) ||
+      (optional? && available == false)
   end
 
-  def downloadable?
-    uploads.all?(&:downloadable?)
+  def any_unsafe_to_link?
+    uploads.any?(&:unsafe_to_link?)
+  end
+
+  def empty?
+    uploads.empty? && available.nil?
+  end
+
+  def status
+    if any_unsafe_to_link?
+      "error"
+    elsif completed?
+      "completed"
+    elsif empty?
+      "not_started"
+    else
+      "in_progress"
+    end
   end
 
   def for_further_information_request?

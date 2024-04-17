@@ -238,7 +238,11 @@ FactoryBot.define do
     trait :with_identification_document do
       identification_document_status { "completed" }
       after(:create) do |application_form, _evaluator|
-        create(:upload, document: application_form.identification_document)
+        create(
+          :upload,
+          :clean,
+          document: application_form.identification_document,
+        )
       end
     end
 
@@ -247,7 +251,7 @@ FactoryBot.define do
       alternative_given_names { Faker::Name.name }
       alternative_family_name { Faker::Name.last_name }
       after(:create) do |application_form, _evaluator|
-        create(:upload, document: application_form.name_change_document)
+        create(:upload, :clean, document: application_form.name_change_document)
       end
     end
 
@@ -297,6 +301,7 @@ FactoryBot.define do
       after(:create) do |application_form, _evaluator|
         create(
           :upload,
+          :clean,
           document:
             application_form.english_language_medium_of_instruction_document,
         )
@@ -309,6 +314,7 @@ FactoryBot.define do
       after(:create) do |application_form, _evaluator|
         create(
           :upload,
+          :clean,
           document: application_form.english_language_proficiency_document,
         )
       end
@@ -335,6 +341,7 @@ FactoryBot.define do
       after(:create) do |application_form, _evaluator|
         create(
           :upload,
+          :clean,
           document: application_form.english_language_proficiency_document,
         )
       end
@@ -375,7 +382,11 @@ FactoryBot.define do
         if application_form.teaching_authority_provides_written_statement
           application_form.update!(written_statement_confirmation: true)
         else
-          create(:upload, document: application_form.written_statement_document)
+          create(
+            :upload,
+            :clean,
+            document: application_form.written_statement_document,
+          )
         end
       end
     end

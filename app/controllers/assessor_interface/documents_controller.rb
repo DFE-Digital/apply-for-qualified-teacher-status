@@ -13,8 +13,8 @@ module AssessorInterface
     def show_pdf
       authorize %i[assessor_interface application_form]
 
-      unless document.downloadable?
-        render "shared/malware_scan"
+      unless document.completed?
+        render "errors/forbidden", status: :forbidden
         return
       end
 

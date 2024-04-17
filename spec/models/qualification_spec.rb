@@ -126,8 +126,8 @@ RSpec.describe Qualification, type: :model do
           certificate_date: Date.new(2021, 1, 1),
         )
 
-        create(:upload, document: qualification.certificate_document)
-        create(:upload, document: qualification.transcript_document)
+        create(:upload, :clean, document: qualification.certificate_document)
+        create(:upload, :clean, document: qualification.transcript_document)
       end
 
       it { is_expected.to be true }

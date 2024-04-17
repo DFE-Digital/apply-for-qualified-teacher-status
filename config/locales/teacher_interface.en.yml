@@ -58,6 +58,8 @@ en:
         draft:
           check: Check your application
           save: Save and sign out
+    documents:
+      unsafe_to_link: The selected file contains a suspected virus. Delete it and upload a new file.
     english_language:
       check:
         heading: Check your answers

@@ -17,7 +17,7 @@ RSpec.describe TeacherInterface::DeleteUploadForm, type: :model do
     subject(:save) { form.save(validate: true) }
 
     let(:document) { create(:document) }
-    let!(:upload) { create(:upload, document:) }
+    let!(:upload) { create(:upload, :clean, document:) }
 
     context "when confirm is true" do
       let(:confirm) { "true" }
@@ -33,7 +33,7 @@ RSpec.describe TeacherInterface::DeleteUploadForm, type: :model do
       end
 
       context "with another upload" do
-        before { create(:upload, document:) }
+        before { create(:upload, :clean, document:) }
 
         it "doesn't mark the document as incomplete" do
           expect { save }.to_not change(document, :completed?).from(true)
