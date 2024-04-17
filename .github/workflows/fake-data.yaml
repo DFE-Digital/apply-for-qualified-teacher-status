@@ -35,4 +35,4 @@ jobs:
           kubectl exec \
             -n tra-${{ github.event.inputs.environment }} \
             deployment/apply-for-qts-${{ github.event.inputs.environment }}-web \
-            -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed fake_data:regenerate"
+            -- sh -c "cd /app && /usr/local/bin/bundle exec rails fake_data:regenerate"

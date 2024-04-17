@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   export:
-    name: Export from production
+    name: Export (production)
     runs-on: ubuntu-latest
 
     environment: production
@@ -55,8 +55,9 @@ jobs:
           retention-days: 3
 
   import:
-    name: Export from production
+    name: Import
     runs-on: ubuntu-latest
+    needs: [export]
 
     strategy:
       matrix:
