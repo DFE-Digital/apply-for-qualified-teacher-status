@@ -380,14 +380,16 @@ en:
               inclusion: Select whether your document is written in English
             original_attachment:
               blank: Select a file to upload
+              encrypted_pdf: The selected file is security protected
+              file_size_too_big: Files must be smaller than 50MB
               invalid_content_type: Files must be in PDF, JPG, PNG, DOCX or DOC format
               mismatch_content_type: Files must have matching file type and file name. For example, if the upload is called example.doc, it must be a DOC file.
-              file_size_too_big: Files must be smaller than 50MB
             translated_attachment:
               blank: Select a translation to upload
+              encrypted_pdf: The selected file is security protected
+              file_size_too_big: Files must be smaller than 50MB
               invalid_content_type: Files must be in PDF, JPG, PNG, DOCX or DOC format
               mismatch_content_type: Files must have matching file type and file name. For example, if the upload is called example.doc, it must be a DOC file.
-              file_size_too_big: Files must be smaller than 50MB
         teacher_interface/work_history_form:
           attributes:
             contact_name:

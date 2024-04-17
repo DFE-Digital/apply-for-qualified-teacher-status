@@ -3,161 +3,161 @@
 
 <%= render "upload_timeout_error" if @form.timeout_error %>
 
-<% if @document.uploads.empty? || !@document.allow_multiple_uploads? %>
-  <% if @document.english_language_proficiency? %>
-    <h1 class="govuk-heading-l">Upload your English language proficiency test</h1>
-    <p class="govuk-body">This document must confirm that you have an English language proficiency test from an approved provider at level B2 of the Common European Framework of Reference for Languages (CEFR) scale.</p>
-    <p class="govuk-body">The test must be on the list of approved English language proficiency tests and awarded within the last 2 years before the date of your application.</p>
-    <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
-  <% elsif @document.identification? %>
-    <h1 class="govuk-heading-l">Upload a valid identification document</h1>
-
-    <p class="govuk-body">The document must show your date of birth and your nationality. If your ID document has several pages, you can add them on the next screen. </p>
-
-    <p class="govuk-body">Acceptable documents include:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>passport</li>
-      <li>driving licence</li>
-      <li>identity card</li>
-      <li>birth certificate</li>
-    </ul>
-
-    <p class="govuk-hint">If you’re uploading an identity card or driving licence, you’ll need to upload both sides of the card.</p>
-  <% elsif @document.name_change? %>
-    <h1 class="govuk-heading-l">Upload proof of your change of name</h1>
-
-    <p class="govuk-body">We need to see proof of your change of name.</p>
-
-    <p class="govuk-body">For example:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>a marriage or civil partnership certificate</li>
-      <li>proof that you’ve legally changed your name for another reason.</li>
-    </ul>
-  <% elsif @document.medium_of_instruction? %>
-    <h1 class="govuk-heading-l">Upload your Medium of Instruction (MOI)</h1>
-    <p class="govuk-body">This document must confirm that the primary language used to teach this qualification was English.</p>
-  <% elsif @document.qualification_certificate? %>
-    <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-
-    <h1 class="govuk-heading-l">
-      <% if @document.documentable.try(:institution_name).present? %>
-        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_certificate") %>
-      <% elsif @document.documentable.is_teaching? %>
-        Upload your teaching qualification certificate
-      <% else %>
-        Upload your university degree certificate
-      <% end %>
-    </h1>
-
-    <div class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</div>
-  <% elsif @document.qualification_document? %>
-    <h1 class="govuk-heading-l">Upload your qualification document</h1>
-  <% elsif @document.qualification_transcript? %>
-    <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-
-    <h1 class="govuk-heading-l">
-      <% if @document.documentable.try(:institution_name).present? %>
-        Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_transcript") %>
-      <% elsif @document.documentable.is_teaching? %>
-        Upload your teaching qualification transcript
-      <% else %>
-        Upload your university degree transcript
-      <% end %>
-    </h1>
-
-    <p class="govuk-body"><%= I18n.t("application_form.qualifications.upload.transcript.description") %></p>
-  <% elsif @document.signed_consent? %>
-    <h1 class="govuk-heading-xl">Upload consent document</h1>
-    <h2 class="govuk-heading-m"><%= qualification_title(@document.documentable.qualification) %></h2>
-    <p class="govuk-body">Upload the signed document. Do not send it by email.</p>
-  <% elsif @document.unsigned_consent? %>
-    <h1 class="govuk-heading-xl">Upload your unsigned consent document</h1>
-  <% elsif @document.written_statement? %>
-    <span class="govuk-caption-l">Proof that you’re recognised as a teacher</span>
-    <h1 class="govuk-heading-l">Upload your written statement</h1>
-
-    <% if CountryCode.northern_ireland?(@application_form.region.country.code) %>
-      <p class="govuk-body">
-        Provide your ‘Letter of Successful Completion of Induction’ to confirm that you've completed an induction period in Northern Ireland.
-      </p>
-
-      <p class="govuk-body">The letter must include:</p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>confirmation that you completed the induction in Northern Ireland</li>
-        <li>the date you completed your induction</li>
-        <li>your Teacher Reference (TR) number (if you have one)</li>
-        <li>the name of the school where you completed the induction</li>
-        <li>a signature from the school’s administrative department or headteacher/principal</li>
-      </ul>
-
-      <%= govuk_details(summary_text: "How to get this") do %>
-        <p class="govuk-body">You can get a Letter of Successful Completion of Induction by contacting the school where you completed your induction period.</p>
-      <% end %>
-
-      <%= govuk_inset_text do %>
-        <p class="govuk-body">
-          Note that if you cannot show evidence that you’ve already completed an induction period in Northern Ireland, if you’re awarded QTS you’ll need to do a period of statutory induction.
-        </p>
-      <% end %>
-    <% else %>
-      <p class="govuk-body">
-        You need to provide a written statement from <span lang="<%= @application_form.region.country.code %>"><%= region_teaching_authority_name(@application_form.region) %></span>.
-      </p>
-
-      <p class="govuk-body">
-        This is called <%= region_certificate_phrase(@application_form.region) %>.
-      </p>
-
-      <p class="govuk-body govuk-!-font-weight-bold">
-        You must supply the exact type of document named here. We cannot accept any other document as proof that you’re recognised as a teacher.
-      </p>
-
-      <p class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</p>
-
-      <p class="govuk-body">It must confirm:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <% proof_of_recognition_requirements_for(region: @application_form.region).each do |requirement| %>
-          <li><%= requirement %></li>
-        <% end %>
-      </ul>
-      <p class="govuk-body">This written confirmation must be dated within 6 months of you applying for QTS.</p>
-
-      <% if @application_form.region.status_check_written? %>
-        <% if @application_form.region.status_information.present? %>
-          <%= raw GovukMarkdown.render(@application_form.region.status_information) %>
-        <% end %>
-
-        <% if @application_form.region.country.status_information.present? %>
-          <%= raw GovukMarkdown.render(@application_form.region.country.status_information) %>
-        <% end %>
-      <% end %>
-
-      <% if @application_form.region.sanction_check_written? %>
-        <% if @application_form.region.sanction_information.present? %>
-          <%= raw GovukMarkdown.render(@application_form.region.sanction_information) %>
-        <% end %>
-
-        <% if @application_form.region.country.sanction_information.present? %>
-          <%= raw GovukMarkdown.render(@application_form.region.country.sanction_information) %>
-        <% end %>
-      <% end %>
-
-      <%= govuk_details(summary_text: "How to get this") do %>
-        <p class="govuk-body">If you do not have this yet, you can obtain it by contacting:</p>
-        <%= render "shared/teaching_authority_contact_information", region: @application_form.region %>
-      <% end %>
-    <% end %>
-  <% end %>
-<% else %>
-  <h1 class="govuk-heading-l">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>
-  <p class="govuk-body">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document. If your document has more pages, you can add them on the next screen.</p>
-<% end %>
-
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @document, :uploads] do |f| %>
   <%= f.govuk_error_summary %>
+
+  <% if @document.uploads.empty? || !@document.allow_multiple_uploads? %>
+    <% if @document.english_language_proficiency? %>
+      <h1 class="govuk-heading-l">Upload your English language proficiency test</h1>
+      <p class="govuk-body">This document must confirm that you have an English language proficiency test from an approved provider at level B2 of the Common European Framework of Reference for Languages (CEFR) scale.</p>
+      <p class="govuk-body">The test must be on the list of approved English language proficiency tests and awarded within the last 2 years before the date of your application.</p>
+      <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
+    <% elsif @document.identification? %>
+      <h1 class="govuk-heading-l">Upload a valid identification document</h1>
+
+      <p class="govuk-body">The document must show your date of birth and your nationality. If your ID document has several pages, you can add them on the next screen. </p>
+
+      <p class="govuk-body">Acceptable documents include:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>passport</li>
+        <li>driving licence</li>
+        <li>identity card</li>
+        <li>birth certificate</li>
+      </ul>
+
+      <p class="govuk-hint">If you’re uploading an identity card or driving licence, you’ll need to upload both sides of the card.</p>
+    <% elsif @document.name_change? %>
+      <h1 class="govuk-heading-l">Upload proof of your change of name</h1>
+
+      <p class="govuk-body">We need to see proof of your change of name.</p>
+
+      <p class="govuk-body">For example:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a marriage or civil partnership certificate</li>
+        <li>proof that you’ve legally changed your name for another reason.</li>
+      </ul>
+    <% elsif @document.medium_of_instruction? %>
+      <h1 class="govuk-heading-l">Upload your Medium of Instruction (MOI)</h1>
+      <p class="govuk-body">This document must confirm that the primary language used to teach this qualification was English.</p>
+    <% elsif @document.qualification_certificate? %>
+      <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
+
+      <h1 class="govuk-heading-l">
+        <% if @document.documentable.try(:institution_name).present? %>
+          Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_certificate") %>
+        <% elsif @document.documentable.is_teaching? %>
+          Upload your teaching qualification certificate
+        <% else %>
+          Upload your university degree certificate
+        <% end %>
+      </h1>
+
+      <div class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</div>
+    <% elsif @document.qualification_document? %>
+      <h1 class="govuk-heading-l">Upload your qualification document</h1>
+    <% elsif @document.qualification_transcript? %>
+      <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
+
+      <h1 class="govuk-heading-l">
+        <% if @document.documentable.try(:institution_name).present? %>
+          Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_transcript") %>
+        <% elsif @document.documentable.is_teaching? %>
+          Upload your teaching qualification transcript
+        <% else %>
+          Upload your university degree transcript
+        <% end %>
+      </h1>
+
+      <p class="govuk-body"><%= I18n.t("application_form.qualifications.upload.transcript.description") %></p>
+    <% elsif @document.signed_consent? %>
+      <h1 class="govuk-heading-xl">Upload consent document</h1>
+      <h2 class="govuk-heading-m"><%= qualification_title(@document.documentable.qualification) %></h2>
+      <p class="govuk-body">Upload the signed document. Do not send it by email.</p>
+    <% elsif @document.unsigned_consent? %>
+      <h1 class="govuk-heading-xl">Upload your unsigned consent document</h1>
+    <% elsif @document.written_statement? %>
+      <span class="govuk-caption-l">Proof that you’re recognised as a teacher</span>
+      <h1 class="govuk-heading-l">Upload your written statement</h1>
+
+      <% if CountryCode.northern_ireland?(@application_form.region.country.code) %>
+        <p class="govuk-body">
+          Provide your ‘Letter of Successful Completion of Induction’ to confirm that you've completed an induction period in Northern Ireland.
+        </p>
+
+        <p class="govuk-body">The letter must include:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>confirmation that you completed the induction in Northern Ireland</li>
+          <li>the date you completed your induction</li>
+          <li>your Teacher Reference (TR) number (if you have one)</li>
+          <li>the name of the school where you completed the induction</li>
+          <li>a signature from the school’s administrative department or headteacher/principal</li>
+        </ul>
+
+        <%= govuk_details(summary_text: "How to get this") do %>
+          <p class="govuk-body">You can get a Letter of Successful Completion of Induction by contacting the school where you completed your induction period.</p>
+        <% end %>
+
+        <%= govuk_inset_text do %>
+          <p class="govuk-body">
+            Note that if you cannot show evidence that you’ve already completed an induction period in Northern Ireland, if you’re awarded QTS you’ll need to do a period of statutory induction.
+          </p>
+        <% end %>
+      <% else %>
+        <p class="govuk-body">
+          You need to provide a written statement from <span lang="<%= @application_form.region.country.code %>"><%= region_teaching_authority_name(@application_form.region) %></span>.
+        </p>
+
+        <p class="govuk-body">
+          This is called <%= region_certificate_phrase(@application_form.region) %>.
+        </p>
+
+        <p class="govuk-body govuk-!-font-weight-bold">
+          You must supply the exact type of document named here. We cannot accept any other document as proof that you’re recognised as a teacher.
+        </p>
+
+        <p class="govuk-body">Your documents must be written in English. If they are not written in English, you will need to upload a certified translation of each.</p>
+
+        <p class="govuk-body">It must confirm:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <% proof_of_recognition_requirements_for(region: @application_form.region).each do |requirement| %>
+            <li><%= requirement %></li>
+          <% end %>
+        </ul>
+        <p class="govuk-body">This written confirmation must be dated within 6 months of you applying for QTS.</p>
+
+        <% if @application_form.region.status_check_written? %>
+          <% if @application_form.region.status_information.present? %>
+            <%= raw GovukMarkdown.render(@application_form.region.status_information) %>
+          <% end %>
+
+          <% if @application_form.region.country.status_information.present? %>
+            <%= raw GovukMarkdown.render(@application_form.region.country.status_information) %>
+          <% end %>
+        <% end %>
+
+        <% if @application_form.region.sanction_check_written? %>
+          <% if @application_form.region.sanction_information.present? %>
+            <%= raw GovukMarkdown.render(@application_form.region.sanction_information) %>
+          <% end %>
+
+          <% if @application_form.region.country.sanction_information.present? %>
+            <%= raw GovukMarkdown.render(@application_form.region.country.sanction_information) %>
+          <% end %>
+        <% end %>
+
+        <%= govuk_details(summary_text: "How to get this") do %>
+          <p class="govuk-body">If you do not have this yet, you can obtain it by contacting:</p>
+          <%= render "shared/teaching_authority_contact_information", region: @application_form.region %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <h1 class="govuk-heading-l">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>
+    <p class="govuk-body">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document. If your document has more pages, you can add them on the next screen.</p>
+  <% end %>
 
   <%= f.govuk_file_field :original_attachment,
                          label: { text: "Select a file to upload", class: "govuk-heading-m" },
