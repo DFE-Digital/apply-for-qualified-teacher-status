@@ -31,7 +31,7 @@ module AssessorInterface
       redirect_to [:status, :assessor_interface, application_form]
     rescue RequestFurtherInformation::AlreadyExists
       flash[:warning] = "Further information has already been requested."
-      render :preview, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
 
     def edit
