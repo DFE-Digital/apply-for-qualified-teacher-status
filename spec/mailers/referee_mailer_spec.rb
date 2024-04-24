@@ -46,7 +46,7 @@ RSpec.describe RefereeMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear Contact Name") }
       it do
@@ -84,7 +84,7 @@ RSpec.describe RefereeMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear Contact Name") }
       it do
