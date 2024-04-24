@@ -13,7 +13,7 @@ class SubmitApplicationForm
 
     ActiveRecord::Base.transaction do
       application_form.update!(
-        requires_preliminary_check:,
+        requires_preliminary_check: region.requires_preliminary_check,
         subjects: application_form.subjects.compact_blank,
         submitted_at: Time.zone.now,
         working_days_since_submission: 0,
@@ -21,7 +21,7 @@ class SubmitApplicationForm
 
       assessment = AssessmentFactory.call(application_form:)
 
-      if reduced_evidence_accepted
+      if application_form.reduced_evidence_accepted
         UpdateAssessmentInductionRequired.call(assessment:)
       end
 
@@ -38,7 +38,7 @@ class SubmitApplicationForm
       action: :application_received,
     )
 
-    if teaching_authority_requires_submission_email
+    if region.teaching_authority_requires_submission_email
       DeliverEmail.call(
         application_form:,
         mailer: TeachingAuthorityMailer,
@@ -53,20 +53,14 @@ class SubmitApplicationForm
 
   attr_reader :application_form, :user
 
-  delegate :reduced_evidence_accepted,
-           :region,
-           :requires_preliminary_check,
-           :teaching_authority_provides_written_statement,
-           to: :application_form
-
-  delegate :teaching_authority_requires_submission_email, to: :region
+  delegate :region, to: :application_form
 
   def create_professional_standing_request(assessment)
-    return unless teaching_authority_provides_written_statement
+    return unless application_form.teaching_authority_provides_written_statement
 
     requestable = ProfessionalStandingRequest.create!(assessment:)
 
-    unless requires_preliminary_check
+    unless application_form.requires_preliminary_check
       RequestRequestable.call(requestable:, user:)
     end
   end
