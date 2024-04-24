@@ -31,7 +31,7 @@ class TeacherInterface::ApplicationFormViewObject
         %i[personal_information identification_document],
       ),
       task_list_section(:qualifications, %i[qualifications age_range subjects]),
-      if application_form.created_under_new_regulations?
+      unless application_form.created_under_old_regulations?
         task_list_section(:english_language, %i[english_language])
       end,
       if needs_work_history

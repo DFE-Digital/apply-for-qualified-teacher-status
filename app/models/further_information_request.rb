@@ -56,7 +56,7 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def expires_after
-    if !application_form.created_under_new_regulations? &&
+    if application_form.created_under_old_regulations? &&
          FOUR_WEEK_COUNTRY_CODES.include?(application_form.country.code)
       4.weeks
     else

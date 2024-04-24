@@ -16,7 +16,7 @@ module PageObjects
                ".govuk-checkboxes__conditional .govuk-checkboxes__item"
 
       def most_recent_role
-        cards&.second
+        cards&.first
       end
     end
   end

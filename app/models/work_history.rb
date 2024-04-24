@@ -73,7 +73,7 @@ class WorkHistory < ApplicationRecord
       values += [contact_name, contact_email]
     end
 
-    if application_form.created_under_new_regulations?
+    unless application_form.created_under_old_regulations?
       values.append(hours_per_week)
 
       unless application_form.reduced_evidence_accepted?

@@ -40,13 +40,11 @@
   You have completed <%= view_object.completed_task_list_sections.count %> of <%= view_object.task_list_sections.count %> sections.
 </p>
 
-<% if view_object.application_form.created_under_new_regulations? %>
-  <%= govuk_inset_text do %>
-    <p class="govuk-body">
-      You started this application on <%= view_object.started_at %>.
-      Applications must be completed within 6 months, so you’ll need to complete it before <%= view_object.expires_at %>.
-    </p>
-  <% end %>
+<%= govuk_inset_text do %>
+  <p class="govuk-body">
+    You started this application on <%= view_object.started_at %>.
+    Applications must be completed within 6 months, so you’ll need to complete it before <%= view_object.expires_at %>.
+  </p>
 <% end %>
 
 <%= render TaskList::Component.new(view_object.task_list_sections) %>

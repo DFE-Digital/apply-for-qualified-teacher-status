@@ -49,8 +49,7 @@ class AssessmentFactory
         end
       ),
       (
-        if application_form.created_under_new_regulations? &&
-             application_form.english_language_citizenship_exempt
+        if application_form.english_language_citizenship_exempt
           FailureReasons::EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED
         end
       ),
@@ -87,16 +86,8 @@ class AssessmentFactory
       "has_university_degree_transcript",
       "has_additional_qualification_certificate",
       "has_additional_degree_transcript",
-      (
-        if application_form.created_under_new_regulations?
-          "teaching_qualification_pedagogy"
-        end
-      ),
-      (
-        if application_form.created_under_new_regulations?
-          "teaching_qualification_1_year"
-        end
-      ),
+      "teaching_qualification_pedagogy",
+      "teaching_qualification_1_year",
     ].compact
 
     failure_reasons = [
@@ -104,19 +95,10 @@ class AssessmentFactory
       FailureReasons::TEACHING_QUALIFICATIONS_FROM_INELIGIBLE_COUNTRY,
       FailureReasons::TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL,
       FailureReasons::TEACHING_HOURS_NOT_FULFILLED,
+      FailureReasons::TEACHING_QUALIFICATION_PEDAGOGY,
+      FailureReasons::TEACHING_QUALIFICATION_1_YEAR,
       (
-        if application_form.created_under_new_regulations?
-          FailureReasons::TEACHING_QUALIFICATION_PEDAGOGY
-        end
-      ),
-      (
-        if application_form.created_under_new_regulations?
-          FailureReasons::TEACHING_QUALIFICATION_1_YEAR
-        end
-      ),
-      (
-        if application_form.created_under_new_regulations? &&
-             application_form.english_language_qualification_exempt
+        if application_form.english_language_qualification_exempt
           FailureReasons::EL_EXEMPTION_BY_QUALIFICATION_DOCUMENTS_UNCONFIRMED
         end
       ),
@@ -169,68 +151,56 @@ class AssessmentFactory
   end
 
   def english_language_proficiency_section
-    if application_form.created_under_new_regulations?
-      checks =
-        if application_form.english_language_exempt?
-          []
-        elsif application_form.english_language_proof_method_medium_of_instruction?
-          %i[english_language_valid_moi]
-        else
-          %i[english_language_valid_provider]
-        end
+    checks =
+      if application_form.english_language_exempt?
+        []
+      elsif application_form.english_language_proof_method_medium_of_instruction?
+        %i[english_language_valid_moi]
+      else
+        %i[english_language_valid_provider]
+      end
 
-      failure_reasons =
-        if application_form.english_language_exempt?
-          []
-        elsif application_form.english_language_proof_method_medium_of_instruction?
-          [
-            FailureReasons::EL_MOI_NOT_TAUGHT_IN_ENGLISH,
-            FailureReasons::EL_MOI_INVALID_FORMAT,
-          ]
-        else
-          [
-            FailureReasons::EL_QUALIFICATION_INVALID,
-            (
-              if application_form.english_language_provider_other
-                FailureReasons::EL_PROFICIENCY_DOCUMENT_ILLEGIBLE
-              else
-                FailureReasons::EL_UNVERIFIABLE_REFERENCE_NUMBER
-              end
-            ),
-            FailureReasons::EL_GRADE_BELOW_B2,
-            FailureReasons::EL_SELT_EXPIRED,
-          ]
-        end
+    failure_reasons =
+      if application_form.english_language_exempt?
+        []
+      elsif application_form.english_language_proof_method_medium_of_instruction?
+        [
+          FailureReasons::EL_MOI_NOT_TAUGHT_IN_ENGLISH,
+          FailureReasons::EL_MOI_INVALID_FORMAT,
+        ]
+      else
+        [
+          FailureReasons::EL_QUALIFICATION_INVALID,
+          (
+            if application_form.english_language_provider_other
+              FailureReasons::EL_PROFICIENCY_DOCUMENT_ILLEGIBLE
+            else
+              FailureReasons::EL_UNVERIFIABLE_REFERENCE_NUMBER
+            end
+          ),
+          FailureReasons::EL_GRADE_BELOW_B2,
+          FailureReasons::EL_SELT_EXPIRED,
+        ]
+      end
 
-      AssessmentSection.new(
-        key: "english_language_proficiency",
-        checks:,
-        failure_reasons:,
-      )
-    end
+    AssessmentSection.new(
+      key: "english_language_proficiency",
+      checks:,
+      failure_reasons:,
+    )
   end
 
   def work_history_section
     return nil unless application_form.needs_work_history
 
-    checks =
-      if application_form.created_under_new_regulations?
-        %i[verify_school_details work_history_references]
-      else
-        %i[email_contact_current_employer satisfactory_evidence_work_history]
-      end
+    checks = %i[verify_school_details work_history_references]
 
-    failure_reasons =
-      if application_form.created_under_new_regulations?
-        [
-          FailureReasons::WORK_HISTORY_BREAK,
-          FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
-          FailureReasons::UNRECOGNISED_REFERENCES,
-          FailureReasons::WORK_HISTORY_DURATION,
-        ]
-      else
-        [FailureReasons::SATISFACTORY_EVIDENCE_WORK_HISTORY]
-      end
+    failure_reasons = [
+      FailureReasons::WORK_HISTORY_BREAK,
+      FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
+      FailureReasons::UNRECOGNISED_REFERENCES,
+      FailureReasons::WORK_HISTORY_DURATION,
+    ]
 
     AssessmentSection.new(key: "work_history", checks:, failure_reasons:)
   end

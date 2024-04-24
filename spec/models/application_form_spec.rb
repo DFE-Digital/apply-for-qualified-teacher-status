@@ -444,45 +444,23 @@ RSpec.describe ApplicationForm, type: :model do
     it { is_expected.to eq(application_form.reference) }
   end
 
-  describe "#created_under_new_regulations?" do
-    subject(:created_under_new_regulations?) do
-      application_form.created_under_new_regulations?
+  describe "#created_under_old_regulations?" do
+    subject(:created_under_old_regulations?) do
+      application_form.created_under_old_regulations?
     end
 
-    context "with default new regulations date" do
-      context "with an old application form" do
-        let(:application_form) do
-          create(:application_form, created_at: Date.new(2020, 1, 1))
-        end
-        it { is_expected.to be false }
+    context "with an old application form" do
+      let(:application_form) do
+        create(:application_form, created_at: Date.new(2020, 1, 1))
       end
-
-      context "with a new application form" do
-        let(:application_form) do
-          create(:application_form, created_at: Date.new(2024, 1, 1))
-        end
-        it { is_expected.to be true }
-      end
+      it { is_expected.to be true }
     end
 
-    context "with a custom new regulations date" do
-      around do |example|
-        ClimateControl.modify(NEW_REGS_DATE: "2023-01-01") { example.run }
+    context "with a new application form" do
+      let(:application_form) do
+        create(:application_form, created_at: Date.new(2024, 1, 1))
       end
-
-      context "with an old application form" do
-        let(:application_form) do
-          create(:application_form, created_at: Date.new(2021, 12, 31))
-        end
-        it { is_expected.to be false }
-      end
-
-      context "with a new application form" do
-        let(:application_form) do
-          create(:application_form, created_at: Date.new(2023, 1, 1))
-        end
-        it { is_expected.to be true }
-      end
+      it { is_expected.to be false }
     end
   end
 end

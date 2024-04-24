@@ -255,13 +255,13 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "under the old regulations" do
         context "with unknown work history" do
-          let(:application_form) { create(:application_form, :old_regs) }
+          let(:application_form) { create(:application_form, :old_regulations) }
           it { is_expected.to eq("not_started") }
         end
 
         context "with no work history" do
           let(:application_form) do
-            create(:application_form, :old_regs, has_work_history: false)
+            create(:application_form, :old_regulations, has_work_history: false)
           end
           it { is_expected.to eq("completed") }
         end
@@ -269,7 +269,11 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         context "with has work history" do
           context "without work history" do
             let(:application_form) do
-              create(:application_form, :old_regs, has_work_history: true)
+              create(
+                :application_form,
+                :old_regulations,
+                has_work_history: true,
+              )
             end
             it { is_expected.to eq("in_progress") }
           end
@@ -278,7 +282,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             let(:application_form) do
               create(
                 :application_form,
-                :old_regs,
+                :old_regulations,
                 has_work_history: true,
               ).tap do |application_form|
                 create(:work_history, application_form:)
@@ -291,7 +295,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             let(:application_form) do
               create(
                 :application_form,
-                :old_regs,
+                :old_regulations,
                 has_work_history: true,
               ).tap do |application_form|
                 create(:work_history, :completed, application_form:)

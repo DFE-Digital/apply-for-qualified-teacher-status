@@ -72,7 +72,7 @@ RSpec.describe Assessment, type: :model do
     subject(:can_award?) { assessment.can_award? }
 
     context "with an application under old regulations" do
-      let(:application_form) { create(:application_form, :old_regs) }
+      let(:application_form) { create(:application_form, :old_regulations) }
 
       context "with an unknown assessment" do
         before do
@@ -353,7 +353,7 @@ RSpec.describe Assessment, type: :model do
     end
 
     context "with an application under old regulations" do
-      let(:application_form) { create(:application_form, :old_regs) }
+      let(:application_form) { create(:application_form, :old_regulations) }
       it { is_expected.to be false }
     end
   end
@@ -428,7 +428,7 @@ RSpec.describe Assessment, type: :model do
     end
 
     context "with an application under old regulations" do
-      let(:application_form) { create(:application_form, :old_regs) }
+      let(:application_form) { create(:application_form, :old_regulations) }
       it { is_expected.to be false }
     end
   end
