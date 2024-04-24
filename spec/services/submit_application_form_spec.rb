@@ -8,6 +8,7 @@ RSpec.describe SubmitApplicationForm do
       :with_personal_information,
       :with_teaching_qualification,
       region:,
+      requires_preliminary_check: false,
       subjects: ["Maths", "", ""],
     )
   end
@@ -28,6 +29,13 @@ RSpec.describe SubmitApplicationForm do
       expect { call }.to change(application_form, :stage).from("draft").to(
         "pre_assessment",
       )
+    end
+
+    it "sets requires preliminary check on the application form" do
+      expect { call }.to change(
+        application_form,
+        :requires_preliminary_check,
+      ).from(false).to(true)
     end
   end
 
