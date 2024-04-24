@@ -89,14 +89,14 @@ RSpec.describe "Staff support", type: :system do
 
   def when_i_visit_the_invitation_email_with_azure_ad_enabled
     message = ActionMailer::Base.deliveries.first
-    uri = URI.parse(URI.extract(message.body.encoded).second)
+    uri = URI.parse(URI.extract(message.body.raw_source).second)
     expect(uri.path).to eq("/staff/auth/azure_activedirectory_v2")
     visit uri.path.to_s
   end
 
   def when_i_visit_the_invitation_email_with_azure_ad_disabled
     message = ActionMailer::Base.deliveries.first
-    uri = URI.parse(URI.extract(message.body.encoded).second)
+    uri = URI.parse(URI.extract(message.body.raw_source).second)
     expect(uri.path).to eq("/staff/invitation/accept")
     expect(uri.query).to include("invitation_token=")
     visit "#{uri.path}?#{uri.query}"

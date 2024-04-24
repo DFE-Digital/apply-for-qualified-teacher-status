@@ -46,7 +46,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
@@ -73,7 +73,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
@@ -105,7 +105,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it do
@@ -158,7 +158,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
@@ -219,7 +219,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
@@ -277,7 +277,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it do
@@ -320,7 +320,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it do
@@ -350,7 +350,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it do
@@ -382,7 +382,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
@@ -418,7 +418,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it do
@@ -463,7 +463,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it do
@@ -500,7 +500,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
@@ -563,7 +563,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       let(:number_of_reminders_sent) { 0 }
 
@@ -611,7 +611,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded }
+      subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
       it do

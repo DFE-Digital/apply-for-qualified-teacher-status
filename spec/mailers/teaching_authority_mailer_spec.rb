@@ -59,7 +59,7 @@ RSpec.describe TeachingAuthorityMailer, type: :mailer do
     end
 
     describe "#body" do
-      subject(:body) { mail.body.encoded.gsub("\r", "") }
+      subject(:body) { mail.body.raw_source.gsub("\r", "") }
 
       it { is_expected.to eq(<<-EMAIL) }
 Dear Teaching Authority
