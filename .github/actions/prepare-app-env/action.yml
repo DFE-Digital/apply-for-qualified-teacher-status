@@ -9,8 +9,12 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Update apt
+      run: sudo rm /etc/apt/sources.list.d/microsoft-prod.list && sudo apt-get update
+      shell: bash
+
     - name: Install libvips
-      run: sudo apt update && sudo apt install -y libvips
+      run: sudo apt install -y libvips
       shell: bash
 
     - name: Set up Ruby
