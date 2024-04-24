@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe SubmitApplicationForm do
-  let(:region) { create(:region) }
+  let(:country) { create(:country) }
+  let(:region) { create(:region, country:) }
   let(:application_form) do
     create(
       :application_form,
@@ -9,6 +10,7 @@ RSpec.describe SubmitApplicationForm do
       :with_teaching_qualification,
       region:,
       requires_preliminary_check: false,
+      subject_limited: false,
       subjects: ["Maths", "", ""],
     )
   end
@@ -20,6 +22,16 @@ RSpec.describe SubmitApplicationForm do
     expect { call }.to change(application_form, :stage).from("draft").to(
       "not_started",
     )
+  end
+
+  context "when country is subject limited" do
+    let(:country) { create(:country, :subject_limited) }
+
+    it "sets subject limited on the application form" do
+      expect { call }.to change(application_form, :subject_limited).from(
+        false,
+      ).to(true)
+    end
   end
 
   context "when region requires preliminary check" do
