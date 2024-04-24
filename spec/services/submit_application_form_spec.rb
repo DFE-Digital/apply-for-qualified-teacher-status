@@ -24,6 +24,12 @@ RSpec.describe SubmitApplicationForm do
     )
   end
 
+  it "doesn't set subject limited on the application form" do
+    expect { call }.to_not change(application_form, :subject_limited).from(
+      false,
+    )
+  end
+
   context "when country is subject limited" do
     let(:country) { create(:country, :subject_limited) }
 
@@ -32,6 +38,13 @@ RSpec.describe SubmitApplicationForm do
         false,
       ).to(true)
     end
+  end
+
+  it "doesn't set requires preliminary check on the application form" do
+    expect { call }.to_not change(
+      application_form,
+      :requires_preliminary_check,
+    ).from(false)
   end
 
   context "when region requires preliminary check" do
