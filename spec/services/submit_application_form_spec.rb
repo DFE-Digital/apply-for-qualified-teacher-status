@@ -174,7 +174,11 @@ RSpec.describe SubmitApplicationForm do
 
     context "when teaching authority requires the email" do
       let(:region) do
-        create(:region, teaching_authority_requires_submission_email: true)
+        create(
+          :region,
+          teaching_authority_emails: ["authority@example.com"],
+          teaching_authority_requires_submission_email: true,
+        )
       end
 
       it "queues an email job" do
