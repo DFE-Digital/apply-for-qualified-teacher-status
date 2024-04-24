@@ -68,7 +68,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       end
       it do
         is_expected.not_to validate_presence_of(
-          "#{decline_failure_reason}_notes".to_sym,
+          :"#{decline_failure_reason}_notes",
         )
       end
     end
@@ -76,14 +76,14 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
     context "when reasons are checked and notes are provided" do
       let(:attributes) do
         {
-          :passed => false,
-          :"#{further_information_failure_reason}_checked" => true,
-          :"#{further_information_failure_reason}_notes" => "Notes.",
-          :"#{work_history_failure_reason}_checked" => true,
-          :"#{work_history_failure_reason}_notes" => "Notes.",
-          :"#{work_history_failure_reason}_work_history_checked" => [1],
-          "#{decline_failure_reason}_checked".to_sym => true,
-          "#{decline_failure_reason}_notes".to_sym => "Notes",
+          passed: false,
+          "#{further_information_failure_reason}_checked": true,
+          "#{further_information_failure_reason}_notes": "Notes.",
+          "#{work_history_failure_reason}_checked": true,
+          "#{work_history_failure_reason}_notes": "Notes.",
+          "#{work_history_failure_reason}_work_history_checked": [1],
+          "#{decline_failure_reason}_checked": true,
+          "#{decline_failure_reason}_notes": "Notes",
         }
       end
 

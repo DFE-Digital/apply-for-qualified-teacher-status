@@ -11,7 +11,8 @@
                           label: {
                             text: t(view_object.assessment_section.key, scope: %i[assessor_interface assessment_sections english_language_proficiency passed]),
                             size: "s",
-                          } %>
+                          },
+                          disabled: view_object.disable_form? %>
   <% end %>
 
   <% if view_object.show_english_language_provider_details? %>
@@ -34,13 +35,16 @@
   <% end %>
 
   <% if form.is_a?(AssessorInterface::ScotlandFullRegistrationForm) %>
-    <%= f.govuk_collection_radio_buttons :scotland_full_registration, %i[true false], :itself %>
+    <%= f.govuk_radio_buttons_fieldset :scotland_full_registration do %>
+      <%= f.govuk_radio_button :scotland_full_registration, :true, link_errors: true, disabled: view_object.disable_form? %>
+      <%= f.govuk_radio_button :scotland_full_registration, :false, disabled: view_object.disable_form? %>
+    <% end %>
   <% end %>
 
   <% if form.is_a?(AssessorInterface::InductionRequiredForm) %>
     <%= f.govuk_radio_buttons_fieldset :induction_required, legend: { text: t(view_object.country.code, scope: %i[assessor_interface assessment_sections induction_required]) } do %>
-      <%= f.govuk_radio_button :induction_required, :false, link_errors: true %>
-      <%= f.govuk_radio_button :induction_required, :true do %>
+      <%= f.govuk_radio_button :induction_required, :false, link_errors: true, disabled: view_object.disable_form? %>
+      <%= f.govuk_radio_button :induction_required, :true, disabled: view_object.disable_form? do %>
         <p class="govuk-hint">We can still award QTS, but applicant must complete a statutory induction period.</p>
       <% end %>
     <% end %>
@@ -48,7 +52,7 @@
 
   <% if view_object.preliminary? %>
     <% view_object.failure_reasons.each do |failure_reason| %>
-      <%= f.govuk_collection_radio_buttons "#{failure_reason}_checked".to_sym,
+      <%= f.govuk_collection_radio_buttons :"#{failure_reason}_checked",
                                            [
                                              OpenStruct.new(value: :false, label: "Yes"),
                                              OpenStruct.new(value: :true, label: "No")
@@ -56,22 +60,28 @@
                                            :value,
                                            :label,
                                            legend: { text: t(failure_reason, scope: %i[assessor_interface assessment_sections failure_reasons as_question label]), size: "s" },
-                                           hint: { text: t(failure_reason, scope: %i[assessor_interface assessment_sections failure_reasons as_question hint], default: "") }%>
+                                           hint: { text: t(failure_reason, scope: %i[assessor_interface assessment_sections failure_reasons as_question hint], default: "") },
+                                           disabled: view_object.disable_form? %>
     <% end %>
   <% else %>
     <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Has the applicant completed this section to your satisfaction?" } do %>
-      <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true %>
-      <%= f.govuk_radio_button :passed, false, label: { text: "No" } do %>
+      <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true, disabled: view_object.disable_form? %>
+      <%= f.govuk_radio_button :passed, false, label: { text: "No" }, disabled: view_object.disable_form? do %>
         <div id="assessor-interface-assessment-section-form-selected-failure-reasons-field-error"></div>
         <%= f.govuk_check_boxes_fieldset :selected_failure_reasons, legend: { size: "s" } do %>
           <% view_object.failure_reasons.each do |failure_reason| %>
-            <%= f.govuk_check_box "#{failure_reason}_checked".to_sym, true, label: { text: t(failure_reason, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) } do %>
-              <%= f.govuk_text_area "#{failure_reason}_notes".to_sym,
+            <%= f.govuk_check_box :"#{failure_reason}_checked", true, label: { text: t(failure_reason, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) }, disabled: view_object.disable_form? do %>
+              <%= f.govuk_text_area :"#{failure_reason}_notes",
                                     label: { text: t(view_object.notes_label_key_for(failure_reason:)), size: "s" },
                                     hint: { text: t(view_object.notes_hint_key_for(failure_reason:)) },
-                                    placeholder: t(view_object.notes_placeholder_key_for(failure_reason:)) %>
+                                    placeholder: t(view_object.notes_placeholder_key_for(failure_reason:)),
+                                    disabled: view_object.disable_form? %>
               <% if FailureReasons::chooses_work_history?(failure_reason) %>
-                <%= f.govuk_collection_check_boxes :"#{failure_reason}_work_history_checked", view_object.work_histories, :id, :school_name, multiple: false, legend: { size: "s" } %>
+                <%= f.govuk_check_boxes_fieldset :"#{failure_reason}_work_history_checked", legend: { size: "s" } do %>
+                  <% view_object.work_histories.each do |work_history| %>
+                    <%= f.govuk_check_box :"#{failure_reason}_work_history_checked", work_history.id, label: { text: work_history.school_name }, disabled: view_object.disable_form? %>
+                  <% end %>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
@@ -80,5 +90,7 @@
     <% end %>
   <% end %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: view_object.disable_form? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>

@@ -43,7 +43,7 @@ module AssessorInterface
       build_key(failure_reason, "placeholder")
     end
 
-    def render_form?
+    def show_form?
       return true if preliminary?
 
       if requires_preliminary_check &&
@@ -51,7 +51,7 @@ module AssessorInterface
         return false
       end
 
-      return false if render_section_content?
+      return false if show_english_language_exemption_content?
 
       if assessment_section.professional_standing? &&
            !professional_standing_request_received?
@@ -61,7 +61,14 @@ module AssessorInterface
       true
     end
 
-    def render_section_content?
+    def disable_form?
+      return true unless show_form?
+      return true unless assessment.unknown?
+
+      preliminary? ? assessment.all_preliminary_sections_passed? : false
+    end
+
+    def show_english_language_exemption_content?
       assessment_section.english_language_proficiency? &&
         application_form.english_language_exempt?
     end
@@ -82,6 +89,10 @@ module AssessorInterface
           application_form.english_language_qualification_exempt == true &&
             assessment_section.qualifications?
         )
+    end
+
+    def show_teacher_name_and_date_of_birth?
+      !assessment_section.personal_information?
     end
 
     def teacher_name_and_date_of_birth

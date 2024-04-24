@@ -1,4 +1,4 @@
-<%= f.govuk_fieldset legend: { text: 'What age range is the applicant qualified to teach?' } do %>
+<%= f.govuk_fieldset legend: { text: "What age range is the applicant qualified to teach?" } do %>
   <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the age range they entered if you agree, or enter a new range.</p>
 
   <%= f.govuk_number_field :age_range_min, width: 3 %>
@@ -19,7 +19,7 @@
       options_for_select(
         dfe_autocomplete_options(Subject.all),
         f.object.send(field),
-      ),
+      )
     )
   ) %>
 <% end %>

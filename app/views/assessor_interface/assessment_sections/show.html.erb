@@ -14,7 +14,7 @@
            title: t(".title.#{preliminary_key}.#{section_key}"),
            application_form: @view_object.application_form %>
 
-<% unless section_key == "personal_information" %>
+<% if @view_object.show_teacher_name_and_date_of_birth? %>
   <h2 class="govuk-heading-m"><%= @view_object.teacher_name_and_date_of_birth %></h2>
 <% end %>
 
@@ -25,10 +25,10 @@
            assessment_section: @view_object.assessment_section,
            highlighted_work_history_contact_emails: @view_object.highlighted_work_history_contact_emails %>
 
-<% if @view_object.render_form? %>
+<% if @view_object.show_form? %>
   <%= render "form", form: @form, view_object: @view_object %>
 <% end %>
 
-<% if @view_object.render_section_content? %>
-  <%= render "#{section_key}_content", application_form: @view_object.application_form %>
+<% if @view_object.show_english_language_exemption_content? %>
+  <%= render "english_language_exemption_content", application_form: @view_object.application_form %>
 <% end %>
