@@ -84,24 +84,13 @@ FactoryBot.define do
 
     trait :with_further_information_request do
       after(:create) do |assessment, _evaluator|
-        create(
-          :further_information_request,
-          :requested,
-          :with_items,
-          assessment:,
-        )
+        create(:requested_further_information_request, :with_items, assessment:)
       end
     end
 
     trait :with_professional_standing_request do
       after(:create) do |assessment, _evaluator|
         create(:professional_standing_request, assessment:)
-      end
-    end
-
-    trait :with_requested_professional_standing_request do
-      after(:create) do |assessment, _evaluator|
-        create(:requested_professional_standing_request, assessment:)
       end
     end
 
