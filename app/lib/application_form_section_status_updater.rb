@@ -147,7 +147,16 @@ class ApplicationFormSectionStatusUpdater
   def work_history_status
     all_work_histories_complete = work_histories.all?(&:complete?)
 
-    if application_form.created_under_new_regulations?
+    if application_form.created_under_old_regulations?
+      return :not_started if has_work_history.nil?
+
+      if !has_work_history ||
+           (!work_histories.empty? && all_work_histories_complete)
+        :completed
+      else
+        :in_progress
+      end
+    else
       return :not_started if work_histories.empty?
       return :in_progress unless all_work_histories_complete
 
@@ -157,15 +166,6 @@ class ApplicationFormSectionStatusUpdater
         ).enough_for_submission?
 
       enough_for_submission ? :completed : :in_progress
-    else
-      return :not_started if has_work_history.nil?
-
-      if !has_work_history ||
-           (!work_histories.empty? && all_work_histories_complete)
-        :completed
-      else
-        :in_progress
-      end
     end
   end
 

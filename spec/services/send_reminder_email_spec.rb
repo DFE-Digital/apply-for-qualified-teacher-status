@@ -215,7 +215,7 @@ RSpec.describe SendReminderEmail do
 
     context "with a requested FI request" do
       let(:application_form) do
-        create(:application_form, :submitted, :old_regs, region:)
+        create(:application_form, :submitted, :old_regulations, region:)
       end
       let(:assessment) { create(:assessment, application_form:) }
       let(:region) { create(:region, :in_country, country_code: "FR") }
@@ -284,9 +284,7 @@ RSpec.describe SendReminderEmail do
     end
 
     context "with a requested reference request" do
-      let(:application_form) do
-        create(:application_form, :submitted, :old_regs, region:)
-      end
+      let(:application_form) { create(:application_form, :submitted, region:) }
       let(:assessment) { create(:assessment, application_form:) }
       let(:region) { create(:region, :in_country, country_code: "FR") }
       let(:work_history) { remindable.work_history }

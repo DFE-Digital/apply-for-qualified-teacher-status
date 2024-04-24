@@ -9,7 +9,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   it "award" do
     given_i_am_authorized_as_an_assessor_user
-    given_there_is_an_awardable_application_form(%i[old_regs])
+    given_there_is_an_awardable_application_form(%i[old_regulations])
     given_i_can_request_dqt_api
 
     when_i_visit_the(

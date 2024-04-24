@@ -1,17 +1,17 @@
-<% if application_form.created_under_new_regulations? %>
-  <%= render "shared/application_form/work_history_summary",
-             work_histories: application_form.work_histories.order_by_user,
-             highlighted_contact_emails: highlighted_work_history_contact_emails %>
-<% else %>
-  <%= render "shared/application_form/work_history_old_regs_summary",
+<% if application_form.created_under_old_regulations? %>
+  <%= render "shared/application_form/work_history_old_regulations_summary",
              application_form:,
              show_has_work_history: true,
              work_histories: application_form.work_histories.order_by_user,
              highlighted_contact_emails: highlighted_work_history_contact_emails,
              changeable: false %>
+<% else %>
+  <%= render "shared/application_form/work_history_summary",
+             work_histories: application_form.work_histories.order_by_user,
+             highlighted_contact_emails: highlighted_work_history_contact_emails %>
 <% end %>
 
-<% if application_form.created_under_new_regulations? %>
+<% unless application_form.created_under_old_regulations? %>
   <% years, months = WorkHistoryDuration.for_application_form(application_form).count_years_and_months %>
 
   <h2 class="govuk-heading-m">

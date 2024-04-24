@@ -69,7 +69,7 @@ module AssessorInterface
       if assessment_section.age_range_subjects?
         CheckAgeRangeSubjectsForm
       elsif assessment_section.professional_standing? &&
-            application_form.created_under_new_regulations? &&
+            !application_form.created_under_old_regulations? &&
             !application_form.needs_work_history
         if CountryCode.scotland?(application_form.country.code)
           ScotlandFullRegistrationForm

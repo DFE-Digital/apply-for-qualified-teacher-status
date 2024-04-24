@@ -5,10 +5,10 @@ require "rails_helper"
 RSpec.describe DQT::RecognitionRoute do
   describe "#for_code" do
     subject(:recognition_route) do
-      described_class.for_country_code(country_code, under_new_regulations:)
+      described_class.for_country_code(country_code, under_old_regulations:)
     end
 
-    let(:under_new_regulations) { false }
+    let(:under_old_regulations) { nil }
 
     context "with Scotland" do
       let(:country_code) { "GB-SCT" }
@@ -21,7 +21,7 @@ RSpec.describe DQT::RecognitionRoute do
     end
 
     context "under the new regulations" do
-      let(:under_new_regulations) { true }
+      let(:under_old_regulations) { false }
 
       (Country::CODES - %w[GB-SCT GB-NIR]).each do |country_code|
         context "with #{country_code}" do
@@ -32,7 +32,7 @@ RSpec.describe DQT::RecognitionRoute do
     end
 
     context "under the old regulations" do
-      let(:under_new_regulations) { false }
+      let(:under_old_regulations) { true }
 
       Country::CODES_IN_EUROPEAN_ECONOMIC_AREA.each do |country_code|
         context "with #{country_code}" do

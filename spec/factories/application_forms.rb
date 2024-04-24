@@ -211,7 +211,7 @@ FactoryBot.define do
       withdrawn_at { Time.zone.now }
     end
 
-    trait :old_regs do
+    trait :old_regulations do
       created_at { Date.new(2023, 1, 31) }
       needs_work_history do
         (region.status_check_none? || region.sanction_check_none?) &&

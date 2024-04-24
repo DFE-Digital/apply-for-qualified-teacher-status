@@ -92,7 +92,9 @@ class Assessment < ApplicationRecord
   end
 
   def can_award?
-    if application_form.created_under_new_regulations?
+    if application_form.created_under_old_regulations?
+      all_sections_or_further_information_requests_passed?
+    else
       return false if induction_required.nil?
 
       if verify?
@@ -108,8 +110,6 @@ class Assessment < ApplicationRecord
       else
         false
       end
-    else
-      all_sections_or_further_information_requests_passed?
     end
   end
 
@@ -147,7 +147,7 @@ class Assessment < ApplicationRecord
 
   def can_review?
     return false unless verify?
-    return false unless application_form.created_under_new_regulations?
+    return false if application_form.created_under_old_regulations?
 
     return false unless all_consent_requests_verified?
     return false unless all_reference_requests_verified?
@@ -164,7 +164,7 @@ class Assessment < ApplicationRecord
 
   def can_verify?
     return false unless unknown? || request_further_information?
-    return false unless application_form.created_under_new_regulations?
+    return false if application_form.created_under_old_regulations?
 
     all_sections_or_further_information_requests_passed?
   end

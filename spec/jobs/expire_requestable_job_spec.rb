@@ -47,7 +47,7 @@ RSpec.describe ExpireRequestableJob do
 
       context "when the applicant is from a country with a 4 week expiry" do
         let(:application_form) do
-          create(:application_form, :submitted, :old_regs, region:)
+          create(:application_form, :submitted, :old_regulations, region:)
         end
 
         # Australia, Canada, Gibraltar, New Zealand, US
