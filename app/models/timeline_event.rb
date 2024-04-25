@@ -29,6 +29,7 @@
 #  assignee_id           :bigint
 #  creator_id            :integer
 #  note_id               :bigint
+#  qualification_id      :bigint
 #  requestable_id        :bigint
 #  work_history_id       :bigint
 #
@@ -39,6 +40,7 @@
 #  index_timeline_events_on_assessment_section_id  (assessment_section_id)
 #  index_timeline_events_on_assignee_id            (assignee_id)
 #  index_timeline_events_on_note_id                (note_id)
+#  index_timeline_events_on_qualification_id       (qualification_id)
 #  index_timeline_events_on_requestable            (requestable_type,requestable_id)
 #  index_timeline_events_on_work_history_id        (work_history_id)
 #
@@ -49,6 +51,7 @@
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
 #  fk_rails_...  (note_id => notes.id)
+#  fk_rails_...  (qualification_id => qualifications.id)
 #  fk_rails_...  (work_history_id => work_histories.id)
 #
 class TimelineEvent < ApplicationRecord
@@ -58,6 +61,7 @@ class TimelineEvent < ApplicationRecord
   belongs_to :assignee, class_name: "Staff", optional: true
   belongs_to :creator, polymorphic: true, optional: true
   belongs_to :note, optional: true
+  belongs_to :qualification, optional: true
   belongs_to :requestable, polymorphic: true, optional: true
   belongs_to :work_history, optional: true
 
@@ -165,8 +169,9 @@ class TimelineEvent < ApplicationRecord
             unless: -> { requestable_reviewed? || requestable_verified? }
 
   validates :column_name, presence: true, if: :information_changed?
-  validates :work_history_id,
-            :column_name,
+  validates :column_name,
+            :qualification_id,
+            :work_history_id,
             absence: true,
             unless: :information_changed?
 
