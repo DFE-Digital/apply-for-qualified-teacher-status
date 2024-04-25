@@ -4,7 +4,8 @@ require "rails_helper"
 
 RSpec.describe ApplicationFormFactory do
   let(:teacher) { create(:teacher) }
-  let(:region) { create(:region) }
+  let(:region) { create(:region, country:) }
+  let(:country) { create(:country) }
 
   describe "#call" do
     subject(:call) { described_class.call(teacher:, region:) }
@@ -116,6 +117,10 @@ RSpec.describe ApplicationFormFactory do
       end
     end
 
+    it "doesn't set reduced evidence accepted" do
+      expect(application_form.reduced_evidence_accepted).to be false
+    end
+
     context "when reduced evidence is accepted" do
       let(:region) { create(:region, :reduced_evidence_accepted) }
 
@@ -124,11 +129,27 @@ RSpec.describe ApplicationFormFactory do
       end
     end
 
+    it "doesn't set requires preliminary check" do
+      expect(application_form.requires_preliminary_check).to be false
+    end
+
     context "when preliminary check is required" do
       let(:region) { create(:region, requires_preliminary_check: true) }
 
       it "sets requires preliminary check" do
         expect(application_form.requires_preliminary_check).to be true
+      end
+    end
+
+    it "doesn't set subject limited" do
+      expect(application_form.subject_limited).to be false
+    end
+
+    context "when subject limited" do
+      let(:country) { create(:country, :subject_limited) }
+
+      it "sets subject limited" do
+        expect(application_form.subject_limited).to be true
       end
     end
   end

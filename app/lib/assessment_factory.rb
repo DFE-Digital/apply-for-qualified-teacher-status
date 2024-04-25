@@ -71,12 +71,12 @@ class AssessmentFactory
       "teaching_qualifications_completed_in_eligible_country",
       "qualified_in_mainstream_education",
       (
-        if application_form.country.subject_limited
+        if application_form.subject_limited
           "qualified_to_teach_children_11_to_16"
         end
       ),
       (
-        if application_form.country.subject_limited
+        if application_form.subject_limited
           "teaching_qualification_subjects_criteria"
         end
       ),
@@ -106,12 +106,12 @@ class AssessmentFactory
       FailureReasons::QUALIFICATIONS_DONT_MATCH_SUBJECTS,
       FailureReasons::QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS,
       (
-        if application_form.country.subject_limited
+        if application_form.subject_limited
           FailureReasons::QUALIFIED_TO_TEACH_CHILDREN_11_TO_16
         end
       ),
       (
-        if application_form.country.subject_limited
+        if application_form.subject_limited
           FailureReasons::TEACHING_QUALIFICATION_SUBJECTS_CRITERIA
         end
       ),
@@ -130,12 +130,12 @@ class AssessmentFactory
     checks = [
       "qualified_in_mainstream_education",
       (
-        if application_form.country.subject_limited
+        if application_form.subject_limited
           "qualified_to_teach_children_11_to_16"
         end
       ),
       (
-        if application_form.country.subject_limited
+        if application_form.subject_limited
           "teaching_qualification_subjects_criteria"
         end
       ),

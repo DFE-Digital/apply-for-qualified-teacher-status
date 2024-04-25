@@ -18,6 +18,7 @@ class ApplicationFormFactory
         reference:,
         region:,
         requires_preliminary_check:,
+        subject_limited:,
         teacher:,
         teaching_authority_provides_written_statement:,
         written_statement_optional:,
@@ -30,6 +31,7 @@ class ApplicationFormFactory
   attr_reader :teacher, :region
 
   delegate :reduced_evidence_accepted,
+           :requires_preliminary_check,
            :teaching_authority_provides_written_statement,
            :written_statement_optional,
            to: :region
@@ -57,7 +59,7 @@ class ApplicationFormFactory
     region.status_check_online? || region.sanction_check_online?
   end
 
-  def requires_preliminary_check
-    region.requires_preliminary_check
+  def subject_limited
+    region.country.subject_limited
   end
 end

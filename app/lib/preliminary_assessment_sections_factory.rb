@@ -25,7 +25,7 @@ class PreliminaryAssessmentSectionsFactory
   end
 
   def qualifications_checks
-    if application_form.country.subject_limited
+    if application_form.subject_limited
       %w[
         qualifications_meet_level_6_or_equivalent
         teaching_qualification_subjects_criteria
@@ -38,7 +38,7 @@ class PreliminaryAssessmentSectionsFactory
   def qualifications_failure_reasons
     [
       FailureReasons::TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL,
-      if application_form.country.subject_limited
+      if application_form.subject_limited
         FailureReasons::TEACHING_QUALIFICATION_SUBJECTS_CRITERIA
       end,
     ].compact

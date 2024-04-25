@@ -124,7 +124,7 @@ RSpec.describe AssessmentFactory do
         end
 
         context "when secondary education teaching qualification is required" do
-          let(:country) { create(:country, :subject_limited) }
+          before { application_form.subject_limited = true }
 
           it "has the right checks and failure reasons" do
             section = sections.qualifications.first
@@ -190,7 +190,7 @@ RSpec.describe AssessmentFactory do
         end
 
         context "with an application form with subject criteria" do
-          let(:country) { create(:country, :subject_limited) }
+          before { application_form.subject_limited = true }
 
           it "has the right checks and failure reasons" do
             section = sections.age_range_subjects.first
@@ -232,7 +232,7 @@ RSpec.describe AssessmentFactory do
           end
 
           context "with an application form with subject criteria" do
-            let(:country) { create(:country, :subject_limited) }
+            before { application_form.subject_limited = true }
 
             it "has the right checks and failure reasons" do
               section = sections.preliminary.qualifications.first

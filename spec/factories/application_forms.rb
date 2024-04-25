@@ -38,6 +38,7 @@
 #  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  stage                                         :string           default("draft"), not null
 #  statuses                                      :string           default(["\"draft\""]), not null, is an Array
+#  subject_limited                               :boolean          default(FALSE), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null
 #  submitted_at                                  :datetime
@@ -94,13 +95,18 @@ FactoryBot.define do
     end
     reduced_evidence_accepted { region.reduced_evidence_accepted }
     written_statement_optional { region.written_statement_optional }
+    requires_preliminary_check { region.requires_preliminary_check }
+    subject_limited { region.country.subject_limited }
     teaching_authority_provides_written_statement do
       region.teaching_authority_provides_written_statement
     end
-    requires_preliminary_check { region.requires_preliminary_check }
 
     trait :requires_preliminary_check do
       requires_preliminary_check { true }
+    end
+
+    trait :subject_limited do
+      subject_limited { true }
     end
 
     trait :teaching_authority_provides_written_statement do
