@@ -67,6 +67,8 @@ en:
       assessor_interface_application_form_email_form:
         email: New email address
       assessor_interface_assessment_recommendation_form:
+        confirmation_options:
+          true: I have assessed this application based on the eligibility criteria that was in place on the date that it was submitted.
         recommendation_options:
           award: Award QTS
           decline: Decline QTS
@@ -284,6 +286,8 @@ en:
           document: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
           decline: "Example: We declined this QTS application as you already have another application in progress."
     legend:
+      assessor_interface_assessment_recommendation_form:
+        confirmation: Confirmation
       assessor_interface_assessment_section_form:
         selected_failure_reasons: What are the reasons for your recommendation?
         scotland_full_registration: Does the applicant have or are they eligible for full registration?

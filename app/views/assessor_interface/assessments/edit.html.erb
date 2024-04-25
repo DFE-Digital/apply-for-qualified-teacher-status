@@ -33,6 +33,21 @@
     <p class="govuk-body">Note: for <%= CountryName.from_region(@application_form.region, with_definite_article: true) %> applications you can still award QTS if the qualifications could not be verified.
   <% end %>
 
+  <% if @form.requires_confirmation? %>
+    <div class="hods-alert">
+      <h2 class="hods-alert__heading">
+        Eligibility criteria for <%= CountryName.from_country(@application_form.country, with_definite_article: true) %> has changed.
+      </h2>
+
+      <p>By continuing, you agree you assessed this application against the criteria in place on the date it was submitted.</p>
+      <p>This application was submitted on <strong><%= @application_form.submitted_at.to_date.to_fs %></strong>.</p>
+    </div>
+
+    <%= f.govuk_check_boxes_fieldset :confirmation, multiple: false, small: true, legend: nil do %>
+      <%= f.govuk_check_box :confirmation, true, false, link_errors: true, multiple: false, label: { size: "s" } %>
+    <% end %>
+  <% end %>
+
   <%= f.govuk_collection_radio_buttons :recommendation,
                                        @assessment.available_recommendations,
                                        :itself,

@@ -50,6 +50,11 @@ module AssessorInterface
       @form =
         AssessmentRecommendationForm.new(
           assessment:,
+          confirmation:
+            params.dig(
+              :assessor_interface_assessment_recommendation_form,
+              :confirmation,
+            ),
           recommendation:
             params.dig(
               :assessor_interface_assessment_recommendation_form,
