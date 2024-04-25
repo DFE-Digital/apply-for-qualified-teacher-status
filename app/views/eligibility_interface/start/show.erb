@@ -1,44 +1,56 @@
 <h1 class="govuk-heading-xl">
-  Check your eligibility to apply for qualified teacher status (QTS) in England
+  Check you’re eligible to apply for qualified teacher status (QTS)
 </h1>
 
-<h2 class="govuk-heading-m">What QTS is</h2>
+<h2 class="govuk-heading-m">About QTS</h2>
 
-<p class="govuk-body">Qualified teacher status (QTS) is a legal requirement to teach in many English schools, and most schools prefer their teachers to have it.</p>
+<p class="govuk-body">QTS is a legal requirement to teach in many schools in England. It is a status that most schools prefer their teachers to have. <%= govuk_link_to "Find out more about QTS", "https://www.gov.uk/guidance/qualified-teacher-status-qts" %>.</p>
 
-<p class="govuk-body">If you apply for QTS we’ll assess the teacher training and experience you gained outside of England to decide whether you’re qualified to teach in English schools.</p>
-
-<p class="govuk-body">Having QTS does not guarantee you a job or give you the right to work in England. You’ll still need to apply for a teaching job separately and have the correct visa or status.</p>
+<p class="govuk-body">It does not guarantee you a job or give you the right to work in England. You’ll still need to apply for a teaching job separately and have the correct visa or status.</p>
 
 <%= render "shared/employment_warning" %>
 
-<h2 class="govuk-heading-m">Who this service is for</h2>
+<h2 class="govuk-heading-m">How this service works</h2>
 
-<p class="govuk-body">This service is for qualified teachers who trained to teach outside of England who want to apply for qualified teacher status (QTS) to teach in English schools.</p>
+<ol class="govuk-list govuk-list--number">
+  <li>You need to check if you’re eligible to apply for QTS.</li>
+  <li>If you’re eligible, you’ll be able to make an application.</li>
+  <li>Once you submit your application, we’ll assess your qualifications and teaching experience to decide if we can award you with QTS.</li>
+</ol>
 
-<p class="govuk-body">If you trained in England or Wales, or have not yet qualified, learn more about <%= govuk_link_to "other routes to QTS", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk" %>.
+<p class="govuk-body">Decisions are based on whether you meet our assessment criteria.</p>
 
-<p class="govuk-body">Use this service to:</p>
+<p class="govuk-body">The DfE does not charge for assessing your application or awarding QTS.</p>
+
+<h2 class="govuk-heading-m">Who is eligible</h2>
+
+<p class="govuk-body">To apply, you must be a qualified teacher who trained to teach outside of England in one of the <%= govuk_link_to "eligible countries", "https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers--2#changes-to-eligibility-for-qts" %>. You must also meet all the following assessment criteria.</p>
+
+<p class="govuk-body"><strong>You must have:</strong></p>
 
 <ul class="govuk-list govuk-list--bullet">
-  <li>check if you’re eligible to apply for QTS</li>
-  <li>understand the types of evidence you’ll need to provide</li>
+  <li>an undergraduate degree equal to a UK bachelor’s degree</li>
+  <li>completed teacher training equal to a <%= govuk_link_to "level 6 qualification", "https://www.gov.uk/what-different-qualification-levels-mean/list-of-qualification-levels#:~:text=Level%206%20qualifications%20are%3A,graduate%20certificate" %></li>
+  <li>completed all mandatory induction processes to gain full teacher registration in the country where you qualified</li>
+  <li>been recognised as a professional teacher in the country where you qualified, and have no conditions or restrictions on your teaching practice</li>
+  <li>qualifications to show you can teach children aged anywhere between 5 and 16 years old</li>
+  <li>at least one school year (9 months) of experience employed as a teacher in any country, but must be from after you first became qualified to teach</li>
 </ul>
 
-<p class="govuk-body">We’ll ask some questions to check your eligibility to apply for QTS in England. This should take about 5 minutes.</p>
+<p class="govuk-body">Depending on the country that you trained to teach in, you may be required to have:</p>
 
-<p class="govuk-body">There’s no charge to apply for QTS. You do not need to be in the UK to use this service.</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>qualifications to show you can teach children aged anywhere between 11 and 16 years old</li>
+  <li>a teaching specialism in one of the following subjects: maths, science, biology, chemistry, physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, or Spanish</li>
+</ul>
+
+<p class="govuk-body">If you trained in England or Wales, or have not yet qualified, learn more about <%= govuk_link_to "other routes to getting QTS", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#routes-to-qts" %>.</p>
+
+<%= govuk_start_button(text: "Check you’re eligible", href: eligibility_interface_start_path, as_button: true) %>
 
 <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) %>
   <p class="govuk-body">
     If you’ve already started your application using this service, you can
     <%= govuk_link_to "sign in to continue working on it", :create_or_new_teacher_session %>.
   </p>
-<% end %>
-
-<%= form_with url: eligibility_interface_start_path, method: :post do |f| %>
-  <button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-9" data-module="govuk-button" data-prevent-double-click="true">
-    Start now
-    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" focusable="false" aria-hidden="true"><path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path></svg>
-  </button>
 <% end %>
