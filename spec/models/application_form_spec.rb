@@ -464,4 +464,31 @@ RSpec.describe ApplicationForm, type: :model do
       it { is_expected.to be false }
     end
   end
+
+  describe "#submitted_under_old_criteria?" do
+    subject(:submitted_under_old_criteria?) do
+      application_form.submitted_under_old_criteria?
+    end
+
+    it { is_expected.to be false }
+
+    context "with an old application form" do
+      let(:application_form) do
+        create(:application_form, created_at: Date.new(2020, 1, 1))
+      end
+      it { is_expected.to be true }
+    end
+
+    context "when subject limited doesn't match the country" do
+      let(:application_form) { create(:application_form, :subject_limited) }
+      it { is_expected.to be true }
+    end
+
+    context "when requires preliminary check doesn't match the country" do
+      let(:application_form) do
+        create(:application_form, :requires_preliminary_check)
+      end
+      it { is_expected.to be true }
+    end
+  end
 end

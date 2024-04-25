@@ -243,6 +243,12 @@ class ApplicationForm < ApplicationRecord
     created_at < Date.new(2023, 2, 1)
   end
 
+  def submitted_under_old_criteria?
+    created_under_old_regulations? ||
+      subject_limited != country.subject_limited ||
+      requires_preliminary_check != region.requires_preliminary_check
+  end
+
   def reminder_email_names
     %w[consent expiration references]
   end
