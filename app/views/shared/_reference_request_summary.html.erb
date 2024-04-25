@@ -35,13 +35,13 @@
                t(
                  "helpers.legend.teacher_interface_reference_request_dates_response_form.dates_response.current",
                  school_name: work_history.school_name,
-                 start_date: work_history.start_date.strftime("%B %Y"),
+                 start_date: work_history.start_date.to_fs(:month_and_year),
                ) :
                t(
                  "helpers.legend.teacher_interface_reference_request_dates_response_form.dates_response.previous",
                  school_name: work_history.school_name,
-                 start_date: work_history.start_date.strftime("%B %Y"),
-                 end_date: work_history.end_date.strftime("%B %Y"),
+                 start_date: work_history.start_date.to_fs(:month_and_year),
+                 end_date: work_history.end_date.to_fs(:month_and_year),
                ),
       value: reference_request.dates_response ? "Yes" : "No — #{reference_request.dates_comment}",
       href: dates_teacher_interface_reference_request_path(reference_request.slug),

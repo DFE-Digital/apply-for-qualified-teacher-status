@@ -15,7 +15,7 @@ Download each document then:
 
 [Sign in to access your documents](<%= new_teacher_session_url %>)
 
-You need to sign and upload these documents by <%= @expires_at.to_fs(:date) %> so that we can proceed with your application.
+You need to sign and upload these documents by <%= @expires_at.to_date.to_fs %> so that we can proceed with your application.
 
 ## Why we need your written consent
 

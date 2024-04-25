@@ -17,11 +17,11 @@ class TeacherInterface::ApplicationFormViewObject
   end
 
   def started_at
-    application_form.created_at.to_fs(:date).strip
+    application_form.created_at.to_date.to_fs
   end
 
   def expires_at
-    application_form.expires_at.to_fs(:date).strip
+    application_form.expires_at.to_date.to_fs
   end
 
   def task_list_sections

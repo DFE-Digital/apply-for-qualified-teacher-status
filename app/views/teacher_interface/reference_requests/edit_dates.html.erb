@@ -2,13 +2,13 @@
              t(
                "helpers.legend.teacher_interface_reference_request_dates_response_form.dates_response.current",
                school_name: @work_history.school_name,
-               start_date: @work_history.start_date.strftime("%B %Y"),
+               start_date: @work_history.start_date.to_fs(:month_and_year),
              ) :
              t(
                "helpers.legend.teacher_interface_reference_request_dates_response_form.dates_response.previous",
                school_name: @work_history.school_name,
-               start_date: @work_history.start_date.strftime("%B %Y"),
-               end_date: @work_history.end_date.strftime("%B %Y"),
+               start_date: @work_history.start_date.to_fs(:month_and_year),
+               end_date: @work_history.end_date.to_fs(:month_and_year),
              ) %>
 
 <% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>

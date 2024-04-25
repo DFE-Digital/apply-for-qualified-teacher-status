@@ -112,8 +112,7 @@ module CheckYourAnswersSummary
     end
 
     def format_date(date, field)
-      format = field[:format] == :without_day ? "%B %Y" : "%e %B %Y"
-      date.strftime(format).strip
+      field[:format] == :without_day ? date.to_fs(:month_and_year) : date.to_fs
     end
 
     def format_document(document, field)

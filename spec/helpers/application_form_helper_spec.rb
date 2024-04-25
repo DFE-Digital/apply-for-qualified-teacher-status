@@ -79,7 +79,7 @@ RSpec.describe ApplicationFormHelper do
             },
             actions: [],
           },
-          { key: { text: "Created on" }, value: { text: " 1 January 2020" } },
+          { key: { text: "Created on" }, value: { text: "1 January 2020" } },
           {
             key: {
               text: "Working days since submission",

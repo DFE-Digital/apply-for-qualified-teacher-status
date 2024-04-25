@@ -44,10 +44,10 @@ class ConsentLetter
           pdf.text "Name: #{application_form_full_name(application_form)}"
 
           pdf.pad(LINE_PAD * 2) do
-            pdf.text "Date of birth: #{application_form.date_of_birth.to_fs(:long_ordinal_uk)}"
+            pdf.text "Date of birth: #{application_form.date_of_birth.to_fs}"
           end
 
-          pdf.text "Date of consent: #{date_of_consent.to_fs(:long_ordinal_uk)}"
+          pdf.text "Date of consent: #{date_of_consent.to_fs}"
 
           pdf.pad(SECTION_PAD) do
             pdf.text "The service is run by the Teaching Regulation Agency (TRA) an executive agency of the " \

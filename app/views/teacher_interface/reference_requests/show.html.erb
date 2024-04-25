@@ -36,7 +36,7 @@
 
   <%= govuk_inset_text do %>
     <p class="govuk-body">
-      <%= @work_history.school_name %> from <%= @work_history.start_date.strftime("%B %Y") %> to <%= (@work_history.end_date || Time.zone.today).strftime("%B %Y") %>
+      <%= @work_history.school_name %> from <%= @work_history.start_date.to_fs(:month_and_year) %> to <%= (@work_history.end_date || Date.today).to_fs(:month_and_year) %>
     </p>
   <% end %>
 
