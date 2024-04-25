@@ -9,7 +9,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   it "award" do
     given_i_am_authorized_as_an_assessor_user
-    given_there_is_an_awardable_application_form(%i[old_regulations])
+    given_there_is_an_awardable_application_form
     given_i_can_request_dqt_api
 
     when_i_visit_the(
@@ -59,7 +59,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   it "verify" do
     given_i_am_authorized_as_an_assessor_user
-    given_there_is_an_awardable_application_form_with_work_history
+    given_there_is_a_verifiable_application_form_with_work_history
 
     when_i_visit_the(
       :assessor_complete_assessment_page,
@@ -112,7 +112,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   it "verify with reduced evidence" do
     given_i_am_authorized_as_an_assessor_user
-    given_there_is_an_awardable_application_form_with_reduced_evidence
+    given_there_is_a_verifiable_application_form_with_reduced_evidence
 
     when_i_visit_the(
       :assessor_complete_assessment_page,
@@ -189,36 +189,42 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   private
 
-  def given_there_is_an_awardable_application_form(traits = [])
+  def given_there_is_a_verifiable_application_form
     @application_form ||=
       create(
         :application_form,
         :with_personal_information,
         :with_teaching_qualification,
         :submitted,
-        *traits,
         reduced_evidence_accepted: false,
       )
 
     assessment =
       create(
         :assessment,
-        application_form:,
-        age_range_min: 8,
         age_range_max: 11,
+        age_range_min: 8,
+        application_form:,
         subjects: %w[mathematics],
       )
 
     create(:assessment_section, :personal_information, :passed, assessment:)
   end
 
-  def given_there_is_an_awardable_application_form_with_work_history
-    given_there_is_an_awardable_application_form
+  def given_there_is_an_awardable_application_form
+    given_there_is_a_verifiable_application_form
+
+    application_form.assessment.verify!
+    application_form.assessment.update!(induction_required: false)
+  end
+
+  def given_there_is_a_verifiable_application_form_with_work_history
+    given_there_is_a_verifiable_application_form
     create(:work_history, :completed, application_form:)
   end
 
-  def given_there_is_an_awardable_application_form_with_reduced_evidence
-    given_there_is_an_awardable_application_form
+  def given_there_is_a_verifiable_application_form_with_reduced_evidence
+    given_there_is_a_verifiable_application_form
     application_form.update!(reduced_evidence_accepted: true)
   end
 
