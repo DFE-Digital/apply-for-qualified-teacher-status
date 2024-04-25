@@ -28,8 +28,8 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
       is_expected.to eq(
         [
           {
-            name: "Check and select consent method",
-            link: [
+            title: "Check and select consent method",
+            href: [
               :consent_methods,
               :assessor_interface,
               application_form,
@@ -49,8 +49,8 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
         is_expected.to eq(
           [
             {
-              name: "Check and select consent method",
-              link: [
+              title: "Check and select consent method",
+              href: [
                 :check_consent_methods,
                 :assessor_interface,
                 application_form,
@@ -60,8 +60,8 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
               status: "completed",
             },
             {
-              name: "Generate consent document",
-              link: [
+              title: "Generate consent document",
+              href: [
                 :unsigned_consent_document,
                 :assessor_interface,
                 application_form,
@@ -71,13 +71,13 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
               status: "not_started",
             },
             {
-              name: "Request Ecctis verification",
-              link: nil,
+              title: "Request Ecctis verification",
+              href: nil,
               status: "cannot_start",
             },
             {
-              name: "Record Ecctis response",
-              link: nil,
+              title: "Record Ecctis response",
+              href: nil,
               status: "cannot_start",
             },
           ],
@@ -122,8 +122,8 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
         is_expected.to eq(
           [
             {
-              name: "Generate consent document",
-              link: [
+              title: "Generate consent document",
+              href: [
                 :unsigned_consent_document,
                 :assessor_interface,
                 application_form,
@@ -133,13 +133,13 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
               status: "not_started",
             },
             {
-              name: "Request Ecctis verification",
-              link: nil,
+              title: "Request Ecctis verification",
+              href: nil,
               status: "cannot_start",
             },
             {
-              name: "Record Ecctis response",
-              link: nil,
+              title: "Record Ecctis response",
+              href: nil,
               status: "cannot_start",
             },
           ],
@@ -158,8 +158,8 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
         is_expected.to eq(
           [
             {
-              name: "Upload consent document",
-              link: [
+              title: "Upload consent document",
+              href: [
                 :check_upload,
                 :assessor_interface,
                 application_form,
@@ -169,23 +169,23 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
               status: "not_started",
             },
             {
-              name: "Send consent document to applicant",
-              link: nil,
+              title: "Send consent document to applicant",
+              href: nil,
               status: "cannot_start",
             },
             {
-              name: "Record applicant response",
-              link: nil,
+              title: "Record applicant response",
+              href: nil,
               status: "cannot_start",
             },
             {
-              name: "Request Ecctis verification",
-              link: nil,
+              title: "Request Ecctis verification",
+              href: nil,
               status: "cannot_start",
             },
             {
-              name: "Record Ecctis response",
-              link: nil,
+              title: "Record Ecctis response",
+              href: nil,
               status: "cannot_start",
             },
           ],

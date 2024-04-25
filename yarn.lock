@@ -117,12 +117,12 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.20.2.tgz#9c907b21e30a52db959ba4f80bb01a0cc403d5cc"
   integrity sha512-N49X4lJX27+l9jbLKSqZ6bKNjzQvHaT8IIFUy+YIqmXQdjYCToGWwOItDrfby14c78aDd5NHQl29xingXfCdLQ==
 
-"@ministryofjustice/frontend@^1.8.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-1.8.1.tgz#6bac39524ba406533d1ce51c55d4c8ff96ad358e"
-  integrity sha512-HNl8XXbNje/NtQRlGM57CTLlAGBTW+ziGTBkxXHDn7VauKNz418PnErDlKRWeaHIyc6V9twI5EbOj4lFCsvasw==
+"@ministryofjustice/frontend@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-2.1.2.tgz#9c87572b2fe49033003ab8880e0d6e532b5336e4"
+  integrity sha512-Hf4QfnXGvof7h7Qg3BRW3CzVGihqJHhPX2YWWj2YQpCiT1PwG1SX1ZrkfZLVkmJffW20tAzaq7/cflO1jeSquA==
   dependencies:
-    govuk-frontend "^3.0.0 || ^4.0.0"
+    govuk-frontend "^5.0.0"
     moment "^2.27.0"
 
 "@prettier/plugin-ruby@^4.0.4":
@@ -146,9 +146,9 @@ anymatch@~3.1.2:
     picomatch "^2.0.4"
 
 binary-extensions@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
-  integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.3.0.tgz#f6e14a97858d327252200242d4ccfe522c445522"
+  integrity sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==
 
 braces@~3.0.2:
   version "3.0.2"
@@ -158,9 +158,9 @@ braces@~3.0.2:
     fill-range "^7.0.1"
 
 "chokidar@>=3.0.0 <4.0.0":
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"
-  integrity sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.6.0.tgz#197c6cc669ef2a8dc5e7b4d97ee4e092c3eb0d5b"
+  integrity sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==
   dependencies:
     anymatch "~3.1.2"
     braces "~3.0.2"
@@ -178,15 +178,15 @@ core-js@3.2.1:
   integrity sha512-Qa5XSVefSVPRxy2XfUC13WbvqkxhkwB3ve+pgCQveNgYzbM/UxZeu1dcOX/xr4UmfUd+muuvsaxilQzCyUurMw==
 
 corejs-typeahead@^1.1.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/corejs-typeahead/-/corejs-typeahead-1.3.1.tgz#26b9b158cba7f123556c74068bffce9356505bd3"
-  integrity sha512-fyNlBNWJNL6EQUnJyAunEzBzRcwR2cEHtZXBi2pndHPOJ/wpOf3wbS+/Oh+kYYS5sKowQcs0LFwMSl6Y2Xeqkw==
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/corejs-typeahead/-/corejs-typeahead-1.3.4.tgz#dad8c5ab63579947b5d665eee3b538479847b0f8"
+  integrity sha512-4SAc1UWszc05IyG9te1JHSeLas5WUWKmKAB8m9E6AAmHCpYhdSaySkblVSIUwQG2FR5uAsaeHbKM+pkEP7SiNw==
   dependencies:
     jquery ">=1.11"
 
 "dfe-autocomplete@github:DFE-Digital/dfe-autocomplete":
   version "0.0.1"
-  resolved "https://codeload.github.com/DFE-Digital/dfe-autocomplete/tar.gz/36d80e6b5bba67c92cd9ec6982a4e536d1889aed"
+  resolved "https://codeload.github.com/DFE-Digital/dfe-autocomplete/tar.gz/8e7389ff62a38bc8880323f6c58eed9c8d10f080"
   dependencies:
     accessible-autocomplete "^2.0.4"
 
@@ -227,9 +227,9 @@ fill-range@^7.0.1:
     to-regex-range "^5.0.1"
 
 fsevents@~2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
-  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
+  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
 glob-parent@~5.1.2:
   version "5.1.2"
@@ -247,20 +247,15 @@ govuk-country-and-territory-autocomplete@^1.0.2:
     core-js "3.2.1"
     openregister-picker-engine "^1.2.1"
 
-"govuk-frontend@^3.0.0 || ^4.0.0":
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.7.0.tgz#69950b6c2e69f435ffe9aa60d8dee232dac977de"
-  integrity sha512-0OsdCusF5qvLWwKziU8zqxiC0nq6WP0ZQuw51ymZ/1V0tO71oIKMlSLN2S9bm8RcEGSoidPt2A34gKxePrLjvg==
-
-govuk-frontend@^4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.8.0.tgz#df4e56c762e93aae74fed214bb6be08e13783772"
-  integrity sha512-NOmPJxL8IYq1HSNHYKx9XY2LLTxuwb+IFASiGQO4sgJ8K7AG66SlSeqARrcetevV8zOf+i1z+MbJJ2O7//OxAw==
+govuk-frontend@^5.0.0, govuk-frontend@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.3.1.tgz#d63e2078b0d94a119bfe322431218f04024668a2"
+  integrity sha512-EzegdVdmZVwXUGTQTsBgK4TkMpMyPdOIa2g1kvwX7EeyP9Kah+amXSo97gbiI8N49L6E0J6/2H6qLW4QN3KhMQ==
 
 immutable@^4.0.0:
-  version "4.2.4"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.2.4.tgz#83260d50889526b4b531a5e293709a77f7c55a2a"
-  integrity sha512-WDxL3Hheb1JkRN3sQkyujNlL/xRjAo3rJtaU5xeufUauG66JdMr32bLj4gF+vWl84DIA3Zxw7tiAjneYzRRw+w==
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.3.5.tgz#f8b436e66d59f99760dc577f5c99a4fd2a5cc5a0"
+  integrity sha512-8eabxkth9gZatlwl5TBuJnCsoTADlL6ftEr7A4qgdaTsPyreilDSnUk57SO+jfKcNtxPa22U5KK6DSeAYhpBJw==
 
 is-binary-path@~2.1.0:
   version "2.1.0"
@@ -287,14 +282,14 @@ is-number@^7.0.0:
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
 
 jquery@>=1.11:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.3.tgz#23ed2ffed8a19e048814f13391a19afcdba160e6"
-  integrity sha512-bZ5Sy3YzKo9Fyc8wH2iIQK4JImJ6R0GWI9kL1/k7Z91ZBNgkRXE6U0JfHIizZbort8ZunhSI3jw9I6253ahKfg==
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.7.1.tgz#083ef98927c9a6a74d05a6af02806566d16274de"
+  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
 
 moment@^2.27.0:
-  version "2.29.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
-  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
+  version "2.30.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.30.1.tgz#f8c91c07b7a786e30c59926df530b4eac96974ae"
+  integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
 
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"
@@ -341,9 +336,9 @@ sass@^1.75.0:
     source-map-js ">=0.6.2 <2.0.0"
 
 "source-map-js@>=0.6.2 <2.0.0":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
-  integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.2.0.tgz#16b809c162517b5b8c3e7dcd315a2a5c2612b2af"
+  integrity sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==
 
 to-regex-range@^5.0.1:
   version "5.0.1"

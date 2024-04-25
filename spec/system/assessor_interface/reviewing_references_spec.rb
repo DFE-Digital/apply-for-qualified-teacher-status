@@ -111,7 +111,7 @@ RSpec.describe "Assessor reviewing references", type: :system do
 
   def and_i_see_the_overdue_status
     expect(assessor_review_verifications_page).to have_content(
-      "This reference’s status has changed from OVERDUE to RECEIVED",
+      "This reference’s status has changed from Overdue to Received",
     )
   end
 
@@ -129,17 +129,17 @@ RSpec.describe "Assessor reviewing references", type: :system do
 
   def and_i_see_the_reference_not_started
     item = assessor_review_verifications_page.task_list.find_item("School")
-    expect(item.status_tag.text).to eq("NOT STARTED")
+    expect(item.status_tag.text).to eq("Not started")
   end
 
   def and_i_see_the_reference_accepted
     item = assessor_review_verifications_page.task_list.find_item("School")
-    expect(item.status_tag.text).to eq("ACCEPTED")
+    expect(item.status_tag.text).to eq("Accepted")
   end
 
   def and_i_see_the_reference_rejected
     item = assessor_review_verifications_page.task_list.find_item("School")
-    expect(item.status_tag.text).to eq("REJECTED")
+    expect(item.status_tag.text).to eq("Rejected")
   end
 
   def application_form

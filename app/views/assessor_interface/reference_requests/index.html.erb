@@ -8,18 +8,16 @@
   You can review those that have the status RECEIVED.
 </p>
 
-<%= render TaskList::Component.new([
-  {
-    title: "References to verify",
-    indentation: false,
-    items: @reference_requests.map do |reference_request|
-      {
-        name: work_history_name_and_duration(reference_request.work_history),
-        link: [:verify, :assessor_interface, @application_form, @assessment, reference_request],
-        status: reference_request.status
-      }
-    end
-  }
-]) %>
+<h2 class="govuk-heading-m">References to verify</h2>
+
+<%= govuk_task_list do |task_list|
+  @reference_requests.each do |reference_request|
+    task_list.with_item(
+      title: work_history_name_and_duration(reference_request.work_history),
+      href: [:verify, :assessor_interface, @application_form, @assessment, reference_request],
+      status: render(StatusTag::Component.new(reference_request.status))
+    )
+  end
+end %>
 
 <%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>

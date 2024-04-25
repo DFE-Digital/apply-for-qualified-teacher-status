@@ -156,7 +156,7 @@ RSpec.describe "Teacher personal information", type: :system do
       teacher_check_personal_information_page.summary_list.rows[6]
     expect(name_change_document_row.key.text).to eq("Name change document")
     expect(name_change_document_row.value.text).to eq(
-      "upload.pdf (opens in a new tab)",
+      "upload.pdf (opens in new tab)",
     )
   end
 
@@ -195,7 +195,7 @@ RSpec.describe "Teacher personal information", type: :system do
   def and_i_see_the_completed_personal_information_task
     expect(
       teacher_application_page.personal_information_task_item.status_tag.text,
-    ).to eq("COMPLETED")
+    ).to eq("Completed")
   end
 
   def teacher

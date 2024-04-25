@@ -385,25 +385,25 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def then_the_application_form_is_awarded
     expect(assessor_application_page.status_summary.value).to have_text(
-      "AWARDED",
+      "Awarded",
     )
   end
 
   def then_the_application_form_is_waiting_on
     expect(assessor_application_page.status_summary.value.text).to include(
-      "WAITING ON",
+      "Waiting on",
     )
   end
 
   def then_the_application_form_is_verification_in_progress
     expect(assessor_application_page.status_summary.value.text).to include(
-      "VERIFICATION IN PROGRESS",
+      "Verification in progress",
     )
   end
 
   def then_the_application_form_is_declined
     expect(assessor_application_page.status_summary.value).to have_text(
-      "DECLINED",
+      "Declined",
     )
   end
 

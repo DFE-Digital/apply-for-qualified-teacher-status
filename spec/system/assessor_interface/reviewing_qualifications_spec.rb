@@ -105,7 +105,7 @@ RSpec.describe "Assessor reviewing qualifications", type: :system do
   end
 
   def when_i_click_on_the_qualification
-    assessor_application_page.task_list.click_item("BSc Teaching")
+    assessor_review_verifications_page.task_list.click_item("BSc Teaching")
   end
 
   def when_i_submit_yes_on_the_review_form
@@ -123,13 +123,13 @@ RSpec.describe "Assessor reviewing qualifications", type: :system do
   def and_i_see_the_qualification_accepted
     item =
       assessor_review_verifications_page.task_list.find_item("BSc Teaching")
-    expect(item.status_tag.text).to eq("ACCEPTED")
+    expect(item.status_tag.text).to eq("Accepted")
   end
 
   def and_i_see_the_qualification_rejected
     item =
       assessor_review_verifications_page.task_list.find_item("BSc Teaching")
-    expect(item.status_tag.text).to eq("REJECTED")
+    expect(item.status_tag.text).to eq("Rejected")
   end
 
   def application_form

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "ostruct"
+
 module TeacherInterface
   class EnglishLanguageProviderForm < BaseForm
     attr_accessor :application_form

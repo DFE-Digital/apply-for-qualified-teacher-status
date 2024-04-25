@@ -3,7 +3,7 @@ $govuk-new-link-styles: true;
 $govuk-assets-path: "/";
 $moj-images-path: "/";
 
-@import "govuk-frontend/govuk/all";
+@import "govuk-frontend/dist/govuk/all";
 @import "@ministryofjustice/frontend/moj/components/ticket-panel/ticket-panel";
 @import "@ministryofjustice/frontend/moj/components/timeline/timeline";
 @import "dfe-autocomplete/src/dfe-autocomplete";
@@ -15,7 +15,6 @@ $moj-images-path: "/";
 @import "_environments";
 @import "_search_results";
 @import "_support";
-@import "_task_list";
 
 ul.autocomplete__menu {
   li {

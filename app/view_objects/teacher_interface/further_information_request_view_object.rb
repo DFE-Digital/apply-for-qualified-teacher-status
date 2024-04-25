@@ -15,26 +15,23 @@ module TeacherInterface
           .find(params[:id])
     end
 
-    def task_list_sections
-      items =
-        further_information_request
-          .items
-          .order(:created_at)
-          .map do |item|
-            {
-              name: item_name(item),
-              link: [
-                :edit,
-                :teacher_interface,
-                :application_form,
-                further_information_request,
-                item,
-              ],
-              status: item.status,
-            }
-          end
-
-      [{ title: "Further information requested", items: }]
+    def task_list_items
+      further_information_request
+        .items
+        .order(:created_at)
+        .map do |item|
+          {
+            title: item_name(item),
+            href: [
+              :edit,
+              :teacher_interface,
+              :application_form,
+              further_information_request,
+              item,
+            ],
+            status: item.status,
+          }
+        end
     end
 
     def can_check_answers?

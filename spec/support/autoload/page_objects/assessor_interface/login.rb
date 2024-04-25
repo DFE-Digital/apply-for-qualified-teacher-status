@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PageObjects
   module AssessorInterface
     class Login < SitePrism::Page
@@ -6,7 +8,7 @@ module PageObjects
       section :form, "form" do
         element :email_field, "#staff-email-field"
         element :password_field, "#staff-password-field"
-        element :continue_button, "button"
+        element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
       end
 
       element :azure_sign_in, "#button-sign-in-with-active-directory"

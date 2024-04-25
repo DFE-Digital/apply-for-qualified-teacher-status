@@ -69,13 +69,13 @@ RSpec.describe "Teacher age range and subjects", type: :system do
 
   def and_i_see_the_completed_age_range_task
     expect(teacher_application_page.age_range_task_item.status_tag.text).to eq(
-      "COMPLETED",
+      "Completed",
     )
   end
 
   def and_i_see_the_completed_subjects_task
     expect(teacher_application_page.subjects_task_item.status_tag.text).to eq(
-      "COMPLETED",
+      "Completed",
     )
   end
 
