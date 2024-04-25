@@ -22,7 +22,6 @@
     - failure_reason_assessor_feedback
     - response
     - contact_name
-    - contact_job
     - contact_email
   :notes:
     - text
