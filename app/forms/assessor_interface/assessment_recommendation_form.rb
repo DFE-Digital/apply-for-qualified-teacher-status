@@ -13,4 +13,12 @@ class AssessorInterface::AssessmentRecommendationForm
             inclusion: {
               in: ->(form) { form.assessment&.available_recommendations.to_a },
             }
+
+  attribute :confirmation, :boolean
+  validates :confirmation, presence: true, if: :requires_confirmation?
+
+  def requires_confirmation?
+    assessment&.can_verify? &&
+      assessment&.application_form&.submitted_under_old_criteria?
+  end
 end

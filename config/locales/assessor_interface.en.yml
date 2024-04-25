@@ -241,6 +241,8 @@ en:
               blank: You must confirm that you have reviewed this QTS application
         assessor_interface/assessment_recommendation_form:
           attributes:
+            confirmation:
+              blank: Confirm you have assessed this application based on the eligibility criteria that was in place on the date that it was submitted
             recommendation:
               blank: Select your recommendation
               inclusion: Select your recommendation
