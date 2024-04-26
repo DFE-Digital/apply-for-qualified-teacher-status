@@ -4,14 +4,14 @@ We can confirm that the following person has made an application to us for quali
 
 <%= application_form_full_name(@application_form) %>
 
-Date of birth: <%= @application_form.date_of_birth.to_fs(:long_ordinal_uk) %>
+Date of birth: <%= @application_form.date_of_birth.to_fs %>
 
 The applicant has provided us with the following details about their teaching qualification:
 
 Title: <%= @qualification.title %>
 Institution studied at: <%= @qualification.institution_name %>
-Date started: <%= @qualification.start_date.to_fs(:long_ordinal_uk) %>
-Date ended: <%= @qualification.complete_date.to_fs(:long_ordinal_uk) %>
+Date started: <%= @qualification.start_date.to_fs %>
+Date ended: <%= @qualification.complete_date.to_fs %>
 
 They’ve told us that they’re qualified to teach children <%= @application_form.subjects.to_sentence %> from age <%= @application_form.age_range_min %> to <%= @application_form.age_range_max %> years old.
 

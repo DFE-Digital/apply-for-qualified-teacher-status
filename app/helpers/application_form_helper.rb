@@ -93,7 +93,7 @@ module ApplicationFormHelper
           text: I18n.t("application_form.summary.submitted_at"),
         },
         value: {
-          text: application_form.submitted_at.strftime("%e %B %Y"),
+          text: application_form.submitted_at.to_date.to_fs,
         },
       },
       {

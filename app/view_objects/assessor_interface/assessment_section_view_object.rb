@@ -99,7 +99,7 @@ module AssessorInterface
       [
         application_form.given_names,
         application_form.family_name,
-        "(#{application_form.date_of_birth.to_fs(:long_ordinal_uk)})",
+        "(#{application_form.date_of_birth.to_fs})",
       ].join(" ")
     end
 

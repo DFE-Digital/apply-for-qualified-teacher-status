@@ -65,7 +65,7 @@
       <%= govuk_warning_text(text: "Only resend reference requests if you have been asked to do so.") %>
 
       <% if (timeline_event = @application_form.timeline_events.email_sent.where(mailer_class_name: "RefereeMailer", mailer_action_name: "reference_requested").order(created_at: :desc).first) %>
-        <p class="govuk-body">This email was last sent on <%= timeline_event.created_at.to_fs(:date_and_time) %></p>
+        <p class="govuk-body">This email was last sent on <%= timeline_event.created_at.to_fs %></p>
       <% end %>
 
       <%= govuk_button_link_to "Resend reference request email", [:resend_email, :assessor_interface, @application_form, @assessment, @reference_request] %>
