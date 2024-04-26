@@ -28,10 +28,17 @@ RSpec.describe AssessAssessmentSection do
   context "when the update is successful" do
     it { is_expected.to be true }
 
-    it "sets the state" do
+    it "sets the status" do
       expect { call }.to change(assessment_section, :status).from(
         "not_started",
       ).to("rejected")
+    end
+
+    it "sets the assessed at date" do
+      expect { travel_to(Date.new(2020, 1, 1)) { call } }.to change(
+        assessment_section,
+        :assessed_at,
+      ).from(nil).to(Date.new(2020, 1, 1))
     end
 
     it "records a timeline event" do

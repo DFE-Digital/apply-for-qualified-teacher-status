@@ -38,7 +38,9 @@ class AssessAssessmentSection
         )
       end
 
-      next false unless assessment_section.update(passed:)
+      unless assessment_section.update(passed:, assessed_at: Time.zone.now)
+        next false
+      end
 
       update_application_form_assessor
       create_timeline_event(old_status:)
