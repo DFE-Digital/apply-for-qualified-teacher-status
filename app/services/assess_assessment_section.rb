@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
-class UpdateAssessmentSection
+class AssessAssessmentSection
   include ServicePattern
 
-  def initialize(assessment_section:, user:, params:)
+  def initialize(
+    assessment_section:,
+    user:,
+    passed:,
+    selected_failure_reasons: {}
+  )
     @assessment_section = assessment_section
-    @params = params
     @user = user
-    @selected_failure_reasons = params.delete(:selected_failure_reasons)
+    @passed = passed
+    @selected_failure_reasons = selected_failure_reasons
   end
 
   def call
@@ -33,7 +38,7 @@ class UpdateAssessmentSection
         )
       end
 
-      next false unless assessment_section.update(params)
+      next false unless assessment_section.update(passed:)
 
       update_application_form_assessor
       create_timeline_event(old_status:)
@@ -46,7 +51,7 @@ class UpdateAssessmentSection
 
   private
 
-  attr_reader :assessment_section, :user, :params, :selected_failure_reasons
+  attr_reader :assessment_section, :user, :passed, :selected_failure_reasons
 
   delegate :assessment, to: :assessment_section
   delegate :application_form, to: :assessment

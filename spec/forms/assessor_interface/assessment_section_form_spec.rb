@@ -136,13 +136,11 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       it { is_expected.to be true }
 
       it "calls the update assessment service" do
-        expect(UpdateAssessmentSection).to receive(:call).with(
+        expect(AssessAssessmentSection).to receive(:call).with(
           assessment_section:,
           user:,
-          params: {
-            passed: true,
-            selected_failure_reasons: {
-            },
+          passed: true,
+          selected_failure_reasons: {
           },
         )
 
@@ -164,15 +162,13 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       it { is_expected.to be true }
 
       it "calls the update assessment service" do
-        expect(UpdateAssessmentSection).to receive(:call).with(
+        expect(AssessAssessmentSection).to receive(:call).with(
           assessment_section:,
           user:,
-          params: {
-            passed: false,
-            selected_failure_reasons: {
-              further_information_failure_reason.to_s => {
-                notes: "Notes.",
-              },
+          passed: false,
+          selected_failure_reasons: {
+            further_information_failure_reason.to_s => {
+              notes: "Notes.",
             },
           },
         )

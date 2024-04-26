@@ -70,7 +70,7 @@ class AssessmentSection < ApplicationRecord
   end
 
   def assessed?
-    passed? || failed?
+    passed != nil
   end
 
   def status

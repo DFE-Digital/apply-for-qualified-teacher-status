@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe UpdateAssessmentSection do
+RSpec.describe AssessAssessmentSection do
   let(:user) { create(:staff) }
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
@@ -14,27 +14,34 @@ RSpec.describe UpdateAssessmentSection do
   end
   let(:selected_failure_reason_key) { "identification_document_expired" }
   let(:selected_failure_reason_assessor_feedback) { { notes: "Epic fail" } }
-  let(:params) { { passed: false, selected_failure_reasons: } }
+  let(:passed) { false }
 
-  subject { described_class.call(assessment_section:, user:, params:) }
+  subject(:call) do
+    described_class.call(
+      assessment_section:,
+      user:,
+      passed:,
+      selected_failure_reasons:,
+    )
+  end
 
   context "when the update is successful" do
     it { is_expected.to be true }
 
     it "sets the state" do
-      expect { subject }.to change(assessment_section, :status).from(
+      expect { call }.to change(assessment_section, :status).from(
         "not_started",
       ).to("rejected")
     end
 
     it "records a timeline event" do
-      expect { subject }.to have_recorded_timeline_event(
+      expect { call }.to have_recorded_timeline_event(
         :assessment_section_recorded,
       )
     end
 
     it "creates the assessment failure reason records" do
-      expect { subject }.to change {
+      expect { call }.to change {
         SelectedFailureReason.where(
           assessment_section:,
           key: selected_failure_reason_key,
@@ -52,7 +59,7 @@ RSpec.describe UpdateAssessmentSection do
         end
 
         it "doesn't create a new assessment failure reason record" do
-          expect { subject }.not_to(
+          expect { call }.not_to(
             change do
               SelectedFailureReason.where(
                 assessment_section:,
@@ -63,7 +70,7 @@ RSpec.describe UpdateAssessmentSection do
         end
 
         it "updates the existing record" do
-          expect { subject }.to change {
+          expect { call }.to change {
             SelectedFailureReason.find_by(
               key: selected_failure_reason_key,
             ).assessor_feedback
@@ -87,7 +94,7 @@ RSpec.describe UpdateAssessmentSection do
         end
 
         it "deletes the now unselected failure reason" do
-          expect { subject }.to change {
+          expect { call }.to change {
             SelectedFailureReason.where(key: different_key).count
           }.by(-1)
         end
@@ -95,34 +102,32 @@ RSpec.describe UpdateAssessmentSection do
     end
 
     it "changes the assessor" do
-      expect { subject }.to change { application_form.assessor }.from(nil).to(
-        user,
-      )
+      expect { call }.to change { application_form.assessor }.from(nil).to(user)
     end
 
     context "with an existing assessor" do
       before { application_form.assessor = create(:staff) }
 
       it "doesn't change the assessor" do
-        expect { subject }.to_not(change { application_form.assessor })
+        expect { call }.to_not(change { application_form.assessor })
       end
     end
 
     it "changes the application form state" do
-      expect { subject }.to change { application_form.statuses }.from(
+      expect { call }.to change { application_form.statuses }.from(
         %w[assessment_not_started],
       ).to(%w[assessment_in_progress])
     end
 
     it "changes the assessment started at" do
-      expect { subject }.to change(assessment, :started_at).from(nil)
+      expect { call }.to change(assessment, :started_at).from(nil)
     end
 
     context "with an existing assessment started at" do
       before { assessment.update!(started_at: Date.new(2021, 1, 1)) }
 
       it "doesn't change the assessor" do
-        expect { subject }.to_not change(assessment, :started_at)
+        expect { call }.to_not change(assessment, :started_at)
       end
     end
   end
@@ -133,36 +138,33 @@ RSpec.describe UpdateAssessmentSection do
     it { is_expected.to be false }
 
     it "doesn't record a timeline event" do
-      expect { subject }.to_not have_recorded_timeline_event(
+      expect { call }.to_not have_recorded_timeline_event(
         :assessment_section_recorded,
       )
     end
 
     it "doesn't change the assessor" do
-      expect { subject }.to_not change(application_form, :assessor)
+      expect { call }.to_not change(application_form, :assessor)
     end
 
     it "doesn't change the application form stage" do
-      expect { subject }.to_not change(application_form, :stage)
+      expect { call }.to_not change(application_form, :stage)
     end
 
     it "doesn't change the application form statuses" do
-      expect { subject }.to_not change(application_form, :statuses)
+      expect { call }.to_not change(application_form, :statuses)
     end
 
     it "doesn't change the assessment started at" do
-      expect { subject }.to_not change(assessment, :started_at)
+      expect { call }.to_not change(assessment, :started_at)
     end
   end
 
   context "when the state is the same" do
-    let(:other_params) { { passed: false, selected_failure_reasons: } }
-    before do
-      described_class.call(assessment_section:, user:, params: other_params)
-    end
+    before { call }
 
     it "doesn't record a timeline event" do
-      expect { subject }.to_not have_recorded_timeline_event(
+      expect { call }.to_not have_recorded_timeline_event(
         :assessment_section_recorded,
       )
     end

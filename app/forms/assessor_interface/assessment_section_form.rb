@@ -47,7 +47,9 @@ class AssessorInterface::AssessmentSectionForm
   def save
     return false unless valid?
 
-    params = {
+    AssessAssessmentSection.call(
+      assessment_section:,
+      user:,
       passed:
         (
           if assessment_section.preliminary?
@@ -57,9 +59,7 @@ class AssessorInterface::AssessmentSectionForm
           end
         ),
       selected_failure_reasons:,
-    }
-
-    UpdateAssessmentSection.call(assessment_section:, user:, params:)
+    )
 
     true
   end
