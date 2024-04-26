@@ -92,4 +92,26 @@ namespace :application_forms do
       user:,
     )
   end
+
+  desc "Change the certificate date of a qualification for an application form."
+  task :update_teaching_qualification_certificate_date,
+       %i[reference staff_email certificate_date] =>
+         :environment do |_task, args|
+    application_form = ApplicationForm.find_by!(reference: args[:reference])
+    qualification = application_form.teaching_qualification
+    user = Staff.find_by!(email: args[:staff_email])
+    certificate_date = Date.parse(args[:certificate_date])
+
+    UpdateQualificationCertificateDate.call(
+      qualification:,
+      user:,
+      certificate_date:,
+    )
+
+    note =
+      "Amended date to accurately reflect the qualification (deemed by the assessor). " \
+        "This was approved by Humzah and Natalie on 16/04/2024."
+
+    CreateNote.call(application_form:, author: user, text: note)
+  end
 end

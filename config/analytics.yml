@@ -384,6 +384,7 @@
     - new_value
     - note_id
     - old_value
+    - qualification_id
     - requestable_id
     - requestable_type
     - subjects

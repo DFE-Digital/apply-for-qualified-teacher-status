@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_24_081136) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_25_074307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -519,11 +519,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_081136) do
     t.text "old_value", default: "", null: false
     t.text "new_value", default: "", null: false
     t.text "note_text", default: "", null: false
+    t.bigint "qualification_id"
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
     t.index ["assessment_id"], name: "index_timeline_events_on_assessment_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
     t.index ["note_id"], name: "index_timeline_events_on_note_id"
+    t.index ["qualification_id"], name: "index_timeline_events_on_qualification_id"
     t.index ["requestable_type", "requestable_id"], name: "index_timeline_events_on_requestable"
     t.index ["work_history_id"], name: "index_timeline_events_on_work_history_id"
   end
@@ -589,6 +591,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_081136) do
   add_foreign_key "timeline_events", "assessment_sections"
   add_foreign_key "timeline_events", "assessments"
   add_foreign_key "timeline_events", "notes"
+  add_foreign_key "timeline_events", "qualifications"
   add_foreign_key "timeline_events", "staff", column: "assignee_id"
   add_foreign_key "timeline_events", "work_histories"
   add_foreign_key "uploads", "documents"
