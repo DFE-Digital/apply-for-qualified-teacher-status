@@ -5,6 +5,7 @@
 # Table name: assessment_sections
 #
 #  id              :bigint           not null, primary key
+#  assessed_at     :datetime
 #  checks          :string           default([]), is an Array
 #  failure_reasons :string           default([]), is an Array
 #  key             :string           not null
