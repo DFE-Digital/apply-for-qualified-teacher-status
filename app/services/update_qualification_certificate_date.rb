@@ -14,6 +14,7 @@ class UpdateQualificationCertificateDate
 
     ActiveRecord::Base.transaction do
       qualification.update!(certificate_date:)
+      UpdateAssessmentInductionRequired.call(assessment:) if assessment
       create_timeline_event(old_certificate_date:)
     end
   end
@@ -23,6 +24,7 @@ class UpdateQualificationCertificateDate
   attr_reader :qualification, :user, :certificate_date
 
   delegate :application_form, to: :qualification
+  delegate :assessment, to: :application_form
 
   def create_timeline_event(old_certificate_date:)
     CreateTimelineEvent.call(
