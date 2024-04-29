@@ -168,7 +168,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-passwordless (1.0.1)
+    devise-passwordless (1.0.2)
       devise
       globalid
     devise_invitable (2.0.9)
@@ -444,7 +444,7 @@ GEM
     redcarpet (3.6.0)
     redis (4.8.1)
     regexp_parser (2.9.0)
-    reline (0.5.3)
+    reline (0.5.4)
       io-console (~> 0.5)
     representable (3.2.0)
       declarative (< 0.1.0)
