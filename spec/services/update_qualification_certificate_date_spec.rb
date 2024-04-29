@@ -7,6 +7,7 @@ RSpec.describe UpdateQualificationCertificateDate do
     create(:qualification, certificate_date: Date.new(2020, 1, 1))
   end
   let(:application_form) { qualification.application_form }
+  let(:assessment) { create(:assessment, application_form:) }
   let(:user) { create(:staff) }
   let(:new_certificate_date) { Date.new(2021, 1, 1) }
 
@@ -22,6 +23,13 @@ RSpec.describe UpdateQualificationCertificateDate do
     expect { call }.to change(qualification, :certificate_date).to(
       new_certificate_date,
     )
+  end
+
+  it "update the induction required" do
+    expect(UpdateAssessmentInductionRequired).to receive(:call).with(
+      assessment:,
+    )
+    call
   end
 
   it "records a timeline event" do
