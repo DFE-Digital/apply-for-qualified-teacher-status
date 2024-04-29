@@ -146,22 +146,21 @@ class FakeData::ApplicationFormGenerator
     user = admin_user
 
     assessment.sections.preliminary.each do |assessment_section|
-      params =
+      date_generator.travel_to_next_short do
         if decline
-          {
+          AssessAssessmentSection.call(
+            assessment_section:,
+            user:,
             passed: false,
             selected_failure_reasons: {
               assessment_section.failure_reasons.sample => {
                 notes: "",
               },
             },
-          }
+          )
         else
-          { passed: true, selected_failure_reasons: {} }
+          AssessAssessmentSection.call(assessment_section:, user:, passed: true)
         end
-
-      date_generator.travel_to_next_short do
-        UpdateAssessmentSection.call(assessment_section:, user:, params:)
       end
     end
 
@@ -195,7 +194,7 @@ class FakeData::ApplicationFormGenerator
             end
 
           if failure_reasons.empty?
-            { passed: true, selected_failure_reasons: {} }
+            { passed: true }
           else
             {
               passed: false,
@@ -220,7 +219,7 @@ class FakeData::ApplicationFormGenerator
             }
           end
         else
-          { passed: true, selected_failure_reasons: {} }
+          { passed: true }
         end
 
       date_generator.travel_to_next_long do
@@ -236,7 +235,7 @@ class FakeData::ApplicationFormGenerator
           )
         end
 
-        UpdateAssessmentSection.call(assessment_section:, user:, params:)
+        AssessAssessmentSection.call(assessment_section:, user:, **params)
       end
     end
   end

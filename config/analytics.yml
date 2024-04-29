@@ -57,14 +57,15 @@
     - written_statement_optional
     - written_statement_status
   :assessment_sections:
-    - id
+    - assessed_at
     - assessment_id
-    - preliminary
+    - checks
+    - created_at
+    - failure_reasons
+    - id
     - key
     - passed
-    - checks
-    - failure_reasons
-    - created_at
+    - preliminary
     - updated_at
   :assessments:
     - age_range_max

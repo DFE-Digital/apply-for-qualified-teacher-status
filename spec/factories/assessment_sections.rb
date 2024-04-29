@@ -3,6 +3,7 @@
 # Table name: assessment_sections
 #
 #  id              :bigint           not null, primary key
+#  assessed_at     :datetime
 #  checks          :string           default([]), is an Array
 #  failure_reasons :string           default([]), is an Array
 #  key             :string           not null
@@ -32,11 +33,17 @@ FactoryBot.define do
       key { "qualifications" }
     end
 
+    trait :assessed do
+      assessed_at { Time.zone.now }
+    end
+
     trait :passed do
+      assessed
       passed { true }
     end
 
     trait :failed do
+      assessed
       passed { false }
       selected_failure_reasons do
         [build(:selected_failure_reason, :further_informationable)]
@@ -44,6 +51,7 @@ FactoryBot.define do
     end
 
     trait :declines_assessment do
+      assessed
       passed { false }
       selected_failure_reasons do
         [build(:selected_failure_reason, :declinable)]
@@ -51,6 +59,7 @@ FactoryBot.define do
     end
 
     trait :declines_with_sanctions do
+      assessed
       passed { false }
       selected_failure_reasons do
         [build(:selected_failure_reason, :with_sanctions)]
@@ -58,6 +67,7 @@ FactoryBot.define do
     end
 
     trait :declines_with_already_qts do
+      assessed
       passed { false }
       selected_failure_reasons do
         [build(:selected_failure_reason, :with_already_qts)]
