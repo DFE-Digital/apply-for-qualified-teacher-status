@@ -257,7 +257,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     it "describes the event" do
       expect(component.text).to include(
         "Further information requested on " \
-          "#{timeline_event.requestable.created_at.strftime("%e %B %Y at %l:%M %P")} has been received.",
+          "#{timeline_event.requestable.created_at.strftime("%-d %B %Y at %l:%M %P")} has been received.",
       )
     end
 
@@ -339,7 +339,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     it "describes the event" do
       expect(component.text).to include(
         "Further information requested on " \
-          "#{timeline_event.requestable.created_at.strftime("%e %B %Y at %l:%M %P")} has expired. " \
+          "#{timeline_event.requestable.created_at.strftime("%-d %B %Y at %l:%M %P")} has expired. " \
           "Application has been declined.",
       )
     end
