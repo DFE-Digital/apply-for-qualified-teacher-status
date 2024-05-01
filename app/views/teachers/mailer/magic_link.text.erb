@@ -1,7 +1,13 @@
-Hello <%= @resource.email %>
+# Confirm your email: apply for qualified teacher status (QTS)
 
-You can sign in using the link below:
+Hello, <%= @resource.email %>,
 
-<%= teacher_magic_link_url(token: @token) %>
+Thank you for your interest in applying for qualified teacher status (QTS) in England. Use the link below to confirm your email address and start your application.
 
-Note that the link will expire in <%= Devise.passwordless_login_within.inspect %>.
+[Confirm your email address](<%= teacher_magic_link_url(token: @token) %>)
+
+Please note, this link will expire in 20 minutes. After that time, you will need to [return to the service](https://apply-for-qts-in-england.education.gov.uk/teacher/sign_in_or_sign_up) and request another confirmation link.
+
+Kind regards,
+
+The Teacher Qualifications Team
