@@ -30,7 +30,7 @@ en:
       password_change:
         subject: "Password Changed"
       magic_link:
-        subject: "Confirm your email address"
+        subject: "Confirm your email: apply for qualified teacher status (QTS)"
     omniauth_callbacks:
       failure: 'Could not authenticate you from %{kind} because "%{reason}".'
       success: "Successfully authenticated from %{kind} account."
