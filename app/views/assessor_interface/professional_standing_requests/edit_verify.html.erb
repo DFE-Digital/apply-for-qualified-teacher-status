@@ -7,10 +7,7 @@
   <h1 class="govuk-heading-xl">Record LoPS response</h1>
 
   <% if @professional_standing_request.expired? %>
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text govuk-!-font-size-27"><span class="govuk-warning-text__assistive">Warning</span>This LoPS response is overdue</strong>
-    </div>
+    <%= govuk_warning_text(text: "This LoPS response is overdue.") %>
 
     <h2 class="govuk-heading-s">Please follow these steps:</h2>
 
