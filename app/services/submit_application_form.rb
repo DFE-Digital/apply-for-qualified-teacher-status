@@ -67,9 +67,9 @@ class SubmitApplicationForm
   end
 
   def perform_duplicate_jobs
-    FindApplicantInDQTJob.perform_later(application_form)
+    UpdateDQTMatchJob.perform_later(application_form)
 
     # Sometimes DQT doesn't find a result the first time
-    FindApplicantInDQTJob.set(wait: 5.minutes).perform_later(application_form)
+    UpdateDQTMatchJob.set(wait: 5.minutes).perform_later(application_form)
   end
 end
