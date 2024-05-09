@@ -55,5 +55,25 @@ RSpec.describe UpdateDQTMatchJob do
         { "teachers" => results },
       )
     end
+
+    context "when draft" do
+      let(:application_form) { create(:application_form, :draft) }
+
+      it "doesn't search DQT for teachers" do
+        expect(DQT::Client::FindTeachers).to_not receive(:call)
+
+        perform
+      end
+    end
+
+    context "when completed" do
+      let(:application_form) { create(:application_form, :awarded) }
+
+      it "doesn't search DQT for teachers" do
+        expect(DQT::Client::FindTeachers).to_not receive(:call)
+
+        perform
+      end
+    end
   end
 end

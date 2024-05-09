@@ -2,6 +2,12 @@
 
 class UpdateDQTMatchJob < ApplicationJob
   def perform(application_form)
+    unless application_form.submitted? && application_form.awarded_at.nil? &&
+             application_form.declined_at.nil? &&
+             application_form.withdrawn_at.nil?
+      return
+    end
+
     teachers = DQT::Client::FindTeachers.call(application_form:)
 
     if teachers.empty?
