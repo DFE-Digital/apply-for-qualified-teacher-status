@@ -156,7 +156,9 @@ RSpec.describe "Teacher authentication", type: :system do
     message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
-    expect(message.subject).to eq("Confirm your email: apply for qualified teacher status (QTS)")
+    expect(message.subject).to eq(
+      "Confirm your email: apply for qualified teacher status (QTS)",
+    )
     expect(message.to).to include("test@example.com")
   end
 

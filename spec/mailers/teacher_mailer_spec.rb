@@ -134,9 +134,7 @@ RSpec.describe TeacherMailer, type: :mailer do
         let(:number_of_reminders_sent) { 0 }
 
         it do
-          is_expected.to eq(
-            "Your draft QTS application has not been submitted",
-          )
+          is_expected.to eq("Your draft QTS application has not been submitted")
         end
       end
 
@@ -183,12 +181,13 @@ RSpec.describe TeacherMailer, type: :mailer do
 
         it do
           is_expected.to include(
-            "We contacted you a week ago about your draft application for qualified teacher status (QTS).",
+            "We recently contacted you about your draft application for qualified teacher " \
+              "status (QTS) in England that has not been submitted.",
           )
         end
         it do
           is_expected.to include(
-            "If you do not complete and submit your application by 1 July 2020 we’ll delete the application.",
+            "Applications need to be submitted within 6 months of being started.",
           )
         end
       end

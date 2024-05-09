@@ -6,9 +6,9 @@ You have a draft application for qualified teacher status (QTS) in England that 
 
 Applications need to be submitted within 6 months of being started. If you do not complete and submit your application by <%= @application_form.expires_at.to_date.to_fs %> it will be deleted.
 <% when 1 %>
-We contacted you a week ago about your draft application for qualified teacher status (QTS).
+We recently contacted you about your draft application for qualified teacher status (QTS) in England that has not been submitted.
 
-If you do not complete and submit your application by <%= @application_form.expires_at.to_date.to_fs %> we’ll delete the application.
+Applications need to be submitted within 6 months of being started. If you do not complete and submit your application by <%= @application_form.expires_at.to_date.to_fs %> it will be deleted.
 <% end %>
 
 # What happens if your application is deleted?
