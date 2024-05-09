@@ -47,7 +47,7 @@ class SubmitApplicationForm
       )
     end
 
-    perform_duplicate_jobs
+    UpdateDQTMatchJob.set(wait: 5.minutes).perform_later(application_form)
   end
 
   private
@@ -64,12 +64,5 @@ class SubmitApplicationForm
     unless application_form.requires_preliminary_check
       RequestRequestable.call(requestable:, user:)
     end
-  end
-
-  def perform_duplicate_jobs
-    UpdateDQTMatchJob.perform_later(application_form)
-
-    # Sometimes DQT doesn't find a result the first time
-    UpdateDQTMatchJob.set(wait: 5.minutes).perform_later(application_form)
   end
 end

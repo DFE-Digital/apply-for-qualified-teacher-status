@@ -16,5 +16,7 @@ class UpdateDQTMatchJob < ApplicationJob
     end
 
     application_form.update!(dqt_match: { teachers: })
+
+    UpdateDQTMatchJob.set(wait: 24.hours).perform_later(application_form)
   end
 end
