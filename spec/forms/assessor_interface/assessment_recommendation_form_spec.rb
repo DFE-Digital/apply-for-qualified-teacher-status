@@ -3,13 +3,15 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::AssessmentRecommendationForm, type: :model do
-  let(:assessment) { create(:assessment) }
+  let(:application_form) { create(:application_form) }
+  let(:assessment) { create(:assessment, application_form:) }
 
   subject(:form) { described_class.new(assessment:) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:assessment) }
     it { is_expected.to validate_presence_of(:recommendation) }
+    it { is_expected.to_not validate_presence_of(:confirmation) }
 
     context "with an award-able assessment" do
       before { allow(assessment).to receive(:can_award?).and_return(true) }
@@ -43,6 +45,14 @@ RSpec.describe AssessorInterface::AssessmentRecommendationForm, type: :model do
           %w[request_further_information],
         )
       end
+    end
+
+    context "with an application under old criteria" do
+      let(:application_form) { create(:application_form, :old_regulations) }
+
+      before { allow(assessment).to receive(:can_verify?).and_return(true) }
+
+      it { is_expected.to validate_presence_of(:confirmation) }
     end
   end
 end

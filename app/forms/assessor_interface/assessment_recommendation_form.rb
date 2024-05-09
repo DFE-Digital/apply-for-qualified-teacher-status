@@ -5,16 +5,20 @@ class AssessorInterface::AssessmentRecommendationForm
   include ActiveModel::Attributes
 
   attr_accessor :assessment
-  attribute :recommendation, :string
+  validates :assessment, presence: true
 
-  validates :assessment, :recommendation, presence: true
-  validate :recommendation_allowed
+  attribute :recommendation
+  validates :recommendation,
+            presence: true,
+            inclusion: {
+              in: ->(form) { form.assessment&.available_recommendations.to_a },
+            }
 
-  def recommendation_allowed
-    return if assessment.blank? || recommendation.blank?
+  attribute :confirmation, :boolean
+  validates :confirmation, presence: true, if: :requires_confirmation?
 
-    unless assessment.available_recommendations.include?(recommendation)
-      errors.add(:recommendation, :inclusion)
-    end
+  def requires_confirmation?
+    assessment&.can_verify? &&
+      assessment&.application_form&.submitted_under_old_criteria?
   end
 end
