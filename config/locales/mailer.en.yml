@@ -16,7 +16,7 @@ en:
         subject: "Update: Your qualified teacher status (QTS) application"
       application_not_submitted:
         subject:
-          0: Your draft QTS application will be deleted in 2 weeks
+          0: Your draft QTS application has not been submitted
           1: Your draft QTS application will be deleted in 1 week
       application_received:
         subject: We’ve received your application for qualified teacher status (QTS)

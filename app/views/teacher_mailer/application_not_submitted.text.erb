@@ -2,9 +2,9 @@ Dear <%= application_form_full_name(@application_form) %>,
 
 <% case @number_of_reminders_sent %>
 <% when 0 %>
-We’ve noticed that you have a draft application for qualified teacher status (QTS) that has not been submitted.
+You have a draft application for qualified teacher status (QTS) in England that has not been submitted.
 
-We need to let you know that if you do not complete and submit your application by <%= @application_form.expires_at.to_date.to_fs %> we’ll delete the application.
+Applications need to be submitted within 6 months of being started. If you do not complete and submit your application by <%= @application_form.expires_at.to_date.to_fs %> it will be deleted.
 <% when 1 %>
 We contacted you a week ago about your draft application for qualified teacher status (QTS).
 
@@ -13,16 +13,13 @@ If you do not complete and submit your application by <%= @application_form.expi
 
 # What happens if your application is deleted?
 
-We’re required to delete any QTS applications that are not submitted within 6 months of being started.
+If you do not submit your application before the above date it will be deleted permanently. If you still want to apply for QTS after that date you’ll need to start a new application.
 
-Applications are deleted permanently, so if you still wanted to apply for QTS after that date, you’d need to begin a brand new application.
+# What you can do
+If you still want to apply for QTS you must do so by <%= @application_form.expires_at.to_date.to_fs %>. You can sign in using the link below to complete and submit your application.
 
-# Your next steps
+[Sign into your application](<%= new_teacher_session_url %>)
 
-If you still want to apply for QTS you must do so before <%= @application_form.expires_at.to_date.to_fs %>. You can sign in to complete and submit your application using the link below:
-
-<%= new_teacher_session_url %>
-
-If you no longer want to apply, you do not need to take any action.
+If you no longer want to apply, you do not need to take any action. Your draft application will be deleted.
 
 <%= render "shared/teacher_mailer/footer" %>
