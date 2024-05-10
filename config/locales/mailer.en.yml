@@ -17,7 +17,7 @@ en:
       application_not_submitted:
         subject:
           0: Your draft QTS application has not been submitted
-          1: Your draft QTS application will be deleted in 1 week
+          1: Your draft QTS application is about to be deleted
       application_received:
         subject: We’ve received your application for qualified teacher status (QTS)
       consent_reminder:
@@ -35,7 +35,7 @@ en:
       initial_checks_passed:
         subject: "Your QTS application: Initial checks passed"
       professional_standing_received:
-        subject: Your qualified teacher status application – we’ve received your %{certificate}
+        subject: "Your QTS application: %{certificate} received"
       references_requested:
         subject: We’ve contacted your references – QTS application
       references_reminder:

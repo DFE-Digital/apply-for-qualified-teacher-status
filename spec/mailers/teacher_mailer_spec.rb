@@ -143,7 +143,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
         it do
           is_expected.to eq(
-            "Your draft QTS application will be deleted in 1 week",
+            "Your draft QTS application is about to be deleted",
           )
         end
       end
@@ -484,8 +484,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         is_expected.to eq(
-          "Your qualified teacher status application – we’ve received your " \
-            "Letter of Professional Standing",
+          "Your QTS application: Letter of Professional Standing received"
         )
       end
     end
