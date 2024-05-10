@@ -33,7 +33,7 @@ en:
       further_information_reminder:
         subject: We still need some more information to progress your QTS application
       initial_checks_passed:
-        subject: Your application for qualified teacher status (QTS) – initial checks passed
+        subject: "Your QTS application: Initial checks passed"
       professional_standing_received:
         subject: Your qualified teacher status application – we’ve received your %{certificate}
       references_requested:
