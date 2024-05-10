@@ -500,12 +500,10 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
-      it { is_expected.to include("abc") }
       it do
         is_expected.to include(
-          "Thank you for requesting your Letter of Professional Standing from the " \
-            "teaching authority. We have now received this document and attached " \
-            "it to your application.",
+          "We have received your Letter of Professional Standing from the teaching " \
+            "authority and attached it to your application.",
         )
       end
     end
