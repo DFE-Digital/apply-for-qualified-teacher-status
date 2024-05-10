@@ -30,10 +30,7 @@ RSpec.describe "Teacher submitting", type: :system do
   end
 
   def when_i_confirm_i_have_no_sanctions
-    allow(FindTeachersInDQT).to receive(:call).with(
-      application_form:,
-      reverse_name: true,
-    ).and_return([])
+    allow_any_instance_of(UpdateDQTMatchJob).to receive(:perform)
 
     teacher_check_your_answers_page
       .submission_declaration
