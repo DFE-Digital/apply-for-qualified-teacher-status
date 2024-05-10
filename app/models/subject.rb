@@ -5,6 +5,39 @@ class Subject
 
   attr_accessor :value, :name
 
+  def ebacc?
+    EBACC_VALUES.include?(value)
+  end
+
+  EBACC_VALUES = %w[
+    applied_biology
+    ancient_hebrew
+    applied_chemistry
+    applied_physics
+    arabic_languages
+    biology
+    chinese_languages
+    computer_science
+    english_studies
+    environmental_sciences
+    french_language
+    general_sciences
+    geography
+    german_language
+    history
+    italian_language
+    latin_language
+    materials_science
+    mathematics
+    portuguese_language
+    spanish_language
+    statistics
+    modern_languages
+    russian_languages
+    physics
+    chemistry
+  ].freeze
+
   class << self
     def all
       @all = find(ALL_VALUES)
