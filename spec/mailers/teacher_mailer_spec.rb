@@ -142,9 +142,7 @@ RSpec.describe TeacherMailer, type: :mailer do
         let(:number_of_reminders_sent) { 1 }
 
         it do
-          is_expected.to eq(
-            "Your draft QTS application is about to be deleted",
-          )
+          is_expected.to eq("Your draft QTS application is about to be deleted")
         end
       end
     end
@@ -223,7 +221,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         is_expected.to include(
-          "Your application will be entered into a queue and assigned a QTS assessor, which can take several weeks.",
+          "Your application will be entered into a queue and assigned a QTS assessor. This can take several weeks.",
         )
       end
 
@@ -236,8 +234,8 @@ RSpec.describe TeacherMailer, type: :mailer do
 
         it do
           is_expected.to include(
-            "When we’ve received the written evidence you’ve requested from your teaching authority, we’ll " \
-              "add your application to the queue to be assigned to a QTS assessor — this can take several weeks.",
+            "Once the written evidence is received and checked, your application will be entered into " \
+              "a queue and assigned a QTS assessor. This can take several weeks.",
           )
         end
       end
@@ -484,7 +482,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         is_expected.to eq(
-          "Your QTS application: Letter of Professional Standing received"
+          "Your QTS application: Letter of Professional Standing received",
         )
       end
     end
