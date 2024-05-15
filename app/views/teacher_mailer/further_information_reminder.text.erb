@@ -1,18 +1,16 @@
 Dear <%= application_form_full_name(@application_form) %>,
 
-# The assessor reviewing your QTS application needs more information
+We recently contacted you about more information needed by the assessor reviewing your QTS application.
 
-<%= render "shared/teacher_mailer/reference_number" %>
+We haven’t received the information requested. Your application cannot proceed without this information. If you do not respond by <%= @further_information_request.expires_at.to_date.to_fs %> then your QTS application will be declined.
 
-# What happens next
+# What you need to do
 
-You must respond to this request by <%= @further_information_request.expires_at.to_date.to_fs %> otherwise your QTS application will be declined.
+Sign in using the link below to see what information is needed and add it.
 
-Once you respond with all of the information we’ve requested, the assessor will be able to continue reviewing your application.
+[Sign in to your application](<%= new_teacher_session_url %>)
 
-You can sign in to add the requested information to your application at:
-
-<%= new_teacher_session_url %>
+Once you respond with all the information requested, the assessor will be able to continue reviewing your application.
 
 <%= render "shared/teacher_mailer/any_questions_contact" %>
 

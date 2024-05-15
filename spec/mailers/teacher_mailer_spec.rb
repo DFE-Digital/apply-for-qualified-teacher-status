@@ -442,7 +442,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         is_expected.to eq(
-          "We still need some more information to progress your QTS application",
+          "Your QTS application: information still needed",
         )
       end
     end
@@ -459,11 +459,10 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it do
         is_expected.to include(
-          "You must respond to this request by 12 February 2020 " \
-            "otherwise your QTS application will be declined.",
+          "If you do not respond by 12 February 2020 " \
+            "then your QTS application will be declined.",
         )
       end
-      it { is_expected.to include("abc") }
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
   end
