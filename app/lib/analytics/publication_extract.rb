@@ -53,7 +53,7 @@ class Analytics::PublicationExtract
 
   private
 
-  attr_reader :document
+  attr_reader :document, :start_date, :end_date
 
   delegate :documentable, to: :document
 
@@ -61,39 +61,39 @@ class Analytics::PublicationExtract
     Country.all.sort_by { |country| CountryName.from_country(country) }
   end
 
+  def application_forms(country)
+    ApplicationForm.joins(region: :country).where(region: { country: })
+  end
+
   def submitted_application_forms(country)
-    ApplicationForm.joins(region: :country).where(
-      submitted_at: date_range,
-      region: {
-        country:,
-      },
+    application_forms(country).where(
+      "DATE(submitted_at) BETWEEN ? AND ?",
+      start_date,
+      end_date,
     )
   end
 
   def awarded_application_forms(country)
-    ApplicationForm.joins(region: :country).where(
-      awarded_at: date_range,
-      region: {
-        country:,
-      },
+    application_forms(country).where(
+      "DATE(awarded_at) BETWEEN ? AND ?",
+      start_date,
+      end_date,
     )
   end
 
   def declined_application_forms(country)
-    ApplicationForm.joins(region: :country).where(
-      declined_at: date_range,
-      region: {
-        country:,
-      },
+    application_forms(country).where(
+      "DATE(declined_at) BETWEEN ? AND ?",
+      start_date,
+      end_date,
     )
   end
 
   def withdrawn_application_forms(country)
-    ApplicationForm.joins(region: :country).where(
-      withdrawn_at: date_range,
-      region: {
-        country:,
-      },
+    application_forms(country).where(
+      "DATE(withdrawn_at) BETWEEN ? AND ?",
+      start_date,
+      end_date,
     )
   end
 
@@ -107,9 +107,5 @@ class Analytics::PublicationExtract
 
   def requires_induction?(application_form)
     application_form.assessment.induction_required
-  end
-
-  def date_range
-    @start_date..@end_date
   end
 end
