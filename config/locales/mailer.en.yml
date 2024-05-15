@@ -29,7 +29,7 @@ en:
       further_information_received:
         subject: We’ve received the additional information you sent us
       further_information_requested:
-        subject: We need some more information to progress your QTS application
+        subject: "Your QTS application: More information needed"
       further_information_reminder:
         subject: We still need some more information to progress your QTS application
       initial_checks_passed:

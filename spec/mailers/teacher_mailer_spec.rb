@@ -399,11 +399,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     describe "#subject" do
       subject(:subject) { mail.subject }
 
-      it do
-        is_expected.to eq(
-          "We need some more information to progress your QTS application",
-        )
-      end
+      it { is_expected.to eq("Your QTS application: More information needed") }
     end
 
     describe "#to" do
