@@ -61,20 +61,15 @@ class Analytics::PublicationExtract
     Country.all.sort_by { |country| CountryName.from_country(country) }
   end
 
-  def application_forms(country)
-    ApplicationForm.joins(region: :country).where(region: { country: })
-  end
-
   def submitted_application_forms(country)
-    application_forms(country).where(
-      "DATE(submitted_at) BETWEEN ? AND ?",
-      start_date,
-      end_date,
-    )
+    ApplicationForm
+      .joins(region: :country)
+      .where(region: { country: })
+      .where("DATE(submitted_at) BETWEEN ? AND ?", start_date, end_date)
   end
 
   def awarded_application_forms(country)
-    application_forms(country).where(
+    submitted_application_forms(country).where(
       "DATE(awarded_at) BETWEEN ? AND ?",
       start_date,
       end_date,
@@ -82,7 +77,7 @@ class Analytics::PublicationExtract
   end
 
   def declined_application_forms(country)
-    application_forms(country).where(
+    submitted_application_forms(country).where(
       "DATE(declined_at) BETWEEN ? AND ?",
       start_date,
       end_date,
@@ -90,7 +85,7 @@ class Analytics::PublicationExtract
   end
 
   def withdrawn_application_forms(country)
-    application_forms(country).where(
+    submitted_application_forms(country).where(
       "DATE(withdrawn_at) BETWEEN ? AND ?",
       start_date,
       end_date,
