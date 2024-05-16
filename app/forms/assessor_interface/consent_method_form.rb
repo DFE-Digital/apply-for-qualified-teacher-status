@@ -14,7 +14,15 @@ class AssessorInterface::ConsentMethodForm
 
   def save
     return false if invalid?
+
     qualification_request.update!(consent_method:)
+
+    unless qualification_request.consent_method_signed?
+      ConsentRequest.destroy_by(
+        qualification: qualification_request.qualification,
+      )
+    end
+
     true
   end
 end
