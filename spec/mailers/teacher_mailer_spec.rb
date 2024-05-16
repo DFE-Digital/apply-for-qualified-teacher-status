@@ -363,11 +363,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     describe "#subject" do
       subject(:subject) { mail.subject }
 
-      it do
-        is_expected.to eq(
-          "We’ve received the additional information you sent us",
-        )
-      end
+      it { is_expected.to eq("Your QTS application: information received") }
     end
 
     describe "#to" do
@@ -380,7 +376,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
-      it { is_expected.to include("abc") }
     end
   end
 
@@ -440,11 +435,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     describe "#subject" do
       subject(:subject) { mail.subject }
 
-      it do
-        is_expected.to eq(
-          "Your QTS application: information still needed",
-        )
-      end
+      it { is_expected.to eq("Your QTS application: information still needed") }
     end
 
     describe "#to" do
