@@ -18,7 +18,10 @@ class Analytics::PublicationExtract
       declines = declined_application_forms(country)
       withdraws = withdrawn_application_forms(country)
 
-      submissions_with_subjects = submissions.where.not(subjects: [])
+      submissions_with_subjects =
+        submissions.select do |application_form|
+          application_form.assessment&.subjects.present?
+        end
 
       induction_required =
         awards
