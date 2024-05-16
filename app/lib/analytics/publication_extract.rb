@@ -9,8 +9,11 @@ class Analytics::PublicationExtract
   end
 
   def call
-    countries.map do |country|
+    countries.filter_map do |country|
       submissions = submitted_application_forms(country)
+
+      next if submissions.empty?
+
       awards = awarded_application_forms(country)
       declines = declined_application_forms(country)
       withdraws = withdrawn_application_forms(country)
