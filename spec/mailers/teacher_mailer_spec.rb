@@ -592,9 +592,11 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("abc") }
       it do
         is_expected.to include(
-          "We’ve contacted the references you provided to verify the work history",
+          "We’ve contacted the following references you provided to verify the work " \
+            "history information you gave as part of your QTS application.",
         )
       end
     end
