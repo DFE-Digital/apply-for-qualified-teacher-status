@@ -3,7 +3,8 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::ConsentMethodForm, type: :model do
-  let(:qualification_request) { create(:qualification_request) }
+  let(:qualification) { create(:qualification) }
+  let(:qualification_request) { create(:qualification_request, qualification:) }
   let(:consent_method) { "unsigned" }
 
   subject(:form) do
@@ -27,6 +28,30 @@ RSpec.describe AssessorInterface::ConsentMethodForm, type: :model do
       expect { save }.to change(qualification_request, :consent_method).to(
         "unsigned",
       )
+    end
+
+    context "when a consent request already exists" do
+      before { create(:consent_request, qualification:) }
+
+      context "and the consent method is unsigned" do
+        let(:consent_method) { %w[unsigned none].sample }
+
+        it "deletes the consent request" do
+          expect { save }.to change {
+            ConsentRequest.where(qualification:).count
+          }.from(1).to(0)
+        end
+      end
+
+      context "and the consent method is signed" do
+        let(:consent_method) { %w[signed_ecctis signed_institution].sample }
+
+        it "doesn't delete the consent request" do
+          expect { save }.to_not change {
+            ConsentRequest.where(qualification:).count
+          }.from(1)
+        end
+      end
     end
   end
 end
