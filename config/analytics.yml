@@ -70,19 +70,16 @@
   :assessments:
     - age_range_max
     - age_range_min
-    - age_range_note
     - application_form_id
     - created_at
     - id
     - induction_required
     - recommendation
-    - recommendation_assessor_note
     - recommended_at
     - references_verified
     - scotland_full_registration
     - started_at
     - subjects
-    - subjects_note
     - unsigned_consent_document_generated
     - updated_at
     - working_days_since_started
@@ -97,13 +94,11 @@
     - qualification_id
     - received_at
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
     - unsigned_document_downloaded
     - updated_at
     - verified_at
-    - verify_note
     - verify_passed
   :countries:
     - code
@@ -161,7 +156,6 @@
     - id
     - received_at
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
     - updated_at
@@ -173,12 +167,10 @@
     - contact_job
     - contact_name
     - created_at
-    - failure_reason_assessor_feedback
     - failure_reason_key
     - further_information_request_id
     - id
     - information_type
-    - response
     - updated_at
     - work_history_id
   :notes:
@@ -186,22 +178,18 @@
     - author_id
     - created_at
     - id
-    - text
     - updated_at
   :professional_standing_requests:
     - assessment_id
     - created_at
     - expired_at
     - id
-    - location_note
     - received_at
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
     - updated_at
     - verified_at
-    - verify_note
     - verify_passed
   :qualifications:
     - application_form_id
@@ -223,46 +211,32 @@
     - qualification_id
     - received_at
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
     - updated_at
     - verified_at
-    - verify_note
     - verify_passed
   :reference_requests:
-    - additional_information_response
     - assessment_id
-    - children_comment
     - children_response
-    - contact_comment
     - contact_job
     - contact_name
     - contact_response
     - created_at
-    - dates_comment
     - dates_response
     - expired_at
-    - hours_comment
     - hours_response
     - id
-    - lessons_comment
     - lessons_response
-    - misconduct_comment
     - misconduct_response
     - received_at
-    - reports_comment
     - reports_response
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
-    - satisfied_comment
     - satisfied_response
-    - slug
     - updated_at
     - verified_at
-    - verify_note
     - verify_passed
     - work_history_id
   :regions:
@@ -294,7 +268,6 @@
     - updated_at
   :selected_failure_reasons:
     - assessment_section_id
-    - assessor_feedback
     - created_at
     - id
     - key
@@ -353,7 +326,6 @@
   :uploads:
     - created_at
     - document_id
-    - filename
     - id
     - malware_scan_result
     - translation

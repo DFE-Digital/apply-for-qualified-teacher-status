@@ -22,7 +22,13 @@
     - record_id
     - record_type
   :assessments:
+    - age_range_note
     - qualifications_assessor_note
+    - recommendation_assessor_note
+    - subjects_note
+  :consent_requests:
+    - verify_note
+    - review_note
   :countries:
     - other_information
     - sanction_information
@@ -34,11 +40,40 @@
     - id
     - name
     - updated_at
+  :further_information_requests:
+    - review_note
+  :further_information_request_items:
+    - failure_reason_assessor_feedback
+    - response
+  :notes:
+    - text
+  :professional_standing_requests:
+    - location_note
+    - review_note
+    - verify_note
+  :qualification_requests:
+    - review_note
+    - verify_note
+  :reference_requests:
+    - additional_information_response
+    - children_comment
+    - contact_comment
+    - dates_comment
+    - hours_comment
+    - lessons_comment
+    - misconduct_comment
+    - reports_comment
+    - review_note
+    - satisfied_comment
+    - slug
+    - verify_note
   :regions:
     - other_information
     - sanction_information
     - status_information
     - teaching_qualification_information
+  :selected_failure_reasons:
+    - assessor_feedback
   :sessions:
     - created_at
     - data
@@ -82,3 +117,5 @@
     - subjects_note
     - updated_at
     - work_history_id
+  :uploads:
+    - filename
