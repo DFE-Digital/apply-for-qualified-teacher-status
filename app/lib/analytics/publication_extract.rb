@@ -18,10 +18,7 @@ class Analytics::PublicationExtract
       declines = declined_application_forms(country)
       withdraws = withdrawn_application_forms(country)
 
-      submissions_with_subjects =
-        submissions.select do |application_form|
-          application_form.assessment&.subjects.present?
-        end
+      submissions_now_awarded = submissions.where.not(awarded_at: nil)
 
       induction_required =
         awards
@@ -47,15 +44,15 @@ class Analytics::PublicationExtract
         awaiting_decision:
           submissions.count - awards.count - declines.count - withdraws.count,
         awardees_with_only_ebacc_subject_or_subjects:
-          submissions_with_subjects.count do |application_form|
+          submissions_now_awarded.count do |application_form|
             has_only_ebacc_subjects?(application_form)
           end,
         awardees_with_no_ebacc_subjects:
-          submissions_with_subjects.count do |application_form|
+          submissions_now_awarded.count do |application_form|
             has_no_ebacc_subjects?(application_form)
           end,
         awardees_with_a_mix_of_subjects_at_least_one_is_ebacc:
-          submissions_with_subjects.count do |application_form|
+          submissions_now_awarded.count do |application_form|
             !has_only_ebacc_subjects?(application_form) &&
               !has_no_ebacc_subjects?(application_form)
           end,
