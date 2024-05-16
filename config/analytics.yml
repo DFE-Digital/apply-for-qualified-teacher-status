@@ -158,12 +158,6 @@
     - reference_name
     - updated_at
     - url
-  :feature_flags_features:
-    - active
-    - created_at
-    - id
-    - name
-    - updated_at
   :further_information_requests:
     - assessment_id
     - created_at

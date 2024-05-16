@@ -23,6 +23,12 @@
     - record_type
   :assessments:
     - qualifications_assessor_note
+  :feature_flags_features:
+    - active
+    - created_at
+    - id
+    - name
+    - updated_at
   :sessions:
     - created_at
     - data
