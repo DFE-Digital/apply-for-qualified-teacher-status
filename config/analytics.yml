@@ -126,43 +126,43 @@
     - id
     - updated_at
   :dqt_trn_requests:
-    - id
     - application_form_id
+    - created_at
+    - id
+    - potential_duplicate
     - request_id
     - state
-    - potential_duplicate
-    - created_at
     - updated_at
   :eligibility_checks:
-    - id
-    - free_of_sanctions
-    - created_at
-    - updated_at
-    - teach_children
-    - qualification
-    - degree
-    - country_code
-    - region_id
     - completed_at
-    - work_experience
-    - qualified_for_subject
-  :english_language_providers:
+    - country_code
+    - created_at
+    - degree
+    - free_of_sanctions
     - id
-    - name
+    - qualification
+    - qualified_for_subject
+    - region_id
+    - teach_children
+    - updated_at
+    - work_experience
+  :english_language_providers:
+    - accepted_tests
     - b2_level_requirement
     - b2_level_requirement_prefix
-    - url
-    - reference_name
-    - reference_hint
-    - accepted_tests
     - check_url
     - created_at
-    - updated_at
-  :feature_flags_features:
     - id
     - name
+    - reference_hint
+    - reference_name
+    - updated_at
+    - url
+  :feature_flags_features:
     - active
     - created_at
+    - id
+    - name
     - updated_at
   :further_information_requests:
     - assessment_id
@@ -179,24 +179,24 @@
     - working_days_received_to_recommendation
     - working_days_since_received
   :further_information_request_items:
+    - contact_email
+    - contact_job
+    - contact_name
+    - created_at
+    - failure_reason_assessor_feedback
+    - failure_reason_key
+    - further_information_request_id
     - id
     - information_type
-    - created_at
-    - updated_at
-    - further_information_request_id
-    - failure_reason_key
-    - failure_reason_assessor_feedback
     - response
-    - contact_name
-    - contact_job
-    - contact_email
+    - updated_at
     - work_history_id
   :notes:
-    - id
     - application_form_id
     - author_id
-    - text
     - created_at
+    - id
+    - text
     - updated_at
   :professional_standing_requests:
     - assessment_id
@@ -307,15 +307,15 @@
     - remindable_type
     - updated_at
   :selected_failure_reasons:
-    - id
-    - created_at
-    - updated_at
-    - key
-    - assessor_feedback
     - assessment_section_id
+    - assessor_feedback
+    - created_at
+    - id
+    - key
+    - updated_at
   :selected_failure_reasons_work_histories:
-    - work_history_id
     - selected_failure_reason_id
+    - work_history_id
   :staff:
     - assess_permission
     - azure_ad_uid
