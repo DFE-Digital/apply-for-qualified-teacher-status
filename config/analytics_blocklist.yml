@@ -1,4 +1,3 @@
----
 :shared:
   :active_storage_variant_records:
     - blob_id
@@ -81,6 +80,7 @@
     - session_id
     - updated_at
   :staff:
+    - azure_ad_uid
     - confirmation_token
     - encrypted_password
     - invitation_token
