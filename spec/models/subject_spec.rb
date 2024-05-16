@@ -18,4 +18,18 @@ RSpec.describe Subject do
       expect(find.second.value).to eq("economics")
     end
   end
+
+  describe "#ebacc?" do
+    subject(:ebacc?) { described_class.find([value]).first.ebacc? }
+
+    context "with an EBacc subject" do
+      let(:value) { "ancient_hebrew" }
+      it { is_expected.to be true }
+    end
+
+    context "with a non-EBacc subject" do
+      let(:value) { "applied_computing" }
+      it { is_expected.to be false }
+    end
+  end
 end
