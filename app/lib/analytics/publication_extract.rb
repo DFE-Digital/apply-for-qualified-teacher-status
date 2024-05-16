@@ -33,7 +33,7 @@ class Analytics::PublicationExtract
         declined: declines.count,
         withdrawn: withdraws.count,
         awaiting_decision:
-          submissions.count - awarded + declines.count - withdraws.count,
+          submissions.count - awarded - declines.count - withdraws.count,
         awardees_with_only_ebacc_subject_or_subjects:
           awards.count do |application_form|
             has_only_ebacc_subjects?(application_form)
