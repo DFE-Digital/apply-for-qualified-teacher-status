@@ -44,4 +44,31 @@
   :teachers:
     - access_your_teaching_qualifications_url
   :timeline_events:
+    - age_range_max
+    - age_range_min
+    - age_range_note
+    - application_form_id
+    - assessment_id
+    - assessment_section_id
+    - assignee_id
+    - column_name
+    - created_at
+    - creator_id
+    - creator_name
+    - creator_type
+    - event_type
+    - id
+    - mailer_action_name
+    - mailer_class_name
+    - message_subject
+    - new_value
+    - note_id
     - note_text
+    - old_value
+    - qualification_id
+    - requestable_id
+    - requestable_type
+    - subjects
+    - subjects_note
+    - updated_at
+    - work_history_id
