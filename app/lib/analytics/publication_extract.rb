@@ -25,6 +25,15 @@ class Analytics::PublicationExtract
           .select { |application_form| requires_induction?(application_form) }
           .count
 
+      percent_induction_required =
+        (
+          if awarded.zero?
+            0
+          else
+            ((induction_required.to_f / awarded) * 100).round
+          end
+        )
+
       {
         country_name: CountryName.from_country(country),
         applications: submissions.count,
@@ -48,8 +57,7 @@ class Analytics::PublicationExtract
               !has_no_ebacc_subjects?(application_form)
           end,
         induction_required:,
-        percent_induction_required:
-          awarded.zero? ? 0 : ((induction_required / awarded) * 100).round(1),
+        percent_induction_required:,
       }
     end
   end
