@@ -1,40 +1,40 @@
 ---
 :shared:
   :active_storage_variant_records:
-    - id
     - blob_id
+    - id
     - variation_digest
   :active_storage_blobs:
-    - id
-    - key
-    - filename
-    - content_type
-    - metadata
-    - service_name
     - byte_size
     - checksum
+    - content_type
     - created_at
-  :active_storage_attachments:
+    - filename
     - id
-    - name
-    - record_type
-    - record_id
+    - key
+    - metadata
+    - service_name
+  :active_storage_attachments:
     - blob_id
     - created_at
+    - id
+    - name
+    - record_id
+    - record_type
   :assessments:
     - qualifications_assessor_note
   :sessions:
+    - created_at
+    - data
     - id
     - session_id
-    - data
-    - created_at
     - updated_at
   :staff:
-    - encrypted_password
-    - reset_password_token
     - confirmation_token
-    - unlock_token
+    - encrypted_password
     - invitation_token
+    - reset_password_token
+    - unlock_token
   :teachers:
     - access_your_teaching_qualifications_url
   :timeline_events:
