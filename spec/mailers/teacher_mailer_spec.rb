@@ -200,10 +200,30 @@ RSpec.describe TeacherMailer, type: :mailer do
     describe "#subject" do
       subject(:subject) { mail.subject }
 
-      it do
-        is_expected.to eq(
-          "We’ve received your application for qualified teacher status (QTS)",
-        )
+      context "if the teaching authority provides the written statement" do
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: true,
+          )
+        end
+
+        it { is_expected.to include("Your QTS application has been received") }
+      end
+
+      context "if the teaching authority does not provide the written statement" do
+        let(:certificate) { region_certificate_name(application_form.region) }
+
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: false,
+          )
+        end
+
+        it do
+          is_expected.to include(
+            "Your QTS application: Awaiting Letter of Professional Standing",
+          )
+        end
       end
     end
 
@@ -236,6 +256,20 @@ RSpec.describe TeacherMailer, type: :mailer do
           is_expected.to include(
             "Once the written evidence is received and checked, your application will be entered into " \
               "a queue and assigned a QTS assessor. This can take several weeks.",
+          )
+        end
+      end
+
+      context "if the teaching authority does not provide the written statement" do
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: false,
+          )
+        end
+
+        it do
+          is_expected.to include(
+            "Your application will be entered into a queue and assigned a QTS assessor. This can take several weeks.",
           )
         end
       end

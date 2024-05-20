@@ -49,11 +49,17 @@ class TeacherMailer < ApplicationMailer
   end
 
   def application_received
-    view_mail(
-      GOVUK_NOTIFY_TEMPLATE_ID,
-      to: teacher.email,
-      subject: I18n.t("mailer.teacher.application_received.subject"),
-    )
+    subject =
+      if @application_form.teaching_authority_provides_written_statement
+        I18n.t("mailer.teacher.application_received.subject.true")
+      else
+        I18n.t(
+          "mailer.teacher.application_received.subject.false",
+          certificate: region_certificate_name(region),
+        )
+      end
+
+    view_mail(GOVUK_NOTIFY_TEMPLATE_ID, to: teacher.email, subject:)
   end
 
   def consent_reminder
