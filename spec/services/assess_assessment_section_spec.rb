@@ -18,151 +18,119 @@ RSpec.describe AssessAssessmentSection do
 
   subject(:call) do
     described_class.call(
-      assessment_section:,
+      assessment_section,
       user:,
       passed:,
       selected_failure_reasons:,
     )
   end
 
-  context "when the update is successful" do
-    it { is_expected.to be true }
+  it "sets the status" do
+    expect { call }.to change(assessment_section, :status).from(
+      "not_started",
+    ).to("rejected")
+  end
 
-    it "sets the status" do
-      expect { call }.to change(assessment_section, :status).from(
-        "not_started",
-      ).to("rejected")
-    end
+  it "sets the assessed at date" do
+    expect { travel_to(Date.new(2020, 1, 1)) { call } }.to change(
+      assessment_section,
+      :assessed_at,
+    ).from(nil).to(Date.new(2020, 1, 1))
+  end
 
-    it "sets the assessed at date" do
-      expect { travel_to(Date.new(2020, 1, 1)) { call } }.to change(
-        assessment_section,
-        :assessed_at,
-      ).from(nil).to(Date.new(2020, 1, 1))
-    end
+  it "records a timeline event" do
+    expect { call }.to have_recorded_timeline_event(
+      :assessment_section_recorded,
+    )
+  end
 
-    it "records a timeline event" do
-      expect { call }.to have_recorded_timeline_event(
-        :assessment_section_recorded,
-      )
-    end
+  it "creates the assessment failure reason records" do
+    expect { call }.to change {
+      SelectedFailureReason.where(
+        assessment_section:,
+        key: selected_failure_reason_key,
+      ).count
+    }.by(1)
+  end
 
-    it "creates the assessment failure reason records" do
-      expect { call }.to change {
-        SelectedFailureReason.where(
-          assessment_section:,
+  context "when the failure reason already exists" do
+    context "when the feedback has been updated" do
+      before do
+        assessment_section.selected_failure_reasons.create(
           key: selected_failure_reason_key,
-        ).count
-      }.by(1)
-    end
+          assessor_feedback: "I need updating",
+        )
+      end
 
-    context "when the failure reason already exists" do
-      context "when the feedback has been updated" do
-        before do
-          assessment_section.selected_failure_reasons.create(
-            key: selected_failure_reason_key,
-            assessor_feedback: "I need updating",
-          )
-        end
-
-        it "doesn't create a new assessment failure reason record" do
-          expect { call }.not_to(
-            change do
-              SelectedFailureReason.where(
-                assessment_section:,
-                key: selected_failure_reason_key,
-              ).count
-            end,
-          )
-        end
-
-        it "updates the existing record" do
-          expect { call }.to change {
-            SelectedFailureReason.find_by(
+      it "doesn't create a new assessment failure reason record" do
+        expect { call }.not_to(
+          change do
+            SelectedFailureReason.where(
+              assessment_section:,
               key: selected_failure_reason_key,
-            ).assessor_feedback
-          }.to(selected_failure_reason_assessor_feedback[:notes])
-        end
+            ).count
+          end,
+        )
       end
 
-      context "when the failure reason is no longer selected" do
-        let(:different_key) do
-          (
-            assessment_section.failure_reasons -
-              Array(selected_failure_reason_key)
-          ).sample
-        end
-
-        before do
-          assessment_section.selected_failure_reasons.create(
-            key: different_key,
-            assessor_feedback: "I need deleting",
-          )
-        end
-
-        it "deletes the now unselected failure reason" do
-          expect { call }.to change {
-            SelectedFailureReason.where(key: different_key).count
-          }.by(-1)
-        end
+      it "updates the existing record" do
+        expect { call }.to change {
+          SelectedFailureReason.find_by(
+            key: selected_failure_reason_key,
+          ).assessor_feedback
+        }.to(selected_failure_reason_assessor_feedback[:notes])
       end
     end
 
-    it "changes the assessor" do
-      expect { call }.to change { application_form.assessor }.from(nil).to(user)
-    end
-
-    context "with an existing assessor" do
-      before { application_form.assessor = create(:staff) }
-
-      it "doesn't change the assessor" do
-        expect { call }.to_not(change { application_form.assessor })
+    context "when the failure reason is no longer selected" do
+      let(:different_key) do
+        (
+          assessment_section.failure_reasons -
+            Array(selected_failure_reason_key)
+        ).sample
       end
-    end
 
-    it "changes the application form state" do
-      expect { call }.to change { application_form.statuses }.from(
-        %w[assessment_not_started],
-      ).to(%w[assessment_in_progress])
-    end
+      before do
+        assessment_section.selected_failure_reasons.create(
+          key: different_key,
+          assessor_feedback: "I need deleting",
+        )
+      end
 
-    it "changes the assessment started at" do
-      expect { call }.to change(assessment, :started_at).from(nil)
-    end
-
-    context "with an existing assessment started at" do
-      before { assessment.update!(started_at: Date.new(2021, 1, 1)) }
-
-      it "doesn't change the assessor" do
-        expect { call }.to_not change(assessment, :started_at)
+      it "deletes the now unselected failure reason" do
+        expect { call }.to change {
+          SelectedFailureReason.where(key: different_key).count
+        }.by(-1)
       end
     end
   end
 
-  context "when the update fails" do
-    before { allow(assessment_section).to receive(:update).and_return(false) }
+  it "changes the assessor" do
+    expect { call }.to change { application_form.assessor }.from(nil).to(user)
+  end
 
-    it { is_expected.to be false }
-
-    it "doesn't record a timeline event" do
-      expect { call }.to_not have_recorded_timeline_event(
-        :assessment_section_recorded,
-      )
-    end
+  context "with an existing assessor" do
+    before { application_form.assessor = create(:staff) }
 
     it "doesn't change the assessor" do
-      expect { call }.to_not change(application_form, :assessor)
+      expect { call }.to_not(change { application_form.assessor })
     end
+  end
 
-    it "doesn't change the application form stage" do
-      expect { call }.to_not change(application_form, :stage)
-    end
+  it "changes the application form state" do
+    expect { call }.to change { application_form.statuses }.from(
+      %w[assessment_not_started],
+    ).to(%w[assessment_in_progress])
+  end
 
-    it "doesn't change the application form statuses" do
-      expect { call }.to_not change(application_form, :statuses)
-    end
+  it "changes the assessment started at" do
+    expect { call }.to change(assessment, :started_at).from(nil)
+  end
 
-    it "doesn't change the assessment started at" do
+  context "with an existing assessment started at" do
+    before { assessment.update!(started_at: Date.new(2021, 1, 1)) }
+
+    it "doesn't change the assessor" do
       expect { call }.to_not change(assessment, :started_at)
     end
   end

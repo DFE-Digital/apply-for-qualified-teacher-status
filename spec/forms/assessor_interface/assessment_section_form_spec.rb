@@ -137,7 +137,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
 
       it "calls the update assessment service" do
         expect(AssessAssessmentSection).to receive(:call).with(
-          assessment_section:,
+          assessment_section,
           user:,
           passed: true,
           selected_failure_reasons: {
@@ -163,7 +163,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
 
       it "calls the update assessment service" do
         expect(AssessAssessmentSection).to receive(:call).with(
-          assessment_section:,
+          assessment_section,
           user:,
           passed: false,
           selected_failure_reasons: {

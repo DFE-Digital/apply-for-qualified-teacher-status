@@ -149,7 +149,7 @@ class FakeData::ApplicationFormGenerator
       date_generator.travel_to_next_short do
         if decline
           AssessAssessmentSection.call(
-            assessment_section:,
+            assessment_section,
             user:,
             passed: false,
             selected_failure_reasons: {
@@ -159,7 +159,7 @@ class FakeData::ApplicationFormGenerator
             },
           )
         else
-          AssessAssessmentSection.call(assessment_section:, user:, passed: true)
+          AssessAssessmentSection.call(assessment_section, user:, passed: true)
         end
       end
     end
@@ -235,7 +235,7 @@ class FakeData::ApplicationFormGenerator
           )
         end
 
-        AssessAssessmentSection.call(assessment_section:, user:, **params)
+        AssessAssessmentSection.call(assessment_section, user:, **params)
       end
     end
   end

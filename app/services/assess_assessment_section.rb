@@ -4,7 +4,7 @@ class AssessAssessmentSection
   include ServicePattern
 
   def initialize(
-    assessment_section:,
+    assessment_section,
     user:,
     passed:,
     selected_failure_reasons: {}
@@ -19,35 +19,12 @@ class AssessAssessmentSection
     old_status = assessment_section.status
 
     ActiveRecord::Base.transaction do
-      selected_keys = selected_failure_reasons.keys
-
-      assessment_section
-        .selected_failure_reasons
-        .where.not(key: selected_keys)
-        .destroy_all
-
-      selected_failure_reasons.each do |key, assessor_feedback|
-        failure_reason =
-          assessment_section.selected_failure_reasons.find_or_initialize_by(
-            key:,
-          )
-        failure_reason.update!(assessor_feedback: assessor_feedback[:notes])
-        next unless assessor_feedback[:work_histories]
-        failure_reason.update!(
-          work_histories: assessor_feedback[:work_histories],
-        )
-      end
-
-      unless assessment_section.update(passed:, assessed_at: Time.zone.now)
-        next false
-      end
-
+      update_selected_failure_reasons
+      update_passed_and_assessed_at
       update_application_form_assessor
       create_timeline_event(old_status:)
       update_assessment_started_at
       update_application_form_state
-
-      true
     end
   end
 
@@ -57,6 +34,28 @@ class AssessAssessmentSection
 
   delegate :assessment, to: :assessment_section
   delegate :application_form, to: :assessment
+
+  def update_selected_failure_reasons
+    selected_keys = selected_failure_reasons.keys
+
+    assessment_section
+      .selected_failure_reasons
+      .where.not(key: selected_keys)
+      .destroy_all
+
+    selected_failure_reasons.each do |key, assessor_feedback|
+      failure_reason =
+        assessment_section.selected_failure_reasons.find_or_initialize_by(key:)
+
+      failure_reason.update!(assessor_feedback: assessor_feedback[:notes])
+      next unless assessor_feedback[:work_histories]
+      failure_reason.update!(work_histories: assessor_feedback[:work_histories])
+    end
+  end
+
+  def update_passed_and_assessed_at
+    assessment_section.update!(passed:, assessed_at: Time.zone.now)
+  end
 
   def update_application_form_assessor
     if application_form.assessor.nil?
@@ -83,8 +82,7 @@ class AssessAssessmentSection
   end
 
   def update_assessment_started_at
-    return if assessment.started_at
-    assessment.update!(started_at: Time.zone.now)
+    assessment.update!(started_at: Time.zone.now) if assessment.started_at.nil?
   end
 
   def update_application_form_state
