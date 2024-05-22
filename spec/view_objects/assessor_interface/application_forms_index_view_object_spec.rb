@@ -103,14 +103,15 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
 
     context "with multiple application forms" do
-      let(:application_form_1) do
+      let!(:application_form_1) do
         create(
           :application_form,
           :submitted,
           submitted_at: Date.new(2020, 1, 1),
         )
       end
-      let(:application_form_2) do
+
+      let!(:application_form_2) do
         create(
           :application_form,
           :submitted,
