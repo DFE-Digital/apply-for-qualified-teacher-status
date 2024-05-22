@@ -68,16 +68,13 @@ class AssessAssessmentSection
   end
 
   def create_timeline_event(old_status:)
-    new_status = assessment_section.status
-    return if old_status == new_status
-
     CreateTimelineEvent.call(
       "assessment_section_recorded",
       application_form:,
       user:,
       assessment_section:,
       old_value: old_status,
-      new_value: new_status,
+      new_value: assessment_section.status,
     )
   end
 

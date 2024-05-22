@@ -134,14 +134,4 @@ RSpec.describe AssessAssessmentSection do
       expect { call }.to_not change(assessment, :started_at)
     end
   end
-
-  context "when the state is the same" do
-    before { call }
-
-    it "doesn't record a timeline event" do
-      expect { call }.to_not have_recorded_timeline_event(
-        :assessment_section_recorded,
-      )
-    end
-  end
 end
