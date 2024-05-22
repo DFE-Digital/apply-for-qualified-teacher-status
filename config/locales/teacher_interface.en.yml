@@ -7,7 +7,7 @@ en:
             additional_degree_certificate_illegible: Your additional degree certificate (or translation) is illegible or in a format we cannot accept.
             additional_degree_transcript_illegible: Your additional degree transcript (or translation) is illegible or in a format we cannot accept.
             age_range: The age range you are qualified to teach does not fall within the requirements of QTS.
-            applicant_already_dqt: Your details have been matched with someone who already has QTS and is registered in our database for qualified teachers.
+            applicant_already_dqt: Your details have been matched to a potential existing record in the database of qualified teachers.
             applicant_already_qts: You already hold QTS and induction exemption.
             application_and_qualification_names_do_not_match: The name on the application form is different from 1 or more qualification documents, but no evidence of change of name has been provided.
             authorisation_to_teach: Sanctions or restrictions were detected on your professional record.
