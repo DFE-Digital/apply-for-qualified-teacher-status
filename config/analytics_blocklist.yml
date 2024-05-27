@@ -23,12 +23,22 @@
     - record_type
   :assessments:
     - qualifications_assessor_note
+  :countries:
+    - other_information
+    - sanction_information
+    - status_information
+    - teaching_qualification_information
   :feature_flags_features:
     - active
     - created_at
     - id
     - name
     - updated_at
+  :regions:
+    - other_information
+    - sanction_information
+    - status_information
+    - teaching_qualification_information
   :sessions:
     - created_at
     - data
