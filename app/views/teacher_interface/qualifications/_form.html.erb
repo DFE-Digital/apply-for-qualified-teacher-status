@@ -28,17 +28,7 @@
     <p class="govuk-body">Add any additional qualifications you have that relate to your teaching career. These must be of a <%= govuk_link_to "UK ‘level 6’ equivalent or above", "https://www.gov.uk/what-different-qualification-levels-mean/list-of-qualification-levels" %>.</p>
   <% end %>
 
-  <% if @application_form.region.qualifications_information.present? || @application_form.region.country.qualifications_information.present? %>
-    <section id="app-qualifications-information">
-      <% if @application_form.region.qualifications_information.present? %>
-        <%= raw GovukMarkdown.render(@application_form.region.qualifications_information) %>
-      <% end %>
-
-      <% if @application_form.region.country.qualifications_information.present? %>
-        <%= raw GovukMarkdown.render(@application_form.region.country.qualifications_information) %>
-      <% end %>
-    </section>
-  <% end %>
+  <%= render "shared/teaching_qualification_information", region: @application_form.region %>
 
   <%= f.govuk_fieldset legend: { text: t(qualification.locale_key, scope: %i[application_form qualifications form title]) } do %>
     <%= f.govuk_text_field :title,

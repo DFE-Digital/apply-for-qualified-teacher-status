@@ -31,10 +31,4 @@
   </p>
 <% end %>
 
-<% if region.qualifications_information.present? %>
-  <%= raw GovukMarkdown.render(region.qualifications_information) %>
-<% end %>
-
-<% if region.country.qualifications_information.present? %>
-  <%= raw GovukMarkdown.render(region.country.qualifications_information) %>
-<% end %>
+<%= render "shared/teaching_qualification_information", region: %>
