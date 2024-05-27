@@ -20,6 +20,8 @@
     <p class="govuk-body">If you have more than one teaching qualification enter the first one you received that qualifies you to teach. For example, if you have a bachelor’s and a master’s degree, and both qualify you to teach, enter the bachelor’s degree here.</p>
 
     <p class="govuk-body">You can add more qualifications later.</p>
+
+    <%= render "shared/teaching_qualification_information", region: @application_form.region %>
   <% elsif qualification.is_bachelor_degree? %>
     <h1 class="govuk-heading-l">Bachelor’s degree</h1>
     <p class="govuk-body">Add details of your bachelor’s degree if your teaching qualification was separate.</p>
@@ -27,8 +29,6 @@
     <h1 class="govuk-heading-l">Additional qualification</h1>
     <p class="govuk-body">Add any additional qualifications you have that relate to your teaching career. These must be of a <%= govuk_link_to "UK ‘level 6’ equivalent or above", "https://www.gov.uk/what-different-qualification-levels-mean/list-of-qualification-levels" %>.</p>
   <% end %>
-
-  <%= render "shared/teaching_qualification_information", region: @application_form.region %>
 
   <%= f.govuk_fieldset legend: { text: t(qualification.locale_key, scope: %i[application_form qualifications form title]) } do %>
     <%= f.govuk_text_field :title,
