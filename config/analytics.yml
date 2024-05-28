@@ -112,11 +112,11 @@
     - eligibility_skip_questions
     - id
     - other_information
-    - qualifications_information
     - sanction_information
     - status_information
-    - updated_at
     - subject_limited
+    - teaching_qualification_information
+    - updated_at
   :documents:
     - available
     - created_at
@@ -282,7 +282,6 @@
     - id
     - name
     - other_information
-    - qualifications_information
     - reduced_evidence_accepted
     - requires_preliminary_check
     - sanction_check
@@ -297,6 +296,7 @@
     - teaching_authority_provides_written_statement
     - teaching_authority_requires_submission_email
     - teaching_authority_websites
+    - teaching_qualification_information
     - updated_at
     - written_statement_optional
   :reminder_emails:
