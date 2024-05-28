@@ -28,10 +28,10 @@ RSpec.describe ConfigurationSync::Exporter do
         "eligibility_enabled" => true,
         "eligibility_skip_questions" => false,
         "other_information" => "",
-        "qualifications_information" => "",
         "sanction_information" => "",
         "status_information" => "",
         "subject_limited" => false,
+        "teaching_qualification_information" => "",
       },
     )
   end
@@ -60,7 +60,6 @@ RSpec.describe ConfigurationSync::Exporter do
         "country_code" => "FR",
         "name" => "Region",
         "other_information" => "",
-        "qualifications_information" => "",
         "reduced_evidence_accepted" => false,
         "sanction_check" => "none",
         "sanction_information" => "",
@@ -74,6 +73,7 @@ RSpec.describe ConfigurationSync::Exporter do
         "teaching_authority_provides_written_statement" => false,
         "teaching_authority_requires_submission_email" => false,
         "teaching_authority_websites" => [],
+        "teaching_qualification_information" => "",
         "written_statement_optional" => false,
       },
     )

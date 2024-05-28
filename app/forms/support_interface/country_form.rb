@@ -8,15 +8,15 @@ class SupportInterface::CountryForm
   attr_accessor :country
   validates :country, presence: true
 
-  attribute :subject_limited, :boolean
   attribute :eligibility_enabled, :boolean
   attribute :eligibility_skip_questions, :boolean
   attribute :has_regions, :boolean
   attribute :other_information, :string
-  attribute :qualifications_information, :string
   attribute :region_names, :string
   attribute :sanction_information, :string
   attribute :status_information, :string
+  attribute :subject_limited, :boolean
+  attribute :teaching_qualification_information, :string
 
   validates :eligibility_enabled, inclusion: { in: [true, false] }
   validates :eligibility_skip_questions, inclusion: { in: [true, false] }
@@ -53,16 +53,16 @@ class SupportInterface::CountryForm
     if has_regions
       country.assign_attributes(
         other_information:,
-        qualifications_information:,
         sanction_information:,
         status_information:,
+        teaching_qualification_information:,
       )
     else
       country.assign_attributes(
         other_information: "",
-        qualifications_information: "",
         sanction_information: "",
         status_information: "",
+        teaching_qualification_information: "",
       )
     end
   end

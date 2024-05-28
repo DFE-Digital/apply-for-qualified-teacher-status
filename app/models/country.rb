@@ -33,7 +33,4 @@ class Country < ApplicationRecord
     YAML.load(File.read("lib/countries-in-european-economic-area.yaml"))
 
   validates :code, inclusion: { in: CODES }
-
-  alias_attribute :teaching_qualification_information,
-                  :qualifications_information
 end

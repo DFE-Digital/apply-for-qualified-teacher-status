@@ -7,13 +7,13 @@ module SystemHelpers
   def given_an_eligible_eligibility_check(country_check:)
     country = create(:country, :with_national_region, code: "GB-SCT")
     country.regions.first.update!(
-      qualifications_information: "Qualifications information",
-      requires_preliminary_check: true,
-      status_check: country_check,
-      sanction_check: country_check,
-      status_information: "Status information",
-      sanction_information: "Sanction information",
       other_information: "Other teaching authority information.",
+      requires_preliminary_check: true,
+      sanction_check: country_check,
+      sanction_information: "Sanction information",
+      status_check: country_check,
+      status_information: "Status information",
+      teaching_qualification_information: "Qualifications information",
     )
 
     visit "/eligibility/start"

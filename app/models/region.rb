@@ -60,9 +60,6 @@ class Region < ApplicationRecord
             }
   validates :teaching_authority_online_checker_url, url: { allow_blank: true }
 
-  alias_attribute :teaching_qualification_information,
-                  :qualifications_information
-
   def checks_available?
     !sanction_check_none? && !status_check_none?
   end

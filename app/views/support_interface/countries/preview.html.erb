@@ -48,9 +48,9 @@
   <%= raw GovukMarkdown.render(@country.other_information) %>
 <% end %>
 
-<% if @country.qualifications_information_changed? %>
-  <h3 class="govuk-heading-s">Qualifications information</h3>
-  <%= raw GovukMarkdown.render(@country.qualifications_information) %>
+<% if @country.teaching_qualification_information %>
+  <h3 class="govuk-heading-s">Teaching qualification information</h3>
+  <%= raw GovukMarkdown.render(@country.teaching_qualification_information) %>
 <% end %>
 
 <% if @country.eligibility_skip_questions_changed? || @country.subject_limited_changed? %>
@@ -68,13 +68,13 @@
 
 <%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>
   <%= f.hidden_field :eligibility_enabled, value: @form.eligibility_enabled %>
+  <%= f.hidden_field :eligibility_route, value: @form.eligibility_route %>
   <%= f.hidden_field :eligibility_skip_questions, value: @form.eligibility_skip_questions %>
   <%= f.hidden_field :has_regions, value: @form.has_regions %>
   <%= f.hidden_field :other_information, value: @form.other_information %>
-  <%= f.hidden_field :qualifications_information, value: @form.qualifications_information %>
   <%= f.hidden_field :region_names, value: @form.region_names %>
   <%= f.hidden_field :sanction_information, value: @form.sanction_information %>
   <%= f.hidden_field :status_information, value: @form.status_information %>
-  <%= f.hidden_field :eligibility_route, value: @form.eligibility_route %>
+  <%= f.hidden_field :teaching_qualification_information, value: @form.teaching_qualification_information %>
   <%= f.govuk_submit "Save", name: "preview", value: "false" %>
 <% end %>
