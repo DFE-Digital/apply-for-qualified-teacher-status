@@ -48,7 +48,7 @@ class AssessorInterface::AssessmentSectionForm
     return false unless valid?
 
     AssessAssessmentSection.call(
-      assessment_section:,
+      assessment_section,
       user:,
       passed:
         (

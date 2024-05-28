@@ -36,14 +36,15 @@ module AssessorInterface::UpdatesEnglishLanguageStatus
     private
 
     def save_english_language_status
-      return true unless update_english_language_status?
-
-      AssessAssessmentSection.call(
-        assessment_section:
+      if update_english_language_status?
+        AssessAssessmentSection.call(
           self.class.english_language_section(assessment_section.assessment),
-        user:,
-        passed: english_language_section_passed,
-      )
+          user:,
+          passed: english_language_section_passed,
+        )
+      end
+
+      true
     end
 
     def update_english_language_status?
