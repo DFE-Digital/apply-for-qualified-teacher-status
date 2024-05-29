@@ -1,0 +1,7 @@
+<% if region.teaching_qualification_information.present? %>
+  <%= raw GovukMarkdown.render(region.teaching_qualification_information) %>
+<% end %>
+
+<% if region.country.teaching_qualification_information.present? %>
+  <%= raw GovukMarkdown.render(region.country.teaching_qualification_information) %>
+<% end %>

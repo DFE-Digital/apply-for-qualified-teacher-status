@@ -5,7 +5,6 @@ module PageObjects
     class QualificationForm < SitePrism::Page
       element :heading, "h1"
       element :body, ".govuk-body-l"
-      element :qualifications_information, "#app-qualifications-information"
 
       section :form, "form" do
         element :title_field,
