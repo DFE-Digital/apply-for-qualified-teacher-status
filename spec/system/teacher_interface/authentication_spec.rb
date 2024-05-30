@@ -160,6 +160,24 @@ RSpec.describe "Teacher authentication", type: :system do
       "Confirm your email: apply for qualified teacher status (QTS)",
     )
     expect(message.to).to include("test@example.com")
+
+    email_body = message.body.raw_source
+    teacher = Teacher.find_by(email: "test@example.com")
+    if teacher.sign_in_count == 0
+      expect(email_body).to include(
+        "Thank you for your interest in applying for qualified teacher status (QTS) in England.",
+      )
+      expect(email_body).to_not include(
+        "Welcome back to apply for qualified teacher status (QTS) in England.",
+      )
+    else
+      expect(email_body).to include(
+        "Welcome back to apply for qualified teacher status (QTS) in England.",
+      )
+      expect(email_body).to_not include(
+        "Thank you for your interest in applying for qualified teacher status (QTS) in England.",
+      )
+    end
   end
 
   def when_i_sign_in_using_magic_link
