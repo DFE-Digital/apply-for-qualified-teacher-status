@@ -33,10 +33,11 @@ class ConfigurationSync::Exporter
       eligibility_enabled: country.eligibility_enabled,
       eligibility_skip_questions: country.eligibility_skip_questions,
       other_information: country.other_information,
-      qualifications_information: country.qualifications_information,
       sanction_information: country.sanction_information,
       status_information: country.status_information,
       subject_limited: country.subject_limited,
+      teaching_qualification_information:
+        country.teaching_qualification_information,
     }
   end
 
@@ -61,7 +62,6 @@ class ConfigurationSync::Exporter
       country_code: region.country.code,
       name: region.name,
       other_information: region.other_information,
-      qualifications_information: region.qualifications_information,
       reduced_evidence_accepted: region.reduced_evidence_accepted,
       sanction_check: region.sanction_check,
       sanction_information: region.sanction_information,
@@ -78,6 +78,8 @@ class ConfigurationSync::Exporter
       teaching_authority_requires_submission_email:
         region.teaching_authority_requires_submission_email,
       teaching_authority_websites: region.teaching_authority_websites,
+      teaching_qualification_information:
+        region.teaching_qualification_information,
       written_statement_optional: region.written_statement_optional,
     }
   end

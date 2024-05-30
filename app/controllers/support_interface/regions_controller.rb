@@ -33,9 +33,7 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
   def region_params
     params.require(:region).permit(
       :all_sections_necessary,
-      :work_history_section_to_omit,
       :other_information,
-      :qualifications_information,
       :requires_preliminary_check,
       :sanction_check,
       :sanction_information,
@@ -49,6 +47,8 @@ class SupportInterface::RegionsController < SupportInterface::BaseController
       :teaching_authority_provides_written_statement,
       :teaching_authority_requires_submission_email,
       :teaching_authority_websites_string,
+      :teaching_qualification_information,
+      :work_history_section_to_omit,
       :written_statement_optional,
     )
   end

@@ -25,13 +25,13 @@ RSpec.describe "Eligible region content", type: :view do
       create(
         :region,
         country: create(:country, code: "FR"),
-        status_check: :written,
         sanction_check: :written,
-        status_information: "Status information",
         sanction_information: "Sanction information",
+        status_check: :written,
+        status_information: "Status information",
         teaching_authority_address: "address",
         teaching_authority_certificate: "certificate",
-        qualifications_information: "qualifications info",
+        teaching_qualification_information: "qualifications info",
       )
     end
 

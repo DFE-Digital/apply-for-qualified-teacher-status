@@ -2,17 +2,17 @@
 #
 # Table name: countries
 #
-#  id                         :bigint           not null, primary key
-#  code                       :string           not null
-#  eligibility_enabled        :boolean          default(TRUE), not null
-#  eligibility_skip_questions :boolean          default(FALSE), not null
-#  other_information          :text             default(""), not null
-#  qualifications_information :text             default(""), not null
-#  sanction_information       :string           default(""), not null
-#  status_information         :string           default(""), not null
-#  subject_limited            :boolean          default(FALSE), not null
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
+#  id                                 :bigint           not null, primary key
+#  code                               :string           not null
+#  eligibility_enabled                :boolean          default(TRUE), not null
+#  eligibility_skip_questions         :boolean          default(FALSE), not null
+#  other_information                  :text             default(""), not null
+#  sanction_information               :string           default(""), not null
+#  status_information                 :string           default(""), not null
+#  subject_limited                    :boolean          default(FALSE), not null
+#  teaching_qualification_information :text             default(""), not null
+#  created_at                         :datetime         not null
+#  updated_at                         :datetime         not null
 #
 # Indexes
 #
@@ -33,7 +33,4 @@ class Country < ApplicationRecord
     YAML.load(File.read("lib/countries-in-european-economic-area.yaml"))
 
   validates :code, inclusion: { in: CODES }
-
-  alias_attribute :teaching_qualification_information,
-                  :qualifications_information
 end

@@ -15,15 +15,16 @@ module SupportInterface
       @form =
         CountryForm.new(
           country:,
-          subject_limited: country.subject_limited,
           eligibility_enabled: country.eligibility_enabled,
           eligibility_skip_questions: country.eligibility_skip_questions,
           has_regions: country.regions.count > 1,
           other_information: country.other_information,
-          qualifications_information: country.qualifications_information,
           region_names: country.regions.pluck(:name).join("\n"),
           sanction_information: country.sanction_information,
           status_information: country.status_information,
+          subject_limited: country.subject_limited,
+          teaching_qualification_information:
+            country.teaching_qualification_information,
         )
     end
 
@@ -59,13 +60,13 @@ module SupportInterface
     def country_params
       params.require(:support_interface_country_form).permit(
         :eligibility_enabled,
+        :eligibility_route,
         :has_regions,
         :other_information,
-        :qualifications_information,
         :region_names,
         :sanction_information,
         :status_information,
-        :eligibility_route,
+        :teaching_qualification_information,
       )
     end
   end
