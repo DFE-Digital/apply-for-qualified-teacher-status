@@ -52,6 +52,7 @@ module "web_application" {
 
   docker_image = var.docker_image
   replicas     = var.app_replicas
+  enable_logit = var.enable_logit
 }
 
 module "worker_application" {
@@ -72,4 +73,6 @@ module "worker_application" {
   docker_image  = var.docker_image
   command       = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
   probe_command = ["pgrep", "-f", "sidekiq"]
+
+  enable_logit = var.enable_logit
 }

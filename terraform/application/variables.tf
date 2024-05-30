@@ -43,6 +43,11 @@ variable "dqt_api_url" {
   type = string
 }
 
+variable "enable_logit" {
+  type    = bool
+  default = false
+}
+
 variable "enable_monitoring" {
   type    = bool
   default = true
