@@ -75,6 +75,5 @@ Rails.application.configure do
   config.logger =
     ActiveSupport::Logger.new(config.paths["log"].first, 1, 50.megabytes)
 
-  config.log_format = :color
   config.semantic_logger.backtrace_level = :debug
 end
