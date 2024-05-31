@@ -1,4 +1,4 @@
-# 8. Application forms
+# 8. View objects
 
 Date: 2022-08-26
 
