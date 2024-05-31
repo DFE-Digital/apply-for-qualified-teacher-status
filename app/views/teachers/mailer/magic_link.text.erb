@@ -11,6 +11,4 @@ Welcome back to apply for qualified teacher status (QTS) in England. Use the lin
 
 Please note, this link will expire in <%= Devise.passwordless_login_within.inspect %>. After that time, you will need to [return to the service](<%= create_or_new_teacher_session_url %>) and request another confirmation link.
 
-Kind regards,
-
-The Teacher Qualifications Team
+<%= render "shared/teacher_mailer/footer" %>

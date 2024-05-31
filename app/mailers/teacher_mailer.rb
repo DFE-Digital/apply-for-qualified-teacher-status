@@ -51,10 +51,10 @@ class TeacherMailer < ApplicationMailer
   def application_received
     subject =
       if @application_form.teaching_authority_provides_written_statement
-        I18n.t("mailer.teacher.application_received.subject.true")
+        I18n.t("mailer.teacher.application_received.subject.without_document")
       else
         I18n.t(
-          "mailer.teacher.application_received.subject.false",
+          "mailer.teacher.application_received.subject.awaiting_document",
           certificate: region_certificate_name(region),
         )
       end

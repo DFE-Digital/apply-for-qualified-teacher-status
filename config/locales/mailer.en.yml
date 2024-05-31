@@ -20,8 +20,8 @@ en:
           1: Your draft QTS application is about to be deleted
       application_received:
         subject:
-          true: Your QTS application has been received
-          false: "Your QTS application: Awaiting %{certificate}"
+          without_document: Your QTS application has been received
+          awaiting_document: "Your QTS application: Awaiting %{certificate}"
       consent_reminder:
         subject: "Reminder: we need your written consent to progress your QTS application"
       consent_requested:
