@@ -6,7 +6,6 @@ Thank you for your interest in applying for qualified teacher status (QTS) in En
 Welcome back to apply for qualified teacher status (QTS) in England. Use the link below to confirm your email address and sign in to your application.
 <% end %>
 
-<%= teacher_magic_link_url(token: @token) %>
 [Confirm your email address](<%= teacher_magic_link_url(token: @token) %>)
 
 Please note, this link will expire in <%= Devise.passwordless_login_within.inspect %>. After that time, you will need to [return to the service](<%= create_or_new_teacher_session_url %>) and request another confirmation link.
