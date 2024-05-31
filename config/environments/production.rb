@@ -52,7 +52,6 @@ Rails.application.configure do
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
   config.log_level = :info
-  config.log_format = :json
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
@@ -82,7 +81,8 @@ Rails.application.configure do
     config.rails_semantic_logger.add_file_appender = false
     config.semantic_logger.add_appender(
       io: $stdout,
-      formatter: config.rails_semantic_logger.format,
+      level: config.log_level,
+      formatter: :json,
     )
   end
 
