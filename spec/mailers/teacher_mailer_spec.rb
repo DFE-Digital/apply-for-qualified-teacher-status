@@ -207,7 +207,11 @@ RSpec.describe TeacherMailer, type: :mailer do
           )
         end
 
-        it { is_expected.to include("Your QTS application: Awaiting Letter of Professional Standing") }
+        it do
+          is_expected.to include(
+            "Your QTS application: Awaiting Letter of Professional Standing",
+          )
+        end
       end
 
       context "if the teaching authority does not provide the written statement" do
@@ -219,11 +223,7 @@ RSpec.describe TeacherMailer, type: :mailer do
           )
         end
 
-        it do
-          is_expected.to include(
-            "Your QTS application has been received",
-          )
-        end
+        it { is_expected.to include("Your QTS application has been received") }
       end
     end
 
