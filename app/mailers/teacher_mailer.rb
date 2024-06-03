@@ -51,12 +51,12 @@ class TeacherMailer < ApplicationMailer
   def application_received
     subject =
       if @application_form.teaching_authority_provides_written_statement
-        I18n.t("mailer.teacher.application_received.subject.without_document")
-      else
         I18n.t(
           "mailer.teacher.application_received.subject.awaiting_document",
           certificate: region_certificate_name(region),
         )
+      else
+        I18n.t("mailer.teacher.application_received.subject.without_document")
       end
 
     view_mail(GOVUK_NOTIFY_TEMPLATE_ID, to: teacher.email, subject:)

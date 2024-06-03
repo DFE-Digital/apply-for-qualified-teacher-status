@@ -59,7 +59,7 @@ RSpec.describe "Teacher submitting", type: :system do
     expect(message).to_not be_nil
 
     expect(message.subject).to eq(
-      "Your QTS application: Awaiting Letter of Professional Standing",
+      "Your QTS application has been received",
     )
     expect(message.to).to include("teacher@example.com")
   end
