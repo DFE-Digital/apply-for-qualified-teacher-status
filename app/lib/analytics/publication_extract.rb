@@ -10,33 +10,31 @@ class Analytics::PublicationExtract
 
   def call
     countries.filter_map do |country|
-      submissions = submitted_application_forms(country)
+      application_forms = application_forms_for_country(country)
 
-      next if submissions.empty?
+      next if application_forms.empty?
 
-      awards = awarded_application_forms(country)
-      declines = declined_application_forms(country)
-      withdraws = withdrawn_application_forms(country)
+      applications = application_forms.count
+      awarded = application_forms.count(&:awarded?)
+      declined = application_forms.count(&:declined?)
+      withdrawn = application_forms.count(&:withdrawn?)
 
       induction_required =
-        awards
-          .joins(:assessment)
-          .where(assessment: { induction_required: true })
-          .count
-
-      percent_induction_required = percent_of(induction_required, awards.count)
+        application_forms.count do |application_form|
+          application_form.awarded? &&
+            application_form.assessment.induction_required
+        end
 
       {
         country_name: CountryName.from_country(country),
-        applications: submissions.count,
-        assessed: awards.count + declines.count,
-        awarded: awards.count,
-        declined: declines.count,
-        withdrawn: withdraws.count,
-        awaiting_decision:
-          submissions.count - awards.count - declines.count - withdraws.count,
+        applications:,
+        assessed: awarded + declined,
+        awarded:,
+        declined:,
+        withdrawn:,
+        awaiting_decision: applications - awarded - declined - withdrawn,
         induction_required:,
-        percent_induction_required:,
+        percent_induction_required: percent_of(induction_required, awarded),
       }
     end
   end
@@ -51,35 +49,12 @@ class Analytics::PublicationExtract
     Country.all.sort_by { |country| CountryName.from_country(country) }
   end
 
-  def submitted_application_forms(country)
+  def application_forms_for_country(country)
     ApplicationForm
       .joins(region: :country)
+      .includes(:assessment)
       .where(region: { country: })
       .where("DATE(submitted_at) BETWEEN ? AND ?", start_date, end_date)
-  end
-
-  def awarded_application_forms(country)
-    submitted_application_forms(country).where(
-      "DATE(awarded_at) BETWEEN ? AND ?",
-      start_date,
-      end_date,
-    )
-  end
-
-  def declined_application_forms(country)
-    submitted_application_forms(country).where(
-      "DATE(declined_at) BETWEEN ? AND ?",
-      start_date,
-      end_date,
-    )
-  end
-
-  def withdrawn_application_forms(country)
-    submitted_application_forms(country).where(
-      "DATE(withdrawn_at) BETWEEN ? AND ?",
-      start_date,
-      end_date,
-    )
   end
 
   def percent_of(numerator, denominator)
