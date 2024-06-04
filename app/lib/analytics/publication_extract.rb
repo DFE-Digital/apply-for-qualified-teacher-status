@@ -20,7 +20,8 @@ class Analytics::PublicationExtract
 
       induction_required =
         awards
-          .select { |application_form| requires_induction?(application_form) }
+          .joins(:assessment)
+          .where(assessment: { induction_required: true })
           .count
 
       percent_induction_required =
@@ -86,9 +87,5 @@ class Analytics::PublicationExtract
       start_date,
       end_date,
     )
-  end
-
-  def requires_induction?(application_form)
-    application_form.assessment.induction_required
   end
 end
