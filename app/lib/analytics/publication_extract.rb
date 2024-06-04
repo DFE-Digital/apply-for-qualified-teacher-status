@@ -24,14 +24,7 @@ class Analytics::PublicationExtract
           .where(assessment: { induction_required: true })
           .count
 
-      percent_induction_required =
-        (
-          if awards.empty?
-            0
-          else
-            ((induction_required.to_f / awards.count) * 100).round
-          end
-        )
+      percent_induction_required = percent_of(induction_required, awards.count)
 
       {
         country_name: CountryName.from_country(country),
@@ -87,5 +80,11 @@ class Analytics::PublicationExtract
       start_date,
       end_date,
     )
+  end
+
+  def percent_of(numerator, denominator)
+    return 0 if numerator.zero? || denominator.zero?
+
+    ((numerator.to_f / denominator) * 100).round
   end
 end
