@@ -203,6 +203,18 @@ class ApplicationForm < ApplicationRecord
     submitted_at.present?
   end
 
+  def awarded?
+    awarded_at.present?
+  end
+
+  def declined?
+    declined_at.present?
+  end
+
+  def withdrawn?
+    withdrawn_at.present?
+  end
+
   def to_param
     reference
   end
