@@ -41,19 +41,6 @@ class Analytics::PublicationExtract
         withdrawn: withdraws.count,
         awaiting_decision:
           submissions.count - awards.count - declines.count - withdraws.count,
-        awardees_with_only_ebacc_subject_or_subjects:
-          awards.count do |application_form|
-            has_only_ebacc_subjects?(application_form)
-          end,
-        awardees_with_no_ebacc_subjects:
-          awards.count do |application_form|
-            has_no_ebacc_subjects?(application_form)
-          end,
-        awardees_with_a_mix_of_subjects_at_least_one_is_ebacc:
-          awards.count do |application_form|
-            !has_only_ebacc_subjects?(application_form) &&
-              !has_no_ebacc_subjects?(application_form)
-          end,
         induction_required:,
         percent_induction_required:,
       }
@@ -99,14 +86,6 @@ class Analytics::PublicationExtract
       start_date,
       end_date,
     )
-  end
-
-  def has_only_ebacc_subjects?(application_form)
-    Subject.find(application_form.assessment.subjects).all?(&:ebacc?)
-  end
-
-  def has_no_ebacc_subjects?(application_form)
-    Subject.find(application_form.assessment.subjects).none?(&:ebacc?)
   end
 
   def requires_induction?(application_form)
