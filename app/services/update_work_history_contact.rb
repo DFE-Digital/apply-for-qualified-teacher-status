@@ -30,7 +30,13 @@ class UpdateWorkHistoryContact
     end
 
     if email.present? && (reference_request = work_history.reference_request)
-      reference_request.send_requested_email
+      RequestRequestable.call(
+        requestable: reference_request,
+        user:,
+        allow_already_requested: true,
+      )
+
+      ApplicationFormStatusUpdater.call(application_form:, user:)
 
       DeliverEmail.call(
         application_form:,
