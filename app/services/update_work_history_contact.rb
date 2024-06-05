@@ -12,20 +12,21 @@ class UpdateWorkHistoryContact
   end
 
   def call
-    ActiveRecord::Base.transaction do
-      change_value("contact_name", name) if name.present?
+    change_value("contact_name", name) if name.present?
 
-      change_value("contact_job", job) if job.present?
+    change_value("contact_job", job) if job.present?
 
-      if email.present?
-        change_value("contact_email", email)
+    if email.present?
+      email_address = EmailAddress.new(email)
 
-        email_address = EmailAddress.new(email)
-        work_history.update!(
+      change_value(
+        "contact_email",
+        email,
+        additional_updates: {
           canonical_contact_email: email_address.canonical,
           contact_email_domain: email_address.host_name,
-        )
-      end
+        },
+      )
     end
 
     if email.present? && (reference_request = work_history.reference_request)
@@ -46,10 +47,13 @@ class UpdateWorkHistoryContact
 
   delegate :application_form, to: :work_history
 
-  def change_value(column_name, new_value)
+  def change_value(column_name, new_value, additional_updates: {})
     old_value = work_history.send(column_name)
-    work_history.update!(column_name => new_value)
-    create_timeline_event(column_name, old_value, new_value)
+
+    ActiveRecord::Base.transaction do
+      work_history.update!(column_name => new_value, **additional_updates)
+      create_timeline_event(column_name, old_value, new_value)
+    end
   end
 
   def create_timeline_event(column_name, old_value, new_value)
