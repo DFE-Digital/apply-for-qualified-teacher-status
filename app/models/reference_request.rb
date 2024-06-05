@@ -109,8 +109,21 @@ class ReferenceRequest < ApplicationRecord
     )
   end
 
+  def send_requested_email
+    DeliverEmail.call(
+      application_form:,
+      mailer: RefereeMailer,
+      action: :reference_requested,
+      reference_request: self,
+    )
+  end
+
   def expires_after
     6.weeks
+  end
+
+  def after_requested(*)
+    send_requested_email
   end
 
   def after_verified(*)

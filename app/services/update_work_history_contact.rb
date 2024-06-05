@@ -29,12 +29,7 @@ class UpdateWorkHistoryContact
     end
 
     if email.present? && (reference_request = work_history.reference_request)
-      DeliverEmail.call(
-        application_form:,
-        mailer: RefereeMailer,
-        action: :reference_requested,
-        reference_request:,
-      )
+      reference_request.send_requested_email
 
       DeliverEmail.call(
         application_form:,
