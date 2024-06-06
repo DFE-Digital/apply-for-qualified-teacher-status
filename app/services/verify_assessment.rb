@@ -39,7 +39,7 @@ class VerifyAssessment
       end
 
     if reference_requests.present?
-      send_reference_request_emails(reference_requests)
+      send_references_requested_email(reference_requests)
     end
 
     reference_requests
@@ -80,16 +80,7 @@ class VerifyAssessment
     end
   end
 
-  def send_reference_request_emails(reference_requests)
-    reference_requests.each do |reference_request|
-      DeliverEmail.call(
-        application_form:,
-        mailer: RefereeMailer,
-        action: :reference_requested,
-        reference_request:,
-      )
-    end
-
+  def send_references_requested_email(reference_requests)
     DeliverEmail.call(
       application_form:,
       mailer: TeacherMailer,

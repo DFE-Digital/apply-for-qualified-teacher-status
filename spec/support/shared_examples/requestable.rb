@@ -117,6 +117,8 @@ RSpec.shared_examples "a requestable" do
   describe "#after_requested" do
     let(:after_requested) { subject.after_requested(user: "User") }
 
+    before { subject.requested! }
+
     it "doesn't raise an error" do
       expect { after_requested }.to_not raise_error
     end

@@ -111,13 +111,7 @@ module AssessorInterface
 
     def resend_email
       if reference_request.requested? && !reference_request.received?
-        DeliverEmail.call(
-          application_form:,
-          mailer: RefereeMailer,
-          action: :reference_requested,
-          reference_request:,
-        )
-
+        reference_request.send_requested_email
         flash[:info] = "The reference requested email has been resent."
       end
 

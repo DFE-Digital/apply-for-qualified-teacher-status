@@ -3,16 +3,19 @@
 class RequestRequestable
   include ServicePattern
 
-  def initialize(requestable:, user:)
+  def initialize(requestable:, user:, allow_already_requested: false)
     @requestable = requestable
     @user = user
+    @allow_already_requested = allow_already_requested
   end
 
   def call
-    raise AlreadyRequested if requestable.requested?
+    raise AlreadyRequested if !allow_already_requested && requestable.requested?
 
     ActiveRecord::Base.transaction do
       requestable.requested!
+
+      requestable.update!(expired_at: nil) if requestable.expired?
 
       CreateTimelineEvent.call(
         "requestable_requested",
@@ -30,7 +33,7 @@ class RequestRequestable
 
   private
 
-  attr_reader :requestable, :user
+  attr_reader :requestable, :user, :allow_already_requested
 
   delegate :application_form, to: :requestable
 end
