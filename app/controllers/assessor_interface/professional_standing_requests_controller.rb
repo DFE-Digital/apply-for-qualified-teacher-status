@@ -2,15 +2,11 @@
 
 module AssessorInterface
   class ProfessionalStandingRequestsController < BaseController
-    include HistoryTrackable
-
     before_action :set_variables
 
     before_action do
       authorize [:assessor_interface, professional_standing_request]
     end
-
-    define_history_origin :show
 
     def show
       render layout: "full_from_desktop"

@@ -1,7 +1,7 @@
 <% title = "Request LoPS verification" %>
 
 <% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
-<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
+<% content_for :back_link_url, assessor_interface_application_form_assessment_professional_standing_request_path %>
 
 <%= form_with model: @form, url: [:request, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
   <%= f.govuk_error_summary %>

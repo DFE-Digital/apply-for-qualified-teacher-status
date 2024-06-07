@@ -6,7 +6,7 @@
 <% title = can_update_verify_reference_request ? "Review reference" : "View reference" %>
 
 <% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
-<% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_assessment_reference_requests_path) %>
+<% content_for :back_link_url, assessor_interface_application_form_assessment_reference_requests_path %>
 
 <%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, @reference_request] do |f| %>
   <%= f.govuk_error_summary %>
