@@ -2,7 +2,7 @@ Dear <%= application_form_full_name(@application_form) %>,
 
 The assessor reviewing your QTS application needs more information.
 
-The assessor needs this information by [date] for your application to proceed.
+The assessor needs this information by <%= @further_information_request.expires_at.to_date.to_fs %> for your application to proceed.
 
 # What you need to do
 
