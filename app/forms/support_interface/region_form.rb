@@ -115,6 +115,7 @@ class SupportInterface::RegionForm
       status_check: region.status_check,
       status_information: region.status_information,
       teaching_authority_address: region.teaching_authority_address,
+      teaching_authority_certificate: region.teaching_authority_certificate,
       teaching_authority_emails_string:
         region.teaching_authority_emails.join("\n"),
       teaching_authority_name: region.teaching_authority_name,
