@@ -422,7 +422,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   def then_i_see_application_declined
     declined_timeline_event =
       assessor_timeline_page.timeline_items.find do |timeline_event|
-        timeline_event.title.text.include?("Application declined")
+        timeline_event.heading.text.include?("Application declined")
       end
 
     expect(declined_timeline_event).to_not be_nil

@@ -37,7 +37,7 @@ RSpec.describe "Creating a note", type: :system do
   def and_i_see_the_note_timeline_event
     timeline_item = assessor_timeline_page.timeline_items.first
 
-    expect(timeline_item.title).to have_content("Note created")
+    expect(timeline_item.heading).to have_content("Note created")
 
     expect(timeline_item.description).to have_content("A note.")
   end

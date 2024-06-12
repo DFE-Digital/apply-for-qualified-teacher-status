@@ -129,7 +129,7 @@ RSpec.describe "Teacher consent", type: :system do
   end
 
   def and_i_see_the_consent_submitted_status
-    expect(teacher_submitted_application_page.panel.title.text).to eq(
+    expect(teacher_submitted_application_page.panel.heading.text).to eq(
       "Consent documents successfully submitted",
     )
     expect(teacher_submitted_application_page.panel.body.text).to eq(

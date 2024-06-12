@@ -46,7 +46,7 @@ RSpec.describe "Teacher submitting", type: :system do
   end
 
   def and_i_see_the_submitted_application_information
-    expect(teacher_submitted_application_page.panel.title.text).to eq(
+    expect(teacher_submitted_application_page.panel.heading.text).to eq(
       "Application complete",
     )
     expect(teacher_submitted_application_page.panel.body.text).to eq(
