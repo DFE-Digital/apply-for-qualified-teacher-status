@@ -557,7 +557,7 @@ GEM
       multi_json (~> 1.10)
     simpleidn (0.2.1)
       unf (~> 0.1.4)
-    site_prism (5.0.1)
+    site_prism (5.0.2)
       addressable (~> 2.8, >= 2.8.1)
       capybara (~> 3.31)
       site_prism-all_there (> 2, < 5)

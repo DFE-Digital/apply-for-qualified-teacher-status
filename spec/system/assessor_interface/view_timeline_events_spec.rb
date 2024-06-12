@@ -36,13 +36,13 @@ RSpec.describe "Assessor view timeline events", type: :system do
     )
 
     expect(assessor_timeline_page).to have_timeline_items
-    expect(assessor_timeline_page.timeline_items.first.title).to have_content(
+    expect(assessor_timeline_page.timeline_items.first.heading).to have_content(
       "Note created",
     )
-    expect(assessor_timeline_page.timeline_items.second.title).to have_content(
-      "Stage changed",
-    )
-    expect(assessor_timeline_page.timeline_items.third.title).to have_content(
+    expect(
+      assessor_timeline_page.timeline_items.second.heading,
+    ).to have_content("Stage changed")
+    expect(assessor_timeline_page.timeline_items.third.heading).to have_content(
       "Assessor assigned",
     )
   end

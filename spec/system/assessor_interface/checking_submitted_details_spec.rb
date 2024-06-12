@@ -281,7 +281,10 @@ RSpec.describe "Assessor check submitted details", type: :system do
     teaching_qualification =
       application_form.qualifications.find(&:is_teaching?)
     expect(
-      assessor_check_qualifications_page.teaching_qualification.title.text,
+      assessor_check_qualifications_page
+        .teaching_qualification
+        .title_value
+        .text,
     ).to eq(teaching_qualification.title)
   end
 

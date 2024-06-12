@@ -176,7 +176,7 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def and_i_see_the_further_information_received_information
-    expect(teacher_submitted_application_page.panel.title.text).to eq(
+    expect(teacher_submitted_application_page.panel.heading.text).to eq(
       "Further information successfully submitted",
     )
     expect(teacher_submitted_application_page.panel.body.text).to eq(

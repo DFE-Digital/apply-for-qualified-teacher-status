@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module PageObjects
   module AssessorInterface
     class QualificationCard < SitePrism::Section
       element :heading, "h2"
-      element :title,
+      element :title_value,
               "dl.govuk-summary-list > div:nth-of-type(1) > dd:nth-of-type(1)"
     end
 
