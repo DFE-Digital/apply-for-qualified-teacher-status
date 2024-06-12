@@ -3,6 +3,11 @@
 module Expirable
   extend ActiveSupport::Concern
 
+  included do
+    scope :expired, -> { where.not(expired_at: nil) }
+    scope :not_expired, -> { where(expired_at: nil) }
+  end
+
   def expires_at
     return nil if requested_at.nil? || expires_after.nil?
 
