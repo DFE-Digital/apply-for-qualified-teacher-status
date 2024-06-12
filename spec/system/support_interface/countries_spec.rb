@@ -134,67 +134,74 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_select_sanction_check
-    select "Online", from: "region-sanction-check-field"
+    select "Online", from: "support-interface-region-form-sanction-check-field"
   end
 
   def when_i_select_status_check
-    select "Online", from: "region-status-check-field"
+    select "Online", from: "support-interface-region-form-status-check-field"
   end
 
   def when_i_fill_teaching_authority_name
-    fill_in "region-teaching-authority-name-field", with: "Name"
+    fill_in "support-interface-region-form-teaching-authority-name-field",
+            with: "Name"
   end
 
   def when_i_fill_teaching_authority_address
-    fill_in "region-teaching-authority-address-field", with: "Address"
+    fill_in "support-interface-region-form-teaching-authority-address-field",
+            with: "Address"
   end
 
   def when_i_fill_teaching_authority_emails
-    fill_in "region-teaching-authority-emails-string-field",
+    fill_in "support-interface-region-form-teaching-authority-emails-string-field",
             with: "Email address"
   end
 
   def when_i_fill_teaching_authority_websites
-    fill_in "region-teaching-authority-websites-string-field", with: "Website"
+    fill_in "support-interface-region-form-teaching-authority-websites-string-field",
+            with: "Website"
   end
 
   def when_i_fill_other_information
-    fill_in "region-other-information-field", with: "Other"
+    fill_in "support-interface-region-form-other-information-field",
+            with: "Other"
   rescue Capybara::ElementNotFound
     fill_in "support-interface-country-form-other-information-field",
             with: "Other"
   end
 
   def when_i_fill_teaching_authority_certificate
-    fill_in "region-teaching-authority-certificate-field", with: "Certificate"
+    fill_in "support-interface-region-form-teaching-authority-certificate-field",
+            with: "Certificate"
   end
 
   def when_i_fill_teaching_authority_online_checker_url
-    fill_in "region-teaching-authority-online-checker-url-field",
+    fill_in "support-interface-region-form-teaching-authority-online-checker-url-field",
             with: "https://www.example.com/checks"
   end
 
   def when_i_fill_sanction_information
-    fill_in "region-sanction-information-field", with: "Sanction information"
+    fill_in "support-interface-region-form-sanction-information-field",
+            with: "Sanction information"
   rescue Capybara::ElementNotFound
     fill_in "support-interface-country-form-sanction-information-field",
             with: "Sanction information"
   end
 
   def when_i_fill_status_information
-    fill_in "region-status-information-field", with: "Status information"
+    fill_in "support-interface-region-form-status-information-field",
+            with: "Status information"
   rescue Capybara::ElementNotFound
     fill_in "support-interface-country-form-status-information-field",
             with: "Status information"
   end
 
   def when_i_select_yes_teaching_authority_requires_submission_email
-    choose "region-teaching-authority-requires-submission-email-true-field",
+    choose "support-interface-region-form-teaching-authority-requires-submission-email-true-field",
            visible: :all
   end
 
   def when_i_fill_teaching_qualification_information
-    fill_in "region-teaching-qualification-information-field",
+    fill_in "support-interface-region-form-teaching-qualification-information-field",
             with: "Qualifications information"
   rescue Capybara::ElementNotFound
     fill_in "support-interface-country-form-teaching-qualification-information-field",
@@ -202,11 +209,13 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_check_written_statement_optional
-    choose "region-written-statement-optional-true-field", visible: false
+    choose "support-interface-region-form-written-statement-optional-true-field",
+           visible: false
   end
 
   def when_i_check_requires_preliminary_check
-    choose "region-requires-preliminary-check-true-field", visible: false
+    choose "support-interface-region-form-requires-preliminary-check-true-field",
+           visible: false
   end
 
   def and_i_click_save

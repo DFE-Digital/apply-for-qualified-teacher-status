@@ -69,7 +69,6 @@
 <%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>
   <%= f.hidden_field :eligibility_enabled, value: @form.eligibility_enabled %>
   <%= f.hidden_field :eligibility_route, value: @form.eligibility_route %>
-  <%= f.hidden_field :eligibility_skip_questions, value: @form.eligibility_skip_questions %>
   <%= f.hidden_field :has_regions, value: @form.has_regions %>
   <%= f.hidden_field :other_information, value: @form.other_information %>
   <%= f.hidden_field :region_names, value: @form.region_names %>

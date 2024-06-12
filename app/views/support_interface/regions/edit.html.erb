@@ -1,6 +1,6 @@
 <% content_for :page_title, CountryName.from_region(@region) %>
 
-<%= form_with model: [:support_interface, @region] do |f| %>
+<%= form_with model: @form, url: [:support_interface, @region], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l"><%= CountryName.from_region(@region) %></h1>

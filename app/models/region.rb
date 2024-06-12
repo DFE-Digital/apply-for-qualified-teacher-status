@@ -53,74 +53,7 @@ class Region < ApplicationRecord
   validates :sanction_check, inclusion: { in: sanction_checks.values }
   validates :status_check, inclusion: { in: status_checks.values }
 
-  validates :teaching_authority_name,
-            format: {
-              without: /\Athe.*\z/i,
-              message: "Teaching authority name shouldn't start with ‘the’.",
-            }
-  validates :teaching_authority_online_checker_url, url: { allow_blank: true }
-
   def checks_available?
     !sanction_check_none? && !status_check_none?
-  end
-
-  def teaching_authority_emails_string
-    teaching_authority_emails.join("\n")
-  end
-
-  def teaching_authority_emails_string=(string)
-    self.teaching_authority_emails =
-      string.split("\n").map(&:chomp).compact_blank
-  end
-
-  def teaching_authority_websites_string
-    teaching_authority_websites.join("\n")
-  end
-
-  def teaching_authority_websites_string=(string)
-    self.teaching_authority_websites =
-      string.split("\n").map(&:chomp).compact_blank
-  end
-
-  def teaching_authority_present?
-    teaching_authority_name.present? || teaching_authority_address.present? ||
-      teaching_authority_emails.present? || teaching_authority_websites.present?
-  end
-
-  def all_sections_necessary
-    !application_form_skip_work_history && !reduced_evidence_accepted
-  end
-
-  def all_sections_necessary=(value)
-    application_form_skip_work_history_will_change!
-    reduced_evidence_accepted_will_change!
-
-    if value
-      self.application_form_skip_work_history = false
-      self.reduced_evidence_accepted = false
-    end
-  end
-
-  def work_history_section_to_omit
-    if application_form_skip_work_history
-      "whole_section"
-    elsif reduced_evidence_accepted
-      "contact_details"
-    end
-  end
-
-  def work_history_section_to_omit=(value)
-    return if all_sections_necessary
-    application_form_skip_work_history_will_change!
-    reduced_evidence_accepted_will_change!
-
-    case value
-    when "whole_section"
-      self.application_form_skip_work_history = true
-      self.reduced_evidence_accepted = false
-    when "contact_details"
-      self.application_form_skip_work_history = false
-      self.reduced_evidence_accepted = true
-    end
   end
 end

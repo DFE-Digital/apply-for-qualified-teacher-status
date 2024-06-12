@@ -10,24 +10,24 @@
 
 <hr class="govuk-!-margin-top-6 govuk-!-margin-bottom-6" />
 
-<%= form_with model: [:support_interface, @region] do |f| %>
-  <%= f.hidden_field :application_form_skip_work_history, value: @region.application_form_skip_work_history %>
-  <%= f.hidden_field :other_information, value: @region.other_information %>
-  <%= f.hidden_field :reduced_evidence_accepted, value: @region.reduced_evidence_accepted %>
-  <%= f.hidden_field :requires_preliminary_check, value: @region.requires_preliminary_check %>
-  <%= f.hidden_field :sanction_check, value: @region.sanction_check %>
-  <%= f.hidden_field :sanction_information, value: @region.sanction_information %>
-  <%= f.hidden_field :status_check, value: @region.status_check %>
-  <%= f.hidden_field :status_information, value: @region.status_information %>
-  <%= f.hidden_field :teaching_authority_address, value: @region.teaching_authority_address %>
-  <%= f.hidden_field :teaching_authority_certificate, value: @region.teaching_authority_certificate %>
-  <%= f.hidden_field :teaching_authority_emails_string, value: @region.teaching_authority_emails_string %>
-  <%= f.hidden_field :teaching_authority_name, value: @region.teaching_authority_name %>
-  <%= f.hidden_field :teaching_authority_online_checker_url, value: @region.teaching_authority_online_checker_url %>
-  <%= f.hidden_field :teaching_authority_provides_written_statement, value: @region.teaching_authority_provides_written_statement %>
-  <%= f.hidden_field :teaching_authority_requires_submission_email, value: @region.teaching_authority_requires_submission_email %>
-  <%= f.hidden_field :teaching_authority_websites_string, value: @region.teaching_authority_websites_string %>
-  <%= f.hidden_field :teaching_qualification_information, value: @region.teaching_qualification_information %>
-  <%= f.hidden_field :written_statement_optional, value: @region.written_statement_optional %>
+<%= form_with model: @form, url: [:support_interface, @region], method: :put do |f| %>
+  <%= f.hidden_field :all_sections_necessary, value: @form.all_sections_necessary %>
+  <%= f.hidden_field :other_information, value: @form.other_information %>
+  <%= f.hidden_field :requires_preliminary_check, value: @form.requires_preliminary_check %>
+  <%= f.hidden_field :sanction_check, value: @form.sanction_check %>
+  <%= f.hidden_field :sanction_information, value: @form.sanction_information %>
+  <%= f.hidden_field :status_check, value: @form.status_check %>
+  <%= f.hidden_field :status_information, value: @form.status_information %>
+  <%= f.hidden_field :teaching_authority_address, value: @form.teaching_authority_address %>
+  <%= f.hidden_field :teaching_authority_certificate, value: @form.teaching_authority_certificate %>
+  <%= f.hidden_field :teaching_authority_emails_string, value: @form.teaching_authority_emails_string %>
+  <%= f.hidden_field :teaching_authority_name, value: @form.teaching_authority_name %>
+  <%= f.hidden_field :teaching_authority_online_checker_url, value: @form.teaching_authority_online_checker_url %>
+  <%= f.hidden_field :teaching_authority_provides_written_statement, value: @form.teaching_authority_provides_written_statement %>
+  <%= f.hidden_field :teaching_authority_requires_submission_email, value: @form.teaching_authority_requires_submission_email %>
+  <%= f.hidden_field :teaching_authority_websites_string, value: @form.teaching_authority_websites_string %>
+  <%= f.hidden_field :teaching_qualification_information, value: @form.teaching_qualification_information %>
+  <%= f.hidden_field :work_history_section_to_omit, value: @form.work_history_section_to_omit %>
+  <%= f.hidden_field :written_statement_optional, value: @form.written_statement_optional %>
   <%= f.govuk_submit "Save", name: "preview", value: "false" %>
 <% end %>
