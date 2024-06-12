@@ -38,9 +38,7 @@
 require "rails_helper"
 
 RSpec.describe Region, type: :model do
-  subject(:region) { build(:region, teaching_authority_name:) }
-
-  let(:teaching_authority_name) { "" }
+  subject(:region) { build(:region) }
 
   describe "validations" do
     it { is_expected.to be_valid }
@@ -57,38 +55,6 @@ RSpec.describe Region, type: :model do
         .with_values(none: "none", online: "online", written: "written")
         .with_prefix(:status_check)
         .backed_by_column_of_type(:string)
-    end
-  end
-
-  describe "#teaching_authority_present?" do
-    subject(:teaching_authority_present?) { region.teaching_authority_present? }
-
-    it { is_expected.to eq(false) }
-
-    context "with a name" do
-      before { region.update(teaching_authority_name: "Name") }
-
-      it { is_expected.to eq(true) }
-    end
-
-    context "with an address" do
-      before { region.update(teaching_authority_address: "Address") }
-
-      it { is_expected.to eq(true) }
-    end
-
-    context "with an email address" do
-      before { region.update(teaching_authority_emails: ["test@example.com"]) }
-
-      it { is_expected.to eq(true) }
-    end
-
-    context "with a website" do
-      before do
-        region.update(teaching_authority_websites: ["https://www.example.com"])
-      end
-
-      it { is_expected.to eq(true) }
     end
   end
 end

@@ -56,9 +56,4 @@ class Region < ApplicationRecord
   def checks_available?
     !sanction_check_none? && !status_check_none?
   end
-
-  def teaching_authority_present?
-    teaching_authority_name.present? || teaching_authority_address.present? ||
-      teaching_authority_emails.present? || teaching_authority_websites.present?
-  end
 end
