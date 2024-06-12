@@ -65,14 +65,6 @@ en:
           attributes:
             selected_failure_reasons:
               blank: Select the reasons for your recommendation.
-        country:
-          attributes:
-            teaching_authority_online_checker_url:
-              url: Enter a valid teaching authority online checker URL
-        region:
-          attributes:
-            teaching_authority_online_checker_url:
-              url: Enter a valid teaching authority online checker URL
         teacher:
           attributes:
             email:

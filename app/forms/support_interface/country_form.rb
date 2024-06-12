@@ -9,23 +9,23 @@ class SupportInterface::CountryForm
   validates :country, presence: true
 
   attribute :eligibility_enabled, :boolean
-  attribute :eligibility_skip_questions, :boolean
+  attribute :eligibility_route, :string
   attribute :has_regions, :boolean
   attribute :other_information, :string
   attribute :region_names, :string
   attribute :sanction_information, :string
   attribute :status_information, :string
-  attribute :subject_limited, :boolean
   attribute :teaching_qualification_information, :string
 
   validates :eligibility_enabled, inclusion: { in: [true, false] }
-  validates :eligibility_skip_questions, inclusion: { in: [true, false] }
+  validates :eligibility_route, inclusion: { in: %w[expanded reduced standard] }
   validates :has_regions, inclusion: { in: [true, false] }
   validates :region_names, presence: true, if: :has_regions
 
   def save!
+    assign_country_attributes
+
     ActiveRecord::Base.transaction do
-      assign_country_attributes
       country.save!
 
       diff_actions.each do |action|
@@ -46,8 +46,8 @@ class SupportInterface::CountryForm
   def assign_country_attributes
     country.assign_attributes(
       eligibility_enabled:,
-      eligibility_skip_questions:,
-      subject_limited:,
+      eligibility_skip_questions: eligibility_route == "reduced",
+      subject_limited: eligibility_route == "expanded",
     )
 
     if has_regions
@@ -88,27 +88,27 @@ class SupportInterface::CountryForm
       end
   end
 
-  def eligibility_route
-    if subject_limited
-      "expanded"
-    elsif eligibility_skip_questions
-      "reduced"
-    else
-      "standard"
-    end
-  end
+  def self.for_existing_country(country)
+    eligibility_route =
+      if country.subject_limited
+        "expanded"
+      elsif country.eligibility_skip_questions
+        "reduced"
+      else
+        "standard"
+      end
 
-  def eligibility_route=(value)
-    case value
-    when "standard"
-      self.subject_limited = false
-      self.eligibility_skip_questions = false
-    when "reduced"
-      self.subject_limited = false
-      self.eligibility_skip_questions = true
-    when "expanded"
-      self.subject_limited = true
-      self.eligibility_skip_questions = false
-    end
+    new(
+      country:,
+      eligibility_enabled: country.eligibility_enabled,
+      eligibility_route:,
+      has_regions: country.regions.count > 1,
+      other_information: country.other_information,
+      region_names: country.regions.pluck(:name).join("\n"),
+      sanction_information: country.sanction_information,
+      status_information: country.status_information,
+      teaching_qualification_information:
+        country.teaching_qualification_information,
+    )
   end
 end

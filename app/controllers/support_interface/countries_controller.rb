@@ -4,28 +4,17 @@ module SupportInterface
   class CountriesController < BaseController
     def index
       authorize [:support_interface, Country]
+
       @countries =
         Country
           .includes(:regions)
           .sort_by { |country| CountryName.from_country(country) }
+
       render layout: "full_from_desktop"
     end
 
     def edit
-      @form =
-        CountryForm.new(
-          country:,
-          eligibility_enabled: country.eligibility_enabled,
-          eligibility_skip_questions: country.eligibility_skip_questions,
-          has_regions: country.regions.count > 1,
-          other_information: country.other_information,
-          region_names: country.regions.pluck(:name).join("\n"),
-          sanction_information: country.sanction_information,
-          status_information: country.status_information,
-          subject_limited: country.subject_limited,
-          teaching_qualification_information:
-            country.teaching_qualification_information,
-        )
+      @form = CountryForm.for_existing_country(country)
     end
 
     def update
@@ -50,11 +39,10 @@ module SupportInterface
 
     def country
       @country ||=
-        begin
-          country = Country.includes(:regions).find(params[:id])
-          authorize [:support_interface, country]
-          country
-        end
+        authorize [
+                    :support_interface,
+                    Country.includes(:regions).find(params[:id]),
+                  ]
     end
 
     def country_params
