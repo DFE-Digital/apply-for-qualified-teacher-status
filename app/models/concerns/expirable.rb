@@ -9,7 +9,7 @@ module Expirable
   end
 
   def expires_at
-    return nil if requested_at.nil? || expires_after.nil?
+    return nil if received_at || requested_at.nil? || expires_after.nil?
 
     requested_at + expires_after
   end
@@ -19,7 +19,8 @@ module Expirable
   end
 
   def days_until_expired
-    (expires_at.to_date - Time.zone.today).to_i if expires?
+    @days_until_expired ||=
+      expires? ? (expires_at.to_date - Time.zone.today).to_i : nil
   end
 
   def expired!

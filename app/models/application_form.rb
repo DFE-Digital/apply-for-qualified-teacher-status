@@ -320,6 +320,10 @@ class ApplicationForm < ApplicationRecord
     created_at
   end
 
+  def received_at
+    submitted_at
+  end
+
   def expires_after
     submitted? ? nil : 6.months
   end
