@@ -2,12 +2,7 @@
 
 module AssessorInterface
   class ReferenceRequestsController < BaseController
-    include HistoryTrackable
-
     before_action :set_individual_variables, except: :index
-    skip_before_action :track_history, only: :resend_email
-
-    define_history_origin :index
 
     def index
       authorize %i[assessor_interface reference_request]

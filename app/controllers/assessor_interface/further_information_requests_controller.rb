@@ -2,8 +2,6 @@
 
 module AssessorInterface
   class FurtherInformationRequestsController < BaseController
-    include HistoryTrackable
-
     before_action only: %i[new create] do
       authorize %i[assessor_interface further_information_request]
     end

@@ -2,8 +2,6 @@
 
 module AssessorInterface
   class NotesController < BaseController
-    include HistoryTrackable
-
     before_action { authorize %i[assessor_interface note] }
 
     def new
@@ -17,7 +15,7 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to history_stack.pop_back ||
+        redirect_to params[:next].presence ||
                       [:assessor_interface, application_form]
       else
         render :new, status: :unprocessable_entity

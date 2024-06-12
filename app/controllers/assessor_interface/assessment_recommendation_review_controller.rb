@@ -2,16 +2,12 @@
 
 module AssessorInterface
   class AssessmentRecommendationReviewController < BaseController
-    include HistoryTrackable
-
     before_action :ensure_can_review
     before_action :load_assessment_and_application_form
 
     before_action only: %i[show edit update] do
       authorize %i[assessor_interface assessment_recommendation]
     end
-
-    skip_before_action :track_history, only: :show
 
     def show
       redirect_to [

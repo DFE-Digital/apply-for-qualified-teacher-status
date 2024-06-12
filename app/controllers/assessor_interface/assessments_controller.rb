@@ -2,8 +2,6 @@
 
 module AssessorInterface
   class AssessmentsController < BaseController
-    include HistoryTrackable
-
     before_action :load_assessment_and_application_form
 
     before_action only: %i[edit update] do

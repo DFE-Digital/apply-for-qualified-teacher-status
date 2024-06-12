@@ -2,8 +2,6 @@
 
 module AssessorInterface
   class WorkHistoriesController < BaseController
-    include HistoryTrackable
-
     before_action { authorize [:assessor_interface, work_history] }
 
     def edit
