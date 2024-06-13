@@ -3,12 +3,10 @@
 require "rails_helper"
 
 RSpec.describe "Teacher qualifications", type: :system do
-  before do
-    given_i_am_authorized_as_a_user(teacher)
-    given_an_application_form_exists
-  end
+  before { given_i_am_authorized_as_a_user(teacher) }
 
   it "records qualifications" do
+    given_an_application_form_exists
     given_malware_scanning_is_enabled
 
     when_i_visit_the(:teacher_application_page)
@@ -17,6 +15,7 @@ RSpec.describe "Teacher qualifications", type: :system do
 
     when_i_click_the_qualifications_task
     then_i_see_the(:teacher_new_qualification_page)
+    and_i_dont_see_the_age_subject_restrictions
 
     when_i_fill_in_the_qualification_information
     then_i_see_the(:teacher_upload_document_page)
@@ -45,6 +44,7 @@ RSpec.describe "Teacher qualifications", type: :system do
   end
 
   it "deletes qualifications" do
+    given_an_application_form_exists
     given_malware_scanning_is_disabled
     given_some_qualifications_exist
 
@@ -64,6 +64,19 @@ RSpec.describe "Teacher qualifications", type: :system do
     and_i_see_two_qualifications
   end
 
+  it "subject restricted countries" do
+    given_the_country_is_subject_limited
+    given_an_application_form_exists
+
+    when_i_visit_the(:teacher_application_page)
+    then_i_see_the(:teacher_application_page)
+    and_i_see_the_qualifications_task
+
+    when_i_click_the_qualifications_task
+    then_i_see_the(:teacher_new_qualification_page)
+    and_i_see_the_age_subject_restrictions
+  end
+
   private
 
   def given_an_application_form_exists
@@ -80,12 +93,28 @@ RSpec.describe "Teacher qualifications", type: :system do
     ApplicationFormSectionStatusUpdater.call(application_form:)
   end
 
+  def given_the_country_is_subject_limited
+    @country = create(:country, :subject_limited)
+  end
+
   def and_i_see_the_qualifications_task
     expect(teacher_application_page.qualifications_task_item).to_not be_nil
   end
 
   def when_i_click_the_qualifications_task
     teacher_application_page.qualifications_task_item.click
+  end
+
+  def and_i_see_the_age_subject_restrictions
+    expect(teacher_new_qualification_page).to have_content(
+      "Age and subject restrictions",
+    )
+  end
+
+  def and_i_dont_see_the_age_subject_restrictions
+    expect(teacher_new_qualification_page).to_not have_content(
+      "Age and subject restrictions",
+    )
   end
 
   def when_i_fill_in_the_qualification_information
@@ -207,12 +236,12 @@ RSpec.describe "Teacher qualifications", type: :system do
     @teacher ||= create(:teacher)
   end
 
+  def country
+    @country ||= create(:country, code: "FR")
+  end
+
   def application_form
     @application_form ||=
-      create(
-        :application_form,
-        region: create(:region, :in_country, country_code: "FR"),
-        teacher:,
-      )
+      create(:application_form, region: create(:region, country:), teacher:)
   end
 end
