@@ -16,22 +16,22 @@ expire_consent_requests:
   args: ["ConsentRequest"]
 
 expire_further_information_requests:
-  cron: "10 2 * * *"
+  cron: "12 2 * * *"
   class: ExpireRequestablesJob
   args: ["FurtherInformationRequest"]
 
 expire_professional_standing_requests:
-  cron: "20 2 * * *"
+  cron: "24 2 * * *"
   class: ExpireRequestablesJob
   args: ["ProfessionalStandingRequest"]
 
 expire_qualification_requests:
-  cron: "30 2 * * *"
+  cron: "36 2 * * *"
   class: ExpireRequestablesJob
   args: ["QualificationRequest"]
 
 expire_reference_requests:
-  cron: "40 2 * * *"
+  cron: "48 2 * * *"
   class: ExpireRequestablesJob
   args: ["ReferenceRequest"]
 

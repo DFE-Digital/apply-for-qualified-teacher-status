@@ -5,9 +5,12 @@ class ExpireRequestablesJob < ApplicationJob
     requestable_class_name
       .constantize
       .requested
-      .where(expired_at: nil, received_at: nil)
-      .find_each do |requestable|
-        ExpireRequestableJob.perform_later(requestable)
+      .not_received
+      .not_expired
+      .each do |requestable|
+      if requestable.expires? && Time.zone.now > requestable.expires_at
+        ExpireRequestable.call(requestable:, user: "Expirer")
       end
+    end
   end
 end

@@ -95,8 +95,11 @@ class ReferenceRequest < ApplicationRecord
   end
 
   def should_send_reminder_email?(_name, number_of_reminders_sent)
-    (days_until_expired <= 28 && number_of_reminders_sent.zero?) ||
-      (days_until_expired <= 14 && number_of_reminders_sent == 1)
+    days_until_expired &&
+      (
+        (days_until_expired <= 28 && number_of_reminders_sent.zero?) ||
+          (days_until_expired <= 14 && number_of_reminders_sent == 1)
+      )
   end
 
   def send_reminder_email(_name, number_of_reminders_sent)

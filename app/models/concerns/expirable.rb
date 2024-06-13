@@ -3,15 +3,24 @@
 module Expirable
   extend ActiveSupport::Concern
 
+  included do
+    scope :expired, -> { where.not(expired_at: nil) }
+    scope :not_expired, -> { where(expired_at: nil) }
+  end
+
   def expires_at
-    return nil if requested_at.nil? || expires_after.nil?
+    return nil if received_at || requested_at.nil? || expires_after.nil?
 
     requested_at + expires_after
   end
 
+  def expires?
+    expires_at != nil
+  end
+
   def days_until_expired
-    return nil if expires_at.nil?
-    (expires_at.to_date - Time.zone.today).to_i
+    @days_until_expired ||=
+      expires? ? (expires_at.to_date - Time.zone.today).to_i : nil
   end
 
   def expired!
