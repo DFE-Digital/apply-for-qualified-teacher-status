@@ -20,10 +20,18 @@ module TeacherInterface
     end
 
     def submit
+      consent_requests = application_form.assessment.consent_requests
+
+      if consent_requests.all?(&:received?)
+        redirect_to %i[teacher_interface application_form]
+      end
+
       ActiveRecord::Base.transaction do
-        application_form.assessment.consent_requests.each do |requestable|
-          ReceiveRequestable.call(requestable:, user: current_teacher)
-        end
+        consent_requests
+          .reject(&:received?)
+          .each do |requestable|
+            ReceiveRequestable.call(requestable:, user: current_teacher)
+          end
       end
 
       DeliverEmail.call(
