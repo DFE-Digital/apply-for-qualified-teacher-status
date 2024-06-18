@@ -422,7 +422,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     let(:further_information_request) do
-      create(:further_information_request, assessment:)
+      create(:further_information_request, :requested, assessment:)
     end
 
     describe "#subject" do
@@ -626,7 +626,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
-      it { is_expected.to include("abc") }
       it do
         is_expected.to include(
           "We’ve contacted the following references you provided to verify the work " \

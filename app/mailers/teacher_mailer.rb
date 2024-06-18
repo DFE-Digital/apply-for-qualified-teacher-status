@@ -99,6 +99,8 @@ class TeacherMailer < ApplicationMailer
   end
 
   def further_information_requested
+    @further_information_request = params[:further_information_request]
+
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
       to: teacher.email,
