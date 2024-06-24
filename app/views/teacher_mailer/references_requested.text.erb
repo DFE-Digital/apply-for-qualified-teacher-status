@@ -3,7 +3,7 @@ Dear <%= application_form_full_name(@application_form) %>,
 We’ve contacted the following references you provided to verify the work history information you gave as part of your QTS application.
 
 <% @reference_requests.each do |reference_request| %>
-  <%= reference_request.contact_name %>
+  <%= reference_request.work_history.contact_name %>
 <% end %>
 
 They need to respond by <%= @reference_requests.first.expires_at.to_date.to_fs %>. If your references do not respond, and, as a result, we cannot verify your work history, we may not be able to award you QTS.
