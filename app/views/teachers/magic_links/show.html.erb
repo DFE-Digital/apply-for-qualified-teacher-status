@@ -1,9 +1,13 @@
 <% content_for :page_title, "Sign in" %>
 
-<h1 class="govuk-heading-xl">Sign in</h1>
+<h1 class="govuk-heading-xl">Sign in to apply for QTS in England</h1>
 
 <p class="govuk-body-m">
-  You’re signing in to the account you created for <%= @resource.email %>.
+  Thank you for confirming your email address.
+</p>
+
+<p class="govuk-body-m">
+  You can now sign in to the application you created for <%= @resource.email %>.
 </p>
 
 <%= form_with url: teacher_magic_link_path do |f| %>

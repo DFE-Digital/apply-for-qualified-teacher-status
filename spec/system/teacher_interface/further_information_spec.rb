@@ -188,9 +188,7 @@ RSpec.describe "Teacher further information", type: :system do
     message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
-    expect(message.subject).to eq(
-      "We’ve received the additional information you sent us",
-    )
+    expect(message.subject).to eq("Your QTS application: information received")
     expect(message.to).to include(application_form.teacher.email)
   end
 

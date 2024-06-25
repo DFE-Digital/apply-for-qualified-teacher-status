@@ -134,9 +134,7 @@ RSpec.describe TeacherMailer, type: :mailer do
         let(:number_of_reminders_sent) { 0 }
 
         it do
-          is_expected.to eq(
-            "Your draft QTS application will be deleted in 2 weeks",
-          )
+          is_expected.to eq("Your draft QTS application has not been submitted")
         end
       end
 
@@ -144,9 +142,7 @@ RSpec.describe TeacherMailer, type: :mailer do
         let(:number_of_reminders_sent) { 1 }
 
         it do
-          is_expected.to eq(
-            "Your draft QTS application will be deleted in 1 week",
-          )
+          is_expected.to eq("Your draft QTS application is about to be deleted")
         end
       end
     end
@@ -168,14 +164,12 @@ RSpec.describe TeacherMailer, type: :mailer do
 
         it do
           is_expected.to include(
-            "We’ve noticed that you have a draft application for qualified " \
-              "teacher status (QTS) that has not been submitted.",
+            "You have a draft application for qualified teacher status (QTS) in England that has not been submitted.",
           )
         end
         it do
           is_expected.to include(
-            "We need to let you know that if you do not complete and submit " \
-              "your application by 1 July 2020 we’ll delete the application.",
+            "Applications need to be submitted within 6 months of being started.",
           )
         end
       end
@@ -185,12 +179,13 @@ RSpec.describe TeacherMailer, type: :mailer do
 
         it do
           is_expected.to include(
-            "We contacted you a week ago about your draft application for qualified teacher status (QTS).",
+            "We recently contacted you about your draft application for qualified teacher " \
+              "status (QTS) in England that has not been submitted.",
           )
         end
         it do
           is_expected.to include(
-            "If you do not complete and submit your application by 1 July 2020 we’ll delete the application.",
+            "Applications need to be submitted within 6 months of being started.",
           )
         end
       end
@@ -205,10 +200,30 @@ RSpec.describe TeacherMailer, type: :mailer do
     describe "#subject" do
       subject(:subject) { mail.subject }
 
-      it do
-        is_expected.to eq(
-          "We’ve received your application for qualified teacher status (QTS)",
-        )
+      context "if the teaching authority provides the written statement" do
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: true,
+          )
+        end
+
+        it do
+          is_expected.to include(
+            "Your QTS application: Awaiting Letter of Professional Standing",
+          )
+        end
+      end
+
+      context "if the teaching authority does not provide the written statement" do
+        let(:certificate) { region_certificate_name(application_form.region) }
+
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: false,
+          )
+        end
+
+        it { is_expected.to include("Your QTS application has been received") }
       end
     end
 
@@ -226,7 +241,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         is_expected.to include(
-          "Your application will be entered into a queue and assigned a QTS assessor, which can take several weeks.",
+          "Your application will be entered into a queue and assigned a QTS assessor. This can take several weeks.",
         )
       end
 
@@ -239,8 +254,22 @@ RSpec.describe TeacherMailer, type: :mailer do
 
         it do
           is_expected.to include(
-            "When we’ve received the written evidence you’ve requested from your teaching authority, we’ll " \
-              "add your application to the queue to be assigned to a QTS assessor — this can take several weeks.",
+            "Once the written evidence is received and checked, your application will be entered into " \
+              "a queue and assigned a QTS assessor. This can take several weeks.",
+          )
+        end
+      end
+
+      context "if the teaching authority does not provide the written statement" do
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: false,
+          )
+        end
+
+        it do
+          is_expected.to include(
+            "Your application will be entered into a queue and assigned a QTS assessor. This can take several weeks.",
           )
         end
       end
@@ -368,11 +397,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     describe "#subject" do
       subject(:subject) { mail.subject }
 
-      it do
-        is_expected.to eq(
-          "We’ve received the additional information you sent us",
-        )
-      end
+      it { is_expected.to eq("Your QTS application: information received") }
     end
 
     describe "#to" do
@@ -385,7 +410,6 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
-      it { is_expected.to include("abc") }
     end
   end
 
@@ -398,17 +422,13 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     let(:further_information_request) do
-      create(:further_information_request, assessment:)
+      create(:further_information_request, :requested, assessment:)
     end
 
     describe "#subject" do
       subject(:subject) { mail.subject }
 
-      it do
-        is_expected.to eq(
-          "We need some more information to progress your QTS application",
-        )
-      end
+      it { is_expected.to eq("Your QTS application: More information needed") }
     end
 
     describe "#to" do
@@ -449,11 +469,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     describe "#subject" do
       subject(:subject) { mail.subject }
 
-      it do
-        is_expected.to eq(
-          "We still need some more information to progress your QTS application",
-        )
-      end
+      it { is_expected.to eq("Your QTS application: information still needed") }
     end
 
     describe "#to" do
@@ -468,11 +484,10 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it do
         is_expected.to include(
-          "You must respond to this request by 12 February 2020 " \
-            "otherwise your QTS application will be declined.",
+          "If you do not respond by 12 February 2020 " \
+            "then your QTS application will be declined.",
         )
       end
-      it { is_expected.to include("abc") }
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
   end
@@ -487,8 +502,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         is_expected.to eq(
-          "Your qualified teacher status application – we’ve received your " \
-            "Letter of Professional Standing",
+          "Your QTS application: Letter of Professional Standing received",
         )
       end
     end
@@ -503,12 +517,10 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
-      it { is_expected.to include("abc") }
       it do
         is_expected.to include(
-          "Thank you for requesting your Letter of Professional Standing from the " \
-            "teaching authority. We have now received this document and attached " \
-            "it to your application.",
+          "We have received your Letter of Professional Standing from the teaching " \
+            "authority and attached it to your application.",
         )
       end
     end
@@ -616,7 +628,8 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it do
         is_expected.to include(
-          "We’ve contacted the references you provided to verify the work history",
+          "We’ve contacted the following references you provided to verify the work " \
+            "history information you gave as part of your QTS application.",
         )
       end
     end

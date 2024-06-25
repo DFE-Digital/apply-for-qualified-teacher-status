@@ -58,9 +58,7 @@ RSpec.describe "Teacher submitting", type: :system do
     message = ActionMailer::Base.deliveries.last
     expect(message).to_not be_nil
 
-    expect(message.subject).to eq(
-      "We’ve received your application for qualified teacher status (QTS)",
-    )
+    expect(message.subject).to eq("Your QTS application has been received")
     expect(message.to).to include("teacher@example.com")
   end
 

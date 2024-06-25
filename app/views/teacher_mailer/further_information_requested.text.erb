@@ -2,18 +2,14 @@ Dear <%= application_form_full_name(@application_form) %>,
 
 The assessor reviewing your QTS application needs more information.
 
-# What happens next
+The assessor needs this information by <%= @further_information_request.expires_at.to_date.to_fs %> for your application to proceed.
 
-You must respond to this request within 30 working days of this email.
+# What you need to do
 
-Once you respond with all of the information we’ve requested, the assessor will be able to continue reviewing your application.
+[Sign in to your application](<%= new_teacher_session_url %>)
 
-You can sign in to add the requested information to your application at:
-
-<%= new_teacher_session_url %>
+Your application is on hold until this information is received. Once you respond with all the information requested, the assessor will be able to continue reviewing your application.
 
 <%= render "shared/teacher_mailer/any_questions_contact" %>
-
-<%= render "shared/teacher_mailer/help_us_to_improve_this_service" %>
 
 <%= render "shared/teacher_mailer/footer" %>

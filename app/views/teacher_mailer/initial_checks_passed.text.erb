@@ -1,25 +1,20 @@
 Dear <%= application_form_full_name(@application_form) %>,
 
-# We’ve performed our initial checks on your application
+# Your application for QTS in England has passed initial checks
 
-<%= render "shared/teacher_mailer/reference_number" %>
+You now need to request your <%= region_certificate_name(@application_form.region) %> from <%= region_teaching_authority_name(@application_form.region) %>. 
 
-You should now request your <%= region_certificate_name(@application_form.region) %> from <%= region_teaching_authority_name(@application_form.region) %>. Contact them directly and instruct them to send the document to [<%= t("service.email.verification") %>](mailto:<%= t("service.email.verification") %>).
+Contact them directly and ask them to send the document to [<%= t("service.email.verification") %>](mailto:<%= t("service.email.verification") %>).
 
-Once we receive the document, we’ll begin the full assessment of your application.
+# Information about your <%= region_certificate_name(@application_form.region) %> 
+Sign in to find out more information about your <%= region_certificate_name(@application_form.region) %> before you request it. This could include instructions and fees.
 
-# Important information about your <%= region_certificate_name(@application_form.region) %>
-
-Sign in to see important information about your <%= region_certificate_name(@application_form.region) %> before you request it.
-
-<%= new_teacher_session_url %>
+[Sign in to your application](<%= new_teacher_session_url %>)
 
 # What happens next
 
-We will contact you with a final QTS application decision once all checks and verifications have been completed.
+Once we receive your <%= region_certificate_name(@application_form.region) %>, your application will be entered into a queue and assigned a QTS assessor. We will email you if we need any further information.
 
-<%= render "shared/teacher_mailer/help_us_to_improve_this_service" %>
-
-<%= render "shared/teacher_mailer/any_questions_contact" %>
+Contact [<%= t("service.email.enquiries") %>](mailto:<%= t("service.email.enquiries") %>) with queries. We aim to respond within 5 working days.
 
 <%= render "shared/teacher_mailer/footer" %>
