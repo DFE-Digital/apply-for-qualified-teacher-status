@@ -9,10 +9,12 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
     let(:application_form) { dqt_trn_request.application_form }
     let(:teacher) { application_form.teacher }
 
+    # rubocop:disable Lint/SuppressedException
     let(:perform_rescue_exception) do
       perform
     rescue StandardError
     end
+    # rubocop:enable Lint/SuppressedException
 
     context "with an initial request" do
       let(:dqt_trn_request) { create(:dqt_trn_request, :initial) }
