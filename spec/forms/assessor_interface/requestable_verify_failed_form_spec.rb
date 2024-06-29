@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::RequestableVerifyFailedForm, type: :model do
+  subject(:form) { described_class.new(requestable:, user:, note:) }
+
   let(:requestable) { create(:received_reference_request) }
   let(:user) { create(:staff) }
   let(:note) { "" }
-
-  subject(:form) { described_class.new(requestable:, user:, note:) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:note) }

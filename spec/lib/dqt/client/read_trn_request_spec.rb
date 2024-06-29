@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.describe DQT::Client::ReadTRNRequest do
-  let(:request_id) { "request-id" }
-
   subject(:call) { described_class.call(request_id:) }
+
+  let(:request_id) { "request-id" }
 
   context "with a successful response" do
     before do
@@ -24,7 +24,7 @@ RSpec.describe DQT::Client::ReadTRNRequest do
     end
 
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         {
           potential_duplicate: false,
           qts_date: nil,

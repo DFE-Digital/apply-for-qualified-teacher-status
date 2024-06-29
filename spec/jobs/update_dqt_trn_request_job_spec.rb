@@ -52,7 +52,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "doesn't queue another job" do
-          expect { perform }.to_not have_enqueued_job(UpdateDQTTRNRequestJob)
+          expect { perform }.not_to have_enqueued_job(described_class)
         end
       end
 
@@ -64,26 +64,26 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "leaves the request as initial" do
-          expect { perform_rescue_exception }.to_not change(
+          expect { perform_rescue_exception }.not_to change(
             dqt_trn_request,
             :state,
           )
         end
 
         it "leaves the potential duplicate" do
-          expect { perform_rescue_exception }.to_not change(
+          expect { perform_rescue_exception }.not_to change(
             dqt_trn_request,
             :potential_duplicate,
           )
         end
 
         it "doesn't award QTS" do
-          expect(AwardQTS).to_not receive(:call)
+          expect(AwardQTS).not_to receive(:call)
           perform_rescue_exception
         end
 
         it "doesn't change the stage" do
-          expect { perform_rescue_exception }.to_not change(
+          expect { perform_rescue_exception }.not_to change(
             application_form,
             :stage,
           )
@@ -113,7 +113,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "doesn't award QTS" do
-          expect(AwardQTS).to_not receive(:call)
+          expect(AwardQTS).not_to receive(:call)
           perform
         end
 
@@ -124,7 +124,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "queues another job" do
-          expect { perform }.to have_enqueued_job(UpdateDQTTRNRequestJob)
+          expect { perform }.to have_enqueued_job(described_class)
         end
       end
     end
@@ -165,7 +165,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "doesn't queue another job" do
-          expect { perform }.to_not have_enqueued_job(UpdateDQTTRNRequestJob)
+          expect { perform }.not_to have_enqueued_job(described_class)
         end
       end
 
@@ -177,26 +177,26 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "leaves the request as pending" do
-          expect { perform_rescue_exception }.to_not change(
+          expect { perform_rescue_exception }.not_to change(
             dqt_trn_request,
             :state,
           )
         end
 
         it "leaves the potential duplicate" do
-          expect { perform_rescue_exception }.to_not change(
+          expect { perform_rescue_exception }.not_to change(
             dqt_trn_request,
             :potential_duplicate,
           )
         end
 
         it "doesn't award QTS" do
-          expect(AwardQTS).to_not receive(:call)
+          expect(AwardQTS).not_to receive(:call)
           perform_rescue_exception
         end
 
         it "doesn't change the stage" do
-          expect { perform_rescue_exception }.to_not change(
+          expect { perform_rescue_exception }.not_to change(
             application_form,
             :stage,
           )
@@ -215,7 +215,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "leaves the request as pending" do
-          expect { perform_rescue_exception }.to_not change(
+          expect { perform_rescue_exception }.not_to change(
             dqt_trn_request,
             :state,
           )
@@ -229,7 +229,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "doesn't award QTS" do
-          expect(AwardQTS).to_not receive(:call)
+          expect(AwardQTS).not_to receive(:call)
           perform
         end
 
@@ -240,7 +240,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "queues another job" do
-          expect { perform }.to have_enqueued_job(UpdateDQTTRNRequestJob)
+          expect { perform }.to have_enqueued_job(described_class)
         end
       end
     end
@@ -249,30 +249,30 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
       let(:dqt_trn_request) { create(:dqt_trn_request, :complete) }
 
       it "leaves the request as pending" do
-        expect { perform_rescue_exception }.to_not change(
+        expect { perform_rescue_exception }.not_to change(
           dqt_trn_request,
           :state,
         )
       end
 
       it "leaves the potential duplicate" do
-        expect { perform_rescue_exception }.to_not change(
+        expect { perform_rescue_exception }.not_to change(
           dqt_trn_request,
           :potential_duplicate,
         )
       end
 
       it "doesn't award QTS" do
-        expect(AwardQTS).to_not receive(:call)
+        expect(AwardQTS).not_to receive(:call)
         perform
       end
 
       it "doesn't change the stage" do
-        expect { perform }.to_not change(application_form, :stage)
+        expect { perform }.not_to change(application_form, :stage)
       end
 
       it "doesn't queue another job" do
-        expect { perform }.to_not have_enqueued_job(UpdateDQTTRNRequestJob)
+        expect { perform }.not_to have_enqueued_job(described_class)
       end
     end
   end

@@ -8,16 +8,19 @@ RSpec.describe CountryCode do
 
     context "with a nil location" do
       let(:location) { nil }
+
       it { is_expected.to eq("") }
     end
 
     context "with a blank location" do
       let(:location) { "" }
+
       it { is_expected.to eq("") }
     end
 
     context "with a location" do
       let(:location) { "country:US" }
+
       it { is_expected.to eq("US") }
     end
   end
@@ -27,16 +30,19 @@ RSpec.describe CountryCode do
 
     context "with a nil code" do
       let(:code) { nil }
+
       it { is_expected.to be_nil }
     end
 
     context "with a blank code" do
       let(:code) { "" }
+
       it { is_expected.to be_nil }
     end
 
     context "with a code" do
       let(:code) { "US" }
+
       it { is_expected.to eq("country:US") }
     end
   end
@@ -45,6 +51,7 @@ RSpec.describe CountryCode do
     codes.each do |code|
       context "with #{code} code" do
         let(:code) { code }
+
         it { is_expected.to be true }
       end
     end
@@ -52,6 +59,7 @@ RSpec.describe CountryCode do
     (Country::CODES - codes).each do |code|
       context "with #{code} code" do
         let(:code) { code }
+
         it { is_expected.to be false }
       end
     end
@@ -59,21 +67,25 @@ RSpec.describe CountryCode do
 
   describe "#england?" do
     subject(:england?) { described_class.england?(code) }
+
     include_examples "true with codes", %w[GB-ENG]
   end
 
   describe "#wales?" do
     subject(:wales?) { described_class.wales?(code) }
+
     include_examples "true with codes", %w[GB-WLS]
   end
 
   describe "#scotland?" do
     subject(:scotland?) { described_class.scotland?(code) }
+
     include_examples "true with codes", %w[GB-SCT]
   end
 
   describe "#northern_ireland?" do
     subject(:northern_ireland?) { described_class.northern_ireland?(code) }
+
     include_examples "true with codes", %w[GB-NIR]
   end
 

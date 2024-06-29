@@ -3,26 +3,18 @@
 require "rails_helper"
 
 RSpec.describe HandleApplicationFormSection, type: :controller do
+  subject(:controller) { controller_class.new }
+
   let(:controller_class) do
     Class.new(TeacherInterface::BaseController) do
       include HandleApplicationFormSection
     end
   end
-
-  subject(:controller) { controller_class.new }
-
   let(:session) { {} }
 
-  before do
-    allow(controller).to receive(:params).and_return(params)
-    allow(controller).to receive(:session).and_return(session)
-  end
+  before { allow(controller).to receive_messages(params:, session:) }
 
   describe "#handle_application_form_section" do
-    let(:form) { double }
-    let(:if_success_then_redirect) { :redirect }
-    let(:if_failure_then_render) { :render }
-
     subject(:handle_application_form_section) do
       controller.handle_application_form_section(
         form:,
@@ -30,6 +22,10 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
         if_failure_then_render:,
       )
     end
+
+    let(:form) { double }
+    let(:if_success_then_redirect) { :redirect }
+    let(:if_failure_then_render) { :render }
 
     context "when save and continue" do
       let(:params) { { next: "save_and_continue" } }

@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe DQT::Client::CreateTRNRequest do
+  subject(:call) { described_class.call(request_id:, application_form:) }
+
   let(:request_id) { "request-id" }
   let(:application_form) { create(:application_form) }
-
-  subject(:call) { described_class.call(request_id:, application_form:) }
 
   before do
     expect(DQT::TRNRequestParams).to receive(:call).with(
@@ -37,7 +37,7 @@ RSpec.describe DQT::Client::CreateTRNRequest do
     end
 
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         {
           potential_duplicate: false,
           qts_date: nil,

@@ -22,10 +22,10 @@
 require "rails_helper"
 
 RSpec.describe EligibilityCheck, type: :model do
-  let(:eligibility_check) { EligibilityCheck.new }
+  let(:eligibility_check) { described_class.new }
 
   it do
-    is_expected.to define_enum_for(:work_experience)
+    expect(subject).to define_enum_for(:work_experience)
       .with_values(
         under_9_months: "under_9_months",
         between_9_and_20_months: "between_9_and_20_months",
@@ -53,6 +53,7 @@ RSpec.describe EligibilityCheck, type: :model do
     shared_examples "works correctly" do |country_code, expected_value|
       context "with #{country_code} country code" do
         before { eligibility_check.country_code = country_code }
+
         it { is_expected.to eq(expected_value) }
       end
     end
@@ -73,7 +74,7 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when free_of_sanctions is true" do
       before { eligibility_check.free_of_sanctions = true }
 
-      it { is_expected.to_not include(:misconduct) }
+      it { is_expected.not_to include(:misconduct) }
     end
 
     context "when free_of_sanctions is false" do
@@ -85,7 +86,7 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when teach_children is true" do
       before { eligibility_check.teach_children = true }
 
-      it { is_expected.to_not include(:teach_children) }
+      it { is_expected.not_to include(:teach_children) }
     end
 
     context "when teach_children is false" do
@@ -95,8 +96,10 @@ RSpec.describe EligibilityCheck, type: :model do
     end
 
     context "when filtering by subject" do
-      before { eligibility_check.country_code = "IN" }
-      before { create(:country, :subject_limited, code: "IN") }
+      before do
+        eligibility_check.country_code = "IN"
+        create(:country, :subject_limited, code: "IN")
+      end
 
       context "when teach_children is false" do
         before { eligibility_check.teach_children = false }
@@ -114,7 +117,7 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when qualification is true" do
       before { eligibility_check.qualification = true }
 
-      it { is_expected.to_not include(:qualification) }
+      it { is_expected.not_to include(:qualification) }
     end
 
     context "when qualification is false" do
@@ -126,7 +129,7 @@ RSpec.describe EligibilityCheck, type: :model do
     context "when degree is true" do
       before { eligibility_check.degree = true }
 
-      it { is_expected.to_not include(:degree) }
+      it { is_expected.not_to include(:degree) }
     end
 
     context "when degree is false" do
@@ -140,7 +143,7 @@ RSpec.describe EligibilityCheck, type: :model do
 
       before { eligibility_check.country_code = country.code }
 
-      it { is_expected.to_not include(:country) }
+      it { is_expected.not_to include(:country) }
     end
 
     context "when country doesn't exist" do
@@ -241,7 +244,7 @@ RSpec.describe EligibilityCheck, type: :model do
     let(:eligibility_check_1) { create(:eligibility_check) }
     let(:eligibility_check_2) { create(:eligibility_check, :eligible) }
 
-    it { is_expected.to_not include(eligibility_check_1) }
+    it { is_expected.not_to include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
   end
 
@@ -268,7 +271,7 @@ RSpec.describe EligibilityCheck, type: :model do
       )
     end
 
-    it { is_expected.to_not include(eligibility_check_1) }
+    it { is_expected.not_to include(eligibility_check_1) }
     it { is_expected.to include(eligibility_check_2) }
   end
 
@@ -398,6 +401,7 @@ RSpec.describe EligibilityCheck, type: :model do
 
     context "with a relevant country" do
       before { create(:country, :subject_limited, code: "JM") }
+
       let(:code) { "JM" }
 
       it { is_expected.to be true }

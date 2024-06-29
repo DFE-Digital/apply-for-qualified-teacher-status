@@ -154,7 +154,7 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def and_i_receive_a_teacher_magic_link_email
     message = ActionMailer::Base.deliveries.last
-    expect(message).to_not be_nil
+    expect(message).not_to be_nil
 
     expect(message.subject).to eq(
       "Confirm your email: apply for qualified teacher status (QTS)",
@@ -167,14 +167,14 @@ RSpec.describe "Teacher authentication", type: :system do
       expect(email_body).to include(
         "Thank you for your interest in applying for qualified teacher status (QTS) in England.",
       )
-      expect(email_body).to_not include(
+      expect(email_body).not_to include(
         "Welcome back to apply for qualified teacher status (QTS) in England.",
       )
     else
       expect(email_body).to include(
         "Welcome back to apply for qualified teacher status (QTS) in England.",
       )
-      expect(email_body).to_not include(
+      expect(email_body).not_to include(
         "Thank you for your interest in applying for qualified teacher status (QTS) in England.",
       )
     end

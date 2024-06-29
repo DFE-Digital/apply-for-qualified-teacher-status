@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe DestroyApplicationForm do
+  subject(:call) do
+    described_class.call(application_form: ApplicationForm.first)
+  end
+
   before do
     2.times do
       application_form =
@@ -34,10 +38,6 @@ RSpec.describe DestroyApplicationForm do
 
       create(:selected_failure_reason, assessment_section:)
     end
-  end
-
-  subject(:call) do
-    described_class.call(application_form: ApplicationForm.first)
   end
 
   shared_examples "deletes model" do |model, from, to|

@@ -21,6 +21,8 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
   end
 
   describe "#review_items" do
+    subject(:review_items) { view_object.review_items }
+
     let!(:text_item) do
       create(
         :further_information_request_item,
@@ -38,10 +40,8 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
       )
     end
 
-    subject(:review_items) { view_object.review_items }
-
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         [
           {
             heading:
@@ -88,6 +88,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
         further_information_request.update!(review_passed: true)
         assessment.request_further_information!
       end
+
       it { is_expected.to be true }
     end
 
@@ -96,6 +97,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
         further_information_request.update!(review_passed: true)
         assessment.request_further_information!
       end
+
       it { is_expected.to be true }
     end
 
@@ -104,6 +106,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
         further_information_request.update!(review_passed: nil)
         assessment.award!
       end
+
       it { is_expected.to be true }
     end
 
@@ -112,6 +115,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
         further_information_request.update!(review_passed: true)
         assessment.award!
       end
+
       it { is_expected.to be false }
     end
   end

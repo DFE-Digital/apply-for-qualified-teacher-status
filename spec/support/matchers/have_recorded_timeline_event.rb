@@ -16,7 +16,7 @@ RSpec::Matchers.define :have_recorded_timeline_event do |event_type, **attribute
   end
 
   match_when_negated do |actual|
-    expect { actual.call }.to_not change(timeline_events, :count)
+    expect { actual.call }.not_to change(timeline_events, :count)
   end
 
   supports_block_expectations

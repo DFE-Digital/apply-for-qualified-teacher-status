@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Filters::SubmittedAt do
   subject { described_class.apply(scope:, params:) }
 
-  context "with both submitted_at params " do
+  context "with both submitted_at params" do
     let(:params) do
       {
         "submitted_at_after(1i)" => "2020",

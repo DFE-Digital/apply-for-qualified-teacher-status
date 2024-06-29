@@ -21,7 +21,7 @@ RSpec.describe SendReminderEmailsJob do
       end
 
       it "doesn't enqueue a job for 'not remindable' #{class_name}s" do
-        expect { perform }.to_not have_enqueued_job(SendReminderEmailJob).with(
+        expect { perform }.not_to have_enqueued_job(SendReminderEmailJob).with(
           not_remindable,
         )
       end

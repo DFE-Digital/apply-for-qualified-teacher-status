@@ -143,7 +143,7 @@ RSpec.describe Filters::Name do
       end
     end
 
-    context "match  that spans both fields" do
+    context "match that spans both fields" do
       let(:params) { { name: "the Gangster" } }
 
       let!(:included) do

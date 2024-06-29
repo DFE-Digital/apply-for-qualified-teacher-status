@@ -34,8 +34,11 @@ RSpec.describe Teacher, type: :model do
     it { is_expected.to be_valid }
 
     it { is_expected.to validate_presence_of(:email) }
+
     it do
-      is_expected.to validate_uniqueness_of(:email).ignoring_case_sensitivity
+      expect(subject).to validate_uniqueness_of(
+        :email,
+      ).ignoring_case_sensitivity
     end
   end
 
@@ -44,9 +47,9 @@ RSpec.describe Teacher, type: :model do
   end
 
   describe "#canonical_email" do
-    let(:teacher) { create(:teacher, email: "first.last+123@gmail.com") }
-
     subject(:canonical_email) { teacher.canonical_email }
+
+    let(:teacher) { create(:teacher, email: "first.last+123@gmail.com") }
 
     it { is_expected.to eq("firstlast@gmail.com") }
   end

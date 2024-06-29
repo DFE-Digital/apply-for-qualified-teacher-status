@@ -9,50 +9,50 @@ RSpec.describe TeacherInterface::UploadsController, type: :controller do
   before { sign_in teacher, scope: :teacher }
 
   describe "GET new" do
-    let(:document) { create(:document, documentable: application_form) }
-
     subject(:perform) { get :new, params: { document_id: document.id } }
+
+    let(:document) { create(:document, documentable: application_form) }
 
     include_examples "redirect unless application form is draft"
   end
 
   describe "POST create" do
-    let(:document) { create(:document, documentable: application_form) }
-
     subject(:perform) { post :create, params: { document_id: document.id } }
+
+    let(:document) { create(:document, documentable: application_form) }
 
     include_examples "redirect unless application form is draft"
   end
 
   describe "GET delete" do
-    let(:document) { create(:document, documentable: application_form) }
-    let(:upload) { create(:upload, document:) }
-
     subject(:perform) do
       get :delete, params: { document_id: document.id, id: upload.id }
     end
+
+    let(:document) { create(:document, documentable: application_form) }
+    let(:upload) { create(:upload, document:) }
 
     include_examples "redirect unless application form is draft"
   end
 
   describe "DELETE destroy" do
-    let(:document) { create(:document, documentable: application_form) }
-    let(:upload) { create(:upload, document:) }
-
     subject(:perform) do
       get :delete, params: { document_id: document.id, id: upload.id }
     end
+
+    let(:document) { create(:document, documentable: application_form) }
+    let(:upload) { create(:upload, document:) }
 
     include_examples "redirect unless application form is draft"
   end
 
   describe "GET show" do
-    let(:document) { create(:document, documentable: application_form) }
-    let(:upload) { create(:upload, :clean, document:) }
-
     subject(:perform) do
       get :show, params: { document_id: document.id, id: upload.id }
     end
+
+    let(:document) { create(:document, documentable: application_form) }
+    let(:upload) { create(:upload, :clean, document:) }
 
     include_examples "redirect unless application form is draft"
 

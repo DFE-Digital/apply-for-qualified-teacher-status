@@ -98,7 +98,7 @@ RSpec.describe "Teacher qualifications", type: :system do
   end
 
   def and_i_see_the_qualifications_task
-    expect(teacher_application_page.qualifications_task_item).to_not be_nil
+    expect(teacher_application_page.qualifications_task_item).not_to be_nil
   end
 
   def when_i_click_the_qualifications_task
@@ -112,7 +112,7 @@ RSpec.describe "Teacher qualifications", type: :system do
   end
 
   def and_i_dont_see_the_age_subject_restrictions
-    expect(teacher_new_qualification_page).to_not have_content(
+    expect(teacher_new_qualification_page).not_to have_content(
       "Age and subject restrictions",
     )
   end

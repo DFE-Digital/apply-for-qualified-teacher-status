@@ -6,7 +6,7 @@ RSpec.describe Subject do
   describe "#all" do
     subject(:all) { described_class.all }
 
-    it { is_expected.to_not be_empty }
+    it { is_expected.not_to be_empty }
   end
 
   describe "#find" do
@@ -24,11 +24,13 @@ RSpec.describe Subject do
 
     context "with an EBacc subject" do
       let(:value) { "ancient_hebrew" }
+
       it { is_expected.to be true }
     end
 
     context "with a non-EBacc subject" do
       let(:value) { "applied_computing" }
+
       it { is_expected.to be false }
     end
   end

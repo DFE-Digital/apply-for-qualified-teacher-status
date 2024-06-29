@@ -3,9 +3,6 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
-  let(:application_form) { create(:application_form) }
-  let(:work_history) { build(:work_history, application_form:) }
-
   subject(:form) do
     described_class.new(
       work_history:,
@@ -22,6 +19,9 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
       end_date_is_estimate:,
     )
   end
+
+  let(:application_form) { create(:application_form) }
+  let(:work_history) { build(:work_history, application_form:) }
 
   describe "validations" do
     let(:meets_all_requirements) { "" }
@@ -47,17 +47,20 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
 
     context "with an invalid start date" do
       let(:start_date) { { 1 => 2022, 2 => 13, 3 => 1 } }
-      it { is_expected.to_not be_valid }
+
+      it { is_expected.not_to be_valid }
     end
 
     context "with a start date in the future" do
       let(:start_date) { { 1 => 1.year.from_now.year, 2 => 1, 3 => 1 } }
-      it { is_expected.to_not be_valid }
+
+      it { is_expected.not_to be_valid }
     end
 
     context "when still employed" do
       let(:still_employed) { "true" }
-      it { is_expected.to_not validate_presence_of(:end_date) }
+
+      it { is_expected.not_to validate_presence_of(:end_date) }
     end
 
     context "when not still employed" do
@@ -67,14 +70,15 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
 
       context "with an invalid end date" do
         let(:end_date) { { 1 => 2022, 2 => 13, 3 => 1 } }
-        it { is_expected.to_not be_valid }
+
+        it { is_expected.not_to be_valid }
       end
 
       context "with a start date after the end date" do
         let(:start_date) { { 1 => 2022, 2 => 11, 3 => 1 } }
         let(:end_date) { { 1 => 2022, 2 => 10, 3 => 1 } }
 
-        it { is_expected.to_not be_valid }
+        it { is_expected.not_to be_valid }
       end
     end
   end
@@ -88,6 +92,8 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
   end
 
   describe "#save" do
+    subject(:save) { form.save(validate: true) }
+
     let(:meets_all_requirements) { "true" }
     let(:school_name) { "School" }
     let(:city) { "City" }
@@ -99,8 +105,6 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
     let(:still_employed) { "false" }
     let(:end_date) { { 1 => 2021, 2 => 10, 3 => 1 } }
     let(:end_date_is_estimate) { "" }
-
-    subject(:save) { form.save(validate: true) }
 
     before { expect(save).to be true }
 
@@ -118,10 +122,10 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
     end
 
     context "without validation, with invalid date values" do
+      subject(:save) { form.save(validate: false) }
+
       let(:start_date) { { 1 => 2222, 2 => 22, 3 => 1 } }
       let(:end_date) { { 1 => 3333, 2 => 99, 3 => 1 } }
-
-      subject(:save) { form.save(validate: false) }
 
       it "applies valid date values" do
         expect(work_history.start_date).to eq(

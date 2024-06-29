@@ -3,18 +3,19 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::EnglishLanguageProviderForm, type: :model do
+  subject(:form) { described_class.new(application_form:, provider_id:) }
+
   let(:application_form) { create(:application_form) }
   let!(:providers) { create_list(:english_language_provider, 3) }
-
-  subject(:form) { described_class.new(application_form:, provider_id:) }
 
   describe "validations" do
     let(:provider_id) { "" }
 
     it { is_expected.to validate_presence_of(:application_form) }
     it { is_expected.to validate_presence_of(:provider_id) }
+
     it do
-      is_expected.to validate_inclusion_of(:provider_id).in_array(
+      expect(subject).to validate_inclusion_of(:provider_id).in_array(
         providers.map(&:id).map(&:to_s),
       )
     end
@@ -23,7 +24,7 @@ RSpec.describe TeacherInterface::EnglishLanguageProviderForm, type: :model do
       before { application_form.update!(reduced_evidence_accepted: true) }
 
       it do
-        is_expected.to validate_inclusion_of(:provider_id).in_array(
+        expect(subject).to validate_inclusion_of(:provider_id).in_array(
           providers.map(&:id).map(&:to_s) + ["other"],
         )
       end

@@ -191,6 +191,8 @@ RSpec.describe WorkHistoryDuration do
     end
 
     context "passing a work history record" do
+      subject(:count) { work_history_duration.count_months }
+
       before do
         create(
           :qualification,
@@ -210,8 +212,6 @@ RSpec.describe WorkHistoryDuration do
       end
 
       let(:work_history_duration) { described_class.for_record(work_history) }
-
-      subject(:count) { work_history_duration.count_months }
 
       it { is_expected.to eq(6) }
     end

@@ -4,8 +4,6 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::ReferenceRequestContactResponseForm,
                type: :model do
-  let(:reference_request) { create(:reference_request) }
-
   subject(:form) do
     described_class.new(
       reference_request:,
@@ -16,6 +14,8 @@ RSpec.describe TeacherInterface::ReferenceRequestContactResponseForm,
     )
   end
 
+  let(:reference_request) { create(:reference_request) }
+
   describe "validations" do
     let(:contact_response) { "" }
     let(:contact_name) { "" }
@@ -24,9 +24,9 @@ RSpec.describe TeacherInterface::ReferenceRequestContactResponseForm,
 
     it { is_expected.to validate_presence_of(:reference_request) }
     it { is_expected.to allow_values(true, false).for(:contact_response) }
-    it { is_expected.to_not validate_presence_of(:contact_name) }
-    it { is_expected.to_not validate_presence_of(:contact_job) }
-    it { is_expected.to_not validate_presence_of(:contact_comment) }
+    it { is_expected.not_to validate_presence_of(:contact_name) }
+    it { is_expected.not_to validate_presence_of(:contact_job) }
+    it { is_expected.not_to validate_presence_of(:contact_comment) }
 
     context "with a negative response" do
       let(:contact_response) { "false" }
@@ -50,15 +50,15 @@ RSpec.describe TeacherInterface::ReferenceRequestContactResponseForm,
       end
 
       it "ignores contact_name" do
-        expect { save }.to_not change(reference_request, :contact_name)
+        expect { save }.not_to change(reference_request, :contact_name)
       end
 
       it "ignores contact_job" do
-        expect { save }.to_not change(reference_request, :contact_job)
+        expect { save }.not_to change(reference_request, :contact_job)
       end
 
       it "ignores contact_comment" do
-        expect { save }.to_not change(reference_request, :contact_comment)
+        expect { save }.not_to change(reference_request, :contact_comment)
       end
     end
 

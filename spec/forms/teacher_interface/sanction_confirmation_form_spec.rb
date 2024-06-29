@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::SanctionConfirmationForm, type: :model do
-  let(:application_form) { build(:application_form) }
-
   subject(:form) do
     described_class.new(application_form:, confirmed_no_sanctions:)
   end
+
+  let(:application_form) { build(:application_form) }
 
   describe "validations" do
     context "when confirmed is false" do

@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::WorkHistoryContactForm, type: :model do
-  let(:work_history) { build(:work_history) }
-
   subject(:form) do
     described_class.new(
       work_history:,
@@ -11,6 +9,8 @@ RSpec.describe TeacherInterface::WorkHistoryContactForm, type: :model do
       contact_email:,
     )
   end
+
+  let(:work_history) { build(:work_history) }
 
   describe "validations" do
     let(:contact_name) { "" }
@@ -23,11 +23,11 @@ RSpec.describe TeacherInterface::WorkHistoryContactForm, type: :model do
   end
 
   describe "#save" do
+    subject(:save) { form.save(validate: true) }
+
     let(:contact_name) { "First Last" }
     let(:contact_job) { "Job" }
     let(:contact_email) { "school@example.com" }
-
-    subject(:save) { form.save(validate: true) }
 
     before { expect(save).to be true }
 

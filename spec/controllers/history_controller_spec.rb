@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe HistoryController, type: :controller do
   describe "GET back" do
-    let(:default) { "/fallback" }
-
     subject(:perform) { get :back, params: { origin:, default: } }
+
+    let(:default) { "/fallback" }
 
     context "with origin true" do
       let(:origin) { "true" }

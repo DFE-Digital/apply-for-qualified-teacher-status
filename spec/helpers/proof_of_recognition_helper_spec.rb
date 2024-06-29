@@ -25,14 +25,12 @@ RSpec.describe ProofOfRecognitionHelper do
       let(:status) { true }
 
       it do
-        is_expected.to match_array(
-          [
-            "that you’ve completed a teaching qualification/teacher training",
-            "that you’ve successfully completed any period of professional experience comparable to an induction " \
-              "period (if required)",
-            "the age ranges and subjects you’re qualified to teach",
-            "that you’re qualified to teach at state or government schools",
-          ],
+        expect(subject).to contain_exactly(
+          "that you’ve completed a teaching qualification/teacher training",
+          "that you’ve successfully completed any period of professional experience comparable to an induction " \
+            "period (if required)",
+          "the age ranges and subjects you’re qualified to teach",
+          "that you’re qualified to teach at state or government schools",
         )
       end
     end
@@ -41,14 +39,12 @@ RSpec.describe ProofOfRecognitionHelper do
       let(:sanction) { true }
 
       it do
-        is_expected.to match_array(
-          [
-            "suspended",
-            "barred",
-            "cancelled",
-            "revoked",
-            "restricted or subject to sanctions",
-          ],
+        expect(subject).to contain_exactly(
+          "suspended",
+          "barred",
+          "cancelled",
+          "revoked",
+          "restricted or subject to sanctions",
         )
       end
     end
@@ -58,16 +54,14 @@ RSpec.describe ProofOfRecognitionHelper do
       let(:status) { true }
 
       it do
-        is_expected.to match_array(
-          [
-            "that you’ve completed a teaching qualification/teacher training",
-            "that you’ve successfully completed any period of professional experience comparable to an induction " \
-              "period (if required)",
-            "that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted," \
-              " and that you have no sanctions against you",
-            "the age ranges and subjects you’re qualified to teach",
-            "that you’re qualified to teach at state or government schools",
-          ],
+        expect(subject).to contain_exactly(
+          "that you’ve completed a teaching qualification/teacher training",
+          "that you’ve successfully completed any period of professional experience comparable to an induction " \
+            "period (if required)",
+          "that your authorisation to teach has never been suspended, barred, cancelled, revoked or restricted," \
+            " and that you have no sanctions against you",
+          "the age ranges and subjects you’re qualified to teach",
+          "that you’re qualified to teach at state or government schools",
         )
       end
     end
@@ -77,8 +71,8 @@ RSpec.describe ProofOfRecognitionHelper do
       let(:application_form_skip_work_history) { true }
 
       it do
-        is_expected.to match_array(
-          ["if you have completed your induction in Region Name"],
+        expect(subject).to contain_exactly(
+          "if you have completed your induction in Region Name",
         )
       end
     end
@@ -91,7 +85,9 @@ RSpec.describe ProofOfRecognitionHelper do
       let(:status) { true }
 
       it do
-        is_expected.to eq("In the letter the teaching authority must confirm:")
+        expect(subject).to eq(
+          "In the letter the teaching authority must confirm:",
+        )
       end
     end
 
@@ -99,7 +95,7 @@ RSpec.describe ProofOfRecognitionHelper do
       let(:sanction) { true }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "In the letter the teaching authority must confirm that your authorisation to teach has never been:",
         )
       end
@@ -110,7 +106,9 @@ RSpec.describe ProofOfRecognitionHelper do
       let(:status) { true }
 
       it do
-        is_expected.to eq("In the letter the teaching authority must confirm:")
+        expect(subject).to eq(
+          "In the letter the teaching authority must confirm:",
+        )
       end
     end
   end

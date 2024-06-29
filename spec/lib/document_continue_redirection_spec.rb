@@ -10,7 +10,7 @@ RSpec.describe DocumentContinueRedirection do
       let(:document) { create(:document, :english_language_proficiency) }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           %i[check teacher_interface application_form english_language],
         )
       end
@@ -25,7 +25,7 @@ RSpec.describe DocumentContinueRedirection do
       end
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           [
             :teacher_interface,
             :application_form,
@@ -45,7 +45,7 @@ RSpec.describe DocumentContinueRedirection do
       let(:document) { create(:document, :medium_of_instruction) }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           %i[check teacher_interface application_form english_language],
         )
       end
@@ -55,7 +55,7 @@ RSpec.describe DocumentContinueRedirection do
       let(:document) { create(:document, :name_change) }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           %i[check teacher_interface application_form personal_information],
         )
       end
@@ -72,7 +72,7 @@ RSpec.describe DocumentContinueRedirection do
       end
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           [
             :teacher_interface,
             :application_form,
@@ -95,7 +95,7 @@ RSpec.describe DocumentContinueRedirection do
       end
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           [
             :teacher_interface,
             :application_form,
@@ -116,7 +116,7 @@ RSpec.describe DocumentContinueRedirection do
       end
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           %i[part_of_degree teacher_interface application_form qualifications],
         )
       end
@@ -127,7 +127,7 @@ RSpec.describe DocumentContinueRedirection do
       let(:document) { create(:document, :signed_consent, documentable:) }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           %i[teacher_interface application_form consent_requests],
         )
       end
@@ -138,7 +138,7 @@ RSpec.describe DocumentContinueRedirection do
       let(:document) { create(:document, :unsigned_consent, documentable:) }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           %i[teacher_interface application_form consent_requests],
         )
       end

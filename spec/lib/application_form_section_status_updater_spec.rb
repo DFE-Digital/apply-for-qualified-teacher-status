@@ -13,6 +13,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "with no fields set" do
         let(:application_form) { create(:application_form) }
+
         it { is_expected.to eq("not_started") }
       end
 
@@ -20,6 +21,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, given_names: "Given")
         end
+
         it { is_expected.to eq("in_progress") }
       end
 
@@ -27,6 +29,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, :with_personal_information)
         end
+
         it { is_expected.to eq("completed") }
       end
 
@@ -38,6 +41,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             :with_alternative_name,
           )
         end
+
         it { is_expected.to eq("completed") }
       end
     end
@@ -49,6 +53,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "with no upload" do
         let(:application_form) { create(:application_form) }
+
         it { is_expected.to eq("not_started") }
       end
 
@@ -56,6 +61,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, :with_identification_document)
         end
+
         it { is_expected.to eq("completed") }
       end
     end
@@ -65,6 +71,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "with no qualifications" do
         let(:application_form) { create(:application_form) }
+
         it { is_expected.to eq("not_started") }
       end
 
@@ -74,6 +81,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             create(:qualification, application_form:)
           end
         end
+
         it { is_expected.to eq("in_progress") }
       end
 
@@ -87,6 +95,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             create(:qualification, :completed, application_form:)
           end
         end
+
         it { is_expected.to eq("completed") }
       end
 
@@ -99,6 +108,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             create(:qualification, :completed, application_form:)
           end
         end
+
         it { is_expected.to eq("completed") }
       end
     end
@@ -108,16 +118,19 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "with no fields set" do
         let(:application_form) { create(:application_form) }
+
         it { is_expected.to eq("not_started") }
       end
 
       context "with some fields set" do
         let(:application_form) { create(:application_form, age_range_min: 7) }
+
         it { is_expected.to eq("in_progress") }
       end
 
       context "with all fields set" do
         let(:application_form) { create(:application_form, :with_age_range) }
+
         it { is_expected.to eq("completed") }
       end
     end
@@ -127,16 +140,19 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "with no fields set" do
         let(:application_form) { create(:application_form) }
+
         it { is_expected.to eq("not_started") }
       end
 
       context "with some fields set" do
         let(:application_form) { create(:application_form, subjects: [""]) }
+
         it { is_expected.to eq("in_progress") }
       end
 
       context "with all fields set" do
         let(:application_form) { create(:application_form, :with_subjects) }
+
         it { is_expected.to eq("completed") }
       end
     end
@@ -148,6 +164,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "with no information provided yet" do
         let(:application_form) { create(:application_form) }
+
         it { is_expected.to eq("not_started") }
       end
 
@@ -155,6 +172,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, english_language_citizenship_exempt: true)
         end
+
         it { is_expected.to eq("completed") }
       end
 
@@ -162,6 +180,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, english_language_qualification_exempt: true)
         end
+
         it { is_expected.to eq("completed") }
       end
 
@@ -173,6 +192,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             english_language_qualification_exempt: false,
           )
         end
+
         it { is_expected.to eq("in_progress") }
       end
 
@@ -183,6 +203,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             english_language_proof_method: "medium_of_instruction",
           )
         end
+
         it { is_expected.to eq("in_progress") }
       end
 
@@ -193,6 +214,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             :with_english_language_medium_of_instruction,
           )
         end
+
         it { is_expected.to eq("completed") }
       end
 
@@ -200,6 +222,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, english_language_proof_method: "provider")
         end
+
         it { is_expected.to eq("in_progress") }
       end
 
@@ -207,6 +230,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, :with_english_language_provider)
         end
+
         it { is_expected.to eq("completed") }
       end
 
@@ -214,6 +238,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, :with_english_language_proficiency_document)
         end
+
         it { is_expected.to eq("completed") }
       end
     end
@@ -225,6 +250,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, has_work_history: false)
         end
+
         it { is_expected.to eq("not_started") }
       end
 
@@ -232,6 +258,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, has_work_history: true)
         end
+
         it { is_expected.to eq("not_started") }
       end
 
@@ -241,6 +268,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             create(:work_history, application_form:)
           end
         end
+
         it { is_expected.to eq("in_progress") }
       end
 
@@ -250,12 +278,14 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             create(:work_history, :completed, application_form:)
           end
         end
+
         it { is_expected.to eq("completed") }
       end
 
       context "under the old regulations" do
         context "with unknown work history" do
           let(:application_form) { create(:application_form, :old_regulations) }
+
           it { is_expected.to eq("not_started") }
         end
 
@@ -263,6 +293,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
           let(:application_form) do
             create(:application_form, :old_regulations, has_work_history: false)
           end
+
           it { is_expected.to eq("completed") }
         end
 
@@ -275,6 +306,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
                 has_work_history: true,
               )
             end
+
             it { is_expected.to eq("in_progress") }
           end
 
@@ -288,6 +320,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
                 create(:work_history, application_form:)
               end
             end
+
             it { is_expected.to eq("in_progress") }
           end
 
@@ -301,6 +334,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
                 create(:work_history, :completed, application_form:)
               end
             end
+
             it { is_expected.to eq("completed") }
           end
         end
@@ -321,6 +355,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
               :with_written_statement,
             )
           end
+
           it { is_expected.to eq("completed") }
         end
 
@@ -331,6 +366,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
               :teaching_authority_provides_written_statement,
             )
           end
+
           it { is_expected.to eq("not_started") }
         end
       end
@@ -338,6 +374,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
       context "when teacher provides the written statement" do
         context "with no upload" do
           let(:application_form) { create(:application_form) }
+
           it { is_expected.to eq("not_started") }
         end
 
@@ -345,6 +382,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
           let(:application_form) do
             create(:application_form, :with_written_statement)
           end
+
           it { is_expected.to eq("completed") }
         end
       end
@@ -357,6 +395,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "without a registration number" do
         let(:application_form) { create(:application_form) }
+
         it { is_expected.to eq("not_started") }
       end
 
@@ -364,6 +403,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         let(:application_form) do
           create(:application_form, :with_registration_number)
         end
+
         it { is_expected.to eq("completed") }
       end
     end

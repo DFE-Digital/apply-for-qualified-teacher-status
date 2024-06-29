@@ -124,7 +124,7 @@ RSpec.describe "Staff support", type: :system do
 
   def then_i_see_an_invitation_email
     message = ActionMailer::Base.deliveries.first
-    expect(message).to_not be_nil
+    expect(message).not_to be_nil
 
     expect(message.subject).to eq("Invitation instructions")
     expect(message.to).to include("test@example.com")
@@ -181,7 +181,7 @@ RSpec.describe "Staff support", type: :system do
   end
 
   def then_i_see_the_changed_permission
-    expect(page).to_not have_content("Support console access\tNo")
+    expect(page).not_to have_content("Support console access\tNo")
   end
 
   def then_i_am_taken_to_the_azure_login_page

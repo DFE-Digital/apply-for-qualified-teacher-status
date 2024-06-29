@@ -11,7 +11,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
   describe "#application_forms_pagy" do
     subject(:application_forms_pagy) { view_object.application_forms_pagy }
 
-    it { is_expected.to_not be_nil }
+    it { is_expected.not_to be_nil }
 
     it "is configured correctly" do
       expect(application_forms_pagy.items).to eq(20)
@@ -135,7 +135,9 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     subject(:assessor_filter_options) { view_object.assessor_filter_options }
 
     it do
-      is_expected.to include(OpenStruct.new(id: "null", name: "Not assigned"))
+      expect(subject).to include(
+        OpenStruct.new(id: "null", name: "Not assigned"),
+      )
     end
 
     context "with an assessor user" do
@@ -144,7 +146,9 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       before { create(:application_form, :submitted, assessor: staff) }
 
       it do
-        is_expected.to include(OpenStruct.new(id: staff.id, name: staff.name))
+        expect(subject).to include(
+          OpenStruct.new(id: staff.id, name: staff.name),
+        )
       end
     end
 
@@ -152,7 +156,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       let!(:staff) { create(:staff) }
 
       it do
-        is_expected.to_not include(
+        expect(subject).not_to include(
           OpenStruct.new(id: staff.id, name: staff.name),
         )
       end
@@ -163,7 +167,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     subject(:country_filter_options) { view_object.country_filter_options }
 
     it do
-      is_expected.to include(
+      expect(subject).to include(
         '<option value="country:US">United States</option>',
       )
     end
@@ -172,7 +176,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       let(:session) { { filter_params: { location: "country:US" } } }
 
       it do
-        is_expected.to include(
+        expect(subject).to include(
           '<option selected="selected" value="country:US">United States</option>',
         )
       end
@@ -183,7 +187,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     subject(:stage_filter_options) { view_object.stage_filter_options }
 
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         [
           OpenStruct.new(id: "pre_assessment", label: "Pre-assessment (0)"),
           OpenStruct.new(id: "not_started", label: "Not started (0)"),
@@ -206,7 +210,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       end
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           [
             OpenStruct.new(id: "pre_assessment", label: "Pre-assessment (1)"),
             OpenStruct.new(id: "not_started", label: "Not started (2)"),

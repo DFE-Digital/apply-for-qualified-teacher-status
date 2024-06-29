@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::DocumentAvailableForm, type: :model do
+  subject(:form) { described_class.new(document:, available:) }
+
   let(:application_form) do
     create(:application_form, written_statement_optional: true)
   end
   let(:document) do
     create(:document, :written_statement, documentable: application_form)
   end
-
-  subject(:form) { described_class.new(document:, available:) }
 
   describe "validations" do
     let(:available) { "" }
@@ -24,8 +24,8 @@ RSpec.describe TeacherInterface::DocumentAvailableForm, type: :model do
       let(:available) { "true" }
 
       it "saves the document" do
-        expect(document.available).to eq(true)
-        expect(document.completed?).to eq(false)
+        expect(document.available).to be(true)
+        expect(document.completed?).to be(false)
       end
     end
 
@@ -33,8 +33,8 @@ RSpec.describe TeacherInterface::DocumentAvailableForm, type: :model do
       let(:available) { "false" }
 
       it "saves the document" do
-        expect(document.available).to eq(false)
-        expect(document.completed?).to eq(true)
+        expect(document.available).to be(false)
+        expect(document.completed?).to be(true)
       end
     end
   end

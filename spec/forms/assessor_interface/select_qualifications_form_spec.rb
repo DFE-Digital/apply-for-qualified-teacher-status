@@ -3,6 +3,15 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::SelectQualificationsForm, type: :model do
+  subject(:form) do
+    described_class.new(
+      application_form:,
+      session:,
+      qualification_ids:,
+      qualifications_assessor_note:,
+    )
+  end
+
   let(:application_form) { create(:application_form, :submitted) }
   let(:qualification_1) do
     create(:qualification, :completed, application_form:)
@@ -14,26 +23,19 @@ RSpec.describe AssessorInterface::SelectQualificationsForm, type: :model do
   let(:qualification_ids) { "" }
   let(:qualifications_assessor_note) { "A note." }
 
-  subject(:form) do
-    described_class.new(
-      application_form:,
-      session:,
-      qualification_ids:,
-      qualifications_assessor_note:,
-    )
-  end
-
   describe "validations" do
     it { is_expected.to validate_presence_of(:application_form) }
-    it { is_expected.to_not allow_values(nil).for(:session) }
+    it { is_expected.not_to allow_values(nil).for(:session) }
     it { is_expected.to validate_presence_of(:qualification_ids) }
+
     it do
-      is_expected.to validate_inclusion_of(:qualification_ids).in_array(
+      expect(subject).to validate_inclusion_of(:qualification_ids).in_array(
         [qualification_1.id.to_s, qualification_2.id.to_s],
       )
     end
+
     it do
-      is_expected.to_not validate_presence_of(:qualifications_assessor_note)
+      expect(subject).not_to validate_presence_of(:qualifications_assessor_note)
     end
   end
 

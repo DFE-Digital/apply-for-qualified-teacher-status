@@ -3,14 +3,6 @@
 require "rails_helper"
 
 RSpec.describe VerifyAssessment do
-  let(:application_form) { create(:application_form, :submitted) }
-  let(:assessment) { create(:assessment, application_form:) }
-  let(:user) { create(:staff) }
-  let(:professional_standing) { true }
-  let(:qualification) { create(:qualification, :completed, application_form:) }
-  let(:qualifications_assessor_note) { "A note." }
-  let(:work_history) { create(:work_history, :completed, application_form:) }
-
   subject(:call) do
     described_class.call(
       assessment:,
@@ -21,6 +13,14 @@ RSpec.describe VerifyAssessment do
       work_histories: [work_history],
     )
   end
+
+  let(:application_form) { create(:application_form, :submitted) }
+  let(:assessment) { create(:assessment, application_form:) }
+  let(:user) { create(:staff) }
+  let(:professional_standing) { true }
+  let(:qualification) { create(:qualification, :completed, application_form:) }
+  let(:qualifications_assessor_note) { "A note." }
+  let(:work_history) { create(:work_history, :completed, application_form:) }
 
   context "when already verified" do
     let(:assessment) { create(:assessment, :verify, application_form:) }
@@ -40,7 +40,7 @@ RSpec.describe VerifyAssessment do
 
       it "doesn't request the professional standing" do
         call
-        expect(assessment.professional_standing_request).to_not be_requested
+        expect(assessment.professional_standing_request).not_to be_requested
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.describe VerifyAssessment do
       let(:professional_standing) { false }
 
       it "doesn't create a professional standing request" do
-        expect { call }.to_not change(ProfessionalStandingRequest, :count)
+        expect { call }.not_to change(ProfessionalStandingRequest, :count)
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.describe VerifyAssessment do
       end
 
       it "doesn't create a professional standing request" do
-        expect { call }.to_not change(ProfessionalStandingRequest, :count)
+        expect { call }.not_to change(ProfessionalStandingRequest, :count)
       end
     end
   end
@@ -77,7 +77,7 @@ RSpec.describe VerifyAssessment do
     context "after calling the service" do
       before { call }
 
-      it { is_expected.to_not be_nil }
+      it { is_expected.not_to be_nil }
 
       it "sets the attributes correctly" do
         expect(reference_request.requested?).to be true

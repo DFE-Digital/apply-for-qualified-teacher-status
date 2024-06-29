@@ -9,7 +9,7 @@ RSpec.describe RegionHelper do
     let(:region) { build(:region, country: build(:country, code: "FR")) }
 
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         "a <span lang=\"FR\">Letter of Professional Standing</span>",
       )
     end

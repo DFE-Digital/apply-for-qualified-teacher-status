@@ -16,9 +16,8 @@ RSpec.describe ConfigurationSync::Exporter do
     country = create(:country, code: "FR")
     create(:region, country:, name: "Region")
     create(:english_language_provider, name: "Provider")
+    expect { call }.not_to raise_error
   end
-
-  before { expect { call }.to_not raise_error }
 
   it "exports the countries" do
     expect(parsed_file).to include("countries")

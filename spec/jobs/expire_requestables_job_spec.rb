@@ -24,7 +24,7 @@ RSpec.describe ExpireRequestablesJob, type: :job do
       end
 
       it "doesn't enqueue a job for received #{class_name}s" do
-        expect(ExpireRequestable).to_not receive(:call).with(
+        expect(ExpireRequestable).not_to receive(:call).with(
           requestable: received_requestable,
           user: "Expirer",
         )
@@ -32,7 +32,7 @@ RSpec.describe ExpireRequestablesJob, type: :job do
       end
 
       it "doesn't enqueue a job for expired #{class_name}s" do
-        expect(ExpireRequestable).to_not receive(:call).with(
+        expect(ExpireRequestable).not_to receive(:call).with(
           requestable: expired_requestable,
           user: "Expirer",
         )

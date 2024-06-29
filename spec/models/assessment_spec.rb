@@ -53,7 +53,7 @@ RSpec.describe Assessment, type: :model do
     it { is_expected.to validate_presence_of(:recommendation) }
 
     it do
-      is_expected.to define_enum_for(:recommendation).with_values(
+      expect(subject).to define_enum_for(:recommendation).with_values(
         award: "award",
         decline: "decline",
         request_further_information: "request_further_information",
@@ -78,6 +78,7 @@ RSpec.describe Assessment, type: :model do
         before do
           create(:assessment_section, :personal_information, assessment:)
         end
+
         it { is_expected.to be false }
       end
 
@@ -90,6 +91,7 @@ RSpec.describe Assessment, type: :model do
             assessment:,
           )
         end
+
         it { is_expected.to be true }
       end
 
@@ -102,6 +104,7 @@ RSpec.describe Assessment, type: :model do
             assessment:,
           )
         end
+
         it { is_expected.to be false }
 
         context "when further information was requested" do
@@ -111,6 +114,7 @@ RSpec.describe Assessment, type: :model do
             before do
               create(:further_information_request, :review_passed, assessment:)
             end
+
             it { is_expected.to be true }
           end
 
@@ -118,6 +122,7 @@ RSpec.describe Assessment, type: :model do
             before do
               create(:further_information_request, :review_failed, assessment:)
             end
+
             it { is_expected.to be false }
           end
         end
@@ -133,6 +138,7 @@ RSpec.describe Assessment, type: :model do
           )
           create(:assessment_section, :qualifications, :failed, assessment:)
         end
+
         it { is_expected.to be false }
       end
     end
@@ -214,6 +220,7 @@ RSpec.describe Assessment, type: :model do
       before do
         create(:assessment_section, :personal_information, :passed, assessment:)
       end
+
       it { is_expected.to be false }
     end
 
@@ -221,6 +228,7 @@ RSpec.describe Assessment, type: :model do
       before do
         create(:assessment_section, :personal_information, :failed, assessment:)
       end
+
       it { is_expected.to be false }
     end
 
@@ -234,6 +242,7 @@ RSpec.describe Assessment, type: :model do
           assessment:,
         )
       end
+
       it { is_expected.to be true }
     end
 
@@ -242,6 +251,7 @@ RSpec.describe Assessment, type: :model do
         create(:assessment_section, :personal_information, :passed, assessment:)
         create(:assessment_section, :qualifications, :failed, assessment:)
       end
+
       it { is_expected.to be false }
     end
 
@@ -256,6 +266,7 @@ RSpec.describe Assessment, type: :model do
           assessment:,
         )
       end
+
       it { is_expected.to be true }
     end
 
@@ -272,6 +283,7 @@ RSpec.describe Assessment, type: :model do
           )
           create(:further_information_request, :review_passed, assessment:)
         end
+
         it { is_expected.to be false }
       end
 
@@ -285,12 +297,14 @@ RSpec.describe Assessment, type: :model do
           )
           create(:further_information_request, :review_failed, assessment:)
         end
+
         it { is_expected.to be true }
       end
     end
 
     context "when awarded pending verification" do
       before { assessment.verify! }
+
       it { is_expected.to be false }
     end
   end
@@ -329,11 +343,13 @@ RSpec.describe Assessment, type: :model do
           assessment:,
         )
       end
+
       it { is_expected.to be false }
     end
 
     context "with an existing further information request" do
       before { create(:further_information_request, assessment:) }
+
       it { is_expected.to be false }
     end
   end
@@ -348,12 +364,14 @@ RSpec.describe Assessment, type: :model do
         before do
           create(:assessment_section, :personal_information, assessment:)
         end
+
         it { is_expected.to be false }
       end
     end
 
     context "with an application under old regulations" do
       let(:application_form) { create(:application_form, :old_regulations) }
+
       it { is_expected.to be false }
     end
   end
@@ -368,6 +386,7 @@ RSpec.describe Assessment, type: :model do
         before do
           create(:assessment_section, :personal_information, assessment:)
         end
+
         it { is_expected.to be false }
       end
 
@@ -380,6 +399,7 @@ RSpec.describe Assessment, type: :model do
             assessment:,
           )
         end
+
         it { is_expected.to be true }
       end
 
@@ -392,6 +412,7 @@ RSpec.describe Assessment, type: :model do
             assessment:,
           )
         end
+
         it { is_expected.to be false }
 
         context "when further information was requested" do
@@ -401,6 +422,7 @@ RSpec.describe Assessment, type: :model do
             before do
               create(:further_information_request, :review_passed, assessment:)
             end
+
             it { is_expected.to be true }
           end
 
@@ -408,6 +430,7 @@ RSpec.describe Assessment, type: :model do
             before do
               create(:further_information_request, :review_failed, assessment:)
             end
+
             it { is_expected.to be false }
           end
         end
@@ -423,12 +446,14 @@ RSpec.describe Assessment, type: :model do
           )
           create(:assessment_section, :qualifications, :failed, assessment:)
         end
+
         it { is_expected.to be false }
       end
     end
 
     context "with an application under old regulations" do
       let(:application_form) { create(:application_form, :old_regulations) }
+
       it { is_expected.to be false }
     end
   end
@@ -438,16 +463,19 @@ RSpec.describe Assessment, type: :model do
 
     context "with an award-able assessment" do
       before { allow(assessment).to receive(:can_award?).and_return(true) }
+
       it { is_expected.to include("award") }
     end
 
     context "with an award-able pending verification assessment" do
       before { allow(assessment).to receive(:can_verify?).and_return(true) }
+
       it { is_expected.to include("verify") }
     end
 
     context "with a decline-able assessment" do
       before { allow(assessment).to receive(:can_decline?).and_return(true) }
+
       it { is_expected.to include("decline") }
     end
 
@@ -457,6 +485,7 @@ RSpec.describe Assessment, type: :model do
           :can_request_further_information?,
         ).and_return(true)
       end
+
       it { is_expected.to include("request_further_information") }
     end
   end
@@ -474,6 +503,7 @@ RSpec.describe Assessment, type: :model do
       before do
         create(:assessment_section, :declines_with_already_qts, assessment:)
       end
+
       it { is_expected.to be false }
     end
   end

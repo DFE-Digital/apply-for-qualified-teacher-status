@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe RequestRequestable do
+  subject(:call) { described_class.call(requestable:, user:) }
+
   let(:application_form) { create(:application_form, :submitted) }
   let(:requestable) do
     create(
@@ -11,8 +13,6 @@ RSpec.describe RequestRequestable do
     )
   end
   let(:user) { "John Smith" }
-
-  subject(:call) { described_class.call(requestable:, user:) }
 
   context "with an already requested requestable" do
     before { requestable.requested! }

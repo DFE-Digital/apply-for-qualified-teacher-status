@@ -4,11 +4,11 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::ReferenceRequestDatesResponseForm,
                type: :model do
-  let(:reference_request) { create(:reference_request) }
-
   subject(:form) do
     described_class.new(reference_request:, dates_response:, dates_comment:)
   end
+
+  let(:reference_request) { create(:reference_request) }
 
   describe "validations" do
     let(:dates_response) { "" }
@@ -16,7 +16,7 @@ RSpec.describe TeacherInterface::ReferenceRequestDatesResponseForm,
 
     it { is_expected.to validate_presence_of(:reference_request) }
     it { is_expected.to allow_values(true, false).for(:dates_response) }
-    it { is_expected.to_not validate_presence_of(:dates_comment) }
+    it { is_expected.not_to validate_presence_of(:dates_comment) }
 
     context "with a negative response" do
       let(:dates_response) { "false" }
@@ -37,7 +37,7 @@ RSpec.describe TeacherInterface::ReferenceRequestDatesResponseForm,
       end
 
       it "ignores dates_comment" do
-        expect { save }.to_not change(reference_request, :dates_comment)
+        expect { save }.not_to change(reference_request, :dates_comment)
       end
     end
 

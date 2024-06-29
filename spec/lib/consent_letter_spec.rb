@@ -20,10 +20,10 @@ RSpec.describe ConsentLetter do
     subject(:render_pdf) { described_class.new(application_form:).render_pdf }
 
     it "doesn't raise an error" do
-      expect { render_pdf }.to_not raise_error
+      expect { render_pdf }.not_to raise_error
     end
 
-    it { is_expected.to_not be_nil }
-    it { is_expected.to_not be_empty }
+    it { is_expected.not_to be_nil }
+    it { is_expected.not_to be_empty }
   end
 end

@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe SubmitApplicationForm do
+  subject(:call) { described_class.call(application_form:, user:) }
+
   let(:country) { create(:country) }
   let(:region) { create(:region, country:) }
   let(:application_form) do
@@ -16,8 +18,6 @@ RSpec.describe SubmitApplicationForm do
   end
   let(:user) { create(:teacher) }
 
-  subject(:call) { described_class.call(application_form:, user:) }
-
   it "changes stage to not started" do
     expect { call }.to change(application_form, :stage).from("draft").to(
       "not_started",
@@ -25,7 +25,7 @@ RSpec.describe SubmitApplicationForm do
   end
 
   it "doesn't set subject limited on the application form" do
-    expect { call }.to_not change(application_form, :subject_limited).from(
+    expect { call }.not_to change(application_form, :subject_limited).from(
       false,
     )
   end
@@ -41,7 +41,7 @@ RSpec.describe SubmitApplicationForm do
   end
 
   it "doesn't set requires preliminary check on the application form" do
-    expect { call }.to_not change(
+    expect { call }.not_to change(
       application_form,
       :requires_preliminary_check,
     ).from(false)
@@ -120,16 +120,16 @@ RSpec.describe SubmitApplicationForm do
     context "after calling the service" do
       before { call }
 
-      it { is_expected.to_not be_nil }
+      it { is_expected.not_to be_nil }
     end
   end
 
   describe "creating professional standing request" do
-    let(:assessment) { Assessment.find_by(application_form:) }
-
     subject(:professional_standing_request) do
       ProfessionalStandingRequest.find_by(assessment:)
     end
+
+    let(:assessment) { Assessment.find_by(application_form:) }
 
     it { is_expected.to be_nil }
 
@@ -147,14 +147,14 @@ RSpec.describe SubmitApplicationForm do
         call
       end
 
-      it { is_expected.to_not be_nil }
+      it { is_expected.not_to be_nil }
       it { is_expected.to be_requested }
     end
   end
 
   describe "professional standing request timeline event" do
     it "doesn't record a timeline event" do
-      expect { call }.to_not have_recorded_timeline_event(
+      expect { call }.not_to have_recorded_timeline_event(
         :requestable_requested,
       )
     end
@@ -174,7 +174,7 @@ RSpec.describe SubmitApplicationForm do
 
   describe "setting induction required" do
     it "doesn't set induction required" do
-      expect(UpdateAssessmentInductionRequired).to_not receive(:call)
+      expect(UpdateAssessmentInductionRequired).not_to receive(:call)
       call
     end
 
@@ -199,7 +199,7 @@ RSpec.describe SubmitApplicationForm do
 
   describe "sending application submitted email" do
     it "doesn't queue an email job" do
-      expect { call }.to_not have_enqueued_mail(
+      expect { call }.not_to have_enqueued_mail(
         TeachingAuthorityMailer,
         :application_submitted,
       )

@@ -36,7 +36,7 @@ RSpec.describe TeacherInterface::DeleteUploadForm, type: :model do
         before { create(:upload, :clean, document:) }
 
         it "doesn't mark the document as incomplete" do
-          expect { save }.to_not change(document, :completed?).from(true)
+          expect { save }.not_to change(document, :completed?).from(true)
         end
       end
     end
@@ -45,7 +45,7 @@ RSpec.describe TeacherInterface::DeleteUploadForm, type: :model do
       let(:confirm) { "false" }
 
       it "doesn't delete the upload" do
-        expect { save }.to_not change(Upload, :count)
+        expect { save }.not_to change(Upload, :count)
       end
     end
   end

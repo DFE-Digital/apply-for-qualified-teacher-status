@@ -3,19 +3,20 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::ConsentMethodForm, type: :model do
-  let(:qualification) { create(:qualification) }
-  let(:qualification_request) { create(:qualification_request, qualification:) }
-  let(:consent_method) { "unsigned" }
-
   subject(:form) do
     described_class.new(qualification_request:, consent_method:)
   end
 
+  let(:qualification) { create(:qualification) }
+  let(:qualification_request) { create(:qualification_request, qualification:) }
+  let(:consent_method) { "unsigned" }
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:qualification_request) }
     it { is_expected.to validate_presence_of(:consent_method) }
+
     it do
-      is_expected.to validate_inclusion_of(:consent_method).in_array(
+      expect(subject).to validate_inclusion_of(:consent_method).in_array(
         %w[signed_ecctis signed_institution unsigned none],
       )
     end
@@ -47,7 +48,7 @@ RSpec.describe AssessorInterface::ConsentMethodForm, type: :model do
         let(:consent_method) { %w[signed_ecctis signed_institution].sample }
 
         it "doesn't delete the consent request" do
-          expect { save }.to_not change {
+          expect { save }.not_to change {
             ConsentRequest.where(qualification:).count
           }.from(1)
         end

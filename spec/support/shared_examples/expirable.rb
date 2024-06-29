@@ -5,7 +5,7 @@ RSpec.shared_examples "an expirable" do
     let(:expires_at) { subject.expires_at }
 
     it "doesn't raise an error" do
-      expect { expires_at }.to_not raise_error
+      expect { expires_at }.not_to raise_error
     end
   end
 
@@ -13,7 +13,7 @@ RSpec.shared_examples "an expirable" do
     let(:after_expired) { subject.after_expired(user: "User") }
 
     it "doesn't raise an error" do
-      expect { after_expired }.to_not raise_error
+      expect { after_expired }.not_to raise_error
     end
   end
 end

@@ -3,12 +3,12 @@
 require "rails_helper"
 
 RSpec.describe UpdateAssessmentInductionRequired do
+  subject(:call) { described_class.call(assessment:) }
+
   let(:application_form) { create(:application_form) }
   let(:assessment) do
     create(:assessment, application_form:, induction_required: nil)
   end
-
-  subject(:call) { described_class.call(assessment:) }
 
   shared_examples "induction required" do
     it "sets induction required to true" do
@@ -71,7 +71,7 @@ RSpec.describe UpdateAssessmentInductionRequired do
     before { application_form.update!(needs_work_history: false) }
 
     it "doesn't change induction required" do
-      expect { call }.to_not change(assessment, :induction_required)
+      expect { call }.not_to change(assessment, :induction_required)
     end
   end
 end

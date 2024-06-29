@@ -9,12 +9,12 @@ RSpec.describe AssessorInterface::UploadsController, type: :controller do
   before { sign_in staff, scope: :staff }
 
   describe "GET show" do
-    let(:document) { create(:document, documentable: application_form) }
-    let(:upload) { create(:upload, :clean, document:) }
-
     subject(:perform) do
       get :show, params: { document_id: document.id, id: upload.id }
     end
+
+    let(:document) { create(:document, documentable: application_form) }
+    let(:upload) { create(:upload, :clean, document:) }
 
     context "when the upload is present and user is authenticated" do
       it "renders the upload" do

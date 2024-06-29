@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "Eligible region content", type: :view do
-  let(:region) { create(:region) }
-  let(:eligibility_check) { nil }
-
   subject do
     render "shared/eligible_region_content", region:, eligibility_check:
   end
+
+  let(:region) { create(:region) }
+  let(:eligibility_check) { nil }
 
   it { is_expected.to match(/You’re eligible/) }
   it { is_expected.to match(/What we’ll ask for/) }
@@ -84,7 +84,7 @@ RSpec.describe "Eligible region content", type: :view do
   context "with no status check and no sanction check" do
     let(:region) { create(:region, status_check: :none, sanction_check: :none) }
 
-    it { is_expected.to_not match(/Proof that you’re recognised as a teacher/) }
+    it { is_expected.not_to match(/Proof that you’re recognised as a teacher/) }
   end
 
   describe "English language proficiency" do
@@ -93,7 +93,7 @@ RSpec.describe "Eligible region content", type: :view do
     it { is_expected.to match(/Proof of English language ability/) }
 
     it do
-      is_expected.to match(
+      expect(subject).to match(
         /You’ll need to provide your passport or official identification documents for that country as proof/,
       )
     end
@@ -103,12 +103,13 @@ RSpec.describe "Eligible region content", type: :view do
     let(:region) { create(:region, reduced_evidence_accepted: false) }
 
     it do
-      is_expected.to match(
+      expect(subject).to match(
         /You must provide evidence that you have been employed/,
       )
     end
+
     it do
-      is_expected.to_not match(
+      expect(subject).not_to match(
         /you’ll need to complete a 2-year ‘statutory induction’/,
       )
     end
@@ -119,7 +120,7 @@ RSpec.describe "Eligible region content", type: :view do
       end
 
       it do
-        is_expected.to match(
+        expect(subject).to match(
           /you must complete a 2-year ‘statutory induction’ period/,
         )
       end
@@ -129,7 +130,7 @@ RSpec.describe "Eligible region content", type: :view do
       let(:region) { create(:region, application_form_skip_work_history: true) }
 
       it do
-        is_expected.to_not match(/You’ll need to show you’ve been employed/)
+        expect(subject).not_to match(/You’ll need to show you’ve been employed/)
       end
     end
 
@@ -139,21 +140,23 @@ RSpec.describe "Eligible region content", type: :view do
       end
 
       it do
-        is_expected.to_not match(/Proof that you’re recognised as a teacher/)
+        expect(subject).not_to match(
+          /Proof that you’re recognised as a teacher/,
+        )
       end
     end
 
     context "with a region which accepts reduced evidence" do
       let(:region) { create(:region, reduced_evidence_accepted: true) }
 
-      it { is_expected.to_not match(/We will contact the references/) }
+      it { is_expected.not_to match(/We will contact the references/) }
     end
 
     context "with a region which does not accept reduced evidence" do
       let(:region) { create(:region, reduced_evidence_accepted: false) }
 
       it do
-        is_expected.to match(
+        expect(subject).to match(
           /You must provide evidence that you have been employed/,
         )
       end

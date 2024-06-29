@@ -97,7 +97,7 @@ RSpec.describe ApplicationForm, type: :model do
 
   describe "columns" do
     it do
-      is_expected.to define_enum_for(:action_required_by)
+      expect(subject).to define_enum_for(:action_required_by)
         .with_values(
           admin: "admin",
           assessor: "assessor",
@@ -107,7 +107,7 @@ RSpec.describe ApplicationForm, type: :model do
         .with_prefix
         .backed_by_column_of_type(:string)
 
-      is_expected.to define_enum_for(:stage)
+      expect(subject).to define_enum_for(:stage)
         .with_values(
           draft: "draft",
           pre_assessment: "pre_assessment",
@@ -122,7 +122,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:english_language_proof_method)
+      expect(subject).to define_enum_for(:english_language_proof_method)
         .with_values(
           medium_of_instruction: "medium_of_instruction",
           provider: "provider",
@@ -132,7 +132,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:personal_information_status)
+      expect(subject).to define_enum_for(:personal_information_status)
         .with_values(
           completed: "completed",
           error: "error",
@@ -144,7 +144,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:identification_document_status)
+      expect(subject).to define_enum_for(:identification_document_status)
         .with_values(
           completed: "completed",
           error: "error",
@@ -156,7 +156,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:qualifications_status)
+      expect(subject).to define_enum_for(:qualifications_status)
         .with_values(
           completed: "completed",
           error: "error",
@@ -168,7 +168,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:age_range_status)
+      expect(subject).to define_enum_for(:age_range_status)
         .with_values(
           completed: "completed",
           error: "error",
@@ -180,7 +180,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:subjects_status)
+      expect(subject).to define_enum_for(:subjects_status)
         .with_values(
           completed: "completed",
           error: "error",
@@ -192,7 +192,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:english_language_status)
+      expect(subject).to define_enum_for(:english_language_status)
         .with_values(
           completed: "completed",
           error: "error",
@@ -204,7 +204,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:work_history_status)
+      expect(subject).to define_enum_for(:work_history_status)
         .with_values(
           completed: "completed",
           error: "error",
@@ -216,7 +216,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:registration_number_status)
+      expect(subject).to define_enum_for(:registration_number_status)
         .with_values(
           completed: "completed",
           error: "error",
@@ -228,7 +228,7 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to define_enum_for(:written_statement_status)
+      expect(subject).to define_enum_for(:written_statement_status)
         .with_values(
           completed: "completed",
           error: "error",
@@ -259,12 +259,12 @@ RSpec.describe ApplicationForm, type: :model do
     end
 
     it do
-      is_expected.to validate_length_of(:reference).is_at_least(3).is_at_most(
-        31,
-      )
+      expect(subject).to validate_length_of(:reference).is_at_least(
+        3,
+      ).is_at_most(31)
     end
 
-    it { is_expected.to_not validate_absence_of(:english_language_provider) }
+    it { is_expected.not_to validate_absence_of(:english_language_provider) }
 
     context "with an other english language provider" do
       before { application_form.update!(english_language_provider_other: true) }
@@ -281,7 +281,7 @@ RSpec.describe ApplicationForm, type: :model do
         )
       end
 
-      it { is_expected.to_not be_valid }
+      it { is_expected.not_to be_valid }
     end
   end
 
@@ -355,16 +355,19 @@ RSpec.describe ApplicationForm, type: :model do
         let(:application_form) do
           create(:application_form, created_at: (5.months + 1.week).ago)
         end
+
         it { is_expected.to eq([application_form]) }
       end
 
       context "with a draft application form newer than 5 months old" do
         before { create(:application_form, created_at: 4.months.ago) }
+
         it { is_expected.to be_empty }
       end
 
       context "with a submitted application form" do
         before { create(:application_form, :submitted) }
+
         it { is_expected.to be_empty }
       end
     end
@@ -386,6 +389,7 @@ RSpec.describe ApplicationForm, type: :model do
 
         context "with no reminders sent" do
           let(:number_of_reminders_sent) { 0 }
+
           it { is_expected.to be false }
 
           context "with a consent request" do
@@ -417,6 +421,7 @@ RSpec.describe ApplicationForm, type: :model do
 
         context "with no reminders sent" do
           let(:number_of_reminders_sent) { 1 }
+
           it { is_expected.to be false }
         end
       end
@@ -435,13 +440,14 @@ RSpec.describe ApplicationForm, type: :model do
         )
       end
 
-      it { is_expected.to_not include(eligible_application_form) }
+      it { is_expected.not_to include(eligible_application_form) }
       it { is_expected.to include(ineligible_application_form) }
     end
   end
 
   describe "#to_param" do
     subject(:to_param) { application_form.to_param }
+
     it { is_expected.to eq(application_form.reference) }
   end
 
@@ -454,6 +460,7 @@ RSpec.describe ApplicationForm, type: :model do
       let(:application_form) do
         create(:application_form, created_at: Date.new(2020, 1, 1))
       end
+
       it { is_expected.to be true }
     end
 
@@ -461,6 +468,7 @@ RSpec.describe ApplicationForm, type: :model do
       let(:application_form) do
         create(:application_form, created_at: Date.new(2024, 1, 1))
       end
+
       it { is_expected.to be false }
     end
   end
@@ -476,11 +484,13 @@ RSpec.describe ApplicationForm, type: :model do
       let(:application_form) do
         create(:application_form, created_at: Date.new(2020, 1, 1))
       end
+
       it { is_expected.to be true }
     end
 
     context "when subject limited doesn't match the country" do
       let(:application_form) { create(:application_form, :subject_limited) }
+
       it { is_expected.to be true }
     end
 
@@ -488,6 +498,7 @@ RSpec.describe ApplicationForm, type: :model do
       let(:application_form) do
         create(:application_form, :requires_preliminary_check)
       end
+
       it { is_expected.to be true }
     end
   end

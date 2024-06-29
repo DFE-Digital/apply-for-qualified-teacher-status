@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::SelectWorkHistoriesForm, type: :model do
+  subject(:form) do
+    described_class.new(application_form:, session:, work_history_ids:)
+  end
+
   let(:application_form) { create(:application_form, :submitted) }
   let!(:work_history_1) do
     create(
@@ -23,31 +27,30 @@ RSpec.describe AssessorInterface::SelectWorkHistoriesForm, type: :model do
   let(:session) { {} }
   let(:work_history_ids) { "" }
 
-  subject(:form) do
-    described_class.new(application_form:, session:, work_history_ids:)
-  end
-
   describe "validations" do
     it { is_expected.to validate_presence_of(:application_form) }
-    it { is_expected.to_not allow_values(nil).for(:session) }
+    it { is_expected.not_to allow_values(nil).for(:session) }
+
     it do
-      is_expected.to validate_inclusion_of(:work_history_ids).in_array(
+      expect(subject).to validate_inclusion_of(:work_history_ids).in_array(
         [work_history_1.id.to_s, work_history_2.id.to_s],
       )
     end
 
     context "with not enough hours" do
-      it { is_expected.to_not be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context "with enough hours" do
       let(:work_history_ids) { [work_history_1.id.to_s] }
+
       it { is_expected.to be_valid }
     end
 
     context "without most recent" do
       let(:work_history_ids) { [work_history_2.id.to_s] }
-      it { is_expected.to_not be_valid }
+
+      it { is_expected.not_to be_valid }
     end
   end
 

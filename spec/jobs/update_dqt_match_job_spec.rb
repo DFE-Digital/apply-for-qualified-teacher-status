@@ -4,11 +4,11 @@ require "rails_helper"
 
 RSpec.describe UpdateDQTMatchJob do
   describe "#perform" do
+    subject(:perform) { described_class.new.perform(application_form) }
+
     let(:application_form) do
       create(:application_form, :submitted, :with_personal_information)
     end
-
-    subject(:perform) { described_class.new.perform(application_form) }
 
     before { allow(DQT::Client::FindTeachers).to receive(:call).and_return([]) }
 
@@ -60,7 +60,7 @@ RSpec.describe UpdateDQTMatchJob do
       let(:application_form) { create(:application_form, :draft) }
 
       it "doesn't search DQT for teachers" do
-        expect(DQT::Client::FindTeachers).to_not receive(:call)
+        expect(DQT::Client::FindTeachers).not_to receive(:call)
 
         perform
       end
@@ -70,7 +70,7 @@ RSpec.describe UpdateDQTMatchJob do
       let(:application_form) { create(:application_form, :awarded) }
 
       it "doesn't search DQT for teachers" do
-        expect(DQT::Client::FindTeachers).to_not receive(:call)
+        expect(DQT::Client::FindTeachers).not_to receive(:call)
 
         perform
       end

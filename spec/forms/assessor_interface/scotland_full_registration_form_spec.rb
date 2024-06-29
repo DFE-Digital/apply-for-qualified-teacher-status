@@ -3,12 +3,6 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::ScotlandFullRegistrationForm, type: :model do
-  let(:assessment_section) do
-    create(:assessment_section, :professional_standing)
-  end
-  let(:user) { create(:staff) }
-  let(:attributes) { {} }
-
   subject(:form) do
     described_class.for_assessment_section(assessment_section).new(
       assessment_section:,
@@ -17,13 +11,19 @@ RSpec.describe AssessorInterface::ScotlandFullRegistrationForm, type: :model do
     )
   end
 
+  let(:assessment_section) do
+    create(:assessment_section, :professional_standing)
+  end
+  let(:user) { create(:staff) }
+  let(:attributes) { {} }
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:assessment_section) }
     it { is_expected.to validate_presence_of(:user) }
     it { is_expected.to allow_values(true, false).for(:passed) }
 
     it do
-      is_expected.to allow_values(nil, true, false).for(
+      expect(subject).to allow_values(nil, true, false).for(
         :scotland_full_registration,
       )
     end
@@ -32,7 +32,9 @@ RSpec.describe AssessorInterface::ScotlandFullRegistrationForm, type: :model do
       let(:attributes) { { passed: "true" } }
 
       it do
-        is_expected.to_not allow_values(nil).for(:scotland_full_registration)
+        expect(subject).not_to allow_values(nil).for(
+          :scotland_full_registration,
+        )
       end
     end
   end

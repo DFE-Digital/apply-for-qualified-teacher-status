@@ -4,6 +4,8 @@ require "rails_helper"
 
 RSpec.describe ResendStoredBlobData do
   describe "#call" do
+    subject(:resend_stored_blob_data) { described_class.call(upload:) }
+
     let(:upload) { create(:upload) }
     let(:response_success) { true }
     let(:put_blob_url) { "http://example.com/uploads/#{upload.attachment.key}" }
@@ -19,7 +21,6 @@ RSpec.describe ResendStoredBlobData do
         success?: response_success,
       )
     end
-    subject(:resend_stored_blob_data) { described_class.call(upload:) }
 
     before do
       allow(Azure::Storage::Blob::BlobService).to receive(:new).and_return(
@@ -46,6 +47,7 @@ RSpec.describe ResendStoredBlobData do
 
     context "when the upload attachment is missing" do
       let(:attachment) { instance_double(ActiveStorage::Blob) }
+
       before do
         allow(upload).to receive(:attachment).and_return(attachment)
         allow(attachment).to receive(:key).and_raise(
@@ -61,6 +63,7 @@ RSpec.describe ResendStoredBlobData do
 
     context "when the upload attachment key is nil" do
       let(:attachment) { instance_double(ActiveStorage::Blob, key: nil) }
+
       before { allow(upload).to receive(:attachment).and_return(attachment) }
 
       it "returns without update" do

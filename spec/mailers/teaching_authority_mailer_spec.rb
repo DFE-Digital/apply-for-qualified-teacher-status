@@ -46,7 +46,7 @@ RSpec.describe TeachingAuthorityMailer, type: :mailer do
       subject(:subject) { mail.subject }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "First Last has made an application for qualified teacher status (QTS) in England",
         )
       end

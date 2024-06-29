@@ -4,6 +4,8 @@ require "rails_helper"
 
 RSpec.describe DQT::TRNRequestParams do
   describe "#call" do
+    subject(:call) { described_class.call(application_form:) }
+
     let(:teacher) { create(:teacher, email: "teacher@example.com") }
 
     let(:application_form) do
@@ -47,10 +49,8 @@ RSpec.describe DQT::TRNRequestParams do
       )
     end
 
-    subject(:call) { described_class.call(application_form:) }
-
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         {
           address: {
           },

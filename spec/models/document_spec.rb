@@ -24,7 +24,7 @@ RSpec.describe Document, type: :model do
     it { is_expected.to be_valid }
 
     it do
-      is_expected.to define_enum_for(:document_type).with_values(
+      expect(subject).to define_enum_for(:document_type).with_values(
         english_language_proficiency: "english_language_proficiency",
         identification: "identification",
         medium_of_instruction: "medium_of_instruction",

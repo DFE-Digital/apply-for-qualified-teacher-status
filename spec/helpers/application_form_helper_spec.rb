@@ -43,7 +43,7 @@ RSpec.describe ApplicationFormHelper do
     let(:current_staff) { create(:staff) }
 
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         [
           {
             key: {

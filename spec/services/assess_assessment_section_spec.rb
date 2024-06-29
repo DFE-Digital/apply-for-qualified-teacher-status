@@ -3,6 +3,15 @@
 require "rails_helper"
 
 RSpec.describe AssessAssessmentSection do
+  subject(:call) do
+    described_class.call(
+      assessment_section,
+      user:,
+      passed:,
+      selected_failure_reasons:,
+    )
+  end
+
   let(:user) { create(:staff) }
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
@@ -15,15 +24,6 @@ RSpec.describe AssessAssessmentSection do
   let(:selected_failure_reason_key) { "identification_document_expired" }
   let(:selected_failure_reason_assessor_feedback) { { notes: "Epic fail" } }
   let(:passed) { false }
-
-  subject(:call) do
-    described_class.call(
-      assessment_section,
-      user:,
-      passed:,
-      selected_failure_reasons:,
-    )
-  end
 
   it "sets the status" do
     expect { call }.to change(assessment_section, :status).from(
@@ -106,19 +106,19 @@ RSpec.describe AssessAssessmentSection do
   end
 
   it "changes the assessor" do
-    expect { call }.to change { application_form.assessor }.from(nil).to(user)
+    expect { call }.to change(application_form, :assessor).from(nil).to(user)
   end
 
   context "with an existing assessor" do
     before { application_form.assessor = create(:staff) }
 
     it "doesn't change the assessor" do
-      expect { call }.to_not(change { application_form.assessor })
+      expect { call }.not_to(change(application_form, :assessor))
     end
   end
 
   it "changes the application form state" do
-    expect { call }.to change { application_form.statuses }.from(
+    expect { call }.to change(application_form, :statuses).from(
       %w[assessment_not_started],
     ).to(%w[assessment_in_progress])
   end
@@ -131,7 +131,7 @@ RSpec.describe AssessAssessmentSection do
     before { assessment.update!(started_at: Date.new(2021, 1, 1)) }
 
     it "doesn't change the assessor" do
-      expect { call }.to_not change(assessment, :started_at)
+      expect { call }.not_to change(assessment, :started_at)
     end
   end
 end

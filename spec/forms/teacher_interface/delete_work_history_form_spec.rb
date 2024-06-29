@@ -13,6 +13,7 @@ RSpec.describe TeacherInterface::DeleteWorkHistoryForm, type: :model do
 
     context "when confirm is true" do
       let(:confirm) { "true" }
+
       it { is_expected.to validate_presence_of(:work_history) }
     end
   end
@@ -34,7 +35,7 @@ RSpec.describe TeacherInterface::DeleteWorkHistoryForm, type: :model do
       let(:confirm) { "false" }
 
       it "doesn't delete the work history" do
-        expect { save }.to_not change(WorkHistory, :count)
+        expect { save }.not_to change(WorkHistory, :count)
       end
     end
   end

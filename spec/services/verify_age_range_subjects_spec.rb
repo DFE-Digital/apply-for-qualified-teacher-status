@@ -3,14 +3,6 @@
 require "rails_helper"
 
 RSpec.describe VerifyAgeRangeSubjects do
-  let(:assessment) { create(:assessment) }
-  let(:user) { create(:staff) }
-  let(:age_range_min) { 8 }
-  let(:age_range_max) { 11 }
-  let(:age_range_note) { "A note." }
-  let(:subjects) { %w[english_studies mathematics] }
-  let(:subjects_note) { "A note." }
-
   subject(:call) do
     described_class.call(
       assessment:,
@@ -22,6 +14,14 @@ RSpec.describe VerifyAgeRangeSubjects do
       subjects_note:,
     )
   end
+
+  let(:assessment) { create(:assessment) }
+  let(:user) { create(:staff) }
+  let(:age_range_min) { 8 }
+  let(:age_range_max) { 11 }
+  let(:age_range_note) { "A note." }
+  let(:subjects) { %w[english_studies mathematics] }
+  let(:subjects_note) { "A note." }
 
   it "sets the minimum age" do
     expect { call }.to change(assessment, :age_range_min).to(8)

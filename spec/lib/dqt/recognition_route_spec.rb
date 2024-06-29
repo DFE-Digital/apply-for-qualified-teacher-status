@@ -12,11 +12,13 @@ RSpec.describe DQT::RecognitionRoute do
 
     context "with Scotland" do
       let(:country_code) { "GB-SCT" }
+
       it { is_expected.to eq("Scotland") }
     end
 
     context "with Northern Ireland" do
       let(:country_code) { "GB-NIR" }
+
       it { is_expected.to eq("NorthernIreland") }
     end
 
@@ -26,6 +28,7 @@ RSpec.describe DQT::RecognitionRoute do
       (Country::CODES - %w[GB-SCT GB-NIR]).each do |country_code|
         context "with #{country_code}" do
           let(:country_code) { country_code }
+
           it { is_expected.to eq("OverseasTrainedTeachers") }
         end
       end
@@ -37,6 +40,7 @@ RSpec.describe DQT::RecognitionRoute do
       Country::CODES_IN_EUROPEAN_ECONOMIC_AREA.each do |country_code|
         context "with #{country_code}" do
           let(:country_code) { country_code }
+
           it { is_expected.to eq("EuropeanEconomicArea") }
         end
       end
@@ -47,6 +51,7 @@ RSpec.describe DQT::RecognitionRoute do
       ).each do |country_code|
         context "with #{country_code}" do
           let(:country_code) { country_code }
+
           it { is_expected.to eq("OverseasTrainedTeachers") }
         end
       end

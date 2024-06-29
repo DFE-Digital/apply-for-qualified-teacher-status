@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe Filters::Assessor do
+  subject { described_class.apply(scope:, params:) }
+
   let(:assessor_one) { create(:staff) }
   let(:assessor_two) { create(:staff) }
-
-  subject { described_class.apply(scope:, params:) }
 
   context "the params include assessor_id" do
     describe "filtering 'assessor'" do

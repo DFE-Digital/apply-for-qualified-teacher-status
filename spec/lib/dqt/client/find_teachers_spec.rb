@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe DQT::Client::FindTeachers do
+  subject(:call) { described_class.call(application_form:) }
+
   let(:application_form) do
     create(:application_form, :submitted, :with_personal_information)
   end
@@ -13,8 +15,6 @@ RSpec.describe DQT::Client::FindTeachers do
       lastName: application_form.family_name,
     }
   end
-
-  subject(:call) { described_class.call(application_form:) }
 
   context "with a successful response" do
     let(:result) do
@@ -40,7 +40,7 @@ RSpec.describe DQT::Client::FindTeachers do
     end
 
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         [
           {
             date_of_birth: application_form.date_of_birth.iso8601.to_s,

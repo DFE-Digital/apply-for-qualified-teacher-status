@@ -12,7 +12,7 @@ RSpec::Matchers.define :include_task_list_section do |title|
   match_when_negated do |task_list_sections|
     rendered_sections =
       task_list_sections.filter { |section| section[:items].present? }
-    expect(rendered_sections).to_not include(hash_including(title:))
+    expect(rendered_sections).not_to include(hash_including(title:))
   end
 end
 
@@ -37,7 +37,7 @@ RSpec::Matchers.define :include_task_list_item do |section_title, name, **attrib
           item.merge(section_title: section[:title])
         end
       end
-    expect(all_items).to_not include(
+    expect(all_items).not_to include(
       hash_including(section_title:, name:, **attributes),
     )
   end

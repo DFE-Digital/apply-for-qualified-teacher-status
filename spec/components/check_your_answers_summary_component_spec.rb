@@ -102,11 +102,11 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   end
 
   context "when changeable is false" do
-    let(:changeable) { false }
-
     subject(:links) do
       component.css(".govuk-summary-list__actions .govuk-link")
     end
+
+    let(:changeable) { false }
 
     it { is_expected.to be_empty }
   end
