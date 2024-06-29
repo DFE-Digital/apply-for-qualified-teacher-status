@@ -10,3 +10,10 @@ inherit_from:
 inherit_mode:
   merge:
     - Exclude
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always_true

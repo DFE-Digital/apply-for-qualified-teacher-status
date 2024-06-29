@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNewFieldsToEnglishLanguageProviders < ActiveRecord::Migration[7.0]
   def change
     change_table :english_language_providers, bulk: true do |t|

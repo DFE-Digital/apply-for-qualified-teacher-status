@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddSubjectsToAssessments < ActiveRecord::Migration[7.0]
   def change
     change_table :assessments, bulk: true do |t|

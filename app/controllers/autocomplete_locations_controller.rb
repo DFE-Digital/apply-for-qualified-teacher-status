@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AutocompleteLocationsController < ApplicationController
   LOCATION_AUTOCOMPLETE_GRAPH =
     JSON.parse(File.read("public/location-autocomplete-graph.json"))

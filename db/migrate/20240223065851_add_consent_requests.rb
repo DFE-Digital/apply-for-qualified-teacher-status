@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddConsentRequests < ActiveRecord::Migration[7.1]
   def change
     create_table :consent_requests do |t|

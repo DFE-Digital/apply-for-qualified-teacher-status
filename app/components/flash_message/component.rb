@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FlashMessage
   class Component < ViewComponent::Base
     ALLOWED_PRIMARY_KEYS = %i[info success warning].freeze

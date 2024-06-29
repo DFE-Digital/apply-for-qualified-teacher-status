@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PageObjects
   module AssessorInterface
     class CreateNote < SitePrism::Page

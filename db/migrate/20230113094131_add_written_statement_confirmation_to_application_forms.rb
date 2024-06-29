@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddWrittenStatementConfirmationToApplicationForms < ActiveRecord::Migration[
   7.0
 ]

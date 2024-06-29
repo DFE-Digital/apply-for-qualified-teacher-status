@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateQualificationRequests < ActiveRecord::Migration[7.0]
   def change
     create_table :qualification_requests do |t|

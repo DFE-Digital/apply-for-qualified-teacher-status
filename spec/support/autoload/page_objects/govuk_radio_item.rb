@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PageObjects
   class GovukRadioItem < SitePrism::Section
     element :input, ".govuk-radios__input", visible: false

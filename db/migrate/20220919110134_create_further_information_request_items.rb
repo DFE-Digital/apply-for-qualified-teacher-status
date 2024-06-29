@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateFurtherInformationRequestItems < ActiveRecord::Migration[7.0]
   def change
     create_table :further_information_request_items do |t|

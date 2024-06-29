@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PageHelpers
   def then_i_see_the(page, **args)
     expect(send(page.to_sym)).to be_displayed(**args)
