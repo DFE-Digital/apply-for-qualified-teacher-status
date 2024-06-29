@@ -30,7 +30,7 @@ RSpec.describe RefereeMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
         expect(subject).to eq(
@@ -70,7 +70,7 @@ RSpec.describe RefereeMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
         expect(subject).to eq(

@@ -14,6 +14,24 @@ inherit_mode:
 Layout/EmptyLineAfterMagicComment:
   Enabled: true
 
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+RSpec/IndexedLet:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/SubjectStub:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always_true

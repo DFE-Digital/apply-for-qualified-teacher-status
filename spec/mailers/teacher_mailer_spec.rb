@@ -34,7 +34,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application was successful") }
     end
@@ -61,7 +61,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application was unsuccessful") }
     end
@@ -89,7 +89,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
         expect(subject).to eq(
@@ -129,7 +129,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     let(:number_of_reminders_sent) { nil }
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       context "with two weeks to go" do
         let(:number_of_reminders_sent) { 0 }
@@ -205,7 +205,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       context "if the teaching authority provides the written statement" do
         before do
@@ -297,7 +297,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
         expect(subject).to eq(
@@ -344,7 +344,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
         expect(subject).to eq(
@@ -380,7 +380,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     subject(:mail) { described_class.with(application_form:).consent_submitted }
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("We’ve received your consent documents") }
     end
@@ -412,7 +412,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application: information received") }
     end
@@ -443,7 +443,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application: More information needed") }
     end
@@ -486,7 +486,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application: information still needed") }
     end
@@ -519,7 +519,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
         expect(subject).to eq(
@@ -574,7 +574,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     let(:number_of_reminders_sent) { nil }
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       context "with no reminder emails" do
         let(:number_of_reminders_sent) { 0 }
@@ -636,7 +636,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
         expect(subject).to eq(
