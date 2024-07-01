@@ -234,7 +234,8 @@ RSpec.describe EligibilityCheck, type: :model do
   describe "#complete" do
     subject(:complete) { described_class.complete }
 
-    let!(:incomplete_check) { create(:eligibility_check) }
+    before { create(:eligibility_check) }
+
     let!(:complete_check) { create(:eligibility_check, :complete) }
 
     it { is_expected.to eq([complete_check]) }
@@ -254,7 +255,8 @@ RSpec.describe EligibilityCheck, type: :model do
     subject(:ineligible) { described_class.ineligible }
 
     let!(:ineligible_check) { create(:eligibility_check, :ineligible) }
-    let!(:eligible_check) { create(:eligibility_check, :eligible) }
+
+    before { create(:eligibility_check, :eligible) }
 
     it { is_expected.to eq([ineligible_check]) }
   end

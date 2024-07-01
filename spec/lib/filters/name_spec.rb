@@ -17,7 +17,8 @@ RSpec.describe Filters::Name do
           given_names: "Dave",
         )
       end
-      let!(:filtered) do
+
+      before do
         create(
           :application_form,
           :with_personal_information,
@@ -39,7 +40,8 @@ RSpec.describe Filters::Name do
           given_names: "Cornishpasty Dave",
         )
       end
-      let!(:filtered) do
+
+      before do
         create(
           :application_form,
           :with_personal_information,
@@ -61,7 +63,8 @@ RSpec.describe Filters::Name do
           family_name: "Dave",
         )
       end
-      let!(:filtered) do
+
+      before do
         create(
           :application_form,
           :with_personal_information,
@@ -83,7 +86,8 @@ RSpec.describe Filters::Name do
           family_name: "Davethegangster",
         )
       end
-      let!(:filtered) do
+
+      before do
         create(
           :application_form,
           :with_personal_information,
@@ -103,7 +107,8 @@ RSpec.describe Filters::Name do
       let!(:included) do
         create(:application_form, given_names: "Jane", family_name: "Smith")
       end
-      let!(:excluded) do
+
+      before do
         create(:application_form, given_names: "Tom", family_name: "Bombadil")
       end
 
@@ -118,7 +123,8 @@ RSpec.describe Filters::Name do
       let!(:included) do
         create(:application_form, given_names: "Jane", family_name: "Smith")
       end
-      let!(:excluded) do
+
+      before do
         create(:application_form, given_names: "Tom", family_name: "Bombadil")
       end
 

@@ -310,7 +310,8 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
           ],
         )
       end
-      let!(:failure_reasons) { assessment_section.selected_failure_reasons }
+
+      before { assessment_section.selected_failure_reasons }
 
       it do
         expect(subject).to eq(
@@ -343,7 +344,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       let!(:assessment) { create(:assessment, application_form:) }
 
       context "with sanctions" do
-        let!(:assessment_section) do
+        before do
           create(
             :assessment_section,
             :personal_information,
@@ -356,7 +357,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       end
 
       context "with already QTS" do
-        let!(:assessment_section) do
+        before do
           create(
             :assessment_section,
             :personal_information,

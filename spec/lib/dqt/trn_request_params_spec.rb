@@ -23,7 +23,7 @@ RSpec.describe DQT::TRNRequestParams do
       )
     end
 
-    let!(:assessment) do
+    before do
       create(
         :assessment,
         :award,
@@ -34,9 +34,7 @@ RSpec.describe DQT::TRNRequestParams do
         subjects: %w[physics french_language],
         induction_required: true,
       )
-    end
 
-    before do
       create(
         :qualification,
         :completed,

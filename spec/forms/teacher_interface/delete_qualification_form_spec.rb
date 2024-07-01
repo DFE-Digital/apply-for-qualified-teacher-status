@@ -21,7 +21,9 @@ RSpec.describe TeacherInterface::DeleteQualificationForm, type: :model do
   describe "#save" do
     subject(:save) { form.save(validate: true) }
 
+    # rubocop:disable RSpec/LetSetup
     let!(:qualification) { create(:qualification) }
+    # rubocop:enable RSpec/LetSetup
 
     context "when confirm is true" do
       let(:confirm) { "true" }

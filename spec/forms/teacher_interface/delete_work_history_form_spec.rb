@@ -21,7 +21,9 @@ RSpec.describe TeacherInterface::DeleteWorkHistoryForm, type: :model do
   describe "#save" do
     subject(:save) { form.save(validate: true) }
 
+    # rubocop:disable RSpec/LetSetup
     let!(:work_history) { create(:work_history) }
+    # rubocop:enable RSpec/LetSetup
 
     context "when confirm is true" do
       let(:confirm) { "true" }

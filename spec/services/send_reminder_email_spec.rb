@@ -350,38 +350,43 @@ RSpec.describe SendReminderEmail do
     context "with a teacher with an remindable reference request" do
       let(:remindable) { create(:application_form, :submitted) }
       let(:assessment) { create(:assessment, application_form: remindable) }
-      let!(:reference_request) do
-        create(
-          :reference_request,
-          requested_at: reference_requested_at,
-          assessment:,
-        )
-      end
 
-      context "with less than four weeks remaining" do
-        let(:reference_requested_at) { (6.weeks - 27.days).ago }
+      context "with a requested reference request" do
+        # rubocop:disable RSpec/LetSetup
+        let!(:reference_request) do
+          create(
+            :reference_request,
+            requested_at: reference_requested_at,
+            assessment:,
+          )
+        end
+        # rubocop:enable RSpec/LetSetup
 
-        include_examples "first reminder email",
-                         "sends an application references reminder email",
-                         "references"
-      end
+        context "with less than four weeks remaining" do
+          let(:reference_requested_at) { (6.weeks - 27.days).ago }
 
-      context "with less than two weeks remaining" do
-        let(:reference_requested_at) { (6.weeks - 13.days).ago }
+          include_examples "first reminder email",
+                           "sends an application references reminder email",
+                           "references"
+        end
 
-        include_examples "second reminder email",
-                         "sends an application references reminder email",
-                         "references"
-      end
+        context "with less than two weeks remaining" do
+          let(:reference_requested_at) { (6.weeks - 13.days).ago }
 
-      context "with more than four weeks remaining" do
-        let(:reference_requested_at) { 2.days.ago }
+          include_examples "second reminder email",
+                           "sends an application references reminder email",
+                           "references"
+        end
 
-        include_examples "doesn't send an email"
+        context "with more than four weeks remaining" do
+          let(:reference_requested_at) { 2.days.ago }
+
+          include_examples "doesn't send an email"
+        end
       end
 
       context "with a received reference request" do
-        let!(:reference_request) do
+        before do
           create(:received_reference_request, requested_at: Time.zone.now)
         end
 
@@ -389,7 +394,7 @@ RSpec.describe SendReminderEmail do
       end
 
       context "with an expired reference request" do
-        let!(:reference_request) do
+        before do
           create(:reference_request, :expired, requested_at: Time.zone.now)
         end
 

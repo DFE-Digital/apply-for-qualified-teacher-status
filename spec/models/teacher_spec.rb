@@ -70,9 +70,10 @@ RSpec.describe Teacher, type: :model do
     end
 
     context "with two application forms" do
-      let!(:first_application_form) do
+      before do
         create(:application_form, teacher:, created_at: Date.new(2020, 1, 1))
       end
+
       let!(:second_application_form) do
         create(:application_form, teacher:, created_at: Date.new(2020, 6, 1))
       end

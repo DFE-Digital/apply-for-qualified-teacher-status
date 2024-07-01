@@ -308,12 +308,12 @@ RSpec.describe ApplicationForm, type: :model do
       end
 
       context "submitted" do
-        let!(:application_form) { create(:application_form, :submitted) }
+        before { create(:application_form, :submitted) }
 
         it { is_expected.to be_empty }
 
         context "older than 90 days" do
-          let!(:application_form) do
+          before do
             create(:application_form, :submitted, created_at: 90.days.ago)
           end
 

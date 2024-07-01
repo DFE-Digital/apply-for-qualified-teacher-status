@@ -16,8 +16,10 @@ RSpec.describe TeacherInterface::DeleteUploadForm, type: :model do
   describe "#save" do
     subject(:save) { form.save(validate: true) }
 
+    # rubocop:disable RSpec/LetSetup
     let(:document) { create(:document) }
     let!(:upload) { create(:upload, :clean, document:) }
+    # rubocop:enable RSpec/LetSetup
 
     context "when confirm is true" do
       let(:confirm) { "true" }

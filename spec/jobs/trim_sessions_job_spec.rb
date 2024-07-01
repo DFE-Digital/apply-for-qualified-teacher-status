@@ -6,9 +6,10 @@ RSpec.describe TrimSessionsJob, type: :job do
   describe "#perform" do
     subject(:perform) { described_class.new.perform }
 
-    let!(:session1) do
+    before do
       ActiveRecord::SessionStore::Session.create!(session_id: "1", data: "abc")
     end
+
     let!(:session2) do
       ActiveRecord::SessionStore::Session.create!(
         session_id: "2",
