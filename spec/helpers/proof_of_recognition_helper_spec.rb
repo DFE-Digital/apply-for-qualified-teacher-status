@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe ProofOfRecognitionHelper do
   let(:region) do
-    double(
+    OpenStruct.new(
       name: "Region Name",
       status_check_written?: status,
       status_check_online?: status,

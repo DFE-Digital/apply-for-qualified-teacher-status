@@ -21,7 +21,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   let(:id) { "id" }
 
   let(:model) do
-    double(
+    OpenStruct.new(
       string: "String value",
       number: 10,
       date: Date.new(2020, 1, 1),
