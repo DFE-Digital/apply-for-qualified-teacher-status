@@ -99,7 +99,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         it { is_expected.to eq("completed") }
       end
 
-      context "with an incomplete qualification" do
+      context "with all complete qualifications and part of university degree" do
         let(:application_form) do
           create(
             :application_form,

@@ -421,7 +421,7 @@ RSpec.describe ApplicationForm, type: :model do
           end
         end
 
-        context "with no reminders sent" do
+        context "with one reminder sent" do
           let(:number_of_reminders_sent) { 1 }
 
           it { is_expected.to be false }

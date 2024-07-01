@@ -37,7 +37,7 @@ RSpec.describe TeacherInterface::UploadsController, type: :controller do
 
   describe "DELETE destroy" do
     subject(:perform) do
-      get :delete, params: { document_id: document.id, id: upload.id }
+      delete :delete, params: { document_id: document.id, id: upload.id }
     end
 
     let(:document) { create(:document, documentable: application_form) }

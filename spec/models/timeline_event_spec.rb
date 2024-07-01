@@ -257,7 +257,7 @@ RSpec.describe TimelineEvent do
     end
 
     context "with a requestable requested event type" do
-      before { timeline_event.event_type = :requestable_received }
+      before { timeline_event.event_type = :requestable_requested }
 
       it { is_expected.to validate_absence_of(:assignee) }
       it { is_expected.to validate_absence_of(:assessment_section) }
@@ -392,7 +392,7 @@ RSpec.describe TimelineEvent do
     end
 
     context "with a requestable verified event type" do
-      before { timeline_event.event_type = :requestable_reviewed }
+      before { timeline_event.event_type = :requestable_verified }
 
       it { is_expected.to validate_absence_of(:assignee) }
       it { is_expected.to validate_absence_of(:assessment_section) }

@@ -85,7 +85,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
 
     context "when not passed and not recommended" do
       before do
-        further_information_request.update!(review_passed: true)
+        further_information_request.update!(review_passed: false)
         assessment.request_further_information!
       end
 

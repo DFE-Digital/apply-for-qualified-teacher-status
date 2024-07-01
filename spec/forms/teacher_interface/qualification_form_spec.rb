@@ -68,13 +68,6 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
 
       it { is_expected.not_to be_valid }
     end
-
-    context "with invalid dates" do
-      let(:complete_date) { { 1 => 2020, 2 => 1, 3 => 1 } }
-      let(:certificate_date) { { 1 => 2019, 2 => 1, 3 => 1 } }
-
-      it { is_expected.not_to be_valid }
-    end
   end
 
   context "with a country code" do

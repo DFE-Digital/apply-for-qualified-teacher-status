@@ -159,7 +159,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       end
     end
 
-    context "with needs written statement" do
+    context "with needs registration number" do
       let(:needs_registration_number) { true }
 
       it do

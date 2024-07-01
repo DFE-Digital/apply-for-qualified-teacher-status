@@ -23,7 +23,7 @@ RSpec.describe TeacherInterface::SanctionConfirmationForm, type: :model do
     end
 
     context "when confirmed is nil" do
-      let(:confirmed_no_sanctions) { false }
+      let(:confirmed_no_sanctions) { nil }
 
       it { is_expected.not_to be_valid }
     end
