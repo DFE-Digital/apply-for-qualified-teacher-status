@@ -21,7 +21,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
       context "with a successful response" do
         before do
-          expect(DQT::Client::CreateTRNRequest).to receive(:call).and_return(
+          allow(DQT::Client::CreateTRNRequest).to receive(:call).and_return(
             {
               potential_duplicate: false,
               trn: "abcdef",
@@ -58,7 +58,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
       context "with a failure response" do
         before do
-          expect(DQT::Client::CreateTRNRequest).to receive(:call).and_raise(
+          allow(DQT::Client::CreateTRNRequest).to receive(:call).and_raise(
             Faraday::BadRequestError.new(StandardError.new),
           )
         end
@@ -96,7 +96,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
       context "with a potential duplicate response" do
         before do
-          expect(DQT::Client::CreateTRNRequest).to receive(:call).and_return(
+          allow(DQT::Client::CreateTRNRequest).to receive(:call).and_return(
             { potential_duplicate: true },
           )
         end
@@ -134,7 +134,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
       context "with a successful response" do
         before do
-          expect(DQT::Client::ReadTRNRequest).to receive(:call).and_return(
+          allow(DQT::Client::ReadTRNRequest).to receive(:call).and_return(
             {
               potential_duplicate: false,
               trn: "abcdef",
@@ -171,7 +171,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
       context "with a failure response" do
         before do
-          expect(DQT::Client::ReadTRNRequest).to receive(:call).and_raise(
+          allow(DQT::Client::ReadTRNRequest).to receive(:call).and_raise(
             Faraday::BadRequestError.new(StandardError.new),
           )
         end
@@ -209,7 +209,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
 
       context "with a potential duplicate response" do
         before do
-          expect(DQT::Client::ReadTRNRequest).to receive(:call).and_return(
+          allow(DQT::Client::ReadTRNRequest).to receive(:call).and_return(
             { potential_duplicate: true },
           )
         end

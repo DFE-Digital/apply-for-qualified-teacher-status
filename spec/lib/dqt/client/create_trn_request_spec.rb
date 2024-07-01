@@ -9,7 +9,7 @@ RSpec.describe DQT::Client::CreateTRNRequest do
   let(:application_form) { create(:application_form) }
 
   before do
-    expect(DQT::TRNRequestParams).to receive(:call).with(
+    allow(DQT::TRNRequestParams).to receive(:call).with(
       application_form:,
     ).and_return("body")
   end

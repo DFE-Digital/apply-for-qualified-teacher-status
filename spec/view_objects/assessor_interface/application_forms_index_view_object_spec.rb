@@ -33,7 +33,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       context "with an assessor filter" do
         before do
-          expect_any_instance_of(Filters::Assessor).to receive(
+          allow_any_instance_of(Filters::Assessor).to receive(
             :apply,
           ).and_return(ApplicationForm.none)
         end
@@ -43,9 +43,9 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       context "with a country filter" do
         before do
-          expect_any_instance_of(Filters::Country).to receive(
-            :apply,
-          ).and_return(ApplicationForm.none)
+          allow_any_instance_of(Filters::Country).to receive(:apply).and_return(
+            ApplicationForm.none,
+          )
         end
 
         it { is_expected.to be_empty }
@@ -53,7 +53,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       context "with a name filter" do
         before do
-          expect_any_instance_of(Filters::Name).to receive(:apply).and_return(
+          allow_any_instance_of(Filters::Name).to receive(:apply).and_return(
             ApplicationForm.none,
           )
         end
@@ -63,7 +63,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       context "with a reference filter" do
         before do
-          expect_any_instance_of(Filters::Reference).to receive(
+          allow_any_instance_of(Filters::Reference).to receive(
             :apply,
           ).and_return(ApplicationForm.none)
         end
@@ -73,7 +73,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       context "with an action required by filter" do
         before do
-          expect_any_instance_of(Filters::ActionRequiredBy).to receive(
+          allow_any_instance_of(Filters::ActionRequiredBy).to receive(
             :apply,
           ).and_return(ApplicationForm.none)
         end
@@ -83,9 +83,9 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       context "with a stage filter" do
         before do
-          expect_any_instance_of(Filters::ShowAll).to receive(
-            :apply,
-          ).and_return(ApplicationForm.none)
+          allow_any_instance_of(Filters::ShowAll).to receive(:apply).and_return(
+            ApplicationForm.none,
+          )
         end
 
         it { is_expected.to be_empty }
@@ -93,7 +93,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
 
       context "with show all filter" do
         before do
-          expect_any_instance_of(Filters::Stage).to receive(:apply).and_return(
+          allow_any_instance_of(Filters::Stage).to receive(:apply).and_return(
             ApplicationForm.none,
           )
         end

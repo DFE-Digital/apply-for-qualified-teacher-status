@@ -47,7 +47,7 @@ RSpec.describe UpdateDQTMatchJob do
         },
       ]
 
-      expect(DQT::Client::FindTeachers).to receive(:call).with(
+      allow(DQT::Client::FindTeachers).to receive(:call).with(
         application_form:,
       ).and_return(results)
 
