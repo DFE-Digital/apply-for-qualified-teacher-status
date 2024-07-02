@@ -6,29 +6,35 @@ RSpec.shared_examples_for "an age range subjects form" do
     it { is_expected.to validate_presence_of(:age_range_max) }
 
     context "with a minimum too low" do
-      let(:age_range_subjects_attributes) { { age_range_min: "1" } }
+      let(:age_range_subjects_attributes) do
+        { age_range_min: "1", age_range_max: "10" }
+      end
+
       it { is_expected.to be_invalid }
     end
 
     context "with a minimum too high" do
-      let(:age_range_subjects_attributes) { { age_range_min: "20" } }
+      let(:age_range_subjects_attributes) do
+        { age_range_min: "20", age_range_max: "10" }
+      end
+
       it { is_expected.to be_invalid }
     end
 
-    context "when minimum is set" do
-      context "with a maximum too low" do
-        let(:age_range_subjects_attributes) do
-          { age_range_min: "7", age_range_max: "1" }
-        end
-        it { is_expected.to be_invalid }
+    context "with a maximum too low" do
+      let(:age_range_subjects_attributes) do
+        { age_range_min: "7", age_range_max: "1" }
       end
 
-      context "with a maximum too high" do
-        let(:age_range_subjects_attributes) do
-          { age_range_min: "7", age_range_max: "20" }
-        end
-        it { is_expected.to be_invalid }
+      it { is_expected.to be_invalid }
+    end
+
+    context "with a maximum too high" do
+      let(:age_range_subjects_attributes) do
+        { age_range_min: "7", age_range_max: "20" }
       end
+
+      it { is_expected.to be_invalid }
     end
 
     it { is_expected.to_not validate_presence_of(:age_range_note) }

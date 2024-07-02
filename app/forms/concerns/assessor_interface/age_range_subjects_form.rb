@@ -12,7 +12,9 @@ module AssessorInterface::AgeRangeSubjectsForm
               presence: true,
               numericality: {
                 only_integer: true,
-                greater_than_or_equal_to: 0,
+                greater_than_or_equal_to: 4,
+                less_than_or_equal_to: :age_range_max,
+                if: :age_range_max,
                 allow_nil: true,
               }
     validates :age_range_max,
@@ -20,6 +22,8 @@ module AssessorInterface::AgeRangeSubjectsForm
               numericality: {
                 only_integer: true,
                 greater_than_or_equal_to: :age_range_min,
+                less_than_or_equal_to: 19,
+                if: :age_range_min,
                 allow_nil: true,
               }
 
