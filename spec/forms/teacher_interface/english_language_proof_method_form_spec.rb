@@ -3,26 +3,27 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::EnglishLanguageProofMethodForm, type: :model do
-  let(:application_form) { create(:application_form) }
-
   subject(:form) { described_class.new(application_form:, proof_method:) }
+
+  let(:application_form) { create(:application_form) }
 
   describe "validations" do
     let(:proof_method) { "" }
 
     it { is_expected.to validate_presence_of(:application_form) }
     it { is_expected.to validate_presence_of(:proof_method) }
+
     it do
-      is_expected.to validate_inclusion_of(:proof_method).in_array(
+      expect(subject).to validate_inclusion_of(:proof_method).in_array(
         %w[medium_of_instruction provider],
       )
     end
   end
 
   describe "#save" do
-    let(:proof_method) { "provider" }
-
     subject(:save) { form.save(validate: true) }
+
+    let(:proof_method) { "provider" }
 
     it "saves the application form" do
       expect { save }.to change(

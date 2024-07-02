@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: regions
@@ -44,14 +46,16 @@ RSpec.describe Region, type: :model do
     it { is_expected.to be_valid }
 
     it { is_expected.to validate_uniqueness_of(:name).scoped_to(:country_id) }
+
     it do
-      is_expected.to define_enum_for(:sanction_check)
+      expect(subject).to define_enum_for(:sanction_check)
         .with_values(none: "none", online: "online", written: "written")
         .with_prefix(:sanction_check)
         .backed_by_column_of_type(:string)
     end
+
     it do
-      is_expected.to define_enum_for(:status_check)
+      expect(subject).to define_enum_for(:status_check)
         .with_values(none: "none", online: "online", written: "written")
         .with_prefix(:status_check)
         .backed_by_column_of_type(:string)

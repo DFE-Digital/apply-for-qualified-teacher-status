@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :assessment_sections do
   desc "Edit failure reasons on an assessment section. \
   eg. edit_failure_reasons['work_history', 'new_reason', 'existing_reason1 existing_reason2']"

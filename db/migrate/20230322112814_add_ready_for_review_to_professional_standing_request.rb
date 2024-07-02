@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddReadyForReviewToProfessionalStandingRequest < ActiveRecord::Migration[
   7.0
 ]

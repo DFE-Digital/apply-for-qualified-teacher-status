@@ -24,8 +24,11 @@ require "rails_helper"
 RSpec.describe SelectedFailureReason do
   describe "validations" do
     it { is_expected.to validate_presence_of(:key) }
+
     it do
-      is_expected.to validate_inclusion_of(:key).in_array(FailureReasons::ALL)
+      expect(subject).to validate_inclusion_of(:key).in_array(
+        FailureReasons::ALL,
+      )
     end
   end
 

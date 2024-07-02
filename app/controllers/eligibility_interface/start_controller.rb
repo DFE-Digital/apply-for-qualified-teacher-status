@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EligibilityInterface::StartController < EligibilityInterface::BaseController
   def root
     redirect_to eligibility_interface_start_url

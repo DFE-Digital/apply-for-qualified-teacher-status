@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddContactNameToWorkHistory < ActiveRecord::Migration[7.0]
   def change
     change_table :work_histories, bulk: true do |t|

@@ -3,6 +3,14 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
+  subject(:form) do
+    described_class.for_assessment_section(assessment_section).new(
+      assessment_section:,
+      user:,
+      **attributes,
+    )
+  end
+
   let(:assessment_section) do
     create(
       :assessment_section,
@@ -27,14 +35,6 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
   let(:user) { create(:staff) }
   let(:attributes) { {} }
 
-  subject(:form) do
-    described_class.for_assessment_section(assessment_section).new(
-      assessment_section:,
-      user:,
-      **attributes,
-    )
-  end
-
   describe "validations" do
     it { is_expected.to validate_presence_of(:assessment_section) }
     it { is_expected.to validate_presence_of(:user) }
@@ -57,17 +57,19 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       end
 
       it do
-        is_expected.to validate_presence_of(
+        expect(subject).to validate_presence_of(
           :"#{further_information_failure_reason}_notes",
         )
       end
+
       it do
-        is_expected.to validate_presence_of(
+        expect(subject).to validate_presence_of(
           :"#{work_history_failure_reason}_notes",
         )
       end
+
       it do
-        is_expected.not_to validate_presence_of(
+        expect(subject).not_to validate_presence_of(
           :"#{decline_failure_reason}_notes",
         )
       end
@@ -110,7 +112,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       end
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           { further_information_failure_reason.to_s => { notes: "Notes." } },
         )
       end

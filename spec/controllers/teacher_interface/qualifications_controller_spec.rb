@@ -57,41 +57,41 @@ RSpec.describe TeacherInterface::QualificationsController, type: :controller do
   end
 
   describe "GET edit" do
-    let(:qualification) { create(:qualification, application_form:) }
-
     subject(:perform) { get :edit, params: { id: qualification.id } }
+
+    let(:qualification) { create(:qualification, application_form:) }
 
     include_examples "redirect unless application form is draft"
   end
 
   describe "PATCH update" do
-    let(:qualification) { create(:qualification, application_form:) }
-
     subject(:perform) { patch :update, params: { id: qualification.id } }
+
+    let(:qualification) { create(:qualification, application_form:) }
 
     include_examples "redirect unless application form is draft"
   end
 
   describe "GET check_member" do
-    let(:qualification) { create(:qualification, application_form:) }
-
     subject(:perform) { get :check_member, params: { id: qualification.id } }
+
+    let(:qualification) { create(:qualification, application_form:) }
 
     include_examples "redirect unless application form is draft"
   end
 
   describe "GET delete" do
-    let(:qualification) { create(:qualification, application_form:) }
-
     subject(:perform) { get :delete, params: { id: qualification.id } }
+
+    let(:qualification) { create(:qualification, application_form:) }
 
     include_examples "redirect unless application form is draft"
   end
 
   describe "DELETE destroy" do
-    let(:qualification) { create(:qualification, application_form:) }
-
     subject(:perform) { delete :destroy, params: { id: qualification.id } }
+
+    let(:qualification) { create(:qualification, application_form:) }
 
     include_examples "redirect unless application form is draft"
   end

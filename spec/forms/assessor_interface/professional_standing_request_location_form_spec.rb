@@ -4,15 +4,15 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::ProfessionalStandingRequestLocationForm,
                type: :model do
+  subject(:form) do
+    described_class.new(requestable:, user:, received:, location_note:)
+  end
+
   let(:requestable) { create(:professional_standing_request) }
   let(:user) { create(:staff) }
 
   let(:received) { "" }
   let(:location_note) { "" }
-
-  subject(:form) do
-    described_class.new(requestable:, user:, received:, location_note:)
-  end
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:requestable) }

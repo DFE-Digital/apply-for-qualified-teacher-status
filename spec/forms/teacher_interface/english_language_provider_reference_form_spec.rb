@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::EnglishLanguageProviderReferenceForm,
                type: :model do
-  let(:application_form) { create(:application_form) }
-
   subject(:form) { described_class.new(application_form:, reference:) }
+
+  let(:application_form) { create(:application_form) }
 
   describe "validations" do
     let(:reference) { "" }
@@ -16,9 +16,9 @@ RSpec.describe TeacherInterface::EnglishLanguageProviderReferenceForm,
   end
 
   describe "#save" do
-    let(:reference) { "reference" }
-
     subject(:save) { form.save(validate: true) }
+
+    let(:reference) { "reference" }
 
     it "saves the application form" do
       expect { save }.to change(

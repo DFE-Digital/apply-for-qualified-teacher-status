@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "Teacher further information", type: :system do
@@ -186,7 +188,7 @@ RSpec.describe "Teacher further information", type: :system do
 
   def and_i_receive_a_further_information_received_email
     message = ActionMailer::Base.deliveries.last
-    expect(message).to_not be_nil
+    expect(message).not_to be_nil
 
     expect(message.subject).to eq("Your QTS application: information received")
     expect(message.to).to include(application_form.teacher.email)

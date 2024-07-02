@@ -41,7 +41,7 @@ RSpec.describe "Teacher age range and subjects", type: :system do
   end
 
   def and_i_see_the_age_range_task
-    expect(teacher_application_page.age_range_task_item).to_not be_nil
+    expect(teacher_application_page.age_range_task_item).not_to be_nil
   end
 
   def when_i_click_the_age_range_task
@@ -49,7 +49,7 @@ RSpec.describe "Teacher age range and subjects", type: :system do
   end
 
   def and_i_see_the_subjects_task
-    expect(teacher_application_page.subjects_task_item).to_not be_nil
+    expect(teacher_application_page.subjects_task_item).not_to be_nil
   end
 
   def when_i_click_the_subjects_task

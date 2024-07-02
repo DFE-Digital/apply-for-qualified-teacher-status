@@ -3,14 +3,6 @@
 require "rails_helper"
 
 RSpec.describe UpdateQualificationCertificateDate do
-  let(:qualification) do
-    create(:qualification, certificate_date: Date.new(2020, 1, 1))
-  end
-  let(:application_form) { qualification.application_form }
-  let(:assessment) { create(:assessment, application_form:) }
-  let(:user) { create(:staff) }
-  let(:new_certificate_date) { Date.new(2021, 1, 1) }
-
   subject(:call) do
     described_class.call(
       qualification:,
@@ -18,6 +10,14 @@ RSpec.describe UpdateQualificationCertificateDate do
       certificate_date: new_certificate_date,
     )
   end
+
+  let(:qualification) do
+    create(:qualification, certificate_date: Date.new(2020, 1, 1))
+  end
+  let(:application_form) { qualification.application_form }
+  let(:assessment) { create(:assessment, application_form:) }
+  let(:user) { create(:staff) }
+  let(:new_certificate_date) { Date.new(2021, 1, 1) }
 
   it "changes the certificate date" do
     expect { call }.to change(qualification, :certificate_date).to(

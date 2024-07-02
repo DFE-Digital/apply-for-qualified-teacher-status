@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameFurtherInformationRequestItemAssessorNotes < ActiveRecord::Migration[
   7.0
 ]

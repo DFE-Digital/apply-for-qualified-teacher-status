@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddUnsignedConsentDocumentGeneratedToQualificationRequests < ActiveRecord::Migration[
   7.1
 ]

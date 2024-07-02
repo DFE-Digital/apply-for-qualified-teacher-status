@@ -3,12 +3,12 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::RequestableReviewForm, type: :model do
+  subject(:form) { described_class.new(requestable:, user:, passed:, note:) }
+
   let(:requestable) { create(:received_reference_request) }
   let(:user) { create(:staff) }
   let(:passed) { nil }
   let(:note) { "" }
-
-  subject(:form) { described_class.new(requestable:, user:, passed:, note:) }
 
   describe "validations" do
     it { is_expected.to allow_values(true, false).for(:passed) }

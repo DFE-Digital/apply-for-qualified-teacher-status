@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TeacherInterface::SubjectsForm, type: :model do
-  let(:application_form) { build(:application_form) }
-
   subject(:form) do
     described_class.new(application_form:, subject_1:, subject_2:, subject_3:)
   end
+
+  let(:application_form) { build(:application_form) }
 
   describe "validations" do
     let(:subject_1) { "" }
@@ -14,8 +16,8 @@ RSpec.describe TeacherInterface::SubjectsForm, type: :model do
 
     it { is_expected.to validate_presence_of(:application_form) }
     it { is_expected.to validate_presence_of(:subject_1) }
-    it { is_expected.to_not validate_presence_of(:subject_2) }
-    it { is_expected.to_not validate_presence_of(:subject_3) }
+    it { is_expected.not_to validate_presence_of(:subject_2) }
+    it { is_expected.not_to validate_presence_of(:subject_3) }
   end
 
   describe "#save" do

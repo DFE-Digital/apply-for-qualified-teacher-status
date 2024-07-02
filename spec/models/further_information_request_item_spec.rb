@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: further_information_request_items
@@ -28,21 +30,21 @@
 require "rails_helper"
 
 RSpec.describe FurtherInformationRequestItem do
+  subject(:further_information_request_item) do
+    create(:further_information_request_item)
+  end
+
   describe "associations" do
     it { is_expected.to belong_to(:further_information_request) }
     it { is_expected.to have_one(:document) }
   end
 
   it do
-    is_expected.to define_enum_for(:information_type).with_values(
+    expect(subject).to define_enum_for(:information_type).with_values(
       text: "text",
       document: "document",
       work_history_contact: "work_history_contact",
     ).backed_by_column_of_type(:string)
-  end
-
-  subject(:further_information_request_item) do
-    create(:further_information_request_item)
   end
 
   describe "#status" do

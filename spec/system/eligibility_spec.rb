@@ -247,7 +247,7 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_ineligible_page)
   end
 
-  it "ineligible path when filtering by country, not qualified in relevant subject" do
+  it "ineligible path when filtering by eligible country and not qualified in relevant subject" do
     when_i_visit_the(:eligibility_start_page)
     then_i_see_the(:eligibility_start_page)
 
@@ -276,7 +276,7 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_ineligible_page)
   end
 
-  it "ineligible path when filtering by country, not qualified in relevant subject" do
+  it "ineligible path when filtering by ineligible country and not qualified in relevant subject" do
     when_i_visit_the(:eligibility_start_page)
     then_i_see_the(:eligibility_start_page)
 

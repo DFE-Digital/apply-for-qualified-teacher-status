@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe CreateTimelineEvent do
-  let(:application_form) { create(:application_form) }
-
   subject(:call) do
     described_class.call(
       "status_changed",
@@ -14,6 +12,8 @@ RSpec.describe CreateTimelineEvent do
       new_value: "awarded",
     )
   end
+
+  let(:application_form) { create(:application_form) }
 
   context "with a staff user" do
     let(:user) { create(:staff) }

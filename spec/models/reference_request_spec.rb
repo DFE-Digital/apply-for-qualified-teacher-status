@@ -84,6 +84,7 @@ RSpec.describe ReferenceRequest do
             ),
         )
       end
+
       before do
         create(
           :reference_request,
@@ -103,18 +104,18 @@ RSpec.describe ReferenceRequest do
     context "when received" do
       subject { build(:received_reference_request) }
 
-      it { is_expected.to_not allow_value(nil).for(:dates_response) }
+      it { is_expected.not_to allow_value(nil).for(:dates_response) }
 
-      it { is_expected.to_not allow_value(nil).for(:hours_response) }
+      it { is_expected.not_to allow_value(nil).for(:hours_response) }
 
-      it { is_expected.to_not allow_value(nil).for(:children_response) }
+      it { is_expected.not_to allow_value(nil).for(:children_response) }
 
-      it { is_expected.to_not allow_value(nil).for(:lessons_response) }
+      it { is_expected.not_to allow_value(nil).for(:lessons_response) }
 
-      it { is_expected.to_not allow_value(nil).for(:reports_response) }
+      it { is_expected.not_to allow_value(nil).for(:reports_response) }
 
       it do
-        is_expected.to_not validate_presence_of(
+        expect(subject).not_to validate_presence_of(
           :additional_information_response,
         )
       end
@@ -126,17 +127,20 @@ RSpec.describe ReferenceRequest do
 
     context "when no responses given" do
       let(:reference_request) { build(:reference_request) }
+
       it { is_expected.to be false }
     end
 
     context "when all responses given" do
       let(:reference_request) { build(:reference_request, :with_responses) }
+
       it { is_expected.to be true }
     end
   end
 
   describe "#expires_after" do
     subject(:expires_after) { described_class.new.expires_after }
+
     it { is_expected.to eq(6.weeks) }
   end
 end

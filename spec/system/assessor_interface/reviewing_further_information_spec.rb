@@ -93,7 +93,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   def and_i_see_an_award_qts_option
     expect(
       assessor_complete_assessment_page.award_qts_pending_verifications,
-    ).to_not be_nil
+    ).not_to be_nil
   end
 
   def when_i_mark_the_section_as_incomplete
@@ -103,7 +103,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def and_i_see_a_decline_qts_option
-    expect(assessor_complete_assessment_page.decline_qts).to_not be_nil
+    expect(assessor_complete_assessment_page.decline_qts).not_to be_nil
   end
 
   def and_i_do_not_see_the_review_further_information_form

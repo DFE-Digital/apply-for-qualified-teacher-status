@@ -4,16 +4,16 @@ require "rails_helper"
 
 RSpec.describe HistoryController, type: :controller do
   describe "GET back" do
-    let(:default) { "/fallback" }
-
     subject(:perform) { get :back, params: { origin:, default: } }
+
+    let(:default) { "/fallback" }
 
     context "with origin true" do
       let(:origin) { "true" }
 
       context "with a destination" do
         before do
-          expect_any_instance_of(HistoryStack).to receive(
+          allow_any_instance_of(HistoryStack).to receive(
             :pop_to_origin,
           ).and_return("/origin")
         end
@@ -26,7 +26,7 @@ RSpec.describe HistoryController, type: :controller do
 
       context "without a destination" do
         before do
-          expect_any_instance_of(HistoryStack).to receive(
+          allow_any_instance_of(HistoryStack).to receive(
             :pop_to_origin,
           ).and_return(nil)
         end
@@ -43,7 +43,7 @@ RSpec.describe HistoryController, type: :controller do
 
       context "with a destination" do
         before do
-          expect_any_instance_of(HistoryStack).to receive(:pop_back).and_return(
+          allow_any_instance_of(HistoryStack).to receive(:pop_back).and_return(
             "/previous",
           )
         end
@@ -56,7 +56,7 @@ RSpec.describe HistoryController, type: :controller do
 
       context "without a destination" do
         before do
-          expect_any_instance_of(HistoryStack).to receive(:pop_back).and_return(
+          allow_any_instance_of(HistoryStack).to receive(:pop_back).and_return(
             nil,
           )
         end

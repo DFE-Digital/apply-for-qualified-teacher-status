@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "teacher_interface/application_forms/show.html.erb",
                type: :view do
+  subject { render }
+
   before do
     assign(
       :view_object,
       TeacherInterface::ApplicationFormViewObject.new(application_form:),
     )
   end
-
-  subject { render }
 
   context "when awarded pending checks" do
     let(:application_form) do
@@ -73,11 +75,11 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       before { create(:professional_standing_request, :expired, assessment:) }
 
       it do
-        is_expected.to match(/Your QTS application has been declined/)
-        is_expected.to match(
+        expect(subject).to match(/Your QTS application has been declined/)
+        expect(subject).to match(
           /we did not receive your Letter of Professional Standing/,
         )
-        is_expected.to match(/from teaching authority within 180 days/)
+        expect(subject).to match(/from teaching authority within 180 days/)
       end
     end
 
@@ -87,7 +89,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       end
 
       it do
-        is_expected.to_not match(/you can make a new application in future/)
+        expect(subject).not_to match(/you can make a new application in future/)
       end
     end
   end

@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe RequestFurtherInformation do
+  subject(:call) { described_class.call(assessment:, user:) }
+
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
   let(:user) { create(:staff) }
-
-  subject(:call) { described_class.call(assessment:, user:) }
 
   describe "creating further information request" do
     subject(:further_information_request) do
@@ -19,7 +19,7 @@ RSpec.describe RequestFurtherInformation do
     context "after calling the service" do
       before { call }
 
-      it { is_expected.to_not be_nil }
+      it { is_expected.not_to be_nil }
 
       it "sets the attributes correctly" do
         expect(further_information_request.requested?).to be true

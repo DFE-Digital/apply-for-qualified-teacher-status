@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CountryCode
   class << self
     def from_location(location)

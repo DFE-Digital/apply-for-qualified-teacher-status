@@ -3,11 +3,6 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::CheckAgeRangeSubjectsForm, type: :model do
-  let(:assessment_section) { create(:assessment_section, :age_range_subjects) }
-  let(:user) { create(:staff) }
-  let(:attributes) { {} }
-  let(:age_range_subjects_attributes) { {} }
-
   subject(:form) do
     described_class.for_assessment_section(assessment_section).new(
       assessment_section:,
@@ -16,6 +11,11 @@ RSpec.describe AssessorInterface::CheckAgeRangeSubjectsForm, type: :model do
       **age_range_subjects_attributes,
     )
   end
+
+  let(:assessment_section) { create(:assessment_section, :age_range_subjects) }
+  let(:user) { create(:staff) }
+  let(:attributes) { {} }
+  let(:age_range_subjects_attributes) { {} }
 
   it_behaves_like "an age range subjects form" do
     let(:assessment) { assessment_section.assessment }

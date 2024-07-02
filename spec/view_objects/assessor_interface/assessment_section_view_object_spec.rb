@@ -54,7 +54,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       let(:failure_reason) { FailureReasons::DECLINABLE.sample }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes.decline",
         )
       end
@@ -64,7 +64,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       let(:failure_reason) { "there-once-was-a-cat-with-a-hungry-belly" }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes.text",
         )
       end
@@ -74,7 +74,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       let(:failure_reason) { "additional_degree_certificate_illegible" }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes.document",
         )
       end
@@ -88,7 +88,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       let(:failure_reason) { FailureReasons::DECLINABLE.sample }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes.decline",
         )
       end
@@ -98,7 +98,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       let(:failure_reason) { "soon-may-the-kitty-man-come" }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes.text",
         )
       end
@@ -108,7 +108,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       let(:failure_reason) { "additional_degree_certificate_illegible" }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes.document",
         )
       end
@@ -122,7 +122,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       let(:failure_reason) { FailureReasons::DECLINABLE.sample }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes.decline",
         )
       end
@@ -132,7 +132,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       let(:failure_reason) { "with-birds-and-mice-and-some-tasty-nums" }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes.text",
         )
       end
@@ -142,7 +142,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       let(:failure_reason) { "additional_degree_certificate_illegible" }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes.document",
         )
       end
@@ -305,7 +305,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       create(:assessment_section, :work_history, assessment:)
     end
 
-    let!(:work_history) do
+    before do
       create(:work_history, application_form:, contact_email: "same@gmail.com")
     end
 
@@ -341,11 +341,11 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     let(:assessment_section) do
       create(:assessment_section, :work_history, assessment:)
     end
+    let!(:other_application_form) { create(:application_form, :submitted) }
 
-    let!(:work_history) do
+    before do
       create(:work_history, application_form:, contact_email: "same@gmail.com")
     end
-    let!(:other_application_form) { create(:application_form, :submitted) }
 
     context "without an application form with the same email" do
       before do

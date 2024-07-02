@@ -3,12 +3,12 @@
 require "rails_helper"
 
 RSpec.describe ReviewRequestable do
+  subject(:call) { described_class.call(requestable:, user:, passed:, note:) }
+
   let(:requestable) { create(:received_further_information_request) }
   let(:user) { create(:staff) }
   let(:passed) { true }
   let(:note) { "Note." }
-
-  subject(:call) { described_class.call(requestable:, user:, passed:, note:) }
 
   describe "requestable review decision" do
     subject { requestable.review_passed }

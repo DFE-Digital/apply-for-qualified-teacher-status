@@ -64,7 +64,7 @@ RSpec.describe "Teacher personal information", type: :system do
   def and_i_see_the_personal_information_task
     expect(
       teacher_application_page.personal_information_task_item,
-    ).to_not be_nil
+    ).not_to be_nil
   end
 
   def when_i_click_the_personal_information_task

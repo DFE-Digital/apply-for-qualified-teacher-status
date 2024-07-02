@@ -10,7 +10,8 @@ RSpec.describe Filters::ActionRequiredBy do
     let(:scope) { ApplicationForm.all }
 
     let!(:included) { create(:application_form, :action_required_by_assessor) }
-    let!(:excluded) { create(:application_form, :action_required_by_admin) }
+
+    before { create(:application_form, :action_required_by_admin) }
 
     it { is_expected.to contain_exactly(included) }
   end
@@ -20,7 +21,8 @@ RSpec.describe Filters::ActionRequiredBy do
     let(:scope) { ApplicationForm.all }
 
     let!(:included) { create(:application_form, :action_required_by_assessor) }
-    let!(:excluded) { create(:application_form, :action_required_by_admin) }
+
+    before { create(:application_form, :action_required_by_admin) }
 
     it { is_expected.to contain_exactly(included) }
   end

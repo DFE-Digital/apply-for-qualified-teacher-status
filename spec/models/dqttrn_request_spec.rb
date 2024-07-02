@@ -33,7 +33,7 @@ RSpec.describe DQTTRNRequest, type: :model do
     it { is_expected.to validate_presence_of(:state) }
 
     it do
-      is_expected.to define_enum_for(:state).with_values(
+      expect(subject).to define_enum_for(:state).with_values(
         initial: "initial",
         pending: "pending",
         complete: "complete",

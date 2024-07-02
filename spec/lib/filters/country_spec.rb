@@ -15,7 +15,8 @@ RSpec.describe Filters::Country do
         region: create(:region, :in_country, country_code: "US"),
       )
     end
-    let!(:filtered) do
+
+    before do
       create(
         :application_form,
         region: create(:region, :in_country, country_code: "FR"),

@@ -30,10 +30,10 @@ RSpec.describe RefereeMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "Waiting on reference request for First Last’s application for QTS",
         )
       end
@@ -49,13 +49,15 @@ RSpec.describe RefereeMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear Contact Name") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "You need to answer a few questions about First Last",
         )
       end
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "http://localhost:3000/teacher/references/#{reference_request.slug}",
         )
       end
@@ -68,10 +70,10 @@ RSpec.describe RefereeMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "Reference request for First Last’s application for qualified teacher status (QTS)",
         )
       end
@@ -87,13 +89,15 @@ RSpec.describe RefereeMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear Contact Name") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "You need to answer a few questions about First Last",
         )
       end
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "http://localhost:3000/teacher/references/#{reference_request.slug}",
         )
       end

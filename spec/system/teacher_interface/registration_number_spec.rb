@@ -28,7 +28,7 @@ RSpec.describe "Teacher registration number", type: :system do
   end
 
   def and_i_see_the_registration_number_task
-    expect(teacher_application_page.registration_number_task_item).to_not be_nil
+    expect(teacher_application_page.registration_number_task_item).not_to be_nil
   end
 
   def when_i_click_the_registration_number_task

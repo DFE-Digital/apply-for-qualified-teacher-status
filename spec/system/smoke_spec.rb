@@ -22,7 +22,7 @@ require "support/autoload/page_objects/eligibility_interface/work_experience"
 Capybara.javascript_driver = :cuprite
 Capybara.always_include_port = false
 
-describe "Smoke test", type: :system, js: true, smoke_test: true do
+describe "Smoke test", :js, :smoke_test, type: :system do
   before do
     page.driver.basic_authorize(ENV["SMOKE_USERNAME"], ENV["SMOKE_PASSWORD"])
   end

@@ -57,7 +57,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
 
   def and_i_receive_a_further_information_requested_email
     message = ActionMailer::Base.deliveries.last
-    expect(message).to_not be_nil
+    expect(message).not_to be_nil
 
     expect(message.subject).to eq(
       "Your QTS application: More information needed",

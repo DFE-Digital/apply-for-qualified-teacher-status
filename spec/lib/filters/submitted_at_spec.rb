@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Filters::SubmittedAt do
   subject { described_class.apply(scope:, params:) }
 
-  context "with both submitted_at params " do
+  context "with both submitted_at params" do
     let(:params) do
       {
         "submitted_at_after(1i)" => "2020",
@@ -22,7 +22,7 @@ RSpec.describe Filters::SubmittedAt do
       create(:application_form, submitted_at: Date.new(2020, 1, 10))
     end
 
-    let!(:filtered) do
+    before do
       create(:application_form, :submitted, submitted_at: Date.new(2019, 1, 1))
       create(:application_form, :submitted, submitted_at: Date.new(2021, 1, 1))
     end
@@ -44,7 +44,7 @@ RSpec.describe Filters::SubmittedAt do
       create(:application_form, submitted_at: Date.new(2020, 1, 1))
     end
 
-    let!(:filtered) do
+    before do
       create(:application_form, :submitted, submitted_at: Date.new(2020, 1, 2))
     end
 
@@ -65,7 +65,7 @@ RSpec.describe Filters::SubmittedAt do
       create(:application_form, submitted_at: Date.new(2020, 1, 2))
     end
 
-    let!(:filtered) do
+    before do
       create(:application_form, :submitted, submitted_at: Date.new(2020, 1, 1))
     end
 

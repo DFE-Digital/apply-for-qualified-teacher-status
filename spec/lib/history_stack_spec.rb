@@ -10,7 +10,7 @@ RSpec.describe HistoryStack do
       history_stack.push_self(request, origin:, check:, reset:)
     end
 
-    let(:request) { double(fullpath: "/path?page=1") }
+    let(:request) { OpenStruct.new(fullpath: "/path?page=1") }
     let(:check) { false }
 
     context "with an empty session" do

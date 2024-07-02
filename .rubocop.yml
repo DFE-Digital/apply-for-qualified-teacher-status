@@ -2,6 +2,7 @@ inherit_gem:
   rubocop-govuk:
     - config/default.yml
     - config/rails.yml
+    - config/rspec.yml
 
 inherit_from:
   - node_modules/@prettier/plugin-ruby/rubocop.yml
@@ -10,15 +11,32 @@ inherit_mode:
   merge:
     - Exclude
 
-Style/NumericLiterals:
-  Exclude:
-    - db/schema.rb
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
 
-Layout/LineLength:
-  Exclude:
-    - spec/helpers/application_form_helper_spec.rb
+RSpec/AnyInstance:
+  Enabled: false
 
-Lint/SuppressedException:
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+RSpec/IndexedLet:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
   Exclude:
-    - spec/jobs/update_dqt_trn_request_job_spec.rb
-    - spec/jobs/update_malware_scan_result_job_spec.rb
+    - spec/components/*
+    - spec/lib/business_calendar_spec.rb
+
+RSpec/SubjectStub:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always_true

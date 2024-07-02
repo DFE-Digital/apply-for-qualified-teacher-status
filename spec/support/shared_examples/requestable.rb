@@ -6,9 +6,9 @@ RSpec.shared_examples "a requestable" do
   end
 
   describe "validations" do
-    it { is_expected.to_not validate_presence_of(:requested_at) }
-    it { is_expected.to_not validate_presence_of(:received_at) }
-    it { is_expected.to_not validate_presence_of(:expired_at) }
+    it { is_expected.not_to validate_presence_of(:requested_at) }
+    it { is_expected.not_to validate_presence_of(:received_at) }
+    it { is_expected.not_to validate_presence_of(:expired_at) }
   end
 
   describe "#requested!" do
@@ -120,7 +120,7 @@ RSpec.shared_examples "a requestable" do
     before { subject.requested! }
 
     it "doesn't raise an error" do
-      expect { after_requested }.to_not raise_error
+      expect { after_requested }.not_to raise_error
     end
   end
 
@@ -128,7 +128,7 @@ RSpec.shared_examples "a requestable" do
     let(:after_received) { subject.after_received(user: "User") }
 
     it "doesn't raise an error" do
-      expect { after_received }.to_not raise_error
+      expect { after_received }.not_to raise_error
     end
   end
 
@@ -136,7 +136,7 @@ RSpec.shared_examples "a requestable" do
     let(:after_reviewed) { subject.after_reviewed(user: "User") }
 
     it "doesn't raise an error" do
-      expect { after_reviewed }.to_not raise_error
+      expect { after_reviewed }.not_to raise_error
     end
   end
 
@@ -144,7 +144,7 @@ RSpec.shared_examples "a requestable" do
     let(:after_verified) { subject.after_verified(user: "User") }
 
     it "doesn't raise an error" do
-      expect { after_verified }.to_not raise_error
+      expect { after_verified }.not_to raise_error
     end
   end
 

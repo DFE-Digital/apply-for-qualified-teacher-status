@@ -17,9 +17,9 @@ RSpec.describe PreliminaryAssessmentSectionsFactory do
         create(:application_form, :requires_preliminary_check)
       end
 
-      it { is_expected.to_not be_empty }
-
       let(:section) { assessment_sections.first }
+
+      it { is_expected.not_to be_empty }
 
       it "has the right checks and failure reasons" do
         expect(section.checks).to be_empty

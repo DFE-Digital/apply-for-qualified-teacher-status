@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 OkComputer.mount_at = "healthcheck"
 
 OkComputer::Registry.register "postgresql", OkComputer::ActiveRecordCheck.new

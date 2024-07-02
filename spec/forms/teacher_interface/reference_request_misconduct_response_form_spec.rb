@@ -4,8 +4,6 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::ReferenceRequestMisconductResponseForm,
                type: :model do
-  let(:reference_request) { create(:reference_request) }
-
   subject(:form) do
     described_class.new(
       reference_request:,
@@ -14,13 +12,15 @@ RSpec.describe TeacherInterface::ReferenceRequestMisconductResponseForm,
     )
   end
 
+  let(:reference_request) { create(:reference_request) }
+
   describe "validations" do
     let(:misconduct_response) { "" }
     let(:misconduct_comment) { "" }
 
     it { is_expected.to validate_presence_of(:reference_request) }
     it { is_expected.to allow_values(true, false).for(:misconduct_response) }
-    it { is_expected.to_not validate_presence_of(:misconduct_comment) }
+    it { is_expected.not_to validate_presence_of(:misconduct_comment) }
 
     context "with a positive response" do
       let(:misconduct_response) { "true" }
@@ -43,7 +43,7 @@ RSpec.describe TeacherInterface::ReferenceRequestMisconductResponseForm,
       end
 
       it "ignores misconduct_comment" do
-        expect { save }.to_not change(reference_request, :misconduct_comment)
+        expect { save }.not_to change(reference_request, :misconduct_comment)
       end
     end
 

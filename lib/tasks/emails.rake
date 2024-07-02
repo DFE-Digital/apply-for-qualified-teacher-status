@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :emails do
   desc "Backfill the domain column for teachers and work history."
   task backfill_domains: :environment do

@@ -3,21 +3,21 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::AssessmentRecommendationForm, type: :model do
+  subject(:form) { described_class.new(assessment:) }
+
   let(:application_form) { create(:application_form) }
   let(:assessment) { create(:assessment, application_form:) }
-
-  subject(:form) { described_class.new(assessment:) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:assessment) }
     it { is_expected.to validate_presence_of(:recommendation) }
-    it { is_expected.to_not validate_presence_of(:confirmation) }
+    it { is_expected.not_to validate_presence_of(:confirmation) }
 
     context "with an award-able assessment" do
       before { allow(assessment).to receive(:can_award?).and_return(true) }
 
       it do
-        is_expected.to validate_inclusion_of(:recommendation).in_array(
+        expect(subject).to validate_inclusion_of(:recommendation).in_array(
           %w[award],
         )
       end
@@ -27,7 +27,7 @@ RSpec.describe AssessorInterface::AssessmentRecommendationForm, type: :model do
       before { allow(assessment).to receive(:can_decline?).and_return(true) }
 
       it do
-        is_expected.to validate_inclusion_of(:recommendation).in_array(
+        expect(subject).to validate_inclusion_of(:recommendation).in_array(
           %w[decline],
         )
       end
@@ -41,7 +41,7 @@ RSpec.describe AssessorInterface::AssessmentRecommendationForm, type: :model do
       end
 
       it do
-        is_expected.to validate_inclusion_of(:recommendation).in_array(
+        expect(subject).to validate_inclusion_of(:recommendation).in_array(
           %w[request_further_information],
         )
       end

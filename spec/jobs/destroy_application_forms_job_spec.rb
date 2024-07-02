@@ -36,7 +36,7 @@ RSpec.describe DestroyApplicationFormsJob, type: :job do
     end
 
     it "doesn't expire the submitted application form" do
-      expect { perform }.to_not have_enqueued_job(
+      expect { perform }.not_to have_enqueued_job(
         DestroyApplicationFormJob,
       ).with(submitted_application_form)
     end

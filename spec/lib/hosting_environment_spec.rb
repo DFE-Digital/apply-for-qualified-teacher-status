@@ -38,7 +38,9 @@ RSpec.describe HostingEnvironment do
       let(:hosting_environment) { "preproduction" }
 
       it do
-        is_expected.to eq("preprod.apply-for-qts-in-england.education.gov.uk")
+        expect(subject).to eq(
+          "preprod.apply-for-qts-in-england.education.gov.uk",
+        )
       end
     end
 
@@ -58,7 +60,7 @@ RSpec.describe HostingEnvironment do
       let(:hosting_environment) { "review-292" }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "apply-for-qts-review-292-web.test.teacherservices.cloud",
         )
       end

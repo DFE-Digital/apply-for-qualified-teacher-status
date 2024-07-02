@@ -7,7 +7,7 @@ RSpec.describe FakeData::StaffGenerator do
     subject(:call) { described_class.call }
 
     it "doesn't raise an error" do
-      expect { call }.to_not raise_error
+      expect { call }.not_to raise_error
     end
   end
 end

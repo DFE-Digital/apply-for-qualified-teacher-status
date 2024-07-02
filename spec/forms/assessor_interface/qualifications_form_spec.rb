@@ -3,10 +3,6 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::QualificationsForm, type: :model do
-  let(:assessment_section) { create(:assessment_section, :qualifications) }
-  let(:user) { create(:staff) }
-  let(:attributes) { {} }
-
   subject(:form) do
     described_class.for_assessment_section(assessment_section).new(
       assessment_section:,
@@ -14,6 +10,10 @@ RSpec.describe AssessorInterface::QualificationsForm, type: :model do
       **attributes,
     )
   end
+
+  let(:assessment_section) { create(:assessment_section, :qualifications) }
+  let(:user) { create(:staff) }
+  let(:attributes) { {} }
 
   describe "#save" do
     subject(:save) { form.save }

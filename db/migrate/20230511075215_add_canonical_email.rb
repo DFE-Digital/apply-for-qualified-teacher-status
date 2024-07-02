@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCanonicalEmail < ActiveRecord::Migration[7.0]
   def change
     add_column :teachers, :canonical_email, :text, default: "", null: false

@@ -13,6 +13,7 @@ RSpec.describe TeacherInterface::DeleteQualificationForm, type: :model do
 
     context "when confirm is true" do
       let(:confirm) { "true" }
+
       it { is_expected.to validate_presence_of(:qualification) }
     end
   end
@@ -20,7 +21,9 @@ RSpec.describe TeacherInterface::DeleteQualificationForm, type: :model do
   describe "#save" do
     subject(:save) { form.save(validate: true) }
 
+    # rubocop:disable RSpec/LetSetup
     let!(:qualification) { create(:qualification) }
+    # rubocop:enable RSpec/LetSetup
 
     context "when confirm is true" do
       let(:confirm) { "true" }
@@ -34,7 +37,7 @@ RSpec.describe TeacherInterface::DeleteQualificationForm, type: :model do
       let(:confirm) { "false" }
 
       it "doesn't delete the qualification" do
-        expect { save }.to_not change(Qualification, :count)
+        expect { save }.not_to change(Qualification, :count)
       end
     end
   end

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "Teaching authority contact information", type: :view do
-  before { render "shared/teaching_authority_contact_information", region: }
-
   subject { rendered }
+
+  before { render "shared/teaching_authority_contact_information", region: }
 
   let(:region) do
     create(

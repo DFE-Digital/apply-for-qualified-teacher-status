@@ -3,11 +3,6 @@
 require "rails_helper"
 
 RSpec.describe AwardQTS do
-  let(:teacher) { create(:teacher) }
-  let(:user) { create(:staff) }
-  let(:trn) { "abcdef" }
-  let(:access_your_teaching_qualifications_url) { "https://aytq.com" }
-
   subject(:call) do
     described_class.call(
       application_form:,
@@ -16,6 +11,11 @@ RSpec.describe AwardQTS do
       access_your_teaching_qualifications_url:,
     )
   end
+
+  let(:teacher) { create(:teacher) }
+  let(:user) { create(:staff) }
+  let(:trn) { "abcdef" }
+  let(:access_your_teaching_qualifications_url) { "https://aytq.com" }
 
   context "with a submitted application form" do
     let(:application_form) { create(:application_form, :submitted, teacher:) }
@@ -123,29 +123,29 @@ RSpec.describe AwardQTS do
     before { create(:dqt_trn_request, application_form:) }
 
     it "doesn't change the TRN" do
-      expect { call }.to_not change(teacher, :trn)
+      expect { call }.not_to change(teacher, :trn)
     end
 
     it "doesn't change the access your teaching qualifications URL" do
-      expect { call }.to_not change(
+      expect { call }.not_to change(
         teacher,
         :access_your_teaching_qualifications_url,
       )
     end
 
     it "doesn't send an email" do
-      expect { call }.to_not have_enqueued_mail(
+      expect { call }.not_to have_enqueued_mail(
         TeacherMailer,
         :application_awarded,
       )
     end
 
     it "doesn't change the stage" do
-      expect { call }.to_not change(application_form, :stage)
+      expect { call }.not_to change(application_form, :stage)
     end
 
     it "doesn't change the awarded at date" do
-      expect { call }.to_not change(application_form, :awarded_at)
+      expect { call }.not_to change(application_form, :awarded_at)
     end
   end
 end

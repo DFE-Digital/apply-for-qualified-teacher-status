@@ -17,7 +17,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
     context "with an assessment form" do
       before { create(:assessment, application_form:) }
 
-      it { is_expected.to_not be_nil }
+      it { is_expected.not_to be_nil }
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
         create(:further_information_request, assessment:)
       end
 
-      it { is_expected.to_not be_nil }
+      it { is_expected.not_to be_nil }
     end
   end
 
@@ -75,59 +75,63 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
     end
 
     it do
-      is_expected.to include_task_list_item(
+      expect(subject).to include_task_list_item(
         "About you",
         "Enter your personal information",
       )
     end
+
     it do
-      is_expected.to include_task_list_item(
+      expect(subject).to include_task_list_item(
         "About you",
         "Upload your identity document",
       )
     end
 
     it do
-      is_expected.to include_task_list_item(
+      expect(subject).to include_task_list_item(
         "Your English language proficiency",
         "Verify your English language proficiency",
       )
     end
 
     it do
-      is_expected.to include_task_list_item(
+      expect(subject).to include_task_list_item(
         "Your qualifications",
         "Add your teaching qualifications",
       )
     end
+
     it do
-      is_expected.to include_task_list_item(
+      expect(subject).to include_task_list_item(
         "Your qualifications",
         "Enter the age range you can teach",
       )
     end
+
     it do
-      is_expected.to include_task_list_item(
+      expect(subject).to include_task_list_item(
         "Your qualifications",
         "Enter the subjects you can teach",
       )
     end
 
     it do
-      is_expected.to_not include_task_list_item(
+      expect(subject).not_to include_task_list_item(
         "Your work history",
         "Add your work history",
       )
     end
 
     it do
-      is_expected.to_not include_task_list_item(
+      expect(subject).not_to include_task_list_item(
         "Proof that you’re recognised as a teacher",
         "Upload your written statement",
       )
     end
+
     it do
-      is_expected.to_not include_task_list_item(
+      expect(subject).not_to include_task_list_item(
         "Proof that you’re recognised as a teacher",
         "Enter your registration number",
       )
@@ -137,7 +141,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       let(:needs_work_history) { true }
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Your work history",
           "Add your work history",
         )
@@ -148,18 +152,18 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       let(:needs_written_statement) { true }
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Proof that you’re recognised as a teacher",
           "Upload your written statement",
         )
       end
     end
 
-    context "with needs written statement" do
+    context "with needs registration number" do
       let(:needs_registration_number) { true }
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Proof that you’re recognised as a teacher",
           "Enter your registration number",
         )
@@ -184,7 +188,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
         )
       end
 
-      it { is_expected.to_not be_empty }
+      it { is_expected.not_to be_empty }
     end
   end
 
@@ -217,15 +221,15 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
   describe "#declined_reasons" do
     subject(:declined_reasons) { view_object.declined_reasons }
 
-    it { is_expected.to be_empty }
-
     let(:assessment) { create(:assessment, application_form:) }
+
+    it { is_expected.to be_empty }
 
     context "when the country has been made ineligible" do
       let(:country) { create(:country, :ineligible, code: "ZW") }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           {
             "" => [
               {
@@ -245,8 +249,9 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
     context "when further_information_request is present and expired" do
       before { create(:further_information_request, :expired, assessment:) }
+
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           {
             "" => [
               {
@@ -262,8 +267,9 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
     context "when professional_standing_request is present and expired" do
       before { create(:professional_standing_request, :expired, assessment:) }
+
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           {
             "" => [
               {
@@ -279,6 +285,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
     context "with a recommendation note" do
       before { assessment.update!(recommendation_assessor_note: "A note.") }
+
       it { is_expected.to eq({ "" => [{ name: "A note." }] }) }
     end
 
@@ -303,10 +310,11 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
           ],
         )
       end
-      let!(:failure_reasons) { assessment_section.selected_failure_reasons }
+
+      before { assessment_section.selected_failure_reasons }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           {
             "Personal information" => [
               {
@@ -336,7 +344,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       let!(:assessment) { create(:assessment, application_form:) }
 
       context "with sanctions" do
-        let!(:assessment_section) do
+        before do
           create(
             :assessment_section,
             :personal_information,
@@ -349,7 +357,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       end
 
       context "with already QTS" do
-        let!(:assessment_section) do
+        before do
           create(
             :assessment_section,
             :personal_information,

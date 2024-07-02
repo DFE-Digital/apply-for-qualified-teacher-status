@@ -228,7 +228,7 @@ RSpec.describe "Assessor verifying references", type: :system do
   end
 
   def and_i_cant_resend_the_email
-    expect(assessor_verify_reference_request_page).to_not have_css(
+    expect(assessor_verify_reference_request_page).not_to have_css(
       ".govuk-details",
     )
   end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe "Throttling", rack_attack: true do
+RSpec.describe "Throttling", :rack_attack do
   shared_examples "throttled" do |path|
     context path do
       subject(:cache_count) do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTeachingAuthorityOnlineCheckerUrlToCountriesAndRegions < ActiveRecord::Migration[
   7.0
 ]

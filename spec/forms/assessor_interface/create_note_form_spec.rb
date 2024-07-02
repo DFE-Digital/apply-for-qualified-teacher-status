@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe AssessorInterface::CreateNoteForm, type: :model do
+  subject { described_class.new(application_form:, author:, text:) }
+
   let(:application_form) { create(:application_form) }
   let(:author) { create(:staff) }
   let(:text) { "A note." }
-
-  subject { described_class.new(application_form:, author:, text:) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:application_form) }
@@ -17,7 +19,7 @@ RSpec.describe AssessorInterface::CreateNoteForm, type: :model do
     let(:note) { Note.last }
 
     it "creates a note" do
-      expect { subject.save }.to change { Note.count }.by(1)
+      expect { subject.save }.to change(Note, :count).by(1)
 
       expect(note.application_form).to eq(application_form)
       expect(note.author).to eq(author)

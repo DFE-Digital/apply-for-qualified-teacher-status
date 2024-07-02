@@ -35,7 +35,7 @@ RSpec.describe AssessmentSection, type: :model do
     it { is_expected.to validate_presence_of(:key) }
 
     it do
-      is_expected.to define_enum_for(:key).with_values(
+      expect(subject).to define_enum_for(:key).with_values(
         personal_information: "personal_information",
         qualifications: "qualifications",
         age_range_subjects: "age_range_subjects",
@@ -73,16 +73,19 @@ RSpec.describe AssessmentSection, type: :model do
 
     context "with a passed assessment" do
       before { assessment_section.passed = true }
+
       it { is_expected.to eq("accepted") }
     end
 
     context "with a failed assessment" do
       before { assessment_section.passed = false }
+
       it { is_expected.to eq("rejected") }
     end
 
     context "with no assessment yet" do
       before { assessment_section.passed = nil }
+
       it { is_expected.to eq("not_started") }
     end
   end

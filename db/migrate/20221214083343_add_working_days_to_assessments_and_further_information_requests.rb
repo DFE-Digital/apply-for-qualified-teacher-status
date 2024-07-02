@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddWorkingDaysToAssessmentsAndFurtherInformationRequests < ActiveRecord::Migration[
   7.0
 ]

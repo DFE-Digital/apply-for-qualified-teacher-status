@@ -3,13 +3,6 @@
 require "rails_helper"
 
 RSpec.describe UpdateApplicationFormName do
-  let(:application_form) do
-    create(:application_form, :submitted, :with_personal_information)
-  end
-  let(:user) { create(:staff) }
-  let(:new_given_names) { "New given names" }
-  let(:new_family_name) { "New family name" }
-
   subject(:call) do
     described_class.call(
       application_form:,
@@ -18,6 +11,13 @@ RSpec.describe UpdateApplicationFormName do
       family_name: new_family_name,
     )
   end
+
+  let(:application_form) do
+    create(:application_form, :submitted, :with_personal_information)
+  end
+  let(:user) { create(:staff) }
+  let(:new_given_names) { "New given names" }
+  let(:new_family_name) { "New family name" }
 
   it "changes the contact name" do
     expect { call }.to change(application_form, :given_names).to(

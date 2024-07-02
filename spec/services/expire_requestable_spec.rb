@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe ExpireRequestable do
   describe "#call" do
-    let(:user) { create(:staff) }
-
     subject(:call) { described_class.call(requestable:, user:) }
+
+    let(:user) { create(:staff) }
 
     shared_examples_for "expiring a requestable" do
       it { is_expected.to be_expired }
@@ -36,7 +36,7 @@ RSpec.describe ExpireRequestable do
 
     shared_examples_for "declining the application" do
       it "declines the application" do
-        expect(subject.application_form.declined_at).to_not be_nil
+        expect(subject.application_form.declined_at).not_to be_nil
       end
     end
 

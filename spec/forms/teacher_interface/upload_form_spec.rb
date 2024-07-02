@@ -150,21 +150,25 @@ RSpec.describe TeacherInterface::UploadForm, type: :model do
 
       context "with a Faraday::ConnectionFailed" do
         let(:timeout_error) { Faraday::ConnectionFailed.new(nil, nil) }
+
         it_behaves_like "a timeout error"
       end
 
       context "with a Faraday::TimeoutError" do
         let(:timeout_error) { Faraday::TimeoutError.new }
+
         it_behaves_like "a timeout error"
       end
 
       context "with a Net::ReadTimeout" do
         let(:timeout_error) { Net::ReadTimeout.new }
+
         it_behaves_like "a timeout error"
       end
 
       context "with a Net::WriteTimeout" do
         let(:timeout_error) { Net::WriteTimeout.new }
+
         it_behaves_like "a timeout error"
       end
     end

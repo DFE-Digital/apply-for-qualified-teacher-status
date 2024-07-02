@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe RequestConsent do
+  subject(:call) { described_class.call(assessment:, user:) }
+
   let(:application_form) { create(:application_form, :submitted) }
   let(:assessment) { create(:assessment, application_form:) }
   let(:user) { create(:staff) }
-
-  subject(:call) { described_class.call(assessment:, user:) }
 
   before { create(:consent_request, assessment:) }
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Staff::InvitationsController < Devise::InvitationsController
   include AssessorCurrentNamespace
 

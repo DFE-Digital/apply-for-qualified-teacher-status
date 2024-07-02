@@ -56,11 +56,13 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
 
     context "when the teaching authority provides the written statement" do
       let(:teaching_authority_provides_written_statement) { true }
+
       it { is_expected.to eq(36.weeks) }
     end
 
     context "when the applicant provides the written statement" do
       let(:teaching_authority_provides_written_statement) { false }
+
       it { is_expected.to eq(6.weeks) }
     end
   end
@@ -93,7 +95,7 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
       let(:declined) { true }
 
       it "doesn't send an email" do
-        expect { after_received }.to_not have_enqueued_mail(
+        expect { after_received }.not_to have_enqueued_mail(
           TeacherMailer,
           :professional_standing_received,
         )
@@ -117,7 +119,7 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
       let(:declined) { true }
 
       it "doesn't send an email" do
-        expect { after_received }.to_not have_enqueued_mail(
+        expect { after_received }.not_to have_enqueued_mail(
           TeacherMailer,
           :professional_standing_received,
         )
@@ -129,7 +131,7 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
       let(:declined) { false }
 
       it "doesn't send an email" do
-        expect { after_received }.to_not have_enqueued_mail(
+        expect { after_received }.not_to have_enqueued_mail(
           TeacherMailer,
           :professional_standing_received,
         )
@@ -166,7 +168,7 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
         let(:withdrawn) { true }
 
         it "doesn't decline" do
-          expect(DeclineQTS).to_not receive(:call)
+          expect(DeclineQTS).not_to receive(:call)
         end
       end
 
@@ -186,7 +188,7 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
         let(:withdrawn) { true }
 
         it "doesn't decline" do
-          expect(DeclineQTS).to_not receive(:call)
+          expect(DeclineQTS).not_to receive(:call)
         end
       end
 
@@ -194,7 +196,7 @@ RSpec.describe ProfessionalStandingRequest, type: :model do
         let(:withdrawn) { false }
 
         it "doesn't decline" do
-          expect(DeclineQTS).to_not receive(:call)
+          expect(DeclineQTS).not_to receive(:call)
         end
       end
     end

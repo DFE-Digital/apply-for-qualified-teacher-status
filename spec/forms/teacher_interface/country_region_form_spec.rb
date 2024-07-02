@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TeacherInterface::CountryRegionForm, type: :model do
@@ -84,7 +86,7 @@ RSpec.describe TeacherInterface::CountryRegionForm, type: :model do
 
     it "creates an application form" do
       application_form = teacher.application_form
-      expect(application_form).to_not be_nil
+      expect(application_form).not_to be_nil
       expect(application_form.region).to eq(region)
     end
   end

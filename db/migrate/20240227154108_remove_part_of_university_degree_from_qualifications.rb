@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemovePartOfUniversityDegreeFromQualifications < ActiveRecord::Migration[
   7.1
 ]

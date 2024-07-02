@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.describe RollbackAssessment do
-  let(:user) { create(:staff) }
-
   subject(:call) { described_class.call(assessment:, user:) }
+
+  let(:user) { create(:staff) }
 
   context "with an award assessment" do
     let(:application_form) { create(:application_form, :awarded) }
@@ -160,7 +160,7 @@ RSpec.describe RollbackAssessment do
     let(:assessment) { create(:assessment, :unknown, application_form:) }
 
     it "doesn't change the assessment state" do
-      expect { call }.to_not change(assessment, :unknown?)
+      expect { call }.not_to change(assessment, :unknown?)
     end
 
     it "reverts application form status" do

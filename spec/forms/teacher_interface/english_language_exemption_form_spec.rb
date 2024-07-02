@@ -3,12 +3,12 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::EnglishLanguageExemptionForm, type: :model do
-  let(:application_form) { create(:application_form) }
-  let(:exemption_field) { "citizenship" }
-
   subject(:form) do
     described_class.new(application_form:, exemption_field:, exempt:)
   end
+
+  let(:application_form) { create(:application_form) }
+  let(:exemption_field) { "citizenship" }
 
   describe "validations" do
     let(:exempt) { "" }
@@ -19,9 +19,9 @@ RSpec.describe TeacherInterface::EnglishLanguageExemptionForm, type: :model do
   end
 
   describe "#save" do
-    let(:exempt) { "true" }
-
     subject(:save) { form.save(validate: true) }
+
+    let(:exempt) { "true" }
 
     it "saves the application form" do
       expect { save }.to change(

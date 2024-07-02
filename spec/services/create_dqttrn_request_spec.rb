@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe CreateDQTTRNRequest do
+  subject(:call) { described_class.call(application_form:, user:) }
+
   let(:application_form) { create(:application_form, :submitted) }
   let(:user) { create(:staff) }
-
-  subject(:call) { described_class.call(application_form:, user:) }
 
   it "creates a DQTTRNRequest" do
     expect { call }.to change(DQTTRNRequest, :count).by(1)

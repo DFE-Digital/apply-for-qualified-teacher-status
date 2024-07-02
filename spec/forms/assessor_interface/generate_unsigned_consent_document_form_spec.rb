@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe AssessorInterface::GenerateUnsignedConsentDocumentForm,
                type: :model do
-  let(:assessment) { create(:assessment) }
-
   subject(:form) { described_class.new(assessment:, generated:) }
+
+  let(:assessment) { create(:assessment) }
 
   describe "validations" do
     let(:generated) { "" }
@@ -33,7 +33,7 @@ RSpec.describe AssessorInterface::GenerateUnsignedConsentDocumentForm,
       let(:generated) { "false" }
 
       it "doesn't set unsigned_consent_document_downloaded" do
-        expect { save }.to_not change(
+        expect { save }.not_to change(
           assessment,
           :unsigned_consent_document_generated,
         )

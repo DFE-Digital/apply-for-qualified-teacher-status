@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PersonasHelper
   def region_bucket_for_persona(persona)
     REGION_BUCKETS[persona.slice(:status_check, :sanction_check)]

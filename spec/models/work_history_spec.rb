@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: work_histories
@@ -59,20 +61,20 @@ RSpec.describe WorkHistory, type: :model do
   end
 
   describe "#current_or_most_recent_role?" do
-    let(:work_history) { build(:work_history) }
-
     subject(:current_or_most_recent_role?) do
       work_history.current_or_most_recent_role?
     end
 
+    let(:work_history) { build(:work_history) }
+
     context "when there are no saved work histories" do
-      it { is_expected.to eq(true) }
+      it { is_expected.to be(true) }
     end
 
     context "when there are saved work histories and this is the first" do
       before { work_history.save! }
 
-      it { is_expected.to eq(true) }
+      it { is_expected.to be(true) }
     end
 
     context "when there are saved work histories and this is not the first" do
@@ -84,7 +86,7 @@ RSpec.describe WorkHistory, type: :model do
         )
       end
 
-      it { is_expected.to eq(false) }
+      it { is_expected.to be(false) }
     end
   end
 

@@ -25,7 +25,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
     subject(:all_task_items) { view_object.all_task_items }
 
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         [
           {
             title: "Check and select consent method",
@@ -46,7 +46,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
       before { qualification_request.consent_method_unsigned! }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           [
             {
               title: "Check and select consent method",
@@ -119,7 +119,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
       before { qualification_request.consent_method_unsigned! }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           [
             {
               title: "Generate consent document",
@@ -155,7 +155,7 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
       end
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           [
             {
               title: "Upload consent document",

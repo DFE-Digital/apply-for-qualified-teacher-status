@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateProfessionalStandingRequest < ActiveRecord::Migration[7.0]
   def change
     create_table :professional_standing_requests do |t|

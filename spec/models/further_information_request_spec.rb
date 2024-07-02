@@ -48,6 +48,7 @@ RSpec.describe FurtherInformationRequest do
             ),
         )
       end
+
       before do
         create(
           :further_information_request,

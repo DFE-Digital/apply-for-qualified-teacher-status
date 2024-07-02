@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTeachingAuthorityRequiresSubmissionEmailToRegions < ActiveRecord::Migration[
   7.0
 ]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EligibilityInterface::RegionForm
   include ActiveModel::Model
   include ActiveModel::Attributes

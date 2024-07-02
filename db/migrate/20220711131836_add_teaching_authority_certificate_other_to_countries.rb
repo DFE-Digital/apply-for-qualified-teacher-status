@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTeachingAuthorityCertificateOtherToCountries < ActiveRecord::Migration[
   7.0
 ]

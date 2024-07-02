@@ -19,7 +19,7 @@ RSpec.describe ApplicationFormOverview::Component, type: :component do
   describe "summary list" do
     subject(:dl) { component.at_css("dl") }
 
-    it { is_expected.to_not be_nil }
+    it { is_expected.not_to be_nil }
 
     describe "text" do
       subject(:text) { dl.text.strip }

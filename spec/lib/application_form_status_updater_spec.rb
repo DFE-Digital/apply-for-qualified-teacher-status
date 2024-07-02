@@ -26,13 +26,13 @@ RSpec.describe ApplicationFormStatusUpdater do
 
   shared_examples "doesn't change action required by" do
     it "doesn't change action required by from none" do
-      expect { call }.to_not change(application_form, :action_required_by).from(
+      expect { call }.not_to change(application_form, :action_required_by).from(
         "none",
       )
     end
 
     it "doesn't record a timeline event" do
-      expect { call }.to_not have_recorded_timeline_event(
+      expect { call }.not_to have_recorded_timeline_event(
         :action_required_by_changed,
         creator: user,
         application_form:,
@@ -366,15 +366,15 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "doesn't change action required by"
 
       it "doesn't change the stage from draft" do
-        expect { call }.to_not change(application_form, :stage).from("draft")
+        expect { call }.not_to change(application_form, :stage).from("draft")
       end
 
       it "doesn't record a timeline event" do
-        expect { call }.to_not have_recorded_timeline_event(:stage_changed)
+        expect { call }.not_to have_recorded_timeline_event(:stage_changed)
       end
 
       it "doesn't change the statuses from draft" do
-        expect { call }.to_not change(application_form, :statuses).from(
+        expect { call }.not_to change(application_form, :statuses).from(
           %w[draft],
         )
       end

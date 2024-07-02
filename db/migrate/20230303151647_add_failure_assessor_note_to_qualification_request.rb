@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddFailureAssessorNoteToQualificationRequest < ActiveRecord::Migration[
   7.0
 ]

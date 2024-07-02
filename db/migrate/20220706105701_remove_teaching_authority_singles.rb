@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveTeachingAuthoritySingles < ActiveRecord::Migration[7.0]
   def up
     change_table :regions, bulk: true do |t|

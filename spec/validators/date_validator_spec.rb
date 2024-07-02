@@ -3,17 +3,14 @@
 require "rails_helper"
 
 RSpec.describe DateValidator do
+  subject(:model) { Validatable.new }
+
   before do
     stub_const("Validatable", Class.new).class_eval do
       include ActiveModel::Validations
       attr_accessor :date
       validates :date, date: true
     end
-  end
-
-  subject(:model) { Validatable.new }
-
-  before do
     model.date = date
     model.valid?
   end

@@ -3,14 +3,14 @@
 require "rails_helper"
 
 RSpec.describe UpdateTeacherEmail do
+  subject(:call) do
+    described_class.call(application_form:, user:, email: new_email)
+  end
+
   let(:teacher) { create(:teacher, email: "old@example.com") }
   let(:application_form) { create(:application_form, teacher:) }
   let(:user) { create(:staff) }
   let(:new_email) { "new+123@example.org" }
-
-  subject(:call) do
-    described_class.call(application_form:, user:, email: new_email)
-  end
 
   it "changes the email address" do
     expect { call }.to change(teacher, :email).to(new_email)

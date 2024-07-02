@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PageObjects
   class PageHeader < SitePrism::Section
     element :search_link, "a.govuk-header__link", text: "Search"

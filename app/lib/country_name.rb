@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CountryName
   class << self
     def from_code(code, with_definite_article: false)

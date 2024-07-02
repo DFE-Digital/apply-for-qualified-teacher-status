@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddQualificationChangedWorkHistoryDurationToApplicationForms < ActiveRecord::Migration[
   7.1
 ]

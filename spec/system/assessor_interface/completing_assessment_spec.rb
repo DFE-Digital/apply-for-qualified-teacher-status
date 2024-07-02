@@ -425,7 +425,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
         timeline_event.heading.text.include?("Application declined")
       end
 
-    expect(declined_timeline_event).to_not be_nil
+    expect(declined_timeline_event).not_to be_nil
   end
 
   delegate :reference, to: :application_form

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Staff::ConfirmationsController < Devise::ConfirmationsController
   include AssessorCurrentNamespace
 

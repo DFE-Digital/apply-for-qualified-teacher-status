@@ -31,7 +31,7 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
       end
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           [
             {
               title: "BSc Maths (University of Maths)",
@@ -65,7 +65,7 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
         before { consent_request.update!(unsigned_document_downloaded: true) }
 
         it do
-          is_expected.to eq(
+          expect(subject).to eq(
             [
               {
                 title: "BSc Maths (University of Maths)",
@@ -105,7 +105,7 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
           end
 
           it do
-            is_expected.to eq(
+            expect(subject).to eq(
               [
                 {
                   title: "BSc Maths (University of Maths)",

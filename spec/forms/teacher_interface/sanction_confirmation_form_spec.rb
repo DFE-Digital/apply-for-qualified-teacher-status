@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TeacherInterface::SanctionConfirmationForm, type: :model do
-  let(:application_form) { build(:application_form) }
-
   subject(:form) do
     described_class.new(application_form:, confirmed_no_sanctions:)
   end
+
+  let(:application_form) { build(:application_form) }
 
   describe "validations" do
     context "when confirmed is false" do
@@ -21,7 +23,7 @@ RSpec.describe TeacherInterface::SanctionConfirmationForm, type: :model do
     end
 
     context "when confirmed is nil" do
-      let(:confirmed_no_sanctions) { false }
+      let(:confirmed_no_sanctions) { nil }
 
       it { is_expected.not_to be_valid }
     end

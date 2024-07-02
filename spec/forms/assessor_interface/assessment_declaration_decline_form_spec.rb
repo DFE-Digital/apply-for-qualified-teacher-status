@@ -30,7 +30,9 @@ RSpec.describe AssessorInterface::AssessmentDeclarationDeclineForm,
       end
 
       it do
-        is_expected.not_to validate_presence_of(:recommendation_assessor_note)
+        expect(subject).not_to validate_presence_of(
+          :recommendation_assessor_note,
+        )
       end
     end
   end

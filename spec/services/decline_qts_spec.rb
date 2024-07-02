@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe DeclineQTS do
+  subject(:call) { described_class.call(application_form:, user:) }
+
   let(:teacher) { create(:teacher) }
   let(:user) { create(:staff) }
-
-  subject(:call) { described_class.call(application_form:, user:) }
 
   context "with an application form" do
     let(:application_form) { create(:application_form, :submitted, teacher:) }
@@ -47,22 +47,22 @@ RSpec.describe DeclineQTS do
     let(:application_form) { create(:application_form, :declined, teacher:) }
 
     it "doesn't send an email" do
-      expect { call }.to_not have_enqueued_mail(
+      expect { call }.not_to have_enqueued_mail(
         TeacherMailer,
         :application_declined,
       )
     end
 
     it "doesn't change the stage" do
-      expect { call }.to_not change(application_form, :stage)
+      expect { call }.not_to change(application_form, :stage)
     end
 
     it "doesn't change the declined at date" do
-      expect { call }.to_not change(application_form, :declined_at)
+      expect { call }.not_to change(application_form, :declined_at)
     end
 
     it "doesn't record a timeline event" do
-      expect { call }.to_not have_recorded_timeline_event(
+      expect { call }.not_to have_recorded_timeline_event(
         :application_declined,
         creator: user,
         application_form:,

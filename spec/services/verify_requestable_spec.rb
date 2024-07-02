@@ -3,12 +3,12 @@
 require "rails_helper"
 
 RSpec.describe VerifyRequestable do
+  subject(:call) { described_class.call(requestable:, user:, passed:, note:) }
+
   let(:requestable) { create(:received_professional_standing_request) }
   let(:user) { create(:staff) }
   let(:passed) { true }
   let(:note) { "Note." }
-
-  subject(:call) { described_class.call(requestable:, user:, passed:, note:) }
 
   describe "requestable verify decision" do
     subject { requestable.verify_passed }
