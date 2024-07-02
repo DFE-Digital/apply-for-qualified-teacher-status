@@ -1,5 +1,4 @@
 <% content_for :page_title, t(".title") %>
-<% content_for :feedback_url, t("service.form.referee_feedback") %>
 
 <% if @reference_request.received? %>
   <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
@@ -7,20 +6,6 @@
   <h2 class="govuk-heading-m">Thank you for submitting your response.</h2>
 
   <p class="govuk-body">The QTS assessor will now review your response and continue their review of the applicant.</p>
-
-  <h3 class="govuk-heading-s">Help us to improve this service</h3>
-
-  <p class="govuk-body">
-    We're always trying to improve this service and boost teacher recruitment from overseas. So we'd like to talk to people about their experience of using this service.
-  </p>
-
-  <p class="govuk-body">
-    If you'd like to help, please <%= govuk_link_to "complete this short form", t("service.form.referee_research") %>.
-  </p>
-
-  <p class="govuk-body">
-    If you match our search criteria, we'll invite you to take part in research.
-  </p>
 
   <p class="govuk-body">You do not need to do anything else. You can now close this page.</p>
 <% else %>

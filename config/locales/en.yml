@@ -17,12 +17,7 @@ en:
 
     url: https://apply-for-qts-in-england.education.gov.uk
 
-    form:
-      feedback: https://forms.office.com/e/P70VPi8Ev1
-      opt_out_research: https://forms.office.com/e/LiNd47gbde
-      referee_feedback: https://forms.office.com/e/kuDa4nsySt
-      referee_research: https://forms.office.com/e/YhQmMgRNZM
-      research: https://forms.office.com/e/dTGEjsTN72
+    feedback_url: https://forms.office.com/e/P70VPi8Ev1
 
   teacher:
     registration:
