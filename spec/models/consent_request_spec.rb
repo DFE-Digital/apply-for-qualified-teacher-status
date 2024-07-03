@@ -40,6 +40,7 @@ RSpec.describe ConsentRequest, type: :model do
 
   describe "#expires_after" do
     subject(:expires_after) { consent_request.expires_after }
+
     it { is_expected.to eq(6.weeks) }
   end
 end

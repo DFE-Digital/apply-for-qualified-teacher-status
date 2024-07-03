@@ -1,20 +1,22 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe AssessorInterface::ReviewerAssignmentForm, type: :model do
+  subject(:form) do
+    described_class.new(application_form:, staff:, reviewer_id:)
+  end
+
   let!(:application_form) do
     create(:application_form, :with_personal_information, :submitted)
   end
   let(:staff) { create(:staff) }
   let(:reviewer_id) { create(:staff).id }
 
-  subject(:form) do
-    described_class.new(application_form:, staff:, reviewer_id:)
-  end
-
   describe "validations" do
     it { is_expected.to validate_presence_of(:application_form) }
     it { is_expected.to validate_presence_of(:staff) }
-    it { is_expected.to_not validate_presence_of(:reviewer_id) }
+    it { is_expected.not_to validate_presence_of(:reviewer_id) }
 
     context "if reviewer matches assessor" do
       before { application_form.update!(assessor_id: reviewer_id) }

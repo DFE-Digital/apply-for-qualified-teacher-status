@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: timeline_events
@@ -70,17 +72,17 @@ RSpec.describe TimelineEvent do
     context "with a creator reference" do
       before { timeline_event.creator = create(:staff) }
 
-      it { is_expected.to_not validate_presence_of(:creator_name) }
+      it { is_expected.not_to validate_presence_of(:creator_name) }
     end
 
     context "with a creator name" do
       before { timeline_event.creator_name = "DQT" }
 
-      it { is_expected.to_not validate_presence_of(:creator) }
+      it { is_expected.not_to validate_presence_of(:creator) }
     end
 
     it do
-      is_expected.to define_enum_for(:event_type).with_values(
+      expect(subject).to define_enum_for(:event_type).with_values(
         action_required_by_changed: "action_required_by_changed",
         age_range_subjects_verified: "age_range_subjects_verified",
         application_declined: "application_declined",
@@ -103,7 +105,7 @@ RSpec.describe TimelineEvent do
     context "with an assessor assigned event type" do
       before { timeline_event.event_type = :assessor_assigned }
 
-      it { is_expected.to_not validate_presence_of(:assignee) }
+      it { is_expected.not_to validate_presence_of(:assignee) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -125,7 +127,7 @@ RSpec.describe TimelineEvent do
     context "with an reviewer assigned event type" do
       before { timeline_event.event_type = :reviewer_assigned }
 
-      it { is_expected.to_not validate_presence_of(:assignee) }
+      it { is_expected.not_to validate_presence_of(:assignee) }
       it { is_expected.to validate_absence_of(:assessment_section) }
       it { is_expected.to validate_absence_of(:note) }
       it { is_expected.to validate_absence_of(:mailer_class_name) }
@@ -255,7 +257,7 @@ RSpec.describe TimelineEvent do
     end
 
     context "with a requestable requested event type" do
-      before { timeline_event.event_type = :requestable_received }
+      before { timeline_event.event_type = :requestable_requested }
 
       it { is_expected.to validate_absence_of(:assignee) }
       it { is_expected.to validate_absence_of(:assessment_section) }
@@ -269,8 +271,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_presence_of(:requestable_id) }
       it { is_expected.to validate_presence_of(:requestable_type) }
+
       it do
-        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+        expect(subject).to validate_inclusion_of(:requestable_type).in_array(
           %w[
             FurtherInformationRequest
             ProfessionalStandingRequest
@@ -279,6 +282,7 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+
       it { is_expected.to validate_absence_of(:work_history_id) }
       it { is_expected.to validate_absence_of(:column_name) }
       it { is_expected.to validate_absence_of(:old_value) }
@@ -301,8 +305,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_presence_of(:requestable_id) }
       it { is_expected.to validate_presence_of(:requestable_type) }
+
       it do
-        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+        expect(subject).to validate_inclusion_of(:requestable_type).in_array(
           %w[
             FurtherInformationRequest
             ProfessionalStandingRequest
@@ -311,6 +316,7 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+
       it { is_expected.to validate_absence_of(:work_history_id) }
       it { is_expected.to validate_absence_of(:column_name) }
       it { is_expected.to validate_absence_of(:old_value) }
@@ -333,8 +339,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_presence_of(:requestable_id) }
       it { is_expected.to validate_presence_of(:requestable_type) }
+
       it do
-        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+        expect(subject).to validate_inclusion_of(:requestable_type).in_array(
           %w[
             FurtherInformationRequest
             ProfessionalStandingRequest
@@ -343,6 +350,7 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+
       it { is_expected.to validate_absence_of(:work_history_id) }
       it { is_expected.to validate_absence_of(:column_name) }
       it { is_expected.to validate_absence_of(:old_value) }
@@ -365,8 +373,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_presence_of(:requestable_id) }
       it { is_expected.to validate_presence_of(:requestable_type) }
+
       it do
-        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+        expect(subject).to validate_inclusion_of(:requestable_type).in_array(
           %w[
             FurtherInformationRequest
             ProfessionalStandingRequest
@@ -375,6 +384,7 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+
       it { is_expected.to validate_absence_of(:work_history_id) }
       it { is_expected.to validate_absence_of(:column_name) }
       it { is_expected.to validate_presence_of(:old_value) }
@@ -382,7 +392,7 @@ RSpec.describe TimelineEvent do
     end
 
     context "with a requestable verified event type" do
-      before { timeline_event.event_type = :requestable_reviewed }
+      before { timeline_event.event_type = :requestable_verified }
 
       it { is_expected.to validate_absence_of(:assignee) }
       it { is_expected.to validate_absence_of(:assessment_section) }
@@ -396,8 +406,9 @@ RSpec.describe TimelineEvent do
       it { is_expected.to validate_absence_of(:subjects) }
       it { is_expected.to validate_presence_of(:requestable_id) }
       it { is_expected.to validate_presence_of(:requestable_type) }
+
       it do
-        is_expected.to validate_inclusion_of(:requestable_type).in_array(
+        expect(subject).to validate_inclusion_of(:requestable_type).in_array(
           %w[
             FurtherInformationRequest
             ProfessionalStandingRequest
@@ -406,6 +417,7 @@ RSpec.describe TimelineEvent do
           ],
         )
       end
+
       it { is_expected.to validate_absence_of(:work_history_id) }
       it { is_expected.to validate_absence_of(:column_name) }
       it { is_expected.to validate_presence_of(:old_value) }

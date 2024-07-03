@@ -10,7 +10,8 @@ RSpec.describe Filters::Stage do
     let(:scope) { ApplicationForm.all }
 
     let!(:included) { create(:application_form, :not_started_stage) }
-    let!(:excluded) { create(:application_form, :assessment_stage) }
+
+    before { create(:application_form, :assessment_stage) }
 
     it { is_expected.to contain_exactly(included) }
   end
@@ -20,7 +21,8 @@ RSpec.describe Filters::Stage do
     let(:scope) { ApplicationForm.all }
 
     let!(:included) { create(:application_form, :not_started_stage) }
-    let!(:excluded) { create(:application_form, :completed_stage) }
+
+    before { create(:application_form, :completed_stage) }
 
     it { is_expected.to contain_exactly(included) }
   end

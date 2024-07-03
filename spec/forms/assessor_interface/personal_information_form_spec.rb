@@ -3,12 +3,6 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::PersonalInformationForm, type: :model do
-  let(:assessment_section) do
-    create(:assessment_section, :personal_information)
-  end
-  let(:user) { create(:staff) }
-  let(:attributes) { {} }
-
   subject(:form) do
     described_class.for_assessment_section(assessment_section).new(
       assessment_section:,
@@ -17,10 +11,17 @@ RSpec.describe AssessorInterface::PersonalInformationForm, type: :model do
     )
   end
 
+  let(:assessment_section) do
+    create(:assessment_section, :personal_information)
+  end
+  let(:user) { create(:staff) }
+  let(:attributes) { {} }
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:user) }
+
     it do
-      is_expected.to allow_values(true, false).for(
+      expect(subject).to allow_values(true, false).for(
         :english_language_section_passed,
       )
     end

@@ -7,11 +7,13 @@ RSpec.shared_examples_for "an age range subjects form" do
 
     context "with a minimum too low" do
       let(:age_range_subjects_attributes) { { age_range_min: "1" } }
+
       it { is_expected.to be_invalid }
     end
 
     context "with a minimum too high" do
       let(:age_range_subjects_attributes) { { age_range_min: "20" } }
+
       it { is_expected.to be_invalid }
     end
 
@@ -20,6 +22,7 @@ RSpec.shared_examples_for "an age range subjects form" do
         let(:age_range_subjects_attributes) do
           { age_range_min: "7", age_range_max: "1" }
         end
+
         it { is_expected.to be_invalid }
       end
 
@@ -27,17 +30,18 @@ RSpec.shared_examples_for "an age range subjects form" do
         let(:age_range_subjects_attributes) do
           { age_range_min: "7", age_range_max: "20" }
         end
+
         it { is_expected.to be_invalid }
       end
     end
 
-    it { is_expected.to_not validate_presence_of(:age_range_note) }
+    it { is_expected.not_to validate_presence_of(:age_range_note) }
 
     it { is_expected.to validate_presence_of(:subject_1) }
     it { is_expected.to validate_presence_of(:subject_1_raw) }
-    it { is_expected.to_not validate_presence_of(:subject_2) }
-    it { is_expected.to_not validate_presence_of(:subject_3) }
-    it { is_expected.to_not validate_presence_of(:subjects_note) }
+    it { is_expected.not_to validate_presence_of(:subject_2) }
+    it { is_expected.not_to validate_presence_of(:subject_3) }
+    it { is_expected.not_to validate_presence_of(:subjects_note) }
   end
 
   describe "#save" do

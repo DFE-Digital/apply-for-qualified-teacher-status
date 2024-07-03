@@ -45,7 +45,8 @@ RSpec.describe Filters::Reference do
     let(:params) { { reference: "ABCDEF    " } }
     let(:scope) { ApplicationForm.all }
     let!(:included) { create(:application_form, reference: "ABCDEF") }
-    let!(:excluded) { create(:application_form, reference: "QRHGF") }
+
+    before { create(:application_form, reference: "QRHGF") }
 
     it "returns a filtered scope" do
       expect(subject).to contain_exactly(included)
@@ -56,7 +57,8 @@ RSpec.describe Filters::Reference do
     let(:params) { { reference: "    ABCDEF" } }
     let(:scope) { ApplicationForm.all }
     let!(:included) { create(:application_form, reference: "ABCDEF") }
-    let!(:excluded) { create(:application_form, reference: "QRHGF") }
+
+    before { create(:application_form, reference: "QRHGF") }
 
     it "returns a filtered scope" do
       expect(subject).to contain_exactly(included)

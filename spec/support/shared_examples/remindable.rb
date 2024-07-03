@@ -8,7 +8,8 @@ RSpec.shared_examples "a remindable" do
   describe "scopes" do
     describe "#remindable" do
       subject(:remindable) { described_class.remindable }
-      it { is_expected.to_not be_nil }
+
+      it { is_expected.not_to be_nil }
     end
   end
 

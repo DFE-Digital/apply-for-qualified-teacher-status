@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe Filters::Assessor do
+  subject { described_class.apply(scope:, params:) }
+
   let(:assessor_one) { create(:staff) }
   let(:assessor_two) { create(:staff) }
-
-  subject { described_class.apply(scope:, params:) }
 
   context "the params include assessor_id" do
     describe "filtering 'assessor'" do
@@ -15,7 +15,7 @@ RSpec.describe Filters::Assessor do
 
       let!(:included) { create(:application_form, assessor: assessor_one) }
 
-      let!(:filtered) { create(:application_form, assessor: assessor_two) }
+      before { create(:application_form, assessor: assessor_two) }
 
       it "returns a filtered scope" do
         expect(subject).to contain_exactly(included)
@@ -28,7 +28,7 @@ RSpec.describe Filters::Assessor do
 
       let!(:included) { create(:application_form, reviewer: assessor_one) }
 
-      let!(:filtered) { create(:application_form, reviewer: assessor_two) }
+      before { create(:application_form, reviewer: assessor_two) }
 
       it "returns a filtered scope" do
         expect(subject).to contain_exactly(included)
@@ -47,7 +47,7 @@ RSpec.describe Filters::Assessor do
       ]
     end
 
-    let!(:filtered) do
+    before do
       create(:application_form)
       create(:application_form, assessor: create(:staff))
     end
@@ -63,7 +63,7 @@ RSpec.describe Filters::Assessor do
 
     let!(:included) { [create(:application_form)] }
 
-    let!(:filtered) { create(:application_form, assessor: create(:staff)) }
+    before { create(:application_form, assessor: create(:staff)) }
 
     it "returns a filtered scope" do
       expect(subject).to match_array(included)

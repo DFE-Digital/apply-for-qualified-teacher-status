@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAssessmentSections < ActiveRecord::Migration[7.0]
   def change
     create_table :assessment_sections do |t|

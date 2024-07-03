@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe UnreceiveRequestable do
+  subject(:call) { described_class.call(requestable:, user:) }
+
   let(:application_form) do
     create(:application_form, :submitted, statuses: %w[received_ecctis])
   end
@@ -21,8 +23,6 @@ RSpec.describe UnreceiveRequestable do
     )
   end
   let(:user) { "John Smith" }
-
-  subject(:call) { described_class.call(requestable:, user:) }
 
   context "with an already not received requestable" do
     before { requestable.update!(received_at: nil) }

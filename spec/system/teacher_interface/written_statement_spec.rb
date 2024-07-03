@@ -74,7 +74,7 @@ RSpec.describe "Teacher written statement", type: :system do
   def and_i_see_the_upload_written_statement_task
     expect(
       teacher_application_page.upload_written_statement_task_item,
-    ).to_not be_nil
+    ).not_to be_nil
   end
 
   def when_i_click_the_upload_written_statement_task
@@ -111,7 +111,7 @@ RSpec.describe "Teacher written statement", type: :system do
   def and_i_see_the_provide_written_statement_task
     expect(
       teacher_application_page.provide_written_statement_task_item,
-    ).to_not be_nil
+    ).not_to be_nil
   end
 
   def when_i_click_the_provide_written_statement_task

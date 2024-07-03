@@ -28,7 +28,7 @@ RSpec.describe TeacherInterface::PersonalInformationController,
   end
 
   describe "GET alternative_name" do
-    subject(:perform) { get :name_and_date_of_birth }
+    subject(:perform) { get :alternative_name }
 
     include_examples "redirect unless application form is draft"
   end

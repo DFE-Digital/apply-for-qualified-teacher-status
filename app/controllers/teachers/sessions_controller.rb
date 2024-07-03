@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Teachers::SessionsController < Devise::SessionsController
   include TeacherCurrentNamespace
 

@@ -4,8 +4,6 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::ReferenceRequestSatisfiedResponseForm,
                type: :model do
-  let(:reference_request) { create(:reference_request) }
-
   subject(:form) do
     described_class.new(
       reference_request:,
@@ -14,13 +12,15 @@ RSpec.describe TeacherInterface::ReferenceRequestSatisfiedResponseForm,
     )
   end
 
+  let(:reference_request) { create(:reference_request) }
+
   describe "validations" do
     let(:satisfied_response) { "" }
     let(:satisfied_comment) { "" }
 
     it { is_expected.to validate_presence_of(:reference_request) }
     it { is_expected.to allow_values(true, false).for(:satisfied_response) }
-    it { is_expected.to_not validate_presence_of(:satisfied_comment) }
+    it { is_expected.not_to validate_presence_of(:satisfied_comment) }
 
     context "with a negative response" do
       let(:satisfied_response) { "false" }
@@ -43,7 +43,7 @@ RSpec.describe TeacherInterface::ReferenceRequestSatisfiedResponseForm,
       end
 
       it "ignores satisfied_comment" do
-        expect { save }.to_not change(reference_request, :satisfied_comment)
+        expect { save }.not_to change(reference_request, :satisfied_comment)
       end
     end
 

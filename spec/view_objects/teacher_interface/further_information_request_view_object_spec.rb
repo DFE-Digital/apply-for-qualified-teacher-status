@@ -46,7 +46,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
     end
 
     it do
-      is_expected.to include(
+      expect(subject).to include(
         {
           title: "Tell us more about the subjects you can teach",
           href: [
@@ -62,7 +62,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
     end
 
     it do
-      is_expected.to include(
+      expect(subject).to include(
         {
           title: "Upload your identity document",
           href: [
@@ -104,6 +104,10 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
   end
 
   describe "#check_your_answers_fields" do
+    subject(:check_your_answers_fields) do
+      view_object.check_your_answers_fields
+    end
+
     let!(:text_item) do
       create(
         :further_information_request_item,
@@ -121,12 +125,8 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
       )
     end
 
-    subject(:check_your_answers_fields) do
-      view_object.check_your_answers_fields
-    end
-
     it do
-      is_expected.to eq(
+      expect(subject).to eq(
         {
           text_item.id => {
             title: "Tell us more about the subjects you can teach",

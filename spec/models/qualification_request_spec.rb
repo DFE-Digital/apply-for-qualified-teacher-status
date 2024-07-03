@@ -39,7 +39,7 @@ RSpec.describe QualificationRequest, type: :model do
 
   describe "columns" do
     it do
-      is_expected.to define_enum_for(:consent_method)
+      expect(subject).to define_enum_for(:consent_method)
         .with_values(
           none: "none",
           signed_ecctis: "signed_ecctis",
@@ -54,6 +54,7 @@ RSpec.describe QualificationRequest, type: :model do
 
   describe "#expires_after" do
     subject(:expires_after) { qualification_request.expires_after }
+
     it { is_expected.to eq(6.weeks) }
   end
 end

@@ -26,7 +26,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       end
 
       it "ignores draft application forms" do
-        expect { perform }.to_not(
+        expect { perform }.not_to(
           change do
             draft_application_form.reload.working_days_since_submission
           end,
@@ -53,7 +53,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       end
 
       it "ignores not started assessments" do
-        expect { perform }.to_not(
+        expect { perform }.not_to(
           change { not_started_assessment.reload.working_days_since_started },
         )
       end
@@ -75,7 +75,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       end
 
       it "ignores not recommended assessments" do
-        expect { perform }.to_not(
+        expect { perform }.not_to(
           change do
             not_recommended_assessment.reload.working_days_started_to_recommendation
           end,
@@ -99,7 +99,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       end
 
       it "ignores not recommended assessments" do
-        expect { perform }.to_not(
+        expect { perform }.not_to(
           change do
             not_recommended_assessment.reload.working_days_submission_to_recommendation
           end,
@@ -123,7 +123,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       end
 
       it "ignores not recommended assessments" do
-        expect { perform }.to_not(
+        expect { perform }.not_to(
           change do
             not_recommended_assessment.reload.working_days_submission_to_started
           end,
@@ -165,7 +165,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       end
 
       it "ignores requested further information requests" do
-        expect { perform }.to_not(
+        expect { perform }.not_to(
           change { requested_fi_request.reload.working_days_since_received },
         )
       end
@@ -188,7 +188,7 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       end
 
       it "ignores not recommended assessments" do
-        expect { perform }.to_not(
+        expect { perform }.not_to(
           change do
             requested_fi_request.reload.working_days_received_to_recommendation
           end,

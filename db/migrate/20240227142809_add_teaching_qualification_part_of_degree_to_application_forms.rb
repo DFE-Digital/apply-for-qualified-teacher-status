@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTeachingQualificationPartOfDegreeToApplicationForms < ActiveRecord::Migration[
   7.1
 ]

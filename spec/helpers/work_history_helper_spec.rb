@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe WorkHistoryHelper do
@@ -34,6 +36,8 @@ RSpec.describe WorkHistoryHelper do
   end
 
   describe "#work_history_name_and_duration" do
+    subject(:name_and_duration) { work_history_name_and_duration(work_history) }
+
     let(:application_form) { create(:application_form) }
 
     let(:work_history) do
@@ -47,8 +51,6 @@ RSpec.describe WorkHistoryHelper do
       )
     end
 
-    subject(:name_and_duration) { work_history_name_and_duration(work_history) }
-
     context "when it is not the most recent" do
       before { create(:work_history, application_form:) }
 
@@ -57,7 +59,7 @@ RSpec.describe WorkHistoryHelper do
 
     context "when it is the most recent" do
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           %(School of Rock — 12 months <span class="govuk-!-font-weight-bold">(MOST RECENT)</span>),
         )
       end

@@ -3,12 +3,6 @@
 require "rails_helper"
 
 RSpec.describe UpdateWorkHistoryContact do
-  let(:work_history) { create(:work_history, :completed) }
-  let(:user) { create(:staff) }
-  let(:new_name) { "New name" }
-  let(:new_job) { "New job" }
-  let(:new_email) { "new@example.com" }
-
   subject(:call) do
     described_class.call(
       work_history:,
@@ -18,6 +12,12 @@ RSpec.describe UpdateWorkHistoryContact do
       email: new_email,
     )
   end
+
+  let(:work_history) { create(:work_history, :completed) }
+  let(:user) { create(:staff) }
+  let(:new_name) { "New name" }
+  let(:new_job) { "New job" }
+  let(:new_email) { "new@example.com" }
 
   it "changes the contact name" do
     expect { call }.to change(work_history, :contact_name).to(new_name)
@@ -44,7 +44,7 @@ RSpec.describe UpdateWorkHistoryContact do
   end
 
   it "doesn't send any emails" do
-    expect { call }.to_not have_enqueued_mail(
+    expect { call }.not_to have_enqueued_mail(
       RefereeMailer,
       :reference_requested,
     )

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameTeachingAuthorityInformation < ActiveRecord::Migration[7.0]
   def change
     change_table :countries, bulk: true do |t|

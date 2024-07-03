@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Run `bundle exec rails sitemap:refresh` after making changes to this file.
 
 SitemapGenerator::Sitemap.default_host =

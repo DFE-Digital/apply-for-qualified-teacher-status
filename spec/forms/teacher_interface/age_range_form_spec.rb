@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TeacherInterface::AgeRangeForm, type: :model do
-  let(:application_form) { build(:application_form) }
-
   subject(:form) { described_class.new(application_form:, minimum:, maximum:) }
+
+  let(:application_form) { build(:application_form) }
 
   describe "validations" do
     let(:minimum) { "" }
@@ -15,11 +17,13 @@ RSpec.describe TeacherInterface::AgeRangeForm, type: :model do
 
     context "with a minimum too low" do
       let(:minimum) { "1" }
+
       it { is_expected.to be_invalid }
     end
 
     context "with a minimum too high" do
       let(:minimum) { "20" }
+
       it { is_expected.to be_invalid }
     end
 
@@ -28,11 +32,13 @@ RSpec.describe TeacherInterface::AgeRangeForm, type: :model do
 
       context "with a maximum too low" do
         let(:minimum) { "1" }
+
         it { is_expected.to be_invalid }
       end
 
       context "with a maximum too high" do
         let(:minimum) { "20" }
+
         it { is_expected.to be_invalid }
       end
     end

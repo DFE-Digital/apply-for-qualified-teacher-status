@@ -4,11 +4,11 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::ReferenceRequestHoursResponseForm,
                type: :model do
-  let(:reference_request) { create(:reference_request) }
-
   subject(:form) do
     described_class.new(reference_request:, hours_response:, hours_comment:)
   end
+
+  let(:reference_request) { create(:reference_request) }
 
   describe "validations" do
     let(:hours_response) { "" }
@@ -16,7 +16,7 @@ RSpec.describe TeacherInterface::ReferenceRequestHoursResponseForm,
 
     it { is_expected.to validate_presence_of(:reference_request) }
     it { is_expected.to allow_values(true, false).for(:hours_response) }
-    it { is_expected.to_not validate_presence_of(:hours_comment) }
+    it { is_expected.not_to validate_presence_of(:hours_comment) }
 
     context "with a negative response" do
       let(:hours_response) { "false" }
@@ -37,7 +37,7 @@ RSpec.describe TeacherInterface::ReferenceRequestHoursResponseForm,
       end
 
       it "ignores hours_comment" do
-        expect { save }.to_not change(reference_request, :hours_comment)
+        expect { save }.not_to change(reference_request, :hours_comment)
       end
     end
 

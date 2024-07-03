@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::ApplicationFormEmailForm, type: :model do
+  subject(:form) { described_class.new(application_form:, user:, email:) }
+
   let(:application_form) { create(:application_form) }
   let(:user) { create(:staff) }
   let(:email) { "new@example.com" }
-
-  subject(:form) { described_class.new(application_form:, user:, email:) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:application_form) }

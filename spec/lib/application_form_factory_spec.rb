@@ -9,6 +9,7 @@ RSpec.describe ApplicationFormFactory do
 
   describe "#call" do
     subject(:call) { described_class.call(teacher:, region:) }
+
     let(:application_form) { call }
 
     it "creates an application form" do
@@ -23,21 +24,21 @@ RSpec.describe ApplicationFormFactory do
       context "the first application" do
         subject(:reference) { application_form1.reference }
 
-        it { is_expected.to_not be_nil }
+        it { is_expected.not_to be_nil }
         it { is_expected.to eq("2000001") }
       end
 
       context "the second application" do
         subject(:reference) { application_form2.reference }
 
-        it { is_expected.to_not be_nil }
+        it { is_expected.not_to be_nil }
         it { is_expected.to eq("2000002") }
       end
 
       context "the third application" do
         subject(:reference) { application_form3.reference }
 
-        it { is_expected.to_not be_blank }
+        it { is_expected.not_to be_blank }
         it { is_expected.to eq("2000003") }
       end
     end

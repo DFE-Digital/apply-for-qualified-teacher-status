@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe WithdrawApplicationForm do
+  subject(:call) { described_class.call(application_form:, user:) }
+
   let(:application_form) { create(:application_form, :submitted) }
   let(:user) { create(:staff) }
-
-  subject(:call) { described_class.call(application_form:, user:) }
 
   describe "application form withdrawn_at" do
     subject(:withdrawn_at) { application_form.withdrawn_at }

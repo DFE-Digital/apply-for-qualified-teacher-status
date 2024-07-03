@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TeacherInterface::HasWorkHistoryForm, type: :model do
-  let(:application_form) { build(:application_form) }
-
   subject(:form) { described_class.new(application_form:, has_work_history:) }
+
+  let(:application_form) { build(:application_form) }
 
   describe "validations" do
     let(:has_work_history) { "" }
@@ -18,7 +20,7 @@ RSpec.describe TeacherInterface::HasWorkHistoryForm, type: :model do
     before { form.save(validate: true) }
 
     it "saves the application form" do
-      expect(application_form.has_work_history).to eq(true)
+      expect(application_form.has_work_history).to be(true)
     end
   end
 end

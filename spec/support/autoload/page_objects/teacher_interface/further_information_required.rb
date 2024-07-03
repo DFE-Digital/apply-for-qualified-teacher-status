@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PageObjects
   module TeacherInterface
     class FurtherInformationRequired < SitePrism::Page

@@ -10,7 +10,7 @@ RSpec.describe FakeData::ApplicationFormGenerator do
     let(:params) { {} }
 
     it "doesn't raise an error" do
-      expect { call }.to_not raise_error
+      expect { call }.not_to raise_error
     end
   end
 end

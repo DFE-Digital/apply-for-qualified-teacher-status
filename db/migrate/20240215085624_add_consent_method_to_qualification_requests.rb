@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddConsentMethodToQualificationRequests < ActiveRecord::Migration[7.1]
   def change
     change_table :qualification_requests, bulk: true do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :application_forms do
   desc "Delete all draft application forms."
   task delete_drafts: :environment do

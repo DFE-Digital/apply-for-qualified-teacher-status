@@ -3,13 +3,13 @@
 require "rails_helper"
 
 RSpec.describe BackfillPreliminaryChecks do
-  let(:user) { create(:staff) }
-
   subject(:call) { described_class.call(user:) }
+
+  let(:user) { create(:staff) }
 
   context "with no application forms" do
     it "does nothing" do
-      expect { call }.to_not raise_error
+      expect { call }.not_to raise_error
     end
   end
 
@@ -45,25 +45,25 @@ RSpec.describe BackfillPreliminaryChecks do
       let(:region) { create(:region) }
 
       it "doesn't backfill the submitted application form" do
-        expect { call }.to_not(
+        expect { call }.not_to(
           change { submitted_application_form.reload.stage },
         )
       end
 
       it "doesn't backfill the waiting on application form" do
-        expect { call }.to_not(
+        expect { call }.not_to(
           change { waiting_on_application_form.reload.stage },
         )
       end
 
       it "doesn't backfill the preliminary checked application form" do
-        expect { call }.to_not(
+        expect { call }.not_to(
           change { preliminary_check_application_form.reload.stage },
         )
       end
 
       it "doesn't backfill the awarded application form" do
-        expect { call }.to_not(
+        expect { call }.not_to(
           change { awarded_check_application_form.reload.stage },
         )
       end
@@ -82,7 +82,7 @@ RSpec.describe BackfillPreliminaryChecks do
         expect(submitted_application_form.requires_preliminary_check).to be true
         expect(
           submitted_application_form.assessment.sections.preliminary,
-        ).to_not be_empty
+        ).not_to be_empty
       end
 
       it "backfills the waiting on application form" do
@@ -99,17 +99,17 @@ RSpec.describe BackfillPreliminaryChecks do
         ).to be true
         expect(
           waiting_on_application_form.assessment.sections.preliminary,
-        ).to_not be_empty
+        ).not_to be_empty
       end
 
       it "doesn't backfill the preliminary checked application form" do
-        expect { call }.to_not(
+        expect { call }.not_to(
           change { preliminary_check_application_form.reload.stage },
         )
       end
 
       it "doesn't backfill the awarded application form" do
-        expect { call }.to_not(
+        expect { call }.not_to(
           change { awarded_check_application_form.reload.stage },
         )
       end

@@ -35,7 +35,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         { reference: create(:application_form, :submitted).reference }
       end
 
-      it { is_expected.to_not be_nil }
+      it { is_expected.not_to be_nil }
     end
   end
 
@@ -51,52 +51,57 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     let(:params) { { reference: application_form.reference } }
 
     it do
-      is_expected.to_not include_task_list_item(
+      expect(subject).not_to include_task_list_item(
         "Pre-assessment tasks",
         "Preliminary check",
       )
     end
+
     it do
-      is_expected.to_not include_task_list_item(
+      expect(subject).not_to include_task_list_item(
         "Pre-assessment tasks",
         "Awaiting third-party professional standing",
       )
     end
 
     it do
-      is_expected.to include_task_list_item(
+      expect(subject).to include_task_list_item(
         "Assessment",
         "Check personal information",
       )
     end
+
     it do
-      is_expected.to_not include_task_list_item(
+      expect(subject).not_to include_task_list_item(
         "Assessment",
         "Check qualifications",
       )
     end
+
     it do
-      is_expected.to_not include_task_list_item(
+      expect(subject).not_to include_task_list_item(
         "Assessment",
         "Check work history",
       )
     end
+
     it do
-      is_expected.to_not include_task_list_item(
+      expect(subject).not_to include_task_list_item(
         "Assessment",
         "Check professional standing",
       )
     end
+
     it do
-      is_expected.to include_task_list_item(
+      expect(subject).to include_task_list_item(
         "Assessment",
         "Initial assessment recommendation",
         status: :cannot_start,
       )
     end
 
-    it { is_expected.to_not include_task_list_section("Verification") }
-    it { is_expected.to_not include_task_list_section("Review") }
+    it { is_expected.not_to include_task_list_section("Verification") }
+    it { is_expected.not_to include_task_list_section("Review") }
 
     context "when teaching authority provides written statement and a professional standing request" do
       let!(:professional_standing_request) do
@@ -110,7 +115,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Pre-assessment tasks",
           "Awaiting third-party professional standing",
           status: :cannot_start,
@@ -121,7 +126,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         before { professional_standing_request.requested! }
 
         it do
-          is_expected.to include_task_list_item(
+          expect(subject).to include_task_list_item(
             "Pre-assessment tasks",
             "Awaiting third-party professional standing",
             status: :waiting_on,
@@ -138,7 +143,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         end
 
         it do
-          is_expected.to include_task_list_item(
+          expect(subject).to include_task_list_item(
             "Pre-assessment tasks",
             "Awaiting third-party professional standing",
             status: :completed,
@@ -153,7 +158,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Pre-assessment tasks",
           "Preliminary check (qualifications)",
           status: :not_started,
@@ -164,7 +169,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         before { assessment_section.update!(passed: true) }
 
         it do
-          is_expected.to include_task_list_item(
+          expect(subject).to include_task_list_item(
             "Pre-assessment tasks",
             "Preliminary check (qualifications)",
             status: :completed,
@@ -183,7 +188,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         end
 
         it do
-          is_expected.to include_task_list_item(
+          expect(subject).to include_task_list_item(
             "Pre-assessment tasks",
             "Preliminary check (qualifications)",
             status: :in_progress,
@@ -194,7 +199,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           before { assessment.decline! }
 
           it do
-            is_expected.to include_task_list_item(
+            expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
               "Preliminary check (qualifications)",
               status: :completed,
@@ -208,7 +213,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before { create(:assessment_section, :work_history, assessment:) }
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Assessment",
           "Check work history",
         )
@@ -221,7 +226,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Assessment",
           "Check professional standing",
         )
@@ -232,7 +237,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before { assessment_section.update!(passed: true) }
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Assessment",
           "Initial assessment recommendation",
           status: :not_started,
@@ -241,8 +246,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       context "and award" do
         before { assessment.award! }
+
         it do
-          is_expected.to include_task_list_item(
+          expect(subject).to include_task_list_item(
             "Assessment",
             "Initial assessment recommendation",
             status: :completed,
@@ -252,8 +258,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
       context "and decline" do
         before { assessment.decline! }
+
         it do
-          is_expected.to include_task_list_item(
+          expect(subject).to include_task_list_item(
             "Assessment",
             "Initial assessment recommendation",
             status: :completed,
@@ -273,7 +280,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         end
 
         it do
-          is_expected.to include_task_list_item(
+          expect(subject).to include_task_list_item(
             "Assessment",
             "Initial assessment recommendation",
             status: :in_progress,
@@ -282,8 +289,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
         context "and further information requested" do
           before { create(:further_information_request, assessment:) }
+
           it do
-            is_expected.to include_task_list_item(
+            expect(subject).to include_task_list_item(
               "Assessment",
               "Initial assessment recommendation",
               status: :completed,
@@ -297,7 +305,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before { create(:requested_further_information_request, assessment:) }
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Assessment",
           "Review requested information from applicant",
           status: :cannot_start,
@@ -309,7 +317,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before { create(:received_further_information_request, assessment:) }
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Assessment",
           "Review requested information from applicant",
           status: :not_started,
@@ -328,7 +336,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Assessment",
           "Review requested information from applicant",
           status: :in_progress,
@@ -347,7 +355,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Assessment",
           "Review requested information from applicant",
           status: :in_progress,
@@ -364,8 +372,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           assessment:,
         )
       end
+
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Assessment",
           "Review requested information from applicant",
           status: :completed,
@@ -382,8 +391,9 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           assessment:,
         )
       end
+
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Assessment",
           "Review requested information from applicant",
           status: :completed,
@@ -398,10 +408,11 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item("Verification", "Verify LoPS")
+        expect(subject).to include_task_list_item("Verification", "Verify LoPS")
       end
+
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Verification",
           "Verification decision",
         )
@@ -415,13 +426,14 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Verification",
           "Verify qualifications",
         )
       end
+
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Verification",
           "Verification decision",
         )
@@ -435,13 +447,14 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Verification",
           "Verify references",
         )
       end
+
       it do
-        is_expected.to include_task_list_item(
+        expect(subject).to include_task_list_item(
           "Verification",
           "Verification decision",
         )
@@ -458,10 +471,17 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item("Review", "Review verifications")
+        expect(subject).to include_task_list_item(
+          "Review",
+          "Review verifications",
+        )
       end
+
       it do
-        is_expected.to include_task_list_item("Review", "Assessment decision")
+        expect(subject).to include_task_list_item(
+          "Review",
+          "Assessment decision",
+        )
       end
     end
 
@@ -471,10 +491,17 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to include_task_list_item("Review", "Review verifications")
+        expect(subject).to include_task_list_item(
+          "Review",
+          "Review verifications",
+        )
       end
+
       it do
-        is_expected.to include_task_list_item("Review", "Assessment decision")
+        expect(subject).to include_task_list_item(
+          "Review",
+          "Assessment decision",
+        )
       end
     end
 
@@ -482,10 +509,17 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       before { create(:reference_request, assessment:, verify_passed: false) }
 
       it do
-        is_expected.to include_task_list_item("Review", "Review verifications")
+        expect(subject).to include_task_list_item(
+          "Review",
+          "Review verifications",
+        )
       end
+
       it do
-        is_expected.to include_task_list_item("Review", "Assessment decision")
+        expect(subject).to include_task_list_item(
+          "Review",
+          "Assessment decision",
+        )
       end
     end
   end
@@ -554,7 +588,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         )
       end
 
-      it { is_expected.to_not be_empty }
+      it { is_expected.not_to be_empty }
     end
 
     context "the email address isn't used as a reference" do
@@ -641,7 +675,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           [
             {
               name: "Reverse decision",

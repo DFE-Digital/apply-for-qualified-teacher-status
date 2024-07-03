@@ -47,10 +47,10 @@ RSpec.describe FurtherInformationRequestItemsFactory do
       build(:selected_failure_reason, key: "duplicate_application")
     end
 
-    it { is_expected.to_not be_empty }
+    it { is_expected.not_to be_empty }
 
     it "creates an item for each failure reason" do
-      expect { subject }.to change { SelectedFailureReason.count }.by(3)
+      expect { subject }.to change(SelectedFailureReason, :count).by(3)
     end
 
     it "sets the information type" do

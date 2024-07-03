@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: teachers
@@ -34,8 +36,11 @@ RSpec.describe Teacher, type: :model do
     it { is_expected.to be_valid }
 
     it { is_expected.to validate_presence_of(:email) }
+
     it do
-      is_expected.to validate_uniqueness_of(:email).ignoring_case_sensitivity
+      expect(subject).to validate_uniqueness_of(
+        :email,
+      ).ignoring_case_sensitivity
     end
   end
 
@@ -44,9 +49,9 @@ RSpec.describe Teacher, type: :model do
   end
 
   describe "#canonical_email" do
-    let(:teacher) { create(:teacher, email: "first.last+123@gmail.com") }
-
     subject(:canonical_email) { teacher.canonical_email }
+
+    let(:teacher) { create(:teacher, email: "first.last+123@gmail.com") }
 
     it { is_expected.to eq("firstlast@gmail.com") }
   end
@@ -65,9 +70,10 @@ RSpec.describe Teacher, type: :model do
     end
 
     context "with two application forms" do
-      let!(:first_application_form) do
+      before do
         create(:application_form, teacher:, created_at: Date.new(2020, 1, 1))
       end
+
       let!(:second_application_form) do
         create(:application_form, teacher:, created_at: Date.new(2020, 6, 1))
       end

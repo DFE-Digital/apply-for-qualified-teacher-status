@@ -1,8 +1,8 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
-  let(:application_form) { build(:application_form) }
-
   subject(:form) do
     described_class.new(
       application_form:,
@@ -11,6 +11,8 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
       date_of_birth:,
     )
   end
+
+  let(:application_form) { build(:application_form) }
 
   describe "validations" do
     let(:given_names) { "" }
@@ -26,6 +28,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
       let(:date_of_birth) { { 1 => 1990, 2 => 1, 3 => 1 } }
       let(:given_names) { "given_name" }
       let(:family_name) { "family_name" }
+
       it { is_expected.to be_valid }
     end
 
@@ -44,7 +47,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
         let(:date_of_birth) { { 1 => 1800, 2 => 1, 3 => 1 } }
 
         it do
-          is_expected.to eq(
+          expect(subject).to eq(
             ["Your date of birth cannot be that far in the past"],
           )
         end
@@ -54,7 +57,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
         let(:date_of_birth) { { 1 => 80, 2 => 1, 3 => 1 } }
 
         it do
-          is_expected.to eq(
+          expect(subject).to eq(
             ["Enter your date of birth in the format 27 3 1980"],
           )
         end
@@ -64,7 +67,7 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
         let(:date_of_birth) { { 1 => 1990, 2 => 13, 3 => 40 } }
 
         it do
-          is_expected.to eq(
+          expect(subject).to eq(
             ["Enter your date of birth in the format 27 3 1980"],
           )
         end

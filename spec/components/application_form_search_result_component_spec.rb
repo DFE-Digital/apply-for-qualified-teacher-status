@@ -28,14 +28,16 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
     subject(:href) { component.at_css("h2 > a")["href"] }
 
     it do
-      is_expected.to eq("/assessor/applications/#{application_form.reference}")
+      expect(subject).to eq(
+        "/assessor/applications/#{application_form.reference}",
+      )
     end
   end
 
   describe "description list" do
     subject(:dl) { component.at_css("dl") }
 
-    it { is_expected.to_not be_nil }
+    it { is_expected.not_to be_nil }
 
     describe "text" do
       subject(:text) { dl.text.strip }

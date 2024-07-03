@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::DownloadUnsignedConsentDocumentForm,
                type: :model do
-  let(:consent_request) { create(:consent_request) }
-
   subject(:form) { described_class.new(consent_request:, downloaded:) }
+
+  let(:consent_request) { create(:consent_request) }
 
   describe "validations" do
     let(:downloaded) { "" }
@@ -33,7 +33,7 @@ RSpec.describe TeacherInterface::DownloadUnsignedConsentDocumentForm,
       let(:downloaded) { "false" }
 
       it "doesn't set unsigned_document_downloaded" do
-        expect { save }.to_not change(
+        expect { save }.not_to change(
           consent_request,
           :unsigned_document_downloaded,
         )

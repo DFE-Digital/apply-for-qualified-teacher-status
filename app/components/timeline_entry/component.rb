@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TimelineEntry
   class Component < ViewComponent::Base
     def initialize(timeline_event:)

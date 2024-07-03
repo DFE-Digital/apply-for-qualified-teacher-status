@@ -3,16 +3,15 @@
 require "rails_helper"
 
 RSpec.describe DescriptionList::Component, type: :component do
-  subject(:component) { render_inline(described_class.new(rows:)) }
+  subject(:dl) { component.at_css("dl") }
 
+  let(:component) { render_inline(described_class.new(rows:)) }
   let(:rows) do
     [
       { key: { text: "Label 1" }, value: { text: "Value 1" } },
       { key: { text: "Label 2" }, value: { text: "Value 2" } },
     ]
   end
-
-  subject(:dl) { component.at_css("dl") }
 
   it "has the class" do
     expect(dl["class"]).to eq("app-description-list")

@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe AssignApplicationFormAssessor do
+  subject(:call) { described_class.call(application_form:, user:, assessor:) }
+
   let!(:application_form) { create(:application_form, :submitted) }
   let(:user) { create(:staff) }
   let(:assessor) { create(:staff) }
-
-  subject(:call) { described_class.call(application_form:, user:, assessor:) }
 
   describe "application form assessor" do
     subject(:assessor) { application_form.assessor }

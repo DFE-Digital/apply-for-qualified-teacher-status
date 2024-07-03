@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveHiddenFromAssessmentFromApplicationForms < ActiveRecord::Migration[
   7.1
 ]

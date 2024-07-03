@@ -34,7 +34,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application was successful") }
     end
@@ -61,7 +61,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application was unsuccessful") }
     end
@@ -89,10 +89,10 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "Update: Your qualified teacher status (QTS) application",
         )
       end
@@ -108,8 +108,9 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "As we are unable to verify professional standing documents with the teaching authority in France, we " \
             "have removed France from the list of eligible countries.",
         )
@@ -128,13 +129,15 @@ RSpec.describe TeacherMailer, type: :mailer do
     let(:number_of_reminders_sent) { nil }
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       context "with two weeks to go" do
         let(:number_of_reminders_sent) { 0 }
 
         it do
-          is_expected.to eq("Your draft QTS application has not been submitted")
+          expect(subject).to eq(
+            "Your draft QTS application has not been submitted",
+          )
         end
       end
 
@@ -142,7 +145,9 @@ RSpec.describe TeacherMailer, type: :mailer do
         let(:number_of_reminders_sent) { 1 }
 
         it do
-          is_expected.to eq("Your draft QTS application is about to be deleted")
+          expect(subject).to eq(
+            "Your draft QTS application is about to be deleted",
+          )
         end
       end
     end
@@ -163,12 +168,13 @@ RSpec.describe TeacherMailer, type: :mailer do
         let(:number_of_reminders_sent) { 0 }
 
         it do
-          is_expected.to include(
+          expect(subject).to include(
             "You have a draft application for qualified teacher status (QTS) in England that has not been submitted.",
           )
         end
+
         it do
-          is_expected.to include(
+          expect(subject).to include(
             "Applications need to be submitted within 6 months of being started.",
           )
         end
@@ -178,13 +184,14 @@ RSpec.describe TeacherMailer, type: :mailer do
         let(:number_of_reminders_sent) { 1 }
 
         it do
-          is_expected.to include(
+          expect(subject).to include(
             "We recently contacted you about your draft application for qualified teacher " \
               "status (QTS) in England that has not been submitted.",
           )
         end
+
         it do
-          is_expected.to include(
+          expect(subject).to include(
             "Applications need to be submitted within 6 months of being started.",
           )
         end
@@ -198,7 +205,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       context "if the teaching authority provides the written statement" do
         before do
@@ -208,7 +215,7 @@ RSpec.describe TeacherMailer, type: :mailer do
         end
 
         it do
-          is_expected.to include(
+          expect(subject).to include(
             "Your QTS application: Awaiting Letter of Professional Standing",
           )
         end
@@ -240,7 +247,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("abc") }
 
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "Your application will be entered into a queue and assigned a QTS assessor. This can take several weeks.",
         )
       end
@@ -253,7 +260,7 @@ RSpec.describe TeacherMailer, type: :mailer do
         end
 
         it do
-          is_expected.to include(
+          expect(subject).to include(
             "Once the written evidence is received and checked, your application will be entered into " \
               "a queue and assigned a QTS assessor. This can take several weeks.",
           )
@@ -268,7 +275,7 @@ RSpec.describe TeacherMailer, type: :mailer do
         end
 
         it do
-          is_expected.to include(
+          expect(subject).to include(
             "Your application will be entered into a queue and assigned a QTS assessor. This can take several weeks.",
           )
         end
@@ -290,10 +297,10 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "Reminder: we need your written consent to progress your QTS application",
         )
       end
@@ -309,13 +316,17 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "We recently wrote to you asking for your consent",
         )
       end
+
       it do
-        is_expected.to include("If you do not send them by 12 February 2020")
+        expect(subject).to include(
+          "If you do not send them by 12 February 2020",
+        )
       end
     end
   end
@@ -333,10 +344,10 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "We need your written consent to progress your QTS application",
         )
       end
@@ -352,13 +363,15 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "As part of your QTS application we need to verify some of your qualifications",
         )
       end
+
       it do
-        is_expected.to include("upload these documents by 12 February 2020")
+        expect(subject).to include("upload these documents by 12 February 2020")
       end
     end
   end
@@ -367,7 +380,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     subject(:mail) { described_class.with(application_form:).consent_submitted }
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("We’ve received your consent documents") }
     end
@@ -382,9 +395,13 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+
       it do
-        is_expected.to include("Thank you for submitting the consent documents")
+        expect(subject).to include(
+          "Thank you for submitting the consent documents",
+        )
       end
+
       it { is_expected.to include("Application reference number: abc") }
     end
   end
@@ -395,7 +412,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application: information received") }
     end
@@ -426,7 +443,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application: More information needed") }
     end
@@ -441,11 +458,13 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "The assessor reviewing your QTS application needs more information.",
         )
       end
+
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
   end
@@ -467,7 +486,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it { is_expected.to eq("Your QTS application: information still needed") }
     end
@@ -482,12 +501,14 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "If you do not respond by 12 February 2020 " \
             "then your QTS application will be declined.",
         )
       end
+
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
     end
   end
@@ -498,10 +519,10 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "Your QTS application: Letter of Professional Standing received",
         )
       end
@@ -517,8 +538,9 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "We have received your Letter of Professional Standing from the teaching " \
             "authority and attached it to your application.",
         )
@@ -527,6 +549,14 @@ RSpec.describe TeacherMailer, type: :mailer do
   end
 
   describe "#references_reminder" do
+    subject(:mail) do
+      described_class.with(
+        application_form:,
+        number_of_reminders_sent:,
+        reference_requests: [reference_request],
+      ).references_reminder
+    end
+
     let(:reference_request) do
       create(
         :reference_request,
@@ -542,26 +572,21 @@ RSpec.describe TeacherMailer, type: :mailer do
       )
     end
     let(:number_of_reminders_sent) { nil }
-    subject(:mail) do
-      described_class.with(
-        application_form:,
-        number_of_reminders_sent:,
-        reference_requests: [reference_request],
-      ).references_reminder
-    end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       context "with no reminder emails" do
         let(:number_of_reminders_sent) { 0 }
+
         it { is_expected.to eq("Waiting on references – QTS application") }
       end
 
       context "with one reminder email" do
         let(:number_of_reminders_sent) { 1 }
+
         it do
-          is_expected.to eq(
+          expect(subject).to eq(
             "Your references only have two weeks left to respond",
           )
         end
@@ -580,19 +605,21 @@ RSpec.describe TeacherMailer, type: :mailer do
       let(:number_of_reminders_sent) { 0 }
 
       it { is_expected.to include("Dear First Last") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "We’re still waiting for a response from one or more of the " \
             "references you provided to verify your work history.",
         )
       end
+
       it { is_expected.to include("John Smith — St Smith School") }
 
       context "when the second reminder email" do
         let(:number_of_reminders_sent) { 1 }
 
         it do
-          is_expected.to include(
+          expect(subject).to include(
             "The following references have just 2 weeks to respond to the reference request.",
           )
         end
@@ -609,10 +636,12 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
 
     describe "#subject" do
-      subject(:subject) { mail.subject }
+      subject { mail.subject }
 
       it do
-        is_expected.to eq("We’ve contacted your references – QTS application")
+        expect(subject).to eq(
+          "We’ve contacted your references – QTS application",
+        )
       end
     end
 
@@ -626,8 +655,9 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+
       it do
-        is_expected.to include(
+        expect(subject).to include(
           "We’ve contacted the following references you provided to verify the work " \
             "history information you gave as part of your QTS application.",
         )

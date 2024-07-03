@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: countries
@@ -27,6 +29,6 @@ RSpec.describe Country, type: :model do
     it { is_expected.to be_valid }
 
     it { is_expected.to validate_inclusion_of(:code).in_array(%w[GB-SCT FR]) }
-    it { is_expected.to_not validate_inclusion_of(:code).in_array(%w[ABC]) }
+    it { is_expected.not_to validate_inclusion_of(:code).in_array(%w[ABC]) }
   end
 end

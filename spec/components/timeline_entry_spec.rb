@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe TimelineEntry::Component, type: :component do
   subject(:component) { render_inline(described_class.new(timeline_event:)) }
+
   let(:creator) { timeline_event.creator }
 
   context "with a creator name" do

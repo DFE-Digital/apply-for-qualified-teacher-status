@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DescriptionList
   class Component < ViewComponent::Base
     def initialize(rows:, classes: [])

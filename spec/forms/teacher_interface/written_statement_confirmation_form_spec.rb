@@ -4,11 +4,11 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::WrittenStatementConfirmationForm,
                type: :model do
-  let(:application_form) { build(:application_form) }
-
   subject(:form) do
     described_class.new(application_form:, written_statement_confirmation:)
   end
+
+  let(:application_form) { build(:application_form) }
 
   describe "validations" do
     let(:written_statement_confirmation) { "" }
@@ -32,7 +32,7 @@ RSpec.describe TeacherInterface::WrittenStatementConfirmationForm,
       let(:written_statement_confirmation) { "" }
 
       it "updates the application form" do
-        expect(application_form).to_not be_written_statement_confirmation
+        expect(application_form).not_to be_written_statement_confirmation
       end
     end
   end

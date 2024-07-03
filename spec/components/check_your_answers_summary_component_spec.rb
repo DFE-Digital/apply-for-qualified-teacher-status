@@ -21,7 +21,7 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   let(:id) { "id" }
 
   let(:model) do
-    double(
+    OpenStruct.new(
       string: "String value",
       number: 10,
       date: Date.new(2020, 1, 1),
@@ -102,11 +102,11 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   end
 
   context "when changeable is false" do
-    let(:changeable) { false }
-
     subject(:links) do
       component.css(".govuk-summary-list__actions .govuk-link")
     end
+
+    let(:changeable) { false }
 
     it { is_expected.to be_empty }
   end

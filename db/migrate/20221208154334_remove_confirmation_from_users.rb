@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveConfirmationFromUsers < ActiveRecord::Migration[7.0]
   def change
     change_table :teachers, bulk: true do |t|

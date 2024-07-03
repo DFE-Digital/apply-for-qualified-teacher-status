@@ -4,8 +4,6 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::ReferenceRequestChildrenResponseForm,
                type: :model do
-  let(:reference_request) { create(:reference_request) }
-
   subject(:form) do
     described_class.new(
       reference_request:,
@@ -14,13 +12,15 @@ RSpec.describe TeacherInterface::ReferenceRequestChildrenResponseForm,
     )
   end
 
+  let(:reference_request) { create(:reference_request) }
+
   describe "validations" do
     let(:children_response) { "" }
     let(:children_comment) { "" }
 
     it { is_expected.to validate_presence_of(:reference_request) }
     it { is_expected.to allow_values(true, false).for(:children_response) }
-    it { is_expected.to_not validate_presence_of(:children_comment) }
+    it { is_expected.not_to validate_presence_of(:children_comment) }
 
     context "with a negative response" do
       let(:children_response) { "false" }
@@ -43,7 +43,7 @@ RSpec.describe TeacherInterface::ReferenceRequestChildrenResponseForm,
       end
 
       it "ignores children_comment" do
-        expect { save }.to_not change(reference_request, :children_comment)
+        expect { save }.not_to change(reference_request, :children_comment)
       end
     end
 

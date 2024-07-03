@@ -1,14 +1,8 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TeacherInterface::QualificationForm, type: :model do
-  let(:application_form) do
-    create(
-      :application_form,
-      region: create(:region, :in_country, country_code: "FR"),
-    )
-  end
-  let(:qualification) { build(:qualification, application_form:) }
-
   subject(:form) do
     described_class.new(
       qualification:,
@@ -21,6 +15,14 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
       teaching_confirmation:,
     )
   end
+
+  let(:application_form) do
+    create(
+      :application_form,
+      region: create(:region, :in_country, country_code: "FR"),
+    )
+  end
+  let(:qualification) { build(:qualification, application_form:) }
 
   describe "validations" do
     let(:title) { "" }
@@ -35,11 +37,13 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:institution_name) }
     it { is_expected.to validate_presence_of(:institution_country_location) }
+
     it do
-      is_expected.to validate_inclusion_of(
+      expect(subject).to validate_inclusion_of(
         :institution_country_location,
       ).in_array(%w[country:FR])
     end
+
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to validate_presence_of(:complete_date) }
     it { is_expected.to validate_presence_of(:certificate_date) }
@@ -50,26 +54,19 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
       before { create(:qualification, application_form:) }
 
       it do
-        is_expected.to_not validate_inclusion_of(
+        expect(subject).not_to validate_inclusion_of(
           :institution_country_location,
         ).in_array(%w[country:FR])
       end
 
-      it { is_expected.to_not validate_presence_of(:teaching_confirmation) }
+      it { is_expected.not_to validate_presence_of(:teaching_confirmation) }
     end
 
     context "with invalid dates" do
       let(:start_date) { { 1 => 2020, 2 => 1, 3 => 1 } }
       let(:complete_date) { { 1 => 2019, 2 => 1, 3 => 1 } }
 
-      it { is_expected.to_not be_valid }
-    end
-
-    context "with invalid dates" do
-      let(:complete_date) { { 1 => 2020, 2 => 1, 3 => 1 } }
-      let(:certificate_date) { { 1 => 2019, 2 => 1, 3 => 1 } }
-
-      it { is_expected.to_not be_valid }
+      it { is_expected.not_to be_valid }
     end
   end
 
@@ -84,6 +81,8 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
   end
 
   describe "#save" do
+    subject(:save) { form.save(validate: true) }
+
     let(:title) { "Title" }
     let(:institution_name) { "Institution name" }
     let(:institution_country_location) { "country:FR" }
@@ -91,8 +90,6 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     let(:complete_date) { { 1 => 2022, 2 => 1, 3 => 1 } }
     let(:certificate_date) { { 1 => 2022, 2 => 6, 3 => 1 } }
     let(:teaching_confirmation) { "true" }
-
-    subject(:save) { form.save(validate: true) }
 
     it "saves the qualification" do
       expect(save).to be true
@@ -112,11 +109,11 @@ RSpec.describe TeacherInterface::QualificationForm, type: :model do
     end
 
     context "without validation, with invalid date values" do
+      subject(:save) { form.save(validate: false) }
+
       let(:start_date) { { 1 => 2222, 2 => 22, 3 => 1 } }
       let(:complete_date) { { 1 => 3333, 2 => 99, 3 => 1 } }
       let(:certificate_date) { { 1 => 99, 2 => "JUNE", 3 => 1 } }
-
-      subject(:save) { form.save(validate: false) }
 
       it "applies valid date values" do
         expect(save).to be true

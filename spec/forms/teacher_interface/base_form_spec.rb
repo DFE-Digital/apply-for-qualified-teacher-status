@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe TeacherInterface::BaseForm, type: :model do
+  subject(:form) { form_class.new(application_form:, given_names:) }
+
   let(:form_class) do
     Class.new(TeacherInterface::BaseForm) do
       attr_accessor :application_form
@@ -18,8 +20,6 @@ RSpec.describe TeacherInterface::BaseForm, type: :model do
   end
 
   let(:application_form) { create(:application_form, given_names: "Old name") }
-
-  subject(:form) { form_class.new(application_form:, given_names:) }
 
   describe "#save" do
     subject(:save) { form.save(validate:) }
@@ -56,11 +56,13 @@ RSpec.describe TeacherInterface::BaseForm, type: :model do
 
       context "saving with validation" do
         let(:validate) { true }
+
         include_examples "failure"
       end
 
       context "saving without validation" do
         let(:validate) { false }
+
         include_examples "success"
       end
     end
@@ -70,11 +72,13 @@ RSpec.describe TeacherInterface::BaseForm, type: :model do
 
       context "saving with validation" do
         let(:validate) { true }
+
         include_examples "success"
       end
 
       context "saving without validation" do
         let(:validate) { false }
+
         include_examples "success"
       end
     end

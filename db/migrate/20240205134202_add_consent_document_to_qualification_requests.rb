@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddConsentDocumentToQualificationRequests < ActiveRecord::Migration[7.1]
   def change
     add_column :qualification_requests,
