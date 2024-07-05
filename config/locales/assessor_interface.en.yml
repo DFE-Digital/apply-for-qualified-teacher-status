@@ -174,6 +174,7 @@ en:
           registration_number_alternative: We could not find the applicant’s reference number. The applicant will need to upload written proof of recognition as a teacher instead.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
           school_details_cannot_be_verified: We could not verify school details entered by the applicant.
+          special_education_only: Applicant holds a Special Educational Needs and Disabilities (SEND) only qualification and is not qualified to teach in mainstream education.
           suitability: The applicant does not meet the suitability to teach requirements.
           suitability_previously_declined: The applicant has previously been declined because they do not meet the suitability to teach requirements. They are being declined again for suitability.
           teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
@@ -311,6 +312,8 @@ en:
             satisfactory_evidence_work_history_notes:
               blank: Enter a note to the applicant
             school_details_cannot_be_verified_notes:
+              blank: Enter a note to the applicant
+            special_education_only_notes:
               blank: Enter a note to the applicant
             suitability_notes:
               blank: Enter a note to the applicant

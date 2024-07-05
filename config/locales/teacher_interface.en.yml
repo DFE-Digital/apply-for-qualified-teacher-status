@@ -42,6 +42,7 @@ en:
             school_details_cannot_be_verified: We could not verify the school details you provided.
             suitability: We were not provided with enough evidence to show you meet our suitability to teach requirements. This is because of sanctions, restrictions, penalties, or incidents of misconduct.
             suitability_previously_declined: "You were previously declined QTS because we were not provided with enough evidence to show you meet our suitability to teach requirements. This was because of sanctions, restrictions, penalties, or incidents of misconduct.\n\nYour new application does not show evidence that you now meet our suitability to teach requirements."
+            special_education_only: We require teachers to be qualified to teach in mainstream education. Your qualification is for Special Education Needs and Disabilities (SEND) only. In England, this does not qualify you to teach in mainstream education.
             teaching_certificate_illegible: Your teaching qualification certificate (or translation) is illegible or in a format we cannot accept.
             teaching_hours_not_fulfilled: You have not fulfilled the required number of teaching hours.
             teaching_qualification: We were not provided with sufficient evidence to verify the teaching qualification provided.

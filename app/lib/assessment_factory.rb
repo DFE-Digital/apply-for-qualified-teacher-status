@@ -125,6 +125,7 @@ class AssessmentFactory
       FailureReasons::ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE,
       FailureReasons::SUITABILITY,
       FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+      FailureReasons::SPECIAL_EDUCATION_ONLY,
     ].compact
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)

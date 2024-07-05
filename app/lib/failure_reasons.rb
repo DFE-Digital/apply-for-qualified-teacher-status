@@ -19,6 +19,7 @@ class FailureReasons
     NOT_QUALIFIED_TO_TEACH_MAINSTREAM = "not_qualified_to_teach_mainstream",
     QUALIFIED_TO_TEACH_CHILDREN_11_TO_16 =
       "qualified_to_teach_children_11_to_16",
+    SPECIAL_EDUCATION_ONLY = "special_education_only",
     SUITABILITY = "suitability",
     SUITABILITY_PREVIOUSLY_DECLINED = "suitability_previously_declined",
     TEACHING_HOURS_NOT_FULFILLED = "teaching_hours_not_fulfilled",

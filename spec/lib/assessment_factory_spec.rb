@@ -123,6 +123,7 @@ RSpec.describe AssessmentFactory do
               additional_degree_transcript_illegible
               suitability
               suitability_previously_declined
+              special_education_only
             ],
           )
         end
@@ -172,6 +173,7 @@ RSpec.describe AssessmentFactory do
                 additional_degree_transcript_illegible
                 suitability
                 suitability_previously_declined
+                special_education_only
               ],
             )
           end
