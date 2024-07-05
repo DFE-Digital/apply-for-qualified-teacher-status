@@ -19,6 +19,8 @@ class FailureReasons
     NOT_QUALIFIED_TO_TEACH_MAINSTREAM = "not_qualified_to_teach_mainstream",
     QUALIFIED_TO_TEACH_CHILDREN_11_TO_16 =
       "qualified_to_teach_children_11_to_16",
+    SUITABILITY = "suitability",
+    SUITABILITY_PREVIOUSLY_DECLINED = "suitability_previously_declined",
     TEACHING_HOURS_NOT_FULFILLED = "teaching_hours_not_fulfilled",
     TEACHING_QUALIFICATION = "teaching_qualification",
     TEACHING_QUALIFICATION_1_YEAR = "teaching_qualification_1_year",
@@ -100,6 +102,17 @@ class FailureReasons
 
   def self.further_information?(failure_reason)
     FURTHER_INFORMATIONABLE.include?(failure_reason.to_s)
+  end
+
+  def self.suitability?(failure_reason)
+    [
+      FailureReasons::SUITABILITY,
+      FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+    ].include?(failure_reason.to_s)
+  end
+
+  def self.requires_note?(failure_reason)
+    suitability?(failure_reason) || further_information?(failure_reason)
   end
 
   def self.further_information_request_document_type(failure_reason)

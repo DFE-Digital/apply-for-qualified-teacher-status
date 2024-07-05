@@ -61,6 +61,8 @@ RSpec.describe AssessmentFactory do
               duplicate_application
               applicant_already_qts
               applicant_already_dqt
+              suitability
+              suitability_previously_declined
             ],
           )
         end
@@ -119,6 +121,8 @@ RSpec.describe AssessmentFactory do
               degree_transcript_illegible
               additional_degree_certificate_illegible
               additional_degree_transcript_illegible
+              suitability
+              suitability_previously_declined
             ],
           )
         end
@@ -166,6 +170,8 @@ RSpec.describe AssessmentFactory do
                 degree_transcript_illegible
                 additional_degree_certificate_illegible
                 additional_degree_transcript_illegible
+                suitability
+                suitability_previously_declined
               ],
             )
           end
@@ -184,7 +190,12 @@ RSpec.describe AssessmentFactory do
               %w[qualified_in_mainstream_education age_range_subjects_matches],
             )
             expect(section.failure_reasons).to eq(
-              %w[not_qualified_to_teach_mainstream age_range],
+              %w[
+                not_qualified_to_teach_mainstream
+                age_range
+                suitability
+                suitability_previously_declined
+              ],
             )
           end
         end
@@ -205,7 +216,12 @@ RSpec.describe AssessmentFactory do
             )
 
             expect(section.failure_reasons).to eq(
-              %w[not_qualified_to_teach_mainstream age_range],
+              %w[
+                not_qualified_to_teach_mainstream
+                age_range
+                suitability
+                suitability_previously_declined
+              ],
             )
           end
         end
@@ -287,6 +303,8 @@ RSpec.describe AssessmentFactory do
                 school_details_cannot_be_verified
                 unrecognised_references
                 work_history_duration
+                suitability
+                suitability_previously_declined
               ],
             )
           end
@@ -330,6 +348,8 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
+                suitability
+                suitability_previously_declined
               ],
             )
           end
@@ -373,6 +393,8 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
+                suitability
+                suitability_previously_declined
               ],
             )
           end
@@ -406,6 +428,8 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
+                suitability
+                suitability_previously_declined
               ],
             )
           end

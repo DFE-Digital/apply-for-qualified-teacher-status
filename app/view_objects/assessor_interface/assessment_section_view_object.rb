@@ -165,6 +165,8 @@ module AssessorInterface
       key =
         if FailureReasons.decline?(failure_reason)
           "decline"
+        elsif FailureReasons.suitability?(failure_reason)
+          "suitability"
         elsif FailureReasons.further_information_request_document_type(
               failure_reason,
             ).present?
@@ -172,6 +174,7 @@ module AssessorInterface
         else
           "text"
         end
+
       "helpers.#{key_section}.assessor_interface_assessment_section_form.failure_reason_notes.#{key}"
     end
 

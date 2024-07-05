@@ -56,6 +56,8 @@ class AssessmentFactory
       FailureReasons::DUPLICATE_APPLICATION,
       FailureReasons::APPLICANT_ALREADY_QTS,
       FailureReasons::APPLICANT_ALREADY_DQT,
+      FailureReasons::SUITABILITY,
+      FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
     ].compact
 
     AssessmentSection.new(
@@ -121,6 +123,8 @@ class AssessmentFactory
       FailureReasons::DEGREE_TRANSCRIPT_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE,
+      FailureReasons::SUITABILITY,
+      FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
     ].compact
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
@@ -145,6 +149,8 @@ class AssessmentFactory
     failure_reasons = [
       FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
       FailureReasons::AGE_RANGE,
+      FailureReasons::SUITABILITY,
+      FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
     ]
 
     AssessmentSection.new(key: "age_range_subjects", checks:, failure_reasons:)
@@ -183,6 +189,11 @@ class AssessmentFactory
         ]
       end
 
+    failure_reasons += [
+      FailureReasons::SUITABILITY,
+      FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+    ]
+
     AssessmentSection.new(
       key: "english_language_proficiency",
       checks:,
@@ -200,6 +211,8 @@ class AssessmentFactory
       FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
       FailureReasons::UNRECOGNISED_REFERENCES,
       FailureReasons::WORK_HISTORY_DURATION,
+      FailureReasons::SUITABILITY,
+      FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
     ]
 
     AssessmentSection.new(key: "work_history", checks:, failure_reasons:)
@@ -258,6 +271,8 @@ class AssessmentFactory
       FailureReasons::CONFIRM_AGE_RANGE_SUBJECTS,
       FailureReasons::QUALIFIED_TO_TEACH,
       FailureReasons::FULL_PROFESSIONAL_STATUS,
+      FailureReasons::SUITABILITY,
+      FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
     ].compact
 
     AssessmentSection.new(
