@@ -9,5 +9,7 @@ class CreateMailDeliveryFailures < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
+
+    add_index :mail_delivery_failures, :email_address
   end
 end
