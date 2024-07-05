@@ -160,6 +160,7 @@ en:
           english_language_qualification_invalid: The applicant’s English language qualification is not from one of the approved providers.
           english_language_selt_expired: The applicant provided evidence of a SELT but the test was not completed within the last 2 years.
           english_language_unverifiable_reference_number: Unable to verify the reference number that the applicant has provided.
+          fraud: Applicant has provided information that cannot be verified and is potentially fraudulent.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible or in a format that we cannot accept.
@@ -286,6 +287,8 @@ en:
             degree_transcript_illegible_notes:
               blank: Enter a note to the applicant
             duplicate_application_notes:
+              blank: Enter a note to the applicant
+            fraud_notes:
               blank: Enter a note to the applicant
             full_professional_status_notes:
               blank: Enter a note to the applicant

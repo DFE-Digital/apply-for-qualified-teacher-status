@@ -12,6 +12,7 @@ en:
         failure_reason_notes:
           decline: As this reason triggers a decline, you do not need to add a note, but you can use the space below to add anything you feel might be helpful, if you want to.
           document: This FI reason asks the applicant to upload a file. Use this space to give them clear instructions on what they need to provide.
+          fraud: This reason triggers a decline. As you are declining an applicant because of potential fraud, you must enter the additional content agreed by the suitability panel.
           suitability: This reason triggers a decline. As you are declining an applicant because of suitability reasons, you must enter the additional content agreed by the suitability panel.
           text: This FI allows the applicant to send us a typed response. Use this space to give them clear instructions on what they need to provide.
       assessor_interface_create_note_form:
@@ -93,6 +94,7 @@ en:
         failure_reason_notes:
           decline: Note to the applicant (optional)
           document: Note to the applicant
+          fraud: Note to the applicant (mandatory)
           suitability: Note to the applicant (mandatory)
           text: Note to the applicant
         induction_required_options:
@@ -298,6 +300,7 @@ en:
         failure_reason_notes:
           decline: "Example: We declined this QTS application as you already have another application in progress."
           document: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
+          fraud: "Example: We declined this QTS application as you already have another application in progress."
           suitability: "Example: We declined this QTS application as you already have another application in progress."
           text: "Example: The right-hand section of your teaching qualification document is missing, please take a new image and upload it."
     legend:

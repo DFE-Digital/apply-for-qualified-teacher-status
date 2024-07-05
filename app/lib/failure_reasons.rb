@@ -15,6 +15,7 @@ class FailureReasons
     EL_MOI_NOT_TAUGHT_IN_ENGLISH = "english_language_moi_not_taught_in_english",
     EL_QUALIFICATION_INVALID = "english_language_qualification_invalid",
     EL_SELT_EXPIRED = "english_language_selt_expired",
+    FRAUD = "fraud",
     FULL_PROFESSIONAL_STATUS = "full_professional_status",
     NOT_QUALIFIED_TO_TEACH_MAINSTREAM = "not_qualified_to_teach_mainstream",
     QUALIFIED_TO_TEACH_CHILDREN_11_TO_16 =
@@ -112,8 +113,13 @@ class FailureReasons
     ].include?(failure_reason.to_s)
   end
 
+  def self.fraud?(failure_reason)
+    failure_reason.to_s == FailureReasons::FRAUD
+  end
+
   def self.requires_note?(failure_reason)
-    suitability?(failure_reason) || further_information?(failure_reason)
+    suitability?(failure_reason) || fraud?(failure_reason) ||
+      further_information?(failure_reason)
   end
 
   def self.further_information_request_document_type(failure_reason)

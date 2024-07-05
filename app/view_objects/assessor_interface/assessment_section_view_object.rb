@@ -163,10 +163,12 @@ module AssessorInterface
 
     def build_key(failure_reason, key_section)
       key =
-        if FailureReasons.decline?(failure_reason)
-          "decline"
+        if FailureReasons.fraud?(failure_reason)
+          "fraud"
         elsif FailureReasons.suitability?(failure_reason)
           "suitability"
+        elsif FailureReasons.decline?(failure_reason)
+          "decline"
         elsif FailureReasons.further_information_request_document_type(
               failure_reason,
             ).present?

@@ -58,6 +58,7 @@ class AssessmentFactory
       FailureReasons::APPLICANT_ALREADY_DQT,
       FailureReasons::SUITABILITY,
       FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+      FailureReasons::FRAUD,
     ].compact
 
     AssessmentSection.new(
@@ -126,6 +127,7 @@ class AssessmentFactory
       FailureReasons::SUITABILITY,
       FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
       FailureReasons::SPECIAL_EDUCATION_ONLY,
+      FailureReasons::FRAUD,
     ].compact
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
@@ -152,6 +154,7 @@ class AssessmentFactory
       FailureReasons::AGE_RANGE,
       FailureReasons::SUITABILITY,
       FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+      FailureReasons::FRAUD,
     ]
 
     AssessmentSection.new(key: "age_range_subjects", checks:, failure_reasons:)
@@ -193,6 +196,7 @@ class AssessmentFactory
     failure_reasons += [
       FailureReasons::SUITABILITY,
       FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+      FailureReasons::FRAUD,
     ]
 
     AssessmentSection.new(
@@ -214,6 +218,7 @@ class AssessmentFactory
       FailureReasons::WORK_HISTORY_DURATION,
       FailureReasons::SUITABILITY,
       FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+      FailureReasons::FRAUD,
     ]
 
     AssessmentSection.new(key: "work_history", checks:, failure_reasons:)
@@ -274,6 +279,7 @@ class AssessmentFactory
       FailureReasons::FULL_PROFESSIONAL_STATUS,
       FailureReasons::SUITABILITY,
       FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+      FailureReasons::FRAUD,
     ].compact
 
     AssessmentSection.new(

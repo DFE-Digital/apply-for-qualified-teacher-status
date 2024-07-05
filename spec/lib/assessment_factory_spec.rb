@@ -63,6 +63,7 @@ RSpec.describe AssessmentFactory do
               applicant_already_dqt
               suitability
               suitability_previously_declined
+              fraud
             ],
           )
         end
@@ -124,6 +125,7 @@ RSpec.describe AssessmentFactory do
               suitability
               suitability_previously_declined
               special_education_only
+              fraud
             ],
           )
         end
@@ -174,6 +176,7 @@ RSpec.describe AssessmentFactory do
                 suitability
                 suitability_previously_declined
                 special_education_only
+                fraud
               ],
             )
           end
@@ -197,6 +200,7 @@ RSpec.describe AssessmentFactory do
                 age_range
                 suitability
                 suitability_previously_declined
+                fraud
               ],
             )
           end
@@ -223,6 +227,7 @@ RSpec.describe AssessmentFactory do
                 age_range
                 suitability
                 suitability_previously_declined
+                fraud
               ],
             )
           end
@@ -307,6 +312,7 @@ RSpec.describe AssessmentFactory do
                 work_history_duration
                 suitability
                 suitability_previously_declined
+                fraud
               ],
             )
           end
@@ -352,6 +358,7 @@ RSpec.describe AssessmentFactory do
                 full_professional_status
                 suitability
                 suitability_previously_declined
+                fraud
               ],
             )
           end
@@ -397,6 +404,7 @@ RSpec.describe AssessmentFactory do
                 full_professional_status
                 suitability
                 suitability_previously_declined
+                fraud
               ],
             )
           end
@@ -432,6 +440,7 @@ RSpec.describe AssessmentFactory do
                 full_professional_status
                 suitability
                 suitability_previously_declined
+                fraud
               ],
             )
           end

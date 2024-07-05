@@ -24,6 +24,7 @@ en:
             english_language_qualification_invalid: Your English language qualification is not from one of the approved providers.
             english_language_selt_expired: You have provided evidence of a secure English language test (SELT) but the test was not completed within the last 2 years.
             english_language_unverifiable_reference_number: We were unable to verify the reference number you have provided.
+            fraud: You have provided information that cannot be verified.
             full_professional_status: Your recognition level as a teacher does not match the required level or has outstanding conditions.
             further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
             identification_document_expired: Your ID document has expired.
