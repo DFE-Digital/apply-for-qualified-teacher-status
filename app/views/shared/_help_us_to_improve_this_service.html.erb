@@ -1,23 +1,6 @@
-<% show_feedback ||= false %>
+<h2 class="govuk-heading-m">Help us to improve this service</h2>
 
-<aside class="govuk-!-margin-top-6">
-  <h2 class="govuk-heading-s">Help us to improve this service</h2>
-
-  <% if show_feedback %>
-    <p class="govuk-body">
-      Please <%= govuk_link_to "give us feedback", t("service.form.feedback") %> about your experience of using this service. It should take less than 2 minutes to complete.
-    </p>
-  <% end %>
-
-  <p class="govuk-body">
-    We're always trying to improve this service and boost teacher recruitment from overseas. So we'd like to talk to people about their experience of using this service.
-  </p>
-
-  <p class="govuk-body">
-    If you’d like to help, please <%= govuk_link_to "complete this short form", t("service.form.research") %>.
-  </p>
-
-  <p class="govuk-body">
-    If you match our search criteria, we'll invite you to take part in research.
-  </p>
-</aside>
+<p class="govuk-body">
+  We’re always looking for ways to improve the apply for QTS service.
+  If you’d like to share your experiences, please complete this <%= govuk_link_to "feedback form", t("service.feedback_url"), new_tab: true %>.
+</p>

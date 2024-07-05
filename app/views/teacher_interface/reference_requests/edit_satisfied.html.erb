@@ -1,6 +1,5 @@
 <% content_for :page_title, title_with_error_prefix(t("helpers.legend.teacher_interface_reference_request_satisfied_response_form.satisfied_response"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_reference_request_path) %>
-<% content_for :feedback_url, t("service.form.referee_feedback") %>
 
 <%= form_with model: @form, url: satisfied_teacher_interface_reference_request_path do |f| %>
   <%= f.govuk_error_summary %>

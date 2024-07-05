@@ -38,7 +38,7 @@
 
           <span class="govuk-phase-banner__text">
             <% if HostingEnvironment.production? %>
-              This is a new service - <%= link_to "your feedback will help us to improve it", yield(:feedback_url).presence || t("service.form.feedback") %>.
+              This is a new service - <%= link_to "your feedback will help us to improve it", t("service.feedback_url") %>.
             <% else %>
               This is a ‘<%= HostingEnvironment.phase %>’ version of the service.
             <% end %>
