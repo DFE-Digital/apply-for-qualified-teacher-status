@@ -182,14 +182,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_05_082709) do
     t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
-  create_table "create_mail_delivery_failures", force: :cascade do |t|
-    t.string "email_address"
-    t.string "mailer_class"
-    t.string "mailer_action_method"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "documents", force: :cascade do |t|
     t.string "document_type", null: false
     t.string "documentable_type"
@@ -223,14 +215,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_05_082709) do
     t.datetime "completed_at"
     t.string "work_experience"
     t.boolean "qualified_for_subject"
-  end
-
-  create_table "email_delivery_failures", force: :cascade do |t|
-    t.string "email_address"
-    t.string "mailer_class"
-    t.string "mailer_action_method"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "english_language_providers", force: :cascade do |t|
