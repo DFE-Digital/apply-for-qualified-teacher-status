@@ -1,41 +1,121 @@
 ---
 :shared:
   :active_storage_variant_records:
-    - id
     - blob_id
+    - id
     - variation_digest
   :active_storage_blobs:
-    - id
-    - key
-    - filename
-    - content_type
-    - metadata
-    - service_name
     - byte_size
     - checksum
+    - content_type
     - created_at
-  :active_storage_attachments:
+    - filename
     - id
-    - name
-    - record_type
-    - record_id
+    - key
+    - metadata
+    - service_name
+  :active_storage_attachments:
     - blob_id
     - created_at
+    - id
+    - name
+    - record_id
+    - record_type
   :assessments:
+    - age_range_note
     - qualifications_assessor_note
+    - recommendation_assessor_note
+    - subjects_note
+  :consent_requests:
+    - verify_note
+    - review_note
+  :countries:
+    - other_information
+    - sanction_information
+    - status_information
+    - teaching_qualification_information
+  :feature_flags_features:
+    - active
+    - created_at
+    - id
+    - name
+    - updated_at
+  :further_information_requests:
+    - review_note
+  :further_information_request_items:
+    - failure_reason_assessor_feedback
+    - response
+  :notes:
+    - text
+  :professional_standing_requests:
+    - location_note
+    - review_note
+    - verify_note
+  :qualification_requests:
+    - review_note
+    - verify_note
+  :reference_requests:
+    - additional_information_response
+    - children_comment
+    - contact_comment
+    - dates_comment
+    - hours_comment
+    - lessons_comment
+    - misconduct_comment
+    - reports_comment
+    - review_note
+    - satisfied_comment
+    - slug
+    - verify_note
+  :regions:
+    - other_information
+    - sanction_information
+    - status_information
+    - teaching_qualification_information
+  :selected_failure_reasons:
+    - assessor_feedback
   :sessions:
+    - created_at
+    - data
     - id
     - session_id
-    - data
-    - created_at
     - updated_at
   :staff:
-    - encrypted_password
-    - reset_password_token
     - confirmation_token
-    - unlock_token
+    - encrypted_password
     - invitation_token
+    - reset_password_token
+    - unlock_token
   :teachers:
     - access_your_teaching_qualifications_url
   :timeline_events:
+    - age_range_max
+    - age_range_min
+    - age_range_note
+    - application_form_id
+    - assessment_id
+    - assessment_section_id
+    - assignee_id
+    - column_name
+    - created_at
+    - creator_id
+    - creator_name
+    - creator_type
+    - event_type
+    - id
+    - mailer_action_name
+    - mailer_class_name
+    - message_subject
+    - new_value
+    - note_id
     - note_text
+    - old_value
+    - qualification_id
+    - requestable_id
+    - requestable_type
+    - subjects
+    - subjects_note
+    - updated_at
+    - work_history_id
+  :uploads:
+    - filename

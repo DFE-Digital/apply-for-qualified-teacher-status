@@ -70,19 +70,16 @@
   :assessments:
     - age_range_max
     - age_range_min
-    - age_range_note
     - application_form_id
     - created_at
     - id
     - induction_required
     - recommendation
-    - recommendation_assessor_note
     - recommended_at
     - references_verified
     - scotland_full_registration
     - started_at
     - subjects
-    - subjects_note
     - unsigned_consent_document_generated
     - updated_at
     - working_days_since_started
@@ -97,13 +94,11 @@
     - qualification_id
     - received_at
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
     - unsigned_document_downloaded
     - updated_at
     - verified_at
-    - verify_note
     - verify_passed
   :countries:
     - code
@@ -111,11 +106,7 @@
     - eligibility_enabled
     - eligibility_skip_questions
     - id
-    - other_information
-    - sanction_information
-    - status_information
     - subject_limited
-    - teaching_qualification_information
     - updated_at
   :documents:
     - available
@@ -126,44 +117,38 @@
     - id
     - updated_at
   :dqt_trn_requests:
-    - id
     - application_form_id
+    - created_at
+    - id
+    - potential_duplicate
     - request_id
     - state
-    - potential_duplicate
-    - created_at
     - updated_at
   :eligibility_checks:
-    - id
-    - free_of_sanctions
-    - created_at
-    - updated_at
-    - teach_children
-    - qualification
-    - degree
-    - country_code
-    - region_id
     - completed_at
-    - work_experience
-    - qualified_for_subject
-  :english_language_providers:
+    - country_code
+    - created_at
+    - degree
+    - free_of_sanctions
     - id
-    - name
+    - qualification
+    - qualified_for_subject
+    - region_id
+    - teach_children
+    - updated_at
+    - work_experience
+  :english_language_providers:
+    - accepted_tests
     - b2_level_requirement
     - b2_level_requirement_prefix
-    - url
-    - reference_name
-    - reference_hint
-    - accepted_tests
     - check_url
     - created_at
-    - updated_at
-  :feature_flags_features:
     - id
     - name
-    - active
-    - created_at
+    - reference_hint
+    - reference_name
     - updated_at
+    - url
   :further_information_requests:
     - assessment_id
     - created_at
@@ -171,7 +156,6 @@
     - id
     - received_at
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
     - updated_at
@@ -179,39 +163,33 @@
     - working_days_received_to_recommendation
     - working_days_since_received
   :further_information_request_items:
+    - contact_email
+    - contact_job
+    - contact_name
+    - created_at
+    - failure_reason_key
+    - further_information_request_id
     - id
     - information_type
-    - created_at
     - updated_at
-    - further_information_request_id
-    - failure_reason_key
-    - failure_reason_assessor_feedback
-    - response
-    - contact_name
-    - contact_job
-    - contact_email
     - work_history_id
   :notes:
-    - id
     - application_form_id
     - author_id
-    - text
     - created_at
+    - id
     - updated_at
   :professional_standing_requests:
     - assessment_id
     - created_at
     - expired_at
     - id
-    - location_note
     - received_at
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
     - updated_at
     - verified_at
-    - verify_note
     - verify_passed
   :qualifications:
     - application_form_id
@@ -233,46 +211,32 @@
     - qualification_id
     - received_at
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
     - updated_at
     - verified_at
-    - verify_note
     - verify_passed
   :reference_requests:
-    - additional_information_response
     - assessment_id
-    - children_comment
     - children_response
-    - contact_comment
     - contact_job
     - contact_name
     - contact_response
     - created_at
-    - dates_comment
     - dates_response
     - expired_at
-    - hours_comment
     - hours_response
     - id
-    - lessons_comment
     - lessons_response
-    - misconduct_comment
     - misconduct_response
     - received_at
-    - reports_comment
     - reports_response
     - requested_at
-    - review_note
     - review_passed
     - reviewed_at
-    - satisfied_comment
     - satisfied_response
-    - slug
     - updated_at
     - verified_at
-    - verify_note
     - verify_passed
     - work_history_id
   :regions:
@@ -281,13 +245,10 @@
     - created_at
     - id
     - name
-    - other_information
     - reduced_evidence_accepted
     - requires_preliminary_check
     - sanction_check
-    - sanction_information
     - status_check
-    - status_information
     - teaching_authority_address
     - teaching_authority_certificate
     - teaching_authority_emails
@@ -296,7 +257,6 @@
     - teaching_authority_provides_written_statement
     - teaching_authority_requires_submission_email
     - teaching_authority_websites
-    - teaching_qualification_information
     - updated_at
     - written_statement_optional
   :reminder_emails:
@@ -307,15 +267,14 @@
     - remindable_type
     - updated_at
   :selected_failure_reasons:
-    - id
-    - created_at
-    - updated_at
-    - key
-    - assessor_feedback
     - assessment_section_id
+    - created_at
+    - id
+    - key
+    - updated_at
   :selected_failure_reasons_work_histories:
-    - work_history_id
     - selected_failure_reason_id
+    - work_history_id
   :staff:
     - assess_permission
     - azure_ad_uid
@@ -364,38 +323,9 @@
     - trn
     - updated_at
     - uuid
-  :timeline_events:
-    - age_range_max
-    - age_range_min
-    - age_range_note
-    - application_form_id
-    - assessment_id
-    - assessment_section_id
-    - assignee_id
-    - column_name
-    - created_at
-    - creator_id
-    - creator_name
-    - creator_type
-    - event_type
-    - id
-    - mailer_action_name
-    - mailer_class_name
-    - message_subject
-    - new_value
-    - note_id
-    - old_value
-    - qualification_id
-    - requestable_id
-    - requestable_type
-    - subjects
-    - subjects_note
-    - updated_at
-    - work_history_id
   :uploads:
     - created_at
     - document_id
-    - filename
     - id
     - malware_scan_result
     - translation

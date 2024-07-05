@@ -1,67 +1,31 @@
 ---
 :shared:
-  :active_storage_blobs:
-    - filename
-  :active_storage_attachments:
-    - name
   :application_forms:
-    - given_names
-    - family_name
-    - date_of_birth
-    - age_range_min
-    - age_range_max
-    - has_alternative_name
-    - alternative_given_names
     - alternative_family_name
+    - alternative_given_names
+    - date_of_birth
+    - family_name
+    - given_names
+    - has_alternative_name
     - registration_number
-    - has_work_history
-    - subjects
-  :further_information_requests:
-    - review_note
   :further_information_request_items:
-    - failure_reason_assessor_feedback
-    - response
-    - contact_name
     - contact_email
-  :notes:
-    - text
-  :professional_standing_requests:
-    - location_note
-    - review_note
-    - verify_note
-  :qualifications:
-    - institution_name
-  :qualification_requests:
-    - review_note
-    - verify_note
-  :reference_requests:
-    - additional_information_response
-    - review_note
-    - verify_note
-  :selected_failure_reasons:
-    - assessor_feedback
+    - contact_name
   :staff:
-    - email
-    - unconfirmed_email
+    - azure_ad_uid
     - current_sign_in_ip
+    - email
     - last_sign_in_ip
     - name
-    - azure_ad_uid
+    - unconfirmed_email
   :teachers:
     - canonical_email
     - current_sign_in_ip
     - email
     - last_sign_in_ip
     - unconfirmed_email
-  :timeline_events:
-    - age_range_note
-    - new_value
-    - old_value
-    - subjects_note
   :work_histories:
     - canonical_contact_email
-    - city
     - contact_email
     - contact_name
     - email
-    - school_name
