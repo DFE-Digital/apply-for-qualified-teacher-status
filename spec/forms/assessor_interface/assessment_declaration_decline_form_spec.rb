@@ -35,6 +35,14 @@ RSpec.describe AssessorInterface::AssessmentDeclarationDeclineForm,
         )
       end
     end
+
+    context "when further information failed" do
+      before do
+        create(:further_information_request, :review_failed, assessment:)
+      end
+
+      it { is_expected.to validate_presence_of(:recommendation_assessor_note) }
+    end
   end
 
   describe "#save" do

@@ -489,22 +489,4 @@ RSpec.describe Assessment, type: :model do
       it { is_expected.to include("request_further_information") }
     end
   end
-
-  describe "#selected_failure_reasons_empty?" do
-    subject(:selected_failure_reasons_empty?) do
-      assessment.selected_failure_reasons_empty?
-    end
-
-    context "with no failure reasons" do
-      it { is_expected.to be true }
-    end
-
-    context "with failure reasons" do
-      before do
-        create(:assessment_section, :declines_with_already_qts, assessment:)
-      end
-
-      it { is_expected.to be false }
-    end
-  end
 end

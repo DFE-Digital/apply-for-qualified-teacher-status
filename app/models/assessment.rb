@@ -188,10 +188,6 @@ class Assessment < ApplicationRecord
     end
   end
 
-  def selected_failure_reasons_empty?
-    sections.all? { |section| section.selected_failure_reasons.empty? }
-  end
-
   def all_preliminary_sections_passed?
     sections.preliminary.all?(&:passed?)
   end
