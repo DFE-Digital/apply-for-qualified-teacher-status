@@ -4,7 +4,6 @@
 <%= render "shared/eligible_region_content", region: @region, eligibility_check: @eligibility_check %>
 
 <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) %>
-  <p class="govuk-body">Use our new application form to apply for QTS.</p>
   <%= govuk_start_button(text: "Apply for QTS", href: new_teacher_registration_path) %>
 <% end %>
 
