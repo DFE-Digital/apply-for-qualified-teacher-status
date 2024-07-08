@@ -11,9 +11,7 @@ class AssessorInterface::AssessmentDeclarationDeclineForm
   attribute :recommendation_assessor_note, :string
 
   validates :declaration, presence: true
-  validates :recommendation_assessor_note,
-            presence: true,
-            if: -> { assessment.selected_failure_reasons_empty? }
+  validates :recommendation_assessor_note, presence: true, if: :note_required?
 
   def save
     return false unless valid?
@@ -23,5 +21,10 @@ class AssessorInterface::AssessmentDeclarationDeclineForm
     )
 
     true
+  end
+
+  def note_required?
+    assessment.sections.all? { _1.selected_failure_reasons.empty? } ||
+      assessment.further_information_requests.exists?(review_passed: false)
   end
 end
