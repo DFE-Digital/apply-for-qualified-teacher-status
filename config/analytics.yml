@@ -173,6 +173,13 @@
     - information_type
     - updated_at
     - work_history_id
+  :mail_delivery_failures:
+    - created_at
+    - email_address
+    - id
+    - mailer_action_method
+    - mailer_class
+    - updated_at
   :notes:
     - application_form_id
     - author_id

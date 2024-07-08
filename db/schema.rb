@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_28_121209) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_05_082709) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -144,8 +144,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_28_121209) do
     t.text "recommendation_assessor_note", default: "", null: false
     t.boolean "references_verified"
     t.boolean "scotland_full_registration"
-    t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.text "qualifications_assessor_note", default: "", null: false
+    t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 
@@ -268,6 +268,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_28_121209) do
     t.datetime "requested_at"
     t.datetime "expired_at"
     t.index ["assessment_id"], name: "index_further_information_requests_on_assessment_id"
+  end
+
+  create_table "mail_delivery_failures", force: :cascade do |t|
+    t.string "email_address", null: false
+    t.string "mailer_class", null: false
+    t.string "mailer_action_method", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_address"], name: "index_mail_delivery_failures_on_email_address"
   end
 
   create_table "notes", force: :cascade do |t|
