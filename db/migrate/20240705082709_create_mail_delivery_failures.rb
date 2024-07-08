@@ -8,8 +8,8 @@ class CreateMailDeliveryFailures < ActiveRecord::Migration[7.1]
       t.string :mailer_action_method, null: false
 
       t.timestamps
-    end
 
-    add_index :mail_delivery_failures, :email_address
+      t.index :email_address
+    end
   end
 end

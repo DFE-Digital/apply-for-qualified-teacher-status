@@ -271,11 +271,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_05_082709) do
   end
 
   create_table "mail_delivery_failures", force: :cascade do |t|
-    t.string "email_address"
-    t.string "mailer_class"
-    t.string "mailer_action_method"
+    t.string "email_address", null: false
+    t.string "mailer_class", null: false
+    t.string "mailer_action_method", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email_address"], name: "index_mail_delivery_failures_on_email_address"
   end
 
   create_table "notes", force: :cascade do |t|
