@@ -1,0 +1,10 @@
+filename: docs/diagram
+
+attributes:
+  - content
+  - foreign_keys
+  - inheritance
+
+exclude:
+  - ActiveRecord::InternalMetadata
+  - ActiveRecord::SchemaMigration

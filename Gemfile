@@ -61,6 +61,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "rails-erd"
   gem "rladr"
   gem "web-console"
 
