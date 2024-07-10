@@ -27,6 +27,16 @@ class ConsentLetter
       Prawn::Document
         .new(margin: MARGIN)
         .tap do |pdf|
+          # rubocop:disable Rails/SaveBang
+          pdf.font_families.update(
+            "Open Sans" => {
+              normal: "public/open-sans.ttf",
+            },
+          )
+          # rubocop:enable Rails/SaveBang
+
+          pdf.font "Open Sans"
+
           pdf.image("public/tra-logo.png", position: :right, scale: 0.6)
 
           pdf.pad(SECTION_PAD) do
