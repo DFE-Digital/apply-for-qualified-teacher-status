@@ -26,7 +26,8 @@ module "postgres" {
 
   cluster_configuration_map = module.cluster_data.configuration_map
 
-  use_azure               = var.deploy_azure_backing_services
-  azure_enable_monitoring = var.enable_monitoring
-  azure_extensions        = ["pg_stat_statements", "pgcrypto"]
+  use_azure                = var.deploy_azure_backing_services
+  azure_enable_monitoring  = var.enable_monitoring
+  azure_extensions         = ["pg_stat_statements", "pgcrypto"]
+  azure_maintenance_window = var.azure_maintenance_window
 }
