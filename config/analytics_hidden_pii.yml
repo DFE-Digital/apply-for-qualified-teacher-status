@@ -1,0 +1,30 @@
+:shared:
+  :application_forms:
+    - alternative_family_name
+    - alternative_given_names
+    - date_of_birth
+    - family_name
+    - given_names
+    - registration_number
+  :further_information_request_items:
+    - contact_email
+    - contact_name
+  :mail_delivery_failures:
+    - email_address
+  :staff:
+    - current_sign_in_ip
+    - email
+    - last_sign_in_ip
+    - name
+    - unconfirmed_email
+  :teachers:
+    - canonical_email
+    - current_sign_in_ip
+    - email
+    - last_sign_in_ip
+    - unconfirmed_email
+  :work_histories:
+    - canonical_contact_email
+    - contact_email
+    - contact_name
+    - email
