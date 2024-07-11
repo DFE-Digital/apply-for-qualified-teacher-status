@@ -14,17 +14,17 @@ SET
   alternative_given_names = '',
   alternative_family_name = '',
   registration_number = '';
-  
+
 -- AssessmentSectionFailureReason
 
 UPDATE "selected_failure_reasons"
 SET
-  assessor_feedback = CASE WHEN assessor_feedback IS NULL THEN NULL ELSE '[sanitised]' END; 
+  assessor_feedback = CASE WHEN assessor_feedback IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- AssessmentSection
 -- no update required
 
--- Assessment 
+-- Assessment
 -- no update required
 
 -- Countries
@@ -37,13 +37,13 @@ SET
 -- clear these as the scheduled jobs might run against them
 DELETE FROM "dqt_trn_requests";
 
--- EligibilityCheck 
+-- EligibilityCheck
 -- no update required
 
 -- Features
 -- make sure the service open flag defaults to off
 UPDATE "feature_flags_features"
-  SET active = false 
+  SET active = false
   WHERE name like 'service_open';
 
 -- FurtherInformationRequestItem
@@ -61,7 +61,7 @@ SET
 UPDATE "notes"
 SET
   text = CASE WHEN text IS NULL THEN NULL ELSE '[sanitised]' END;
-  
+
 -- Qualification
 UPDATE "qualifications"
 SET
@@ -86,6 +86,23 @@ DELETE FROM "sessions";
 -- Staff
 DELETE FROM "staff";
 
+-- SuitabilityRecord
+
+UPDATE "suitability_records"
+SET
+    date_of_birth = '2000-01-01',
+    note = '[sanitised]',
+    archive_note = CASE WHEN archive_note = '' THEN '' ELSE '[sanitised]' END;
+
+UPDATE "suitability_record_emails"
+SET
+    value = CASE WHEN value IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END,
+    canonical = CASE WHEN canonical IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END;
+
+UPDATE "suitability_record_names"
+SET
+    value = CONCAT('Applicant ', id);
+
 -- Teacher
 UPDATE "teachers"
 SET
@@ -109,4 +126,3 @@ SET
   job  = '[sanitised]',
   contact_email  = 'sanitised@example.com',
   contact_name  = '[sanitised]';
-
