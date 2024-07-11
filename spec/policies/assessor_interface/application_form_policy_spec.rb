@@ -107,7 +107,7 @@ RSpec.describe AssessorInterface::ApplicationFormPolicy do
   end
 
   describe "#withdraw?" do
-    subject(:rollback?) { policy.withdraw? }
+    subject(:withdraw?) { policy.withdraw? }
 
     it_behaves_like "a policy method requiring the withdraw permission"
   end
