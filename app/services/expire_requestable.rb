@@ -13,7 +13,6 @@ class ExpireRequestable
 
     ActiveRecord::Base.transaction do
       requestable.expired!
-      requestable.after_expired(user:)
 
       CreateTimelineEvent.call(
         "requestable_expired",
@@ -24,6 +23,8 @@ class ExpireRequestable
 
       ApplicationFormStatusUpdater.call(user:, application_form:)
     end
+
+    requestable.after_expired(user:)
 
     requestable
   end
