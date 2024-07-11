@@ -9,6 +9,7 @@ RSpec.describe ConsentLetter do
       :submitted,
       :with_personal_information,
       :with_teaching_qualification,
+      family_name: "Fămily",
     )
   end
 
