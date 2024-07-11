@@ -4,6 +4,7 @@ module TeacherInterface
   class ApplicationFormsController < BaseController
     include HistoryTrackable
 
+    before_action :redirect_if_application_form_active, only: %i[new create]
     before_action :redirect_unless_application_form_is_draft,
                   only: %i[edit update]
     before_action :load_application_form, except: %i[new create]
@@ -13,15 +14,12 @@ module TeacherInterface
     define_history_check :edit
 
     def new
-      existing_application_form = application_form
-
-      @already_applied = existing_application_form.present?
+      @already_applied = application_form.present?
       @needs_region = false
 
       @country_region_form =
         CountryRegionForm.new(
-          location:
-            CountryCode.to_location(existing_application_form&.country&.code),
+          location: CountryCode.to_location(application_form&.country&.code),
         )
     end
 
@@ -80,6 +78,12 @@ module TeacherInterface
     end
 
     private
+
+    def redirect_if_application_form_active
+      if application_form.present? && !application_form.completed_stage?
+        redirect_to %i[teacher_interface application_form]
+      end
+    end
 
     def country_region_form_params
       params.require(:teacher_interface_country_region_form).permit(
