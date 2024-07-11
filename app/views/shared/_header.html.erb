@@ -12,6 +12,11 @@
          href: main_app.assessor_interface_application_forms_path,
          active: current_page?(main_app.assessor_interface_application_forms_path)
        ) %>
+
+      <% if FeatureFlags::FeatureFlag.active?(:suitability) %>
+        <% header.with_navigation_item(text: "Suitability records", href: main_app.assessor_interface_suitability_records_path) %>
+      <% end %>
+
       <% header.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
       <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>

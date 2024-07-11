@@ -203,6 +203,10 @@ Rails.application.routes.draw do
     get "/application/documents/:document_id/uploads/:id",
         to: "uploads#show",
         as: :application_form_document_upload
+
+    resources :suitability_records,
+              path: "/suitability-records",
+              only: %i[index]
   end
 
   namespace :eligibility_interface, path: "/eligibility" do
