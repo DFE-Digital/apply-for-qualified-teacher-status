@@ -86,6 +86,9 @@
     - invitation_token
     - reset_password_token
     - unlock_token
+  :suitability_records:
+    - archive_note
+    - note
   :teachers:
     - access_your_teaching_qualifications_url
   :timeline_events:

@@ -55,6 +55,9 @@
     - written_statement_confirmation
     - written_statement_optional
     - written_statement_status
+  :application_forms_suitability_records:
+    - application_form_id
+    - suitability_record_id
   :assessment_sections:
     - assessed_at
     - assessment_id
@@ -314,6 +317,26 @@
     - updated_at
     - verify_permission
     - withdraw_permission
+  :suitability_record_emails:
+    - canonical
+    - created_at
+    - id
+    - suitability_record_id
+    - updated_at
+    - value
+  :suitability_record_names:
+    - created_at
+    - id
+    - suitability_record_id
+    - updated_at
+    - value
+  :suitability_records:
+    - archived_at
+    - country_code
+    - created_at
+    - date_of_birth
+    - id
+    - updated_at
   :teachers:
     - canonical_email
     - created_at

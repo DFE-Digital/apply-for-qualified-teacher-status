@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_05_082709) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_11_100342) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -108,6 +108,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_05_082709) do
     t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
     t.index ["stage"], name: "index_application_forms_on_stage"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
+  end
+
+  create_table "application_forms_suitability_records", id: false, force: :cascade do |t|
+    t.bigint "suitability_record_id", null: false
+    t.bigint "application_form_id", null: false
   end
 
   create_table "assessment_sections", force: :cascade do |t|
@@ -483,6 +488,33 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_05_082709) do
     t.index ["unlock_token"], name: "index_staff_on_unlock_token", unique: true
   end
 
+  create_table "suitability_record_emails", force: :cascade do |t|
+    t.text "value", null: false
+    t.text "canonical", null: false
+    t.bigint "suitability_record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["suitability_record_id"], name: "index_suitability_record_emails_on_suitability_record_id"
+  end
+
+  create_table "suitability_record_names", force: :cascade do |t|
+    t.text "value", null: false
+    t.bigint "suitability_record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["suitability_record_id"], name: "index_suitability_record_names_on_suitability_record_id"
+  end
+
+  create_table "suitability_records", force: :cascade do |t|
+    t.text "country_code", default: "", null: false
+    t.date "date_of_birth"
+    t.text "note", null: false
+    t.datetime "archived_at"
+    t.text "archive_note", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "teachers", force: :cascade do |t|
     t.string "email", null: false
     t.datetime "created_at", null: false
@@ -597,6 +629,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_05_082709) do
   add_foreign_key "reference_requests", "work_histories"
   add_foreign_key "regions", "countries"
   add_foreign_key "selected_failure_reasons", "assessment_sections"
+  add_foreign_key "suitability_record_emails", "suitability_records"
+  add_foreign_key "suitability_record_names", "suitability_records"
   add_foreign_key "timeline_events", "application_forms"
   add_foreign_key "timeline_events", "assessment_sections"
   add_foreign_key "timeline_events", "assessments"

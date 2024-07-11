@@ -17,6 +17,13 @@
     - last_sign_in_ip
     - name
     - unconfirmed_email
+  :suitability_record_emails:
+    - canonical
+    - value
+  :suitability_record_names:
+    - value
+  :suitability_records:
+    - date_of_birth
   :teachers:
     - canonical_email
     - current_sign_in_ip
