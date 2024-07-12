@@ -5,6 +5,8 @@ DfE::Analytics.configure do |config|
   config.environment = HostingEnvironment.name
   config.queue = :analytics
 
+  config.excluded_paths = [%r{^/healthcheck}]
+
   config.enable_analytics =
     proc do
       disabled_by_default = Rails.env.development?
