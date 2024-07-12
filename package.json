@@ -6,7 +6,7 @@
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete",
     "esbuild": "^0.23.0",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
-    "govuk-frontend": "^5.4.0",
+    "govuk-frontend": "^5.4.1",
     "sass": "^1.77.8"
   },
   "scripts": {
