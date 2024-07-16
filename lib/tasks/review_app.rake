@@ -7,7 +7,8 @@ namespace :review_app do
       raise "THIS TASK CANNOT BE RUN IN PRODUCTION"
     end
 
-    FeatureFlags::FeatureFlag.activate(:personas)
-    FeatureFlags::FeatureFlag.activate(:teacher_applications)
+    %i[personas suitability teacher_applications].each do |feature|
+      FeatureFlags::FeatureFlag.activate(feature)
+    end
   end
 end

@@ -238,6 +238,11 @@ module PageHelpers
       PageObjects::AssessorInterface::SendSignedConsentDocuments.new
   end
 
+  def assessor_suitability_records_page
+    @assessor_suitability_records_page ||=
+      PageObjects::AssessorInterface::SuitabilityRecords.new
+  end
+
   def assessor_timeline_page
     @assessor_timeline_page ||= PageObjects::AssessorInterface::Timeline.new
   end

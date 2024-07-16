@@ -21,6 +21,10 @@ feature_flags:
     author: Richard Pattinson
     description: Allow users to sign in using accounts in Active Directory.
 
+  suitability:
+    author: Thomas Leese
+    description: Enable suitability records and matching.
+
   teacher_applications:
     author: Thomas Leese
     description: >
