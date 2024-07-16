@@ -24,6 +24,8 @@
 #
 FactoryBot.define do
   factory :suitability_record do
+    association :created_by, factory: :staff
+
     note { Faker::Lorem.sentence }
 
     trait :archived do
@@ -32,16 +34,16 @@ FactoryBot.define do
     end
   end
 
-  factory :suitability_record_email do
-    association :suitability_record
-
-    value { Faker::Name.name }
-  end
-
-  factory :suitability_record_name do
+  factory :suitability_record_email, class: SuitabilityRecord::Email do
     association :suitability_record
 
     value { Faker::Internet.email }
     canonical { EmailAddress.canonical(value) }
+  end
+
+  factory :suitability_record_name, class: SuitabilityRecord::Name do
+    association :suitability_record
+
+    value { Faker::Name.name }
   end
 end
