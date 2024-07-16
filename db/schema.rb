@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_11_100342) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_16_075611) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -513,6 +513,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_100342) do
     t.text "archive_note", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "created_by_id", null: false
+    t.index ["created_by_id"], name: "index_suitability_records_on_created_by_id"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -631,6 +633,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_100342) do
   add_foreign_key "selected_failure_reasons", "assessment_sections"
   add_foreign_key "suitability_record_emails", "suitability_records"
   add_foreign_key "suitability_record_names", "suitability_records"
+  add_foreign_key "suitability_records", "staff", column: "created_by_id"
   add_foreign_key "timeline_events", "application_forms"
   add_foreign_key "timeline_events", "assessment_sections"
   add_foreign_key "timeline_events", "assessments"

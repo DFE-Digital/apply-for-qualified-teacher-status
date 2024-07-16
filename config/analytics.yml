@@ -334,6 +334,7 @@
     - archived_at
     - country_code
     - created_at
+    - created_by_id
     - date_of_birth
     - id
     - updated_at
