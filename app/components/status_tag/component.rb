@@ -24,6 +24,8 @@ module StatusTag
 
     COLOURS = {
       accepted: "green",
+      active: "green",
+      archived: "grey",
       assessment: "blue",
       assessment_in_progress: "blue",
       assessment_not_started: "grey",
