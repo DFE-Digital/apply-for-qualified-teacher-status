@@ -12,6 +12,15 @@
 #  note          :text             not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  created_by_id :bigint           not null
+#
+# Indexes
+#
+#  index_suitability_records_on_created_by_id  (created_by_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (created_by_id => staff.id)
 #
 class SuitabilityRecord < ApplicationRecord
   has_and_belongs_to_many :application_forms
