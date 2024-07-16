@@ -33,6 +33,14 @@ class SuitabilityRecord < ApplicationRecord
   validates :note, presence: true
   validates :archive_note, presence: true, if: :archived?
 
+  def name
+    names.min.value
+  end
+
+  def status
+    archived? ? "archived" : "active"
+  end
+
   def archived?
     archived_at.present?
   end

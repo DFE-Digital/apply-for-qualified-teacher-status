@@ -3,3 +3,37 @@
 <% content_for :page_title, title %>
 
 <h1 class="govuk-heading-xl"><%= title %></h1>
+
+<% @records.each_with_index do |suitability_record, index| %>
+  <% unless index.zero? %>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-9 govuk-!-margin-bottom-9" />
+  <% end %>
+
+  <article>
+    <h2 class="govuk-heading-m"><%= suitability_record.name %></h2>
+
+    <%= govuk_summary_list(actions: false) do |summary_list|
+      summary_list.with_row do |row|
+        row.with_key { "Date added" }
+        row.with_value { suitability_record.created_at.to_fs }
+      end
+
+      summary_list.with_row do |row|
+        row.with_key { "Date last updated" }
+        row.with_value { suitability_record.updated_at.to_fs }
+      end
+
+      summary_list.with_row do |row|
+        row.with_key { "Country trained in" }
+        row.with_value { CountryName.from_code(suitability_record.country_code) }
+      end
+
+      summary_list.with_row do |row|
+        row.with_key { "Suitability status" }
+        row.with_value { render StatusTag::Component.new(suitability_record.status) }
+      end
+    end %>
+  </article>
+<% end %>
+
+<%= govuk_pagination(pagy: @pagy) %>
