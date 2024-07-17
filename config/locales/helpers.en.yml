@@ -5,6 +5,8 @@ en:
       assessor_interface_application_form_name_form:
         given_names: Type the updated given names in the text box below
         family_name: Type the updated family name in the text box below
+      assessor_interface_archive_suitability_record_form:
+        note: "Internal note: Briefly explain why this suitability record is being archived."
       assessor_interface_assessment_section_form:
         selected_failure_reasons: Select all options that are relevant to you.
         failure_reason_notes:
@@ -68,6 +70,8 @@ en:
         family_name: Change family name
       assessor_interface_application_form_email_form:
         email: New email address
+      assessor_interface_archive_suitability_record_form:
+        note: Reason for archiving
       assessor_interface_assessment_recommendation_form:
         confirmation_options:
           true: I have assessed this application based on the eligibility criteria that was in place on the date that it was submitted.
