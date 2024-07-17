@@ -1,0 +1,52 @@
+<% title = "Change suitability record for #{@suitability_record.name}" %>
+
+<% content_for :page_title, title %>
+<% content_for :back_link_url, assessor_interface_suitability_records_path %>
+
+<%= form_with model: @form, url: [:assessor_interface, @suitability_record], method: :patch, id: "app-suitability-record-form" do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l"><%= title %></h1>
+
+  <h2 class="govuk-heading-m">Current record</h2>
+
+  <%= govuk_summary_list(actions: false) do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Name" }
+      row.with_value { @suitability_record.name }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Country trained in" }
+      row.with_value { CountryName.from_code(@suitability_record.country_code) }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Date of birth" }
+      row.with_value { @suitability_record.date_of_birth.to_fs }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "References" }
+      row.with_value { @suitability_record.application_forms.pluck(:reference).sort.join(", ") }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Suitability status" }
+      row.with_value { render StatusTag::Component.new(@suitability_record.status) }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Suitability reasons" }
+      row.with_value { @suitability_record.note }
+    end
+  end %>
+
+  <h2 class="govuk-heading-m">Update record</h2>
+
+  <%= render "form_fields", f: %>
+
+  <%= f.govuk_submit "Update record" do %>
+    <%= govuk_link_to "Cancel", %i[assessor_interface suitability_records] %>
+  <% end %>
+<% end %>
