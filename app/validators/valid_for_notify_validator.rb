@@ -14,7 +14,9 @@ class ValidForNotifyValidator < ActiveModel::EachValidator
                   [#{ALPHANUMERIC}])\z}x
 
   def validate_each(record, attribute, value)
-    if value.blank? || !value.match?(EMAIL_REGEX)
+    emails = (value.is_a?(Array) ? value : [value]).compact_blank
+
+    if emails.any? { !_1.match?(EMAIL_REGEX) }
       record.errors.add(
         attribute,
         "Enter an email address in the correct format, like name@example.com",
