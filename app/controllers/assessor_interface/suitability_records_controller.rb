@@ -59,6 +59,16 @@ module AssessorInterface
     end
 
     def update
+      if suitability_record.archived?
+        suitability_record.update!(
+          archived_at: nil,
+          archived_by: nil,
+          archive_note: "",
+        )
+        redirect_to [:edit, :assessor_interface, suitability_record]
+        return
+      end
+
       @form =
         SuitabilityRecordForm.new(
           form_params.merge(suitability_record:, user: current_staff),
@@ -68,6 +78,23 @@ module AssessorInterface
         redirect_to action: :index
       else
         render :edit, status: :unprocessable_entity
+      end
+    end
+
+    def archive
+      @form = ArchiveSuitabilityRecordForm.new(suitability_record:)
+    end
+
+    def destroy
+      @form =
+        ArchiveSuitabilityRecordForm.new(
+          archive_form_params.merge(suitability_record:, user: current_staff),
+        )
+
+      if @form.save
+        redirect_to action: :index
+      else
+        render :archive, status: :unprocessable_entity
       end
     end
 
@@ -83,6 +110,12 @@ module AssessorInterface
         emails: [],
         references: [],
       )
+    end
+
+    def archive_form_params
+      params.require(
+        :assessor_interface_archive_suitability_record_form,
+      ).permit(:note)
     end
 
     def suitability_record

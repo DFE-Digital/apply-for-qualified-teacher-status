@@ -6,6 +6,8 @@ module PageObjects
       set_url "/assessor/suitability-records/{id}/edit"
 
       element :heading, "h1"
+
+      element :archive_button, "#app-archive-button"
     end
   end
 end
