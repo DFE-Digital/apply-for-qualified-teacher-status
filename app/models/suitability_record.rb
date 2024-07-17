@@ -23,6 +23,7 @@
 #  fk_rails_...  (created_by_id => staff.id)
 #
 class SuitabilityRecord < ApplicationRecord
+  belongs_to :created_by, class_name: "Staff"
   has_and_belongs_to_many :application_forms
   has_many :emails, class_name: "SuitabilityRecord::Email"
   has_many :names, class_name: "SuitabilityRecord::Name"
@@ -32,12 +33,22 @@ class SuitabilityRecord < ApplicationRecord
   validates :note, presence: true
   validates :archive_note, presence: true, if: :archived?
 
+  def name
+    names.min.value
+  end
+
+  def status
+    archived? ? "archived" : "active"
+  end
+
   def archived?
     archived_at.present?
   end
 
   class Email < ApplicationRecord
     self.table_name = "suitability_record_emails"
+
+    belongs_to :suitability_record
 
     validates :value, presence: true
     validates :canonical, presence: true
@@ -50,6 +61,8 @@ class SuitabilityRecord < ApplicationRecord
 
   class Name < ApplicationRecord
     self.table_name = "suitability_record_names"
+
+    belongs_to :suitability_record
 
     validates :value, presence: true
   end

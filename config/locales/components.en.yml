@@ -2,6 +2,8 @@ en:
   components:
     status_tag:
       accepted: Accepted
+      active: Active
+      archived: Archived
       assessment: Assessment
       assessment_in_progress: Assessment in progress
       assessment_not_started: Assessment not started
