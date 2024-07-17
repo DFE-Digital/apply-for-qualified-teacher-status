@@ -7,6 +7,8 @@ module PageObjects
 
       element :heading, "h1"
 
+      element :add_new_entry_button, ".govuk-button"
+
       sections :records, "article" do
         element :heading, "h2"
         element :summary_list, GovukSummaryList, ".govuk-summary-list"
