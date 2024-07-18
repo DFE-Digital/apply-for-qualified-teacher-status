@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 7143f86846b45d8b74efad54d6924cf2614596a2
+  revision: 8c42dd43ee8d20014754b2b0ece79cf05120f1ba
   specs:
     dfe-analytics (1.13.0)
       google-cloud-bigquery (~> 1.38)
@@ -473,7 +473,7 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     retriable (3.1.2)
-    rexml (3.3.1)
+    rexml (3.3.2)
       strscan
     rladr (1.2.0)
     rmagick (6.0.1)
