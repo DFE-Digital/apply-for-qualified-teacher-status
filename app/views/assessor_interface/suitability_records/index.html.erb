@@ -12,7 +12,7 @@
   <% end %>
 
   <article>
-    <h2 class="govuk-heading-m"><%= suitability_record.name %></h2>
+    <h2 class="govuk-heading-m"><%= govuk_link_to suitability_record.name, [:edit, :assessor_interface, suitability_record] %></h2>
 
     <%= govuk_summary_list(actions: false) do |summary_list|
       summary_list.with_row do |row|

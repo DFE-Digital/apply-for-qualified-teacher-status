@@ -14,12 +14,19 @@ RSpec.describe "Assessor suitability", type: :system do
     then_i_see_the_suitability_records
   end
 
-  it "create suitability records" do
+  it "create and edit suitability records" do
     given_i_am_authorized_as_a_user(assessor)
 
     when_i_visit_the(:assessor_suitability_records_page)
     and_i_click_the_add_new_entry_button
     then_i_see_the(:assessor_create_suitability_record_page)
+
+    when_i_fill_in_the_fields
+    and_i_submit_the_form
+    then_i_see_the_suitability_records
+
+    when_i_click_on_the_suitability_record
+    then_i_see_the(:assessor_edit_suitability_record_page)
 
     when_i_fill_in_the_fields
     and_i_submit_the_form
@@ -66,6 +73,10 @@ RSpec.describe "Assessor suitability", type: :system do
 
   def and_i_submit_the_form
     assessor_create_suitability_record_page.form.submit_button.click
+  end
+
+  def when_i_click_on_the_suitability_record
+    assessor_suitability_records_page.records.first.heading.link.click
   end
 
   def assessor

@@ -206,7 +206,7 @@ Rails.application.routes.draw do
 
     resources :suitability_records,
               path: "/suitability-records",
-              only: %i[index new create]
+              only: %i[index new create edit update]
   end
 
   namespace :eligibility_interface, path: "/eligibility" do

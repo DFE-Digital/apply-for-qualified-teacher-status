@@ -124,6 +124,11 @@ module PageHelpers
       PageObjects::AssessorInterface::EditApplicationName.new
   end
 
+  def assessor_edit_suitability_record_page
+    @assessor_edit_suitability_record_page ||=
+      PageObjects::AssessorInterface::EditSuitabilityRecord.new
+  end
+
   def assessor_edit_work_history_page
     @assessor_edit_work_history_page ||=
       PageObjects::AssessorInterface::EditWorkHistory.new

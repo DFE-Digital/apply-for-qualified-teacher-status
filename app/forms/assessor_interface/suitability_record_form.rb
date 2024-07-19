@@ -28,20 +28,26 @@ class AssessorInterface::SuitabilityRecordForm
 
     sanitize_dates!(date_of_birth)
 
-    suitability_record.application_forms =
-      ApplicationForm.where(reference: references)
-    suitability_record.country_code = CountryCode.from_location(location)
-    suitability_record.created_by = user if suitability_record.new_record?
-    suitability_record.date_of_birth = date_of_birth
-    suitability_record.emails =
-      (emails.compact_blank || []).map do
-        SuitabilityRecord::Email.new(value: _1)
-      end
-    suitability_record.names =
-      names.compact_blank.map { SuitabilityRecord::Name.new(value: _1) }
-    suitability_record.note = note
+    ActiveRecord::Base.transaction do
+      suitability_record.emails.destroy_all
+      suitability_record.emails =
+        (emails || []).compact_blank.map do
+          SuitabilityRecord::Email.new(value: _1)
+        end
 
-    suitability_record.save!
+      suitability_record.names.destroy_all
+      suitability_record.names =
+        names.compact_blank.map { SuitabilityRecord::Name.new(value: _1) }
+
+      suitability_record.application_forms =
+        ApplicationForm.where(reference: references)
+      suitability_record.country_code = CountryCode.from_location(location)
+      suitability_record.created_by = user if suitability_record.new_record?
+      suitability_record.date_of_birth = date_of_birth
+      suitability_record.note = note
+
+      suitability_record.save!
+    end
 
     true
   end

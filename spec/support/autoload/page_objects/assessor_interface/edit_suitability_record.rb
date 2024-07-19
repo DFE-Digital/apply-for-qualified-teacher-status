@@ -2,8 +2,8 @@
 
 module PageObjects
   module AssessorInterface
-    class CreateSuitabilityRecord < SuitabilityRecordFormPage
-      set_url "/assessor/suitability-records/new"
+    class EditSuitabilityRecord < SuitabilityRecordFormPage
+      set_url "/assessor/suitability-records/{id}/edit"
 
       element :heading, "h1"
     end

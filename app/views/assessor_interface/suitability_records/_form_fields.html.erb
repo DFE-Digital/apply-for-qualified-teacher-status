@@ -1,0 +1,57 @@
+<%= f.govuk_text_field :name %>
+
+<div id="app-aliases">
+  <% if @form.aliases.blank? %>
+    <%= f.govuk_text_field :aliases, multiple: true %>
+  <% else %>
+    <% @form.aliases.each_with_index do |value, index| %>
+      <%= f.govuk_text_field :aliases, multiple: true, value: %>
+
+      <% if index > 0 %>
+        <%= govuk_button_link_to "Remove alias", "#", class: "app-remove-alias-button", secondary: true %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= govuk_button_link_to "Add another alias", "#", id: "app-add-alias-button", secondary: true %>
+
+<%= f.govuk_select :location,
+                   options_for_select(locations, @form.location),
+                   options: { include_blank: true } %>
+
+<%= f.govuk_date_field :date_of_birth, legend: { size: "s" }, maxlength_enabled: true, date_of_birth: true %>
+
+<div id="app-emails">
+  <% if @form.emails.blank? %>
+    <%= f.govuk_email_field :emails, multiple: true %>
+  <% else %>
+    <% @form.emails.each_with_index do |value, index| %>
+      <%= f.govuk_email_field :emails, multiple: true, value: %>
+
+      <% if index > 0 %>
+        <%= govuk_button_link_to "Remove email address", "#", class: "app-remove-email-button", secondary: true %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= govuk_button_link_to "Add another email", "#", id: "app-add-email-button", secondary: true %>
+
+<div id="app-references">
+  <% if @form.references.blank? %>
+    <%= f.govuk_text_field :references, multiple: true %>
+  <% else %>
+    <% @form.references.each_with_index do |value, index| %>
+      <%= f.govuk_text_field :references, multiple: true, value: %>
+
+      <% if index > 0 %>
+        <%= govuk_button_link_to "Remove alias", "#", class: "app-remove-reference-button", secondary: true %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= govuk_button_link_to "Add another application reference number", "#", id: "app-add-reference-button", secondary: true %>
+
+<%= f.govuk_text_area :note %>
