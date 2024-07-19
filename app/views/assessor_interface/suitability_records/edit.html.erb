@@ -40,13 +40,30 @@
       row.with_key { "Suitability reasons" }
       row.with_value { @suitability_record.note }
     end
+
+    if @suitability_record.archived?
+      summary_list.with_row do |row|
+        row.with_key { "Date archived" }
+        row.with_value { @suitability_record.archived_at.to_fs }
+      end
+
+      summary_list.with_row do |row|
+        row.with_key { "Reason for archiving" }
+        row.with_value { @suitability_record.archive_note }
+      end
+    end
   end %>
 
-  <h2 class="govuk-heading-m">Update record</h2>
+  <% if @suitability_record.archived? %>
+    <%= f.govuk_submit "Set to active", secondary: true %>
+  <% else %>
+    <h2 class="govuk-heading-m">Update record</h2>
 
-  <%= render "form_fields", f: %>
+    <%= render "form_fields", f: %>
 
-  <%= f.govuk_submit "Update record" do %>
-    <%= govuk_link_to "Cancel", %i[assessor_interface suitability_records] %>
+    <%= f.govuk_submit "Update record" do %>
+      <%= govuk_button_link_to "Archive record", [:archive, :assessor_interface, @suitability_record], secondary: true, id: "app-archive-button" %>
+      <%= govuk_link_to "Cancel", %i[assessor_interface suitability_records] %>
+    <% end %>
   <% end %>
 <% end %>

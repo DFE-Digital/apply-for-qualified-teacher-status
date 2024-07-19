@@ -204,9 +204,9 @@ Rails.application.routes.draw do
         to: "uploads#show",
         as: :application_form_document_upload
 
-    resources :suitability_records,
-              path: "/suitability-records",
-              only: %i[index new create edit update]
+    resources :suitability_records, path: "/suitability-records" do
+      get "archive", on: :member
+    end
   end
 
   namespace :eligibility_interface, path: "/eligibility" do

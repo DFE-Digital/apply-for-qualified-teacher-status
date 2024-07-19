@@ -29,6 +29,11 @@ module PageHelpers
       PageObjects::AssessorInterface::Applications.new
   end
 
+  def assessor_archive_suitability_record_page
+    @assessor_archive_suitability_record_page ||=
+      PageObjects::AssessorInterface::ArchiveSuitabilityRecord.new
+  end
+
   def assessor_assessment_recommendation_review_page
     @assessor_assessment_recommendation_review_page ||=
       PageObjects::AssessorInterface::AssessmentRecommendationReview.new

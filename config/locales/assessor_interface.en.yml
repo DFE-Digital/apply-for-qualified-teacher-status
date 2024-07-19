@@ -220,6 +220,10 @@ en:
             email:
               blank: Enter an email address
               inclusion: A teacher already exists with this email address
+        assessor_interface/archive_suitability_record_form:
+          attributes:
+            note:
+              blank: Briefly explain why you have archived this suitability record
         assessor_interface/assessor_assignment_form:
           attributes:
             assessor_id:
