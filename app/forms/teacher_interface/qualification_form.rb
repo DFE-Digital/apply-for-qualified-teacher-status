@@ -3,7 +3,7 @@
 module TeacherInterface
   class QualificationForm < BaseForm
     include ActiveRecord::AttributeAssignment
-    include TeacherInterface::SanitizeDates
+    include SanitizeDates
 
     attr_accessor :qualification
     attribute :title, :string

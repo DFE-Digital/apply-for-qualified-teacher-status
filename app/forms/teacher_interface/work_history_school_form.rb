@@ -3,7 +3,7 @@
 module TeacherInterface
   class WorkHistorySchoolForm < BaseForm
     include ActiveRecord::AttributeAssignment
-    include TeacherInterface::SanitizeDates
+    include SanitizeDates
 
     attr_accessor :work_history
     attribute :meets_all_requirements, :boolean

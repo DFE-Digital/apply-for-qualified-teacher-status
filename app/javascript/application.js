@@ -2,11 +2,18 @@ import dfeAutocomplete from "dfe-autocomplete";
 import { initAll } from "govuk-frontend";
 import openregisterLocationPicker from "govuk-country-and-territory-autocomplete";
 import checkboxSearchFilter from "./checkbox_search_filter";
+import suitabilityRecordForm from "./suitability_record_form";
 
 initAll();
 
 var loadCountryAutoComplete = () => {
   var locationPicker =
+    document.getElementById(
+      "assessor-interface-suitability-record-form-location-field"
+    ) ??
+    document.getElementById(
+      "assessor-interface-suitability-record-form-location-field-error"
+    ) ??
     document.getElementById(
       "eligibility-interface-country-form-location-field"
     ) ??
@@ -57,3 +64,5 @@ loadCountryAutoComplete();
 dfeAutocomplete({ rawAttribute: true });
 
 checkboxSearchFilter("app-applications-filters-assessor", "Search assessors");
+
+suitabilityRecordForm("app-suitability-record-form");

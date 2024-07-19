@@ -3,7 +3,7 @@
 module TeacherInterface
   class NameAndDateOfBirthForm < BaseForm
     include ActiveRecord::AttributeAssignment
-    include TeacherInterface::SanitizeDates
+    include SanitizeDates
 
     attr_accessor :application_form
     attribute :given_names, :string

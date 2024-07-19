@@ -57,10 +57,7 @@ class SuitabilityRecord < ApplicationRecord
     validates :value, presence: true
     validates :canonical, presence: true
 
-    def value=(value)
-      self.value = value
-      self.canonical = EmailAddress.canonical(value)
-    end
+    before_validation { self.canonical = EmailAddress.canonical(value) }
   end
 
   class Name < ApplicationRecord

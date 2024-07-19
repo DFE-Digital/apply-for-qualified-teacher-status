@@ -99,6 +99,11 @@ module PageHelpers
       PageObjects::AssessorInterface::CreateNote.new
   end
 
+  def assessor_create_suitability_record_page
+    @assessor_create_suitability_record_page ||=
+      PageObjects::AssessorInterface::CreateSuitabilityRecord.new
+  end
+
   def assessor_declare_assessment_recommendation_page
     @assessor_declare_assessment_recommendation_page ||=
       PageObjects::AssessorInterface::DeclareAssessmentRecommendation.new
