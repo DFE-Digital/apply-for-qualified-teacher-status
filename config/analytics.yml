@@ -332,6 +332,7 @@
     - value
   :suitability_records:
     - archived_at
+    - archived_by_id
     - country_code
     - created_at
     - created_by_id
