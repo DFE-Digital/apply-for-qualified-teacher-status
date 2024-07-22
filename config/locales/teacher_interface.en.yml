@@ -24,6 +24,7 @@ en:
             english_language_qualification_invalid: Your English language qualification is not from one of the approved providers.
             english_language_selt_expired: You have provided evidence of a secure English language test (SELT) but the test was not completed within the last 2 years.
             english_language_unverifiable_reference_number: We were unable to verify the reference number you have provided.
+            fraud: You have provided information that cannot be verified.
             full_professional_status: Your recognition level as a teacher does not match the required level or has outstanding conditions.
             further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
             identification_document_expired: Your ID document has expired.
@@ -40,6 +41,9 @@ en:
             registration_number_alternative: We could not find your reference number.
             satisfactory_evidence_work_history: The information you provided on work history is not sufficient to award QTS.
             school_details_cannot_be_verified: We could not verify the school details you provided.
+            suitability: We were not provided with enough evidence to show you meet our suitability to teach requirements. This is because of sanctions, restrictions, penalties, or incidents of misconduct.
+            suitability_previously_declined: "You were previously declined QTS because we were not provided with enough evidence to show you meet our suitability to teach requirements. This was because of sanctions, restrictions, penalties, or incidents of misconduct.\n\nYour new application does not show evidence that you now meet our suitability to teach requirements."
+            special_education_only: We require teachers to be qualified to teach in mainstream education. Your qualification is for Special Education Needs and Disabilities (SEND) only. In England, this does not qualify you to teach in mainstream education.
             teaching_certificate_illegible: Your teaching qualification certificate (or translation) is illegible or in a format we cannot accept.
             teaching_hours_not_fulfilled: You have not fulfilled the required number of teaching hours.
             teaching_qualification: We were not provided with sufficient evidence to verify the teaching qualification provided.

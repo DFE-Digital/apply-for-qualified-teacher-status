@@ -58,6 +58,14 @@ class AssessmentFactory
       FailureReasons::APPLICANT_ALREADY_DQT,
     ].compact
 
+    if suitability_active?
+      failure_reasons += [
+        FailureReasons::SUITABILITY,
+        FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+        FailureReasons::FRAUD,
+      ]
+    end
+
     AssessmentSection.new(
       key: "personal_information",
       checks:,
@@ -121,7 +129,16 @@ class AssessmentFactory
       FailureReasons::DEGREE_TRANSCRIPT_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE,
       FailureReasons::ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE,
+      FailureReasons::SPECIAL_EDUCATION_ONLY,
     ].compact
+
+    if suitability_active?
+      failure_reasons += [
+        FailureReasons::SUITABILITY,
+        FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+        FailureReasons::FRAUD,
+      ]
+    end
 
     AssessmentSection.new(key: "qualifications", checks:, failure_reasons:)
   end
@@ -146,6 +163,14 @@ class AssessmentFactory
       FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
       FailureReasons::AGE_RANGE,
     ]
+
+    if suitability_active?
+      failure_reasons += [
+        FailureReasons::SUITABILITY,
+        FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+        FailureReasons::FRAUD,
+      ]
+    end
 
     AssessmentSection.new(key: "age_range_subjects", checks:, failure_reasons:)
   end
@@ -183,6 +208,14 @@ class AssessmentFactory
         ]
       end
 
+    if suitability_active?
+      failure_reasons += [
+        FailureReasons::SUITABILITY,
+        FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+        FailureReasons::FRAUD,
+      ]
+    end
+
     AssessmentSection.new(
       key: "english_language_proficiency",
       checks:,
@@ -201,6 +234,14 @@ class AssessmentFactory
       FailureReasons::UNRECOGNISED_REFERENCES,
       FailureReasons::WORK_HISTORY_DURATION,
     ]
+
+    if suitability_active?
+      failure_reasons += [
+        FailureReasons::SUITABILITY,
+        FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+        FailureReasons::FRAUD,
+      ]
+    end
 
     AssessmentSection.new(key: "work_history", checks:, failure_reasons:)
   end
@@ -260,10 +301,22 @@ class AssessmentFactory
       FailureReasons::FULL_PROFESSIONAL_STATUS,
     ].compact
 
+    if suitability_active?
+      failure_reasons += [
+        FailureReasons::SUITABILITY,
+        FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+        FailureReasons::FRAUD,
+      ]
+    end
+
     AssessmentSection.new(
       key: "professional_standing",
       checks:,
       failure_reasons:,
     )
+  end
+
+  def suitability_active?
+    @suitability_active ||= FeatureFlags::FeatureFlag.active?(:suitability)
   end
 end

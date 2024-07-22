@@ -16,6 +16,10 @@ RSpec.describe AssessmentFactory do
     )
   end
 
+  before { FeatureFlags::FeatureFlag.activate(:suitability) }
+
+  after { FeatureFlags::FeatureFlag.deactivate(:suitability) }
+
   describe "#call" do
     subject(:call) { described_class.call(application_form:) }
 
@@ -61,6 +65,9 @@ RSpec.describe AssessmentFactory do
               duplicate_application
               applicant_already_qts
               applicant_already_dqt
+              suitability
+              suitability_previously_declined
+              fraud
             ],
           )
         end
@@ -119,6 +126,10 @@ RSpec.describe AssessmentFactory do
               degree_transcript_illegible
               additional_degree_certificate_illegible
               additional_degree_transcript_illegible
+              special_education_only
+              suitability
+              suitability_previously_declined
+              fraud
             ],
           )
         end
@@ -166,6 +177,10 @@ RSpec.describe AssessmentFactory do
                 degree_transcript_illegible
                 additional_degree_certificate_illegible
                 additional_degree_transcript_illegible
+                special_education_only
+                suitability
+                suitability_previously_declined
+                fraud
               ],
             )
           end
@@ -184,7 +199,13 @@ RSpec.describe AssessmentFactory do
               %w[qualified_in_mainstream_education age_range_subjects_matches],
             )
             expect(section.failure_reasons).to eq(
-              %w[not_qualified_to_teach_mainstream age_range],
+              %w[
+                not_qualified_to_teach_mainstream
+                age_range
+                suitability
+                suitability_previously_declined
+                fraud
+              ],
             )
           end
         end
@@ -205,7 +226,13 @@ RSpec.describe AssessmentFactory do
             )
 
             expect(section.failure_reasons).to eq(
-              %w[not_qualified_to_teach_mainstream age_range],
+              %w[
+                not_qualified_to_teach_mainstream
+                age_range
+                suitability
+                suitability_previously_declined
+                fraud
+              ],
             )
           end
         end
@@ -287,6 +314,9 @@ RSpec.describe AssessmentFactory do
                 school_details_cannot_be_verified
                 unrecognised_references
                 work_history_duration
+                suitability
+                suitability_previously_declined
+                fraud
               ],
             )
           end
@@ -330,6 +360,9 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
+                suitability
+                suitability_previously_declined
+                fraud
               ],
             )
           end
@@ -373,6 +406,9 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
+                suitability
+                suitability_previously_declined
+                fraud
               ],
             )
           end
@@ -406,6 +442,9 @@ RSpec.describe AssessmentFactory do
                 confirm_age_range_subjects
                 qualified_to_teach
                 full_professional_status
+                suitability
+                suitability_previously_declined
+                fraud
               ],
             )
           end

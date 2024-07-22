@@ -15,10 +15,14 @@ class FailureReasons
     EL_MOI_NOT_TAUGHT_IN_ENGLISH = "english_language_moi_not_taught_in_english",
     EL_QUALIFICATION_INVALID = "english_language_qualification_invalid",
     EL_SELT_EXPIRED = "english_language_selt_expired",
+    FRAUD = "fraud",
     FULL_PROFESSIONAL_STATUS = "full_professional_status",
     NOT_QUALIFIED_TO_TEACH_MAINSTREAM = "not_qualified_to_teach_mainstream",
     QUALIFIED_TO_TEACH_CHILDREN_11_TO_16 =
       "qualified_to_teach_children_11_to_16",
+    SPECIAL_EDUCATION_ONLY = "special_education_only",
+    SUITABILITY = "suitability",
+    SUITABILITY_PREVIOUSLY_DECLINED = "suitability_previously_declined",
     TEACHING_HOURS_NOT_FULFILLED = "teaching_hours_not_fulfilled",
     TEACHING_QUALIFICATION = "teaching_qualification",
     TEACHING_QUALIFICATION_1_YEAR = "teaching_qualification_1_year",
@@ -100,6 +104,22 @@ class FailureReasons
 
   def self.further_information?(failure_reason)
     FURTHER_INFORMATIONABLE.include?(failure_reason.to_s)
+  end
+
+  def self.suitability?(failure_reason)
+    [
+      FailureReasons::SUITABILITY,
+      FailureReasons::SUITABILITY_PREVIOUSLY_DECLINED,
+    ].include?(failure_reason.to_s)
+  end
+
+  def self.fraud?(failure_reason)
+    failure_reason.to_s == FailureReasons::FRAUD
+  end
+
+  def self.requires_note?(failure_reason)
+    suitability?(failure_reason) || fraud?(failure_reason) ||
+      further_information?(failure_reason)
   end
 
   def self.further_information_request_document_type(failure_reason)

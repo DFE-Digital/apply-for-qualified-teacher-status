@@ -51,11 +51,21 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     subject { super().notes_label_key_for(failure_reason:) }
 
     context "with a decline failure reason" do
-      let(:failure_reason) { FailureReasons::DECLINABLE.sample }
+      let(:failure_reason) { FailureReasons::AGE_RANGE }
 
       it do
         expect(subject).to eq(
           "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes.decline",
+        )
+      end
+    end
+
+    context "with a fraud failure reason" do
+      let(:failure_reason) { FailureReasons::FRAUD }
+
+      it do
+        expect(subject).to eq(
+          "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes.fraud",
         )
       end
     end
@@ -85,11 +95,21 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     subject { super().notes_hint_key_for(failure_reason:) }
 
     context "with a decline failure reason" do
-      let(:failure_reason) { FailureReasons::DECLINABLE.sample }
+      let(:failure_reason) { FailureReasons::AGE_RANGE }
 
       it do
         expect(subject).to eq(
           "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes.decline",
+        )
+      end
+    end
+
+    context "with a fraud failure reason" do
+      let(:failure_reason) { FailureReasons::FRAUD }
+
+      it do
+        expect(subject).to eq(
+          "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes.fraud",
         )
       end
     end

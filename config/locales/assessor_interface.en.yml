@@ -160,6 +160,7 @@ en:
           english_language_qualification_invalid: The applicant’s English language qualification is not from one of the approved providers.
           english_language_selt_expired: The applicant provided evidence of a SELT but the test was not completed within the last 2 years.
           english_language_unverifiable_reference_number: Unable to verify the reference number that the applicant has provided.
+          fraud: Applicant has provided information that cannot be verified and is potentially fraudulent.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible or in a format that we cannot accept.
@@ -174,6 +175,9 @@ en:
           registration_number_alternative: We could not find the applicant’s reference number. The applicant will need to upload written proof of recognition as a teacher instead.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
           school_details_cannot_be_verified: We could not verify school details entered by the applicant.
+          special_education_only: Applicant holds a Special Educational Needs and Disabilities (SEND) only qualification and is not qualified to teach in mainstream education.
+          suitability: The applicant does not meet the suitability to teach requirements.
+          suitability_previously_declined: The applicant has previously been declined because they do not meet the suitability to teach requirements. They are being declined again for suitability.
           teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
@@ -284,6 +288,8 @@ en:
               blank: Enter a note to the applicant
             duplicate_application_notes:
               blank: Enter a note to the applicant
+            fraud_notes:
+              blank: Enter a note to the applicant
             full_professional_status_notes:
               blank: Enter a note to the applicant
             identification_document_expired_notes:
@@ -309,6 +315,12 @@ en:
             satisfactory_evidence_work_history_notes:
               blank: Enter a note to the applicant
             school_details_cannot_be_verified_notes:
+              blank: Enter a note to the applicant
+            special_education_only_notes:
+              blank: Enter a note to the applicant
+            suitability_notes:
+              blank: Enter a note to the applicant
+            suitability_previously_declined_notes:
               blank: Enter a note to the applicant
             teaching_certificate_illegible_notes:
               blank: Enter a note to the applicant

@@ -94,10 +94,10 @@ class AssessorInterface::AssessmentSectionForm
 
         klass.attribute "#{failure_reason}_notes", :string
 
-        if assessment_section.preliminary? ||
-             FailureReasons.decline?(failure_reason)
-          next
-        end
+        next if assessment_section.preliminary?
+
+        next unless FailureReasons.requires_note?(failure_reason)
+
         klass.validates "#{failure_reason}_notes",
                         presence: true,
                         if: :"#{failure_reason}_checked"
