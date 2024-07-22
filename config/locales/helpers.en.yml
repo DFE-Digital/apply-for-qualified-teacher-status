@@ -6,7 +6,7 @@ en:
         given_names: Type the updated given names in the text box below
         family_name: Type the updated family name in the text box below
       assessor_interface_archive_suitability_record_form:
-        note: "Internal note: Briefly explain why this suitability record is being archived."
+        note: "Internal note: Briefly explain why you have archived this suitability record."
       assessor_interface_assessment_section_form:
         selected_failure_reasons: Select all options that are relevant to you.
         failure_reason_notes:
@@ -20,7 +20,7 @@ en:
       assessor_interface_filter_form:
         reference: "Example: 210245"
       assessor_interface_suitability_record_form:
-        note: "Internal note: Briefly explain why this suitability record has been created."
+        note: "Internal note: Briefly explain why you have created this suitability record."
       assessor_interface_work_history_contact_form:
         name: Type the updated full name in the text box below
         job: Type the updated job title in the text box below
@@ -149,7 +149,7 @@ en:
         emails: Email address (optional)
         location: Country trained in
         note: Suitability reasons
-        references: Application reference number (optional)
+        references: Application reference (optional)
       assessor_interface_verify_professional_standing_form:
         verify_professional_standing_options:
           true: Yes, verify LoPS
