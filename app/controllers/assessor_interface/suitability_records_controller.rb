@@ -19,6 +19,8 @@ module AssessorInterface
             :application_forms,
           ).sort_by(&:name),
         )
+
+      render layout: "full_from_desktop"
     end
 
     def new
