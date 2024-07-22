@@ -27,6 +27,7 @@
 class AssessmentSection < ApplicationRecord
   belongs_to :assessment
   has_many :selected_failure_reasons, dependent: :destroy
+  has_one :application_form, through: :assessment
 
   enum :key,
        {
