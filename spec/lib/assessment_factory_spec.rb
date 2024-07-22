@@ -16,6 +16,10 @@ RSpec.describe AssessmentFactory do
     )
   end
 
+  before { FeatureFlags::FeatureFlag.activate(:suitability) }
+
+  after { FeatureFlags::FeatureFlag.deactivate(:suitability) }
+
   describe "#call" do
     subject(:call) { described_class.call(application_form:) }
 
@@ -122,9 +126,9 @@ RSpec.describe AssessmentFactory do
               degree_transcript_illegible
               additional_degree_certificate_illegible
               additional_degree_transcript_illegible
+              special_education_only
               suitability
               suitability_previously_declined
-              special_education_only
               fraud
             ],
           )
@@ -173,9 +177,9 @@ RSpec.describe AssessmentFactory do
                 degree_transcript_illegible
                 additional_degree_certificate_illegible
                 additional_degree_transcript_illegible
+                special_education_only
                 suitability
                 suitability_previously_declined
-                special_education_only
                 fraud
               ],
             )
