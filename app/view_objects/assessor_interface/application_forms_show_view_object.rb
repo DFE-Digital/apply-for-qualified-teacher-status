@@ -52,6 +52,11 @@ class AssessorInterface::ApplicationFormsShowViewObject
       other_application_forms_where_email_used_as_reference.present?
   end
 
+  def show_suitability_banner?
+    FeatureFlags::FeatureFlag.active?(:suitability) &&
+      SuitabilityMatcher.call(application_form:)
+  end
+
   def management_tasks
     [
       if AssessorInterface::AssessmentPolicy.new(

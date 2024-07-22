@@ -8,6 +8,14 @@
            email_used_as_reference_in_this_application_form: @view_object.email_used_as_reference_in_this_application_form?,
            other_application_forms_where_email_used_as_reference: @view_object.other_application_forms_where_email_used_as_reference %>
 
+<% if @view_object.show_suitability_banner? %>
+  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+    <% notification_banner.with_heading(text: "This applicant has been flagged for suitability to teach. ") %>
+
+    <p class="govuk-body">Check with the suitability panel before continuing.</p>
+  <% end %>
+<% end %>
+
 <% if (duplicate_matches = @view_object.duplicate_matches).present? %>
   <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
     <% notification_banner.with_heading(text: "Application details match DQT record(s)") %>
