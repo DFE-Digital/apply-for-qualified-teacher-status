@@ -139,7 +139,7 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     subject { super().notes_placeholder_key_for(failure_reason:) }
 
     context "with a decline failure reason" do
-      let(:failure_reason) { FailureReasons::DECLINABLE.sample }
+      let(:failure_reason) { FailureReasons::AGE_RANGE }
 
       it do
         expect(subject).to eq(

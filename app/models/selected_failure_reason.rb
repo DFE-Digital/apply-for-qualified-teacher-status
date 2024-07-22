@@ -21,6 +21,8 @@
 #
 class SelectedFailureReason < ApplicationRecord
   belongs_to :assessment_section
+  has_one :assessment, through: :assessment_section
+  has_one :application_form, through: :assessment
 
   validates :key, presence: true
   validates :key, inclusion: { in: FailureReasons::ALL }
