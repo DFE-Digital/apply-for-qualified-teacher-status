@@ -20,7 +20,7 @@
                    options_for_select(locations, @form.location),
                    options: { include_blank: true } %>
 
-<%= f.govuk_date_field :date_of_birth, legend: { size: "s" }, maxlength_enabled: true, date_of_birth: true %>
+<%= f.govuk_date_field :date_of_birth, legend: { size: nil }, maxlength_enabled: true, date_of_birth: true %>
 
 <div id="app-emails">
   <% if @form.emails.blank? %>
@@ -36,7 +36,7 @@
   <% end %>
 </div>
 
-<%= govuk_button_link_to "Add another email", "#", id: "app-add-email-button", secondary: true %>
+<%= govuk_button_link_to "Add another email address", "#", id: "app-add-email-button", secondary: true %>
 
 <div id="app-references">
   <% if @form.references.blank? %>
@@ -46,12 +46,12 @@
       <%= f.govuk_text_field :references, multiple: true, value: %>
 
       <% if index > 0 %>
-        <%= govuk_button_link_to "Remove alias", "#", class: "app-remove-reference-button", secondary: true %>
+        <%= govuk_button_link_to "Remove application reference", "#", class: "app-remove-reference-button", secondary: true %>
       <% end %>
     <% end %>
   <% end %>
 </div>
 
-<%= govuk_button_link_to "Add another application reference number", "#", id: "app-add-reference-button", secondary: true %>
+<%= govuk_button_link_to "Add another application reference", "#", id: "app-add-reference-button", secondary: true %>
 
 <%= f.govuk_text_area :note %>

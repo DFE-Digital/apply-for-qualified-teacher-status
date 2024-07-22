@@ -89,7 +89,7 @@ function SuitabilityRecordForm(params) {
   ).parentElement;
 
   this.setUp(
-    "application reference number",
+    "application reference",
     this.referenceAddButton,
     this.referenceRemoveButtons,
     this.referenceContainer,

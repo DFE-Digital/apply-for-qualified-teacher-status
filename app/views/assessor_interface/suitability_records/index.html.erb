@@ -4,11 +4,13 @@
 
 <h1 class="govuk-heading-xl"><%= title %></h1>
 
-<%= govuk_button_link_to "Add a new entry", %i[new assessor_interface suitability_record] %>
+<%= govuk_button_link_to "Add a new record", %i[new assessor_interface suitability_record] %>
 
 <% @records.each_with_index do |suitability_record, index| %>
   <% unless index.zero? %>
-    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-9 govuk-!-margin-bottom-9" />
+    <div class="govuk-!-padding-bottom-3"></div>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+    <div class="govuk-!-padding-bottom-4"></div>
   <% end %>
 
   <article>
