@@ -54,7 +54,7 @@ module AssessorInterface
           name: suitability_record.name,
           note: suitability_record.note,
           references:
-            suitability_record.application_forms.map(&:references).sort,
+            suitability_record.application_forms.map(&:reference).sort,
         )
     end
 

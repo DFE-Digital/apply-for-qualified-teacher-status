@@ -100,6 +100,7 @@ class ApplicationForm < ApplicationRecord
   has_many :work_histories, dependent: :destroy
   has_many :qualifications, dependent: :destroy
   has_many :timeline_events
+  has_one :country, through: :region
   has_one :dqt_trn_request
   has_one :assessment
   has_many :notes, dependent: :destroy
@@ -142,8 +143,6 @@ class ApplicationForm < ApplicationRecord
          completed: "completed",
        },
        _suffix: true
-
-  delegate :country, to: :region, allow_nil: true
 
   STATUS_COLUMNS = %i[
     personal_information_status

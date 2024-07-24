@@ -90,7 +90,7 @@ class SuitabilityMatcher
 
   def application_forms_declined_due_to_suitability
     SelectedFailureReason
-      .includes(application_form: { region: :country })
+      .includes(application_form: %i[country teacher])
       .where(key: SUITABILITY_FAILURE_REASONS)
       .map(&:application_form)
       .uniq
@@ -105,7 +105,7 @@ class SuitabilityMatcher
   def matches_any_suitability_records?
     SuitabilityRecord
       .active
-      .includes(:emails, :names, application_forms: { region: :country })
+      .includes(:emails, :names, application_forms: %i[country teacher])
       .any? do |suitability_record|
         matches_application_form =
           suitability_record.application_forms.any? do |application_form|
