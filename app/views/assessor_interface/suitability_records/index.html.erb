@@ -28,9 +28,11 @@
         row.with_value { suitability_record.created_at.to_fs }
       end
 
-      summary_list.with_row do |row|
-        row.with_key { "Date last updated" }
-        row.with_value { suitability_record.updated_at.to_fs }
+      if suitability_record.updated_at != suitability_record.created_at
+        summary_list.with_row do |row|
+          row.with_key { "Date last updated" }
+          row.with_value { suitability_record.updated_at.to_fs }
+        end
       end
 
       summary_list.with_row do |row|
