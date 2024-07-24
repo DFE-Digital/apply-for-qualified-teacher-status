@@ -39,7 +39,7 @@ class SuitabilityMatcher
         (value_a.month - value_b.month).abs <= 3 &&
         (value_a.year - value_b.year).abs <= 3
     elsif value_a.is_a?(String) && value_b.is_a?(String)
-      levenshtein_distance(string_a, string_b) <= 3
+      levenshtein_distance(value_a, value_b) <= 3
     else
       false
     end
