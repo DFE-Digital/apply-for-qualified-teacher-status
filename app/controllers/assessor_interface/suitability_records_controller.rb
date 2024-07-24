@@ -12,12 +12,10 @@ module AssessorInterface
 
     def index
       @pagy, @records =
-        pagy_array(
-          SuitabilityRecord.includes(
-            :names,
-            :emails,
-            :application_forms,
-          ).sort_by(&:name),
+        pagy(
+          SuitabilityRecord.includes(:names, :emails, :application_forms).order(
+            :created_at,
+          ),
         )
 
       render layout: "full_from_desktop"

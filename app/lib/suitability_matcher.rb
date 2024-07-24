@@ -104,6 +104,7 @@ class SuitabilityMatcher
 
   def matches_any_suitability_records?
     SuitabilityRecord
+      .active
       .includes(:emails, :names, application_forms: { region: :country })
       .any? do |suitability_record|
         matches_application_form =
