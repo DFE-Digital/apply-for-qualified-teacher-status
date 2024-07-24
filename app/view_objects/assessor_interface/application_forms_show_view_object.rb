@@ -9,7 +9,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def application_form
     @application_form ||=
       ApplicationForm
-        .includes(assessment: :sections)
+        .includes(:country, :teacher, assessment: :sections)
         .where.not(submitted_at: nil)
         .find_by!(reference: params[:reference])
   end
