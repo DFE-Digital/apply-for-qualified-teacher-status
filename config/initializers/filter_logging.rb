@@ -27,3 +27,5 @@ Rails.application.config.filter_parameters += %i[
   current_sign_in_ip
   last_sign_in_ip
 ]
+
+Rails.application.config.filter_redirect << %r{/teacher/check_email}
