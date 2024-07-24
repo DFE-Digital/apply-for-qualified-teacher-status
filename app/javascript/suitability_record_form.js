@@ -8,6 +8,7 @@ function SuitabilityRecordForm(params) {
       function (event) {
         let newElement = input.cloneNode(true);
         newElement.querySelector("input").value = "";
+        newElement.classList.add("govuk-!-margin-bottom-2");
         container.appendChild(newElement);
 
         let removeButton = document.createElement("a");

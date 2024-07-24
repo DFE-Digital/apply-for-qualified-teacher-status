@@ -69,7 +69,7 @@
   <% if @suitability_record.archived? %>
     <%= f.govuk_submit "Set to active", secondary: true %>
   <% else %>
-    <h2 class="govuk-heading-m">Update record</h2>
+    <h2 class="govuk-heading-m govuk-!-padding-top-6">Update record</h2>
 
     <%= render "form_fields", f: %>
 
