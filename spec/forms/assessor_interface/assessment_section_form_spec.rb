@@ -31,7 +31,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
   let(:work_history_failure_reason) do
     FailureReasons::WORK_HISTORY_FAILURE_REASONS.sample.to_sym
   end
-  let(:decline_failure_reason) { FailureReasons::DECLINABLE.sample.to_sym }
+  let(:decline_failure_reason) { FailureReasons::AGE_RANGE.to_sym }
   let(:user) { create(:staff) }
   let(:attributes) { {} }
 

@@ -5,7 +5,7 @@
     <%= f.govuk_text_field :aliases, multiple: true %>
   <% else %>
     <% @form.aliases.each_with_index do |value, index| %>
-      <%= f.govuk_text_field :aliases, multiple: true, value: %>
+      <%= f.govuk_text_field :aliases, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
 
       <% if index > 0 %>
         <%= govuk_button_link_to "Remove alias", "#", class: "app-remove-alias-button", secondary: true %>
@@ -27,7 +27,7 @@
     <%= f.govuk_email_field :emails, multiple: true %>
   <% else %>
     <% @form.emails.each_with_index do |value, index| %>
-      <%= f.govuk_email_field :emails, multiple: true, value: %>
+      <%= f.govuk_email_field :emails, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
 
       <% if index > 0 %>
         <%= govuk_button_link_to "Remove email address", "#", class: "app-remove-email-button", secondary: true %>
@@ -43,7 +43,7 @@
     <%= f.govuk_text_field :references, multiple: true %>
   <% else %>
     <% @form.references.each_with_index do |value, index| %>
-      <%= f.govuk_text_field :references, multiple: true, value: %>
+      <%= f.govuk_text_field :references, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
 
       <% if index > 0 %>
         <%= govuk_button_link_to "Remove application reference", "#", class: "app-remove-reference-button", secondary: true %>

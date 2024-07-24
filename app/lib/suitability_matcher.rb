@@ -29,8 +29,57 @@ class SuitabilityMatcher
     @country_code ||= application_form.country.code
   end
 
-  def match?(string_a, string_b)
-    levenshtein_distance(string_a, string_b) <= 3
+  delegate :date_of_birth, to: :application_form
+
+  def match?(value_a, value_b)
+    return false if value_a.blank? || value_b.blank?
+
+    if value_a.is_a?(Date) && value_b.is_a?(Date)
+      (value_a.day - value_b.day).abs <= 3 &&
+        (value_a.month - value_b.month).abs <= 3 &&
+        (value_a.year - value_b.year).abs <= 3
+    elsif value_a.is_a?(String) && value_b.is_a?(String)
+      levenshtein_distance(string_a, string_b) <= 3
+    else
+      false
+    end
+  end
+
+  def considered_a_match_with?(
+    other_email_addresses,
+    other_names,
+    other_date_of_birth,
+    other_country_code
+  )
+    return true if other_email_addresses.include?(canonical_email)
+
+    if other_names.include?(full_name) && other_date_of_birth == date_of_birth
+      return true
+    end
+
+    name_matches = other_names.any? { match?(full_name, _1) }
+
+    number_of_matches = [
+      name_matches,
+      match?(date_of_birth, other_date_of_birth),
+      other_email_addresses.any? { match?(canonical_email, _1) },
+    ].compact_blank.count
+
+    number_of_matches == 3 ||
+      (
+        number_of_matches == 2 &&
+          (name_matches || country_code == other_country_code)
+      )
+  end
+
+  def matches_other_application_form?(other_application_form)
+    other_application_form == application_form ||
+      considered_a_match_with?(
+        [other_application_form.teacher.canonical_email],
+        [application_form_full_name(other_application_form)],
+        other_application_form.date_of_birth,
+        other_application_form.country.code,
+      )
   end
 
   SUITABILITY_FAILURE_REASONS = [
@@ -49,40 +98,27 @@ class SuitabilityMatcher
 
   def matches_any_declined_due_to_suitability?
     application_forms_declined_due_to_suitability.any? do |other_application_form|
-      next true if other_application_form == application_form
-
-      next false unless country_code == other_application_form.country.code
-
-      unless match?(
-               full_name,
-               application_form_full_name(other_application_form),
-             )
-        next false
-      end
-
-      application_form.date_of_birth == other_application_form.date_of_birth ||
-        match?(canonical_email, other_application_form.teacher.canonical_email)
+      matches_other_application_form?(other_application_form)
     end
   end
 
   def matches_any_suitability_records?
     SuitabilityRecord
-      .includes(:emails, :names, :application_forms)
+      .includes(:emails, :names, application_forms: { region: :country })
       .any? do |suitability_record|
-        if suitability_record.application_forms.include?(application_form)
-          next true
-        end
-
-        next false unless country_code == suitability_record.country_code
-
-        unless suitability_record.names.any? { match?(full_name, _1.value) }
-          next false
-        end
-
-        application_form.date_of_birth == suitability_record.date_of_birth ||
-          suitability_record.emails.any? do
-            match?(canonical_email, _1.canonical)
+        matches_application_form =
+          suitability_record.application_forms.any? do |application_form|
+            matches_other_application_form?(application_form)
           end
+
+        next true if matches_application_form
+
+        considered_a_match_with?(
+          suitability_record.emails.map(&:canonical),
+          suitability_record.names.map(&:value),
+          suitability_record.date_of_birth,
+          suitability_record.country_code,
+        )
       end
   end
 end
