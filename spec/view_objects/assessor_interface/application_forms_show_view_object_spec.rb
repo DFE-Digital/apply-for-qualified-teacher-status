@@ -10,6 +10,10 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     )
   end
 
+  before { FeatureFlags::FeatureFlag.activate(:suitability) }
+
+  after { FeatureFlags::FeatureFlag.deactivate(:suitability) }
+
   let(:params) { {} }
   let(:current_staff) { create(:staff) }
 
