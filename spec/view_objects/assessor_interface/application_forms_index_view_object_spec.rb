@@ -8,6 +8,14 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
   let(:params) { {} }
   let(:session) { {} }
 
+  before do
+    FeatureFlags::FeatureFlag.activate(:suitability)
+  end
+
+  after do
+    FeatureFlags::FeatureFlag.deactivate(:suitability)
+  end
+
   describe "#application_forms_pagy" do
     subject(:application_forms_pagy) { view_object.application_forms_pagy }
 

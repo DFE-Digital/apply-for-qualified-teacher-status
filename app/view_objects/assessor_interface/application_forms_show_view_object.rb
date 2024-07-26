@@ -54,7 +54,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def show_suitability_banner?
     FeatureFlags::FeatureFlag.active?(:suitability) &&
-      SuitabilityMatcher.call(application_form:)
+      SuitabilityMatcher.new.flag_as_unsuitable?(application_form:)
   end
 
   def management_tasks
