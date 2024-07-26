@@ -48,6 +48,11 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     STAGE_FILTER_OPTIONS.map { |name| stage_filter_entry(name) }
   end
 
+  def flag_as_unsuitable?(application_form)
+    suitability_active? &&
+      suitability_matcher.flag_as_unsuitable?(application_form:)
+  end
+
   private
 
   ACTION_REQUIRED_BY_OPTIONS = %w[admin assessor external].freeze
@@ -142,4 +147,12 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   attr_reader :params, :session
+
+  def suitability_active?
+    @suitability_active ||= FeatureFlags::FeatureFlag.active?(:suitability)
+  end
+
+  def suitability_matcher
+    @suitability_matcher ||= SuitabilityMatcher.new
+  end
 end

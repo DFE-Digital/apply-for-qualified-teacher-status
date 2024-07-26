@@ -1,6 +1,9 @@
 <li class="app-search-results__item">
   <h2 class="app-search-result__item-title">
     <%= govuk_link_to full_name, href %>
+    <% if unsuitable %>
+      <%= govuk_tag(text: "Flagged for suitablilty", colour: "red") %>
+    <% end %>
   </h2>
 
   <%= render(DescriptionList::Component.new(

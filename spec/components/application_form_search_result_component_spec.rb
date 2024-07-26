@@ -4,7 +4,9 @@ require "rails_helper"
 
 RSpec.describe ApplicationFormSearchResult::Component, type: :component do
   subject(:component) do
-    render_inline(described_class.new(application_form, current_staff:))
+    render_inline(
+      described_class.new(application_form, current_staff:, unsuitable: false),
+    )
   end
 
   let(:application_form) do

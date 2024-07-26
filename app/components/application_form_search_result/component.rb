@@ -2,10 +2,11 @@
 
 module ApplicationFormSearchResult
   class Component < ViewComponent::Base
-    def initialize(application_form, current_staff:)
+    def initialize(application_form, current_staff:, unsuitable:)
       super
       @application_form = application_form
       @current_staff = current_staff
+      @unsuitable = unsuitable
     end
 
     def full_name
@@ -25,6 +26,8 @@ module ApplicationFormSearchResult
         class_context: "app-search-result__item",
       )
     end
+
+    attr_reader :unsuitable
 
     private
 
