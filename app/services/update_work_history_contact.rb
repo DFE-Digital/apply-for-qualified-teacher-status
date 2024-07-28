@@ -30,6 +30,8 @@ class UpdateWorkHistoryContact
     end
 
     if email.present? && (reference_request = work_history.reference_request)
+      reference_request.regenerate_slug
+
       RequestRequestable.call(
         requestable: reference_request,
         user:,
