@@ -14,7 +14,7 @@ module AssessorInterface
       @pagy, @records =
         pagy(
           SuitabilityRecord.includes(:names, :emails, :application_forms).order(
-            :created_at,
+            created_at: :desc,
           ),
         )
 
