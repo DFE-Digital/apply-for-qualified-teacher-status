@@ -4,6 +4,7 @@ DfE::Analytics.configure do |config|
   config.entity_table_checks_enabled = Rails.env.production?
   config.environment = HostingEnvironment.name
   config.queue = :analytics
+  config.bigquery_maintenance_window = "30-07-2024 18:00..30-07-2024 19:00"
 
   config.excluded_paths = [%r{^/healthcheck}]
 
