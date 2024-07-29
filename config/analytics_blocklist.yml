@@ -71,8 +71,6 @@
     - sanction_information
     - status_information
     - teaching_qualification_information
-  :selected_failure_reasons:
-    - assessor_feedback
   :sessions:
     - created_at
     - data
