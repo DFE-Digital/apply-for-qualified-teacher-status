@@ -6,6 +6,8 @@
 
 <%= govuk_button_link_to "Add a new record", %i[new assessor_interface suitability_record] %>
 
+<div class="govuk-!-padding-bottom-5"></div>
+
 <% @records.each_with_index do |suitability_record, index| %>
   <% unless index.zero? %>
     <div class="govuk-!-padding-bottom-3"></div>
