@@ -16,6 +16,20 @@
       row.with_value { @suitability_record.name }
     end
 
+    @suitability_record.aliases.each do |name_alias|
+      summary_list.with_row do |row|
+        row.with_key { "Alias" }
+        row.with_value { name_alias }
+      end
+    end
+
+    @suitability_record.emails.map(&:value).each do |email|
+      summary_list.with_row do |row|
+        row.with_key { "Email address" }
+        row.with_value { email }
+      end
+    end
+
     summary_list.with_row do |row|
       row.with_key { "Country trained in" }
       row.with_value { CountryName.from_code(@suitability_record.country_code) }
@@ -26,9 +40,11 @@
       row.with_value { @suitability_record.date_of_birth.to_fs }
     end
 
-    summary_list.with_row do |row|
-      row.with_key { "References" }
-      row.with_value { @suitability_record.application_forms.pluck(:reference).sort.join(", ") }
+    @suitability_record.application_forms.pluck(:reference).sort.each do |reference|
+      summary_list.with_row do |row|
+        row.with_key { "Application reference" }
+        row.with_value { reference.to_s }
+      end
     end
 
     summary_list.with_row do |row|

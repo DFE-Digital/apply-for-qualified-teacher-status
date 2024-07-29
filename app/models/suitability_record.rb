@@ -41,6 +41,10 @@ class SuitabilityRecord < ApplicationRecord
     names.min.value
   end
 
+  def aliases
+    names.map(&:value).sort - [name]
+  end
+
   def status
     archived? ? "archived" : "active"
   end
