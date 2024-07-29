@@ -45,9 +45,7 @@ module AssessorInterface
       @form =
         SuitabilityRecordForm.new(
           suitability_record:,
-          aliases:
-            suitability_record.names.map(&:value).sort -
-              [suitability_record.name],
+          aliases: suitability_record.aliases,
           location: CountryCode.to_location(suitability_record.country_code),
           date_of_birth: suitability_record.date_of_birth,
           emails: suitability_record.emails.map(&:value),
