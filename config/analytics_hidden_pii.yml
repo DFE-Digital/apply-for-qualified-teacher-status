@@ -11,6 +11,8 @@
     - contact_name
   :mail_delivery_failures:
     - email_address
+  :selected_failure_reasons:
+    - assessor_feedback
   :staff:
     - current_sign_in_ip
     - email
