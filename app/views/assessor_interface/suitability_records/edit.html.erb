@@ -16,17 +16,17 @@
       row.with_value { @suitability_record.name }
     end
 
-    @suitability_record.aliases.each do |name_alias|
+    if (aliases = @suitability_record.aliases).present?
       summary_list.with_row do |row|
-        row.with_key { "Alias" }
-        row.with_value { name_alias }
+        row.with_key { "Aliases" }
+        row.with_value { aliases.join("<br />").html_safe }
       end
     end
 
-    @suitability_record.emails.map(&:value).each do |email|
+    if (emails = @suitability_record.emails.map(&:value)).present?
       summary_list.with_row do |row|
-        row.with_key { "Email address" }
-        row.with_value { email }
+        row.with_key { "Email addresses" }
+        row.with_value { emails.join("<br />").html_safe }
       end
     end
 
@@ -40,10 +40,10 @@
       row.with_value { @suitability_record.date_of_birth.to_fs }
     end
 
-    @suitability_record.application_forms.pluck(:reference).sort.each do |reference|
+    if (references = @suitability_record.application_forms.pluck(:reference).map(&:to_s).sort).present?
       summary_list.with_row do |row|
-        row.with_key { "Application reference" }
-        row.with_value { reference.to_s }
+        row.with_key { "Application references" }
+        row.with_value { references.join("<br />").html_safe }
       end
     end
 
@@ -59,13 +59,13 @@
 
     summary_list.with_row do |row|
       row.with_key { "Date added" }
-      row.with_value { @suitability_record.created_at.to_fs }
+      row.with_value { @suitability_record.created_at.localtime.to_fs }
     end
 
     if @suitability_record.updated_at != @suitability_record.created_at
       summary_list.with_row do |row|
         row.with_key { "Date last updated" }
-        row.with_value { @suitability_record.updated_at.to_fs }
+        row.with_value { @suitability_record.updated_at.localtime.to_fs }
       end
     end
 
@@ -83,7 +83,9 @@
   end %>
 
   <% if @suitability_record.archived? %>
-    <%= f.govuk_submit "Set to active", secondary: true %>
+    <%= f.govuk_submit "Set to active" do %>
+      <%= govuk_link_to "Cancel", %i[assessor_interface suitability_records] %>
+    <% end %>
   <% else %>
     <h2 class="govuk-heading-m govuk-!-padding-top-6">Update record</h2>
 
