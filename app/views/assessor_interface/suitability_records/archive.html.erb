@@ -1,7 +1,7 @@
 <% title = "Archive suitability record for #{@suitability_record.name}" %>
 
 <% content_for :page_title, title %>
-<% content_for :back_link_url, assessor_interface_suitability_records_path %>
+<% content_for :back_link_url, edit_assessor_interface_suitability_record_path %>
 
 <%= form_with model: @form, url: [:assessor_interface, @suitability_record], method: :delete do |f| %>
   <%= f.govuk_error_summary %>
@@ -11,6 +11,6 @@
   <%= f.govuk_text_area :note %>
 
   <%= f.govuk_submit "Archive record" do %>
-    <%= govuk_link_to "Cancel", %i[assessor_interface suitability_records] %>
+    <%= govuk_link_to "Cancel", edit_assessor_interface_suitability_record_path %>
   <% end %>
 <% end %>
