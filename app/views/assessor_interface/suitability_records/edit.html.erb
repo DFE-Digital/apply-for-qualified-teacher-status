@@ -83,7 +83,9 @@
   end %>
 
   <% if @suitability_record.archived? %>
-    <%= f.govuk_submit "Set to active", secondary: true %>
+    <%= f.govuk_submit "Set to active" do %>
+      <%= govuk_link_to "Cancel", %i[assessor_interface suitability_records] %>
+    <% end %>
   <% else %>
     <h2 class="govuk-heading-m govuk-!-padding-top-6">Update record</h2>
 
