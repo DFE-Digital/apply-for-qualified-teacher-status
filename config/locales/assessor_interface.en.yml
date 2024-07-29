@@ -414,11 +414,11 @@ en:
         assessor_interface/suitability_record_form:
           attributes:
             name:
-              blank: Enter a name
+              blank: Enter the name
             location:
-              blank: Enter a country trained in
+              blank: Enter the country trained in
             date_of_birth:
-              blank: Enter a date of birth
+              blank: Enter the date of birth
             note:
               blank: Briefly explain why you have created this suitability record
         assessor_interface/upload_unsigned_consent_document_form:
