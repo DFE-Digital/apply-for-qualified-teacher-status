@@ -8,6 +8,8 @@ module TeacherInterface
     skip_before_action :authenticate_teacher!
     before_action :load_requested_reference_request, except: :show
 
+    rescue_from ActiveRecord::RecordNotFound, with: :error_not_found
+
     define_history_origin :show
     define_history_reset :show
     define_history_check :edit
@@ -23,6 +25,10 @@ module TeacherInterface
 
       @application_form = reference_request.application_form
       @work_history = reference_request.work_history
+    end
+
+    def error_not_found
+      render "error_not_found", status: :not_found
     end
 
     def edit
