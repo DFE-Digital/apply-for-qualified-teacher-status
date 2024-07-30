@@ -45,4 +45,12 @@ RSpec.describe FileUploadValidator do
 
     it { is_expected.not_to be_valid }
   end
+
+  context "with a small file" do
+    let(:file) { fixture_file_upload("upload.pdf", "application/pdf") }
+
+    before { allow(file).to receive(:size).and_return(1) }
+
+    it { is_expected.not_to be_valid }
+  end
 end

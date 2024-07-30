@@ -426,7 +426,6 @@ en:
             original_attachment:
               blank: Upload the required consent document
               encrypted_pdf: The selected file is security protected
-              file_size_too_big: Files must be smaller than 50MB
               invalid_content_type: Files must be in PDF, JPG, PNG, DOCX or DOC format
               mismatch_content_type: Files must have matching file type and file name. For example, if the upload is called example.doc, it must be a DOC file.
         assessor_interface/verify_professional_standing_form:

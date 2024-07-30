@@ -25,6 +25,8 @@ class FileUploadValidator < ActiveModel::EachValidator
     if uploaded_file.size >= MAX_FILE_SIZE
       record.errors.add attribute, :file_size_too_big
     end
+
+    record.errors.add attribute, :file_size_too_small if uploaded_file.size <= 1
   end
 
   def validate_content_type(record, attribute, uploaded_file)
