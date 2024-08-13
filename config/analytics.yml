@@ -77,6 +77,7 @@
     - id
     - induction_required
     - recommendation
+    - recommendation_assessor_note
     - recommended_at
     - references_verified
     - scotland_full_registration

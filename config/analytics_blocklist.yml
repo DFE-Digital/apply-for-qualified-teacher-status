@@ -23,7 +23,6 @@
   :assessments:
     - age_range_note
     - qualifications_assessor_note
-    - recommendation_assessor_note
     - subjects_note
   :consent_requests:
     - verify_note

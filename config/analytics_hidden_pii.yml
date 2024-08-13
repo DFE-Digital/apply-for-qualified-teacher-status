@@ -6,6 +6,8 @@
     - family_name
     - given_names
     - registration_number
+  :assessments:
+    - recommendation_assessor_note
   :further_information_request_items:
     - contact_email
     - contact_name
