@@ -15,9 +15,10 @@ class ApplicationMailer < Mail::Notify::Mailer
       #
       # @see https://github.com/rails/rails/issues/39018
       if respond_to?(:headers)
-        binding.break
-        email = Email.find(headers['email-log-id'].to_s)
-        email.update!(delivery_status: 'notify_error')
+        recipient_email = headers['To'].value
+        MailDeliveryFailure.create!(
+          recipient_email: recipient_email
+        )
       end
   
       raise
