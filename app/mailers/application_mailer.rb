@@ -15,16 +15,16 @@ class ApplicationMailer < Mail::Notify::Mailer
     #
     # @see https://github.com/rails/rails/issues/39018
     if respond_to?(:headers)
-      recipient_email = headers["To"].value
-      MailDeliveryFailure.create!(recipient_email:)
+      email_address = headers["To"].value
+      mailer_action_method = action_name
+      mailer_class = mailer_name
+      MailDeliveryFailure.create!(email_address:, mailer_action_method:, mailer_class:)
     end
 
     raise
   end
 
   def notify_email(headers)
-    headers =
-      headers.merge(rails_mailer: mailer_name, rails_mail_template: action_name)
     view_mail(GOVUK_NOTIFY_TEMPLATE_ID, headers)
   end
 end

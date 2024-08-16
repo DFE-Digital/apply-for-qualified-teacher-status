@@ -27,7 +27,11 @@ RSpec.describe ApplicationMailer, :sidekiq do
         Notifications::Client::NotFoundError,
       )
 
-      expect(Email.last.delivery_status).to eql("notify_error")
+      failure = MailDeliveryFailure.last
+      expect(failure).not_to be_nil
+      expect(failure.email_address).to eq("test@example.com")
+      expect(failure.mailer_action_method).to eq("test_notify_error")
+      expect(failure.mailer_class).to eq("anonymous")
     end
   end
 end
