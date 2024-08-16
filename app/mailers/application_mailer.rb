@@ -18,7 +18,11 @@ class ApplicationMailer < Mail::Notify::Mailer
       email_address = headers["To"].value
       mailer_action_method = action_name
       mailer_class = mailer_name
-      MailDeliveryFailure.create!(email_address:, mailer_action_method:, mailer_class:)
+      MailDeliveryFailure.create!(
+        email_address:,
+        mailer_action_method:,
+        mailer_class:,
+      )
     end
 
     raise
