@@ -26,13 +26,14 @@ class Upload < ApplicationRecord
   has_one_attached :attachment, dependent: :purge_later
   validates :attachment, presence: true
 
-  enum malware_scan_result: {
+  enum :malware_scan_result,
+       {
          clean: "clean",
          error: "error",
          pending: "pending",
          suspect: "suspect",
        },
-       _prefix: :malware_scan
+       prefix: :malware_scan
 
   delegate :application_form, to: :document
 
