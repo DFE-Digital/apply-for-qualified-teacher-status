@@ -35,14 +35,15 @@ class QualificationRequest < ApplicationRecord
 
   belongs_to :qualification
 
-  enum consent_method: {
+  enum :consent_method,
+       {
          none: "none",
          signed_ecctis: "signed_ecctis",
          signed_institution: "signed_institution",
          unknown: "unknown",
          unsigned: "unsigned",
        },
-       _prefix: true
+       prefix: true
 
   scope :order_by_role,
         -> { joins(:qualification).order("qualifications.start_date": :desc) }

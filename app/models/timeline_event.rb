@@ -65,7 +65,8 @@ class TimelineEvent < ApplicationRecord
   belongs_to :requestable, polymorphic: true, optional: true
   belongs_to :work_history, optional: true
 
-  enum event_type: {
+  enum :event_type,
+       {
          action_required_by_changed: "action_required_by_changed",
          age_range_subjects_verified: "age_range_subjects_verified",
          application_declined: "application_declined",

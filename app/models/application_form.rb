@@ -125,15 +125,17 @@ class ApplicationForm < ApplicationRecord
             absence: true,
             if: :english_language_provider_other
 
-  enum action_required_by: {
+  enum :action_required_by,
+       {
          admin: "admin",
          assessor: "assessor",
          external: "external",
          none: "none",
        },
-       _prefix: true
+       prefix: true
 
-  enum stage: {
+  enum :stage,
+       {
          draft: "draft",
          pre_assessment: "pre_assessment",
          not_started: "not_started",
@@ -142,7 +144,7 @@ class ApplicationForm < ApplicationRecord
          review: "review",
          completed: "completed",
        },
-       _suffix: true
+       suffix: true
 
   STATUS_COLUMNS = %i[
     personal_information_status

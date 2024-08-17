@@ -51,8 +51,8 @@ class Document < ApplicationRecord
       UNTRANSLATABLE_TYPES + UNTRANSLATABLE_SINGLE_TYPES + TRANSLATABLE_TYPES
     ).freeze
 
-  enum document_type:
-         DOCUMENT_TYPES.each_with_object({}) { |type, memo| memo[type] = type }
+  enum :document_type,
+       DOCUMENT_TYPES.each_with_object({}) { |type, memo| memo[type] = type }
   validates :document_type, inclusion: { in: DOCUMENT_TYPES }
 
   def translatable?
