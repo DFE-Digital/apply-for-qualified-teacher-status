@@ -18,7 +18,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     it { is_expected.not_to be_nil }
 
     it "is configured correctly" do
-      expect(application_forms_pagy.items).to eq(20)
+      expect(application_forms_pagy.limit).to eq(20)
       expect(application_forms_pagy.page).to eq(1)
     end
   end
