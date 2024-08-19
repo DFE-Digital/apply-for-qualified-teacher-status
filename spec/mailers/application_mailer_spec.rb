@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ApplicationMailer, :sidekiq do
+RSpec.describe ApplicationMailer, type: :mailer do
   describe ".rescue_from" do
     fake_mailer =
       Class.new(ApplicationMailer) do
