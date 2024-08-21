@@ -70,7 +70,7 @@ en:
       comparison: can't be before start date
       encrypted_pdf: file is encrypted
       file_size_too_big: Files must be smaller than 50 MB
-      file_size_too_small: Files must be bigger than 0 MB
+      file_size_too_small: The selected file is empty.
       future: can't be in the future
       invalid_content_type: is not in the correct format
       mismatch_content_type: file format doesn't match extension
