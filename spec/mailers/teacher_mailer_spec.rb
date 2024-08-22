@@ -248,7 +248,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         expect(subject).to include(
-          "Your application will be entered into a queue and assigned a QTS assessor. This can take several weeks.",
+          "Your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.",
         )
       end
 
@@ -276,7 +276,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
         it do
           expect(subject).to include(
-            "Your application will be entered into a queue and assigned a QTS assessor. This can take several weeks.",
+            "Your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.",
           )
         end
       end
