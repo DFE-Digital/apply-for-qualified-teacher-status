@@ -467,7 +467,7 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     retriable (3.1.2)
-    rexml (3.3.4)
+    rexml (3.3.6)
       strscan
     rladr (1.2.0)
     rmagick (6.0.1)
