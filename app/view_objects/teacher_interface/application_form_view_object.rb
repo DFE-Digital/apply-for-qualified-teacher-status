@@ -81,6 +81,8 @@ class TeacherInterface::ApplicationFormViewObject
           },
         ],
       }
+    elsif assessment_declined_reasons.present?
+      assessment_declined_reasons
     elsif further_information_request&.expired?
       {
         "" => [
@@ -107,17 +109,7 @@ class TeacherInterface::ApplicationFormViewObject
         ],
       }
     else
-      reasons = {}
-
-      if (note = assessment&.recommendation_assessor_note).present?
-        reasons.merge!({ "" => [{ name: note }] })
-      end
-
-      if assessment.present? && further_information_request.nil?
-        reasons.merge!(assessment_declined_reasons)
-      end
-
-      reasons
+      {}
     end
   end
 
@@ -254,6 +246,23 @@ class TeacherInterface::ApplicationFormViewObject
   end
 
   def assessment_declined_reasons
+    @assessment_declined_reasons ||=
+      begin
+        reasons = {}
+
+        if (note = assessment&.recommendation_assessor_note).present?
+          reasons.merge!({ "" => [{ name: note }] })
+        end
+
+        if assessment.present? && further_information_request.nil?
+          reasons.merge!(selected_failure_reasons_declined_reasons)
+        end
+
+        reasons
+      end
+  end
+
+  def selected_failure_reasons_declined_reasons
     assessment
       .sections
       .each_with_object({}) do |section, hash|
