@@ -487,7 +487,6 @@ Rails.application.routes.draw do
   get "cookies", to: "static#cookies"
   get "email/:key", to: "static#email", as: "email"
   get "english-language-guidance", to: "static#english_language_guidance"
-  get "privacy", to: "static#privacy"
 
   root to: redirect("/eligibility")
 end
