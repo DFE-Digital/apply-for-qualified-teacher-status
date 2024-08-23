@@ -27,6 +27,7 @@ module TeacherInterface
     def form_params
       params.require(:teacher_interface_registration_number_form).permit(
         :registration_number,
+        license_number_parts: [],
       )
     end
   end
