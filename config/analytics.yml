@@ -358,6 +358,7 @@
   :uploads:
     - created_at
     - document_id
+    - filename
     - id
     - malware_scan_result
     - translation
