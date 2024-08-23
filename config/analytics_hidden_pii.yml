@@ -34,6 +34,8 @@
     - email
     - last_sign_in_ip
     - unconfirmed_email
+  :uploads:
+    - filename
   :work_histories:
     - canonical_contact_email
     - contact_email

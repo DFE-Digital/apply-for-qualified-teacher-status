@@ -117,5 +117,3 @@
     - subjects_note
     - updated_at
     - work_history_id
-  :uploads:
-    - filename
