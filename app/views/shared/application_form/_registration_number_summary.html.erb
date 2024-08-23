@@ -1,7 +1,7 @@
 <%= render(CheckYourAnswersSummary::Component.new(
   id: "registration-number",
   model: application_form,
-  title: I18n.t("application_form.tasks.items.registration_number"),
+  title: t(CountryCode.ghana?(application_form.country.code) ? "ghana" : "other", scope: %i[application_form tasks items registration_number]),
   fields: {
     registration_number: {
       href: %i[registration_number teacher_interface application_form]

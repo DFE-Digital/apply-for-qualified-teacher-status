@@ -1,4 +1,4 @@
-<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.items.registration_number"), error: @form.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.items.registration_number.other"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
 <%= form_with model: @form, url: %i[registration_number teacher_interface application_form] do |f| %>

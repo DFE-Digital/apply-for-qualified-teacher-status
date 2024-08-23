@@ -206,6 +206,12 @@ class TeacherInterface::ApplicationFormViewObject
       else
         I18n.t("application_form.tasks.items.written_statement.upload")
       end
+    elsif key == :registration_number
+      if CountryCode.ghana?(application_form.country.code)
+        I18n.t("application_form.tasks.items.registration_number.ghana")
+      else
+        I18n.t("application_form.tasks.items.registration_number.other")
+      end
     else
       I18n.t("application_form.tasks.items.#{key}")
     end

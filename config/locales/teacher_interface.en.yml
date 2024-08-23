@@ -128,7 +128,9 @@ en:
         subjects: Enter the subjects you can teach
         english_language: Verify your English language proficiency
         work_history: Add your work history
-        registration_number: Enter your registration number
+        registration_number:
+          ghana: Enter your teacher license number
+          other: Enter your registration number
         written_statement:
           upload: Upload your written statement
           provide: Provide your written statement
