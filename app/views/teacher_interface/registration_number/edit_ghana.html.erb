@@ -1,0 +1,37 @@
+<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.items.registration_number.ghana"), error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<%= form_with model: @form, url: %i[registration_number teacher_interface application_form] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_text_field :registration_number, label: { size: "l", tag: "h1" } %>
+
+  <% if @application_form.region.status_check_online? %>
+    <% if @application_form.region.status_information.present? %>
+      <%= raw GovukMarkdown.render(@application_form.region.status_information) %>
+    <% end %>
+
+    <% if @application_form.region.country.status_information.present? %>
+      <%= raw GovukMarkdown.render(@application_form.region.country.status_information) %>
+    <% end %>
+  <% end %>
+
+  <% if @application_form.region.sanction_check_online? %>
+    <% if @application_form.region.sanction_information.present? %>
+      <%= raw GovukMarkdown.render(@application_form.region.sanction_information) %>
+    <% end %>
+
+    <% if @application_form.region.country.sanction_information.present? %>
+      <%= raw GovukMarkdown.render(@application_form.region.country.sanction_information) %>
+    <% end %>
+  <% end %>
+
+  <%= govuk_details(summary_text: "When we might need more information") do %>
+    <p>
+      If we’re unable to find you using your registration number, we may need to
+      contact you for more information as part of your application.
+    </p>
+  <% end %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>
