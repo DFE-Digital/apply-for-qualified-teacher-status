@@ -12,6 +12,10 @@ class UpdateWorkHistoryContact
   end
 
   def call
+    if reference_request.present? && reference_request.received?
+      raise InvalidState, "Reference has already been received."
+    end
+
     change_value("contact_name", name) if name.present?
 
     change_value("contact_job", job) if job.present?
@@ -27,25 +31,25 @@ class UpdateWorkHistoryContact
           contact_email_domain: email_address.host_name,
         },
       )
-    end
 
-    if email.present? && (reference_request = work_history.reference_request)
-      reference_request.regenerate_slug
+      if reference_request.present?
+        reference_request.regenerate_slug
 
-      RequestRequestable.call(
-        requestable: reference_request,
-        user:,
-        allow_already_requested: true,
-      )
+        RequestRequestable.call(
+          requestable: reference_request,
+          user:,
+          allow_already_requested: true,
+        )
 
-      ApplicationFormStatusUpdater.call(application_form:, user:)
+        ApplicationFormStatusUpdater.call(application_form:, user:)
 
-      DeliverEmail.call(
-        application_form:,
-        mailer: TeacherMailer,
-        action: :references_requested,
-        reference_requests: [reference_request],
-      )
+        DeliverEmail.call(
+          application_form:,
+          mailer: TeacherMailer,
+          action: :references_requested,
+          reference_requests: [reference_request],
+        )
+      end
     end
   end
 
@@ -53,7 +57,7 @@ class UpdateWorkHistoryContact
 
   attr_reader :work_history, :user, :name, :job, :email
 
-  delegate :application_form, to: :work_history
+  delegate :application_form, :reference_request, to: :work_history
 
   def change_value(column_name, new_value, additional_updates: {})
     old_value = work_history.send(column_name)
@@ -74,5 +78,8 @@ class UpdateWorkHistoryContact
       old_value:,
       new_value:,
     )
+  end
+
+  class InvalidState < StandardError
   end
 end
