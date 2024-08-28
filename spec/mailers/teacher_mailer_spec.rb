@@ -262,8 +262,8 @@ RSpec.describe TeacherMailer, type: :mailer do
 
         it do
           expect(subject).to include(
-            "Once the written evidence is received and checked, your application will be entered into " \
-              "a queue and assigned a QTS assessor. This can take several weeks.",
+            "Once the written evidence is received and checked, your application " \
+              "will be assessed by a trained assessor.",
           )
         end
       end
