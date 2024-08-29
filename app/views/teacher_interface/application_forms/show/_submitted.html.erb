@@ -1,5 +1,6 @@
 <% further_information_submitted = view_object.further_information_request&.received? %>
 <% qualification_consent_submitted = view_object.qualification_consent_submitted? %>
+<% teaching_authority_provides_written_statement = view_object.application_form.country.region.teaching_authority_provides_written_statement? %>
 
 <% title_text = if qualification_consent_submitted
                   "Consent documents successfully submitted"
@@ -29,8 +30,14 @@
   <p class="govuk-body">Keep the email safe, as you may need your application reference number for future correspondence about your application.</p>
 
   <h2 class="govuk-heading-m">What happens next</h2>
-  <p class="govuk-body">Your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.</p>
-  <p class="govuk-body">If we need more information, we will email you. You do not need to contact us.</p>
+  <% if teaching_authority_provides_written_statement %>
+    <p class="govuk-body">We are waiting to receive the written evidence you’ve requested from your teaching authority.</p>
+    <p class="govuk-body">Once the written evidence is received and checked, your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.</p>
+    <p class="govuk-body">If we need more information, we will email you. You do not need to contact us.</p>
+  <% else %>
+    <p class="govuk-body">Your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.</p>
+    <p class="govuk-body">If we need more information, we will email you. You do not need to contact us.</p>
+  <% end %>
 
   <h2 class="govuk-heading-m">How long will it take?</h2>
   <p class="govuk-body">Your teaching qualifications and experience will be assessed against strict requirements. These requirements are mandatory and must be met in full. The process is designed to ensure we only award QTS to the highest quality teachers. Your application will be assessed as soon as possible, but it can take time.</p>
