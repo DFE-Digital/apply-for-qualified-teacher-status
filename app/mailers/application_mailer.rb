@@ -27,8 +27,4 @@ class ApplicationMailer < Mail::Notify::Mailer
 
     raise
   end
-
-  def notify_email(headers)
-    view_mail(GOVUK_NOTIFY_TEMPLATE_ID, headers)
-  end
 end
