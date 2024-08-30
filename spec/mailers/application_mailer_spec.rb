@@ -13,7 +13,11 @@ RSpec.describe ApplicationMailer, type: :mailer do
         }
 
         def test_notify_error
-          view_mail("testGOVUK_NOTIFY_TEMPLATE_ID_APPLICATION", to: "test@example.com", subject: "Some subject")
+          view_mail(
+            ApplicationMailer::GOVUK_NOTIFY_TEMPLATE_ID,
+            to: "test@example.com",
+            subject: "Some subject",
+          )
         end
       end
 
