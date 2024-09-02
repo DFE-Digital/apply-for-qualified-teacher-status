@@ -30,7 +30,9 @@ module TeacherInterface
     end
 
     def registration_number_validator
-      RegistrationNumberValidators::Ghana.new(registration_number:)
+      @registration_number_validator ||= RegistrationNumberValidators::Ghana.new(
+        registration_number:
+      )
     end
 
     private
@@ -42,11 +44,15 @@ module TeacherInterface
     end
 
     def registration_number
-      [
+      registration_number_parts = [
         license_number_part_one,
         license_number_part_two,
         license_number_part_three,
-      ].join("/")
+      ]
+
+      return nil if registration_number_parts.compact_blank.empty?
+
+      registration_number_parts.join("/")
     end
   end
 end

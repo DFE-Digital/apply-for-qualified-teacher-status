@@ -170,7 +170,18 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def registration_number_status
-    registration_number.nil? ? :not_started : :completed
+    if CountryCode.ghana?(application_form.country.code)
+      if registration_number.present?
+        registration_number_validator ||= RegistrationNumberValidators::Ghana.new(
+          registration_number:
+        )
+        registration_number_validator.valid? ? :completed : :in_progress
+      else
+        :not_started
+      end
+    else
+      registration_number.nil? ? :not_started : :completed
+    end
   end
 
   def written_statement_status

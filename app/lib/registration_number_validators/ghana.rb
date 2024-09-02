@@ -5,7 +5,7 @@ module RegistrationNumberValidators
     def initialize(registration_number:)
       @registration_number = registration_number
 
-      registration_number_parts = registration_number.split("/")
+      registration_number_parts = registration_number.to_s.split("/")
 
       @license_number_part_one = registration_number_parts[0]
       @license_number_part_two = registration_number_parts[1]

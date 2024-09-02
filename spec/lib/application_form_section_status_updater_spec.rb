@@ -406,6 +406,29 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
         it { is_expected.to eq("completed") }
       end
+
+      context "when the application form is from Ghana" do
+        let(:application_form) { create(:application_form, registration_number:, region: ghana_country.regions.first) }
+        let(:ghana_country) { create(:country, :with_national_region, code: "GH") }
+
+        context "without a registration/license number" do
+          let(:registration_number) { nil }
+
+          it { is_expected.to eq("not_started") }
+        end
+
+        context "without a valid registration/license number" do
+          let(:registration_number) { "P/12%3/44N" }
+
+          it { is_expected.to eq("in_progress") }
+        end
+
+        context "with a valid registration/license number" do
+          let(:registration_number) { "PT/123456/1234" }
+
+          it { is_expected.to eq("completed") }
+        end
+      end
     end
   end
 end

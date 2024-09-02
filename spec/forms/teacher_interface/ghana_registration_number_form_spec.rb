@@ -51,9 +51,9 @@ RSpec.describe TeacherInterface::GhanaRegistrationNumberForm, type: :model do
   end
 
   describe "#save" do
-    subject(:save) { form.save(validate: true) }
-
     context "with valid parts" do
+      subject(:save) { form.save(validate: true) }
+
       let(:license_number_part_one) { 'PT' }
       let(:license_number_part_two) { '123456' }
       let(:license_number_part_three) { '1234' }
@@ -62,6 +62,48 @@ RSpec.describe TeacherInterface::GhanaRegistrationNumberForm, type: :model do
         expect { save }.to change(application_form, :registration_number).to(
           "PT/123456/1234",
         )
+      end
+    end
+
+    context "with invalid parts" do
+      subject(:save) { form.save(validate: false) }
+
+      let(:license_number_part_one) { 'P2' }
+      let(:license_number_part_two) { '123%56' }
+      let(:license_number_part_three) { '1^634' }
+
+      it "sets the registration number to the string" do
+        expect { save }.to change(application_form, :registration_number).to(
+          "P2/123%56/1^634",
+        )
+      end
+
+      context "when all parts are empty" do
+        let(:license_number_part_one) { '' }
+        let(:license_number_part_two) { '' }
+        let(:license_number_part_three) { '' }
+
+        before do
+          application_form.update(registration_number: "PT/123456/1234")
+        end
+
+        it "sets the registration number to nil" do
+          expect { save }.to change(application_form, :registration_number).to(
+            nil
+          )
+        end
+      end
+
+      context "when some parts are empty" do
+        let(:license_number_part_one) { 'PT' }
+        let(:license_number_part_two) { '' }
+        let(:license_number_part_three) { '111' }
+
+        it "sets the registration number to nil" do
+          expect { save }.to change(application_form, :registration_number).to(
+            "PT//111"
+          )
+        end
       end
     end
   end
