@@ -323,9 +323,8 @@ en:
               blank: Confirm that you have downloaded the consent document.
         teacher_interface/ghana_registration_number_form:
           attributes:
-            license_number_parts:
-              blank: Enter your teacher license number
-              invalid: Enter your teacher license number in full. It is made up of 2 letters, 6 numbers and a final 4 numbers. For example, PT/123456/1234.
+            registration_number:
+              invalid: Enter your teacher license number. It is made up of 2 letters, 6 numbers and a final 4 numbers. For example, PT/123456/1234.
         teacher_interface/reference_request_children_response_form:
           attributes:
             children_response:

@@ -661,6 +661,11 @@ module PageHelpers
       PageObjects::TeacherInterface::RegistrationNumber.new
   end
 
+  def teacher_ghana_registration_number_page
+    @teacher_registration_number_page =
+      PageObjects::TeacherInterface::GhanaRegistrationNumber.new
+  end
+
   def teacher_signed_out_page
     @teacher_signed_out_page = PageObjects::TeacherInterface::SignedOut.new
   end
