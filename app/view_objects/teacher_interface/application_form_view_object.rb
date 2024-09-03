@@ -12,7 +12,7 @@ class TeacherInterface::ApplicationFormViewObject
   delegate :assessment, :country, :region, :teacher, to: :application_form
 
   def teaching_authority_provides_written_statement?
-    application_form.region.teaching_authority_provides_written_statement 
+    application_form.region.teaching_authority_provides_written_statement
   end
 
   def further_information_request
