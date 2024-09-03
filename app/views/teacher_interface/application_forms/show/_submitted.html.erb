@@ -1,6 +1,6 @@
 <% further_information_submitted = view_object.further_information_request&.received? %>
 <% qualification_consent_submitted = view_object.qualification_consent_submitted? %>
-<% teaching_authority_provides_written_statement = view_object.application_form.region.teaching_authority_provides_written_statement? %>
+<% teaching_authority_provides_written_statement = view_object.teaching_authority_provides_written_statement? %>
 
 <% title_text = if qualification_consent_submitted
                   "Consent documents successfully submitted"
