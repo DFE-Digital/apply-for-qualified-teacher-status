@@ -43,7 +43,9 @@ RSpec.describe "Teacher Ghana registration number", type: :system do
   end
 
   def and_i_see_the_registration_number_task
-    expect(teacher_application_page.ghana_registration_number_task_item).not_to be_nil
+    expect(
+      teacher_application_page.ghana_registration_number_task_item,
+    ).not_to be_nil
   end
 
   def when_i_click_the_registration_number_task
@@ -72,17 +74,23 @@ RSpec.describe "Teacher Ghana registration number", type: :system do
 
   def and_i_see_the_completed_registration_number_task
     expect(
-      teacher_application_page.ghana_registration_number_task_item.status_tag.text,
+      teacher_application_page
+        .ghana_registration_number_task_item
+        .status_tag
+        .text,
     ).to eq("Completed")
   end
 
   def and_i_see_the_validation_failures
     expect(
-      teacher_ghana_registration_number_page.form.license_number_error_message.text,
+      teacher_ghana_registration_number_page
+        .form
+        .license_number_error_message
+        .text,
     ).to include(
       "Enter your teacher license number. " \
-      "It is made up of 2 letters, 6 numbers and a final 4 numbers. " \
-      "For example, PT/123456/1234."
+        "It is made up of 2 letters, 6 numbers and a final 4 numbers. " \
+        "For example, PT/123456/1234.",
     )
   end
 
@@ -92,7 +100,12 @@ RSpec.describe "Teacher Ghana registration number", type: :system do
 
   def application_form
     @application_form ||=
-      create(:application_form, teacher:, region: ghana_country.regions.first, needs_registration_number: true)
+      create(
+        :application_form,
+        teacher:,
+        region: ghana_country.regions.first,
+        needs_registration_number: true,
+      )
   end
 
   def ghana_country

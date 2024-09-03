@@ -408,8 +408,16 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
       end
 
       context "when the application form is from Ghana" do
-        let(:application_form) { create(:application_form, registration_number:, region: ghana_country.regions.first) }
-        let(:ghana_country) { create(:country, :with_national_region, code: "GH") }
+        let(:application_form) do
+          create(
+            :application_form,
+            registration_number:,
+            region: ghana_country.regions.first,
+          )
+        end
+        let(:ghana_country) do
+          create(:country, :with_national_region, code: "GH")
+        end
 
         context "without a registration/license number" do
           let(:registration_number) { nil }

@@ -3,11 +3,7 @@
 require "rails_helper"
 
 RSpec.describe RegistrationNumberValidators::Ghana, type: :model do
-  subject(:validator) do
-    described_class.new(
-      registration_number:,
-    )
-  end
+  subject(:validator) { described_class.new(registration_number:) }
 
   let(:registration_number) { "PT/123456/1234" }
 

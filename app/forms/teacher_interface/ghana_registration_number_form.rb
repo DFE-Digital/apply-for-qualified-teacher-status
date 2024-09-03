@@ -13,7 +13,7 @@ module TeacherInterface
 
     validate :license_number_parts_valid
 
-    def initialize(attributes={})
+    def initialize(attributes = {})
       super
 
       if attributes[:registration_number].present?
@@ -30,9 +30,8 @@ module TeacherInterface
     end
 
     def registration_number_validator
-      @registration_number_validator ||= RegistrationNumberValidators::Ghana.new(
-        registration_number:
-      )
+      @registration_number_validator ||=
+        RegistrationNumberValidators::Ghana.new(registration_number:)
     end
 
     private

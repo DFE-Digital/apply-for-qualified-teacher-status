@@ -13,9 +13,8 @@ module RegistrationNumberValidators
     end
 
     def valid?
-      license_number_part_one_valid? &&
-      license_number_part_two_valid? &&
-      license_number_part_three_valid?
+      license_number_part_one_valid? && license_number_part_two_valid? &&
+        license_number_part_three_valid?
     end
 
     def license_number_part_one_valid?
@@ -35,6 +34,8 @@ module RegistrationNumberValidators
 
     private
 
-    attr_reader :license_number_part_one, :license_number_part_two, :license_number_part_three
+    attr_reader :license_number_part_one,
+                :license_number_part_two,
+                :license_number_part_three
   end
 end

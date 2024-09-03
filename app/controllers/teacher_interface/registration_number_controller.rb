@@ -9,7 +9,8 @@ module TeacherInterface
     before_action :load_application_form
 
     def edit
-      @form = form_class.new(
+      @form =
+        form_class.new(
           application_form:,
           registration_number: application_form.registration_number,
         )
@@ -34,7 +35,9 @@ module TeacherInterface
 
     def form_params
       if ghana?
-        params.require(:teacher_interface_ghana_registration_number_form).permit(
+        params.require(
+          :teacher_interface_ghana_registration_number_form,
+        ).permit(
           :license_number_part_one,
           :license_number_part_two,
           :license_number_part_three,

@@ -172,9 +172,8 @@ class ApplicationFormSectionStatusUpdater
   def registration_number_status
     if CountryCode.ghana?(application_form.country.code)
       if registration_number.present?
-        registration_number_validator ||= RegistrationNumberValidators::Ghana.new(
-          registration_number:
-        )
+        registration_number_validator =
+          RegistrationNumberValidators::Ghana.new(registration_number:)
         registration_number_validator.valid? ? :completed : :in_progress
       else
         :not_started
