@@ -41,6 +41,14 @@ RSpec.describe TeacherInterface::GhanaRegistrationNumberForm, type: :model do
       it { is_expected.to be_invalid }
     end
 
+    context "with license number parts having spaces in the end" do
+      let(:license_number_part_one) { " PT " }
+      let(:license_number_part_two) { "123456 " }
+      let(:license_number_part_three) { " 1234" }
+
+      it { is_expected.to be_valid }
+    end
+
     context "with valid parts" do
       let(:license_number_part_one) { "PT" }
       let(:license_number_part_two) { "123456" }
@@ -59,6 +67,20 @@ RSpec.describe TeacherInterface::GhanaRegistrationNumberForm, type: :model do
       let(:license_number_part_three) { "1234" }
 
       it "sets the registration number to the string" do
+        expect { save }.to change(application_form, :registration_number).to(
+          "PT/123456/1234",
+        )
+      end
+    end
+
+    context "with license number parts having spaces in the end" do
+      subject(:save) { form.save(validate: true) }
+
+      let(:license_number_part_one) { " PT " }
+      let(:license_number_part_two) { "123456 " }
+      let(:license_number_part_three) { " 1234" }
+
+      it "sets the registration number to the string without spaces" do
         expect { save }.to change(application_form, :registration_number).to(
           "PT/123456/1234",
         )

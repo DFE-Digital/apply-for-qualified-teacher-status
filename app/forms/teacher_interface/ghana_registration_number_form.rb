@@ -47,7 +47,7 @@ module TeacherInterface
         license_number_part_one,
         license_number_part_two,
         license_number_part_three,
-      ]
+      ].map(&:strip)
 
       return nil if registration_number_parts.compact_blank.empty?
 
