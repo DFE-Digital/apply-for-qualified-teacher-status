@@ -128,7 +128,9 @@ en:
         subjects: Enter the subjects you can teach
         english_language: Verify your English language proficiency
         work_history: Add your work history
-        registration_number: Enter your registration number
+        registration_number:
+          ghana: Enter your teacher license number
+          other: Enter your registration number
         written_statement:
           upload: Upload your written statement
           provide: Provide your written statement
@@ -319,6 +321,10 @@ en:
           attributes:
             downloaded:
               blank: Confirm that you have downloaded the consent document.
+        teacher_interface/ghana_registration_number_form:
+          attributes:
+            registration_number:
+              invalid: Enter your teacher license number. It is made up of 2 letters, 6 numbers and a final 4 numbers. For example, PT/123456/1234.
         teacher_interface/reference_request_children_response_form:
           attributes:
             children_response:

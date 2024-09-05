@@ -47,6 +47,10 @@ module PageObjects
         find_task_list_item("Enter your registration number")
       end
 
+      def ghana_registration_number_task_item
+        find_task_list_item("Enter your teacher license number")
+      end
+
       def upload_written_statement_task_item
         find_task_list_item("Upload your written statement")
       end

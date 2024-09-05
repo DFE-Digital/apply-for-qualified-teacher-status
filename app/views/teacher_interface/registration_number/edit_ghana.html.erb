@@ -1,0 +1,77 @@
+<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.items.registration_number.ghana"), error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<%= form_with model: @form, url: %i[registration_number teacher_interface application_form] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if @form.errors.present? %>">
+    <fieldset class="govuk-fieldset" aria-describedby="teacher-interface-ghana-registration-number-form-registration-number-hint">
+      <h1 class="govuk-label-wrapper">
+        <label for="teacher-interface-ghana-registration-number-form-registration-number-field" class="govuk-label govuk-label--l">
+          <%= t("helpers.label.teacher_interface_ghana_registration_number_form.registration_number") %>
+        </label>
+      </h1>
+      <div class="govuk-hint" id="teacher-interface-ghana-registration-number-form-registration-number-hint">
+        <%= t("helpers.hint.teacher_interface_ghana_registration_number_form.registration_number") %>
+      </div>
+
+      <% if @form.errors.present? %>
+        <p id="teacher-interface-ghana-registration-number-form-registration-number-field-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span>
+          <%= @form.errors.first.message %>
+        </p>
+      <% end %>
+
+      <div class="govuk-date-input">
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <input id="teacher-interface-ghana-registration-number-form-license-number-part-one"
+                   class="govuk-input govuk-date-input__input govuk-input--width-2 <%= 'govuk-input--error' if @form.errors.present? && !@form.registration_number_validator.license_number_part_one_valid? %>"
+                   name="teacher_interface_ghana_registration_number_form[license_number_part_one]"
+                   type="text" inputmode="text" value=<%= @form.license_number_part_one %>>
+          </div>
+        </div>
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <input id="teacher-interface-ghana-registration-number-form-license-number-part-two"
+                   class="govuk-input govuk-date-input__input govuk-input--width-4 <%= 'govuk-input--error' if @form.errors.present? && !@form.registration_number_validator.license_number_part_two_valid? %>"
+                   name="teacher_interface_ghana_registration_number_form[license_number_part_two]"
+                   type="text"
+                   inputmode="numeric"
+                   value=<%= @form.license_number_part_two %>>
+          </div>
+        </div>
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <input id="teacher-interface-ghana-registration-number-form-license-number-part-three"
+                   class="govuk-input govuk-date-input__input govuk-input--width-3 <%= 'govuk-input--error' if @form.errors.present? && !@form.registration_number_validator.license_number_part_three_valid? %>"
+                   name="teacher_interface_ghana_registration_number_form[license_number_part_three]"
+                   type="text"
+                   inputmode="numeric"
+                   value=<%= @form.license_number_part_three %>>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="govuk-!-padding-bottom-3"></div>
+
+  <h2 class="govuk-heading-m">Finding and checking your teacher license number</h2>
+  <p class="govuk-body">
+    You can get your teacher license number by signing in to your <%= link_to "Teacher Portal Ghana account", "https://tpg.ntc.gov.gh/account/login/teacher" %>.</p>
+  <p class="govuk-body">You can check your number on the <%= link_to "Teacher Portal Ghana website", "https://tpg.ntc.gov.gh/public/teacher/verify-license" %>.</p>
+  <p class="govuk-body">If you cannot find your teaching license number, contact the <%= link_to "Ghana National Teaching Council", "https://ntc.gov.gh/" %>.</p>
+
+  <div class="govuk-!-padding-bottom-3"></div>
+
+  <h2 class="govuk-heading-m">Why we need your teacher license number</h2>
+  <p class="govuk-body">
+		We use this number to verify you are registered to teach in Ghana.
+    If you do not have one, we will not be able to verify you. This means your application will be declined. We do not accept other registration or license numbers.
+  </p>
+
+  <div class="govuk-!-padding-bottom-3"></div>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>

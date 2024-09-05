@@ -26,6 +26,10 @@ class CountryCode
       code == "GB-NIR"
     end
 
+    def ghana?(code)
+      code == "GH"
+    end
+
     def european_economic_area?(code)
       Country::CODES_IN_EUROPEAN_ECONOMIC_AREA.include?(code)
     end
