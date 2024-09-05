@@ -226,7 +226,7 @@ en:
       teacher_interface_further_information_request_item_text_form:
         response: Enter your response
       teacher_interface_ghana_registration_number_form:
-        registration_number: "Enter your teacher license number"
+        registration_number: Enter your teacher license number
       teacher_interface_has_work_history_form:
         has_work_history_options:
           true: "Yes"
