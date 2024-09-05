@@ -49,7 +49,7 @@ en:
       teacher_interface_further_information_request_item_text_form:
         response: Use the text box below to respond to the assessor’s question.
       teacher_interface_ghana_registration_number_form:
-        registration_number: Your teacher license number is made up of 2 letters, 6 numbers, and a final 4 numbers. For example, PT/123456/1234.
+        registration_number: Your teacher license number is made up of 2 letters, 6 numbers and a final 4 numbers. For example, PT/123456/1234.
       teacher_interface_has_work_history_form:
         has_work_history: If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet.
       teacher_interface_new_session_form:
