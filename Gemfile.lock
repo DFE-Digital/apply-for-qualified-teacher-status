@@ -263,7 +263,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 3.9, < 3.14)
-    govuk_design_system_formbuilder (5.5.0)
+    govuk_design_system_formbuilder (5.6.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -299,7 +299,7 @@ GEM
       base64
     language_server-protocol (3.17.0.3)
     libreconv (0.9.5)
-    logger (1.6.0)
+    logger (1.6.1)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
