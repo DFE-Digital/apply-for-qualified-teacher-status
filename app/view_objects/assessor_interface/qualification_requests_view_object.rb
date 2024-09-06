@@ -49,6 +49,8 @@ module AssessorInterface
     end
 
     def individual_task_items_for(qualification_request:)
+      return [] unless all_consent_methods_selected?
+
       consent_task_items(qualification_request) +
         ecctis_task_items(qualification_request)
     end

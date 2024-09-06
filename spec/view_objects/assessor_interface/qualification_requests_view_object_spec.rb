@@ -84,6 +84,88 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
         )
       end
     end
+
+    context "when there are multiple qualification requests" do
+      let!(:qualification_request_two) do
+        create(:qualification_request, assessment:, qualification:)
+      end
+
+      it do
+        expect(subject).to eq(
+          [
+            {
+              title: "Check and select consent method",
+              href: [
+                :consent_methods,
+                :assessor_interface,
+                application_form,
+                assessment,
+                :qualification_requests,
+              ],
+              status: "not_started",
+            },
+          ],
+        )
+      end
+
+      context "with only one consent method chosen" do
+        before { qualification_request.consent_method_unsigned! }
+
+        it do
+          expect(subject).to eq(
+            [
+              {
+                title: "Check and select consent method",
+                href: [
+                  :consent_methods,
+                  :assessor_interface,
+                  application_form,
+                  assessment,
+                  :qualification_requests,
+                ],
+                status: "in_progress",
+              },
+            ],
+          )
+        end
+      end
+
+      context "with both consent methods chosen" do
+        before do
+          qualification_request.consent_method_unsigned!
+          qualification_request_two.consent_method_unsigned!
+        end
+
+        it do
+          expect(subject).to eq(
+            [
+              {
+                title: "Check and select consent method",
+                href: [
+                  :check_consent_methods,
+                  :assessor_interface,
+                  application_form,
+                  assessment,
+                  :qualification_requests,
+                ],
+                status: "completed",
+              },
+              {
+                title: "Generate consent document",
+                href: [
+                  :unsigned_consent_document,
+                  :assessor_interface,
+                  application_form,
+                  assessment,
+                  :qualification_requests,
+                ],
+                status: "not_started",
+              },
+            ],
+          )
+        end
+      end
+    end
   end
 
   describe "#show_individual_task_items?" do
@@ -105,6 +187,12 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
       end
 
       it { is_expected.to be true }
+
+      context "when one of the qualification methods have not been selected" do
+        before { qualification_request.consent_method_unknown! }
+
+        it { is_expected.to be false }
+      end
     end
   end
 
@@ -190,6 +278,37 @@ RSpec.describe AssessorInterface::QualificationRequestsViewObject do
             },
           ],
         )
+      end
+    end
+
+    context "when there are other qualification requests" do
+      before { qualification_request.consent_method_unsigned! }
+
+      let!(:qualification_request_two) do
+        create(:qualification_request, assessment:, qualification:)
+      end
+
+      it { expect(subject).to be_empty }
+
+      context "with all consent methods selected" do
+        before { qualification_request_two.consent_method_unsigned! }
+
+        it do
+          expect(subject).to eq(
+            [
+              {
+                title: "Request Ecctis verification",
+                href: nil,
+                status: "cannot_start",
+              },
+              {
+                title: "Record Ecctis response",
+                href: nil,
+                status: "cannot_start",
+              },
+            ],
+          )
+        end
       end
     end
   end
