@@ -260,8 +260,7 @@ class ApplicationForm < ApplicationRecord
 
   def submitted_under_old_criteria?
     created_under_old_regulations? ||
-      subject_limited != country.subject_limited ||
-      requires_preliminary_check != region.requires_preliminary_check
+      subject_limited != country.subject_limited
   end
 
   def reminder_email_names
