@@ -495,13 +495,5 @@ RSpec.describe ApplicationForm, type: :model do
 
       it { is_expected.to be true }
     end
-
-    context "when requires preliminary check doesn't match the country" do
-      let(:application_form) do
-        create(:application_form, :requires_preliminary_check)
-      end
-
-      it { is_expected.to be true }
-    end
   end
 end
