@@ -18,7 +18,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       create(:application_form, :awarded_pending_checks)
     end
 
-    it { is_expected.to match(/Application complete/) }
+    it { is_expected.to match(/Application received/) }
     it { is_expected.to match(/We’ve received your application for QTS/) }
   end
 
