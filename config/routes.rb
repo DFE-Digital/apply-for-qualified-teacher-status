@@ -447,6 +447,8 @@ Rails.application.routes.draw do
              }
 
   devise_scope :teacher do
+    get "teacher/auth/gov_one/callback"  => "teachers/omniauth_callbacks#gov_one"
+
     get "/teacher/sign_in_or_sign_up",
         to: "teachers/sessions#new_or_create",
         as: "create_or_new_teacher_session"
