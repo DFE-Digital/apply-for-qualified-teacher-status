@@ -22,7 +22,7 @@ locals {
   gcp_key_ring               = "bigquery-${var.service_short}-${local.environment}-2"
   gcp_key                    = "bigquery-${var.service_short}-${local.environment}-2"
   gcp_dataset_name           = var.gcp_dataset == null ? replace("${var.service_short}_events_${local.environment}_spike", "-", "_") : var.gcp_dataset
-  gcp_principal              = "principal://iam.googleapis.com/projects/${data.google_project.current.number}/locations/global/workloadIdentityPools/${local.gcp_workload_id_pool}"
+  gcp_principal              = "principal://iam.googleapis.com/projects/${var.gcp_project_number}/locations/global/workloadIdentityPools/${local.gcp_workload_id_pool}"
   gcp_principal_with_subject = "${local.gcp_principal}/subject/${data.azurerm_user_assigned_identity.gcp_wif.principal_id}"
 
   gcp_credentials_map = {
