@@ -35,7 +35,7 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
 
     outputs:
-      image: ${{ steps.build-docker-image.outputs.image }}
+      image: ghcr.io/dfe-digital/apply-for-qualified-teacher-status:a822b59e3447f403721b7bb632d61e0b5acd89eb
 
     steps:
       - uses: actions/checkout@v4
@@ -54,12 +54,12 @@ jobs:
           keyvault: ${{ steps.key-vault-name.outputs.value }}
           secrets: "SNYK-TOKEN"
 
-      - uses: DFE-Digital/github-actions/build-docker-image@master
-        id: build-docker-image
-        with:
-          docker-repository: ghcr.io/dfe-digital/apply-for-qualified-teacher-status
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          snyk-token: ${{ steps.key-vault-secrets.outputs.SNYK-TOKEN }}
+      # - uses: DFE-Digital/github-actions/build-docker-image@master
+      #   id: build-docker-image
+      #   with:
+      #     docker-repository: ghcr.io/dfe-digital/apply-for-qualified-teacher-status
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     snyk-token: ${{ steps.key-vault-secrets.outputs.SNYK-TOKEN }}
 
   rspec:
     name: Rspec
