@@ -7,9 +7,8 @@ variable "gcp_keyring" {
 variable "gcp_key" {
   default = null
 }
-variable "gcp_project" {
-  default = null
-}
+variable "gcp_project" {}
+variable "gcp_project_number" {}
 variable "gcp_table_deletion_protection" {
   default = true
 }
@@ -17,7 +16,7 @@ variable "gcp_table_deletion_protection" {
 locals {
   # Global constants
   gcp_region           = "europe-west2"
-  gcp_table_name       = "events" # TBC
+  gcp_table_name       = "events"
   gcp_workload_id_pool = "azure-cip-identity-pool"
 
   gcp_key_ring               = "bigquery-${var.service_short}-${local.environment}-2"
@@ -29,7 +28,7 @@ locals {
   gcp_credentials_map = {
     universe_domain    = "googleapis.com"
     type               = "external_account"
-    audience           = "//iam.googleapis.com/projects/${data.google_project.current.number}/locations/global/workloadIdentityPools/azure-cip-identity-pool/providers/azure-cip-oidc-provider"
+    audience           = "//iam.googleapis.com/projects/${var.gcp_project_number}/locations/global/workloadIdentityPools/azure-cip-identity-pool/providers/azure-cip-oidc-provider"
     subject_token_type = "urn:ietf:params:oauth:token-type:jwt"
     token_url          = "https://sts.googleapis.com/v1/token"
     credential_source = {
@@ -48,7 +47,7 @@ provider "google" {
   region  = local.gcp_region
 }
 
-data "google_project" "current" {}
+# data "google_project" "current" {}
 
 data "azurerm_client_config" "current" {}
 
