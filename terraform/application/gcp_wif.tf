@@ -9,6 +9,12 @@ variable "gcp_key" {
 }
 variable "gcp_project" {}
 variable "gcp_project_number" {}
+variable "gcp_taxonomy_id" {
+  default = null
+}
+variable "gcp_policy_tag_id" {
+  default = null
+}
 variable "gcp_table_deletion_protection" {
   default = true
 }
@@ -40,6 +46,7 @@ locals {
     }
   }
   gcp_credentials = jsonencode(local.gcp_credentials_map)
+  gcp_policy_tag_name = "projects/${var.gcp_project}/locations/${local.gcp_region}/taxonomies/${var.gcp_taxonomy_id}/policyTags/${var.gcp_policy_tag_id}"
 }
 
 provider "google" {
@@ -138,5 +145,8 @@ resource "google_bigquery_table" "events" {
   }
 
   # https://github.com/DFE-Digital/dfe-analytics/blob/main/docs/create-events-table.sql
-  schema = file("${path.module}/config/events.json")
+  schema = templatefile(
+    "${path.module}/config/events.json.tmpl",
+    { policy_tag_name = local.gcp_policy_tag_name }
+  )
 }
