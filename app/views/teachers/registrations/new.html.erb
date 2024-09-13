@@ -10,3 +10,9 @@
   <%= f.govuk_email_field :email, autocomplete: "email", label: { size: "m" } %>
   <%= f.govuk_submit %>
 <% end %>
+
+<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+  <h2 class="govuk-heading-l">Gov One Login</h2>
+
+  <%= button_to "Sign up in with Gov One", "/teacher/auth/gov_one", class: "govuk-button" %>
+<% end %>
