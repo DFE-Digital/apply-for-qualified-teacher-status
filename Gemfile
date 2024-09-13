@@ -78,6 +78,7 @@ group :test do
   gem "capybara"
   gem "climate_control"
   gem "cuprite"
+  gem "pry"
   gem "rspec"
   gem "rspec-rails"
   gem "shoulda-matchers"

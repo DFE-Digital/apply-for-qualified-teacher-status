@@ -145,6 +145,7 @@ GEM
     cgi (0.4.1)
     choice (0.2.0)
     climate_control (1.2.0)
+    coderay (1.1.3)
     combine_pdf (1.0.26)
       matrix
       ruby-rc4 (>= 0.1.5)
@@ -408,6 +409,9 @@ GEM
       activesupport (>= 7.0.0)
       rack
       railties (>= 7.0.0)
+    pry (0.14.2)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -710,6 +714,7 @@ DEPENDENCIES
   prawn
   prettier_print
   propshaft
+  pry
   puma
   pundit
   rack-attack

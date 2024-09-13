@@ -18,11 +18,13 @@
 #  uuid                                    :uuid             not null
 #  created_at                              :datetime         not null
 #  updated_at                              :datetime         not null
+#  gov_one_id                              :string
 #
 # Indexes
 #
 #  index_teacher_on_lower_email       (lower((email)::text)) UNIQUE
 #  index_teachers_on_canonical_email  (canonical_email)
+#  index_teachers_on_gov_one_id       (gov_one_id) UNIQUE
 #  index_teachers_on_uuid             (uuid) UNIQUE
 #
 class Teacher < ApplicationRecord
