@@ -65,7 +65,7 @@ module PageObjects
       end
 
       def review_requested_information_task
-        find_task_list_item("Review requested information from applicant")
+        find_task_list_item("Review further information from applicant")
       end
 
       def verify_professional_standing_task
