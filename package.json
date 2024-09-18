@@ -5,7 +5,7 @@
     "@ministryofjustice/frontend": "^2.2.0",
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete",
     "esbuild": "^0.23.1",
-    "govuk-country-and-territory-autocomplete": "^1.0.2",
+    "govuk-country-and-territory-autocomplete": "^2.0.0",
     "govuk-frontend": "^5.6.0",
     "sass": "^1.77.8"
   },
