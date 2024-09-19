@@ -311,7 +311,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review requested information from applicant",
+          "Review further information from applicant",
           status: :cannot_start,
         )
       end
@@ -323,7 +323,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review requested information from applicant",
+          "Review further information from applicant",
           status: :not_started,
         )
       end
@@ -342,7 +342,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review requested information from applicant",
+          "Review further information from applicant",
           status: :in_progress,
         )
       end
@@ -361,7 +361,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review requested information from applicant",
+          "Review further information from applicant",
           status: :in_progress,
         )
       end
@@ -380,7 +380,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review requested information from applicant",
+          "Review further information from applicant",
           status: :completed,
         )
       end
@@ -399,7 +399,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review requested information from applicant",
+          "Review further information from applicant",
           status: :completed,
         )
       end
