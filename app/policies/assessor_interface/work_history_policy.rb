@@ -2,6 +2,6 @@
 
 class AssessorInterface::WorkHistoryPolicy < ApplicationPolicy
   def update?
-    user.change_work_history_permission
+    user.change_work_history_permission && !user.archived?
   end
 end

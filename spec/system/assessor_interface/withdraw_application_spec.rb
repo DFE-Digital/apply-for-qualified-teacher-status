@@ -16,6 +16,12 @@ RSpec.describe "Assessor withdraw application", type: :system do
     then_i_see_the_forbidden_page
   end
 
+  it "does not allow any access if user is archived" do
+    given_i_am_authorized_as_an_archived_user(manager)
+    when_i_visit_the(:assessor_withdraw_application_page, reference:)
+    then_i_see_the_forbidden_page
+  end
+
   it "allows withdrawing an application" do
     given_i_am_authorized_as_a_user(manager)
 

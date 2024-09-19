@@ -254,7 +254,8 @@ Rails.application.routes.draw do
       authenticate :staff do
         constraints(
           lambda do |request|
-            request.env["warden"].user.support_console_permission?
+            request.env["warden"].user.support_console_permission? &&
+              !request.env["warden"].user.archived?
           end,
         ) { mount Sidekiq::Web, at: "sidekiq" }
       end

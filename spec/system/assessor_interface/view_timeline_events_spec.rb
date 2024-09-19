@@ -3,13 +3,17 @@
 require "rails_helper"
 
 RSpec.describe "Assessor view timeline events", type: :system do
-  before do
-    given_an_assessor_exists
-    given_an_application_form_exists
-    given_i_am_authorized_as_a_user(assessor)
+  before { given_an_application_form_exists }
+
+  it "does not allow any access if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+    when_i_visit_the(:assessor_timeline_page, reference:)
+    then_i_see_the_forbidden_page
   end
 
   it "displays the timeline events" do
+    given_an_assessor_exists
+    given_i_am_authorized_as_a_user(assessor)
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_view_timeline
     then_i_see_the_timeline

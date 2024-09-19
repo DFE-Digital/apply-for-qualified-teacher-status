@@ -9,6 +9,12 @@ RSpec.describe "Features support", type: :system do
     then_i_see_the_forbidden_page
   end
 
+  it "does not allow any any access if user is archived" do
+    given_i_am_authorized_as_an_archived_support_user
+    when_i_visit_the_feature_flags_page
+    then_i_see_the_forbidden_page
+  end
+
   it "allows activating/deactivating features" do
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_feature_flags_page

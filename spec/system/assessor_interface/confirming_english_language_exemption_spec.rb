@@ -3,6 +3,21 @@
 require "rails_helper"
 
 RSpec.describe "Assessor confirms English language section", type: :system do
+  it "does not allow any access to english language section if user is archived" do
+    given_there_is_an_application_form
+    and_the_application_states_english_language_exemption_by_citizenship
+
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(
+      :assessor_check_english_language_proficiency_page,
+      reference:,
+      assessment_id:,
+      section_id: section_id("english_language_proficiency"),
+    )
+    then_i_see_the_forbidden_page
+  end
+
   it "exemption via citizenship in the Personal Information section" do
     given_there_is_an_application_form
     and_the_application_states_english_language_exemption_by_citizenship

@@ -16,6 +16,13 @@ RSpec.describe "Assessor authentication", type: :system do
     then_i_see_the(:staff_signed_out_page)
   end
 
+  it "does not allow any access if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(:assessor_applications_page)
+    then_i_see_the_forbidden_page
+  end
+
   private
 
   def given_staff_exist

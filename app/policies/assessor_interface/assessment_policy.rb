@@ -2,14 +2,16 @@
 
 class AssessorInterface::AssessmentPolicy < ApplicationPolicy
   def review?
+    return false if user.archived?
+
     user.assess_permission || user.verify_permission
   end
 
   def destroy?
-    user.reverse_decision_permission
+    user.reverse_decision_permission && !user.archived?
   end
 
   def rollback?
-    destroy?
+    destroy? && !user.archived?
   end
 end

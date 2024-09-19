@@ -8,6 +8,26 @@ RSpec.describe "Assessor reviewing verifications", type: :system do
     given_there_is_an_application_form_with_failed_verifications
   end
 
+  it "does not allow any access if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(
+      :assessor_review_verifications_page,
+      reference:,
+      assessment_id:,
+    )
+    then_i_see_the_forbidden_page
+
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(
+      :assessor_review_professional_standing_request_page,
+      reference:,
+      assessment_id:,
+    )
+    then_i_see_the_forbidden_page
+  end
+
   it "sends for review" do
     when_i_visit_the(:assessor_application_page, reference:)
     then_i_see_the(:assessor_application_page, reference:)
