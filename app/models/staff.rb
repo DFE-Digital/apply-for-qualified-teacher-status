@@ -74,6 +74,7 @@ class Staff < ApplicationRecord
   validates :name, presence: true
 
   scope :assessors, -> { where(assess_permission: true) }
+  scope :not_archived, -> { where(archived: false) }
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

@@ -5,7 +5,7 @@ class SupportInterface::StaffController < SupportInterface::BaseController
 
   def index
     authorize [:support_interface, Staff]
-    @staff = Staff.order(:name)
+    @staff = Staff.not_archived.order(:name)
   end
 
   def edit
