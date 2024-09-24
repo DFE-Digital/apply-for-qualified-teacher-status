@@ -50,7 +50,7 @@ jobs:
           echo "container-name=$(terraform output -raw postgres_azure_backup_storage_container_name)" >> $GITHUB_OUTPUT
 
       - name: Install kubectl
-        uses: azure/setup-kubectl@v4
+        uses: DFE-Digital/github-actions/set-kubectl@master
 
       - name: Install konduit
         run: make install-konduit
@@ -141,7 +141,7 @@ jobs:
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Install kubectl
-        uses: azure/setup-kubectl@v4
+        uses: DFE-Digital/github-actions/set-kubectl@master
 
       - name: Install konduit
         run: make install-konduit
