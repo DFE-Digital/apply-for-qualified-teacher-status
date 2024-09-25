@@ -15,7 +15,24 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+require "rspec/retry"
+require "rspec/core/formatters/base_text_formatter"
+
 RSpec.configure do |config|
+  # RSpec-retry configuration, retry and log any indeterminate tests.
+  if ENV["CI"]
+    reporter = RSpec::Core::Reporter.new(config)
+    formatter =
+      RSpec::Core::Formatters::BaseTextFormatter.new(
+        File.open("tmp/rspec-retry-flakey-specs.log", "ab"),
+      )
+    reporter.register_listener(formatter, "message")
+    config.retry_reporter = reporter
+
+    config.around { |ex| ex.run_with_retry retry: 3 }
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
