@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_17_141207) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_10_153044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -533,8 +533,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_141207) do
     t.text "canonical_email", default: "", null: false
     t.string "access_your_teaching_qualifications_url"
     t.text "email_domain", default: "", null: false
+    t.string "gov_one_id"
     t.index "lower((email)::text)", name: "index_teacher_on_lower_email", unique: true
     t.index ["canonical_email"], name: "index_teachers_on_canonical_email"
+    t.index ["gov_one_id"], name: "index_teachers_on_gov_one_id", unique: true
     t.index ["uuid"], name: "index_teachers_on_uuid", unique: true
   end
 

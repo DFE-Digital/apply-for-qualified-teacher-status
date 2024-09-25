@@ -27,9 +27,7 @@ RSpec.describe "Staff support", type: :system do
     then_i_see_the_invited_staff_user
     then_i_sign_out
 
-    when_i_visit_the_invitation_email_with_azure_ad_enabled
-    # TODO: Add back in once Azure Login Page working on tests again.
-    # then_i_am_taken_to_the_azure_login_page
+    when_i_visit_the_invitation_email_with_azure_ad_enabled_i_see_the_link_to_access
   end
 
   it "allows inviting a user with Azure active directory deactivated" do
@@ -90,12 +88,10 @@ RSpec.describe "Staff support", type: :system do
     visit support_interface_staff_index_path
   end
 
-  def when_i_visit_the_invitation_email_with_azure_ad_enabled
+  def when_i_visit_the_invitation_email_with_azure_ad_enabled_i_see_the_link_to_access
     message = ActionMailer::Base.deliveries.first
     uri = URI.parse(URI.extract(message.body.raw_source).second)
     expect(uri.path).to eq("/staff/auth/azure_activedirectory_v2")
-    # TODO: Add back in once Azure Login Page working on tests again.
-    # visit uri.path.to_s
   end
 
   def when_i_visit_the_invitation_email_with_azure_ad_disabled
@@ -186,9 +182,5 @@ RSpec.describe "Staff support", type: :system do
 
   def then_i_see_the_changed_permission
     expect(page).not_to have_content("Support console access\tNo")
-  end
-
-  def then_i_am_taken_to_the_azure_login_page
-    expect(page.current_url).to include("https://login.microsoftonline.com/")
   end
 end

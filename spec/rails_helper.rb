@@ -87,3 +87,5 @@ Shoulda::Matchers.configure do |config|
 end
 
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
+
+OmniAuth.config.test_mode = true

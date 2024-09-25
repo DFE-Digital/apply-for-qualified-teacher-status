@@ -25,6 +25,10 @@ feature_flags:
     author: Thomas Leese
     description: Enable suitability records and matching.
 
+  gov_one_applicant_login:
+    author: Hassan Mir
+    description: Allow teacher applicants to sign in using GovOne Login
+
   teacher_applications:
     author: Thomas Leese
     description: >

@@ -1,0 +1,14 @@
+development:
+  base_uri: <%= ENV.fetch("GOV_ONE_OAUTH_BASE_URI", "https://oidc.integration.account.gov.uk/") %>
+  client_id: <%= ENV["GOV_ONE_OAUTH_CLIENT_ID"] %>
+  base_62_private_key: <%= ENV["GOV_ONE_OAUTH_BASE64_PRIVATE_KEY"] %>
+
+production:
+  base_uri: <%= ENV["GOV_ONE_OAUTH_BASE_URI"] %>
+  client_id: <%= ENV["GOV_ONE_OAUTH_CLIENT_ID"] %>
+  base_62_private_key: <%= ENV["GOV_ONE_OAUTH_BASE64_PRIVATE_KEY"] %>
+
+test:
+  base_uri: https://oidc.integration.account.gov.uk/
+  client_id: test
+  base_62_private_key: test
