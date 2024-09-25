@@ -81,6 +81,9 @@ group :test do
   gem "pry"
   gem "rspec"
   gem "rspec-rails"
+  gem "rspec-retry",
+      git: "https://github.com/DFE-Digital/rspec-retry.git",
+      branch: "main"
   gem "shoulda-matchers"
   gem "site_prism"
   gem "webmock"

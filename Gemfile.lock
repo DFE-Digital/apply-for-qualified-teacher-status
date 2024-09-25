@@ -26,6 +26,14 @@ GIT
     govuk_feature_flags (0.1.0)
       rails (>= 7.0.4)
 
+GIT
+  remote: https://github.com/DFE-Digital/rspec-retry.git
+  revision: 306b42b8d5853303982e1a165e82d04744c20ea3
+  branch: main
+  specs:
+    rspec-retry (0.7.0)
+      rspec-core (> 3.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -725,6 +733,7 @@ DEPENDENCIES
   rmagick
   rspec
   rspec-rails
+  rspec-retry!
   rubocop-govuk
   ruby-vips
   sentry-rails
