@@ -30,4 +30,5 @@ module "postgres" {
   azure_enable_monitoring  = var.enable_monitoring
   azure_extensions         = ["pg_stat_statements", "pgcrypto"]
   azure_maintenance_window = var.azure_maintenance_window
+  server_version           = "14"
 }
