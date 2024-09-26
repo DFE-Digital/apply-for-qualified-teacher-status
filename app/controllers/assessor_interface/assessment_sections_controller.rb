@@ -30,6 +30,7 @@ module AssessorInterface
         if assessment_section.preliminary?
           if assessment.all_preliminary_sections_passed?
             request_professional_standing
+            send_initial_checks_passed_email
             unassign_assessor
           else
             redirect_to [
@@ -98,6 +99,14 @@ module AssessorInterface
       RequestRequestable.call(requestable:, user: current_staff)
 
       ApplicationFormStatusUpdater.call(application_form:, user: current_staff)
+    end
+
+    def send_initial_checks_passed_email
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :initial_checks_passed,
+      )
     end
 
     def unassign_assessor
