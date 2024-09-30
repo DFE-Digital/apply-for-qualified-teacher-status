@@ -3,6 +3,14 @@
 require "rails_helper"
 
 RSpec.describe "Creating a note", type: :system do
+  it "does not allow any access if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+    given_there_is_an_application_form
+
+    when_i_visit_the(:assessor_create_note_page, reference:)
+    then_i_see_the_forbidden_page
+  end
+
   it "creates a note" do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form

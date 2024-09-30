@@ -5,6 +5,7 @@
 # Table name: staff
 #
 #  id                             :bigint           not null, primary key
+#  archived                       :boolean          default(FALSE)
 #  assess_permission              :boolean          default(FALSE)
 #  azure_ad_uid                   :string
 #  change_email_permission        :boolean          default(FALSE), not null
@@ -90,6 +91,22 @@ RSpec.describe Staff, type: :model do
         let(:non_assessor) { create(:staff) }
 
         it { is_expected.not_to include(non_assessor) }
+      end
+    end
+
+    describe ".not_archived" do
+      subject { described_class.not_archived }
+
+      context "when archived == true" do
+        let(:archived) { create(:staff, archived: true) }
+
+        it { is_expected.not_to include(archived) }
+      end
+
+      context "when archived == false" do
+        let(:archived) { create(:staff, archived: false) }
+
+        it { is_expected.to include(archived) }
       end
     end
   end

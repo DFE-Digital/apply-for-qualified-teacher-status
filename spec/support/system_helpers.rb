@@ -55,8 +55,25 @@ module SystemHelpers
     sign_in(@user = user)
   end
 
+  def given_i_am_authorized_as_an_archived_user(user)
+    user.update!(archived: true)
+
+    sign_in(@user = user)
+  end
+
   def given_i_am_authorized_as_a_support_user
-    user = create(:staff, :with_support_console_permission, name: "Admin")
+    user = create(:staff, :with_support_console_permission, name: "Support")
+    given_i_am_authorized_as_a_user(user)
+  end
+
+  def given_i_am_authorized_as_an_archived_support_user
+    user =
+      create(
+        :staff,
+        :with_support_console_permission,
+        name: "Support",
+        archived: true,
+      )
     given_i_am_authorized_as_a_user(user)
   end
 
@@ -65,8 +82,30 @@ module SystemHelpers
     given_i_am_authorized_as_a_user(user)
   end
 
+  def given_i_am_authorized_as_an_archived_assessor_user
+    user =
+      create(
+        :staff,
+        :with_assess_permission,
+        name: "Authorized User",
+        archived: true,
+      )
+    given_i_am_authorized_as_a_user(user)
+  end
+
   def given_i_am_authorized_as_an_admin_user
-    user = create(:staff, :with_verify_permission, name: "Authorized User")
+    user = create(:staff, :with_verify_permission, name: "Admin User")
+    given_i_am_authorized_as_a_user(user)
+  end
+
+  def given_i_am_authorized_as_an_archived_admin_user
+    user =
+      create(
+        :staff,
+        :with_verify_permission,
+        name: "Admin User",
+        archived: true,
+      )
     given_i_am_authorized_as_a_user(user)
   end
 

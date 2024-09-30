@@ -5,6 +5,7 @@
 # Table name: staff
 #
 #  id                             :bigint           not null, primary key
+#  archived                       :boolean          default(FALSE)
 #  assess_permission              :boolean          default(FALSE)
 #  azure_ad_uid                   :string
 #  change_email_permission        :boolean          default(FALSE), not null
@@ -73,6 +74,7 @@ class Staff < ApplicationRecord
   validates :name, presence: true
 
   scope :assessors, -> { where(assess_permission: true) }
+  scope :not_archived, -> { where(archived: false) }
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

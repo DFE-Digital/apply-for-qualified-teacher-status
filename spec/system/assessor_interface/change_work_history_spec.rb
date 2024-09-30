@@ -16,6 +16,18 @@ RSpec.describe "Assessor change work history", type: :system do
     then_i_see_the_forbidden_page
   end
 
+  it "does not allow any access if user is archived" do
+    given_i_am_authorized_as_an_archived_user(manager)
+
+    when_i_visit_the(
+      :assessor_check_work_history_page,
+      reference:,
+      assessment_id:,
+      section_id: assessment_section.id,
+    )
+    then_i_see_the_forbidden_page
+  end
+
   it "allows changing work history from initial assessment" do
     given_i_am_authorized_as_a_user(manager)
 

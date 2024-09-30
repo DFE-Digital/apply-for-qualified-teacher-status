@@ -8,6 +8,17 @@ RSpec.describe "Assessor verifying qualifications", type: :system do
     given_there_is_an_application_form_with_qualification_request
   end
 
+  it "does not allow any access if user is archived" do
+    given_i_am_authorized_as_an_archived_admin_user
+
+    when_i_visit_the(
+      :assessor_qualification_requests_page,
+      reference:,
+      assessment_id: assessment.id,
+    )
+    then_i_see_the_forbidden_page
+  end
+
   it "request consent" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_the_verify_qualifications_task

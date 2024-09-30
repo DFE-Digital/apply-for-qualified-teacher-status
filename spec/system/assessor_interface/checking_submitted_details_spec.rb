@@ -47,6 +47,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_personal_information
   end
 
+  it "does not allow to view personal information if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(
+      :assessor_check_personal_information_page,
+      reference:,
+      assessment_id:,
+      section_id: section_id("personal_information"),
+    )
+    then_i_see_the_forbidden_page
+  end
+
   it "allows passing the qualifications" do
     when_i_visit_the(
       :assessor_check_qualifications_page,
@@ -84,6 +96,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
       section_id: section_id("qualifications"),
     )
     then_i_see_the_qualifications
+  end
+
+  it "does not allow to view qualifications if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(
+      :assessor_check_qualifications_page,
+      reference:,
+      assessment_id:,
+      section_id: section_id("qualifications"),
+    )
+    then_i_see_the_forbidden_page
   end
 
   it "allows passing the age range and subjects" do
@@ -129,6 +153,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
     then_i_see_the_age_range_and_subjects
   end
 
+  it "does not allow to view age range subjects if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(
+      :assessor_check_qualifications_page,
+      reference:,
+      assessment_id:,
+      section_id: section_id("age_range_subjects"),
+    )
+    then_i_see_the_forbidden_page
+  end
+
   it "allows passing the work history" do
     when_i_visit_the(
       :assessor_check_work_history_page,
@@ -166,6 +202,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
       section_id: section_id("work_history"),
     )
     then_i_see_the_work_history
+  end
+
+  it "does not allow to view work history if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(
+      :assessor_check_qualifications_page,
+      reference:,
+      assessment_id:,
+      section_id: section_id("work_history"),
+    )
+    then_i_see_the_forbidden_page
   end
 
   it "allows passing the professional standing" do
@@ -223,6 +271,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
       section_id: section_id("professional_standing"),
     )
     then_i_see_the_professional_standing
+  end
+
+  it "does not allow to view professional standing if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(
+      :assessor_check_qualifications_page,
+      reference:,
+      assessment_id:,
+      section_id: section_id("professional_standing"),
+    )
+    then_i_see_the_forbidden_page
   end
 
   private

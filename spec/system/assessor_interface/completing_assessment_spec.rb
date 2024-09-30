@@ -7,6 +7,19 @@ RSpec.describe "Assessor completing assessment", type: :system do
     create(:staff, :with_assess_permission, name: "Authorized User")
   end
 
+  it "does not allow any access if assessor is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+    given_there_is_an_awardable_application_form
+    given_i_can_request_dqt_api
+
+    when_i_visit_the(
+      :assessor_complete_assessment_page,
+      reference:,
+      assessment_id:,
+    )
+    then_i_see_the_forbidden_page
+  end
+
   it "award" do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_awardable_application_form

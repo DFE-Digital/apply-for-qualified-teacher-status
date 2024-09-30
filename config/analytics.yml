@@ -287,6 +287,7 @@
     - selected_failure_reason_id
     - work_history_id
   :staff:
+    - archived
     - assess_permission
     - change_email_permission
     - change_name_permission

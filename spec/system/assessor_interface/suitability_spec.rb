@@ -6,6 +6,14 @@ RSpec.describe "Assessor suitability", type: :system do
   before { given_suitability_is_enabled }
   after { given_suitability_is_disabled }
 
+  it "does not allow any access if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+    given_a_record_exists
+
+    when_i_visit_the(:assessor_suitability_records_page)
+    then_i_see_the_forbidden_page
+  end
+
   it "view suitability records" do
     given_i_am_authorized_as_a_user(assessor)
     given_a_record_exists

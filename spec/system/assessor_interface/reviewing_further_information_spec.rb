@@ -9,6 +9,18 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     given_there_is_further_information_received
   end
 
+  it "does not allow any access if user is archived" do
+    given_i_am_authorized_as_an_archived_assessor_user
+
+    when_i_visit_the(
+      :assessor_review_further_information_request_page,
+      reference:,
+      assessment_id:,
+      id: further_information_request.id,
+    )
+    then_i_see_the_forbidden_page
+  end
+
   it "review complete" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_review_requested_information

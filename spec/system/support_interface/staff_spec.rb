@@ -9,6 +9,12 @@ RSpec.describe "Staff support", type: :system do
     then_i_see_the_forbidden_page
   end
 
+  it "does not allow any any access if user is archived" do
+    given_i_am_authorized_as_an_archived_support_user
+    when_i_visit_the_staff_page
+    then_i_see_the_forbidden_page
+  end
+
   it "allows inviting a user with Azure active directory active" do
     given_sign_in_with_active_directory_is_active
     given_i_am_authorized_as_a_support_user

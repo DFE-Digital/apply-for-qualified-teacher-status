@@ -11,6 +11,12 @@ RSpec.describe "English language providers support", type: :system do
     then_i_see_the_forbidden_page
   end
 
+  it "does not allow any any access if user is archived" do
+    given_i_am_authorized_as_an_archived_support_user
+    when_i_visit_the(:support_english_language_providers_index_page)
+    then_i_see_the_forbidden_page
+  end
+
   it "editing english language providers" do
     given_i_am_authorized_as_a_support_user
     when_i_visit_the(:support_english_language_providers_index_page)
