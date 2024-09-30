@@ -8,6 +8,8 @@ DfE::Analytics.configure do |config|
 
   config.excluded_paths = [%r{^/healthcheck}]
 
+  config.azure_federated_auth = true
+
   config.enable_analytics =
     proc do
       disabled_by_default = Rails.env.development?

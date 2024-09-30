@@ -17,15 +17,25 @@ module "application_configuration" {
   config_variables = {
     HOSTING_ENVIRONMENT = local.environment
 
-    BIGQUERY_PROJECT_ID = "apply-for-qts-in-england",
-    BIGQUERY_DATASET    = "events_${var.app_environment}",
-    BIGQUERY_TABLE_NAME = "events",
+
+    # Original
+    # BIGQUERY_PROJECT_ID = "apply-for-qts-in-england",
+    # BIGQUERY_DATASET    = "events_${var.app_environment}",
+    # BIGQUERY_TABLE_NAME = "events",
+
+    # From terraform
+
+    BIGQUERY_PROJECT_ID       = var.gcp_project
+    BIGQUERY_TABLE_NAME       = local.gcp_table_name
+    BIGQUERY_DATASET          = local.gcp_dataset_name
 
     DQT_API_URL = var.dqt_api_url
   }
 
   secret_key_vault_short = "app"
   secret_variables = {
+    GOOGLE_CLOUD_CREDENTIALS  = local.gcp_credentials
+
     DATABASE_URL = module.postgres.url
     REDIS_URL    = module.redis.url
 
@@ -75,4 +85,5 @@ module "worker_application" {
   probe_command = ["pgrep", "-f", "sidekiq"]
 
   enable_logit = var.enable_logit
+  enable_gcp_wif = true
 }
