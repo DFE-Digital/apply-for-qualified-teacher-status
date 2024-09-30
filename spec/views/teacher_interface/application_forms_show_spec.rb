@@ -13,6 +13,140 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
     )
   end
 
+  context "when request further information" do
+    let(:application_form) { create(:application_form, :submitted) }
+    let!(:further_information_request) do
+      create(:requested_further_information_request, application_form:)
+    end
+
+    it { is_expected.to match(/We need some more information/) }
+
+    context "with the requested consent request received" do
+      let!(:further_information_request) do
+        create(:received_further_information_request, application_form:)
+      end
+
+      it { is_expected.to match(/Further information successfully submitted/) }
+    end
+  end
+
+  context "when request qualification consent" do
+    let(:application_form) { create(:application_form, :submitted) }
+
+    let!(:consent_request) do
+      create :requested_consent_request, application_form:
+    end
+
+    it do
+      is_expected.to match(
+        /We need your written consent to verify some of your qualifications/,
+      )
+    end
+
+    context "with the requested consent request received" do
+      let!(:consent_request) do
+        create :received_consent_request, application_form:
+      end
+
+      it { is_expected.to match(/Consent documents successfully submitted/) }
+    end
+  end
+
+  context "when in draft" do
+    let(:application_form) { create(:application_form) }
+
+    it do
+      is_expected.to match(/Applications must be completed within 6 months/)
+    end
+  end
+
+  context "when request professional standing certificate" do
+    let(:application_form) do
+      create :application_form,
+             :with_assessment,
+             :submitted,
+             teaching_authority_provides_written_statement: true
+    end
+
+    before do
+      create(
+        :requested_professional_standing_request,
+        assessment: application_form.assessment,
+      )
+    end
+
+    it { is_expected.to match(/Application submitted/) }
+
+    it do
+      expect(subject).to match(
+        /Your application cannot proceed until we receive your Letter of Professional Standing/,
+      )
+    end
+
+    context "with requiring preliminary check that is still pending" do
+      let(:application_form) do
+        create :application_form,
+               :with_assessment,
+               :requires_preliminary_check,
+               :submitted,
+               teaching_authority_provides_written_statement: true
+      end
+
+      before do
+        create(
+          :assessment_section,
+          :preliminary,
+          assessment: application_form.assessment,
+        )
+      end
+
+      it { is_expected.to match(/Application submitted/) }
+
+      it do
+        expect(subject).to match(
+          /We need to carry out some initial checks on your application./,
+        )
+      end
+    end
+
+    context "with requiring preliminary check that has passed" do
+      let(:application_form) do
+        create :application_form,
+               :with_assessment,
+               :requires_preliminary_check,
+               :submitted,
+               teaching_authority_provides_written_statement: true
+      end
+
+      before do
+        create(
+          :assessment_section,
+          :preliminary,
+          assessment: application_form.assessment,
+          passed: true,
+        )
+      end
+
+      it { is_expected.to match(/Your application has passed initial checks/) }
+
+      it do
+        expect(subject).to match(
+          /Your application cannot proceed until we receive your Letter of Professional Standing/,
+        )
+      end
+    end
+  end
+
+  context "when from ineligible country" do
+    let(:application_form) { create(:application_form) }
+
+    before do
+      application_form.region.country.update(eligibility_enabled: false)
+    end
+
+    it { is_expected.to match(/Your QTS application has been closed/) }
+  end
+
   context "when awarded pending checks" do
     let(:application_form) do
       create(:application_form, :awarded_pending_checks)

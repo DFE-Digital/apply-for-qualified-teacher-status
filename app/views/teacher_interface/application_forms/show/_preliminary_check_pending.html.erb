@@ -1,0 +1,21 @@
+<h2 class="govuk-heading-l">
+  Application submitted
+</h2>
+
+<h2 class="govuk-heading-m">
+  Application reference number: <strong><%= view_object.application_form.reference %></strong>
+</h2>
+
+<h2 class="govuk-heading-m">What happens next</h2>
+
+<p class="govuk-body">
+  We need to carry out some initial checks on your application. We will email you to let you know if your application passes these initial checks.
+</p>
+
+<p class="govuk-body">
+  If initial checks are passed you will need to request <%= region_certificate_phrase(view_object.region) %> from <%= region_teaching_authority_name_phrase(view_object.region) %>.
+</p>
+
+<p class="govuk-body">
+  Do not request your <%= region_certificate_name(view_object.region) %> until you have received confirmation from us. You do not need to contact us. 
+</p>

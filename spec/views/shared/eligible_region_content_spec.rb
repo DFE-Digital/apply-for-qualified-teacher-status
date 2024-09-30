@@ -164,4 +164,55 @@ RSpec.describe "Eligible region content", type: :view do
       end
     end
   end
+
+  context "with letter of professional standing provided by teaching authority" do
+    let(:region) do
+      create(
+        :region,
+        :written_checks,
+        teaching_authority_provides_written_statement: true,
+      )
+    end
+
+    it do
+      expect(subject).to match(/To prove you are recognised as a teacher in/)
+      expect(subject).to match(/You cannot send it yourself./)
+
+      expect(subject).to match(
+        /Do this after you have submitted your application, as you will need your application reference number./,
+      )
+
+      expect(subject).not_to match(
+        /Do not request your Letter of Professional Standing/,
+      )
+      expect(subject).not_to match(
+        /We will need to carry out initial checks on your application./,
+      )
+    end
+
+    context "when the region requires preliminary checks" do
+      let(:region) do
+        create :region,
+               :written_checks,
+               :requires_preliminary_check,
+               teaching_authority_provides_written_statement: true
+      end
+
+      it do
+        expect(subject).to match(/To prove you are recognised as a teacher in/)
+        expect(subject).to match(/You cannot send it yourself./)
+
+        expect(subject).to match(
+          /Do not request your Letter of Professional Standing/,
+        )
+        expect(subject).to match(
+          /We will need to carry out initial checks on your application./,
+        )
+
+        expect(subject).not_to match(
+          /Do this after you have submitted your application, as you will need your application reference number./,
+        )
+      end
+    end
+  end
 end

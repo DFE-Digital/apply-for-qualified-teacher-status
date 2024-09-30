@@ -386,6 +386,48 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
     end
   end
 
+  describe "#preliminary_check_pending?" do
+    subject(:preliminary_check_pending?) do
+      view_object.preliminary_check_pending?
+    end
+
+    let(:assessment) { create(:assessment, application_form:) }
+
+    it { is_expected.to be false }
+
+    context "when the application requires preliminary checks and it hasn't passed" do
+      let(:region) { create(:region, :requires_preliminary_check, country:) }
+      let(:application_form) do
+        create(:application_form, :requires_preliminary_check, region:)
+      end
+
+      before { create :assessment_section, :preliminary, assessment: }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the application requires preliminary checks and it has passed" do
+      let(:region) { create(:region, :requires_preliminary_check, country:) }
+      let(:application_form) do
+        create(:application_form, :requires_preliminary_check, region:)
+      end
+
+      before { create :assessment_section, :preliminary, :passed, assessment: }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the application requires preliminary checks but there is no assessment yet" do
+      let(:region) { create(:region, :requires_preliminary_check, country:) }
+      let(:application_form) do
+        create(:application_form, :requires_preliminary_check, region:)
+      end
+      let(:assessment) { nil }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe "#request_professional_standing_certificate?" do
     subject(:request_professional_standing_certificate?) do
       view_object.request_professional_standing_certificate?
@@ -428,6 +470,44 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
         it { is_expected.to be true }
       end
+    end
+  end
+
+  describe "#letter_of_professional_standing_received?" do
+    subject(:letter_of_professional_standing_received?) do
+      view_object.letter_of_professional_standing_received?
+    end
+
+    let(:application_form) do
+      create(:application_form, :teaching_authority_provides_written_statement)
+    end
+
+    let(:assessment) { create(:assessment, application_form:) }
+
+    it { is_expected.to be false }
+
+    context "when there is a professional standing request" do
+      let!(:requested_professional_standing_request) do
+        create(:requested_professional_standing_request, assessment:)
+      end
+
+      it { is_expected.to be false }
+
+      context "with the status being received" do
+        before do
+          requested_professional_standing_request.update(
+            received_at: Time.current,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context "when there is no assessment" do
+      let(:assessment) { nil }
+
+      it { is_expected.to be false }
     end
   end
 end

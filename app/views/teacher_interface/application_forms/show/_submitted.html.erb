@@ -1,6 +1,7 @@
 <% further_information_submitted = view_object.further_information_request&.received? %>
 <% qualification_consent_submitted = view_object.qualification_consent_submitted? %>
 <% teaching_authority_provides_written_statement = view_object.teaching_authority_provides_written_statement? %>
+<% letter_of_professional_standing_received = view_object.letter_of_professional_standing_received? %>
 
 <% title_text = if qualification_consent_submitted
                   "Consent documents successfully submitted"
@@ -26,8 +27,12 @@
   <p class="govuk-body">The assessor will continue to review your QTS application once they’ve checked that the further information you’ve provided can be accepted.</p>
   <p class="govuk-body">You can now close this page.</p>
 <% else %>
-  <p class="govuk-body">We’ve received your application for QTS and we’ve sent you a confirmation email.</p>
-  <p class="govuk-body">Keep the email safe, as you may need your application reference number for future correspondence about your application.</p>
+  <% if letter_of_professional_standing_received %>
+    <p class="govuk-body">We’ve received and checked your  <%= region_certificate_name(view_object.region) %> from <%= region_teaching_authority_name_phrase(view_object.region) %>. This has been attached to your application.</p>
+  <% else %>
+    <p class="govuk-body">We’ve received your application for QTS and we’ve sent you a confirmation email.</p>
+    <p class="govuk-body">Keep the email safe, as you may need your application reference number for future correspondence about your application.</p>
+  <% end %>
 
   <h2 class="govuk-heading-m">What happens next</h2>
   <p class="govuk-body">Your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.</p>

@@ -233,32 +233,36 @@ RSpec.describe SubmitApplicationForm do
       end
 
       it "generates a professional standing request" do
-        expect {
-          call
-        }.to change(ProfessionalStandingRequest, :count).by(1)
+        expect { call }.to change(ProfessionalStandingRequest, :count).by(1)
       end
 
       it "marks the professional standing request as requested" do
         call
 
         expect(
-          application_form.assessment.reload.professional_standing_request.requested_at
+          application_form
+            .assessment
+            .reload
+            .professional_standing_request
+            .requested_at,
         ).not_to be_nil
       end
 
       context "with the application form a requiring preliminary check" do
         before do
           region.update!(requires_preliminary_check: true)
-          application_form.update!(
-            requires_preliminary_check: true,
-          )
+          application_form.update!(requires_preliminary_check: true)
         end
 
         it "does not mark the professional standing request as requested" do
           call
 
           expect(
-            application_form.assessment.reload.professional_standing_request.requested_at
+            application_form
+              .assessment
+              .reload
+              .professional_standing_request
+              .requested_at,
           ).to be_nil
         end
       end
