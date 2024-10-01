@@ -12,7 +12,7 @@ You must now get your <%= region_certificate_name(@application_form.region) %> f
 
 # What you need to do
 
-Email <%= region_teaching_authority_emails_phrase(@application_form.region) %> and ask them to send your <%= region_certificate_name(@application_form.region) %> directly to us at [<%= t("service.email.verification") %>](mailto:<%= t("service.email.verification") %>).
+Email <%= @application_form.region.teaching_authority_emails.map { |email| "[#{email}](mailto:#{email})" }.to_sentence %> and ask them to send your <%= region_certificate_name(@application_form.region) %> directly to us at [<%= t("service.email.verification") %>](mailto:<%= t("service.email.verification") %>).
 
 You cannot send it yourself.
 
