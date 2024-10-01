@@ -118,14 +118,6 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
-  def initial_checks_passed
-    view_mail(
-      GOVUK_NOTIFY_TEMPLATE_ID,
-      to: teacher.email,
-      subject: I18n.t("mailer.teacher.initial_checks_passed.subject"),
-    )
-  end
-
   def initial_checks_required
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,

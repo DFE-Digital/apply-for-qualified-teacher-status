@@ -34,8 +34,6 @@ en:
         subject: "Your QTS application: More information needed"
       further_information_reminder:
         subject: "Your QTS application: information still needed"
-      initial_checks_passed:
-        subject: "Your QTS application: Initial checks passed"
       initial_checks_required:
         subject: "Your QTS application: Initial checks required"
       professional_standing_received:
