@@ -100,7 +100,7 @@ RSpec.describe "Teacher submitting", type: :system do
       when_i_confirm_i_have_no_sanctions
       then_i_see_the(:teacher_submitted_application_page)
       and_i_see_the_submitted_application_information_with_preliminary_check_pending
-      and_i_receive_an_application_email_to_request_lops
+      and_i_receive_an_application_email_for_initial_checks_required
     end
   end
 
@@ -175,7 +175,17 @@ RSpec.describe "Teacher submitting", type: :system do
     expect(message).not_to be_nil
 
     expect(message.subject).to eq(
-      "Your QTS application: Awaiting Letter of Professional Standing",
+      "Your QTS application: Request your Letter of Professional Standing",
+    )
+    expect(message.to).to include("teacher@example.com")
+  end
+
+  def and_i_receive_an_application_email_for_initial_checks_required
+    message = ActionMailer::Base.deliveries.last
+    expect(message).not_to be_nil
+
+    expect(message.subject).to eq(
+      "Your QTS application: Initial checks required",
     )
     expect(message.to).to include("teacher@example.com")
   end

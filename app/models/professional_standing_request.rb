@@ -38,6 +38,16 @@ class ProfessionalStandingRequest < ApplicationRecord
     end
   end
 
+  def after_requested(*)
+    if should_send_emails?
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :professional_standing_requested,
+      )
+    end
+  end
+
   def after_received(*)
     if should_send_emails?
       DeliverEmail.call(

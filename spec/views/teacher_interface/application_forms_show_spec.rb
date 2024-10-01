@@ -38,7 +38,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
     end
 
     it do
-      is_expected.to match(
+      expect(subject).to match(
         /We need your written consent to verify some of your qualifications/,
       )
     end
@@ -56,7 +56,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
     let(:application_form) { create(:application_form) }
 
     it do
-      is_expected.to match(/Applications must be completed within 6 months/)
+      expect(subject).to match(/Applications must be completed within 6 months/)
     end
   end
 

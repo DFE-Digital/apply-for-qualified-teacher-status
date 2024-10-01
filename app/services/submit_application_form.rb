@@ -33,11 +33,13 @@ class SubmitApplicationForm
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
-    DeliverEmail.call(
-      application_form:,
-      mailer: TeacherMailer,
-      action: :application_received,
-    )
+    unless application_form.teaching_authority_provides_written_statement
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :application_received,
+      )
+    end
 
     if region.teaching_authority_requires_submission_email
       DeliverEmail.call(
@@ -61,7 +63,13 @@ class SubmitApplicationForm
 
     requestable = ProfessionalStandingRequest.create!(assessment:)
 
-    unless application_form.requires_preliminary_check
+    if application_form.requires_preliminary_check
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :initial_checks_required,
+      )
+    else
       RequestRequestable.call(requestable:, user:)
     end
   end

@@ -515,6 +515,36 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
   end
 
+  describe "#initial_checks_required" do
+    subject(:mail) do
+      described_class.with(application_form:).initial_checks_required
+    end
+
+    describe "#subject" do
+      subject { mail.subject }
+
+      it { is_expected.to eq("Your QTS application: Initial checks required") }
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body }
+
+      it { is_expected.to include("Dear First Last") }
+
+      it do
+        expect(subject).to include(
+          "We need to carry out some initial checks on your application",
+        )
+      end
+    end
+  end
+
   describe "#professional_standing_received" do
     subject(:mail) do
       described_class.with(application_form:).professional_standing_received
@@ -546,6 +576,50 @@ RSpec.describe TeacherMailer, type: :mailer do
           "We have received your Letter of Professional Standing from the teaching " \
             "authority and attached it to your application.",
         )
+      end
+    end
+  end
+
+  describe "#professional_standing_requested" do
+    subject(:mail) do
+      described_class.with(application_form:).professional_standing_requested
+    end
+
+    describe "#subject" do
+      subject { mail.subject }
+
+      it do
+        expect(subject).to eq(
+          "Your QTS application: Request your Letter of Professional Standing",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body }
+
+      it { is_expected.to include("Dear First Last") }
+
+      it do
+        expect(subject).to include(
+          "We’ve received your application for qualfied teacher status (QTS) in England",
+        )
+      end
+
+      context "when the application had required preliminary checks" do
+        before { application_form.update!(requires_preliminary_check: true) }
+
+        it do
+          expect(subject).to include(
+            "Your application has passed initial checks",
+          )
+        end
       end
     end
   end
