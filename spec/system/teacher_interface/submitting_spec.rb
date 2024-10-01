@@ -88,7 +88,12 @@ RSpec.describe "Teacher submitting", type: :system do
       )
     end
 
-    before { application_form.region.update(requires_preliminary_check: true) }
+    before do
+      application_form.region.update(
+        teaching_authority_provides_written_statement: true,
+        requires_preliminary_check: true,
+      )
+    end
 
     it "submits" do
       when_i_visit_the(:teacher_application_page)

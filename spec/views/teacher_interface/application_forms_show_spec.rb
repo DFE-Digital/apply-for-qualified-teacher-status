@@ -94,6 +94,9 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       end
 
       before do
+        application_form.region.update!(
+          teaching_authority_provides_written_statement: true,
+        )
         create(
           :assessment_section,
           :preliminary,
@@ -136,6 +139,26 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
         )
       end
     end
+  end
+
+  context "when requiring preliminary check" do
+    let(:application_form) do
+      create :application_form,
+             :with_assessment,
+             :requires_preliminary_check,
+             :submitted
+    end
+
+    before do
+      create(
+        :assessment_section,
+        :preliminary,
+        assessment: application_form.assessment,
+      )
+    end
+
+    it { is_expected.to match(/Application received/) }
+    it { is_expected.to match(/We’ve received your application for QTS/) }
   end
 
   context "when from ineligible country" do
