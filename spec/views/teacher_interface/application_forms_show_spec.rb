@@ -15,14 +15,17 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
   context "when request further information" do
     let(:application_form) { create(:application_form, :submitted) }
-    let!(:further_information_request) do
-      create(:requested_further_information_request, application_form:)
+
+    context "with the requested consent request not received" do
+      before do
+        create(:requested_further_information_request, application_form:)
+      end
+
+      it { is_expected.to match(/We need some more information/) }
     end
 
-    it { is_expected.to match(/We need some more information/) }
-
     context "with the requested consent request received" do
-      let!(:further_information_request) do
+      before do
         create(:received_further_information_request, application_form:)
       end
 
@@ -33,20 +36,18 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
   context "when request qualification consent" do
     let(:application_form) { create(:application_form, :submitted) }
 
-    let!(:consent_request) do
-      create :requested_consent_request, application_form:
-    end
+    context "with the requested consent request not received" do
+      before { create :requested_consent_request, application_form: }
 
-    it do
-      expect(subject).to match(
-        /We need your written consent to verify some of your qualifications/,
-      )
+      it do
+        expect(subject).to match(
+          /We need your written consent to verify some of your qualifications/,
+        )
+      end
     end
 
     context "with the requested consent request received" do
-      let!(:consent_request) do
-        create :received_consent_request, application_form:
-      end
+      before { create :received_consent_request, application_form: }
 
       it { is_expected.to match(/Consent documents successfully submitted/) }
     end

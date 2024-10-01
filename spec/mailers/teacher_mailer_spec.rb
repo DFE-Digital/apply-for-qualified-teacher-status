@@ -252,36 +252,6 @@ RSpec.describe TeacherMailer, type: :mailer do
             "information you have submitted.",
         )
       end
-
-      context "if the teaching authority provides the written statement" do
-        before do
-          application_form.update!(
-            teaching_authority_provides_written_statement: true,
-          )
-        end
-
-        it do
-          expect(subject).to include(
-            "Once the written evidence is received and checked, your application " \
-              "will be assessed by a trained assessor.",
-          )
-        end
-      end
-
-      context "if the teaching authority does not provide the written statement" do
-        before do
-          application_form.update!(
-            teaching_authority_provides_written_statement: false,
-          )
-        end
-
-        it do
-          expect(subject).to include(
-            "Your application will be assessed by a trained assessor. They will check all the " \
-              "information you have submitted.",
-          )
-        end
-      end
     end
   end
 
@@ -573,8 +543,8 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         expect(subject).to include(
-          "We have received your Letter of Professional Standing from the teaching " \
-            "authority and attached it to your application.",
+          "We’ve received and checked your Letter of Professional Standing from the teaching " \
+            "authority. This has been attached to your application.",
         )
       end
     end

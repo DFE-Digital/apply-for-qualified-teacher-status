@@ -18,7 +18,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     and_i_choose_yes_to_both_questions
     then_i_see_the(:assessor_application_page, reference:)
     and_i_see_a_completed_preliminary_check_task
-    and_the_teacher_receives_a_checks_passed_email
+    and_the_teacher_receives_a_request_your_lops_email
     and_the_assessor_is_unassigned
 
     when_i_visit_the(:assessor_application_page, reference:)
@@ -142,10 +142,10 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     ).to have_content("Waiting on")
   end
 
-  def and_the_teacher_receives_a_checks_passed_email
+  def and_the_teacher_receives_a_request_your_lops_email
     expect(TeacherMailer.deliveries.count).to eq(1)
     expect(TeacherMailer.deliveries.first.subject).to eq(
-      I18n.t("mailer.teacher.initial_checks_passed.subject"),
+      "Your QTS application: Request your Letter of Professional Standing",
     )
   end
 
