@@ -45,6 +45,14 @@ class ProfessionalStandingRequest < ApplicationRecord
         mailer: TeacherMailer,
         action: :professional_standing_requested,
       )
+
+      if region.teaching_authority_requires_submission_email
+        DeliverEmail.call(
+          application_form:,
+          mailer: TeachingAuthorityMailer,
+          action: :application_submitted,
+        )
+      end
     end
   end
 
@@ -65,7 +73,7 @@ class ProfessionalStandingRequest < ApplicationRecord
     end
   end
 
-  delegate :teacher, to: :application_form
+  delegate :teacher, :region, to: :application_form
 
   private
 

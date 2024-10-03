@@ -41,14 +41,6 @@ class SubmitApplicationForm
       )
     end
 
-    if region.teaching_authority_requires_submission_email
-      DeliverEmail.call(
-        application_form:,
-        mailer: TeachingAuthorityMailer,
-        action: :application_submitted,
-      )
-    end
-
     UpdateDQTMatchJob.set(wait: 5.minutes).perform_later(application_form)
   end
 

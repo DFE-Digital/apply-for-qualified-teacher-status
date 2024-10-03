@@ -259,23 +259,6 @@ RSpec.describe SubmitApplicationForm do
       )
     end
 
-    context "when teaching authority requires the email" do
-      let(:region) do
-        create(
-          :region,
-          teaching_authority_emails: ["authority@example.com"],
-          teaching_authority_requires_submission_email: true,
-        )
-      end
-
-      it "queues an email job for teaching authority mailer" do
-        expect { call }.to have_enqueued_mail(
-          TeachingAuthorityMailer,
-          :application_submitted,
-        ).with(params: { application_form: }, args: [])
-      end
-    end
-
     context "when teaching authority provides the written statement" do
       before do
         region.update!(requires_preliminary_check: false)
