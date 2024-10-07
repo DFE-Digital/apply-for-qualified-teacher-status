@@ -19,6 +19,7 @@ module AssessorInterface::AgeRangeSubjectsForm
               presence: true,
               numericality: {
                 only_integer: true,
+                less_than_or_equal_to: 19,
                 greater_than_or_equal_to: :age_range_min,
                 allow_nil: true,
               }
