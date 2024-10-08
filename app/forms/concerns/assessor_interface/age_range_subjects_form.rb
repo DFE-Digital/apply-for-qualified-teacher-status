@@ -8,7 +8,9 @@ module AssessorInterface::AgeRangeSubjectsForm
     attribute :age_range_max, :integer
     attribute :age_range_note, :string
 
-    validates :age_range_note, presence: true, if: :age_range_changed_from_application_form?
+    validates :age_range_note,
+              presence: true,
+              if: :age_range_changed_from_application_form?
     validates :age_range_min,
               presence: true,
               numericality: {
