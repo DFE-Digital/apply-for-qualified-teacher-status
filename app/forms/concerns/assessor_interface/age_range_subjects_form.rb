@@ -67,7 +67,7 @@ module AssessorInterface::AgeRangeSubjectsForm
 
   private
 
-  delegate :application_form, to: :assessment, allow_nil: true
+  delegate :application_form, to: :assessment
 
   def age_range_changed_from_application_form?
     return unless assessment
