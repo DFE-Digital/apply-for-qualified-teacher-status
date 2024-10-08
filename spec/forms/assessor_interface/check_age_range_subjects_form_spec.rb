@@ -21,10 +21,4 @@ RSpec.describe AssessorInterface::CheckAgeRangeSubjectsForm, type: :model do
     let(:assessment) { assessment_section.assessment }
     let(:attributes) { { passed: true } }
   end
-
-  describe "validations" do
-    it { is_expected.to validate_presence_of(:assessment_section) }
-    it { is_expected.to validate_presence_of(:user) }
-    it { is_expected.to allow_values(true, false).for(:passed) }
-  end
 end
