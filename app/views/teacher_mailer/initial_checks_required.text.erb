@@ -1,0 +1,15 @@
+Dear <%= application_form_full_name(@application_form) %>,
+
+# We’ve received your application for qualfied teacher status (QTS) in England
+
+<%= render "shared/teacher_mailer/reference_number" %>
+
+# What happens next
+
+We need to carry out some initial checks on your application. We will email you to let you know if your application passes these initial checks.
+
+If initial checks are passed you will need to request a <%= region_certificate_name(@application_form.region) %> from <%= region_teaching_authority_name_phrase(@application_form.region) %>.
+
+Do not request your <%= region_certificate_name(@application_form.region) %> until you have received confirmation from us. You do not need to contact us.
+
+<%= render "shared/teacher_mailer/footer" %>

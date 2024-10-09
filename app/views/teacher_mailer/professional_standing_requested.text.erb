@@ -1,0 +1,53 @@
+Dear <%= application_form_full_name(@application_form) %>,
+
+<% if @application_form.requires_preliminary_check %>
+# Your application has passed initial checks
+<% else %>
+# We’ve received your application for qualfied teacher status (QTS) in England
+<% end %>
+
+<%= render "shared/teacher_mailer/reference_number" %>
+
+You must now get your <%= region_certificate_name(@application_form.region) %> from <%= region_teaching_authority_name_phrase(@application_form.region) %>. Your application cannot progress until we have received it.
+
+# What you need to do
+
+Email <%= @application_form.region.teaching_authority_emails.map { |email| "[#{email}](mailto:#{email})" }.to_sentence %> and ask them to send your <%= region_certificate_name(@application_form.region) %> directly to us at [<%= t("service.email.verification") %>](mailto:<%= t("service.email.verification") %>).
+
+You cannot send it yourself.
+
+<% if @application_form.region.status_check_online? %>
+<% if @application_form.region.status_information.present? %>
+<%= @application_form.region.status_information %>
+<% end %>
+
+<% if @application_form.region.country.status_information.present? %>
+<%= @application_form.region.country.status_information %>
+<% end %>
+<% end %>
+
+<% if @application_form.region.sanction_check_online? %>
+<% if @application_form.region.sanction_information.present? %>
+<%= @application_form.region.sanction_information %>
+<% end %>
+
+<% if @application_form.region.country.sanction_information.present? %>
+<%= @application_form.region.country.sanction_information %>
+<% end %>
+<% end %>
+
+<% if @application_form.region.other_information.present? %>
+<%= @application_form.region.other_information %>
+<% end %>
+
+<% if @application_form.region.country.other_information.present? %>
+<%= @application_form.region.country.other_information %>
+<% end %>
+
+# What happens next
+
+Once the <%= region_certificate_name(@application_form.region) %> is received and checked, your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.
+
+<%= render "shared/teacher_mailer/any_questions_contact" %>
+
+<%= render "shared/teacher_mailer/footer" %>

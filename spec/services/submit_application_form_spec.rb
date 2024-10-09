@@ -146,11 +146,31 @@ RSpec.describe SubmitApplicationForm do
         application_form.update!(
           teaching_authority_provides_written_statement: true,
         )
+        application_form.region.update!(
+          teaching_authority_provides_written_statement: true,
+        )
         call
       end
 
       it { is_expected.not_to be_nil }
       it { is_expected.to be_requested }
+    end
+
+    context "when teaching authority provides the written statement with preliminary checks being required" do
+      before do
+        application_form.update!(
+          teaching_authority_provides_written_statement: true,
+          requires_preliminary_check: true,
+        )
+        application_form.region.update!(
+          teaching_authority_provides_written_statement: true,
+          requires_preliminary_check: true,
+        )
+        call
+      end
+
+      it { is_expected.not_to be_nil }
+      it { is_expected.not_to be_requested }
     end
   end
 
@@ -197,31 +217,46 @@ RSpec.describe SubmitApplicationForm do
         :application_received,
       ).with(params: { application_form: }, args: [])
     end
+
+    context "when the teaching authority provides written statement" do
+      before do
+        application_form.update!(
+          teaching_authority_provides_written_statement: true,
+        )
+        application_form.region.update!(
+          teaching_authority_provides_written_statement: true,
+        )
+      end
+
+      it "does not enqueue an email job" do
+        expect { call }.not_to have_enqueued_mail(
+          TeacherMailer,
+          :application_received,
+        )
+      end
+    end
   end
 
-  describe "sending application submitted email" do
-    it "doesn't queue an email job" do
+  describe "submitting an application with teaching authority providing written statement" do
+    it "doesn't queue an email job for teaching authority" do
       expect { call }.not_to have_enqueued_mail(
         TeachingAuthorityMailer,
         :application_submitted,
       )
     end
 
-    context "when teaching authority requires the email" do
-      let(:region) do
-        create(
-          :region,
-          teaching_authority_emails: ["authority@example.com"],
-          teaching_authority_requires_submission_email: true,
-        )
-      end
+    it "doesn't queue an email job for initial checks required" do
+      expect { call }.not_to have_enqueued_mail(
+        TeacherMailer,
+        :initial_checks_required,
+      )
+    end
 
-      it "queues an email job" do
-        expect { call }.to have_enqueued_mail(
-          TeachingAuthorityMailer,
-          :application_submitted,
-        ).with(params: { application_form: }, args: [])
-      end
+    it "doesn't queue an email job for professional standing request" do
+      expect { call }.not_to have_enqueued_mail(
+        TeacherMailer,
+        :professional_standing_requested,
+      )
     end
 
     context "when teaching authority provides the written statement" do
@@ -232,11 +267,67 @@ RSpec.describe SubmitApplicationForm do
         )
       end
 
-      it "enqueues an initial checks email job" do
+      it "generates a professional standing request" do
+        expect { call }.to change(ProfessionalStandingRequest, :count).by(1)
+      end
+
+      it "marks the professional standing request as requested" do
+        call
+
+        expect(
+          application_form
+            .assessment
+            .reload
+            .professional_standing_request
+            .requested_at,
+        ).not_to be_nil
+      end
+
+      it "doesn't queue an email job for initial checks required" do
+        expect { call }.not_to have_enqueued_mail(
+          TeacherMailer,
+          :initial_checks_required,
+        )
+      end
+
+      it "enqueues an email job for professional standing request" do
         expect { call }.to have_enqueued_mail(
           TeacherMailer,
-          :initial_checks_passed,
-        ).with(params: { application_form: }, args: [])
+          :professional_standing_requested,
+        )
+      end
+
+      context "with the application form a requiring preliminary check" do
+        before do
+          region.update!(requires_preliminary_check: true)
+          application_form.update!(requires_preliminary_check: true)
+        end
+
+        it "enqueues an email job for initial checks required" do
+          expect { call }.to have_enqueued_mail(
+            TeacherMailer,
+            :initial_checks_required,
+          )
+        end
+
+        it "doesn't queue an email job for professional standing request" do
+          expect { call }.not_to have_enqueued_mail(
+            TeacherMailer,
+            :professional_standing_requested,
+          )
+        end
+
+        it "does not mark the professional standing request as requested" do
+          call
+
+          expect(
+            application_form
+              .assessment
+              .reload
+              .professional_standing_request
+              .requested_at,
+          ).to be_nil
+        end
       end
     end
   end

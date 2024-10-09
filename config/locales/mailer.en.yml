@@ -34,10 +34,12 @@ en:
         subject: "Your QTS application: More information needed"
       further_information_reminder:
         subject: "Your QTS application: information still needed"
-      initial_checks_passed:
-        subject: "Your QTS application: Initial checks passed"
+      initial_checks_required:
+        subject: "Your QTS application: Initial checks required"
       professional_standing_received:
         subject: "Your QTS application: %{certificate} received"
+      professional_standing_requested:
+        subject: "Your QTS application: Request your %{certificate}"
       references_requested:
         subject: We’ve contacted your references – QTS application
       references_reminder:

@@ -26,22 +26,38 @@
   <% if region.status_check_written? || region.sanction_check_written? %>
     <% if teaching_authority_provides_written_statement %>
       <p class="govuk-body">
-        You’ll need to provide <%= region_certificate_phrase(region) %> from <%= region_teaching_authority_name_phrase(region) %>.
-      </p>
-
-      <p class="govuk-body">
-        You should request it by emailing <%= region_teaching_authority_emails_phrase(region) %>.
-      </p>
-
-      <p class="govuk-body">
-        You cannot send this document yourself – instead, you must contact <%= region_teaching_authority_name_phrase(region) %> and ask them to send it directly to us at <%= govuk_link_to t("service.email.verification"), email_path("verification") %>.
+        To prove you are recognised as a teacher in <%= CountryName.from_region_with_country(region, with_definite_article: true) %>,
+        you’ll need to get <%= region_certificate_phrase(region) %> from <%= region_teaching_authority_name_phrase(region) %>.
       </p>
 
       <% if region.requires_preliminary_check %>
         <p class="govuk-body govuk-!-font-weight-bold">
-          Do not request this document yet – we’ll carry out some checks on your application first. If your application passes these checks, we’ll then email you and ask you to request the document.
+          Do not request your <%= region_certificate_name(region) %> yet
+        </p>
+
+        <p class="govuk-body">
+          We will need to carry out initial checks on your application.
+          If these checks are passed we will email you and ask you to request your <%= region_certificate_name(region) %>.
+        </p>
+
+        <p class="govuk-body">
+          Once we have asked you to, you must email <%= region_teaching_authority_emails_phrase(region) %>
+          and ask them to send your <%= region_certificate_name(region) %> directly to us at <%= govuk_link_to t("service.email.verification"), email_path("verification") %>.
+        </p>
+      <% else %>
+        <p class="govuk-body">
+          Do this after you have submitted your application, as you will need your application reference number.
+        </p>
+
+        <p class="govuk-body">
+          Once you have submitted your application you must email <%= region_teaching_authority_emails_phrase(region) %>
+          and ask them to send your <%= region_certificate_name(region) %> directly to us at <%= govuk_link_to t("service.email.verification"), email_path("verification") %>.
         </p>
       <% end %>
+
+      <p class="govuk-body">
+        You cannot send it yourself.
+      </p>
     <% else %>
       <p class="govuk-body">
         <% if region.written_statement_optional %>

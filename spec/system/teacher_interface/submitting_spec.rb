@@ -3,6 +3,22 @@
 require "rails_helper"
 
 RSpec.describe "Teacher submitting", type: :system do
+  let(:application_form) do
+    create(
+      :application_form,
+      :with_personal_information,
+      :with_identification_document,
+      :with_teaching_qualification,
+      :with_age_range,
+      :with_subjects,
+      :with_english_language_provider,
+      :with_work_history,
+      :with_written_statement,
+      :with_registration_number,
+      teacher:,
+    )
+  end
+
   before do
     given_i_am_authorized_as_a_user(teacher)
     given_there_is_an_application_form
@@ -19,6 +35,78 @@ RSpec.describe "Teacher submitting", type: :system do
     then_i_see_the(:teacher_submitted_application_page)
     and_i_see_the_submitted_application_information
     and_i_receive_an_application_email
+  end
+
+  context "when from country requiring written statement from teaching authority" do
+    let(:application_form) do
+      create(
+        :application_form,
+        :teaching_authority_provides_written_statement,
+        :with_personal_information,
+        :with_identification_document,
+        :with_teaching_qualification,
+        :with_age_range,
+        :with_subjects,
+        :with_english_language_provider,
+        :with_work_history,
+        :with_written_statement,
+        :with_registration_number,
+        teacher:,
+      )
+    end
+
+    it "submits" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+
+      when_i_click_check_your_answers
+      then_i_see_the(:teacher_check_your_answers_page)
+
+      when_i_confirm_i_have_no_sanctions
+      then_i_see_the(:teacher_submitted_application_page)
+      and_i_see_the_submitted_application_information_with_lops_pending
+      and_i_receive_an_application_email_to_request_lops
+    end
+  end
+
+  context "when from country requiring written statement from teaching authority and preliminary check" do
+    let(:application_form) do
+      create(
+        :application_form,
+        :teaching_authority_provides_written_statement,
+        :requires_preliminary_check,
+        :with_personal_information,
+        :with_identification_document,
+        :with_teaching_qualification,
+        :with_age_range,
+        :with_subjects,
+        :with_english_language_provider,
+        :with_work_history,
+        :with_written_statement,
+        :with_registration_number,
+        teacher:,
+      )
+    end
+
+    before do
+      application_form.region.update(
+        teaching_authority_provides_written_statement: true,
+        requires_preliminary_check: true,
+      )
+    end
+
+    it "submits" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+
+      when_i_click_check_your_answers
+      then_i_see_the(:teacher_check_your_answers_page)
+
+      when_i_confirm_i_have_no_sanctions
+      then_i_see_the(:teacher_submitted_application_page)
+      and_i_see_the_submitted_application_information_with_preliminary_check_pending
+      and_i_receive_an_application_email_for_initial_checks_required
+    end
   end
 
   def given_there_is_an_application_form
@@ -54,6 +142,31 @@ RSpec.describe "Teacher submitting", type: :system do
     )
   end
 
+  def and_i_see_the_submitted_application_information_with_lops_pending
+    expect(teacher_submitted_application_page).to have_content(
+      "Application submitted",
+    )
+    expect(teacher_submitted_application_page).to have_content(
+      "Application reference number: #{application_form.reference}",
+    )
+    expect(teacher_submitted_application_page).to have_content(
+      "You must now get your Letter of Professional Standing from the teaching authority.",
+    )
+  end
+
+  def and_i_see_the_submitted_application_information_with_preliminary_check_pending
+    expect(teacher_submitted_application_page).to have_content(
+      "Application submitted",
+    )
+    expect(teacher_submitted_application_page).to have_content(
+      "Application reference number: #{application_form.reference}",
+    )
+    expect(teacher_submitted_application_page).to have_content(
+      "We need to carry out some initial checks on your application. " \
+        "We will email you to let you know if your application passes these initial checks.",
+    )
+  end
+
   def and_i_receive_an_application_email
     message = ActionMailer::Base.deliveries.last
     expect(message).not_to be_nil
@@ -62,24 +175,27 @@ RSpec.describe "Teacher submitting", type: :system do
     expect(message.to).to include("teacher@example.com")
   end
 
-  def teacher
-    @teacher ||= create(:teacher, email: "teacher@example.com")
+  def and_i_receive_an_application_email_to_request_lops
+    message = ActionMailer::Base.deliveries.last
+    expect(message).not_to be_nil
+
+    expect(message.subject).to eq(
+      "Your QTS application: Request your Letter of Professional Standing",
+    )
+    expect(message.to).to include("teacher@example.com")
   end
 
-  def application_form
-    @application_form ||=
-      create(
-        :application_form,
-        :with_personal_information,
-        :with_identification_document,
-        :with_teaching_qualification,
-        :with_age_range,
-        :with_subjects,
-        :with_english_language_provider,
-        :with_work_history,
-        :with_written_statement,
-        :with_registration_number,
-        teacher:,
-      )
+  def and_i_receive_an_application_email_for_initial_checks_required
+    message = ActionMailer::Base.deliveries.last
+    expect(message).not_to be_nil
+
+    expect(message.subject).to eq(
+      "Your QTS application: Initial checks required",
+    )
+    expect(message.to).to include("teacher@example.com")
+  end
+
+  def teacher
+    @teacher ||= create(:teacher, email: "teacher@example.com")
   end
 end

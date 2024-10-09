@@ -118,11 +118,11 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
-  def initial_checks_passed
+  def initial_checks_required
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,
       to: teacher.email,
-      subject: I18n.t("mailer.teacher.initial_checks_passed.subject"),
+      subject: I18n.t("mailer.teacher.initial_checks_required.subject"),
     )
   end
 
@@ -133,6 +133,18 @@ class TeacherMailer < ApplicationMailer
       subject:
         I18n.t(
           "mailer.teacher.professional_standing_received.subject",
+          certificate: region_certificate_name(region),
+        ),
+    )
+  end
+
+  def professional_standing_requested
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject:
+        I18n.t(
+          "mailer.teacher.professional_standing_requested.subject",
           certificate: region_certificate_name(region),
         ),
     )

@@ -59,6 +59,29 @@ RSpec.describe CountryName do
     end
   end
 
+  describe "#from_region_with_country" do
+    subject(:name) do
+      described_class.from_region_with_country(region, with_definite_article:)
+    end
+
+    let(:region) { create(:region, :national, country:) }
+    let(:with_definite_article) { false }
+
+    it { is_expected.to eq("United States") }
+
+    context "with definite article" do
+      let(:with_definite_article) { true }
+
+      it { is_expected.to eq("the United States") }
+    end
+
+    context "with a region name" do
+      before { region.update!(name: "California") }
+
+      it { is_expected.to eq("California, United States") }
+    end
+  end
+
   describe "#from_eligibility_check" do
     subject(:name) do
       described_class.from_eligibility_check(

@@ -139,6 +139,12 @@ class TeacherInterface::ApplicationFormViewObject
       !further_information_request.received?
   end
 
+  def preliminary_check_pending?
+    return false if assessment.nil?
+
+    requires_preliminary_check && !assessment.all_preliminary_sections_passed?
+  end
+
   def request_professional_standing_certificate?
     teaching_authority_provides_written_statement &&
       professional_standing_request&.requested? &&
@@ -159,6 +165,12 @@ class TeacherInterface::ApplicationFormViewObject
     return false if assessment.nil? || consent_requests.empty?
 
     consent_requests.all?(&:received?)
+  end
+
+  def letter_of_professional_standing_received?
+    return false if assessment.nil? || professional_standing_request.nil?
+
+    professional_standing_request.received?
   end
 
   def show_work_history_under_submission_banner?

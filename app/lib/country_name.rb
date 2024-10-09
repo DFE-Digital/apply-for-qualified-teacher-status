@@ -17,6 +17,14 @@ class CountryName
         from_country(region.country, with_definite_article:)
     end
 
+    def from_region_with_country(region, with_definite_article: false)
+      if region.name.presence
+        "#{region.name.presence}, #{from_code(region.country.code, with_definite_article:)}"
+      else
+        from_region(region, with_definite_article:)
+      end
+    end
+
     def from_eligibility_check(eligibility_check, with_definite_article: false)
       if eligibility_check.region.present?
         from_country(eligibility_check.region.country, with_definite_article:)

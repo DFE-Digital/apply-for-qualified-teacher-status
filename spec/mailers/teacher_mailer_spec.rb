@@ -252,36 +252,6 @@ RSpec.describe TeacherMailer, type: :mailer do
             "information you have submitted.",
         )
       end
-
-      context "if the teaching authority provides the written statement" do
-        before do
-          application_form.update!(
-            teaching_authority_provides_written_statement: true,
-          )
-        end
-
-        it do
-          expect(subject).to include(
-            "Once the written evidence is received and checked, your application " \
-              "will be assessed by a trained assessor.",
-          )
-        end
-      end
-
-      context "if the teaching authority does not provide the written statement" do
-        before do
-          application_form.update!(
-            teaching_authority_provides_written_statement: false,
-          )
-        end
-
-        it do
-          expect(subject).to include(
-            "Your application will be assessed by a trained assessor. They will check all the " \
-              "information you have submitted.",
-          )
-        end
-      end
     end
   end
 
@@ -515,6 +485,36 @@ RSpec.describe TeacherMailer, type: :mailer do
     end
   end
 
+  describe "#initial_checks_required" do
+    subject(:mail) do
+      described_class.with(application_form:).initial_checks_required
+    end
+
+    describe "#subject" do
+      subject { mail.subject }
+
+      it { is_expected.to eq("Your QTS application: Initial checks required") }
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body }
+
+      it { is_expected.to include("Dear First Last") }
+
+      it do
+        expect(subject).to include(
+          "We need to carry out some initial checks on your application",
+        )
+      end
+    end
+  end
+
   describe "#professional_standing_received" do
     subject(:mail) do
       described_class.with(application_form:).professional_standing_received
@@ -543,9 +543,53 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         expect(subject).to include(
-          "We have received your Letter of Professional Standing from the teaching " \
-            "authority and attached it to your application.",
+          "We’ve received and checked your Letter of Professional Standing from the teaching " \
+            "authority. This has been attached to your application.",
         )
+      end
+    end
+  end
+
+  describe "#professional_standing_requested" do
+    subject(:mail) do
+      described_class.with(application_form:).professional_standing_requested
+    end
+
+    describe "#subject" do
+      subject { mail.subject }
+
+      it do
+        expect(subject).to eq(
+          "Your QTS application: Request your Letter of Professional Standing",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body }
+
+      it { is_expected.to include("Dear First Last") }
+
+      it do
+        expect(subject).to include(
+          "We’ve received your application for qualfied teacher status (QTS) in England",
+        )
+      end
+
+      context "when the application had required preliminary checks" do
+        before { application_form.update!(requires_preliminary_check: true) }
+
+        it do
+          expect(subject).to include(
+            "Your application has passed initial checks",
+          )
+        end
       end
     end
   end
