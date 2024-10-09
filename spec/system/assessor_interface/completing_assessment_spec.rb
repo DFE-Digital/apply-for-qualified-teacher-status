@@ -217,6 +217,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
         :assessment,
         age_range_max: 11,
         age_range_min: 8,
+        age_range_note: "Explanation",
         application_form:,
         subjects: %w[mathematics],
       )
