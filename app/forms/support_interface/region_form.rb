@@ -31,6 +31,7 @@ class SupportInterface::RegionForm
   validates :requires_preliminary_check, inclusion: { in: [true, false] }
   validates :sanction_check, inclusion: { in: %w[online written none] }
   validates :status_check, inclusion: { in: %w[online written none] }
+  validates :teaching_authority_emails_string, presence: true
   validates :teaching_authority_name,
             format: {
               without: /\Athe.*\z/i,
