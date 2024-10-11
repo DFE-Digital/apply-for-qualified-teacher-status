@@ -92,7 +92,7 @@ en:
       assessor_interface_assessment_section_form:
         age_range_max: To
         age_range_min: From
-        age_range_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> If you''ve entered a new range please explain why (optional)'
+        age_range_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> If you''ve entered a new range please explain why'
         failure_reason_notes:
           decline: Note to the applicant (optional)
           document: Note to the applicant
@@ -112,7 +112,7 @@ en:
       assessor_interface_confirm_age_range_subjects_form:
         age_range_min: From
         age_range_max: To
-        age_range_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> If you''ve entered a new range please explain why (optional)'
+        age_range_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> If you''ve entered a new range please explain why'
         subject_1: Subject 1
         subject_2: Subject 2 (optional)
         subject_3: Subject 3 (optional)

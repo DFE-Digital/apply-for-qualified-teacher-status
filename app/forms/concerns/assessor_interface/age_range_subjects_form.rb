@@ -8,6 +8,9 @@ module AssessorInterface::AgeRangeSubjectsForm
     attribute :age_range_max, :integer
     attribute :age_range_note, :string
 
+    validates :age_range_note,
+              presence: true,
+              if: :age_range_changed_from_application_form?
     validates :age_range_min,
               presence: true,
               numericality: {
@@ -19,6 +22,7 @@ module AssessorInterface::AgeRangeSubjectsForm
               presence: true,
               numericality: {
                 only_integer: true,
+                less_than_or_equal_to: 19,
                 greater_than_or_equal_to: :age_range_min,
                 allow_nil: true,
               }
@@ -59,5 +63,16 @@ module AssessorInterface::AgeRangeSubjectsForm
     end
 
     true
+  end
+
+  private
+
+  delegate :application_form, to: :assessment
+
+  def age_range_changed_from_application_form?
+    return unless assessment
+
+    application_form.age_range_min != age_range_min ||
+      application_form.age_range_max != age_range_max
   end
 end

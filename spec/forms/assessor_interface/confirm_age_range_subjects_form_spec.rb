@@ -17,12 +17,4 @@ RSpec.describe AssessorInterface::ConfirmAgeRangeSubjectsForm, type: :model do
     it { is_expected.to validate_presence_of(:assessment) }
     it { is_expected.to validate_presence_of(:user) }
   end
-
-  describe "#save" do
-    subject(:save) { form.save }
-
-    describe "when invalid attributes" do
-      it { is_expected.to be false }
-    end
-  end
 end

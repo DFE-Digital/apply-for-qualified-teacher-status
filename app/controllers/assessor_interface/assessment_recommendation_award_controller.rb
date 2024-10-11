@@ -59,9 +59,11 @@ module AssessorInterface
           assessment:,
           age_range_min: assessment.age_range_min,
           age_range_max: assessment.age_range_max,
+          age_range_note: assessment.age_range_note,
           subject_1: assessment.subjects.first,
           subject_2: assessment.subjects.second,
           subject_3: assessment.subjects.third,
+          subjects_note: assessment.subjects_note,
         )
     end
 

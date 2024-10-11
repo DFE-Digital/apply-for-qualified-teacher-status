@@ -348,12 +348,26 @@ en:
               blank: Enter a note to the applicant
             written_statement_recent_notes:
               blank: Enter a note to the applicant
+        assessor_interface/check_age_range_subjects_form:
+          attributes:
+            age_range_min:
+              blank: Enter the minimum age
+            age_range_max:
+              blank: Enter the maximum age
+              less_than_or_equal_to: We cannot accept an age greater than 19
+              greater_than_or_equal_to: ‘To’ must be greater than ‘From’
+            age_range_note:
+              blank: Explain why you have entered a new age range
         assessor_interface/confirm_age_range_subjects_form:
           attributes:
             age_range_min:
               blank: Enter the minimum age
             age_range_max:
               blank: Enter the maximum age
+              less_than_or_equal_to: We cannot accept an age greater than 19
+              greater_than_or_equal_to: ‘To’ must be greater than ‘From’
+            age_range_note:
+              blank: Explain why you have entered a new age range
             subject_1:
               blank: Enter the subject
         assessor_interface/consent_method_form:
