@@ -16,6 +16,7 @@ RSpec.describe "eligibility_interface/start/show.html.erb", type: :view do
       /Check you’re eligible to apply for qualified teacher status/,
     )
   end
+
   it do
     expect(subject).to match(
       /If you’ve already started your application using this service, you can/,
@@ -27,6 +28,7 @@ RSpec.describe "eligibility_interface/start/show.html.erb", type: :view do
       /You need a GOV.UK One Login to use this service./,
     )
   end
+
   it { expect(subject).not_to match(/using a GOV.UK One Login./) }
 
   context "with GOV.UK One Login enabled" do
@@ -41,7 +43,9 @@ RSpec.describe "eligibility_interface/start/show.html.erb", type: :view do
         /You need a GOV.UK One Login to use this service./,
       )
     end
+
     it { expect(subject).to match(/using a GOV.UK One Login./) }
+
     it do
       expect(subject).not_to match(
         /If you’ve already started your application using this service, you can/,
