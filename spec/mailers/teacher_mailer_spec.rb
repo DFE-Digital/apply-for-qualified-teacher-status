@@ -164,8 +164,11 @@ RSpec.describe TeacherMailer, type: :mailer do
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("Sign in to your application") }
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
+
       it do
-        is_expected.not_to include("Create your GOV.UK One Login or sign in")
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
       end
 
       context "with two weeks to go" do
@@ -304,8 +307,11 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("Sign in to access your documents") }
+
       it do
-        is_expected.not_to include("Create your GOV.UK One Login or sign in")
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
       end
 
       it do
@@ -366,8 +372,11 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("Sign in to access your documents") }
+
       it do
-        is_expected.not_to include("Create your GOV.UK One Login or sign in")
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
       end
 
       it do
@@ -476,8 +485,11 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("Sign in to your application") }
+
       it do
-        is_expected.not_to include("Create your GOV.UK One Login or sign in")
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
       end
 
       it do
@@ -534,8 +546,11 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("Sign in to your application") }
+
       it do
-        is_expected.not_to include("Create your GOV.UK One Login or sign in")
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
       end
 
       it do

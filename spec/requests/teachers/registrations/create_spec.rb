@@ -41,7 +41,7 @@ RSpec.describe "POST /teacher", type: :request do
   end
 
   context "when there is an existing teacher record with the same email" do
-    let!(:teacher) { create :teacher, email: }
+    before { create :teacher, email: }
 
     it "does not create a new teacher record" do
       expect { register }.not_to change(Teacher, :count)
