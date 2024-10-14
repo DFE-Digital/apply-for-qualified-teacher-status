@@ -75,4 +75,5 @@ module "worker_application" {
   probe_command = ["pgrep", "-f", "sidekiq"]
 
   enable_logit = var.enable_logit
+  enable_gcp_wif = true
 }
