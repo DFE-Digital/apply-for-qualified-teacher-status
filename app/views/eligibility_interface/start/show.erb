@@ -59,7 +59,7 @@
   <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
     <p class="govuk-body">
       Find out more about
-      <%= govuk_link_to "using a GOV.UK One Login", "https://www.gov.uk/using-your-gov-uk-one-login" %>.
+      <%= govuk_link_to "using a GOV.UK One Login", "https://www.gov.uk/using-your-gov-uk-one-login", new_tab: true %>.
     </p>
   <% else %>
     <p class="govuk-body">

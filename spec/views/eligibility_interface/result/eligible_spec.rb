@@ -21,7 +21,7 @@ RSpec.describe "eligibility_interface/result/eligible.html.erb", type: :view do
     )
   end
 
-  it { expect(subject).not_to match(/using a GOV.UK One Login./) }
+  it { expect(subject).not_to match(/using a GOV.UK One Login/) }
 
   context "with GOV.UK One Login enabled" do
     around do |example|
@@ -36,6 +36,6 @@ RSpec.describe "eligibility_interface/result/eligible.html.erb", type: :view do
       )
     end
 
-    it { expect(subject).to match(/using a GOV.UK One Login./) }
+    it { expect(subject).to match(/using a GOV.UK One Login/) }
   end
 end
