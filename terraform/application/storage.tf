@@ -13,18 +13,16 @@ resource "azurerm_storage_account" "uploads" {
   min_tls_version                   = "TLS1_2"
   infrastructure_encryption_enabled = true
 
-  tags = {
-    Environment        = var.uploads_storage_environment_tag
-    Product            = local.uploads_storage_product_name
-    "Service Offering" = local.uploads_storage_product_name
-  }
-
   blob_properties {
     last_access_time_enabled = true
 
     container_delete_retention_policy {
       days = var.uploads_container_delete_retention_days
     }
+  }
+
+  lifecycle {
+    ignore_changes = [tags]
   }
 }
 
