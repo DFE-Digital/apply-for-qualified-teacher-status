@@ -15,6 +15,15 @@ It's deployed using a GitHub Action workflow:
 
 https://github.com/DFE-Digital/apply-for-qualified-teacher-status/blob/main/.github/workflows/deploy.yml
 
+## Environment variables
+
+The application is configured using environment variables.
+
+- Default rails variables are provided by [the terraform module](https://github.com/DFE-Digital/terraform-modules/blob/main/aks/application_configuration/resources.tf#L2)
+- Access keys to Azure resources are [configured via terraform](https://github.com/DFE-Digital/apply-for-qualified-teacher-status/blob/5038181f6078a7bb88057b64b4daa11ca8cc216a/terraform/application/application.tf#L28)
+- Custom secrets are manually configured in the application keyvaults: `s189t01-afqts-rv-app-kv`, `s189t01-afqts-dv-app-kv`, `s189t01-afqts-ts-app-kv`, `s189t01-afqts-pp-app-kv`, `s189p01-afqts-pd-app-kv`
+- Custom non secret variables are configured in the environment yaml files: `terraform/application/config/review/variables.yml`, `terraform/application/config/test/variables.yml`...
+
 ## Using `kubectl`
 
 This guide is based on https://github.com/DFE-Digital/register-trainee-teachers/blob/main/docs/aks-cheatsheet.md
