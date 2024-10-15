@@ -48,10 +48,6 @@ variable "docker_image" {
   type = string
 }
 
-variable "dqt_api_url" {
-  type = string
-}
-
 variable "enable_logit" {
   type    = bool
   default = false
@@ -87,4 +83,8 @@ variable "uploads_storage_environment_tag" {
 variable "uploads_storage_account_name" {
   type    = string
   default = null
+}
+
+locals {
+  environment_variables = yamldecode(file("${path.module}/config/${var.app_environment}/variables.yml"))
 }
