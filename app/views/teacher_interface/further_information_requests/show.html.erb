@@ -16,4 +16,8 @@ end %>
   <%= govuk_button_link_to t("teacher_interface.further_information_request.show.check"), [:edit, :teacher_interface, :application_form, @view_object.further_information_request] %>
 <% end %>
 
-<%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.save"), destroy_teacher_session_path, secondary: true %>
+<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+  <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.save"), logout_uri, secondary: true %>
+<% else %>
+  <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.save"), destroy_teacher_session_path, secondary: true %>
+<% end %>

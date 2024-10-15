@@ -48,7 +48,11 @@
     <% end %>
   <% when "teacher" %>
     <% if current_teacher %>
-      <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_teacher_session_path) %>
+      <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+        <% header.with_navigation_item(text: "Sign out", href: logout_uri) %>
+      <% else %>
+        <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_teacher_session_path) %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
