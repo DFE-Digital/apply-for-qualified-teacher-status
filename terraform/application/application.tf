@@ -76,6 +76,6 @@ module "worker_application" {
   command       = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
   probe_command = ["pgrep", "-f", "sidekiq"]
 
-  enable_logit = var.enable_logit
+  enable_logit   = var.enable_logit
   enable_gcp_wif = true
 }
