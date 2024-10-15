@@ -3,6 +3,10 @@
 class Teachers::SessionsController < Devise::SessionsController
   include TeacherCurrentNamespace
 
+  before_action :redirect_to_gov_one_login,
+                if: :gov_one_applicant_login_feature_active?,
+                only: [:new]
+
   layout "two_thirds"
 
   def new
@@ -15,30 +19,10 @@ class Teachers::SessionsController < Devise::SessionsController
   end
 
   def create
-    @new_session_form =
-      TeacherInterface::NewSessionForm.new(
-        email: new_session_form_params[:email],
-        sign_in_or_sign_up: new_session_form_params[:sign_in_or_sign_up],
-      )
-
-    if @new_session_form.valid?
-      if @new_session_form.sign_up?
-        redirect_to :eligibility_interface_countries
-        return
-      end
-
-      self.resource = resource_class.find_by_email(@new_session_form.email)
-
-      if resource
-        resource.send_magic_link
-        redirect_to teacher_check_email_path(email: resource.email)
-      else
-        redirect_to :eligibility_interface_countries
-      end
-    elsif @new_session_form.sign_in_or_sign_up.blank?
-      render :new_or_create, status: :unprocessable_entity
+    if gov_one_applicant_login_feature_active?
+      handle_login_with_gov_one
     else
-      render :new, status: :unprocessable_entity
+      handle_login_with_magic_link
     end
   end
 
@@ -88,5 +72,59 @@ class Teachers::SessionsController < Devise::SessionsController
       :email,
       :sign_in_or_sign_up,
     )
+  end
+
+  def redirect_to_gov_one_login
+    redirect_to "/teacher/auth/gov_one"
+  end
+
+  def gov_one_applicant_login_feature_active?
+    FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login)
+  end
+
+  def handle_login_with_gov_one
+    @new_session_form =
+      TeacherInterface::NewSessionForm.new(
+        sign_in_or_sign_up: new_session_form_params[:sign_in_or_sign_up],
+      )
+
+    if @new_session_form.valid?
+      if @new_session_form.sign_up?
+        redirect_to :eligibility_interface_countries
+      else
+        redirect_to_gov_one_login
+      end
+    else
+      render :new_or_create, status: :unprocessable_entity
+    end
+  end
+
+  def handle_login_with_magic_link
+    @new_session_form =
+      TeacherInterface::NewSessionForm.new(
+        email: new_session_form_params[:email],
+        sign_in_or_sign_up: new_session_form_params[:sign_in_or_sign_up],
+        validate_email: true,
+      )
+
+    if @new_session_form.valid?
+      if @new_session_form.sign_up?
+        redirect_to :eligibility_interface_countries
+        return
+      end
+
+      self.resource = resource_class.find_by_email(@new_session_form.email)
+
+      if resource
+        resource.send_magic_link
+        redirect_to teacher_check_email_path(email: resource.email)
+      else
+        redirect_to :eligibility_interface_countries
+      end
+    elsif @new_session_form.sign_in_or_sign_up.blank?
+      render :new_or_create, status: :unprocessable_entity
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 end

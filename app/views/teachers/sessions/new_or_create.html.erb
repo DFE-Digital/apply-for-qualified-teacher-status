@@ -7,12 +7,21 @@
 <%= form_with model: @new_session_form, url: session_path(resource_name) do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_radio_buttons_fieldset :sign_in_or_sign_up, legend: { size: "m", text: "Have you used the service before?" } do %>
-    <%= f.govuk_radio_button :sign_in_or_sign_up, "sign_in", label: { text: "Yes, sign in and continue application" }, link_errors: true do %>
-      <%= f.govuk_email_field :email, autocomplete: "email" %>
-    <% end %>
+  <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+    <%= f.hidden_field :validate_email, value: 0 %>
 
-    <%= f.govuk_radio_button :sign_in_or_sign_up, "sign_up", label: { text: "No, I need to check if I can apply" } %>
+    <%= f.govuk_radio_buttons_fieldset :sign_in_or_sign_up, legend: { size: "m", text: "Have you used the service before?" } do %>
+      <%= f.govuk_radio_button :sign_in_or_sign_up, "sign_in", label: { text: "Yes, sign in and continue application" }, hint: { text: "You need a GOV.UK One Login to sign in. If you don't have one you can create one, but you must use the same email as your QTS sign in to access your application." } %>
+      <%= f.govuk_radio_button :sign_in_or_sign_up, "sign_up", label: { text: "No, I need to check if I can apply" } %>
+    <% end %>
+  <% else %>
+    <%= f.govuk_radio_buttons_fieldset :sign_in_or_sign_up, legend: { size: "m", text: "Have you used the service before?" } do %>
+      <%= f.govuk_radio_button :sign_in_or_sign_up, "sign_in", label: { text: "Yes, sign in and continue application" }, link_errors: true do %>
+        <%= f.govuk_email_field :email, autocomplete: "email" %>
+      <% end %>
+
+      <%= f.govuk_radio_button :sign_in_or_sign_up, "sign_up", label: { text: "No, I need to check if I can apply" } %>
+    <% end %>
   <% end %>
 
   <%= f.govuk_submit %>
