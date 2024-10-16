@@ -32,6 +32,8 @@ module "application_configuration" {
     AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.uploads.name
     AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.uploads.primary_access_key
     AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
+
+    GOOGLE_CLOUD_CREDENTIALS = module.dfe_analytics.google_cloud_credentials
   }
 }
 
@@ -74,5 +76,6 @@ module "worker_application" {
   command       = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
   probe_command = ["pgrep", "-f", "sidekiq"]
 
-  enable_logit = var.enable_logit
+  enable_logit   = var.enable_logit
+  enable_gcp_wif = true
 }
