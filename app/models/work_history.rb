@@ -70,7 +70,9 @@ class WorkHistory < ApplicationRecord
     end
 
     unless application_form.reduced_evidence_accepted?
-      return false unless contact_email.match?(ValidForNotifyValidator::EMAIL_REGEX)
+      unless contact_email.match?(ValidForNotifyValidator::EMAIL_REGEX)
+        return false
+      end
 
       values += [contact_name, contact_email]
     end
