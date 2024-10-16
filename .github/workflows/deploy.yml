@@ -173,7 +173,6 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
     environment: review
     permissions:
-      contents: 'read'
       id-token: 'write'
 
     steps:
