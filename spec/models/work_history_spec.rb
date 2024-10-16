@@ -131,5 +131,28 @@ RSpec.describe WorkHistory, type: :model do
         it { is_expected.to be true }
       end
     end
+
+    context "without a valid contact email" do
+      let(:application_form) { create(:application_form) }
+
+      let(:work_history) do
+        build(
+          :work_history,
+          :completed,
+          application_form:,
+          contact_email: "INVALID",
+        )
+      end
+
+      it { is_expected.to be false }
+
+      context "with a reduced evidence application form" do
+        let(:application_form) do
+          create(:application_form, reduced_evidence_accepted: true)
+        end
+
+        it { is_expected.to be true }
+      end
+    end
   end
 end
