@@ -35,7 +35,7 @@ class SupportInterface::RegionForm
             presence: {
               message: "You must provide an email for the teaching authority.",
             },
-            if: -> { teaching_authority_requires_submission_email }
+            if: :teaching_authority_requires_submission_email
   validates :teaching_authority_name,
             format: {
               without: /\Athe.*\z/i,
