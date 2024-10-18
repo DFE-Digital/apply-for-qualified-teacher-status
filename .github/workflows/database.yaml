@@ -7,10 +7,13 @@ on:
 
 jobs:
   backup-production:
-    name: Backup production
+    name: Backup database
     runs-on: ubuntu-latest
-
-    environment: production
+    environment:
+      name: ${{ inputs.environment || 'production' }}
+    env:
+      DEPLOY_ENV: ${{ inputs.environment || 'production'  }}
+      BACKUP_FILE: ${{ inputs.backup-file || 'schedule'  }}
 
     services:
       postgres:
