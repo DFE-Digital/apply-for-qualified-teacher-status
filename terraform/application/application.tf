@@ -16,25 +16,21 @@ module "application_configuration" {
 
   config_variables = merge(
     local.environment_variables,
-    {
-      HOSTING_ENVIRONMENT = local.environment
-
-      BIGQUERY_PROJECT_ID = "apply-for-qts-in-england"
-      BIGQUERY_DATASET    = "events_${var.app_environment}"
-      BIGQUERY_TABLE_NAME = "events"
-  })
+    { HOSTING_ENVIRONMENT = local.environment }
+  )
 
   secret_key_vault_short = "app"
-  secret_variables = {
-    DATABASE_URL = module.postgres.url
-    REDIS_URL    = module.redis.url
+  secret_variables = merge(
+    module.dfe_analytics.dfe_analytics_variables_map,
+    {
+      DATABASE_URL = module.postgres.url
+      REDIS_URL    = module.redis.url
 
-    AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.uploads.name
-    AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.uploads.primary_access_key
-    AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
-
-    GOOGLE_CLOUD_CREDENTIALS = module.dfe_analytics.google_cloud_credentials
-  }
+      AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.uploads.name
+      AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.uploads.primary_access_key
+      AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
+    }
+  )
 }
 
 module "web_application" {
