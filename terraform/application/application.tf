@@ -21,7 +21,7 @@ module "application_configuration" {
 
   secret_key_vault_short = "app"
   secret_variables = merge(
-    module.dfe_analytics.dfe_analytics_variables_map,
+    module.dfe_analytics.variables_map,
     {
       DATABASE_URL = module.postgres.url
       REDIS_URL    = module.redis.url
