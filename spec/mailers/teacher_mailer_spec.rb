@@ -355,7 +355,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject { mail.subject }
 
       it do
-        is_expected.to eq("Your QTS application: consent documents received")
+        expect(subject).to eq("Your QTS application: consent documents received")
       end
     end
 
