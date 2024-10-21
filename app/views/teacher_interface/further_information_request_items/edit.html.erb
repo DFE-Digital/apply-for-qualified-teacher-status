@@ -2,6 +2,8 @@
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_further_information_request_path(@further_information_request)) %>
 
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @further_information_request, @further_information_request_item], method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
   <h1 class="govuk-heading-l">Further information required</h1>
 
   <h2 class="govuk-heading-s">Notes from the assessor</h2>
