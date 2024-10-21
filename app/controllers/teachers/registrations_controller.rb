@@ -3,6 +3,8 @@
 class Teachers::RegistrationsController < Devise::RegistrationsController
   include TeacherCurrentNamespace
 
+  before_action :redirect_to_gov_one_login,
+                if: :gov_one_applicant_login_feature_active?
   after_action :create_application_form, only: :create
 
   layout "two_thirds"
@@ -53,5 +55,13 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
 
   def teacher_requires_application_form?
     resource.persisted? && resource.application_form.nil?
+  end
+
+  def redirect_to_gov_one_login
+    redirect_to "/teacher/auth/gov_one"
+  end
+
+  def gov_one_applicant_login_feature_active?
+    FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login)
   end
 end

@@ -13,9 +13,16 @@ Download each document then:
 - scan or photograph it
 - upload the signed document
 
+<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+# Signing in to your application
+You’ll now need a GOV.UK One Login to sign in. If you don't have one you can create one, but you must use the same email as your QTS sign in to access your application.
+
+[Create your GOV.UK One Login or sign in](<%= new_teacher_session_url %>)
+<% else %>
 [Sign in to access your documents](<%= new_teacher_session_url %>)
 
 You need to sign and upload these documents by <%= @expires_at.to_date.to_fs %> so that we can proceed with your application.
+<% end %>
 
 ## Why we need your written consent
 

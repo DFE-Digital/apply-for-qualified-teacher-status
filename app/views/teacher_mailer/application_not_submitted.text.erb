@@ -16,9 +16,19 @@ Applications need to be submitted within 6 months of being started. If you do no
 If you do not submit your application before the above date it will be deleted permanently. If you still want to apply for QTS after that date you’ll need to start a new application.
 
 # What you can do
+<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+If you still want to apply for QTS you must do so by <%= @application_form.expires_at.to_date.to_fs %>. You will need to sign in to complete and submit your application.
+
+# Signing in to your application
+You’ll now need a GOV.UK One Login to sign in. If you don't have one you can create one, but you must use the same email as your QTS sign in to access your application.
+
+[Create your GOV.UK One Login or sign in](<%= new_teacher_session_url %>)
+<% else %>
 If you still want to apply for QTS you must do so by <%= @application_form.expires_at.to_date.to_fs %>. You can sign in using the link below to complete and submit your application.
 
 [Sign in to your application](<%= new_teacher_session_url %>)
+<% end %>
+
 
 If you no longer want to apply, you do not need to take any action. Your draft application will be deleted.
 

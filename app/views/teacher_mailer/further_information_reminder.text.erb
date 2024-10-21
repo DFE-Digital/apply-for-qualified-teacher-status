@@ -6,9 +6,18 @@ We haven’t received the information requested. Your application cannot proceed
 
 # What you need to do
 
+<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+You will need to sign in to your application to see what information is needed and add it.
+
+# Signing in to your application
+You’ll now need a GOV.UK One Login to sign in. If you don't have one you can create one, but you must use the same email as your QTS sign in to access your application.
+
+[Create your GOV.UK One Login or sign in](<%= new_teacher_session_url %>)
+<% else %>
 Sign in using the link below to see what information is needed and add it.
 
 [Sign in to your application](<%= new_teacher_session_url %>)
+<% end %>
 
 Once you respond with all the information requested, the assessor will be able to continue reviewing your application.
 

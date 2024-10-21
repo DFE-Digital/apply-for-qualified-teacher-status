@@ -162,7 +162,14 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("Sign in to your application") }
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
+
+      it do
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
+      end
 
       context "with two weeks to go" do
         let(:number_of_reminders_sent) { 0 }
@@ -195,6 +202,17 @@ RSpec.describe TeacherMailer, type: :mailer do
             "Applications need to be submitted within 6 months of being started.",
           )
         end
+      end
+
+      context "with the GOV.UK One Login feature enabled" do
+        around do |example|
+          FeatureFlags::FeatureFlag.activate(:gov_one_applicant_login)
+          example.run
+          FeatureFlags::FeatureFlag.deactivate(:gov_one_applicant_login)
+        end
+
+        it { is_expected.to include("Create your GOV.UK One Login or sign in") }
+        it { is_expected.not_to include("Sign in to your application") }
       end
     end
   end
@@ -288,6 +306,13 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("Sign in to access your documents") }
+
+      it do
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
+      end
 
       it do
         expect(subject).to include(
@@ -299,6 +324,17 @@ RSpec.describe TeacherMailer, type: :mailer do
         expect(subject).to include(
           "If you do not send them by 12 February 2020",
         )
+      end
+
+      context "with the GOV.UK One Login feature enabled" do
+        around do |example|
+          FeatureFlags::FeatureFlag.activate(:gov_one_applicant_login)
+          example.run
+          FeatureFlags::FeatureFlag.deactivate(:gov_one_applicant_login)
+        end
+
+        it { is_expected.to include("Create your GOV.UK One Login or sign in") }
+        it { is_expected.not_to include("Sign in to access your documents") }
       end
     end
   end
@@ -335,6 +371,13 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("Sign in to access your documents") }
+
+      it do
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
+      end
 
       it do
         expect(subject).to include(
@@ -344,6 +387,17 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         expect(subject).to include("upload these documents by 12 February 2020")
+      end
+
+      context "with the GOV.UK One Login feature enabled" do
+        around do |example|
+          FeatureFlags::FeatureFlag.activate(:gov_one_applicant_login)
+          example.run
+          FeatureFlags::FeatureFlag.deactivate(:gov_one_applicant_login)
+        end
+
+        it { is_expected.to include("Create your GOV.UK One Login or sign in") }
+        it { is_expected.not_to include("Sign in to access your documents") }
       end
     end
   end
@@ -434,6 +488,13 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("Sign in to your application") }
+
+      it do
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
+      end
 
       it do
         expect(subject).to include(
@@ -442,6 +503,17 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
 
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
+
+      context "with the GOV.UK One Login feature enabled" do
+        around do |example|
+          FeatureFlags::FeatureFlag.activate(:gov_one_applicant_login)
+          example.run
+          FeatureFlags::FeatureFlag.deactivate(:gov_one_applicant_login)
+        end
+
+        it { is_expected.to include("Create your GOV.UK One Login or sign in") }
+        it { is_expected.not_to include("Sign in to your application") }
+      end
     end
   end
 
@@ -477,6 +549,13 @@ RSpec.describe TeacherMailer, type: :mailer do
       subject(:body) { mail.body }
 
       it { is_expected.to include("Dear First Last") }
+      it { is_expected.to include("Sign in to your application") }
+
+      it do
+        expect(subject).not_to include(
+          "Create your GOV.UK One Login or sign in",
+        )
+      end
 
       it do
         expect(subject).to include(
@@ -486,6 +565,17 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
 
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
+
+      context "with the GOV.UK One Login feature enabled" do
+        around do |example|
+          FeatureFlags::FeatureFlag.activate(:gov_one_applicant_login)
+          example.run
+          FeatureFlags::FeatureFlag.deactivate(:gov_one_applicant_login)
+        end
+
+        it { is_expected.to include("Create your GOV.UK One Login or sign in") }
+        it { is_expected.not_to include("Sign in to your application") }
+      end
     end
   end
 
