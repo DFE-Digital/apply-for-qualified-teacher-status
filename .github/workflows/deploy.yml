@@ -172,6 +172,10 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
     environment: review
+    permissions:
+      id-token: write
+      pull-requests: write
+
     steps:
       - uses: actions/checkout@v4
 
