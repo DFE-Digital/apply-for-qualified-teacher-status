@@ -18,8 +18,8 @@ development: test-cluster ## Specify development configuration
 
 .PHONY: review
 review: test-cluster ## Specify review configuration
-	$(if ${PR_NUMBER},,$(error Missing PR_NUMBER))
-	$(eval ENVIRONMENT=pr-${PR_NUMBER})
+	$(if ${PULL_REQUEST_NUMBER},,$(error Missing PULL_REQUEST_NUMBER))
+	$(eval ENVIRONMENT=pr-${PULL_REQUEST_NUMBER})
 	$(eval include global_config/review.sh)
 	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PULL_REQUEST_NUMBER).tfstate)
 	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
