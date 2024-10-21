@@ -274,6 +274,14 @@ en:
           attributes:
             has_work_history:
               inclusion: Select whether you have worked professionally as a teacher
+        teacher_interface/further_information_request_item_work_history_contact_form:
+          attributes:
+            contact_name:
+              blank: Enter this person’s full name
+            contact_job:
+              blank: Enter this person’s job title
+            contact_email:
+              blank: Enter this person’s email address
         teacher_interface/name_and_date_of_birth_form:
           attributes:
             date_of_birth:

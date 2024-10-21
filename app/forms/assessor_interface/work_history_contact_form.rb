@@ -11,6 +11,8 @@ class AssessorInterface::WorkHistoryContactForm
 
   validates :work_history, :user, presence: true
 
+  validates :email, valid_for_notify: true
+
   def save
     return false if invalid?
 
