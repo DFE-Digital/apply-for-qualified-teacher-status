@@ -312,7 +312,7 @@ GEM
       aes_key_wrap
       bindata
       httpclient
-    jwt (2.9.0)
+    jwt (2.9.3)
       base64
     language_server-protocol (3.17.0.3)
     libreconv (0.9.5)
@@ -375,7 +375,7 @@ GEM
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
-    omniauth-azure-activedirectory-v2 (2.3.0)
+    omniauth-azure-activedirectory-v2 (2.4.0)
       omniauth-oauth2 (~> 1.8)
     omniauth-oauth2 (1.8.0)
       oauth2 (>= 1.4, < 3)
