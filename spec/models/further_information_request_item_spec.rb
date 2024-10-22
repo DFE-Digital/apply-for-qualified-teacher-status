@@ -90,6 +90,52 @@ RSpec.describe FurtherInformationRequestItem do
         it { is_expected.to eq("completed") }
       end
     end
+
+    context "with contact work history contact" do
+      before do
+        further_information_request_item.work_history_contact!
+        further_information_request_item.work_history = create(:work_history)
+      end
+
+      context "without any entries" do
+        it { is_expected.to eq("not_started") }
+      end
+
+      context "with partially being filled out" do
+        before do
+          further_information_request_item.update!(
+            contact_name: "name",
+            contact_job: "job",
+          )
+        end
+
+        it { is_expected.to eq("not_started") }
+      end
+
+      context "with all contact information provided but an invalid email" do
+        before do
+          further_information_request_item.update!(
+            contact_name: "name",
+            contact_job: "job",
+            contact_email: "INVALID",
+          )
+        end
+
+        it { is_expected.to eq("not_started") }
+      end
+
+      context "with all contact information provided and a valid email" do
+        before do
+          further_information_request_item.update!(
+            contact_name: "name",
+            contact_job: "job",
+            contact_email: "referee@job.com",
+          )
+        end
+
+        it { is_expected.to eq("completed") }
+      end
+    end
   end
 
   describe "#is_teaching?" do

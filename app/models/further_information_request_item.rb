@@ -54,7 +54,8 @@ class FurtherInformationRequestItem < ApplicationRecord
     (text? && response.present?) || (document? && document.completed?) ||
       (
         work_history_contact? && contact_name.present? &&
-          contact_job.present? && contact_email.present?
+          contact_job.present? && contact_email.present? &&
+          contact_email.match?(ValidForNotifyValidator::EMAIL_REGEX)
       )
   end
 
