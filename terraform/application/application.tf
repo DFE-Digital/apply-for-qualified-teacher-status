@@ -19,9 +19,9 @@ module "application_configuration" {
     {
       HOSTING_ENVIRONMENT = local.environment
 
-      BIGQUERY_PROJECT_ID = "apply-for-qts-in-england"
-      BIGQUERY_DATASET    = "events_${var.app_environment}"
-      BIGQUERY_TABLE_NAME = "events"
+      BIGQUERY_PROJECT_ID = module.dfe_analytics.bigquery_project_id
+      BIGQUERY_DATASET    = module.dfe_analytics.bigquery_dataset
+      BIGQUERY_TABLE_NAME = module.dfe_analytics.bigquery_table_name
   })
 
   secret_key_vault_short = "app"
@@ -32,6 +32,8 @@ module "application_configuration" {
     AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.uploads.name
     AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.uploads.primary_access_key
     AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
+
+    GOOGLE_CLOUD_CREDENTIALS = var.bigquery_federated_auth ? module.dfe_analytics.google_cloud_credentials : null
   }
 }
 
@@ -74,5 +76,6 @@ module "worker_application" {
   command       = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
   probe_command = ["pgrep", "-f", "sidekiq"]
 
-  enable_logit = var.enable_logit
+  enable_logit   = var.enable_logit
+  enable_gcp_wif = true
 }
