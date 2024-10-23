@@ -31,6 +31,11 @@ class SupportInterface::RegionForm
   validates :requires_preliminary_check, inclusion: { in: [true, false] }
   validates :sanction_check, inclusion: { in: %w[online written none] }
   validates :status_check, inclusion: { in: %w[online written none] }
+  validates :teaching_authority_emails_string,
+            presence: {
+              message: "You must provide an email for the teaching authority.",
+            },
+            if: :teaching_authority_requires_submission_email
   validates :teaching_authority_name,
             format: {
               without: /\Athe.*\z/i,
