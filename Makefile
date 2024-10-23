@@ -1,45 +1,42 @@
 .DEFAULT_GOAL		:=help
 SHELL				:=/bin/bash
 
-SERVICE_SHORT=afqts
 KEY_VAULT_PURGE_PROTECTION=false
 ARM_TEMPLATE_TAG=1.1.6
 TERRAFILE_VERSION=0.8
+SERVICE_NAME=apply-for-qts
+SERVICE_SHORT=afqts
 
 .PHONY: help
 help: ## Show this help
 	@grep -E '^[a-zA-Z\._\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: development
-development: set-test-azure-subscription test-cluster ## Specify development configuration
-	$(eval CONFIG=development)
-	$(eval CONFIG_SHORT=dv)
+development: test-cluster ## Specify development configuration
+	$(eval include global_config/development.sh)
 	$(eval DOMAINS_TERRAFORM_BACKEND_KEY=afqtsdomains_dev.tfstate)
 
 .PHONY: review
-review: set-test-azure-subscription test-cluster ## Specify review configuration
-	$(if $(PULL_REQUEST_NUMBER), , $(error Missing environment variable "PULL_REQUEST_NUMBER"))
-	$(eval CONFIG=review)
-	$(eval CONFIG_SHORT=rv)
+review: test-cluster ## Specify review configuration
+	$(if ${PULL_REQUEST_NUMBER},,$(error Missing PULL_REQUEST_NUMBER))
+	$(eval ENVIRONMENT=pr-${PULL_REQUEST_NUMBER})
+	$(eval include global_config/review.sh)
 	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PULL_REQUEST_NUMBER).tfstate)
 	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
 	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
 
 .PHONY: test
-test: set-test-azure-subscription test-cluster ## Specify test configuration
-	$(eval CONFIG=test)
-	$(eval CONFIG_SHORT=ts)
+test: test-cluster ## Specify test configuration
+	$(eval include global_config/test.sh)
 
 .PHONY: preproduction
 preproduction: set-test-azure-subscription test-cluster ## Specify preproduction configuration
-	$(eval CONFIG=preproduction)
-	$(eval CONFIG_SHORT=pp)
+	$(eval include global_config/preprod.sh)
 	$(eval DOMAINS_TERRAFORM_BACKEND_KEY=afqtsdomains_preprod.tfstate)
 
 .PHONY: production
 production: set-production-azure-subscription production-cluster ## Specify production configuration
-	$(eval CONFIG=production)
-	$(eval CONFIG_SHORT=pd)
+	$(eval include global_config/production.sh)
 	$(eval KEY_VAULT_PURGE_PROTECTION=true)
 
 .PHONY: set-test-azure-subscription
@@ -71,10 +68,6 @@ print-infrastructure-key-vault-name: set-key-vault-names  ## Print the name of t
 set-resource-group-name:
 	$(eval RESOURCE_GROUP_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-rg)
 
-.PHONY: set-storage-account-name
-set-storage-account-name:
-	$(eval STORAGE_ACCOUNT_NAME=$(AZURE_RESOURCE_PREFIX)$(SERVICE_SHORT)tfstate$(CONFIG_SHORT)sa)
-
 .PHONY: print-resource-group-name
 print-resource-group-name: set-resource-group-name
 	echo ${RESOURCE_GROUP_NAME}
@@ -88,6 +81,12 @@ ci:	## Run in automation environment
 	$(eval AUTO_APPROVE=-auto-approve)
 	$(eval SKIP_AZURE_LOGIN=true)
 	$(eval CONFIRM_PRODUCTION=true)
+
+composed-variables: ## Compose variables needed for deployments
+	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
+	$(eval KEYVAULT_NAMES='("${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-app-kv", "${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv")')
+	$(eval STORAGE_ACCOUNT_NAME=$(AZURE_RESOURCE_PREFIX)$(SERVICE_SHORT)tfstate$(CONFIG_SHORT)sa)
+	$(eval LOG_ANALYTICS_WORKSPACE_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-log)
 
 bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
@@ -105,19 +104,24 @@ terrafile: bin/terrafile
 	./bin/terrafile -p terraform/application/vendor/modules \
 		-f terraform/application/config/$(CONFIG)/Terrafile
 
-.PHONY: terraform-init
-terraform-init: set-resource-group-name set-storage-account-name set-azure-account terrafile
+terraform-init: composed-variables bin/terrafile set-azure-account ## Initialize terraform for AKS
 	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
+	$(eval TERRAFORM_BACKEND_KEY=$(or ${TERRAFORM_BACKEND_KEY},terraform.tfstate))
 
-	$(eval export TF_VAR_docker_image=$(DOCKER_IMAGE))
-	$(eval export TF_VAR_config_short=$(CONFIG_SHORT))
-	$(eval export TF_VAR_service_short=$(SERVICE_SHORT))
-	$(eval export TF_VAR_azure_resource_prefix=$(AZURE_RESOURCE_PREFIX))
-
+	./bin/terrafile -p terraform/application/vendor/modules -f terraform/application/config/$(CONFIG)/Terrafile
 	terraform -chdir=terraform/application init -upgrade -reconfigure \
-		-backend-config=resource_group_name=$(RESOURCE_GROUP_NAME) \
-		-backend-config=storage_account_name=$(STORAGE_ACCOUNT_NAME) \
-		-backend-config=key=$(or $(TERRAFORM_BACKEND_KEY),terraform.tfstate)
+		-backend-config=resource_group_name=${RESOURCE_GROUP_NAME} \
+		-backend-config=storage_account_name=${STORAGE_ACCOUNT_NAME} \
+		-backend-config=key=${TERRAFORM_BACKEND_KEY}
+
+	$(eval export TF_VAR_environment=${ENVIRONMENT})
+	$(eval export TF_VAR_azure_resource_prefix=${AZURE_RESOURCE_PREFIX})
+	$(eval export TF_VAR_config=${CONFIG})
+	$(eval export TF_VAR_config_short=${CONFIG_SHORT})
+	$(eval export TF_VAR_service_name=${SERVICE_NAME})
+	$(eval export TF_VAR_service_short=${SERVICE_SHORT})
+	$(eval export TF_VAR_docker_image=$(DOCKER_IMAGE))
+	$(eval export TF_VAR_resource_group_name=${RESOURCE_GROUP_NAME})
 
 .PHONY: terraform-plan
 terraform-plan: terraform-init
@@ -148,13 +152,22 @@ check-auto-approve:
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 
 .PHONY: arm-deployment
-arm-deployment: set-resource-group-name set-storage-account-name set-azure-account set-azure-resource-group-tags set-key-vault-names
+arm-deployment: composed-variables set-azure-account
+	$(if ${DISABLE_KEYVAULTS},, $(eval KV_ARG=keyVaultNames=${KEYVAULT_NAMES}))
+	$(if ${ENABLE_KV_DIAGNOSTICS}, $(eval KV_DIAG_ARG=enableDiagnostics=${ENABLE_KV_DIAGNOSTICS} logAnalyticsWorkspaceName=${LOG_ANALYTICS_WORKSPACE_NAME}),)
+
 	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
-		-l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
+		-l "${REGION}" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
-			"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
-			keyVaultNames='("${KEY_VAULT_APPLICATION_NAME}", "${KEY_VAULT_INFRASTRUCTURE_NAME}")' \
-			"enableKVPurgeProtection=${KEY_VAULT_PURGE_PROTECTION}" ${WHAT_IF}
+		"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=terraform-state" \
+		${KV_ARG} \
+		${KV_DIAG_ARG} \
+		"enableKVPurgeProtection=${KV_PURGE_PROTECTION}" \
+		${WHAT_IF}
+
+deploy-arm-resources: arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
+
+validate-arm-resources: set-what-if arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
 
 .PHONY: deploy-azure-resources
 deploy-azure-resources: check-auto-approve arm-deployment # make development deploy-azure-resources AUTO_APPROVE=1
