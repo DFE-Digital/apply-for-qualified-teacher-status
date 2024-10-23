@@ -5,10 +5,10 @@ class FindOrCreateTeacherFromGovOne
 
   attr_reader :teacher
 
-  def initialize(email:, gov_one_id:, eligibility_check_id:)
+  def initialize(email:, gov_one_id:, eligibility_check:)
     @email = email
     @gov_one_id = gov_one_id
-    @eligibility_check_id = eligibility_check_id
+    @eligibility_check = eligibility_check
   end
 
   def call
@@ -27,7 +27,7 @@ class FindOrCreateTeacherFromGovOne
 
   private
 
-  attr_reader :email, :gov_one_id, :eligibility_check_id
+  attr_reader :email, :gov_one_id, :eligibility_check
 
   def find_or_create_teacher!
     @teacher =
@@ -46,10 +46,6 @@ class FindOrCreateTeacherFromGovOne
   def valid_eligibility_check?
     eligibility_check.present? && eligibility_check.region.present? &&
       eligibility_check.country.eligibility_enabled?
-  end
-
-  def eligibility_check
-    @eligibility_check ||= EligibilityCheck.find_by(id: eligibility_check_id)
   end
 
   def teacher_requires_application_form?
