@@ -172,6 +172,10 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
     environment: review
+    permissions:
+      id-token: write
+      pull-requests: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -205,6 +209,9 @@ jobs:
       url: ${{ steps.deploy.outputs.url }}
     outputs:
       environment_name: ${{ matrix.environment }}
+    permissions:
+      id-token: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
@@ -225,6 +232,9 @@ jobs:
       name: production
       url: ${{ steps.deploy.outputs.url }}
     concurrency: deploy_production
+    permissions:
+      id-token: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
