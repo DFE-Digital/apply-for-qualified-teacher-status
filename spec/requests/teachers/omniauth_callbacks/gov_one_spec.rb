@@ -3,9 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
-  subject(:gov_one_callback) do
-    get "/teacher/auth/gov_one/callback" }
-  end
+  subject(:gov_one_callback) { get "/teacher/auth/gov_one/callback" }
 
   let(:omniauth_hash) do
     OmniAuth::AuthHash.new(
