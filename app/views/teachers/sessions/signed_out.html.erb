@@ -1,30 +1,9 @@
-<% content_for :page_title, "We’ve saved your progress" %>
+<% content_for :page_title, "You have been signed out" %>
 
-<h1 class="govuk-heading-xl">We’ve saved your progress</h1>
+<h1 class="govuk-heading-xl">You have been signed out</h1>
 
 <p class="govuk-body-m">You've been signed out of the Apply for qualified teacher status in England service.</p>
 
-<% if @section == "qualification_consent" %>
-  <p class="govuk-body-m">
-    We’ve saved your progress regarding submitting the written consent we need to proceed with your application.
-  </p>
+<p class="govuk-body-m">All changes have been saved.</p>
 
-  <p class="govuk-body">
-    <%= govuk_link_to "Sign in", new_teacher_session_url %> to complete your written consent tasks and submit your documents.
-  </p>
-<% else %>
-  <p class="govuk-body-m">
-    All the information you’ve added to your application so far has been saved.
-  </p>
-
-  <p class="govuk-body">
-    We’ll keep your application open for 6 months from the date you started it.
-    If you do not submit it within this time, you’ll need to make a new application.
-  </p>
-
-  <h2 class="govuk-heading-m">Continuing your application</h2>
-
-  <p class="govuk-body">
-    Use your email address to <%= govuk_link_to "sign in", new_teacher_session_url %> and complete your application.
-  </p>
-<% end %>
+<p class="govuk-body-m">You can close this page or <%= govuk_link_to "sign back in", new_teacher_session_url %>.</p>
