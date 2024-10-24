@@ -18,5 +18,9 @@
     <%= govuk_button_link_to "Continue", check_teacher_interface_application_form_consent_requests_path %>
   <% end %>
 
-  <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.save"), destroy_teacher_session_path, secondary: true %>
+  <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+    <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.save"), logout_uri, secondary: true %>
+  <% else %>
+    <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.save"), destroy_teacher_session_path, secondary: true %>
+  <% end %>
 </div>

@@ -3,8 +3,19 @@
 
 <%= render "shared/eligible_region_content", region: @region, eligibility_check: @eligibility_check %>
 
+<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+  <p class="govuk-body">You need a GOV.UK One Login to use this service. You can create one if you do not already have one.</p>
+<% end %>
+
 <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) %>
   <%= govuk_start_button(text: "Apply for QTS", href: new_teacher_registration_path) %>
+<% end %>
+
+<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+  <p class="govuk-body">
+    Find out more about
+    <%= govuk_link_to "using a GOV.UK One Login", "https://www.gov.uk/using-your-gov-uk-one-login", new_tab: true %>.
+  </p>
 <% end %>
 
 <%= render "shared/help_us_to_improve_this_service" %>
