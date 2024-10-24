@@ -19,7 +19,7 @@ RSpec.describe "Teacher consent", type: :system do
 
     when_i_click_the_save_and_sign_out_button
     then_i_see_the(:teacher_signed_out_page)
-    and_i_see_qualification_consent_sign_out_content
+    and_i_see_sign_out_content
   end
 
   it "check your answers" do
@@ -80,9 +80,9 @@ RSpec.describe "Teacher consent", type: :system do
     teacher_consent_requests_page.save_and_sign_out_button.click
   end
 
-  def and_i_see_qualification_consent_sign_out_content
+  def and_i_see_sign_out_content
     expect(teacher_signed_out_page).to have_content(
-      "We’ve saved your progress regarding submitting the written consent",
+      "You've been signed out of the Apply for qualified teacher status in England service.",
     )
   end
 
