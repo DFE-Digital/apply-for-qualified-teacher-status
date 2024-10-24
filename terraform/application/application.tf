@@ -19,9 +19,9 @@ module "application_configuration" {
     {
       HOSTING_ENVIRONMENT = local.environment
 
-      BIGQUERY_PROJECT_ID = module.dfe_analytics.bigquery_project_id
-      BIGQUERY_DATASET    = module.dfe_analytics.bigquery_dataset
-      BIGQUERY_TABLE_NAME = module.dfe_analytics.bigquery_table_name
+      BIGQUERY_PROJECT_ID = var.bigquery_federated_auth ? module.dfe_analytics[0].bigquery_project_id : "apply-for-qts-in-england"
+      BIGQUERY_DATASET    = var.bigquery_federated_auth ? module.dfe_analytics[0].bigquery_dataset : "events_${var.app_environment}"
+      BIGQUERY_TABLE_NAME = var.bigquery_federated_auth ? module.dfe_analytics[0].bigquery_table_name : "events"
   })
 
   secret_key_vault_short = "app"
@@ -33,7 +33,7 @@ module "application_configuration" {
     AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.uploads.primary_access_key
     AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
 
-    GOOGLE_CLOUD_CREDENTIALS = var.bigquery_federated_auth ? module.dfe_analytics.google_cloud_credentials : null
+    GOOGLE_CLOUD_CREDENTIALS = var.bigquery_federated_auth ? module.dfe_analytics[0].google_cloud_credentials : null
   }
 }
 
@@ -77,5 +77,5 @@ module "worker_application" {
   probe_command = ["pgrep", "-f", "sidekiq"]
 
   enable_logit   = var.enable_logit
-  enable_gcp_wif = true
+  enable_gcp_wif = var.bigquery_federated_auth ? true : null
 }

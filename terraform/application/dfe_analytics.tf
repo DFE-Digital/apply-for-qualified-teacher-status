@@ -3,6 +3,7 @@ provider "google" {
 }
 
 module "dfe_analytics" {
+  count  = var.bigquery_federated_auth ? 1 : 0
   source = "./vendor/modules/dfe-terraform-modules//aks/dfe_analytics"
 
   azure_resource_prefix = var.azure_resource_prefix
