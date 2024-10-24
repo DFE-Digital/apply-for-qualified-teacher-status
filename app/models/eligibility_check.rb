@@ -141,6 +141,10 @@ class EligibilityCheck < ApplicationRecord
     touch(:completed_at)
   end
 
+  def completed?
+    completed_at.present?
+  end
+
   def status
     return :country if country_code.blank?
 

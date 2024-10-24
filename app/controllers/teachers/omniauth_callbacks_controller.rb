@@ -6,18 +6,24 @@ class Teachers::OmniauthCallbacksController < ApplicationController
     email = auth&.info&.email
     gov_one_id = auth&.uid
 
-    session[:id_token] = auth&.credentials&.id_token
+    return error_redirect unless email
 
-    teacher =
-      FindOrCreateTeacherFromGovOne.call(
-        email:,
-        gov_one_id:,
-        eligibility_check_id: session[:eligibility_check_id],
-      )
+    if new_user_without_eligibility_check_completed?(email)
+      redirect_to :eligibility_interface_countries
+    else
+      session[:id_token] = auth&.credentials&.id_token
 
-    return error_redirect unless teacher
+      teacher =
+        FindOrCreateTeacherFromGovOne.call(
+          email:,
+          gov_one_id:,
+          eligibility_check:,
+        )
 
-    sign_in_and_redirect teacher
+      return error_redirect unless teacher
+
+      sign_in_and_redirect teacher
+    end
   end
 
   def failure
@@ -26,11 +32,24 @@ class Teachers::OmniauthCallbacksController < ApplicationController
 
   private
 
+  def new_user_without_eligibility_check_completed?(email)
+    Teacher.find_by(email:).nil? &&
+      (
+        eligibility_check.nil? || !eligibility_check.completed? ||
+          !eligibility_check.eligible?
+      )
+  end
+
+  def eligibility_check
+    @eligibility_check ||=
+      EligibilityCheck.find_by(id: session[:eligibility_check_id])
+  end
+
   def error_redirect
     return if teacher_signed_in?
 
     flash[:alert] = "There was a problem signing in. Please try again."
-    redirect_to new_teacher_session_path
+    redirect_to root_path
   end
 
   def after_sign_in_path_for(resource)
