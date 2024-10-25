@@ -6,7 +6,10 @@ module TeacherInterface
     attribute :response, :string
 
     validates :further_information_request_item, presence: true
-    validates :response, presence: true
+    validates :response,
+              presence: {
+                message: "Please respond to the assessor's request",
+              }
 
     def update_model
       further_information_request_item.update!(response:)
