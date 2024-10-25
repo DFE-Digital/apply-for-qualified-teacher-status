@@ -8,7 +8,10 @@ module TeacherInterface
     validates :further_information_request_item, presence: true
     validates :response,
               presence: {
-                message: "Please respond to the assessor's request",
+                message:
+                  I18n.t(
+                    "teacher_interface.further_information_request_item_text_form.response.blank",
+                  ),
               }
 
     def update_model

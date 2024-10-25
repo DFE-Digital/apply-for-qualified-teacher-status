@@ -95,6 +95,9 @@ en:
           school_details_cannot_be_verified: Tell us more about this school
           unrecognised_references: Tell us more about your work history
           work_history_break: Tell us more about your work history
+    further_information_request_item_text_form:
+      response:
+        blank: Please respond to the assessor's request
     reference_requests:
       show:
         title: You’ve been asked to act as a reference
