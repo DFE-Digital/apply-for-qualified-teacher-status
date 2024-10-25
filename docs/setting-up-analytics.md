@@ -27,6 +27,8 @@ in the free tier
 
 ## 3. Create a data set and table
 
+Update: The [dfe_analytics](https://github.com/DFE-Digital/terraform-modules/tree/main/aks/dfe_analytics) terraform module now automates these steps.
+
 You should create separate data sets for each environment (dev/preprod/prod).
 
 1. Select the BigQuery instance
@@ -189,6 +191,8 @@ If you edit as text, you can paste this:
 
 ## 4. Create custom roles
 
+Update: The [dfe_analytics](https://github.com/DFE-Digital/terraform-modules/tree/main/aks/dfe_analytics) terraform module now automates these steps.
+
 1. Go to IAM and Admin settings > Roles
 1. Click on "+ Create role"
 1. Create the 3 roles outlined below
@@ -321,12 +325,16 @@ If you edit as text, you can paste this:
 
 ## 5. Create an appender service account
 
+Update: The [dfe_analytics](https://github.com/DFE-Digital/terraform-modules/tree/main/aks/dfe_analytics) terraform module now automates these steps.
+
 1. Go to [IAM and Admin settings > Create service account](https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts/create?supportedpurview=project)
 1. Name it like "Appender NAME_OF_SERVICE ENVIRONMENT", so "Appender Apply Local"
 1. Add a description, like "Used when developing locally."
 1. Grant the service account access to the project, use the "BigQuery Appender Custom" role you set up earlier
 
 ## 6. Get an API JSON key :key:
+
+Update: The [dfe_analytics](https://github.com/DFE-Digital/terraform-modules/tree/main/aks/dfe_analytics) terraform module now automates these steps.
 
 1. Access the service account you previously setup
 1. Go to the keys tab, click on "Add key > Create new key"
@@ -335,6 +343,8 @@ If you edit as text, you can paste this:
 The full contents of this JSON file is your `BIGQUERY_API_JSON_KEY`.
 
 ## 6. Set up environment variables
+
+Update: The [dfe_analytics](https://github.com/DFE-Digital/terraform-modules/tree/main/aks/dfe_analytics) terraform module now automates these steps.
 
 Putting the previous things together, to finish setting up `dfe-analytics`, you
 need these environment variables:
