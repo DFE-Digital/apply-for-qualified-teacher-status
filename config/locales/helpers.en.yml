@@ -47,7 +47,7 @@ en:
           medium_of_instruction: This is sometimes called a 'Medium of Instruction' (MOI) and you can request it from the institution where you studied. It must be signed and stamped by them on official headed paper, and it must state that the medium of instruction was English. It must also include your name, degree title and award date.
           provider: The test must have been taken within the last 2 years. We cannot accept English language tests from a provider that does not appear on the list.
       teacher_interface_further_information_request_item_text_form:
-        response: Use the text box below to respond to the assessor’s question.
+        response: Use the text box below to respond to the assessor's request.
       teacher_interface_ghana_registration_number_form:
         registration_number: Your teacher license number is made up of 2 letters, 6 numbers and a final 4 numbers. For example, PT/123456/1234.
       teacher_interface_has_work_history_form:
