@@ -3,7 +3,7 @@
 class Staff::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :authenticate_support!
 
-  def azure_activedirectory_v2
+  def entra_id
     auth = request.env["omniauth.auth"]
     email = auth["info"]["email"]
     azure_ad_uid = auth["uid"]

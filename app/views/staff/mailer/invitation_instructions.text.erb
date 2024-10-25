@@ -3,7 +3,7 @@
 <%= t("devise.mailer.invitation_instructions.someone_invited_you", url: root_url) %>
 
 <% if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory) %>
-  <%= omniauth_authorize_url(:staff, :azure_activedirectory_v2) %>
+  <%= omniauth_authorize_url(:staff, :entra_id) %>
 <% else %>
   <%= accept_invitation_url(@resource, invitation_token: @token) %>
 <% end %>

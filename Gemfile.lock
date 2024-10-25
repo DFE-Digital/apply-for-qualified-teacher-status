@@ -375,7 +375,7 @@ GEM
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
-    omniauth-azure-activedirectory-v2 (2.4.0)
+    omniauth-entra-id (3.0.0)
       omniauth-oauth2 (~> 1.8)
     omniauth-oauth2 (1.8.0)
       oauth2 (>= 1.4, < 3)
@@ -712,7 +712,7 @@ DEPENDENCIES
   mail-notify
   matrix
   okcomputer
-  omniauth-azure-activedirectory-v2
+  omniauth-entra-id
   omniauth-rails_csrf_protection
   omniauth_openid_connect
   pagy

@@ -9,7 +9,7 @@ RSpec.describe "Staff sign in", type: :request do
 
   shared_examples "an Azure login" do
     it "redirects to Azure login" do
-      expect(response).to redirect_to("/staff/auth/azure_activedirectory_v2")
+      expect(response).to redirect_to("/staff/auth/entra_id")
     end
   end
 
