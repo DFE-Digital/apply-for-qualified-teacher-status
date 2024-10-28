@@ -368,7 +368,7 @@ Devise.setup do |config|
   # Which algorithm to use for tokenizing magic links. See README for descriptions
   config.passwordless_tokenizer = "MessageEncryptorTokenizer"
 
-  config.omniauth :azure_activedirectory_v2,
+  config.omniauth :entra_id,
                   client_id: ENV["MICROSOFT_OAUTH_CLIENT_ID"],
                   client_secret: ENV["MICROSOFT_OAUTH_CLIENT_SECRET"],
                   tenant_id: ENV["MICROSOFT_OAUTH_TENANT_ID"]

@@ -14,7 +14,7 @@ module StaffAuthenticatable
       super
     else
       session[:staff_return_to] = request.fullpath
-      redirect_to omniauth_authorize_path(:staff, :azure_activedirectory_v2)
+      redirect_to omniauth_authorize_path(:staff, :entra_id)
     end
   end
 end

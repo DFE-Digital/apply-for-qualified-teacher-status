@@ -97,7 +97,7 @@ RSpec.describe "Staff support", type: :system do
   def when_i_visit_the_invitation_email_with_azure_ad_enabled_i_see_the_link_to_access
     message = ActionMailer::Base.deliveries.first
     uri = URI.parse(URI.extract(message.body.raw_source).second)
-    expect(uri.path).to eq("/staff/auth/azure_activedirectory_v2")
+    expect(uri.path).to eq("/staff/auth/entra_id")
   end
 
   def when_i_visit_the_invitation_email_with_azure_ad_disabled
