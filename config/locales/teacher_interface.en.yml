@@ -277,6 +277,10 @@ en:
           attributes:
             has_work_history:
               inclusion: Select whether you have worked professionally as a teacher
+        teacher_interface/further_information_request_item_text_form:
+          attributes:
+            response:
+              blank: "Please respond to the assessor's request"
         teacher_interface/further_information_request_item_work_history_contact_form:
           attributes:
             contact_name:

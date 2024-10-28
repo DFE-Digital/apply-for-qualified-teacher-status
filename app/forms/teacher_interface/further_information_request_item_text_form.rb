@@ -6,13 +6,7 @@ module TeacherInterface
     attribute :response, :string
 
     validates :further_information_request_item, presence: true
-    validates :response,
-              presence: {
-                message:
-                  I18n.t(
-                    "teacher_interface.further_information_request_item_text_form.response.blank",
-                  ),
-              }
+    validates :response, presence: true
 
     def update_model
       further_information_request_item.update!(response:)
