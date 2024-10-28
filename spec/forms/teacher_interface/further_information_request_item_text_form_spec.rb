@@ -14,6 +14,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestItemTextForm,
   let(:response) { nil }
 
   it { is_expected.to validate_presence_of(:further_information_request_item) }
+  it { is_expected.to validate_presence_of(:response) }
 
   describe "#save" do
     subject(:save) { form.save(validate: true) }
@@ -22,13 +23,6 @@ RSpec.describe TeacherInterface::FurtherInformationRequestItemTextForm,
       let(:response) { "" }
 
       it { is_expected.to be false }
-
-      it "adds an error to the response" do
-        subject
-        expect(form.errors[:response]).to include(
-          "Please respond to the assessor's request",
-        )
-      end
     end
 
     context "with a present value" do
