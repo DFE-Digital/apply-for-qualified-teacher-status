@@ -3,6 +3,13 @@
 require "rails_helper"
 
 RSpec.describe "Assessor filtering application forms", type: :system do
+  let(:assessors) do
+    [
+      create(:staff, :with_assess_permission, name: "Fal Staff"),
+      create(:staff, :with_assess_permission, name: "Wag Staff"),
+    ]
+  end
+
   before do
     given_there_are_application_forms
     given_i_am_authorized_as_an_assessor_user
@@ -54,7 +61,61 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   private
 
   def given_there_are_application_forms
-    application_forms
+    create(
+      :application_form,
+      :submitted,
+      region: create(:region, :in_country, country_code: "US"),
+      given_names: "Cher",
+      family_name: "Bert",
+      assessor: assessors.second,
+      submitted_at: 2.months.ago,
+      reference: "CHERBERT",
+    )
+
+    create(
+      :application_form,
+      :submitted,
+      :action_required_by_admin,
+      region: create(:region, :in_country, country_code: "FR"),
+      given_names: "Emma",
+      family_name: "Dubois",
+      assessor: assessors.second,
+      submitted_at: 2.months.ago,
+      teacher: create(:teacher, email: "emma.dubois@example.org"),
+    )
+
+    create(
+      :application_form,
+      :submitted,
+      :action_required_by_assessor,
+      region: create(:region, :in_country, country_code: "ES"),
+      given_names: "Arnold",
+      family_name: "Drummond",
+      assessor: assessors.first,
+      submitted_at: 2.months.ago,
+    )
+
+    create(
+      :application_form,
+      :awarded,
+      awarded_at: 2.days.ago,
+      region: create(:region, :in_country, country_code: "PT"),
+      given_names: "John",
+      family_name: "Smith",
+      assessor: assessors.second,
+      submitted_at: 10.days.ago,
+    )
+
+    create(
+      :application_form,
+      :awarded,
+      awarded_at: 6.months.ago,
+      region: create(:region, :in_country, country_code: "DE"),
+      given_names: "Nick",
+      family_name: "Johnson",
+      assessor: assessors.second,
+      submitted_at: 7.months.ago,
+    )
   end
 
   def when_i_visit_the_applications_page
@@ -200,68 +261,5 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def then_i_see_a_list_of_all_applications
     expect(assessor_applications_page.search_results.count).to eq(5)
-  end
-
-  def application_forms
-    @application_forms ||= [
-      create(
-        :application_form,
-        :submitted,
-        region: create(:region, :in_country, country_code: "US"),
-        given_names: "Cher",
-        family_name: "Bert",
-        assessor: assessors.second,
-        submitted_at: 2.months.ago,
-        reference: "CHERBERT",
-      ),
-      create(
-        :application_form,
-        :submitted,
-        :action_required_by_admin,
-        region: create(:region, :in_country, country_code: "FR"),
-        given_names: "Emma",
-        family_name: "Dubois",
-        assessor: assessors.second,
-        submitted_at: 2.months.ago,
-        teacher: create(:teacher, email: "emma.dubois@example.org"),
-      ),
-      create(
-        :application_form,
-        :submitted,
-        :action_required_by_assessor,
-        region: create(:region, :in_country, country_code: "ES"),
-        given_names: "Arnold",
-        family_name: "Drummond",
-        assessor: assessors.first,
-        submitted_at: 2.months.ago,
-      ),
-      create(
-        :application_form,
-        :awarded,
-        awarded_at: 2.days.ago,
-        region: create(:region, :in_country, country_code: "PT"),
-        given_names: "John",
-        family_name: "Smith",
-        assessor: assessors.second,
-        submitted_at: 10.days.ago,
-      ),
-      create(
-        :application_form,
-        :awarded,
-        awarded_at: 6.months.ago,
-        region: create(:region, :in_country, country_code: "DE"),
-        given_names: "Nick",
-        family_name: "Johnson",
-        assessor: assessors.second,
-        submitted_at: 7.months.ago,
-      ),
-    ]
-  end
-
-  def assessors
-    @assessors ||= [
-      create(:staff, :with_assess_permission, name: "Fal Staff"),
-      create(:staff, :with_assess_permission, name: "Wag Staff"),
-    ]
   end
 end
