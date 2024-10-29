@@ -32,15 +32,9 @@ class SupportInterface::RegionForm
   validates :sanction_check, inclusion: { in: %w[online written none] }
   validates :status_check, inclusion: { in: %w[online written none] }
   validates :teaching_authority_emails_string,
-            presence: {
-              message: "You must provide an email for the teaching authority.",
-            },
+            presence: true,
             if: :teaching_authority_requires_submission_email
-  validates :teaching_authority_name,
-            format: {
-              without: /\Athe.*\z/i,
-              message: "Teaching authority name shouldn't start with ‘the’.",
-            }
+  validates :teaching_authority_name, format: { without: /\Athe.*\z/i }
   validates :teaching_authority_online_checker_url, url: { allow_blank: true }
   validates :teaching_authority_provides_written_statement,
             inclusion: {
