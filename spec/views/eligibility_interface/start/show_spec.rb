@@ -23,14 +23,6 @@ RSpec.describe "eligibility_interface/start/show.html.erb", type: :view do
     )
   end
 
-  it do
-    expect(subject).not_to match(
-      /You need a GOV.UK One Login to use this service./,
-    )
-  end
-
-  it { expect(subject).not_to match(/using a GOV.UK One Login/) }
-
   context "with GOV.UK One Login enabled" do
     around do |example|
       FeatureFlags::FeatureFlag.activate(:gov_one_applicant_login)
@@ -40,14 +32,6 @@ RSpec.describe "eligibility_interface/start/show.html.erb", type: :view do
 
     it do
       expect(subject).to match(
-        /You need a GOV.UK One Login to use this service./,
-      )
-    end
-
-    it { expect(subject).to match(/using a GOV.UK One Login/) }
-
-    it do
-      expect(subject).not_to match(
         /If you’ve already started your application using this service, you can/,
       )
     end
