@@ -1,0 +1,36 @@
+en:
+  activemodel:
+    errors:
+      models:
+        support_interface/country_form:
+          attributes:
+            eligibility_enabled:
+              inclusion: You must select whether or not we accept applications from this country
+            eligibility_route:
+              inclusion: You must select an eligibility route
+            has_regions:
+              inclusion: You must select whether or not there are regions within in this country that have a different teaching authority or service journey
+            region_names:
+              blank: You must provide region names
+        support_interface/region_form:
+          attributes:
+            all_sections_necessary:
+              inclusion: Please select whether applicants need to complete all sections of the application form
+            requires_preliminary_check:
+              inclusion: Please select whether this region requires a preliminary check
+            sanction_check:
+              inclusion: Please select how sanctions will be checked
+            status_check:
+              inclusion: Please select how teacher status will be checked
+            teaching_authority_emails_string:
+              blank: You must provide an email for the teaching authority.
+            teaching_authority_name:
+              invalid: Teaching authority name shouldn't start with 'the'.
+            teaching_authority_online_checker_url:
+              url: Online checker website is a valid URL
+            teaching_authority_provides_written_statement:
+              inclusion: Please select whether teaching authority only send the letter of professional standing (LOPS) directly to the TRA
+            work_history_section_to_omit:
+              inclusion: Please choose which sections will be removed
+            written_statement_optional:
+              inclusion: Please choose whether applicant can submit without uploading the written statement
