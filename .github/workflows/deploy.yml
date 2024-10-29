@@ -8,11 +8,14 @@ on:
         required: true
         default: development
         type: environment
-        options:
-          - development
-          - test
-          - preproduction
-          - production
+      docker-image-tag:
+        description: "Docker image tag to deploy (optional)"
+        required: true
+        type: string
+      pull-request-number:
+        description: "Pull request number (required for review environment)"
+        required: false
+        type: string
   push:
     branches:
       - main
@@ -32,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
 
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || (github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch')
 
     outputs:
       image: ${{ steps.build-docker-image.outputs.image }}
@@ -64,6 +67,7 @@ jobs:
   rspec_system:
     name: Rspec System
     runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
 
     services:
       postgres:
@@ -116,6 +120,7 @@ jobs:
   rspec_other:
     name: Rspec Other
     runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
 
     services:
       postgres:
@@ -271,3 +276,24 @@ jobs:
           SLACK_WEBHOOK: ${{ steps.key-vault-secrets.outputs.SLACK-WEBHOOK }}
           SLACK_COLOR: failure
           SLACK_FOOTER: Sent from notify_slack_of_failures job in deploy workflow
+
+  deploy_custom:
+    name: Custom deployment to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ steps.deploy.outputs.url }}
+    concurrency: deploy_${{ inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/deploy-environment
+        id: deploy
+        with:
+          environment: ${{ inputs.environment }}
+          docker-image: ghcr.io/dfe-digital/apply-for-qualified-teacher-status:${{ inputs.docker-image-tag }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          pull-request-number: ${{ inputs.environment == 'review' && inputs.pull-request-number || '' }}
+          smoke-test-credentials-required: ${{ inputs.environment == 'production' && 'false' || 'true' }}
