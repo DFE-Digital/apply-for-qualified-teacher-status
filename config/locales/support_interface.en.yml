@@ -27,7 +27,7 @@ en:
             teaching_authority_name:
               invalid: Teaching authority name shouldn't start with 'the'.
             teaching_authority_online_checker_url:
-              url: Online checker website is a valid URL
+              url: Online checker website is not a valid URL
             teaching_authority_provides_written_statement:
               inclusion: Please select whether teaching authority only send the letter of professional standing (LOPS) directly to the TRA
             work_history_section_to_omit:
