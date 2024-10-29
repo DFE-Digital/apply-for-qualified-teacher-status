@@ -4,13 +4,12 @@ require "rails_helper"
 
 RSpec.describe FindOrCreateTeacherFromGovOne do
   subject(:call) do
-    described_class.call(email:, gov_one_id:, eligibility_check_id:)
+    described_class.call(email:, gov_one_id:, eligibility_check:)
   end
 
   let(:email) { "test@example.com" }
   let(:gov_one_id) { "123456789" }
   let(:eligibility_check) { nil }
-  let(:eligibility_check_id) { eligibility_check&.id }
 
   it "creates a teacher record" do
     expect { call }.to change(Teacher, :count).by(1)

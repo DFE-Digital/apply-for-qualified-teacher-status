@@ -241,6 +241,20 @@ RSpec.describe EligibilityCheck, type: :model do
     it { is_expected.to eq([complete_check]) }
   end
 
+  describe "#completed?" do
+    context "when completed_at is set" do
+      let(:eligibility_check) { create(:eligibility_check, :complete) }
+
+      it { expect(eligibility_check.completed?).to be true }
+    end
+
+    context "when completed_at is nil" do
+      let(:eligibility_check) { create(:eligibility_check) }
+
+      it { expect(eligibility_check.completed?).to be false }
+    end
+  end
+
   describe "#eligible" do
     subject(:eligible) { described_class.eligible }
 
