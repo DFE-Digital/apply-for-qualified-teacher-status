@@ -11,6 +11,7 @@
 #  current_sign_in_ip                      :string
 #  email                                   :string           not null
 #  email_domain                            :text             default(""), not null
+#  gov_one_email                           :string
 #  last_sign_in_at                         :datetime
 #  last_sign_in_ip                         :string
 #  sign_in_count                           :integer          default(0), not null
