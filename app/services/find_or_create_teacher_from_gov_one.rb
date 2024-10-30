@@ -34,7 +34,11 @@ class FindOrCreateTeacherFromGovOne
       Teacher.find_by(gov_one_id:) || Teacher.find_by(email:) ||
         Teacher.create!(email:)
 
-    teacher.update!(gov_one_id:) if teacher.gov_one_id.nil?
+    if teacher.gov_one_id.nil?
+      teacher.update!(gov_one_id:, gov_one_email: email)
+    else
+      teacher.update!(gov_one_email: email)
+    end
   end
 
   def create_application_form!
