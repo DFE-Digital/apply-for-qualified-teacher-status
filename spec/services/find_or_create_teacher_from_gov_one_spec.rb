@@ -18,7 +18,11 @@ RSpec.describe FindOrCreateTeacherFromGovOne do
   it "ensures the teacher record has the email and gov_one_id provided" do
     teacher = call
 
-    expect(teacher).to have_attributes(email:, gov_one_id:, gov_one_email: email)
+    expect(teacher).to have_attributes(
+      email:,
+      gov_one_id:,
+      gov_one_email: email,
+    )
   end
 
   context "when eligibility_check_id is provided" do
@@ -80,7 +84,6 @@ RSpec.describe FindOrCreateTeacherFromGovOne do
 
       expect(existing_teacher.reload.gov_one_id).to eq(gov_one_id)
     end
-
 
     it "sets the gov_one_email on the existing teacher record" do
       call
