@@ -140,6 +140,11 @@ jobs:
         with:
           name: backup-sanitised
 
+      - uses: ./.github/actions/set-kubernetes-credentials
+        with:
+          environment: preproduction
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Install kubectl
         uses: DFE-Digital/github-actions/set-kubectl@master
 
