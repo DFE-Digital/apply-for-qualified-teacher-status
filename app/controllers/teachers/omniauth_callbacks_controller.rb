@@ -8,7 +8,7 @@ class Teachers::OmniauthCallbacksController < ApplicationController
 
     return error_redirect unless email
 
-    if new_user_without_eligibility_check_completed?(email)
+    if new_user_without_eligibility_check_completed?(gov_one_id, email)
       redirect_to :eligibility_interface_countries
     else
       session[:id_token] = auth&.credentials&.id_token
@@ -32,8 +32,8 @@ class Teachers::OmniauthCallbacksController < ApplicationController
 
   private
 
-  def new_user_without_eligibility_check_completed?(email)
-    Teacher.find_by(email:).nil? &&
+  def new_user_without_eligibility_check_completed?(gov_one_id, email)
+    (Teacher.find_by(gov_one_id:).nil? && Teacher.find_by(email:).nil?) &&
       (
         eligibility_check.nil? || !eligibility_check.completed? ||
           !eligibility_check.eligible?
