@@ -85,6 +85,12 @@ variable "uploads_storage_account_name" {
   default = null
 }
 
+variable "bigquery_federated_auth" {
+  type        = bool
+  default     = false
+  description = "Configure environment variable to let dfe-analytics use federated authentication"
+}
+
 locals {
   environment_variables = yamldecode(file("${path.module}/config/${var.app_environment}/variables.yml"))
 }
