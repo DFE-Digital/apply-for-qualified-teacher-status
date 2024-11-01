@@ -14,18 +14,29 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
     end
 
     it do
-      is_expected.to validate_inclusion_of(:eligibility_enabled).in_array(
+      expect(subject).to validate_inclusion_of(:eligibility_enabled).in_array(
         [true, false],
       )
     end
+
     it do
-      is_expected.to validate_inclusion_of(:eligibility_route).in_array(
+      expect(subject).to validate_inclusion_of(:eligibility_route).in_array(
         %w[expanded reduced standard],
       )
     end
+
     it do
-      is_expected.to validate_inclusion_of(:has_regions).in_array([true, false])
+      expect(subject).to validate_inclusion_of(:has_regions).in_array(
+        [true, false],
+      )
     end
+
     it { is_expected.to validate_presence_of(:region_names) }
+
+    context "when has_regions is false" do
+      before { form.has_regions = false }
+
+      it { is_expected.not_to validate_presence_of(:region_names) }
+    end
   end
 end
