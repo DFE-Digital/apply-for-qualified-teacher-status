@@ -32,7 +32,8 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
 
     it do
       expect(subject).to validate_presence_of(:has_regions).with_message(
-        "You must select whether or not there are regions within in this country that have a different teaching authority or service journey",
+        "You must select whether or not there are regions within in this " \
+          "country that have a different teaching authority or service journey",
       )
     end
 
