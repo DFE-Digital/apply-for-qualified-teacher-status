@@ -47,6 +47,7 @@ jobs:
         run: |
           source global_config/${{ inputs.environment }}.sh
           tf_vars_file=${{ env.TF_VARS_PATH }}/${CONFIG}/variables.tfvars.json
+          echo "CONFIG=${CONFIG}" >> $GITHUB_ENV
           echo "CLUSTER=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
           echo "RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
           echo "STORAGE_ACCOUNT_NAME=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}dbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
