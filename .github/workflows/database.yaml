@@ -74,7 +74,8 @@ jobs:
           echo "BACKUP_FILE=${BACKUP_FILE}" >> $GITHUB_ENV
           echo "KEYVAULT_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv" >> $GITHUB_ENV
 
-      - uses: azure/login@v2
+      - name: Azure login
+        uses: azure/login@v2
         with:
           environment: ${{ env.ENVIRONMENT }}
           creds: ${{ secrets.AZURE_CREDENTIALS }}
