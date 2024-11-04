@@ -55,7 +55,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-
       - name: Set environment variables
         run: |
           source global_config/${DEPLOY_ENV}.sh
@@ -75,7 +74,7 @@ jobs:
           echo "BACKUP_FILE=${BACKUP_FILE}" >> $GITHUB_ENV
           echo "KEYVAULT_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv" >> $GITHUB_ENV
 
-       - uses: azure/login@v2
+      - uses: azure/login@v2
         with:
           environment: ${{ env.ENVIRONMENT }}
           creds: ${{ secrets.AZURE_CREDENTIALS }}
