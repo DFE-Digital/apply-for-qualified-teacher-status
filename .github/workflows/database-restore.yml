@@ -46,7 +46,7 @@ jobs:
       - name: Set environment variables
         run: |
           source global_config/${{ inputs.environment }}.sh
-          tf_vars_file=${{ env.TF_VARS_PATH }}/${{ env.ENVIRONMENT }}/variables.tfvars.json
+          tf_vars_file=${{ env.TF_VARS_PATH }}/${CONFIG}/variables.tfvars.json
           echo "CLUSTER=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
           echo "RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
           echo "STORAGE_ACCOUNT_NAME=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}dbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
@@ -65,7 +65,7 @@ jobs:
         with:
           storage-account: ${{ env.STORAGE_ACCOUNT_NAME }}
           resource-group: ${{ env.RESOURCE_GROUP_NAME }}
-          app-name: ${{ env.SERVICE_NAME }}-${{ env.ENVIRONMENT }}-web
+          app-name: ${{ env.SERVICE_NAME }}-${CONFIG}-web
           cluster: ${{ env.CLUSTER }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           backup-file: ${{ env.BACKUP_FILE }}
