@@ -76,8 +76,8 @@ jobs:
 
       - name: Azure login
         uses: azure/login@v2
+        environment: ${{ env.ENVIRONMENT }}
         with:
-          environment: ${{ env.ENVIRONMENT }}
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Fetch secrets from key vault
