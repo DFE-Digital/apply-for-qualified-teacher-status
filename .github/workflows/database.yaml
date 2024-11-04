@@ -61,7 +61,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          source global_config/${DEPLOY_ENV}.sh
+          source global_config/${{ inputs.environment }}.sh
           tf_vars_file=${TF_VARS_PATH}/${{ env.ENVIRONMENT }}/variables.tfvars.json
           echo "CLUSTER=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
           echo "RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
