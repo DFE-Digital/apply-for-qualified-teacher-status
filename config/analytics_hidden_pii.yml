@@ -32,6 +32,7 @@
     - canonical_email
     - current_sign_in_ip
     - email
+    - gov_one_email
     - last_sign_in_ip
     - unconfirmed_email
   :uploads:

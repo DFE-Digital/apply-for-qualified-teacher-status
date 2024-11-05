@@ -112,6 +112,46 @@ RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
     end
   end
 
+  context "when the user has an existing teacher record with a different email" do
+    before { create :teacher, email: "oldemail@example.com", gov_one_id: }
+
+    it "does not generate a new teacher record with an application" do
+      expect { gov_one_callback }.not_to change(Teacher, :count)
+    end
+
+    it "redirects the teacher to the teacher interface" do
+      gov_one_callback
+
+      expect(response).to redirect_to(teacher_interface_root_path)
+    end
+
+    it "sets the id_token session" do
+      gov_one_callback
+
+      expect(request.session[:id_token]).to eq("99999")
+    end
+  end
+
+  context "when the user has an existing teacher record without a GOV.UK One login ID set" do
+    before { create :teacher, email: }
+
+    it "does not generate a new teacher record with an application" do
+      expect { gov_one_callback }.not_to change(Teacher, :count)
+    end
+
+    it "redirects the teacher to the teacher interface" do
+      gov_one_callback
+
+      expect(response).to redirect_to(teacher_interface_root_path)
+    end
+
+    it "sets the id_token session" do
+      gov_one_callback
+
+      expect(request.session[:id_token]).to eq("99999")
+    end
+  end
+
   context "when no auth info is provided" do
     let(:omniauth_hash) { OmniAuth::AuthHash.new({}) }
 

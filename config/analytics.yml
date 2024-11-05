@@ -349,6 +349,7 @@
     - current_sign_in_ip
     - email
     - email_domain
+    - gov_one_email
     - id
     - last_sign_in_at
     - last_sign_in_ip
