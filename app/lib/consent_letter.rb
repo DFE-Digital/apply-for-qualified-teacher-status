@@ -21,7 +21,7 @@ class ConsentLetter
   SECTION_PAD = 48
 
   PRIVACY_URL =
-    "https://www.gov.uk/government/organisations/department-for-education/about/personal-information-charter"
+    "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/5a254207-a566-44f7-ac77-6ba59fd26e04#using-your-data-when-you-use-the-apply-for-qualified-teacher-status-qts-in-england-service"
 
   def document
     @document ||=
