@@ -20,7 +20,8 @@ class ConsentLetter
   LINE_PAD = 12
   SECTION_PAD = 48
 
-  PRIVACY_URL = "https://apply-for-qts-in-england.education.gov.uk/privacy"
+  PRIVACY_URL =
+    "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/5a254207-a566-44f7-ac77-6ba59fd26e04#using-your-data-when-you-use-the-apply-for-qualified-teacher-status-qts-in-england-service"
 
   def document
     @document ||=
