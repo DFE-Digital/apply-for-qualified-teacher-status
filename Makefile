@@ -18,12 +18,13 @@ development: test-cluster ## Specify development configuration
 
 .PHONY: review
 review: test-cluster ## Specify review configuration
-	$(if ${PULL_REQUEST_NUMBER},,$(error Missing PULL_REQUEST_NUMBER))
-	$(eval ENVIRONMENT=pr-${PULL_REQUEST_NUMBER})
+	$(if ${PR_NUMBER},,$(error Missing PULL_REQUEST_NUMBER))
+	$(eval ENVIRONMENT=pr-${PR_NUMBER})
+	$(eval export NAMESPACE=tra-development)
 	$(eval include global_config/review.sh)
-	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PULL_REQUEST_NUMBER).tfstate)
-	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
-	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
+	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PR_NUMBER).tfstate)
+	$(eval export TF_VAR_app_suffix=-$(PR_NUMBER))
+	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PR_NUMBER)sa)
 
 .PHONY: test
 test: test-cluster ## Specify test configuration
@@ -105,7 +106,8 @@ terrafile: bin/terrafile
 		-f terraform/application/config/$(CONFIG)/Terrafile
 
 terraform-init: composed-variables bin/terrafile set-azure-account ## Initialize terraform for AKS
-	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
+	$(if $(DOCKER_IMAGE_TAG), , $(error Missing environment variable "DOCKER_IMAGE_TAG"))
+	$(eval export DOCKER_IMAGE=ghcr.io/dfe-digital/apply-for-qualified-teacher-status:$(DOCKER_IMAGE_TAG))
 	$(eval TERRAFORM_BACKEND_KEY=$(or ${TERRAFORM_BACKEND_KEY},terraform.tfstate))
 
 	./bin/terrafile -p terraform/application/vendor/modules -f terraform/application/config/$(CONFIG)/Terrafile
@@ -236,3 +238,7 @@ enable-maintenance: maintenance-image-push maintenance-fail-over ## Build, push,
 disable-maintenance: get-cluster-credentials ## Fail back to the main app: make production disable-maintenance
 	$(eval export CONFIG)
 	./maintenance_page/scripts/failback.sh
+
+db-seed: get-cluster-credentials
+	$(if $(PR_NUMBER), , $(error can only run with PR_NUMBER))
+	kubectl -n ${NAMESPACE} exec deployment/apply-for-qts-review-${PR_NUMBER}-web -- /bin/sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed review_app:configure fake_data:generate"

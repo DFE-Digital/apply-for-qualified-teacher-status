@@ -6,8 +6,11 @@ on:
       environment:
         description: "Deploy environment"
         required: true
-        default: development
-        type: environment
+        type: choice
+        default: review
+        options:
+        - review
+        - development
       docker-image-tag:
         description: "Docker image tag to deploy (optional)"
         required: true
@@ -17,293 +20,121 @@ on:
         required: false
         type: string
   push:
-    branches:
-      - main
-
+   branches:
+    - main
   pull_request:
     branches:
-      - main
-    types:
-      - labeled
-      - synchronize
-      - reopened
-      - opened
+    - main
+    types: [opened, reopened, synchronize, labeled]
+
+env:
+  TERRAFORM_BASE: terraform/application
+  HEALTHCHECK_CMD: 'healthcheck/all'
 
 jobs:
-  docker:
-    name: Build and push Docker image
-    runs-on: ubuntu-latest
-    environment: development
-
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || (github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch')
-
+  build:
+    name: Build
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    env:
+      DOCKER_REPOSITORY: ghcr.io/dfe-digital/apply-for-qualified-teacher-status
     outputs:
-      image: ${{ steps.build-docker-image.outputs.image }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - id: key-vault-name
-        shell: bash
-        run: echo "value=$(make -s development print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
-
-      - uses: Azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - uses: Azure/get-keyvault-secrets@v1
-        id: key-vault-secrets
-        with:
-          keyvault: ${{ steps.key-vault-name.outputs.value }}
-          secrets: "SNYK-TOKEN"
-
-      - uses: DFE-Digital/github-actions/build-docker-image@master
-        id: build-docker-image
-        with:
-          docker-repository: ghcr.io/dfe-digital/apply-for-qualified-teacher-status
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          snyk-token: ${{ steps.key-vault-secrets.outputs.SNYK-TOKEN }}
-
-  rspec_system:
-    name: Rspec System
+      docker-image-tag: ${{ steps.build-image.outputs.tag }}
     runs-on: ubuntu-latest
-    if: github.event_name != 'workflow_dispatch'
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-retries 5
-          --health-timeout 5s
-
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    env:
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/apply_for_qts_test
-      RAILS_ENV: test
-      REDIS_URL: redis://localhost:6379/0
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+      name: Checkout
 
-      - name: Prepare application environment
-        uses: ./.github/actions/prepare-app-env
+    - name: Build and push docker image
+      id: build-image
+      uses: DFE-Digital/github-actions/build-docker-image@2088-create-github-workflow-templates
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        context: .
+        docker-repository: ${{ env.DOCKER_REPOSITORY }}
+        max-cache: true
+        reuse-cache: true
+#        snyk-token: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Build frontend
-        run: yarn build && yarn build:css
-
-      - name: Setup DB
-        run: bin/rails db:test:prepare
-
-      - name: Run DfE Analytics
-        run: bin/bundle exec rails dfe:analytics:check
-
-      - name: Run tests
-        run: bundle exec rspec spec/system --format documentation --tag ~smoke_test
-
-  rspec_other:
-    name: Rspec Other
+  test:
+    name: Run tests
+    if: ${{ github.event_name != 'workflow_dispatch' }}
     runs-on: ubuntu-latest
-    if: github.event_name != 'workflow_dispatch'
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-retries 5
-          --health-timeout 5s
-
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    env:
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/apply_for_qts_test
-      RAILS_ENV: test
-      REDIS_URL: redis://localhost:6379/0
+    # This is a skeleton test job
+    # It will need to be updated to set the environment and run required tests
+    # The steps can be moved to a separate action if preferred
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Check out repository
+      uses: actions/checkout@v4
 
-      - name: Prepare application environment
-        uses: ./.github/actions/prepare-app-env
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
 
-      - name: Build frontend
-        run: yarn build && yarn build:css
+    # - name: Run static analysis
+    #   shell: bash
+    #   run: |
+    #     bundle exec rubocop
+    #     bundle exec brakeman
 
-      - name: Setup DB
-        run: bin/rails db:test:prepare
+    # - name: Run unit tests
+    #   shell: bash
+    #   run: bundle exec rspec
 
-      - name: Run DfE Analytics
-        run: bin/bundle exec rails dfe:analytics:check
-
-      - name: Run tests
-        run: bundle exec rspec spec/lib spec/forms spec/models spec/view_objects spec/components spec/controllers spec/policies spec/helpers spec/validators spec/jobs spec/mailers spec/views spec/requests spec/services --format documentation
-
-  deploy_review:
-    name: Deploy to review environment
+  deploy-review-app:
+    name: Deployment To Review
     concurrency: deploy_review_${{ github.event.pull_request.number }}
-    needs: [docker, rspec_system, rspec_other]
+    if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
+    needs: [build, test]
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'deploy')
-    environment: review
     permissions:
       id-token: write
       pull-requests: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/deploy-environment
-        id: deploy
-        with:
-          environment: review
-          docker-image: ${{ needs.docker.outputs.image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          pull-request-number: ${{ github.event.pull_request.number }}
-
-      - name: Post sticky pull request comment
-        if: github.event_name == 'pull_request'
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          message: |
-            Review app deployed to ${{ steps.deploy.outputs.url }}/personas
-
-  deploy_non_production:
-    name: Deploy to ${{ matrix.environment }} environment
-    runs-on: ubuntu-latest
-    needs: [docker, rspec_system, rspec_other]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    concurrency: deploy_${{ matrix.environment }}
-    strategy:
-      max-parallel: 1
-      matrix:
-        environment: [development, test, preproduction]
     environment:
-      name: ${{ matrix.environment }}
-      url: ${{ steps.deploy.outputs.url }}
-    outputs:
-      environment_name: ${{ matrix.environment }}
-    permissions:
-      id-token: write
-      pull-requests: write
+      name: review
+      url: ${{ steps.deploy_review.outputs.environment_url }}
 
     steps:
-      - uses: actions/checkout@v4
+    - name: Deploy App to Review
+      id: deploy_review
+      uses: DFE-Digital/github-actions/deploy-to-aks@2088-create-github-workflow-templates
+      with:
+        azure-credentials:  ${{ secrets.AZURE_CREDENTIALS }}
+        environment: review
+        pr-number: ${{ github.event.pull_request.number }}
+        sha: ${{ needs.build.outputs.docker-image-tag }}
+        terraform-base: ${{ env.TERRAFORM_BASE }}
+        healthcheck: ${{ env.HEALTHCHECK_CMD }}
+        db-seed: true
+        # gcp-wip: ${{ vars.GCP_WIP }}
+        # gcp-project-id: ${{ vars.GCP_PROJECT_ID }}
+        # db-seed: true
 
-      - uses: ./.github/actions/deploy-environment
-        id: deploy
-        with:
-          environment: ${{ matrix.environment }}
-          docker-image: ${{ needs.docker.outputs.image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-
-  deploy_production:
-    name: Deploy to production environment
-    needs: [docker, rspec_system, rspec_other, deploy_non_production]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment:
-      name: production
-      url: ${{ steps.deploy.outputs.url }}
-    concurrency: deploy_production
-    permissions:
-      id-token: write
-      pull-requests: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/deploy-environment
-        id: deploy
-        with:
-          environment: production
-          docker-image: ${{ needs.docker.outputs.image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          smoke-test-credentials-required: "false"
-
-  notify_slack_of_failures:
-    name: Notify Slack of failures
-    runs-on: ubuntu-latest
-    environment: development
-
-    if: ${{ failure() && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-    needs: [docker, rspec_system, rspec_other, deploy_non_production]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - id: key-vault-name
-        shell: bash
-        run: echo "value=$(make -s development print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
-
-      - uses: Azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - uses: Azure/get-keyvault-secrets@v1
-        id: key-vault-secrets
-        with:
-          keyvault: ${{ steps.key-vault-name.outputs.value }}
-          secrets: "SLACK-WEBHOOK"
-
-      - name: Notify Slack channel on job failure
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_TITLE: Deployment of apply-for-qualified-teacher-status to ${{ needs.deploy_non_production.outputs.environment_name }} failed
-          SLACK_MESSAGE: |
-            Deployment to ${{ needs.deploy_non_production.outputs.environment_name }} environment failed
-          SLACK_WEBHOOK: ${{ steps.key-vault-secrets.outputs.SLACK-WEBHOOK }}
-          SLACK_COLOR: failure
-          SLACK_FOOTER: Sent from notify_slack_of_failures job in deploy workflow
-
-  deploy_custom:
-    name: Custom deployment to ${{ inputs.environment }}
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
+  manual_deploy:
+    name: Manual deploy
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     environment:
       name: ${{ inputs.environment }}
-      url: ${{ steps.deploy.outputs.url }}
-    concurrency: deploy_${{ inputs.environment }}
+      url: ${{ steps.deploy_manual.outputs.environment_url }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      pull-requests: write
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/deploy-environment
-        id: deploy
-        with:
-          environment: ${{ inputs.environment }}
-          docker-image: ghcr.io/dfe-digital/apply-for-qualified-teacher-status:${{ inputs.docker-image-tag }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          pull-request-number: ${{ inputs.environment == 'review' && inputs.pull-request-number || '' }}
-          smoke-test-credentials-required: ${{ inputs.environment == 'production' && 'false' || 'true' }}
+    - name: Deploy app to ${{ inputs.environment }}
+      id: deploy_manual
+      uses: DFE-Digital/github-actions/deploy-to-aks@2088-create-github-workflow-templates
+      with:
+        azure-credentials:  ${{ secrets.AZURE_CREDENTIALS }}
+        environment: ${{ inputs.environment }}
+        pr-number: ${{ inputs.pull-request-number }}
+        sha: ${{ inputs.docker-image-tag }}
+        terraform-base: ${{ env.TERRAFORM_BASE }}
+        healthcheck: ${{ env.HEALTHCHECK_CMD }}
+        db-seed: ${{ inputs.environment == 'review' && 'true' || 'false' }}
+        gcp-wip: projects/385922361840/locations/global/workloadIdentityPools/apply-for-qualified-teacher-sta3/providers/apply-for-qualified-teacher-sta3
+        gcp-project-id: apply-for-qts-in-england

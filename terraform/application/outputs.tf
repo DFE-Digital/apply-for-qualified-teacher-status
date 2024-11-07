@@ -2,6 +2,12 @@ output "url" {
   value = module.web_application.url
 }
 
+output "external_urls" {
+  value = [
+    module.web_application.url
+  ]
+}
+
 output "postgres_azure_backup_storage_account_name" {
   value = module.postgres.azure_backup_storage_account_name
 }
