@@ -174,4 +174,21 @@ RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
       )
     end
   end
+
+  context "when the user is already signed in" do
+    before do
+      teacher = create(:teacher, email:, gov_one_id:)
+      sign_in teacher
+    end
+
+    it "does not generate a new teacher record with an application" do
+      expect { gov_one_callback }.not_to change(Teacher, :count)
+    end
+
+    it "redirects the teacher to the teacher interface" do
+      gov_one_callback
+
+      expect(response).to redirect_to(teacher_interface_root_path)
+    end
+  end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Teachers::OmniauthCallbacksController < ApplicationController
+  before_action :redirect_teacher_already_if_signed_in
+
   def gov_one
     auth = request.env["omniauth.auth"]
     email = auth&.info&.email
@@ -31,6 +33,10 @@ class Teachers::OmniauthCallbacksController < ApplicationController
   end
 
   private
+
+  def redirect_teacher_already_if_signed_in
+    redirect_to teacher_interface_root_path if teacher_signed_in?
+  end
 
   def new_user_without_eligibility_check_completed?(gov_one_id, email)
     (Teacher.find_by(gov_one_id:).nil? && Teacher.find_by(email:).nil?) &&
