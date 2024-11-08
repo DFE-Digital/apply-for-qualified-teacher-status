@@ -45,4 +45,62 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       it { is_expected.not_to validate_presence_of(:region_names) }
     end
   end
+
+  describe "#save" do
+    subject(:save) { form.save! }
+
+    let(:eligibility_enabled) { true }
+    let(:eligibility_route) { "standard" }
+    let(:has_regions) { true }
+    let(:region_names) { "Madrid" }
+    let(:country) { create(:country) }
+    let(:other_information) { "Other information" }
+    let(:status_information) { "Status information" }
+    let(:sanction_information) { "Sanction information" }
+    let(:teaching_qualification_information) do
+      "Teaching qualification information"
+    end
+    let(:form) do
+      described_class.new(
+        country:,
+        eligibility_enabled:,
+        eligibility_route:,
+        has_regions:,
+        region_names:,
+        other_information:,
+        status_information:,
+        sanction_information:,
+        teaching_qualification_information:,
+      )
+    end
+
+    context "when form is valid" do
+      it do
+        subject
+        expect(country.reload).to have_attributes(eligibility_enabled:)
+        expect(subject).to be_truthy
+      end
+
+      it "increases the number of regions by 1" do
+        expect { save }.to change(Region, :count).by(1)
+      end
+      #       it "creates a new region with the given attributes" do
+      #         save
+      #         region = Region.last
+      #         expect(region.name).to eq("Madrid")
+      #         expect(region.other_information).to eq("Other information")
+      #         expect(region.status_information).to eq("Status information")
+      #         expect(region.sanction_information).to eq("Sanction information")
+      #         expect(region.teaching_qualification_information).to eq("Teaching qualification information")
+      #       end
+    end
+    #     context "when form is invalid" do
+    #       before do
+    #       allow(subject).to receive(:valid?).and_return(false)
+    #       end
+    #       it 'raises an error' do
+    #         expect { country_form.save! }.to raise_error(ActiveRecord::RecordInvalid)
+    #       end
+    #     end
+  end
 end
