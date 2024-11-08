@@ -74,15 +74,30 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       )
     end
 
-    it do
-      save!
-      expect { save }.not_to(change(Country, :count))
+    context do
+      it do
+        subject
+        expect { subject }.not_to(change(Country, :count))
+      end
     end
 
-    it "creates a new region with the given attributes" do
-      save!
-      expect(Region.count).to eq(1)
-      expect(Region.last).to have_attributes(name: "Madrid")
+    context "when there is one region specified" do
+      it "creates a new region with the given attributes" do
+        subject
+        expect(Region.count).to eq(1)
+        expect(Region.last).to have_attributes(name: "Madrid")
+      end
+    end
+
+    context "when there are multiple regions specified" do
+      let(:region_names) { "Madrid\nBarcelona" }
+
+      it "creates multiple regions" do
+        subject
+        expect(Region.count).to eq(2)
+        expect(Region.last).to have_attributes(name: "Madrid")
+        expect(Region.first).to have_attributes(name: "Barcelona")
+      end
     end
   end
 end
