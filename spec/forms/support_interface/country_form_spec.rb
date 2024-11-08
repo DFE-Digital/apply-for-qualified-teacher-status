@@ -74,33 +74,15 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       )
     end
 
-    context "when form is valid" do
-      it do
-        subject
-        expect(country.reload).to have_attributes(eligibility_enabled:)
-        expect(subject).to be_truthy
-      end
-
-      it "increases the number of regions by 1" do
-        expect { save }.to change(Region, :count).by(1)
-      end
-      #       it "creates a new region with the given attributes" do
-      #         save
-      #         region = Region.last
-      #         expect(region.name).to eq("Madrid")
-      #         expect(region.other_information).to eq("Other information")
-      #         expect(region.status_information).to eq("Status information")
-      #         expect(region.sanction_information).to eq("Sanction information")
-      #         expect(region.teaching_qualification_information).to eq("Teaching qualification information")
-      #       end
+    it do
+      save!
+      expect { save }.not_to(change(Country, :count))
     end
-    #     context "when form is invalid" do
-    #       before do
-    #       allow(subject).to receive(:valid?).and_return(false)
-    #       end
-    #       it 'raises an error' do
-    #         expect { country_form.save! }.to raise_error(ActiveRecord::RecordInvalid)
-    #       end
-    #     end
+
+    it "creates a new region with the given attributes" do
+      save!
+      expect(Region.count).to eq(1)
+      expect(Region.last).to have_attributes(name: "Madrid")
+    end
   end
 end
