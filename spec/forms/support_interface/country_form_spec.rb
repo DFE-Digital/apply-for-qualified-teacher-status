@@ -73,19 +73,22 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
         teaching_qualification_information:,
       )
     end
-=begin
+
     context "saving the form" do
-      it "does not create a new country" do
-        expect { subject }.not_to(change(Country, :code))
-        expect { subject }.not_to(change(Country, :name))
+      it "updates the country record attributes" do
+        subject
+        expect(country.eligibility_enabled).to eq(true)
+        expect(country.other_information).to eq("Other information")
+        expect(country.status_information).to eq("Status information")
+        expect(country.sanction_information).to eq("Sanction information")
       end
     end
-=end
+
     context "when there is one region specified" do
       it "creates a new region with the given attributes" do
         subject
-        expect(Region.count).to eq(1)
-        expect(Region.last).to have_attributes(name: "Madrid")
+        expect(country.regions.count).to eq(1)
+        expect(country.regions.last).to have_attributes(name: "Madrid")
       end
     end
 
@@ -94,44 +97,38 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
 
       it "creates multiple regions" do
         subject
-        expect(Region.count).to eq(2)
-        expect(Region.last).to have_attributes(name: "Madrid")
-        expect(Region.first).to have_attributes(name: "Barcelona")
+        expect(country.regions.count).to eq(2)
+        expect(country.regions.last).to have_attributes(name: "Madrid")
+        expect(country.regions.first).to have_attributes(name: "Barcelona")
       end
     end
 
     context "when a region is removed" do
       let(:region_names) { "Madrid\nBarcelona" }
 
-      before do
-        Region.create!(name: "Madrid", country:)
-        Region.create!(name: "Barcelona", country:)
-        Region.create!(name: "Valencia", country:)
-      end
-
-      it "initially has three regions" do
-        expect(Region.count).to eq(3)
-      end
-
       it "removes one region" do
+        country.regions.create!(name: "Madrid")
+        country.regions.create!(name: "Barcelona")
+        country.regions.create!(name: "Valencia")
+        expect(country.regions.count).to eq(3)
         subject
-        expect(Region.count).to eq(2)
-        expect(Region.last).to have_attributes(name: "Barcelona")
-        expect(Region.first).to have_attributes(name: "Madrid")
+        expect(country.regions.reload.count).to eq(2)
+        expect(country.regions.reload.last).to have_attributes(name: "Barcelona")
+        expect(country.regions.reload.first).to have_attributes(name: "Madrid")
       end
     end
-=begin  
+
     context "when there are no regions specified" do
       let(:has_regions) { false }
+      let(:region_names) { "" }
 
       it "does not create any regions" do
         subject
         expect(has_regions).to be false
-        expect(Region.count).to eq(0)
+        expect(country.regions.reload.count).to eq(0)
       end
     end
-=end
-=begin
+
     context "when attributes are invalid" do
       let(:eligibility_route) { "invalid_route" }
 
@@ -139,6 +136,5 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
         expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
-=end
   end
 end
