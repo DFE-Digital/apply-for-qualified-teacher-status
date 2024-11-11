@@ -99,5 +99,26 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
         expect(Region.first).to have_attributes(name: "Barcelona")
       end
     end
+
+    context "when a region is removed" do
+      let(:region_names) { "Madrid\nBarcelona" }
+
+      before do
+        Region.create!(name: "Madrid", country:)
+        Region.create!(name: "Barcelona", country:)
+        Region.create!(name: "Valencia", country:)
+      end
+
+      it "initially has three regions" do
+        expect(Region.count).to eq(3)
+      end
+
+      it "removes one region" do
+        save!
+        expect(Region.count).to eq(2)
+        expect(Region.last).to have_attributes(name: "Barcelona")
+        expect(Region.first).to have_attributes(name: "Madrid")
+      end
+    end
   end
 end
