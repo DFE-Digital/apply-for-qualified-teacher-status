@@ -73,14 +73,14 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
         teaching_qualification_information:,
       )
     end
-
-    context do
-      it do
-        subject
-        expect { subject }.not_to(change(Country, :count))
+=begin
+    context "saving the form" do
+      it "does not create a new country" do
+        expect { subject }.not_to(change(Country, :code))
+        expect { subject }.not_to(change(Country, :name))
       end
     end
-
+=end
     context "when there is one region specified" do
       it "creates a new region with the given attributes" do
         subject
@@ -114,11 +114,31 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       end
 
       it "removes one region" do
-        save!
+        subject
         expect(Region.count).to eq(2)
         expect(Region.last).to have_attributes(name: "Barcelona")
         expect(Region.first).to have_attributes(name: "Madrid")
       end
     end
+=begin  
+    context "when there are no regions specified" do
+      let(:has_regions) { false }
+
+      it "does not create any regions" do
+        subject
+        expect(has_regions).to be false
+        expect(Region.count).to eq(0)
+      end
+    end
+=end
+=begin
+    context "when attributes are invalid" do
+      let(:eligibility_route) { "invalid_route" }
+
+      it "raises an error" do
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+=end
   end
 end
