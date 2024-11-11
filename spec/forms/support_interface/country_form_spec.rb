@@ -45,4 +45,151 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       it { is_expected.not_to validate_presence_of(:region_names) }
     end
   end
+
+  describe "#save" do
+    subject(:save) { form.save! }
+
+    let(:eligibility_enabled) { true }
+    let(:eligibility_route) { "standard" }
+    let(:has_regions) { true }
+    let(:region_names) { "Madrid" }
+    let(:country) { create(:country) }
+    let(:other_information) { "Other information" }
+    let(:status_information) { "Status information" }
+    let(:sanction_information) { "Sanction information" }
+    let(:teaching_qualification_information) do
+      "Teaching qualification information"
+    end
+    let(:form) do
+      described_class.new(
+        country:,
+        eligibility_enabled:,
+        eligibility_route:,
+        has_regions:,
+        region_names:,
+        other_information:,
+        status_information:,
+        sanction_information:,
+        teaching_qualification_information:,
+      )
+    end
+
+    it "updates the country record attributes" do
+      subject
+      expect(country).to have_attributes(
+        eligibility_enabled: true,
+        other_information: "Other information",
+        status_information: "Status information",
+        sanction_information: "Sanction information",
+        teaching_qualification_information:
+          "Teaching qualification information",
+        eligibility_skip_questions: false,
+        subject_limited: false,
+      )
+    end
+
+    it "creates a new region from the region name provided" do
+      subject
+      expect(country.regions.count).to eq(1)
+      expect(country.regions.last).to have_attributes(name: "Madrid")
+    end
+
+    context "when the eligibility route is reduced" do
+      let(:eligibility_route) { "reduced" }
+
+      it "updates the country record attributes and sets eligibility_skip_questions to true" do
+        subject
+        expect(country).to have_attributes(
+          eligibility_enabled: true,
+          other_information: "Other information",
+          status_information: "Status information",
+          sanction_information: "Sanction information",
+          teaching_qualification_information:
+            "Teaching qualification information",
+          eligibility_skip_questions: true,
+          subject_limited: false,
+        )
+      end
+    end
+
+    context "when the eligibility route is expanded" do
+      let(:eligibility_route) { "expanded" }
+
+      it "updates the country record attributes and sets subject_limited to true" do
+        subject
+        expect(country).to have_attributes(
+          eligibility_enabled: true,
+          other_information: "Other information",
+          status_information: "Status information",
+          sanction_information: "Sanction information",
+          teaching_qualification_information:
+            "Teaching qualification information",
+          eligibility_skip_questions: false,
+          subject_limited: true,
+        )
+      end
+    end
+
+    context "when there are multiple regions specified" do
+      let(:region_names) { "Madrid\nBarcelona" }
+
+      it "creates multiple regions" do
+        subject
+        expect(country.regions.count).to eq(2)
+        expect(country.regions.last).to have_attributes(name: "Madrid")
+        expect(country.regions.first).to have_attributes(name: "Barcelona")
+      end
+    end
+
+    context "when a region is removed" do
+      let(:region_names) { "Madrid\nBarcelona" }
+
+      before do
+        create(:region, name: "Madrid", country:)
+        create(:region, name: "Barcelona", country:)
+        create(:region, name: "Valencia", country:)
+      end
+
+      it "removes one region" do
+        expect(country.regions.count).to eq(3)
+        subject
+        expect(country.regions.reload.count).to eq(2)
+        expect(country.regions.reload.map(&:name)).to contain_exactly(
+          "Madrid",
+          "Barcelona",
+        )
+      end
+    end
+
+    context "when there are no regions specified" do
+      let(:has_regions) { false }
+
+      it "updates the country record attributes" do
+        subject
+        expect(country).to have_attributes(
+          eligibility_enabled: true,
+          other_information: "",
+          status_information: "",
+          sanction_information: "",
+          teaching_qualification_information: "",
+          eligibility_skip_questions: false,
+          subject_limited: false,
+        )
+      end
+
+      it "only creates the national region" do
+        subject
+        expect(country.regions.reload.count).to eq(1)
+        expect(country.regions.first).to have_attributes(name: "")
+      end
+    end
+
+    context "when attributes are invalid" do
+      let(:eligibility_route) { "invalid_route" }
+
+      it "raises an error" do
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+  end
 end

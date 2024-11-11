@@ -23,6 +23,7 @@ class SupportInterface::CountryForm
   validates :region_names, presence: true, if: :has_regions
 
   def save!
+    raise ActiveRecord::RecordInvalid, self if invalid?
     assign_country_attributes
 
     ActiveRecord::Base.transaction do
