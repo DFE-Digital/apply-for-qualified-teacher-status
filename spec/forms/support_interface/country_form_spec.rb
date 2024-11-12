@@ -192,4 +192,48 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       end
     end
   end
+
+  describe "#for_existing_country" do
+    subject(:form) { described_class.for_existing_country(country) }
+
+    let(:country) { create(:country) }
+
+    it "returns a CountryForm" do
+      expect(subject).to be_a(described_class)
+      expect(form.eligibility_enabled).to eq(country.eligibility_enabled)
+      expect(form.eligibility_route).to eq("standard")
+      expect(form.has_regions).to eq(country.regions.count > 1)
+      expect(form.region_names).to eq(country.regions.pluck(:name).join("\n"))
+      expect(form.other_information).to eq(country.other_information)
+      expect(form.status_information).to eq(country.status_information)
+      expect(form.sanction_information).to eq(country.sanction_information)
+      expect(form.teaching_qualification_information).to eq(
+        country.teaching_qualification_information,
+      )
+    end
+
+    context "when the country is subject limited" do
+      let(:country) { create(:country, :subject_limited) }
+
+      it "sets the eligibility route to expanded" do
+        expect(form.eligibility_route).to eq("expanded")
+      end
+    end
+
+    context "when the country has eligibility skip questions" do
+      let(:country) { create(:country, :eligibility_skip_questions) }
+
+      it "sets the eligibility route to reduced" do
+        expect(form.eligibility_route).to eq("reduced")
+      end
+    end
+
+    context "when the country has no regions" do
+      let(:country) { create(:country, regions: []) }
+
+      it "sets has_regions to false" do
+        expect(form.has_regions).to be(false)
+      end
+    end
+  end
 end
