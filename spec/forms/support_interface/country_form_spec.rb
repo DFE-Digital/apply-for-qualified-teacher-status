@@ -197,10 +197,6 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
     subject(:form) { described_class.for_existing_country(country) }
 
     let(:country) { create(:country, other_information:, status_information:, sanction_information:, teaching_qualification_information:) }
-    let(:eligibility_route) { "standard" }
-    let(:eligibility_enabled) { true }
-    let(:has_regions) { true }
-    let(:region_names) { "Madrid\nBarcelona" }
     let(:other_information) { "Other information" }
     let(:status_information) { "Status information" }
     let(:sanction_information) { "Sanction information" }
@@ -208,31 +204,20 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       "Teaching qualification information"
     end
 
-    context do
-      before do
-        create(:region, name: "Madrid", country:)
-        create(:region, name: "Barcelona", country:)
-      end
-
-      it "returns a CountryForm for the country" do
-        expect(subject).to have_attributes(eligibility_enabled: true)
-        expect(subject).to have_attributes(eligibility_route: "standard")
-        expect(subject).to have_attributes(has_regions: true)
-        expect(subject).to have_attributes(region_names: "Madrid\nBarcelona")
-        expect(subject).to have_attributes(
-          other_information: "Other information",
-        )
-        expect(subject).to have_attributes(
-          status_information: "Status information",
-        )
-        expect(subject).to have_attributes(
-          sanction_information: "Sanction information",
-        )
-        expect(subject).to have_attributes(
-          teaching_qualification_information:
-            "Teaching qualification information",
-        )
-      end
+    it "returns a CountryForm for the country" do
+      create(:region, name: "Madrid", country: country)
+      create(:region, name: "Barcelona", country: country)
+    
+      expect(subject).to have_attributes(
+        eligibility_enabled: true,
+        eligibility_route: "standard",
+        has_regions: true,
+        region_names: "Madrid\nBarcelona",
+        other_information: "Other information",
+        status_information: "Status information",
+        sanction_information: "Sanction information",
+        teaching_qualification_information: "Teaching qualification information"
+      )
     end
 
     context "when the country is subject limited" do
@@ -251,8 +236,18 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       end
     end
 
+    context "when the country has regions" do
+      let(:country) { create(:country) }
+
+      it "sets has_regions to true" do
+        create(:region, name: "Madrid", country: country)
+        create(:region, name: "Barcelona", country: country)
+        expect(subject).to have_attributes(has_regions: true)
+      end
+    end
+
     context "when the country has no regions" do
-      let(:country) { create(:country, regions: []) }
+      let(:country) { create(:country) }
 
       it "sets has_regions to false" do
         expect(subject).to have_attributes(has_regions: false)
