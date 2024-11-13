@@ -213,14 +213,10 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
     end
 
     it "returns a CountryForm for the country" do
-      create(:region, name: "Madrid", country:)
-      create(:region, name: "Barcelona", country:)
-
       expect(subject).to have_attributes(
         eligibility_enabled: true,
         eligibility_route: "standard",
-        has_regions: true,
-        region_names: "Madrid\nBarcelona",
+        has_regions: false,
         other_information: "Other information",
         status_information: "Status information",
         sanction_information: "Sanction information",
@@ -251,7 +247,10 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       it "sets has_regions to true" do
         create(:region, name: "Madrid", country:)
         create(:region, name: "Barcelona", country:)
-        expect(subject).to have_attributes(has_regions: true)
+        expect(subject).to have_attributes(
+          has_regions: true,
+          region_names: "Madrid\nBarcelona",
+        )
       end
     end
 
