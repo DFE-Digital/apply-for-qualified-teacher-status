@@ -197,26 +197,49 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
     subject(:form) { described_class.for_existing_country(country) }
 
     let(:country) { create(:country) }
+    let(:eligibility_route) { "standard" }
+    let(:eligibility_enabled) { true }
+    let(:has_regions) { true }
+    let(:region_names) { "Madrid\nBarcelona" }
+    let(:other_information) { "Other information" }
+    let(:status_information) { "Status information" }
+    let(:sanction_information) { "Sanction information" }
+    let(:teaching_qualification_information) do
+      "Teaching qualification information"
+    end
 
-    it "returns a CountryForm" do
-      expect(subject).to be_a(described_class)
-      expect(form.eligibility_enabled).to eq(country.eligibility_enabled)
-      expect(form.eligibility_route).to eq("standard")
-      expect(form.has_regions).to eq(country.regions.count > 1)
-      expect(form.region_names).to eq(country.regions.pluck(:name).join("\n"))
-      expect(form.other_information).to eq(country.other_information)
-      expect(form.status_information).to eq(country.status_information)
-      expect(form.sanction_information).to eq(country.sanction_information)
-      expect(form.teaching_qualification_information).to eq(
-        country.teaching_qualification_information,
-      )
+    context do
+      before do
+        create(:region, name: "Madrid", country:)
+        create(:region, name: "Barcelona", country:)
+      end
+
+      it "returns a CountryForm for the country" do
+        expect(subject).to have_attributes(eligibility_enabled: true)
+        expect(subject).to have_attributes(eligibility_route: "standard")
+        expect(subject).to have_attributes(has_regions: true)
+        expect(subject).to have_attributes(region_names: "Madrid\nBarcelona")
+        expect(subject).to have_attributes(
+          other_information: "Other information",
+        )
+        expect(subject).to have_attributes(
+          status_information: "Status information",
+        )
+        expect(subject).to have_attributes(
+          sanction_information: "Sanction information",
+        )
+        expect(subject).to have_attributes(
+          teaching_qualification_information:
+            "Teaching qualification information",
+        )
+      end
     end
 
     context "when the country is subject limited" do
       let(:country) { create(:country, :subject_limited) }
 
       it "sets the eligibility route to expanded" do
-        expect(form.eligibility_route).to eq("expanded")
+        expect(subject).to have_attributes(eligibility_route: "expanded")
       end
     end
 
@@ -224,7 +247,7 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       let(:country) { create(:country, :eligibility_skip_questions) }
 
       it "sets the eligibility route to reduced" do
-        expect(form.eligibility_route).to eq("reduced")
+        expect(subject).to have_attributes(eligibility_route: "reduced")
       end
     end
 
@@ -232,7 +255,7 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       let(:country) { create(:country, regions: []) }
 
       it "sets has_regions to false" do
-        expect(form.has_regions).to be(false)
+        expect(subject).to have_attributes(has_regions: false)
       end
     end
   end
