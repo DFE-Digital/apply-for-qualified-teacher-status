@@ -196,7 +196,7 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
   describe "#for_existing_country" do
     subject(:form) { described_class.for_existing_country(country) }
 
-    let(:country) { create(:country) }
+    let(:country) { create(:country, other_information:, status_information:, sanction_information:, teaching_qualification_information:) }
     let(:eligibility_route) { "standard" }
     let(:eligibility_enabled) { true }
     let(:has_regions) { true }
