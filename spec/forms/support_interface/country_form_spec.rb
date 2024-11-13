@@ -192,4 +192,68 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       end
     end
   end
+
+  describe "#for_existing_country" do
+    subject(:form) { described_class.for_existing_country(country) }
+
+    let(:country) do
+      create(
+        :country,
+        other_information:,
+        status_information:,
+        sanction_information:,
+        teaching_qualification_information:,
+      )
+    end
+    let(:other_information) { "Other information" }
+    let(:status_information) { "Status information" }
+    let(:sanction_information) { "Sanction information" }
+    let(:teaching_qualification_information) do
+      "Teaching qualification information"
+    end
+
+    it "returns a CountryForm for the country" do
+      expect(subject).to have_attributes(
+        eligibility_enabled: true,
+        eligibility_route: "standard",
+        has_regions: false,
+        region_names: "",
+        other_information: "Other information",
+        status_information: "Status information",
+        sanction_information: "Sanction information",
+        teaching_qualification_information:
+          "Teaching qualification information",
+      )
+    end
+
+    context "when the country is subject limited" do
+      let(:country) { create(:country, :subject_limited) }
+
+      it "sets the eligibility route to expanded" do
+        expect(subject).to have_attributes(eligibility_route: "expanded")
+      end
+    end
+
+    context "when the country has eligibility skip questions" do
+      let(:country) { create(:country, :eligibility_skip_questions) }
+
+      it "sets the eligibility route to reduced" do
+        expect(subject).to have_attributes(eligibility_route: "reduced")
+      end
+    end
+
+    context "when the country has regions" do
+      before do
+        create(:region, name: "Madrid", country:)
+        create(:region, name: "Barcelona", country:)
+      end
+
+      it "sets has_regions to true" do
+        expect(subject).to have_attributes(
+          has_regions: true,
+          region_names: "Madrid\nBarcelona",
+        )
+      end
+    end
+  end
 end

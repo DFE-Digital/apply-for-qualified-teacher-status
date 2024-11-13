@@ -24,6 +24,10 @@ FactoryBot.define do
   factory :country do
     sequence :code, Country::CODES.cycle
 
+    trait :eligibility_skip_questions do
+      eligibility_skip_questions { true }
+    end
+
     trait :subject_limited do
       subject_limited { true }
     end
