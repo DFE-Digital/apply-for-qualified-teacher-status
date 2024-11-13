@@ -217,6 +217,7 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
         eligibility_enabled: true,
         eligibility_route: "standard",
         has_regions: false,
+        region_names: "",
         other_information: "Other information",
         status_information: "Status information",
         sanction_information: "Sanction information",
@@ -242,23 +243,16 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
     end
 
     context "when the country has regions" do
-      let(:country) { create(:country) }
-
-      it "sets has_regions to true" do
+      before do
         create(:region, name: "Madrid", country:)
         create(:region, name: "Barcelona", country:)
+      end
+
+      it "sets has_regions to true" do
         expect(subject).to have_attributes(
           has_regions: true,
           region_names: "Madrid\nBarcelona",
         )
-      end
-    end
-
-    context "when the country has no regions" do
-      let(:country) { create(:country) }
-
-      it "sets has_regions to false" do
-        expect(subject).to have_attributes(has_regions: false)
       end
     end
   end
