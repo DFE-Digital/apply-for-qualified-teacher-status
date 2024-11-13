@@ -196,7 +196,15 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
   describe "#for_existing_country" do
     subject(:form) { described_class.for_existing_country(country) }
 
-    let(:country) { create(:country, other_information:, status_information:, sanction_information:, teaching_qualification_information:) }
+    let(:country) do
+      create(
+        :country,
+        other_information:,
+        status_information:,
+        sanction_information:,
+        teaching_qualification_information:,
+      )
+    end
     let(:other_information) { "Other information" }
     let(:status_information) { "Status information" }
     let(:sanction_information) { "Sanction information" }
@@ -205,9 +213,9 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
     end
 
     it "returns a CountryForm for the country" do
-      create(:region, name: "Madrid", country: country)
-      create(:region, name: "Barcelona", country: country)
-    
+      create(:region, name: "Madrid", country:)
+      create(:region, name: "Barcelona", country:)
+
       expect(subject).to have_attributes(
         eligibility_enabled: true,
         eligibility_route: "standard",
@@ -216,7 +224,8 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
         other_information: "Other information",
         status_information: "Status information",
         sanction_information: "Sanction information",
-        teaching_qualification_information: "Teaching qualification information"
+        teaching_qualification_information:
+          "Teaching qualification information",
       )
     end
 
@@ -240,8 +249,8 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       let(:country) { create(:country) }
 
       it "sets has_regions to true" do
-        create(:region, name: "Madrid", country: country)
-        create(:region, name: "Barcelona", country: country)
+        create(:region, name: "Madrid", country:)
+        create(:region, name: "Barcelona", country:)
         expect(subject).to have_attributes(has_regions: true)
       end
     end
