@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class DQT::Subject
+class TRS::Subject
   class << self
     def for(value)
-      # these three subjects are not coded by HESA so we've agreed these encodings with the DQT team
+      # these three subjects are not coded by HESA so we've agreed these encodings with the TRS team
       return "999001" if value == "citizenship"
       return "999002" if value == "physical_education"
       return "999003" if value == "design_and_technology"

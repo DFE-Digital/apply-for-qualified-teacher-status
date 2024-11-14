@@ -53,7 +53,7 @@ module ApplyForQualifiedTeacherStatus
     ] = :forbidden
     config.action_mailer.deliver_later_queue_name = "mailer"
 
-    config.dqt = config_for(:dqt)
+    config.trs = config_for(:trs)
     config.gov_one = config_for(:gov_one)
   end
 end

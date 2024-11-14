@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class DQT::Client::ReadTRNRequest
+class TRS::Client::ReadTRNRequest
   include ServicePattern
-  include DQT::Client::Connection
+  include TRS::Client::Connection
 
   def initialize(request_id:)
     @request_id = request_id

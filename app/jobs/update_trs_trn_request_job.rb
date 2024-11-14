@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateDQTTRNRequestJob < ApplicationJob
+class UpdateTRSTRNRequestJob < ApplicationJob
   def perform(dqt_trn_request)
     return if dqt_trn_request.complete?
 

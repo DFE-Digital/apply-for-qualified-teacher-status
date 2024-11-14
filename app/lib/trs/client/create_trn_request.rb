@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class DQT::Client::CreateTRNRequest
+class TRS::Client::CreateTRNRequest
   include ServicePattern
-  include DQT::Client::Connection
+  include TRS::Client::Connection
 
   def initialize(request_id:, application_form:)
     @request_id = request_id
@@ -11,7 +11,7 @@ class DQT::Client::CreateTRNRequest
 
   def call
     path = "/v2/trn-requests/#{request_id}"
-    body = DQT::TRNRequestParams.call(application_form:)
+    body = TRS::TRNRequestParams.call(application_form:)
     connection
       .put(path, body)
       .body

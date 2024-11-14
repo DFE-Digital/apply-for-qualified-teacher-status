@@ -2,14 +2,14 @@
 
 require "rails_helper"
 
-RSpec.describe DQT::Client::CreateTRNRequest do
+RSpec.describe TRS::Client::CreateTRNRequest do
   subject(:call) { described_class.call(request_id:, application_form:) }
 
   let(:request_id) { "request-id" }
   let(:application_form) { create(:application_form) }
 
   before do
-    allow(DQT::TRNRequestParams).to receive(:call).with(
+    allow(TRS::TRNRequestParams).to receive(:call).with(
       application_form:,
     ).and_return("body")
   end

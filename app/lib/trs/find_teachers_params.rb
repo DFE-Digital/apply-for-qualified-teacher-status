@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DQT
+module TRS
   class FindTeachersParams
     include ServicePattern
 

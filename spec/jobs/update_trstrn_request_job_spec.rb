@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe UpdateDQTTRNRequestJob, type: :job do
+RSpec.describe UpdateTRSTRNRequestJob, type: :job do
   describe "#perform" do
     subject(:perform) { described_class.new.perform(dqt_trn_request) }
 
@@ -52,7 +52,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "doesn't queue another job" do
-          expect { perform }.not_to have_enqueued_job(UpdateTRSTRNRequestJob)
+          expect { perform }.not_to have_enqueued_job(described_class)
         end
       end
 
@@ -124,7 +124,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "queues another job" do
-          expect { perform }.to have_enqueued_job(UpdateTRSTRNRequestJob).with(
+          expect { perform }.to have_enqueued_job(described_class).with(
             dqt_trn_request,
           )
         end
@@ -167,7 +167,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "doesn't queue another job" do
-          expect { perform }.not_to have_enqueued_job(UpdateTRSTRNRequestJob)
+          expect { perform }.not_to have_enqueued_job(described_class)
         end
       end
 
@@ -242,7 +242,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
         end
 
         it "queues another job" do
-          expect { perform }.to have_enqueued_job(UpdateTRSTRNRequestJob).with(
+          expect { perform }.to have_enqueued_job(described_class).with(
             dqt_trn_request,
           )
         end
@@ -276,7 +276,7 @@ RSpec.describe UpdateDQTTRNRequestJob, type: :job do
       end
 
       it "doesn't queue another job" do
-        expect { perform }.not_to have_enqueued_job(UpdateTRSTRNRequestJob)
+        expect { perform }.not_to have_enqueued_job(described_class)
       end
     end
   end
