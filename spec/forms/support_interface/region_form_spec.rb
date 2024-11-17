@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe SupportInterface::RegionForm, type: :model do
   describe "#valid?" do
     context "when all required attributes are present and valid" do
-      let(:region) { double("Region") }
+      let(:region) { create(:region) }
       let(:form) do
         described_class.new(
           region:,
@@ -47,12 +47,13 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       end
 
       it do
-        is_expected.to validate_inclusion_of(:sanction_check).in_array(
+        expect(subject).to validate_inclusion_of(:sanction_check).in_array(
           %w[online written none],
         )
       end
+
       it do
-        is_expected.to validate_inclusion_of(:status_check).in_array(
+        expect(subject).to validate_inclusion_of(:status_check).in_array(
           %w[online written none],
         )
       end
