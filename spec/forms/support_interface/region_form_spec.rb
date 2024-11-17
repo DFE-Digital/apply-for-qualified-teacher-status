@@ -26,7 +26,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
           #teaching_authority_requires_submission_email: true,
           #teaching_authority_websites_string: "https://website1.com\nhttps://website2.com",
           #teaching_qualification_information: "Some information",
-          work_history_section_to_omit: "contact_details",
+          #work_history_section_to_omit: "contact_details",
           written_statement_optional: false,
         )
       end
@@ -89,9 +89,19 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       end
 
       it do
-        expect(subject).to validate_inclusion_of(
+        expect(form).not_to validate_inclusion_of(
           :work_history_section_to_omit,
         ).in_array(%w[whole_section contact_details])
+      end
+
+      context "when all_sections_necessary is false" do
+        before { form.all_sections_necessary = false }
+
+        it do
+          expect(form).to validate_inclusion_of(
+            :work_history_section_to_omit,
+          ).in_array(%w[whole_section contact_details])
+        end
       end
 
       it do
