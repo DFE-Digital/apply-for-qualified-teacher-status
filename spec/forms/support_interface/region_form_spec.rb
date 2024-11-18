@@ -11,12 +11,19 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
         teaching_authority_name:,
         teaching_authority_emails_string:,
         teaching_authority_requires_submission_email:,
-        all_sections_necessary: true,
+        all_sections_necessary:,
         requires_preliminary_check: false,
         sanction_check: "none",
         status_check: "none",
         teaching_authority_provides_written_statement: false,
         written_statement_optional: true,
+        teaching_authority_websites_string: "",
+        teaching_authority_address: "",
+        other_information: "",
+        teaching_authority_certificate: "",
+        status_information: "",
+        sanction_information: "",
+        teaching_qualification_information: "",
       )
     end
 
@@ -27,6 +34,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     let(:teaching_authority_emails_string) { "" }
     let(:teaching_authority_name) { "Teaching Authority" }
     let(:teaching_authority_online_checker_url) { "" }
+    let(:all_sections_necessary) { true }
 
     it do
       expect(subject).to validate_presence_of(
@@ -70,6 +78,17 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       expect(subject).to validate_inclusion_of(:status_check).in_array(
         %w[online written none],
       )
+    end
+
+    context "all_sections_necessary is false" do
+      let(:all_sections_necessary) { false }
+
+      it do
+        save!
+        expect(subject).to validate_inclusion_of(
+          :work_history_section_to_omit,
+        ).in_array(%w[whole_section contact_details])
+      end
     end
 
     context "when teaching authority requires submission email" do
