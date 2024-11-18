@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateDQTTRNRequest
+class CreateTRSTRNRequest
   include ServicePattern
 
   def initialize(application_form:, user:)
@@ -12,7 +12,7 @@ class CreateDQTTRNRequest
     request_id = SecureRandom.uuid
     dqt_trn_request = DQTTRNRequest.create!(request_id:, application_form:)
     ApplicationFormStatusUpdater.call(application_form:, user:)
-    UpdateDQTTRNRequestJob.perform_later(dqt_trn_request)
+    UpdateTRSTRNRequestJob.perform_later(dqt_trn_request)
   end
 
   private

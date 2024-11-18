@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DQT::RecognitionRoute do
+RSpec.describe TRS::RecognitionRoute do
   describe "#for_code" do
     subject(:recognition_route) do
       described_class.for_country_code(country_code, under_old_regulations:)

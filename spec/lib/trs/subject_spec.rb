@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DQT::Subject do
+RSpec.describe TRS::Subject do
   describe "#for" do
     subject(:dqt_code) { described_class.for(value) }
 

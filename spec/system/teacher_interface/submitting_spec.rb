@@ -118,7 +118,7 @@ RSpec.describe "Teacher submitting", type: :system do
   end
 
   def when_i_confirm_i_have_no_sanctions
-    allow_any_instance_of(UpdateDQTMatchJob).to receive(:perform)
+    allow_any_instance_of(UpdateTRSMatchJob).to receive(:perform)
 
     teacher_check_your_answers_page
       .submission_declaration

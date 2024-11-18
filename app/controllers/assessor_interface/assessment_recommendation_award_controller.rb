@@ -111,7 +111,7 @@ module AssessorInterface
         if @form.confirmation
           ActiveRecord::Base.transaction do
             assessment.award!
-            CreateDQTTRNRequest.call(application_form:, user: current_staff)
+            CreateTRSTRNRequest.call(application_form:, user: current_staff)
           end
 
           redirect_to [:status, :assessor_interface, application_form]

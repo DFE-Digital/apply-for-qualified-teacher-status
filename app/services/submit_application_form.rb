@@ -41,7 +41,7 @@ class SubmitApplicationForm
       )
     end
 
-    UpdateDQTMatchJob.set(wait: 5.minutes).perform_later(application_form)
+    UpdateTRSMatchJob.set(wait: 5.minutes).perform_later(application_form)
   end
 
   private

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class DQT::Client::FindTeachers
+class TRS::Client::FindTeachers
   include ServicePattern
-  include DQT::Client::Connection
+  include TRS::Client::Connection
 
   attr_reader :application_form, :reverse_name
 
@@ -16,7 +16,7 @@ class DQT::Client::FindTeachers
     response =
       connection.get(
         path,
-        DQT::FindTeachersParams.call(application_form:, reverse_name:),
+        TRS::FindTeachersParams.call(application_form:, reverse_name:),
       )
     if response.success?
       response.body["results"].map do |r|

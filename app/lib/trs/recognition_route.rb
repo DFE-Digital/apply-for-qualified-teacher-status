@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DQT::RecognitionRoute
+class TRS::RecognitionRoute
   class << self
     def for_country_code(country_code, under_old_regulations:)
       if CountryCode.scotland?(country_code)

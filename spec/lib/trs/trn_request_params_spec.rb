@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DQT::TRNRequestParams do
+RSpec.describe TRS::TRNRequestParams do
   describe "#call" do
     subject(:call) { described_class.call(application_form:) }
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DQT::FindTeachersParams do
+RSpec.describe TRS::FindTeachersParams do
   describe "#call" do
     subject(:call) { described_class.call(application_form:, reverse_name:) }
 

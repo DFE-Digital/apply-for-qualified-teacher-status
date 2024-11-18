@@ -334,7 +334,7 @@ RSpec.describe SubmitApplicationForm do
 
   describe "finding matches in DQT" do
     it "calls a background job to find matching DQT records" do
-      expect { call }.to have_enqueued_job(UpdateDQTMatchJob).with(
+      expect { call }.to have_enqueued_job(UpdateTRSMatchJob).with(
         application_form,
       )
     end

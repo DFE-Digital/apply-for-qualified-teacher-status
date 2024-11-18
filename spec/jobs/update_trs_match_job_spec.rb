@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe UpdateDQTMatchJob do
+RSpec.describe UpdateTRSMatchJob do
   describe "#perform" do
     subject(:perform) { described_class.new.perform(application_form) }
 
@@ -12,7 +12,7 @@ RSpec.describe UpdateDQTMatchJob do
 
     before { allow(TRS::Client::FindTeachers).to receive(:call).and_return([]) }
 
-    it "searches DQT for teachers" do
+    it "searches TRS for teachers" do
       expect(TRS::Client::FindTeachers).to receive(:call).with(
         application_form:,
       )

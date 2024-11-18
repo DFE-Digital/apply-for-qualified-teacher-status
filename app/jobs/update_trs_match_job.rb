@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateDQTMatchJob < ApplicationJob
+class UpdateTRSMatchJob < ApplicationJob
   def perform(application_form)
     unless application_form.submitted? && application_form.awarded_at.nil? &&
              application_form.declined_at.nil? &&

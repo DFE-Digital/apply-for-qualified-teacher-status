@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DQT::Client::ReadTRNRequest do
+RSpec.describe TRS::Client::ReadTRNRequest do
   subject(:call) { described_class.call(request_id:) }
 
   let(:request_id) { "request-id" }

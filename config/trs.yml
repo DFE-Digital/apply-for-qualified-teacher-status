@@ -1,0 +1,11 @@
+development:
+  url: <%= ENV.fetch("TRS_API_URL", "https://dev.teacher-qualifications-api.education.gov.uk") %>
+  api_key: <%= ENV["TRS_API_KEY"] %>
+
+production:
+  url: <%= ENV.fetch("TRS_API_URL", "https://teacher-qualifications-api.education.gov.uk") %>
+  api_key: <%= ENV["TRS_API_KEY"] %>
+
+test:
+  url: https://test-teacher-qualifications-api.education.gov.uk
+  api_key: test-api-key

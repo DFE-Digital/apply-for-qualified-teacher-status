@@ -27,7 +27,7 @@ application_form.awarded_pending_checks!
 
 # process the award
 
-CreateDQTTRNRequest.call(application_form:, user:)
+CreateTRSTRNRequest.call(application_form:, user:)
 ```
 
 Check the application is in awarded state in the UI and that the sidekiq jobs have gone through.
