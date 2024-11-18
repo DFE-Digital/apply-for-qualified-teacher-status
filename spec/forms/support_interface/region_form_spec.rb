@@ -4,10 +4,7 @@ require "rails_helper"
 
 RSpec.describe SupportInterface::RegionForm, type: :model do
   describe "#valid?" do
-    subject(:valid) { form.valid? }
-
-    let(:region) { create(:region) }
-    let(:form) do
+    subject(:form) do
       described_class.new(
         teaching_authority_emails_string:,
         region:,
@@ -21,16 +18,20 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       )
     end
 
+    let(:valid) { form.valid? }
+
+    let(:region) { create(:region) }
+
     context "when teaching authority requires submission email" do
       let(:teaching_authority_requires_submission_email) { true }
 
       context "when teaching authority emails string is blank" do
         let(:teaching_authority_emails_string) { "" }
 
-        it { is_expected.to be_falsey }
+        it { is_expected.not_to be_valid }
 
         it "adds an error to the teaching_authority_emails_string field" do
-          subject
+          valid
           expect(form.errors[:teaching_authority_emails_string]).to include(
             "You must provide an email for the teaching authority.",
           )
@@ -42,7 +43,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
           "test@test.com, test2@test.com"
         end
 
-        it { is_expected.to be_truthy }
+        it { is_expected.to be_valid }
       end
     end
 
@@ -52,7 +53,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       context "when teaching authority emails string is blank" do
         let(:teaching_authority_emails_string) { "" }
 
-        it { is_expected.to be_truthy }
+        it { is_expected.to be_valid }
       end
 
       context "when teaching authority emails string is not blank" do
@@ -60,7 +61,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
           "test@test.com, test2@test.com"
         end
 
-        it { is_expected.to be_truthy }
+        it { is_expected.to be_valid }
       end
     end
   end
