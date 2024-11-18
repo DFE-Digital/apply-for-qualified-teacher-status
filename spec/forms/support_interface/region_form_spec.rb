@@ -39,6 +39,18 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       )
     end
 
+    it do
+      expect(subject).to validate_inclusion_of(:sanction_check).in_array(
+        %w[online written none],
+      )
+    end
+
+    it do
+      expect(subject).to validate_inclusion_of(:status_check).in_array(
+        %w[online written none],
+      )
+    end
+
     context "when teaching authority requires submission email" do
       let(:teaching_authority_requires_submission_email) { true }
 
