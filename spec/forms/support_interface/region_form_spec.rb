@@ -20,12 +20,29 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       )
     end
 
+    let(:save!) { form.save! }
     let(:valid) { form.valid? }
     let(:region) { create(:region) }
     let(:teaching_authority_requires_submission_email) { false }
     let(:teaching_authority_emails_string) { "" }
     let(:teaching_authority_name) { "Teaching Authority" }
     let(:teaching_authority_online_checker_url) { "" }
+
+    it do
+      expect(subject).to validate_presence_of(
+        :written_statement_optional,
+      ).with_message(
+        "Please choose whether applicant can submit without uploading the written statement",
+      )
+    end
+
+    it do
+      expect(subject).to validate_presence_of(
+        :teaching_authority_provides_written_statement,
+      ).with_message(
+        "Please select whether teaching authority only send the letter of professional standing (LOPS) directly to the TRA",
+      )
+    end
 
     it do
       expect(subject).to validate_presence_of(
