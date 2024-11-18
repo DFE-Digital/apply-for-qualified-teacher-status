@@ -7,6 +7,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     subject(:form) do
       described_class.new(
         region:,
+        teaching_authority_online_checker_url:,
         teaching_authority_name:,
         teaching_authority_emails_string:,
         teaching_authority_requires_submission_email:,
@@ -24,12 +25,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     let(:teaching_authority_requires_submission_email) { false }
     let(:teaching_authority_emails_string) { "" }
     let(:teaching_authority_name) { "Teaching Authority" }
-
-    context "when teaching authority name includes 'the'" do
-      let(:teaching_authority_name) { "The Teaching Authority" }
-
-      it { is_expected.not_to be_valid }
-    end
+    let(:teaching_authority_online_checker_url) { "" }
 
     it do
       expect(subject).to validate_presence_of(
@@ -100,6 +96,24 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
 
         it { is_expected.to be_valid }
       end
+    end
+
+    context "when teaching authority name includes 'the'" do
+      let(:teaching_authority_name) { "The Teaching Authority" }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context "when teaching authority online checker url is not a valid url" do
+      let(:teaching_authority_online_checker_url) { "not a url" }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context "when teaching authority online checker url is a valid url" do
+      let(:teaching_authority_online_checker_url) { "https://www.example.com" }
+
+      it { is_expected.to be_valid }
     end
   end
 end
