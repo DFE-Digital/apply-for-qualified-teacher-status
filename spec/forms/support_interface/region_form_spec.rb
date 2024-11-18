@@ -4,8 +4,7 @@ require "rails_helper"
 
 RSpec.describe SupportInterface::RegionForm, type: :model do
   describe "#valid?" do
-    let(:region) { create(:region) }
-    let(:form) do
+    subject(:form) do
       described_class.new(
         region:,
         all_sections_necessary: true,
@@ -17,8 +16,8 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
         #status_information: "Some information",
         #teaching_authority_address: "Some address",
         #teaching_authority_certificate: "Some certificate",
-        teaching_authority_emails_string:
-          "email1@example.com\nemail2@example.com",
+        #teaching_authority_emails_string:
+        #"email1@example.com\nemail2@example.com",
         teaching_authority_name: "Teaching Authority",
         teaching_authority_online_checker_url: "https://example.com",
         teaching_authority_provides_written_statement: true,
@@ -29,6 +28,9 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
         written_statement_optional: false,
       )
     end
+
+    let(:valid?) { form.valid? }
+    let(:region) { create(:region) }
 
     it do
       expect(form).to be_valid
