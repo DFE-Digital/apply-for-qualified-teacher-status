@@ -7,6 +7,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     subject(:form) do
       described_class.new(
         region:,
+        teaching_authority_name:,
         teaching_authority_emails_string:,
         teaching_authority_requires_submission_email:,
         all_sections_necessary: true,
@@ -22,6 +23,13 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     let(:region) { create(:region) }
     let(:teaching_authority_requires_submission_email) { false }
     let(:teaching_authority_emails_string) { "" }
+    let(:teaching_authority_name) { "Teaching Authority" }
+
+    context "when teaching authority name includes 'the'" do
+      let(:teaching_authority_name) { "The Teaching Authority" }
+
+      it { is_expected.not_to be_valid }
+    end
 
     it do
       expect(subject).to validate_presence_of(
