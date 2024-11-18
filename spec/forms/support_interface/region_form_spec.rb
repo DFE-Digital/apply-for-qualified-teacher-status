@@ -48,7 +48,8 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       expect(subject).to validate_presence_of(
         :teaching_authority_provides_written_statement,
       ).with_message(
-        "Please select whether teaching authority only send the letter of professional standing (LOPS) directly to the TRA",
+        "Please select whether teaching authority only send the letter of professional " \
+          "standing (LOPS) directly to the TRA",
       )
     end
 
