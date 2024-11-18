@@ -6,8 +6,8 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
   describe "#valid?" do
     subject(:form) do
       described_class.new(
-        teaching_authority_emails_string:,
         region:,
+        teaching_authority_emails_string:,
         teaching_authority_requires_submission_email:,
         all_sections_necessary: true,
         requires_preliminary_check: false,
@@ -19,8 +19,25 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     end
 
     let(:valid) { form.valid? }
-
     let(:region) { create(:region) }
+    let(:teaching_authority_requires_submission_email) { false }
+    let(:teaching_authority_emails_string) { "" }
+
+    it do
+      expect(subject).to validate_presence_of(
+        :all_sections_necessary,
+      ).with_message(
+        "Please select whether applicants need to complete all sections of the application form",
+      )
+    end
+
+    it do
+      expect(subject).to validate_presence_of(
+        :requires_preliminary_check,
+      ).with_message(
+        "Please select whether this region requires a preliminary check",
+      )
+    end
 
     context "when teaching authority requires submission email" do
       let(:teaching_authority_requires_submission_email) { true }
