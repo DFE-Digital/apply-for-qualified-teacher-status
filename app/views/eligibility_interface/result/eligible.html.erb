@@ -8,7 +8,7 @@
 <% end %>
 
 <% if FeatureFlags::FeatureFlag.active?(:teacher_applications) %>
-  <%= govuk_start_button(text: "Apply for QTS", href: new_teacher_registration_path) %>
+  <%= govuk_start_button(text: "Sign in to apply for QTS", href: new_teacher_registration_path) %>
 <% end %>
 
 <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
