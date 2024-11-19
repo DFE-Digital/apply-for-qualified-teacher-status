@@ -5,7 +5,7 @@
 </h1>
 
 <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
-    <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
     <% notification_banner.with_heading(text: "How you sign in has changed") %>
 
     <p class="govuk-body">You need a GOV.UK One Login to sign in.</p>
@@ -23,7 +23,7 @@
     <%= f.hidden_field :validate_email, value: 0 %>
 
     <%= f.govuk_radio_buttons_fieldset :sign_in_or_sign_up, legend: { size: "m", text: "Have you used the service before?" } do %>
-      <%= f.govuk_radio_button :sign_in_or_sign_up, "sign_in", label: { text: "Yes, sign in and continue application" }, hint: { text: "You need a GOV.UK One Login to sign in. If you don't have one you can create one, but you must use the same email as your QTS sign in to access your application." } %>
+      <%= f.govuk_radio_button :sign_in_or_sign_up, "sign_in", label: { text: "Yes, sign in and continue application" }, hint: { text: "Create or sign in to your GOV.UK One Login" } %>
       <%= f.govuk_radio_button :sign_in_or_sign_up, "sign_up", label: { text: "No, I need to check if I can apply" } %>
     <% end %>
   <% else %>
