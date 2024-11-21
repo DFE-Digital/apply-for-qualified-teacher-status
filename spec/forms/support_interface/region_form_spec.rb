@@ -85,7 +85,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       let(:all_sections_necessary) { false }
 
       it do
-        save!
+        subject.valid?
         expect(subject).to validate_inclusion_of(
           :work_history_section_to_omit,
         ).in_array(%w[whole_section contact_details])
@@ -198,9 +198,11 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       )
     end
 
-    context "when form is valid" do
-      it "returns true" do
-        expect(subject).to be true
+    context "when form is invalid" do
+      let(:sanction_check) { "invalid" }
+
+      it "returns false" do
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
   end
