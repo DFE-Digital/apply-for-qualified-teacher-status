@@ -85,7 +85,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       let(:all_sections_necessary) { false }
 
       it do
-        subject.valid?
+        valid
         expect(subject).to validate_inclusion_of(
           :work_history_section_to_omit,
         ).in_array(%w[whole_section contact_details])
@@ -160,15 +160,15 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     let(:form) do
       described_class.new(
         region:,
-        teaching_authority_online_checker_url:,
+        teaching_authority_online_checker_url: "",
         teaching_authority_name:,
-        teaching_authority_emails_string:,
-        teaching_authority_requires_submission_email:,
-        all_sections_necessary:,
+        teaching_authority_emails_string: "",
+        teaching_authority_requires_submission_email: false,
+        all_sections_necessary: true,
         requires_preliminary_check: false,
-        sanction_check:,
+        sanction_check: "none",
         status_check: "none",
-        teaching_authority_provides_written_statement:,
+        teaching_authority_provides_written_statement: false,
         written_statement_optional: true,
         teaching_authority_websites_string: "",
         teaching_authority_address: "",
@@ -181,25 +181,34 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     end
 
     let(:region) { create(:region) }
-    let(:teaching_authority_requires_submission_email) { false }
-    let(:teaching_authority_emails_string) { "" }
     let(:teaching_authority_name) { "Teaching Authority" }
-    let(:teaching_authority_online_checker_url) { "" }
-    let(:all_sections_necessary) { true }
-    let(:teaching_authority_provides_written_statement) { false }
-    let(:sanction_check) { "none" }
 
     it "updates region attributes" do
       subject
       expect(region).to have_attributes(
+        application_form_skip_work_history: false,
+        other_information: "",
+        reduced_evidence_accepted: false,
+        requires_preliminary_check: false,
+        sanction_check: "none",
+        sanction_information: "",
+        status_check: "none",
+        status_information: "",
+        teaching_authority_address: "",
+        teaching_authority_certificate: "",
+        teaching_authority_emails: [],
         teaching_authority_name: "Teaching Authority",
+        teaching_authority_online_checker_url: "",
         teaching_authority_provides_written_statement: false,
         teaching_authority_requires_submission_email: false,
+        teaching_authority_websites: [],
+        teaching_qualification_information: "",
+        written_statement_optional: true,
       )
     end
 
     context "when form is invalid" do
-      let(:sanction_check) { "invalid" }
+      let(:teaching_authority_name) { "The Teaching Authority" }
 
       it "returns false" do
         expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
