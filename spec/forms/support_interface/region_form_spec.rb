@@ -153,4 +153,55 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       it { is_expected.to be_valid }
     end
   end
+
+  describe "#save" do
+    subject(:save!) { form.save! }
+
+    let(:form) do
+      described_class.new(
+        region:,
+        teaching_authority_online_checker_url:,
+        teaching_authority_name:,
+        teaching_authority_emails_string:,
+        teaching_authority_requires_submission_email:,
+        all_sections_necessary:,
+        requires_preliminary_check: false,
+        sanction_check:,
+        status_check: "none",
+        teaching_authority_provides_written_statement:,
+        written_statement_optional: true,
+        teaching_authority_websites_string: "",
+        teaching_authority_address: "",
+        other_information: "",
+        teaching_authority_certificate: "",
+        status_information: "",
+        sanction_information: "",
+        teaching_qualification_information: "",
+      )
+    end
+
+    let(:region) { create(:region) }
+    let(:teaching_authority_requires_submission_email) { false }
+    let(:teaching_authority_emails_string) { "" }
+    let(:teaching_authority_name) { "Teaching Authority" }
+    let(:teaching_authority_online_checker_url) { "" }
+    let(:all_sections_necessary) { true }
+    let(:teaching_authority_provides_written_statement) { false }
+    let(:sanction_check) { "none" }
+
+    it "updates region attributes" do
+      subject
+      expect(region).to have_attributes(
+        teaching_authority_name: "Teaching Authority",
+        teaching_authority_provides_written_statement: false,
+        teaching_authority_requires_submission_email: false,
+      )
+    end
+
+    context "when form is valid" do
+      it "returns true" do
+        expect(subject).to be true
+      end
+    end
+  end
 end
