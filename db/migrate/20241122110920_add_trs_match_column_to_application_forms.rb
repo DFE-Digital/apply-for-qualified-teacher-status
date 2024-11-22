@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTRSMatchColumnToApplicationForms < ActiveRecord::Migration[7.2]
   def up
     add_column :application_forms, :trs_match, :jsonb, default: {}

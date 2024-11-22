@@ -15,7 +15,7 @@ class UpdateTRSMatchJob < ApplicationJob
         TRS::Client::FindTeachers.call(application_form:, reverse_name: true)
     end
 
-    application_form.update!(dqt_match: { teachers: })
+    application_form.update!(trs_match: { teachers: })
 
     UpdateTRSMatchJob.set(wait: 24.hours).perform_later(application_form)
   end
