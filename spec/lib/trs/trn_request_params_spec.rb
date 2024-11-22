@@ -57,6 +57,8 @@ RSpec.describe TRS::TRNRequestParams do
           firstName: "Given",
           genderCode: "NotAvailable",
           inductionRequired: true,
+          identityVerified: true,
+          oneLoginUserSubject: nil,
           initialTeacherTraining: {
             ageRangeFrom: 7,
             ageRangeTo: 11,
@@ -83,6 +85,52 @@ RSpec.describe TRS::TRNRequestParams do
           underNewOverseasRegulations: true,
         },
       )
+    end
+
+    context "when the teacher has a GOV.UK One Login ID" do
+      let(:teacher) do
+        create(:teacher, email: "teacher@example.com", gov_one_id: "12345678")
+      end
+
+      it do
+        expect(subject).to eq(
+          {
+            address: {
+            },
+            birthDate: "1960-01-01",
+            emailAddress: "teacher@example.com",
+            firstName: "Given",
+            genderCode: "NotAvailable",
+            inductionRequired: true,
+            identityVerified: true,
+            oneLoginUserSubject: "12345678",
+            initialTeacherTraining: {
+              ageRangeFrom: 7,
+              ageRangeTo: 11,
+              programmeStartDate: "1990-01-01",
+              programmeEndDate: "1995-01-01",
+              providerUkprn: nil,
+              subject1: "100425",
+              subject2: "100321",
+              subject3: nil,
+              trainingCountryCode: "FR",
+            },
+            lastName: "Family",
+            middleName: nil,
+            qtsDate: "2024-01-07",
+            qualification: {
+              class: "NotKnown",
+              countryCode: "FR",
+              date: "1996-01-01",
+              heQualificationType: "Unknown",
+              providerUkprn: nil,
+            },
+            recognitionRoute: "OverseasTrainedTeachers",
+            teacherType: "OverseasQualifiedTeacher",
+            underNewOverseasRegulations: true,
+          },
+        )
+      end
     end
   end
 end

@@ -17,6 +17,8 @@ module TRS
         lastName: application_form.family_name,
         birthDate: application_form.date_of_birth.iso8601,
         emailAddress: teacher.email,
+        identityVerified: true,
+        oneLoginUserSubject: teacher.gov_one_id,
         address: {
         },
         genderCode: "NotAvailable",
