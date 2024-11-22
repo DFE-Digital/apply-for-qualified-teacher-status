@@ -46,6 +46,7 @@
 #  submitted_at                                  :datetime
 #  teaching_authority_provides_written_statement :boolean          default(FALSE), not null
 #  teaching_qualification_part_of_degree         :boolean
+#  trs_match                                     :jsonb
 #  withdrawn_at                                  :datetime
 #  work_history_status                           :string           default("not_started"), not null
 #  working_days_since_submission                 :integer
