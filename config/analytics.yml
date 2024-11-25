@@ -366,6 +366,8 @@
     - translation
     - updated_at
   :work_histories:
+    - address_line1
+    - address_line2
     - application_form_id
     - canonical_contact_email
     - city
@@ -381,6 +383,7 @@
     - id
     - job
     - school_name
+    - school_website
     - start_date
     - start_date_is_estimate
     - still_employed
