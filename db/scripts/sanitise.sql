@@ -13,6 +13,7 @@ SET
   date_of_birth = '2000-01-01',
   alternative_given_names = '',
   alternative_family_name = '',
+  dqt_match = '{}',
   registration_number = '';
 
 -- AssessmentSectionFailureReason
