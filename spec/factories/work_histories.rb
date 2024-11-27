@@ -44,6 +44,7 @@ FactoryBot.define do
     contact_email_domain { EmailAddress.new(contact_email).host_name }
 
     trait :completed do
+      address_line1 { Faker::Address.street_name }
       city { Faker::Address.city }
       contact_job { Faker::Job.title }
       contact_name { Faker::Name.name }

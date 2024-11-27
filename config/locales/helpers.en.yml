@@ -65,6 +65,7 @@ en:
       teacher_interface_teaching_qualification_part_of_degree_form:
         teaching_qualification_part_of_degree: Enter your bachelor’s degree if your teaching qualification was separate, for example a postgraduate degree, diploma, or certificate in education.
       teacher_interface_work_history_school_form:
+        school_website: If this school does not have a webpage, the assessor may need to ask you for further information to verify it.
         hours_per_week: This means all the hours you spent working per week for this role (not just the hours you spent teaching students). In roles where you worked under 30 hours per week we may need to ask for more information when we assess your application.
         start_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
         end_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
@@ -293,6 +294,10 @@ en:
         contact_email: This person’s email address
       teacher_interface_work_history_school_form:
         school_name: Name of school
+        school_website: School webpage (optional)
+        address_line1: Address line 1
+        address_line2: Address line 2 (optional)
+        city: Town or city
         country_location: Country
         job: What was the job title or role?
         hours_per_week: Approximately how many hours per week did you work in this role?

@@ -65,7 +65,15 @@ class WorkHistory < ApplicationRecord
   end
 
   def complete?
-    values = [school_name, city, country_code, job, start_date, still_employed]
+    values = [
+      school_name,
+      address_line1,
+      city,
+      country_code,
+      job,
+      start_date,
+      still_employed,
+    ]
 
     if still_employed == false
       values.pop
