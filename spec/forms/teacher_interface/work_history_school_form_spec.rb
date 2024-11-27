@@ -8,8 +8,11 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
       work_history:,
       meets_all_requirements:,
       school_name:,
+      address_line1:,
+      address_line2:,
       city:,
       country_location:,
+      school_website:,
       job:,
       hours_per_week:,
       start_date:,
@@ -26,8 +29,11 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
   describe "validations" do
     let(:meets_all_requirements) { "" }
     let(:school_name) { "" }
+    let(:address_line1) { "" }
+    let(:address_line2) { "" }
     let(:city) { "" }
     let(:country_location) { "" }
+    let(:school_website) { "" }
     let(:job) { "" }
     let(:hours_per_week) { "" }
     let(:start_date) { "" }
@@ -38,6 +44,7 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
 
     it { is_expected.to validate_presence_of(:meets_all_requirements) }
     it { is_expected.to validate_presence_of(:school_name) }
+    it { is_expected.to validate_presence_of(:address_line1) }
     it { is_expected.to validate_presence_of(:city) }
     it { is_expected.to validate_presence_of(:country_location) }
     it { is_expected.to validate_presence_of(:job) }
@@ -96,8 +103,11 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
 
     let(:meets_all_requirements) { "true" }
     let(:school_name) { "School" }
+    let(:address_line1) { "Address Line 1" }
+    let(:address_line2) { "Address Line 2" }
     let(:city) { "City" }
     let(:country_location) { "country:FR" }
+    let(:school_website) { "www.website.com" }
     let(:job) { "Job" }
     let(:hours_per_week) { "30" }
     let(:start_date) { { 1 => 2020, 2 => 10, 3 => 1 } }

@@ -135,8 +135,11 @@ module TeacherInterface
         WorkHistorySchoolForm.new(
           work_history:,
           school_name: work_history.school_name,
+          address_line1: work_history.address_line1,
+          address_line2: work_history.address_line2,
           city: work_history.city,
           country_code: work_history.country_code,
+          school_website: work_history.school_website,
           job: work_history.job,
           hours_per_week: work_history.hours_per_week,
           start_date: work_history.start_date,
@@ -237,8 +240,11 @@ module TeacherInterface
       params.require(:teacher_interface_work_history_school_form).permit(
         :meets_all_requirements,
         :school_name,
+        :address_line1,
+        :address_line2,
         :city,
         :country_location,
+        :school_website,
         :job,
         :hours_per_week,
         :start_date,
