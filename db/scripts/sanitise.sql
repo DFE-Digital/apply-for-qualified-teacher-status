@@ -25,7 +25,9 @@ SET
 -- no update required
 
 -- Assessment
--- no update required
+UPDATE "assessments"
+SET
+  recommendation_assessor_note = CASE WHEN recommendation_assessor_note IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- Countries
 -- no update required
@@ -51,11 +53,16 @@ UPDATE "further_information_request_items"
 SET
   failure_reason_assessor_feedback = CASE WHEN failure_reason_assessor_feedback IS NULL THEN NULL ELSE '[sanitised]' END,
   response = CASE WHEN response IS NULL THEN NULL ELSE '[sanitised]' END;
+  contact_email = CASE WHEN contact_email IS NULL THEN NULL ELSE 'sanitised@example.com' END;
+  contact_name = CASE WHEN contact_name IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- FurtherInformationRequest
 UPDATE "further_information_requests"
 SET
   failure_assessor_note = CASE WHEN failure_assessor_note IS NULL THEN NULL ELSE '[sanitised]' END;
+
+-- MailDeliveryFailure
+DELETE FROM "mail_delivery_failures";
 
 -- Note
 UPDATE "notes"
@@ -107,6 +114,9 @@ SET
 UPDATE "teachers"
 SET
   email = CASE WHEN email IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END,
+  canonical_email = CASE WHEN email IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END,
+  gov_one_email = CASE WHEN email IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END,
+  email_domain = CASE WHEN email IS NULL THEN NULL ELSE '@example.com' END,
   current_sign_in_ip = '0.0.0.0',
   last_sign_in_ip = '0.0.0.0';
 
@@ -116,7 +126,9 @@ SET
   annotation = CASE WHEN annotation IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- Uploads
--- no update required
+UPDATE "uploads"
+SET
+  filename = CASE WHEN filename IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- WorkHistory
 UPDATE "work_histories"
@@ -125,4 +137,5 @@ SET
   city  = '[sanitised]',
   job  = '[sanitised]',
   contact_email  = 'sanitised@example.com',
+  canonical_contact_email  = 'sanitised@example.com',
   contact_name  = '[sanitised]';
