@@ -13,6 +13,7 @@ SET
   date_of_birth = '2000-01-01',
   alternative_given_names = '',
   alternative_family_name = '',
+  dqt_match = '{}',
   registration_number = '';
 
 -- AssessmentSectionFailureReason
@@ -25,7 +26,18 @@ SET
 -- no update required
 
 -- Assessment
--- no update required
+UPDATE "assessments"
+SET
+  recommendation_assessor_note = CASE WHEN recommendation_assessor_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  age_range_note = CASE WHEN age_range_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  qualifications_assessor_note = CASE WHEN qualifications_assessor_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  subjects_note = CASE WHEN subjects_note IS NULL THEN NULL ELSE '[sanitised]' END;
+
+-- ConsentRequest
+UPDATE "consent_requests"
+SET
+  verify_note = CASE WHEN verify_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  review_note = CASE WHEN review_note IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- Countries
 -- no update required
@@ -50,17 +62,30 @@ UPDATE "feature_flags_features"
 UPDATE "further_information_request_items"
 SET
   failure_reason_assessor_feedback = CASE WHEN failure_reason_assessor_feedback IS NULL THEN NULL ELSE '[sanitised]' END,
-  response = CASE WHEN response IS NULL THEN NULL ELSE '[sanitised]' END;
+  response = CASE WHEN response IS NULL THEN NULL ELSE '[sanitised]' END,
+  contact_email = CASE WHEN contact_email IS NULL THEN NULL ELSE 'sanitised@example.com' END,
+  contact_name = CASE WHEN contact_name IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- FurtherInformationRequest
 UPDATE "further_information_requests"
 SET
-  failure_assessor_note = CASE WHEN failure_assessor_note IS NULL THEN NULL ELSE '[sanitised]' END;
+  failure_assessor_note = CASE WHEN failure_assessor_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  review_note = CASE WHEN review_note IS NULL THEN NULL ELSE '[sanitised]' END;
+
+-- MailDeliveryFailure
+DELETE FROM "mail_delivery_failures";
 
 -- Note
 UPDATE "notes"
 SET
   text = CASE WHEN text IS NULL THEN NULL ELSE '[sanitised]' END;
+
+-- ProfessionalStandingRequests
+UPDATE "professional_standing_requests"
+SET
+  location_note = CASE WHEN location_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  review_note = CASE WHEN review_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  verify_note = CASE WHEN verify_note IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- Qualification
 UPDATE "qualifications"
@@ -71,11 +96,30 @@ SET
   complete_date = '01/01/2002',
   certificate_date = '01/01/2002';
 
+-- QualificationRequest
+UPDATE "qualification_requests"
+SET
+  review_note = CASE WHEN review_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  verify_note = CASE WHEN verify_note IS NULL THEN NULL ELSE '[sanitised]' END;
+
 -- Region
 -- no update required
 
 -- ReferenceRequest
--- no update required
+UPDATE "reference_requests"
+SET
+  additional_information_response = CASE WHEN additional_information_response IS NULL THEN NULL ELSE '[sanitised]' END,
+  children_comment = CASE WHEN children_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  contact_comment = CASE WHEN contact_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  dates_comment = CASE WHEN dates_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  hours_comment = CASE WHEN hours_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  lessons_comment = CASE WHEN lessons_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  misconduct_comment = CASE WHEN misconduct_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  reports_comment = CASE WHEN reports_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  review_note = CASE WHEN review_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  satisfied_comment = CASE WHEN satisfied_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  verify_note = CASE WHEN verify_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  slug = CASE WHEN slug IS NULL THEN NULL ELSE concat('slug-', id) END;
 
 -- ReminderEmail
 -- no update required
@@ -107,16 +151,27 @@ SET
 UPDATE "teachers"
 SET
   email = CASE WHEN email IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END,
+  canonical_email = CASE WHEN email IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END,
+  gov_one_email = CASE WHEN email IS NULL THEN NULL ELSE CONCAT('teacher', id, '@example.com') END,
+  email_domain = CASE WHEN email IS NULL THEN NULL ELSE '@example.com' END,
+  access_your_teaching_qualifications_url = CASE WHEN access_your_teaching_qualifications_url IS NULL THEN NULL ELSE '[sanitised]' END,
   current_sign_in_ip = '0.0.0.0',
   last_sign_in_ip = '0.0.0.0';
 
 -- TimelineEvent
 UPDATE "timeline_events"
 SET
-  annotation = CASE WHEN annotation IS NULL THEN NULL ELSE '[sanitised]' END;
+  annotation = CASE WHEN annotation IS NULL THEN NULL ELSE '[sanitised]' END,
+  age_range_note = CASE WHEN age_range_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  new_value = CASE WHEN new_value IS NULL THEN NULL ELSE '[sanitised]' END,
+  old_value = CASE WHEN old_value IS NULL THEN NULL ELSE '[sanitised]' END,
+  note_text = CASE WHEN note_text IS NULL THEN NULL ELSE '[sanitised]' END,
+  subjects_note = CASE WHEN subjects_note IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- Uploads
--- no update required
+UPDATE "uploads"
+SET
+  filename = CASE WHEN filename IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- WorkHistory
 UPDATE "work_histories"
@@ -125,4 +180,5 @@ SET
   city  = '[sanitised]',
   job  = '[sanitised]',
   contact_email  = 'sanitised@example.com',
+  canonical_contact_email  = 'sanitised@example.com',
   contact_name  = '[sanitised]';
