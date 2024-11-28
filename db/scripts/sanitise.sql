@@ -106,7 +106,7 @@ SET
 -- no update required
 
 -- ReferenceRequest
-UPDATE "qualification_requests"
+UPDATE "reference_requests"
 SET
   additional_information_response = CASE WHEN additional_information_response IS NULL THEN NULL ELSE '[sanitised]' END,
   children_comment = CASE WHEN children_comment IS NULL THEN NULL ELSE '[sanitised]' END,
