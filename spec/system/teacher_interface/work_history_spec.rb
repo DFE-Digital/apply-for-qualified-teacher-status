@@ -99,8 +99,14 @@ RSpec.describe "Teacher work history", type: :system do
   def when_i_fill_in_the_school_information
     teacher_new_work_history_page.form.meets_all_requirements_checkbox.click
     teacher_new_work_history_page.form.school_name_input.fill_in with: "School"
+    teacher_new_work_history_page.form.address_line1_input.fill_in with:
+      "Building A"
+    teacher_new_work_history_page.form.address_line2_input.fill_in with:
+      "Street B"
     teacher_new_work_history_page.form.city_input.fill_in with: "City"
     teacher_new_work_history_page.form.country_input.fill_in with: "France"
+    teacher_new_work_history_page.form.school_website_input.fill_in with:
+      "www.schoolwebsite.com"
     teacher_new_work_history_page.form.job_input.fill_in with: "Job"
     teacher_new_work_history_page.form.hours_per_week_input.fill_in with: "30"
     teacher_new_work_history_page.form.start_date_month_input.fill_in with: "1"
@@ -123,66 +129,88 @@ RSpec.describe "Teacher work history", type: :system do
   def and_i_see_the_work_history_information
     summary_list_rows = teacher_check_work_history_page.summary_list.rows
 
-    expect(summary_list_rows.count).to eq(10)
+    expect(summary_list_rows.count).to eq(13)
 
     expect(summary_list_rows[0].key.text).to eq("School name")
     expect(summary_list_rows[0].value.text).to eq("School")
 
-    expect(summary_list_rows[1].key.text).to eq("City of institution")
-    expect(summary_list_rows[1].value.text).to eq("City")
+    expect(summary_list_rows[1].key.text).to eq("Address line 1 of institution")
+    expect(summary_list_rows[1].value.text).to eq("Building A")
 
-    expect(summary_list_rows[2].key.text).to eq("Country of institution")
-    expect(summary_list_rows[2].value.text).to eq("France")
+    expect(summary_list_rows[2].key.text).to eq("Address line 2 of institution")
+    expect(summary_list_rows[2].value.text).to eq("Street B")
 
-    expect(summary_list_rows[3].key.text).to eq("Your job role")
-    expect(summary_list_rows[3].value.text).to eq("Job")
+    expect(summary_list_rows[3].key.text).to eq("Town or city of institution")
+    expect(summary_list_rows[3].value.text).to eq("City")
 
-    expect(summary_list_rows[4].key.text).to eq("Hours per week")
-    expect(summary_list_rows[4].value.text).to eq("30")
+    expect(summary_list_rows[4].key.text).to eq("Country of institution")
+    expect(summary_list_rows[4].value.text).to eq("France")
 
-    expect(summary_list_rows[5].key.text).to eq("Role start date")
-    expect(summary_list_rows[5].value.text).to eq("January 2020")
+    expect(summary_list_rows[5].key.text).to eq("School webpage")
+    expect(summary_list_rows[5].value.text).to eq("www.schoolwebsite.com")
 
-    expect(summary_list_rows[6].key.text).to eq("Role end date")
-    expect(summary_list_rows[6].value.text).to eq("December 2021")
+    expect(summary_list_rows[6].key.text).to eq("Your job role")
+    expect(summary_list_rows[6].value.text).to eq("Job")
 
-    expect(summary_list_rows[7].key.text).to eq("Reference contact’s full name")
-    expect(summary_list_rows[7].value.text).to eq("Name")
+    expect(summary_list_rows[7].key.text).to eq("Hours per week")
+    expect(summary_list_rows[7].value.text).to eq("30")
 
-    expect(summary_list_rows[8].key.text).to eq("Reference contact’s job title")
-    expect(summary_list_rows[8].value.text).to eq("Job")
+    expect(summary_list_rows[8].key.text).to eq("Role start date")
+    expect(summary_list_rows[8].value.text).to eq("January 2020")
 
-    expect(summary_list_rows[9].key.text).to eq(
+    expect(summary_list_rows[9].key.text).to eq("Role end date")
+    expect(summary_list_rows[9].value.text).to eq("December 2021")
+
+    expect(summary_list_rows[10].key.text).to eq(
+      "Reference contact’s full name",
+    )
+    expect(summary_list_rows[10].value.text).to eq("Name")
+
+    expect(summary_list_rows[11].key.text).to eq(
+      "Reference contact’s job title",
+    )
+    expect(summary_list_rows[11].value.text).to eq("Job")
+
+    expect(summary_list_rows[12].key.text).to eq(
       "Reference contact’s email address",
     )
-    expect(summary_list_rows[9].value.text).to eq("contact@example.com")
+    expect(summary_list_rows[12].value.text).to eq("contact@example.com")
   end
 
   def and_i_see_the_reduced_evidence_work_history_information
     summary_list_rows = teacher_check_work_history_page.summary_list.rows
 
-    expect(summary_list_rows.count).to eq(7)
+    expect(summary_list_rows.count).to eq(10)
 
     expect(summary_list_rows[0].key.text).to eq("School name")
     expect(summary_list_rows[0].value.text).to eq("School")
 
-    expect(summary_list_rows[1].key.text).to eq("City of institution")
-    expect(summary_list_rows[1].value.text).to eq("City")
+    expect(summary_list_rows[1].key.text).to eq("Address line 1 of institution")
+    expect(summary_list_rows[1].value.text).to eq("Building A")
 
-    expect(summary_list_rows[2].key.text).to eq("Country of institution")
-    expect(summary_list_rows[2].value.text).to eq("France")
+    expect(summary_list_rows[2].key.text).to eq("Address line 2 of institution")
+    expect(summary_list_rows[2].value.text).to eq("Street B")
 
-    expect(summary_list_rows[3].key.text).to eq("Your job role")
-    expect(summary_list_rows[3].value.text).to eq("Job")
+    expect(summary_list_rows[3].key.text).to eq("Town or city of institution")
+    expect(summary_list_rows[3].value.text).to eq("City")
 
-    expect(summary_list_rows[4].key.text).to eq("Hours per week")
-    expect(summary_list_rows[4].value.text).to eq("30")
+    expect(summary_list_rows[4].key.text).to eq("Country of institution")
+    expect(summary_list_rows[4].value.text).to eq("France")
 
-    expect(summary_list_rows[5].key.text).to eq("Role start date")
-    expect(summary_list_rows[5].value.text).to eq("January 2020")
+    expect(summary_list_rows[5].key.text).to eq("School webpage")
+    expect(summary_list_rows[5].value.text).to eq("www.schoolwebsite.com")
 
-    expect(summary_list_rows[6].key.text).to eq("Role end date")
-    expect(summary_list_rows[6].value.text).to eq("December 2021")
+    expect(summary_list_rows[6].key.text).to eq("Your job role")
+    expect(summary_list_rows[6].value.text).to eq("Job")
+
+    expect(summary_list_rows[7].key.text).to eq("Hours per week")
+    expect(summary_list_rows[7].value.text).to eq("30")
+
+    expect(summary_list_rows[8].key.text).to eq("Role start date")
+    expect(summary_list_rows[8].value.text).to eq("January 2020")
+
+    expect(summary_list_rows[9].key.text).to eq("Role end date")
+    expect(summary_list_rows[9].value.text).to eq("December 2021")
   end
 
   def when_i_click_continue
