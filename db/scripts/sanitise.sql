@@ -177,8 +177,11 @@ SET
 UPDATE "work_histories"
 SET
   school_name = '[sanitised]',
+  address_line1 = CASE WHEN address_line1 IS NULL THEN NULL ELSE '[sanitised]' END,
+  address_line2 = CASE WHEN address_line2 IS NULL THEN NULL ELSE '[sanitised]' END,
   city  = '[sanitised]',
   job  = '[sanitised]',
+  school_website  = CASE WHEN address_line1 IS NULL THEN NULL ELSE '[sanitised]' END,
   contact_email  = 'sanitised@example.com',
   canonical_contact_email  = 'sanitised@example.com',
   contact_name  = '[sanitised]';
