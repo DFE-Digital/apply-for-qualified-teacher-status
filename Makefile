@@ -3,7 +3,6 @@ SHELL				:=/bin/bash
 
 KEY_VAULT_PURGE_PROTECTION=false
 ARM_TEMPLATE_TAG=1.1.6
-TERRAFILE_VERSION=0.8
 SERVICE_NAME=apply-for-qts
 SERVICE_SHORT=afqts
 
@@ -92,23 +91,18 @@ bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh
 
-bin/terrafile:
-	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
-		| tar xz -C ./bin terrafile
-
 .PHONY: install-konduit
 install-konduit: bin/konduit.sh ## Install the konduit script, for accessing backend services
 
-.PHONY: terrafile
-terrafile: bin/terrafile
-	./bin/terrafile -p terraform/application/vendor/modules \
-		-f terraform/application/config/$(CONFIG)/Terrafile
+.PHONY: vendor-modules
+vendor-modules:
+	rm -rf terraform/application/vendor/modules
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/application/vendor/modules/dfe-terraform-modules
 
-terraform-init: composed-variables bin/terrafile set-azure-account ## Initialize terraform for AKS
+terraform-init: composed-variables vendor-modules set-azure-account ## Initialize terraform for AKS
 	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
 	$(eval TERRAFORM_BACKEND_KEY=$(or ${TERRAFORM_BACKEND_KEY},terraform.tfstate))
 
-	./bin/terrafile -p terraform/application/vendor/modules -f terraform/application/config/$(CONFIG)/Terrafile
 	terraform -chdir=terraform/application init -upgrade -reconfigure \
 		-backend-config=resource_group_name=${RESOURCE_GROUP_NAME} \
 		-backend-config=storage_account_name=${STORAGE_ACCOUNT_NAME} \
@@ -187,7 +181,13 @@ validate-azure-domains-resources: set-production-azure-subscription set-what-if 
 .PHONY: deploy-azure-domains-resources
 deploy-azure-domains-resources: set-production-azure-subscription check-auto-approve domains-arm-deployment # make validate-azure-domains-resources
 
-domains-infra-init: set-production-azure-subscription set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
+.PHONY: vendor-domain-infra-modules
+vendor-domain-infra-modules:
+	rm -rf terraform/domains/infrastructure/vendor/modules/domains
+	TERRAFORM_MODULES_TAG=stable
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/domains/infrastructure/vendor/modules/domains
+
+domains-infra-init: set-production-azure-subscription vendor-domain-infra-modules set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
@@ -196,7 +196,12 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
-domains-init: set-production-azure-subscription set-azure-account ## terraform init for dns resources: make <env>  domains-init
+.PHONY: vendor-domain-modules
+vendor-domain-modules:
+	rm -rf terraform/domains/environment_domains/vendor/modules/domains
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/domains/environment_domains/vendor/modules/domains
+
+domains-init: set-production-azure-subscription vendor-domain-modules set-azure-account ## terraform init for dns resources: make <env>  domains-init
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY),afqtsdomains_$(CONFIG).tfstate)
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing

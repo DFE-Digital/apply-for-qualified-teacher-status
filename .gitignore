@@ -22,7 +22,6 @@ storage/*
 # Temporary binaries
 bin/fetch_config.rb
 bin/konduit.sh
-bin/terrafile
 
 # Terraform
 *.tfstate

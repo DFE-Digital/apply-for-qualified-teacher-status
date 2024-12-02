@@ -49,7 +49,7 @@ jobs:
         working-directory: terraform
 
       - name: Download vendor modules
-        run: make ci development terrafile
+        run: make ci development vendor-modules
 
       - name: Validate
         run: |
