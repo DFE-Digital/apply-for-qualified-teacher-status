@@ -251,7 +251,7 @@ RSpec.describe SupportInterface::CountryForm, type: :model do
       it "sets has_regions to true" do
         expect(subject).to have_attributes(
           has_regions: true,
-          region_names: "Madrid\nBarcelona",
+          region_names: country.reload.regions.map(&:name).join("\n"),
         )
       end
     end
