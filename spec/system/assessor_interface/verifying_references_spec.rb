@@ -235,7 +235,7 @@ RSpec.describe "Assessor verifying references", type: :system do
     ).to eq("Yes")
     expect(
       assessor_verify_reference_request_page.responses.values[10].text,
-    ).to eq("None provided")
+    ).to eq("Not provided")
   end
 
   def and_i_cant_resend_the_email
