@@ -6,7 +6,6 @@
     - family_name
     - given_names
     - registration_number
-    - dqt_match
     - trs_match
   :assessments:
     - recommendation_assessor_note

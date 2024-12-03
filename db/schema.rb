@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_22_110920) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_03_141754) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -90,7 +90,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_22_110920) do
     t.datetime "declined_at"
     t.boolean "requires_preliminary_check", default: false, null: false
     t.boolean "written_statement_optional", default: false, null: false
-    t.jsonb "dqt_match", default: {}
     t.datetime "withdrawn_at"
     t.string "action_required_by", default: "none", null: false
     t.string "stage", default: "draft", null: false
