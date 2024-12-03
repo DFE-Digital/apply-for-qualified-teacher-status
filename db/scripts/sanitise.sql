@@ -14,6 +14,7 @@ SET
   alternative_given_names = '',
   alternative_family_name = '',
   dqt_match = '{}',
+  trs_match = '{}',
   registration_number = '';
 
 -- AssessmentSectionFailureReason

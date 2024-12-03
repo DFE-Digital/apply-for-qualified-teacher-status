@@ -26,7 +26,7 @@ RSpec.describe UpdateTRSMatchJob do
     end
 
     it "does not update the application form if no results are returned" do
-      expect { perform }.to change(application_form, :dqt_match).to(
+      expect { perform }.to change(application_form, :trs_match).to(
         { "teachers" => [] },
       )
     end
@@ -51,7 +51,7 @@ RSpec.describe UpdateTRSMatchJob do
         application_form:,
       ).and_return(results)
 
-      expect { perform }.to change(application_form, :dqt_match).to(
+      expect { perform }.to change(application_form, :trs_match).to(
         { "teachers" => results },
       )
     end

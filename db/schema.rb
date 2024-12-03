@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_29_152315) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_22_110920) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -98,6 +98,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_152315) do
     t.boolean "qualification_changed_work_history_duration", default: false, null: false
     t.boolean "teaching_qualification_part_of_degree"
     t.boolean "subject_limited", default: false, null: false
+    t.jsonb "trs_match", default: {}
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"

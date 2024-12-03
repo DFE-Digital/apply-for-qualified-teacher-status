@@ -38,7 +38,7 @@ RSpec.describe "Assessor views duplicate applicant's application form",
   end
 
   def and_the_applicant_matches_a_record_in_dqt
-    application_form.update!(dqt_match:)
+    application_form.update!(trs_match:)
   end
 
   def application_form
@@ -64,7 +64,7 @@ RSpec.describe "Assessor views duplicate applicant's application form",
 
   delegate :reference, to: :application_form
 
-  def dqt_match
+  def trs_match
     {
       "first_name" => "John",
       "last_name" => "Smith",
