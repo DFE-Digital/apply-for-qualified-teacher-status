@@ -5,6 +5,8 @@
 # Table name: work_histories
 #
 #  id                      :bigint           not null, primary key
+#  address_line1           :string
+#  address_line2           :string
 #  canonical_contact_email :text             default(""), not null
 #  city                    :text             default(""), not null
 #  contact_email           :text             default(""), not null
@@ -17,6 +19,7 @@
 #  hours_per_week          :integer
 #  job                     :text             default(""), not null
 #  school_name             :text             default(""), not null
+#  school_website          :string
 #  start_date              :date
 #  start_date_is_estimate  :boolean          default(FALSE), not null
 #  still_employed          :boolean
@@ -41,6 +44,7 @@ FactoryBot.define do
     contact_email_domain { EmailAddress.new(contact_email).host_name }
 
     trait :completed do
+      address_line1 { Faker::Address.street_name }
       city { Faker::Address.city }
       contact_job { Faker::Job.title }
       contact_name { Faker::Name.name }

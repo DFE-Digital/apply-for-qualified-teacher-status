@@ -8,8 +8,11 @@ module TeacherInterface
     attr_accessor :work_history
     attribute :meets_all_requirements, :boolean
     attribute :school_name, :string
+    attribute :address_line1, :string
+    attribute :address_line2, :string
     attribute :city, :string
     attribute :country_location, :string
+    attribute :school_website, :string
     attribute :job, :string
     attribute :hours_per_week, :integer
     attribute :start_date
@@ -20,6 +23,7 @@ module TeacherInterface
 
     validates :meets_all_requirements, presence: true
     validates :school_name, presence: true
+    validates :address_line1, presence: true
     validates :city, presence: true
     validates :country_location, presence: true
     validates :job, presence: true
@@ -42,8 +46,11 @@ module TeacherInterface
 
       work_history.update!(
         school_name:,
+        address_line1:,
+        address_line2:,
         city:,
         country_code:,
+        school_website:,
         job:,
         hours_per_week:,
         start_date:,
