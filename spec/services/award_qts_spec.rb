@@ -30,7 +30,7 @@ RSpec.describe AwardQTS do
       create(:application_form, :awarded_pending_checks, teacher:)
     end
 
-    before { create(:dqt_trn_request, application_form:) }
+    before { create(:trs_trn_request, application_form:) }
 
     it "sets the TRN" do
       expect { call }.to change(teacher, :trn).to("abcdef")
@@ -76,7 +76,7 @@ RSpec.describe AwardQTS do
       create(:application_form, :potential_duplicate_in_dqt, teacher:)
     end
 
-    before { create(:dqt_trn_request, application_form:) }
+    before { create(:trs_trn_request, application_form:) }
 
     it "sets the TRN" do
       expect { call }.to change(teacher, :trn).to("abcdef")
@@ -120,7 +120,7 @@ RSpec.describe AwardQTS do
   context "with an awarded application form" do
     let(:application_form) { create(:application_form, :awarded, teacher:) }
 
-    before { create(:dqt_trn_request, application_form:) }
+    before { create(:trs_trn_request, application_form:) }
 
     it "doesn't change the TRN" do
       expect { call }.not_to change(teacher, :trn)

@@ -1,18 +1,31 @@
 # frozen_string_literal: true
 
 class UpdateTRSTRNRequestJob < ApplicationJob
-  def perform(dqt_trn_request)
-    return if dqt_trn_request.complete?
+  def perform(trs_trn_request)
+    return if trs_trn_request.complete?
 
-    application_form = dqt_trn_request.application_form
+    application_form = trs_trn_request.application_form
 
-    response = fetch_response(dqt_trn_request)
+    # TODO: We can remove this block once the migration between DQTTRNRequest to TRSTRNRequest
+    # has fully completed. This job may have quite a few instances in our scheduled queue
+    # and as a result we need to ensure they switch into using the TRSTRNRequest once we
+    # migrate all existing DQTTRNRequests into a record within the TRSTRNRequests table.
+    if trs_trn_request.is_a?(DQTTRNRequest)
+      if application_form.trs_trn_request
+        trs_trn_request = application_form.trs_trn_request
+      else
+        UpdateTRSTRNRequestJob.set(wait: 1.hour).perform_later(trs_trn_request)
+        return
+      end
+    end
 
-    dqt_trn_request.pending! if dqt_trn_request.initial?
+    response = fetch_response(trs_trn_request)
+
+    trs_trn_request.pending! if trs_trn_request.initial?
 
     potential_duplicate = response[:potential_duplicate]
-    if potential_duplicate != dqt_trn_request.potential_duplicate
-      dqt_trn_request.update!(potential_duplicate:)
+    if potential_duplicate != trs_trn_request.potential_duplicate
+      trs_trn_request.update!(potential_duplicate:)
     end
 
     ApplicationFormStatusUpdater.call(application_form:, user: "DQT")
@@ -25,24 +38,24 @@ class UpdateTRSTRNRequestJob < ApplicationJob
         access_your_teaching_qualifications_url:
           response[:access_your_teaching_qualifications_link],
       )
-      dqt_trn_request.complete!
+      trs_trn_request.complete!
     end
 
-    if dqt_trn_request.pending?
-      UpdateTRSTRNRequestJob.set(wait: 1.hour).perform_later(dqt_trn_request)
+    if trs_trn_request.pending?
+      UpdateTRSTRNRequestJob.set(wait: 1.hour).perform_later(trs_trn_request)
     end
   end
 
   private
 
-  def fetch_response(dqt_trn_request)
-    if dqt_trn_request.initial?
+  def fetch_response(trs_trn_request)
+    if trs_trn_request.initial?
       TRS::Client::CreateTRNRequest.call(
-        request_id: dqt_trn_request.request_id,
-        application_form: dqt_trn_request.application_form,
+        request_id: trs_trn_request.request_id,
+        application_form: trs_trn_request.application_form,
       )
     else
-      TRS::Client::ReadTRNRequest.call(request_id: dqt_trn_request.request_id)
+      TRS::Client::ReadTRNRequest.call(request_id: trs_trn_request.request_id)
     end
   rescue Faraday::Error => e
     Sentry.configure_scope do |scope|

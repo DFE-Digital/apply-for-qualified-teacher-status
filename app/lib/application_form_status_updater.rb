@@ -51,7 +51,7 @@ class ApplicationFormStatusUpdater
            application_form.declined_at.present? ||
            application_form.awarded_at.present?
         "none"
-      elsif dqt_trn_request.present? || assessment_in_review? ||
+      elsif trs_trn_request.present? || assessment_in_review? ||
             overdue_further_information || received_further_information
         "assessor"
       elsif preliminary_check? || need_to_request_lops? ||
@@ -76,7 +76,7 @@ class ApplicationFormStatusUpdater
            application_form.declined_at.present? ||
            application_form.awarded_at.present?
         "completed"
-      elsif assessment_in_review? || dqt_trn_request.present?
+      elsif assessment_in_review? || trs_trn_request.present?
         "review"
       elsif preliminary_check? ||
             (teaching_authority_provides_written_statement && waiting_on_lops)
@@ -107,8 +107,8 @@ class ApplicationFormStatusUpdater
         %w[declined]
       elsif application_form.awarded_at.present?
         %w[awarded]
-      elsif dqt_trn_request.present?
-        if dqt_trn_request.potential_duplicate?
+      elsif trs_trn_request.present?
+        if trs_trn_request.potential_duplicate?
           %w[potential_duplicate_in_dqt]
         else
           %w[awarded_pending_checks]
@@ -133,7 +133,7 @@ class ApplicationFormStatusUpdater
   end
 
   delegate :assessment,
-           :dqt_trn_request,
+           :trs_trn_request,
            :region,
            :teacher,
            :teaching_authority_provides_written_statement,
