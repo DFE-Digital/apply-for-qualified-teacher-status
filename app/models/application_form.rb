@@ -102,6 +102,7 @@ class ApplicationForm < ApplicationRecord
   has_many :timeline_events
   has_one :country, through: :region
   has_one :dqt_trn_request
+  has_one :trs_trn_request
   has_one :assessment
   has_many :notes, dependent: :destroy
 

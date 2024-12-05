@@ -8,8 +8,8 @@ RSpec.describe CreateTRSTRNRequest do
   let(:application_form) { create(:application_form, :submitted) }
   let(:user) { create(:staff) }
 
-  it "creates a DQTTRNRequest" do
-    expect { call }.to change(DQTTRNRequest, :count).by(1)
+  it "creates a TRSTRNRequest" do
+    expect { call }.to change(TRSTRNRequest, :count).by(1)
   end
 
   it "changes the status" do
@@ -20,7 +20,7 @@ RSpec.describe CreateTRSTRNRequest do
 
   it "schedules an update job" do
     expect { call }.to have_enqueued_job(UpdateTRSTRNRequestJob).with(
-      DQTTRNRequest.first,
+      TRSTRNRequest.first,
     )
   end
 end

@@ -65,10 +65,10 @@ RSpec.describe ApplicationFormStatusUpdater do
   describe "#call" do
     subject(:call) { described_class.call(application_form:, user:) }
 
-    context "with a potential duplicate in DQT" do
+    context "with a potential duplicate in TRS" do
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:dqt_trn_request, :potential_duplicate, application_form:)
+        create(:trs_trn_request, :potential_duplicate, application_form:)
       end
 
       include_examples "changes action required by", "assessor"
@@ -115,10 +115,10 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "changes statuses", %w[awarded]
     end
 
-    context "with a DQT TRN request" do
+    context "with a TRS TRN request" do
       before do
         application_form.update!(submitted_at: Time.zone.now)
-        create(:dqt_trn_request, application_form:)
+        create(:trs_trn_request, application_form:)
       end
 
       include_examples "changes action required by", "assessor"
