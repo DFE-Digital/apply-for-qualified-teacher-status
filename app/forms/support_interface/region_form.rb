@@ -48,6 +48,7 @@ class SupportInterface::RegionForm
   validates :written_statement_optional, inclusion: { in: [true, false] }
 
   def save!
+    raise ActiveRecord::RecordInvalid, self if invalid?
     assign_region_attributes
 
     ActiveRecord::Base.transaction { region.save! }
