@@ -85,7 +85,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       let(:all_sections_necessary) { false }
 
       it do
-        save!
+        valid
         expect(subject).to validate_inclusion_of(
           :work_history_section_to_omit,
         ).in_array(%w[whole_section contact_details])
@@ -151,6 +151,68 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       let(:teaching_authority_online_checker_url) { "https://www.example.com" }
 
       it { is_expected.to be_valid }
+    end
+  end
+
+  describe "#save" do
+    subject(:save!) { form.save! }
+
+    let(:form) do
+      described_class.new(
+        region:,
+        teaching_authority_online_checker_url: "",
+        teaching_authority_name:,
+        teaching_authority_emails_string: "",
+        teaching_authority_requires_submission_email: false,
+        all_sections_necessary: true,
+        requires_preliminary_check: false,
+        sanction_check: "none",
+        status_check: "none",
+        teaching_authority_provides_written_statement: false,
+        written_statement_optional: true,
+        teaching_authority_websites_string: "",
+        teaching_authority_address: "",
+        other_information: "",
+        teaching_authority_certificate: "",
+        status_information: "",
+        sanction_information: "",
+        teaching_qualification_information: "",
+      )
+    end
+
+    let(:region) { create(:region) }
+    let(:teaching_authority_name) { "Teaching Authority" }
+
+    it "updates region attributes" do
+      subject
+      expect(region).to have_attributes(
+        application_form_skip_work_history: false,
+        other_information: "",
+        reduced_evidence_accepted: false,
+        requires_preliminary_check: false,
+        sanction_check: "none",
+        sanction_information: "",
+        status_check: "none",
+        status_information: "",
+        teaching_authority_address: "",
+        teaching_authority_certificate: "",
+        teaching_authority_emails: [],
+        teaching_authority_name: "Teaching Authority",
+        teaching_authority_online_checker_url: "",
+        teaching_authority_provides_written_statement: false,
+        teaching_authority_requires_submission_email: false,
+        teaching_authority_websites: [],
+        teaching_qualification_information: "",
+        written_statement_optional: true,
+      )
+    end
+
+    context "when form is invalid" do
+      let(:teaching_authority_name) { "The Teaching Authority" }
+
+      it "returns false" do
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+      end
     end
   end
 end
