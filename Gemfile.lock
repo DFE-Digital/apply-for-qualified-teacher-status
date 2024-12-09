@@ -735,6 +735,7 @@ DEPENDENCIES
   rspec-rails
   rspec-retry!
   rubocop-govuk
+  ruby-progressbar
   ruby-vips
   sentry-rails
   sentry-ruby

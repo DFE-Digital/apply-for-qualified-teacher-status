@@ -19,7 +19,7 @@ class AwardQTS
   def call
     return if application_form.awarded_at.present?
 
-    raise InvalidState if application_form.dqt_trn_request.nil?
+    raise InvalidState if application_form.trs_trn_request.nil?
 
     raise MissingTRN if trn.blank?
 
