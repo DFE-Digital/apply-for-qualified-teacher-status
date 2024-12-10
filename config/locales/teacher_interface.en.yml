@@ -453,8 +453,10 @@ en:
               blank: The role must meet all the requirements
             school_name:
               blank: Enter the school name
+            address_line1:
+              blank: Enter address line 1, typically the building and street
             city:
-              blank: Enter the city
+              blank: Enter town or city
             country_location:
               blank: Enter the country
             job:

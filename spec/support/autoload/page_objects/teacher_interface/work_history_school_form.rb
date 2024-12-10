@@ -10,10 +10,16 @@ module PageObjects
 
         element :school_name_input,
                 "#teacher-interface-work-history-school-form-school-name-field"
+        element :address_line1_input,
+                "#teacher-interface-work-history-school-form-address-line1-field"
+        element :address_line2_input,
+                "#teacher-interface-work-history-school-form-address-line2-field"
         element :city_input,
                 "#teacher-interface-work-history-school-form-city-field"
         element :country_input,
                 "#teacher-interface-work-history-school-form-country-location-field"
+        element :school_website_input,
+                "#teacher-interface-work-history-school-form-school-website-field"
 
         element :job_input,
                 "#teacher-interface-work-history-school-form-job-field"

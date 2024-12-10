@@ -5,6 +5,8 @@
 # Table name: work_histories
 #
 #  id                      :bigint           not null, primary key
+#  address_line1           :string
+#  address_line2           :string
 #  canonical_contact_email :text             default(""), not null
 #  city                    :text             default(""), not null
 #  contact_email           :text             default(""), not null
@@ -17,6 +19,7 @@
 #  hours_per_week          :integer
 #  job                     :text             default(""), not null
 #  school_name             :text             default(""), not null
+#  school_website          :string
 #  start_date              :date
 #  start_date_is_estimate  :boolean          default(FALSE), not null
 #  still_employed          :boolean
@@ -62,7 +65,15 @@ class WorkHistory < ApplicationRecord
   end
 
   def complete?
-    values = [school_name, city, country_code, job, start_date, still_employed]
+    values = [
+      school_name,
+      address_line1,
+      city,
+      country_code,
+      job,
+      start_date,
+      still_employed,
+    ]
 
     if still_employed == false
       values.pop
