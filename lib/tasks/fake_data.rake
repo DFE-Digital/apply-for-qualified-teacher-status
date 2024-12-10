@@ -43,7 +43,6 @@ namespace :fake_data do
     end
 
     TimelineEvent.delete_all
-    DQTTRNRequest.delete_all
     TRSTRNRequest.delete_all
     ReminderEmail.delete_all
     ConsentRequest.delete_all

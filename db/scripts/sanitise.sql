@@ -45,10 +45,6 @@ SET
 -- Documents
 -- no update required
 
--- DQTTRNRequest
--- clear these as the scheduled jobs might run against them
-DELETE FROM "dqt_trn_requests";
-
 -- TRSTRNRequest
 -- clear these as the scheduled jobs might run against them
 DELETE FROM "trs_trn_requests";
