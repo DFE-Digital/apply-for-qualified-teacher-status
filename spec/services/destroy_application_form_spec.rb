@@ -21,6 +21,7 @@ RSpec.describe DestroyApplicationForm do
       create(:timeline_event, :stage_changed, application_form:)
       create(:note, application_form:)
       create(:dqt_trn_request, application_form:)
+      create(:trs_trn_request, application_form:)
 
       assessment =
         create(
@@ -51,6 +52,7 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", AssessmentSection
   include_examples "deletes model", ConsentRequest
   include_examples "deletes model", DQTTRNRequest
+  include_examples "deletes model", TRSTRNRequest
   include_examples "deletes model", Document, 20, 10
   include_examples "deletes model", FurtherInformationRequest
   include_examples "deletes model", FurtherInformationRequestItem, 6, 3

@@ -25,7 +25,7 @@
   <p class="govuk-body">You’ve successfully sent your further information request email to the applicant.</p>
 <% elsif @view_object.application_form.declined_at.present? %>
   <p class="govuk-body">The application will be deleted after 90 days unless the applicant chooses to appeal.</p>
-<% elsif @view_object.application_form.dqt_trn_request.present? %>
+<% elsif @view_object.application_form.trs_trn_request.present? || @view_object.application_form.dqt_trn_request.present? %>
   <p class="govuk-body">This status will appear while the award is reconciled with the information in the Database of Qualified Teachers (DQT).</p>
   <p class="govuk-body">Once these checks are complete, the status will change to ‘Awarded’ and the applicant will receive the email telling them they’ve been awarded QTS.</p>
 <% end %>

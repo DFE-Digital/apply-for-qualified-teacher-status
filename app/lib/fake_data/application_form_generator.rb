@@ -504,7 +504,7 @@ class FakeData::ApplicationFormGenerator
     access_your_teaching_qualifications_url = Faker::Internet.url
 
     date_generator.travel_to_next_long do
-      DQTTRNRequest.create!(request_id: SecureRandom.uuid, application_form:)
+      TRSTRNRequest.create!(request_id: SecureRandom.uuid, application_form:)
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
