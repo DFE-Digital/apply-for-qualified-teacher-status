@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_05_125213) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_10_165522) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -196,16 +196,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_125213) do
     t.boolean "available"
     t.index ["document_type"], name: "index_documents_on_document_type"
     t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable"
-  end
-
-  create_table "dqt_trn_requests", force: :cascade do |t|
-    t.bigint "application_form_id", null: false
-    t.uuid "request_id", null: false
-    t.string "state", default: "pending", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "potential_duplicate"
-    t.index ["application_form_id"], name: "index_dqt_trn_requests_on_application_form_id"
   end
 
   create_table "eligibility_checks", force: :cascade do |t|
@@ -637,7 +627,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_125213) do
   add_foreign_key "assessments", "application_forms"
   add_foreign_key "consent_requests", "assessments"
   add_foreign_key "consent_requests", "qualifications"
-  add_foreign_key "dqt_trn_requests", "application_forms"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "further_information_request_items", "work_histories"
   add_foreign_key "notes", "application_forms"

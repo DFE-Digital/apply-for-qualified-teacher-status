@@ -6,19 +6,6 @@ class UpdateTRSTRNRequestJob < ApplicationJob
 
     application_form = trs_trn_request.application_form
 
-    # TODO: We can remove this block once the migration between DQTTRNRequest to TRSTRNRequest
-    # has fully completed. This job may have quite a few instances in our scheduled queue
-    # and as a result we need to ensure they switch into using the TRSTRNRequest once we
-    # migrate all existing DQTTRNRequests into a record within the TRSTRNRequests table.
-    if trs_trn_request.is_a?(DQTTRNRequest)
-      if application_form.trs_trn_request
-        trs_trn_request = application_form.trs_trn_request
-      else
-        UpdateTRSTRNRequestJob.set(wait: 1.hour).perform_later(trs_trn_request)
-        return
-      end
-    end
-
     response = fetch_response(trs_trn_request)
 
     trs_trn_request.pending! if trs_trn_request.initial?
