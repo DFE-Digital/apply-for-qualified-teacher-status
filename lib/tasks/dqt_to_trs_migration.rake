@@ -6,7 +6,7 @@ namespace :dqt_to_trs_migration do
   desc "Backfill the trs_trn_requests table with what is within dqt_trn_requests"
   task replace_dqt_trn_requests_table_with_trs_trn_requests: :environment do
     progressbar =
-      ProgressBar.create!(name: "Creation", count: DQTTRNRequest.count)
+      ProgressBar.create(name: "Creation", count: DQTTRNRequest.count) # rubocop:disable Rails/SaveBang
 
     ActiveRecord::Base.transaction do
       DQTTRNRequest.find_each do |dqt_trn_request|
