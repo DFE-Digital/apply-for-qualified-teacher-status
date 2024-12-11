@@ -2,7 +2,7 @@
 
 <% content_for :page_title, "You’re not eligible" %>
 <% content_for :back_link_url, ineligible_country ? eligibility_interface_countries_path : eligibility_interface_misconduct_path %>
-<% current_date = Date.today %>
+<% current_date = Date.current %>
 
 <h1 class="govuk-heading-xl">
   You’re not eligible to apply for qualified teacher status (QTS) in England
