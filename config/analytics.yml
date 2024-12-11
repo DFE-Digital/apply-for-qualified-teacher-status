@@ -119,14 +119,6 @@
     - documentable_type
     - id
     - updated_at
-  :dqt_trn_requests:
-    - application_form_id
-    - created_at
-    - id
-    - potential_duplicate
-    - request_id
-    - state
-    - updated_at
   :eligibility_checks:
     - completed_at
     - country_code
