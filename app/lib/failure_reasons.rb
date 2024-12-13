@@ -42,6 +42,7 @@ class FailureReasons
     ADDITIONAL_DEGREE_TRANSCRIPT_ILLEGIBLE =
       "additional_degree_transcript_illegible",
     APPLICANT_ALREADY_DQT = "applicant_already_dqt",
+    APPLICANT_ALREADY_TRS = "applicant_already_trs",
     APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH =
       "application_and_qualification_names_do_not_match",
     DEGREE_CERTIFICATE_ILLEGIBLE = "degree_certificate_illegible",

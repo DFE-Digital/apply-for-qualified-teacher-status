@@ -119,7 +119,7 @@ RSpec.describe UpdateTRSTRNRequestJob, type: :job do
 
         it "changes the state" do
           expect { perform }.to change(application_form, :statuses).to(
-            %w[potential_duplicate_in_dqt],
+            %w[potential_duplicate_in_trs],
           )
         end
 
@@ -237,7 +237,7 @@ RSpec.describe UpdateTRSTRNRequestJob, type: :job do
 
         it "changes the state" do
           expect { perform }.to change(application_form, :statuses).to(
-            %w[potential_duplicate_in_dqt],
+            %w[potential_duplicate_in_trs],
           )
         end
 

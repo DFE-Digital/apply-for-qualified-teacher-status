@@ -73,7 +73,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "review"
-      include_examples "changes statuses", %w[potential_duplicate_in_dqt]
+      include_examples "changes statuses", %w[potential_duplicate_in_trs]
     end
 
     context "with a withdrawn_at date" do

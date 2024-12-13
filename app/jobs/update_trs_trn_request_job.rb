@@ -15,12 +15,12 @@ class UpdateTRSTRNRequestJob < ApplicationJob
       trs_trn_request.update!(potential_duplicate:)
     end
 
-    ApplicationFormStatusUpdater.call(application_form:, user: "DQT")
+    ApplicationFormStatusUpdater.call(application_form:, user: "TRS")
 
     unless potential_duplicate
       AwardQTS.call(
         application_form:,
-        user: "DQT",
+        user: "TRS",
         trn: response[:trn],
         access_your_teaching_qualifications_url:
           response[:access_your_teaching_qualifications_link],

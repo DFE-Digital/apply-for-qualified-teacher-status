@@ -54,7 +54,7 @@ RSpec.describe AssessmentFactory do
               identification_document_present
               duplicate_application
               applicant_already_qts
-              applicant_already_dqt
+              applicant_already_trs
             ],
           )
           expect(section.failure_reasons).to eq(
@@ -64,7 +64,7 @@ RSpec.describe AssessmentFactory do
               identification_document_mismatch
               duplicate_application
               applicant_already_qts
-              applicant_already_dqt
+              applicant_already_trs
               suitability
               suitability_previously_declined
               fraud

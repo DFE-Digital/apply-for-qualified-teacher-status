@@ -192,10 +192,10 @@ FactoryBot.define do
       statuses { %w[awarded_pending_checks] }
     end
 
-    trait :potential_duplicate_in_dqt do
+    trait :potential_duplicate_in_trs do
       submitted
       review_stage
-      statuses { %w[potential_duplicate_in_dqt] }
+      statuses { %w[potential_duplicate_in_trs] }
     end
 
     trait :awarded do
