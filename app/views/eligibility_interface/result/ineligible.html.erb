@@ -2,6 +2,7 @@
 
 <% content_for :page_title, "You’re not eligible" %>
 <% content_for :back_link_url, ineligible_country ? eligibility_interface_countries_path : eligibility_interface_misconduct_path %>
+<% current_date = Date.current %>
 
 <h1 class="govuk-heading-xl">
   You’re not eligible to apply for qualified teacher status (QTS) in England
@@ -45,7 +46,11 @@
 
   <% if @eligibility_check.ineligible_reasons.include?(:work_experience) %>
     <p class="govuk-body">
-      If you’re a citizen of Iceland, Norway, or Lichtenstein you can gain more teaching experience during an adaptation period.
+      <% if current_date <= Date.new(2024, 12, 31) %>
+        If you’re a citizen of Iceland, Norway, or Liechtenstein you can gain more teaching experience during an adaptation period.
+      <% else %>
+        If you’re a citizen of Iceland, Liechtenstein, Norway, or Switzerland you can gain more teaching experience during an adaptation period.
+      <% end %>
     </p>
   <% end %>
 <% end %>
