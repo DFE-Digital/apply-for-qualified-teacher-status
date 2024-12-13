@@ -45,11 +45,13 @@
   </ul>
 
   <% if @eligibility_check.ineligible_reasons.include?(:work_experience) %>
-    <% if current_date <= Date.new(2024, 12, 31) %>
-      If you’re a citizen of Iceland, Norway, or Liechtenstein you can gain more teaching experience during an adaptation period.
-    <% else %>
-      If you’re a citizen of Iceland, Liechtenstein, Norway, or Switzerland you can gain more teaching experience during an adaptation period.
-    <% end %>
+    <p class="govuk-body">
+      <% if current_date <= Date.new(2024, 12, 31) %>
+        If you’re a citizen of Iceland, Norway, or Liechtenstein you can gain more teaching experience during an adaptation period.
+      <% else %>
+        If you’re a citizen of Iceland, Liechtenstein, Norway, or Switzerland you can gain more teaching experience during an adaptation period.
+      <% end %>
+    </p>
   <% end %>
 <% end %>
 
