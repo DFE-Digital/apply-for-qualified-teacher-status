@@ -56,6 +56,17 @@ var loadCountryAutoComplete = () => {
       selectElement: locationPicker,
       url: "/autocomplete_locations.json",
       name: "location_autocomplete",
+      onConfirm: openregisterLocationPicker.onConfirm || ((result) => {
+        // We get the value entered in the input box
+        const input = document.getElementById(locationPicker.id.replace("-select", ""));
+
+        // We remove the existing value on the select so that we don't retain previous selection.
+        // This is that with every change, we ensure that the user selects from the dropdown.
+        locationPicker.value = '';
+
+        var requestedOption = Array.prototype.filter.call(locationPicker.options, o => o.innerText === input.value)[0]
+        if (requestedOption) { requestedOption.selected = true }
+      })
     });
   }
 };
