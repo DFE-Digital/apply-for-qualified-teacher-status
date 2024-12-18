@@ -162,7 +162,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
         region:,
         teaching_authority_online_checker_url: "",
         teaching_authority_name:,
-        teaching_authority_emails_string: "",
+        teaching_authority_emails_string:,
         teaching_authority_requires_submission_email: false,
         all_sections_necessary: true,
         requires_preliminary_check: false,
@@ -170,7 +170,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
         status_check: "none",
         teaching_authority_provides_written_statement: false,
         written_statement_optional: true,
-        teaching_authority_websites_string: "",
+        teaching_authority_websites_string:,
         teaching_authority_address: "",
         other_information: "",
         teaching_authority_certificate: "",
@@ -182,29 +182,51 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
 
     let(:region) { create(:region) }
     let(:teaching_authority_name) { "Teaching Authority" }
+    let(:teaching_authority_emails_string) do
+      "email1@example.com\nemail2@example.com"
+    end
+    let(:teaching_authority_websites_string) do
+      "http://site1.com\nhttp://site2.com"
+    end
 
-    it "updates region attributes" do
-      subject
-      expect(region).to have_attributes(
-        application_form_skip_work_history: false,
-        other_information: "",
-        reduced_evidence_accepted: false,
-        requires_preliminary_check: false,
-        sanction_check: "none",
-        sanction_information: "",
-        status_check: "none",
-        status_information: "",
-        teaching_authority_address: "",
-        teaching_authority_certificate: "",
-        teaching_authority_emails: [],
-        teaching_authority_name: "Teaching Authority",
-        teaching_authority_online_checker_url: "",
-        teaching_authority_provides_written_statement: false,
-        teaching_authority_requires_submission_email: false,
-        teaching_authority_websites: [],
-        teaching_qualification_information: "",
-        written_statement_optional: true,
-      )
+    context "when form is valid" do
+      it "updates region attributes" do
+        subject
+        expect(region).to have_attributes(
+          application_form_skip_work_history: false,
+          other_information: "",
+          reduced_evidence_accepted: false,
+          requires_preliminary_check: false,
+          sanction_check: "none",
+          sanction_information: "",
+          status_check: "none",
+          status_information: "",
+          teaching_authority_address: "",
+          teaching_authority_certificate: "",
+          teaching_authority_emails: %w[email1@example.com email2@example.com],
+          teaching_authority_name: "Teaching Authority",
+          teaching_authority_online_checker_url: "",
+          teaching_authority_provides_written_statement: false,
+          teaching_authority_requires_submission_email: false,
+          teaching_authority_websites: %w[http://site1.com http://site2.com],
+          teaching_qualification_information: "",
+          written_statement_optional: true,
+        )
+      end
+
+      it "processes emails correctly" do
+        subject
+        expect(region.teaching_authority_emails).to eq(
+          %w[email1@example.com email2@example.com],
+        )
+      end
+
+      it "processes urls correctly" do
+        subject
+        expect(region.teaching_authority_websites).to eq(
+          %w[http://site1.com http://site2.com],
+        )
+      end
     end
 
     context "when form is invalid" do
@@ -212,6 +234,12 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
 
       it "returns false" do
         expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+
+      it "does not change region attributes when form is invalid" do
+        original_attributes = region.attributes
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+        expect(region.reload.attributes).to eq(original_attributes)
       end
     end
   end
