@@ -164,7 +164,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
         teaching_authority_name:,
         teaching_authority_emails_string:,
         teaching_authority_requires_submission_email: false,
-        all_sections_necessary: true,
+        all_sections_necessary:,
         requires_preliminary_check: false,
         sanction_check: "none",
         status_check: "none",
@@ -177,6 +177,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
         status_information: "",
         sanction_information: "",
         teaching_qualification_information: "",
+        work_history_section_to_omit:,
       )
     end
 
@@ -188,6 +189,8 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     let(:teaching_authority_websites_string) do
       "http://site1.com\nhttp://site2.com"
     end
+    let(:work_history_section_to_omit) { "" }
+    let(:all_sections_necessary) { true }
 
     context "when form is valid" do
       it "updates region attributes" do
@@ -213,19 +216,27 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
           written_statement_optional: true,
         )
       end
+    end
 
-      it "processes emails correctly" do
+    context "when work history section to omit is whole section" do
+      let(:all_sections_necessary) { false }
+      let(:work_history_section_to_omit) { "whole_section" }
+
+      it do
         subject
-        expect(region.teaching_authority_emails).to eq(
-          %w[email1@example.com email2@example.com],
+        expect(region).to have_attributes(
+          application_form_skip_work_history: true,
         )
       end
+    end
 
-      it "processes urls correctly" do
+    context "when work history section to omit is contact details" do
+      let(:all_sections_necessary) { false }
+      let(:work_history_section_to_omit) { "contact_details" }
+
+      it do
         subject
-        expect(region.teaching_authority_websites).to eq(
-          %w[http://site1.com http://site2.com],
-        )
+        expect(region).to have_attributes(reduced_evidence_accepted: true)
       end
     end
 
