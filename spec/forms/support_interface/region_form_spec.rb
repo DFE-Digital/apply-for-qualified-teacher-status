@@ -240,7 +240,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
         expect(region).to have_attributes(
           reduced_evidence_accepted: true,
           application_form_skip_work_history: false,
-          )
+        )
       end
     end
 
