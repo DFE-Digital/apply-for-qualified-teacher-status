@@ -22,6 +22,7 @@ class ApplicationFormFactory
         teacher:,
         teaching_authority_provides_written_statement:,
         written_statement_optional:,
+        old_identification_document_upload: false,
       )
     end
   end

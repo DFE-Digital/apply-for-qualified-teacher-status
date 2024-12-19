@@ -83,7 +83,7 @@
 #
 class ApplicationForm < ApplicationRecord
   ATTACHABLE_DOCUMENT_TYPES = %w[
-    identification
+    passport
     name_change
     medium_of_instruction
     english_language_proficiency

@@ -123,6 +123,7 @@ en:
       items:
         personal_information: Enter your personal information
         identification_document: Upload your identity document
+        passport_document: Upload your passport document
         qualifications: Add your teaching qualifications
         age_range: Enter the age range you can teach
         subjects: Enter the subjects you can teach

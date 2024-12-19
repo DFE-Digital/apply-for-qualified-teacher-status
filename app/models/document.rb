@@ -32,6 +32,7 @@ class Document < ApplicationRecord
 
   UNTRANSLATABLE_TYPES = %w[
     english_language_proficiency
+    passport
     identification
     medium_of_instruction
     name_change

@@ -52,6 +52,7 @@ class ApplicationFormSectionStatusUpdater
            :teaching_authority_provides_written_statement,
            :written_statement_confirmation,
            :written_statement_document,
+           :old_identification_document_upload,
            to: :application_form
 
   def personal_information_status
@@ -72,8 +73,14 @@ class ApplicationFormSectionStatusUpdater
     status_for_values(*values)
   end
 
+  def passport_document_status
+    passport_document&.status
+  end
+
   def identification_document_status
-    identification_document.status
+    return 'not_started' unless old_identification_document_upload
+
+    identification_document&.status
   end
 
   def qualifications_status
