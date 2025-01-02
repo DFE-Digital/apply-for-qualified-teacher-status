@@ -258,4 +258,86 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       end
     end
   end
+
+  describe ".for_existing_region" do
+    subject(:form) { described_class.for_existing_region(region) }
+
+    let(:region) do
+      create(
+        :region,
+        application_form_skip_work_history:,
+        other_information:,
+        reduced_evidence_accepted:,
+        requires_preliminary_check:,
+        sanction_check:,
+        sanction_information:,
+        status_check:,
+        status_information:,
+        teaching_authority_address:,
+        teaching_authority_certificate:,
+        teaching_authority_emails:,
+        written_statement_optional:,
+      )
+    end
+
+    let(:application_form_skip_work_history) { false }
+    let(:other_information) { "Other information" }
+    let(:reduced_evidence_accepted) { false }
+    let(:requires_preliminary_check) { false }
+    let(:sanction_check) { "none" }
+    let(:sanction_information) { "Sanction information" }
+    let(:status_check) { "none" }
+    let(:status_information) { "Status information" }
+    let(:teaching_authority_address) { "Teaching Authority Address" }
+    let(:teaching_authority_certificate) { "Teaching Authority Certificate" }
+    let(:teaching_authority_emails) { %w[http://site1.com http://site2.com] }
+    let(:written_statement_optional) { true }
+
+    it "returns a RegionForm for the region" do
+      expect(subject).to have_attributes(
+        all_sections_necessary: true,
+        other_information: "Other information",
+        requires_preliminary_check: false,
+        sanction_check: "none",
+        sanction_information: "Sanction information",
+        status_check: "none",
+        status_information: "Status information",
+        teaching_authority_address: "Teaching Authority Address",
+        teaching_authority_certificate: "Teaching Authority Certificate",
+        teaching_authority_emails_string: "http://site1.com\nhttp://site2.com",
+        teaching_authority_name: "",
+        teaching_authority_online_checker_url: "",
+        teaching_authority_provides_written_statement: false,
+        teaching_authority_requires_submission_email: false,
+        teaching_authority_websites_string: "",
+        teaching_qualification_information: "",
+        work_history_section_to_omit: nil,
+        written_statement_optional: true,
+      )
+    end
+
+    context "when application_form_skip_work_history is true" do
+      let(:application_form_skip_work_history) { true }
+
+      it "sets all_sections_necessary to false" do
+        expect(subject.all_sections_necessary).to be(false)
+      end
+
+      it "sets work_history_section_to_omit to whole_section" do
+        expect(subject.work_history_section_to_omit).to eq("whole_section")
+      end
+    end
+
+    context "when reduced_evidence_accepted is true" do
+      let(:reduced_evidence_accepted) { true }
+
+      it "sets all_sections_necessary to false" do
+        expect(subject.all_sections_necessary).to be(false)
+      end
+
+      it "sets work_history_section_to_omit to contact_details" do
+        expect(subject.work_history_section_to_omit).to eq("contact_details")
+      end
+    end
+  end
 end
