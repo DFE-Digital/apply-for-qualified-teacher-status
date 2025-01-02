@@ -265,20 +265,33 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     let(:region) do
       create(
         :region,
-        application_form_skip_work_history: false,
-        other_information: "Other information",
-        reduced_evidence_accepted: false,
-        requires_preliminary_check: false,
-        sanction_check: "none",
-        sanction_information: "Sanction information",
-        status_check: "none",
-        status_information: "Status information",
-        teaching_authority_address: "Teaching Authority Address",
-        teaching_authority_certificate: "Teaching Authority Certificate",
-        teaching_authority_emails: %w[http://site1.com http://site2.com],
-        written_statement_optional: true,
+        application_form_skip_work_history:,
+        other_information:,
+        reduced_evidence_accepted:,
+        requires_preliminary_check:,
+        sanction_check:,
+        sanction_information:,
+        status_check:,
+        status_information:,
+        teaching_authority_address:,
+        teaching_authority_certificate:,
+        teaching_authority_emails:,
+        written_statement_optional:,
       )
     end
+
+    let(:application_form_skip_work_history) { false }
+    let(:other_information) { "Other information" }
+    let(:reduced_evidence_accepted) { false }
+    let(:requires_preliminary_check) { false }
+    let(:sanction_check) { "none" }
+    let(:sanction_information) { "Sanction information" }
+    let(:status_check) { "none" }
+    let(:status_information) { "Status information" }
+    let(:teaching_authority_address) { "Teaching Authority Address" }
+    let(:teaching_authority_certificate) { "Teaching Authority Certificate" }
+    let(:teaching_authority_emails) { %w[http://site1.com http://site2.com] }
+    let(:written_statement_optional) { true }
 
     it "returns a RegionForm for the region" do
       expect(subject).to have_attributes(
@@ -304,7 +317,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     end
 
     context "when application_form_skip_work_history is true" do
-      let(:region) { create(:region, application_form_skip_work_history: true) }
+      let(:application_form_skip_work_history) { true }
 
       it "sets all_sections_necessary to false" do
         expect(subject.all_sections_necessary).to be(false)
@@ -316,7 +329,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
     end
 
     context "when reduced_evidence_accepted is true" do
-      let(:region) { create(:region, reduced_evidence_accepted: true) }
+      let(:reduced_evidence_accepted) { true }
 
       it "sets all_sections_necessary to false" do
         expect(subject.all_sections_necessary).to be(false)
