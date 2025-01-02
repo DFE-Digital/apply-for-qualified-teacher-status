@@ -85,7 +85,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       let(:all_sections_necessary) { false }
 
       it do
-        save!
+        valid
         expect(subject).to validate_inclusion_of(
           :work_history_section_to_omit,
         ).in_array(%w[whole_section contact_details])
@@ -151,6 +151,111 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
       let(:teaching_authority_online_checker_url) { "https://www.example.com" }
 
       it { is_expected.to be_valid }
+    end
+  end
+
+  describe "#save" do
+    subject(:save!) { form.save! }
+
+    let(:form) do
+      described_class.new(
+        region:,
+        teaching_authority_online_checker_url: "",
+        teaching_authority_name:,
+        teaching_authority_emails_string:,
+        teaching_authority_requires_submission_email: false,
+        all_sections_necessary:,
+        requires_preliminary_check: false,
+        sanction_check: "none",
+        status_check: "none",
+        teaching_authority_provides_written_statement: false,
+        written_statement_optional: true,
+        teaching_authority_websites_string:,
+        teaching_authority_address: "",
+        other_information: "",
+        teaching_authority_certificate: "",
+        status_information: "",
+        sanction_information: "",
+        teaching_qualification_information: "",
+        work_history_section_to_omit:,
+      )
+    end
+
+    let(:region) { create(:region) }
+    let(:teaching_authority_name) { "Teaching Authority" }
+    let(:teaching_authority_emails_string) do
+      "email1@example.com\nemail2@example.com"
+    end
+    let(:teaching_authority_websites_string) do
+      "http://site1.com\nhttp://site2.com"
+    end
+    let(:work_history_section_to_omit) { "" }
+    let(:all_sections_necessary) { true }
+
+    context "when form is valid" do
+      it "updates region attributes" do
+        subject
+        expect(region).to have_attributes(
+          application_form_skip_work_history: false,
+          other_information: "",
+          reduced_evidence_accepted: false,
+          requires_preliminary_check: false,
+          sanction_check: "none",
+          sanction_information: "",
+          status_check: "none",
+          status_information: "",
+          teaching_authority_address: "",
+          teaching_authority_certificate: "",
+          teaching_authority_emails: %w[email1@example.com email2@example.com],
+          teaching_authority_name: "Teaching Authority",
+          teaching_authority_online_checker_url: "",
+          teaching_authority_provides_written_statement: false,
+          teaching_authority_requires_submission_email: false,
+          teaching_authority_websites: %w[http://site1.com http://site2.com],
+          teaching_qualification_information: "",
+          written_statement_optional: true,
+        )
+      end
+    end
+
+    context "when work history section to omit is whole section" do
+      let(:all_sections_necessary) { false }
+      let(:work_history_section_to_omit) { "whole_section" }
+
+      it do
+        subject
+        expect(region).to have_attributes(
+          application_form_skip_work_history: true,
+          reduced_evidence_accepted: false,
+        )
+      end
+    end
+
+    context "when work history section to omit is contact details" do
+      let(:all_sections_necessary) { false }
+      let(:work_history_section_to_omit) { "contact_details" }
+
+      it do
+        subject
+        expect(region).to have_attributes(
+          reduced_evidence_accepted: true,
+          application_form_skip_work_history: false,
+        )
+      end
+    end
+
+    context "when form is invalid" do
+      let(:teaching_authority_name) { "The Teaching Authority" }
+
+      it "returns false" do
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+
+      it "does not change region attributes when form is invalid" do
+        original_attributes = region.attributes
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+        expect(region.reload.attributes).to eq(original_attributes)
+      end
     end
   end
 end
