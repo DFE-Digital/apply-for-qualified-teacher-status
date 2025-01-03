@@ -109,7 +109,7 @@ class ApplicationFormStatusUpdater
         %w[awarded]
       elsif trs_trn_request.present?
         if trs_trn_request.potential_duplicate?
-          %w[potential_duplicate_in_dqt]
+          %w[potential_duplicate_in_trs]
         else
           %w[awarded_pending_checks]
         end

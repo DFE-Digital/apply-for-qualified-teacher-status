@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe TRS::CountryCode do
   describe "#for_code" do
-    subject(:dqt_code) { described_class.for_code(code) }
+    subject(:trs_code) { described_class.for_code(code) }
 
     let(:code) { "US" }
 

@@ -18,9 +18,9 @@
 
 <% if (duplicate_matches = @view_object.duplicate_matches).present? %>
   <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
-    <% notification_banner.with_heading(text: "Application details match DQT record(s)") %>
+    <% notification_banner.with_heading(text: "Application details match TRS record(s)") %>
 
-    <p class="govuk-body">The surname and date of birth used in this application matches the following records found in the Database of Qualified Teachers (DQT):</p>
+    <p class="govuk-body">The surname and date of birth used in this application matches the following records found in the Teaching Record System (TRS):</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <% duplicate_matches.each do |match| %>
