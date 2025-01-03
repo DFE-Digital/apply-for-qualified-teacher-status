@@ -4,7 +4,7 @@
   "dependencies": {
     "@ministryofjustice/frontend": "^3.3.0",
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.24.2",
     "govuk-country-and-territory-autocomplete": "^2.0.0",
     "govuk-frontend": "^5.7.1",
     "sass": "^1.83.0"
