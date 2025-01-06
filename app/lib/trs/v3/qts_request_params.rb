@@ -13,7 +13,7 @@ module TRS
 
       def call
         {
-          routeType: "", # TODO: Something like "Apply for QTS" TBC.
+          routeType: route_type,
           startDate: teaching_qualification.start_date.iso8601,
           endDate: teaching_qualification.complete_date.iso8601,
           subjects:,
@@ -55,6 +55,21 @@ module TRS
       def induction_exemption_reasons
         # TODO: List of potential reasons to be provided.
         # This must be provided if exemptFromInduction is true
+      end
+
+      def route_type
+        # TODO: The value returned will be either an enum or GUID. TBD
+        if CountryCode.scotland?(country_code)
+          "Scotland R"
+        elsif CountryCode.northern_ireland?(country_code)
+          "NI R"
+        else
+          "Apply for QTS"
+        end
+      end
+
+      def country_code
+        @country_code ||= application_form.region.country.code
       end
     end
   end
