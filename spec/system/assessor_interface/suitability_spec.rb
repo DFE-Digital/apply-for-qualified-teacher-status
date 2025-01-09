@@ -78,7 +78,7 @@ RSpec.describe "Assessor suitability", type: :system do
 
     form.name_field.fill_in with: "John Smith"
     form.alias_field.fill_in with: "Alias"
-    form.location_field.select("France")
+    form.location_field.select "France"
     form.date_of_birth_day_field.fill_in with: "1"
     form.date_of_birth_month_field.fill_in with: "1"
     form.date_of_birth_year_field.fill_in with: "1999"
