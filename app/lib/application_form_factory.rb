@@ -22,6 +22,7 @@ class ApplicationFormFactory
         teacher:,
         teaching_authority_provides_written_statement:,
         written_statement_optional:,
+        requires_passport_as_identity_proof:,
       )
     end
   end
@@ -61,5 +62,9 @@ class ApplicationFormFactory
 
   def subject_limited
     region.country.subject_limited
+  end
+
+  def requires_passport_as_identity_proof
+    FeatureFlags::FeatureFlag.active?(:use_passport_for_identity_verification)
   end
 end

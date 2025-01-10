@@ -35,6 +35,7 @@ class Document < ApplicationRecord
     identification
     medium_of_instruction
     name_change
+    passport
   ].freeze
 
   UNTRANSLATABLE_SINGLE_TYPES = %w[signed_consent unsigned_consent].freeze

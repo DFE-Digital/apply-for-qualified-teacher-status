@@ -35,4 +35,8 @@ feature_flags:
       Allow starting an application on this service directly after completing
       an eligibility check.
 
+  use_passport_for_identity_verification:
+    author: Hassan Mir
+    description: New applicants must upload passport as their proof of identity as opposed to any photo ID.
+
 parent_controller: SupportInterface::FeatureFlagsController
