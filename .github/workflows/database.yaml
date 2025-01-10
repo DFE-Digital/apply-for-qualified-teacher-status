@@ -100,32 +100,3 @@ jobs:
           backup-file: ${{ env.BACKUP_FILE }}.sql
           db-server-name: ${{ inputs.db-server }}
           slack-webhook: ${{ steps.key-vault-secrets.outputs.SLACK_WEBHOOK }}
-
-      - name: Install postgres client
-        if: github.event_name == 'schedule'
-        uses: DFE-Digital/github-actions/install-postgres-client@master
-        with:
-          version: 14
-
-      - name: Sanitise dump
-        if: github.event_name == 'schedule'
-        run: |
-          gzip -d --to-stdout ${BACKUP_FILE}.sql.gz | psql -d postgres
-          psql -d postgres -f db/scripts/sanitise.sql
-          pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}.sql.gz
-        env:
-          PGUSER: postgres
-          PGPASSWORD: postgres
-          PGHOST: localhost
-          PGPORT: 5432
-
-      - name: Upload sanitised backup to Azure Storage
-        if: github.event_name == 'schedule'
-        run: |
-          STORAGE_CONN_STR=$(az storage account show-connection-string -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.STORAGE_ACCOUNT_NAME }} --query 'connectionString')
-          echo "::add-mask::$STORAGE_CONN_STR"
-
-          az storage blob upload --container-name database-backup \
-            --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz --overwrite \
-            --connection-string "${STORAGE_CONN_STR}"
-          rm ${SANITISED_FILE_NAME}.sql.gz
