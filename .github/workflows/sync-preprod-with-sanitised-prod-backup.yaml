@@ -14,6 +14,40 @@ env:
   TF_VARS_PATH: terraform/application/config
 
 jobs:
+  sanitise-backup:
+    name: Sanitise Backup
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      GLOBAL_CONFIG: production
+      BACKUP_FILE: ${{ inputs.backup-file }}
+    
+      - name: Install postgres client
+        uses: DFE-Digital/github-actions/install-postgres-client@master
+        with:
+          version: 14
+
+      - name: Sanitise dump
+        run: |
+          gzip -d --to-stdout ${BACKUP_FILE}.sql.gz | psql -d postgres
+          psql -d postgres -f db/scripts/sanitise.sql
+          pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}.sql.gz
+        env:
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGHOST: localhost
+          PGPORT: 5432
+
+      - name: Upload sanitised backup to Azure Storage
+        run: |
+          STORAGE_CONN_STR=$(az storage account show-connection-string -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.STORAGE_ACCOUNT_NAME }} --query 'connectionString')
+          echo "::add-mask::$STORAGE_CONN_STR"
+
+          az storage blob upload --container-name database-backup \
+            --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz --overwrite \
+            --connection-string "${STORAGE_CONN_STR}"
+          rm ${SANITISED_FILE_NAME}.sql.gz
+
   sync-preprod:
     name: Sync Preproduction with Sanitised Backup
     runs-on: ubuntu-latest
@@ -42,32 +76,6 @@ jobs:
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Install postgres client
-        uses: DFE-Digital/github-actions/install-postgres-client@master
-        with:
-          version: 14
-
-      - name: Sanitise dump
-        run: |
-          gzip -d --to-stdout ${BACKUP_FILE}.sql.gz | psql -d postgres
-          psql -d postgres -f db/scripts/sanitise.sql
-          pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}.sql.gz
-        env:
-          PGUSER: postgres
-          PGPASSWORD: postgres
-          PGHOST: localhost
-          PGPORT: 5432
-
-      - name: Upload sanitised backup to Azure Storage
-        run: |
-          STORAGE_CONN_STR=$(az storage account show-connection-string -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.STORAGE_ACCOUNT_NAME }} --query 'connectionString')
-          echo "::add-mask::$STORAGE_CONN_STR"
-
-          az storage blob upload --container-name database-backup \
-            --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz --overwrite \
-            --connection-string "${STORAGE_CONN_STR}"
-          rm ${SANITISED_FILE_NAME}.sql.gz
 
       - name: Set Connection String
         run: |
