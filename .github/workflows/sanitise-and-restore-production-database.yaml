@@ -1,4 +1,4 @@
-name: Sync Preproduction with Sanitised Backup
+name: Sanitise and Restore Production Database
 
 on:
   workflow_dispatch:
@@ -21,6 +21,10 @@ jobs:
     env:
       GLOBAL_CONFIG: production
       BACKUP_FILE: ${{ inputs.backup-file }}
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
     
       - name: Install postgres client
         uses: DFE-Digital/github-actions/install-postgres-client@master
@@ -48,8 +52,8 @@ jobs:
             --connection-string "${STORAGE_CONN_STR}"
           rm ${SANITISED_FILE_NAME}.sql.gz
 
-  sync-preprod:
-    name: Sync Preproduction with Sanitised Backup
+  restore-preproduction:
+    name: Restore preproduction
     needs: sanitise-backup
     runs-on: ubuntu-latest
     environment: production
