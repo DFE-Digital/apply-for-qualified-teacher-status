@@ -258,7 +258,9 @@ FactoryBot.define do
     end
 
     trait :with_passport_document do
-      identification_document_status { "completed" }
+      passport_document_status { "completed" }
+
+      passport_expiry_date { Date.new(2.years.from_now.year, 1, 1) }
       after(:create) do |application_form, _evaluator|
         create(:upload, :clean, document: application_form.passport_document)
       end

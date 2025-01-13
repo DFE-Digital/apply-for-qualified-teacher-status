@@ -101,12 +101,64 @@ RSpec.describe "Teacher submitting", type: :system do
 
       when_i_click_check_your_answers
       then_i_see_the(:teacher_check_your_answers_page)
+      and_i_see_the_identity_document_summary
 
       when_i_confirm_i_have_no_sanctions
       then_i_see_the(:teacher_submitted_application_page)
       and_i_see_the_submitted_application_information_with_preliminary_check_pending
       and_i_receive_an_application_email_for_initial_checks_required
     end
+  end
+
+  context "when the application required passport as a form of identity proof" do
+    let(:application_form) do
+      create(
+        :application_form,
+        :with_personal_information,
+        :with_passport_document,
+        :with_teaching_qualification,
+        :with_age_range,
+        :with_subjects,
+        :with_english_language_provider,
+        :with_work_history,
+        :with_written_statement,
+        :with_registration_number,
+        teacher:,
+        requires_passport_as_identity_proof: true,
+      )
+    end
+
+    it "submits" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+
+      when_i_click_check_your_answers
+      then_i_see_the(:teacher_check_your_answers_page)
+      and_i_see_the_passport_document_summary
+
+      when_i_confirm_i_have_no_sanctions
+      then_i_see_the(:teacher_submitted_application_page)
+      and_i_see_the_submitted_application_information
+      and_i_receive_an_application_email
+    end
+  end
+
+  def and_i_see_the_identity_document_summary
+    expect(teacher_submitted_application_page).to have_content(
+      "Upload your identity document",
+    )
+    expect(teacher_submitted_application_page).not_to have_content(
+      "Upload your passport",
+    )
+  end
+
+  def and_i_see_the_passport_document_summary
+    expect(teacher_submitted_application_page).not_to have_content(
+      "Upload your identity document",
+    )
+    expect(teacher_submitted_application_page).to have_content(
+      "Upload your passport",
+    )
   end
 
   def given_there_is_an_application_form

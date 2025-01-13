@@ -90,11 +90,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
       context "with valid expiry date and an upload" do
         let(:application_form) do
-          create(
-            :application_form,
-            :with_passport_document,
-            passport_expiry_date: Date.new(2.years.from_now.year, 1, 1),
-          )
+          create(:application_form, :with_passport_document)
         end
 
         it { is_expected.to eq("completed") }
