@@ -29,6 +29,7 @@ RSpec.describe Document, type: :model do
       expect(subject).to define_enum_for(:document_type).with_values(
         english_language_proficiency: "english_language_proficiency",
         identification: "identification",
+        passport: "passport",
         medium_of_instruction: "medium_of_instruction",
         name_change: "name_change",
         qualification_certificate: "qualification_certificate",

@@ -44,7 +44,8 @@ RSpec.describe TeacherInterface::PassportExpiryDateForm, type: :model do
         it do
           expect(subject).to eq(
             [
-              "The passport expiry date must be entered as numbers, including the day, month and year. For example, 27 3 2007.",
+              "The passport expiry date must be entered as numbers, " \
+                "including the day, month and year. For example, 27 3 2007.",
             ],
           )
         end
@@ -56,7 +57,8 @@ RSpec.describe TeacherInterface::PassportExpiryDateForm, type: :model do
         it do
           expect(subject).to eq(
             [
-              "The passport expiry date must be entered as numbers, including the day, month and year. For example, 27 3 2007.",
+              "The passport expiry date must be entered as numbers, " \
+                "including the day, month and year. For example, 27 3 2007.",
             ],
           )
         end
