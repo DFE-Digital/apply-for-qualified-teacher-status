@@ -50,6 +50,7 @@ jobs:
 
   sync-preprod:
     name: Sync Preproduction with Sanitised Backup
+    needs: sanitise-backup
     runs-on: ubuntu-latest
     environment: production
     env:
