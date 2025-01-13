@@ -41,6 +41,16 @@ RSpec.describe DocumentContinueRedirection do
       it { is_expected.to eq(%i[teacher_interface application_form]) }
     end
 
+    context "with a passport document" do
+      let(:document) { create(:document, :passport) }
+
+      it do
+        expect(subject).to eq(
+          %i[check teacher_interface application_form passport_document],
+        )
+      end
+    end
+
     context "with a medium of instruction document" do
       let(:document) { create(:document, :medium_of_instruction) }
 

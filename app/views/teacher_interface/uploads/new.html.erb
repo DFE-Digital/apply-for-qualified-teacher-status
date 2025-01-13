@@ -27,6 +27,24 @@
       </ul>
 
       <p class="govuk-hint">If you’re uploading an identity card or driving licence, you’ll need to upload both sides of the card.</p>
+    <% elsif @document.passport? %>
+      <h1 class="govuk-heading-l">Upload your passport</h1>
+
+      <p class="govuk-body">Upload a clear image or scan of the two passport pages that show your photo and personal details, including your name, passport number, and expiry date. You can:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>upload both pages together in one image or scan</li>
+        <li>upload each page separately</li>
+      </ul>
+
+      <p class="govuk-body">Make sure:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>all information is clear and readable</li>
+        <li>the edges of the pages are visible</li>
+      </ul>
+
+      <p class="govuk-body">You do not need to upload every page of your passport.</p>
     <% elsif @document.name_change? %>
       <h1 class="govuk-heading-l">Upload proof of your change of name</h1>
 

@@ -257,6 +257,20 @@ FactoryBot.define do
       end
     end
 
+    trait :with_passport_document do
+      identification_document_status { "completed" }
+      after(:create) do |application_form, _evaluator|
+        create(:upload, :clean, document: application_form.passport_document)
+      end
+    end
+
+    trait :with_unsafe_passport_document do
+      identification_document_status { "completed" }
+      after(:create) do |application_form, _evaluator|
+        create(:upload, :suspect, document: application_form.passport_document)
+      end
+    end
+
     trait :with_alternative_name do
       has_alternative_name { true }
       alternative_given_names { Faker::Name.name }

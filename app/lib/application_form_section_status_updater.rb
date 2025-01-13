@@ -11,6 +11,7 @@ class ApplicationFormSectionStatusUpdater
     application_form.update!(
       personal_information_status:,
       identification_document_status:,
+      passport_document_status:,
       qualifications_status:,
       age_range_status:,
       subjects_status:,
@@ -49,6 +50,8 @@ class ApplicationFormSectionStatusUpdater
            :has_work_history,
            :work_histories,
            :registration_number,
+           :passport_document,
+           :passport_expiry_date,
            :teaching_authority_provides_written_statement,
            :written_statement_confirmation,
            :written_statement_document,
@@ -74,6 +77,21 @@ class ApplicationFormSectionStatusUpdater
 
   def identification_document_status
     identification_document.status
+  end
+
+  def passport_document_status
+    if passport_expiry_date.nil? && !passport_document.available?
+      return :not_started
+    end
+
+    if passport_document.any_unsafe_to_link?
+      :error
+    elsif passport_document.completed? && passport_expiry_date.present? &&
+          passport_expiry_date >= Date.current
+      :completed
+    else
+      :in_progress
+    end
   end
 
   def qualifications_status

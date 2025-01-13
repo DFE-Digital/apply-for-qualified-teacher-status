@@ -442,6 +442,11 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckPersonalInformation.new
   end
 
+  def teacher_check_passport_document_page
+    @teacher_check_passport_document_page =
+      PageObjects::TeacherInterface::CheckPassportDocument.new
+  end
+
   def teacher_check_qualification_page
     @teacher_check_qualification_page ||=
       PageObjects::TeacherInterface::CheckQualification.new
@@ -619,6 +624,11 @@ module PageHelpers
   def teacher_name_and_date_of_birth_page
     @teacher_name_and_date_of_birth_page =
       PageObjects::TeacherInterface::NameAndDateOfBirth.new
+  end
+
+  def teacher_passport_expiry_date_page
+    @teacher_passport_expiry_date_page =
+      PageObjects::TeacherInterface::PassportExpiryDate.new
   end
 
   def teacher_new_application_page

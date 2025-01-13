@@ -123,6 +123,7 @@ en:
       items:
         personal_information: Enter your personal information
         identification_document: Upload your identity document
+        passport_document: Upload your passport
         qualifications: Add your teaching qualifications
         age_range: Enter the age range you can teach
         subjects: Enter the subjects you can teach
@@ -304,6 +305,12 @@ en:
               blank: Select whether you have used the service before
             email:
               blank: Enter your email address
+        teacher_interface/passport_expiry_date_form:
+          attributes:
+            passport_expiry_date:
+              blank: Enter your passport expiry date.
+              expired: The passport expiry date must be in the future.
+              invalid: The passport expiry date must be entered as numbers, including the day, month and year. For example, 27 3 2007.
         teacher_interface/qualification_form:
           attributes:
             title:

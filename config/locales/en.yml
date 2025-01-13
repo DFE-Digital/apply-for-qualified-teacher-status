@@ -27,6 +27,7 @@ en:
     document_type:
       english_language_proficiency: English language proficiency test
       identification: identity
+      passport: passport
       medium_of_instruction: medium of instruction
       name_change: name change
       qualification_certificate: certificate

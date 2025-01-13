@@ -36,7 +36,7 @@ en:
       teacher_interface_add_another_qualification_form:
         add_another: Add another degree or qualification if they are related to your teaching career. For example, to show you are qualified to teach a particular subject.
       teacher_interface_add_another_upload_form:
-        add_another: If your document has several pages or you’re providing an image of the other side of your identity card or driving license, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’.
+        add_another: If your document has several pages, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’.
       teacher_interface_alternative_name_form:
         has_alternative_name: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
         alternative_given_names: Enter your full name apart from your family name

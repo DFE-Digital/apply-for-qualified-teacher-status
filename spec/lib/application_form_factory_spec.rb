@@ -122,6 +122,10 @@ RSpec.describe ApplicationFormFactory do
       expect(application_form.reduced_evidence_accepted).to be false
     end
 
+    it "doesn't set requires passport document as identity proof" do
+      expect(application_form.requires_passport_as_identity_proof).to be false
+    end
+
     context "when reduced evidence is accepted" do
       let(:region) { create(:region, :reduced_evidence_accepted) }
 
@@ -151,6 +155,24 @@ RSpec.describe ApplicationFormFactory do
 
       it "sets subject limited" do
         expect(application_form.subject_limited).to be true
+      end
+    end
+
+    context "when the feature for passport upload is released" do
+      before do
+        FeatureFlags::FeatureFlag.activate(
+          :use_passport_for_identity_verification,
+        )
+      end
+
+      after do
+        FeatureFlags::FeatureFlag.deactivate(
+          :use_passport_for_identity_verification,
+        )
+      end
+
+      it "sets requires passport document as identity proof" do
+        expect(application_form.requires_passport_as_identity_proof).to be true
       end
     end
   end

@@ -27,6 +27,10 @@ class DocumentContinueRedirection
     %i[teacher_interface application_form]
   end
 
+  def passport_url
+    %i[check teacher_interface application_form passport_document]
+  end
+
   def name_change_url
     %i[check teacher_interface application_form personal_information]
   end
