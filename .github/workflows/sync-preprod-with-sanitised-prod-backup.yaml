@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       backup-file:
-        description: Name of the sanitized backup file to restore (e.g., afqts_sanitised_2023-10-07.sql.gz)
+        description: Name of the prod backup file to sanitise and restore on preproduction (e.g., afqts_pd_2025-01-10.sql.gz)
         required: true
         type: string
 
