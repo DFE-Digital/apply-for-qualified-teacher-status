@@ -30,12 +30,7 @@
     <% elsif @document.passport? %>
       <h1 class="govuk-heading-l">Upload your passport</h1>
 
-      <p class="govuk-body">Upload a clear image or scan of the two passport pages that show your photo and personal details, including your name, passport number, and expiry date. You can:</p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>upload both pages together in one image or scan</li>
-        <li>upload each page separately</li>
-      </ul>
+      <p class="govuk-body">Only upload the passport pages that show your photo and personal details, including your name, passport number, and expiry date.</p>
 
       <p class="govuk-body">Make sure:</p>
 
@@ -174,7 +169,21 @@
     <% end %>
   <% else %>
     <h1 class="govuk-heading-l">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>
-    <p class="govuk-body">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document. If your document has more pages, you can add them on the next screen.</p>
+
+    <% if @document.passport? %>
+      <p class="govuk-body">Only upload the passport pages that show your photo and personal details, including your name, passport number, and expiry date.</p>
+
+      <p class="govuk-body">Make sure:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>all information is clear and readable</li>
+        <li>the edges of the pages are visible</li>
+      </ul>
+
+      <p class="govuk-body">You do not need to upload every page of your passport.</p>
+    <% else %>
+      <p class="govuk-body">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document. If your document has more pages, you can add them on the next screen.</p>
+    <% end %>
   <% end %>
 
   <%= f.govuk_file_field :original_attachment,
