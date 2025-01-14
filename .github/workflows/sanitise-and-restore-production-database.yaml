@@ -21,11 +21,11 @@ jobs:
     env:
       GLOBAL_CONFIG: production
       BACKUP_FILE: ${{ inputs.backup-file }}
-    
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-    
+
       - name: Install postgres client
         uses: DFE-Digital/github-actions/install-postgres-client@master
         with:
