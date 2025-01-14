@@ -26,9 +26,23 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Set environment variables
+        run: |
+          source global_config/${GLOBAL_CONFIG}.sh
+          echo "SANITISED_FILE_NAME=afqts_sanitised_$(date +"%F").sql.gz" >> $GITHUB_ENV
+          echo "RESOURCE_GROUP_NAME=s189p01-afqts-pd-rg" >> $GITHUB_ENV
+          echo "STORAGE_ACCOUNT_NAME=s189p01afqtsdbbkppdsa" >> $GITHUB_ENV
+
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Download Production Backup from Azure Storage
+        run: |
+          az config set extension.use_dynamic_install=yes_without_prompt
+          az config set core.only_show_errors=true
+          az storage azcopy blob download --container database-backup \
+            --source ${BACKUP_FILE} --destination ${BACKUP_FILE}
 
       - name: Install postgres client
         uses: DFE-Digital/github-actions/install-postgres-client@master
@@ -37,7 +51,7 @@ jobs:
 
       - name: Sanitise dump
         run: |
-          gzip -d --to-stdout ${BACKUP_FILE}.sql.gz | psql -d postgres
+          gzip -d --to-stdout ${BACKUP_FILE} | psql -d postgres
           psql -d postgres -f db/scripts/sanitise.sql
           pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}.sql.gz
         env:
@@ -60,7 +74,7 @@ jobs:
     name: Restore preproduction
     needs: sanitise-backup
     runs-on: ubuntu-latest
-    environment: production
+    environment: preproduction
     env:
       GLOBAL_CONFIG: preprod
       BACKUP_FILE: ${{ inputs.backup-file }}
