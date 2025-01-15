@@ -100,3 +100,113 @@ jobs:
           backup-file: ${{ env.BACKUP_FILE }}.sql
           db-server-name: ${{ inputs.db-server }}
           slack-webhook: ${{ steps.key-vault-secrets.outputs.SLACK_WEBHOOK }}
+
+      - name: Install postgres client
+        if: github.event_name == 'schedule'
+        uses: DFE-Digital/github-actions/install-postgres-client@master
+        with:
+          version: 14
+
+      - name: Sanitise dump
+        if: github.event_name == 'schedule'
+        run: |
+          gzip -d --to-stdout ${BACKUP_FILE}.sql.gz | psql -d postgres
+          psql -d postgres -f db/scripts/sanitise.sql
+          pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}.sql.gz
+        env:
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGHOST: localhost
+          PGPORT: 5432
+
+      - name: Upload sanitised backup to Azure Storage
+        if: github.event_name == 'schedule'
+        run: |
+          STORAGE_CONN_STR=$(az storage account show-connection-string -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.STORAGE_ACCOUNT_NAME }} --query 'connectionString')
+          echo "::add-mask::$STORAGE_CONN_STR"
+
+          az storage blob upload --container-name database-backup \
+            --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz --overwrite \
+            --connection-string "${STORAGE_CONN_STR}"
+          rm ${SANITISED_FILE_NAME}.sql.gz
+
+  restore-preproduction:
+    name: Restore preproduction
+    needs: [backup]
+    if: ${{ github.event_name == 'schedule' }}
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      GLOBAL_CONFIG: preprod
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set environment variables
+        run: |
+          source global_config/${GLOBAL_CONFIG}.sh
+          tf_vars_file=${TF_VARS_PATH}/${CONFIG}/variables.tfvars.json
+          APP_ENVIRONMENT=$(jq -r '.app_environment' ${tf_vars_file})
+          echo "APP_NAME=${SERVICE_NAME}-${APP_ENVIRONMENT}-web" >> $GITHUB_ENV
+          echo "SANITISED_FILE_NAME=afqts_sanitised_$(date +"%F").sql.gz" >> $GITHUB_ENV
+          echo "CLUSTER_RG=s189t01-tsc-ts-rg" >> $GITHUB_ENV
+          echo "CLUSTER_NAME=s189t01-tsc-test-aks" >> $GITHUB_ENV
+          echo "RESOURCE_GROUP_NAME=s189p01-afqts-pd-rg" >> $GITHUB_ENV
+          echo "STORAGE_ACCOUNT_NAME=s189p01afqtsdbbkppdsa" >> $GITHUB_ENV
+
+      # Download backup from production storage account
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set Connection String
+        run: |
+          STORAGE_CONN_STR=$(az storage account show-connection-string -g ${RESOURCE_GROUP_NAME} -n ${STORAGE_ACCOUNT_NAME} --query 'connectionString')
+          echo "::add-mask::$STORAGE_CONN_STR"
+          echo "AZURE_STORAGE_CONNECTION_STRING=$STORAGE_CONN_STR" >> $GITHUB_ENV
+
+      - name: Download Backup from Azure Storage
+        run: |
+          az config set extension.use_dynamic_install=yes_without_prompt
+          az config set core.only_show_errors=true
+          az storage azcopy blob download --container database-backup \
+            --source ${SANITISED_FILE_NAME} --destination ${SANITISED_FILE_NAME}
+
+      # Restore backup to preproduction database
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_PREPRODUCTION }}
+
+      - name: Setup postgres client
+        uses: DFE-Digital/github-actions/install-postgres-client@master
+        with:
+          version: 14
+
+      - name: Install kubectl
+        uses: DFE-Digital/github-actions/set-kubectl@master
+
+      - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+        with:
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PREPRODUCTION }}
+
+      - name: K8 setup
+        run: |
+          az aks get-credentials --overwrite-existing -g ${CLUSTER_RG} -n ${CLUSTER_NAME}
+          kubelogin convert-kubeconfig -l spn
+          # install konduit
+          curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/master/scripts/konduit.sh -o ./konduit.sh
+          chmod +x ./konduit.sh
+
+      - name: Restore backup to aks env database
+        run: |
+          ./konduit.sh -i ${SANITISED_FILE_NAME} -c -t 7200 -x ${APP_NAME} -- psql
+
+      - name: Restore Summary
+        if: success()
+        run: |
+          NOW=$(TZ=Europe/London date +"%F %R")
+          echo "RESTORE SUCCESSFUL!" >> $GITHUB_STEP_SUMMARY
+          echo "APP: ${APP_NAME}" >> $GITHUB_STEP_SUMMARY
+          echo "BACKUP FILE RESTORED: ${STORAGE_ACCOUNT_NAME} / database-backup / ${SANITISED_FILE_NAME}" >> $GITHUB_STEP_SUMMARY
+          echo "AT: ${NOW}" >> $GITHUB_STEP_SUMMARY
