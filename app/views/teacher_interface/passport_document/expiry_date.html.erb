@@ -1,25 +1,25 @@
 <% content_for :page_title, title_with_error_prefix(t("application_form.tasks.sections.about_you"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<span class="govuk-caption-l"><%= t("application_form.tasks.sections.about_you") %></span>
-<h1 class="govuk-heading-l">Your passport details</h1>
-
-<p class="govuk-body">
-  We can only accept valid passports to verify your identity. You cannot apply for QTS with an expired passport.
-</p>
-
-<p class="govuk-body">
-  If your passport has expired, you can still complete the other sections of your application whilst you renew it.
-</p>
-
-<p class="govuk-body">
-  If your passport expires whilst your QTS application is being assessed, your application will still be considered.
-</p>
-
-<%= govuk_warning_text(text: "If you submit your application with an expired passport, your application will be declined.") %>
-
 <%= form_with model: @form, url: [:expiry_date, :teacher_interface, :application_form, :passport_document] do |f| %>
   <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l"><%= t("application_form.tasks.sections.about_you") %></span>
+  <h1 class="govuk-heading-l">Your passport details</h1>
+
+  <p class="govuk-body">
+    We can only accept valid passports to verify your identity. You cannot apply for QTS with an expired passport.
+  </p>
+
+  <p class="govuk-body">
+    If your passport has expired, you can still complete the other sections of your application whilst you renew it.
+  </p>
+
+  <p class="govuk-body">
+    If your passport expires whilst your QTS application is being assessed, your application will still be considered.
+  </p>
+
+  <%= govuk_warning_text(text: "If you submit your application with an expired passport, your application will be declined.") %>
 
   <%= f.govuk_date_field :passport_expiry_date,
                         legend: { text: "Passport expiry date" },
