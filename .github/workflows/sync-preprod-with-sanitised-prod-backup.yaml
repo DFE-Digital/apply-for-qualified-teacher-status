@@ -74,7 +74,7 @@ jobs:
     name: Restore preproduction
     needs: sanitise-backup
     runs-on: ubuntu-latest
-    environment: preproduction
+    environment: production
     env:
       GLOBAL_CONFIG: preprod
       BACKUP_FILE: ${{ inputs.backup-file }}
