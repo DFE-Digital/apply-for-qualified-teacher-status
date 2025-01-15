@@ -1,4 +1,4 @@
-name: Sanitise and Restore Production Database
+name: Sync PreProd with Sanitised Prod Backup
 
 on:
   workflow_dispatch:
