@@ -80,7 +80,8 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def passport_document_status
-    if passport_expiry_date.nil? && (passport_document.nil? || passport_document.uploads.empty?)
+    if passport_expiry_date.nil? &&
+         (passport_document.nil? || passport_document.uploads.empty?)
       return :not_started
     end
 
