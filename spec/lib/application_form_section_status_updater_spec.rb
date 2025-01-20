@@ -71,6 +71,19 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         application_form.passport_document_status
       end
 
+      context "without a passport document" do
+        let(:application_form) { create(:application_form) }
+
+        it "returns not_started" do
+          application_form.passport_document.destroy!
+          application_form.reload
+
+          described_class.call(application_form:)
+
+          expect(subject).to eq("not_started")
+        end
+      end
+
       context "with no upload or expiry date" do
         let(:application_form) { create(:application_form) }
 
