@@ -14,7 +14,7 @@ RSpec.describe AssessmentFactory do
       age_range_min: 7,
       age_range_max: 11,
       requires_passport_as_identity_proof:,
-      english_language_citizenship_exempt:
+      english_language_citizenship_exempt:,
     )
   end
 
