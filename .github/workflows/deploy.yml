@@ -32,7 +32,7 @@ on:
 jobs:
   docker:
     name: Build and push Docker image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: development
 
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || (github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch')
@@ -66,7 +66,7 @@ jobs:
 
   rspec_system:
     name: Rspec System
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.event_name != 'workflow_dispatch'
 
     services:
@@ -119,7 +119,7 @@ jobs:
 
   rspec_other:
     name: Rspec Other
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.event_name != 'workflow_dispatch'
 
     services:
@@ -174,7 +174,7 @@ jobs:
     name: Deploy to review environment
     concurrency: deploy_review_${{ github.event.pull_request.number }}
     needs: [docker, rspec_system, rspec_other]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
     environment: review
     permissions:
@@ -201,7 +201,7 @@ jobs:
 
   deploy_non_production:
     name: Deploy to ${{ matrix.environment }} environment
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [docker, rspec_system, rspec_other]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_${{ matrix.environment }}
@@ -231,7 +231,7 @@ jobs:
   deploy_production:
     name: Deploy to production environment
     needs: [docker, rspec_system, rspec_other, deploy_non_production]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
       name: production
@@ -254,7 +254,7 @@ jobs:
 
   notify_slack_of_failures:
     name: Notify Slack of failures
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: development
 
     if: ${{ failure() && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
@@ -289,7 +289,7 @@ jobs:
 
   deploy_custom:
     name: Custom deployment to ${{ inputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.event_name == 'workflow_dispatch'
     environment:
       name: ${{ inputs.environment }}
